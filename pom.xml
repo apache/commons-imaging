@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- ====================================================================== -->
+  <!-- P R O J E C T  D E S C R I P T I O N                                   -->
+  <!-- ====================================================================== -->
+
+  <!-- TODO: superfluous?
+  <parent>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>4</version>
+  </parent>
+  -->
+    
+  <groupId>org.apache.sanselan</groupId>
+  <artifactId>sanselan</artifactId>
+  <name>Apache Sanselan</name>
+  
+  <packaging>jar</packaging>
+  <version>0.87-SNAPSHOT</version>
+  
+  <!--
+    Keep the description on a single line. Otherwise Maven might generate
+    a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
+   -->
+  <description>Apache Sanselan... TODO: write description.</description>
+  <url>http://sanselan.apache.org/</url>
+
+  <prerequisites>
+    <maven>2.0</maven>
+  </prerequisites>
+  <issueManagement>
+    <system>Jira</system>
+    <url>http://issues.apache.org/jira/browse/JCR</url>
+  </issueManagement>
+  <inceptionYear>2004</inceptionYear>
+
+
+
+
+
+
+  <build>
+    <plugins>
+    
+      <!-- Use Java 1.4 everywhere -->
+      <plugin>
+        <inherited>true</inherited>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <target>1.4</target>
+          <source>1.4</source>
+        </configuration>
+      </plugin>
+      
+      <!-- JCR-704: Enable maven-source-plugin -->
+      <plugin>
+        <inherited>true</inherited>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <!-- Interoperate with Maven 1 -->
+      <plugin>
+        <inherited>true</inherited>
+        <artifactId>maven-one-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>install-maven-one-repository</goal>
+            </goals>
+            <phase>install</phase>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <!-- Generate aggregate Javadocs -->
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <source>1.4</source>
+          <aggregate>true</aggregate>
+          <links>
+            <link>http://java.sun.com/j2se/1.4.2/docs/api/</link>
+            <link>http://www.day.com/maven/jsr170/javadocs/jcr-1.0/</link>
+          </links>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+
+
+
+    
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+
+
+  
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+    </plugins>
+
+  </reporting>
+
+
+
+
+<!-- TODO:
+  Do we need this element?
+  <profiles />
+  -->
+
+  <!-- ====================================================================== -->
+  <!-- M A I L I N G   L I S T S                                              -->
+  <!-- ====================================================================== -->
+  
+  <mailingLists>
+
+    <mailingList>
+      <name>Sanselan Development List</name>
+      <subscribe>sanselan-dev-subscribe at incubator.apache.org</subscribe>
+      <unsubscribe>sanselan-dev-unsubscribe at incubator.apache.org</unsubscribe>
+      <post>sanselan-dev at incubator.apache.org</post>
+<!-- TODO:
+      <archive>http://mail-archives.apache.org/mod_mbox/sanselan-dev/</archive>
+-->
+    </mailingList>
+    <mailingList>
+      <name>Sanselan Source Control List</name>
+      <subscribe>sanselan-commits-subscribe@apache.org</subscribe>
+      <unsubscribe>sanselan-commits-unsubscribe@apache.org</unsubscribe>
+<!-- TODO:
+      <archive>http://mail-archives.apache.org/mod_mbox/sanselan-commits/</archive>
+-->
+    </mailingList>
+  </mailingLists>
+	
+  <!-- ====================================================================== -->
+  <!-- P E O P L E                                                            -->
+  <!-- ====================================================================== -->
+  
+<!-- TODO:
+  <developers>
+    <developer>
+      <name>Roy T. Fielding</name>
+      <id>fielding</id>
+      <email/>
+      <organization>Day Software</organization>
+      <roles>
+        <role>Documentation</role>
+      </roles>
+      <timezone>-8</timezone>
+    </developer>
+
+  </developers>
+-->
+<!-- TODO:
+  <contributors>
+    <contributor>
+      <name>Lydia Balazs</name>
+      <email/>
+      <organization>Day Software</organization>
+      <roles>
+        <role>Unit Tests</role>
+      </roles>
+      <timezone>+1</timezone>
+    </contributor>
+
+  </contributors>
+-->
+	
+<!-- TODO:
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/jackrabbit/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/jackrabbit/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/jackrabbit/trunk</url>
+  </scm>
+-->
+	
+</project>
