@@ -26,20 +26,18 @@
   <!-- P R O J E C T  D E S C R I P T I O N                                   -->
   <!-- ====================================================================== -->
 
-  <!-- TODO: superfluous?
   <parent>
     <groupId>org.apache</groupId>
     <artifactId>apache</artifactId>
     <version>4</version>
   </parent>
-  -->
     
   <groupId>org.apache.sanselan</groupId>
   <artifactId>sanselan</artifactId>
   <name>Apache Sanselan</name>
   
   <packaging>jar</packaging>
-  <version>0.87-SNAPSHOT</version>
+  <version>0.87-incubator-SNAPSHOT</version>
   
   <!--
     Keep the description on a single line. Otherwise Maven might generate
@@ -48,19 +46,21 @@
   <description>Apache Sanselan... TODO: write description.</description>
   <url>http://sanselan.apache.org/</url>
 
-  <prerequisites>
-    <maven>2.0</maven>
-  </prerequisites>
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/incubator/sanselan/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/incubator/sanselan/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/incubator/sanselan/trunk</url>
+  </scm>
+
   <issueManagement>
     <system>Jira</system>
-    <url>http://issues.apache.org/jira/browse/JCR</url>
+    <url>http://issues.apache.org/jira/browse/SANSELAN</url>
   </issueManagement>
-  <inceptionYear>2004</inceptionYear>
+  <inceptionYear>2007</inceptionYear>
 
-
-
-
-
+  <prerequisites>
+    <maven>2.0.7</maven>
+  </prerequisites>
 
   <build>
     <plugins>
@@ -74,55 +74,9 @@
           <source>1.4</source>
         </configuration>
       </plugin>
-      
-      <!-- JCR-704: Enable maven-source-plugin -->
-      <plugin>
-        <inherited>true</inherited>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      
-      <!-- Interoperate with Maven 1 -->
-      <plugin>
-        <inherited>true</inherited>
-        <artifactId>maven-one-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>install-maven-one-repository</goal>
-            </goals>
-            <phase>install</phase>
-          </execution>
-        </executions>
-      </plugin>
-      
-      <!-- Generate aggregate Javadocs -->
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <source>1.4</source>
-          <aggregate>true</aggregate>
-          <links>
-            <link>http://java.sun.com/j2se/1.4.2/docs/api/</link>
-            <link>http://www.day.com/maven/jsr170/javadocs/jcr-1.0/</link>
-          </links>
-        </configuration>
-      </plugin>
-    </plugins>
+    </plugins>      
   </build>
 
-
-
-
-
-    
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -131,9 +85,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
-
-
   
   <reporting>
     <plugins>
@@ -144,14 +95,6 @@
     </plugins>
 
   </reporting>
-
-
-
-
-<!-- TODO:
-  Do we need this element?
-  <profiles />
-  -->
 
   <!-- ====================================================================== -->
   <!-- M A I L I N G   L I S T S                                              -->
@@ -182,42 +125,31 @@
   <!-- P E O P L E                                                            -->
   <!-- ====================================================================== -->
   
-<!-- TODO:
   <developers>
     <developer>
-      <name>Roy T. Fielding</name>
-      <id>fielding</id>
-      <email/>
-      <organization>Day Software</organization>
-      <roles>
-        <role>Documentation</role>
-      </roles>
-      <timezone>-8</timezone>
+      <name>Charles M. Chen</name>
+      <id>cmchen</id>
     </developer>
-
+    <developer>
+      <name>Philipp Koch</name>
+      <id>pkoch</id>
+    </developer>
+    <developer>
+      <name>Jeremias Maerki</name>
+      <id>jeremias</id>
+    </developer>
+    <developer>
+      <name>Craig Russell</name>
+      <id>clr</id>
+    </developer>
+    <developer>
+      <name>Yoav Shapira</name>
+      <id>yoavs</id>
+    </developer>
+    <developer>
+      <name>Carsten Ziegeler</name>
+      <id>cziegeler</id>
+    </developer>
   </developers>
--->
-<!-- TODO:
-  <contributors>
-    <contributor>
-      <name>Lydia Balazs</name>
-      <email/>
-      <organization>Day Software</organization>
-      <roles>
-        <role>Unit Tests</role>
-      </roles>
-      <timezone>+1</timezone>
-    </contributor>
-
-  </contributors>
--->
-	
-<!-- TODO:
-  <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/jackrabbit/trunk</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/jackrabbit/trunk</developerConnection>
-    <url>http://svn.apache.org/viewvc/jackrabbit/trunk</url>
-  </scm>
--->
 	
 </project>
