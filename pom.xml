@@ -121,17 +121,13 @@
       <subscribe>sanselan-dev-subscribe at incubator.apache.org</subscribe>
       <unsubscribe>sanselan-dev-unsubscribe at incubator.apache.org</unsubscribe>
       <post>sanselan-dev at incubator.apache.org</post>
-<!-- TODO:
       <archive>http://mail-archives.apache.org/mod_mbox/sanselan-dev/</archive>
--->
     </mailingList>
     <mailingList>
       <name>Sanselan Source Control List</name>
       <subscribe>sanselan-commits-subscribe@apache.org</subscribe>
       <unsubscribe>sanselan-commits-unsubscribe@apache.org</unsubscribe>
-<!-- TODO:
       <archive>http://mail-archives.apache.org/mod_mbox/sanselan-commits/</archive>
--->
     </mailingList>
   </mailingLists>
 	
