@@ -36,9 +36,9 @@
   <artifactId>sanselan</artifactId>
   <name>Apache Sanselan</name>
   
-  <packaging>jar</packaging>
   <version>0.87-incubator-SNAPSHOT</version>
-  
+  <packaging>bundle</packaging>
+
   <!--
     Keep the description on a single line. Otherwise Maven might generate
     a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
@@ -74,6 +74,20 @@
           <source>1.4</source>
         </configuration>
       </plugin>
+      <!-- Add manifest entries for OSGi environments -->
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>1.0.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>${pom.groupId}.${pom.artifactId}</Bundle-SymbolicName>
+            <Export-Package>org.apache.sanselan.*</Export-Package>
+            <DynamicImport-Package>sun.misc,edu.stanford.ejalbert,net.n3.nanoxml,uk.co.wilson.xml</DynamicImport-Package>
+          </instructions>
+        </configuration>
+      </plugin>
     </plugins>      
   </build>
 
@@ -81,7 +95,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>3.8.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
