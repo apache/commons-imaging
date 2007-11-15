@@ -74,7 +74,7 @@ public abstract class FieldType extends BinaryFileFunctions
 
 	public String toString()
 	{
-		return "[" + getClass().getSimpleName() + ". type: " + type
+		return "[" + getClass().getName() + ". type: " + type
 				+ ", name: " + name + ", length: " + length + "]";
 	}
 
