@@ -293,13 +293,13 @@ public class JpegImageParser extends ImageParser implements JpegConstants
 		Debug.debug();
 	}
 
-	private Vector readSegments(ByteSource byteSource, int markers[],
+	public Vector readSegments(ByteSource byteSource, int markers[],
 			boolean return_after_first) throws ImageReadException, IOException
 	{
 		return readSegments(byteSource, markers, return_after_first, false);
 	}
 
-	private Vector readSegments(ByteSource byteSource, int markers[],
+	public Vector readSegments(ByteSource byteSource, int markers[],
 			boolean return_after_first, boolean readEverything)
 			throws ImageReadException, IOException
 	{
