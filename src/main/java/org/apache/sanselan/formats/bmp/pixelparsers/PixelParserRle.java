@@ -35,26 +35,26 @@ public class PixelParserRle extends PixelParser
 
 	private int getSamplesPerByte() throws ImageReadException, IOException
 	{
-		if (bhi.BitsPerPixel == 8)
+		if (bhi.bitsPerPixel == 8)
 			return 1;
-		else if (bhi.BitsPerPixel == 4)
+		else if (bhi.bitsPerPixel == 4)
 			return 2;
 		else
 			throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
-					+ bhi.BitsPerPixel);
+					+ bhi.bitsPerPixel);
 	}
 
 	private int[] convertDataToSamples(int data) throws ImageReadException,
 			IOException
 	{
 		int rgbs[];
-		if (bhi.BitsPerPixel == 8)
+		if (bhi.bitsPerPixel == 8)
 		{
 			rgbs = new int[1];
 			rgbs[0] = getColorTableRGB(data);
 			//			pixels_written = 1;
 		}
-		else if (bhi.BitsPerPixel == 4)
+		else if (bhi.bitsPerPixel == 4)
 		{
 			rgbs = new int[2];
 			int sample1 = data >> 4;
@@ -65,7 +65,7 @@ public class PixelParserRle extends PixelParser
 		}
 		else
 			throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
-					+ bhi.BitsPerPixel);
+					+ bhi.bitsPerPixel);
 
 		return rgbs;
 	}
@@ -85,7 +85,7 @@ public class PixelParserRle extends PixelParser
 				//					rgb = getNextRGB();
 				int rgb = rgbs[i % rgbs.length];
 				//								bi.setRGB(x, y, rgb);
-				db.setElem(y * bhi.Width + x, rgb);
+				db.setElem(y * bhi.width + x, rgb);
 				//								bi.setRGB(x, y, 0xff00ff00);
 			}
 			else
@@ -106,8 +106,8 @@ public class PixelParserRle extends PixelParser
 		DataBuffer db = bi.getRaster().getDataBuffer();
 
 		int count = 0;
-		int width = bhi.Width;
-		int height = bhi.Height;
+		int width = bhi.width;
+		int height = bhi.height;
 		int x = 0, y = height - 1;
 
 		//		bfp.setDebug(true);

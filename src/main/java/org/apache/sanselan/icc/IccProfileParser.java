@@ -19,12 +19,14 @@ package org.apache.sanselan.icc;
 import java.awt.color.ICC_Profile;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.sanselan.common.BinaryFileParser;
-import org.apache.sanselan.common.ByteSource;
-import org.apache.sanselan.common.ByteSourceArray;
-import org.apache.sanselan.common.ByteSourceFile;
+import org.apache.sanselan.common.byteSources.ByteSource;
+import org.apache.sanselan.common.byteSources.ByteSourceArray;
+import org.apache.sanselan.common.byteSources.ByteSourceFile;
+import org.apache.sanselan.util.CachingInputStream;
 import org.apache.sanselan.util.Debug;
 
 public class IccProfileParser extends BinaryFileParser implements IccConstants
@@ -60,24 +62,17 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants
 
 	public IccProfileInfo getICCProfileInfo(ByteSource byteSource)
 	{
-		//		if (debug)
-		//			Debug.debug("getICCProfileInfo" + ": " + file.getName());
 
 		InputStream is = null;
 
 		try
 		{
-			//			is = byteSource.getInputStream();
-			//
-			//			IccProfileInfo result = getICCProfileInfo(byteSource.getAll(), is,
-			//					byteSource.getLength());
 
 			IccProfileInfo result;
 			{
-				byte bytes[] = byteSource.getAll();
-				is = new ByteArrayInputStream(bytes);
+				is = byteSource.getInputStream();
 
-				result = getICCProfileInfo(bytes, is, bytes.length);
+				result = readICCProfileInfo(is);
 			}
 
 			if (result == null)
@@ -123,31 +118,33 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants
 		return null;
 	}
 
-	private IccProfileInfo getICCProfileInfo(byte data[], InputStream is,
-			long length)
+	private IccProfileInfo readICCProfileInfo(InputStream is)
 	{
+		CachingInputStream cis = new CachingInputStream(is);
+		is = cis;
+
 		if (debug)
 			Debug.debug();
 
 		//				setDebug(true);
 
-		if (debug)
-			Debug.debug("length: " + length);
+		//		if (debug)
+		//			Debug.debug("length: " + length);
 
 		try
 		{
 			int ProfileSize = read4Bytes("ProfileSize", is,
 					"Not a Valid ICC Profile");
 
-			if (length != ProfileSize)
-			{
-				//				Debug.debug("Unexpected Length data expected: " + Integer.toHexString((int) length)
-				//						+ ", encoded: " + Integer.toHexString(ProfileSize));
-				//				Debug.debug("Unexpected Length data: " + length
-				//						+ ", length: " + ProfileSize);
-				//				throw new Error("asd");
-				return null;
-			}
+			//			if (length != ProfileSize)
+			//			{
+			//				//				Debug.debug("Unexpected Length data expected: " + Integer.toHexString((int) length)
+			//				//						+ ", encoded: " + Integer.toHexString(ProfileSize));
+			//				//				Debug.debug("Unexpected Length data: " + length
+			//				//						+ ", length: " + ProfileSize);
+			//				//				throw new Error("asd");
+			//				return null;
+			//			}
 
 			int CMMTypeSignature = read4Bytes("Signature", is,
 					"Not a Valid ICC Profile");
@@ -267,6 +264,17 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants
 				//				tags .add(tag);
 			}
 
+			{
+				// read stream to end, filling cache.
+				while (is.read() >= 0)
+					;
+			}
+
+			byte data[] = cis.getCache();
+
+			if (data.length < ProfileSize)
+				throw new IOException("Couldn't read ICC Profile.");
+
 			IccProfileInfo result = new IccProfileInfo(data, ProfileSize,
 					CMMTypeSignature, ProfileVersion,
 					ProfileDeviceClassSignature, ColorSpace,
@@ -330,18 +338,18 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants
 
 			//			setDebug(true);
 
-			long length = byteSource.getLength();
-
-			if (debug)
-				Debug.debug("length: " + length);
+			//			long length = byteSource.getLength();
+			//
+			//			if (debug)
+			//				Debug.debug("length: " + length);
 
 			InputStream is = byteSource.getInputStream();
 
 			int ProfileSize = read4Bytes("ProfileSize", is,
 					"Not a Valid ICC Profile");
 
-			if (length != ProfileSize)
-				return null;
+			//			if (length != ProfileSize)
+			//				return null;
 
 			this.skipBytes(is, 4 * 5);
 

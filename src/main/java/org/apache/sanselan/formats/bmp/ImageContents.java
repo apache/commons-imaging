@@ -21,17 +21,17 @@ import org.apache.sanselan.formats.bmp.pixelparsers.PixelParser;
 class ImageContents
 {
 	public final BmpHeaderInfo bhi;
-	public final byte ColorTable[];
-	public final byte ImageData[];
-	public final PixelParser fPixelParser;
+	public final byte colorTable[];
+	public final byte imageData[];
+	public final PixelParser pixelParser;
 
 	public ImageContents(BmpHeaderInfo bhi, byte ColorTable[],
 			byte ImageData[], PixelParser fPixelParser)
 	{
 		this.bhi = bhi;
-		this.ColorTable = ColorTable;
-		this.ImageData = ImageData;
-		this.fPixelParser = fPixelParser;
+		this.colorTable = ColorTable;
+		this.imageData = ImageData;
+		this.pixelParser = fPixelParser;
 	}
 
 }

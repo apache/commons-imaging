@@ -140,7 +140,7 @@ public class ImageInfo
 	 * 
 	 * @see #getFormat()
 	 */
-	public String FormatName()
+	public String getFormatName()
 	{
 		return formatName;
 	}

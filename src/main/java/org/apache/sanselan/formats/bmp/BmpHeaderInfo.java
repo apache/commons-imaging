@@ -24,24 +24,24 @@ public class BmpHeaderInfo
 	//		CP’ - OS/2 Color Pointer
 	//		‘IC’ - OS/2 Icon
 	//		‘PT’ - OS/2 Pointer
-	public final byte Identifier1;
-	public final byte Identifier2;
+	public final byte identifier1;
+	public final byte identifier2;
 
-	public final int FileSize;
-	public final int Reserved;
-	public final int BitmapDataOffset;
+	public final int fileSize;
+	public final int reserved;
+	public final int bitmapDataOffset;
 
-	public final int BitmapHeaderSize;
-	public final int Width;
-	public final int Height;
-	public final int Planes;
-	public final int BitsPerPixel;
-	public final int Compression;
-	public final int BitmapDataSize;
-	public final int HResolution;
-	public final int VResolution;
-	public final int ColorsUsed;
-	public final int ColorsImportant;
+	public final int bitmapHeaderSize;
+	public final int width;
+	public final int height;
+	public final int planes;
+	public final int bitsPerPixel;
+	public final int compression;
+	public final int bitmapDataSize;
+	public final int hResolution;
+	public final int vResolution;
+	public final int colorsUsed;
+	public final int colorsImportant;
 
 	public BmpHeaderInfo(byte Identifier1, byte Identifier2, int FileSize,
 			int Reserved, int BitmapDataOffset,
@@ -51,23 +51,23 @@ public class BmpHeaderInfo
 			int HResolution, int VResolution, int ColorsUsed,
 			int ColorsImportant)
 	{
-		this.Identifier1 = Identifier1;
-		this.Identifier2 = Identifier2;
-		this.FileSize = FileSize;
-		this.Reserved = Reserved;
-		this.BitmapDataOffset = BitmapDataOffset;
+		this.identifier1 = Identifier1;
+		this.identifier2 = Identifier2;
+		this.fileSize = FileSize;
+		this.reserved = Reserved;
+		this.bitmapDataOffset = BitmapDataOffset;
 
-		this.BitmapHeaderSize = BitmapHeaderSize;
-		this.Width = Width;
-		this.Height = Height;
-		this.Planes = Planes;
-		this.BitsPerPixel = BitsPerPixel;
-		this.Compression = Compression;
-		this.BitmapDataSize = BitmapDataSize;
-		this.HResolution = HResolution;
-		this.VResolution = VResolution;
-		this.ColorsUsed = ColorsUsed;
-		this.ColorsImportant = ColorsImportant;
+		this.bitmapHeaderSize = BitmapHeaderSize;
+		this.width = Width;
+		this.height = Height;
+		this.planes = Planes;
+		this.bitsPerPixel = BitsPerPixel;
+		this.compression = Compression;
+		this.bitmapDataSize = BitmapDataSize;
+		this.hResolution = HResolution;
+		this.vResolution = VResolution;
+		this.colorsUsed = ColorsUsed;
+		this.colorsImportant = ColorsImportant;
 	}
 
 }

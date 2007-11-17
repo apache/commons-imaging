@@ -26,7 +26,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.common.ByteSource;
+import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 
 public class TiffField

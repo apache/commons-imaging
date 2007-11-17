@@ -40,14 +40,14 @@ public abstract class PixelParserSimple extends PixelParser
 	{
 		DataBuffer db = bi.getRaster().getDataBuffer();
 
-		for (int y = bhi.Height - 1; y >= 0; y--)
+		for (int y = bhi.height - 1; y >= 0; y--)
 		{
-			for (int x = 0; x < bhi.Width; x++)
+			for (int x = 0; x < bhi.width; x++)
 			{
 				int rgb = 0xff000000;
 				rgb = getNextRGB();
 
-				db.setElem(y * bhi.Width + x, rgb);
+				db.setElem(y * bhi.width + x, rgb);
 			}
 			newline();
 		}

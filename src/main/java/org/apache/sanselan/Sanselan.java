@@ -19,7 +19,6 @@ package org.apache.sanselan;
 import java.awt.Dimension;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,10 +30,11 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.sanselan.common.ByteSource;
-import org.apache.sanselan.common.ByteSourceArray;
-import org.apache.sanselan.common.ByteSourceFile;
 import org.apache.sanselan.common.IImageMetadata;
+import org.apache.sanselan.common.byteSources.ByteSource;
+import org.apache.sanselan.common.byteSources.ByteSourceArray;
+import org.apache.sanselan.common.byteSources.ByteSourceFile;
+import org.apache.sanselan.common.byteSources.ByteSourceInputStream;
 import org.apache.sanselan.icc.IccProfileInfo;
 import org.apache.sanselan.icc.IccProfileParser;
 import org.apache.sanselan.util.Debug;
@@ -65,6 +65,8 @@ public class Sanselan implements SanselanConstants
 	 */
 	public static boolean hasImageFileExtension(File file)
 	{
+		if(!file.isFile())
+			return false;
 		return hasImageFileExtension(file.getName());
 	}
 
@@ -621,62 +623,29 @@ public class Sanselan implements SanselanConstants
 		return imageParser.getAllBufferedImages(byteSource);
 	}
 
-//	public static boolean extractImages(byte bytes[], File dstDir,
-//			String dstRoot, ImageParser encoder) throws ImageReadException,
-//			IOException, ImageWriteException
-//	{
-//		return extractImages(new ByteSourceArray(bytes), dstDir, dstRoot,
-//				encoder);
-//	}
-//
-//	public static boolean extractImages(File file, File dstDir, String dstRoot,
-//			ImageParser encoder) throws ImageReadException, IOException,
-//			ImageWriteException
-//	{
-//		return extractImages(new ByteSourceFile(file), dstDir, dstRoot, encoder);
-//	}
-//
-//	public static boolean extractImages(ByteSource byteSource, File dstDir,
-//			String dstRoot, ImageParser encoder) throws ImageReadException,
-//			IOException, ImageWriteException
-//	{
-//		ImageParser imageParser = getImageParser(byteSource);
-//
-//		return imageParser.extractImages(byteSource, dstDir, dstRoot, encoder);
-//	}
-
-	private static byte[] getInputStreamBytes(InputStream is)
-			throws IOException
-	{
-		ByteArrayOutputStream os = null;
-
-		try
-		{
-			os = new ByteArrayOutputStream(4096);
-
-			is = new BufferedInputStream(is);
-
-			int count;
-			byte[] buffer = new byte[4096];
-			while ((count = is.read(buffer, 0, 4096)) > 0)
-				os.write(buffer, 0, count);
-
-			os.flush();
-
-			return os.toByteArray();
-		}
-		finally
-		{
-			try
-			{
-				if (os != null)
-					os.close();
-			}
-			catch (IOException ioe)
-			{
-			}
-		}
-	}
+	//	public static boolean extractImages(byte bytes[], File dstDir,
+	//			String dstRoot, ImageParser encoder) throws ImageReadException,
+	//			IOException, ImageWriteException
+	//	{
+	//		return extractImages(new ByteSourceArray(bytes), dstDir, dstRoot,
+	//				encoder);
+	//	}
+	//
+	//	public static boolean extractImages(File file, File dstDir, String dstRoot,
+	//			ImageParser encoder) throws ImageReadException, IOException,
+	//			ImageWriteException
+	//	{
+	//		return extractImages(new ByteSourceFile(file), dstDir, dstRoot, encoder);
+	//	}
+	//
+	//	public static boolean extractImages(ByteSource byteSource, File dstDir,
+	//			String dstRoot, ImageParser encoder) throws ImageReadException,
+	//			IOException, ImageWriteException
+	//	{
+	//		ImageParser imageParser = getImageParser(byteSource);
+	//
+	//		return imageParser.extractImages(byteSource, dstDir, dstRoot, encoder);
+	//	}
 
 	/** 
 	 * Reads the first image from an InputStream as a BufferedImage.
@@ -716,8 +685,10 @@ public class Sanselan implements SanselanConstants
 	public static BufferedImage getBufferedImage(InputStream is, Map params)
 			throws ImageReadException, IOException
 	{
-		byte bytes[] = getInputStreamBytes(is);
-		return getBufferedImage(new ByteSourceArray(bytes), params);
+		String filename = null;
+		if (params.containsKey(PARAM_KEY_FILENAME))
+			filename = (String) params.get(PARAM_KEY_FILENAME);
+		return getBufferedImage(new ByteSourceInputStream(is, filename), params);
 	}
 
 	/** 

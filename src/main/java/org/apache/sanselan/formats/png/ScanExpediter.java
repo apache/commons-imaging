@@ -30,6 +30,7 @@ import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterPaeth;
 import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterSub;
 import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterUp;
 import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
+import org.apache.sanselan.util.Debug;
 
 public abstract class ScanExpediter extends BinaryFileParser
 {
@@ -38,21 +39,16 @@ public abstract class ScanExpediter extends BinaryFileParser
 	protected final InputStream is;
 	protected final BufferedImage bi;
 	protected final int colorType;
-	protected final int BitDepth;
+	protected final int bitDepth;
 	protected final int bytesPerPixel;
 	protected final int bitsPerPixel;
 	protected final PNGChunkPLTE fPNGChunkPLTE;
 	protected final GammaCorrection gammaCorrection;
 	protected final TransparencyFilter transparencyFilter;
 
-	//	protected final 	DataBuffer buffer ;
-
 	public ScanExpediter(int width, int height, InputStream is,
-			BufferedImage bi, int color_type,
-			int BitDepth,
-			//				int BytesPerPixel, 
-			int BitsPerPixel, PNGChunkPLTE fPNGChunkPLTE,
-			GammaCorrection fGammaCorrection,
+			BufferedImage bi, int color_type, int bitDepth, int bitsPerPixel,
+			PNGChunkPLTE pngChunkPLTE, GammaCorrection gammaCorrection,
 			TransparencyFilter transparencyFilter)
 
 	{
@@ -61,13 +57,15 @@ public abstract class ScanExpediter extends BinaryFileParser
 		this.is = is;
 		this.bi = bi;
 		this.colorType = color_type;
-		this.BitDepth = BitDepth;
-		this.bytesPerPixel = this.getBitsToBytesRoundingUp(BitsPerPixel);
-		this.bitsPerPixel = BitsPerPixel;
-		this.fPNGChunkPLTE = fPNGChunkPLTE;
-		this.gammaCorrection = fGammaCorrection;
+		this.bitDepth = bitDepth;
+		this.bytesPerPixel = this.getBitsToBytesRoundingUp(bitsPerPixel);
+		this.bitsPerPixel = bitsPerPixel;
+		this.fPNGChunkPLTE = pngChunkPLTE;
+		this.gammaCorrection = gammaCorrection;
 		this.transparencyFilter = transparencyFilter;
 
+		Debug.debug("BitDepth", bitDepth);
+		Debug.debug("bitsPerPixel", bitsPerPixel);
 		//		Debug.debug("colorType", colorType);
 
 		//		buffer = bi.getRaster().getDataBuffer();

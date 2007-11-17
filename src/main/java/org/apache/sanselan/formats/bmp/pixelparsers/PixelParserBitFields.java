@@ -79,29 +79,29 @@ public class PixelParserBitFields extends PixelParserSimple
 	{
 		int data;
 
-		if (bhi.BitsPerPixel == 8)
+		if (bhi.bitsPerPixel == 8)
 		{
 			data = 0xff & imageData[bytecount + 0];
 			bytecount += 1;
 		}
-		else if (bhi.BitsPerPixel == 24)
+		else if (bhi.bitsPerPixel == 24)
 		{
 			data = bfp.read3Bytes("Pixel", is, "BMP Image Data");
 			bytecount += 3;
 		}
-		else if (bhi.BitsPerPixel == 32)
+		else if (bhi.bitsPerPixel == 32)
 		{
 			data = bfp.read4Bytes("Pixel", is, "BMP Image Data");
 			bytecount += 4;
 		}
-		else if (bhi.BitsPerPixel == 16)
+		else if (bhi.bitsPerPixel == 16)
 		{
 			data = bfp.read2Bytes("Pixel", is, "BMP Image Data");
 			bytecount += 2;
 		}
 		else
 			throw new ImageReadException("Unknown BitsPerPixel: "
-					+ bhi.BitsPerPixel);
+					+ bhi.bitsPerPixel);
 
 		int red = (redMask & data);
 		int green = (greenMask & data);

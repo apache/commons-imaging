@@ -40,9 +40,9 @@ import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageParser;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.common.ByteSource;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.ImageMetadata;
+import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.png.chunks.PNGChunk;
 import org.apache.sanselan.formats.png.chunks.PNGChunkIDAT;
 import org.apache.sanselan.formats.png.chunks.PNGChunkIHDR;
@@ -822,7 +822,12 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 			//			cm = ColorModel.getRGBdefault();
 			//
+			
 			int bitsPerPixel = bitsPerSample * samplesPerPixel;
+			Debug.debug("bitsPerSample", bitsPerSample);
+			Debug.debug("samplesPerPixel", samplesPerPixel);
+
+			
 			//
 			//						WritableRaster raster = cm.createCompatibleWritableRaster(width,
 			//					height);
@@ -845,7 +850,8 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 			int bitsPerScanLine = bitsPerPixel * width;
 
-			//			Debug.debug("bitsPerScanLine", bitsPerScanLine);
+						Debug.debug("bitsPerScanLine", bitsPerScanLine);
+						Debug.debug("bitsPerPixel", bitsPerPixel);
 
 			ScanExpediter scanExpediter;
 

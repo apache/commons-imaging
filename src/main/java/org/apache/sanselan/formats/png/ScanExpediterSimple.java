@@ -23,34 +23,38 @@ import java.io.InputStream;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.formats.png.chunks.PNGChunkPLTE;
 import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
+import org.apache.sanselan.util.Debug;
 
 public class ScanExpediterSimple extends ScanExpediter
 {
 	public ScanExpediterSimple(int width, int height, InputStream is,
-			BufferedImage bi, int color_type, int BitDepth, int bits_per_pixel,
-			PNGChunkPLTE fPNGChunkPLTE, GammaCorrection fGammaCorrection,
-			TransparencyFilter fTransparencyFilter)
+			BufferedImage bi, int color_type, int BitDepth, int bitsPerPixel,
+			PNGChunkPLTE pngChunkPLTE, GammaCorrection gammaCorrection,
+			TransparencyFilter transparencyFilter)
 
 	{
-		super(width, height, is, bi, color_type, BitDepth, bits_per_pixel,
-				fPNGChunkPLTE, fGammaCorrection, fTransparencyFilter);
+		super(width, height, is, bi, color_type, BitDepth, bitsPerPixel,
+				pngChunkPLTE, gammaCorrection, transparencyFilter);
 	}
 
 	public void drive() throws ImageReadException, IOException
 	{
 		int bitsPerScanLine = bitsPerPixel * width;
-		int pixel_bytes_per_scan_line = getBitsToBytesRoundingUp(bitsPerScanLine);
+		Debug.debug("bitsPerPixel", bitsPerPixel);
+		Debug.debug("bitsPerScanLine", bitsPerScanLine);
+		int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
+		Debug.debug("pixelBytesPerScanLine", pixelBytesPerScanLine);
 		byte prev[] = null;
 
 		for (int y = 0; y < height; y++)
 		{
-			byte unfiltered[] = getNextScanline(is, pixel_bytes_per_scan_line,
+			byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
 					prev, bytesPerPixel);
 
 			prev = unfiltered;
 
 			BitParser bitParser = new BitParser(unfiltered, bitsPerPixel,
-					BitDepth);
+					bitDepth);
 
 			for (int x = 0; x < width; x++)
 			{

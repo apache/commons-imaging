@@ -28,6 +28,18 @@ public interface SanselanConstants
 	public static final String PARAM_KEY_VERBOSE = "VERBOSE";
 
 	/** 
+	 * Parameter key.  Used to hint the filename when reading from a byte array or InputStream.
+	 * The filename hint can help disambiguate what file the image format.
+	 * <p>
+	 * Applies to read operations.
+	 * <p>
+	 * Valid values: filename as string
+	 * <p>
+	 * @see InputStream
+	 */
+	public static final String PARAM_KEY_FILENAME = "FILENAME";
+
+	/** 
 	 * Parameter key.  Used in write operations to indicate desired image format.
 	 * <p>
 	 * Valid values: Any format defined in ImageFormat, such as ImageFormat.IMAGE_FORMAT_PNG.

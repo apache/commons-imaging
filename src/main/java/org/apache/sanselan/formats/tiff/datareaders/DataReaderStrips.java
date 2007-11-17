@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.BitInputStream;
-import org.apache.sanselan.common.ByteSource;
+import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
 public class DataReaderStrips extends DataReader

@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.common.ByteSource;
+import org.apache.sanselan.common.byteSources.ByteSource;
 
 public class TiffDirectory extends TiffElement implements TiffConstants
 //extends BinaryFileFunctions

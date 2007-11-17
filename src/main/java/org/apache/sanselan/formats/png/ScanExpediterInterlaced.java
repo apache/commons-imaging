@@ -102,7 +102,7 @@ public class ScanExpediterInterlaced extends ScanExpediter
 					prev = unfiltered;
 
 					BitParser fBitParser = new BitParser(unfiltered,
-							bitsPerPixel, BitDepth);
+							bitsPerPixel, bitDepth);
 
 					while (x < width)
 					{

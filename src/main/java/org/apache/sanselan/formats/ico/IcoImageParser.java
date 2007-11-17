@@ -35,8 +35,8 @@ import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageParser;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.common.ByteSource;
 import org.apache.sanselan.common.IImageMetadata;
+import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.util.Debug;
 
 public class IcoImageParser extends ImageParser

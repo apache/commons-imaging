@@ -14,51 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.sanselan.common;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
-public class ByteSourceArray extends ByteSource
+package org.apache.sanselan.util;
+
+import java.io.*;
+
+public class CachingInputStream extends InputStream
 {
-	private final byte bytes[];
+	private final InputStream is;
+	private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-	public ByteSourceArray(String filename, byte bytes[])
+	public CachingInputStream(InputStream is)
 	{
-		super(filename);
-		this.bytes = bytes;
+		this.is = is;
 	}
 
-	public ByteSourceArray(byte bytes[])
+	public byte[] getCache()
 	{
-		super(null);
-		this.bytes = bytes;
+		return baos.toByteArray();
 	}
 
-	public InputStream getInputStream() //throws IOException
+	public int read() throws IOException
 	{
-		return new ByteArrayInputStream(bytes);
-	}
-
-	public byte[] getBlock(int start, int length) throws IOException
-	{
-		if (start + length > bytes.length)
-			return null;
-
-		byte result[] = new byte[length];
-		System.arraycopy(bytes, start, result, 0, length);
+		int result = is.read();
+		baos.write(result);
 		return result;
 	}
 
-	public long getLength()
+	public int available() throws IOException
 	{
-		return bytes.length;
+		return is.available();
 	}
 
-	public String getDescription()
+	public void close() throws IOException
 	{
-		return bytes.length + " byte array";
+		is.close();
 	}
 
 }

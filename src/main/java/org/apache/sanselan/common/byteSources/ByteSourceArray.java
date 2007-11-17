@@ -14,44 +14,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.sanselan.common;
+package org.apache.sanselan.common.byteSources;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public abstract class ByteSource extends BinaryFileFunctions
+public class ByteSourceArray extends ByteSource
 {
-	protected final String filename;
+	private final byte bytes[];
 
-	public ByteSource(final String filename)
+	public ByteSourceArray(String filename, byte bytes[])
 	{
-		this.filename = filename;
+		super(filename);
+		this.bytes = bytes;
 	}
 
-	public final InputStream getInputStream(int start) throws IOException
+	public ByteSourceArray(byte bytes[])
 	{
-		InputStream is = getInputStream();
-
-		skipBytes(is, start);
-
-		return is;
+		super(null);
+		this.bytes = bytes;
 	}
 
-	public abstract InputStream getInputStream() throws IOException;
+	public InputStream getInputStream() //throws IOException
+	{
+		return new ByteArrayInputStream(bytes);
+	}
 
-	public abstract byte[] getBlock(int start, int length) throws IOException;
+	public byte[] getBlock(int start, int length) throws IOException
+	{
+		if (start + length > bytes.length)
+			throw new IOException("Could not read block.");
 
-	public abstract long getLength();
+		byte result[] = new byte[length];
+		System.arraycopy(bytes, start, result, 0, length);
+		return result;
+	}
 
+//	public long getLength()
+//	{
+//		return bytes.length;
+//	}
+	
 	public byte[] getAll() throws IOException
 	{
-		return getBlock(0, (int) getLength());
+		return bytes;
 	}
+	
 
-	public abstract String getDescription();
-
-	public final String getFilename()
+	public String getDescription()
 	{
-		return filename;
+		return bytes.length + " byte array";
 	}
+
 }

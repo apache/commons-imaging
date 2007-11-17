@@ -26,7 +26,7 @@ import java.util.Vector;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryFileParser;
-import org.apache.sanselan.common.ByteSource;
+import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.jpeg.JpegConstants;
 import org.apache.sanselan.formats.jpeg.JpegImageParser;
 import org.apache.sanselan.formats.jpeg.segments.GenericSegment;

@@ -14,9 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.sanselan.common;
+package org.apache.sanselan.common.byteSources;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -69,11 +70,42 @@ public class ByteSourceFile extends ByteSource
 		}
 	}
 
-	public long getLength()
-	{
-		//		System.out.println("file.length(): " + file.length());
+//	public long getLength()
+//	{
+//		//		System.out.println("file.length(): " + file.length());
+//
+//		return file.length();
+//	}
 
-		return file.length();
+	public byte[] getAll() throws IOException
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+		InputStream is = null;
+		try
+		{
+			is = new FileInputStream(file);
+			is = new BufferedInputStream(is);
+			byte buffer[] = new byte[1024];
+			int read;
+			while ((read = is.read(buffer)) > 0)
+			{
+				baos.write(buffer, 0, read);
+			}
+			return baos.toByteArray();
+		}
+		finally
+		{
+			try
+			{
+				if (null != is)
+					is.close();
+			}
+			catch (IOException e)
+			{
+				//				Debug.d
+			}
+		}
 	}
 
 	public String getDescription()

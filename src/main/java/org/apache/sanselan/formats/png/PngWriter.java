@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
@@ -117,19 +118,19 @@ public class PngWriter implements PngConstants
 		public final int width;
 		public final int height;
 		public final byte bit_depth;
-		public final byte colour_type;
+		public final byte colorType;
 		public final byte compression_method;
 		public final byte filter_method;
 		public final byte interlace_method;
 
 		public ImageHeader(int width, int height, byte bit_depth,
-				byte colour_type, byte compression_method, byte filter_method,
+				byte colorType, byte compression_method, byte filter_method,
 				byte interlace_method)
 		{
 			this.width = width;
 			this.height = height;
 			this.bit_depth = bit_depth;
-			this.colour_type = colour_type;
+			this.colorType = colorType;
 			this.compression_method = compression_method;
 			this.filter_method = filter_method;
 			this.interlace_method = interlace_method;
@@ -144,7 +145,7 @@ public class PngWriter implements PngConstants
 		writeInt(baos, value.width);
 		writeInt(baos, value.height);
 		baos.write(0xff & value.bit_depth);
-		baos.write(0xff & value.colour_type);
+		baos.write(0xff & value.colorType);
 		baos.write(0xff & value.compression_method);
 		baos.write(0xff & value.filter_method);
 		baos.write(0xff & value.interlace_method);
@@ -208,7 +209,7 @@ public class PngWriter implements PngConstants
 		return result;
 	}
 
-	private byte getBitDepth(final byte colour_type, Map params)
+	private byte getBitDepth(final byte colorType, Map params)
 	{
 		byte result = 8;
 
@@ -226,7 +227,7 @@ public class PngWriter implements PngConstants
 					result = (byte) value;
 				default :
 			}
-			switch (colour_type)
+			switch (colorType)
 			{
 				case COLOR_TYPE_GREYSCALE :
 					break;
@@ -286,11 +287,19 @@ public class PngWriter implements PngConstants
 		if (params.containsKey(PARAM_KEY_VERBOSE))
 			params.remove(PARAM_KEY_VERBOSE);
 
+		Map rawParams = new HashMap(params);
+		if (params.containsKey(PARAM_KEY_PNG_FORCE_TRUE_COLOR))
+			params.remove(PARAM_KEY_PNG_FORCE_TRUE_COLOR);
+		if (params.containsKey(PARAM_KEY_PNG_FORCE_INDEXED_COLOR))
+			params.remove(PARAM_KEY_PNG_FORCE_INDEXED_COLOR);
+		if (params.containsKey(PARAM_KEY_PNG_BIT_DEPTH))
+			params.remove(PARAM_KEY_PNG_BIT_DEPTH);
 		if (params.size() > 0)
 		{
 			Object firstKey = params.keySet().iterator().next();
 			throw new ImageWriteException("Unknown parameter: " + firstKey);
 		}
+		params = rawParams;
 
 		int width = src.getWidth();
 		int height = src.getHeight();
@@ -327,7 +336,7 @@ public class PngWriter implements PngConstants
 			else
 				colorType = getColourType(hasAlpha, isGrayscale);
 			if (verbose)
-				Debug.debug("colour_type", colorType);
+				Debug.debug("colorType", colorType);
 
 		}
 
