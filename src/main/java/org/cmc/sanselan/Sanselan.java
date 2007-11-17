@@ -65,7 +65,7 @@ public class Sanselan implements SanselanConstants
 	 */
 	public static boolean hasImageFileExtension(File file)
 	{
-		if(!file.isFile())
+		if (!file.isFile())
 			return false;
 		return hasImageFileExtension(file.getName());
 	}
@@ -238,6 +238,19 @@ public class Sanselan implements SanselanConstants
 	/** 
 	 * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and TIFF images.
 	 * <p>
+	 * @param  is InputStream from which to read image data.
+	 * @param  filename Filename associated with image data (optional).
+	 * @return      An instance of ICC_Profile or null if the image contains no ICC profile..
+	 */
+	public static ICC_Profile getICCProfile(InputStream is, String filename)
+			throws ImageReadException, IOException
+	{
+		return getICCProfile(new ByteSourceInputStream(is, filename));
+	}
+
+	/** 
+	 * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and TIFF images.
+	 * <p>
 	 * @param  file  File containing image data.
 	 * @return      An instance of ICC_Profile or null if the image contains no ICC profile..
 	 */
@@ -330,6 +343,25 @@ public class Sanselan implements SanselanConstants
 	 * <p>
 	 * Not to be confused with "image metadata."
 	 * <p>
+	 * @param  is InputStream from which to read image data.
+	 * @param  filename Filename associated with image data (optional).
+	 * @return      An instance of ImageInfo.
+	 * @see         ImageInfo
+	 */
+	public static ImageInfo getImageInfo(InputStream is, String filename)
+			throws ImageReadException, IOException
+	{
+		return getImageInfo(new ByteSourceInputStream(is, filename));
+	}
+
+	/** 
+	 * Parses the "image info" of an image.
+	 * <p>
+	 * "Image info" is a summary of basic information about the image such as: 
+	 * width, height, file format, bit depth, color type, etc.
+	 * <p>
+	 * Not to be confused with "image metadata."
+	 * <p>
 	 * @param  bytes  Byte array containing an image file.
 	 * @return      An instance of ImageInfo.
 	 * @see         ImageInfo
@@ -406,6 +438,19 @@ public class Sanselan implements SanselanConstants
 	/** 
 	 * Determines the width and height of an image.
 	 * <p>
+	 * @param  is InputStream from which to read image data.
+	 * @param  filename Filename associated with image data (optional).
+	 * @return      The width and height of the image.
+	 */
+	public static Dimension getImageSize(InputStream is, String filename)
+			throws ImageReadException, IOException
+	{
+		return getImageSize(new ByteSourceInputStream(is, filename));
+	}
+
+	/** 
+	 * Determines the width and height of an image.
+	 * <p>
 	 * @param  bytes  Byte array containing an image file.
 	 * @return      The width and height of the image.
 	 */
@@ -434,6 +479,8 @@ public class Sanselan implements SanselanConstants
 
 		return imageParser.getImageSize(byteSource);
 	}
+
+
 
 	/** 
 	 * Parses the metadata of an image.  This metadata depends on the format of the image.  
@@ -477,6 +524,54 @@ public class Sanselan implements SanselanConstants
 	{
 		return getMetadata(new ByteSourceArray(bytes), params);
 	}
+
+	/** 
+	 * Parses the metadata of an image file.  This metadata depends on the format of the image.  
+	 * <p>
+	 * JPEG/JFIF files may contain EXIF and/or IPTC metadata.
+	 * PNG files may contain comments.
+	 * TIFF files may contain metadata.
+	 * <p>
+	 * The instance of IImageMetadata returned by getMetadata() should be upcast (depending on image format).
+	 * <p>
+	 * Not to be confused with "image info."
+	 * <p>
+	 * @param  is InputStream from which to read image data.
+	 * @param  filename Filename associated with image data (optional).
+	 * @return      An instance of IImageMetadata.
+	 * @see         IImageMetadata
+	 */
+	public static IImageMetadata getMetadata(InputStream is, String filename)
+			throws ImageReadException, IOException
+	{
+		return getMetadata(is, filename, null);
+	}
+
+	/** 
+	 * Parses the metadata of an image file.  This metadata depends on the format of the image.  
+	 * <p>
+	 * JPEG/JFIF files may contain EXIF and/or IPTC metadata.
+	 * PNG files may contain comments.
+	 * TIFF files may contain metadata.
+	 * <p>
+	 * The instance of IImageMetadata returned by getMetadata() should be upcast (depending on image format).
+	 * <p>
+	 * Not to be confused with "image info."
+	 * <p>
+	 * @param  is InputStream from which to read image data.
+	 * @param  filename Filename associated with image data (optional).
+	 * @param  params Map of optional parameters, defined in SanselanConstants.
+	 * @return      An instance of IImageMetadata.
+	 * @see         IImageMetadata
+	 */
+	public static IImageMetadata getMetadata(InputStream is, String filename, Map params)
+			throws ImageReadException, IOException
+	{
+		return getMetadata(new ByteSourceInputStream(is, filename), params);
+	}
+	
+	
+
 
 	/** 
 	 * Parses the metadata of an image file.  This metadata depends on the format of the image.  
@@ -583,6 +678,22 @@ public class Sanselan implements SanselanConstants
 		ImageParser imageParser = getImageParser(byteSource);
 
 		return imageParser.getFormatCompliance(byteSource);
+	}
+
+	/** 
+	 * Returns all images contained in an image.
+	 * <p>
+	 * Useful for image formats such as GIF and ICO in which a single file may 
+	 * contain multiple images.
+	 * <p>
+	 * @param  is InputStream from which to read image data.
+	 * @param  filename Filename associated with image data (optional).
+	 * @return      A vector of BufferedImages.
+	 */
+	public static Vector getAllBufferedImages(InputStream is, String filename)
+			throws ImageReadException, IOException
+	{
+		return getAllBufferedImages(new ByteSourceInputStream(is, filename));
 	}
 
 	/** 

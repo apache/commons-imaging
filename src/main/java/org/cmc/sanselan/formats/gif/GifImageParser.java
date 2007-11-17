@@ -734,8 +734,9 @@ public class GifImageParser extends ImageParser
 		int width = ghi.logicalScreenWidth;
 		int height = ghi.logicalScreenHeight;
 
+		boolean hasAlpha = gce.transparency;
 		BufferedImage result = getBufferedImageFactory(params)
-				.getColorBufferedImage(width, height);
+				.getColorBufferedImage(width, height, hasAlpha);
 
 		{
 			int colortable[];

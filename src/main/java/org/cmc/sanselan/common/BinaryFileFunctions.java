@@ -26,6 +26,7 @@ import java.io.RandomAccessFile;
 
 import org.cmc.sanselan.ImageReadException;
 import org.cmc.sanselan.ImageWriteException;
+import org.cmc.sanselan.util.Debug;
 
 public class BinaryFileFunctions implements BinaryConstants
 {
@@ -467,6 +468,7 @@ public class BinaryFileFunctions implements BinaryConstants
 		while (read < length)
 		{
 			int count = is.read(result, read, length - read);
+//			Debug.debug("count", count);
 			if (count < 1)
 				throw new IOException(exception);
 

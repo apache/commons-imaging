@@ -17,11 +17,15 @@
 package org.cmc.sanselan.util;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.cmc.sanselan.SanselanConstants;
 
@@ -100,4 +104,108 @@ public class IOUtils implements SanselanConstants
 			}
 		}
 	}
+
+	public static void writeToFile(byte[] src, File file) throws IOException
+	{
+		ByteArrayInputStream stream = null;
+
+		try
+		{
+			stream = new ByteArrayInputStream(src);
+
+			putInputStreamToFile(stream, file);
+		}
+		finally
+		{
+			try
+			{
+				if (stream != null)
+					stream.close();
+			}
+			catch (Exception e)
+			{
+				Debug.debug(e);
+
+			}
+		}
+	}
+
+	public static void putInputStreamToFile(InputStream src, File file)
+			throws IOException
+	{
+		FileOutputStream stream = null;
+
+		try
+		{
+			if (file.getParentFile() != null)
+				file.getParentFile().mkdirs();
+			stream = new FileOutputStream(file);
+
+			copyStreamToStream(src, stream);
+		}
+		finally
+		{
+			try
+			{
+				if (stream != null)
+					stream.close();
+			}
+			catch (Exception e)
+			{
+				Debug.debug(e);
+			}
+		}
+	}
+
+	public static void copyStreamToStream(InputStream src, OutputStream dst)
+			throws IOException
+	{
+		copyStreamToStream(src, dst, true);
+	}
+
+	public static void copyStreamToStream(InputStream src, OutputStream dst,
+			boolean close_streams) throws IOException
+	{
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		try
+		{
+			bis = new BufferedInputStream(src);
+			bos = new BufferedOutputStream(dst);
+
+			int count;
+			byte[] buffer = new byte[4096];
+			while ((count = bis.read(buffer, 0, buffer.length)) > 0)
+				dst.write(buffer, 0, count);
+
+			bos.flush();
+		}
+		finally
+		{
+			if (close_streams)
+			{
+				try
+				{
+					if (bis != null)
+						bis.close();
+				}
+				catch (IOException e)
+				{
+					Debug.debug(e);
+				}
+				try
+				{
+					if (bos != null)
+						bos.close();
+				}
+				catch (IOException e)
+				{
+					Debug.debug(e);
+				}
+			}
+		}
+
+	}
+
 }

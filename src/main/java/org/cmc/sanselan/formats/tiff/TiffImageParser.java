@@ -1050,9 +1050,10 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throw new ImageReadException("Tiff: fSamplesPerPixel ("
 					+ samplesPerPixel + ")!=fBitsPerSample.length ("
 					+ bitsPerSample.length + ")");
-
+		
+		boolean hasAlpha = false;
 		BufferedImage result = getBufferedImageFactory(params)
-				.getColorBufferedImage(width, height);
+				.getColorBufferedImage(width, height, hasAlpha);
 
 		PhotometricInterpreter photometricInterpreter = getPhotometricInterpreter(
 				entries, photometricInterpretation, bitsPerPixel,

@@ -562,8 +562,9 @@ public class BmpImageParser extends ImageParser
 		int width = bhi.width;
 		int height = bhi.height;
 
+		boolean hasAlpha = false;
 		BufferedImage result = getBufferedImageFactory(params)
-				.getColorBufferedImage(width, height);
+				.getColorBufferedImage(width, height, hasAlpha);
 
 		if (debug)
 		{

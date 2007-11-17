@@ -286,8 +286,9 @@ public class PNMImageParser extends ImageParser
 			int width = info.width;
 			int height = info.height;
 
+			boolean hasAlpha = false;
 			BufferedImage result = getBufferedImageFactory(params)
-					.getColorBufferedImage(width, height);
+					.getColorBufferedImage(width, height, hasAlpha);
 
 			info.readImage(result, is);
 

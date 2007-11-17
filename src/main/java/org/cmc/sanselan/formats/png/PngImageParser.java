@@ -59,6 +59,7 @@ import org.cmc.sanselan.formats.transparencyfilters.TransparencyFilterIndexedCol
 import org.cmc.sanselan.formats.transparencyfilters.TransparencyFilterTrueColor;
 import org.cmc.sanselan.icc.IccProfileParser;
 import org.cmc.sanselan.util.Debug;
+import org.cmc.sanselan.util.IOUtils;
 
 public class PngImageParser extends ImageParser implements PngConstants
 {
@@ -318,15 +319,15 @@ public class PngImageParser extends ImageParser implements PngConstants
 		//		                       followed by an alpha sample.
 		switch (colorType)
 		{
-			case 0 :
+			case COLOR_TYPE_GREYSCALE :
 				return true;
-			case 2 :
+			case COLOR_TYPE_TRUE_COLOR :
 				return false;
-			case 3 :
+			case COLOR_TYPE_INDEXED_COLOR :
 				return false;
-			case 4 :
+			case COLOR_TYPE_GREYSCALE_WITH_ALPHA :
 				return true;
-			case 6 :
+			case COLOR_TYPE_TRUE_COLOR_WITH_ALPHA :
 				return false;
 		}
 
@@ -362,15 +363,15 @@ public class PngImageParser extends ImageParser implements PngConstants
 		//		                       followed by an alpha sample.
 		switch (colorType)
 		{
-			case 0 :
+			case COLOR_TYPE_GREYSCALE :
 				return 1;
-			case 2 :
+			case COLOR_TYPE_TRUE_COLOR :
 				return 3;
-			case 3 :
+			case COLOR_TYPE_INDEXED_COLOR :
 				return 1; // is this accurate ?  how may bits per index?
-			case 4 :
+			case COLOR_TYPE_GREYSCALE_WITH_ALPHA :
 				return 2;
-			case 6 :
+			case COLOR_TYPE_TRUE_COLOR_WITH_ALPHA :
 				return 4;
 		}
 
@@ -397,13 +398,13 @@ public class PngImageParser extends ImageParser implements PngConstants
 	{
 		switch (ColorType)
 		{
-			case 0 : //       1,2,4,8,16  Each pixel is a grayscale sample.
-			case 2 : //     8,16        Each pixel is an R,G,B triple.
-			case 3 : //     1,2,4,8     Each pixel is a palette index;
+			case COLOR_TYPE_GREYSCALE : //       1,2,4,8,16  Each pixel is a grayscale sample.
+			case COLOR_TYPE_TRUE_COLOR : //     8,16        Each pixel is an R,G,B triple.
+			case COLOR_TYPE_INDEXED_COLOR : //     1,2,4,8     Each pixel is a palette index;
 				return false;
-			case 4 : //     8,16        Each pixel is a grayscale sample,
+			case COLOR_TYPE_GREYSCALE_WITH_ALPHA : //     8,16        Each pixel is a grayscale sample,
 				//					                       followed by an alpha sample.
-			case 6 : //    8,16        Each pixel is an R,G,B triple,
+			case COLOR_TYPE_TRUE_COLOR_WITH_ALPHA : //    8,16        Each pixel is an R,G,B triple,
 				//					                       followed by an alpha sample.
 				return true;
 			default :
@@ -416,16 +417,16 @@ public class PngImageParser extends ImageParser implements PngConstants
 	{
 		switch (ColorType)
 		{
-			case 0 : //       1,2,4,8,16  Each pixel is a grayscale sample.
+			case COLOR_TYPE_GREYSCALE : //       1,2,4,8,16  Each pixel is a grayscale sample.
 				return "grayscale";
-			case 2 : //     8,16        Each pixel is an R,G,B triple.
+			case COLOR_TYPE_TRUE_COLOR : //     8,16        Each pixel is an R,G,B triple.
 				return "rgb";
-			case 3 : //     1,2,4,8     Each pixel is a palette index;
+			case COLOR_TYPE_INDEXED_COLOR : //     1,2,4,8     Each pixel is a palette index;
 				return "indexed rgb";
-			case 4 : //     8,16        Each pixel is a grayscale sample,
+			case COLOR_TYPE_GREYSCALE_WITH_ALPHA : //     8,16        Each pixel is a grayscale sample,
 				//					                       followed by an alpha sample.
 				return "grayscale w/ alpha";
-			case 6 : //    8,16        Each pixel is an R,G,B triple,
+			case COLOR_TYPE_TRUE_COLOR_WITH_ALPHA : //    8,16        Each pixel is an R,G,B triple,
 				//					                       followed by an alpha sample.
 				return "RGB w/ alpha";
 			default :
@@ -444,14 +445,14 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 		switch (ColorType)
 		{
-			case 0 : //       1,2,4,8,16  Each pixel is a grayscale sample.
+			case COLOR_TYPE_GREYSCALE : //       1,2,4,8,16  Each pixel is a grayscale sample.
 				return new TransparencyFilterGrayscale(pngChunktRNS.bytes);
-			case 2 : //     8,16        Each pixel is an R,G,B triple.
+			case COLOR_TYPE_TRUE_COLOR : //     8,16        Each pixel is an R,G,B triple.
 				return new TransparencyFilterTrueColor(pngChunktRNS.bytes);
-			case 3 : //     1,2,4,8     Each pixel is a palette index;
+			case COLOR_TYPE_INDEXED_COLOR : //     1,2,4,8     Each pixel is a palette index;
 				return new TransparencyFilterIndexedColor(pngChunktRNS.bytes);
-			case 4 : //     8,16        Each pixel is a grayscale sample,
-			case 6 : //    8,16        Each pixel is an R,G,B triple,
+			case COLOR_TYPE_GREYSCALE_WITH_ALPHA : //     8,16        Each pixel is a grayscale sample,
+			case COLOR_TYPE_TRUE_COLOR_WITH_ALPHA : //    8,16        Each pixel is an R,G,B triple,
 			default :
 				throw new ImageReadException(
 						"Simple Transparency not compatible with ColorType: "
@@ -580,14 +581,14 @@ public class PngImageParser extends ImageParser implements PngConstants
 			int ColorType;
 			switch (pngChunkIHDR.colorType)
 			{
-				case 0 : //       1,2,4,8,16  Each pixel is a grayscale sample.
-				case 4 : //     8,16        Each pixel is a grayscale sample,
+				case COLOR_TYPE_GREYSCALE : //       1,2,4,8,16  Each pixel is a grayscale sample.
+				case COLOR_TYPE_GREYSCALE_WITH_ALPHA : //     8,16        Each pixel is a grayscale sample,
 					//					                       followed by an alpha sample.
 					ColorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
 					break;
-				case 2 : //     8,16        Each pixel is an R,G,B triple.
-				case 3 : //     1,2,4,8     Each pixel is a palette index;
-				case 6 : //    8,16        Each pixel is an R,G,B triple,
+				case COLOR_TYPE_TRUE_COLOR : //     8,16        Each pixel is an R,G,B triple.
+				case COLOR_TYPE_INDEXED_COLOR : //     1,2,4,8     Each pixel is a palette index;
+				case COLOR_TYPE_TRUE_COLOR_WITH_ALPHA : //    8,16        Each pixel is an R,G,B triple,
 					//					                       followed by an alpha sample.
 					ColorType = ImageInfo.COLOR_TYPE_RGB;
 					break;
@@ -720,7 +721,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 			//			System.out.println("color_type: " + color_type);
 			//			System.out.println("BitDepth: " + BitDepth);
 
-			int transfer_type;
+//			int transfer_type;
 			//			int BytesPerSample;
 			int bitsPerSample = bitDepth;
 
@@ -728,7 +729,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 				throw new ImageReadException("PNG: unknown FilterMethod: "
 						+ pngChunkIHDR.filterMethod);
 
-			transfer_type = DataBuffer.TYPE_BYTE;
+//			transfer_type = DataBuffer.TYPE_BYTE;
 			//			switch (BitDepth)
 			//			{
 			//				case 1 :
@@ -822,36 +823,37 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 			//			cm = ColorModel.getRGBdefault();
 			//
-			
-			int bitsPerPixel = bitsPerSample * samplesPerPixel;
-			Debug.debug("bitsPerSample", bitsPerSample);
-			Debug.debug("samplesPerPixel", samplesPerPixel);
 
-			
-			//
-			//						WritableRaster raster = cm.createCompatibleWritableRaster(width,
-			//					height);
-			//
-			//						boolean premult = cm.isAlphaPremultiplied();
-			//
-			//						BufferedImage result = new BufferedImage(cm, raster, premult, null);
+			int bitsPerPixel = bitsPerSample * samplesPerPixel;
+//			Debug.debug("bitsPerSample", bitsPerSample);
+//			Debug.debug("samplesPerPixel", samplesPerPixel);
+
+			boolean hasAlpha = colorType == COLOR_TYPE_GREYSCALE_WITH_ALPHA
+					|| colorType == COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
+
 			BufferedImage result;
 			if (isGrayscale)
 				result = getBufferedImageFactory(params)
-						.getGrayscaleBufferedImage(width, height);
+						.getGrayscaleBufferedImage(width, height, hasAlpha);
 			else
 				result = getBufferedImageFactory(params).getColorBufferedImage(
-						width, height);
+						width, height, hasAlpha);
 
 			ByteArrayInputStream bais = new ByteArrayInputStream(compressed);
 			InflaterInputStream iis = new InflaterInputStream(bais);
+
+			byte bytes[] = IOUtils.getInputStreamBytes(iis);
+
+			bais = new ByteArrayInputStream(compressed);
+			iis = new InflaterInputStream(bais);
+
 			//			ZInputStream iis = new ZInputStream(bais);
 			//			ByteArrayInputStream iis = new ByteArrayInputStream(uncompressed);
 
-			int bitsPerScanLine = bitsPerPixel * width;
+//			int bitsPerScanLine = bitsPerPixel * width;
 
-						Debug.debug("bitsPerScanLine", bitsPerScanLine);
-						Debug.debug("bitsPerPixel", bitsPerPixel);
+//			Debug.debug("bitsPerScanLine", bitsPerScanLine);
+//			Debug.debug("bitsPerPixel", bitsPerPixel);
 
 			ScanExpediter scanExpediter;
 

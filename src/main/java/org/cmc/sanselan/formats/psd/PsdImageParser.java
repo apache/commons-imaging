@@ -706,8 +706,9 @@ public class PsdImageParser extends ImageParser
 
 		//		transfer_type = DataBuffer.TYPE_BYTE;
 
+		boolean hasAlpha = false;
 		BufferedImage result = getBufferedImageFactory(params)
-				.getColorBufferedImage(width, height);
+				.getColorBufferedImage(width, height, hasAlpha);
 
 		DataParser dataParser;
 		switch (imageContents.header.Mode)
