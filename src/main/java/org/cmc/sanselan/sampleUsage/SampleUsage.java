@@ -71,19 +71,19 @@ public class SampleUsage
 			Sanselan.writeImage(image, os, format, optional_params);
 
 			// <b>get the image's embedded ICC Profile, if it has one. </b>
-			byte icc_profile_bytes[] = Sanselan.getICCProfileBytes(imageBytes);
+			byte iccProfileBytes[] = Sanselan.getICCProfileBytes(imageBytes);
 
-			ICC_Profile icc_profile = Sanselan.getICCProfile(imageBytes);
+			ICC_Profile iccProfile = Sanselan.getICCProfile(imageBytes);
 
 			// <b>get the image's width and height. </b>
 			Dimension d = Sanselan.getImageSize(imageBytes);
 
 			// <b>get all of the image's info (ie. bits per pixel, size, transparency, etc.) </b>
-			ImageInfo image_info = Sanselan.getImageInfo(imageBytes);
+			ImageInfo imageInfo = Sanselan.getImageInfo(imageBytes);
 
-			if (image_info.getColorType() == ImageInfo.COLOR_TYPE_GRAYSCALE)
+			if (imageInfo.getColorType() == ImageInfo.COLOR_TYPE_GRAYSCALE)
 				System.out.println("Grayscale image.");
-			if (image_info.getHeight() > 1000)
+			if (imageInfo.getHeight() > 1000)
 				System.out.println("Large image.");
 
 			// <b>try to guess the image's format. </b>
@@ -98,7 +98,7 @@ public class SampleUsage
 			Sanselan.dumpImageFile(imageBytes);
 
 			// <b>get a summary of format errors. </b>
-			FormatCompliance format_compliance = Sanselan
+			FormatCompliance formatCompliance = Sanselan
 					.getFormatCompliance(imageBytes);
 
 		}
