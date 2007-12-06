@@ -24,7 +24,6 @@ import java.awt.image.Raster;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -34,7 +33,6 @@ import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageParser;
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.util.Debug;
@@ -496,7 +494,7 @@ public class IcoImageParser extends ImageParser
 
 		return result;
 	}
-	
+
 
 	public Vector getAllBufferedImages(ByteSource byteSource)
 			throws ImageReadException, IOException

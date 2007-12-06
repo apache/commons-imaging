@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.sanselan.common.BinaryConstants;
-import org.apache.sanselan.common.BinaryFileParser;
 
 public class MyBitInputStream extends InputStream implements BinaryConstants
 {
@@ -84,7 +83,7 @@ public class MyBitInputStream extends InputStream implements BinaryConstants
 		{
 			sample = sampleMask & (bitCache >> (bitsInCache - SampleBits));
 		}
-		else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so read from right 
+		else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so read from right
 		{
 			sample = sampleMask & bitCache;
 			bitCache >>= SampleBits;

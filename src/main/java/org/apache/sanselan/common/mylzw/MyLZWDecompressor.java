@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.sanselan.util.Debug;
-
 public final class MyLZWDecompressor
 {
 	private static final int MAX_TABLE_SIZE = 1 << 12;
@@ -164,7 +162,7 @@ public final class MyLZWDecompressor
 				writeToResult(baos, stringFromCode(code));
 
 				oldCode = code;
-			} // end of ClearCode case 
+			} // end of ClearCode case
 			else
 			{
 				if (isInTable(code))
@@ -183,11 +181,11 @@ public final class MyLZWDecompressor
 					addStringToTable(OutString);
 					oldCode = code;
 				}
-			} // end of not-ClearCode case 
+			} // end of not-ClearCode case
 
 			if (written >= expected_length)
 				break;
-		} // end of while loop 
+		} // end of while loop
 
 		byte result[] = baos.toByteArray();
 

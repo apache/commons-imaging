@@ -20,7 +20,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
 
 public class MyLZWCompressor
 {
@@ -224,8 +223,6 @@ public class MyLZWCompressor
 
 		for (int i = 0; i < bytes.length; i++)
 		{
-			byte K = bytes[i];
-
 			if (isInTable(bytes, w_start, w_length + 1))
 			{
 				w_length++;
