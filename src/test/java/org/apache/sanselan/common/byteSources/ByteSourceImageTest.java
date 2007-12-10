@@ -157,8 +157,8 @@ public class ByteSourceImageTest extends ByteSourceTest
 				continue;
 			if (method.getName().equals("getClass"))
 				continue;
-			if (method.getGenericParameterTypes().length > 0)
-				continue;
+			//if (method.getGenericParameterTypes().length > 0)
+			//	continue;
 
 			Object valueFile = method.invoke(imageInfoFile, null);
 			Object valueBytes = method.invoke(imageInfoBytes, null);
