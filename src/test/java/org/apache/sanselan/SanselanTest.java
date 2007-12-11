@@ -62,6 +62,8 @@ public abstract class SanselanTest extends TestCase
 		File dataFolder = new File(testFolder, "data");
 		File imagesFolder = new File(dataFolder, "images");
 
+		assertTrue(imagesFolder.exists());
+		
 		final List result = new ArrayList();
 
 		FSTraversal.Visitor visitor = new FSTraversal.Visitor()
@@ -70,7 +72,7 @@ public abstract class SanselanTest extends TestCase
 			{
 				if (Sanselan.hasImageFileExtension(file))
 					result.add(file);
-				return false;
+				return true;
 			}
 		};
 		new FSTraversal().traverseFiles(imagesFolder, visitor);
@@ -81,8 +83,9 @@ public abstract class SanselanTest extends TestCase
 	protected File getTestImage()
 	{
 		List images = getAllTestImages();
-		if(images.size()<1)
-			return null;
+
+		assertTrue(images.size()>0);
+
 		return (File) images.get(0);
 	}
 }
