@@ -797,7 +797,7 @@ public class Sanselan implements SanselanConstants
 			throws ImageReadException, IOException
 	{
 		String filename = null;
-		if (params.containsKey(PARAM_KEY_FILENAME))
+		if (params != null && params.containsKey(PARAM_KEY_FILENAME))
 			filename = (String) params.get(PARAM_KEY_FILENAME);
 		return getBufferedImage(new ByteSourceInputStream(is, filename), params);
 	}
