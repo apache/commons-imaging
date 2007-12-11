@@ -941,7 +941,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			if (o instanceof Number)
 			{
 				int value = ((Number) o).intValue();
-				System.out.println(tag.name + ": " + value);
+				if (debug) {
+	                                System.out.println(tag.name + ": " + value);
+				}
 				return value;
 			}
 		}
