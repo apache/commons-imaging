@@ -2,7 +2,7 @@
 Welcome to Apache Sanselan  <http://sanselan.apache.org/>
 =============================================================
 
-License (see also LICENSE.txt)
+License (see also LICENSE)
 ==============================
 
 Collective work: Copyright 2007 The Apache Software Foundation.
