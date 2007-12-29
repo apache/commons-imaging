@@ -21,7 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
 
@@ -278,7 +278,7 @@ public class PngWriter implements PngConstants
 			throws ImageWriteException, IOException
 	{
 		// make copy of params; we'll clear keys as we consume them.
-		params = new Hashtable(params);
+		params = new HashMap(params);
 
 		// clear format key.
 		if (params.containsKey(PARAM_KEY_FORMAT))

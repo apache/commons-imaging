@@ -16,13 +16,13 @@
  */
 package org.apache.sanselan.common;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public interface IImageMetadata
 {
 	public String toString(String prefix);
 
-	public Vector getItems();
+	public ArrayList getItems();
 
 	public interface IImageMetadataItem
 	{

@@ -19,13 +19,13 @@ package org.apache.sanselan;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class FormatCompliance
 {
 	private final boolean failOnError;
 	private final String description;
-	private final Vector comments = new Vector();
+	private final ArrayList comments = new ArrayList();
 
 	public FormatCompliance(String description)
 	{

@@ -23,7 +23,7 @@
 //import java.io.InputStream;
 //import java.io.PrintWriter;
 //import java.util.Map;
-//import java.util.Vector;
+//import java.util.ArrayList;
 //
 //import org.apache.sanselan.ImageFormat;
 //import org.apache.sanselan.ImageInfo;
@@ -197,7 +197,7 @@
 //		}
 //		String FormatDetails;
 //		int BitsPerPixel;
-//		Vector Comments;
+//		ArrayList Comments;
 //		ImageFormat Format = ImageFormat.IMAGE_FORMAT_TGA;
 //		String FormatName = Format.name;
 //		String MimeType = "image/tga";

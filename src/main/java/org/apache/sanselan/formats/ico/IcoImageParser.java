@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageInfo;
@@ -496,10 +496,10 @@ public class IcoImageParser extends ImageParser
 	}
 
 
-	public Vector getAllBufferedImages(ByteSource byteSource)
+	public ArrayList getAllBufferedImages(ByteSource byteSource)
 			throws ImageReadException, IOException
 	{
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 		ImageContents contents = readImage(byteSource);
 
 		FileHeader fileHeader = contents.fileHeader;

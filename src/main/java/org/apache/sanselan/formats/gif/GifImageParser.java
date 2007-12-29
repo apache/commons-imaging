@@ -25,9 +25,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.FormatCompliance;
 import org.apache.sanselan.ImageFormat;
@@ -209,7 +209,7 @@ public class GifImageParser extends ImageParser
 			byte first[]) throws ImageReadException, IOException
 	{
 		byte bytes[] = null;
-		Vector subblocks = new Vector();
+		ArrayList subblocks = new ArrayList();
 
 		if (first != null)
 			subblocks.add(first);
@@ -231,11 +231,11 @@ public class GifImageParser extends ImageParser
 	private final static int PLAIN_TEXT_EXTENSION = 0x01;
 	private final static int TERMINATOR_BYTE = 0x3b;
 
-	private Vector readBlocks(GIFHeaderInfo ghi, InputStream is,
+	private ArrayList readBlocks(GIFHeaderInfo ghi, InputStream is,
 			boolean stop_before_image_data, FormatCompliance formatCompliance)
 			throws ImageReadException, IOException
 	{
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 
 		while (true)
 		{
@@ -467,7 +467,7 @@ public class GifImageParser extends ImageParser
 		}
 	}
 
-	private GIFBlock findBlock(Vector v, int code)
+	private GIFBlock findBlock(ArrayList v, int code)
 	{
 		for (int i = 0; i < v.size(); i++)
 		{
@@ -502,7 +502,7 @@ public class GifImageParser extends ImageParser
 				globalColorTable = readColorTable(is,
 						ghi.sizeOfGlobalColorTable, formatCompliance);
 
-			Vector blocks = readBlocks(ghi, is, stop_before_image_data,
+			ArrayList blocks = readBlocks(ghi, is, stop_before_image_data,
 					formatCompliance);
 
 			ImageContents result = new ImageContents(ghi, globalColorTable,
@@ -559,9 +559,9 @@ public class GifImageParser extends ImageParser
 		return null;
 	}
 
-	private Vector getComments(Vector v) throws ImageReadException, IOException
+	private ArrayList getComments(ArrayList v) throws ImageReadException, IOException
 	{
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 		int code = 0x21fe;
 
 		for (int i = 0; i < v.size(); i++)
@@ -600,7 +600,7 @@ public class GifImageParser extends ImageParser
 		int Height = bhi.logicalScreenHeight;
 		int Width = bhi.logicalScreenWidth;
 
-		Vector Comments;
+		ArrayList Comments;
 
 		Comments = getComments(blocks.blocks);
 
@@ -844,7 +844,7 @@ public class GifImageParser extends ImageParser
 			throws ImageWriteException, IOException
 	{
 		// make copy of params; we'll clear keys as we consume them.
-		params = new Hashtable(params);
+		params = new HashMap(params);
 
 		// clear format key.
 		if (params.containsKey(PARAM_KEY_FORMAT))

@@ -16,26 +16,27 @@
  */
 package org.apache.sanselan.formats.tiff;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Vector;
 
 import org.apache.sanselan.ImageReadException;
+import org.apache.sanselan.formats.tiff.constants.TagInfo2;
 import org.apache.sanselan.util.Debug;
 
 public class TiffContents
 {
 	public final TiffHeader header;
-	public final Vector directories;
+	public final ArrayList directories;
 
-	public TiffContents(TiffHeader tiffHeader, Vector directories)
+	public TiffContents(TiffHeader tiffHeader, ArrayList directories)
 	{
 		this.header = tiffHeader;
 		this.directories = directories;
 	}
 
-	public Vector getElements() throws ImageReadException
+	public ArrayList getElements() throws ImageReadException
 	{
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 
 		result.add(header);
 
@@ -45,7 +46,7 @@ public class TiffContents
 
 			result.add(directory);
 
-			Vector fields = directory.entries;
+			ArrayList fields = directory.entries;
 			for (int j = 0; j < fields.size(); j++)
 			{
 				TiffField field = (TiffField) fields.get(j);
@@ -63,7 +64,7 @@ public class TiffContents
 		return result;
 	}
 
-	public TiffField findField(TagInfo tag)
+	public TiffField findField(TagInfo2 tag)
 	{
 		for (int i = 0; i < directories.size(); i++)
 		{
@@ -79,7 +80,7 @@ public class TiffContents
 
 	public void dissect(boolean verbose) throws ImageReadException
 	{
-		Vector elements = getElements();
+		ArrayList elements = getElements();
 
 		Collections.sort(elements, TiffElement.COMPARATOR);
 

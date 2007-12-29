@@ -19,6 +19,10 @@ package org.apache.sanselan.formats.jpeg;
 public interface JpegConstants
 {
 
+	public static final byte JFIF0_SIGNATURE[] = new byte[]{
+			(byte) 'J', (byte) 'F', (byte) 'I', (byte) 'F', (byte) 0,
+	};
+
 	public static final byte ExifIdentifierCode[] = {
 			0xff & 'E', 0xff & 'x', 0xff & 'i', 0xff & 'f',
 	};
@@ -59,6 +63,16 @@ public interface JpegConstants
 	public static final int SOF13Marker = 0xFFc0 + 0xd;
 	public static final int SOF14Marker = 0xFFc0 + 0xe;
 	public static final int SOF15Marker = 0xFFc0 + 0xf;
+
+	public static final int MARKERS[] = {
+			SOS_Marker, JPEG_APP0, JPEG_APP0_Marker, JPEG_APP1_Marker,
+			JPEG_APP2_Marker, JPEG_APP13_Marker, JPEG_APP14_Marker,
+			JPEG_APP15_Marker, JFIFMarker, SOF0Marker, SOF1Marker, SOF2Marker,
+			SOF3Marker, SOF4Marker, SOF5Marker, SOF6Marker, SOF7Marker,
+			SOF8Marker, SOF9Marker, SOF10Marker, SOF11Marker, SOF12Marker,
+			SOF13Marker, SOF14Marker, SOF15Marker,
+	};
+
 
 	public static final byte icc_profile_label[] = {
 			0x49, 0x43, 0x43, 0x5F, 0x50, 0x52, 0x4F, 0x46, 0x49, 0x4C, 0x45,

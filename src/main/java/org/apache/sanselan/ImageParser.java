@@ -24,7 +24,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.common.BinaryFileParser;
 import org.apache.sanselan.common.IBufferedImageFactory;
@@ -140,25 +140,25 @@ public abstract class ImageParser extends BinaryFileParser
 		return getFormatCompliance(new ByteSourceFile(file));
 	}
 
-	public Vector getAllBufferedImages(ByteSource byteSource)
+	public ArrayList getAllBufferedImages(ByteSource byteSource)
 			throws ImageReadException, IOException
 	{
 		BufferedImage bi = getBufferedImage(byteSource, null);
 
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 
 		result.add(bi);
 
 		return result;
 	}
 
-	public final Vector getAllBufferedImages(byte bytes[])
+	public final ArrayList getAllBufferedImages(byte bytes[])
 			throws ImageReadException, IOException
 	{
 		return getAllBufferedImages(new ByteSourceArray(bytes));
 	}
 
-	public final Vector getAllBufferedImages(File file)
+	public final ArrayList getAllBufferedImages(File file)
 			throws ImageReadException, IOException
 	{
 		if (!canAcceptExtension(file))
@@ -171,7 +171,7 @@ public abstract class ImageParser extends BinaryFileParser
 //			String dstRoot, ImageParser encoder) throws ImageReadException,
 //			IOException, ImageWriteException
 //	{
-//		Vector v = getAllBufferedImages(byteSource);
+//		ArrayList v = getAllBufferedImages(byteSource);
 //
 //		if (v == null)
 //			return false;

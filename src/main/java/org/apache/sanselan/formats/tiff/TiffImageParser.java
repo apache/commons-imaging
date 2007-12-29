@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.Vector;
 
 import org.apache.sanselan.FormatCompliance;
 import org.apache.sanselan.ImageFormat;
@@ -37,6 +37,8 @@ import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceArray;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
+import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.datareaders.DataReader;
 import org.apache.sanselan.formats.tiff.datareaders.DataReaderStrips;
 import org.apache.sanselan.formats.tiff.datareaders.DataReaderTiled;
@@ -55,7 +57,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 {
 	public TiffImageParser()
 	{
-		//		setDebug(true);
+		//        setDebug(true);
 	}
 
 	public String getName()
@@ -131,13 +133,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			int offset, int tags[], int maxEntriesToMatch)
 			throws ImageReadException, IOException
 	{
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 
 		int entryCount = read2Bytes("DirectoryEntryCount", is,
 				"Not a Valid TIFF File");
 
-		//		Debug.debug();
-		//		Debug.debug("readDirectory entryCount", entryCount);
+		//        Debug.debug();
+		//        Debug.debug("readDirectory entryCount", entryCount);
 
 		for (int i = 0; i < entryCount; i++)
 		{
@@ -152,12 +154,12 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 			if (keepField(tag, tags))
 			{
-				TiffField entry = new TiffField(tag, type, length, valueOffset,
+				TiffField entry = new TiffField(tag, dirType, type, length, valueOffset,
 						valueOffsetBytes, getByteOrder());
 				result.add(entry);
 
-				//				Debug.debug("read field tag", tag + ", 0x"
-				//						+ Integer.toHexString(tag));
+				//                Debug.debug("read field tag", tag + ", 0x"
+				//                        + Integer.toHexString(tag));
 
 				if (debug)
 					for (int j = 0; j < 4; j++)
@@ -213,7 +215,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			}
 		}
 
-		Vector directories = new Vector();
+		ArrayList directories = new ArrayList();
 
 		int offset = tiffHeader.offsetToFirstIFD;
 		for (int count = 0; (offset > 0)
@@ -255,7 +257,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		try
 		{
 			is = byteSource.getInputStream();
-			//			Debug.debug("readSingleDirectory offset", offset);
+			//            Debug.debug("readSingleDirectory offset", offset);
 			if (offset > 0)
 				is.skip(offset);
 
@@ -292,14 +294,14 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		if (contents == null)
 			throw new ImageReadException("TIFF missing contents");
 
-		Vector directories = contents.directories;
+		ArrayList directories = contents.directories;
 
 		if ((directories == null) || (directories.size() < 1))
 			return null;
-		//			throw new ImageReadException("TIFF missing directories");
+		//            throw new ImageReadException("TIFF missing directories");
 
 		TiffDirectory directory = (TiffDirectory) directories.get(0);
-		Vector entries = directory.entries;
+		ArrayList entries = directory.entries;
 
 		if ((entries == null) || (entries.size() != 1))
 			throw new ImageReadException("TIFF missing entries");
@@ -310,14 +312,14 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 	}
 
-	private TiffField findField(Vector directories, int tag)
+	private TiffField findField(ArrayList directories, int tag)
 			throws ImageReadException, IOException
 	{
 		if ((directories == null) || (directories.size() < 1))
 			throw new ImageReadException("TIFF missing directories");
 
 		TiffDirectory directory = (TiffDirectory) directories.get(0);
-		Vector entries = directory.entries;
+		ArrayList entries = directory.entries;
 
 		if ((entries == null) || (entries.size() < 1))
 			throw new ImageReadException("TIFF missing entries");
@@ -332,7 +334,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return null;
 	}
 
-	private TiffField findField(Vector entries, TagInfo tag)
+	private TiffField findField(ArrayList entries, TagInfo2 tag)
 	{
 		if (entries == null)
 			return null;
@@ -351,7 +353,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throws ImageReadException, IOException
 	{
 		int fieldTypes[] = new int[]{
-				TIFF_TAG_ImageWidth.tag, TIFF_TAG_ImageLength.tag,
+				TIFF_TAG_IMAGE_WIDTH.tag, TIFF_TAG_IMAGE_LENGTH.tag,
 		};
 
 		TiffContents contents = readDirectories(byteSource, fieldTypes, -1, 2,
@@ -359,10 +361,11 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		if (contents == null)
 			throw new ImageReadException("TIFF missing contents");
 
-		Vector directories = contents.directories;
+		ArrayList directories = contents.directories;
 
-		TiffField widthField = findField(directories, TIFF_TAG_ImageWidth.tag);
-		TiffField heightField = findField(directories, TIFF_TAG_ImageLength.tag);
+		TiffField widthField = findField(directories, TIFF_TAG_IMAGE_WIDTH.tag);
+		TiffField heightField = findField(directories,
+				TIFF_TAG_IMAGE_LENGTH.tag);
 
 		if ((widthField == null) || (heightField == null))
 			throw new ImageReadException("TIFF image has invalid size.");
@@ -420,7 +423,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		if (contents == null)
 			throw new ImageReadException("TIFF missing contents");
 
-		Vector directories = contents.directories;
+		ArrayList directories = contents.directories;
 
 		TiffImageMetadata result = new TiffImageMetadata(contents);
 
@@ -445,9 +448,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				}
 				if (dir.hasJpegImageData())
 				{
-					//										BufferedImage thumbnail = getBufferedImage(byteSource, dir,
-					//												null);
-					//										metadataDirectory.setThumbnail(thumbnail);
+					//                                        BufferedImage thumbnail = getBufferedImage(byteSource, dir,
+					//                                                null);
+					//                                        metadataDirectory.setThumbnail(thumbnail);
 
 					byte rawJpegImageData[] = getJpegRawImageData(byteSource,
 							dir);
@@ -455,37 +458,37 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				}
 			}
 
-			Vector entries = dir.getDirectoryEntrys();
+			ArrayList entries = dir.getDirectoryEntrys();
 
 			for (int j = 0; j < entries.size(); j++)
 			{
 				TiffField entry = (TiffField) entries.get(j);
 
-				if (entry.tag == TiffConstants.TIFF_TAG_Exif_IFD_Pointer.tag
-						|| entry.tag == TiffConstants.TIFF_TAG_GPSInfo_IFD_Pointer.tag
-						|| entry.tag == TiffConstants.TIFF_TAG_Interoperability_IFD_Pointer.tag)
+				if (entry.tag == TiffConstants.EXIF_TAG_EXIF_OFFSET.tag
+						|| entry.tag == TiffConstants.EXIF_TAG_GPSINFO.tag
+						|| entry.tag == TiffConstants.EXIF_TAG_INTEROP_OFFSET.tag)
 				{
 					int offset = ((Number) entry.getValue()).intValue();
 					int dirType;
-					if (entry.tag == TiffConstants.TIFF_TAG_Exif_IFD_Pointer.tag)
+					if (entry.tag == TiffConstants.EXIF_TAG_EXIF_OFFSET.tag)
 						dirType = TiffDirectory.DIRECTORY_TYPE_EXIF;
-					else if (entry.tag == TiffConstants.TIFF_TAG_GPSInfo_IFD_Pointer.tag)
+					else if (entry.tag == TiffConstants.EXIF_TAG_GPSINFO.tag)
 						dirType = TiffDirectory.DIRECTORY_TYPE_GPS;
-					else if (entry.tag == TiffConstants.TIFF_TAG_Interoperability_IFD_Pointer.tag)
+					else if (entry.tag == TiffConstants.EXIF_TAG_INTEROP_OFFSET.tag)
 						dirType = TiffDirectory.DIRECTORY_TYPE_INTEROPERABILITY;
 					else
 						throw new ImageReadException(
 								"Unknown subdirectory type.");
 
-					//					Debug.debug();
-					//					Debug.debug("extra dir child of ", dir.description());
-					//					Debug.debug("extra dir offset", offset);
-					//					Debug.debug("extra dir type", TiffDirectory.description(dirType));
+					//                    Debug.debug();
+					//                    Debug.debug("extra dir child of ", dir.description());
+					//                    Debug.debug("extra dir offset", offset);
+					//                    Debug.debug("extra dir type", TiffDirectory.description(dirType));
 					TiffDirectory extraDir = readSingleDirectory(byteSource,
 							dirType, offset, getDefaultFormatCompliance());
-					//					Debug.debug("extraDir", extraDir);
-					//					directories.add(extraDir);
-					directories.insertElementAt(extraDir, i + 1);
+					//                    Debug.debug("extraDir", extraDir);
+					//                    directories.add(extraDir);
+					directories.add(i + 1, extraDir);
 				}
 
 				metadataDirectory.add(entry);
@@ -616,11 +619,11 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throws ImageReadException, IOException
 	{
 		int FieldTypes[] = new int[]{
-				TIFF_TAG_ImageWidth.tag, TIFF_TAG_ImageLength.tag,
-				TIFF_TAG_ResolutionUnit.tag, TIFF_TAG_XResolution.tag,
-				TIFF_TAG_YResolution.tag, TIFF_TAG_BitsPerSample.tag,
-				TIFF_TAG_ColorMap.tag, TIFF_TAG_SamplesPerPixel.tag,
-				TIFF_TAG_Compression.tag,
+				TIFF_TAG_IMAGE_WIDTH.tag, TIFF_TAG_IMAGE_LENGTH.tag,
+				TIFF_TAG_RESOLUTION_UNIT.tag, TIFF_TAG_XRESOLUTION.tag,
+				TIFF_TAG_YRESOLUTION.tag, TIFF_TAG_BITS_PER_SAMPLE.tag,
+				TIFF_TAG_COLOR_MAP.tag, TIFF_TAG_SAMPLES_PER_PIXEL.tag,
+				TIFF_TAG_COMPRESSION.tag,
 		};
 
 		TiffContents contents = readDirectories(byteSource, FieldTypes, -1, -1,
@@ -628,19 +631,19 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		if (contents == null)
 			throw new ImageReadException("TIFF missing contents");
 
-		Vector dirs = contents.directories;
+		ArrayList dirs = contents.directories;
 		if ((dirs == null) || (dirs.size() < 1))
 			throw new ImageReadException("TIFF image missing directories");
 
 		TiffDirectory directory = (TiffDirectory) dirs.get(0);
 
-		Vector entries = directory.entries;
+		ArrayList entries = directory.entries;
 
 		if (entries == null)
 			throw new ImageReadException("TIFF missing entries");
 
-		TiffField widthField = findField(entries, TIFF_TAG_ImageWidth);
-		TiffField heightField = findField(entries, TIFF_TAG_ImageLength);
+		TiffField widthField = findField(entries, TIFF_TAG_IMAGE_WIDTH);
+		TiffField heightField = findField(entries, TIFF_TAG_IMAGE_LENGTH);
 
 		if ((widthField == null) || (heightField == null))
 			throw new ImageReadException("TIFF image missing size info.");
@@ -651,7 +654,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		//-------------------
 
 		TiffField resolutionUnitField = findField(entries,
-				TIFF_TAG_ResolutionUnit);
+				TIFF_TAG_RESOLUTION_UNIT);
 		int resolutionUnit = 2; // Inch
 		if ((resolutionUnitField != null)
 				&& (resolutionUnitField.getValue() != null))
@@ -674,8 +677,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				break;
 
 		}
-		TiffField xResolutionField = findField(entries, TIFF_TAG_XResolution);
-		TiffField yResolutionField = findField(entries, TIFF_TAG_YResolution);
+		TiffField xResolutionField = findField(entries, TIFF_TAG_XRESOLUTION);
+		TiffField yResolutionField = findField(entries, TIFF_TAG_YRESOLUTION);
 
 		int physicalWidthDpi = -1;
 		float physicalWidthInch = -1;
@@ -705,9 +708,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		//-------------------
 
 		TiffField bitsPerSampleField = findField(entries,
-				TIFF_TAG_BitsPerSample);
-//		TiffField samplesPerPixelField = findField(entries,
-//				TIFF_TAG_SamplesPerPixel);
+				TIFF_TAG_BITS_PER_SAMPLE);
+		//        TiffField samplesPerPixelField = findField(entries,
+		//                TIFF_TAG_SAMPLES_PER_PIXEL);
 
 		int bitsPerSample = -1;
 
@@ -722,7 +725,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 		//-------------------
 
-		Vector comments = new Vector();
+		ArrayList comments = new ArrayList();
 		for (int i = 0; i < entries.size(); i++)
 		{
 			TiffField field = (TiffField) entries.get(i);
@@ -743,13 +746,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 		boolean isTransparent = false; // TODO: wrong
 		boolean usesPalette = false;
-		TiffField colorMapField = findField(entries, TIFF_TAG_ColorMap);
+		TiffField colorMapField = findField(entries, TIFF_TAG_COLOR_MAP);
 		if (colorMapField != null)
 			usesPalette = true;
 
 		int colorType = ImageInfo.COLOR_TYPE_RGB;
 
-		int compression = getTagAsNumber(entries, TIFF_TAG_Compression)
+		int compression = getTagAsNumber(entries, TIFF_TAG_COMPRESSION)
 				.intValue();
 		String compressionAlgorithm;
 
@@ -815,7 +818,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			if (contents == null)
 				return false;
 
-			Vector directories = contents.directories;
+			ArrayList directories = contents.directories;
 
 			if (directories == null)
 				return false;
@@ -824,7 +827,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			{
 				TiffDirectory directory = (TiffDirectory) directories.get(d);
 
-				Vector entries = directory.entries;
+				ArrayList entries = directory.entries;
 
 				if (entries == null)
 					return false;
@@ -852,7 +855,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return true;
 	}
 
-	private Number getTagAsNumber(Vector entries, TagInfo tag)
+	private Number getTagAsNumber(ArrayList entries, TagInfo2 tag)
 			throws ImageReadException, IOException
 	{
 		TiffField entry = findField(entries, tag);
@@ -862,8 +865,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 		Object o = entry.getValue();
 
-		//		Debug.debug("getTagAsNumber:" + entry.tagInfo.name, o);
-		//		Debug.debug("getTagAsNumber:" + entry.tagInfo.name, Debug.getType(o));
+		//        Debug.debug("getTagAsNumber:" + entry.tagInfo.name, o);
+		//        Debug.debug("getTagAsNumber:" + entry.tagInfo.name, Debug.getType(o));
 
 		Number result = (Number) o;
 
@@ -874,7 +877,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	private int getTagAsValueOrArraySum(Vector entries, TagInfo tag)
+	private int getTagAsValueOrArraySum(ArrayList entries, TagInfo2 tag)
 			throws ImageReadException, IOException
 	{
 		TiffField entry = findField(entries, tag);
@@ -890,7 +893,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	private double[] getTagAsDoubleArray(Vector entries, TagInfo tag,
+	private double[] getTagAsDoubleArray(ArrayList entries, TagInfo2 tag,
 			boolean throwExceptionIfMissing) throws ImageReadException,
 			IOException
 	{
@@ -909,7 +912,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	private int[] getTagAsIntArray(Vector entries, TagInfo tag,
+	private int[] getTagAsIntArray(ArrayList entries, TagInfo2 tag,
 			boolean throwExceptionIfMissing) throws ImageReadException,
 			IOException
 	{
@@ -931,7 +934,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	private int dumpOptionalNumberTag(Vector entries, TagInfo tag)
+	private int dumpOptionalNumberTag(ArrayList entries, TagInfo2 tag)
 	{
 		TiffField entry = findField(entries, tag);
 
@@ -941,9 +944,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			if (o instanceof Number)
 			{
 				int value = ((Number) o).intValue();
-				if (debug) {
-	                                System.out.println(tag.name + ": " + value);
-				}
+				//				System.out.println(tag.name + ": " + value);
 				return value;
 			}
 		}
@@ -969,7 +970,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		if (contents == null)
 			throw new ImageReadException("TIFF missing contents");
 
-		Vector directories = contents.directories;
+		ArrayList directories = contents.directories;
 
 		if ((directories == null) || (directories.size() < 1))
 			throw new ImageReadException("TIFF missing TiffDirectories");
@@ -982,7 +983,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 	public RawTiffImageData getTiffRawImageData(ByteSource byteSource,
 			TiffDirectory directory) throws ImageReadException, IOException
 	{
-		Vector elements = directory.getTiffRawImageDataElements();
+		ArrayList elements = directory.getTiffRawImageDataElements();
 		byte result[][] = new byte[elements.size()][];
 		for (int i = 0; i < elements.size(); i++)
 		{
@@ -1009,50 +1010,50 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			TiffDirectory directory, Map params) throws ImageReadException,
 			IOException
 	{
-		Vector entries = directory.entries;
+		ArrayList entries = directory.entries;
 
 		if (entries == null)
 			throw new ImageReadException("TIFF missing entries");
 
-		//			this.setDebug(true);
+		//            this.setDebug(true);
 
-		TiffField imageWidthField = findField(entries, TIFF_TAG_ImageWidth);
+		TiffField imageWidthField = findField(entries, TIFF_TAG_IMAGE_WIDTH);
 		if (imageWidthField == null)
 			throw new ImageReadException(
-					"Tiff: Missing Tag: TIFF_TAG_ImageWidth");
-		TiffField imageLengthField = findField(entries, TIFF_TAG_ImageLength);
+					"Tiff: Missing Tag: TIFF_TAG_IMAGE_WIDTH");
+		TiffField imageLengthField = findField(entries, TIFF_TAG_IMAGE_LENGTH);
 		if (imageLengthField == null)
 			throw new ImageReadException(
-					"Tiff: Missing Tag: TIFF_TAG_ImageLength");
+					"Tiff: Missing Tag: TIFF_TAG_IMAGE_LENGTH");
 
 		int photometricInterpretation = getTagAsNumber(entries,
-				TIFF_TAG_PhotometricInterpretation).intValue();
-		int compression = getTagAsNumber(entries, TIFF_TAG_Compression)
+				TIFF_TAG_PHOTOMETRIC_INTERPRETATION).intValue();
+		int compression = getTagAsNumber(entries, TIFF_TAG_COMPRESSION)
 				.intValue();
-		int width = getTagAsNumber(entries, TIFF_TAG_ImageWidth).intValue();
-		int height = getTagAsNumber(entries, TIFF_TAG_ImageLength).intValue();
-		int samplesPerPixel = getTagAsNumber(entries, TIFF_TAG_SamplesPerPixel)
-				.intValue();
-		int bitsPerSample[] = getTagAsIntArray(entries, TIFF_TAG_BitsPerSample,
-				true);
+		int width = getTagAsNumber(entries, TIFF_TAG_IMAGE_WIDTH).intValue();
+		int height = getTagAsNumber(entries, TIFF_TAG_IMAGE_LENGTH).intValue();
+		int samplesPerPixel = getTagAsNumber(entries,
+				TIFF_TAG_SAMPLES_PER_PIXEL).intValue();
+		int bitsPerSample[] = getTagAsIntArray(entries,
+				TIFF_TAG_BITS_PER_SAMPLE, true);
 		int bitsPerPixel = getTagAsValueOrArraySum(entries,
-				TIFF_TAG_BitsPerSample);
+				TIFF_TAG_BITS_PER_SAMPLE);
 
 		int predictor;
 		{
-			dumpOptionalNumberTag(entries, TIFF_TAG_FillOrder);
-			dumpOptionalNumberTag(entries, TIFF_TAG_FreeByteCounts);
-			dumpOptionalNumberTag(entries, TIFF_TAG_FreeOffsets);
-			dumpOptionalNumberTag(entries, TIFF_TAG_Orientation);
-			dumpOptionalNumberTag(entries, TIFF_TAG_PlanarConfiguration);
-			predictor = dumpOptionalNumberTag(entries, TIFF_TAG_Predictor);
+			//			dumpOptionalNumberTag(entries, TIFF_TAG_FILL_ORDER);
+			//			dumpOptionalNumberTag(entries, TIFF_TAG_FREE_BYTE_COUNTS);
+			//			dumpOptionalNumberTag(entries, TIFF_TAG_FREE_OFFSETS);
+			//			dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
+			//			dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
+			predictor = dumpOptionalNumberTag(entries, TIFF_TAG_PREDICTOR);
 		}
 
 		if (samplesPerPixel != bitsPerSample.length)
 			throw new ImageReadException("Tiff: fSamplesPerPixel ("
 					+ samplesPerPixel + ")!=fBitsPerSample.length ("
 					+ bitsPerSample.length + ")");
-		
+
 		boolean hasAlpha = false;
 		BufferedImage result = getBufferedImageFactory(params)
 				.getColorBufferedImage(width, height, hasAlpha);
@@ -1061,7 +1062,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				entries, photometricInterpretation, bitsPerPixel,
 				bitsPerSample, predictor, samplesPerPixel, width, height);
 
-		//			this.setDebug(false);
+		//            this.setDebug(false);
 
 		DataReader dataReader = getDataReader(entries, photometricInterpreter,
 				bitsPerPixel, bitsPerSample, predictor, samplesPerPixel, width,
@@ -1074,7 +1075,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	private PhotometricInterpreter getPhotometricInterpreter(Vector entries,
+	private PhotometricInterpreter getPhotometricInterpreter(ArrayList entries,
 			int photometricInterpretation, int bitsPerPixel,
 			int bitsPerSample[], int predictor, int samplesPerPixel, int width,
 			int height) throws IOException, ImageReadException
@@ -1090,7 +1091,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 						height, invert);
 			case 3 : // Palette
 			{
-				int[] colorMap = getTagAsIntArray(entries, TIFF_TAG_ColorMap,
+				int[] colorMap = getTagAsIntArray(entries, TIFF_TAG_COLOR_MAP,
 						false);
 
 				int expected_colormap_size = 3 * (1 << bitsPerPixel);
@@ -1112,13 +1113,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			case 6 : // 
 			{
 				double[] fYCbCrCoefficients = getTagAsDoubleArray(entries,
-						TIFF_TAG_YCbCrCoefficients, false);
+						TIFF_TAG_YCBCR_COEFFICIENTS, false);
 				int[] fYCbCrPositioning = getTagAsIntArray(entries,
-						TIFF_TAG_YCbCrPositioning, false);
+						TIFF_TAG_YCBCR_POSITIONING, false);
 				int[] fYCbCrSubSampling = getTagAsIntArray(entries,
-						TIFF_TAG_YCbCrSubSampling, false);
+						TIFF_TAG_YCBCR_SUB_SAMPLING, false);
 				double[] referenceBlackWhite = getTagAsDoubleArray(entries,
-						TIFF_TAG_ReferenceBlackWhite, false);
+						TIFF_TAG_REFERENCE_BLACK_WHITE, false);
 
 				return new PhotometricInterpreterYCbCr(fYCbCrCoefficients,
 						fYCbCrPositioning, fYCbCrSubSampling,
@@ -1144,23 +1145,23 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		}
 	}
 
-	private DataReader getDataReader(Vector entries,
+	private DataReader getDataReader(ArrayList entries,
 			PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
 			int bitsPerSample[], int predictor, int samplesPerPixel, int width,
 			int height, int compression) throws IOException, ImageReadException
 	{
-		int[] tileOffsets = getTagAsIntArray(entries, TIFF_TAG_TileOffsets,
+		int[] tileOffsets = getTagAsIntArray(entries, TIFF_TAG_TILE_OFFSETS,
 				false);
 		int[] tileByteCounts = getTagAsIntArray(entries,
-				TIFF_TAG_TileByteCounts, false);
+				TIFF_TAG_TILE_BYTE_COUNTS, false);
 
-		int[] stripOffsets = getTagAsIntArray(entries, TIFF_TAG_StripOffsets,
+		int[] stripOffsets = getTagAsIntArray(entries, TIFF_TAG_STRIP_OFFSETS,
 				false);
 		int[] stripByteCounts = getTagAsIntArray(entries,
-				TIFF_TAG_StripByteCounts, false);
+				TIFF_TAG_STRIP_BYTE_COUNTS, false);
 
-		TiffField tileWidthField = findField(entries, TIFF_TAG_TileWidth);
-		TiffField tileLengthField = findField(entries, TIFF_TAG_TileLength);
+		TiffField tileWidthField = findField(entries, TIFF_TAG_TILE_WIDTH);
+		TiffField tileLengthField = findField(entries, TIFF_TAG_TILE_LENGTH);
 
 		if ((tileOffsets != null) && (tileByteCounts != null))
 		{
@@ -1169,9 +1170,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 						+ tileOffsets.length + ")!=fTileByteCounts.length ("
 						+ tileByteCounts.length + ")");
 
-			int tileWidth = getTagAsNumber(entries, TIFF_TAG_TileWidth)
+			int tileWidth = getTagAsNumber(entries, TIFF_TAG_TILE_WIDTH)
 					.intValue();
-			int tileLength = getTagAsNumber(entries, TIFF_TAG_TileLength)
+			int tileLength = getTagAsNumber(entries, TIFF_TAG_TILE_LENGTH)
 					.intValue();
 
 			return new DataReaderTiled(photometricInterpreter, tileOffsets,
@@ -1187,9 +1188,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 						+ stripOffsets.length + ")!=fStripByteCounts.length ("
 						+ stripByteCounts.length + ")");
 
-			int tileWidth = getTagAsNumber(entries, TIFF_TAG_TileWidth)
+			int tileWidth = getTagAsNumber(entries, TIFF_TAG_TILE_WIDTH)
 					.intValue();
-			int tileLength = getTagAsNumber(entries, TIFF_TAG_TileLength)
+			int tileLength = getTagAsNumber(entries, TIFF_TAG_TILE_LENGTH)
 					.intValue();
 
 			return new DataReaderTiled(photometricInterpreter, stripOffsets,
@@ -1199,7 +1200,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		}
 		else if ((stripOffsets != null) && (stripByteCounts != null))
 		{
-			int rowsPerStrip = getTagAsNumber(entries, TIFF_TAG_RowsPerStrip)
+			int rowsPerStrip = getTagAsNumber(entries, TIFF_TAG_ROWS_PER_STRIP)
 					.intValue();
 
 			if (stripOffsets.length != stripByteCounts.length)

@@ -16,12 +16,12 @@
  */
 package org.apache.sanselan.common;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class ImageMetadata implements IImageMetadata
 {
 
-	private final Vector items = new Vector();
+	private final ArrayList items = new ArrayList();
 
 	public void add(String keyword, String text)
 	{
@@ -33,9 +33,9 @@ public class ImageMetadata implements IImageMetadata
 		items.add(item);
 	}
 
-	public Vector getItems()
+	public ArrayList getItems()
 	{
-		return new Vector(items);
+		return new ArrayList(items);
 	}
 
 	protected static final String newline = System

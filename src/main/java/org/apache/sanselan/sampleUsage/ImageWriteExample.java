@@ -27,7 +27,7 @@ import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanConstants;
-import org.apache.sanselan.formats.tiff.TiffConstants;
+import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 public class ImageWriteExample
 {

@@ -24,9 +24,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.FormatCompliance;
 import org.apache.sanselan.ImageFormat;
@@ -475,7 +475,7 @@ public class BmpImageParser extends ImageParser
 		int Height = bhi.height;
 		int Width = bhi.width;
 
-		Vector Comments = new Vector();
+		ArrayList Comments = new ArrayList();
 		// TODO: comments...
 
 		int bitsPerPixel = bhi.bitsPerPixel;
@@ -589,7 +589,7 @@ public class BmpImageParser extends ImageParser
 			throws ImageWriteException, IOException
 	{
 		// make copy of params; we'll clear keys as we consume them.
-		params = new Hashtable(params);
+		params = new HashMap(params);
 
 		// clear format key.
 		if (params.containsKey(PARAM_KEY_FORMAT))

@@ -29,6 +29,12 @@ public class UnknownSegment extends GenericSegment
 		super(marker, marker_length, is);
 	}
 
+	public UnknownSegment(int marker, byte bytes[]) throws ImageReadException,
+			IOException
+	{
+		super(marker, bytes);
+	}
+
 	public String getDescription()
 	{
 		return "Unknown (" + getSegmentType() + ")";

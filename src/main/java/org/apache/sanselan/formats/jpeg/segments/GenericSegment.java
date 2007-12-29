@@ -35,6 +35,14 @@ public abstract class GenericSegment extends Segment
 				"Invalid Segment: insufficient data");
 	}
 
+	public GenericSegment(int marker, byte bytes[]) throws ImageReadException,
+			IOException
+	{
+		super(marker, bytes.length);
+
+		this.bytes = bytes;
+	}
+
 	public void dump(PrintWriter pw)
 	{
 		dump(pw, 0);

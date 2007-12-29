@@ -18,6 +18,7 @@
 package org.apache.sanselan;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public abstract class SanselanTest extends TestCase
 	{
 		super(name);
 	}
-	
+
 	public void compareByteArrays(byte a[], byte b[])
 	{
 		assertTrue(a.length == b.length);
@@ -63,7 +64,7 @@ public abstract class SanselanTest extends TestCase
 		File imagesFolder = new File(dataFolder, "images");
 
 		assertTrue(imagesFolder.exists());
-		
+
 		final List result = new ArrayList();
 
 		FSTraversal.Visitor visitor = new FSTraversal.Visitor()
@@ -79,13 +80,46 @@ public abstract class SanselanTest extends TestCase
 
 		return result;
 	}
-	
-	protected File getTestImage()
+
+	public static interface ImageFilter
+	{
+		public boolean accept(File file) throws IOException, ImageReadException;
+	}
+
+	protected File getTestImage() throws IOException, ImageReadException
+	{
+		return getTestImage(null);
+	}
+
+	protected File getTestImage(ImageFilter filter) throws IOException,
+			ImageReadException
+	{
+		List images = getTestImages(filter);
+
+		assertTrue(images.size() > 0);
+
+		return (File) images.get(0);
+	}
+
+	protected List getTestImages(ImageFilter filter) throws IOException,
+			ImageReadException
 	{
 		List images = getAllTestImages();
 
-		assertTrue(images.size()>0);
+		if (filter != null)
+		{
+			List filtered = new ArrayList();
+			for (int i = 0; i < images.size(); i++)
+			{
+				File file = (File) images.get(i);
+				if (filter.accept(file))
+					filtered.add(file);
+			}
+			images = filtered;
+		}
 
-		return (File) images.get(0);
+		assertTrue(images.size() > 0);
+
+		return images;
 	}
 }

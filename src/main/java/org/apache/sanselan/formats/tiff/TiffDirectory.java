@@ -17,23 +17,16 @@
 package org.apache.sanselan.formats.tiff;
 
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.byteSources.ByteSource;
+import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 public class TiffDirectory extends TiffElement implements TiffConstants
 //extends BinaryFileFunctions
 {
-	public static final int DIRECTORY_TYPE_UNKNOWN = -1;
-	public static final int DIRECTORY_TYPE_ROOT = 1;
-	public static final int DIRECTORY_TYPE_SUB = 2;
-	public static final int DIRECTORY_TYPE_THUMBNAIL = 3;
-	public static final int DIRECTORY_TYPE_EXIF = 4;
-	//	public static final int DIRECTORY_TYPE_SUB = 5;
-	public static final int DIRECTORY_TYPE_GPS = 6;
-	public static final int DIRECTORY_TYPE_INTEROPERABILITY = 7;
-
 	public String description()
 	{
 		return TiffDirectory.description(type);
@@ -63,7 +56,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 			result.append("\n");
 
 			entryOffset += TIFF_ENTRY_LENGTH;
-			//			entry.fillInValue(byteSource);
+			//            entry.fillInValue(byteSource);
 		}
 		return result.toString();
 	}
@@ -92,11 +85,11 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 	}
 
 	public final int type;
-	public final Vector entries;
-	//	public final int offset;
+	public final ArrayList entries;
+	//    public final int offset;
 	public final int nextDirectoryOffset;
 
-	public TiffDirectory(int type, Vector entries, final int offset,
+	public TiffDirectory(int type, ArrayList entries, final int offset,
 			int nextDirectoryOffset)
 	{
 		super(offset, TIFF_DIRECTORY_HEADER_LENGTH + entries.size()
@@ -107,9 +100,9 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 		this.nextDirectoryOffset = nextDirectoryOffset;
 	}
 
-	public Vector getDirectoryEntrys()
+	public ArrayList getDirectoryEntrys()
 	{
-		return new Vector(entries);
+		return new ArrayList(entries);
 	}
 
 	public void fillInValues(ByteSource byteSource) throws ImageReadException,
@@ -135,7 +128,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
 	public boolean hasJpegImageData()
 	{
-		if (null != findField(TIFF_TAG_JPEGInterchangeFormat))
+		if (null != findField(TIFF_TAG_JPEG_INTERCHANGE_FORMAT))
 			return true;
 
 		return false;
@@ -143,16 +136,16 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
 	public boolean hasTiffImageData()
 	{
-		if (null != findField(TIFF_TAG_TileOffsets))
+		if (null != findField(TIFF_TAG_TILE_OFFSETS))
 			return true;
 
-		if (null != findField(TIFF_TAG_StripOffsets))
+		if (null != findField(TIFF_TAG_STRIP_OFFSETS))
 			return true;
 
 		return false;
 	}
 
-	public TiffField findField(TagInfo tag)
+	public TiffField findField(TagInfo2 tag)
 	{
 		if (entries == null)
 			return null;
@@ -182,7 +175,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 		}
 	}
 
-	private Vector getRawImageDataElements(TiffField offsetsField,
+	private ArrayList getRawImageDataElements(TiffField offsetsField,
 			TiffField byteCountsField) throws ImageReadException
 	{
 		int offsets[] = offsetsField.getValueAsIntArray();
@@ -192,7 +185,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 			throw new ImageReadException("offsets.length(" + offsets.length
 					+ ") != byteCounts.length(" + byteCounts.length + ")");
 
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 		for (int i = 0; i < offsets.length; i++)
 		{
 			result.add(new ImageDataElement(offsets[i], byteCounts[i]));
@@ -200,12 +193,12 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 		return result;
 	}
 
-	public Vector getTiffRawImageDataElements() throws ImageReadException
+	public ArrayList getTiffRawImageDataElements() throws ImageReadException
 	{
-		TiffField tileOffsets = findField(TIFF_TAG_TileOffsets);
-		TiffField tileByteCounts = findField(TIFF_TAG_TileByteCounts);
-		TiffField stripOffsets = findField(TIFF_TAG_StripOffsets);
-		TiffField stripByteCounts = findField(TIFF_TAG_StripByteCounts);
+		TiffField tileOffsets = findField(TIFF_TAG_TILE_OFFSETS);
+		TiffField tileByteCounts = findField(TIFF_TAG_TILE_BYTE_COUNTS);
+		TiffField stripOffsets = findField(TIFF_TAG_STRIP_OFFSETS);
+		TiffField stripByteCounts = findField(TIFF_TAG_STRIP_BYTE_COUNTS);
 
 		if ((tileOffsets != null) && (tileByteCounts != null))
 		{
@@ -221,10 +214,10 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
 	public boolean imageDataInStrips() throws ImageReadException
 	{
-		TiffField tileOffsets = findField(TIFF_TAG_TileOffsets);
-		TiffField tileByteCounts = findField(TIFF_TAG_TileByteCounts);
-		TiffField stripOffsets = findField(TIFF_TAG_StripOffsets);
-		TiffField stripByteCounts = findField(TIFF_TAG_StripByteCounts);
+		TiffField tileOffsets = findField(TIFF_TAG_TILE_OFFSETS);
+		TiffField tileByteCounts = findField(TIFF_TAG_TILE_BYTE_COUNTS);
+		TiffField stripOffsets = findField(TIFF_TAG_STRIP_OFFSETS);
+		TiffField stripByteCounts = findField(TIFF_TAG_STRIP_BYTE_COUNTS);
 
 		if ((tileOffsets != null) && (tileByteCounts != null))
 			return false;
@@ -239,8 +232,8 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 	public ImageDataElement getJpegRawImageDataElement()
 			throws ImageReadException
 	{
-		TiffField jpegInterchangeFormat = findField(TIFF_TAG_JPEGInterchangeFormat);
-		TiffField jpegInterchangeFormatLength = findField(TIFF_TAG_JPEGInterchangeFormatLength);
+		TiffField jpegInterchangeFormat = findField(TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
+		TiffField jpegInterchangeFormatLength = findField(TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
 
 		if ((jpegInterchangeFormat != null)
 				&& (jpegInterchangeFormatLength != null))

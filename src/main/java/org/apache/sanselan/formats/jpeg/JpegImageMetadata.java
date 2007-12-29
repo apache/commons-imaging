@@ -17,14 +17,15 @@
 package org.apache.sanselan.formats.jpeg;
 
 import java.awt.image.BufferedImage;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.ImageMetadata;
 import org.apache.sanselan.formats.tiff.RawTiffImageData;
-import org.apache.sanselan.formats.tiff.TagInfo;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
+import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.util.Debug;
 
 public class JpegImageMetadata implements IImageMetadata
 {
@@ -52,9 +53,9 @@ public class JpegImageMetadata implements IImageMetadata
 		return photoshop;
 	}
 
-	public TiffField findEXIFValue(TagInfo tagInfo)
+	public TiffField findEXIFValue(TagInfo2 tagInfo)
 	{
-		Vector items = getItems();
+		ArrayList items = getItems();
 		for (int i = 0; i < items.size(); i++)
 		{
 			Object o = items.get(i);
@@ -72,7 +73,7 @@ public class JpegImageMetadata implements IImageMetadata
 
 	public BufferedImage getEXIFThumbnail()
 	{
-		Vector dirs = exif.getDirectories();
+		ArrayList dirs = exif.getDirectories();
 		for (int i = 0; i < dirs.size(); i++)
 		{
 			TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
@@ -88,7 +89,7 @@ public class JpegImageMetadata implements IImageMetadata
 
 	public RawTiffImageData getRawImageData()
 	{
-		Vector dirs = exif.getDirectories();
+		ArrayList dirs = exif.getDirectories();
 		for (int i = 0; i < dirs.size(); i++)
 		{
 			TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
@@ -102,9 +103,9 @@ public class JpegImageMetadata implements IImageMetadata
 		return null;
 	}
 
-	public Vector getItems()
+	public ArrayList getItems()
 	{
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 
 		if (null != exif)
 			result.addAll(exif.getItems());
@@ -153,6 +154,13 @@ public class JpegImageMetadata implements IImageMetadata
 		}
 
 		return result.toString();
+	}
+
+	
+
+	public void dump()
+	{
+		Debug.debug(this.toString());
 	}
 
 }

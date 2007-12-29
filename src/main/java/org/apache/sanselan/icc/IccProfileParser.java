@@ -228,7 +228,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants
 
 			int TagCount = read4Bytes("TagCount", is, "Not a Valid ICC Profile");
 
-			//			Vector tags = new Vector();
+			//			ArrayList tags = new ArrayList();
 			IccTag tags[] = new IccTag[TagCount];
 
 			for (int i = 0; i < TagCount; i++)

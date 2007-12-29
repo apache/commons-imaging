@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public final class Debug
 {
@@ -177,7 +177,7 @@ public final class Debug
 		if (map == null)
 			return getDebug(message + " map: " + null);
 
-		Vector keys = new Vector(map.keySet());
+		ArrayList keys = new ArrayList(map.keySet());
 		result.append(getDebug(message + " map: " + keys.size()) + newline);
 		for (int i = 0; i < keys.size(); i++)
 		{
@@ -208,7 +208,7 @@ public final class Debug
 			buffer.append(s + newline);
 	}
 
-	public static boolean compare(String prefix, Map a, Map b, Vector ignore,
+	public static boolean compare(String prefix, Map a, Map b, ArrayList ignore,
 			StringBuffer buffer)
 	{
 		if ((a == null) && (b == null))
@@ -227,8 +227,8 @@ public final class Debug
 			return false;
 		}
 
-		Vector keys_a = new Vector(a.keySet());
-		Vector keys_b = new Vector(b.keySet());
+		ArrayList keys_a = new ArrayList(a.keySet());
+		ArrayList keys_b = new ArrayList(b.keySet());
 
 		if (ignore != null)
 		{
@@ -872,7 +872,7 @@ public final class Debug
 		{
 			java.util.Map map = (java.util.Map) value;
 			debug(prefix, "map");
-			Vector keys = new Vector(map.keySet());
+			ArrayList keys = new ArrayList(map.keySet());
 			Collections.sort(keys);
 			for (int i = 0; i < keys.size(); i++)
 			{

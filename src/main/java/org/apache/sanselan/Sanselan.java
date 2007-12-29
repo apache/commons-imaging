@@ -26,9 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
@@ -51,7 +51,7 @@ import org.apache.sanselan.util.Debug;
  * 
  * @see org.apache.sanselan.sampleUsage.SampleUsage
  */
-public class Sanselan implements SanselanConstants
+public abstract class Sanselan implements SanselanConstants
 {
 
 	/** 
@@ -690,7 +690,7 @@ public class Sanselan implements SanselanConstants
 	 * @param  filename Filename associated with image data (optional).
 	 * @return      A vector of BufferedImages.
 	 */
-	public static Vector getAllBufferedImages(InputStream is, String filename)
+	public static ArrayList getAllBufferedImages(InputStream is, String filename)
 			throws ImageReadException, IOException
 	{
 		return getAllBufferedImages(new ByteSourceInputStream(is, filename));
@@ -705,7 +705,7 @@ public class Sanselan implements SanselanConstants
 	 * @param  bytes  Byte array containing an image file.
 	 * @return      A vector of BufferedImages.
 	 */
-	public static Vector getAllBufferedImages(byte bytes[])
+	public static ArrayList getAllBufferedImages(byte bytes[])
 			throws ImageReadException, IOException
 	{
 		return getAllBufferedImages(new ByteSourceArray(bytes));
@@ -720,13 +720,13 @@ public class Sanselan implements SanselanConstants
 	 * @param  file  File containing image data.
 	 * @return      A vector of BufferedImages.
 	 */
-	public static Vector getAllBufferedImages(File file)
+	public static ArrayList getAllBufferedImages(File file)
 			throws ImageReadException, IOException
 	{
 		return getAllBufferedImages(new ByteSourceFile(file));
 	}
 
-	private static Vector getAllBufferedImages(ByteSource byteSource)
+	private static ArrayList getAllBufferedImages(ByteSource byteSource)
 			throws ImageReadException, IOException
 	{
 		ImageParser imageParser = getImageParser(byteSource);
@@ -889,7 +889,7 @@ public class Sanselan implements SanselanConstants
 	{
 		ImageParser imageParser = getImageParser(byteSource);
 		if (null == params)
-			params = new Hashtable();
+			params = new HashMap();
 
 		return imageParser.getBufferedImage(byteSource, params);
 	}
@@ -988,7 +988,7 @@ public class Sanselan implements SanselanConstants
 
 		// make sure params are non-null
 		if (params == null)
-			params = new Hashtable();
+			params = new HashMap();
 
 		params.put(PARAM_KEY_FORMAT, format);
 

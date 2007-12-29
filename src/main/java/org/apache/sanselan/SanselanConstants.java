@@ -16,7 +16,7 @@
  */
 package org.apache.sanselan;
 
-import org.apache.sanselan.formats.tiff.TiffConstants;
+import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 public interface SanselanConstants
 {

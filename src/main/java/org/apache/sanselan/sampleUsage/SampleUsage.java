@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.sanselan.FormatCompliance;
@@ -64,7 +64,7 @@ public class SampleUsage
 			BufferedImage image = someImage;
 			File dst = someFile;
 			ImageFormat format = ImageFormat.IMAGE_FORMAT_PNG;
-			Map optional_params = new Hashtable();
+			Map optional_params = new HashMap();
 			Sanselan.writeImage(image, dst, format, optional_params);
 
 			OutputStream os = someOutputStream;

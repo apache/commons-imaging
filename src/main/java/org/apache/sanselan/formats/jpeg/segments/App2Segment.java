@@ -28,6 +28,12 @@ public class App2Segment extends APPNSegment implements Comparable
 	public final byte icc_bytes[];
 	public final int cur_marker, num_markers;
 
+	public App2Segment(int marker, byte segmentData[])
+			throws ImageReadException, IOException
+	{
+		this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
+	}
+
 	public App2Segment(int marker, int marker_length, InputStream is2)
 			throws ImageReadException, IOException
 	{

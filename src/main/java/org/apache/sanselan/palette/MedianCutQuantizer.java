@@ -19,9 +19,9 @@ package org.apache.sanselan.palette;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.util.Debug;
@@ -70,10 +70,10 @@ public class MedianCutQuantizer
 	{
 		//		public final ColorGroup parent;
 		public ColorGroupCut cut = null;
-		//		public final Vector children = new Vector();
+		//		public final ArrayList children = new ArrayList();
 		public int palette_index = -1;
 
-		public final Vector color_counts;
+		public final ArrayList color_counts;
 		public int min_red = Integer.MAX_VALUE;
 		public int max_red = Integer.MIN_VALUE;
 		public int min_green = Integer.MAX_VALUE;
@@ -91,7 +91,7 @@ public class MedianCutQuantizer
 		public final int max_diff;
 		public final int diff_total;
 
-		public ColorGroup(final Vector color_counts) throws ImageWriteException
+		public ColorGroup(final ArrayList color_counts) throws ImageWriteException
 		{
 			this.color_counts = color_counts;
 
@@ -185,7 +185,7 @@ public class MedianCutQuantizer
 	public Map groupColors1(BufferedImage image, int max, int mask)
 			throws ImageWriteException
 	{
-		Map color_map = new Hashtable();
+		Map color_map = new HashMap();
 
 		int width = image.getWidth();
 		int height = image.getHeight();
@@ -250,7 +250,7 @@ public class MedianCutQuantizer
 				Debug.debug("lossless palette: " + discrete_colors);
 
 			int palette[] = new int[discrete_colors];
-			Vector color_counts = new Vector(color_map.values());
+			ArrayList color_counts = new ArrayList(color_map.values());
 
 			for (int i = 0; i < color_counts.size(); i++)
 			{
@@ -266,8 +266,8 @@ public class MedianCutQuantizer
 		if (verbose)
 			Debug.debug("discrete colors: " + discrete_colors);
 
-		Vector color_groups = new Vector();
-		ColorGroup root = new ColorGroup(new Vector(color_map.values()));
+		ArrayList color_groups = new ArrayList();
+		ColorGroup root = new ColorGroup(new ArrayList(color_map.values()));
 		{
 			color_groups.add(root);
 
@@ -353,7 +353,7 @@ public class MedianCutQuantizer
 	private static final int BLUE = 3;
 
 	private void doCut(ColorGroup color_group, final int mode,
-			final Vector color_groups) throws ImageWriteException
+			final ArrayList color_groups) throws ImageWriteException
 	{
 		int count_total = 0;
 		for (int i = 0; i < color_group.color_counts.size(); i++)
@@ -417,18 +417,18 @@ public class MedianCutQuantizer
 
 		color_groups.remove(color_group);
 		{
-			Vector color_counts1 = new Vector(color_group.color_counts.subList(
+			ArrayList color_counts1 = new ArrayList(color_group.color_counts.subList(
 					0, median_index + 1));
-			Vector color_counts2 = new Vector(color_group.color_counts.subList(
+			ArrayList color_counts2 = new ArrayList(color_group.color_counts.subList(
 					median_index + 1, color_group.color_counts.size()));
 
 			ColorGroup less, more;
 			{
-				less = new ColorGroup(new Vector(color_counts1));
+				less = new ColorGroup(new ArrayList(color_counts1));
 				color_groups.add(less);
 			}
 			{
-				more = new ColorGroup(new Vector(color_counts2));
+				more = new ColorGroup(new ArrayList(color_counts2));
 				color_groups.add(more);
 			}
 

@@ -29,7 +29,7 @@ import java.io.OutputStream;
 
 import org.apache.sanselan.SanselanConstants;
 
-public class IOUtils implements SanselanConstants
+public abstract class IOUtils implements SanselanConstants
 {
 
 	/** 

@@ -18,13 +18,13 @@ package org.apache.sanselan.formats.gif;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
 
 class GenericGIFBlock extends GIFBlock
 {
-	public final Vector subblocks;
+	public final ArrayList subblocks;
 
-	public GenericGIFBlock(int blockCode, Vector subblocks)
+	public GenericGIFBlock(int blockCode, ArrayList subblocks)
 	{
 		super(blockCode);
 

@@ -19,8 +19,9 @@ package org.apache.sanselan.formats.tiff.fieldtypes;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryFileFunctions;
 import org.apache.sanselan.formats.tiff.TiffField;
+import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
-public abstract class FieldType extends BinaryFileFunctions
+public abstract class FieldType extends BinaryFileFunctions implements TiffConstants
 {
 	public final int type, length;
 	public final String name;
@@ -34,7 +35,7 @@ public abstract class FieldType extends BinaryFileFunctions
 
 	public boolean isLocalValue(TiffField entry)
 	{
-		return ((length > 0) && ((length * entry.length) <= 4));
+		return ((length > 0) && ((length * entry.length) <= TIFF_ENTRY_MAX_VALUE_LENGTH));
 	}
 
 	public String getDisplayValue(TiffField entry)

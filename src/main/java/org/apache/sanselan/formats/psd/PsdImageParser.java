@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageInfo;
@@ -175,7 +175,7 @@ public class PsdImageParser extends ImageParser
 		return result;
 	}
 
-	private Vector readImageResourceBlocks(byte bytes[],
+	private ArrayList readImageResourceBlocks(byte bytes[],
 			int fImageResourceIDs[], int max_blocks_to_read)
 			throws ImageReadException, IOException
 	{
@@ -195,11 +195,11 @@ public class PsdImageParser extends ImageParser
 		return false;
 	}
 
-	private Vector readImageResourceBlocks(InputStream is,
+	private ArrayList readImageResourceBlocks(InputStream is,
 			int fImageResourceIDs[], int max_blocks_to_read, int available)
 			throws ImageReadException, IOException
 	{
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 
 		while (available > 0)
 		{
@@ -262,7 +262,7 @@ public class PsdImageParser extends ImageParser
 		return result;
 	}
 
-	private Vector readImageResourceBlocks(ByteSource byteSource,
+	private ArrayList readImageResourceBlocks(ByteSource byteSource,
 			int fImageResourceIDs[], int max_blocks_to_read)
 			throws ImageReadException, IOException
 	{
@@ -477,7 +477,7 @@ public class PsdImageParser extends ImageParser
 	public byte[] getICCProfileBytes(ByteSource byteSource)
 			throws ImageReadException, IOException
 	{
-		Vector segments = readImageResourceBlocks(byteSource, new int[]{
+		ArrayList segments = readImageResourceBlocks(byteSource, new int[]{
 			IMAGE_RESOURCE_Id_ICC_PROFILE,
 		}, 1);
 
@@ -560,7 +560,7 @@ public class PsdImageParser extends ImageParser
 		int Width = header.Columns;
 		int Height = header.Rows;
 
-		Vector Comments = new Vector();
+		ArrayList Comments = new ArrayList();
 		// TODO: comments...
 
 		int BitsPerPixel = header.Depth * getChannelsPerMode(header.Mode);
@@ -610,7 +610,7 @@ public class PsdImageParser extends ImageParser
 		return result;
 	}
 
-	private ImageResourceBlock findImageResourceBlock(Vector blocks, int ID)
+	private ImageResourceBlock findImageResourceBlock(ArrayList blocks, int ID)
 			throws ImageReadException, IOException
 	{
 		for (int i = 0; i < blocks.size(); i++)
@@ -641,7 +641,7 @@ public class PsdImageParser extends ImageParser
 			imageContents.dump(pw);
 			imageContents.header.dump(pw);
 
-			Vector blocks = readImageResourceBlocks(byteSource,
+			ArrayList blocks = readImageResourceBlocks(byteSource,
 			//					fImageContents.ImageResources, 
 					null, -1);
 
@@ -694,7 +694,7 @@ public class PsdImageParser extends ImageParser
 		//		GraphicControlExtension gce = (GraphicControlExtension) findBlock(
 		//				fImageContents.blocks, kGraphicControlExtension);
 
-		Vector blocks = readImageResourceBlocks(byteSource,
+		ArrayList blocks = readImageResourceBlocks(byteSource,
 		//					fImageContents.ImageResources, 
 				null, -1);
 

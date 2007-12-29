@@ -23,9 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageInfo;
@@ -196,7 +196,7 @@ public class PNMImageParser extends ImageParser
 		if (info == null)
 			throw new ImageReadException("PNM: Couldn't read Header");
 
-		Vector Comments = new Vector();
+		ArrayList Comments = new ArrayList();
 
 		int BitsPerPixel = info.getBitDepth() * info.getNumComponents();
 		ImageFormat Format = info.getImageType();
@@ -342,7 +342,7 @@ public class PNMImageParser extends ImageParser
 			writer = new PPMWriter(RAWBITS);
 
 		// make copy of params; we'll clear keys as we consume them.
-		params = new Hashtable(params);
+		params = new HashMap(params);
 
 		// clear format key.
 		if (params.containsKey(PARAM_KEY_FORMAT))

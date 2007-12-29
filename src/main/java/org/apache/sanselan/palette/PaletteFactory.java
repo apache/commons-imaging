@@ -20,9 +20,9 @@ import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.util.Collections;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class PaletteFactory
 {
@@ -168,7 +168,7 @@ public class PaletteFactory
 			return null;
 		}
 
-		//		Vector result = new Vector();
+		//		ArrayList result = new ArrayList();
 
 		int slice_mins[] = new int[subset.mins.length];
 		System.arraycopy(subset.mins, 0, slice_mins, 0, subset.mins.length);
@@ -198,7 +198,7 @@ public class PaletteFactory
 
 	}
 
-	private Vector divideSubset2(int table[], ColorSpaceSubset subset,
+	private ArrayList divideSubset2(int table[], ColorSpaceSubset subset,
 			int component, int precision)
 	{
 		if (debug)
@@ -241,7 +241,7 @@ public class PaletteFactory
 		DivisionCandidate dc2 = finishDivision(table, subset, component,
 				precision, sum2, slice2);
 
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 
 		if (dc1 != null)
 			result.add(dc1);
@@ -254,7 +254,7 @@ public class PaletteFactory
 	private DivisionCandidate divideSubset2(int table[],
 			ColorSpaceSubset subset, int precision)
 	{
-		Vector dcs = new Vector();
+		ArrayList dcs = new ArrayList();
 
 		dcs.addAll(divideSubset2(table, subset, 0, precision));
 		dcs.addAll(divideSubset2(table, subset, 1, precision));
@@ -309,10 +309,10 @@ public class PaletteFactory
 		}
 	}
 
-	private Vector divide(Vector v, int desired_count, int table[],
+	private ArrayList divide(ArrayList v, int desired_count, int table[],
 			int precision)
 	{
-		Vector ignore = new Vector();
+		ArrayList ignore = new ArrayList();
 
 		int count = 0;
 		while (true)
@@ -384,7 +384,7 @@ public class PaletteFactory
 		int width = src.getWidth();
 		int height = src.getHeight();
 
-		Vector subsets = new Vector();
+		ArrayList subsets = new ArrayList();
 		ColorSpaceSubset all = new ColorSpaceSubset(width * height, precision);
 		subsets.add(all);
 
@@ -439,7 +439,7 @@ public class PaletteFactory
 	public SimplePalette makePaletteSimple(BufferedImage src, int max)
 	// This is not efficient for large values of max, say, max > 256;
 	{
-		Map map = new Hashtable();
+		Map map = new HashMap();
 		int rgbs[] = new int[max];
 		int rgb_count = 0;
 

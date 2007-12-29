@@ -17,9 +17,15 @@
 package org.apache.sanselan.formats.tiff;
 
 import java.awt.image.BufferedImage;
-import java.util.Vector;
+import java.util.ArrayList;
 
+import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.ImageMetadata;
+import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
+import org.apache.sanselan.formats.tiff.write.TiffOutputDirectory;
+import org.apache.sanselan.formats.tiff.write.TiffOutputField;
+import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
 
 public class TiffImageMetadata extends ImageMetadata
 {
@@ -89,21 +95,61 @@ public class TiffImageMetadata extends ImageMetadata
 		{
 			return (prefix != null ? prefix : "") + directory.description()
 					+ ": " //
-					+ (rawTiffImageData != null ? " (rawImageData)" : "") //
+					+ (rawTiffImageData != null ? " (tiffImageData)" : "") //
+					+ (rawJpegImageData != null ? " (jpegImageData)" : "") //
 					+ "\n" + super.toString(prefix) + "\n";
+		}
+
+		public TiffOutputDirectory getOutputDirectory(int byteOrder)
+				throws ImageWriteException
+		{
+			TiffOutputDirectory dstDir = new TiffOutputDirectory(type);
+
+			ArrayList entries = getItems();
+			for (int i = 0; i < entries.size(); i++)
+			{
+				TiffImageMetadata.Item item = (TiffImageMetadata.Item) entries
+						.get(i);
+				TiffField srcField = item.getTiffField();
+
+				TagInfo2 tag = srcField.tagInfo;
+				FieldType tagtype = srcField.fieldType;
+				int count = srcField.length;
+				//			byte bytes[] = srcField.fieldType.getRawBytes(srcField);
+
+				//			Debug.debug("\t" + "srcField", srcField);
+				//			Debug.debug("\t" + "bytes", bytes);
+
+				Object value = srcField.getValue();
+				byte bytes2[];
+				if (tag.isDate())
+					bytes2 = tagtype.getRawBytes(srcField);
+				else
+					bytes2 = tagtype.writeData(value, byteOrder);
+				//			Debug.debug("\t" + "bytes2", bytes2);
+
+				TiffOutputField dstField = new TiffOutputField(tag, tagtype,
+						count, bytes2);
+				dstDir.add(dstField);
+			}
+
+			dstDir.setRawTiffImageData(getRawTiffImageData());
+			dstDir.setRawJpegImageData(getRawJpegImageData());
+
+			return dstDir;
 		}
 	}
 
-	public Vector getDirectories()
+	public ArrayList getDirectories()
 	{
 		return super.getItems();
 	}
 
-	public Vector getItems()
+	public ArrayList getItems()
 	{
-		Vector result = new Vector();
+		ArrayList result = new ArrayList();
 
-		Vector items = super.getItems();
+		ArrayList items = super.getItems();
 		for (int i = 0; i < items.size(); i++)
 		{
 			Directory dir = (Directory) items.get(i);
@@ -129,6 +175,24 @@ public class TiffImageMetadata extends ImageMetadata
 			return entry;
 		}
 
+	}
+
+	public TiffOutputSet getOutputSet() throws ImageWriteException
+	{
+		int byteOrder = contents.header.byteOrder;
+		TiffOutputSet result = new TiffOutputSet(byteOrder);
+
+		ArrayList srcDirs = getDirectories();
+		for (int i = 0; i < srcDirs.size(); i++)
+		{
+			TiffImageMetadata.Directory srcDir = (TiffImageMetadata.Directory) srcDirs
+					.get(i);
+			TiffOutputDirectory outputDirectory = srcDir
+					.getOutputDirectory(byteOrder);
+			result.addDirectory(outputDirectory);
+		}
+
+		return result;
 	}
 
 }

@@ -16,9 +16,10 @@
  */
 package org.apache.sanselan.formats.jpeg.segments;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.formats.jpeg.IptcElement;
@@ -28,12 +29,20 @@ import org.apache.sanselan.formats.jpeg.JpegImageParser;
 public class App13Segment extends APPNSegment
 {
 	protected final JpegImageParser parser;
-	public final Vector elements = new Vector();
+	public final ArrayList elements = new ArrayList();
 
-	public App13Segment(JpegImageParser parser, int marker, int marker_length,
-			InputStream is2) throws ImageReadException, IOException
+	public App13Segment(JpegImageParser parser, int marker, byte segmentData[])
+			throws ImageReadException, IOException
 	{
-		super(marker, marker_length, is2);
+		this(parser, marker, segmentData.length, new ByteArrayInputStream(
+				segmentData));
+	}
+
+	// TODO:
+	public App13Segment(JpegImageParser parser, int marker, int marker_length,
+			InputStream is) throws ImageReadException, IOException
+	{
+		super(marker, marker_length, is);
 		this.parser = parser;
 
 		//			InputStream bais = new ByteArrayInputStream(bytes);
@@ -123,20 +132,6 @@ public class App13Segment extends APPNSegment
 			}
 
 		}
-		//			System.out.println("								zimbabwe legit");
-
-		//
-		//			{
-		//				int i = read_byte("zero", is, "Invalid App13 Segment");
-		//				if (i != 0)
-		//					throw new ImageReadException("Invalid App13 Segment");
-		//			}
-
-		//			while (true)
-		//			{
-		//				readAndVerifyBytes(.CONST_8BIM", bais, .CONST_8BIM, "Invalid.CONST_8BIM Segment");
-		//				System.out.println();
-		//			}
 
 	}
 

@@ -19,7 +19,7 @@ package org.apache.sanselan;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ImageInfo represents a collection of basic properties of an image, 
@@ -30,7 +30,7 @@ public class ImageInfo
 	private final String formatDetails; // ie version
 
 	private final int bitsPerPixel;
-	private final Vector comments;
+	private final ArrayList comments;
 
 	private final ImageFormat format;
 	private final String formatName;
@@ -71,7 +71,7 @@ public class ImageInfo
 
 	private final String compressionAlgorithm;
 
-	public ImageInfo(String FormatDetails, int BitsPerPixel, Vector Comments,
+	public ImageInfo(String FormatDetails, int BitsPerPixel, ArrayList Comments,
 			ImageFormat Format, String FormatName, int Height, String MimeType,
 			int NumberOfImages, int PhysicalHeightDpi,
 			float PhysicalHeightInch, int PhysicalWidthDpi,
@@ -117,9 +117,9 @@ public class ImageInfo
 	 * <p/>
 	 * This is mostly obsolete.
 	 */
-	public Vector getComments()
+	public ArrayList getComments()
 	{
-		return new Vector(comments);
+		return new ArrayList(comments);
 	}
 
 	/** 

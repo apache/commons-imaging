@@ -18,26 +18,24 @@ package org.apache.sanselan.formats.jpeg.exifRewrite;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryFileParser;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.jpeg.JpegConstants;
-import org.apache.sanselan.formats.jpeg.JpegImageParser;
+import org.apache.sanselan.formats.jpeg.JpegUtils;
 import org.apache.sanselan.formats.jpeg.segments.GenericSegment;
 import org.apache.sanselan.formats.jpeg.segments.UnknownSegment;
-import org.apache.sanselan.formats.tiff.TagInfo;
-import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.TiffImageParser;
-import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.formats.tiff.write.TiffImageWriter;
-import org.apache.sanselan.formats.tiff.write.WriteField;
+import org.apache.sanselan.formats.tiff.write.TiffOutputDirectory;
+import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
 import org.apache.sanselan.util.Debug;
 
 public class ExifRewriter extends BinaryFileParser implements JpegConstants
@@ -47,92 +45,111 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 		setByteOrder(BYTE_ORDER_NETWORK);
 	}
 
-	public void rewriteEXIFMetadata(ByteSource byteSource, OutputStream os,
-			Map params) throws ImageReadException, IOException,
-			ImageWriteException
+	private static class JFIFPieces
 	{
-		Vector pieces = new Vector();
-		InputStream is = null;
-		GenericSegment exifSegment = null;
+		public final ArrayList pieces;
+		public final GenericSegment exifSegment;
 
-		try
+		public JFIFPieces(final ArrayList pieces, final GenericSegment exifSegment)
 		{
-			is = byteSource.getInputStream();
+			this.pieces = pieces;
+			this.exifSegment = exifSegment;
+		}
+	}
 
-			readAndVerifyBytes(is, SOI,
-					"Not a Valid JPEG File: doesn't begin with 0xffd8");
+	private JFIFPieces analyzeJFIF(ByteSource byteSource)
+			throws ImageReadException, IOException
+	//			, ImageWriteException
+	{
+		final ArrayList pieces = new ArrayList();
+		final GenericSegment exifSegmentArray[] = new GenericSegment[]{
+			null,
+		};
 
-			int byteOrder = getByteOrder();
-
-			for (int markerCount = 0; true; markerCount++)
+		JpegUtils.Visitor visitor = new JpegUtils.Visitor()
+		{
+			// return false to exit before reading image data.
+			public boolean beginSOS()
 			{
-				byte markerBytes[] = readByteArray("markerBytes", 2, is,
-						"markerBytes");
-				int marker = convertByteArrayToShort("marker", markerBytes,
-						byteOrder);
+				return true;
+			}
 
-				//					private boolean isExifAPP1Segment(GenericSegment segment)
+			public void visitSOS(int marker, byte markerBytes[],
+					byte imageData[])
+			{
+				pieces.add(markerBytes);
+				pieces.add(imageData);
+			}
 
-				if (marker == 0xffd9 || marker == SOS_Marker)
-				{
-					pieces.add(markerBytes);
-					pieces.add(getStreamBytes(is));
-					break;
-				}
-
-				byte markerLengthBytes[] = readByteArray("markerLengthBytes",
-						2, is, "markerLengthBytes");
-				int markerLength = convertByteArrayToShort("markerLength",
-						markerLengthBytes, byteOrder);
-
-				UnknownSegment segment = new UnknownSegment(marker,
-						markerLength - 2, is);
-
+			// return false to exit traversal.
+			public boolean visitSegment(int marker, byte markerBytes[],
+					int markerLength, byte markerLengthBytes[],
+					byte segmentData[]) throws
+			//					ImageWriteException,
+					ImageReadException, IOException
+			{
 				if (marker != JPEG_APP1_Marker)
 				{
 					pieces.add(markerBytes);
 					pieces.add(markerLengthBytes);
-					pieces.add(segment.bytes);
-					continue;
+					pieces.add(segmentData);
 				}
-
-				if (!JpegImageParser.isExifAPP1Segment(segment))
+				else if (!byteArrayHasPrefix(segmentData, ExifIdentifierCode))
 				{
 					pieces.add(markerBytes);
 					pieces.add(markerLengthBytes);
-					pieces.add(segment.bytes);
-					continue;
+					pieces.add(segmentData);
 				}
-
-				if (exifSegment != null)
+				else if (exifSegmentArray[0] != null)
 				{
 					// TODO: add support for multiple segments
-					throw new ImageWriteException(
+					throw new ImageReadException(
 							"More than one APP1 EXIF segment.");
 				}
+				else
+				{
+					UnknownSegment segment = new UnknownSegment(marker,
+							segmentData);
 
-				exifSegment = segment;
-				pieces.add(segment);
+					exifSegmentArray[0] = segment;
+					pieces.add(segment);
+				}
+				return true;
 			}
+		};
 
-		}
-		finally
-		{
-			try
-			{
-				is.close();
-			}
-			catch (Exception e)
-			{
-				Debug.debug(e);
-			}
-		}
+		new JpegUtils().traverseJFIF(byteSource, visitor);
 
+		GenericSegment exifSegment = exifSegmentArray[0];
 		if (exifSegment == null)
 		{
 			// TODO: add support for adding, not just replacing.
-			throw new ImageWriteException("No APP1 EXIF segment found.");
+			throw new ImageReadException("No APP1 EXIF segment found.");
 		}
+
+		return new JFIFPieces(pieces, exifSegment);
+	}
+
+	public void removeExifMetadata(ByteSource byteSource, OutputStream os,
+			Map params) throws ImageReadException, IOException,
+			ImageWriteException
+	{
+		JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+		ArrayList pieces = jfifPieces.pieces;
+
+		pieces.remove(jfifPieces.exifSegment);
+		//		List filtered = new ArrayList();
+
+		writeSegmentsReplacingExif(os, pieces, null);
+	}
+
+	public void rewriteExifMetadata(ByteSource byteSource, OutputStream os,
+			Map params) throws ImageReadException, IOException,
+			ImageWriteException
+	{
+		JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+		ArrayList pieces = jfifPieces.pieces;
+		GenericSegment exifSegment = jfifPieces.exifSegment;
 
 		byte exifBytes[] = exifSegment.bytes;
 		exifBytes = getBytearrayTail("trimmed exif bytes", exifBytes, 6);
@@ -140,17 +157,37 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 		TiffImageMetadata exifMetadata = (TiffImageMetadata) new TiffImageParser()
 				.getMetadata(exifBytes, params);
 
-		byte newBytes[] = rewriteExif(exifMetadata, true);
+		byte newBytes[] = writeExifSegment(exifMetadata, true);
 		//		exifSegment.bytes = newBytes;
 
-		//		Vector segments = readSegments(byteSource, null, false, true);
+		//		ArrayList segments = readSegments(byteSource, null, false, true);
 
 		//		TiffImageMetadata exif = getExifMetadata(byteSource, params);
 
-		writeSegments(os, pieces, newBytes);
+		writeSegmentsReplacingExif(os, pieces, newBytes);
 	}
 
-	private void writeSegments(OutputStream os, Vector segments,
+	public void updateExifMetadata(ByteSource byteSource, OutputStream os,
+			ArrayList outputDirectories, Map params) throws ImageReadException,
+			IOException, ImageWriteException
+	{
+		JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+		ArrayList pieces = jfifPieces.pieces;
+		GenericSegment exifSegment = jfifPieces.exifSegment;
+
+		byte exifBytes[] = exifSegment.bytes;
+		exifBytes = getBytearrayTail("trimmed exif bytes", exifBytes, 6);
+
+		TiffImageMetadata exifMetadata = (TiffImageMetadata) new TiffImageParser()
+				.getMetadata(exifBytes, params);
+		int byteOrder = exifMetadata.contents.header.byteOrder;
+
+		byte newBytes[] = writeExifSegment(outputDirectories, byteOrder, true);
+
+		writeSegmentsReplacingExif(os, pieces, newBytes);
+	}
+
+	private void writeSegmentsReplacingExif(OutputStream os, ArrayList segments,
 			byte newBytes[]) throws ImageWriteException, IOException
 	{
 		int byteOrder = getByteOrder();
@@ -169,10 +206,6 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 				}
 				else if (o instanceof GenericSegment)
 				{
-					//					byte markerBytes[] = readByteArray("markerBytes", 2, is,
-					//					"markerBytes");
-					//			int marker = convertByteArrayToShort("marker", markerBytes,
-					//					byteOrder);
 					byte markerBytes[] = convertShortToByteArray(
 							JPEG_APP1_Marker, byteOrder);
 					os.write(markerBytes);
@@ -182,21 +215,11 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 							markerLength, byteOrder);
 					os.write(markerLengthBytes);
 
-					//
-					//			pieces.add(markerBytes);
-					//					pieces.add(markerLengthBytes);
-
 					os.write(newBytes);
-					//					GenericSegment segment = (GenericSegment) o;
-					//					os.write(segment.bytes);
 				}
 				else
 					throw new ImageWriteException("Unknown data: " + o);
 			}
-			//			readAndVerifyBytes(is, SOI,
-			//					"Not a Valid JPEG File: doesn't begin with 0xffd8");
-			//
-			//			return readMarkers(is, markers, return_after_first);
 		}
 		finally
 		{
@@ -211,26 +234,46 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 		}
 	}
 
-	public byte[] rewriteExif(TiffImageMetadata exif, boolean includeEXIFPrefix)
-			throws IOException, ImageWriteException
+	public byte[] writeExifSegment(TiffImageMetadata exif,
+			boolean includeEXIFPrefix) throws IOException, ImageWriteException
 	{
 		if (exif == null)
 			return null;
 
 		int byteOrder = exif.contents.header.byteOrder;
 
-		Vector dstDirs = new Vector();
-		Vector srcDirs = exif.getDirectories();
+		ArrayList outputDirectories = new ArrayList();
+		ArrayList srcDirs = exif.getDirectories();
 		for (int i = 0; i < srcDirs.size(); i++)
 		{
 			TiffImageMetadata.Directory srcDir = (TiffImageMetadata.Directory) srcDirs
 					.get(i);
 			//			Debug.debug("srcDir", srcDir);
 
-			TiffImageWriter.Directory dstDir = translate(srcDir, byteOrder);
-			dstDirs.add(dstDir);
+			//			TiffOutputDirectory outputDirectory = translate(srcDir, byteOrder);
+			TiffOutputDirectory outputDirectory = srcDir
+					.getOutputDirectory(byteOrder);
+			outputDirectories.add(outputDirectory);
 		}
 
+		return writeExifSegment(outputDirectories, byteOrder, includeEXIFPrefix);
+	}
+	
+
+	public byte[] writeExifSegment(TiffOutputSet outputSet, 
+			boolean includeEXIFPrefix) throws IOException, ImageWriteException
+	{
+		List outputDirectories = outputSet.getDirectories();
+		
+		return writeExifSegment( outputDirectories, outputSet.byteOrder,
+				 includeEXIFPrefix) ;
+	}
+
+	
+
+	public byte[] writeExifSegment(List outputDirectories, int byteOrder,
+			boolean includeEXIFPrefix) throws IOException, ImageWriteException
+	{
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 
 		if (includeEXIFPrefix)
@@ -240,48 +283,47 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 			os.write(0);
 		}
 
-		new TiffImageWriter(byteOrder).writeDirectories(os, dstDirs);
+		new TiffImageWriter(byteOrder).writeDirectories(os, outputDirectories);
 
 		return os.toByteArray();
 	}
 
-	private TiffImageWriter.Directory translate(
-			TiffImageMetadata.Directory srcDir, int byteOrder)
-			throws ImageWriteException
-	{
-		TiffImageWriter.Directory dstDir = new TiffImageWriter.Directory(
-				srcDir.type);
-
-		Vector entries = srcDir.getItems();
-		for (int i = 0; i < entries.size(); i++)
-		{
-			TiffImageMetadata.Item item = (TiffImageMetadata.Item) entries
-					.get(i);
-			TiffField srcField = item.getTiffField();
-
-			TagInfo tag = srcField.tagInfo;
-			FieldType tagtype = srcField.fieldType;
-			int count = srcField.length;
-			byte bytes[] = srcField.fieldType.getRawBytes(srcField);
-
-			//			Debug.debug("\t" + "srcField", srcField);
-			//			Debug.debug("\t" + "bytes", bytes);
-
-			Object value = srcField.getValue();
-			byte bytes2[];
-			if (tag.isDate)
-				bytes2 = tagtype.getRawBytes(srcField);
-			else
-				bytes2 = tagtype.writeData(value, byteOrder);
-			//			Debug.debug("\t" + "bytes2", bytes2);
-
-			WriteField dstField = new WriteField(tag, tagtype, count, bytes2);
-			dstDir.add(dstField);
-		}
-
-		dstDir.setRawTiffImageData(srcDir.getRawTiffImageData());
-		dstDir.setRawJpegImageData(srcDir.getRawJpegImageData());
-
-		return dstDir;
-	}
+	//	private TiffOutputDirectory translate(TiffImageMetadata.Directory srcDir,
+	//			int byteOrder) throws ImageWriteException
+	//	{
+	//		TiffOutputDirectory dstDir = new TiffOutputDirectory(srcDir.type);
+	//
+	//		ArrayList entries = srcDir.getItems();
+	//		for (int i = 0; i < entries.size(); i++)
+	//		{
+	//			TiffImageMetadata.Item item = (TiffImageMetadata.Item) entries
+	//					.get(i);
+	//			TiffField srcField = item.getTiffField();
+	//
+	//			TagInfo tag = srcField.tagInfo;
+	//			FieldType tagtype = srcField.fieldType;
+	//			int count = srcField.length;
+	//			//			byte bytes[] = srcField.fieldType.getRawBytes(srcField);
+	//
+	//			//			Debug.debug("\t" + "srcField", srcField);
+	//			//			Debug.debug("\t" + "bytes", bytes);
+	//
+	//			Object value = srcField.getValue();
+	//			byte bytes2[];
+	//			if (tag.isDate)
+	//				bytes2 = tagtype.getRawBytes(srcField);
+	//			else
+	//				bytes2 = tagtype.writeData(value, byteOrder);
+	//			//			Debug.debug("\t" + "bytes2", bytes2);
+	//
+	//			TiffOutputField dstField = new TiffOutputField(tag, tagtype, count,
+	//					bytes2);
+	//			dstDir.add(dstField);
+	//		}
+	//
+	//		dstDir.setRawTiffImageData(srcDir.getRawTiffImageData());
+	//		dstDir.setRawJpegImageData(srcDir.getRawJpegImageData());
+	//
+	//		return dstDir;
+	//	}
 }

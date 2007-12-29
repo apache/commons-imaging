@@ -27,17 +27,17 @@ import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.byteSources.ByteSource;
+import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 
-public class TiffField
-//extends TiffElement
-		implements
-			TiffConstants
+public class TiffField implements TiffConstants
 {
-	public final TagInfo tagInfo;
+	public final TagInfo2 tagInfo;
 	public final FieldType fieldType;
 
 	public final int tag;
+	public final int directoryType;
 	public final int type;
 	public final int length;
 	public final int valueOffset;
@@ -46,14 +46,12 @@ public class TiffField
 	public byte oversizeValue[] = null;
 	public final int byteOrder;
 
-	public TiffField(
-			//			int offset, 
-			int tag, int type, int Length, int ValueOffset,
-			byte ValueOffsetBytes[], int byteOrder)
+	public TiffField(int tag, int directoryType, int type, int Length,
+			int ValueOffset, byte ValueOffsetBytes[], int byteOrder)
 	{
-		//		super(offset,  TiffConstants.TIFF_ENTRY_LENGTH);
 
 		this.tag = tag;
+		this.directoryType = directoryType;
 		this.type = type;
 		this.length = Length;
 		this.valueOffset = ValueOffset;
@@ -61,7 +59,7 @@ public class TiffField
 		this.byteOrder = byteOrder;
 
 		fieldType = getFieldType(type);
-		tagInfo = getTag(tag);
+		tagInfo = getTag(directoryType, tag);
 	}
 
 	public final class OversizeValueElement extends TiffElement
@@ -106,16 +104,48 @@ public class TiffField
 		return FIELD_TYPE_UNKNOWN;
 	}
 
-	private static TagInfo getTag(int value)
+	private static TagInfo2 getTag(int directoryType, int value)
 	{
-		for (int i = 0; i < TIFF_TAGS.length; i++)
+		Object key = new Integer(value);
+
+		if (directoryType == DIRECTORY_TYPE_EXIF
+				|| directoryType == DIRECTORY_TYPE_INTEROPERABILITY)
 		{
-			TagInfo fTag = TIFF_TAGS[i];
-			if (fTag.tag == value)
-				return fTag;
+			if (EXIF_TAG_MAP.containsKey(key))
+				return (TagInfo2) EXIF_TAG_MAP.get(key);
+		}
+		else if (directoryType == DIRECTORY_TYPE_GPS)
+		{
+			if (GPS_TAG_MAP.containsKey(key))
+				return (TagInfo2) GPS_TAG_MAP.get(key);
+		}
+		else
+		{
+			if (TIFF_TAG_MAP.containsKey(key))
+				return (TagInfo2) TIFF_TAG_MAP.get(key);
 		}
 
-		return TIFF_TAG_Unknown;
+		if (ALL_TAG_MAP.containsKey(key))
+			return (TagInfo2) ALL_TAG_MAP.get(key);
+
+		//		public static final int DIRECTORY_TYPE_EXIF = -2;
+		//		//	public static final int DIRECTORY_TYPE_SUB = 5;
+		//		public static final int DIRECTORY_TYPE_GPS = -3;
+		//		public static final int DIRECTORY_TYPE_INTEROPERABILITY = -4;
+		//
+		//		private static final Map GPS_TAG_MAP = makeTagMap(ALL_GPS_TAGS, false);
+		//		private static final Map TIFF_TAG_MAP = makeTagMap(ALL_TIFF_TAGS, false);
+		//		private static final Map EXIF_TAG_MAP = makeTagMap(ALL_EXIF_TAGS, false);
+		//		private static final Map ALL_TAG_MAP = makeTagMap(ALL_TAGS, true);
+		//
+		//		for (int i = 0; i < ALL_TAGS.length; i++)
+		//		{
+		//			TagInfo2 tag = ALL_TAGS[i];
+		//			if (tag.tag == value)
+		//				return tag;
+		//		}
+
+		return TIFF_TAG_UNKNOWN;
 	}
 
 	private int getValueLengthInBytes()
@@ -393,6 +423,8 @@ public class TiffField
 
 	public String getTagName()
 	{
+		if (tagInfo == TIFF_TAG_UNKNOWN)
+			return tagInfo.name + " (0x" + Integer.toHexString(tag) + ")";
 		return tagInfo.name;
 	}
 
@@ -409,26 +441,66 @@ public class TiffField
 		return tagInfo.getValue(this);
 	}
 
-	static
+	private static final Map makeTagMap(TagInfo2 tags[],
+			boolean ignoreDuplicates, String name)
 	{
+		// make sure to use the thread-safe version; this is shared state.
 		Map map = new Hashtable();
 
-		for (int i = 0; i < TIFF_TAGS.length; i++)
+		for (int i = 0; i < tags.length; i++)
 		{
-			TagInfo tag = TIFF_TAGS[i];
-			Object o = map.get("" + tag.tag);
-			if (o == null)
-				map.put("" + tag.tag, tag);
-			else
+			TagInfo2 tag = tags[i];
+			Object key = new Integer(tag.tag);
+
+			if (map.get(key) == null)
+				map.put(key, tag);
+			else if (!ignoreDuplicates)
 			{
-				System.out.println("Duplicate tag: " + tag.tag);
+				System.out.println("Duplicate tag in " + name + ": " + tag.tag
+						+ " (0x" + Integer.toHexString(tag.tag) + ")");
 				System.out.println("\t" + "New name: " + tag.name);
-				System.out.println("\t" + "Old name: " + ((TagInfo) o).name);
+				System.out.println("\t" + "Old name: "
+						+ ((TagInfo2) map.get(key)).name);
 			}
 		}
 
+		return map;
 	}
 
+	private static final Map GPS_TAG_MAP = makeTagMap(ALL_GPS_TAGS, false,
+			"GPS");
+	private static final Map TIFF_TAG_MAP = makeTagMap(ALL_TIFF_TAGS, false,
+			"TIFF");
+	private static final Map EXIF_TAG_MAP = makeTagMap(ALL_EXIF_TAGS, true,
+			"EXIF");
+	private static final Map ALL_TAG_MAP = makeTagMap(ALL_TAGS, true, "All");
+
+	//	static
+	//	{
+	//		Map map = new HashMap();
+	//
+	//		for (int i = 0; i < ALL_TAGS.length; i++)
+	//		{
+	//			TagInfo2 tag = ALL_TAGS[i];
+	//			Object o = map.get("" + tag.tag);
+	//			if (o == null)
+	//				map.put("" + tag.tag, tag);
+	//			else
+	//			{
+	//				System.out.println("Duplicate tag: " + tag.tag);
+	//				System.out.println("\t" + "New name: " + tag.name);
+	//				System.out.println("\t" + "Old name: " + ((TagInfo2) o).name);
+	//			}
+	//		}
+	//
+	//	}
+
+	//	public static final TagInfo2 ALL_TAGS[] = TagConstantsUtils
+	//			.mergeTagLists(new TagInfo2[][]{
+	//					ALL_EXIF_TAGS, ALL_TIFF_TAGS, ALL_GPS_TAGS,
+	//			});
+	//
+	//	
 	public int[] getValueAsIntArray()
 	{
 		Object o = getValue();

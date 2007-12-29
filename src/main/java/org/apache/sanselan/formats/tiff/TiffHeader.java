@@ -16,6 +16,8 @@
  */
 package org.apache.sanselan.formats.tiff;
 
+import org.apache.sanselan.formats.tiff.constants.TiffConstants;
+
 public class TiffHeader extends TiffElement
 {
 	public final int byteOrder;

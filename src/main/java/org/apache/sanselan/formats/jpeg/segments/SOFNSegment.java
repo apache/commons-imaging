@@ -16,6 +16,7 @@
  */
 package org.apache.sanselan.formats.jpeg.segments;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,11 +26,14 @@ import org.apache.sanselan.formats.jpeg.JpegImageParser;
 public class SOFNSegment extends Segment
 {
 	public final int width, height;
-	public final int Number_of_components;
+	public final int numberOfComponents;
 	public final int Precision;
 
-	//		public final byte bytes[];
-	//		public final int cur_marker, num_markers;
+	public SOFNSegment(int marker, byte segmentData[])
+			throws ImageReadException, IOException
+	{
+		this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
+	}
 
 	public SOFNSegment(int marker, int marker_length, InputStream is)
 			throws ImageReadException, IOException
@@ -43,7 +47,7 @@ public class SOFNSegment extends Segment
 			Precision = readByte("Data_precision", is, "Not a Valid JPEG File");
 			height = read2Bytes("Image_height", is, "Not a Valid JPEG File");
 			width = read2Bytes("Image_Width", is, "Not a Valid JPEG File");
-			Number_of_components = readByte("Number_of_components", is,
+			numberOfComponents = readByte("Number_of_components", is,
 					"Not a Valid JPEG File");
 
 			// ignore the rest of the segment for now...

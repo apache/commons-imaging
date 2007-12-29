@@ -27,7 +27,7 @@ import org.apache.sanselan.common.BitInputStream;
 import org.apache.sanselan.common.PackBits;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.mylzw.MyLZWDecompressor;
-import org.apache.sanselan.formats.tiff.TiffConstants;
+import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
 public abstract class DataReader implements TiffConstants, BinaryConstants
