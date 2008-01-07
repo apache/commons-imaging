@@ -112,23 +112,20 @@ public class TiffImageMetadata extends ImageMetadata
 						.get(i);
 				TiffField srcField = item.getTiffField();
 
-				TagInfo2 tag = srcField.tagInfo;
-				FieldType tagtype = srcField.fieldType;
+				TagInfo2 tagInfo = srcField.tagInfo;
+				FieldType fieldType = srcField.fieldType;
 				int count = srcField.length;
 				//			byte bytes[] = srcField.fieldType.getRawBytes(srcField);
 
-				//			Debug.debug("\t" + "srcField", srcField);
-				//			Debug.debug("\t" + "bytes", bytes);
-
 				Object value = srcField.getValue();
 				byte bytes2[];
-				if (tag.isDate())
-					bytes2 = tagtype.getRawBytes(srcField);
+				if (tagInfo.isDate())
+					bytes2 = fieldType.getRawBytes(srcField);
 				else
-					bytes2 = tagtype.writeData(value, byteOrder);
+					bytes2 = fieldType.writeData(value, byteOrder);
 				//			Debug.debug("\t" + "bytes2", bytes2);
 
-				TiffOutputField dstField = new TiffOutputField(tag, tagtype,
+				TiffOutputField dstField = new TiffOutputField(srcField.tag, tagInfo, fieldType,
 						count, bytes2);
 				dstDir.add(dstField);
 			}

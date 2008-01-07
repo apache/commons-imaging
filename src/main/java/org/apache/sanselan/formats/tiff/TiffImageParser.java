@@ -138,9 +138,6 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		int entryCount = read2Bytes("DirectoryEntryCount", is,
 				"Not a Valid TIFF File");
 
-		//        Debug.debug();
-		//        Debug.debug("readDirectory entryCount", entryCount);
-
 		for (int i = 0; i < entryCount; i++)
 		{
 			int tag = read2Bytes("Tag", is, "Not a Valid TIFF File");
@@ -154,12 +151,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 			if (keepField(tag, tags))
 			{
-				TiffField entry = new TiffField(tag, dirType, type, length, valueOffset,
-						valueOffsetBytes, getByteOrder());
+				TiffField entry = new TiffField(tag, dirType, type, length,
+						valueOffset, valueOffsetBytes, getByteOrder());
 				result.add(entry);
-
-				//                Debug.debug("read field tag", tag + ", 0x"
-				//                        + Integer.toHexString(tag));
 
 				if (debug)
 					for (int j = 0; j < 4; j++)
@@ -257,7 +251,6 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		try
 		{
 			is = byteSource.getInputStream();
-			//            Debug.debug("readSingleDirectory offset", offset);
 			if (offset > 0)
 				is.skip(offset);
 
@@ -480,14 +473,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 						throw new ImageReadException(
 								"Unknown subdirectory type.");
 
-					//                    Debug.debug();
-					//                    Debug.debug("extra dir child of ", dir.description());
-					//                    Debug.debug("extra dir offset", offset);
-					//                    Debug.debug("extra dir type", TiffDirectory.description(dirType));
 					TiffDirectory extraDir = readSingleDirectory(byteSource,
 							dirType, offset, getDefaultFormatCompliance());
-					//                    Debug.debug("extraDir", extraDir);
-					//                    directories.add(extraDir);
 					directories.add(i + 1, extraDir);
 				}
 

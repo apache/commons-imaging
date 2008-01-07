@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.sanselan.util.Debug;
 
 public final class TiffOutputSet implements TiffConstants
 {
@@ -124,5 +125,58 @@ public final class TiffOutputSet implements TiffConstants
 	//	public static final int DIRECTORY_TYPE_DIR_2 = 2;
 	//	public static final int DIRECTORY_TYPE_DIR_3 = 3;
 	//	public static final int DIRECTORY_TYPE_DIR_4 = 4;
+
+
+	private static final String newline = System.getProperty("line.separator");
+
+	public String toString()
+	{
+		return toString(null);
+	}
+
+	public String toString(String prefix)
+	{
+		if (prefix == null)
+			prefix = "";
+
+		StringBuffer result = new StringBuffer();
+
+		
+		result.append(prefix);
+		result.append("TiffOutputSet {");
+		result.append(newline );
+
+		result.append(prefix);
+		result.append("byteOrder: " + byteOrder);
+		result.append(newline );
+		
+		for(int i=0;i<directories.size();i++)
+		{
+			TiffOutputDirectory directory = (TiffOutputDirectory)  directories.get(i);
+			result.append(prefix );
+			result.append("\t" + "directory " + i + ": " + directory.description() + " (" + directory.type + ")");
+			result.append(newline );
+			
+			ArrayList fields = directory.getFields();
+			for(int j=0;j<fields.size();j++)
+			{
+				TiffOutputField field = (TiffOutputField)  fields.get(j);
+				result.append(prefix );
+				result.append("\t\t" + "field " + i + ": " + field.tagInfo );
+				result.append(newline );
+			}
+		}
+
+		result.append(prefix);
+		result.append("}");
+		result.append(newline );
+
+		return result.toString();
+	}
+
+	public void dump()
+	{
+		Debug.debug(this.toString());
+	}
 
 }

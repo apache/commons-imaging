@@ -20,23 +20,27 @@ package org.apache.sanselan.formats.jpeg;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 
-import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
-import org.apache.sanselan.SanselanTest;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceArray;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
-import org.apache.sanselan.formats.jpeg.JpegImageMetadata.Photoshop;
 import org.apache.sanselan.formats.jpeg.exifRewrite.ExifRewriter;
+import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
+import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
+import org.apache.sanselan.formats.tiff.write.TiffOutputField;
+import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
 import org.apache.sanselan.util.Debug;
 import org.apache.sanselan.util.IOUtils;
 
-public class ExifRewriteTest extends ExifBaseTest
+public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 {
 	public ExifRewriteTest(String name)
 	{
@@ -92,37 +96,165 @@ public class ExifRewriteTest extends ExifBaseTest
 			Debug.debug("Source Segments:");
 			new JpegUtils().dumpJFIF(byteSource);
 
-			{
-				JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
-						.getMetadata(imageFile);
-				assertNotNull(metadata.getExif());
-				metadata.dump();
+			JpegImageMetadata oldMetadata = (JpegImageMetadata) Sanselan
+					.getMetadata(imageFile);
+			assertNotNull(oldMetadata);
 
-				//			TiffImageMetadata tiffImageMetadata = metadata.getExif();
-				//			Photoshop photoshop = metadata.getPhotoshop();
-			}
+			TiffImageMetadata oldExifMetadata = oldMetadata.getExif();
+			assertNotNull(oldExifMetadata);
+			oldMetadata.dump();
 
-			{
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				new ExifRewriter().removeExifMetadata(byteSource, baos, null);
-				byte bytes[] = baos.toByteArray();
-				File tempFile = File.createTempFile("test", ".jpg");
-				Debug.debug("tempFile", tempFile);
-				tempFile.deleteOnExit();
-				IOUtils.writeToFile(bytes, tempFile);
+			//			TiffImageMetadata tiffImageMetadata = metadata.getExif();
+			//			Photoshop photoshop = metadata.getPhotoshop();
 
-				Debug.debug("Output Segments:");
-				new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
+			TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
+			outputSet.dump();
 
-				assertTrue(!hasExifData(tempFile));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			new ExifRewriter().updateExifMetadata(byteSource, baos, outputSet);
+			byte bytes[] = baos.toByteArray();
+			File tempFile = File.createTempFile("test", ".jpg");
+			Debug.debug("tempFile", tempFile);
+			//			tempFile.deleteOnExit();
+			IOUtils.writeToFile(bytes, tempFile);
 
-				JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
-						.getMetadata(tempFile);
-				//			assertNotNull(metadata);
-				//			assertNotNull(metadata.getExif());
-				//			metadata.dump();
-			}
+			Debug.debug("Output Segments:");
+			new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
+
+			//				assertTrue(!hasExifData(tempFile));
+
+			JpegImageMetadata newMetadata = (JpegImageMetadata) Sanselan
+					.getMetadata(tempFile);
+			assertNotNull(newMetadata);
+			TiffImageMetadata newExifMetadata = newMetadata.getExif();
+			assertNotNull(newExifMetadata);
+			newMetadata.dump();
+
+			compare(oldExifMetadata, newExifMetadata);
 		}
 	}
 
+	private Hashtable makeDirectoryMap(ArrayList directories)
+	{
+		Hashtable directoryMap = new Hashtable();
+		for (int i = 0; i < directories.size(); i++)
+		{
+			TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories
+					.get(i);
+			directoryMap.put(new Integer(directory.type), directory);
+		}
+		return directoryMap;
+	}
+
+	private Hashtable makeFieldMap(ArrayList items)
+	{
+		Hashtable fieldMap = new Hashtable();
+		for (int i = 0; i < items.size(); i++)
+		{
+			TiffImageMetadata.Item item = (TiffImageMetadata.Item) items.get(i);
+			TiffField field = item.getTiffField();
+			fieldMap.put(new Integer(field.tag), field);
+		}
+		return fieldMap;
+	}
+
+	private void compare(TiffImageMetadata oldExifMetadata,
+			TiffImageMetadata newExifMetadata)
+	{
+		assertNotNull(oldExifMetadata);
+		assertNotNull(newExifMetadata);
+
+		ArrayList oldDirectories = oldExifMetadata.getDirectories();
+		ArrayList newDirectories = newExifMetadata.getDirectories();
+
+		assertTrue(oldDirectories.size() == newDirectories.size());
+
+		Hashtable oldDirectoryMap = makeDirectoryMap(oldDirectories);
+		Hashtable newDirectoryMap = makeDirectoryMap(newDirectories);
+
+		assertEquals(oldDirectories.size(), oldDirectoryMap.keySet().size());
+		ArrayList oldDirectoryTypes = new ArrayList(oldDirectoryMap.keySet());
+		Collections.sort(oldDirectoryTypes);
+		ArrayList newDirectoryTypes = new ArrayList(newDirectoryMap.keySet());
+		Collections.sort(newDirectoryTypes);
+		assertEquals(oldDirectoryTypes, newDirectoryTypes);
+
+		for (int i = 0; i < oldDirectoryTypes.size(); i++)
+		{
+			Integer dirType = (Integer) oldDirectoryTypes.get(i);
+
+//			Debug.debug("dirType", dirType);
+
+			TiffImageMetadata.Directory oldDirectory = (TiffImageMetadata.Directory) oldDirectoryMap
+					.get(dirType);
+			TiffImageMetadata.Directory newDirectory = (TiffImageMetadata.Directory) newDirectoryMap
+					.get(dirType);
+			assertNotNull(oldDirectory);
+			assertNotNull(newDirectory);
+
+			ArrayList oldItems = oldDirectory.getItems();
+			ArrayList newItems = newDirectory.getItems();
+
+			assertTrue(oldItems.size() == newItems.size());
+
+			Hashtable oldFieldMap = makeFieldMap(oldItems);
+			Hashtable newFieldMap = makeFieldMap(newItems);
+
+			assertEquals(oldItems.size(), oldFieldMap.keySet().size());
+			//			assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
+			//			assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
+
+			ArrayList oldFieldTags = new ArrayList(oldFieldMap.keySet());
+			Collections.sort(oldFieldTags);
+			ArrayList newFieldTags = new ArrayList(newFieldMap.keySet());
+			Collections.sort(newFieldTags);
+			assertEquals(oldFieldTags, newFieldTags);
+
+			for (int j = 0; j < oldFieldTags.size(); j++)
+			{
+				Integer fieldTag = (Integer) oldFieldTags.get(j);
+
+				TiffField oldField = (TiffField) oldFieldMap.get(fieldTag);
+				TiffField newField = (TiffField) newFieldMap.get(fieldTag);
+
+//				Debug.debug("fieldTag", fieldTag);
+
+				//				fieldTag.
+				assertNotNull(oldField);
+				assertNotNull(newField);
+
+				assertEquals(oldField.tag, newField.tag);
+				assertEquals(dirType.intValue(), newField.directoryType);
+				assertEquals(oldField.directoryType, newField.directoryType);
+				assertEquals(oldField.length, newField.length);
+				assertEquals(oldField.isLocalValue(), newField.isLocalValue());
+
+
+				if(!oldField.tagInfo.isOffset())
+				{
+					if (oldField.isLocalValue())
+					{
+						compare(oldField.valueOffsetBytes,
+								newField.valueOffsetBytes);
+					}
+					else
+					{
+						compare(oldField.oversizeValue, newField.oversizeValue);
+					}
+				}
+
+			}
+
+//			Debug.debug();
+		}
+	}
+
+	private void compare(byte a[], byte b[])
+	{
+		assertNotNull(a);
+		assertNotNull(b);
+		assertEquals(a.length, b.length);
+		for (int i = 0; i < a.length; i++)
+			assertEquals(a[i], b[i]);
+	}
 }

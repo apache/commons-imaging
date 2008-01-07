@@ -23,23 +23,23 @@ class PointerDirectoriesInfo
 	public final TiffOutputDirectory exifDirectory;
 	public final TiffOutputField gpsDirectoryOffsetField;
 	public final TiffOutputDirectory gpsDirectory;
-	public final TiffOutputField iteroperabilityDirectoryOffsetField;
-	public final TiffOutputDirectory iteroperabilityDirectory;
+	public final TiffOutputField interoperabilityDirectoryOffsetField;
+	public final TiffOutputDirectory interoperabilityDirectory;
 
 	public PointerDirectoriesInfo(
 			final TiffOutputField exifDirectoryOffsetField,
 			final TiffOutputDirectory exifDirectory,
 			final TiffOutputField gpsDirectoryOffsetField,
 			final TiffOutputDirectory gpsDirectory,
-			final TiffOutputField iteroperabilityDirectoryOffsetField,
-			final TiffOutputDirectory iteroperabilityDirectory)
+			final TiffOutputField interoperabilityDirectoryOffsetField,
+			final TiffOutputDirectory interoperabilityDirectory)
 	{
 		this.exifDirectoryOffsetField = exifDirectoryOffsetField;
 		this.exifDirectory = exifDirectory;
 		this.gpsDirectoryOffsetField = gpsDirectoryOffsetField;
 		this.gpsDirectory = gpsDirectory;
-		this.iteroperabilityDirectoryOffsetField = iteroperabilityDirectoryOffsetField;
-		this.iteroperabilityDirectory = iteroperabilityDirectory;
+		this.interoperabilityDirectoryOffsetField = interoperabilityDirectoryOffsetField;
+		this.interoperabilityDirectory = interoperabilityDirectory;
 	}
 
 }

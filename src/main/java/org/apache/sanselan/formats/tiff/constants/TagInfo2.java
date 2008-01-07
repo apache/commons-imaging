@@ -83,12 +83,39 @@ public class TagInfo2 implements TiffDirectoryConstants
 
 	public String toString()
 	{
-		return "[TagInfo. tag: " + tag + ", name: " + name + "]";
+		return "[TagInfo. tag: " + tag + " (0x" + Integer.toHexString(tag)
+				+ ", name: " + name + "]";
 	}
 
 	public boolean isDate()
 	{
 		return false;
+	}
+
+	public boolean isOffset()
+	{
+		return false;
+	}
+
+	public static class Offset extends TagInfo2
+	{
+		public Offset(String name, int tag, FieldType dataTypes[], int length,
+				ExifDirectoryType exifDirectory)
+		{
+			super(name, tag, dataTypes, length, exifDirectory);
+		}
+
+		public Offset(String name, int tag, FieldType dataType, int length)
+		{
+			super(name, tag, dataType, length);
+		}
+
+		//		"Exif Offset", 0x8769, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1,
+		//		EXIF_DIRECTORY_UNKNOWN);
+		public boolean isOffset()
+		{
+			return true;
+		}
 	}
 
 	public static class Date extends TagInfo2

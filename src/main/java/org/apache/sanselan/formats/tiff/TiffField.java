@@ -30,6 +30,7 @@ import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.constants.TagInfo2;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
+import org.apache.sanselan.util.Debug;
 
 public class TiffField implements TiffConstants
 {
@@ -60,6 +61,11 @@ public class TiffField implements TiffConstants
 
 		fieldType = getFieldType(type);
 		tagInfo = getTag(directoryType, tag);
+	}
+
+	public boolean isLocalValue()
+	{
+		return fieldType.isLocalValue(this);
 	}
 
 	public final class OversizeValueElement extends TiffElement
@@ -151,8 +157,8 @@ public class TiffField implements TiffConstants
 	private int getValueLengthInBytes()
 	{
 		int unit_length = fieldType.length;
-		int ValueLength = unit_length * length;
-		return ValueLength;
+		int valueLength = unit_length * length;
+		return valueLength;
 	}
 
 	public void fillInValue(ByteSource byteSource) throws ImageReadException,
@@ -161,9 +167,9 @@ public class TiffField implements TiffConstants
 		if (fieldType.isLocalValue(this))
 			return;
 
-		int ValueLength = getValueLengthInBytes();
+		int valueLength = getValueLengthInBytes();
 
-		byte bytes[] = byteSource.getBlock(valueOffset, ValueLength);
+		byte bytes[] = byteSource.getBlock(valueOffset, valueLength);
 		setOversizeValue(bytes);
 	}
 
@@ -408,6 +414,12 @@ public class TiffField implements TiffConstants
 	//		Debug.debug("oversizeValue", oversizeValue);
 	//		Debug.debug("byteOrder", byteOrder);
 	//	}
+
+	public String getDescriptionWithoutValue()
+	{
+		return tag + " (0x" + Integer.toHexString(tag) + ": " + tagInfo.name
+				+ "): ";
+	}
 
 	public String toString()
 	{

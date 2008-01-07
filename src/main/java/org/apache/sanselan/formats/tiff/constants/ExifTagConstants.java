@@ -558,7 +558,7 @@ public interface ExifTagConstants
 	public static final TagInfo2 EXIF_TAG_PHOTOSHOP_SETTINGS = new TagInfo2(
 			"Photoshop Settings", 0x8649, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1,
 			EXIF_DIRECTORY_UNKNOWN);
-	public static final TagInfo2 EXIF_TAG_EXIF_OFFSET = new TagInfo2(
+	public static final TagInfo2 EXIF_TAG_EXIF_OFFSET = new TagInfo2.Offset(
 			"Exif Offset", 0x8769, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1,
 			EXIF_DIRECTORY_UNKNOWN);
 	public static final TagInfo2 EXIF_TAG_ICC_PROFILE = new TagInfo2(
@@ -590,7 +590,7 @@ public interface ExifTagConstants
 	public static final TagInfo2 EXIF_TAG_SPECTRAL_SENSITIVITY = new TagInfo2(
 			"Spectral Sensitivity", 0x8824, FIELD_TYPE_ASCII, 1,
 			EXIF_DIRECTORY_EXIF_IFD);
-	public static final TagInfo2 EXIF_TAG_GPSINFO = new TagInfo2("GPSInfo",
+	public static final TagInfo2 EXIF_TAG_GPSINFO = new TagInfo2.Offset("GPSInfo",
 			0x8825, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1, EXIF_DIRECTORY_UNKNOWN);
 	public static final TagInfo2 EXIF_TAG_ISO = new TagInfo2("ISO", 0x8827,
 			FIELD_TYPE_SHORT, 1, EXIF_DIRECTORY_EXIF_IFD);
@@ -806,7 +806,7 @@ public interface ExifTagConstants
 	public static final TagInfo2 EXIF_TAG_RELATED_SOUND_FILE = new TagInfo2(
 			"Related Sound File", 0xa004, FIELD_TYPE_ASCII, 1,
 			EXIF_DIRECTORY_EXIF_IFD);
-	public static final TagInfo2 EXIF_TAG_INTEROP_OFFSET = new TagInfo2(
+	public static final TagInfo2 EXIF_TAG_INTEROP_OFFSET = new TagInfo2.Offset(
 			"Interop Offset", 0xa005, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1,
 			EXIF_DIRECTORY_UNKNOWN);
 	public static final TagInfo2 EXIF_TAG_FLASH_ENERGY_EXIF_IFD = new TagInfo2(
@@ -1032,12 +1032,14 @@ public interface ExifTagConstants
 	public static final TagInfo2 EXIF_TAG_HEIGHT_RESOLUTION = new TagInfo2(
 			"Height Resolution", 0xbc83, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1,
 			EXIF_DIRECTORY_UNKNOWN);
+	// might be an offset?
 	public static final TagInfo2 EXIF_TAG_IMAGE_OFFSET = new TagInfo2(
 			"Image Offset", 0xbcc0, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1,
 			EXIF_DIRECTORY_UNKNOWN);
 	public static final TagInfo2 EXIF_TAG_IMAGE_BYTE_COUNT = new TagInfo2(
 			"Image Byte Count", 0xbcc1, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1,
 			EXIF_DIRECTORY_UNKNOWN);
+	// might be an offset?
 	public static final TagInfo2 EXIF_TAG_ALPHA_OFFSET = new TagInfo2(
 			"Alpha Offset", 0xbcc2, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1,
 			EXIF_DIRECTORY_UNKNOWN);

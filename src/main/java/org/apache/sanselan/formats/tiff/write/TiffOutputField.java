@@ -26,24 +26,42 @@ import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 
 public class TiffOutputField implements TiffConstants
 {
+	public final int tag;
 	public final TagInfo2 tagInfo;
 	public final FieldType fieldType;
 	public final int count;
 
 	public byte bytes[];
 
-	public TiffOutputField(TagInfo2 tag, FieldType tagtype, int count, byte bytes[])
+	public TiffOutputField(TagInfo2 tagInfo, FieldType tagtype, int count,
+			byte bytes[])
 	{
-		this.tagInfo = tag;
+		this(tagInfo.tag, tagInfo, tagtype, count, bytes);
+	}
+
+	public TiffOutputField(final int tag, TagInfo2 tagInfo, FieldType tagtype,
+			int count, byte bytes[])
+	{
+		this.tag = tag;
+		this.tagInfo = tagInfo;
 		this.fieldType = tagtype;
 		this.count = count;
 		this.bytes = bytes;
 	}
 
+	public static final TiffOutputField createOffsetField(TagInfo2 tagInfo,
+			int byteOrder)
+	{
+		return new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1, FIELD_TYPE_LONG
+				.writeData(new int[]{
+					0,
+				}, byteOrder));
+	}
+
 	public int writeDirectoryEntry(BinaryOutputStream bos,
 			int seperateValuesOffset) throws ImageWriteException, IOException
 	{
-		bos.write2Bytes(tagInfo.tag);
+		bos.write2Bytes(tag);
 		bos.write2Bytes(fieldType.type);
 		bos.write4Bytes(count);
 
@@ -104,5 +122,33 @@ public class TiffOutputField implements TiffConstants
 	public void setData(byte bytes[])
 	{
 		this.bytes = bytes;
+	}
+
+	private static final String newline = System.getProperty("line.separator");
+
+	public String toString()
+	{
+		return toString(null);
+	}
+
+	public String toString(String prefix)
+	{
+		if (prefix == null)
+			prefix = "";
+		StringBuffer result = new StringBuffer();
+
+		result.append(prefix);
+		result.append(tagInfo);
+		result.append(newline);
+
+		result.append(prefix);
+		result.append("count: " + count);
+		result.append(newline);
+
+		result.append(prefix);
+		result.append(fieldType);
+		result.append(newline);
+
+		return result.toString();
 	}
 }
