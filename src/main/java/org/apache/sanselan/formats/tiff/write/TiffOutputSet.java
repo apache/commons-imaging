@@ -127,20 +127,6 @@ public final class TiffOutputSet implements TiffConstants
 		return result;
 	}
 
-	//	public static final int DIRECTORY_TYPE_UNKNOWN = -1;
-	//	public static final int DIRECTORY_TYPE_ROOT = 0;
-	//	public static final int DIRECTORY_TYPE_SUB = 1;
-	//	public static final int DIRECTORY_TYPE_THUMBNAIL = 2;
-	//	public static final int DIRECTORY_TYPE_EXIF = -2;
-	//	//	public static final int DIRECTORY_TYPE_SUB = 5;
-	//	public static final int DIRECTORY_TYPE_GPS = -3;
-	//	public static final int DIRECTORY_TYPE_INTEROPERABILITY = -4;
-	//	public static final int DIRECTORY_TYPE_DIR_0 = 0;
-	//	public static final int DIRECTORY_TYPE_DIR_1 = 1;
-	//	public static final int DIRECTORY_TYPE_DIR_2 = 2;
-	//	public static final int DIRECTORY_TYPE_DIR_3 = 3;
-	//	public static final int DIRECTORY_TYPE_DIR_4 = 4;
-
 	private static final String newline = System.getProperty("line.separator");
 
 	public String toString()

@@ -519,7 +519,7 @@ public class BinaryFileFunctions implements BinaryConstants
 		return result;
 	}
 
-	protected final byte[] getBytearrayTail(String name, byte bytes[], int count)
+	protected final byte[] getByteArrayTail(String name, byte bytes[], int count)
 	{
 		return readBytearray(name, bytes, count, bytes.length - count);
 	}

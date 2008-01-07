@@ -36,12 +36,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 		implements
 			TiffConstants
 {
-	public static final int UNDEFINED_VALUE = -1;
-
 	public final int type;
-	public int internalLength = UNDEFINED_VALUE;
-	public int totalLength = UNDEFINED_VALUE;
-	//	public int offset = UNDEFINED_VALUE;
 	private final ArrayList fields = new ArrayList();
 
 	private TiffOutputDirectory nextDirectory = null;
@@ -90,48 +85,6 @@ public final class TiffOutputDirectory extends TiffOutputItem
 			}
 		};
 		Collections.sort(fields, comparator);
-		//			Debug.debug("first field", ((WriteField) fields.get(0)).tagInfo);
-		//			Debug.debug("last field", ((WriteField) fields.get(fields.size()-1)).tagInfo);
-		//			for(int i=0;i<fields.size();i++)
-		//			{
-		//				WriteField field = (WriteField) fields.get(i);
-		//				Debug.debug(" field", field.tagInfo);
-		//			}
-	}
-
-	public void calculateLengths(int byteOrder) throws IOException,
-			ImageWriteException
-	{
-		tiffImageDataInfoStep(byteOrder);
-		jpegImageDataInfoStep(byteOrder);
-
-		internalLength = TIFF_ENTRY_LENGTH * fields.size()
-				+ TIFF_DIRECTORY_HEADER_LENGTH + TIFF_DIRECTORY_FOOTER_LENGTH;
-
-		totalLength = internalLength;
-
-		for (int i = 0; i < fields.size(); i++)
-		{
-			TiffOutputField field = (TiffOutputField) fields.get(i);
-			totalLength += field.getSeperateValueLength();
-		}
-
-		if (null != imageDataInfo)
-		{
-			int imageDataOffset = getOffset() + totalLength;
-			totalLength += imageDataInfo.totalLength;
-			updateTiffImageDataOffsetsStep(imageDataOffset, byteOrder);
-		}
-
-		if (null != rawJpegImageData)
-		{
-			int imageDataOffset = getOffset() + totalLength;
-			totalLength += rawJpegImageData.length;
-			totalLength += TiffImageWriterBase
-					.imageDataPaddingLength(rawJpegImageData.length);
-			updateJpegImageDataOffsetsStep(imageDataOffset, byteOrder);
-		}
-
 	}
 
 	public String description()
@@ -149,11 +102,11 @@ public final class TiffOutputDirectory extends TiffOutputItem
 		for (int i = 0; i < fields.size(); i++)
 		{
 			TiffOutputField field = (TiffOutputField) fields.get(i);
-			field.writeSimple(bos);
+			field.writeField(bos);
 
-//			Debug.debug("\t" + "writing field (" + field.tag + ", 0x" + Integer.toHexString(field.tag) + ")", field.tagInfo);
-//			if(field.tagInfo.isOffset())
-//				Debug.debug("\t\tOFFSET!", field.bytes);
+			//			Debug.debug("\t" + "writing field (" + field.tag + ", 0x" + Integer.toHexString(field.tag) + ")", field.tagInfo);
+			//			if(field.tagInfo.isOffset())
+			//				Debug.debug("\t\tOFFSET!", field.bytes);
 		}
 
 		int nextDirectoryOffset = 0;
@@ -165,181 +118,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 			bos.write4Bytes(0);
 		else
 			bos.write4Bytes(nextDirectoryOffset);
-
-		//		// Write Seperate Values
-		//		for (int i = 0; i < fields.size(); i++)
-		//		{
-		//			TiffOutputField field = (TiffOutputField) fields.get(i);
-		//			field.writeSeperateValue(bos);
-		//		}
-
-		//		if (null != rawTiffImageData)
-		//		{
-		//			byte imageData[][] = rawTiffImageData.getRawImageData();
-		//			for (int i = 0; i < imageData.length; i++)
-		//			{
-		//				bos.writeByteArray(imageData[i]);
-		//				int imageDataByteCount = imageData[i].length;
-		//
-		//				int remainder = TiffImageWriterBase
-		//						.imageDataPaddingLength(imageDataByteCount);
-		//				for (int j = 0; j < remainder; j++)
-		//					bos.write(0);
-		//			}
-		//		}
-		//
-		//		if (null != rawJpegImageData)
-		//		{
-		//			//				byte imageData[][] = rawJpegImageData.getRawImageData();
-		//			bos.writeByteArray(rawJpegImageData);
-		//			int remainder = TiffImageWriterBase
-		//					.imageDataPaddingLength(rawJpegImageData.length);
-		//			for (int j = 0; j < remainder; j++)
-		//				bos.write(0);
-		//		}
-
 	}
-
-	public void write(BinaryOutputStream bos) throws IOException,
-			ImageWriteException
-	{
-
-		//			Debug.debug("dir write");
-		//			Debug.debug("dir write offset", offset);
-		//			Debug.debug("dir write internalLength", internalLength);
-		//			Debug.debug("dir write totalLength", totalLength);
-		//			Debug.debug("dir write fields", fields.size());
-		//			Debug.debug("dir write nextDirectoryOffset", nextDirectoryOffset);
-
-		int nextSeperateValueOffset = getOffset() + internalLength;
-
-		//			Debug.debug("writing directory", description());
-		//			Debug.debug("writing fields.size()", fields.size());
-
-		// Write Directory Field Count
-		bos.write2Bytes(fields.size()); // DirectoryFieldCount
-
-		// Write Fields
-		for (int i = 0; i < fields.size(); i++)
-		{
-			TiffOutputField field = (TiffOutputField) fields.get(i);
-			//				checkOffset("ifd [" + i + "]", fOffsetToSeperateValues);
-			nextSeperateValueOffset += field.writeDirectoryEntry(bos,
-					nextSeperateValueOffset);
-		}
-
-		int nextDirectoryOffset = 0;
-		if (nextDirectory != null)
-			nextDirectoryOffset = nextDirectory.getOffset();
-
-		// Write nextDirectoryOffset
-		if (nextDirectoryOffset == UNDEFINED_VALUE)
-			bos.write4Bytes(0);
-		else
-			bos.write4Bytes(nextDirectoryOffset);
-
-		// Write Seperate Values
-		for (int i = 0; i < fields.size(); i++)
-		{
-			TiffOutputField field = (TiffOutputField) fields.get(i);
-			field.writeSeperateValue(bos);
-		}
-
-		if (null != rawTiffImageData)
-		{
-			byte imageData[][] = rawTiffImageData.getRawImageData();
-			for (int i = 0; i < imageData.length; i++)
-			{
-				bos.writeByteArray(imageData[i]);
-				int imageDataByteCount = imageData[i].length;
-
-				int remainder = TiffImageWriterBase
-						.imageDataPaddingLength(imageDataByteCount);
-				for (int j = 0; j < remainder; j++)
-					bos.write(0);
-			}
-		}
-
-		if (null != rawJpegImageData)
-		{
-			//				byte imageData[][] = rawJpegImageData.getRawImageData();
-			bos.writeByteArray(rawJpegImageData);
-			int remainder = TiffImageWriterBase
-					.imageDataPaddingLength(rawJpegImageData.length);
-			for (int j = 0; j < remainder; j++)
-				bos.write(0);
-		}
-
-	}
-
-	private ImageDataInfo imageDataInfo = null;
-
-	private void tiffImageDataInfoStep(int byteOrder)
-	{
-		if (null == rawTiffImageData)
-			return;
-
-		byte imageData[][] = rawTiffImageData.getRawImageData();
-		boolean stripsNotTiles = rawTiffImageData.stripsNotTiles();
-
-		int imageDataOffsets[] = null;
-		int imageDataByteCounts[] = null;
-		TiffOutputField imageDataOffsetsField = null;
-
-		imageDataOffsets = new int[imageData.length];
-		imageDataByteCounts = new int[imageData.length];
-
-		int totalLength = 0;
-		for (int i = 0; i < imageData.length; i++)
-		{
-			imageDataByteCounts[i] = imageData[i].length;
-			totalLength += imageData[i].length;
-
-			totalLength += TiffImageWriterBase
-					.imageDataPaddingLength(imageData[i].length);
-		}
-
-		// Append imageData-related fields to first directory
-		{
-			TagInfo tagInfo;
-			if (stripsNotTiles)
-				tagInfo = TIFF_TAG_STRIP_OFFSETS;
-			else
-				tagInfo = TIFF_TAG_TILE_OFFSETS;
-
-			imageDataOffsetsField = findField(tagInfo);
-			if (null == imageDataOffsetsField)
-			{
-				imageDataOffsetsField = new TiffOutputField(tagInfo,
-						FIELD_TYPE_LONG, imageDataOffsets.length,
-						FIELD_TYPE_LONG.writeData(imageDataOffsets, byteOrder));
-				add(imageDataOffsetsField);
-			}
-		}
-		{
-			TagInfo tagInfo;
-			if (stripsNotTiles)
-				tagInfo = TIFF_TAG_STRIP_BYTE_COUNTS;
-			else
-				tagInfo = TIFF_TAG_TILE_BYTE_COUNTS;
-
-			byte data[] = FIELD_TYPE_LONG.writeData(imageDataByteCounts,
-					byteOrder);
-
-			TiffOutputField field = findField(tagInfo);
-			if (null == field)
-				add(new TiffOutputField(tagInfo, FIELD_TYPE_LONG,
-						imageDataByteCounts.length, data));
-			else
-				field.setData(data);
-
-		}
-
-		imageDataInfo = new ImageDataInfo(imageData, imageDataOffsets,
-				imageDataByteCounts, imageDataOffsetsField, totalLength);
-	}
-
-	TiffOutputField jpegImageDataOffsetField = null;
 
 	private byte rawJpegImageData[] = null;
 
@@ -353,69 +132,6 @@ public final class TiffOutputDirectory extends TiffOutputItem
 		return rawJpegImageData;
 	}
 
-	private void jpegImageDataInfoStep(int byteOrder)
-	{
-		if (null == rawJpegImageData)
-			return;
-
-		//			int totalLength = 0;
-		//			totalLength += rawJpegImageData.length;
-		//			totalLength += imageDataPaddingLength(rawJpegImageData.length);
-
-		// Append imageData-related fields to first directory
-		{
-			TagInfo tagInfo = TIFF_TAG_JPEG_INTERCHANGE_FORMAT;
-
-			jpegImageDataOffsetField = findField(tagInfo);
-			if (null == jpegImageDataOffsetField)
-			{
-				jpegImageDataOffsetField = new TiffOutputField(tagInfo,
-						FIELD_TYPE_LONG, 1, FIELD_TYPE_LONG.getStubValue(1));
-				add(jpegImageDataOffsetField);
-			}
-		}
-		{
-			TagInfo tagInfo = TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH;
-
-			byte data[] = FIELD_TYPE_LONG.writeData(new int[]{
-				rawJpegImageData.length,
-			}, byteOrder);
-
-			TiffOutputField field = findField(tagInfo);
-			if (null == field)
-				add(new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1, data));
-			else
-				field.setData(data);
-		}
-	}
-
-	private void updateTiffImageDataOffsetsStep(final int imageDataOffset,
-			int byteOrder) throws IOException, ImageWriteException
-	{
-		int currentOffset = imageDataOffset;
-
-		for (int i = 0; i < imageDataInfo.imageData.length; i++)
-		{
-			imageDataInfo.imageDataOffsets[i] = currentOffset;
-			currentOffset += imageDataInfo.imageDataByteCounts[i];
-
-			currentOffset += TiffImageWriterBase
-					.imageDataPaddingLength(imageDataInfo.imageDataByteCounts[i]);
-		}
-
-		imageDataInfo.imageDataOffsetsField.setData(FIELD_TYPE_LONG.writeData(
-				imageDataInfo.imageDataOffsets, byteOrder));
-		//			}
-	}
-
-	private void updateJpegImageDataOffsetsStep(final int imageDataOffset,
-			int byteOrder) throws IOException, ImageWriteException
-	{
-		jpegImageDataOffsetField.setData(FIELD_TYPE_LONG.writeData(new int[]{
-			imageDataOffset,
-		}, byteOrder));
-	}
-
 	private RawTiffImageData rawTiffImageData = null;
 
 	public void setRawTiffImageData(RawTiffImageData rawTiffImageData)
@@ -427,16 +143,6 @@ public final class TiffOutputDirectory extends TiffOutputItem
 	{
 		return rawTiffImageData;
 	}
-
-	//		public static final Comparator COMPARATOR = new Comparator()
-	//		{
-	//			public int compare(Object o1, Object o2)
-	//			{
-	//				Directory e1 = (Directory) o1;
-	//				Directory e2 = (Directory) o2;
-	//				return e1.offset - e2.offset;
-	//			}
-	//		};
 
 	public int getItemLength()
 	{
@@ -461,7 +167,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 	protected List getOutputItems(TiffOutputSummary outputSummary)
 	{
 		// first validate directory fields.
-		
+
 		removeFieldIfPresent(TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
 		removeFieldIfPresent(TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
 
@@ -473,15 +179,15 @@ public final class TiffOutputDirectory extends TiffOutputItem
 					FieldType.getStubLocalValue());
 			add(jpegOffsetField);
 
-			TiffOutputField jpegLengthField = new TiffOutputField(
-					TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH, FIELD_TYPE_LONG,
-					1, FieldType.getStubLocalValue());
-			add(jpegLengthField);
-
 			byte lengthValue[] = FIELD_TYPE_LONG.writeData(new int[]{
 				rawJpegImageData.length,
 			}, outputSummary.byteOrder);
-			jpegLengthField.setData(lengthValue);
+
+			TiffOutputField jpegLengthField = new TiffOutputField(
+					TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH, FIELD_TYPE_LONG,
+					1, lengthValue);
+			add(jpegLengthField);
+
 		}
 
 		// --------------------------------------------------------------
@@ -492,7 +198,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 		removeFieldIfPresent(TIFF_TAG_TILE_BYTE_COUNTS);
 
 		TiffOutputField imageDataOffsetField;
-		ImageDataInfo imageDataInfo = null;
+		ImageDataOffsets imageDataInfo = null;
 		if (null != rawTiffImageData)
 		{
 			boolean stripsNotTiles = rawTiffImageData.stripsNotTiles();
@@ -520,15 +226,9 @@ public final class TiffOutputDirectory extends TiffOutputItem
 
 			imageDataOffsets = new int[imageData.length];
 			imageDataByteCounts = new int[imageData.length];
-
-			int imageDataTotalLength = 0;
 			for (int i = 0; i < imageData.length; i++)
 			{
 				imageDataByteCounts[i] = imageData[i].length;
-				imageDataTotalLength += imageData[i].length;
-
-				imageDataTotalLength += TiffImageWriterBase
-						.imageDataPaddingLength(imageData[i].length);
 			}
 
 			// --------
@@ -551,9 +251,8 @@ public final class TiffOutputDirectory extends TiffOutputItem
 
 			// --------
 
-			imageDataInfo = new ImageDataInfo(imageData, imageDataOffsets,
-					imageDataByteCounts, imageDataOffsetField,
-					imageDataTotalLength);
+			imageDataInfo = new ImageDataOffsets(imageData, imageDataOffsets,
+					 imageDataOffsetField);
 		}
 
 		// --------------------------------------------------------------
@@ -562,18 +261,6 @@ public final class TiffOutputDirectory extends TiffOutputItem
 		result.add(this);
 		sortFields();
 
-		//		public void calculateLengths(int byteOrder) throws IOException,
-		//		ImageWriteException
-		//{
-		//	tiffImageDataInfoStep(byteOrder);
-		//	jpegImageDataInfoStep(byteOrder);
-		//
-		//	internalLength = TIFF_ENTRY_LENGTH * fields.size()
-		//			+ TIFF_DIRECTORY_HEADER_LENGTH
-		//			+ TIFF_DIRECTORY_FOOTER_LENGTH;
-		//
-		//	totalLength = internalLength;
-		//
 		for (int i = 0; i < fields.size(); i++)
 		{
 			TiffOutputField field = (TiffOutputField) fields.get(i);
@@ -582,7 +269,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 
 			TiffOutputItem item = field.getSeperateValue();
 			result.add(item);
-//			outputSummary.add(item, field);
+			//			outputSummary.add(item, field);
 		}
 
 		if (null != imageDataInfo)

@@ -376,7 +376,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
 		//
 		//		Debug.debug("head", head);
 
-		return getBytearrayTail("trimmed exif bytes", bytes, 6);
+		return getByteArrayTail("trimmed exif bytes", bytes, 6);
 	}
 
 	private JpegImageMetadata.Photoshop getPhotoshopMetadata(

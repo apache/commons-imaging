@@ -16,24 +16,18 @@
  */
 package org.apache.sanselan.formats.tiff.write;
 
-class ImageDataInfo
+class ImageDataOffsets
 {
-	public final byte imageData[][];
 	public final int imageDataOffsets[];
-	public final int imageDataByteCounts[];
 	public final TiffOutputField imageDataOffsetsField;
-	public final int totalLength;
 	public final TiffOutputItem outputItems[];
 
-	public ImageDataInfo(final byte[][] imageData,
-			final int[] imageDataOffsets, final int[] imageDataByteCounts,
-			final TiffOutputField imageDataOffsetsField, final int totalLength)
+	public ImageDataOffsets(final byte imageData[][],
+			final int[] imageDataOffsets, 
+			final TiffOutputField imageDataOffsetsField)
 	{
-		this.imageData = imageData;
 		this.imageDataOffsets = imageDataOffsets;
-		this.imageDataByteCounts = imageDataByteCounts;
 		this.imageDataOffsetsField = imageDataOffsetsField;
-		this.totalLength = totalLength;
 
 		outputItems = new TiffOutputItem[imageData.length];
 		for (int i = 0; i < imageData.length; i++)

@@ -122,7 +122,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 			byte bytes[] = baos.toByteArray();
 			File tempFile = File.createTempFile(name + "_", ".jpg");
 			Debug.debug("tempFile", tempFile);
-			//			tempFile.deleteOnExit();
+			tempFile.deleteOnExit();
 			IOUtils.writeToFile(bytes, tempFile);
 
 			Debug.debug("Output Segments:");
@@ -158,39 +158,22 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		rewrite(rewriter, "lossy");
 	}
 
-	//	public void testRewriteLossy2() throws IOException, ImageReadException,
-	//			ImageWriteException
-	//	{
-	//		Rewriter rewriter = new Rewriter()
-	//		{
-	//			public void rewrite(ByteSource byteSource, OutputStream os,
-	//					TiffOutputSet outputSet) throws ImageReadException,
-	//					IOException, ImageWriteException
-	//			{
-	//				new ExifRewriter().updateExifMetadataLossy2(byteSource, os,
-	//						outputSet);
-	//			}
-	//		};
-	//
-	//		rewrite(rewriter, "lossy2");
-	//	}
-
-	//	public void testRewriteLossless() throws IOException, ImageReadException,
-	//			ImageWriteException
-	//	{
-	//		Rewriter rewriter = new Rewriter()
-	//		{
-	//			public void rewrite(ByteSource byteSource, OutputStream os,
-	//					TiffOutputSet outputSet) throws ImageReadException,
-	//					IOException, ImageWriteException
-	//			{
-	//				new ExifRewriter().updateExifMetadataLossless(byteSource, os,
-	//						outputSet);
-	//			}
-	//		};
-	//
-	//		rewrite(rewriter, "lossless");
-	//	}
+//	public void testRewriteLossless() throws IOException, ImageReadException,
+//			ImageWriteException
+//	{
+//		Rewriter rewriter = new Rewriter()
+//		{
+//			public void rewrite(ByteSource byteSource, OutputStream os,
+//					TiffOutputSet outputSet) throws ImageReadException,
+//					IOException, ImageWriteException
+//			{
+//				new ExifRewriter().updateExifMetadataLossless(byteSource, os,
+//						outputSet);
+//			}
+//		};
+//
+//		rewrite(rewriter, "lossless");
+//	}
 
 	private Hashtable makeDirectoryMap(ArrayList directories)
 	{
@@ -241,7 +224,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		{
 			Integer dirType = (Integer) oldDirectoryTypes.get(i);
 
-//			Debug.debug("dirType", dirType);
+			//			Debug.debug("dirType", dirType);
 
 			TiffImageMetadata.Directory oldDirectory = (TiffImageMetadata.Directory) oldDirectoryMap
 					.get(dirType);
@@ -253,10 +236,10 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 			ArrayList oldItems = oldDirectory.getItems();
 			ArrayList newItems = newDirectory.getItems();
 
-//			Debug.debug("oldItems.size()", oldItems.size());
-//			Debug.debug("newItems.size()", newItems.size());
-//			dump("oldItems", oldItems);
-//			dump("newItems", newItems);
+			//			Debug.debug("oldItems.size()", oldItems.size());
+			//			Debug.debug("newItems.size()", newItems.size());
+			//			dump("oldItems", oldItems);
+			//			dump("newItems", newItems);
 
 			assertTrue(oldItems.size() == newItems.size());
 
@@ -283,9 +266,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 				TiffField oldField = (TiffField) oldFieldMap.get(fieldTag);
 				TiffField newField = (TiffField) newFieldMap.get(fieldTag);
 
-//				Debug.debug("fieldTag", fieldTag);
-//				Debug.debug("oldField", oldField);
-//				Debug.debug("fieldTag", fieldTag);
+				//				Debug.debug("fieldTag", fieldTag);
+				//				Debug.debug("oldField", oldField);
+				//				Debug.debug("fieldTag", fieldTag);
 
 				//				fieldTag.
 				assertNotNull(oldField);

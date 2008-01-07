@@ -20,7 +20,6 @@ import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryFileFunctions;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
-import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossy;
 
 public abstract class FieldType extends BinaryFileFunctions
 		implements
