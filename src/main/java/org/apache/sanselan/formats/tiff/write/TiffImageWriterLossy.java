@@ -327,11 +327,6 @@ public class TiffImageWriterLossy extends TiffImageWriterBase
 		bos.write4Bytes(foffsetToFirstIFD);
 	}
 
-	static int imageDataPaddingLength(int dataLength)
-	{
-		return (4 - (dataLength % 4)) % 4;
-	}
-
 	private TiffOutputDirectory findDirectoryByType(List directories, int type)
 	{
 		for (int i = 0; i < directories.size(); i++)
@@ -342,6 +337,12 @@ public class TiffImageWriterLossy extends TiffImageWriterBase
 				return directory;
 		}
 		return null;
+	}
+
+	public void writeDirectories(OutputStream os, TiffOutputSet outputSet)
+			throws IOException, ImageWriteException
+	{
+		writeDirectories(os, outputSet.getDirectories());
 	}
 
 	public void writeDirectories(OutputStream os, List directories)
@@ -403,7 +404,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase
 			// fields must be written in ascending order.
 			directory.sortFields();
 
-			directory.offset = offset;
+			directory.setOffset(offset);
 
 			if (directory.type == TiffDirectory.DIRECTORY_TYPE_EXIF
 					|| directory.type == TiffDirectory.DIRECTORY_TYPE_GPS

@@ -34,6 +34,21 @@ public final class TiffOutputSet implements TiffConstants
 		this.byteOrder = byteOrder;
 	}
 
+	protected List getOutputItems(TiffOutputSummary outputSummary)
+	{
+		List result = new ArrayList();
+
+		for (int i = 0; i < directories.size(); i++)
+		{
+			TiffOutputDirectory directory = (TiffOutputDirectory) directories
+					.get(i);
+
+			result.addAll(directory.getOutputItems(outputSummary));
+		}
+
+		return result;
+	}
+
 	public void addDirectory(TiffOutputDirectory directory)
 			throws ImageWriteException
 	{

@@ -20,6 +20,7 @@ import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryFileFunctions;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossy;
 
 public abstract class FieldType extends BinaryFileFunctions
 		implements
@@ -38,6 +39,18 @@ public abstract class FieldType extends BinaryFileFunctions
 	public boolean isLocalValue(TiffField entry)
 	{
 		return ((length > 0) && ((length * entry.length) <= TIFF_ENTRY_MAX_VALUE_LENGTH));
+	}
+
+	//	public static final byte[] STUB_LOCAL_VALUE  = new byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
+
+	public static final byte[] getStubLocalValue()
+	{
+		return new byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
+	}
+
+	public final byte[] getStubValue(int count)
+	{
+		return new byte[count * length];
 	}
 
 	public String getDisplayValue(TiffField entry)

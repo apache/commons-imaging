@@ -33,6 +33,8 @@ public class TiffOutputField implements TiffConstants
 
 	public byte bytes[];
 
+	private final TiffOutputItem separateValueItem;
+
 	public TiffOutputField(TagInfo tagInfo, FieldType tagtype, int count,
 			byte bytes[])
 	{
@@ -47,9 +49,18 @@ public class TiffOutputField implements TiffConstants
 		this.fieldType = tagtype;
 		this.count = count;
 		this.bytes = bytes;
+
+		if (isLocalValue())
+			separateValueItem = null;
+		else
+		{
+			String name = "Field Seperate value (" + tagInfo.getDescription()
+					+ ")";
+			separateValueItem = new TiffOutputItem.Value(name, bytes);
+		}
 	}
 
-	public static final TiffOutputField createOffsetField(TagInfo tagInfo,
+	protected static final TiffOutputField createOffsetField(TagInfo tagInfo,
 			int byteOrder)
 	{
 		return new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1, FIELD_TYPE_LONG
@@ -58,7 +69,37 @@ public class TiffOutputField implements TiffConstants
 				}, byteOrder));
 	}
 
-	public int writeDirectoryEntry(BinaryOutputStream bos,
+	protected void writeSimple(BinaryOutputStream bos) throws IOException,
+			ImageWriteException
+	{
+		bos.write2Bytes(tag);
+		bos.write2Bytes(fieldType.type);
+		bos.write4Bytes(count);
+
+		if (isLocalValue())
+		{
+			if (separateValueItem != null)
+				throw new ImageWriteException("Unexpected separate value item.");
+
+			bos.writeByteArray(bytes);
+			int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
+			for (int i = 0; i < remainder; i++)
+				bos.write(0);
+		}
+		else
+		{
+			if (separateValueItem == null)
+				throw new ImageWriteException("Missing separate value item.");
+
+			bos.write4Bytes(separateValueItem.getOffset());
+
+			int written = bytes.length;
+			if ((written % 2) != 0)
+				written++;
+		}
+	}
+
+	protected int writeDirectoryEntry(BinaryOutputStream bos,
 			int seperateValuesOffset) throws ImageWriteException, IOException
 	{
 		bos.write2Bytes(tag);
@@ -68,7 +109,7 @@ public class TiffOutputField implements TiffConstants
 		//		if(fieldType.type == TiffConstants.FIELD_TYPE_ASCII.type)
 		//			Debug.debug("ascii bytes", bytes);
 
-		if (bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH)
+		if (isLocalValue())
 		{
 			bos.writeByteArray(bytes);
 			int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
@@ -88,9 +129,19 @@ public class TiffOutputField implements TiffConstants
 		}
 	}
 
-	public int getSeperateValueLength()
+	protected TiffOutputItem getSeperateValue()
 	{
-		if (bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH)
+		return separateValueItem;
+	}
+
+	protected boolean isLocalValue()
+	{
+		return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
+	}
+
+	protected int getSeperateValueLength()
+	{
+		if (isLocalValue())
 			return 0;
 		else
 		{
@@ -102,10 +153,10 @@ public class TiffOutputField implements TiffConstants
 		}
 	}
 
-	public int writeSeperateValue(BinaryOutputStream bos)
+	protected int writeSeperateValue(BinaryOutputStream bos)
 			throws ImageWriteException, IOException
 	{
-		if (bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH)
+		if (isLocalValue())
 			return 0;
 
 		bos.writeByteArray(bytes);
@@ -119,9 +170,16 @@ public class TiffOutputField implements TiffConstants
 		return written;
 	}
 
-	public void setData(byte bytes[])
+	protected void setData(byte bytes[])
 	{
+		if (this.bytes.length != bytes.length)
+			throw new Error("Bug. Locality disrupted! "
+					+ tagInfo.getDescription());
+		boolean wasLocalValue = isLocalValue();
 		this.bytes = bytes;
+		if (isLocalValue() != wasLocalValue)
+			throw new Error("Bug. Locality disrupted! "
+					+ tagInfo.getDescription());
 	}
 
 	private static final String newline = System.getProperty("line.separator");

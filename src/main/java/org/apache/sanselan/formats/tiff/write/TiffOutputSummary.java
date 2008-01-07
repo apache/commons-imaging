@@ -16,83 +16,82 @@
  */
 package org.apache.sanselan.formats.tiff.write;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 class TiffOutputSummary implements TiffConstants
 {
+	public final int byteOrder;
 	public final TiffOutputDirectory rootDirectory;
 	public final Map directoryTypeMap;
 
-	public TiffOutputSummary(final TiffOutputDirectory rootDirectory,
-			final Map directoryTypeMap)
+	public TiffOutputSummary(final int byteOrder,
+			final TiffOutputDirectory rootDirectory, final Map directoryTypeMap)
 	{
+		this.byteOrder = byteOrder;
 		this.rootDirectory = rootDirectory;
 		this.directoryTypeMap = directoryTypeMap;
 	}
 
-	private static class Offset
+	private static class OffsetItem
 	{
-		public final TiffOutputDirectory directory;
-		public final TiffOutputField directoryOffsetField;
+		public final TiffOutputItem item;
+		public final TiffOutputField itemOffsetField;
 
-		public Offset(final TiffOutputDirectory directory,
-				final TiffOutputField directoryOffsetField)
+		public OffsetItem(final TiffOutputItem item,
+				final TiffOutputField itemOffsetField)
 		{
 			super();
-			this.directoryOffsetField = directoryOffsetField;
-			this.directory = directory;
+			this.itemOffsetField = itemOffsetField;
+			this.item = item;
 		}
 	}
 
-	private List offsets = new ArrayList();
+	private List offsetItems = new ArrayList();
 
-	public void add(final TiffOutputDirectory directory,
-			final TiffOutputField directoryOffsetField)
+	public void add(final TiffOutputItem item,
+			final TiffOutputField itemOffsetField)
 	{
-		offsets.add(new Offset(directory, directoryOffsetField));
+		offsetItems.add(new OffsetItem(item, itemOffsetField));
 	}
 
 	public void updateOffsets(int byteOrder)
 	{
-		for (int i = 0; i < offsets.size(); i++)
+		for (int i = 0; i < offsetItems.size(); i++)
 		{
-			Offset offset = (Offset) offsets.get(i);
+			OffsetItem offset = (OffsetItem) offsetItems.get(i);
 
 			byte value[] = FIELD_TYPE_LONG.writeData(new int[]{
-				offset.directory.offset,
+				offset.item.getOffset(),
 			}, byteOrder);
-			offset.directoryOffsetField.setData(value);
+			offset.itemOffsetField.setData(value);
+		}
+
+		for (int i = 0; i < imageDataItems.size(); i++)
+		{
+			ImageDataInfo imageDataInfo = (ImageDataInfo) imageDataItems.get(i);
+
+			for (int j = 0; j < imageDataInfo.imageData.length; j++)
+			{
+				TiffOutputItem item = imageDataInfo.outputItems[j];
+				imageDataInfo.imageDataOffsets[j] = item.getOffset();
+			}
+
+			imageDataInfo.imageDataOffsetsField.setData(FIELD_TYPE_LONG
+					.writeData(imageDataInfo.imageDataOffsets, byteOrder));
 		}
 	}
 
-	//	public PointerDirectoriesInfo(
-	//){}
-	//	
-	//	public final TiffOutputField exifDirectoryOffsetField;
-	//	public final TiffOutputDirectory exifDirectory;
-	//	public final TiffOutputField gpsDirectoryOffsetField;
-	//	public final TiffOutputDirectory gpsDirectory;
-	//	public final TiffOutputField interoperabilityDirectoryOffsetField;
-	//	public final TiffOutputDirectory interoperabilityDirectory;
-	//
-	//	public PointerDirectoriesInfo(
-	//			final TiffOutputField exifDirectoryOffsetField,
-	//			final TiffOutputDirectory exifDirectory,
-	//			final TiffOutputField gpsDirectoryOffsetField,
-	//			final TiffOutputDirectory gpsDirectory,
-	//			final TiffOutputField interoperabilityDirectoryOffsetField,
-	//			final TiffOutputDirectory interoperabilityDirectory)
-	//	{
-	//		this.exifDirectoryOffsetField = exifDirectoryOffsetField;
-	//		this.exifDirectory = exifDirectory;
-	//		this.gpsDirectoryOffsetField = gpsDirectoryOffsetField;
-	//		this.gpsDirectory = gpsDirectory;
-	//		this.interoperabilityDirectoryOffsetField = interoperabilityDirectoryOffsetField;
-	//		this.interoperabilityDirectory = interoperabilityDirectory;
-	//	}
+	private List imageDataItems = new ArrayList();
+
+	public void addTiffImageData(final ImageDataInfo imageDataInfo)
+	{
+		offsetItems.add(imageDataInfo);
+	}
 
 }

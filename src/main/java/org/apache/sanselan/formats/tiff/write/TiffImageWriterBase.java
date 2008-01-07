@@ -21,13 +21,13 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryConstants;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
-import org.apache.sanselan.util.Debug;
 
 public abstract class TiffImageWriterBase
 		implements
@@ -48,8 +48,16 @@ public abstract class TiffImageWriterBase
 		this.byteOrder = byteOrder;
 	}
 
-	public abstract void writeDirectories(OutputStream os, List directories)
-			throws IOException, ImageWriteException;
+	protected final static int imageDataPaddingLength(int dataLength)
+	{
+		return (4 - (dataLength % 4)) % 4;
+	}
+
+	public abstract void writeDirectories(OutputStream os,
+			TiffOutputSet outputSet) throws IOException, ImageWriteException;
+
+	//	public abstract void writeDirectories(OutputStream os, List directories)
+	//	throws IOException, ImageWriteException;
 
 	protected TiffOutputSummary validateDirectories(List directories)
 			throws ImageWriteException
@@ -115,25 +123,34 @@ public abstract class TiffImageWriterBase
 				//				dirMap.put(arg0, arg1)
 			}
 
+			HashSet fieldTags = new HashSet();
 			ArrayList fields = directory.getFields();
 			for (int j = 0; j < fields.size(); j++)
 			{
 				TiffOutputField field = (TiffOutputField) fields.get(j);
-				if (field.tagInfo.tag == EXIF_TAG_EXIF_OFFSET.tag)
+
+				Integer fieldKey = new Integer(field.tag);
+				if (fieldTags.contains(fieldKey))
+					throw new ImageWriteException("Tag ("
+							+ field.tagInfo.getDescription()
+							+ ") appears twice in directory.");
+				fieldTags.add(fieldKey);
+
+				if (field.tag == EXIF_TAG_EXIF_OFFSET.tag)
 				{
 					if (exifDirectoryOffsetField != null)
 						throw new ImageWriteException(
 								"More than one Exif directory offset field.");
 					exifDirectoryOffsetField = field;
 				}
-				else if (field.tagInfo.tag == EXIF_TAG_INTEROP_OFFSET.tag)
+				else if (field.tag == EXIF_TAG_INTEROP_OFFSET.tag)
 				{
 					if (interoperabilityDirectoryOffsetField != null)
 						throw new ImageWriteException(
 								"More than one Interoperability directory offset field.");
 					interoperabilityDirectoryOffsetField = field;
 				}
-				else if (field.tagInfo.tag == EXIF_TAG_GPSINFO.tag)
+				else if (field.tag == EXIF_TAG_GPSINFO.tag)
 				{
 					if (gpsDirectoryOffsetField != null)
 						throw new ImageWriteException(
@@ -169,8 +186,8 @@ public abstract class TiffImageWriterBase
 				.get(new Integer(DIRECTORY_TYPE_ROOT));
 
 		// prepare results
-		TiffOutputSummary result = new TiffOutputSummary(rootDirectory,
-				directoryTypeMap);
+		TiffOutputSummary result = new TiffOutputSummary(byteOrder,
+				rootDirectory, directoryTypeMap);
 
 		// make sure offset fields and offset'd directories correspond.
 		if (exifDirectory == null && exifDirectoryOffsetField != null)

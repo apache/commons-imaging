@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.sanselan.ImageFormat;
@@ -337,6 +338,11 @@ public class JpegImageParser extends ImageParser implements JpegConstants
 		byte bytes[] = getExifRawData(byteSource);
 		if (null == bytes)
 			return null;
+
+		if(params==null)
+			params = new HashMap();
+		if (!params.containsKey(PARAM_KEY_READ_THUMBNAILS))
+			params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.TRUE);
 
 		return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes,
 				params);

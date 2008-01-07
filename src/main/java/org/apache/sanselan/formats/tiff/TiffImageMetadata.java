@@ -26,6 +26,7 @@ import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
+import org.apache.sanselan.util.Debug;
 
 public class TiffImageMetadata extends ImageMetadata
 {
@@ -133,6 +134,7 @@ public class TiffImageMetadata extends ImageMetadata
 			dstDir.setRawTiffImageData(getRawTiffImageData());
 			dstDir.setRawJpegImageData(getRawJpegImageData());
 
+			
 			return dstDir;
 		}
 	}

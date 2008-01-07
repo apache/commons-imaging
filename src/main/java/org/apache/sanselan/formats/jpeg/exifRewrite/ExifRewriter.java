@@ -20,7 +20,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
@@ -32,11 +31,9 @@ import org.apache.sanselan.formats.jpeg.JpegUtils;
 import org.apache.sanselan.formats.jpeg.segments.GenericSegment;
 import org.apache.sanselan.formats.jpeg.segments.UnknownSegment;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
-import org.apache.sanselan.formats.tiff.TiffImageParser;
-import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.sanselan.formats.tiff.write.TiffImageWriterBase;
 import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossless;
-import org.apache.sanselan.formats.tiff.write.TiffOutputDirectory;
+import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossy2;
 import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
 import org.apache.sanselan.util.Debug;
 
@@ -146,45 +143,45 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 		writeSegmentsReplacingExif(os, pieces, null);
 	}
 
-//	public void rewriteExifMetadataLossless(ByteSource byteSource,
-//			OutputStream os, Map params) throws ImageReadException,
-//			IOException, ImageWriteException
-//	{
-//
-//		rewriteExifMetadata(MODE_LOSSLESS, byteSource, os, params);
-//	}
-//
-//	public void rewriteExifMetadataLossy(ByteSource byteSource,
-//			OutputStream os, Map params) throws ImageReadException,
-//			IOException, ImageWriteException
-//	{
-//
-//		rewriteExifMetadata(MODE_LOSSY, byteSource, os, params);
-//	}
-//
-//	private void rewriteExifMetadata(int mode, ByteSource byteSource,
-//			OutputStream os, Map params) throws ImageReadException,
-//			IOException, ImageWriteException
-//	{
-//		JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-//		ArrayList pieces = jfifPieces.pieces;
-//		GenericSegment exifSegment = jfifPieces.exifSegment;
-//
-//		byte exifBytes[] = exifSegment.bytes;
-//		exifBytes = getBytearrayTail("trimmed exif bytes", exifBytes, 6);
-//
-//		TiffImageMetadata exifMetadata = (TiffImageMetadata) new TiffImageParser()
-//				.getMetadata(exifBytes, params);
-//
-//		byte newBytes[] = writeExifSegment(mode, exifMetadata, true);
-//		//		exifSegment.bytes = newBytes;
-//
-//		//		ArrayList segments = readSegments(byteSource, null, false, true);
-//
-//		//		TiffImageMetadata exif = getExifMetadata(byteSource, params);
-//
-//		writeSegmentsReplacingExif(os, pieces, newBytes);
-//	}
+	//	public void rewriteExifMetadataLossless(ByteSource byteSource,
+	//			OutputStream os, Map params) throws ImageReadException,
+	//			IOException, ImageWriteException
+	//	{
+	//
+	//		rewriteExifMetadata(MODE_LOSSLESS, byteSource, os, params);
+	//	}
+	//
+	//	public void rewriteExifMetadataLossy(ByteSource byteSource,
+	//			OutputStream os, Map params) throws ImageReadException,
+	//			IOException, ImageWriteException
+	//	{
+	//
+	//		rewriteExifMetadata(MODE_LOSSY, byteSource, os, params);
+	//	}
+	//
+	//	private void rewriteExifMetadata(int mode, ByteSource byteSource,
+	//			OutputStream os, Map params) throws ImageReadException,
+	//			IOException, ImageWriteException
+	//	{
+	//		JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+	//		ArrayList pieces = jfifPieces.pieces;
+	//		GenericSegment exifSegment = jfifPieces.exifSegment;
+	//
+	//		byte exifBytes[] = exifSegment.bytes;
+	//		exifBytes = getBytearrayTail("trimmed exif bytes", exifBytes, 6);
+	//
+	//		TiffImageMetadata exifMetadata = (TiffImageMetadata) new TiffImageParser()
+	//				.getMetadata(exifBytes, params);
+	//
+	//		byte newBytes[] = writeExifSegment(mode, exifMetadata, true);
+	//		//		exifSegment.bytes = newBytes;
+	//
+	//		//		ArrayList segments = readSegments(byteSource, null, false, true);
+	//
+	//		//		TiffImageMetadata exif = getExifMetadata(byteSource, params);
+	//
+	//		writeSegmentsReplacingExif(os, pieces, newBytes);
+	//	}
 
 	//	public void updateExifMetadata(ByteSource byteSource, OutputStream os,
 	//			ArrayList outputDirectories, Map params) throws ImageReadException,
@@ -227,7 +224,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 			OutputStream os, TiffOutputSet outputSet)
 			throws ImageReadException, IOException, ImageWriteException
 	{
-		List outputDirectories = outputSet.getDirectories();
+		//		List outputDirectories = outputSet.getDirectories();
 		JFIFPieces jfifPieces = analyzeJFIF(byteSource);
 		ArrayList pieces = jfifPieces.pieces;
 		GenericSegment exifSegment = jfifPieces.exifSegment;
@@ -235,10 +232,9 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 		byte exifBytes[] = exifSegment.bytes;
 		exifBytes = getBytearrayTail("trimmed exif bytes", exifBytes, 6);
 
-		int byteOrder = outputSet.byteOrder;
+		//		int byteOrder = outputSet.byteOrder;
 
-		byte newBytes[] = writeExifSegment(mode, byteOrder, outputDirectories,
-				true);
+		byte newBytes[] = writeExifSegment(mode, outputSet, true);
 
 		writeSegmentsReplacingExif(os, pieces, newBytes);
 	}
@@ -297,34 +293,35 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 		if (exif == null)
 			return null;
 
-		int byteOrder = exif.contents.header.byteOrder;
+		//		int byteOrder = exif.contents.header.byteOrder;
 
-		ArrayList outputDirectories = new ArrayList();
-		ArrayList srcDirs = exif.getDirectories();
-		for (int i = 0; i < srcDirs.size(); i++)
-		{
-			TiffImageMetadata.Directory srcDir = (TiffImageMetadata.Directory) srcDirs
-					.get(i);
-			//			Debug.debug("srcDir", srcDir);
+		TiffOutputSet outputSet = exif.getOutputSet();
+		//		TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
+		////		ArrayList outputDirectories = new ArrayList();
+		//		ArrayList srcDirs = exif.getDirectories();
+		//		for (int i = 0; i < srcDirs.size(); i++)
+		//		{
+		//			TiffImageMetadata.Directory srcDir = (TiffImageMetadata.Directory) srcDirs
+		//					.get(i);
+		//			//			Debug.debug("srcDir", srcDir);
+		//
+		//			//			TiffOutputDirectory outputDirectory = translate(srcDir, byteOrder);
+		//			TiffOutputDirectory outputDirectory = srcDir
+		//					.getOutputDirectory(byteOrder);
+		//			outputSet.add(outputDirectory);
+		//		}
 
-			//			TiffOutputDirectory outputDirectory = translate(srcDir, byteOrder);
-			TiffOutputDirectory outputDirectory = srcDir
-					.getOutputDirectory(byteOrder);
-			outputDirectories.add(outputDirectory);
-		}
-
-		return writeExifSegment(mode, byteOrder, outputDirectories,
-				includeEXIFPrefix);
+		return writeExifSegment(mode, outputSet, includeEXIFPrefix);
 	}
 
-//	private byte[] writeExifSegment(int mode, TiffOutputSet outputSet,
-//			boolean includeEXIFPrefix) throws IOException, ImageWriteException
-//	{
-//		List outputDirectories = outputSet.getDirectories();
-//
-//		return writeExifSegment(mode, outputSet.byteOrder, outputDirectories,
-//				includeEXIFPrefix);
-//	}
+	//	private byte[] writeExifSegment(int mode, TiffOutputSet outputSet,
+	//			boolean includeEXIFPrefix) throws IOException, ImageWriteException
+	//	{
+	//		List outputDirectories = outputSet.getDirectories();
+	//
+	//		return writeExifSegment(mode, outputSet.byteOrder, outputDirectories,
+	//				includeEXIFPrefix);
+	//	}
 
 	//
 	//	public byte[] writeExifSegmentLossy(List outputDirectories, int byteOrder,
@@ -344,23 +341,23 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 	//				includeEXIFPrefix);
 	//	}
 
-	private byte[] writeExifSegment(int mode, int byteOrder,
-			List outputDirectories, boolean includeEXIFPrefix)
-			throws IOException, ImageWriteException
+	private byte[] writeExifSegment(int mode, TiffOutputSet outputSet,
+			boolean includeEXIFPrefix) throws IOException, ImageWriteException
 	{
 		TiffImageWriterBase writer;
 		if (mode == MODE_LOSSLESS)
-			writer = new TiffImageWriterLossless(byteOrder);
+			writer = new TiffImageWriterLossless(outputSet.byteOrder);
 		else if (mode == MODE_LOSSY)
-			writer = new TiffImageWriterLossy(byteOrder);
+			writer = new TiffImageWriterLossy2(outputSet.byteOrder);
+//		writer = new TiffImageWriterLossy(outputSet.byteOrder);
 		else
 			throw new ImageWriteException("Unknown TIFF write mode.");
 
-		return writeExifSegment(writer, outputDirectories, includeEXIFPrefix);
+		return writeExifSegment(writer, outputSet, includeEXIFPrefix);
 	}
 
 	private byte[] writeExifSegment(TiffImageWriterBase writer,
-			List outputDirectories, boolean includeEXIFPrefix)
+			TiffOutputSet outputSet, boolean includeEXIFPrefix)
 			throws IOException, ImageWriteException
 	{
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -372,7 +369,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 			os.write(0);
 		}
 
-		writer.writeDirectories(os, outputDirectories);
+		writer.writeDirectories(os, outputSet);
 
 		return os.toByteArray();
 	}

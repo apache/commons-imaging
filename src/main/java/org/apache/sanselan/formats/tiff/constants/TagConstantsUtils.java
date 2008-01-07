@@ -16,7 +16,8 @@
  */
 package org.apache.sanselan.formats.tiff.constants;
 
-public class TagConstantsUtils
+
+public class TagConstantsUtils implements TiffDirectoryConstants
 {
 
 	public static TagInfo[] mergeTagLists(TagInfo lists[][])
@@ -35,6 +36,14 @@ public class TagConstantsUtils
 		}
 
 		return result;
+	}
+
+	public static ExifDirectoryType getExifDirectoryType(int type)
+	{
+		for (int i = 0; i < EXIF_DIRECTORIES.length; i++)
+			if (EXIF_DIRECTORIES[i].directoryType == type)
+				return EXIF_DIRECTORIES[i];
+		return EXIF_DIRECTORY_UNKNOWN;
 	}
 
 }

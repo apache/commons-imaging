@@ -36,6 +36,12 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
 		super(byteOrder);
 	}
 
+	public void writeDirectories(OutputStream os, TiffOutputSet outputSet)
+			throws IOException, ImageWriteException
+	{
+		writeDirectories(os, outputSet.getDirectories());
+	}
+
 	public void writeDirectories(OutputStream os, List directories)
 			throws IOException, ImageWriteException
 	{
@@ -52,27 +58,26 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
 		//		PointerDirectoriesInfo pointerDirectoriesInfo = pointerDirectoriesStep(directories);
 		/**/
 
-//		//        final int imageDataOffset = 
-//		calculateLengthsAndOffsetsStep(directories);
-//
-//		/**/
-//
-//		updateDirectoryPointersStep(pointerDirectoriesInfo);
-//
-//		/**/
-//
-//		//        updateImageDataOffsetsStep(imageDataInfo, imageDataOffset);
-//		/**/
-//
-//		DebugOutputStream dos = null;
-//		//        DebugOutputStream dos = new DebugOutputStream(os);
-//		//        os = dos;
-//		BinaryOutputStream bos = new BinaryOutputStream(os, byteOrder);
-//
-//		/**/
-//
-//		writeStep(bos, directories, dos);
-
+		//		//        final int imageDataOffset = 
+		//		calculateLengthsAndOffsetsStep(directories);
+		//
+		//		/**/
+		//
+		//		updateDirectoryPointersStep(pointerDirectoriesInfo);
+		//
+		//		/**/
+		//
+		//		//        updateImageDataOffsetsStep(imageDataInfo, imageDataOffset);
+		//		/**/
+		//
+		//		DebugOutputStream dos = null;
+		//		//        DebugOutputStream dos = new DebugOutputStream(os);
+		//		//        os = dos;
+		//		BinaryOutputStream bos = new BinaryOutputStream(os, byteOrder);
+		//
+		//		/**/
+		//
+		//		writeStep(bos, directories, dos);
 	}
 
 	//    public byte[][] getStrips(BufferedImage src, int fSamplesPerPixel,

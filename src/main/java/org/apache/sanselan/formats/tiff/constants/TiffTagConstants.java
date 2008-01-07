@@ -78,7 +78,7 @@ public interface TiffTagConstants
 	public static final TagInfo TIFF_TAG_MODEL = new TagInfo("Model", 0x110,
 			FIELD_TYPE_DESCRIPTION_ASCII, -1, TIFF_DIRECTORY_ROOT);
 
-	public static final TagInfo TIFF_TAG_STRIP_OFFSETS = new TagInfo(
+	public static final TagInfo TIFF_TAG_STRIP_OFFSETS = new TagInfo.Offset(
 			"Strip Offsets", 0x111, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, -1,
 			TIFF_DIRECTORY_ROOT);
 
@@ -199,7 +199,7 @@ public interface TiffTagConstants
 			"Tile Length", 0x143, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, 1,
 			TIFF_DIRECTORY_ROOT);
 
-	public static final TagInfo TIFF_TAG_TILE_OFFSETS = new TagInfo(
+	public static final TagInfo TIFF_TAG_TILE_OFFSETS = new TagInfo.Offset(
 			"Tile Offsets", 0x144, FIELD_TYPE_DESCRIPTION_LONG, -1,
 			TIFF_DIRECTORY_ROOT);
 
@@ -248,7 +248,7 @@ public interface TiffTagConstants
 	public static final TagInfo TIFF_TAG_JPEG_PROC = new TagInfo("JPEGProc",
 			0x200, FIELD_TYPE_DESCRIPTION_SHORT, 1, TIFF_DIRECTORY_ROOT);
 
-	public static final TagInfo TIFF_TAG_JPEG_INTERCHANGE_FORMAT = new TagInfo(
+	public static final TagInfo TIFF_TAG_JPEG_INTERCHANGE_FORMAT = new TagInfo.Offset(
 			"JPEGInterchange Format", 0x201, FIELD_TYPE_DESCRIPTION_LONG, 1,
 			TIFF_DIRECTORY_ROOT);
 

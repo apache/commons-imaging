@@ -30,6 +30,7 @@ import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
+import org.apache.sanselan.util.Debug;
 
 public class TiffField implements TiffConstants
 {
@@ -168,6 +169,10 @@ public class TiffField implements TiffConstants
 
 		int valueLength = getValueLengthInBytes();
 
+//		Debug.debug("fillInValue tagInfo", tagInfo);
+//		Debug.debug("fillInValue valueOffset", valueOffset);
+//		Debug.debug("fillInValue valueLength", valueLength);
+		
 		byte bytes[] = byteSource.getBlock(valueOffset, valueLength);
 		setOversizeValue(bytes);
 	}

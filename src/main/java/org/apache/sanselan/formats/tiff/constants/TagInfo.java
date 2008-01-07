@@ -80,6 +80,11 @@ public class TagInfo implements TiffDirectoryConstants
 		return o;
 	}
 
+	public String getDescription()
+	{
+		return tag + " (0x" + Integer.toHexString(tag) + ": " + name + "): ";
+	}
+
 	public String toString()
 	{
 		return "[TagInfo. tag: " + tag + " (0x" + Integer.toHexString(tag)

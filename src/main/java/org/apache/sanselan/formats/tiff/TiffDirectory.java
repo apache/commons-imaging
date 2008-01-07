@@ -47,8 +47,8 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 			result.append("\t");
 			result.append("[" + entryOffset + "]: ");
 			result.append(entry.tagInfo.name);
-			result.append(" (" + entry.tagInfo.tag + ", 0x"
-					+ Integer.toHexString(entry.tagInfo.tag) + ")");
+			result.append(" (" + entry.tag + ", 0x"
+					+ Integer.toHexString(entry.tag) + ")");
 			result.append(", " + entry.fieldType.name);
 			result.append(", " + entry.fieldType.getRawBytes(entry).length);
 			result.append(": " + entry.getValueDescription());
