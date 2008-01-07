@@ -35,7 +35,6 @@ import org.apache.sanselan.formats.jpeg.exifRewrite.ExifRewriter;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
-import org.apache.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
 import org.apache.sanselan.util.Debug;
 import org.apache.sanselan.util.IOUtils;
@@ -183,7 +182,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		{
 			Integer dirType = (Integer) oldDirectoryTypes.get(i);
 
-//			Debug.debug("dirType", dirType);
+			//			Debug.debug("dirType", dirType);
 
 			TiffImageMetadata.Directory oldDirectory = (TiffImageMetadata.Directory) oldDirectoryMap
 					.get(dirType);
@@ -217,7 +216,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 				TiffField oldField = (TiffField) oldFieldMap.get(fieldTag);
 				TiffField newField = (TiffField) newFieldMap.get(fieldTag);
 
-//				Debug.debug("fieldTag", fieldTag);
+				//				Debug.debug("fieldTag", fieldTag);
 
 				//				fieldTag.
 				assertNotNull(oldField);
@@ -229,8 +228,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 				assertEquals(oldField.length, newField.length);
 				assertEquals(oldField.isLocalValue(), newField.isLocalValue());
 
-
-				if(!oldField.tagInfo.isOffset())
+				if (!oldField.tagInfo.isOffset())
 				{
 					if (oldField.isLocalValue())
 					{
@@ -245,7 +243,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 
 			}
 
-//			Debug.debug();
+			//			Debug.debug();
 		}
 	}
 

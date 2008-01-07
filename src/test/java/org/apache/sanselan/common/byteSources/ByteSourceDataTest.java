@@ -26,7 +26,6 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.sanselan.util.Debug;
 import org.apache.sanselan.util.IOUtils;
 
 public class ByteSourceDataTest extends ByteSourceTest

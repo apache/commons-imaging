@@ -23,7 +23,6 @@ import java.io.InputStream;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.formats.png.chunks.PNGChunkPLTE;
 import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
-import org.apache.sanselan.util.Debug;
 
 public class ScanExpediterSimple extends ScanExpediter
 {
@@ -39,17 +38,17 @@ public class ScanExpediterSimple extends ScanExpediter
 
 	public void drive() throws ImageReadException, IOException
 	{
-//		Debug.debug("width", width);
+		//		Debug.debug("width", width);
 		int bitsPerScanLine = bitsPerPixel * width;
-//		Debug.debug("bitsPerPixel", bitsPerPixel);
-//		Debug.debug("bitsPerScanLine", bitsPerScanLine);
+		//		Debug.debug("bitsPerPixel", bitsPerPixel);
+		//		Debug.debug("bitsPerScanLine", bitsPerScanLine);
 		int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
-//		Debug.debug("pixelBytesPerScanLine", pixelBytesPerScanLine);
+		//		Debug.debug("pixelBytesPerScanLine", pixelBytesPerScanLine);
 		byte prev[] = null;
 
 		for (int y = 0; y < height; y++)
 		{
-//			Debug.debug("getNextScanline", y + "/" + height + ", " + pixelBytesPerScanLine);
+			//			Debug.debug("getNextScanline", y + "/" + height + ", " + pixelBytesPerScanLine);
 
 			byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
 					prev, bytesPerPixel);

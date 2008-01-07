@@ -21,7 +21,9 @@ import org.apache.sanselan.common.BinaryFileFunctions;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
-public abstract class FieldType extends BinaryFileFunctions implements TiffConstants
+public abstract class FieldType extends BinaryFileFunctions
+		implements
+			TiffConstants
 {
 	public final int type, length;
 	public final String name;
@@ -75,8 +77,8 @@ public abstract class FieldType extends BinaryFileFunctions implements TiffConst
 
 	public String toString()
 	{
-		return "[" + getClass().getName() + ". type: " + type
-				+ ", name: " + name + ", length: " + length + "]";
+		return "[" + getClass().getName() + ". type: " + type + ", name: "
+				+ name + ", length: " + length + "]";
 	}
 
 	public abstract byte[] writeData(Object o, int byteOrder)

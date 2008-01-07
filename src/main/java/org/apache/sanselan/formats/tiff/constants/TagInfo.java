@@ -5,17 +5,16 @@ package org.apache.sanselan.formats.tiff.constants;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.util.Debug;
 
-public class TagInfo2 implements TiffDirectoryConstants
+public class TagInfo implements TiffDirectoryConstants
 {
 	protected static final int LENGTH_UNKNOWN = -1;
 
-	public TagInfo2(String name, int tag, FieldType dataType, int length,
+	public TagInfo(String name, int tag, FieldType dataType, int length,
 			ExifDirectoryType exifDirectory)
 	{
 		this(name, tag, new FieldType[]{
@@ -23,14 +22,14 @@ public class TagInfo2 implements TiffDirectoryConstants
 		}, length, exifDirectory);
 	}
 
-	public TagInfo2(String name, int tag, FieldType dataType, int length)
+	public TagInfo(String name, int tag, FieldType dataType, int length)
 	{
 		this(name, tag, new FieldType[]{
 			dataType
 		}, length, EXIF_DIRECTORY_UNKNOWN);
 	}
 
-	public TagInfo2(String name, int tag, FieldType dataType,
+	public TagInfo(String name, int tag, FieldType dataType,
 			String lengthDescription)
 	{
 		this(name, tag, new FieldType[]{
@@ -38,18 +37,18 @@ public class TagInfo2 implements TiffDirectoryConstants
 		}, LENGTH_UNKNOWN, EXIF_DIRECTORY_UNKNOWN);
 	}
 
-	public TagInfo2(String name, int tag, FieldType dataTypes[],
+	public TagInfo(String name, int tag, FieldType dataTypes[],
 			String lengthDescription)
 	{
 		this(name, tag, dataTypes, LENGTH_UNKNOWN, EXIF_DIRECTORY_UNKNOWN);
 	}
 
-	public TagInfo2(String name, int tag, FieldType dataType)
+	public TagInfo(String name, int tag, FieldType dataType)
 	{
 		this(name, tag, dataType, LENGTH_UNKNOWN, EXIF_DIRECTORY_UNKNOWN);
 	}
 
-	public TagInfo2(String name, int tag, FieldType dataTypes[], int length,
+	public TagInfo(String name, int tag, FieldType dataTypes[], int length,
 			String lengthDescription)
 	{
 		this(name, tag, dataTypes, length, EXIF_DIRECTORY_UNKNOWN);
@@ -62,7 +61,7 @@ public class TagInfo2 implements TiffDirectoryConstants
 
 	//	public final String lengthDescription;
 
-	public TagInfo2(String name, int tag, FieldType dataTypes[], int length,
+	public TagInfo(String name, int tag, FieldType dataTypes[], int length,
 			ExifDirectoryType exifDirectory
 	//			, String lengthDescription
 	)
@@ -97,7 +96,7 @@ public class TagInfo2 implements TiffDirectoryConstants
 		return false;
 	}
 
-	public static class Offset extends TagInfo2
+	public static class Offset extends TagInfo
 	{
 		public Offset(String name, int tag, FieldType dataTypes[], int length,
 				ExifDirectoryType exifDirectory)
@@ -118,7 +117,7 @@ public class TagInfo2 implements TiffDirectoryConstants
 		}
 	}
 
-	public static class Date extends TagInfo2
+	public static class Date extends TagInfo
 	{
 		public Date(String name, int tag, FieldType dataType, int length)
 		{

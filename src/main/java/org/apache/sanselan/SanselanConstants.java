@@ -16,6 +16,8 @@
  */
 package org.apache.sanselan;
 
+import java.io.InputStream;
+
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 public interface SanselanConstants

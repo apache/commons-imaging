@@ -26,8 +26,8 @@ import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageInfo;
@@ -420,7 +420,6 @@ public class IcoImageParser extends ImageParser
 				"Use getAllBufferedImages() instead for .ico images.");
 	}
 
-
 	private BufferedImage readBufferedImage(IconData fIconData)
 			throws ImageReadException
 	{
@@ -495,7 +494,6 @@ public class IcoImageParser extends ImageParser
 		return result;
 	}
 
-
 	public ArrayList getAllBufferedImages(ByteSource byteSource)
 			throws ImageReadException, IOException
 	{
@@ -515,28 +513,28 @@ public class IcoImageParser extends ImageParser
 		return result;
 	}
 
-//	public boolean extractImages(ByteSource byteSource, File dst_dir,
-//			String dst_root, ImageParser encoder) throws ImageReadException,
-//			IOException, ImageWriteException
-//	{
-//		ImageContents contents = readImage(byteSource);
-//
-//		FileHeader fileHeader = contents.fileHeader;
-//		for (int i = 0; i < fileHeader.iconCount; i++)
-//		{
-//			IconData iconData = contents.iconDatas[i];
-//
-//			BufferedImage image = readBufferedImage(iconData);
-//
-//			int size = Math.max(iconData.iconInfo.Width,
-//					iconData.iconInfo.Height);
-//			File file = new File(dst_dir, dst_root + "_" + size + "_"
-//					+ iconData.iconInfo.BitCount
-//					+ encoder.getDefaultExtension());
-//			encoder.writeImage(image, new FileOutputStream(file), null);
-//		}
-//
-//		return true;
-//	}
+	//	public boolean extractImages(ByteSource byteSource, File dst_dir,
+	//			String dst_root, ImageParser encoder) throws ImageReadException,
+	//			IOException, ImageWriteException
+	//	{
+	//		ImageContents contents = readImage(byteSource);
+	//
+	//		FileHeader fileHeader = contents.fileHeader;
+	//		for (int i = 0; i < fileHeader.iconCount; i++)
+	//		{
+	//			IconData iconData = contents.iconDatas[i];
+	//
+	//			BufferedImage image = readBufferedImage(iconData);
+	//
+	//			int size = Math.max(iconData.iconInfo.Width,
+	//					iconData.iconInfo.Height);
+	//			File file = new File(dst_dir, dst_root + "_" + size + "_"
+	//					+ iconData.iconInfo.BitCount
+	//					+ encoder.getDefaultExtension());
+	//			encoder.writeImage(image, new FileOutputStream(file), null);
+	//		}
+	//
+	//		return true;
+	//	}
 
 }

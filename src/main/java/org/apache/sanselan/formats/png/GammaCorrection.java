@@ -18,7 +18,7 @@ package org.apache.sanselan.formats.png;
 
 public class GammaCorrection
 {
-        private static final boolean DEBUG = false;
+	private static final boolean DEBUG = false;
 
 	//		private final double src_gamma, dst_gamma;
 	private final int lookup_table[];
@@ -27,17 +27,20 @@ public class GammaCorrection
 	{
 		//			this.src_gamma = src_gamma;
 		//			this.dst_gamma = dst_gamma;
-	        if (DEBUG) {
-	                System.out.println("src_gamma: " + src_gamma);
-	                System.out.println("dst_gamma: " + dst_gamma);
-	        }
+		if (DEBUG)
+		{
+			System.out.println("src_gamma: " + src_gamma);
+			System.out.println("dst_gamma: " + dst_gamma);
+		}
 
 		lookup_table = new int[256];
 		for (int i = 0; i < 256; i++)
 		{
 			lookup_table[i] = correctSample(i, src_gamma, dst_gamma);
-			if (DEBUG) {
-			    System.out.println("lookup_table[" + i + "]: " + lookup_table[i]);
+			if (DEBUG)
+			{
+				System.out.println("lookup_table[" + i + "]: "
+						+ lookup_table[i]);
 			}
 		}
 	}

@@ -22,7 +22,6 @@ import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
-import java.awt.image.DataBuffer;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -30,8 +29,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Map;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.sanselan.ColorTools;
@@ -721,7 +720,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 			//			System.out.println("color_type: " + color_type);
 			//			System.out.println("BitDepth: " + BitDepth);
 
-//			int transfer_type;
+			//			int transfer_type;
 			//			int BytesPerSample;
 			int bitsPerSample = bitDepth;
 
@@ -729,7 +728,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 				throw new ImageReadException("PNG: unknown FilterMethod: "
 						+ pngChunkIHDR.filterMethod);
 
-//			transfer_type = DataBuffer.TYPE_BYTE;
+			//			transfer_type = DataBuffer.TYPE_BYTE;
 			//			switch (BitDepth)
 			//			{
 			//				case 1 :
@@ -825,8 +824,8 @@ public class PngImageParser extends ImageParser implements PngConstants
 			//
 
 			int bitsPerPixel = bitsPerSample * samplesPerPixel;
-//			Debug.debug("bitsPerSample", bitsPerSample);
-//			Debug.debug("samplesPerPixel", samplesPerPixel);
+			//			Debug.debug("bitsPerSample", bitsPerSample);
+			//			Debug.debug("samplesPerPixel", samplesPerPixel);
 
 			boolean hasAlpha = colorType == COLOR_TYPE_GREYSCALE_WITH_ALPHA
 					|| colorType == COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
@@ -850,10 +849,10 @@ public class PngImageParser extends ImageParser implements PngConstants
 			//			ZInputStream iis = new ZInputStream(bais);
 			//			ByteArrayInputStream iis = new ByteArrayInputStream(uncompressed);
 
-//			int bitsPerScanLine = bitsPerPixel * width;
+			//			int bitsPerScanLine = bitsPerPixel * width;
 
-//			Debug.debug("bitsPerScanLine", bitsPerScanLine);
-//			Debug.debug("bitsPerPixel", bitsPerPixel);
+			//			Debug.debug("bitsPerScanLine", bitsPerScanLine);
+			//			Debug.debug("bitsPerPixel", bitsPerPixel);
 
 			ScanExpediter scanExpediter;
 

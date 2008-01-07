@@ -31,10 +31,9 @@ public abstract class ColorConversions
 							for (int K = 0; K <= 256; K += 64)
 							{
 
-								int rgb1 = ColorConversions
-										.convertCMYKtoRGB(Math.min(255, C),
-												Math.min(255, M), Math.min(255,
-														Y), Math.min(255, K));
+								int rgb1 = ColorConversions.convertCMYKtoRGB(
+										Math.min(255, C), Math.min(255, M),
+										Math.min(255, Y), Math.min(255, K));
 								int rgb2 = ColorConversions
 										.convertCMYKtoRGB_old(Math.min(255, C),
 												Math.min(255, M), Math.min(255,
@@ -118,10 +117,8 @@ public abstract class ColorConversions
 
 				{
 					ColorCMY cmy = ColorConversions.convertRGBtoCMY(rgb);
-					ColorCMYK cmyk = ColorConversions
-							.convertCMYtoCMYK(cmy);
-					ColorCMY cmyk_cmy = ColorConversions
-							.convertCMYKtoCMY(cmyk);
+					ColorCMYK cmyk = ColorConversions.convertCMYtoCMYK(cmy);
+					ColorCMY cmyk_cmy = ColorConversions.convertCMYKtoCMY(cmyk);
 					int cmyk_cmy_rgb = ColorConversions
 							.convertCMYtoRGB(cmyk_cmy);
 

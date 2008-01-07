@@ -20,12 +20,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 
 public class MyLZWCompressor
 {
 
-//	private static final int MAX_TABLE_SIZE = 1 << 12;
+	//	private static final int MAX_TABLE_SIZE = 1 << 12;
 
 	private int codeSize;
 	private final int initialCodeSize;

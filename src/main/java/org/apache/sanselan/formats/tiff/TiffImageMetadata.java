@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.ImageMetadata;
-import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.sanselan.formats.tiff.write.TiffOutputField;
@@ -112,7 +112,7 @@ public class TiffImageMetadata extends ImageMetadata
 						.get(i);
 				TiffField srcField = item.getTiffField();
 
-				TagInfo2 tagInfo = srcField.tagInfo;
+				TagInfo tagInfo = srcField.tagInfo;
 				FieldType fieldType = srcField.fieldType;
 				int count = srcField.length;
 				//			byte bytes[] = srcField.fieldType.getRawBytes(srcField);
@@ -125,8 +125,8 @@ public class TiffImageMetadata extends ImageMetadata
 					bytes2 = fieldType.writeData(value, byteOrder);
 				//			Debug.debug("\t" + "bytes2", bytes2);
 
-				TiffOutputField dstField = new TiffOutputField(srcField.tag, tagInfo, fieldType,
-						count, bytes2);
+				TiffOutputField dstField = new TiffOutputField(srcField.tag,
+						tagInfo, fieldType, count, bytes2);
 				dstDir.add(dstField);
 			}
 

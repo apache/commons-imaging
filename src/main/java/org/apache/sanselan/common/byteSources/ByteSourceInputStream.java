@@ -21,8 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.sanselan.util.Debug;
-
 public class ByteSourceInputStream extends ByteSource
 {
 	private final InputStream is;
@@ -135,7 +133,7 @@ public class ByteSourceInputStream extends ByteSource
 				return 0;
 
 			// optimized block read
-			
+
 			if (null == block)
 			{
 				if (readFirst)
@@ -155,8 +153,8 @@ public class ByteSourceInputStream extends ByteSource
 
 			if (blockIndex >= block.bytes.length)
 				return -1;
-			
-			int readSize = Math.min(len, block.bytes.length-blockIndex);
+
+			int readSize = Math.min(len, block.bytes.length - blockIndex);
 			System.arraycopy(block.bytes, blockIndex, b, off, readSize);
 			blockIndex += readSize;
 			return readSize;

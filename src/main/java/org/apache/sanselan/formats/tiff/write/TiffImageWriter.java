@@ -31,8 +31,6 @@ import org.apache.sanselan.common.PackBits;
 import org.apache.sanselan.common.mylzw.MyLZWCompressor;
 import org.apache.sanselan.formats.tiff.RawTiffImageData;
 import org.apache.sanselan.formats.tiff.TiffDirectory;
-import org.apache.sanselan.formats.tiff.TiffField;
-import org.apache.sanselan.formats.tiff.constants.TagInfo2;
 import org.apache.sanselan.util.Debug;
 import org.apache.sanselan.util.DebugOutputStream;
 
@@ -454,7 +452,6 @@ public class TiffImageWriter extends TiffImageWriterBase
 		TiffOutputDirectory rootDirectory = (TiffOutputDirectory) dirMap
 				.get(new Integer(DIRECTORY_TYPE_ROOT));
 
-
 		if (exifDirectory == null && exifDirectoryOffsetField != null)
 		{
 			// perhaps we should just discard field?
@@ -480,21 +477,22 @@ public class TiffImageWriter extends TiffImageWriterBase
 					EXIF_TAG_GPSINFO, byteOrder);
 			rootDirectory.add(gpsDirectoryOffsetField);
 		}
-		
 
-		if (interoperabilityDirectory == null && interoperabilityDirectoryOffsetField != null)
+		if (interoperabilityDirectory == null
+				&& interoperabilityDirectoryOffsetField != null)
 		{
 			// perhaps we should just discard field?
 			throw new ImageWriteException(
 					"Output set has Interoperability Directory Offset field, but no Interoperability Directory");
 		}
-		else if (interoperabilityDirectory != null && interoperabilityDirectoryOffsetField == null)
+		else if (interoperabilityDirectory != null
+				&& interoperabilityDirectoryOffsetField == null)
 		{
-			interoperabilityDirectoryOffsetField = TiffOutputField.createOffsetField(
-					EXIF_TAG_INTEROP_OFFSET, byteOrder);
+			interoperabilityDirectoryOffsetField = TiffOutputField
+					.createOffsetField(EXIF_TAG_INTEROP_OFFSET, byteOrder);
 			rootDirectory.add(interoperabilityDirectoryOffsetField);
 		}
-		
+
 		return new PointerDirectoriesInfo(exifDirectoryOffsetField,
 				exifDirectory, gpsDirectoryOffsetField, gpsDirectory,
 				interoperabilityDirectoryOffsetField, interoperabilityDirectory);
@@ -506,7 +504,7 @@ public class TiffImageWriter extends TiffImageWriterBase
 			throws IOException, ImageWriteException
 	{
 
-		PointerDirectoriesInfo pointerDirectoriesInfo = 	validateDirectories(directories);
+		PointerDirectoriesInfo pointerDirectoriesInfo = validateDirectories(directories);
 
 		//        Collections.sort(directories, Directory.COMPARATOR);
 
@@ -516,8 +514,7 @@ public class TiffImageWriter extends TiffImageWriterBase
 		//                stripsNotTiles);
 		/**/
 
-//		PointerDirectoriesInfo pointerDirectoriesInfo = pointerDirectoriesStep(directories);
-
+		//		PointerDirectoriesInfo pointerDirectoriesInfo = pointerDirectoriesStep(directories);
 		/**/
 
 		//        final int imageDataOffset = 
@@ -546,8 +543,6 @@ public class TiffImageWriter extends TiffImageWriterBase
 		//        writeImageDataStep(bos, directories, imageDataInfo);
 		/**/
 	}
-
-
 
 	private void calculateLengthsAndOffsetsStep(List directories)
 			throws IOException, ImageWriteException

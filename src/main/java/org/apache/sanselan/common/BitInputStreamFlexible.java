@@ -64,8 +64,7 @@ public class BitInputStreamFlexible extends InputStream
 				{
 					//					cache >>= count;
 					cacheBitsRemaining -= count;
-					result = ((1 << count) - 1)
-							& (cache >> cacheBitsRemaining);
+					result = ((1 << count) - 1) & (cache >> cacheBitsRemaining);
 					count = 0;
 				}
 			}

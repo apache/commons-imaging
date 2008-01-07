@@ -42,14 +42,14 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 		// return false to exit traversal.
 		public boolean visitSegment(int marker, byte markerBytes[],
 				int markerLength, byte markerLengthBytes[], byte segmentData[])
-				throws ImageReadException, 
-//				ImageWriteException, 
+				throws ImageReadException,
+				//				ImageWriteException, 
 				IOException;
 	}
 
 	public void traverseJFIF(ByteSource byteSource, Visitor visitor)
-			throws ImageReadException, 
-//			ImageWriteException, 
+			throws ImageReadException,
+			//			ImageWriteException, 
 			IOException
 	{
 		InputStream is = null;

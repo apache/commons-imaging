@@ -45,12 +45,12 @@ public abstract class ByteSource extends BinaryFileFunctions
 
 	public abstract byte[] getAll() throws IOException;
 
-//	public abstract long getLength();
-//
-//	public byte[] getAll() throws IOException
-//	{
-//		return getBlock(0, (int) getLength());
-//	}
+	//	public abstract long getLength();
+	//
+	//	public byte[] getAll() throws IOException
+	//	{
+	//		return getBlock(0, (int) getLength());
+	//	}
 
 	public abstract String getDescription();
 

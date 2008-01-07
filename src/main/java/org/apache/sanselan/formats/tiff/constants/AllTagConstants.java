@@ -25,9 +25,9 @@ public interface AllTagConstants
 			ExifTagConstants,
 			GPSTagConstants
 {
-	public static final TagInfo2 ALL_TAGS[] = TagConstantsUtils
-			.mergeTagLists(new TagInfo2[][]{
-					ALL_TIFF_TAGS, 	ALL_EXIF_TAGS, ALL_GPS_TAGS,
+	public static final TagInfo ALL_TAGS[] = TagConstantsUtils
+			.mergeTagLists(new TagInfo[][]{
+					ALL_TIFF_TAGS, ALL_EXIF_TAGS, ALL_GPS_TAGS,
 			});
 
 }

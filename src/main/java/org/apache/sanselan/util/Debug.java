@@ -23,11 +23,11 @@ import java.awt.color.ICC_Profile;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
-import java.util.ArrayList;
 
 public final class Debug
 {
@@ -208,8 +208,8 @@ public final class Debug
 			buffer.append(s + newline);
 	}
 
-	public static boolean compare(String prefix, Map a, Map b, ArrayList ignore,
-			StringBuffer buffer)
+	public static boolean compare(String prefix, Map a, Map b,
+			ArrayList ignore, StringBuffer buffer)
 	{
 		if ((a == null) && (b == null))
 		{

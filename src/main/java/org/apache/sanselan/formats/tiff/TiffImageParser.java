@@ -37,7 +37,7 @@ import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceArray;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
-import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.datareaders.DataReader;
 import org.apache.sanselan.formats.tiff.datareaders.DataReaderStrips;
@@ -327,7 +327,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return null;
 	}
 
-	private TiffField findField(ArrayList entries, TagInfo2 tag)
+	private TiffField findField(ArrayList entries, TagInfo tag)
 	{
 		if (entries == null)
 			return null;
@@ -842,7 +842,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return true;
 	}
 
-	private Number getTagAsNumber(ArrayList entries, TagInfo2 tag)
+	private Number getTagAsNumber(ArrayList entries, TagInfo tag)
 			throws ImageReadException, IOException
 	{
 		TiffField entry = findField(entries, tag);
@@ -864,7 +864,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	private int getTagAsValueOrArraySum(ArrayList entries, TagInfo2 tag)
+	private int getTagAsValueOrArraySum(ArrayList entries, TagInfo tag)
 			throws ImageReadException, IOException
 	{
 		TiffField entry = findField(entries, tag);
@@ -880,7 +880,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	private double[] getTagAsDoubleArray(ArrayList entries, TagInfo2 tag,
+	private double[] getTagAsDoubleArray(ArrayList entries, TagInfo tag,
 			boolean throwExceptionIfMissing) throws ImageReadException,
 			IOException
 	{
@@ -899,7 +899,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	private int[] getTagAsIntArray(ArrayList entries, TagInfo2 tag,
+	private int[] getTagAsIntArray(ArrayList entries, TagInfo tag,
 			boolean throwExceptionIfMissing) throws ImageReadException,
 			IOException
 	{
@@ -921,7 +921,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	private int dumpOptionalNumberTag(ArrayList entries, TagInfo2 tag)
+	private int dumpOptionalNumberTag(ArrayList entries, TagInfo tag)
 	{
 		TiffField entry = findField(entries, tag);
 

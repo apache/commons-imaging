@@ -16,25 +16,13 @@
  */
 package org.apache.sanselan.formats.tiff.write;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
-
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryConstants;
-import org.apache.sanselan.common.BinaryOutputStream;
-import org.apache.sanselan.common.PackBits;
-import org.apache.sanselan.common.mylzw.MyLZWCompressor;
-import org.apache.sanselan.formats.tiff.RawTiffImageData;
-import org.apache.sanselan.formats.tiff.TiffDirectory;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
-import org.apache.sanselan.util.Debug;
-import org.apache.sanselan.util.DebugOutputStream;
 
-public abstract class TiffImageWriterBase implements TiffConstants, BinaryConstants
+public abstract class TiffImageWriterBase
+		implements
+			TiffConstants,
+			BinaryConstants
 {
 	public static final int DEFAULT_WRITE_BYTE_ORDER = BYTE_ORDER_INTEL;
 
@@ -49,6 +37,5 @@ public abstract class TiffImageWriterBase implements TiffConstants, BinaryConsta
 	{
 		this.byteOrder = byteOrder;
 	}
-
 
 }

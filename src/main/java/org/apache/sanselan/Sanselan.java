@@ -26,9 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
@@ -480,8 +480,6 @@ public abstract class Sanselan implements SanselanConstants
 		return imageParser.getImageSize(byteSource);
 	}
 
-
-
 	/** 
 	 * Parses the metadata of an image.  This metadata depends on the format of the image.  
 	 * <p>
@@ -564,14 +562,11 @@ public abstract class Sanselan implements SanselanConstants
 	 * @return      An instance of IImageMetadata.
 	 * @see         IImageMetadata
 	 */
-	public static IImageMetadata getMetadata(InputStream is, String filename, Map params)
-			throws ImageReadException, IOException
+	public static IImageMetadata getMetadata(InputStream is, String filename,
+			Map params) throws ImageReadException, IOException
 	{
 		return getMetadata(new ByteSourceInputStream(is, filename), params);
 	}
-	
-	
-
 
 	/** 
 	 * Parses the metadata of an image file.  This metadata depends on the format of the image.  

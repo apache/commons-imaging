@@ -30,7 +30,6 @@ import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterPaeth;
 import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterSub;
 import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterUp;
 import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
-import org.apache.sanselan.util.Debug;
 
 public abstract class ScanExpediter extends BinaryFileParser
 {
@@ -64,8 +63,8 @@ public abstract class ScanExpediter extends BinaryFileParser
 		this.gammaCorrection = gammaCorrection;
 		this.transparencyFilter = transparencyFilter;
 
-//		Debug.debug("BitDepth", bitDepth);
-//		Debug.debug("bitsPerPixel", bitsPerPixel);
+		//		Debug.debug("BitDepth", bitDepth);
+		//		Debug.debug("bitsPerPixel", bitsPerPixel);
 		//		Debug.debug("colorType", colorType);
 
 		//		buffer = bi.getRaster().getDataBuffer();
@@ -275,7 +274,6 @@ public abstract class ScanExpediter extends BinaryFileParser
 			throw new ImageReadException("PNG: missing filter type");
 		//			System.out.println("\t" + "filter: " + filter_type);
 
-		
 		//				byte unfiltered[] = new byte[length];
 		byte scanline[] = this.readByteArray("scanline", length, is,
 				"PNG: missing image data");

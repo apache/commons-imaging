@@ -17,7 +17,6 @@
 package org.apache.sanselan.icc;
 
 import java.awt.color.ICC_Profile;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

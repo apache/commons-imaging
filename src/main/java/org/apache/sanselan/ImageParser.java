@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Map;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.sanselan.common.BinaryFileParser;
 import org.apache.sanselan.common.IBufferedImageFactory;
@@ -55,7 +55,7 @@ public abstract class ImageParser extends BinaryFileParser
 				new PngImageParser(), new BmpImageParser(),
 				new GifImageParser(), new PsdImageParser(),
 				new PNMImageParser(), new IcoImageParser(),
-//				new TgaImageParser(),
+		//				new TgaImageParser(),
 		};
 
 		return result;
@@ -167,46 +167,46 @@ public abstract class ImageParser extends BinaryFileParser
 		return getAllBufferedImages(new ByteSourceFile(file));
 	}
 
-//	public boolean extractImages(ByteSource byteSource, File dstDir,
-//			String dstRoot, ImageParser encoder) throws ImageReadException,
-//			IOException, ImageWriteException
-//	{
-//		ArrayList v = getAllBufferedImages(byteSource);
-//
-//		if (v == null)
-//			return false;
-//
-//		for (int i = 0; i < v.size(); i++)
-//		{
-//			BufferedImage image = (BufferedImage) v.get(i);
-//			File file = new File(dstDir, dstRoot + "_" + i
-//					+ encoder.getDefaultExtension());
-//			encoder.writeImage(image, new FileOutputStream(file), null);
-//		}
-//
-//		return false;
-//	}
-//
-//	public final boolean extractImages(byte bytes[], File dstDir,
-//			String dstRoot, ImageParser encoder)
-//
-//	throws ImageReadException, IOException, ImageWriteException
-//	{
-//		return extractImages(new ByteSourceArray(bytes), dstDir, dstRoot,
-//				encoder);
-//	}
-//
-//	public final boolean extractImages(File file, File dstDir,
-//			String dstRoot, ImageParser encoder)
-//
-//	throws ImageReadException, IOException, ImageWriteException
-//	{
-//		if (!canAcceptExtension(file))
-//			return false;
-//
-//		return extractImages(new ByteSourceFile(file), dstDir, dstRoot,
-//				encoder);
-//	}
+	//	public boolean extractImages(ByteSource byteSource, File dstDir,
+	//			String dstRoot, ImageParser encoder) throws ImageReadException,
+	//			IOException, ImageWriteException
+	//	{
+	//		ArrayList v = getAllBufferedImages(byteSource);
+	//
+	//		if (v == null)
+	//			return false;
+	//
+	//		for (int i = 0; i < v.size(); i++)
+	//		{
+	//			BufferedImage image = (BufferedImage) v.get(i);
+	//			File file = new File(dstDir, dstRoot + "_" + i
+	//					+ encoder.getDefaultExtension());
+	//			encoder.writeImage(image, new FileOutputStream(file), null);
+	//		}
+	//
+	//		return false;
+	//	}
+	//
+	//	public final boolean extractImages(byte bytes[], File dstDir,
+	//			String dstRoot, ImageParser encoder)
+	//
+	//	throws ImageReadException, IOException, ImageWriteException
+	//	{
+	//		return extractImages(new ByteSourceArray(bytes), dstDir, dstRoot,
+	//				encoder);
+	//	}
+	//
+	//	public final boolean extractImages(File file, File dstDir,
+	//			String dstRoot, ImageParser encoder)
+	//
+	//	throws ImageReadException, IOException, ImageWriteException
+	//	{
+	//		if (!canAcceptExtension(file))
+	//			return false;
+	//
+	//		return extractImages(new ByteSourceFile(file), dstDir, dstRoot,
+	//				encoder);
+	//	}
 
 	public abstract BufferedImage getBufferedImage(ByteSource byteSource,
 			Map params) throws ImageReadException, IOException;

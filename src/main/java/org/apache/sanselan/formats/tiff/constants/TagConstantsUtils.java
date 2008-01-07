@@ -19,13 +19,13 @@ package org.apache.sanselan.formats.tiff.constants;
 public class TagConstantsUtils
 {
 
-	public static TagInfo2[] mergeTagLists(TagInfo2 lists[][])
+	public static TagInfo[] mergeTagLists(TagInfo lists[][])
 	{
 		int count = 0;
 		for (int i = 0; i < lists.length; i++)
 			count += lists[i].length;
 
-		TagInfo2 result[] = new TagInfo2[count];
+		TagInfo result[] = new TagInfo[count];
 
 		int index = 0;
 		for (int i = 0; i < lists.length; i++)

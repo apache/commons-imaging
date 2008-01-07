@@ -27,14 +27,13 @@ import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.byteSources.ByteSource;
-import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
-import org.apache.sanselan.util.Debug;
 
 public class TiffField implements TiffConstants
 {
-	public final TagInfo2 tagInfo;
+	public final TagInfo tagInfo;
 	public final FieldType fieldType;
 
 	public final int tag;
@@ -110,7 +109,7 @@ public class TiffField implements TiffConstants
 		return FIELD_TYPE_UNKNOWN;
 	}
 
-	private static TagInfo2 getTag(int directoryType, int value)
+	private static TagInfo getTag(int directoryType, int value)
 	{
 		Object key = new Integer(value);
 
@@ -118,21 +117,21 @@ public class TiffField implements TiffConstants
 				|| directoryType == DIRECTORY_TYPE_INTEROPERABILITY)
 		{
 			if (EXIF_TAG_MAP.containsKey(key))
-				return (TagInfo2) EXIF_TAG_MAP.get(key);
+				return (TagInfo) EXIF_TAG_MAP.get(key);
 		}
 		else if (directoryType == DIRECTORY_TYPE_GPS)
 		{
 			if (GPS_TAG_MAP.containsKey(key))
-				return (TagInfo2) GPS_TAG_MAP.get(key);
+				return (TagInfo) GPS_TAG_MAP.get(key);
 		}
 		else
 		{
 			if (TIFF_TAG_MAP.containsKey(key))
-				return (TagInfo2) TIFF_TAG_MAP.get(key);
+				return (TagInfo) TIFF_TAG_MAP.get(key);
 		}
 
 		if (ALL_TAG_MAP.containsKey(key))
-			return (TagInfo2) ALL_TAG_MAP.get(key);
+			return (TagInfo) ALL_TAG_MAP.get(key);
 
 		//		public static final int DIRECTORY_TYPE_EXIF = -2;
 		//		//	public static final int DIRECTORY_TYPE_SUB = 5;
@@ -453,7 +452,7 @@ public class TiffField implements TiffConstants
 		return tagInfo.getValue(this);
 	}
 
-	private static final Map makeTagMap(TagInfo2 tags[],
+	private static final Map makeTagMap(TagInfo tags[],
 			boolean ignoreDuplicates, String name)
 	{
 		// make sure to use the thread-safe version; this is shared state.
@@ -461,7 +460,7 @@ public class TiffField implements TiffConstants
 
 		for (int i = 0; i < tags.length; i++)
 		{
-			TagInfo2 tag = tags[i];
+			TagInfo tag = tags[i];
 			Object key = new Integer(tag.tag);
 
 			if (map.get(key) == null)
@@ -472,7 +471,7 @@ public class TiffField implements TiffConstants
 						+ " (0x" + Integer.toHexString(tag.tag) + ")");
 				System.out.println("\t" + "New name: " + tag.name);
 				System.out.println("\t" + "Old name: "
-						+ ((TagInfo2) map.get(key)).name);
+						+ ((TagInfo) map.get(key)).name);
 			}
 		}
 

@@ -33,8 +33,6 @@ public abstract class ByteSourceTest extends SanselanTest
 		super(name);
 	}
 
-
-
 	protected File createTempFile(byte src[]) throws IOException
 	{
 		// make temp file directory

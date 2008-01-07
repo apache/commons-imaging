@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-
 package org.apache.sanselan.util;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class DebugInputStream extends InputStream
 {

@@ -55,7 +55,8 @@ public class ImageReadExample
 				IBufferedImageFactory
 	{
 
-		public BufferedImage getColorBufferedImage(int width, int height, boolean hasAlpha)
+		public BufferedImage getColorBufferedImage(int width, int height,
+				boolean hasAlpha)
 		{
 			GraphicsEnvironment ge = GraphicsEnvironment
 					.getLocalGraphicsEnvironment();
@@ -65,7 +66,8 @@ public class ImageReadExample
 					Transparency.TRANSLUCENT);
 		}
 
-		public BufferedImage getGrayscaleBufferedImage(int width, int height, boolean hasAlpha)
+		public BufferedImage getGrayscaleBufferedImage(int width, int height,
+				boolean hasAlpha)
 		{
 			return getColorBufferedImage(width, height, hasAlpha);
 		}

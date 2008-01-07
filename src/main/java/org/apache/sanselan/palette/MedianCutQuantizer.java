@@ -17,11 +17,11 @@
 package org.apache.sanselan.palette;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.util.Debug;
@@ -91,7 +91,8 @@ public class MedianCutQuantizer
 		public final int max_diff;
 		public final int diff_total;
 
-		public ColorGroup(final ArrayList color_counts) throws ImageWriteException
+		public ColorGroup(final ArrayList color_counts)
+				throws ImageWriteException
 		{
 			this.color_counts = color_counts;
 
@@ -118,8 +119,8 @@ public class MedianCutQuantizer
 			blue_diff = max_blue - min_blue;
 			max_diff = Math.max(ignoreAlpha ? red_diff : Math.max(alpha_diff,
 					red_diff), Math.max(green_diff, blue_diff));
-			diff_total = (ignoreAlpha ? 0 : alpha_diff) + red_diff
-					+ green_diff + blue_diff;
+			diff_total = (ignoreAlpha ? 0 : alpha_diff) + red_diff + green_diff
+					+ blue_diff;
 
 		}
 
@@ -417,10 +418,10 @@ public class MedianCutQuantizer
 
 		color_groups.remove(color_group);
 		{
-			ArrayList color_counts1 = new ArrayList(color_group.color_counts.subList(
-					0, median_index + 1));
-			ArrayList color_counts2 = new ArrayList(color_group.color_counts.subList(
-					median_index + 1, color_group.color_counts.size()));
+			ArrayList color_counts1 = new ArrayList(color_group.color_counts
+					.subList(0, median_index + 1));
+			ArrayList color_counts2 = new ArrayList(color_group.color_counts
+					.subList(median_index + 1, color_group.color_counts.size()));
 
 			ColorGroup less, more;
 			{

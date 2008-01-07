@@ -24,7 +24,7 @@ import org.apache.sanselan.common.ImageMetadata;
 import org.apache.sanselan.formats.tiff.RawTiffImageData;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
-import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.util.Debug;
 
 public class JpegImageMetadata implements IImageMetadata
@@ -53,7 +53,7 @@ public class JpegImageMetadata implements IImageMetadata
 		return photoshop;
 	}
 
-	public TiffField findEXIFValue(TagInfo2 tagInfo)
+	public TiffField findEXIFValue(TagInfo tagInfo)
 	{
 		ArrayList items = getItems();
 		for (int i = 0; i < items.size(); i++)
@@ -155,8 +155,6 @@ public class JpegImageMetadata implements IImageMetadata
 
 		return result.toString();
 	}
-
-	
 
 	public void dump()
 	{

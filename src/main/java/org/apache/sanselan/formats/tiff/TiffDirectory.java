@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.byteSources.ByteSource;
-import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 public class TiffDirectory extends TiffElement implements TiffConstants
@@ -145,7 +145,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 		return false;
 	}
 
-	public TiffField findField(TagInfo2 tag)
+	public TiffField findField(TagInfo tag)
 	{
 		if (entries == null)
 			return null;

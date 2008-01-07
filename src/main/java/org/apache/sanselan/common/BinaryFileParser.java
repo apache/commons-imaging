@@ -96,8 +96,7 @@ public class BinaryFileParser extends BinaryFileFunctions
 	{
 		return read2Bytes(name, is, exception, byteOrder);
 	}
-	
-	
+
 	public static boolean byteArrayHasPrefix(byte bytes[], byte prefix[])
 	{
 		if ((bytes == null) || (bytes.length < prefix.length))
@@ -109,6 +108,5 @@ public class BinaryFileParser extends BinaryFileFunctions
 
 		return true;
 	}
-
 
 }

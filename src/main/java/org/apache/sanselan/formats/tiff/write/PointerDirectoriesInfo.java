@@ -16,7 +16,6 @@
  */
 package org.apache.sanselan.formats.tiff.write;
 
-
 class PointerDirectoriesInfo
 {
 	public final TiffOutputField exifDirectoryOffsetField;

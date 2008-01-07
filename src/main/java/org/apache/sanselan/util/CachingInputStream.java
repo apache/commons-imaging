@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-
 package org.apache.sanselan.util;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class CachingInputStream extends InputStream
 {

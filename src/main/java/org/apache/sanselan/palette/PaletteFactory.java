@@ -19,10 +19,10 @@ package org.apache.sanselan.palette;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 
 public class PaletteFactory
 {
@@ -94,10 +94,10 @@ public class PaletteFactory
 		if (debug)
 			System.out.println("mapsize: " + mapsize);
 
-//		for (int i = 0; i < colormap.length; i++)
-//		{
-//			int rgb = colormap[i];
-//		}
+		//		for (int i = 0; i < colormap.length; i++)
+		//		{
+		//			int rgb = colormap[i];
+		//		}
 
 	}
 

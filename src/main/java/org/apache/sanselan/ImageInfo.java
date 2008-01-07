@@ -71,13 +71,13 @@ public class ImageInfo
 
 	private final String compressionAlgorithm;
 
-	public ImageInfo(String FormatDetails, int BitsPerPixel, ArrayList Comments,
-			ImageFormat Format, String FormatName, int Height, String MimeType,
-			int NumberOfImages, int PhysicalHeightDpi,
-			float PhysicalHeightInch, int PhysicalWidthDpi,
-			float PhysicalWidthInch, int Width, boolean isProgressive,
-			boolean isTransparent, boolean usesPalette, int ColorType,
-			String compressionAlgorithm)
+	public ImageInfo(String FormatDetails, int BitsPerPixel,
+			ArrayList Comments, ImageFormat Format, String FormatName,
+			int Height, String MimeType, int NumberOfImages,
+			int PhysicalHeightDpi, float PhysicalHeightInch,
+			int PhysicalWidthDpi, float PhysicalWidthInch, int Width,
+			boolean isProgressive, boolean isTransparent, boolean usesPalette,
+			int ColorType, String compressionAlgorithm)
 	{
 		this.formatDetails = FormatDetails;
 

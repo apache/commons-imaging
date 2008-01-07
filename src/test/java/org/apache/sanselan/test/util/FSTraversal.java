@@ -179,9 +179,8 @@ public class FSTraversal
 			if (root == null || !root.exists())
 				continue;
 
-			if (!traverse(roots[i], mode, visitor, estimate
-					+ estimateIncrement * i / roots.length, estimateIncrement
-					/ roots.length))
+			if (!traverse(roots[i], mode, visitor, estimate + estimateIncrement
+					* i / roots.length, estimateIncrement / roots.length))
 				return false;
 		}
 

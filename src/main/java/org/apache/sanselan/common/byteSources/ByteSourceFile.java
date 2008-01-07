@@ -70,12 +70,12 @@ public class ByteSourceFile extends ByteSource
 		}
 	}
 
-//	public long getLength()
-//	{
-//		//		System.out.println("file.length(): " + file.length());
-//
-//		return file.length();
-//	}
+	//	public long getLength()
+	//	{
+	//		//		System.out.println("file.length(): " + file.length());
+	//
+	//		return file.length();
+	//	}
 
 	public byte[] getAll() throws IOException
 	{

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.util.Debug;
 
 public class TiffContents
@@ -64,7 +64,7 @@ public class TiffContents
 		return result;
 	}
 
-	public TiffField findField(TagInfo2 tag)
+	public TiffField findField(TagInfo tag)
 	{
 		for (int i = 0; i < directories.size(); i++)
 		{

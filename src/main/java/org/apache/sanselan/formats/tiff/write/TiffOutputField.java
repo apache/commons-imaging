@@ -20,26 +20,26 @@ import java.io.IOException;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryOutputStream;
-import org.apache.sanselan.formats.tiff.constants.TagInfo2;
+import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 
 public class TiffOutputField implements TiffConstants
 {
 	public final int tag;
-	public final TagInfo2 tagInfo;
+	public final TagInfo tagInfo;
 	public final FieldType fieldType;
 	public final int count;
 
 	public byte bytes[];
 
-	public TiffOutputField(TagInfo2 tagInfo, FieldType tagtype, int count,
+	public TiffOutputField(TagInfo tagInfo, FieldType tagtype, int count,
 			byte bytes[])
 	{
 		this(tagInfo.tag, tagInfo, tagtype, count, bytes);
 	}
 
-	public TiffOutputField(final int tag, TagInfo2 tagInfo, FieldType tagtype,
+	public TiffOutputField(final int tag, TagInfo tagInfo, FieldType tagtype,
 			int count, byte bytes[])
 	{
 		this.tag = tag;
@@ -49,7 +49,7 @@ public class TiffOutputField implements TiffConstants
 		this.bytes = bytes;
 	}
 
-	public static final TiffOutputField createOffsetField(TagInfo2 tagInfo,
+	public static final TiffOutputField createOffsetField(TagInfo tagInfo,
 			int byteOrder)
 	{
 		return new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1, FIELD_TYPE_LONG

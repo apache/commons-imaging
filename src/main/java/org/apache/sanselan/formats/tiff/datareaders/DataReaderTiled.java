@@ -33,7 +33,7 @@ public class DataReaderTiled extends DataReader
 	private final int tileOffsets[];
 	private final int tileByteCounts[];
 
-//	private final int predictor;
+	//	private final int predictor;
 	private final int bitsPerPixel;
 
 	private final int width, height;
@@ -55,7 +55,7 @@ public class DataReaderTiled extends DataReader
 		this.tileLength = TileLength;
 
 		this.bitsPerPixel = fBitsPerPixel;
-//		this.predictor = Predictor;
+		//		this.predictor = Predictor;
 		this.width = width;
 		this.height = height;
 		this.compression = fCompression;

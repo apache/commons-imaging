@@ -25,8 +25,8 @@ import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryOutputStream;
 import org.apache.sanselan.formats.tiff.RawTiffImageData;
 import org.apache.sanselan.formats.tiff.TiffDirectory;
-import org.apache.sanselan.formats.tiff.constants.TagInfo2;
 import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
+import org.apache.sanselan.formats.tiff.constants.TagInfo;
 
 public final class TiffOutputDirectory implements AllTagConstants
 {
@@ -54,7 +54,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 		return new ArrayList(fields);
 	}
 
-	public TiffOutputField findField(TagInfo2 tagInfo)
+	public TiffOutputField findField(TagInfo tagInfo)
 	{
 		for (int i = 0; i < fields.size(); i++)
 		{
@@ -225,7 +225,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 
 		// Append imageData-related fields to first directory
 		{
-			TagInfo2 tagInfo;
+			TagInfo tagInfo;
 			if (stripsNotTiles)
 				tagInfo = TiffImageWriter.TIFF_TAG_STRIP_OFFSETS;
 			else
@@ -243,7 +243,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 			}
 		}
 		{
-			TagInfo2 tagInfo;
+			TagInfo tagInfo;
 			if (stripsNotTiles)
 				tagInfo = TiffImageWriter.TIFF_TAG_STRIP_BYTE_COUNTS;
 			else
@@ -279,7 +279,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 
 		// Append imageData-related fields to first directory
 		{
-			TagInfo2 tagInfo = TiffImageWriter.TIFF_TAG_JPEG_INTERCHANGE_FORMAT;
+			TagInfo tagInfo = TiffImageWriter.TIFF_TAG_JPEG_INTERCHANGE_FORMAT;
 
 			jpegImageDataOffsetField = findField(tagInfo);
 			if (null == jpegImageDataOffsetField)
@@ -293,7 +293,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 			}
 		}
 		{
-			TagInfo2 tagInfo = TiffImageWriter.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH;
+			TagInfo tagInfo = TiffImageWriter.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH;
 
 			byte data[] = TiffImageWriter.FIELD_TYPE_LONG.writeData(new int[]{
 				rawJpegImageData.length,

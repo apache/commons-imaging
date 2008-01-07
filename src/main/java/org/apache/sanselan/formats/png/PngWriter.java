@@ -21,7 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
 
@@ -403,7 +402,6 @@ public class PngWriter implements PngConstants
 				boolean useAlpha = colorType == COLOR_TYPE_GREYSCALE_WITH_ALPHA
 						|| colorType == COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
 
-
 				int row[] = new int[width];
 				for (int y = 0; y < height; y++)
 				{
@@ -450,13 +448,12 @@ public class PngWriter implements PngConstants
 							if (useAlpha)
 								baos.write(alpha);
 
-
 						}
 					}
 				}
 				uncompressed = baos.toByteArray();
 			}
-//			Debug.debug("uncompressed", uncompressed.length);
+			//			Debug.debug("uncompressed", uncompressed.length);
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			DeflaterOutputStream dos = new DeflaterOutputStream(baos);
@@ -466,7 +463,6 @@ public class PngWriter implements PngConstants
 				int end = Math.min(uncompressed.length, index + chunk_size);
 				int length = end - index;
 
-
 				dos.write(uncompressed, index, length);
 				dos.flush();
 				baos.flush();
@@ -475,7 +471,7 @@ public class PngWriter implements PngConstants
 				baos.reset();
 				if (compressed.length > 0)
 				{
-//					Debug.debug("compressed", compressed.length);
+					//					Debug.debug("compressed", compressed.length);
 					writeChunkIDAT(os, compressed);
 				}
 
@@ -485,7 +481,7 @@ public class PngWriter implements PngConstants
 				byte compressed[] = baos.toByteArray();
 				if (compressed.length > 0)
 				{
-//					Debug.debug("compressed final", compressed.length);
+					//					Debug.debug("compressed final", compressed.length);
 					writeChunkIDAT(os, compressed);
 				}
 			}
