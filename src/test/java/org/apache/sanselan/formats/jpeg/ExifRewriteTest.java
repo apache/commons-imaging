@@ -20,6 +20,7 @@ package org.apache.sanselan.formats.jpeg;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -82,8 +83,15 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		}
 	}
 
-	public void testRewrite() throws IOException, ImageReadException,
-			ImageWriteException
+	private interface Rewriter
+	{
+		public void rewrite(ByteSource byteSource, OutputStream os,
+				TiffOutputSet outputSet) throws ImageReadException,
+				IOException, ImageWriteException;
+	}
+
+	public void rewrite(Rewriter rewriter) throws IOException,
+			ImageReadException, ImageWriteException
 	{
 		List images = getImagesWithExifData();
 		for (int i = 0; i < images.size(); i++)
@@ -107,10 +115,10 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 			//			Photoshop photoshop = metadata.getPhotoshop();
 
 			TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
-			outputSet.dump();
+//			outputSet.dump();
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			new ExifRewriter().updateExifMetadata(byteSource, baos, outputSet);
+			rewriter.rewrite(byteSource, baos, outputSet);
 			byte bytes[] = baos.toByteArray();
 			File tempFile = File.createTempFile("test", ".jpg");
 			Debug.debug("tempFile", tempFile);
@@ -127,11 +135,45 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 			assertNotNull(newMetadata);
 			TiffImageMetadata newExifMetadata = newMetadata.getExif();
 			assertNotNull(newExifMetadata);
-			newMetadata.dump();
+//			newMetadata.dump();
 
 			compare(oldExifMetadata, newExifMetadata);
 		}
 	}
+
+	public void testRewriteLossy() throws IOException, ImageReadException,
+			ImageWriteException
+	{
+		Rewriter rewriter = new Rewriter()
+		{
+			public void rewrite(ByteSource byteSource, OutputStream os,
+					TiffOutputSet outputSet) throws ImageReadException,
+					IOException, ImageWriteException
+			{
+				new ExifRewriter().updateExifMetadataLossy(byteSource, os,
+						outputSet);
+			}
+		};
+
+		rewrite(rewriter);
+	}
+
+//	public void testRewriteLossless() throws IOException, ImageReadException,
+//			ImageWriteException
+//	{
+//		Rewriter rewriter = new Rewriter()
+//		{
+//			public void rewrite(ByteSource byteSource, OutputStream os,
+//					TiffOutputSet outputSet) throws ImageReadException,
+//					IOException, ImageWriteException
+//			{
+//				new ExifRewriter().updateExifMetadataLossless(byteSource, os,
+//						outputSet);
+//			}
+//		};
+//
+//		rewrite(rewriter);
+//	}
 
 	private Hashtable makeDirectoryMap(ArrayList directories)
 	{

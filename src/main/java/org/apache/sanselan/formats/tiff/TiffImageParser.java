@@ -50,7 +50,7 @@ import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInter
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterPalette;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterRGB;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
-import org.apache.sanselan.formats.tiff.write.TiffImageWriter;
+import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.sanselan.util.Debug;
 
 public class TiffImageParser extends ImageParser implements TiffConstants
@@ -138,12 +138,17 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		int entryCount = read2Bytes("DirectoryEntryCount", is,
 				"Not a Valid TIFF File");
 
+//		Debug.debug("dirType", dirType);
+//		Debug.debug("offset", offset);
+
 		for (int i = 0; i < entryCount; i++)
 		{
 			int tag = read2Bytes("Tag", is, "Not a Valid TIFF File");
 			int type = read2Bytes("Type", is, "Not a Valid TIFF File");
 			int length = read4Bytes("Length", is, "Not a Valid TIFF File");
 
+//			Debug.debug("tag", tag);
+			
 			byte valueOffsetBytes[] = readByteArray("ValueOffset", 4, is,
 					"Not a Valid TIFF File");
 			int valueOffset = convertByteArrayToInt("ValueOffset",
@@ -173,6 +178,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				"Not a Valid TIFF File");
 		if (debug)
 			System.out.println("");
+
+//		Debug.debug();
 
 		return new TiffDirectory(dirType, result, offset, nextDirectoryOffset);
 	}
@@ -1207,7 +1214,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 	public void writeImage(BufferedImage src, OutputStream os, Map params)
 			throws ImageWriteException, IOException
 	{
-		new TiffImageWriter().writeImage(src, os, params);
+		new TiffImageWriterLossy().writeImage(src, os, params);
 	}
 
 }

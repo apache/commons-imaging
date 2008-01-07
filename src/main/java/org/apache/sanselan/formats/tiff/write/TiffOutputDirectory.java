@@ -36,8 +36,14 @@ public final class TiffOutputDirectory implements AllTagConstants
 	public int internalLength = UNDEFINED_VALUE;
 	public int totalLength = UNDEFINED_VALUE;
 	public int offset = UNDEFINED_VALUE;
-	public int nextDirectoryOffset = UNDEFINED_VALUE;
 	private final ArrayList fields = new ArrayList();
+
+	private TiffOutputDirectory nextDirectory = null;
+
+	public void setNextDirectory(TiffOutputDirectory nextDirectory)
+	{
+		this.nextDirectory = nextDirectory;
+	}
 
 	public TiffOutputDirectory(final int type)
 	{
@@ -93,9 +99,9 @@ public final class TiffOutputDirectory implements AllTagConstants
 		tiffImageDataInfoStep(byteOrder);
 		jpegImageDataInfoStep(byteOrder);
 
-		internalLength = TiffImageWriter.TIFF_ENTRY_LENGTH * fields.size()
-				+ TiffImageWriter.TIFF_DIRECTORY_HEADER_LENGTH
-				+ TiffImageWriter.TIFF_DIRECTORY_FOOTER_LENGTH;
+		internalLength = TiffImageWriterLossy.TIFF_ENTRY_LENGTH * fields.size()
+				+ TiffImageWriterLossy.TIFF_DIRECTORY_HEADER_LENGTH
+				+ TiffImageWriterLossy.TIFF_DIRECTORY_FOOTER_LENGTH;
 
 		totalLength = internalLength;
 
@@ -116,7 +122,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 		{
 			int imageDataOffset = offset + totalLength;
 			totalLength += rawJpegImageData.length;
-			totalLength += TiffImageWriter
+			totalLength += TiffImageWriterLossy
 					.imageDataPaddingLength(rawJpegImageData.length);
 			updateJpegImageDataOffsetsStep(imageDataOffset, byteOrder);
 		}
@@ -156,6 +162,10 @@ public final class TiffOutputDirectory implements AllTagConstants
 					nextSeperateValueOffset);
 		}
 
+		int nextDirectoryOffset = 0;
+		if(nextDirectory!=null)
+			nextDirectoryOffset = nextDirectory.offset;
+		
 		// Write nextDirectoryOffset
 		if (nextDirectoryOffset == UNDEFINED_VALUE)
 			bos.write4Bytes(0);
@@ -177,7 +187,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 				bos.writeByteArray(imageData[i]);
 				int imageDataByteCount = imageData[i].length;
 
-				int remainder = TiffImageWriter
+				int remainder = TiffImageWriterLossy
 						.imageDataPaddingLength(imageDataByteCount);
 				for (int j = 0; j < remainder; j++)
 					bos.write(0);
@@ -188,7 +198,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 		{
 			//				byte imageData[][] = rawJpegImageData.getRawImageData();
 			bos.writeByteArray(rawJpegImageData);
-			int remainder = TiffImageWriter
+			int remainder = TiffImageWriterLossy
 					.imageDataPaddingLength(rawJpegImageData.length);
 			for (int j = 0; j < remainder; j++)
 				bos.write(0);
@@ -219,7 +229,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 			imageDataByteCounts[i] = imageData[i].length;
 			totalLength += imageData[i].length;
 
-			totalLength += TiffImageWriter
+			totalLength += TiffImageWriterLossy
 					.imageDataPaddingLength(imageData[i].length);
 		}
 
@@ -227,17 +237,17 @@ public final class TiffOutputDirectory implements AllTagConstants
 		{
 			TagInfo tagInfo;
 			if (stripsNotTiles)
-				tagInfo = TiffImageWriter.TIFF_TAG_STRIP_OFFSETS;
+				tagInfo = TiffImageWriterLossy.TIFF_TAG_STRIP_OFFSETS;
 			else
-				tagInfo = TiffImageWriter.TIFF_TAG_TILE_OFFSETS;
+				tagInfo = TiffImageWriterLossy.TIFF_TAG_TILE_OFFSETS;
 
 			imageDataOffsetsField = findField(tagInfo);
 			if (null == imageDataOffsetsField)
 			{
 				imageDataOffsetsField = new TiffOutputField(tagInfo,
-						TiffImageWriter.FIELD_TYPE_LONG,
+						TiffImageWriterLossy.FIELD_TYPE_LONG,
 						imageDataOffsets.length,
-						TiffImageWriter.FIELD_TYPE_LONG.writeData(
+						TiffImageWriterLossy.FIELD_TYPE_LONG.writeData(
 								imageDataOffsets, byteOrder));
 				add(imageDataOffsetsField);
 			}
@@ -245,17 +255,17 @@ public final class TiffOutputDirectory implements AllTagConstants
 		{
 			TagInfo tagInfo;
 			if (stripsNotTiles)
-				tagInfo = TiffImageWriter.TIFF_TAG_STRIP_BYTE_COUNTS;
+				tagInfo = TiffImageWriterLossy.TIFF_TAG_STRIP_BYTE_COUNTS;
 			else
-				tagInfo = TiffImageWriter.TIFF_TAG_TILE_BYTE_COUNTS;
+				tagInfo = TiffImageWriterLossy.TIFF_TAG_TILE_BYTE_COUNTS;
 
-			byte data[] = TiffImageWriter.FIELD_TYPE_LONG.writeData(
+			byte data[] = TiffImageWriterLossy.FIELD_TYPE_LONG.writeData(
 					imageDataByteCounts, byteOrder);
 
 			TiffOutputField field = findField(tagInfo);
 			if (null == field)
 				add(new TiffOutputField(tagInfo,
-						TiffImageWriter.FIELD_TYPE_LONG,
+						TiffImageWriterLossy.FIELD_TYPE_LONG,
 						imageDataByteCounts.length, data));
 			else
 				field.setData(data);
@@ -279,30 +289,32 @@ public final class TiffOutputDirectory implements AllTagConstants
 
 		// Append imageData-related fields to first directory
 		{
-			TagInfo tagInfo = TiffImageWriter.TIFF_TAG_JPEG_INTERCHANGE_FORMAT;
+			TagInfo tagInfo = TiffImageWriterLossy.TIFF_TAG_JPEG_INTERCHANGE_FORMAT;
 
 			jpegImageDataOffsetField = findField(tagInfo);
 			if (null == jpegImageDataOffsetField)
 			{
 				jpegImageDataOffsetField = new TiffOutputField(tagInfo,
-						TiffImageWriter.FIELD_TYPE_LONG, 1,
-						TiffImageWriter.FIELD_TYPE_LONG.writeData(new int[]{
-							0,
-						}, byteOrder));
+						TiffImageWriterLossy.FIELD_TYPE_LONG, 1,
+						TiffImageWriterLossy.FIELD_TYPE_LONG.writeData(
+								new int[]{
+									0,
+								}, byteOrder));
 				add(jpegImageDataOffsetField);
 			}
 		}
 		{
-			TagInfo tagInfo = TiffImageWriter.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH;
+			TagInfo tagInfo = TiffImageWriterLossy.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH;
 
-			byte data[] = TiffImageWriter.FIELD_TYPE_LONG.writeData(new int[]{
-				rawJpegImageData.length,
-			}, byteOrder);
+			byte data[] = TiffImageWriterLossy.FIELD_TYPE_LONG.writeData(
+					new int[]{
+						rawJpegImageData.length,
+					}, byteOrder);
 
 			TiffOutputField field = findField(tagInfo);
 			if (null == field)
 				add(new TiffOutputField(tagInfo,
-						TiffImageWriter.FIELD_TYPE_LONG, 1, data));
+						TiffImageWriterLossy.FIELD_TYPE_LONG, 1, data));
 			else
 				field.setData(data);
 		}
@@ -318,12 +330,12 @@ public final class TiffOutputDirectory implements AllTagConstants
 			imageDataInfo.imageDataOffsets[i] = currentOffset;
 			currentOffset += imageDataInfo.imageDataByteCounts[i];
 
-			currentOffset += TiffImageWriter
+			currentOffset += TiffImageWriterLossy
 					.imageDataPaddingLength(imageDataInfo.imageDataByteCounts[i]);
 		}
 
 		imageDataInfo.imageDataOffsetsField
-				.setData(TiffImageWriter.FIELD_TYPE_LONG.writeData(
+				.setData(TiffImageWriterLossy.FIELD_TYPE_LONG.writeData(
 						imageDataInfo.imageDataOffsets, byteOrder));
 		//			}
 	}
@@ -331,7 +343,7 @@ public final class TiffOutputDirectory implements AllTagConstants
 	private void updateJpegImageDataOffsetsStep(final int imageDataOffset,
 			int byteOrder) throws IOException, ImageWriteException
 	{
-		jpegImageDataOffsetField.setData(TiffImageWriter.FIELD_TYPE_LONG
+		jpegImageDataOffsetField.setData(TiffImageWriterLossy.FIELD_TYPE_LONG
 				.writeData(new int[]{
 					imageDataOffset,
 				}, byteOrder));

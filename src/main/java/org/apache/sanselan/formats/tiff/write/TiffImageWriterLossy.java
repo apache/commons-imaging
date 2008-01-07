@@ -34,14 +34,14 @@ import org.apache.sanselan.formats.tiff.TiffDirectory;
 import org.apache.sanselan.util.Debug;
 import org.apache.sanselan.util.DebugOutputStream;
 
-public class TiffImageWriter extends TiffImageWriterBase
+public class TiffImageWriterLossy extends TiffImageWriterBase
 {
 
-	public TiffImageWriter()
+	public TiffImageWriterLossy()
 	{
 	}
 
-	public TiffImageWriter(int byteOrder)
+	public TiffImageWriterLossy(int byteOrder)
 	{
 		super(byteOrder);
 	}
@@ -344,167 +344,11 @@ public class TiffImageWriter extends TiffImageWriterBase
 		return null;
 	}
 
-	private PointerDirectoriesInfo validateDirectories(List directories)
-			throws ImageWriteException
-	{
-		if (1 > directories.size())
-			throw new ImageWriteException("No directories.");
-
-		TiffOutputDirectory exifDirectory = null;
-		TiffOutputDirectory gpsDirectory = null;
-		TiffOutputDirectory interoperabilityDirectory = null;
-		TiffOutputField exifDirectoryOffsetField = null;
-		TiffOutputField gpsDirectoryOffsetField = null;
-		TiffOutputField interoperabilityDirectoryOffsetField = null;
-
-		ArrayList directoryIndices = new ArrayList();
-		Map dirMap = new HashMap();
-		for (int i = 0; i < directories.size(); i++)
-		{
-			TiffOutputDirectory directory = (TiffOutputDirectory) directories
-					.get(i);
-			int dirType = directory.type;
-			Integer key = new Integer(dirType);
-			dirMap.put(key, directory);
-			//			Debug.debug("validating dirType", dirType + " ("
-			//					+ directory.getFields().size() + " fields)");
-
-			if (dirType < 0)
-			{
-				switch (dirType)
-				{
-					case DIRECTORY_TYPE_EXIF :
-						if (exifDirectory != null)
-							throw new ImageWriteException(
-									"More than one EXIF directory.");
-						exifDirectory = directory;
-						break;
-
-					case DIRECTORY_TYPE_GPS :
-						if (gpsDirectory != null)
-							throw new ImageWriteException(
-									"More than one GPS directory.");
-						gpsDirectory = directory;
-						break;
-
-					case DIRECTORY_TYPE_INTEROPERABILITY :
-						if (interoperabilityDirectory != null)
-							throw new ImageWriteException(
-									"More than one Interoperability directory.");
-						interoperabilityDirectory = directory;
-						break;
-					default :
-						throw new ImageWriteException("Unknown directory: "
-								+ dirType);
-				}
-			}
-			else
-			{
-				if (directoryIndices.contains(key))
-					throw new ImageWriteException(
-							"More than one directory with index: " + dirType
-									+ ".");
-				directoryIndices.add(new Integer(dirType));
-				//				dirMap.put(arg0, arg1)
-			}
-
-			ArrayList fields = directory.getFields();
-			for (int j = 0; j < fields.size(); j++)
-			{
-				TiffOutputField field = (TiffOutputField) fields.get(j);
-				if (field.tagInfo.tag == EXIF_TAG_EXIF_OFFSET.tag)
-				{
-					if (exifDirectoryOffsetField != null)
-						throw new ImageWriteException(
-								"More than one Exif directory offset field.");
-					exifDirectoryOffsetField = field;
-				}
-				else if (field.tagInfo.tag == EXIF_TAG_INTEROP_OFFSET.tag)
-				{
-					if (interoperabilityDirectoryOffsetField != null)
-						throw new ImageWriteException(
-								"More than one Interoperability directory offset field.");
-					interoperabilityDirectoryOffsetField = field;
-				}
-				else if (field.tagInfo.tag == EXIF_TAG_GPSINFO.tag)
-				{
-					if (gpsDirectoryOffsetField != null)
-						throw new ImageWriteException(
-								"More than one GPS directory offset field.");
-					gpsDirectoryOffsetField = field;
-				}
-			}
-			//			directory.
-		}
-
-		if (directoryIndices.size() < 1)
-			throw new ImageWriteException("Missing root directory.");
-
-		// "normal" TIFF directories should have continous indices starting with 0, ie. 0, 1, 2...
-		Collections.sort(directoryIndices);
-		for (int i = 0; i < directoryIndices.size(); i++)
-		{
-			Integer index = (Integer) directoryIndices.get(i);
-			if (index.intValue() != i)
-				throw new ImageWriteException("Missing directory: " + i + ".");
-		}
-
-		TiffOutputDirectory rootDirectory = (TiffOutputDirectory) dirMap
-				.get(new Integer(DIRECTORY_TYPE_ROOT));
-
-		if (exifDirectory == null && exifDirectoryOffsetField != null)
-		{
-			// perhaps we should just discard field?
-			throw new ImageWriteException(
-					"Output set has Exif Directory Offset field, but no Exif Directory");
-		}
-		else if (exifDirectory != null && exifDirectoryOffsetField == null)
-		{
-			exifDirectoryOffsetField = TiffOutputField.createOffsetField(
-					EXIF_TAG_EXIF_OFFSET, byteOrder);
-			rootDirectory.add(exifDirectoryOffsetField);
-		}
-
-		if (gpsDirectory == null && gpsDirectoryOffsetField != null)
-		{
-			// perhaps we should just discard field?
-			throw new ImageWriteException(
-					"Output set has GPS Directory Offset field, but no GPS Directory");
-		}
-		else if (gpsDirectory != null && gpsDirectoryOffsetField == null)
-		{
-			gpsDirectoryOffsetField = TiffOutputField.createOffsetField(
-					EXIF_TAG_GPSINFO, byteOrder);
-			rootDirectory.add(gpsDirectoryOffsetField);
-		}
-
-		if (interoperabilityDirectory == null
-				&& interoperabilityDirectoryOffsetField != null)
-		{
-			// perhaps we should just discard field?
-			throw new ImageWriteException(
-					"Output set has Interoperability Directory Offset field, but no Interoperability Directory");
-		}
-		else if (interoperabilityDirectory != null
-				&& interoperabilityDirectoryOffsetField == null)
-		{
-			interoperabilityDirectoryOffsetField = TiffOutputField
-					.createOffsetField(EXIF_TAG_INTEROP_OFFSET, byteOrder);
-			rootDirectory.add(interoperabilityDirectoryOffsetField);
-		}
-
-		return new PointerDirectoriesInfo(exifDirectoryOffsetField,
-				exifDirectory, gpsDirectoryOffsetField, gpsDirectory,
-				interoperabilityDirectoryOffsetField, interoperabilityDirectory);
-
-		//		Debug.debug();
-	}
-
 	public void writeDirectories(OutputStream os, List directories)
 			throws IOException, ImageWriteException
 	{
 
-		PointerDirectoriesInfo pointerDirectoriesInfo = validateDirectories(directories);
+		TiffOutputSummary outputSummary = validateDirectories(directories);
 
 		//        Collections.sort(directories, Directory.COMPARATOR);
 
@@ -522,7 +366,7 @@ public class TiffImageWriter extends TiffImageWriterBase
 
 		/**/
 
-		updateDirectoryPointersStep(pointerDirectoriesInfo);
+		outputSummary.updateOffsets(byteOrder);
 
 		/**/
 
@@ -551,7 +395,6 @@ public class TiffImageWriter extends TiffImageWriterBase
 		// Calculate lengths and offsets
 		int offset = TIFF_HEADER_SIZE;
 
-		TiffOutputDirectory previousDirectory = null;
 		for (int i = 0; i < directories.size(); i++)
 		{
 			TiffOutputDirectory directory = (TiffOutputDirectory) directories
@@ -572,45 +415,11 @@ public class TiffImageWriter extends TiffImageWriterBase
 			}
 			else
 			{
-				if (null != previousDirectory)
-					previousDirectory.nextDirectoryOffset = offset;
-
 				directory.calculateLengths(byteOrder);
 				offset += directory.totalLength;
-
-				previousDirectory = directory;
 			}
 		}
 		//        return offset;
-	}
-
-	private void updateDirectoryPointersStep(
-			PointerDirectoriesInfo pointerDirectoriesInfo)
-	{
-		if (null != pointerDirectoriesInfo.exifDirectory)
-		{
-			byte value[] = FIELD_TYPE_LONG.writeData(new int[]{
-				pointerDirectoriesInfo.exifDirectory.offset,
-			}, byteOrder);
-			pointerDirectoriesInfo.exifDirectoryOffsetField.setData(value);
-		}
-
-		if (null != pointerDirectoriesInfo.gpsDirectory)
-		{
-			byte value[] = FIELD_TYPE_LONG.writeData(new int[]{
-				pointerDirectoriesInfo.gpsDirectory.offset,
-			}, byteOrder);
-			pointerDirectoriesInfo.gpsDirectoryOffsetField.setData(value);
-		}
-
-		if (null != pointerDirectoriesInfo.interoperabilityDirectory)
-		{
-			byte value[] = FIELD_TYPE_LONG.writeData(new int[]{
-				pointerDirectoriesInfo.interoperabilityDirectory.offset,
-			}, byteOrder);
-			pointerDirectoriesInfo.interoperabilityDirectoryOffsetField
-					.setData(value);
-		}
 	}
 
 	private void writeStep(BinaryOutputStream bos, List directories,
