@@ -31,7 +31,6 @@ import org.apache.sanselan.common.BinaryConstants;
 import org.apache.sanselan.common.PackBits;
 import org.apache.sanselan.common.mylzw.MyLZWCompressor;
 import org.apache.sanselan.formats.tiff.RawTiffImageData;
-import org.apache.sanselan.formats.tiff.TiffDirectory;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 public abstract class TiffImageWriterBase

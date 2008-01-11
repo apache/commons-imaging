@@ -30,7 +30,6 @@ import org.apache.sanselan.formats.jpeg.JpegConstants;
 import org.apache.sanselan.formats.jpeg.JpegUtils;
 import org.apache.sanselan.formats.jpeg.segments.GenericSegment;
 import org.apache.sanselan.formats.jpeg.segments.UnknownSegment;
-import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.write.TiffImageWriterBase;
 import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossless;
 import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossy;

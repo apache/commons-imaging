@@ -22,12 +22,6 @@ import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.BitInputStream;
-import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
-
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.formats.tiff.RawTiffImageData;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 

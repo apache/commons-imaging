@@ -541,8 +541,7 @@ public class BmpImageParser extends ImageParser
 		FormatCompliance result = new FormatCompliance(byteSource
 				.getDescription());
 
-		ImageContents ic = readImageContents(byteSource.getInputStream(),
-				result);
+		readImageContents(byteSource.getInputStream(), result);
 
 		return result;
 	}
@@ -556,8 +555,8 @@ public class BmpImageParser extends ImageParser
 			throw new ImageReadException("Couldn't read BMP Data");
 
 		BmpHeaderInfo bhi = ic.bhi;
-		byte colorTable[] = ic.colorTable;
-		byte imageData[] = ic.imageData;
+		//		byte colorTable[] = ic.colorTable;
+		//		byte imageData[] = ic.imageData;
 
 		int width = bhi.width;
 		int height = bhi.height;

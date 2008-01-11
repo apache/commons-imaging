@@ -298,12 +298,13 @@ public class PaletteFactory
 
 	private static class DivisionCandidate
 	{
-		private final ColorSpaceSubset src, dst_a, dst_b;
+		//		private final ColorSpaceSubset src;
+		private final ColorSpaceSubset dst_a, dst_b;
 
 		public DivisionCandidate(ColorSpaceSubset src, ColorSpaceSubset dst_a,
 				ColorSpaceSubset dst_b)
 		{
-			this.src = src;
+			//			this.src = src;
 			this.dst_a = dst_a;
 			this.dst_b = dst_b;
 		}

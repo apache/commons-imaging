@@ -296,7 +296,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 
 		public boolean readImageData()
 		{
-			return true;
+			return readImageData;
 		}
 	}
 

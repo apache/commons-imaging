@@ -22,8 +22,6 @@ import java.util.List;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryOutputStream;
-import org.apache.sanselan.util.Debug;
-import org.apache.sanselan.util.DebugOutputStream;
 
 public class TiffImageWriterLossy extends TiffImageWriterBase
 {

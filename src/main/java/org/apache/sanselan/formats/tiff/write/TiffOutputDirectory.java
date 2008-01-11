@@ -30,7 +30,6 @@ import org.apache.sanselan.formats.tiff.constants.TagConstantsUtils;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
-import org.apache.sanselan.util.Debug;
 
 public final class TiffOutputDirectory extends TiffOutputItem
 		implements

@@ -418,7 +418,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				true).getIntValue();
 		int bitsPerSample[] = directory.findField(TIFF_TAG_BITS_PER_SAMPLE,
 				true).getIntArrayValue();
-		// TODO: why are we using bits per sample twice?  is there a bits per pixel tag?
+		// TODO: why are we using bits per sample twice?  because one is a sum.
 		int bitsPerPixel = directory.findField(TIFF_TAG_BITS_PER_SAMPLE, true)
 				.getIntValueOrArraySum();
 

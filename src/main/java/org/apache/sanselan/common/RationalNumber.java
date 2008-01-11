@@ -19,8 +19,9 @@ package org.apache.sanselan.common;
 import java.text.NumberFormat;
 
 public class RationalNumber extends Number
-
 {
+	private static final long serialVersionUID = -1;
+	
 	public final int numerator;
 	public final int divisor;
 

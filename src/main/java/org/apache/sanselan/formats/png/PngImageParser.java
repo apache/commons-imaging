@@ -746,7 +746,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 			//					throw new ImageReadException("PNG: unknown bit depth: " + BitDepth);
 			//			}
 
-			ColorModel cm = null;
+//			ColorModel cm = null;
 			int samplesPerPixel = samplesPerPixel(pngChunkIHDR.colorType);
 			boolean isGrayscale = isGrayscale(pngChunkIHDR.colorType);
 

@@ -17,16 +17,10 @@
 package org.apache.sanselan.formats.tiff.write;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryOutputStream;
-import org.apache.sanselan.formats.tiff.RawTiffImageData;
-import org.apache.sanselan.formats.tiff.TiffDirectory;
 import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
-import org.apache.sanselan.formats.tiff.constants.TagInfo;
 
  abstract class TiffOutputItem implements AllTagConstants
 {

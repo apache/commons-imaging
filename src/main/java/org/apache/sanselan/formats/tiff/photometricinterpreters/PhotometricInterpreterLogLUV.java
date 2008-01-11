@@ -23,7 +23,7 @@ import org.apache.sanselan.ImageReadException;
 
 public class PhotometricInterpreterLogLUV extends PhotometricInterpreter
 {
-	private final boolean yOnly;
+//	private final boolean yOnly;
 
 	public PhotometricInterpreterLogLUV(int fSamplesPerPixel,
 			int fBitsPerSample[], int Predictor, int width, int height,
@@ -31,7 +31,7 @@ public class PhotometricInterpreterLogLUV extends PhotometricInterpreter
 	{
 		super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
-		this.yOnly = yonly;
+//		this.yOnly = yonly;
 	}
 
 	public void dumpstats() throws ImageReadException, IOException
