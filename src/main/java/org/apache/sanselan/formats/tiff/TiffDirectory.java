@@ -16,8 +16,10 @@
  */
 package org.apache.sanselan.formats.tiff;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.byteSources.ByteSource;
@@ -27,6 +29,7 @@ import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 public class TiffDirectory extends TiffElement implements TiffConstants
 //extends BinaryFileFunctions
 {
+
 	public String description()
 	{
 		return TiffDirectory.description(type);
@@ -105,8 +108,8 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 		return new ArrayList(entries);
 	}
 
-	public void fillInValues(ByteSource byteSource) throws ImageReadException,
-			IOException
+	protected void fillInValues(ByteSource byteSource)
+			throws ImageReadException, IOException
 	{
 		for (int i = 0; i < entries.size(); i++)
 		{
@@ -126,7 +129,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
 	}
 
-	public boolean hasJpegImageData()
+	public boolean hasJpegImageData() throws ImageReadException
 	{
 		if (null != findField(TIFF_TAG_JPEG_INTERCHANGE_FORMAT))
 			return true;
@@ -134,7 +137,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 		return false;
 	}
 
-	public boolean hasTiffImageData()
+	public boolean hasTiffImageData() throws ImageReadException
 	{
 		if (null != findField(TIFF_TAG_TILE_OFFSETS))
 			return true;
@@ -145,7 +148,29 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 		return false;
 	}
 
-	public TiffField findField(TagInfo tag)
+	public BufferedImage getTiffImage() throws ImageReadException, IOException
+	{
+		Map params = null;
+		return getTiffImage(params);
+	}
+
+	public BufferedImage getTiffImage(Map params) throws ImageReadException,
+			IOException
+	{
+		if (null == rawTiffImageData)
+			return null;
+
+		return new TiffImageParser().getBufferedImage(this, params);
+	}
+
+	public TiffField findField(TagInfo tag) throws ImageReadException
+	{
+		boolean failIfMissing = false;
+		return findField(tag, failIfMissing);
+	}
+
+	public TiffField findField(TagInfo tag, boolean failIfMissing)
+			throws ImageReadException
 	{
 		if (entries == null)
 			return null;
@@ -156,6 +181,10 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 			if (field.tag == tag.tag)
 				return field;
 		}
+
+		if (failIfMissing)
+			throw new ImageReadException("Missing expected field: "
+					+ tag.getDescription());
 
 		return null;
 	}
@@ -178,8 +207,8 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 	private ArrayList getRawImageDataElements(TiffField offsetsField,
 			TiffField byteCountsField) throws ImageReadException
 	{
-		int offsets[] = offsetsField.getValueAsIntArray();
-		int byteCounts[] = byteCountsField.getValueAsIntArray();
+		int offsets[] = offsetsField.getIntArrayValue();
+		int byteCounts[] = byteCountsField.getIntArrayValue();
 
 		if (offsets.length != byteCounts.length)
 			throw new ImageReadException("offsets.length(" + offsets.length
@@ -238,12 +267,37 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 		if ((jpegInterchangeFormat != null)
 				&& (jpegInterchangeFormatLength != null))
 		{
-			int offset = jpegInterchangeFormat.getValueAsIntArray()[0];
-			int byteCount = jpegInterchangeFormatLength.getValueAsIntArray()[0];
+			int offset = jpegInterchangeFormat.getIntArrayValue()[0];
+			int byteCount = jpegInterchangeFormatLength.getIntArrayValue()[0];
 
 			return new ImageDataElement(offset, byteCount);
 		}
 		else
 			throw new ImageReadException("Couldn't find image data.");
 	}
+
+	private RawTiffImageData rawTiffImageData = null;
+
+	public void setRawTiffImageData(RawTiffImageData rawImageData)
+	{
+		this.rawTiffImageData = rawImageData;
+	}
+
+	public RawTiffImageData getRawTiffImageData()
+	{
+		return rawTiffImageData;
+	}
+
+	private byte rawJpegImageData[] = null;
+
+	public void setRawJpegImageData(byte bytes[])
+	{
+		this.rawJpegImageData = bytes;
+	}
+
+	public byte[] getRawJpegImageData()
+	{
+		return rawJpegImageData;
+	}
+
 }

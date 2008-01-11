@@ -22,60 +22,64 @@ import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.BitInputStream;
-import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
-public class DataReaderTiled extends DataReader
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import org.apache.sanselan.ImageReadException;
+import org.apache.sanselan.formats.tiff.RawTiffImageData;
+import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+
+public final class DataReaderTiled extends DataReader
 {
 
 	private final int tileWidth;
 	private final int tileLength;
-	private final int tileOffsets[];
-	private final int tileByteCounts[];
 
-	//	private final int predictor;
 	private final int bitsPerPixel;
 
 	private final int width, height;
 
 	private final int compression;
 
-	public DataReaderTiled(PhotometricInterpreter fPhotometricInterpreter,
-			int fTileOffsets[], int fTileByteCounts[], int TileWidth,
-			int TileLength, int fBitsPerPixel, int fBitsPerSample[],
-			int Predictor, int fSamplesPerPixel, int width, int height,
-			int fCompression, int byteOrder)
+	private final RawTiffImageData.Tiles imageData;
+
+	public DataReaderTiled(PhotometricInterpreter photometricInterpreter,
+			int tileWidth, int tileLength, int bitsPerPixel,
+			int bitsPerSample[], int predictor, int samplesPerPixel,
+			int width, int height, int compression,
+			RawTiffImageData.Tiles imageData)
 	{
-		super(fPhotometricInterpreter, fBitsPerSample, Predictor,
-				fSamplesPerPixel, byteOrder);
+		super(photometricInterpreter, bitsPerSample, predictor,
+				samplesPerPixel);
 
-		this.tileOffsets = fTileOffsets;
-		this.tileByteCounts = fTileByteCounts;
-		this.tileWidth = TileWidth;
-		this.tileLength = TileLength;
+		this.tileWidth = tileWidth;
+		this.tileLength = tileLength;
 
-		this.bitsPerPixel = fBitsPerPixel;
-		//		this.predictor = Predictor;
+		this.bitsPerPixel = bitsPerPixel;
 		this.width = width;
 		this.height = height;
-		this.compression = fCompression;
+		this.compression = compression;
+
+		this.imageData = imageData;
 	}
 
-	private void interpretTile(BufferedImage bi, byte bytes[], int start_x,
-			int start_y) throws ImageReadException, IOException
+	private void interpretTile(BufferedImage bi, byte bytes[], int startX,
+			int startY) throws ImageReadException, IOException
 	{
 		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 		BitInputStream bis = new BitInputStream(bais);
 
-		int pixels_per_tile = tileWidth * tileLength;
+		int pixelsPerTile = tileWidth * tileLength;
 
-		int tile_x = 0, tile_y = 0;
+		int tileX = 0, tileY = 0;
 
-		for (int i = 0; i < pixels_per_tile; i++)
+		for (int i = 0; i < pixelsPerTile; i++)
 		{
 
-			int x = tile_x + start_x;
-			int y = tile_y + start_y;
+			int x = tileX + startX;
+			int y = tileY + startY;
 
 			int samples[] = getSamplesAsBytes(bis);
 
@@ -85,38 +89,34 @@ public class DataReaderTiled extends DataReader
 				photometricInterpreter.interpretPixel(bi, samples, x, y);
 			}
 
-			tile_x++;
+			tileX++;
 
-			if (tile_x >= tileWidth)
+			if (tileX >= tileWidth)
 			{
-				tile_x = 0;
-				tile_y++;
+				tileX = 0;
+				tileY++;
 				bis.flushCache();
-				if (tile_y >= tileLength)
+				if (tileY >= tileLength)
 					break;
 			}
 
 		}
 	}
 
-	public void readImageData(BufferedImage bi, ByteSource byteSource)
-			throws ImageReadException, IOException
+	public void readImageData(BufferedImage bi) throws ImageReadException,
+			IOException
 	{
-		int bits_per_row = tileWidth * bitsPerPixel;
-		int bytes_per_row = (bits_per_row + 7) / 8;
-		int bytes_per_tile = bytes_per_row * tileLength;
+		int bitsPerRow = tileWidth * bitsPerPixel;
+		int bytesPerRow = (bitsPerRow + 7) / 8;
+		int bytesPerTile = bytesPerRow * tileLength;
 		int x = 0, y = 0;
 
-		for (int tile = 0; tile < tileOffsets.length; tile++)
+		for (int tile = 0; tile < imageData.tiles.length; tile++)
 		{
-			int fTileOffset = tileOffsets[tile];
-			int fTileByteCount = tileByteCounts[tile];
-
-			byte compressed[] = byteSource
-					.getBlock(fTileOffset, fTileByteCount);
+			byte compressed[] = imageData.tiles[tile];
 
 			byte decompressed[] = decompress(compressed, compression,
-					bytes_per_tile);
+					bytesPerTile);
 
 			interpretTile(bi, decompressed, x, y);
 

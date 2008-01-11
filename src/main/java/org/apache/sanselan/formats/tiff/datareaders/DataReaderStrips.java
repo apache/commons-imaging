@@ -22,41 +22,41 @@ import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.BitInputStream;
-import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
-public class DataReaderStrips extends DataReader
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import org.apache.sanselan.ImageReadException;
+import org.apache.sanselan.formats.tiff.RawTiffImageData;
+import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+
+public final class DataReaderStrips extends DataReader
 {
 
 	private final int bitsPerPixel;
-
 	private final int width, height;
-
-	private final int stripOffsets[];
-	private final int stripByteCounts[];
 	private final int compression;
 	private final int rowsPerStrip;
 
-	public DataReaderStrips(PhotometricInterpreter fPhotometricInterpreter,
-			int fBitsPerPixel, int fBitsPerSample[], int Predictor,
-			int fSamplesPerPixel, int width, int height, int fStripOffsets[],
-			int fStripByteCounts[], int fCompression, int fRowsPerStrip,
-			int byteOrder)
-	{
-		super(fPhotometricInterpreter, fBitsPerSample, Predictor,
-				fSamplesPerPixel, byteOrder);
+	private final RawTiffImageData.Strips imageData;
 
-		this.bitsPerPixel = fBitsPerPixel;
+	public DataReaderStrips(PhotometricInterpreter photometricInterpreter,
+			int bitsPerPixel, int bitsPerSample[], int predictor,
+			int samplesPerPixel, int width, int height, int compression,
+			int rowsPerStrip, RawTiffImageData.Strips imageData)
+	{
+		super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel);
+
+		this.bitsPerPixel = bitsPerPixel;
 		this.width = width;
 		this.height = height;
-		this.stripOffsets = fStripOffsets;
-		this.stripByteCounts = fStripByteCounts;
-		this.compression = fCompression;
-		this.rowsPerStrip = fRowsPerStrip;
-
+		this.compression = compression;
+		this.rowsPerStrip = rowsPerStrip;
+		this.imageData = imageData;
 	}
 
-	public void interpretStrip(BufferedImage bi, byte bytes[],
+	private void interpretStrip(BufferedImage bi, byte bytes[],
 			int pixels_per_strip) throws ImageReadException, IOException
 	{
 		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
@@ -85,29 +85,24 @@ public class DataReaderStrips extends DataReader
 		}
 	}
 
-	int x = 0, y = 0;
+	private int x = 0, y = 0;
 
-	public void readImageData(BufferedImage bi, ByteSource byteSource)
-			throws ImageReadException, IOException
+	public void readImageData(BufferedImage bi) throws ImageReadException,
+			IOException
 	{
-
-		for (int strip = 0; strip < stripOffsets.length; strip++)
+		for (int strip = 0; strip < imageData.strips.length; strip++)
 		{
-			int rows_remaining = height - (strip * rowsPerStrip);
-			int rows_in_this_strip = Math.min(rows_remaining, rowsPerStrip);
-			int pixels_per_strip = rows_in_this_strip * width;
-			int bytes_per_strip = ((pixels_per_strip * bitsPerPixel) + 7) / 8;
+			int rowsRemaining = height - (strip * rowsPerStrip);
+			int rowsInThisStrip = Math.min(rowsRemaining, rowsPerStrip);
+			int pixelsPerStrip = rowsInThisStrip * width;
+			int bytesPerStrip = ((pixelsPerStrip * bitsPerPixel) + 7) / 8;
 
-			int fStripOffset = stripOffsets[strip];
-			int fStripByteCount = stripByteCounts[strip];
-
-			byte compressed[] = byteSource.getBlock(fStripOffset,
-					fStripByteCount);
+			byte compressed[] = imageData.strips[strip];
 
 			byte decompressed[] = decompress(compressed, compression,
-					bytes_per_strip);
+					bytesPerStrip);
 
-			interpretStrip(bi, decompressed, pixels_per_strip);
+			interpretStrip(bi, decompressed, pixelsPerStrip);
 
 		}
 	}

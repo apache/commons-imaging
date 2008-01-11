@@ -25,7 +25,6 @@ import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.BinaryConstants;
 import org.apache.sanselan.common.BitInputStream;
 import org.apache.sanselan.common.PackBits;
-import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.mylzw.MyLZWDecompressor;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -39,21 +38,18 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
 	protected final int predictor;
 	protected final int samplesPerPixel;
 
-	protected final int byteOrder;
-
-	public DataReader(PhotometricInterpreter fPhotometricInterpreter,
-			int fBitsPerSample[], int Predictor, int fSamplesPerPixel,
-			int byteOrder)
+	public DataReader(PhotometricInterpreter photometricInterpreter,
+			int bitsPerSample[], int predictor, int samplesPerPixel)
 	{
-		this.photometricInterpreter = fPhotometricInterpreter;
-		this.bitsPerSample = fBitsPerSample;
-		this.samplesPerPixel = fSamplesPerPixel;
-		this.predictor = Predictor;
-		this.byteOrder = byteOrder;
-		last = new int[fSamplesPerPixel];
+		this.photometricInterpreter = photometricInterpreter;
+		this.bitsPerSample = bitsPerSample;
+		this.samplesPerPixel = samplesPerPixel;
+		this.predictor = predictor;
+		last = new int[samplesPerPixel];
 	}
 
-	public abstract void readImageData(BufferedImage bi, ByteSource byteSource)
+//	public abstract void readImageData(BufferedImage bi, ByteSource byteSource)
+	public abstract void readImageData(BufferedImage bi)
 			throws ImageReadException, IOException;
 
 	protected int[] getSamplesAsBytes(BitInputStream bis)
@@ -116,12 +112,12 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
 
 				int LZWMinimumCodeSize = 8;
 
-				MyLZWDecompressor fMyLzwDecompressor = new MyLZWDecompressor(
+				MyLZWDecompressor myLzwDecompressor = new MyLZWDecompressor(
 						LZWMinimumCodeSize, BYTE_ORDER_NETWORK);
 
-				fMyLzwDecompressor.setTiffLZWMode();
+				myLzwDecompressor.setTiffLZWMode();
 
-				byte[] result = fMyLzwDecompressor
+				byte[] result = myLzwDecompressor
 						.decompress(is, expected_size);
 
 				return result;

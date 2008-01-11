@@ -30,7 +30,6 @@ import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
-import org.apache.sanselan.util.Debug;
 
 public class TiffField implements TiffConstants
 {
@@ -169,10 +168,10 @@ public class TiffField implements TiffConstants
 
 		int valueLength = getValueLengthInBytes();
 
-//		Debug.debug("fillInValue tagInfo", tagInfo);
-//		Debug.debug("fillInValue valueOffset", valueOffset);
-//		Debug.debug("fillInValue valueLength", valueLength);
-		
+		//				Debug.debug("fillInValue tagInfo", tagInfo);
+		//				Debug.debug("fillInValue valueOffset", valueOffset);
+		//				Debug.debug("fillInValue valueLength", valueLength);
+
 		byte bytes[] = byteSource.getBlock(valueOffset, valueLength);
 		setOversizeValue(bytes);
 	}
@@ -517,11 +516,12 @@ public class TiffField implements TiffConstants
 	//			});
 	//
 	//	
-	public int[] getValueAsIntArray()
+
+	public int[] getIntArrayValue() throws ImageReadException
 	{
 		Object o = getValue();
-		if (o == null)
-			return null;
+		//		if (o == null)
+		//			return null;
 
 		if (o instanceof Number)
 			return new int[]{
@@ -544,6 +544,108 @@ public class TiffField implements TiffConstants
 			return result;
 		}
 
-		return null;
+		throw new ImageReadException("Unknown value: " + o + " for: "
+				+ tagInfo.getDescription());
+		//		return null;
+	}
+
+	public double[] getDoubleArrayValue() throws ImageReadException
+	{
+		Object o = getValue();
+		//		if (o == null)
+		//			return null;
+
+		if (o instanceof Number)
+		{
+			return new double[]{
+				((Number) o).doubleValue()
+			};
+		}
+		else if (o instanceof Number[])
+		{
+			Number numbers[] = (Number[]) o;
+			double result[] = new double[numbers.length];
+			for (int i = 0; i < numbers.length; i++)
+				result[i] = numbers[i].doubleValue();
+			return result;
+		}
+		else if (o instanceof int[])
+		{
+			int numbers[] = (int[]) o;
+			double result[] = new double[numbers.length];
+			for (int i = 0; i < numbers.length; i++)
+				result[i] = numbers[i];
+			return result;
+		}
+		else if (o instanceof float[])
+		{
+			float numbers[] = (float[]) o;
+			double result[] = new double[numbers.length];
+			for (int i = 0; i < numbers.length; i++)
+				result[i] = numbers[i];
+			return result;
+		}
+		else if (o instanceof double[])
+		{
+			double numbers[] = (double[]) o;
+			double result[] = new double[numbers.length];
+			for (int i = 0; i < numbers.length; i++)
+				result[i] = numbers[i];
+			return result;
+		}
+
+		throw new ImageReadException("Unknown value: " + o + " for: "
+				+ tagInfo.getDescription());
+		//		return null;
+	}
+
+	public int getIntValueOrArraySum() throws ImageReadException
+	{
+		Object o = getValue();
+		//		if (o == null)
+		//			return -1;
+
+		if (o instanceof Number)
+			return ((Number) o).intValue();
+		else if (o instanceof Number[])
+		{
+			Number numbers[] = (Number[]) o;
+			int sum = 0;
+			for (int i = 0; i < numbers.length; i++)
+				sum += numbers[i].intValue();
+			return sum;
+		}
+		else if (o instanceof int[])
+		{
+			int numbers[] = (int[]) o;
+			int sum = 0;
+			for (int i = 0; i < numbers.length; i++)
+				sum += numbers[i];
+			return sum;
+		}
+
+		throw new ImageReadException("Unknown value: " + o + " for: "
+				+ tagInfo.getDescription());
+		//		return -1;
+	}
+
+	public int getIntValue() throws ImageReadException
+	{
+		Object o = getValue();
+		if (o == null)
+			throw new ImageReadException("Missing value: "
+					+ tagInfo.getDescription());
+
+		return ((Number) o).intValue();
+	}
+
+	public double getDoubleValue() throws ImageReadException
+	{
+		Object o = getValue();
+		if (o == null)
+			throw new ImageReadException("Missing value: "
+					+ tagInfo.getDescription());
+
+		return ((Number) o).doubleValue();
 	}
 }

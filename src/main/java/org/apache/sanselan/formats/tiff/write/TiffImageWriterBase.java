@@ -461,7 +461,7 @@ public abstract class TiffImageWriterBase
 
 		}
 
-		RawTiffImageData rawTiffImageData = new RawTiffImageData.Strips(strips);
+		RawTiffImageData rawTiffImageData = new RawTiffImageData.Strips(strips, rowsPerStrip);
 		directory.setRawTiffImageData(rawTiffImageData);
 
 		write(os, outputSet);

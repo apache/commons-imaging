@@ -341,8 +341,8 @@ public class JpegImageParser extends ImageParser implements JpegConstants
 
 		if(params==null)
 			params = new HashMap();
-		if (!params.containsKey(PARAM_KEY_READ_THUMBNAILS))
-			params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.TRUE);
+//		if (!params.containsKey(PARAM_KEY_READ_THUMBNAILS))
+//			params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.TRUE);
 
 		return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes,
 				params);

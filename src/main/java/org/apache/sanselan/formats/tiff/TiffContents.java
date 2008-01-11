@@ -64,7 +64,7 @@ public class TiffContents
 		return result;
 	}
 
-	public TiffField findField(TagInfo tag)
+	public TiffField findField(TagInfo tag) throws ImageReadException
 	{
 		for (int i = 0; i < directories.size(); i++)
 		{

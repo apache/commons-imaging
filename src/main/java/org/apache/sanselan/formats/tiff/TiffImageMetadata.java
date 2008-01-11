@@ -17,8 +17,10 @@
 package org.apache.sanselan.formats.tiff;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.ImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
@@ -26,7 +28,6 @@ import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
-import org.apache.sanselan.util.Debug;
 
 public class TiffImageMetadata extends ImageMetadata
 {
@@ -41,7 +42,7 @@ public class TiffImageMetadata extends ImageMetadata
 			implements
 				ImageMetadata.IImageMetadataItem
 	{
-		private BufferedImage thumbnail = null;
+		//		private BufferedImage thumbnail = null;
 
 		public final int type;
 
@@ -58,46 +59,62 @@ public class TiffImageMetadata extends ImageMetadata
 			add(new TiffImageMetadata.Item(entry));
 		}
 
-		public void setThumbnail(BufferedImage thumbnail)
+		//		public void setThumbnail(BufferedImage thumbnail)
+		//		{
+		//			this.thumbnail = thumbnail;
+		//		}
+		//
+		//		public BufferedImage getThumbnail()
+		//		{
+		//			return thumbnail;
+		//		}
+
+		public BufferedImage getThumbnail() throws ImageReadException,
+				IOException
 		{
-			this.thumbnail = thumbnail;
+			return directory.getTiffImage();
 		}
 
-		public BufferedImage getThumbnail()
-		{
-			return thumbnail;
-		}
-
-		private RawTiffImageData rawTiffImageData = null;
-
-		public void setRawTiffImageData(RawTiffImageData rawImageData)
-		{
-			this.rawTiffImageData = rawImageData;
-		}
+		//		private RawTiffImageData rawTiffImageData = null;
+		//
+		//		public void setRawTiffImageData(RawTiffImageData rawImageData)
+		//		{
+		//			this.rawTiffImageData = rawImageData;
+		//		}
+		//
+		//		public RawTiffImageData getRawTiffImageData()
+		//		{
+		//			return rawTiffImageData;
+		//		}
 
 		public RawTiffImageData getRawTiffImageData()
 		{
-			return rawTiffImageData;
+			return directory.getRawTiffImageData();
 		}
 
-		private byte rawJpegImageData[] = null;
-
-		public void setRawJpegImageData(byte bytes[])
-		{
-			this.rawJpegImageData = bytes;
-		}
+		//		private byte rawJpegImageData[] = null;
+		//
+		//		public void setRawJpegImageData(byte bytes[])
+		//		{
+		//			this.rawJpegImageData = bytes;
+		//		}
+		//
+		//		public byte[] getRawJpegImageData()
+		//		{
+		//			return rawJpegImageData;
+		//		}
 
 		public byte[] getRawJpegImageData()
 		{
-			return rawJpegImageData;
+			return directory.getRawJpegImageData();
 		}
 
 		public String toString(String prefix)
 		{
 			return (prefix != null ? prefix : "") + directory.description()
 					+ ": " //
-					+ (rawTiffImageData != null ? " (tiffImageData)" : "") //
-					+ (rawJpegImageData != null ? " (jpegImageData)" : "") //
+					+ (getRawTiffImageData() != null ? " (tiffImageData)" : "") //
+					+ (getRawJpegImageData() != null ? " (jpegImageData)" : "") //
 					+ "\n" + super.toString(prefix) + "\n";
 		}
 
@@ -134,7 +151,6 @@ public class TiffImageMetadata extends ImageMetadata
 			dstDir.setRawTiffImageData(getRawTiffImageData());
 			dstDir.setRawJpegImageData(getRawJpegImageData());
 
-			
 			return dstDir;
 		}
 	}

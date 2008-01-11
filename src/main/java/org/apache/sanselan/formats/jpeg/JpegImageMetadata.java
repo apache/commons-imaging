@@ -17,8 +17,10 @@
 package org.apache.sanselan.formats.jpeg;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.ImageMetadata;
 import org.apache.sanselan.formats.tiff.RawTiffImageData;
@@ -71,7 +73,7 @@ public class JpegImageMetadata implements IImageMetadata
 		return null;
 	}
 
-	public BufferedImage getEXIFThumbnail()
+	public BufferedImage getEXIFThumbnail() throws ImageReadException, IOException
 	{
 		ArrayList dirs = exif.getDirectories();
 		for (int i = 0; i < dirs.size(); i++)
