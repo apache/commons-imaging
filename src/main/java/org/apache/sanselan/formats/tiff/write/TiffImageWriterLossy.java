@@ -95,17 +95,4 @@ public class TiffImageWriterLossy extends TiffImageWriterBase
 
 	}
 
-	private void writeImageFileHeader(BinaryOutputStream bos)
-			throws IOException, ImageWriteException
-	{
-		bos.write(byteOrder);
-		bos.write(byteOrder);
-
-		bos.write2Bytes(42); // tiffVersion
-
-		int offsetToFirstIFD = TIFF_HEADER_SIZE;
-
-		bos.write4Bytes(offsetToFirstIFD);
-	}
-
 }

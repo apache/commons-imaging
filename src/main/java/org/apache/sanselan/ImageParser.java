@@ -366,11 +366,6 @@ public abstract class ImageParser extends BinaryFileParser
 		return false;
 	}
 
-	protected FormatCompliance getDefaultFormatCompliance()
-	{
-		return new FormatCompliance("ignore", false);
-	}
-
 	protected IBufferedImageFactory getBufferedImageFactory(Map params)
 	{
 		if (params == null)

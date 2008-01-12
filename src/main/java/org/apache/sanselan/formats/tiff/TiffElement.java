@@ -29,6 +29,11 @@ public abstract class TiffElement
 		this.length = length;
 	}
 
+	public String getElementDescription()
+	{
+		return getElementDescription(false);
+	}
+
 	public abstract String getElementDescription(boolean verbose);
 
 	public static final Comparator COMPARATOR = new Comparator()
@@ -40,4 +45,32 @@ public abstract class TiffElement
 			return e1.offset - e2.offset;
 		}
 	};
+
+	public static abstract class DataElement extends TiffElement
+	{
+		public final byte data[];
+
+		public DataElement(int offset, int length, final byte data[])
+		{
+			super(offset, length);
+
+			this.data = data;
+		}
+
+	}
+
+	public static final class Stub extends TiffElement
+	{
+		public Stub(int offset, int length)
+		{
+			super(offset, length);
+		}
+
+		public String getElementDescription(boolean verbose)
+		{
+			return "Element, offset: " + offset + ", length: " + length
+					+ ", last: " + (offset + length) + "";
+		}
+
+	}
 }

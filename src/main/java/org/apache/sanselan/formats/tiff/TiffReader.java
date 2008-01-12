@@ -160,15 +160,15 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 			{
 				if (directory.hasTiffImageData())
 				{
-					RawTiffImageData rawImageData = getTiffRawImageData(
+					TiffImageData rawImageData = getTiffRawImageData(
 							byteSource, directory);
-					directory.setRawTiffImageData(rawImageData);
+					directory.setTiffImageData(rawImageData);
 				}
 				if (directory.hasJpegImageData())
 				{
-					byte rawJpegImageData[] = getJpegRawImageData(byteSource,
-							directory);
-					directory.setRawJpegImageData(rawJpegImageData);
+					JpegImageData rawJpegImageData = getJpegRawImageData(
+							byteSource, directory);
+					directory.setJpegImageData(rawJpegImageData);
 				}
 			}
 
@@ -331,16 +331,18 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 		readDirectories(byteSource, formatCompliance, listener);
 	}
 
-	private RawTiffImageData getTiffRawImageData(ByteSource byteSource,
+	private TiffImageData getTiffRawImageData(ByteSource byteSource,
 			TiffDirectory directory) throws ImageReadException, IOException
 	{
 		ArrayList elements = directory.getTiffRawImageDataElements();
-		byte result[][] = new byte[elements.size()][];
+		TiffImageData.Data data[] = new TiffImageData.Data[elements.size()];
 		for (int i = 0; i < elements.size(); i++)
 		{
 			TiffDirectory.ImageDataElement element = (TiffDirectory.ImageDataElement) elements
 					.get(i);
-			result[i] = byteSource.getBlock(element.offset, element.length);
+			byte bytes[] = byteSource.getBlock(element.offset, element.length);
+			data[i] = new TiffImageData.Data(element.offset, element.length,
+					bytes);
 		}
 
 		if (directory.imageDataInStrips())
@@ -351,7 +353,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 				throw new ImageReadException("Can't find rows per strip field.");
 			int rowsPerStrip = rowsPerStripField.getIntValue();
 
-			return new RawTiffImageData.Strips(result, rowsPerStrip);
+			return new TiffImageData.Strips(data, rowsPerStrip);
 		}
 		else
 		{
@@ -366,16 +368,16 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 				throw new ImageReadException("Can't find tile length field.");
 			int tileLength = tileLengthField.getIntValue();
 
-			return new RawTiffImageData.Tiles(result, tileWidth, tileLength);
+			return new TiffImageData.Tiles(data, tileWidth, tileLength);
 		}
 	}
 
-	private byte[] getJpegRawImageData(ByteSource byteSource,
+	private JpegImageData getJpegRawImageData(ByteSource byteSource,
 			TiffDirectory directory) throws ImageReadException, IOException
 	{
 		ImageDataElement element = directory.getJpegRawImageDataElement();
-		byte result[] = byteSource.getBlock(element.offset, element.length);
-		return result;
+		byte data[] = byteSource.getBlock(element.offset, element.length);
+		return new JpegImageData(element.offset, element.length, data);
 	}
 
 }

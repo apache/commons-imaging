@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
+import org.apache.sanselan.common.BinaryFileFunctions;
 import org.apache.sanselan.common.BinaryFileParser;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.jpeg.JpegConstants;
@@ -163,8 +164,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 		boolean includeEXIFPrefix = true;
 		byte newBytes[] = writeExifSegment(writer, outputSet, includeEXIFPrefix);
 
-		Debug.debug("oldBytes", exifBytes.length);
-		Debug.debug("newBytes", newBytes.length);
+//		Debug.debug("oldBytes", exifBytes.length);
+//		Debug.debug("newBytes", newBytes.length);
+//		Debug.debug("oldBytes", BinaryFileFunctions.head(exifBytes, 10));
+//		Debug.debug("newBytes", newBytes);
 
 		writeSegmentsReplacingExif(os, pieces, newBytes);
 	}
@@ -208,6 +211,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 					byte markerBytes[] = convertShortToByteArray(
 							JPEG_APP1_Marker, byteOrder);
 					os.write(markerBytes);
+
+					if (newBytes.length > 0xffff)
+						throw new ImageWriteException(
+								"APP1 Segment is too long: " + newBytes.length);
 
 					int markerLength = newBytes.length + 2;
 					byte markerLengthBytes[] = convertShortToByteArray(

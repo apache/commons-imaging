@@ -157,7 +157,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 	public BufferedImage getTiffImage(Map params) throws ImageReadException,
 			IOException
 	{
-		if (null == rawTiffImageData)
+		if (null == tiffImageData)
 			return null;
 
 		return new TiffImageParser().getBufferedImage(this, params);
@@ -276,28 +276,28 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 			throw new ImageReadException("Couldn't find image data.");
 	}
 
-	private RawTiffImageData rawTiffImageData = null;
+	private TiffImageData tiffImageData = null;
 
-	public void setRawTiffImageData(RawTiffImageData rawImageData)
+	public void setTiffImageData(TiffImageData rawImageData)
 	{
-		this.rawTiffImageData = rawImageData;
+		this.tiffImageData = rawImageData;
 	}
 
-	public RawTiffImageData getRawTiffImageData()
+	public TiffImageData getTiffImageData()
 	{
-		return rawTiffImageData;
+		return tiffImageData;
 	}
 
-	private byte rawJpegImageData[] = null;
+	private JpegImageData jpegImageData = null;
 
-	public void setRawJpegImageData(byte bytes[])
+	public void setJpegImageData(JpegImageData value)
 	{
-		this.rawJpegImageData = bytes;
+		this.jpegImageData = value;
 	}
 
-	public byte[] getRawJpegImageData()
+	public JpegImageData getJpegImageData()
 	{
-		return rawJpegImageData;
+		return jpegImageData;
 	}
 
 }

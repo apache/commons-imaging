@@ -459,7 +459,7 @@ public class BmpImageParser extends ImageParser
 			throws ImageReadException, IOException
 	{
 		ImageContents ic = readImageContents(byteSource.getInputStream(),
-				getDefaultFormatCompliance());
+				FormatCompliance.getDefault());
 
 		if (ic == null)
 			throw new ImageReadException("Couldn't read BMP Data");
@@ -550,7 +550,7 @@ public class BmpImageParser extends ImageParser
 			throws ImageReadException, IOException
 	{
 		ImageContents ic = readImageContents(byteSource.getInputStream(),
-				getDefaultFormatCompliance());
+				FormatCompliance.getDefault());
 		if (ic == null)
 			throw new ImageReadException("Couldn't read BMP Data");
 

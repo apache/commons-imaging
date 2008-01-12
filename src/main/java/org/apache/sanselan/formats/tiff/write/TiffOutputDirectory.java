@@ -24,7 +24,9 @@ import java.util.List;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryOutputStream;
-import org.apache.sanselan.formats.tiff.RawTiffImageData;
+import org.apache.sanselan.formats.tiff.JpegImageData;
+import org.apache.sanselan.formats.tiff.TiffElement;
+import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.TiffDirectory;
 import org.apache.sanselan.formats.tiff.constants.TagConstantsUtils;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
@@ -119,28 +121,28 @@ public final class TiffOutputDirectory extends TiffOutputItem
 			bos.write4Bytes(nextDirectoryOffset);
 	}
 
-	private byte rawJpegImageData[] = null;
+	private JpegImageData jpegImageData = null;
 
-	public void setRawJpegImageData(byte rawJpegImageData[])
+	public void setJpegImageData(JpegImageData rawJpegImageData)
 	{
-		this.rawJpegImageData = rawJpegImageData;
+		this.jpegImageData = rawJpegImageData;
 	}
 
-	public byte[] getRawJpegImageData()
+	public JpegImageData getRawJpegImageData()
 	{
-		return rawJpegImageData;
+		return jpegImageData;
 	}
 
-	private RawTiffImageData rawTiffImageData = null;
+	private TiffImageData tiffImageData = null;
 
-	public void setRawTiffImageData(RawTiffImageData rawTiffImageData)
+	public void setTiffImageData(TiffImageData rawTiffImageData)
 	{
-		this.rawTiffImageData = rawTiffImageData;
+		this.tiffImageData = rawTiffImageData;
 	}
 
-	public RawTiffImageData getRawTiffImageData()
+	public TiffImageData getRawTiffImageData()
 	{
-		return rawTiffImageData;
+		return tiffImageData;
 	}
 
 	public int getItemLength()
@@ -171,7 +173,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 		removeFieldIfPresent(TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
 
 		TiffOutputField jpegOffsetField = null;
-		if (null != rawJpegImageData)
+		if (null != jpegImageData)
 		{
 			jpegOffsetField = new TiffOutputField(
 					TIFF_TAG_JPEG_INTERCHANGE_FORMAT, FIELD_TYPE_LONG, 1,
@@ -179,7 +181,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 			add(jpegOffsetField);
 
 			byte lengthValue[] = FIELD_TYPE_LONG.writeData(new int[]{
-				rawJpegImageData.length,
+				jpegImageData.length,
 			}, outputSummary.byteOrder);
 
 			TiffOutputField jpegLengthField = new TiffOutputField(
@@ -198,9 +200,9 @@ public final class TiffOutputDirectory extends TiffOutputItem
 
 		TiffOutputField imageDataOffsetField;
 		ImageDataOffsets imageDataInfo = null;
-		if (null != rawTiffImageData)
+		if (null != tiffImageData)
 		{
-			boolean stripsNotTiles = rawTiffImageData.stripsNotTiles();
+			boolean stripsNotTiles = tiffImageData.stripsNotTiles();
 
 			TagInfo offsetTag;
 			TagInfo byteCountsTag;
@@ -217,7 +219,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 
 			// --------
 
-			byte imageData[][] = rawTiffImageData.getRawImageData();
+			TiffElement.DataElement imageData[] = tiffImageData.getImageData();
 
 			int imageDataOffsets[] = null;
 			int imageDataByteCounts[] = null;
@@ -279,10 +281,10 @@ public final class TiffOutputDirectory extends TiffOutputItem
 			outputSummary.addTiffImageData(imageDataInfo);
 		}
 
-		if (null != rawJpegImageData)
+		if (null != jpegImageData)
 		{
 			TiffOutputItem item = new TiffOutputItem.Value("JPEG image data",
-					rawJpegImageData);
+					jpegImageData.data);
 			result.add(item);
 			outputSummary.add(item, jpegOffsetField);
 		}

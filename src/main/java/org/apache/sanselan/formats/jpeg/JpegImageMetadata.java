@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.ImageMetadata;
-import org.apache.sanselan.formats.tiff.RawTiffImageData;
+import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
@@ -89,7 +89,7 @@ public class JpegImageMetadata implements IImageMetadata
 		return null;
 	}
 
-	public RawTiffImageData getRawImageData()
+	public TiffImageData getRawImageData()
 	{
 		ArrayList dirs = exif.getDirectories();
 		for (int i = 0; i < dirs.size(); i++)
@@ -97,7 +97,7 @@ public class JpegImageMetadata implements IImageMetadata
 			TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
 					.get(i);
 			//			Debug.debug("dir", dir);
-			RawTiffImageData rawImageData = dir.getRawTiffImageData();
+			TiffImageData rawImageData = dir.getTiffImageData();
 			if (null != rawImageData)
 				return rawImageData;
 		}

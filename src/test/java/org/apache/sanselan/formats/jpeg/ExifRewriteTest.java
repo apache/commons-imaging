@@ -122,7 +122,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 			byte bytes[] = baos.toByteArray();
 			File tempFile = File.createTempFile(name + "_", ".jpg");
 			Debug.debug("tempFile", tempFile);
-			tempFile.deleteOnExit();
+//			tempFile.deleteOnExit();
 			IOUtils.writeToFile(bytes, tempFile);
 
 			Debug.debug("Output Segments:");
@@ -158,22 +158,22 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		rewrite(rewriter, "lossy");
 	}
 
-//	public void testRewriteLossless() throws IOException, ImageReadException,
-//			ImageWriteException
-//	{
-//		Rewriter rewriter = new Rewriter()
-//		{
-//			public void rewrite(ByteSource byteSource, OutputStream os,
-//					TiffOutputSet outputSet) throws ImageReadException,
-//					IOException, ImageWriteException
-//			{
-//				new ExifRewriter().updateExifMetadataLossless(byteSource, os,
-//						outputSet);
-//			}
-//		};
-//
-//		rewrite(rewriter, "lossless");
-//	}
+	public void testRewriteLossless() throws IOException, ImageReadException,
+			ImageWriteException
+	{
+		Rewriter rewriter = new Rewriter()
+		{
+			public void rewrite(ByteSource byteSource, OutputStream os,
+					TiffOutputSet outputSet) throws ImageReadException,
+					IOException, ImageWriteException
+			{
+				new ExifRewriter().updateExifMetadataLossless(byteSource, os,
+						outputSet);
+			}
+		};
+
+		rewrite(rewriter, "lossless");
+	}
 
 	private Hashtable makeDirectoryMap(ArrayList directories)
 	{

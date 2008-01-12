@@ -28,9 +28,11 @@ import java.util.Map;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryConstants;
+import org.apache.sanselan.common.BinaryOutputStream;
 import org.apache.sanselan.common.PackBits;
 import org.apache.sanselan.common.mylzw.MyLZWCompressor;
-import org.apache.sanselan.formats.tiff.RawTiffImageData;
+import org.apache.sanselan.formats.tiff.TiffElement;
+import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 public abstract class TiffImageWriterBase
@@ -38,7 +40,7 @@ public abstract class TiffImageWriterBase
 			TiffConstants,
 			BinaryConstants
 {
-	
+
 	public static final int DEFAULT_WRITE_BYTE_ORDER = BYTE_ORDER_INTEL;
 
 	protected final int byteOrder;
@@ -58,8 +60,8 @@ public abstract class TiffImageWriterBase
 		return (4 - (dataLength % 4)) % 4;
 	}
 
-	public abstract void write(OutputStream os,
-			TiffOutputSet outputSet) throws IOException, ImageWriteException;
+	public abstract void write(OutputStream os, TiffOutputSet outputSet)
+			throws IOException, ImageWriteException;
 
 	protected TiffOutputSummary validateDirectories(List directories)
 			throws ImageWriteException
@@ -348,6 +350,11 @@ public abstract class TiffImageWriterBase
 			throw new ImageWriteException(
 					"Invalid compression parameter (Only LZW, Packbits and uncompressed supported).");
 
+		TiffElement.DataElement imageData[] = new TiffElement.DataElement[strips.length];
+		for (int i = 0; i < strips.length; i++)
+			imageData[i] = new TiffImageData.Data(0, strips[i].length,
+					strips[i]);
+
 		//        int stripOffsets[] = new int[stripCount];
 		//        int stripByteCounts[] = new int[stripCount];
 		//
@@ -460,8 +467,9 @@ public abstract class TiffImageWriterBase
 
 		}
 
-		RawTiffImageData rawTiffImageData = new RawTiffImageData.Strips(strips, rowsPerStrip);
-		directory.setRawTiffImageData(rawTiffImageData);
+		TiffImageData tiffImageData = new TiffImageData.Strips(imageData,
+				rowsPerStrip);
+		directory.setTiffImageData(tiffImageData);
 
 		write(os, outputSet);
 	}
@@ -516,6 +524,25 @@ public abstract class TiffImageWriterBase
 		}
 
 		return result;
+	}
+
+	protected void writeImageFileHeader(BinaryOutputStream bos)
+			throws IOException, ImageWriteException
+	{
+		int offsetToFirstIFD = TIFF_HEADER_SIZE;
+
+		writeImageFileHeader(bos, offsetToFirstIFD);
+	}
+
+	protected void writeImageFileHeader(BinaryOutputStream bos,
+			int offsetToFirstIFD) throws IOException, ImageWriteException
+	{
+		bos.write(byteOrder);
+		bos.write(byteOrder);
+
+		bos.write2Bytes(42); // tiffVersion
+
+		bos.write4Bytes(offsetToFirstIFD);
 	}
 
 }

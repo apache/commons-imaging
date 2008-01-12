@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.BitInputStream;
-import org.apache.sanselan.formats.tiff.RawTiffImageData;
+import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
 public final class DataReaderStrips extends DataReader
@@ -33,12 +33,12 @@ public final class DataReaderStrips extends DataReader
 	private final int compression;
 	private final int rowsPerStrip;
 
-	private final RawTiffImageData.Strips imageData;
+	private final TiffImageData.Strips imageData;
 
 	public DataReaderStrips(PhotometricInterpreter photometricInterpreter,
 			int bitsPerPixel, int bitsPerSample[], int predictor,
 			int samplesPerPixel, int width, int height, int compression,
-			int rowsPerStrip, RawTiffImageData.Strips imageData)
+			int rowsPerStrip, TiffImageData.Strips imageData)
 	{
 		super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel);
 
@@ -91,7 +91,7 @@ public final class DataReaderStrips extends DataReader
 			int pixelsPerStrip = rowsInThisStrip * width;
 			int bytesPerStrip = ((pixelsPerStrip * bitsPerPixel) + 7) / 8;
 
-			byte compressed[] = imageData.strips[strip];
+			byte compressed[] = imageData.strips[strip].data;
 
 			byte decompressed[] = decompress(compressed, compression,
 					bytesPerStrip);

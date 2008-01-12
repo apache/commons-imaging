@@ -24,4 +24,9 @@ public class ImageWriteException extends Exception
 	{
 		super(s);
 	}
+
+	public ImageWriteException(String s, Exception e)
+	{
+		super(s, e);
+	}
 }

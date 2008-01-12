@@ -59,62 +59,28 @@ public class TiffImageMetadata extends ImageMetadata
 			add(new TiffImageMetadata.Item(entry));
 		}
 
-		//		public void setThumbnail(BufferedImage thumbnail)
-		//		{
-		//			this.thumbnail = thumbnail;
-		//		}
-		//
-		//		public BufferedImage getThumbnail()
-		//		{
-		//			return thumbnail;
-		//		}
-
 		public BufferedImage getThumbnail() throws ImageReadException,
 				IOException
 		{
 			return directory.getTiffImage();
 		}
 
-		//		private RawTiffImageData rawTiffImageData = null;
-		//
-		//		public void setRawTiffImageData(RawTiffImageData rawImageData)
-		//		{
-		//			this.rawTiffImageData = rawImageData;
-		//		}
-		//
-		//		public RawTiffImageData getRawTiffImageData()
-		//		{
-		//			return rawTiffImageData;
-		//		}
-
-		public RawTiffImageData getRawTiffImageData()
+		public TiffImageData getTiffImageData()
 		{
-			return directory.getRawTiffImageData();
+			return directory.getTiffImageData();
 		}
 
-		//		private byte rawJpegImageData[] = null;
-		//
-		//		public void setRawJpegImageData(byte bytes[])
-		//		{
-		//			this.rawJpegImageData = bytes;
-		//		}
-		//
-		//		public byte[] getRawJpegImageData()
-		//		{
-		//			return rawJpegImageData;
-		//		}
-
-		public byte[] getRawJpegImageData()
+		public JpegImageData getJpegImageData()
 		{
-			return directory.getRawJpegImageData();
+			return directory.getJpegImageData();
 		}
 
 		public String toString(String prefix)
 		{
 			return (prefix != null ? prefix : "") + directory.description()
 					+ ": " //
-					+ (getRawTiffImageData() != null ? " (tiffImageData)" : "") //
-					+ (getRawJpegImageData() != null ? " (jpegImageData)" : "") //
+					+ (getTiffImageData() != null ? " (tiffImageData)" : "") //
+					+ (getJpegImageData() != null ? " (jpegImageData)" : "") //
 					+ "\n" + super.toString(prefix) + "\n";
 		}
 
@@ -148,8 +114,8 @@ public class TiffImageMetadata extends ImageMetadata
 				dstDir.add(dstField);
 			}
 
-			dstDir.setRawTiffImageData(getRawTiffImageData());
-			dstDir.setRawJpegImageData(getRawJpegImageData());
+			dstDir.setTiffImageData(getTiffImageData());
+			dstDir.setJpegImageData(getJpegImageData());
 
 			return dstDir;
 		}

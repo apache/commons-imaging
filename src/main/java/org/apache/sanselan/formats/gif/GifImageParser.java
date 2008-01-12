@@ -451,7 +451,7 @@ public class GifImageParser extends ImageParser
 		{
 			is = byteSource.getInputStream();
 
-			return readHeader(is, getDefaultFormatCompliance());
+			return readHeader(is, FormatCompliance.getDefault());
 		}
 		finally
 		{
@@ -483,7 +483,7 @@ public class GifImageParser extends ImageParser
 			IOException
 	{
 		return readFile(byteSource, stop_before_image_data,
-				getDefaultFormatCompliance());
+				FormatCompliance.getDefault());
 	}
 
 	private ImageContents readFile(ByteSource byteSource,

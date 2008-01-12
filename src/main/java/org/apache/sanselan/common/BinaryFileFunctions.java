@@ -529,6 +529,31 @@ public class BinaryFileFunctions implements BinaryConstants
 		return readBytearray(name, bytes, 0, bytes.length - count);
 	}
 
+	public static final byte[] slice(byte bytes[], int start, int count)
+	{
+		if (bytes.length < (start + count))
+			return null;
+
+		byte result[] = new byte[count];
+		System.arraycopy(bytes, start, result, 0, count);
+
+		return result;
+	}
+
+	public static final byte[] tail(byte bytes[], int count)
+	{
+		if (count > bytes.length)
+			count = bytes.length;
+		return slice(bytes, bytes.length - count, count);
+	}
+
+	public static final byte[] head(byte bytes[], int count)
+	{
+		if (count > bytes.length)
+			count = bytes.length;
+		return slice(bytes, 0, count);
+	}
+
 	public final boolean compareByteArrays(byte a[], byte b[])
 	{
 		if (a.length != b.length)

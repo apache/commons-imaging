@@ -16,14 +16,16 @@
  */
 package org.apache.sanselan.formats.tiff.write;
 
+import org.apache.sanselan.formats.tiff.TiffElement;
+
 class ImageDataOffsets
 {
 	public final int imageDataOffsets[];
 	public final TiffOutputField imageDataOffsetsField;
 	public final TiffOutputItem outputItems[];
 
-	public ImageDataOffsets(final byte imageData[][],
-			final int[] imageDataOffsets, 
+	public ImageDataOffsets(final TiffElement.DataElement imageData[],
+			final int[] imageDataOffsets,
 			final TiffOutputField imageDataOffsetsField)
 	{
 		this.imageDataOffsets = imageDataOffsets;
@@ -33,7 +35,7 @@ class ImageDataOffsets
 		for (int i = 0; i < imageData.length; i++)
 		{
 			TiffOutputItem item = new TiffOutputItem.Value("TIFF image data",
-					imageData[i]);
+					imageData[i].data);
 			outputItems[i] = item;
 		}
 

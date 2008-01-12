@@ -39,6 +39,11 @@ public class FormatCompliance
 		this.failOnError = fail_on_error;
 	}
 
+	public static final FormatCompliance getDefault()
+	{
+		return new FormatCompliance("ignore", false);
+	}
+	
 	public void addComment(String s) throws ImageReadException
 	{
 		comments.add(s);
