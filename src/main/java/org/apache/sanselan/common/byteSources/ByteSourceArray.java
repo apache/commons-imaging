@@ -44,7 +44,9 @@ public class ByteSourceArray extends ByteSource
 	public byte[] getBlock(int start, int length) throws IOException
 	{
 		if (start + length > bytes.length)
-			throw new IOException("Could not read block.");
+			throw new IOException("Could not read block (block start: " + start
+					+ ", block length: " + length + ", data length: "
+					+ bytes.length + ").");
 
 		byte result[] = new byte[length];
 		System.arraycopy(bytes, start, result, 0, length);

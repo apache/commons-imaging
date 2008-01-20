@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.sanselan.formats.jpeg;
+package org.apache.sanselan.formats.jpeg.exif;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +26,8 @@ import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
+import org.apache.sanselan.formats.jpeg.JpegImageMetadata;
+import org.apache.sanselan.formats.jpeg.JpegUtils;
 import org.apache.sanselan.util.Debug;
 
 public class ExifDumpTest extends ExifBaseTest

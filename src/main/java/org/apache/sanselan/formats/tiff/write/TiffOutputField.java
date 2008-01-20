@@ -41,12 +41,12 @@ public class TiffOutputField implements TiffConstants
 		this(tagInfo.tag, tagInfo, tagtype, count, bytes);
 	}
 
-	public TiffOutputField(final int tag, TagInfo tagInfo, FieldType tagtype,
+	public TiffOutputField(final int tag, TagInfo tagInfo, FieldType fieldType,
 			int count, byte bytes[])
 	{
 		this.tag = tag;
 		this.tagInfo = tagInfo;
-		this.fieldType = tagtype;
+		this.fieldType = fieldType;
 		this.count = count;
 		this.bytes = bytes;
 
@@ -58,6 +58,21 @@ public class TiffOutputField implements TiffConstants
 					+ ")";
 			separateValueItem = new TiffOutputItem.Value(name, bytes);
 		}
+	}
+
+	public static TiffOutputField create(TagInfo tagInfo, int byteOrder,
+			Number number) throws ImageWriteException
+	{
+		if (tagInfo.dataTypes == null || tagInfo.dataTypes.length < 1)
+			throw new ImageWriteException("Tag has no default data type.");
+		FieldType fieldType = tagInfo.dataTypes[0];
+
+		if (tagInfo.length != 1)
+			throw new ImageWriteException("Tag does not expect a single value.");
+
+		byte bytes[] = fieldType.writeData(number, byteOrder);
+
+		return new TiffOutputField(tagInfo.tag, tagInfo, fieldType, 1, bytes);
 	}
 
 	protected static final TiffOutputField createOffsetField(TagInfo tagInfo,

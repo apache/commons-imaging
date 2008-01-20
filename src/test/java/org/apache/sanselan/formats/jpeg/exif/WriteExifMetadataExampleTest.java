@@ -15,22 +15,24 @@
  * limitations under the License.
  */
 
-package org.apache.sanselan.formats.jpeg;
+package org.apache.sanselan.formats.jpeg.exif;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.Sanselan;
-import org.apache.sanselan.common.IImageMetadata;
+import org.apache.sanselan.formats.jpeg.exifRewrite.ExifRewriter;
+import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
+import org.apache.sanselan.sampleUsage.WriteExifMetadataExample;
 import org.apache.sanselan.util.Debug;
 
-public class JpegReadTest extends JpegBaseTest
+public class WriteExifMetadataExampleTest extends ExifBaseTest
+		implements
+			AllTagConstants
 {
-	public JpegReadTest(String name)
+	public WriteExifMetadataExampleTest(String name)
 	{
 		super(name);
 	}
@@ -38,17 +40,26 @@ public class JpegReadTest extends JpegBaseTest
 	public void test() throws IOException, ImageReadException,
 			ImageWriteException
 	{
-		List images = getJpegImages();
+		List images = getImagesWithExifData();
 		for (int i = 0; i < images.size(); i++)
 		{
 			File imageFile = (File) images.get(i);
 			Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-			assertNotNull(metadata);
+			File tempFile = File.createTempFile("test", ".jpg");
+			Debug.debug("tempFile", tempFile.getAbsoluteFile());
+			tempFile.deleteOnExit();
 
-			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-			assertNotNull(imageInfo);
+			try
+			{
+				new WriteExifMetadataExample().changeExifMetadata(imageFile,
+						tempFile);
+			}
+			catch (ExifRewriter.ExifOverflowException e)
+			{
+				Debug.debug("Error image", imageFile.getAbsoluteFile());
+				Debug.debug(e, 4);
+			}
 		}
 	}
 

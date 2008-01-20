@@ -19,6 +19,7 @@ package org.apache.sanselan.formats.tiff;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
@@ -96,6 +97,17 @@ public class TiffImageMetadata extends ImageMetadata
 						.get(i);
 				TiffField srcField = item.getTiffField();
 
+				if (null != dstDir.findField(srcField.tag))
+				{
+					// ignore duplicate tags in a directory.
+					continue;
+				}
+				else if (srcField.tagInfo instanceof TagInfo.Offset)
+				{
+					// ignore offset fields.
+					continue;
+				}
+
 				TagInfo tagInfo = srcField.tagInfo;
 				FieldType fieldType = srcField.fieldType;
 				int count = srcField.length;
@@ -168,6 +180,15 @@ public class TiffImageMetadata extends ImageMetadata
 		{
 			TiffImageMetadata.Directory srcDir = (TiffImageMetadata.Directory) srcDirs
 					.get(i);
+
+			if (null != result.findDirectory(srcDir.type))
+			{
+				// Certain cameras right directories more than once.  
+				// This is a bug.
+				// Ignore second directory of a given type.
+				continue;
+			}
+
 			TiffOutputDirectory outputDirectory = srcDir
 					.getOutputDirectory(byteOrder);
 			result.addDirectory(outputDirectory);

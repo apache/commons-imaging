@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.sanselan.ImageWriteException;
+import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.util.Debug;
 
@@ -73,6 +74,15 @@ public final class TiffOutputSet implements TiffConstants
 		return findDirectory(DIRECTORY_TYPE_EXIF);
 	}
 
+	public TiffOutputDirectory getOrCreateExifDirectory()
+			throws ImageWriteException
+	{
+		TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_EXIF);
+		if (null != result)
+			return result;
+		return addExifDirectory();
+	}
+
 	public TiffOutputDirectory getGPSDirectory()
 	{
 		return findDirectory(DIRECTORY_TYPE_GPS);
@@ -91,6 +101,39 @@ public final class TiffOutputSet implements TiffConstants
 					.get(i);
 			if (directory.type == directoryType)
 				return directory;
+		}
+		return null;
+	}
+
+	public void removeField(TagInfo tagInfo)
+	{
+		removeField(tagInfo.tag);
+	}
+
+	public void removeField(int tag)
+	{
+		for (int i = 0; i < directories.size(); i++)
+		{
+			TiffOutputDirectory directory = (TiffOutputDirectory) directories
+					.get(i);
+			directory.removeField(tag);
+		}
+	}
+
+	public TiffOutputField findField(TagInfo tagInfo)
+	{
+		return findField(tagInfo.tag);
+	}
+
+	public TiffOutputField findField(int tag)
+	{
+		for (int i = 0; i < directories.size(); i++)
+		{
+			TiffOutputDirectory directory = (TiffOutputDirectory) directories
+					.get(i);
+			TiffOutputField field = directory.findField(tag);
+			if (null != field)
+				return field;
 		}
 		return null;
 	}

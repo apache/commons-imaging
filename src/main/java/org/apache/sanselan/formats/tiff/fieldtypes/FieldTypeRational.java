@@ -18,6 +18,7 @@ package org.apache.sanselan.formats.tiff.fieldtypes;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.RationalNumber;
+import org.apache.sanselan.common.RationalNumberUtilities;
 import org.apache.sanselan.formats.tiff.TiffField;
 
 public class FieldTypeRational extends FieldType
@@ -41,7 +42,12 @@ public class FieldTypeRational extends FieldType
 	{
 		if (o instanceof RationalNumber)
 			return convertRationalToByteArray((RationalNumber) o, byteOrder);
-
+		else if (o instanceof Number)
+		{
+			Number number = (Number) o;
+			RationalNumber rationalNumber = RationalNumberUtilities.getRationalNumber(number.doubleValue());
+			return convertRationalToByteArray(rationalNumber, byteOrder);
+		}
 		return convertRationalArrayToByteArray((RationalNumber[]) o, byteOrder);
 	}
 

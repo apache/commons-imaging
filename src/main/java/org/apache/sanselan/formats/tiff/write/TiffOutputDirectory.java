@@ -62,12 +62,34 @@ public final class TiffOutputDirectory extends TiffOutputItem
 		return new ArrayList(fields);
 	}
 
+	public void removeField(TagInfo tagInfo)
+	{
+		removeField(tagInfo.tag);
+	}
+
+	public void removeField(int tag)
+	{
+		ArrayList matches = new ArrayList();
+		for (int i = 0; i < fields.size(); i++)
+		{
+			TiffOutputField field = (TiffOutputField) fields.get(i);
+			if (field.tag == tag)
+				matches.add(field);
+		}
+		fields.removeAll(matches);
+	}
+
 	public TiffOutputField findField(TagInfo tagInfo)
+	{
+		return findField(tagInfo.tag);
+	}
+
+	public TiffOutputField findField(int tag)
 	{
 		for (int i = 0; i < fields.size(); i++)
 		{
 			TiffOutputField field = (TiffOutputField) fields.get(i);
-			if (field.tag == tagInfo.tag)
+			if (field.tag == tag)
 				return field;
 		}
 		return null;
@@ -253,7 +275,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 			// --------
 
 			imageDataInfo = new ImageDataOffsets(imageData, imageDataOffsets,
-					 imageDataOffsetField);
+					imageDataOffsetField);
 		}
 
 		// --------------------------------------------------------------

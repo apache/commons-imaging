@@ -19,6 +19,7 @@ package org.apache.sanselan.formats.tiff;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.FormatCompliance;
@@ -91,22 +92,33 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 		int offset = tiffHeader.offsetToFirstIFD;
 		int dirType = TiffDirectory.DIRECTORY_TYPE_ROOT;
 
-		readDirectory(byteSource, offset, dirType, formatCompliance, listener);
+		List visited = new ArrayList();
+		readDirectory(byteSource, offset, dirType, formatCompliance, listener,
+				visited);
 	}
 
-	private void readDirectory(ByteSource byteSource, int offset, int dirType,
-			FormatCompliance formatCompliance, Listener listener)
-			throws ImageReadException, IOException
+	private boolean readDirectory(ByteSource byteSource, int offset,
+			int dirType, FormatCompliance formatCompliance, Listener listener,
+			List visited) throws ImageReadException, IOException
 	{
 		boolean ignoreNextDirectory = false;
-		readDirectory(byteSource, offset, dirType, formatCompliance, listener,
-				ignoreNextDirectory);
+		return readDirectory(byteSource, offset, dirType, formatCompliance,
+				listener, ignoreNextDirectory, visited);
 	}
 
-	private void readDirectory(ByteSource byteSource, int offset, int dirType,
-			FormatCompliance formatCompliance, Listener listener,
-			boolean ignoreNextDirectory) throws ImageReadException, IOException
+	private boolean readDirectory(ByteSource byteSource, int offset,
+			int dirType, FormatCompliance formatCompliance, Listener listener,
+			boolean ignoreNextDirectory, List visited)
+			throws ImageReadException, IOException
 	{
+		Number key = new Integer(offset);
+		//		Debug.debug();
+		//		Debug.debug("key", key);
+		//		Debug.debug("visited", visited);
+		if (visited.contains(key))
+			return false;
+		visited.add(key);
+
 		InputStream is = null;
 		try
 		{
@@ -116,12 +128,14 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 
 			ArrayList fields = new ArrayList();
 
+//						Debug.debug("dirType", dirType);
+//						Debug.debug("offset", offset);
+
 			int entryCount = read2Bytes("DirectoryEntryCount", is,
 					"Not a Valid TIFF File");
 
-			//			Debug.debug("dirType", dirType);
-			//			Debug.debug("offset", offset);
-			//			Debug.debug("entryCount", entryCount);
+//						Debug.debug("entryCount", entryCount);
+//						Debug.debug();
 
 			for (int i = 0; i < entryCount; i++)
 			{
@@ -146,7 +160,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 				fields.add(field);
 
 				if (!listener.addField(field))
-					return;
+					return true;
 			}
 
 			int nextDirectoryOffset = read4Bytes("nextDirectoryOffset", is,
@@ -173,10 +187,11 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 			}
 
 			if (!listener.addDirectory(directory))
-				return;
+				return true;
 
 			if (listener.readOffsetDirectories())
 			{
+				List fieldsToRemove = new ArrayList();
 				for (int j = 0; j < fields.size(); j++)
 				{
 					TiffField entry = (TiffField) fields.get(j);
@@ -201,16 +216,30 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 						throw new ImageReadException(
 								"Unknown subdirectory type.");
 
-					readDirectory(byteSource, subDirectoryOffset,
-							subDirectoryType, formatCompliance, listener, true);
+					//					Debug.debug("sub dir", subDirectoryOffset);
+					boolean subDirectoryRead = readDirectory(byteSource,
+							subDirectoryOffset, subDirectoryType,
+							formatCompliance, listener, true, visited);
+					
+					if (!subDirectoryRead)
+					{
+						// Offset field pointed to invalid location.  
+						// This is a bug in certain cameras.  Ignore offset field.
+						fieldsToRemove.add(entry);
+					}
+
 				}
+				fields.removeAll(fieldsToRemove);
 			}
 
 			if (!ignoreNextDirectory && directory.nextDirectoryOffset > 0)
 			{
+				//				Debug.debug("next dir", directory.nextDirectoryOffset );
 				readDirectory(byteSource, directory.nextDirectoryOffset,
-						dirType + 1, formatCompliance, listener);
+						dirType + 1, formatCompliance, listener, visited);
 			}
+			
+			return true;
 		}
 		finally
 		{

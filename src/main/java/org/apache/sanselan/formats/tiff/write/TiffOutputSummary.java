@@ -90,7 +90,7 @@ class TiffOutputSummary implements TiffConstants
 
 	public void addTiffImageData(final ImageDataOffsets imageDataInfo)
 	{
-		offsetItems.add(imageDataInfo);
+		imageDataItems.add(imageDataInfo);
 	}
 
 }

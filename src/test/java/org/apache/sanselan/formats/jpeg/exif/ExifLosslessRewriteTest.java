@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.sanselan.formats.jpeg;
+package org.apache.sanselan.formats.jpeg.exif;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,6 +32,8 @@ import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceArray;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
+import org.apache.sanselan.formats.jpeg.JpegImageMetadata;
+import org.apache.sanselan.formats.jpeg.JpegUtils;
 import org.apache.sanselan.formats.jpeg.exifRewrite.ExifRewriter;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
@@ -40,48 +42,48 @@ import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
 import org.apache.sanselan.util.Debug;
 import org.apache.sanselan.util.IOUtils;
 
-public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
+public class ExifLosslessRewriteTest extends ExifBaseTest implements AllTagConstants
 {
-	public ExifRewriteTest(String name)
+	public ExifLosslessRewriteTest(String name)
 	{
 		super(name);
 	}
 
-	public void testRemove() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		List images = getImagesWithExifData();
-		for (int i = 0; i < images.size(); i++)
-		{
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
-
-			ByteSource byteSource = new ByteSourceFile(imageFile);
-			Debug.debug("Source Segments:");
-			new JpegUtils().dumpJFIF(byteSource);
-
-			{
-				JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
-						.getMetadata(imageFile);
-				assertNotNull(metadata.getExif());
-			}
-
-			{
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				new ExifRewriter().removeExifMetadata(byteSource, baos, null);
-				byte bytes[] = baos.toByteArray();
-				File tempFile = File.createTempFile("test", ".jpg");
-				Debug.debug("tempFile", tempFile);
-				tempFile.deleteOnExit();
-				IOUtils.writeToFile(bytes, tempFile);
-
-				Debug.debug("Output Segments:");
-				new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
-
-				assertTrue(!hasExifData(tempFile));
-			}
-		}
-	}
+//	public void testRemove() throws IOException, ImageReadException,
+//			ImageWriteException
+//	{
+//		List images = getImagesWithExifData();
+//		for (int i = 0; i < images.size(); i++)
+//		{
+//			File imageFile = (File) images.get(i);
+//			Debug.debug("imageFile", imageFile);
+//
+//			ByteSource byteSource = new ByteSourceFile(imageFile);
+//			Debug.debug("Source Segments:");
+//			new JpegUtils().dumpJFIF(byteSource);
+//
+//			{
+//				JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
+//						.getMetadata(imageFile);
+//				assertNotNull(metadata.getExif());
+//			}
+//
+//			{
+//				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//				new ExifRewriter().removeExifMetadata(byteSource, baos, null);
+//				byte bytes[] = baos.toByteArray();
+//				File tempFile = File.createTempFile("test", ".jpg");
+//				Debug.debug("tempFile", tempFile);
+//				tempFile.deleteOnExit();
+//				IOUtils.writeToFile(bytes, tempFile);
+//
+//				Debug.debug("Output Segments:");
+//				new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
+//
+//				assertTrue(!hasExifData(tempFile));
+//			}
+//		}
+//	}
 
 	private interface Rewriter
 	{
@@ -122,7 +124,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 			byte bytes[] = baos.toByteArray();
 			File tempFile = File.createTempFile(name + "_", ".jpg");
 			Debug.debug("tempFile", tempFile);
-//			tempFile.deleteOnExit();
+			tempFile.deleteOnExit();
 			IOUtils.writeToFile(bytes, tempFile);
 
 			Debug.debug("Output Segments:");
@@ -141,22 +143,22 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		}
 	}
 
-	public void testRewriteLossy() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		Rewriter rewriter = new Rewriter()
-		{
-			public void rewrite(ByteSource byteSource, OutputStream os,
-					TiffOutputSet outputSet) throws ImageReadException,
-					IOException, ImageWriteException
-			{
-				new ExifRewriter().updateExifMetadataLossy(byteSource, os,
-						outputSet);
-			}
-		};
-
-		rewrite(rewriter, "lossy");
-	}
+//	public void testRewriteLossy() throws IOException, ImageReadException,
+//			ImageWriteException
+//	{
+//		Rewriter rewriter = new Rewriter()
+//		{
+//			public void rewrite(ByteSource byteSource, OutputStream os,
+//					TiffOutputSet outputSet) throws ImageReadException,
+//					IOException, ImageWriteException
+//			{
+//				new ExifRewriter().updateExifMetadataLossy(byteSource, os,
+//						outputSet);
+//			}
+//		};
+//
+//		rewrite(rewriter, "lossy");
+//	}
 
 	public void testRewriteLossless() throws IOException, ImageReadException,
 			ImageWriteException

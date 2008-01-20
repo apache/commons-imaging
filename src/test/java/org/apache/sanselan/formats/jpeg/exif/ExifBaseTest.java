@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.sanselan.formats.jpeg;
+package org.apache.sanselan.formats.jpeg.exif;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +25,8 @@ import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanTest;
+import org.apache.sanselan.formats.jpeg.JpegImageMetadata;
+import org.apache.sanselan.util.Debug;
 
 public abstract class ExifBaseTest extends SanselanTest
 {
@@ -36,19 +38,34 @@ public abstract class ExifBaseTest extends SanselanTest
 	protected static boolean hasExifData(File file) throws IOException,
 			ImageReadException
 	{
+//		Debug.debug("hasExifData file", file.getAbsoluteFile());
+
+		if(!file.getName().toLowerCase().endsWith(".jpg"))
+			return false;
 		ImageFormat format = Sanselan.guessFormat(file);
 		if (format != ImageFormat.IMAGE_FORMAT_JPEG)
 			return false;
 
-		JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
-				.getMetadata(file);
-		if (null == metadata)
-			return false;
+		//		Debug.debug("possible file", file);
 
-		if (null == metadata.getExif())
-			return false;
+		try
+		{
+			JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
+					.getMetadata(file);
+			if (null == metadata)
+				return false;
 
-		return true;
+			if (null == metadata.getExif())
+				return false;
+
+			return true;
+		}
+		catch (Exception e)
+		{
+//			Debug.debug("Error file", file.getAbsoluteFile());
+//			Debug.debug(e, 4);
+			return false;
+		}
 	}
 
 	private static final ImageFilter imageFilter = new ImageFilter()

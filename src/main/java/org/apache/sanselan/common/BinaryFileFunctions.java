@@ -115,8 +115,8 @@ public class BinaryFileFunctions implements BinaryConstants
 			{
 				//				System.out.println("i" + ": " + i);
 
-				this.debugByteArray("expected", expected);
-				debugNumber("data[" + i + "]", b);
+//				this.debugByteArray("expected", expected);
+//				debugNumber("data[" + i + "]", b);
 				//				debugNumber("expected[" + i + "]", expected[i]);
 
 				throw new ImageReadException(exception);
@@ -134,9 +134,9 @@ public class BinaryFileFunctions implements BinaryConstants
 		{
 			if (bytes[i] != expected[i])
 			{
-				System.out.println("i" + ": " + i);
-				debugNumber("bytes[" + i + "]", bytes[i]);
-				debugNumber("expected[" + i + "]", expected[i]);
+//				System.out.println("i" + ": " + i);
+//				debugNumber("bytes[" + i + "]", bytes[i]);
+//				debugNumber("expected[" + i + "]", expected[i]);
 
 				throw new ImageReadException(exception);
 			}
