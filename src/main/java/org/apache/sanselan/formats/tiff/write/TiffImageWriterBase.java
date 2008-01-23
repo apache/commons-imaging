@@ -63,9 +63,11 @@ public abstract class TiffImageWriterBase
 	public abstract void write(OutputStream os, TiffOutputSet outputSet)
 			throws IOException, ImageWriteException;
 
-	protected TiffOutputSummary validateDirectories(List directories)
+	protected TiffOutputSummary validateDirectories(TiffOutputSet outputSet)
 			throws ImageWriteException
 	{
+		List directories = outputSet.getDirectories();
+
 		if (1 > directories.size())
 			throw new ImageWriteException("No directories.");
 
@@ -193,6 +195,31 @@ public abstract class TiffImageWriterBase
 		TiffOutputSummary result = new TiffOutputSummary(byteOrder,
 				rootDirectory, directoryTypeMap);
 
+		if (interoperabilityDirectory == null
+				&& interoperabilityDirectoryOffsetField != null)
+		{
+			// perhaps we should just discard field?
+			throw new ImageWriteException(
+					"Output set has Interoperability Directory Offset field, but no Interoperability Directory");
+		}
+		else if (interoperabilityDirectory != null)
+		{
+			if (exifDirectory == null)
+			{
+				exifDirectory = outputSet.addExifDirectory();
+			}
+
+			if (interoperabilityDirectoryOffsetField == null)
+			{
+				interoperabilityDirectoryOffsetField = TiffOutputField
+						.createOffsetField(EXIF_TAG_INTEROP_OFFSET, byteOrder);
+				exifDirectory.add(interoperabilityDirectoryOffsetField);
+			}
+
+			result.add(interoperabilityDirectory,
+					interoperabilityDirectoryOffsetField);
+		}
+
 		// make sure offset fields and offset'd directories correspond.
 		if (exifDirectory == null && exifDirectoryOffsetField != null)
 		{
@@ -228,26 +255,6 @@ public abstract class TiffImageWriterBase
 			}
 
 			result.add(gpsDirectory, gpsDirectoryOffsetField);
-		}
-
-		if (interoperabilityDirectory == null
-				&& interoperabilityDirectoryOffsetField != null)
-		{
-			// perhaps we should just discard field?
-			throw new ImageWriteException(
-					"Output set has Interoperability Directory Offset field, but no Interoperability Directory");
-		}
-		else if (interoperabilityDirectory != null)
-		{
-			if (interoperabilityDirectoryOffsetField == null)
-			{
-				interoperabilityDirectoryOffsetField = TiffOutputField
-						.createOffsetField(EXIF_TAG_INTEROP_OFFSET, byteOrder);
-				rootDirectory.add(interoperabilityDirectoryOffsetField);
-			}
-
-			result.add(interoperabilityDirectory,
-					interoperabilityDirectoryOffsetField);
 		}
 
 		return result;

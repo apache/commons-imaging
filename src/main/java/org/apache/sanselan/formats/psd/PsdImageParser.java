@@ -544,7 +544,7 @@ public class PsdImageParser extends ImageParser
 		}
 	}
 
-	public ImageInfo getImageInfo(ByteSource byteSource)
+	public ImageInfo getImageInfo(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		ImageContents imageContents = readImageContents(byteSource);

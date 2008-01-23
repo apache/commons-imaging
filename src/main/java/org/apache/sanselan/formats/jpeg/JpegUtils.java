@@ -89,6 +89,8 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 						markerLength - 2, is,
 						"Invalid Segment: insufficient data");
 
+				//				Debug.debug("markerLength", markerLength);
+
 				if (!visitor.visitSegment(marker, markerBytes, markerLength,
 						markerLengthBytes, segmentData))
 					return;

@@ -185,12 +185,21 @@ public class ByteSourceInputStream extends ByteSource
 		}
 	}
 
-	//	public long getLength()
-	//	{
-	//		//		System.out.println("file.length(): " + file.length());
-	//
-	//		return file.length();
-	//	}
+	private Long length = null;
+
+	public long getLength() throws IOException
+	{
+		if (length != null)
+			return length.longValue();
+
+		InputStream is = getInputStream();
+		long result = 0;
+		long skipped;
+		while ((skipped = is.skip(1024)) > 0)
+			result += skipped;
+		length = new Long(result);
+		return result;
+	}
 
 	public byte[] getAll() throws IOException
 	{

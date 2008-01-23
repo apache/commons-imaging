@@ -30,10 +30,10 @@ import org.apache.sanselan.util.IOUtils;
 
 public class ByteSourceDataTest extends ByteSourceTest
 {
-	public ByteSourceDataTest()
-	{
-		super(ByteSourceDataTest.class.getName());
-	}
+	//	public ByteSourceDataTest()
+	//	{
+	//		super(ByteSourceDataTest.class.getName());
+	//	}
 
 	/**
 	 * @return the suite of tests being tested

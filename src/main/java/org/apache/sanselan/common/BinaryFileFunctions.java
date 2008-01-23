@@ -103,6 +103,18 @@ public class BinaryFileFunctions implements BinaryConstants
 		return true;
 	}
 
+	public final byte[] readBytes(InputStream is, int count)
+			throws ImageReadException, IOException
+	{
+		byte result[] = new byte[count];
+		for (int i = 0; i < count; i++)
+		{
+			int data = is.read();
+			result[i] = (byte) data;
+		}
+		return result;
+	}
+
 	public final void readAndVerifyBytes(InputStream is, byte expected[],
 			String exception) throws ImageReadException, IOException
 	{
@@ -115,8 +127,8 @@ public class BinaryFileFunctions implements BinaryConstants
 			{
 				//				System.out.println("i" + ": " + i);
 
-//				this.debugByteArray("expected", expected);
-//				debugNumber("data[" + i + "]", b);
+				//				this.debugByteArray("expected", expected);
+				//				debugNumber("data[" + i + "]", b);
 				//				debugNumber("expected[" + i + "]", expected[i]);
 
 				throw new ImageReadException(exception);
@@ -134,9 +146,9 @@ public class BinaryFileFunctions implements BinaryConstants
 		{
 			if (bytes[i] != expected[i])
 			{
-//				System.out.println("i" + ": " + i);
-//				debugNumber("bytes[" + i + "]", bytes[i]);
-//				debugNumber("expected[" + i + "]", expected[i]);
+				//				System.out.println("i" + ": " + i);
+				//				debugNumber("bytes[" + i + "]", bytes[i]);
+				//				debugNumber("expected[" + i + "]", expected[i]);
 
 				throw new ImageReadException(exception);
 			}
@@ -408,26 +420,30 @@ public class BinaryFileFunctions implements BinaryConstants
 	}
 
 	protected final int convertByteArrayToShort(String name, byte bytes[],
-			int byteOrder)
+			int byteOrder) throws ImageReadException
 	{
 		return convertByteArrayToShort(name, 0, bytes, byteOrder);
 	}
 
-	protected final int convertByteArrayToShort(String name, int start,
-			byte bytes[], int byteOrder)
+	protected final int convertByteArrayToShort(String name, int index,
+			byte bytes[], int byteOrder) throws ImageReadException
 	{
-		byte byte0 = bytes[start + 0];
-		byte byte1 = bytes[start + 1];
+		if (index + 1 >= bytes.length)
+			throw new ImageReadException("Index out of bounds. Array size: "
+					+ bytes.length + ", index: " + index);
+
+		int byte0 = 0xff & bytes[index + 0];
+		int byte1 = 0xff & bytes[index + 1];
 
 		//		return convert2BytesToShort(name, byte0, byte1, byteOrder);
 
 		int result;
 
 		if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
-			result = ((0xff & byte0) << 8) + ((0xff & byte1) << 0);
+			result = (byte0 << 8) | byte1;
 		else
 			// intel, little endian
-			result = ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
+			result = (byte1 << 8) | byte0;
 
 		if (debug)
 			debugNumber(name, result, 2);
@@ -437,6 +453,8 @@ public class BinaryFileFunctions implements BinaryConstants
 
 	protected final int[] convertByteArrayToShortArray(String name,
 			byte bytes[], int start, int length, int byteOrder)
+			throws ImageReadException
+
 	{
 		int expectedLength = start + length * 2;
 
@@ -558,8 +576,8 @@ public class BinaryFileFunctions implements BinaryConstants
 	{
 		if (a.length != b.length)
 		{
-			System.out.println("length mismatch: " + a.length + " != "
-					+ b.length);
+//			System.out.println("length mismatch: " + a.length + " != "
+//					+ b.length);
 			return false;
 		}
 
@@ -580,11 +598,36 @@ public class BinaryFileFunctions implements BinaryConstants
 		{
 			if (a[aStart + i] != b[bStart + i])
 			{
-				debugNumber("\t" + "a[" + (aStart + i) + "]", a[aStart + i]);
-				debugNumber("\t" + "b[" + (bStart + i) + "]", b[bStart + i]);
+//				debugNumber("\t" + "a[" + (aStart + i) + "]", a[aStart + i]);
+//				debugNumber("\t" + "b[" + (bStart + i) + "]", b[bStart + i]);
 
 				return false;
 			}
+		}
+
+		return true;
+	}
+
+	public static final boolean compareBytes(byte a[], byte b[])
+	{
+		if (a.length != b.length)
+			return false;
+
+		return compareBytes(a, 0, b, 0, a.length);
+	}
+
+	public static final boolean compareBytes(byte a[], int aStart, byte b[],
+			int bStart, int length)
+	{
+		if (a.length < (aStart + length))
+			return false;
+		if (b.length < (bStart + length))
+			return false;
+
+		for (int i = 0; i < length; i++)
+		{
+			if (a[aStart + i] != b[bStart + i])
+				return false;
 		}
 
 		return true;

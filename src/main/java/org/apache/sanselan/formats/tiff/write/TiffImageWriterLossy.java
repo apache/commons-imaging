@@ -38,9 +38,9 @@ public class TiffImageWriterLossy extends TiffImageWriterBase
 	public void write(OutputStream os, TiffOutputSet outputSet)
 			throws IOException, ImageWriteException
 	{
-		List directories = outputSet.getDirectories();
+		//		List directories = outputSet.getDirectories();
 
-		TiffOutputSummary outputSummary = validateDirectories(directories);
+		TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
 		List outputItems = outputSet.getOutputItems(outputSummary);
 

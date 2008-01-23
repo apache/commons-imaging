@@ -35,7 +35,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 		return TiffDirectory.description(type);
 	}
 
-	public String getElementDescription(boolean verbose)
+	public String getElementDescription(boolean verbose) 
 	{
 		if (!verbose)
 			return "TIFF Directory (" + description() + ")";
@@ -188,6 +188,8 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
 		return null;
 	}
+	
+
 
 	public final class ImageDataElement extends TiffElement
 	{

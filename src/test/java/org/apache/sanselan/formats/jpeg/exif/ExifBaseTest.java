@@ -25,22 +25,23 @@ import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanTest;
-import org.apache.sanselan.formats.jpeg.JpegImageMetadata;
-import org.apache.sanselan.util.Debug;
+import org.apache.sanselan.common.byteSources.ByteSource;
+import org.apache.sanselan.common.byteSources.ByteSourceFile;
+import org.apache.sanselan.formats.jpeg.JpegImageParser;
 
 public abstract class ExifBaseTest extends SanselanTest
 {
-	public ExifBaseTest(String name)
-	{
-		super(name);
-	}
+	//	public ExifBaseTest(String name)
+	//	{
+	//		super(name);
+	//	}
 
 	protected static boolean hasExifData(File file) throws IOException,
 			ImageReadException
 	{
-//		Debug.debug("hasExifData file", file.getAbsoluteFile());
+		//		Debug.debug("hasExifData file", file.getAbsoluteFile());
 
-		if(!file.getName().toLowerCase().endsWith(".jpg"))
+		if (!file.getName().toLowerCase().endsWith(".jpg"))
 			return false;
 		ImageFormat format = Sanselan.guessFormat(file);
 		if (format != ImageFormat.IMAGE_FORMAT_JPEG)
@@ -50,20 +51,13 @@ public abstract class ExifBaseTest extends SanselanTest
 
 		try
 		{
-			JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
-					.getMetadata(file);
-			if (null == metadata)
-				return false;
-
-			if (null == metadata.getExif())
-				return false;
-
-			return true;
+			ByteSource byteSource = new ByteSourceFile(file);
+			return new JpegImageParser().hasExifSegment(byteSource);
 		}
 		catch (Exception e)
 		{
-//			Debug.debug("Error file", file.getAbsoluteFile());
-//			Debug.debug(e, 4);
+			//			Debug.debug("Error file", file.getAbsoluteFile());
+			//			Debug.debug(e, 4);
 			return false;
 		}
 	}
@@ -82,6 +76,8 @@ public abstract class ExifBaseTest extends SanselanTest
 		return getTestImage(imageFilter);
 	}
 
+	//	, int max
+	//	
 	protected List getImagesWithExifData() throws IOException,
 			ImageReadException
 	{

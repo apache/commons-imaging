@@ -25,10 +25,10 @@ import org.apache.sanselan.util.Debug;
 
 public class RationalNumberTest extends SanselanTest
 {
-	public RationalNumberTest()
-	{
-		super("Rational Number Test");
-	}
+	//	public RationalNumberTest()
+	//	{
+	//		super("Rational Number Test");
+	//	}
 
 	public void test()
 	{

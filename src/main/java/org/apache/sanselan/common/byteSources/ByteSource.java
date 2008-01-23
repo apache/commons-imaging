@@ -45,7 +45,13 @@ public abstract class ByteSource extends BinaryFileFunctions
 
 	public abstract byte[] getAll() throws IOException;
 
-	//	public abstract long getLength();
+	/*
+	 * This operation can be VERY expensive; for inputstream 
+	 * byte sources, the entire stream must be drained to 
+	 * determine its length.
+	 */
+	public abstract long getLength() throws IOException;
+
 	//
 	//	public byte[] getAll() throws IOException
 	//	{

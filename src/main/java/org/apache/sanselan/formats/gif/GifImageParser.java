@@ -482,8 +482,8 @@ public class GifImageParser extends ImageParser
 			boolean stop_before_image_data) throws ImageReadException,
 			IOException
 	{
-		return readFile(byteSource, stop_before_image_data,
-				FormatCompliance.getDefault());
+		return readFile(byteSource, stop_before_image_data, FormatCompliance
+				.getDefault());
 	}
 
 	private ImageContents readFile(ByteSource byteSource,
@@ -578,7 +578,7 @@ public class GifImageParser extends ImageParser
 		return result;
 	}
 
-	public ImageInfo getImageInfo(ByteSource byteSource)
+	public ImageInfo getImageInfo(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		ImageContents blocks = readFile(byteSource, false);

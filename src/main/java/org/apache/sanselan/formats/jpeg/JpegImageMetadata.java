@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.ImageMetadata;
-import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.TiffField;
+import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.util.Debug;
@@ -73,7 +73,8 @@ public class JpegImageMetadata implements IImageMetadata
 		return null;
 	}
 
-	public BufferedImage getEXIFThumbnail() throws ImageReadException, IOException
+	public BufferedImage getEXIFThumbnail() throws ImageReadException,
+			IOException
 	{
 		ArrayList dirs = exif.getDirectories();
 		for (int i = 0; i < dirs.size(); i++)

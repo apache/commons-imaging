@@ -33,10 +33,10 @@ import org.apache.sanselan.util.Debug;
 
 public class TiffReadTest extends SanselanTest
 {
-	public TiffReadTest(String name)
-	{
-		super(name);
-	}
+//	public TiffReadTest(String name)
+//	{
+//		super(name);
+//	}
 
 	private static boolean isTiff(File file) throws IOException,
 			ImageReadException
@@ -53,10 +53,10 @@ public class TiffReadTest extends SanselanTest
 		}
 	};
 
-	private File getTiffImage() throws IOException, ImageReadException
-	{
-		return getTestImage(imageFilter);
-	}
+//	private File getTiffImage() throws IOException, ImageReadException
+//	{
+//		return getTestImage(imageFilter);
+//	}
 
 	private List getTiffImages() throws IOException, ImageReadException
 	{
@@ -69,6 +69,8 @@ public class TiffReadTest extends SanselanTest
 		List images = getTiffImages();
 		for (int i = 0; i < images.size(); i++)
 		{
+			Debug.purgeMemory();
+
 			File imageFile = (File) images.get(i);
 			Debug.debug("imageFile", imageFile);
 

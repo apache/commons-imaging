@@ -53,10 +53,10 @@ public class ByteSourceArray extends ByteSource
 		return result;
 	}
 
-	//	public long getLength()
-	//	{
-	//		return bytes.length;
-	//	}
+		public long getLength()
+	{
+		return bytes.length;
+	}
 
 	public byte[] getAll() throws IOException
 	{

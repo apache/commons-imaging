@@ -28,11 +28,13 @@ import org.apache.sanselan.test.util.FSTraversal;
 import org.apache.sanselan.util.Debug;
 
 public abstract class SanselanTest extends TestCase
+		implements
+			SanselanConstants
 {
-	public SanselanTest(String name)
-	{
-		super(name);
-	}
+	//	public SanselanTest(String name)
+	//	{
+	//		super(name);
+	//	}
 
 	public void compareByteArrays(byte a[], byte b[])
 	{
@@ -56,12 +58,28 @@ public abstract class SanselanTest extends TestCase
 		}
 	}
 
+	private static final File PHIL_HARVEY_TEST_IMAGE_FOLDER = new File(
+			"src\\test\\data\\images\\exif\\philHarvey\\");
+
+	protected boolean isPhilHarveyTestImage(File file)
+	{
+		//		Debug.debug("isPhilHarveyTestImage file",  file.getAbsolutePath());
+		//		Debug.debug("isPhilHarveyTestImage folder", PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
+		return file.getAbsolutePath().startsWith(
+				PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
+	}
+
 	protected List getAllTestImages()
 	{
-		File srcFolder = new File(".", "src");
+		File srcFolder = new File("src");
 		File testFolder = new File(srcFolder, "test");
 		File dataFolder = new File(testFolder, "data");
 		File imagesFolder = new File(dataFolder, "images");
+
+//				imagesFolder = new File(
+		//		"src\\test\\data\\images\\exif\\drewNoakes\\");
+		//	"src\\test\\data\\images\\exif\\drewNoakes\\007_Canon EOS 20D (1).jpg");
+//"src\\test\\data\\images\\tiff\\");
 
 		assertTrue(imagesFolder.exists());
 
@@ -94,15 +112,26 @@ public abstract class SanselanTest extends TestCase
 	protected File getTestImage(ImageFilter filter) throws IOException,
 			ImageReadException
 	{
-		List images = getTestImages(filter);
+		List images = getTestImages(filter, 1);
 
 		assertTrue(images.size() > 0);
 
 		return (File) images.get(0);
 	}
 
+	protected List getTestImages() throws IOException, ImageReadException
+	{
+		return getTestImages(null, -1);
+	}
+
 	protected List getTestImages(ImageFilter filter) throws IOException,
 			ImageReadException
+	{
+		return getTestImages(filter, -1);
+	}
+
+	protected List getTestImages(ImageFilter filter, int max)
+			throws IOException, ImageReadException
 	{
 		List images = getAllTestImages();
 
@@ -111,9 +140,20 @@ public abstract class SanselanTest extends TestCase
 			List filtered = new ArrayList();
 			for (int i = 0; i < images.size(); i++)
 			{
+						Debug.purgeMemory();
+			
 				File file = (File) images.get(i);
+
+				if (file.getParentFile().getName().toLowerCase().equals(
+						"@broken"))
+					continue;
+
 				if (filter.accept(file))
+				{
 					filtered.add(file);
+					if (max > 0 && filtered.size() >= max)
+						return filtered;
+				}
 			}
 			images = filtered;
 		}

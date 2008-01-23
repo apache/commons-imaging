@@ -33,10 +33,10 @@ import org.apache.sanselan.util.IOUtils;
 
 public class PngWriteReadTest extends SanselanTest
 {
-	public PngWriteReadTest(String name)
-	{
-		super(name);
-	}
+	//	public PngWriteReadTest(String name)
+	//	{
+	//		super(name);
+	//	}
 
 	private int[][] getSimpleRawData(int width, int height, int value)
 	{
@@ -143,6 +143,7 @@ public class PngWriteReadTest extends SanselanTest
 
 		File tmpDirectory = new File("tmp");
 		File tempFile = File.createTempFile("temp", ".png", tmpDirectory);
+		tempFile.deleteOnExit();
 		IOUtils.writeToFile(bytes, tempFile);
 
 		BufferedImage dstImage = Sanselan.getBufferedImage(bytes);

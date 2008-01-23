@@ -301,9 +301,9 @@ public interface TiffTagConstants
 
 	// TODO:
 	//	public static final TagInfo2 TIFF_TAG_UNKNOWN = null;
-	public static final TagInfo TIFF_TAG_UNKNOWN = new TagInfo("Unknown Tag",
-			-1, FIELD_TYPE_DESCRIPTION_UNKNOWN, TagInfo.LENGTH_UNKNOWN,
-			EXIF_DIRECTORY_UNKNOWN);
+	public static final TagInfo TIFF_TAG_UNKNOWN = new TagInfo.Unknown(
+			"Unknown Tag", -1, FIELD_TYPE_DESCRIPTION_UNKNOWN,
+			TagInfo.LENGTH_UNKNOWN, EXIF_DIRECTORY_UNKNOWN);
 
 	public static final TagInfo ALL_TIFF_TAGS[] = {
 			TIFF_TAG_NEW_SUBFILE_TYPE, TIFF_TAG_SUBFILE_TYPE,

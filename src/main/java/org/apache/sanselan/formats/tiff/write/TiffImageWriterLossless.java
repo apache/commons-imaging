@@ -218,7 +218,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
 		else if (analysis.size() == 1)
 		{
 			TiffElement onlyElement = (TiffElement) analysis.get(0);
-//			Debug.debug("onlyElement", onlyElement.getElementDescription());
+			//			Debug.debug("onlyElement", onlyElement.getElementDescription());
 			if (onlyElement.offset == TIFF_HEADER_SIZE
 					&& onlyElement.offset + onlyElement.length
 							+ TIFF_HEADER_SIZE == oldLength)
@@ -232,14 +232,14 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
 		//		if (true)
 		//			throw new ImageWriteException("hahah");
 
-		List directories = outputSet.getDirectories();
+		//		List directories = outputSet.getDirectories();
 
-		TiffOutputSummary outputSummary = validateDirectories(directories);
+		TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
 		List outputItems = outputSet.getOutputItems(outputSummary);
 
 		int outputLength = updateOffsetsStep(analysis, outputItems);
-//		Debug.debug("outputLength", outputLength);
+		//		Debug.debug("outputLength", outputLength);
 
 		outputSummary.updateOffsets(byteOrder);
 
@@ -311,9 +311,9 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
 			TiffOutputItem outputItem = (TiffOutputItem) unplacedItems
 					.remove(0);
 			int outputItemLength = outputItem.getItemLength();
-//			Debug.debug("largest unplaced item: "
-//					+ outputItem.getItemDescription() + " (" + outputItemLength
-//					+ ")");
+			//			Debug.debug("largest unplaced item: "
+			//					+ outputItem.getItemDescription() + " (" + outputItemLength
+			//					+ ")");
 
 			// search for the smallest possible element large enough to hold the item.
 			TiffElement bestFit = null;

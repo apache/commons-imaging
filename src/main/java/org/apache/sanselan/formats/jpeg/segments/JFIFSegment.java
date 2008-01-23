@@ -23,7 +23,7 @@ import java.io.InputStream;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.formats.jpeg.JpegConstants;
 
-public class JFIFSegment extends Segment
+public class JFIFSegment extends Segment implements JpegConstants
 {
 	public final int jfifMajorVersion;
 	public final int jfifMinorVersion;
@@ -51,8 +51,11 @@ public class JFIFSegment extends Segment
 	{
 		super(marker, marker_length);
 
-		readAndVerifyBytes(is, JpegConstants.JFIF0_SIGNATURE,
-				"Not a Valid JPEG File: missing JFIF string");
+		byte signature[] = readBytes(is, JFIF0_SIGNATURE.length);
+		if (!compareByteArrays(signature, JFIF0_SIGNATURE)
+				&& !compareByteArrays(signature, JFIF0_SIGNATURE_ALTERNATIVE))
+			throw new ImageReadException(
+					"Not a Valid JPEG File: missing JFIF string");
 
 		jfifMajorVersion = readByte("JFIF_major_version", is,
 				"Not a Valid JPEG File");

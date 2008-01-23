@@ -21,8 +21,10 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
@@ -62,9 +64,17 @@ public class TiffField implements TiffConstants
 		tagInfo = getTag(directoryType, tag);
 	}
 
+	private int sortHint = -1;
+	
+	
 	public boolean isLocalValue()
 	{
 		return fieldType.isLocalValue(this);
+	}
+
+	public int getBytesLength() throws ImageReadException
+	{
+		return fieldType.getBytesLength(this);
 	}
 
 	public final class OversizeValueElement extends TiffElement
@@ -109,29 +119,132 @@ public class TiffField implements TiffConstants
 		return FIELD_TYPE_UNKNOWN;
 	}
 
-	private static TagInfo getTag(int directoryType, int value)
+	private static TagInfo getTag(int directoryType, int tag,
+			List possibleMatches)
 	{
-		Object key = new Integer(value);
+		if (possibleMatches.size() < 1)
+			return null;
+		//		else if (possibleMatches.size() == 1)
+		//		{
+		//			TagInfo tagInfo = (TagInfo) possibleMatches.get(0);
+		//			return tagInfo;
+		//		}
 
-		if (directoryType == DIRECTORY_TYPE_EXIF
-				|| directoryType == DIRECTORY_TYPE_INTEROPERABILITY)
+		// first search for exact match.
+		for (int i = 0; i < possibleMatches.size(); i++)
 		{
-			if (EXIF_TAG_MAP.containsKey(key))
-				return (TagInfo) EXIF_TAG_MAP.get(key);
-		}
-		else if (directoryType == DIRECTORY_TYPE_GPS)
-		{
-			if (GPS_TAG_MAP.containsKey(key))
-				return (TagInfo) GPS_TAG_MAP.get(key);
-		}
-		else
-		{
-			if (TIFF_TAG_MAP.containsKey(key))
-				return (TagInfo) TIFF_TAG_MAP.get(key);
+			TagInfo tagInfo = (TagInfo) possibleMatches.get(i);
+			if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
+				// pass
+				continue;
+			else if (directoryType == DIRECTORY_TYPE_EXIF
+					&& tagInfo.directoryType == EXIF_DIRECTORY_EXIF_IFD)
+				return tagInfo;
+			else if (directoryType == DIRECTORY_TYPE_INTEROPERABILITY
+					&& tagInfo.directoryType == EXIF_DIRECTORY_INTEROP_IFD)
+				return tagInfo;
+			else if (directoryType == DIRECTORY_TYPE_GPS
+					&& tagInfo.directoryType == EXIF_DIRECTORY_GPS)
+				return tagInfo;
+			else if (directoryType == DIRECTORY_TYPE_MAKER_NOTES
+					&& tagInfo.directoryType == EXIF_DIRECTORY_MAKER_NOTES)
+				return tagInfo;
+			else if (directoryType == DIRECTORY_TYPE_DIR_0
+					&& tagInfo.directoryType == TIFF_DIRECTORY_IFD0)
+				return tagInfo;
+			else if (directoryType == DIRECTORY_TYPE_DIR_1
+					&& tagInfo.directoryType == TIFF_DIRECTORY_IFD1)
+				return tagInfo;
+			else if (directoryType == DIRECTORY_TYPE_DIR_2
+					&& tagInfo.directoryType == TIFF_DIRECTORY_IFD2)
+				return tagInfo;
+			else if (directoryType == DIRECTORY_TYPE_DIR_3
+					&& tagInfo.directoryType == TIFF_DIRECTORY_IFD3)
+				return tagInfo;
 		}
 
-		if (ALL_TAG_MAP.containsKey(key))
-			return (TagInfo) ALL_TAG_MAP.get(key);
+		// accept an inexact match.
+		for (int i = 0; i < possibleMatches.size(); i++)
+		{
+			TagInfo tagInfo = (TagInfo) possibleMatches.get(i);
+
+			if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
+				// pass
+				continue;
+			else if (directoryType >= 0
+					&& tagInfo.directoryType.isImageDirectory())
+				return tagInfo;
+			else if (directoryType < 0
+					&& !tagInfo.directoryType.isImageDirectory())
+				return tagInfo;
+		}
+
+		// accept a wildcard match.
+		for (int i = 0; i < possibleMatches.size(); i++)
+		{
+			TagInfo tagInfo = (TagInfo) possibleMatches.get(i);
+
+			if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
+				return tagInfo;
+		}
+
+		//		// accept a very rough match.
+		//		for (int i = 0; i < possibleMatches.size(); i++)
+		//		{
+		//			TagInfo tagInfo = (TagInfo) possibleMatches.get(i);
+		//			if (tagInfo.exifDirectory == EXIF_DIRECTORY_UNKNOWN)
+		//				return tagInfo;
+		//			else if (directoryType == DIRECTORY_TYPE_EXIF
+		//					&& tagInfo.exifDirectory == EXIF_DIRECTORY_EXIF_IFD)
+		//				return tagInfo;
+		//			else if (directoryType == DIRECTORY_TYPE_INTEROPERABILITY
+		//					&& tagInfo.exifDirectory == EXIF_DIRECTORY_INTEROP_IFD)
+		//				return tagInfo;
+		//			else if (directoryType == DIRECTORY_TYPE_GPS
+		//					&& tagInfo.exifDirectory == EXIF_DIRECTORY_GPS)
+		//				return tagInfo;
+		//			else if (directoryType == DIRECTORY_TYPE_MAKER_NOTES
+		//					&& tagInfo.exifDirectory == EXIF_DIRECTORY_MAKER_NOTES)
+		//				return tagInfo;
+		//			else if (directoryType >= 0
+		//					&& tagInfo.exifDirectory.isImageDirectory())
+		//				return tagInfo;
+		//			else if (directoryType < 0
+		//					&& !tagInfo.exifDirectory.isImageDirectory())
+		//				return tagInfo;
+		//		}
+
+		return TIFF_TAG_UNKNOWN;
+
+		//		if (true)
+		//			throw new Error("Why didn't this algorithm work?");
+		//
+		//		{
+		//			TagInfo tagInfo = (TagInfo) possibleMatches.get(0);
+		//			return tagInfo;
+		//		}
+
+		//		Object key = new Integer(tag);
+		//
+		//		if (directoryType == DIRECTORY_TYPE_EXIF
+		//				|| directoryType == DIRECTORY_TYPE_INTEROPERABILITY)
+		//		{
+		//			if (EXIF_TAG_MAP.containsKey(key))
+		//				return (TagInfo) EXIF_TAG_MAP.get(key);
+		//		}
+		//		else if (directoryType == DIRECTORY_TYPE_GPS)
+		//		{
+		//			if (GPS_TAG_MAP.containsKey(key))
+		//				return (TagInfo) GPS_TAG_MAP.get(key);
+		//		}
+		//		else
+		//		{
+		//			if (TIFF_TAG_MAP.containsKey(key))
+		//				return (TagInfo) TIFF_TAG_MAP.get(key);
+		//		}
+		//
+		//		if (ALL_TAG_MAP.containsKey(key))
+		//			return (TagInfo) ALL_TAG_MAP.get(key);
 
 		//		public static final int DIRECTORY_TYPE_EXIF = -2;
 		//		//	public static final int DIRECTORY_TYPE_SUB = 5;
@@ -150,7 +263,76 @@ public class TiffField implements TiffConstants
 		//				return tag;
 		//		}
 
-		return TIFF_TAG_UNKNOWN;
+		//		return TIFF_TAG_UNKNOWN;
+	}
+
+	private static TagInfo getTag(int directoryType, int tag)
+	{
+		//		Debug.debug();
+		//		Debug
+		//				.debug("getTag tag", tag + " (0x" + Integer.toHexString(tag)
+		//						+ ")");
+		//		Debug.debug("getTag directoryType", directoryType + " (0x"
+		//				+ Integer.toHexString(directoryType) + ")");
+
+		Object key = new Integer(tag);
+
+		List possibleMatches = (List) EXIF_TAG_MAP.get(key);
+
+		if (null == possibleMatches)
+		{
+//			if (tag == 0x8769)
+//				Debug.debug("exif offset field is unknown.1");
+			return TIFF_TAG_UNKNOWN;
+		}
+
+		TagInfo result = getTag(directoryType, tag, possibleMatches);
+		//		if (tag == 0x8769)
+		//		{
+		//			Debug.debug("exif offset possibleMatches", possibleMatches);
+		//			Debug.debug("exif offset field", result);
+		//		}
+		//		Debug.debug("result", result);
+		return result;
+
+		//		if (directoryType == DIRECTORY_TYPE_EXIF
+		//				|| directoryType == DIRECTORY_TYPE_INTEROPERABILITY)
+		//		{
+		//			if (EXIF_TAG_MAP.containsKey(key))
+		//				return (TagInfo) EXIF_TAG_MAP.get(key);
+		//		}
+		//		else if (directoryType == DIRECTORY_TYPE_GPS)
+		//		{
+		//			if (GPS_TAG_MAP.containsKey(key))
+		//				return (TagInfo) GPS_TAG_MAP.get(key);
+		//		}
+		//		else
+		//		{
+		//			if (TIFF_TAG_MAP.containsKey(key))
+		//				return (TagInfo) TIFF_TAG_MAP.get(key);
+		//		}
+		//
+		//		if (ALL_TAG_MAP.containsKey(key))
+		//			return (TagInfo) ALL_TAG_MAP.get(key);
+		//
+		//		//		public static final int DIRECTORY_TYPE_EXIF = -2;
+		//		//		//	public static final int DIRECTORY_TYPE_SUB = 5;
+		//		//		public static final int DIRECTORY_TYPE_GPS = -3;
+		//		//		public static final int DIRECTORY_TYPE_INTEROPERABILITY = -4;
+		//		//
+		//		//		private static final Map GPS_TAG_MAP = makeTagMap(ALL_GPS_TAGS, false);
+		//		//		private static final Map TIFF_TAG_MAP = makeTagMap(ALL_TIFF_TAGS, false);
+		//		//		private static final Map EXIF_TAG_MAP = makeTagMap(ALL_EXIF_TAGS, false);
+		//		//		private static final Map ALL_TAG_MAP = makeTagMap(ALL_TAGS, true);
+		//		//
+		//		//		for (int i = 0; i < ALL_TAGS.length; i++)
+		//		//		{
+		//		//			TagInfo2 tag = ALL_TAGS[i];
+		//		//			if (tag.tag == value)
+		//		//				return tag;
+		//		//		}
+		//
+		//		return TIFF_TAG_UNKNOWN;
 	}
 
 	private int getValueLengthInBytes()
@@ -168,9 +350,9 @@ public class TiffField implements TiffConstants
 
 		int valueLength = getValueLengthInBytes();
 
-		//				Debug.debug("fillInValue tagInfo", tagInfo);
-		//				Debug.debug("fillInValue valueOffset", valueOffset);
-		//				Debug.debug("fillInValue valueLength", valueLength);
+		//						Debug.debug("fillInValue tagInfo", tagInfo);
+		//						Debug.debug("fillInValue valueOffset", valueOffset);
+		//						Debug.debug("fillInValue valueLength", valueLength);
 
 		byte bytes[] = byteSource.getBlock(valueOffset, valueLength);
 		setOversizeValue(bytes);
@@ -178,7 +360,14 @@ public class TiffField implements TiffConstants
 
 	public String getValueDescription()
 	{
-		return getValueDescription(getValue());
+		try
+		{
+			return getValueDescription(getValue());
+		}
+		catch (ImageReadException e)
+		{
+			return "Invalid value: " + e.getMessage();
+		}
 	}
 
 	private String getValueDescription(Object o)
@@ -189,19 +378,6 @@ public class TiffField implements TiffConstants
 		if (o instanceof Number)
 		{
 			return o.toString();
-			//			try
-			//			{
-			//				return o.toString();
-			//			}
-			//			catch (ArithmeticException e)
-			//			{
-			//				errorDump();
-			//				
-			//				//				Debug.debug(toString());
-			//				//				Debug.debug(e);
-			//
-			//				throw e;
-			//			}
 		}
 		else if (o instanceof String)
 		{
@@ -430,7 +606,7 @@ public class TiffField implements TiffConstants
 
 		result.append(tag + " (0x" + Integer.toHexString(tag) + ": "
 				+ tagInfo.name + "): ");
-		result.append(getValueDescription(getValue()) + " (" + length + " "
+		result.append(getValueDescription() + " (" + length + " "
 				+ fieldType.name + ")");
 
 		return result.toString();
@@ -450,10 +626,21 @@ public class TiffField implements TiffConstants
 
 	public static final String Attribute_Tag = "Tag";
 
-	public Object getValue()
+	public Object getValue() throws ImageReadException
 	{
 		//		System.out.print("getValue");
 		return tagInfo.getValue(this);
+	}
+
+	public String getStringValue() throws ImageReadException
+	{
+		Object o = getValue();
+		if (o == null)
+			return null;
+		if (!(o instanceof String))
+			throw new ImageReadException("Expected String value("
+					+ tagInfo.getDescription() + "): " + o);
+		return (String) o;
 	}
 
 	private static final Map makeTagMap(TagInfo tags[],
@@ -467,16 +654,24 @@ public class TiffField implements TiffConstants
 			TagInfo tag = tags[i];
 			Object key = new Integer(tag.tag);
 
-			if (map.get(key) == null)
-				map.put(key, tag);
-			else if (!ignoreDuplicates)
+			List tagList = (List) map.get(key);
+			if (tagList == null)
 			{
-				System.out.println("Duplicate tag in " + name + ": " + tag.tag
-						+ " (0x" + Integer.toHexString(tag.tag) + ")");
-				System.out.println("\t" + "New name: " + tag.name);
-				System.out.println("\t" + "Old name: "
-						+ ((TagInfo) map.get(key)).name);
+				tagList = new ArrayList();
+				map.put(key, tagList);
 			}
+			tagList.add(tag);
+
+			//			if (map.get(key) == null)
+			//				map.put(key, tag);
+			//			else if (!ignoreDuplicates)
+			//			{
+			//				System.out.println("Duplicate tag in " + name + ": " + tag.tag
+			//						+ " (0x" + Integer.toHexString(tag.tag) + ")");
+			//				System.out.println("\t" + "New name: " + tag.name);
+			//				System.out.println("\t" + "Old name: "
+			//						+ ((TagInfo) map.get(key)).name);
+			//			}
 		}
 
 		return map;
@@ -647,5 +842,15 @@ public class TiffField implements TiffConstants
 					+ tagInfo.getDescription());
 
 		return ((Number) o).doubleValue();
+	}
+
+	public int getSortHint()
+	{
+		return sortHint;
+	}
+
+	public void setSortHint(int sortHint)
+	{
+		this.sortHint = sortHint;
 	}
 }

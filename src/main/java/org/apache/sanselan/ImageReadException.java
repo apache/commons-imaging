@@ -24,4 +24,9 @@ public class ImageReadException extends Exception
 	{
 		super(s);
 	}
+
+	public ImageReadException(String s, Exception e)
+	{
+		super(s, e);
+	}
 }

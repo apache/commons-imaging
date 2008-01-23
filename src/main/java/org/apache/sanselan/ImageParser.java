@@ -101,22 +101,28 @@ public abstract class ImageParser extends BinaryFileParser
 		return getMetadata(new ByteSourceFile(file), params);
 	}
 
-	public abstract ImageInfo getImageInfo(ByteSource byteSource)
+	public abstract ImageInfo getImageInfo(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException;
 
-	public final ImageInfo getImageInfo(byte bytes[])
+	public final ImageInfo getImageInfo(ByteSource byteSource)
 			throws ImageReadException, IOException
 	{
-		return getImageInfo(new ByteSourceArray(bytes));
+		return getImageInfo(byteSource, null);
 	}
 
-	public final ImageInfo getImageInfo(File file) throws ImageReadException,
-			IOException
+	public final ImageInfo getImageInfo(byte bytes[], Map params)
+			throws ImageReadException, IOException
+	{
+		return getImageInfo(new ByteSourceArray(bytes), params);
+	}
+
+	public final ImageInfo getImageInfo(File file, Map params)
+			throws ImageReadException, IOException
 	{
 		if (!canAcceptExtension(file))
 			return null;
 
-		return getImageInfo(new ByteSourceFile(file));
+		return getImageInfo(new ByteSourceFile(file), params);
 	}
 
 	public FormatCompliance getFormatCompliance(ByteSource byteSource)

@@ -128,14 +128,19 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 
 			ArrayList fields = new ArrayList();
 
-//						Debug.debug("dirType", dirType);
-//						Debug.debug("offset", offset);
-
+			//			Debug.debug();
+			//			Debug.debug("dirType", dirType);
+			//			Debug.debug("offset", offset);
+			//
+			//			if(offset>=byteSource.getLength())
+			//			{
+			//				Debug.debug("skipping invalid directory!");
+			//				return true;
+			//			}
 			int entryCount = read2Bytes("DirectoryEntryCount", is,
 					"Not a Valid TIFF File");
 
-//						Debug.debug("entryCount", entryCount);
-//						Debug.debug();
+			//			Debug.debug("entryCount", entryCount);
 
 			for (int i = 0; i < entryCount; i++)
 			{
@@ -154,6 +159,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 				//				{
 				TiffField field = new TiffField(tag, dirType, type, length,
 						valueOffset, valueOffsetBytes, getByteOrder());
+				field.setSortHint(i);
 
 				field.fillInValue(byteSource);
 
@@ -220,7 +226,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 					boolean subDirectoryRead = readDirectory(byteSource,
 							subDirectoryOffset, subDirectoryType,
 							formatCompliance, listener, true, visited);
-					
+
 					if (!subDirectoryRead)
 					{
 						// Offset field pointed to invalid location.  
@@ -238,7 +244,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 				readDirectory(byteSource, directory.nextDirectoryOffset,
 						dirType + 1, formatCompliance, listener, visited);
 			}
-			
+
 			return true;
 		}
 		finally
@@ -273,6 +279,21 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 		private TiffHeader tiffHeader = null;
 		private ArrayList directories = new ArrayList();
 		private ArrayList fields = new ArrayList();
+		private final boolean readThumbnails;
+
+		public Collector()
+		{
+			this(null);
+		}
+
+		public Collector(Map params)
+		{
+			boolean readThumbnails = true;
+			if (params != null && params.containsKey(PARAM_KEY_READ_THUMBNAILS))
+				readThumbnails = Boolean.TRUE.equals(params
+						.get(PARAM_KEY_READ_THUMBNAILS));
+			this.readThumbnails = readThumbnails;
+		}
 
 		public boolean setTiffHeader(TiffHeader tiffHeader)
 		{
@@ -294,7 +315,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 
 		public boolean readImageData()
 		{
-			return true;
+			return readThumbnails;
 		}
 
 		public boolean readOffsetDirectories()
@@ -329,6 +350,27 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 		}
 	}
 
+	private static class DirectoryCollector extends Collector
+	{
+		private final boolean readImageData;
+
+		public DirectoryCollector(final boolean readImageData)
+		{
+			this.readImageData = readImageData;
+		}
+
+		public boolean addDirectory(TiffDirectory directory)
+		{
+			super.addDirectory(directory);
+			return false;
+		}
+
+		public boolean readImageData()
+		{
+			return readImageData;
+		}
+	}
+
 	public TiffContents readFirstDirectory(ByteSource byteSource, Map params,
 			boolean readImageData, FormatCompliance formatCompliance)
 			throws ImageReadException, IOException
@@ -342,11 +384,25 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 		return contents;
 	}
 
+	public TiffContents readDirectories(ByteSource byteSource,
+			boolean readImageData, FormatCompliance formatCompliance)
+			throws ImageReadException, IOException
+	{
+		Collector collector = new FirstDirectoryCollector(readImageData);
+		readDirectories(byteSource, formatCompliance, collector);
+		TiffContents contents = collector.getContents();
+		if (contents.directories.size() < 1)
+			throw new ImageReadException(
+					"Image did not contain any directories.");
+		return contents;
+	}
+
 	public TiffContents readContents(ByteSource byteSource, Map params,
 			FormatCompliance formatCompliance) throws ImageReadException,
 			IOException
 	{
-		Collector collector = new Collector();
+
+		Collector collector = new Collector(params);
 		read(byteSource, params, formatCompliance, collector);
 		TiffContents contents = collector.getContents();
 		return contents;
@@ -405,8 +461,13 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 			TiffDirectory directory) throws ImageReadException, IOException
 	{
 		ImageDataElement element = directory.getJpegRawImageDataElement();
-		byte data[] = byteSource.getBlock(element.offset, element.length);
-		return new JpegImageData(element.offset, element.length, data);
+		int offset = element.offset;
+		int length = element.length;
+		// Sony DCR-PC110 has an off-by-one error.
+		if (offset + length == byteSource.getLength() + 1)
+			length--;
+		byte data[] = byteSource.getBlock(offset, length);
+		return new JpegImageData(offset, length, data);
 	}
 
 }

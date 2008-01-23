@@ -45,10 +45,6 @@ public class App13Segment extends APPNSegment
 		super(marker, marker_length, is);
 		this.parser = parser;
 
-		//			InputStream bais = new ByteArrayInputStream(bytes);
-		//			dump();
-
-		//		Debug.debug("bytes", bytes);
 		boolean verbose = false;
 
 		if (!compareByteArrays(bytes, 0,
@@ -72,7 +68,7 @@ public class App13Segment extends APPNSegment
 			int segmentType = convertByteArrayToShort("SegmentType", index,
 					bytes);
 			if (verbose)
-				debugNumber("SegmentType", segmentType, 2);
+				debugNumber("segmentType", segmentType, 2);
 			index += 2;
 
 			// padding
@@ -81,21 +77,19 @@ public class App13Segment extends APPNSegment
 			int segmentSize = convertByteArrayToShort("SegmentSize", index,
 					bytes);
 			if (verbose)
-				debugNumber("fSegmentSize", segmentSize, 2);
+				debugNumber("segmentSize", segmentSize, 2);
 			index += 2;
 
 			int index2 = index;
 
 			index += segmentSize;
-			if ((segmentSize % 2) != 0)
-				index++;
 
-			while (index2 < index)
+			while (index2 + 1 < index)
 			{
 				int iptcPrefix = convertByteArrayToShort("IPTCPrefix", index2,
 						bytes);
 				if (verbose)
-					debugNumber("fIPTCPrefix", iptcPrefix, 2);
+					debugNumber("IPTCPrefix", iptcPrefix, 2);
 				index2 += 2;
 
 				if (iptcPrefix == 0x1c02)
@@ -131,6 +125,8 @@ public class App13Segment extends APPNSegment
 				elements.add(element);
 			}
 
+			if ((segmentSize % 2) != 0)
+				index++;
 		}
 
 	}

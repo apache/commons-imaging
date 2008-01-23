@@ -85,7 +85,7 @@ public class IcoImageParser extends ImageParser
 		return null;
 	}
 
-	public ImageInfo getImageInfo(ByteSource byteSource)
+	public ImageInfo getImageInfo(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		return null;

@@ -19,8 +19,6 @@ package org.apache.sanselan.common;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.apache.sanselan.util.Debug;
-
 public class RationalNumber extends Number
 {
 	private static final long serialVersionUID = -1;

@@ -57,7 +57,7 @@ public class App2Segment extends APPNSegment implements Comparable
 		}
 		else
 		{
-			debugByteArray("Unknown APP2 Segment Type", bytes);
+			//			debugByteArray("Unknown APP2 Segment Type", bytes);
 			cur_marker = -1;
 			num_markers = -1;
 			icc_bytes = null;

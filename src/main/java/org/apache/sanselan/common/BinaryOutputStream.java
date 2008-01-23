@@ -71,7 +71,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
 		this.byteOrder = byteOrder;
 	}
 
-	protected int getByteOrder()
+	public int getByteOrder()
 	{
 		return byteOrder;
 	}

@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,10 +40,10 @@ import org.apache.sanselan.util.IOUtils;
 
 public class ByteSourceImageTest extends ByteSourceTest
 {
-	public ByteSourceImageTest()
-	{
-		super(ByteSourceImageTest.class.getName());
-	}
+	//	public ByteSourceImageTest()
+	//	{
+	//		super(ByteSourceImageTest.class.getName());
+	//	}
 
 	/**
 	 * @return the suite of tests being tested
@@ -54,23 +57,42 @@ public class ByteSourceImageTest extends ByteSourceTest
 			IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException
 	{
-		File imageFile = getTestImage();
-		Debug.debug("imageFile", imageFile);
-		assertTrue(imageFile != null);
+		List imageFiles = getTestImages();
+		for (int i = 0; i < imageFiles.size(); i++)
+		{
+			Debug.purgeMemory();
+			
+			File imageFile = (File) imageFiles.get(i);
+			Debug.debug("imageFile", imageFile);
+			assertTrue(imageFile != null);
 
-		byte imageFileBytes[] = IOUtils.getFileBytes(imageFile);
-		assertTrue(imageFileBytes != null);
-		assertTrue(imageFileBytes.length == imageFile.length());
+			byte imageFileBytes[] = IOUtils.getFileBytes(imageFile);
+			assertTrue(imageFileBytes != null);
+			assertTrue(imageFileBytes.length == imageFile.length());
 
-		checkGuessFormat(imageFile, imageFileBytes);
+			checkGuessFormat(imageFile, imageFileBytes);
 
-		checkGetICCProfileBytes(imageFile, imageFileBytes);
+			if (imageFile.getName().toLowerCase().endsWith(".png")
+					&& imageFile.getParentFile().getName().equalsIgnoreCase(
+							"pngsuite")
+					&& imageFile.getName().toLowerCase().startsWith("x"))
+				continue;
 
-		checkGetImageInfo(imageFile, imageFileBytes);
+			checkGetICCProfileBytes(imageFile, imageFileBytes);
 
-		checkGetImageSize(imageFile, imageFileBytes);
+			if (!imageFile.getParentFile().getName().toLowerCase().equals(
+					"@broken"))
+				checkGetImageInfo(imageFile, imageFileBytes);
 
-		checkGetBufferedImage(imageFile, imageFileBytes);
+			checkGetImageSize(imageFile, imageFileBytes);
+
+			ImageFormat imageFormat = Sanselan.guessFormat(imageFile);
+			if (ImageFormat.IMAGE_FORMAT_JPEG == imageFormat
+					|| ImageFormat.IMAGE_FORMAT_UNKNOWN == imageFormat)
+				;
+			else
+				checkGetBufferedImage(imageFile, imageFileBytes);
+		}
 	}
 
 	public void checkGetBufferedImage(File file, byte[] bytes)
@@ -139,9 +161,15 @@ public class ByteSourceImageTest extends ByteSourceTest
 			IllegalArgumentException, InvocationTargetException
 	{
 		// check guessFormat()
-		ImageInfo imageInfoFile = Sanselan.getImageInfo(imageFile);
 
-		ImageInfo imageInfoBytes = Sanselan.getImageInfo(imageFileBytes);
+		Map params = new HashMap();
+		boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+		params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
+
+		ImageInfo imageInfoFile = Sanselan.getImageInfo(imageFile, params);
+
+		ImageInfo imageInfoBytes = Sanselan
+				.getImageInfo(imageFileBytes, params);
 
 		assertTrue(imageInfoFile != null);
 		assertTrue(imageInfoBytes != null);

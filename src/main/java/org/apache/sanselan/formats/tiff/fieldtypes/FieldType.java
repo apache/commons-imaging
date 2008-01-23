@@ -16,6 +16,7 @@
  */
 package org.apache.sanselan.formats.tiff.fieldtypes;
 
+import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryFileFunctions;
 import org.apache.sanselan.formats.tiff.TiffField;
@@ -40,6 +41,14 @@ public abstract class FieldType extends BinaryFileFunctions
 		return ((length > 0) && ((length * entry.length) <= TIFF_ENTRY_MAX_VALUE_LENGTH));
 	}
 
+	public int getBytesLength(TiffField entry) throws ImageReadException
+	{
+		if (length < 1)
+			throw new ImageReadException("Unknown field type");
+
+		return length * entry.length;
+	}
+
 	//	public static final byte[] STUB_LOCAL_VALUE  = new byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
 
 	public static final byte[] getStubLocalValue()
@@ -52,7 +61,7 @@ public abstract class FieldType extends BinaryFileFunctions
 		return new byte[count * length];
 	}
 
-	public String getDisplayValue(TiffField entry)
+	public String getDisplayValue(TiffField entry) throws ImageReadException
 	{
 		Object o = getSimpleValue(entry);
 		if (o == null)
@@ -73,7 +82,8 @@ public abstract class FieldType extends BinaryFileFunctions
 		return entry.oversizeValue;
 	}
 
-	public abstract Object getSimpleValue(TiffField entry);
+	public abstract Object getSimpleValue(TiffField entry)
+			throws ImageReadException;
 
 	//	public final Object getSimpleValue(TiffField entry)
 	//	{

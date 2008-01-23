@@ -69,12 +69,13 @@ public class BinaryFileParser extends BinaryFileFunctions
 	}
 
 	public final int convertByteArrayToShort(String name, byte bytes[])
+			throws ImageReadException
 	{
 		return convertByteArrayToShort(name, bytes, byteOrder);
 	}
 
 	public final int convertByteArrayToShort(String name, int start,
-			byte bytes[])
+			byte bytes[]) throws ImageReadException
 	{
 		return convertByteArrayToShort(name, start, bytes, byteOrder);
 	}

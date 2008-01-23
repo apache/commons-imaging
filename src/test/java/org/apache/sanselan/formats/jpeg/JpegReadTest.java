@@ -19,7 +19,9 @@ package org.apache.sanselan.formats.jpeg;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageReadException;
@@ -30,10 +32,6 @@ import org.apache.sanselan.util.Debug;
 
 public class JpegReadTest extends JpegBaseTest
 {
-	public JpegReadTest(String name)
-	{
-		super(name);
-	}
 
 	public void test() throws IOException, ImageReadException,
 			ImageWriteException
@@ -41,13 +39,24 @@ public class JpegReadTest extends JpegBaseTest
 		List images = getJpegImages();
 		for (int i = 0; i < images.size(); i++)
 		{
+			Debug.purgeMemory();
+
 			File imageFile = (File) images.get(i);
 			Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-			assertNotNull(metadata);
+			//			ByteSource byteSource = new ByteSourceFile(imageFile);
+			//			new JpegUtils().dumpJFIF(byteSource);
 
-			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
+			Map params = new HashMap();
+			boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+			params
+					.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
+							!ignoreImageData));
+
+			IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+			//			assertNotNull(metadata);
+
+			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile, params);
 			assertNotNull(imageInfo);
 		}
 	}

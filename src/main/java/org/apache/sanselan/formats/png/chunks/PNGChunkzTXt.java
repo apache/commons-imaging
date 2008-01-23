@@ -43,7 +43,7 @@ public class PNGChunkzTXt extends PNGTextChunk
 			System.arraycopy(bytes, 0, Keyword_bytes, 0, index);
 			Keyword = new String(Keyword_bytes);
 
-//			int CompressionMethod = bytes[index + 1];
+			//			int CompressionMethod = bytes[index + 1];
 
 			int CompressedTextLength = bytes.length - (index + 1 + 1);
 			byte CompressedText[] = new byte[CompressedTextLength];

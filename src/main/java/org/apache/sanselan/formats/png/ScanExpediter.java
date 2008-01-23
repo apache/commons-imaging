@@ -94,7 +94,7 @@ public abstract class ScanExpediter extends BinaryFileParser
 
 	public abstract void drive() throws ImageReadException, IOException;
 
-//	private long count = 0;
+	//	private long count = 0;
 
 	protected int getRGB(BitParser bitParser, int pixel_index_in_scanline)
 			throws ImageReadException, IOException

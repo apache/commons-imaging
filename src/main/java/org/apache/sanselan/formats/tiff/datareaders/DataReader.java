@@ -48,7 +48,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
 		last = new int[samplesPerPixel];
 	}
 
-//	public abstract void readImageData(BufferedImage bi, ByteSource byteSource)
+	//	public abstract void readImageData(BufferedImage bi, ByteSource byteSource)
 	public abstract void readImageData(BufferedImage bi)
 			throws ImageReadException, IOException;
 
@@ -117,8 +117,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
 
 				myLzwDecompressor.setTiffLZWMode();
 
-				byte[] result = myLzwDecompressor
-						.decompress(is, expected_size);
+				byte[] result = myLzwDecompressor.decompress(is, expected_size);
 
 				return result;
 			}

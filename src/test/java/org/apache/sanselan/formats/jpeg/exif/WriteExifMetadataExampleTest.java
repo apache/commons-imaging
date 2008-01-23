@@ -32,10 +32,10 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
 		implements
 			AllTagConstants
 {
-	public WriteExifMetadataExampleTest(String name)
-	{
-		super(name);
-	}
+//	public WriteExifMetadataExampleTest(String name)
+//	{
+//		super(name);
+//	}
 
 	public void test() throws IOException, ImageReadException,
 			ImageWriteException
@@ -43,6 +43,8 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
 		List images = getImagesWithExifData();
 		for (int i = 0; i < images.size(); i++)
 		{
+			Debug.purgeMemory();
+			
 			File imageFile = (File) images.get(i);
 			Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
@@ -52,6 +54,9 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
 
 			try
 			{
+				boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+				if(ignoreImageData)
+					continue;
 				new WriteExifMetadataExample().changeExifMetadata(imageFile,
 						tempFile);
 			}

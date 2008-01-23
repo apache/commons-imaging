@@ -16,7 +16,6 @@
  */
 package org.apache.sanselan.common;
 
-
 public abstract class RationalNumberUtilities extends Number
 {
 

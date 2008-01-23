@@ -73,7 +73,8 @@ class TiffOutputSummary implements TiffConstants
 
 		for (int i = 0; i < imageDataItems.size(); i++)
 		{
-			ImageDataOffsets imageDataInfo = (ImageDataOffsets) imageDataItems.get(i);
+			ImageDataOffsets imageDataInfo = (ImageDataOffsets) imageDataItems
+					.get(i);
 
 			for (int j = 0; j < imageDataInfo.outputItems.length; j++)
 			{

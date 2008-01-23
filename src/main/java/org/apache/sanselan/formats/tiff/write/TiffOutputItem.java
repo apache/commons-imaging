@@ -22,7 +22,7 @@ import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryOutputStream;
 import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
 
- abstract class TiffOutputItem implements AllTagConstants
+abstract class TiffOutputItem implements AllTagConstants
 {
 	public static final int UNDEFINED_VALUE = -1;
 

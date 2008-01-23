@@ -63,15 +63,15 @@ public interface SanselanConstants
 
 	public static final String BUFFERED_IMAGE_FACTORY = "BUFFERED_IMAGE_FACTORY";
 
-//	/** 
-//	 * Parameter key.  Indicates whether to read embedded thumbnails.  
-//	 * <p>
-//	 * Only applies to read EXIF metadata from JPEG/JFIF files.
-//	 * <p>
-//	 * Valid values: Boolean.TRUE and Boolean.FALSE.
-//	 * <p>
-//	 * @see TiffConstants
-//	 */
-//	public static final String PARAM_KEY_READ_THUMBNAILS = "READ_THUMBNAILS";
+	/** 
+	 * Parameter key.  Indicates whether to read embedded thumbnails.  
+	 * <p>
+	 * Only applies to read EXIF metadata from JPEG/JFIF files.
+	 * <p>
+	 * Valid values: Boolean.TRUE and Boolean.FALSE.
+	 * <p>
+	 * @see TiffConstants
+	 */
+	public static final String PARAM_KEY_READ_THUMBNAILS = "READ_THUMBNAILS";
 
 }

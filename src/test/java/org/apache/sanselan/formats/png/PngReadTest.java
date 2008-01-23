@@ -33,10 +33,10 @@ import org.apache.sanselan.util.Debug;
 
 public class PngReadTest extends SanselanTest
 {
-	public PngReadTest(String name)
-	{
-		super(name);
-	}
+//	public PngReadTest(String name)
+//	{
+//		super(name);
+//	}
 
 	private static boolean isPng(File file) throws IOException,
 			ImageReadException
@@ -53,10 +53,10 @@ public class PngReadTest extends SanselanTest
 		}
 	};
 
-	private File getPngImage() throws IOException, ImageReadException
-	{
-		return getTestImage(imageFilter);
-	}
+//	private File getPngImage() throws IOException, ImageReadException
+//	{
+//		return getTestImage(imageFilter);
+//	}
 
 	private List getPngImages() throws IOException, ImageReadException
 	{
@@ -71,6 +71,8 @@ public class PngReadTest extends SanselanTest
 		List images = getPngImages();
 		for (int i = 0; i < images.size(); i++)
 		{
+			Debug.purgeMemory();
+
 			File imageFile = (File) images.get(i);
 			Debug.debug("imageFile", imageFile);
 			if (imageFile.getParentFile().getName()

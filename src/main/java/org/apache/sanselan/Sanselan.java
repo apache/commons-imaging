@@ -326,13 +326,33 @@ public abstract class Sanselan implements SanselanConstants
 	 * <p>
 	 * @param  filename String.
 	 * @param  bytes  Byte array containing an image file.
+	 * @param  params Map of optional parameters, defined in SanselanConstants.
+	 * @return      An instance of ImageInfo.
+	 * @see         ImageInfo
+	 */
+	public static ImageInfo getImageInfo(String filename, byte bytes[],
+			Map params) throws ImageReadException, IOException
+	{
+		return getImageInfo(new ByteSourceArray(filename, bytes), params);
+	}
+
+	/** 
+	 * Parses the "image info" of an image.
+	 * <p>
+	 * "Image info" is a summary of basic information about the image such as: 
+	 * width, height, file format, bit depth, color type, etc.
+	 * <p>
+	 * Not to be confused with "image metadata."
+	 * <p>
+	 * @param  filename String.
+	 * @param  bytes  Byte array containing an image file.
 	 * @return      An instance of ImageInfo.
 	 * @see         ImageInfo
 	 */
 	public static ImageInfo getImageInfo(String filename, byte bytes[])
 			throws ImageReadException, IOException
 	{
-		return getImageInfo(new ByteSourceArray(filename, bytes));
+		return getImageInfo(new ByteSourceArray(filename, bytes), null);
 	}
 
 	/** 
@@ -351,7 +371,27 @@ public abstract class Sanselan implements SanselanConstants
 	public static ImageInfo getImageInfo(InputStream is, String filename)
 			throws ImageReadException, IOException
 	{
-		return getImageInfo(new ByteSourceInputStream(is, filename));
+		return getImageInfo(new ByteSourceInputStream(is, filename), null);
+	}
+
+	/** 
+	 * Parses the "image info" of an image.
+	 * <p>
+	 * "Image info" is a summary of basic information about the image such as: 
+	 * width, height, file format, bit depth, color type, etc.
+	 * <p>
+	 * Not to be confused with "image metadata."
+	 * <p>
+	 * @param  is InputStream from which to read image data.
+	 * @param  filename Filename associated with image data (optional).
+	 * @param  params Map of optional parameters, defined in SanselanConstants.
+	 * @return      An instance of ImageInfo.
+	 * @see         ImageInfo
+	 */
+	public static ImageInfo getImageInfo(InputStream is, String filename,
+			Map params) throws ImageReadException, IOException
+	{
+		return getImageInfo(new ByteSourceInputStream(is, filename), params);
 	}
 
 	/** 
@@ -369,7 +409,45 @@ public abstract class Sanselan implements SanselanConstants
 	public static ImageInfo getImageInfo(byte bytes[])
 			throws ImageReadException, IOException
 	{
-		return getImageInfo(new ByteSourceArray(bytes));
+		return getImageInfo(new ByteSourceArray(bytes), null);
+	}
+
+	/** 
+	 * Parses the "image info" of an image.
+	 * <p>
+	 * "Image info" is a summary of basic information about the image such as: 
+	 * width, height, file format, bit depth, color type, etc.
+	 * <p>
+	 * Not to be confused with "image metadata."
+	 * <p>
+	 * @param  bytes  Byte array containing an image file.
+	 * @param  params Map of optional parameters, defined in SanselanConstants.
+	 * @return      An instance of ImageInfo.
+	 * @see         ImageInfo
+	 */
+	public static ImageInfo getImageInfo(byte bytes[], Map params)
+			throws ImageReadException, IOException
+	{
+		return getImageInfo(new ByteSourceArray(bytes), params);
+	}
+
+	/** 
+	 * Parses the "image info" of an image file.
+	 * <p>
+	 * "Image info" is a summary of basic information about the image such as: 
+	 * width, height, file format, bit depth, color type, etc.
+	 * <p>
+	 * Not to be confused with "image metadata."
+	 * <p>
+	 * @param  file  File containing image data.
+	 * @param  params Map of optional parameters, defined in SanselanConstants.
+	 * @return      An instance of ImageInfo.
+	 * @see         ImageInfo
+	 */
+	public static ImageInfo getImageInfo(File file, Map params)
+			throws ImageReadException, IOException
+	{
+		return getImageInfo(new ByteSourceFile(file), params);
 	}
 
 	/** 
@@ -387,15 +465,15 @@ public abstract class Sanselan implements SanselanConstants
 	public static ImageInfo getImageInfo(File file) throws ImageReadException,
 			IOException
 	{
-		return getImageInfo(new ByteSourceFile(file));
+		return getImageInfo(file, null);
 	}
 
-	private static ImageInfo getImageInfo(ByteSource byteSource)
+	private static ImageInfo getImageInfo(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		ImageParser imageParser = getImageParser(byteSource);
 
-		ImageInfo imageInfo = imageParser.getImageInfo(byteSource);
+		ImageInfo imageInfo = imageParser.getImageInfo(byteSource, params);
 
 		return imageInfo;
 	}

@@ -43,7 +43,7 @@ public class FormatCompliance
 	{
 		return new FormatCompliance("ignore", false);
 	}
-	
+
 	public void addComment(String s) throws ImageReadException
 	{
 		comments.add(s);

@@ -16,7 +16,10 @@
  */
 package org.apache.sanselan.formats.tiff.fieldtypes;
 
+import org.apache.sanselan.ImageReadException;
+import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.formats.tiff.TiffField;
+import org.apache.sanselan.util.Debug;
 
 public class FieldTypeShort extends FieldType
 {
@@ -39,7 +42,7 @@ public class FieldTypeShort extends FieldType
 	//				+ ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
 	//	}
 
-	public Object getSimpleValue(TiffField entry)
+	public Object getSimpleValue(TiffField entry) throws ImageReadException
 	{
 		if (entry.length == 1)
 			return new Integer(convertByteArrayToShort(name + " ("
@@ -50,19 +53,28 @@ public class FieldTypeShort extends FieldType
 				+ ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
 	}
 
-	public byte[] writeData(Object o, int byteOrder)
+	public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
 	{
 		if (o instanceof Integer)
-			return writeData(new int[]{
+			return convertShortArrayToByteArray(new int[]{
 				((Integer) o).intValue(),
 			}, byteOrder);
-
-		return writeData((int[]) o, byteOrder);
-	}
-
-	public byte[] writeData(int values[], int byteOrder)
-	{
-		return convertShortArrayToByteArray(values, byteOrder);
+		else if (o instanceof int[])
+		{
+			int numbers[] = (int[]) o;
+			return convertShortArrayToByteArray(numbers, byteOrder);
+		}
+		else if (o instanceof Integer[])
+		{
+			Integer numbers[] = (Integer[]) o;
+			int values[] = new int[numbers.length];
+			for (int i = 0; i < values.length; i++)
+				values[i] = numbers[i].intValue();
+			return convertShortArrayToByteArray(values, byteOrder);
+		}
+		else
+			throw new ImageWriteException("Invalid data: " + o + " ("
+					+ Debug.getType(o) + ")");
 	}
 
 }

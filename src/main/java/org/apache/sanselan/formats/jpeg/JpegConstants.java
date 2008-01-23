@@ -20,7 +20,18 @@ public interface JpegConstants
 {
 
 	public static final byte JFIF0_SIGNATURE[] = new byte[]{
-			(byte) 'J', (byte) 'F', (byte) 'I', (byte) 'F', (byte) 0,
+			0x4a, // J
+			0x46, // F
+			0x49, // I
+			0x46, // F
+			0x0, //  
+	};
+	public static final byte JFIF0_SIGNATURE_ALTERNATIVE[] = new byte[]{
+			0x4a, // J
+			0x46, // F
+			0x49, // I
+			0x46, // F
+			0x20, //  
 	};
 
 	public static final byte ExifIdentifierCode[] = {

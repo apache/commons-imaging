@@ -31,7 +31,7 @@ public class TiffOutputField implements TiffConstants
 	public final FieldType fieldType;
 	public final int count;
 
-	public byte bytes[];
+	private byte bytes[];
 
 	private final TiffOutputItem separateValueItem;
 
@@ -59,6 +59,9 @@ public class TiffOutputField implements TiffConstants
 			separateValueItem = new TiffOutputItem.Value(name, bytes);
 		}
 	}
+	
+	private int sortHint = -1;
+	
 
 	public static TiffOutputField create(TagInfo tagInfo, int byteOrder,
 			Number number) throws ImageWriteException
@@ -76,7 +79,7 @@ public class TiffOutputField implements TiffConstants
 	}
 
 	protected static final TiffOutputField createOffsetField(TagInfo tagInfo,
-			int byteOrder)
+			int byteOrder) throws ImageWriteException
 	{
 		return new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1, FIELD_TYPE_LONG
 				.writeData(new int[]{
@@ -87,6 +90,19 @@ public class TiffOutputField implements TiffConstants
 	protected void writeField(BinaryOutputStream bos) throws IOException,
 			ImageWriteException
 	{
+//		CachingOutputStream cos = null;
+//		if (tagInfo.isUnknown())
+//		{
+//			cos = new CachingOutputStream(bos);
+//			int byteOrder = bos.getByteOrder();
+//			bos = new BinaryOutputStream(cos, byteOrder);
+//			
+//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
+//					+ ") isLocalValue()", isLocalValue());
+//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
+//					+ ") bytes", bytes);
+//		}
+		
 		bos.write2Bytes(tag);
 		bos.write2Bytes(fieldType.type);
 		bos.write4Bytes(count);
@@ -112,6 +128,11 @@ public class TiffOutputField implements TiffConstants
 			if ((written % 2) != 0)
 				written++;
 		}
+//		if (null != cos)
+//		{
+//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
+//					+ ") written field", cos.getCache());
+//		}
 	}
 
 	protected TiffOutputItem getSeperateValue()
@@ -126,6 +147,10 @@ public class TiffOutputField implements TiffConstants
 
 	protected void setData(byte bytes[]) throws ImageWriteException
 	{
+//		if(tagInfo.isUnknown())
+//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
+//					+ ") setData", bytes);
+			
 		if (this.bytes.length != bytes.length)
 			throw new ImageWriteException("Cannot change size of value.");
 
@@ -162,5 +187,15 @@ public class TiffOutputField implements TiffConstants
 		result.append(newline);
 
 		return result.toString();
+	}
+
+	public int getSortHint()
+	{
+		return sortHint;
+	}
+
+	public void setSortHint(int sortHint)
+	{
+		this.sortHint = sortHint;
 	}
 }

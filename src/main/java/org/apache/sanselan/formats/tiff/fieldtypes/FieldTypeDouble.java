@@ -18,6 +18,7 @@ package org.apache.sanselan.formats.tiff.fieldtypes;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.formats.tiff.TiffField;
+import org.apache.sanselan.util.Debug;
 
 public class FieldTypeDouble extends FieldType
 {
@@ -36,7 +37,22 @@ public class FieldTypeDouble extends FieldType
 		if (o instanceof Double)
 			return convertDoubleToByteArray(((Double) o).doubleValue(),
 					byteOrder);
-
-		return convertDoubleArrayToByteArray((double[]) o, byteOrder);
+		else if (o instanceof double[])
+		{
+			double numbers[] = (double[]) o;
+			return convertDoubleArrayToByteArray(numbers, byteOrder);
+		}
+		else if (o instanceof Double[])
+		{
+			Double numbers[] = (Double[]) o;
+			double values[] = new double[numbers.length];
+			for (int i = 0; i < values.length; i++)
+				values[i] = numbers[i].doubleValue();
+			return convertDoubleArrayToByteArray(values, byteOrder);
+		}
+		else
+			throw new ImageWriteException("Invalid data: " + o + " ("
+					+ Debug.getType(o) + ")");
 	}
+
 }

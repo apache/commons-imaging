@@ -152,13 +152,12 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	public ImageInfo getImageInfo(ByteSource byteSource)
+	public ImageInfo getImageInfo(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		Map params = null;
-		TiffContents contents = new TiffReader().readFirstDirectory(byteSource,
-				params, false, formatCompliance);
+		TiffContents contents = new TiffReader().readDirectories(byteSource,
+				false, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 
 		TiffField widthField = directory.findField(TIFF_TAG_IMAGE_WIDTH, true);
@@ -250,8 +249,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		ImageFormat format = ImageFormat.IMAGE_FORMAT_TIFF;
 		String formatName = "TIFF Tag-based Image File Format";
 		String mimeType = "image/tiff";
-		// we ought to count images, but don't yet.
-		int numberOfImages = -1;
+		int numberOfImages = contents.directories.size();
 		// not accurate ... only reflects first
 		boolean isProgressive = false;
 		// is TIFF ever interlaced/progressive?
@@ -329,7 +327,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 			//		try
 			{
-				FormatCompliance formatCompliance = FormatCompliance.getDefault();
+				FormatCompliance formatCompliance = FormatCompliance
+						.getDefault();
 				Map params = null;
 				TiffContents contents = new TiffReader().readContents(
 						byteSource, params, formatCompliance);

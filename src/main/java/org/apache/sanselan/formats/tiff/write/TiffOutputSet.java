@@ -36,6 +36,7 @@ public final class TiffOutputSet implements TiffConstants
 	}
 
 	protected List getOutputItems(TiffOutputSummary outputSummary)
+			throws ImageWriteException
 	{
 		List result = new ArrayList();
 
@@ -164,6 +165,8 @@ public final class TiffOutputSet implements TiffConstants
 	public TiffOutputDirectory addInteroperabilityDirectory()
 			throws ImageWriteException
 	{
+		getOrCreateExifDirectory();
+
 		TiffOutputDirectory result = new TiffOutputDirectory(
 				DIRECTORY_TYPE_INTEROPERABILITY);
 		addDirectory(result);

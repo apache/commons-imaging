@@ -18,6 +18,7 @@ package org.apache.sanselan.formats.tiff.fieldtypes;
 
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.formats.tiff.TiffField;
+import org.apache.sanselan.util.Debug;
 
 public class FieldTypeFloat extends FieldType
 {
@@ -43,25 +44,22 @@ public class FieldTypeFloat extends FieldType
 	{
 		if (o instanceof Float)
 			return convertFloatToByteArray(((Float) o).floatValue(), byteOrder);
-
-		return convertFloatArrayToByteArray((float[]) o, byteOrder);
+		else if (o instanceof float[])
+		{
+			float numbers[] = (float[]) o;
+			return convertFloatArrayToByteArray(numbers, byteOrder);
+		}
+		else if (o instanceof Float[])
+		{
+			Float numbers[] = (Float[]) o;
+			float values[] = new float[numbers.length];
+			for (int i = 0; i < values.length; i++)
+				values[i] = numbers[i].floatValue();
+			return convertFloatArrayToByteArray(values, byteOrder);
+		}
+		else
+			throw new ImageWriteException("Invalid data: " + o + " ("
+					+ Debug.getType(o) + ")");
 	}
-
-	//	public byte[] writeData(Object o, float byteOrder)
-	//	{
-	//		if (o instanceof Float)
-	//			return writeData(new float[]{
-	//				((Float) o).floatValue(),
-	//			}, byteOrder);
-	//
-	//		return writeData((float[]) o, byteOrder);
-	//	}
-	//	
-	//	
-	//	
-	//	public byte[] writeData(float values[], int byteOrder)
-	//	{
-	//		return convertIntArrayToByteArray(values, byteOrder);
-	//	}
 
 }

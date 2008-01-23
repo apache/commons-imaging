@@ -41,12 +41,10 @@ public final class DataReaderTiled extends DataReader
 
 	public DataReaderTiled(PhotometricInterpreter photometricInterpreter,
 			int tileWidth, int tileLength, int bitsPerPixel,
-			int bitsPerSample[], int predictor, int samplesPerPixel,
-			int width, int height, int compression,
-			TiffImageData.Tiles imageData)
+			int bitsPerSample[], int predictor, int samplesPerPixel, int width,
+			int height, int compression, TiffImageData.Tiles imageData)
 	{
-		super(photometricInterpreter, bitsPerSample, predictor,
-				samplesPerPixel);
+		super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel);
 
 		this.tileWidth = tileWidth;
 		this.tileLength = tileLength;

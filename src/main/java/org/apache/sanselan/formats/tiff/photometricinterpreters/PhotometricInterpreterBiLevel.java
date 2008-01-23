@@ -24,7 +24,8 @@ import org.apache.sanselan.ImageReadException;
 public class PhotometricInterpreterBiLevel extends PhotometricInterpreter
 {
 	private final boolean invert;
-//	private final int bitsPerPixel;
+
+	//	private final int bitsPerPixel;
 
 	public PhotometricInterpreterBiLevel(int fBitsPerPixel,
 			int fSamplesPerPixel, int fBitsPerSample[], int Predictor,
@@ -33,7 +34,7 @@ public class PhotometricInterpreterBiLevel extends PhotometricInterpreter
 		super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
 		this.invert = invert;
-//		this.bitsPerPixel = fBitsPerPixel;
+		//		this.bitsPerPixel = fBitsPerPixel;
 	}
 
 	public void interpretPixel(BufferedImage bi, int samples[], int x, int y)

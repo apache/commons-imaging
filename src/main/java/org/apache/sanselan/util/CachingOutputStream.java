@@ -14,35 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.sanselan.formats.tiff.constants;
 
-public class TagConstantsUtils implements TiffDirectoryConstants
+package org.apache.sanselan.util;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class CachingOutputStream extends OutputStream
 {
+	private final OutputStream os;
+	private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-	public static TagInfo[] mergeTagLists(TagInfo lists[][])
+	public CachingOutputStream(OutputStream os)
 	{
-		int count = 0;
-		for (int i = 0; i < lists.length; i++)
-			count += lists[i].length;
-
-		TagInfo result[] = new TagInfo[count];
-
-		int index = 0;
-		for (int i = 0; i < lists.length; i++)
-		{
-			System.arraycopy(lists[i], 0, result, index, lists[i].length);
-			index += lists[i].length;
-		}
-
-		return result;
+		this.os = os;
 	}
 
-	public static ExifDirectoryType getExifDirectoryType(int type)
+	public void write(int b) throws IOException
 	{
-		for (int i = 0; i < EXIF_DIRECTORIES.length; i++)
-			if (EXIF_DIRECTORIES[i].directoryType == type)
-				return EXIF_DIRECTORIES[i];
-		return EXIF_DIRECTORY_UNKNOWN;
+		os.write(b);
+		baos.write(b);
+	}
+
+	public byte[] getCache()
+	{
+		return baos.toByteArray();
+	}
+
+	public void close() throws IOException
+	{
+		os.close();
+	}
+
+	public void flush() throws IOException
+	{
+		os.flush();
 	}
 
 }

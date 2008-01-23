@@ -27,7 +27,7 @@ public class SOFNSegment extends Segment
 {
 	public final int width, height;
 	public final int numberOfComponents;
-	public final int Precision;
+	public final int precision;
 
 	public SOFNSegment(int marker, byte segmentData[])
 			throws ImageReadException, IOException
@@ -44,7 +44,7 @@ public class SOFNSegment extends Segment
 			System.out.println("SOF0Segment marker_length: " + marker_length);
 
 		{
-			Precision = readByte("Data_precision", is, "Not a Valid JPEG File");
+			precision = readByte("Data_precision", is, "Not a Valid JPEG File");
 			height = read2Bytes("Image_height", is, "Not a Valid JPEG File");
 			width = read2Bytes("Image_Width", is, "Not a Valid JPEG File");
 			numberOfComponents = readByte("Number_of_components", is,

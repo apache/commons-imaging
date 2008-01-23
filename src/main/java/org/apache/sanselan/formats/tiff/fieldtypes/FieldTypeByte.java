@@ -16,7 +16,9 @@
  */
 package org.apache.sanselan.formats.tiff.fieldtypes;
 
+import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.formats.tiff.TiffField;
+import org.apache.sanselan.util.Debug;
 
 public class FieldTypeByte extends FieldType
 {
@@ -33,13 +35,17 @@ public class FieldTypeByte extends FieldType
 		return getRawBytes(entry);
 	}
 
-	public byte[] writeData(Object o, int byteOrder)
+	public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
 	{
 		if (o instanceof Byte)
 			return new byte[]{
 				((Byte) o).byteValue(),
 			};
-
-		return (byte[]) o;
+		else if (o instanceof byte[])
+			return (byte[]) o;
+		else
+			throw new ImageWriteException("Invalid data: " + o + " ("
+					+ Debug.getType(o) + ")");
 	}
+
 }

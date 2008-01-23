@@ -16,7 +16,9 @@
  */
 package org.apache.sanselan.formats.tiff.fieldtypes;
 
+import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.formats.tiff.TiffField;
+import org.apache.sanselan.util.Debug;
 
 public class FieldTypeUnknown extends FieldType
 {
@@ -27,20 +29,30 @@ public class FieldTypeUnknown extends FieldType
 
 	public Object getSimpleValue(TiffField entry)
 	{
+		//		Debug.debug("unknown field type. entry", entry.tagInfo.name);
+		//		Debug.debug("unknown field type. entry.type", entry.type);
+		//		Debug.debug("unknown field type. entry.length", entry.length);
+		//		Debug.debug("unknown field type. entry.oversizeValue", entry.oversizeValue);
+		//		Debug.debug("unknown field type. entry.isLocalValue()", entry.isLocalValue());
+		//		Debug.debug("unknown field type. entry.oversizeValue", entry.oversizeValue);
+
 		if (entry.length == 1)
 			return new Byte(entry.valueOffsetBytes[0]);
 
 		return getRawBytes(entry);
 	}
 
-	public byte[] writeData(Object o, int byteOrder)
+	public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
 	{
 		if (o instanceof Byte)
 			return new byte[]{
 				((Byte) o).byteValue(),
 			};
-
-		return (byte[]) o;
+		else if (o instanceof byte[])
+			return (byte[]) o;
+		else
+			throw new ImageWriteException("Invalid data: " + o + " ("
+					+ Debug.getType(o) + ")");
 	}
 
 }

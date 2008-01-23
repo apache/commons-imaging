@@ -25,9 +25,9 @@ import java.util.List;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryOutputStream;
 import org.apache.sanselan.formats.tiff.JpegImageData;
+import org.apache.sanselan.formats.tiff.TiffDirectory;
 import org.apache.sanselan.formats.tiff.TiffElement;
 import org.apache.sanselan.formats.tiff.TiffImageData;
-import org.apache.sanselan.formats.tiff.TiffDirectory;
 import org.apache.sanselan.formats.tiff.constants.TagConstantsUtils;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
@@ -104,7 +104,9 @@ public final class TiffOutputDirectory extends TiffOutputItem
 				TiffOutputField e1 = (TiffOutputField) o1;
 				TiffOutputField e2 = (TiffOutputField) o2;
 
-				return e1.tag - e2.tag;
+				if (e1.tag != e2.tag)
+					return e1.tag - e2.tag;
+				return e1.getSortHint() - e2.getSortHint();
 			}
 		};
 		Collections.sort(fields, comparator);
@@ -188,6 +190,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 	}
 
 	protected List getOutputItems(TiffOutputSummary outputSummary)
+			throws ImageWriteException
 	{
 		// first validate directory fields.
 

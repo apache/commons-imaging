@@ -125,13 +125,13 @@ public interface ExifTagConstants
 	public static final TagInfo EXIF_TAG_MODEL = new TagInfo("Model", 0x0110,
 			FIELD_TYPE_ASCII, 1, EXIF_DIRECTORY_IFD0);
 	// poly tag public static final TagInfo2 EXIF_TAG_STRIP_OFFSETS = new TagInfo2( "StripOffsets", 0x0111, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1, EXIF_DIRECTORY_UNKNOWN);
-	public static final TagInfo EXIF_TAG_PREVIEW_IMAGE_START_IFD0 = new TagInfo(
+	public static final TagInfo EXIF_TAG_PREVIEW_IMAGE_START_IFD0 = new TagInfo.Offset(
 			"Preview Image Start", 0x0111, FIELD_TYPE_LONG, 1,
 			EXIF_DIRECTORY_IFD0);
-	public static final TagInfo EXIF_TAG_PREVIEW_IMAGE_START_SUB_IFD1 = new TagInfo(
+	public static final TagInfo EXIF_TAG_PREVIEW_IMAGE_START_SUB_IFD1 = new TagInfo.Offset(
 			"Preview Image Start", 0x0111, FIELD_TYPE_LONG, 1,
 			EXIF_DIRECTORY_SUB_IFD1);
-	public static final TagInfo EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD2 = new TagInfo(
+	public static final TagInfo EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD2 = new TagInfo.Offset(
 			"Jpg From Raw Start", 0x0111, FIELD_TYPE_LONG, 1,
 			EXIF_DIRECTORY_SUB_IFD2);
 	public static final TagInfo EXIF_TAG_ORIENTATION = new TagInfo(
@@ -352,13 +352,13 @@ public interface ExifTagConstants
 	public static final TagInfo EXIF_TAG_PREVIEW_IMAGE_START_MAKER_NOTES = new TagInfo(
 			"Preview Image Start", 0x0201, FIELD_TYPE_LONG, 1,
 			EXIF_DIRECTORY_MAKER_NOTES);
-	public static final TagInfo EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD = new TagInfo(
+	public static final TagInfo EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD = new TagInfo.Offset(
 			"Jpg From Raw Start", 0x0201, FIELD_TYPE_LONG, 1,
 			EXIF_DIRECTORY_SUB_IFD);
-	public static final TagInfo EXIF_TAG_JPG_FROM_RAW_START_IFD2 = new TagInfo(
+	public static final TagInfo EXIF_TAG_JPG_FROM_RAW_START_IFD2 = new TagInfo.Offset(
 			"Jpg From Raw Start", 0x0201, FIELD_TYPE_LONG, 1,
 			EXIF_DIRECTORY_IFD2);
-	public static final TagInfo EXIF_TAG_OTHER_IMAGE_START = new TagInfo(
+	public static final TagInfo EXIF_TAG_OTHER_IMAGE_START = new TagInfo.Offset(
 			"Other Image Start", 0x0201, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1,
 			EXIF_DIRECTORY_UNKNOWN);
 	// poly tag public static final TagInfo2 EXIF_TAG_THUMBNAIL_LENGTH = new TagInfo2( "ThumbnailLength", 0x0202, FIELD_TYPE_LONG, 1, EXIF_DIRECTORY_IFD1);
@@ -759,7 +759,12 @@ public interface ExifTagConstants
 	public static final int SENSING_METHOD_VALUE_COLOR_SEQUENTIAL_LINEAR = 8;
 	public static final TagInfo EXIF_TAG_STO_NITS = new TagInfo("Sto Nits",
 			0x923f, FIELD_TYPE_DESCRIPTION_UNKNOWN, 1, EXIF_DIRECTORY_UNKNOWN);
-	// skipping Maker Note! public static final TagInfo2 EXIF_TAG_USER_COMMENT = new TagInfo2( "UserComment", 0x9286, FIELD_TYPE_UNDEFINED, 1, EXIF_DIRECTORY_EXIF_IFD);
+	//	 skipping Maker Note! 
+	public static final TagInfo EXIF_TAG_MAKER_NOTE = new TagInfo("Maker Note",
+			0x927c, FIELD_TYPE_UNDEFINED, 1, EXIF_DIRECTORY_EXIF_IFD);
+	public static final TagInfo EXIF_TAG_USER_COMMENT = new TagInfo.Text(
+			"UserComment", 0x9286, FIELD_TYPE_UNDEFINED, 1,
+			EXIF_DIRECTORY_EXIF_IFD);
 	public static final TagInfo EXIF_TAG_SUB_SEC_TIME = new TagInfo(
 			"Sub Sec Time", 0x9290, FIELD_TYPE_ASCII, 1,
 			EXIF_DIRECTORY_EXIF_IFD);
@@ -1464,5 +1469,9 @@ public interface ExifTagConstants
 			EXIF_TAG_SHADOWS, EXIF_TAG_BRIGHTNESS, EXIF_TAG_CONTRAST_2,
 			EXIF_TAG_SATURATION_2, EXIF_TAG_SHARPNESS_2, EXIF_TAG_SMOOTHNESS,
 			EXIF_TAG_MOIRE_FILTER,
+
+			EXIF_TAG_USER_COMMENT, //
+
+			EXIF_TAG_MAKER_NOTE, //
 	};
 }

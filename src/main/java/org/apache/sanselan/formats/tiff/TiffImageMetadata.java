@@ -24,13 +24,18 @@ import java.util.List;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.ImageMetadata;
+import org.apache.sanselan.common.RationalNumber;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
+import org.apache.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.sanselan.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
 
 public class TiffImageMetadata extends ImageMetadata
+		implements
+			TiffDirectoryConstants
 {
 	public final TiffContents contents;
 
@@ -71,6 +76,16 @@ public class TiffImageMetadata extends ImageMetadata
 			return directory.getTiffImageData();
 		}
 
+		public TiffField findField(TagInfo tagInfo) throws ImageReadException
+		{
+			return directory.findField(tagInfo);
+		}
+
+		public List getAllFields() throws ImageReadException
+		{
+			return directory.getDirectoryEntrys();
+		}
+
 		public JpegImageData getJpegImageData()
 		{
 			return directory.getJpegImageData();
@@ -88,49 +103,65 @@ public class TiffImageMetadata extends ImageMetadata
 		public TiffOutputDirectory getOutputDirectory(int byteOrder)
 				throws ImageWriteException
 		{
-			TiffOutputDirectory dstDir = new TiffOutputDirectory(type);
-
-			ArrayList entries = getItems();
-			for (int i = 0; i < entries.size(); i++)
+			try
 			{
-				TiffImageMetadata.Item item = (TiffImageMetadata.Item) entries
-						.get(i);
-				TiffField srcField = item.getTiffField();
+				TiffOutputDirectory dstDir = new TiffOutputDirectory(type);
 
-				if (null != dstDir.findField(srcField.tag))
+				ArrayList entries = getItems();
+				for (int i = 0; i < entries.size(); i++)
 				{
-					// ignore duplicate tags in a directory.
-					continue;
+					TiffImageMetadata.Item item = (TiffImageMetadata.Item) entries
+							.get(i);
+					TiffField srcField = item.getTiffField();
+
+					if (null != dstDir.findField(srcField.tag))
+					{
+						// ignore duplicate tags in a directory.
+						continue;
+					}
+					else if (srcField.tagInfo instanceof TagInfo.Offset)
+					{
+						// ignore offset fields.
+						continue;
+					}
+
+					TagInfo tagInfo = srcField.tagInfo;
+					FieldType fieldType = srcField.fieldType;
+					int count = srcField.length;
+					//			byte bytes[] = srcField.fieldType.getRawBytes(srcField);
+
+					//					Debug.debug("tagInfo", tagInfo);
+
+					Object value = srcField.getValue();
+
+					//					Debug.debug("value", Debug.getType(value));
+
+					byte bytes[] = tagInfo.encodeValue(fieldType, value,
+							byteOrder);
+
+					//					if (tagInfo.isUnknown())
+					//						Debug.debug(
+					//								"\t" + "unknown tag(0x"
+					//										+ Integer.toHexString(srcField.tag)
+					//										+ ") bytes", bytes);
+
+					TiffOutputField dstField = new TiffOutputField(
+							srcField.tag, tagInfo, fieldType, count, bytes);
+					dstField.setSortHint(srcField.getSortHint());
+					dstDir.add(dstField);
 				}
-				else if (srcField.tagInfo instanceof TagInfo.Offset)
-				{
-					// ignore offset fields.
-					continue;
-				}
 
-				TagInfo tagInfo = srcField.tagInfo;
-				FieldType fieldType = srcField.fieldType;
-				int count = srcField.length;
-				//			byte bytes[] = srcField.fieldType.getRawBytes(srcField);
+				dstDir.setTiffImageData(getTiffImageData());
+				dstDir.setJpegImageData(getJpegImageData());
 
-				Object value = srcField.getValue();
-				byte bytes2[];
-				if (tagInfo.isDate())
-					bytes2 = fieldType.getRawBytes(srcField);
-				else
-					bytes2 = fieldType.writeData(value, byteOrder);
-				//			Debug.debug("\t" + "bytes2", bytes2);
-
-				TiffOutputField dstField = new TiffOutputField(srcField.tag,
-						tagInfo, fieldType, count, bytes2);
-				dstDir.add(dstField);
+				return dstDir;
 			}
-
-			dstDir.setTiffImageData(getTiffImageData());
-			dstDir.setJpegImageData(getJpegImageData());
-
-			return dstDir;
+			catch (ImageReadException e)
+			{
+				throw new ImageWriteException(e.getMessage(), e);
+			}
 		}
+
 	}
 
 	public ArrayList getDirectories()
@@ -195,6 +226,140 @@ public class TiffImageMetadata extends ImageMetadata
 		}
 
 		return result;
+	}
+
+	public TiffField findField(TagInfo tagInfo) throws ImageReadException
+	{
+		ArrayList directories = getDirectories();
+		for (int i = 0; i < directories.size(); i++)
+		{
+			Directory directory = (Directory) directories.get(i);
+			TiffField field = directory.findField(tagInfo);
+			if (null != field)
+				return field;
+		}
+		return null;
+	}
+
+	public TiffDirectory findDirectory(int directoryType)
+	{
+		ArrayList directories = getDirectories();
+		for (int i = 0; i < directories.size(); i++)
+		{
+			Directory directory = (Directory) directories.get(i);
+			if (directory.type == directoryType)
+				return directory.directory;
+		}
+		return null;
+	}
+
+	public List getAllFields() throws ImageReadException
+	{
+		List result = new ArrayList();
+		ArrayList directories = getDirectories();
+		for (int i = 0; i < directories.size(); i++)
+		{
+			Directory directory = (Directory) directories.get(i);
+			result.addAll(directory.getAllFields());
+		}
+		return result;
+	}
+
+	public GPSInfo getGPS() throws ImageReadException
+	{
+		TiffDirectory gpsDirectory = findDirectory(DIRECTORY_TYPE_GPS);
+		if (null == gpsDirectory)
+			return null;
+
+		// more specific example of how to access GPS values.
+		TiffField latitudeRefField = gpsDirectory
+				.findField(TiffConstants.GPS_TAG_GPS_LATITUDE_REF);
+		TiffField latitudeField = gpsDirectory
+				.findField(TiffConstants.GPS_TAG_GPS_LATITUDE);
+		TiffField longitudeRefField = gpsDirectory
+				.findField(TiffConstants.GPS_TAG_GPS_LONGITUDE_REF);
+		TiffField longitudeField = gpsDirectory
+				.findField(TiffConstants.GPS_TAG_GPS_LONGITUDE);
+
+		if (latitudeRefField == null || latitudeField == null
+				|| longitudeRefField == null || longitudeField == null)
+			return null;
+
+		// all of these values are strings.
+		String latitudeRef = latitudeRefField.getStringValue();
+		RationalNumber latitude[] = (RationalNumber[]) latitudeField.getValue();
+		String longitudeRef = longitudeRefField.getStringValue();
+		RationalNumber longitude[] = (RationalNumber[]) longitudeField
+				.getValue();
+
+		if (latitude.length != 3 || longitude.length != 3)
+			throw new ImageReadException(
+					"Expected three values for latitude and longitude.");
+
+		RationalNumber latitudeDegrees = latitude[0];
+		RationalNumber latitudeMinutes = latitude[1];
+		RationalNumber latitudeSeconds = latitude[2];
+
+		RationalNumber longitudeDegrees = longitude[0];
+		RationalNumber longitudeMinutes = longitude[1];
+		RationalNumber longitudeSeconds = longitude[2];
+
+		return new GPSInfo(latitudeRef, longitudeRef, latitudeDegrees,
+				latitudeMinutes, latitudeSeconds, longitudeDegrees,
+				longitudeMinutes, longitudeSeconds);
+	}
+
+	public static class GPSInfo
+	{
+		public final String latitudeRef;
+		public final String longitudeRef;
+
+		public final RationalNumber latitudeDegrees;
+		public final RationalNumber latitudeMinutes;
+		public final RationalNumber latitudeSeconds;
+		public final RationalNumber longitudeDegrees;
+		public final RationalNumber longitudeMinutes;
+		public final RationalNumber longitudeSeconds;
+
+		public GPSInfo(final String latitudeRef, final String longitudeRef,
+				final RationalNumber latitudeDegrees,
+				final RationalNumber latitudeMinutes,
+				final RationalNumber latitudeSeconds,
+				final RationalNumber longitudeDegrees,
+				final RationalNumber longitudeMinutes,
+				final RationalNumber longitudeSeconds)
+		{
+			this.latitudeRef = latitudeRef;
+			this.longitudeRef = longitudeRef;
+			this.latitudeDegrees = latitudeDegrees;
+			this.latitudeMinutes = latitudeMinutes;
+			this.latitudeSeconds = latitudeSeconds;
+			this.longitudeDegrees = longitudeDegrees;
+			this.longitudeMinutes = longitudeMinutes;
+			this.longitudeSeconds = longitudeSeconds;
+		}
+
+		public String toString()
+		{
+			// This will format the gps info like so:
+			//
+			// latitude: 8 degrees, 40 minutes, 42.2 seconds S
+			// longitude: 115 degrees, 26 minutes, 21.8 seconds E
+
+			StringBuffer result = new StringBuffer();
+			result.append("[GPS. ");
+			result.append("Latitude: " + latitudeDegrees.toDisplayString()
+					+ " degrees, " + latitudeMinutes.toDisplayString()
+					+ " minutes, " + latitudeSeconds.toDisplayString()
+					+ " seconds " + latitudeRef);
+			result.append(", Longitude: " + longitudeDegrees.toDisplayString()
+					+ " degrees, " + longitudeMinutes.toDisplayString()
+					+ " minutes, " + longitudeSeconds.toDisplayString()
+					+ " seconds " + longitudeRef);
+			result.append("]");
+
+			return result.toString();
+		}
 	}
 
 }

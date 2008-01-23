@@ -20,6 +20,7 @@ import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.RationalNumber;
 import org.apache.sanselan.common.RationalNumberUtilities;
 import org.apache.sanselan.formats.tiff.TiffField;
+import org.apache.sanselan.util.Debug;
 
 public class FieldTypeRational extends FieldType
 {
@@ -42,13 +43,45 @@ public class FieldTypeRational extends FieldType
 	{
 		if (o instanceof RationalNumber)
 			return convertRationalToByteArray((RationalNumber) o, byteOrder);
+		else if (o instanceof RationalNumber[])
+		{
+			return convertRationalArrayToByteArray((RationalNumber[]) o,
+					byteOrder);
+		}
 		else if (o instanceof Number)
 		{
 			Number number = (Number) o;
-			RationalNumber rationalNumber = RationalNumberUtilities.getRationalNumber(number.doubleValue());
+			RationalNumber rationalNumber = RationalNumberUtilities
+					.getRationalNumber(number.doubleValue());
 			return convertRationalToByteArray(rationalNumber, byteOrder);
 		}
-		return convertRationalArrayToByteArray((RationalNumber[]) o, byteOrder);
+		else if (o instanceof Number[])
+		{
+			Number numbers[] = (Number[]) o;
+			RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
+			for (int i = 0; i < numbers.length; i++)
+			{
+				Number number = numbers[i];
+				rationalNumbers[i] = RationalNumberUtilities
+						.getRationalNumber(number.doubleValue());
+			}
+			return convertRationalArrayToByteArray(rationalNumbers, byteOrder);
+		}
+		else if (o instanceof double[])
+		{
+			double numbers[] = (double[]) o;
+			RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
+			for (int i = 0; i < numbers.length; i++)
+			{
+				double number = numbers[i];
+				rationalNumbers[i] = RationalNumberUtilities
+						.getRationalNumber(number);
+			}
+			return convertRationalArrayToByteArray(rationalNumbers, byteOrder);
+		}
+		else
+			throw new ImageWriteException("Invalid data: " + o + " ("
+					+ Debug.getType(o) + ")");
 	}
 
 	public byte[] writeData(int numerator, int denominator, int byteOrder)

@@ -188,7 +188,7 @@ public class PNMImageParser extends ImageParser
 		return null;
 	}
 
-	public ImageInfo getImageInfo(ByteSource byteSource)
+	public ImageInfo getImageInfo(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		FileInfo info = readHeader(byteSource);

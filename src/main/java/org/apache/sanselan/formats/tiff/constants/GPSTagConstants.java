@@ -178,12 +178,12 @@ public interface GPSTagConstants
 			EXIF_DIRECTORY_GPS);
 
 	// ************************************************************
-	public static final TagInfo GPS_TAG_GPS_PROCESSING_METHOD = new TagInfo(
+	public static final TagInfo GPS_TAG_GPS_PROCESSING_METHOD = new TagInfo.Text(
 			"GPS Processing Method", 0x001b, FIELD_TYPE_DESCRIPTION_UNKNOWN,
 			-1, EXIF_DIRECTORY_GPS);
 
 	// ************************************************************
-	public static final TagInfo GPS_TAG_GPS_AREA_INFORMATION = new TagInfo(
+	public static final TagInfo GPS_TAG_GPS_AREA_INFORMATION = new TagInfo.Text(
 			"GPS Area Information", 0x001c, FIELD_TYPE_DESCRIPTION_UNKNOWN, -1,
 			EXIF_DIRECTORY_GPS);
 
