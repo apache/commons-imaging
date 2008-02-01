@@ -26,8 +26,10 @@ import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.RationalNumber;
 import org.apache.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.sanselan.formats.tiff.TiffField;
+import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.sanselan.util.Debug;
 
 public class MetadataExample
 {
@@ -71,7 +73,24 @@ public class MetadataExample
 
 			System.out.println();
 
-			// more specific example of how to access GPS values.
+			// simple interface to GPS data
+			TiffImageMetadata exifMetadata = jpegMetadata.getExif();
+			if (null != exifMetadata)
+			{
+				TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
+				if (null != gpsInfo)
+				{
+					String gpsDescription = gpsInfo.toString();
+					double longitude = gpsInfo.getLongitudeAsDegreesEast();
+					double latitude = gpsInfo.getLatitudeAsDegreesNorth();
+
+					System.out.println("	" + "GPS Description: " + gpsInfo);
+					System.out.println("	" + "GPS Longitude (Degrees East): " + longitude);
+					System.out.println("	" + "GPS Latitude (Degrees North): " + latitude);
+				}
+			}
+
+			// more specific example of how to manually access GPS values
 			TiffField gpsLatitudeRefField = jpegMetadata
 					.findEXIFValue(TiffConstants.GPS_TAG_GPS_LATITUDE_REF);
 			TiffField gpsLatitudeField = jpegMetadata

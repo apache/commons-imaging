@@ -65,8 +65,7 @@ public class TiffField implements TiffConstants
 	}
 
 	private int sortHint = -1;
-	
-	
+
 	public boolean isLocalValue()
 	{
 		return fieldType.isLocalValue(this);
@@ -281,8 +280,8 @@ public class TiffField implements TiffConstants
 
 		if (null == possibleMatches)
 		{
-//			if (tag == 0x8769)
-//				Debug.debug("exif offset field is unknown.1");
+			//			if (tag == 0x8769)
+			//				Debug.debug("exif offset field is unknown.1");
 			return TIFF_TAG_UNKNOWN;
 		}
 

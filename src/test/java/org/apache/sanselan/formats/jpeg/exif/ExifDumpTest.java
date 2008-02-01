@@ -34,10 +34,10 @@ import org.apache.sanselan.util.Debug;
 
 public class ExifDumpTest extends ExifBaseTest
 {
-//	public ExifDumpTest(String name)
-//	{
-//		super(name);
-//	}
+	//	public ExifDumpTest(String name)
+	//	{
+	//		super(name);
+	//	}
 
 	public void test() throws IOException, ImageReadException,
 			ImageWriteException
@@ -45,6 +45,7 @@ public class ExifDumpTest extends ExifBaseTest
 		List images = getImagesWithExifData();
 		for (int i = 0; i < images.size(); i++)
 		{
+			if(i%10==0)
 			Debug.purgeMemory();
 
 			File imageFile = (File) images.get(i);
@@ -57,13 +58,15 @@ public class ExifDumpTest extends ExifBaseTest
 
 			Map params = new HashMap();
 			boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-			params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
+			params
+					.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
+							!ignoreImageData));
 
 			JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
 					.getMetadata(imageFile, params);
-			if(null==metadata)
+			if (null == metadata)
 				continue;
-//			assertNotNull(metadata.getExif());
+			//			assertNotNull(metadata.getExif());
 
 			metadata.dump();
 		}

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.sanselan.ImageWriteException;
+import org.apache.sanselan.common.RationalNumber;
+import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.util.Debug;
@@ -84,6 +86,15 @@ public final class TiffOutputSet implements TiffConstants
 		return addExifDirectory();
 	}
 
+	public TiffOutputDirectory getOrCreateGPSDirectory()
+			throws ImageWriteException
+	{
+		TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_GPS);
+		if (null != result)
+			return result;
+		return addGPSDirectory();
+	}
+
 	public TiffOutputDirectory getGPSDirectory()
 	{
 		return findDirectory(DIRECTORY_TYPE_GPS);
@@ -104,6 +115,79 @@ public final class TiffOutputSet implements TiffConstants
 				return directory;
 		}
 		return null;
+	}
+
+	/*
+	 * Expects longitude in degrees E, latitude in degrees N
+	 */
+	public void setGPSInDegrees(double longitude, double latitude)
+			throws ImageWriteException
+	{
+		TiffOutputDirectory gpsDirectory = getOrCreateGPSDirectory();
+
+		String longitudeRef = longitude < 0 ? "W" : "E";
+		longitude = Math.abs(longitude);
+		String latitudeRef = latitude < 0 ? "S" : "N";
+		latitude = Math.abs(latitude);
+
+		{
+			TiffOutputField longitudeRefField = TiffOutputField.create(
+					TiffConstants.GPS_TAG_GPS_LONGITUDE_REF, byteOrder,
+					longitudeRef);
+			gpsDirectory.removeField(TiffConstants.GPS_TAG_GPS_LONGITUDE_REF);
+			gpsDirectory.add(longitudeRefField);
+		}
+
+		{
+			TiffOutputField latitudeRefField = TiffOutputField.create(
+					TiffConstants.GPS_TAG_GPS_LATITUDE_REF, byteOrder,
+					latitudeRef);
+			gpsDirectory.removeField(TiffConstants.GPS_TAG_GPS_LATITUDE_REF);
+			gpsDirectory.add(latitudeRefField);
+		}
+
+		{
+			double value = longitude;
+			double longitudeDegrees = (long) value;
+			value %= 1;
+			value *= 60.0;
+			double longitudeMinutes = (long) value;
+			value %= 1;
+			value *= 60.0;
+			double longitudeSeconds = value;
+			Double values[] = {
+					new Double(longitudeDegrees), new Double(longitudeMinutes),
+					new Double(longitudeSeconds),
+			};
+
+			TiffOutputField longitudeField = TiffOutputField.create(
+					TiffConstants.GPS_TAG_GPS_LONGITUDE, byteOrder, values);
+			gpsDirectory.removeField(TiffConstants.GPS_TAG_GPS_LONGITUDE);
+			gpsDirectory.add(longitudeField);
+		}
+
+		{
+			double value = latitude;
+			double latitudeDegrees = (long) value;
+			value %= 1;
+			value *= 60.0;
+			double latitudeMinutes = (long) value;
+			value %= 1;
+			value *= 60.0;
+			double latitudeSeconds = value;
+			Double values[] = {
+					new Double(latitudeDegrees), new Double(latitudeMinutes),
+					new Double(latitudeSeconds),
+			};
+
+
+			
+			TiffOutputField latitudeField = TiffOutputField.create(
+					TiffConstants.GPS_TAG_GPS_LATITUDE, byteOrder, values);
+			gpsDirectory.removeField(TiffConstants.GPS_TAG_GPS_LATITUDE);
+			gpsDirectory.add(latitudeField);
+		}
+
 	}
 
 	public void removeField(TagInfo tagInfo)

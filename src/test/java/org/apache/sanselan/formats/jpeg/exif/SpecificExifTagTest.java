@@ -37,10 +37,10 @@ public abstract class SpecificExifTagTest extends ExifBaseTest
 		implements
 			AllTagConstants
 {
-//	public SpecificExifTagTest(String name)
-//	{
-//		super(name);
-//	}
+	//	public SpecificExifTagTest(String name)
+	//	{
+	//		super(name);
+	//	}
 
 	public void testSingleImage() throws IOException, ImageReadException,
 			ImageWriteException
@@ -55,10 +55,12 @@ public abstract class SpecificExifTagTest extends ExifBaseTest
 		List images = getImagesWithExifData();
 		for (int i = 0; i < images.size(); i++)
 		{
+			if(i%10==0)
 			Debug.purgeMemory();
 
 			File imageFile = (File) images.get(i);
-			if (imageFile.getParentFile().getName().toLowerCase().equals("@broken"))
+			if (imageFile.getParentFile().getName().toLowerCase().equals(
+					"@broken"))
 				continue;
 			checkImage(imageFile);
 		}
@@ -70,7 +72,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest
 	private void checkImage(File imageFile) throws IOException,
 			ImageReadException, ImageWriteException
 	{
-//		Debug.debug("imageFile", imageFile.getAbsoluteFile());
+		//		Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
 		Map params = new HashMap();
 		boolean ignoreImageData = isPhilHarveyTestImage(imageFile);

@@ -53,7 +53,7 @@ public class ByteSourceArray extends ByteSource
 		return result;
 	}
 
-		public long getLength()
+	public long getLength()
 	{
 		return bytes.length;
 	}

@@ -39,6 +39,7 @@ public class JpegReadTest extends JpegBaseTest
 		List images = getJpegImages();
 		for (int i = 0; i < images.size(); i++)
 		{
+			if(i%10==0)
 			Debug.purgeMemory();
 
 			File imageFile = (File) images.get(i);

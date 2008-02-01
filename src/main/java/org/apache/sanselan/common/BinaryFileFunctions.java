@@ -576,8 +576,8 @@ public class BinaryFileFunctions implements BinaryConstants
 	{
 		if (a.length != b.length)
 		{
-//			System.out.println("length mismatch: " + a.length + " != "
-//					+ b.length);
+			//			System.out.println("length mismatch: " + a.length + " != "
+			//					+ b.length);
 			return false;
 		}
 
@@ -598,8 +598,8 @@ public class BinaryFileFunctions implements BinaryConstants
 		{
 			if (a[aStart + i] != b[bStart + i])
 			{
-//				debugNumber("\t" + "a[" + (aStart + i) + "]", a[aStart + i]);
-//				debugNumber("\t" + "b[" + (bStart + i) + "]", b[bStart + i]);
+				//				debugNumber("\t" + "a[" + (aStart + i) + "]", a[aStart + i]);
+				//				debugNumber("\t" + "b[" + (bStart + i) + "]", b[bStart + i]);
 
 				return false;
 			}

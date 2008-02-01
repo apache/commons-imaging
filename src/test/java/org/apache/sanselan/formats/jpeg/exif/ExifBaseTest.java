@@ -43,9 +43,9 @@ public abstract class ExifBaseTest extends SanselanTest
 
 		if (!file.getName().toLowerCase().endsWith(".jpg"))
 			return false;
-		ImageFormat format = Sanselan.guessFormat(file);
-		if (format != ImageFormat.IMAGE_FORMAT_JPEG)
-			return false;
+//		ImageFormat format = Sanselan.guessFormat(file);
+//		if (format != ImageFormat.IMAGE_FORMAT_JPEG)
+//			return false;
 
 		//		Debug.debug("possible file", file);
 
@@ -76,12 +76,16 @@ public abstract class ExifBaseTest extends SanselanTest
 		return getTestImage(imageFilter);
 	}
 
-	//	, int max
-	//	
 	protected List getImagesWithExifData() throws IOException,
 			ImageReadException
 	{
 		return getTestImages(imageFilter);
+	}
+
+	protected List getImagesWithExifData(int max) throws IOException,
+			ImageReadException
+	{
+		return getTestImages(imageFilter, max);
 	}
 
 }

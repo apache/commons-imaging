@@ -32,6 +32,7 @@ import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
+import org.apache.sanselan.util.Debug;
 
 public class TiffImageMetadata extends ImageMetadata
 		implements
@@ -360,6 +361,37 @@ public class TiffImageMetadata extends ImageMetadata
 
 			return result.toString();
 		}
+
+		public double getLongitudeAsDegreesEast() throws ImageReadException
+		{
+			double result = longitudeDegrees.doubleValue()
+					+ (longitudeMinutes.doubleValue() / 60.0)
+					+ (longitudeSeconds.doubleValue() / 360.0);
+
+			if (longitudeRef.trim().equalsIgnoreCase("e"))
+				return result;
+			else if (longitudeRef.trim().equalsIgnoreCase("w"))
+				return -result;
+			else
+				throw new ImageReadException("Unknown longitude ref: \""
+						+ longitudeRef + "\"");
+		}
+
+		public double getLatitudeAsDegreesNorth() throws ImageReadException
+		{
+			double result = latitudeDegrees.doubleValue()
+					+ (latitudeMinutes.doubleValue() / 60.0)
+					+ (latitudeSeconds.doubleValue() / 360.0);
+
+			if (latitudeRef.trim().equalsIgnoreCase("n"))
+				return result;
+			else if (latitudeRef.trim().equalsIgnoreCase("s"))
+				return -result;
+			else
+				throw new ImageReadException("Unknown latitude ref: \""
+						+ latitudeRef + "\"");
+		}
+
 	}
 
 }

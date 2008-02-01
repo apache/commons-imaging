@@ -32,15 +32,19 @@ public class GpsTest extends ExifBaseTest implements SanselanConstants
 {
 
 	public void test() throws Exception
-
 	{
 
-		List images = getImagesWithExifData();
+		List images = getImagesWithExifData(300);
 		for (int i = 0; i < images.size(); i++)
 		{
-			Debug.purgeMemory();
+			if (i % 10 == 0)
+				Debug.purgeMemory();
 
 			File imageFile = (File) images.get(i);
+
+//			Debug.debug();
+//			Debug.debug("imageFile", imageFile);
+
 			if (imageFile.getParentFile().getName().toLowerCase().equals(
 					"@broken"))
 				continue;
@@ -67,6 +71,11 @@ public class GpsTest extends ExifBaseTest implements SanselanConstants
 
 				Debug.debug("imageFile", imageFile);
 				Debug.debug("gpsInfo", gpsInfo);
+				Debug.debug("gpsInfo longitude as degrees east", gpsInfo
+						.getLongitudeAsDegreesEast());
+				Debug.debug("gpsInfo latitude as degrees north", gpsInfo
+						.getLatitudeAsDegreesNorth());
+
 				Debug.debug();
 			}
 			catch (Exception e)

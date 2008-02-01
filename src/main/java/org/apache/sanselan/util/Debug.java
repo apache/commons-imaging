@@ -889,7 +889,6 @@ public final class Debug
 		}
 	}
 
-
 	public static final void purgeMemory()
 	{
 		try

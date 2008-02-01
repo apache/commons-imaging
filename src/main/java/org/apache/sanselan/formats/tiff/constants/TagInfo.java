@@ -129,6 +129,7 @@ public class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
 		{
 			super(name, tag, dataTypes, length, exifDirectory);
 		}
+
 		public Offset(String name, int tag, FieldType dataType, int length,
 				ExifDirectoryType exifDirectory)
 		{
@@ -412,14 +413,14 @@ public class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
 		public byte[] encodeValue(FieldType fieldType, Object value,
 				int byteOrder) throws ImageWriteException
 		{
-//			Debug.debug();
-//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag) + ") ",
-//					this);
-//			Debug.debug("unknown tag fieldType", fieldType);
-//			Debug.debug("unknown tag value", value);
-//			Debug.debug("unknown tag value", Debug.getType(value));
+			//			Debug.debug();
+			//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag) + ") ",
+			//					this);
+			//			Debug.debug("unknown tag fieldType", fieldType);
+			//			Debug.debug("unknown tag value", value);
+			//			Debug.debug("unknown tag value", Debug.getType(value));
 			byte result[] = super.encodeValue(fieldType, value, byteOrder);
-//			Debug.debug("unknown tag result", result);
+			//			Debug.debug("unknown tag result", result);
 			return result;
 		}
 

@@ -57,6 +57,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		List images = getImagesWithExifData();
 		for (int i = 0; i < images.size(); i++)
 		{
+			if(i%10==0)
 			Debug.purgeMemory();
 
 			File imageFile = (File) images.get(i);
@@ -99,6 +100,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		List images = getImagesWithExifData();
 		for (int i = 0; i < images.size(); i++)
 		{
+			if(i%10==0)
 			Debug.purgeMemory();
 
 			File imageFile = (File) images.get(i);
@@ -182,6 +184,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		List images = getImagesWithExifData();
 		for (int i = 0; i < images.size(); i++)
 		{
+			if(i%10==0)
 			Debug.purgeMemory();
 
 			File imageFile = (File) images.get(i);

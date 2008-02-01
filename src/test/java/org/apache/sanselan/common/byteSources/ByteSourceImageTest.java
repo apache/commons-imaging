@@ -60,8 +60,9 @@ public class ByteSourceImageTest extends ByteSourceTest
 		List imageFiles = getTestImages();
 		for (int i = 0; i < imageFiles.size(); i++)
 		{
+			if(i%10==0)
 			Debug.purgeMemory();
-			
+
 			File imageFile = (File) imageFiles.get(i);
 			Debug.debug("imageFile", imageFile);
 			assertTrue(imageFile != null);

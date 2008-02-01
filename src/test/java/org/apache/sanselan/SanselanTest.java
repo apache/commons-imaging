@@ -76,10 +76,10 @@ public abstract class SanselanTest extends TestCase
 		File dataFolder = new File(testFolder, "data");
 		File imagesFolder = new File(dataFolder, "images");
 
-//				imagesFolder = new File(
+		//				imagesFolder = new File(
 		//		"src\\test\\data\\images\\exif\\drewNoakes\\");
 		//	"src\\test\\data\\images\\exif\\drewNoakes\\007_Canon EOS 20D (1).jpg");
-//"src\\test\\data\\images\\tiff\\");
+		//"src\\test\\data\\images\\tiff\\");
 
 		assertTrue(imagesFolder.exists());
 
@@ -138,17 +138,20 @@ public abstract class SanselanTest extends TestCase
 		if (filter != null)
 		{
 			List filtered = new ArrayList();
+//			long last = System.currentTimeMillis();
 			for (int i = 0; i < images.size(); i++)
 			{
-						Debug.purgeMemory();
-			
+				if(i%10==0)
+				Debug.purgeMemory();
+
 				File file = (File) images.get(i);
+//				Debug.debug("considering file", file.getAbsoluteFile());
 
 				if (file.getParentFile().getName().toLowerCase().equals(
 						"@broken"))
 					continue;
 
-				if (filter.accept(file))
+				if (filter.accept(file) )
 				{
 					filtered.add(file);
 					if (max > 0 && filtered.size() >= max)
