@@ -31,6 +31,14 @@ public final class TiffOutputSet implements TiffConstants
 	public final int byteOrder;
 	private final ArrayList directories = new ArrayList();
 
+	
+
+	public TiffOutputSet()
+	{
+		this(TiffConstants.DEFAULT_TIFF_BYTE_ORDER);
+	}
+	
+
 	public TiffOutputSet(final int byteOrder)
 	{
 		super();

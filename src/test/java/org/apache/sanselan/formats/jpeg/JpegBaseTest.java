@@ -28,10 +28,7 @@ import org.apache.sanselan.SanselanTest;
 
 public abstract class JpegBaseTest extends SanselanTest
 {
-	//	public JpegBaseTest(String name)
-	//	{
-	//		super(name);
-	//	}
+
 
 	protected static boolean isJpeg(File file) throws IOException,
 			ImageReadException
@@ -40,7 +37,7 @@ public abstract class JpegBaseTest extends SanselanTest
 		return format == ImageFormat.IMAGE_FORMAT_JPEG;
 	}
 
-	private static final ImageFilter imageFilter = new ImageFilter()
+	public static final ImageFilter imageFilter = new ImageFilter()
 	{
 		public boolean accept(File file) throws IOException, ImageReadException
 		{
@@ -48,10 +45,7 @@ public abstract class JpegBaseTest extends SanselanTest
 		}
 	};
 
-	//	protected File getJpegImage() throws IOException, ImageReadException
-	//	{
-	//		return getTestImage(imageFilter);
-	//	}
+
 
 	protected List getJpegImages() throws IOException, ImageReadException
 	{

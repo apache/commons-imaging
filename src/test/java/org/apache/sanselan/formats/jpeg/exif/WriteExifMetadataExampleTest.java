@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
+import org.apache.sanselan.formats.jpeg.JpegBaseTest;
 import org.apache.sanselan.formats.jpeg.exifRewrite.ExifRewriter;
 import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
 import org.apache.sanselan.sampleUsage.WriteExifMetadataExample;
@@ -41,6 +42,38 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
 			ImageWriteException
 	{
 		List images = getImagesWithExifData();
+		for (int i = 0; i < images.size(); i++)
+		{
+			if (i % 10 == 0)
+				Debug.purgeMemory();
+
+			File imageFile = (File) images.get(i);
+			Debug.debug("imageFile", imageFile.getAbsoluteFile());
+
+			File tempFile = File.createTempFile("test", ".jpg");
+			Debug.debug("tempFile", tempFile.getAbsoluteFile());
+			tempFile.deleteOnExit();
+
+			try
+			{
+				boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+				if (ignoreImageData)
+					continue;
+				new WriteExifMetadataExample().changeExifMetadata(imageFile,
+						tempFile);
+			}
+			catch (ExifRewriter.ExifOverflowException e)
+			{
+				Debug.debug("Error image", imageFile.getAbsoluteFile());
+				Debug.debug(e, 4);
+			}
+		}
+	}
+
+	public void testInsert() throws IOException, ImageReadException,
+			ImageWriteException
+	{
+		List images = getTestImages(JpegBaseTest.imageFilter);
 		for (int i = 0; i < images.size(); i++)
 		{
 			if (i % 10 == 0)

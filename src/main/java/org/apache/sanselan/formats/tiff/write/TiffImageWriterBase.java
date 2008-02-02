@@ -41,13 +41,12 @@ public abstract class TiffImageWriterBase
 			BinaryConstants
 {
 
-	public static final int DEFAULT_WRITE_BYTE_ORDER = BYTE_ORDER_INTEL;
 
 	protected final int byteOrder;
 
 	public TiffImageWriterBase()
 	{
-		this.byteOrder = DEFAULT_WRITE_BYTE_ORDER;
+		this.byteOrder = DEFAULT_TIFF_BYTE_ORDER;
 	}
 
 	public TiffImageWriterBase(int byteOrder)

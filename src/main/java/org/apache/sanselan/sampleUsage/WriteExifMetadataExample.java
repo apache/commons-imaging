@@ -71,21 +71,31 @@ public class WriteExifMetadataExample
 		OutputStream os = null;
 		try
 		{
+			TiffOutputSet outputSet =  null;
+
 			// note that metadata might be null if no metadata is found.
 			IImageMetadata metadata = Sanselan.getMetadata(jpegImageFile);
 			JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+			if (null != jpegMetadata)
+			{
+				// note that exif might be null if no Exif metadata is found.
+				TiffImageMetadata exif = jpegMetadata.getExif();
 
-			// note that exif might be null if no Exif metadata is found.
-			TiffImageMetadata exif = jpegMetadata.getExif();
-
-			// TiffImageMetadata class is immutable (read-only).
-			// TiffOutputSet class represents the Exif data to write.
-			// 
-			// Usually, we want to update existing Exif metadata by changing 
-			// the values of a few fields, or adding a field.
-			// In these cases, it is easiest to use getOutputSet() to 
-			// start with a "copy" of the fields read from the image.
-			TiffOutputSet outputSet = exif.getOutputSet();
+				if (null != exif)
+				{
+					// TiffImageMetadata class is immutable (read-only).
+					// TiffOutputSet class represents the Exif data to write.
+					// 
+					// Usually, we want to update existing Exif metadata by changing 
+					// the values of a few fields, or adding a field.
+					// In these cases, it is easiest to use getOutputSet() to 
+					// start with a "copy" of the fields read from the image.
+					 outputSet = exif.getOutputSet();
+				}
+			}
+			
+			if(null==outputSet)
+				outputSet =  new TiffOutputSet();
 
 			{
 				// Example of how to remove a single tag/field.
@@ -125,13 +135,13 @@ public class WriteExifMetadataExample
 						.getOrCreateExifDirectory();
 				exifDirectory.add(aperture);
 			}
-			
+
 			{
 				// Example of how to add/update GPS info to output set.
 
 				// New York City
 				double longitude = -74.0; // 74 degrees W (in Degrees East)
-				double latitude = 40 + 43/60.0; // 40 degrees N (in Degrees North)
+				double latitude = 40 + 43 / 60.0; // 40 degrees N (in Degrees North)
 
 				outputSet.setGPSInDegrees(longitude, latitude);
 			}
@@ -157,6 +167,5 @@ public class WriteExifMetadataExample
 				}
 		}
 	}
-
 
 }

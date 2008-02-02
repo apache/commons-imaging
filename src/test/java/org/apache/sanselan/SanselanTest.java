@@ -69,35 +69,31 @@ public abstract class SanselanTest extends TestCase
 				PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
 	}
 
-	protected List getAllTestImages()
-	{
-		File srcFolder = new File("src");
-		File testFolder = new File(srcFolder, "test");
-		File dataFolder = new File(testFolder, "data");
-		File imagesFolder = new File(dataFolder, "images");
-
-		//				imagesFolder = new File(
-		//		"src\\test\\data\\images\\exif\\drewNoakes\\");
-		//	"src\\test\\data\\images\\exif\\drewNoakes\\007_Canon EOS 20D (1).jpg");
-		//"src\\test\\data\\images\\tiff\\");
-
-		assertTrue(imagesFolder.exists());
-
-		final List result = new ArrayList();
-
-		FSTraversal.Visitor visitor = new FSTraversal.Visitor()
-		{
-			public boolean visit(File file, double progressEstimate)
-			{
-				if (Sanselan.hasImageFileExtension(file))
-					result.add(file);
-				return true;
-			}
-		};
-		new FSTraversal().traverseFiles(imagesFolder, visitor);
-
-		return result;
-	}
+	//	protected List getAllTestImages()
+	//	{
+	//		File srcFolder = new File("src");
+	//		File testFolder = new File(srcFolder, "test");
+	//		File dataFolder = new File(testFolder, "data");
+	//		File imagesFolder = new File(dataFolder, "images");
+	//
+	//
+	//		assertTrue(imagesFolder.exists());
+	//
+	//		final List result = new ArrayList();
+	//
+	//		FSTraversal.Visitor visitor = new FSTraversal.Visitor()
+	//		{
+	//			public boolean visit(File file, double progressEstimate)
+	//			{
+	//				if (Sanselan.hasImageFileExtension(file))
+	//					result.add(file);
+	//				return true;
+	//			}
+	//		};
+	//		new FSTraversal().traverseFiles(imagesFolder, visitor);
+	//
+	//		return result;
+	//	}
 
 	public static interface ImageFilter
 	{
@@ -130,39 +126,67 @@ public abstract class SanselanTest extends TestCase
 		return getTestImages(filter, -1);
 	}
 
-	protected List getTestImages(ImageFilter filter, int max)
+	protected List getTestImages(final ImageFilter filter, final int max)
 			throws IOException, ImageReadException
 	{
-		List images = getAllTestImages();
+		
+		File srcFolder = new File("src");
+		File testFolder = new File(srcFolder, "test");
+		File dataFolder = new File(testFolder, "data");
+		File imagesFolder = new File(dataFolder, "images");
 
-		if (filter != null)
+		assertTrue(imagesFolder.exists());
+
+		final List images = new ArrayList();
+
+		FSTraversal.Visitor visitor = new FSTraversal.Visitor()
 		{
-			List filtered = new ArrayList();
-//			long last = System.currentTimeMillis();
-			for (int i = 0; i < images.size(); i++)
+			long counter = 0;
+
+			public boolean visit(File file, double progressEstimate)
 			{
-				if(i%10==0)
-				Debug.purgeMemory();
+				if (!Sanselan.hasImageFileExtension(file))
+					return true;
+				if (counter++ % 10 == 0)
+					Debug.purgeMemory();
 
-				File file = (File) images.get(i);
-//				Debug.debug("considering file", file.getAbsoluteFile());
-
-				if (file.getParentFile().getName().toLowerCase().equals(
-						"@broken"))
-					continue;
-
-				if (filter.accept(file) )
+				try
 				{
-					filtered.add(file);
-					if (max > 0 && filtered.size() >= max)
-						return filtered;
+					if (filter != null && !filter.accept(file))
+						return true;
 				}
+				catch (Exception e)
+				{
+					Debug.debug(e);
+					return false;
+				}
+
+				images.add(file);
+
+				if (max < 1)
+					return true;
+				return images.size() < max;
 			}
-			images = filtered;
+		};
+		new FSTraversal().traverseFiles(imagesFolder, visitor);
+
+		List filtered = new ArrayList();
+		//			long last = System.currentTimeMillis();
+		for (int i = 0; i < images.size(); i++)
+		{
+//			if (i % 10 == 0)
+//				Debug.purgeMemory();
+
+			File file = (File) images.get(i);
+			//				Debug.debug("considering file", file.getAbsoluteFile());
+
+			if (file.getParentFile().getName().toLowerCase().equals("@broken"))
+				continue;
+			filtered.add(file);
 		}
 
-		assertTrue(images.size() > 0);
+		assertTrue(filtered.size() > 0);
 
-		return images;
+		return filtered;
 	}
 }
