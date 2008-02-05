@@ -69,7 +69,7 @@ public abstract class TiffImageWriterBase
 
 		if (1 > directories.size())
 			throw new ImageWriteException("No directories.");
-
+		
 		TiffOutputDirectory exifDirectory = null;
 		TiffOutputDirectory gpsDirectory = null;
 		TiffOutputDirectory interoperabilityDirectory = null;

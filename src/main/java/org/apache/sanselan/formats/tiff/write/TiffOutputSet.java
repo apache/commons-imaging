@@ -31,13 +31,10 @@ public final class TiffOutputSet implements TiffConstants
 	public final int byteOrder;
 	private final ArrayList directories = new ArrayList();
 
-	
-
 	public TiffOutputSet()
 	{
 		this(TiffConstants.DEFAULT_TIFF_BYTE_ORDER);
 	}
-	
 
 	public TiffOutputSet(final int byteOrder)
 	{
@@ -85,9 +82,21 @@ public final class TiffOutputSet implements TiffConstants
 		return findDirectory(DIRECTORY_TYPE_EXIF);
 	}
 
+	public TiffOutputDirectory getOrCreateRootDirectory()
+			throws ImageWriteException
+	{
+		TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_ROOT);
+		if (null != result)
+			return result;
+		return addRootDirectory();
+	}
+
 	public TiffOutputDirectory getOrCreateExifDirectory()
 			throws ImageWriteException
 	{
+		// EXIF directory requires root directory.
+		getOrCreateRootDirectory();
+		
 		TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_EXIF);
 		if (null != result)
 			return result;
@@ -97,6 +106,9 @@ public final class TiffOutputSet implements TiffConstants
 	public TiffOutputDirectory getOrCreateGPSDirectory()
 			throws ImageWriteException
 	{
+		// GPS directory requires EXIF directory
+		getOrCreateExifDirectory();
+		
 		TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_GPS);
 		if (null != result)
 			return result;
@@ -188,8 +200,6 @@ public final class TiffOutputSet implements TiffConstants
 					new Double(latitudeSeconds),
 			};
 
-
-			
 			TiffOutputField latitudeField = TiffOutputField.create(
 					TiffConstants.GPS_TAG_GPS_LATITUDE, byteOrder, values);
 			gpsDirectory.removeField(TiffConstants.GPS_TAG_GPS_LATITUDE);

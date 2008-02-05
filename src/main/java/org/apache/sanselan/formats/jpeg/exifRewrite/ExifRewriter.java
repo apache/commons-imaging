@@ -361,18 +361,22 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 		JFIFPieces jfifPieces = analyzeJFIF(byteSource);
 		List pieces = jfifPieces.pieces;
 
-		JFIFPieceSegment exifPiece = null;
-
+		TiffImageWriterBase writer;
 		// Just use first APP1 segment for now.
 		// Multiple APP1 segments are rare and poorly supported.
 		if (jfifPieces.exifPieces.size() > 0)
+		{
+			JFIFPieceSegment exifPiece = null;
 			exifPiece = (JFIFPieceSegment) jfifPieces.exifPieces.get(0);
 
-		byte exifBytes[] = exifPiece.segmentData;
-		exifBytes = getByteArrayTail("trimmed exif bytes", exifBytes, 6);
+			byte exifBytes[] = exifPiece.segmentData;
+			exifBytes = getByteArrayTail("trimmed exif bytes", exifBytes, 6);
 
-		TiffImageWriterBase writer = new TiffImageWriterLossless(
-				outputSet.byteOrder, exifBytes);
+			writer = new TiffImageWriterLossless(outputSet.byteOrder, exifBytes);
+
+		}
+		else
+			writer = new TiffImageWriterLossy(outputSet.byteOrder);
 
 		boolean includeEXIFPrefix = true;
 		byte newBytes[] = writeExifSegment(writer, outputSet, includeEXIFPrefix);

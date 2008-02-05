@@ -41,7 +41,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
 	public void test() throws IOException, ImageReadException,
 			ImageWriteException
 	{
-		List images = getImagesWithExifData();
+		List images = getJpegImages();
 		for (int i = 0; i < images.size(); i++)
 		{
 			if (i % 10 == 0)
@@ -73,7 +73,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
 	public void testInsert() throws IOException, ImageReadException,
 			ImageWriteException
 	{
-		List images = getTestImages(JpegBaseTest.imageFilter);
+		List images = getJpegImages();
 		for (int i = 0; i < images.size(); i++)
 		{
 			if (i % 10 == 0)

@@ -43,9 +43,9 @@ public abstract class ExifBaseTest extends SanselanTest
 
 		if (!file.getName().toLowerCase().endsWith(".jpg"))
 			return false;
-//		ImageFormat format = Sanselan.guessFormat(file);
-//		if (format != ImageFormat.IMAGE_FORMAT_JPEG)
-//			return false;
+		//ImageFormat format = Sanselan.guessFormat(file);
+		//if (format != ImageFormat.IMAGE_FORMAT_JPEG)
+		//	return false;
 
 		//		Debug.debug("possible file", file);
 
@@ -62,7 +62,7 @@ public abstract class ExifBaseTest extends SanselanTest
 		}
 	}
 
-	private static final ImageFilter imageFilter = new ImageFilter()
+	private static final ImageFilter HAS_EXIF_IMAGE_FILTER = new ImageFilter()
 	{
 		public boolean accept(File file) throws IOException, ImageReadException
 		{
@@ -70,22 +70,46 @@ public abstract class ExifBaseTest extends SanselanTest
 		}
 	};
 
+	private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter()
+	{
+		public boolean accept(File file) throws IOException, ImageReadException
+		{
+			return file.getName().toLowerCase().endsWith(".jpg");
+		}
+	};
+
 	protected File getImageWithExifData() throws IOException,
 			ImageReadException
 	{
-		return getTestImage(imageFilter);
+		return getTestImage(HAS_EXIF_IMAGE_FILTER);
 	}
 
 	protected List getImagesWithExifData() throws IOException,
 			ImageReadException
 	{
-		return getTestImages(imageFilter);
+		return getTestImages(HAS_EXIF_IMAGE_FILTER);
 	}
 
 	protected List getImagesWithExifData(int max) throws IOException,
 			ImageReadException
 	{
-		return getTestImages(imageFilter, max);
+		return getTestImages(HAS_EXIF_IMAGE_FILTER, max);
+	}
+
+	protected File getJpegImage() throws IOException, ImageReadException
+	{
+		return getTestImage(JPEG_IMAGE_FILTER);
+	}
+
+	protected List getJpegImages() throws IOException, ImageReadException
+	{
+		return getTestImages(JPEG_IMAGE_FILTER);
+	}
+
+	protected List getJpegImages(int max) throws IOException,
+			ImageReadException
+	{
+		return getTestImages(JPEG_IMAGE_FILTER, max);
 	}
 
 }
