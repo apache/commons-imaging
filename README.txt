@@ -5,7 +5,7 @@ Welcome to Apache Sanselan  <http://sanselan.apache.org/>
 License (see also LICENSE)
 ==============================
 
-Collective work: Copyright 2007 The Apache Software Foundation.
+Collective work: Copyright 2007-2008 The Apache Software Foundation.
 
 Licensed to the Apache Software Foundation (ASF) under one or more
 contributor license agreements.  See the NOTICE file distributed with
