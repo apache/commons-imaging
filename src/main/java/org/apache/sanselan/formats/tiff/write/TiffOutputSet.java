@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.common.RationalNumber;
-import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.util.Debug;
@@ -96,7 +94,7 @@ public final class TiffOutputSet implements TiffConstants
 	{
 		// EXIF directory requires root directory.
 		getOrCreateRootDirectory();
-		
+
 		TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_EXIF);
 		if (null != result)
 			return result;
@@ -108,7 +106,7 @@ public final class TiffOutputSet implements TiffConstants
 	{
 		// GPS directory requires EXIF directory
 		getOrCreateExifDirectory();
-		
+
 		TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_GPS);
 		if (null != result)
 			return result;

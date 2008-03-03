@@ -292,28 +292,28 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 	private boolean isGrayscale(int colorType) throws ImageReadException
 	{
-		//		Color type is a single-byte integer that describes the interpretation of the 
-		//		image data. Color type codes represent sums of the following values: 
-		//			1 (palette used), 2 (color used), and 4 (alpha channel used). 
+		//		Color type is a single-byte integer that describes the interpretation of the
+		//		image data. Color type codes represent sums of the following values:
+		//			1 (palette used), 2 (color used), and 4 (alpha channel used).
 		//			Valid values are 0, 2, 3, 4, and 6.
 		//
-		//		Bit depth restrictions for each color type are imposed to simplify implementations 
-		//		and to prohibit combinations that do not compress well. Decoders must support all 
+		//		Bit depth restrictions for each color type are imposed to simplify implementations
+		//		and to prohibit combinations that do not compress well. Decoders must support all
 		//		valid combinations of bit depth and color type. The allowed combinations are:
 		//
 		//		   Color    Allowed    Interpretation
 		//		   Type    Bit Depths
-		//		   
+		//
 		//		   0       1,2,4,8,16  Each pixel is a grayscale sample.
-		//		   
+		//
 		//		   2       8,16        Each pixel is an R,G,B triple.
-		//		   
+		//
 		//		   3       1,2,4,8     Each pixel is a palette index;
 		//		                       a PLTE chunk must appear.
-		//		   
+		//
 		//		   4       8,16        Each pixel is a grayscale sample,
 		//		                       followed by an alpha sample.
-		//		   
+		//
 		//		   6       8,16        Each pixel is an R,G,B triple,
 		//		                       followed by an alpha sample.
 		switch (colorType)
@@ -336,28 +336,28 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 	private int samplesPerPixel(int colorType) throws ImageReadException
 	{
-		//		Color type is a single-byte integer that describes the interpretation of the 
-		//		image data. Color type codes represent sums of the following values: 
-		//			1 (palette used), 2 (color used), and 4 (alpha channel used). 
+		//		Color type is a single-byte integer that describes the interpretation of the
+		//		image data. Color type codes represent sums of the following values:
+		//			1 (palette used), 2 (color used), and 4 (alpha channel used).
 		//			Valid values are 0, 2, 3, 4, and 6.
 		//
-		//		Bit depth restrictions for each color type are imposed to simplify implementations 
-		//		and to prohibit combinations that do not compress well. Decoders must support all 
+		//		Bit depth restrictions for each color type are imposed to simplify implementations
+		//		and to prohibit combinations that do not compress well. Decoders must support all
 		//		valid combinations of bit depth and color type. The allowed combinations are:
 		//
 		//		   Color    Allowed    Interpretation
 		//		   Type    Bit Depths
-		//		   
+		//
 		//		   0       1,2,4,8,16  Each pixel is a grayscale sample.
-		//		   
+		//
 		//		   2       8,16        Each pixel is an R,G,B triple.
-		//		   
+		//
 		//		   3       1,2,4,8     Each pixel is a palette index;
 		//		                       a PLTE chunk must appear.
-		//		   
+		//
 		//		   4       8,16        Each pixel is a grayscale sample,
 		//		                       followed by an alpha sample.
-		//		   
+		//
 		//		   6       8,16        Each pixel is an R,G,B triple,
 		//		                       followed by an alpha sample.
 		switch (colorType)
@@ -434,7 +434,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 	}
 
 	// TODO: I have been too casual about making inner classes subclass of BinaryFileParser
-	// I may not have always preserved byte order correctly.  
+	// I may not have always preserved byte order correctly.
 
 	private TransparencyFilter getTransparencyFilter(int ColorType,
 			PNGChunk pngChunktRNS) throws ImageReadException, IOException
@@ -558,12 +558,12 @@ public class PngImageParser extends ImageParser implements PngConstants
 				double meters_per_inch = 0.0254;
 
 				PhysicalWidthDpi = (int) Math
-						.round((double) pngChunkpHYs.PixelsPerUnitXAxis
+						.round(pngChunkpHYs.PixelsPerUnitXAxis
 								* meters_per_inch);
 				PhysicalWidthInch = (float) ((double) Width
 						* (double) pngChunkpHYs.PixelsPerUnitXAxis * meters_per_inch);
 				PhysicalHeightDpi = (int) Math
-						.round((double) pngChunkpHYs.PixelsPerUnitYAxis
+						.round(pngChunkpHYs.PixelsPerUnitYAxis
 								* meters_per_inch);
 				PhysicalHeightInch = (float) ((double) Height
 						* (double) pngChunkpHYs.PixelsPerUnitYAxis * meters_per_inch);
@@ -773,7 +773,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 			//					//										cm = ColorModel.getRGBdefault();
 			//					break;
 			//				}
-			//					//					   
+			//					//
 			//				case 3 : //     1,2,4,8     Each pixel is a palette index;
 			//					//					                       a PLTE chunk must appear.
 			//				{
@@ -917,7 +917,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 			pw.println("chunks: " + chunks.size());
 
-			if ((chunks == null) || (chunks.size() < 1))
+			if ((chunks.size() < 1))
 				return false;
 
 			for (int i = 0; i < chunks.size(); i++)

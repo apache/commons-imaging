@@ -29,7 +29,6 @@ import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
-import org.apache.sanselan.util.Debug;
 
 public class MetadataExample
 {

@@ -92,7 +92,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		TiffField field = directory.findField(EXIF_TAG_ICC_PROFILE);
 		if (null == field)
 			return null;
-		return (byte[]) field.oversizeValue;
+		return field.oversizeValue;
 	}
 
 	public Dimension getImageSize(ByteSource byteSource)
@@ -210,7 +210,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				double XResolutionPixelsPerUnit = xResolutionField
 						.getDoubleValue();
 				physicalWidthDpi = (int) (XResolutionPixelsPerUnit / unitsPerInch);
-				physicalWidthInch = (float) ((double) width / (XResolutionPixelsPerUnit * unitsPerInch));
+				physicalWidthInch = (float) (width / (XResolutionPixelsPerUnit * unitsPerInch));
 			}
 			if ((yResolutionField != null)
 					&& (yResolutionField.getValue() != null))
@@ -218,7 +218,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				double YResolutionPixelsPerUnit = yResolutionField
 						.getDoubleValue();
 				physicalHeightDpi = (int) (YResolutionPixelsPerUnit / unitsPerInch);
-				physicalHeightInch = (float) ((double) height / (YResolutionPixelsPerUnit * unitsPerInch));
+				physicalHeightInch = (float) (height / (YResolutionPixelsPerUnit * unitsPerInch));
 			}
 		}
 
@@ -498,7 +498,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			case 5 : // CMYK
 				return new PhotometricInterpreterCMYK(samplesPerPixel,
 						bitsPerSample, predictor, width, height);
-			case 6 : // 
+			case 6 : //
 			{
 				double yCbCrCoefficients[] = directory.findField(
 						TIFF_TAG_YCBCR_COEFFICIENTS, true)

@@ -293,9 +293,9 @@ public class GifImageParser extends ImageParser
 												+ new String(label) + ")",
 										complete_code);
 
-							// if (label == new String("ICCRGBG1")) 
+							// if (label == new String("ICCRGBG1"))
 							{
-								// GIF's can have embedded ICC Profiles - who knew? 
+								// GIF's can have embedded ICC Profiles - who knew?
 							}
 
 							if ((label != null) && (label.length > 0))
@@ -749,11 +749,8 @@ public class GifImageParser extends ImageParser
 				throw new ImageReadException("Gif: No Color Table");
 
 			int transparentIndex = -1;
-			if (gce != null)
-			{
-				if (gce.transparency)
-					transparentIndex = gce.transparentColorIndex;
-			}
+			if (gce.transparency)
+				transparentIndex = gce.transparentColorIndex;
 
 			//			Debug.debug("charles TransparentIndex", TransparentIndex);
 
@@ -834,7 +831,7 @@ public class GifImageParser extends ImageParser
 			os.write(bytes, index, block_size);
 			index += block_size;
 		}
-		os.write(0); // last block 
+		os.write(0); // last block
 	}
 
 	private static final int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
@@ -888,11 +885,11 @@ public class GifImageParser extends ImageParser
 		{
 			// write Header
 			os.write(0x47); // G magic numbers
-			os.write(0x49); // I 
+			os.write(0x49); // I
 			os.write(0x46); // F
 
 			os.write(0x38); // 8 version magic numbers
-			os.write(0x39); // 9 
+			os.write(0x39); // 9
 			os.write(0x61); // a
 
 			// Logical Screen Descriptor.
@@ -913,7 +910,7 @@ public class GifImageParser extends ImageParser
 			int colorTableSizeInFormat = 1 << (colorTableScaleLessOne + 1);
 			int actual_size = 3 * simple_pow(2, colorTableScaleLessOne + 1);
 			{
-				byte colorResolution = (byte) colorTableScaleLessOne; // TODO: 
+				byte colorResolution = (byte) colorTableScaleLessOne; // TODO:
 
 				boolean globalColorTableFlag = false;
 				boolean sortFlag = false;
@@ -959,10 +956,10 @@ public class GifImageParser extends ImageParser
 
 			{ //  Image Descriptor.
 				bos.write(IMAGE_SEPARATOR);
-				bos.write2Bytes(0); // Image Left Position  
-				bos.write2Bytes(0); //  Image Top Position  
-				bos.write2Bytes(width); // Image Width    
-				bos.write2Bytes(height); //  Image Height     
+				bos.write2Bytes(0); // Image Left Position
+				bos.write2Bytes(0); //  Image Top Position
+				bos.write2Bytes(width); // Image Width
+				bos.write2Bytes(height); //  Image Height
 
 				{
 					boolean LocalColorTableFlag = true;

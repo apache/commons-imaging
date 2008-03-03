@@ -32,7 +32,6 @@ import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
-import org.apache.sanselan.util.Debug;
 
 public class TiffImageMetadata extends ImageMetadata
 		implements
@@ -215,7 +214,7 @@ public class TiffImageMetadata extends ImageMetadata
 
 			if (null != result.findDirectory(srcDir.type))
 			{
-				// Certain cameras right directories more than once.  
+				// Certain cameras right directories more than once.
 				// This is a bug.
 				// Ignore second directory of a given type.
 				continue;

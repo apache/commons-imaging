@@ -505,7 +505,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 			//					+ (ba == bb) + " " + eq);
 			//			if(ba != bb)
 			//				assertFalse(true);
-			//			
+			//
 			//			Debug.debug("i: " + i + ", a[i]: " + ba + ", b[i]: " + bb + " = "
 			//					+ (ba == bb) + " " + eq);
 			//			assertTrue(eq == true);
@@ -536,18 +536,5 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 		assertEquals(a.length, b.length);
 		for (int i = 0; i < a.length; i++)
 			assertEquals(a[i], b[i]);
-	}
-
-	private void dump(String name, Set set)
-	{
-		dump(name, new ArrayList(set));
-	}
-
-	private void dump(String name, List list)
-	{
-		Debug.debug(name, list.size());
-		for (int i = 0; i < list.size(); i++)
-			Debug.debug("\t" + list.get(i));
-		Debug.debug();
 	}
 }

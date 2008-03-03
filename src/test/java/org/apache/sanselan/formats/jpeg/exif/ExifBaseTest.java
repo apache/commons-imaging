@@ -21,9 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanTest;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;

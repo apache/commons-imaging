@@ -23,7 +23,6 @@ import java.util.List;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.formats.jpeg.JpegBaseTest;
 import org.apache.sanselan.formats.jpeg.exifRewrite.ExifRewriter;
 import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
 import org.apache.sanselan.sampleUsage.WriteExifMetadataExample;

@@ -32,7 +32,7 @@ import org.apache.sanselan.SanselanConstants;
 public abstract class IOUtils implements SanselanConstants
 {
 
-	/** 
+	/**
 	 * Reads an InputStream to the end.
 	 * <p>
 	 * @param  is The InputStream to read.
@@ -74,10 +74,10 @@ public abstract class IOUtils implements SanselanConstants
 		}
 	}
 
-	/** 
+	/**
 	 * Reads a File into memory.
 	 * <p>
-	 * @param  is The File to read.
+	 * @param  file The File to read.
 	 * @return A byte array containing the contents of the File
 	 * @see InputStream
 	 */
