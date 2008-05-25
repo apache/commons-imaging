@@ -365,7 +365,7 @@ public class TiffImageMetadata extends ImageMetadata
 		{
 			double result = longitudeDegrees.doubleValue()
 					+ (longitudeMinutes.doubleValue() / 60.0)
-					+ (longitudeSeconds.doubleValue() / 360.0);
+					+ (longitudeSeconds.doubleValue() / 3600.0);
 
 			if (longitudeRef.trim().equalsIgnoreCase("e"))
 				return result;
@@ -380,7 +380,7 @@ public class TiffImageMetadata extends ImageMetadata
 		{
 			double result = latitudeDegrees.doubleValue()
 					+ (latitudeMinutes.doubleValue() / 60.0)
-					+ (latitudeSeconds.doubleValue() / 360.0);
+					+ (latitudeSeconds.doubleValue() / 3600.0);
 
 			if (latitudeRef.trim().equalsIgnoreCase("n"))
 				return result;
