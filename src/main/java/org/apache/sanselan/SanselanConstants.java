@@ -74,4 +74,15 @@ public interface SanselanConstants
 	 */
 	public static final String PARAM_KEY_READ_THUMBNAILS = "READ_THUMBNAILS";
 
+	/** 
+	 * Parameter key.  Indicates whether to throw exceptions when parsing
+	 * invalid files, or whether to tolerate small problems.  
+	 * <p>
+	 * Valid values: Boolean.TRUE and Boolean.FALSE.
+	 * Default value: Boolean.FALSE.
+	 * <p>
+	 * @see TiffConstants
+	 */
+	public static final String PARAM_KEY_STRICT = "STRICT";
+
 }

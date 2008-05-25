@@ -217,7 +217,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 		}
 	}
 
-	public byte[] getICCProfileBytes(ByteSource byteSource)
+	public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		ArrayList chunks = readChunks(byteSource, new int[]{
@@ -240,7 +240,8 @@ public class PngImageParser extends ImageParser implements PngConstants
 		return (bytes);
 	}
 
-	public Dimension getImageSize(ByteSource byteSource)
+	public Dimension getImageSize(ByteSource byteSource,
+			Map params)
 			throws ImageReadException, IOException
 	{
 		ArrayList chunks = readChunks(byteSource, new int[]{

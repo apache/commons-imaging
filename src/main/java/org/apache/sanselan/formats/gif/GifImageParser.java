@@ -525,13 +525,14 @@ public class GifImageParser extends ImageParser
 		}
 	}
 
-	public byte[] getICCProfileBytes(ByteSource byteSource)
+	public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		return null;
 	}
 
-	public Dimension getImageSize(ByteSource byteSource)
+	public Dimension getImageSize(ByteSource byteSource,
+			Map params)
 			throws ImageReadException, IOException
 	{
 		GIFHeaderInfo bhi = readHeader(byteSource);

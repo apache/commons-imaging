@@ -80,12 +80,11 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		};
 	}
 
-	public byte[] getICCProfileBytes(ByteSource byteSource)
+	public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		Map params = null;
-		TiffContents contents = new TiffReader().readFirstDirectory(byteSource,
+		TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(byteSource,
 				params, false, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 
@@ -95,12 +94,11 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return field.oversizeValue;
 	}
 
-	public Dimension getImageSize(ByteSource byteSource)
+	public Dimension getImageSize(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		Map params = null;
-		TiffContents contents = new TiffReader().readFirstDirectory(byteSource,
+		TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(byteSource,
 				params, false, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 
@@ -124,7 +122,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		TiffContents contents = new TiffReader().readContents(byteSource,
+		TiffContents contents = new TiffReader(isStrict(params)).readContents(byteSource,
 				params, formatCompliance);
 
 		ArrayList directories = contents.directories;
@@ -156,7 +154,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		TiffContents contents = new TiffReader().readDirectories(byteSource,
+		TiffContents contents = new TiffReader(isStrict(params)).readDirectories(byteSource,
 				false, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 
@@ -330,7 +328,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				FormatCompliance formatCompliance = FormatCompliance
 						.getDefault();
 				Map params = null;
-				TiffContents contents = new TiffReader().readContents(
+				TiffContents contents = new TiffReader(true).readContents(
 						byteSource, params, formatCompliance);
 
 				ArrayList directories = contents.directories;
@@ -380,7 +378,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
 		Map params = null;
-		new TiffReader().readContents(byteSource, params, formatCompliance);
+		new TiffReader(isStrict(params)).readContents(byteSource, params, formatCompliance);
 		return formatCompliance;
 	}
 
@@ -388,7 +386,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		TiffContents contents = new TiffReader().readFirstDirectory(byteSource,
+		TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(byteSource,
 				params, true, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 		BufferedImage result = directory.getTiffImage(params);

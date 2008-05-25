@@ -476,6 +476,13 @@ public class BinaryFileFunctions implements BinaryConstants
 		return result;
 	}
 
+	public final byte[] readByteArray(String name, int length, InputStream is)
+			throws IOException
+	{
+		String exception = name + " could not be read.";
+		return readByteArray(name, length, is, exception);
+	}
+
 	public final byte[] readByteArray(String name, int length, InputStream is,
 			String exception) throws IOException
 	{

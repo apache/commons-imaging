@@ -273,7 +273,7 @@ public class JpegImageParser extends ImageParser
 		return readSegments(byteSource, markers, returnAfterFirst, false);
 	}
 
-	public byte[] getICCProfileBytes(ByteSource byteSource)
+	public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		ArrayList segments = readSegments(byteSource, new int[]{
@@ -487,7 +487,8 @@ public class JpegImageParser extends ImageParser
 		return result;
 	}
 
-	public Dimension getImageSize(ByteSource byteSource)
+	public Dimension getImageSize(ByteSource byteSource,
+			Map params)
 			throws ImageReadException, IOException
 	{
 		ArrayList segments = readSegments(byteSource, new int[]{

@@ -126,7 +126,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
 			ByteSource byteSource = new ByteSourceArray(exifBytes);
 			Map params = null;
 			FormatCompliance formatCompliance = FormatCompliance.getDefault();
-			TiffContents contents = new TiffReader().readContents(byteSource,
+			TiffContents contents = new TiffReader(false).readContents(byteSource,
 					params, formatCompliance);
 
 			ArrayList elements = new ArrayList();
