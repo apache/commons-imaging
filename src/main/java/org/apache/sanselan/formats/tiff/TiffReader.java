@@ -108,9 +108,13 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 		Number key = new Integer(offset);
 
 //		Debug.debug();
-//		Debug.debug("offset", offset);
-//		Debug.debug("key", key);
-		// Debug.debug("visited", visited);
+//		Debug.debug("dir offset", offset + " (0x" + Integer.toHexString(offset)
+//				+ ")");
+//		Debug.debug("dir key", key);
+//		Debug.debug("dir visited", visited);
+//		Debug.debug("dirType", dirType);
+//		Debug.debug();
+
 		if (visited.contains(key))
 			return false;
 		visited.add(key);
@@ -123,16 +127,12 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 
 			ArrayList fields = new ArrayList();
 
-			// Debug.debug();
-			// Debug.debug("dirType", dirType);
-			// Debug.debug("offset", offset);
-			//
-			// if(offset>=byteSource.getLength())
-			// {
-			// Debug.debug("skipping invalid directory!");
-			// return true;
-			// }
-			
+
+			if (offset >= byteSource.getLength()) {
+				Debug.debug("skipping invalid directory!");
+				return true;
+			}
+
 			int entryCount;
 			try {
 				entryCount = read2Bytes("DirectoryEntryCount", is,
@@ -144,20 +144,12 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 					return true;
 			}
 
-			// Debug.debug("entryCount", entryCount);
+//			Debug.debug("entryCount", entryCount);
 
 			for (int i = 0; i < entryCount; i++) {
 				int tag = read2Bytes("Tag", is, "Not a Valid TIFF File");
 				int type = read2Bytes("Type", is, "Not a Valid TIFF File");
 				int length = read4Bytes("Length", is, "Not a Valid TIFF File");
-
-				if (tag == 0) {
-					// skip invalid fields.
-					// These are seen very rarely, but can have invalid value
-					// lengths,
-					// which can cause OOM problems.
-					continue;
-				}
 
 //				Debug.debug("tag*", tag + " (0x" + Integer.toHexString(tag)
 //						+ ")");
@@ -166,6 +158,14 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 						"Not a Valid TIFF File");
 				int valueOffset = convertByteArrayToInt("ValueOffset",
 						valueOffsetBytes);
+
+				if (tag == 0) {
+					// skip invalid fields.
+					// These are seen very rarely, but can have invalid value
+					// lengths,
+					// which can cause OOM problems.
+					continue;
+				}
 
 				// if (keepField(tag, tags))
 				// {
@@ -176,6 +176,8 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 //				Debug.debug("tagInfo", field.tagInfo);
 
 				field.fillInValue(byteSource);
+
+//				Debug.debug("\t" + "value", field.getValueDescription());
 
 				fields.add(field);
 
