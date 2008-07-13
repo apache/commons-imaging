@@ -36,7 +36,7 @@
   <artifactId>sanselan</artifactId>
   <name>Apache Sanselan</name>
   
-  <version>0.87-incubator-SNAPSHOT</version>
+  <version>0.92-incubator-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <!--
