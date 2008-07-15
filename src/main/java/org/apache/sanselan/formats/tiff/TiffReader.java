@@ -129,7 +129,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 
 
 			if (offset >= byteSource.getLength()) {
-				Debug.debug("skipping invalid directory!");
+//				Debug.debug("skipping invalid directory!");
 				return true;
 			}
 

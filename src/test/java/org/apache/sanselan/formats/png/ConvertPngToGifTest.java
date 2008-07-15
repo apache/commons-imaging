@@ -22,13 +22,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
-import org.apache.sanselan.SanselanConstants;
 import org.apache.sanselan.util.Debug;
 
 public class ConvertPngToGifTest extends PngBaseTest {
