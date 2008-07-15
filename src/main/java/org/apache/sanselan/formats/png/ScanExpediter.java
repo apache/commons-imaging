@@ -30,6 +30,7 @@ import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterPaeth;
 import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterSub;
 import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterUp;
 import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
+import org.apache.sanselan.util.Debug;
 
 public abstract class ScanExpediter extends BinaryFileParser
 {
@@ -41,7 +42,7 @@ public abstract class ScanExpediter extends BinaryFileParser
 	protected final int bitDepth;
 	protected final int bytesPerPixel;
 	protected final int bitsPerPixel;
-	protected final PNGChunkPLTE fPNGChunkPLTE;
+	protected final PNGChunkPLTE pngChunkPLTE;
 	protected final GammaCorrection gammaCorrection;
 	protected final TransparencyFilter transparencyFilter;
 
@@ -59,16 +60,9 @@ public abstract class ScanExpediter extends BinaryFileParser
 		this.bitDepth = bitDepth;
 		this.bytesPerPixel = this.getBitsToBytesRoundingUp(bitsPerPixel);
 		this.bitsPerPixel = bitsPerPixel;
-		this.fPNGChunkPLTE = pngChunkPLTE;
+		this.pngChunkPLTE = pngChunkPLTE;
 		this.gammaCorrection = gammaCorrection;
 		this.transparencyFilter = transparencyFilter;
-
-		//		Debug.debug("BitDepth", bitDepth);
-		//		Debug.debug("bitsPerPixel", bitsPerPixel);
-		//		Debug.debug("colorType", colorType);
-
-		//		buffer = bi.getRaster().getDataBuffer();
-
 	}
 
 	protected int getBitsToBytesRoundingUp(int bits)
@@ -94,127 +88,98 @@ public abstract class ScanExpediter extends BinaryFileParser
 
 	public abstract void drive() throws ImageReadException, IOException;
 
-	//	private long count = 0;
-
-	protected int getRGB(BitParser bitParser, int pixel_index_in_scanline)
+	protected int getRGB(BitParser bitParser, int pixelIndexInScanline)
 			throws ImageReadException, IOException
 	{
+
 		switch (colorType)
 		{
-			case 0 : //       1,2,4,8,16  Each pixel is a grayscale sample.
+		case 0: // 1,2,4,8,16 Each pixel is a grayscale sample.
+		{
+			int sample = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
+
+			if (gammaCorrection != null)
 			{
-				int sample = bitParser.getSampleAsByte(pixel_index_in_scanline,
-						0);
-
-				//				if (verbose)
-				//					Debug.debug("sample", Integer.toHexString(sample));
-
-				if (gammaCorrection != null)
-				{
-					sample = gammaCorrection.correctSample(sample);
-					//					if (verbose)
-					//						Debug.debug("gammaCorrection", Integer
-					//								.toHexString(sample));
-				}
-
-				int rgb = getPixelRGB(sample, sample, sample);
-				//				if (verbose)
-				//					Debug.debug("rgb", Integer.toHexString(rgb));
-
-				if (transparencyFilter != null)
-					rgb = transparencyFilter.filter(rgb, sample);
-
-				return rgb;
-
+				sample = gammaCorrection.correctSample(sample);
 			}
-			case 2 : //     8,16        Each pixel is an R,G,B triple.
+
+			int rgb = getPixelRGB(sample, sample, sample);
+
+			if (transparencyFilter != null)
+				rgb = transparencyFilter.filter(rgb, sample);
+
+			return rgb;
+
+		}
+		case 2: // 8,16 Each pixel is an R,G,B triple.
+		{
+			int red = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
+			int green = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
+			int blue = bitParser.getSampleAsByte(pixelIndexInScanline, 2);
+
+			int rgb = getPixelRGB(red, green, blue);
+
+			if (transparencyFilter != null)
+				rgb = transparencyFilter.filter(rgb, -1);
+
+			if (gammaCorrection != null)
 			{
-				int red = bitParser.getSampleAsByte(pixel_index_in_scanline, 0);
-				int green = bitParser.getSampleAsByte(pixel_index_in_scanline,
-						1);
-				int blue = bitParser
-						.getSampleAsByte(pixel_index_in_scanline, 2);
-
-				int rgb = getPixelRGB(red, green, blue);
-
-				//				count++;
-				//
-				//				if ((count% 256) == 0)
-				//				{
-				//				this.debugNumber("before: " + count , rgb, 4);
-				//				}
-
-				if (transparencyFilter != null)
-					rgb = transparencyFilter.filter(rgb, -1);
-
-				if (gammaCorrection != null)
-				{
-					int alpha = (0xff000000 & rgb) >> 24; // make sure to preserve transparency
-					red = gammaCorrection.correctSample(red);
-					green = gammaCorrection.correctSample(green);
-					blue = gammaCorrection.correctSample(blue);
-					rgb = getPixelARGB(alpha, red, green, blue);
-				}
-
-				//				if ((count% 256) == 0)
-				//				{
-				//				this.debugNumber("after: " + count , rgb, 4);
-				//				}
-
-				return rgb;
+				int alpha = (0xff000000 & rgb) >> 24; // make sure to preserve
+				// transparency
+				red = gammaCorrection.correctSample(red);
+				green = gammaCorrection.correctSample(green);
+				blue = gammaCorrection.correctSample(blue);
+				rgb = getPixelARGB(alpha, red, green, blue);
 			}
-				//					   
-			case 3 : //     1,2,4,8     Each pixel is a palette index;
-				//					                       a PLTE chunk must appear.
+
+			return rgb;
+		}
+			//					   
+		case 3: // 1,2,4,8 Each pixel is a palette index;
+			// a PLTE chunk must appear.
+		{
+			int index = bitParser.getSample(pixelIndexInScanline, 0);
+
+			int rgb = pngChunkPLTE.getRGB(index);
+
+			if (transparencyFilter != null)
+				rgb = transparencyFilter.filter(rgb, index);
+
+			return rgb;
+		}
+		case 4: // 8,16 Each pixel is a grayscale sample,
+			// followed by an alpha sample.
+		{
+			int sample = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
+			int alpha = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
+
+			if (gammaCorrection != null)
+				sample = gammaCorrection.correctSample(sample);
+
+			int rgb = getPixelARGB(alpha, sample, sample, sample);
+			return rgb;
+
+		}
+		case 6: // 8,16 Each pixel is an R,G,B triple,
+		{
+			int red = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
+			int green = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
+			int blue = bitParser.getSampleAsByte(pixelIndexInScanline, 2);
+			int alpha = bitParser.getSampleAsByte(pixelIndexInScanline, 3);
+
+			if (gammaCorrection != null)
 			{
-				int index = bitParser.getSample(pixel_index_in_scanline, 0);
-
-				int rgb = fPNGChunkPLTE.getRGB(index);
-
-				if (transparencyFilter != null)
-					rgb = transparencyFilter.filter(rgb, index);
-
-				return rgb;
-				//				return 0xffff0000;
+				red = gammaCorrection.correctSample(red);
+				green = gammaCorrection.correctSample(green);
+				blue = gammaCorrection.correctSample(blue);
 			}
-			case 4 : //     8,16        Each pixel is a grayscale sample,
-				//					                       followed by an alpha sample.
-			{
-				int sample = bitParser.getSampleAsByte(pixel_index_in_scanline,
-						0);
-				int alpha = bitParser.getSampleAsByte(pixel_index_in_scanline,
-						1);
 
-				if (gammaCorrection != null)
-					sample = gammaCorrection.correctSample(sample);
-
-				int rgb = getPixelARGB(alpha, sample, sample, sample);
-				return rgb;
-
-			}
-			case 6 : //    8,16        Each pixel is an R,G,B triple,
-			{
-				int red = bitParser.getSampleAsByte(pixel_index_in_scanline, 0);
-				int green = bitParser.getSampleAsByte(pixel_index_in_scanline,
-						1);
-				int blue = bitParser
-						.getSampleAsByte(pixel_index_in_scanline, 2);
-				int alpha = bitParser.getSampleAsByte(pixel_index_in_scanline,
-						3);
-
-				if (gammaCorrection != null)
-				{
-					red = gammaCorrection.correctSample(red);
-					green = gammaCorrection.correctSample(green);
-					blue = gammaCorrection.correctSample(blue);
-				}
-
-				int rgb = getPixelARGB(alpha, red, green, blue);
-				return rgb;
-			}
-			default :
-				throw new ImageReadException("PNG: unknown color type: "
-						+ colorType);
+			int rgb = getPixelARGB(alpha, red, green, blue);
+			return rgb;
+		}
+		default:
+			throw new ImageReadException("PNG: unknown color type: "
+					+ colorType);
 		}
 	}
 
@@ -225,39 +190,37 @@ public abstract class ScanExpediter extends BinaryFileParser
 
 		switch (filter_type)
 		{
-			case 0 : //None
-				filter = new ScanlineFilterNone();
-				break;
+		case 0: // None
+			filter = new ScanlineFilterNone();
+			break;
 
-			case 1 : // Sub
-				filter = new ScanlineFilterSub(BytesPerPixel);
-				break;
+		case 1: // Sub
+			filter = new ScanlineFilterSub(BytesPerPixel);
+			break;
 
-			case 2 : //Up
-				filter = new ScanlineFilterUp(BytesPerPixel);
-				break;
+		case 2: // Up
+			filter = new ScanlineFilterUp(BytesPerPixel);
+			break;
 
-			case 3 : // Average
-				filter = new ScanlineFilterAverage(BytesPerPixel);
-				break;
+		case 3: // Average
+			filter = new ScanlineFilterAverage(BytesPerPixel);
+			break;
 
-			case 4 : // Paeth
-				filter = new ScanlineFilterPaeth(BytesPerPixel);
-				break;
+		case 4: // Paeth
+			filter = new ScanlineFilterPaeth(BytesPerPixel);
+			break;
 
-			default :
-				throw new ImageReadException("PNG: unknown filter_type: "
-						+ filter_type);
+		default:
+			throw new ImageReadException("PNG: unknown filter_type: "
+					+ filter_type);
 
 		}
 
 		return filter;
 	}
 
-	protected byte[] unfilterScanline(
-	//			int filter_method,
-			int filter_type, byte src[], byte prev[], int BytesPerPixel)
-			throws ImageReadException, IOException
+	protected byte[] unfilterScanline(int filter_type, byte src[], byte prev[],
+			int BytesPerPixel) throws ImageReadException, IOException
 	{
 		ScanlineFilter filter = getScanlineFilter(filter_type, BytesPerPixel);
 
@@ -272,9 +235,7 @@ public abstract class ScanExpediter extends BinaryFileParser
 		int filter_type = is.read();
 		if (filter_type < 0)
 			throw new ImageReadException("PNG: missing filter type");
-		//			System.out.println("\t" + "filter: " + filter_type);
 
-		//				byte unfiltered[] = new byte[length];
 		byte scanline[] = this.readByteArray("scanline", length, is,
 				"PNG: missing image data");
 

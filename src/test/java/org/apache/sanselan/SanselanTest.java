@@ -27,14 +27,22 @@ import junit.framework.TestCase;
 import org.apache.sanselan.test.util.FSTraversal;
 import org.apache.sanselan.util.Debug;
 
-public abstract class SanselanTest extends TestCase
-		implements
-			SanselanConstants
+public abstract class SanselanTest extends TestCase implements
+		SanselanConstants
 {
-	//	public SanselanTest(String name)
-	//	{
-	//		super(name);
-	//	}
+
+	protected File createTempFile(String prefix, String suffix)
+			throws IOException
+	{
+		File tempFolder = new File("temp");
+		if (!tempFolder.exists())
+			tempFolder.mkdirs();
+		assertTrue(tempFolder.isDirectory());
+
+		File result = File.createTempFile(prefix, suffix, tempFolder);
+//		result.deleteOnExit();
+		return result;
+	}
 
 	public void compareByteArrays(byte a[], byte b[])
 	{
@@ -51,8 +59,7 @@ public abstract class SanselanTest extends TestCase
 			Thread.sleep(50);
 			System.runFinalization();
 			Thread.sleep(50);
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			Debug.debug(e);
 		}
@@ -63,37 +70,12 @@ public abstract class SanselanTest extends TestCase
 
 	protected boolean isPhilHarveyTestImage(File file)
 	{
-		//		Debug.debug("isPhilHarveyTestImage file",  file.getAbsolutePath());
-		//		Debug.debug("isPhilHarveyTestImage folder", PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
+		// Debug.debug("isPhilHarveyTestImage file", file.getAbsolutePath());
+		// Debug.debug("isPhilHarveyTestImage folder",
+		// PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
 		return file.getAbsolutePath().startsWith(
 				PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
 	}
-
-	//	protected List getAllTestImages()
-	//	{
-	//		File srcFolder = new File("src");
-	//		File testFolder = new File(srcFolder, "test");
-	//		File dataFolder = new File(testFolder, "data");
-	//		File imagesFolder = new File(dataFolder, "images");
-	//
-	//
-	//		assertTrue(imagesFolder.exists());
-	//
-	//		final List result = new ArrayList();
-	//
-	//		FSTraversal.Visitor visitor = new FSTraversal.Visitor()
-	//		{
-	//			public boolean visit(File file, double progressEstimate)
-	//			{
-	//				if (Sanselan.hasImageFileExtension(file))
-	//					result.add(file);
-	//				return true;
-	//			}
-	//		};
-	//		new FSTraversal().traverseFiles(imagesFolder, visitor);
-	//
-	//		return result;
-	//	}
 
 	public static interface ImageFilter
 	{
@@ -129,24 +111,39 @@ public abstract class SanselanTest extends TestCase
 	protected List getTestImages(final ImageFilter filter, final int max)
 			throws IOException, ImageReadException
 	{
-		
+
 		File srcFolder = new File("src");
 		File testFolder = new File(srcFolder, "test");
 		File dataFolder = new File(testFolder, "data");
 		File imagesFolder = new File(dataFolder, "images");
 
+		 imagesFolder = new File(imagesFolder, "ignore\\PngSuite\\BGYN6A16.PNG");
+		// imagesFolder = new File(imagesFolder, "jpg\\3");
+		// imagesFolder = new File(imagesFolder, "");
+		// imagesFolder = new File(imagesFolder,
+		// "exif\\philHarvey\\Nokia\\Nokia5500.jpg");
+//		imagesFolder = new File(imagesFolder, "png\\2\\");
+		// imagesFolder = new File(imagesFolder,
+		// "exif\\drewNoakes\\007_FujiFilm FinePixS1Pro (5).jpg");
+		// src\\test\\data\\images\\exif\\drewNoakes\\007_Nikon D1X.jpg
+		// src\\test\\data\\images\\exif\\drewNoakes\\007_FujiFilm FinePixS1Pro
+		// (5).jpg
+
 		assertTrue(imagesFolder.exists());
+
+		Debug.debug("imagesFolder", imagesFolder);
 
 		final List images = new ArrayList();
 
-		FSTraversal.Visitor visitor = new FSTraversal.Visitor()
-		{
+		FSTraversal.Visitor visitor = new FSTraversal.Visitor() {
 			long counter = 0;
 
 			public boolean visit(File file, double progressEstimate)
 			{
+
 				if (!Sanselan.hasImageFileExtension(file))
 					return true;
+
 				if (counter++ % 10 == 0)
 					Debug.purgeMemory();
 
@@ -154,8 +151,7 @@ public abstract class SanselanTest extends TestCase
 				{
 					if (filter != null && !filter.accept(file))
 						return true;
-				}
-				catch (Exception e)
+				} catch (Exception e)
 				{
 					Debug.debug(e);
 					return false;
@@ -171,14 +167,14 @@ public abstract class SanselanTest extends TestCase
 		new FSTraversal().traverseFiles(imagesFolder, visitor);
 
 		List filtered = new ArrayList();
-		//			long last = System.currentTimeMillis();
+		// long last = System.currentTimeMillis();
 		for (int i = 0; i < images.size(); i++)
 		{
-//			if (i % 10 == 0)
-//				Debug.purgeMemory();
+			// if (i % 10 == 0)
+			// Debug.purgeMemory();
 
 			File file = (File) images.get(i);
-			//				Debug.debug("considering file", file.getAbsoluteFile());
+			// Debug.debug("considering file", file.getAbsoluteFile());
 
 			if (file.getParentFile().getName().toLowerCase().equals("@broken"))
 				continue;

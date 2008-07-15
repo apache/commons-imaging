@@ -21,40 +21,28 @@ import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.formats.png.GammaCorrection;
+import org.apache.sanselan.util.Debug;
 
 public class PNGChunkPLTE extends PNGChunk
 {
 	public final int rgb[];
 
-	//		public final int red[];
-	//		public final int green[];
-	//		public final int blue[];
-
-	public PNGChunkPLTE(int Length, int ChunkType, int CRC, byte bytes[])
+	public PNGChunkPLTE(int length, int ChunkType, int CRC, byte bytes[])
 			throws ImageReadException, IOException
 	{
-		super(Length, ChunkType, CRC, bytes);
+		super(length, ChunkType, CRC, bytes);
 
 		ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 
-		if ((Length % 3) != 0)
-			throw new ImageReadException("PLTE: wrong length: " + Length);
+		if ((length % 3) != 0)
+			throw new ImageReadException("PLTE: wrong length: " + length);
 
-		int count = Length / 3;
+		int count = length / 3;
 
 		rgb = new int[count];
-		//			red = new int[count];
-		//			green = new int[count];
-		//			blue = new int[count];
 
 		for (int i = 0; i < count; i++)
 		{
-			//				red[i] = read_byte("red[" + i + "]", is,
-			//				"Not a Valid Png File: PLTE Corrupt");
-			//		green[i] = read_byte("green[" + i + "]", is,
-			//				"Not a Valid Png File: PLTE Corrupt");
-			//		blue[i] = read_byte("blue[" + i + "]", is,
-			//				"Not a Valid Png File: PLTE Corrupt");
 			int red = readByte("red[" + i + "]", is,
 					"Not a Valid Png File: PLTE Corrupt");
 			int green = readByte("green[" + i + "]", is,
@@ -74,11 +62,21 @@ public class PNGChunkPLTE extends PNGChunk
 		return rgb[index];
 	}
 
-	public void correct(GammaCorrection fGammaCorrection)
+	// public void printPalette() {
+	// Debug.debug();
+	// Debug.debug("palette");
+	// for (int i = 0; i < rgb.length; i++) {
+	// Debug.debug("\t" + "palette[" + i + "];", rgb[i] + " (0x"
+	// + Integer.toHexString(rgb[i]) + ")");
+	//
+	// }
+	// Debug.debug();
+	// }
+
+	public void correct(GammaCorrection gammaCorrection)
 	{
 		for (int i = 0; i < rgb.length; i++)
-			//		{int pixel = 
-			rgb[i] = fGammaCorrection.correctARGB(rgb[i]);
+			rgb[i] = gammaCorrection.correctARGB(rgb[i]);
 	}
 
 }

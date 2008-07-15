@@ -107,7 +107,7 @@ public class ScanExpediterInterlaced extends ScanExpediter
 					while (x < width)
 					{
 						visit(x, y, bi, fBitParser, colorType,
-								pixel_index_in_scanline, fPNGChunkPLTE,
+								pixel_index_in_scanline, pngChunkPLTE,
 								gammaCorrection);
 
 						x = x + Col_Increment[pass - 1];

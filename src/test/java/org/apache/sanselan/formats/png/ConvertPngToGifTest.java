@@ -20,75 +20,50 @@ package org.apache.sanselan.formats.png;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.sanselan.ImageFormat;
-import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
-import org.apache.sanselan.SanselanTest;
-import org.apache.sanselan.common.IImageMetadata;
+import org.apache.sanselan.SanselanConstants;
 import org.apache.sanselan.util.Debug;
 
-public class PngReadTest extends PngBaseTest
-{
+public class ConvertPngToGifTest extends PngBaseTest {
 
 
 
 	public void test() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		Debug.debug("start");
+			ImageWriteException {
 
 		List images = getPngImages();
-		for (int i = 0; i < images.size(); i++)
-		{
+		for (int i = 0; i < images.size(); i++) {
 			if (i % 10 == 0)
 				Debug.purgeMemory();
 
 			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
+			
 			if (isInvalidPNGTestFile(imageFile))
-			{
-				try
-				{
-					IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-					// assertNotNull(metadata);
-					fail("Image read should have failed.");
-				} catch (Exception e)
-				{
-				}
+				continue;
+			
+			// Debug.debug("imageFile", imageFile);
+			// Debug.debug();
 
-				try
-				{
-					ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-					// assertNotNull(imageInfo);
-					fail("Image read should have failed.");
-				} catch (Exception e)
-				{
-				}
+			Hashtable params = new Hashtable();
+//			params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-				try
-				{
-					BufferedImage image = Sanselan.getBufferedImage(imageFile);
-					// assertNotNull(image);
-					fail("Image read should have failed.");
-				} catch (Exception e)
-				{
-				}
-			} else
-			{
-				IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-				// assertNotNull(metadata);
+			BufferedImage image = Sanselan.getBufferedImage(imageFile, params);
+			assertNotNull(image);
 
-				ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-				assertNotNull(imageInfo);
+			File outFile = createTempFile(imageFile.getName()+".", ".gif");
+//			Debug.debug("outFile", outFile);
 
-				BufferedImage image = Sanselan.getBufferedImage(imageFile);
-				assertNotNull(image);
-			}
+			Sanselan.writeImage(image, outFile, ImageFormat.IMAGE_FORMAT_GIF,
+					params);
 		}
+		Debug.debug("complete.");
 	}
 
 }

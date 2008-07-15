@@ -23,6 +23,7 @@ import java.io.InputStream;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.formats.png.chunks.PNGChunkPLTE;
 import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
+import org.apache.sanselan.util.Debug;
 
 public class ScanExpediterSimple extends ScanExpediter
 {
@@ -38,17 +39,12 @@ public class ScanExpediterSimple extends ScanExpediter
 
 	public void drive() throws ImageReadException, IOException
 	{
-		//		Debug.debug("width", width);
 		int bitsPerScanLine = bitsPerPixel * width;
-		//		Debug.debug("bitsPerPixel", bitsPerPixel);
-		//		Debug.debug("bitsPerScanLine", bitsPerScanLine);
 		int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
-		//		Debug.debug("pixelBytesPerScanLine", pixelBytesPerScanLine);
 		byte prev[] = null;
 
 		for (int y = 0; y < height; y++)
 		{
-			//			Debug.debug("getNextScanline", y + "/" + height + ", " + pixelBytesPerScanLine);
 
 			byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
 					prev, bytesPerPixel);
@@ -62,26 +58,9 @@ public class ScanExpediterSimple extends ScanExpediter
 			{
 				int rgb = getRGB(bitParser, x);
 
-				//				if (((x + y) % 256) == 0)
-				//				{
-				//					this.debugNumber(x + ", " + y, rgb, 4);
-				//				} 
-				//				this.debugNumber(x + ", " + y, rgb, 4);
-				//				if (y == 0)
-				//					Debug.debug("read " + x + ", " + y, Integer
-				//							.toHexString(rgb));
-
-				//				Debug.debug("pngChunkIHDR.interlaceMethod", pngChunkIHDR.interlaceMethod);
 				bi.setRGB(x, y, rgb);
-				//				buffer.setElem(y * width +x , rgb);
-
-				//				bi.setRGB(x, y, 0xff000000 | rgb);
-				//				bi.setRGB(x, y, 0xff000000);
-				//				bi.setRGB(x, y, 0xffffffff);
 			}
 		}
 
-		//		Debug.debug("bi", bi.getWidth());
-		//		Debug.debug("bi", bi.getHeight());
 	}
 }

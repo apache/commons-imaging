@@ -20,42 +20,40 @@ public class GammaCorrection
 {
 	private static final boolean DEBUG = false;
 
-	//		private final double src_gamma, dst_gamma;
-	private final int lookup_table[];
+	private final int lookupTable[];
 
 	public GammaCorrection(double src_gamma, double dst_gamma)
 	{
-		//			this.src_gamma = src_gamma;
-		//			this.dst_gamma = dst_gamma;
+
 		if (DEBUG)
 		{
 			System.out.println("src_gamma: " + src_gamma);
 			System.out.println("dst_gamma: " + dst_gamma);
 		}
 
-		lookup_table = new int[256];
+		lookupTable = new int[256];
 		for (int i = 0; i < 256; i++)
 		{
-			lookup_table[i] = correctSample(i, src_gamma, dst_gamma);
+			lookupTable[i] = correctSample(i, src_gamma, dst_gamma);
 			if (DEBUG)
 			{
-				System.out.println("lookup_table[" + i + "]: "
-						+ lookup_table[i]);
+				System.out
+						.println("lookup_table[" + i + "]: " + lookupTable[i]);
 			}
 		}
 	}
 
 	public int correctSample(int sample)
 	{
-		return lookup_table[sample];
+		return lookupTable[sample];
 	}
 
 	public int correctARGB(int pixel)
 	{
 		int alpha = (0xff000000) & pixel;
-		int red = (pixel & 0xff) >> 16;
-		int green = (pixel & 0xff) >> 8;
-		int blue = (pixel & 0xff) >> 0;
+		int red = (pixel >> 16) & 0xff;
+		int green = (pixel >> 8) & 0xff;
+		int blue = (pixel >> 0) & 0xff;
 
 		red = correctSample(red);
 		green = correctSample(green);
@@ -69,12 +67,12 @@ public class GammaCorrection
 
 	private int correctSample(int sample, double src_gamma, double dst_gamma)
 	{
-		//			if (kUseAdobeGammaMethod && val <= 32)
-		//			{
-		//				double slope = Math.round(255.0d * Math.pow((32.0 / 255.0d),
-		//						src_gamma / dst_gamma)) / 32.d;
-		//				return (int) (sample * slope);
-		//			}
+		// if (kUseAdobeGammaMethod && val <= 32)
+		// {
+		// double slope = Math.round(255.0d * Math.pow((32.0 / 255.0d),
+		// src_gamma / dst_gamma)) / 32.d;
+		// return (int) (sample * slope);
+		// }
 
 		return (int) Math.round(255.0d * Math.pow((sample / 255.0d), src_gamma
 				/ dst_gamma));

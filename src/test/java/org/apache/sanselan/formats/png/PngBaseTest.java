@@ -31,64 +31,32 @@ import org.apache.sanselan.SanselanTest;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.util.Debug;
 
-public class PngReadTest extends PngBaseTest
+public abstract class PngBaseTest extends SanselanTest
 {
 
-
-
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException
+	private static boolean isPng(File file) throws IOException,
+			ImageReadException
 	{
-		Debug.debug("start");
+		ImageFormat format = Sanselan.guessFormat(file);
+		return format == ImageFormat.IMAGE_FORMAT_PNG;
+	}
 
-		List images = getPngImages();
-		for (int i = 0; i < images.size(); i++)
+	private static final ImageFilter imageFilter = new ImageFilter() {
+		public boolean accept(File file) throws IOException, ImageReadException
 		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
-
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
-			if (isInvalidPNGTestFile(imageFile))
-			{
-				try
-				{
-					IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-					// assertNotNull(metadata);
-					fail("Image read should have failed.");
-				} catch (Exception e)
-				{
-				}
-
-				try
-				{
-					ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-					// assertNotNull(imageInfo);
-					fail("Image read should have failed.");
-				} catch (Exception e)
-				{
-				}
-
-				try
-				{
-					BufferedImage image = Sanselan.getBufferedImage(imageFile);
-					// assertNotNull(image);
-					fail("Image read should have failed.");
-				} catch (Exception e)
-				{
-				}
-			} else
-			{
-				IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-				// assertNotNull(metadata);
-
-				ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-				assertNotNull(imageInfo);
-
-				BufferedImage image = Sanselan.getBufferedImage(imageFile);
-				assertNotNull(image);
-			}
+			return isPng(file);
 		}
+	};
+
+	protected List getPngImages() throws IOException, ImageReadException
+	{
+		return getTestImages(imageFilter);
+	}
+
+	protected boolean isInvalidPNGTestFile(File file)
+	{
+		return (file.getParentFile().getName().equalsIgnoreCase("pngsuite") && file
+				.getName().toLowerCase().startsWith("x"));
 	}
 
 }

@@ -63,6 +63,11 @@ public class BinaryFileParser extends BinaryFileFunctions
 		return byteOrder;
 	}
 
+	protected final int convertByteArrayToInt(String name, int start, byte bytes[])
+	{
+		return convertByteArrayToInt(name, bytes, start, byteOrder);
+	}
+
 	protected final int convertByteArrayToInt(String name, byte bytes[])
 	{
 		return convertByteArrayToInt(name, bytes, byteOrder);
