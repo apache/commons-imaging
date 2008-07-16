@@ -95,8 +95,9 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
 			}
 			catch (ExifRewriter.ExifOverflowException e)
 			{
+				Debug.debug("Ignoring unavoidable ExifOverflowException", e.getMessage());
 				Debug.debug("Error image", imageFile.getAbsoluteFile());
-				Debug.debug(e, 4);
+//				Debug.debug(e, 4);
 			}
 		}
 	}
