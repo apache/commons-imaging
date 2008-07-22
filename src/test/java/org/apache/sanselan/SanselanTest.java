@@ -34,13 +34,13 @@ public abstract class SanselanTest extends TestCase implements
 	protected File createTempFile(String prefix, String suffix)
 			throws IOException
 	{
-		File tempFolder = new File("temp");
+		File tempFolder = new File("tmp");
 		if (!tempFolder.exists())
 			tempFolder.mkdirs();
 		assertTrue(tempFolder.isDirectory());
 
 		File result = File.createTempFile(prefix, suffix, tempFolder);
-//		result.deleteOnExit();
+		result.deleteOnExit();
 		return result;
 	}
 
