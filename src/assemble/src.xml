@@ -1,0 +1,28 @@
+<!--
+I've called this assembly description "src" which is misleading; its actually based on the standard "project" descriptor.
+
+http://maven.apache.org/plugins/maven-assembly-plugin/descriptor-refs.html
+
+-->
+<assembly>
+  <id>src</id>
+  <formats>
+    <format>tar.gz</format>
+<!--
+    <format>tar.bz2</format>
+-->
+    <format>zip</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory></outputDirectory>
+      <useDefaultExcludes>true</useDefaultExcludes>
+      <excludes>
+        <exclude>temp/**</exclude>
+        <exclude>tmp/**</exclude>
+        <exclude>**/target/**</exclude>
+      </excludes>
+    </fileSet>
+  </fileSets>
+</assembly>

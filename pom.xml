@@ -42,9 +42,12 @@
     Keep the description on a single line. Otherwise Maven might generate
     a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
    -->
-  <description>Apache Sanselan... TODO: write description.</description>
+  <description>Apache Sanselan is a pure-Java image library.</description>
   <url>http://sanselan.apache.org/</url>
-
+  <organization>
+  	<url>http://cwiki.apache.org/SANSELAN/</url>
+  </organization>
+  
   <scm>
     <connection>scm:svn:http://svn.apache.org/repos/asf/incubator/sanselan/trunk</connection>
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/incubator/sanselan/trunk</developerConnection>
@@ -82,7 +85,6 @@
           <instructions>
             <Bundle-SymbolicName>${pom.groupId}.${pom.artifactId}</Bundle-SymbolicName>
             <Export-Package>org.apache.sanselan.*</Export-Package>
-            <DynamicImport-Package>sun.misc,edu.stanford.ejalbert,net.n3.nanoxml,uk.co.wilson.xml</DynamicImport-Package>
           </instructions>
         </configuration>
       </plugin>
@@ -168,10 +170,17 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-assembly-plugin</artifactId>
-            <configuration>
+            <configuration>          
+	            <descriptors>
+	            	<descriptor>src/assemble/bin.xml</descriptor>
+	            	<descriptor>src/assemble/src.xml</descriptor>
+	          	</descriptors>
+
               <descriptorRefs>
+<!--
                 <descriptorRef>bin</descriptorRef>
                 <descriptorRef>project</descriptorRef>
+-->
               </descriptorRefs>
             </configuration>
             <executions>
