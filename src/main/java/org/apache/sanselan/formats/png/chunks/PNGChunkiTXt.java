@@ -97,7 +97,7 @@ public class PNGChunkiTXt extends PNGTextChunk
 						compressedTextLength);
 
 				text = new String(new ZLibInflater()
-						.zlibInflate(compressedText), "utf-8");
+						.inflate(compressedText), "utf-8");
 
 			} else
 				text = new String(bytes, index, bytes.length - index, "utf-8");

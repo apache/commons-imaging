@@ -51,7 +51,7 @@ public class PNGChunkzTXt extends PNGTextChunk
 			System.arraycopy(bytes, index + 1 + 1, compressedText, 0,
 					compressedTextLength);
 
-			text = new String(new ZLibInflater().zlibInflate(compressedText),
+			text = new String(new ZLibInflater().inflate(compressedText),
 					"ISO-8859-1");
 		}
 	}

@@ -23,18 +23,11 @@ public interface PngConstants extends SanselanConstants
 
 	public static final int COMPRESSION_DEFLATE_INFLATE = 0;
 
-	public final static byte[] IHDR_CHUNK_TYPE = new byte[]{
-			73, 72, 68, 82
-	};
-	public final static byte[] PLTE_CHUNK_TYPE = new byte[]{
-			80, 76, 84, 69
-	};
-	public final static byte[] IEND_CHUNK_TYPE = new byte[]{
-			73, 69, 78, 68
-	};
-	public final static byte[] IDAT_CHUNK_TYPE = new byte[]{
-			73, 68, 65, 84
-	};
+	public final static byte[] IHDR_CHUNK_TYPE = new byte[] { 73, 72, 68, 82 };
+	public final static byte[] PLTE_CHUNK_TYPE = new byte[] { 80, 76, 84, 69 };
+	public final static byte[] IEND_CHUNK_TYPE = new byte[] { 73, 69, 78, 68 };
+	public final static byte[] IDAT_CHUNK_TYPE = new byte[] { 73, 68, 65, 84 };
+	public final static byte[] iTXt_CHUNK_TYPE = new byte[] { 105, 84, 88, 116 };
 
 	public final static int IEND = PngImageParser.CharsToQuad('I', 'E', 'N',
 			'D');
@@ -57,22 +50,21 @@ public interface PngConstants extends SanselanConstants
 	public final static int gAMA = PngImageParser.CharsToQuad('g', 'A', 'M',
 			'A');
 	public final static int sRGB = PngImageParser.CharsToQuad('s', 'R', 'G',
-	'B');
-	
+			'B');
+
 	// XMP chunk type.
 	public final static int iTXt = PngImageParser.CharsToQuad('i', 'T', 'X',
-	't');
+			't');
 
-	public static final byte PNG_Signature[] = {
-			(byte) 137, 80, 78, 71, 13, 10, 26, 10,
-	};
+	public static final byte PNG_Signature[] = { (byte) 137, 80, 78, 71, 13,
+			10, 26, 10, };
 
 	public static final String PARAM_KEY_PNG_BIT_DEPTH = "PNG_BIT_DEPTH";
 	public static final String PARAM_KEY_PNG_FORCE_INDEXED_COLOR = "PNG_FORCE_INDEXED_COLOR";
 	public static final String PARAM_KEY_PNG_FORCE_TRUE_COLOR = "PNG_FORCE_TRUE_COLOR";
 
-	//	public static final Object PARAM_KEY_PNG_BIT_DEPTH_YES = "YES";
-	//	public static final Object PARAM_KEY_PNG_BIT_DEPTH_NO = "NO";
+	// public static final Object PARAM_KEY_PNG_BIT_DEPTH_YES = "YES";
+	// public static final Object PARAM_KEY_PNG_BIT_DEPTH_NO = "NO";
 
 	public static final int COLOR_TYPE_GREYSCALE = 0;
 	public static final int COLOR_TYPE_TRUE_COLOR = 2;
@@ -93,19 +85,27 @@ public interface PngConstants extends SanselanConstants
 	public static final byte FILTER_TYPE_PAETH = 4;
 
 	/*
-	 Background colour 	Solid background colour to be used when presenting the image if no better option is available.
-	 Gamma and chromaticity 	Gamma characteristic of the image with respect to the desired output intensity, and chromaticity characteristics of the RGB values used in the image.
-	 ICC profile 	Description of the colour space (in the form of an International Color Consortium (ICC) profile) to which the samples in the image conform.
-	 Image histogram 	Estimates of how frequently the image uses each palette entry.
-	 Physical pixel dimensions 	Intended pixel size and aspect ratio to be used in presenting the PNG image.
-	 Significant bits 	The number of bits that are significant in the samples.
-	 sRGB colour space 	A rendering intent (as defined by the International Color Consortium) and an indication that the image samples conform to this colour space.
-	 Suggested palette 	A reduced palette that may be used when the display device is not capable of displaying the full range of colours in the image.
-	 Textual data 	Textual information (which may be compressed) associated with the image.
-	 Time 	The time when the PNG image was last modified.
-	 Transparency 	Alpha information that allows the reference image to be reconstructed when the alpha channel is not retained in the PNG image.
+	 * Background colour Solid background colour to be used when presenting the
+	 * image if no better option is available. Gamma and chromaticity Gamma
+	 * characteristic of the image with respect to the desired output intensity,
+	 * and chromaticity characteristics of the RGB values used in the image. ICC
+	 * profile Description of the colour space (in the form of an International
+	 * Color Consortium (ICC) profile) to which the samples in the image
+	 * conform. Image histogram Estimates of how frequently the image uses each
+	 * palette entry. Physical pixel dimensions Intended pixel size and aspect
+	 * ratio to be used in presenting the PNG image. Significant bits The number
+	 * of bits that are significant in the samples. sRGB colour space A
+	 * rendering intent (as defined by the International Color Consortium) and
+	 * an indication that the image samples conform to this colour space.
+	 * Suggested palette A reduced palette that may be used when the display
+	 * device is not capable of displaying the full range of colours in the
+	 * image. Textual data Textual information (which may be compressed)
+	 * associated with the image. Time The time when the PNG image was last
+	 * modified. Transparency Alpha information that allows the reference image
+	 * to be reconstructed when the alpha channel is not retained in the PNG
+	 * image.
 	 */
-	
-	public final String XMP_KEYWORD = 	"XML:com.adobe.xmp";
+
+	public final String XMP_KEYWORD = "XML:com.adobe.xmp";
 
 }

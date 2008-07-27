@@ -64,7 +64,7 @@ public class PNGChunkiCCP extends PNGChunk
 			}
 
 			UncompressedProfile = new ZLibInflater()
-					.zlibInflate(CompressedProfile);
+					.inflate(CompressedProfile);
 
 			if (getDebug())
 			{

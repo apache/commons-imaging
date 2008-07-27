@@ -18,18 +18,25 @@ package org.apache.sanselan.common;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.zip.DeflaterInputStream;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.sanselan.ImageReadException;
 
 public class ZLibInflater extends BinaryFileFunctions
 {
-	public final byte[] zlibInflate(byte bytes[]) throws ImageReadException,
-			IOException
+	public final byte[] inflate(byte bytes[]) throws IOException
 	// slow, probably.
 	{
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		InflaterInputStream zIn = new InflaterInputStream(in);
+		return getStreamBytes(zIn);
+	}
+
+	public final byte[] deflate(byte bytes[]) throws IOException
+	{
+		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+		DeflaterInputStream zIn = new DeflaterInputStream(in);
 		return getStreamBytes(zIn);
 	}
 

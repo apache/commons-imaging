@@ -35,12 +35,9 @@ import org.apache.sanselan.formats.tiff.TiffElement;
 import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
-public abstract class TiffImageWriterBase
-		implements
-			TiffConstants,
-			BinaryConstants
+public abstract class TiffImageWriterBase implements TiffConstants,
+		BinaryConstants
 {
-
 
 	protected final int byteOrder;
 
@@ -69,7 +66,7 @@ public abstract class TiffImageWriterBase
 
 		if (1 > directories.size())
 			throw new ImageWriteException("No directories.");
-		
+
 		TiffOutputDirectory exifDirectory = null;
 		TiffOutputDirectory gpsDirectory = null;
 		TiffOutputDirectory interoperabilityDirectory = null;
@@ -86,46 +83,45 @@ public abstract class TiffImageWriterBase
 			int dirType = directory.type;
 			Integer key = new Integer(dirType);
 			directoryTypeMap.put(key, directory);
-			//			Debug.debug("validating dirType", dirType + " ("
-			//					+ directory.getFields().size() + " fields)");
+			// Debug.debug("validating dirType", dirType + " ("
+			// + directory.getFields().size() + " fields)");
 
 			if (dirType < 0)
 			{
 				switch (dirType)
 				{
-					case DIRECTORY_TYPE_EXIF :
-						if (exifDirectory != null)
-							throw new ImageWriteException(
-									"More than one EXIF directory.");
-						exifDirectory = directory;
-						break;
+				case DIRECTORY_TYPE_EXIF:
+					if (exifDirectory != null)
+						throw new ImageWriteException(
+								"More than one EXIF directory.");
+					exifDirectory = directory;
+					break;
 
-					case DIRECTORY_TYPE_GPS :
-						if (gpsDirectory != null)
-							throw new ImageWriteException(
-									"More than one GPS directory.");
-						gpsDirectory = directory;
-						break;
+				case DIRECTORY_TYPE_GPS:
+					if (gpsDirectory != null)
+						throw new ImageWriteException(
+								"More than one GPS directory.");
+					gpsDirectory = directory;
+					break;
 
-					case DIRECTORY_TYPE_INTEROPERABILITY :
-						if (interoperabilityDirectory != null)
-							throw new ImageWriteException(
-									"More than one Interoperability directory.");
-						interoperabilityDirectory = directory;
-						break;
-					default :
-						throw new ImageWriteException("Unknown directory: "
-								+ dirType);
+				case DIRECTORY_TYPE_INTEROPERABILITY:
+					if (interoperabilityDirectory != null)
+						throw new ImageWriteException(
+								"More than one Interoperability directory.");
+					interoperabilityDirectory = directory;
+					break;
+				default:
+					throw new ImageWriteException("Unknown directory: "
+							+ dirType);
 				}
-			}
-			else
+			} else
 			{
 				if (directoryIndices.contains(key))
 					throw new ImageWriteException(
 							"More than one directory with index: " + dirType
 									+ ".");
 				directoryIndices.add(new Integer(dirType));
-				//				dirMap.put(arg0, arg1)
+				// dirMap.put(arg0, arg1)
 			}
 
 			HashSet fieldTags = new HashSet();
@@ -147,15 +143,13 @@ public abstract class TiffImageWriterBase
 						throw new ImageWriteException(
 								"More than one Exif directory offset field.");
 					exifDirectoryOffsetField = field;
-				}
-				else if (field.tag == EXIF_TAG_INTEROP_OFFSET.tag)
+				} else if (field.tag == EXIF_TAG_INTEROP_OFFSET.tag)
 				{
 					if (interoperabilityDirectoryOffsetField != null)
 						throw new ImageWriteException(
 								"More than one Interoperability directory offset field.");
 					interoperabilityDirectoryOffsetField = field;
-				}
-				else if (field.tag == EXIF_TAG_GPSINFO.tag)
+				} else if (field.tag == EXIF_TAG_GPSINFO.tag)
 				{
 					if (gpsDirectoryOffsetField != null)
 						throw new ImageWriteException(
@@ -163,13 +157,14 @@ public abstract class TiffImageWriterBase
 					gpsDirectoryOffsetField = field;
 				}
 			}
-			//			directory.
+			// directory.
 		}
 
 		if (directoryIndices.size() < 1)
 			throw new ImageWriteException("Missing root directory.");
 
-		// "normal" TIFF directories should have continous indices starting with 0, ie. 0, 1, 2...
+		// "normal" TIFF directories should have continous indices starting with
+		// 0, ie. 0, 1, 2...
 		Collections.sort(directoryIndices);
 
 		TiffOutputDirectory previousDirectory = null;
@@ -200,8 +195,7 @@ public abstract class TiffImageWriterBase
 			// perhaps we should just discard field?
 			throw new ImageWriteException(
 					"Output set has Interoperability Directory Offset field, but no Interoperability Directory");
-		}
-		else if (interoperabilityDirectory != null)
+		} else if (interoperabilityDirectory != null)
 		{
 			if (exifDirectory == null)
 			{
@@ -225,8 +219,7 @@ public abstract class TiffImageWriterBase
 			// perhaps we should just discard field?
 			throw new ImageWriteException(
 					"Output set has Exif Directory Offset field, but no Exif Directory");
-		}
-		else if (exifDirectory != null)
+		} else if (exifDirectory != null)
 		{
 			if (exifDirectoryOffsetField == null)
 			{
@@ -243,8 +236,7 @@ public abstract class TiffImageWriterBase
 			// perhaps we should just discard field?
 			throw new ImageWriteException(
 					"Output set has GPS Directory Offset field, but no GPS Directory");
-		}
-		else if (gpsDirectory != null)
+		} else if (gpsDirectory != null)
 		{
 			if (gpsDirectoryOffsetField == null)
 			{
@@ -258,18 +250,19 @@ public abstract class TiffImageWriterBase
 
 		return result;
 
-		//		Debug.debug();
+		// Debug.debug();
 	}
 
 	public void writeImage(BufferedImage src, OutputStream os, Map params)
 			throws ImageWriteException, IOException
 	{
-		//        writeImageNew(src, os, params);
-		//    }
+		// writeImageNew(src, os, params);
+		// }
 		//
-		//    public void writeImageNew(BufferedImage src, OutputStream os, Map params)
-		//            throws ImageWriteException, IOException
-		//    {
+		// public void writeImageNew(BufferedImage src, OutputStream os, Map
+		// params)
+		// throws ImageWriteException, IOException
+		// {
 
 		// make copy of params; we'll clear keys as we consume them.
 		params = new HashMap(params);
@@ -278,16 +271,24 @@ public abstract class TiffImageWriterBase
 		if (params.containsKey(PARAM_KEY_FORMAT))
 			params.remove(PARAM_KEY_FORMAT);
 
+		String xmpXml = null;
+		if (params.containsKey(PARAM_KEY_XMP_XML))
+		{
+			xmpXml = (String) params.get(PARAM_KEY_XMP_XML);
+			params.remove(PARAM_KEY_XMP_XML);
+		}
+
 		int width = src.getWidth();
 		int height = src.getHeight();
 
-		//        BinaryOutputStream bos = new BinaryOutputStream(os, WRITE_BYTE_ORDER);
+		// BinaryOutputStream bos = new BinaryOutputStream(os,
+		// WRITE_BYTE_ORDER);
 		//
-		//        writeImageFileHeader(bos, WRITE_BYTE_ORDER);
+		// writeImageFileHeader(bos, WRITE_BYTE_ORDER);
 
-		//        ArrayList directoryFields = new ArrayList();
+		// ArrayList directoryFields = new ArrayList();
 
-		final int photometricInterpretation = 2; // TODO: 
+		final int photometricInterpretation = 2; // TODO:
 
 		int compression = TIFF_COMPRESSION_LZW; // LZW is default
 		if (params.containsKey(PARAM_KEY_COMPRESSION))
@@ -303,18 +304,18 @@ public abstract class TiffImageWriterBase
 			params.remove(PARAM_KEY_COMPRESSION);
 		}
 
-		final int samplesPerPixel = 3; // TODO: 
-		final int bitsPerSample = 8; // TODO: 
+		final int samplesPerPixel = 3; // TODO:
+		final int bitsPerSample = 8; // TODO:
 
-		//        int fRowsPerStrip; // TODO: 
-		int rowsPerStrip = 8000 / (width * samplesPerPixel); // TODO: 
+		// int fRowsPerStrip; // TODO:
+		int rowsPerStrip = 8000 / (width * samplesPerPixel); // TODO:
 		rowsPerStrip = Math.max(1, rowsPerStrip); // must have at least one.
 
 		byte strips[][] = getStrips(src, samplesPerPixel, bitsPerSample,
 				rowsPerStrip);
 
-		//        int stripCount = (height + fRowsPerStrip - 1) / fRowsPerStrip;
-		//        int stripCount = strips.length;
+		// int stripCount = (height + fRowsPerStrip - 1) / fRowsPerStrip;
+		// int stripCount = strips.length;
 
 		if (params.size() > 0)
 		{
@@ -322,18 +323,17 @@ public abstract class TiffImageWriterBase
 			throw new ImageWriteException("Unknown parameter: " + firstKey);
 		}
 
-		//        System.out.println("width: " + width);
-		//        System.out.println("height: " + height);
-		//        System.out.println("fRowsPerStrip: " + fRowsPerStrip);
-		//        System.out.println("fSamplesPerPixel: " + fSamplesPerPixel);
-		//        System.out.println("stripCount: " + stripCount);
+		// System.out.println("width: " + width);
+		// System.out.println("height: " + height);
+		// System.out.println("fRowsPerStrip: " + fRowsPerStrip);
+		// System.out.println("fSamplesPerPixel: " + fSamplesPerPixel);
+		// System.out.println("stripCount: " + stripCount);
 
 		if (compression == TIFF_COMPRESSION_PACKBITS)
 		{
 			for (int i = 0; i < strips.length; i++)
 				strips[i] = new PackBits().compress(strips[i]);
-		}
-		else if (compression == TIFF_COMPRESSION_LZW)
+		} else if (compression == TIFF_COMPRESSION_LZW)
 		{
 			for (int i = 0; i < strips.length; i++)
 			{
@@ -347,12 +347,10 @@ public abstract class TiffImageWriterBase
 
 				strips[i] = compressed;
 			}
-		}
-		else if (compression == TIFF_COMPRESSION_UNCOMPRESSED)
+		} else if (compression == TIFF_COMPRESSION_UNCOMPRESSED)
 		{
 			// do nothing.
-		}
-		else
+		} else
 			throw new ImageWriteException(
 					"Invalid compression parameter (Only LZW, Packbits and uncompressed supported).");
 
@@ -361,85 +359,79 @@ public abstract class TiffImageWriterBase
 			imageData[i] = new TiffImageData.Data(0, strips[i].length,
 					strips[i]);
 
-		//        int stripOffsets[] = new int[stripCount];
-		//        int stripByteCounts[] = new int[stripCount];
+		// int stripOffsets[] = new int[stripCount];
+		// int stripByteCounts[] = new int[stripCount];
 		//
-		//        for (int i = 0; i < strips.length; i++)
-		//            stripByteCounts[i] = strips[i].length;
+		// for (int i = 0; i < strips.length; i++)
+		// stripByteCounts[i] = strips[i].length;
 
 		TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
 		TiffOutputDirectory directory = outputSet.addRootDirectory();
 
-		//        WriteField stripOffsetsField;
+		// WriteField stripOffsetsField;
 
 		{
 			{
 				TiffOutputField field = new TiffOutputField(
 						TIFF_TAG_IMAGE_WIDTH, FIELD_TYPE_LONG, 1,
-						FIELD_TYPE_LONG.writeData(new int[]{
-							width,
-						}, byteOrder));
+						FIELD_TYPE_LONG.writeData(new int[] { width, },
+								byteOrder));
 				directory.add(field);
 			}
 			{
 				TiffOutputField field = new TiffOutputField(
 						TIFF_TAG_IMAGE_LENGTH, FIELD_TYPE_LONG, 1,
-						FIELD_TYPE_LONG.writeData(new int[]{
-							height,
-						}, byteOrder));
+						FIELD_TYPE_LONG.writeData(new int[] { height, },
+								byteOrder));
 				directory.add(field);
 			}
 			{
 				TiffOutputField field = new TiffOutputField(
 						TIFF_TAG_PHOTOMETRIC_INTERPRETATION, FIELD_TYPE_SHORT,
-						1, FIELD_TYPE_SHORT.writeData(new int[]{
-							photometricInterpretation,
-						}, byteOrder));
+						1, FIELD_TYPE_SHORT.writeData(
+								new int[] { photometricInterpretation, },
+								byteOrder));
 				directory.add(field);
 			}
 			{
 				TiffOutputField field = new TiffOutputField(
 						TIFF_TAG_COMPRESSION, FIELD_TYPE_SHORT, 1,
-						FIELD_TYPE_SHORT.writeData(new int[]{
-							compression,
-						}, byteOrder));
+						FIELD_TYPE_SHORT.writeData(new int[] { compression, },
+								byteOrder));
 				directory.add(field);
 			}
 			{
 				TiffOutputField field = new TiffOutputField(
 						TIFF_TAG_SAMPLES_PER_PIXEL, FIELD_TYPE_SHORT, 1,
-						FIELD_TYPE_SHORT.writeData(new int[]{
-							samplesPerPixel,
-						}, byteOrder));
+						FIELD_TYPE_SHORT.writeData(
+								new int[] { samplesPerPixel, }, byteOrder));
 				directory.add(field);
 			}
 			{
 				TiffOutputField field = new TiffOutputField(
 						TIFF_TAG_BITS_PER_SAMPLE, FIELD_TYPE_SHORT, 3,
-						FIELD_TYPE_SHORT.writeData(new int[]{
-								bitsPerSample, bitsPerSample, bitsPerSample,
-						}, byteOrder));
+						FIELD_TYPE_SHORT.writeData(new int[] { bitsPerSample,
+								bitsPerSample, bitsPerSample, }, byteOrder));
 				directory.add(field);
 			}
-			//            {
-			//                stripOffsetsField = new WriteField(TIFF_TAG_STRIP_OFFSETS,
-			//                        FIELD_TYPE_LONG, stripOffsets.length, FIELD_TYPE_LONG
-			//                                .writeData(stripOffsets, byteOrder));
-			//                directory.add(stripOffsetsField);
-			//            }
-			//            {
-			//                WriteField field = new WriteField(TIFF_TAG_STRIP_BYTE_COUNTS,
-			//                        FIELD_TYPE_LONG, stripByteCounts.length,
-			//                        FIELD_TYPE_LONG.writeData(stripByteCounts,
-			//                                WRITE_BYTE_ORDER));
-			//                directory.add(field);
-			//            }
+			// {
+			// stripOffsetsField = new WriteField(TIFF_TAG_STRIP_OFFSETS,
+			// FIELD_TYPE_LONG, stripOffsets.length, FIELD_TYPE_LONG
+			// .writeData(stripOffsets, byteOrder));
+			// directory.add(stripOffsetsField);
+			// }
+			// {
+			// WriteField field = new WriteField(TIFF_TAG_STRIP_BYTE_COUNTS,
+			// FIELD_TYPE_LONG, stripByteCounts.length,
+			// FIELD_TYPE_LONG.writeData(stripByteCounts,
+			// WRITE_BYTE_ORDER));
+			// directory.add(field);
+			// }
 			{
 				TiffOutputField field = new TiffOutputField(
 						TIFF_TAG_ROWS_PER_STRIP, FIELD_TYPE_LONG, 1,
-						FIELD_TYPE_LONG.writeData(new int[]{
-							rowsPerStrip,
-						}, byteOrder));
+						FIELD_TYPE_LONG.writeData(new int[] { rowsPerStrip, },
+								byteOrder));
 				directory.add(field);
 			}
 
@@ -447,9 +439,8 @@ public abstract class TiffImageWriterBase
 				int resolutionUnit = 2;// inches.
 				TiffOutputField field = new TiffOutputField(
 						TIFF_TAG_RESOLUTION_UNIT, FIELD_TYPE_SHORT, 1,
-						FIELD_TYPE_SHORT.writeData(new int[]{
-							resolutionUnit,
-						}, byteOrder));
+						FIELD_TYPE_SHORT.writeData(
+								new int[] { resolutionUnit, }, byteOrder));
 				directory.add(field);
 			}
 
@@ -468,6 +459,15 @@ public abstract class TiffImageWriterBase
 						TIFF_TAG_YRESOLUTION, FIELD_TYPE_RATIONAL, 1,
 						FIELD_TYPE_RATIONAL
 								.writeData(yResolution, 1, byteOrder));
+				directory.add(field);
+			}
+
+			if (null != xmpXml)
+			{
+				byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
+
+				TiffOutputField field = new TiffOutputField(TIFF_TAG_XMP,
+						FIELD_TYPE_BYTE, xmpXmlBytes.length, xmpXmlBytes);
 				directory.add(field);
 			}
 
