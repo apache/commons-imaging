@@ -49,9 +49,8 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
 			File imageFile = (File) images.get(i);
 			Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-			File tempFile = File.createTempFile("test", ".jpg");
+			File tempFile = createTempFile("test", ".jpg");
 			Debug.debug("tempFile", tempFile.getAbsoluteFile());
-			tempFile.deleteOnExit();
 
 			try
 			{
@@ -81,9 +80,8 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
 			File imageFile = (File) images.get(i);
 			Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-			File tempFile = File.createTempFile("test", ".jpg");
+			File tempFile = createTempFile("test", ".jpg");
 			Debug.debug("tempFile", tempFile.getAbsoluteFile());
-			tempFile.deleteOnExit();
 
 			try
 			{

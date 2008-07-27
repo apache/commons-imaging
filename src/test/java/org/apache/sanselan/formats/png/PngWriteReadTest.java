@@ -141,9 +141,7 @@ public class PngWriteReadTest extends SanselanTest
 
 		//		Debug.debug("bytes", bytes);
 
-		File tmpDirectory = new File("tmp");
-		File tempFile = File.createTempFile("temp", ".png", tmpDirectory);
-		tempFile.deleteOnExit();
+		File tempFile = createTempFile("temp", ".png");
 		IOUtils.writeToFile(bytes, tempFile);
 
 		BufferedImage dstImage = Sanselan.getBufferedImage(bytes);

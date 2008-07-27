@@ -28,20 +28,14 @@ import org.apache.sanselan.SanselanTest;
 
 public abstract class ByteSourceTest extends SanselanTest
 {
-	//	public ByteSourceTest(String name)
-	//	{
-	//		super(name);
-	//	}
+	// public ByteSourceTest(String name)
+	// {
+	// super(name);
+	// }
 
 	protected File createTempFile(byte src[]) throws IOException
 	{
-		// make temp file directory
-		File tmp = new File(".", "tmp");
-		tmp.mkdirs();
-
-		// create temp file.
-		File file = File.createTempFile("raw_", ".bin", tmp);
-		file.deleteOnExit();
+		File file = createTempFile("raw_", ".bin");
 
 		// write test bytes to file.
 		OutputStream os = new FileOutputStream(file);
@@ -79,8 +73,6 @@ public abstract class ByteSourceTest extends SanselanTest
 		}
 		byte longArray[] = (baos.toByteArray());
 
-		return new byte[][]{
-				emptyArray, single, simple, zeroes, longArray,
-		};
+		return new byte[][] { emptyArray, single, simple, zeroes, longArray, };
 	}
 }

@@ -57,7 +57,11 @@ public interface PngConstants extends SanselanConstants
 	public final static int gAMA = PngImageParser.CharsToQuad('g', 'A', 'M',
 			'A');
 	public final static int sRGB = PngImageParser.CharsToQuad('s', 'R', 'G',
-			'B');
+	'B');
+	
+	// XMP chunk type.
+	public final static int iTXt = PngImageParser.CharsToQuad('i', 'T', 'X',
+	't');
 
 	public static final byte PNG_Signature[] = {
 			(byte) 137, 80, 78, 71, 13, 10, 26, 10,
@@ -101,4 +105,7 @@ public interface PngConstants extends SanselanConstants
 	 Time 	The time when the PNG image was last modified.
 	 Transparency 	Alpha information that allows the reference image to be reconstructed when the alpha channel is not retained in the PNG image.
 	 */
+	
+	public final String XMP_KEYWORD = 	"XML:com.adobe.xmp";
+
 }

@@ -81,9 +81,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				new ExifRewriter().removeExifMetadata(byteSource, baos);
 				byte bytes[] = baos.toByteArray();
-				File tempFile = File.createTempFile("test", ".jpg");
+				File tempFile = createTempFile("test", ".jpg");
 				Debug.debug("tempFile", tempFile);
-				tempFile.deleteOnExit();
 				IOUtils.writeToFile(bytes, tempFile);
 
 				Debug.debug("Output Segments:");
@@ -126,9 +125,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				new ExifRewriter().removeExifMetadata(byteSource, baos);
 				byte bytes[] = baos.toByteArray();
-				File tempFile = File.createTempFile("removed", ".jpg");
+				File tempFile = createTempFile("removed", ".jpg");
 				Debug.debug("tempFile", tempFile);
-				tempFile.deleteOnExit();
 				IOUtils.writeToFile(bytes, tempFile);
 
 				Debug.debug("Output Segments:");
@@ -148,9 +146,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 						outputSet);
 
 				byte bytes[] = baos.toByteArray();
-				File tempFile = File.createTempFile("inserted" + "_", ".jpg");
+				File tempFile = createTempFile("inserted" + "_", ".jpg");
 				Debug.debug("tempFile", tempFile);
-				//			tempFile.deleteOnExit();
 				IOUtils.writeToFile(bytes, tempFile);
 
 				Debug.debug("Output Segments:");
@@ -223,9 +220,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				rewriter.rewrite(byteSource, baos, outputSet);
 				byte bytes[] = baos.toByteArray();
-				File tempFile = File.createTempFile(name + "_", ".jpg");
+				File tempFile = createTempFile(name + "_", ".jpg");
 				Debug.debug("tempFile", tempFile);
-				//			tempFile.deleteOnExit();
 				IOUtils.writeToFile(bytes, tempFile);
 
 				Debug.debug("Output Segments:");

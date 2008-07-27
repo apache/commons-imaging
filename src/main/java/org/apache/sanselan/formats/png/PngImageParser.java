@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.InflaterInputStream;
 
@@ -48,6 +49,7 @@ import org.apache.sanselan.formats.png.chunks.PNGChunkIHDR;
 import org.apache.sanselan.formats.png.chunks.PNGChunkPLTE;
 import org.apache.sanselan.formats.png.chunks.PNGChunkgAMA;
 import org.apache.sanselan.formats.png.chunks.PNGChunkiCCP;
+import org.apache.sanselan.formats.png.chunks.PNGChunkiTXt;
 import org.apache.sanselan.formats.png.chunks.PNGChunkpHYs;
 import org.apache.sanselan.formats.png.chunks.PNGChunktEXt;
 import org.apache.sanselan.formats.png.chunks.PNGChunkzTXt;
@@ -58,7 +60,6 @@ import org.apache.sanselan.formats.transparencyfilters.TransparencyFilterIndexed
 import org.apache.sanselan.formats.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.sanselan.icc.IccProfileParser;
 import org.apache.sanselan.util.Debug;
-import org.apache.sanselan.util.IOUtils;
 import org.apache.sanselan.util.ParamMap;
 
 public class PngImageParser extends ImageParser implements PngConstants
@@ -96,22 +97,22 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 	// private final static int tRNS = CharsToQuad('t', 'R', 'N', 's');
 
-	private boolean keepChunk(int ChunkType, int ChunkTypes[])
+	private boolean keepChunk(int ChunkType, int chunkTypes[])
 	{
 		// System.out.println("keepChunk: ");
-		if (ChunkTypes == null)
+		if (chunkTypes == null)
 			return true;
 
-		for (int i = 0; i < ChunkTypes.length; i++)
+		for (int i = 0; i < chunkTypes.length; i++)
 		{
-			if (ChunkTypes[i] == ChunkType)
+			if (chunkTypes[i] == ChunkType)
 				return true;
 		}
 		return false;
 	}
 
-	private ArrayList readChunks(InputStream is, int ChunkTypes[],
-			boolean return_after_first) throws ImageReadException, IOException
+	private ArrayList readChunks(InputStream is, int chunkTypes[],
+			boolean returnAfterFirst) throws ImageReadException, IOException
 	{
 		ArrayList result = new ArrayList();
 
@@ -128,7 +129,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 				printCharQuad("ChunkType", chunkType);
 				debugNumber("Length", length, 4);
 			}
-			boolean keep = keepChunk(chunkType, ChunkTypes);
+			boolean keep = keepChunk(chunkType, chunkTypes);
 
 			byte bytes[] = null;
 			if (keep)
@@ -162,10 +163,12 @@ public class PngImageParser extends ImageParser implements PngConstants
 					result.add(new PNGChunkIDAT(length, chunkType, CRC, bytes));
 				else if (chunkType == gAMA)
 					result.add(new PNGChunkgAMA(length, chunkType, CRC, bytes));
+				else if (chunkType == iTXt)
+					result.add(new PNGChunkiTXt(length, chunkType, CRC, bytes));
 				else
 					result.add(new PNGChunk(length, chunkType, CRC, bytes));
 
-				if (return_after_first)
+				if (returnAfterFirst)
 					return result;
 			}
 
@@ -186,8 +189,8 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 	}
 
-	private ArrayList readChunks(ByteSource byteSource, int ChunkTypes[],
-			boolean return_after_first) throws ImageReadException, IOException
+	private ArrayList readChunks(ByteSource byteSource, int chunkTypes[],
+			boolean returnAfterFirst) throws ImageReadException, IOException
 	{
 		InputStream is = null;
 
@@ -198,7 +201,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 			ArrayList chunks = null;
 
 			readSignature(is);
-			chunks = readChunks(is, ChunkTypes, return_after_first);
+			chunks = readChunks(is, chunkTypes, returnAfterFirst);
 			return chunks;
 		} finally
 		{
@@ -530,12 +533,12 @@ public class PngImageParser extends ImageParser implements PngConstants
 			for (int i = 0; i < tEXts.size(); i++)
 			{
 				PNGChunktEXt pngChunktEXt = (PNGChunktEXt) tEXts.get(i);
-				Comments.add(pngChunktEXt.Keyword + ": " + pngChunktEXt.Text);
+				Comments.add(pngChunktEXt.keyword + ": " + pngChunktEXt.text);
 			}
 			for (int i = 0; i < zTXts.size(); i++)
 			{
 				PNGChunkzTXt pngChunkzTXt = (PNGChunkzTXt) zTXts.get(i);
-				Comments.add(pngChunkzTXt.Keyword + ": " + pngChunkzTXt.Text);
+				Comments.add(pngChunkzTXt.keyword + ": " + pngChunkzTXt.text);
 			}
 
 			int BitsPerPixel = pngChunkIHDR.bitDepth
@@ -845,7 +848,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 	{
 		new PngWriter(params).writeImage(src, os, params);
 	}
-	
+
 	/**
 	 * Extracts embedded XML metadata as XML string.
 	 * <p>
@@ -854,11 +857,31 @@ public class PngImageParser extends ImageParser implements PngConstants
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present. Otherwise, returns null..
 	 */
 	public String getXmpXml(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
-		// TODO: implement.
-		return null;
+			throws ImageReadException, IOException
+	{
+
+		List chunks = readChunks(byteSource, new int[] { iTXt, }, false);
+
+		if ((chunks == null) || (chunks.size() < 1))
+			return null;
+
+		List xmpChunks = new ArrayList();
+		for (int i = 0; i < chunks.size(); i++)
+		{
+			PNGChunkiTXt chunk = (PNGChunkiTXt) chunks.get(i);
+			if (!chunk.getKeyword().equals(XMP_KEYWORD))
+				continue;
+			xmpChunks.add(chunk);
+		}
+
+		if (xmpChunks.size() < 1)
+			return null;
+
+		PNGChunkiTXt chunk = (PNGChunkiTXt) xmpChunks.get(0);
+		return chunk.getText();
 	}
+
 }

@@ -22,40 +22,26 @@ import org.apache.sanselan.ImageReadException;
 
 public class PNGChunktEXt extends PNGTextChunk
 {
-	//		public final int Length;
-	//		public final int ChunkType;
-	//		public final int CRC;
-	//		public final byte bytes[];
-	public final String Keyword, Text;
+	public final String keyword, text;
 
-	//		public final int CompressionMethod;
-
-	public PNGChunktEXt(int Length, int ChunkType, int CRC, byte bytes[])
+	public PNGChunktEXt(int length, int chunkType, int crc, byte bytes[])
 			throws ImageReadException, IOException
 	{
-		super(Length, ChunkType, CRC, bytes);
-
+		super(length, chunkType, crc, bytes);
 		{
-			//				debug_ByteArray("PNGChunktEXt", bytes);
-
 			int index = findNull(bytes);
 			if (index < 0)
-				throw new ImageReadException("PNGChunktEXt: No Profile Name");
-			byte name_bytes[] = new byte[index];
-			System.arraycopy(bytes, 0, name_bytes, 0, index);
-			Keyword = new String(name_bytes);
+				throw new ImageReadException("PNG tEXt chunk keyword is not terminated.");
 
-			//				CompressionMethod = bytes[index + 1];
+			keyword = new String(bytes, 0, index, "ISO-8859-1");
 
-			int TextLength = bytes.length - (index + 1);
-			byte Text_bytes[] = new byte[TextLength];
-			System.arraycopy(bytes, index + 1, Text_bytes, 0, TextLength);
-			Text = new String(Text_bytes);
+			int textLength = bytes.length - (index + 1);
+			text = new String(bytes, index + 1, textLength, "ISO-8859-1");
 
 			if (getDebug())
 			{
-				System.out.println("Keyword: " + Keyword);
-				System.out.println("Text: " + Text);
+				System.out.println("Keyword: " + keyword);
+				System.out.println("Text: " + text);
 			}
 
 		}
@@ -66,7 +52,7 @@ public class PNGChunktEXt extends PNGTextChunk
 	 */
 	public String getKeyword()
 	{
-		return Keyword;
+		return keyword;
 	}
 
 	/**
@@ -74,6 +60,6 @@ public class PNGChunktEXt extends PNGTextChunk
 	 */
 	public String getText()
 	{
-		return Text;
+		return text;
 	}
 }
