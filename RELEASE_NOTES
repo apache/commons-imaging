@@ -16,7 +16,7 @@ Release 0.95
 ------------
 
  * Improved handling of tEXt and zTXt PNG text blocks.
- * Added XMP XML extraction for the following formats: GIF (untested), JPEG, TIFF, PNG.
+ * Added XMP XML extraction for the following formats: GIF (untested), JPEG, TIFF, PNG, PSD.
  * Added RELEASE_NOTES file (this file).
  * Added Apache license header to bin.xml and src.xml Maven assembly descriptors.
  * Added Javadocs to the binary distribution

@@ -23,7 +23,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.ImageFormat;
@@ -32,6 +34,7 @@ import org.apache.sanselan.ImageParser;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
+import org.apache.sanselan.formats.png.chunks.PNGChunkiTXt;
 import org.apache.sanselan.formats.psd.dataparsers.DataParser;
 import org.apache.sanselan.formats.psd.dataparsers.DataParserBitmap;
 import org.apache.sanselan.formats.psd.dataparsers.DataParserCMYK;
@@ -44,18 +47,22 @@ import org.apache.sanselan.formats.psd.datareaders.DataReader;
 import org.apache.sanselan.formats.psd.datareaders.UncompressedDataReader;
 import org.apache.sanselan.util.Debug;
 
-public class PsdImageParser extends ImageParser {
+public class PsdImageParser extends ImageParser
+{
 
-	public PsdImageParser() {
+	public PsdImageParser()
+	{
 		super.setByteOrder(BYTE_ORDER_MSB);
 		// setDebug(true);
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return "PSD-Custom";
 	}
 
-	public String getDefaultExtension() {
+	public String getDefaultExtension()
+	{
 		return DEFAULT_EXTENSION;
 	}
 
@@ -63,27 +70,34 @@ public class PsdImageParser extends ImageParser {
 
 	private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
 
-	protected String[] getAcceptedExtensions() {
+	protected String[] getAcceptedExtensions()
+	{
 		return ACCEPTED_EXTENSIONS;
 	}
 
-	protected ImageFormat[] getAcceptedTypes() {
+	protected ImageFormat[] getAcceptedTypes()
+	{
 		return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PSD, //
 		};
 	}
 
 	private PSDHeaderInfo readHeader(ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		InputStream is = null;
 
-		try {
+		try
+		{
 			is = byteSource.getInputStream();
 
 			return readHeader(is);
-		} finally {
-			try {
+		} finally
+		{
+			try
+			{
 				is.close();
-			} catch (Exception e) {
+			} catch (Exception e)
+			{
 				Debug.debug(e);
 			}
 
@@ -91,7 +105,8 @@ public class PsdImageParser extends ImageParser {
 	}
 
 	private PSDHeaderInfo readHeader(InputStream is) throws ImageReadException,
-			IOException {
+			IOException
+	{
 		readAndVerifyBytes(is, new byte[] { 56, 66, 80, 83 },
 				"Not a Valid PSD File");
 
@@ -113,7 +128,8 @@ public class PsdImageParser extends ImageParser {
 	}
 
 	private ImageContents readImageContents(InputStream is)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		PSDHeaderInfo header = readHeader(is);
 
 		int ColorModeDataLength = read4Bytes("ColorModeDataLength", is,
@@ -157,49 +173,48 @@ public class PsdImageParser extends ImageParser {
 	}
 
 	private ArrayList readImageResourceBlocks(byte bytes[],
-			int fImageResourceIDs[], int max_blocks_to_read)
-			throws ImageReadException, IOException {
+			int imageResourceIDs[], int maxBlocksToRead)
+			throws ImageReadException, IOException
+	{
 		return readImageResourceBlocks(new ByteArrayInputStream(bytes),
-				fImageResourceIDs, max_blocks_to_read, bytes.length);
+				imageResourceIDs, maxBlocksToRead, bytes.length);
 	}
 
-	private boolean keepImageResourceBlock(int ID, int fImageResourceIDs[]) {
-		if (fImageResourceIDs == null)
+	private boolean keepImageResourceBlock(int ID, int imageResourceIDs[])
+	{
+		if (imageResourceIDs == null)
 			return true;
 
-		for (int i = 0; i < fImageResourceIDs.length; i++)
-			if (ID == fImageResourceIDs[i])
+		for (int i = 0; i < imageResourceIDs.length; i++)
+			if (ID == imageResourceIDs[i])
 				return true;
 
 		return false;
 	}
 
 	private ArrayList readImageResourceBlocks(InputStream is,
-			int fImageResourceIDs[], int max_blocks_to_read, int available)
-			throws ImageReadException, IOException {
+			int imageResourceIDs[], int maxBlocksToRead, int available)
+			throws ImageReadException, IOException
+	{
 		ArrayList result = new ArrayList();
 
-		while (available > 0) {
-			// if (debug)
-			// System.out.println("available: " + available);
-
+		while (available > 0)
+		{
 			readAndVerifyBytes(is, new byte[] { 56, 66, 73, 77 },
 					"Not a Valid PSD File");
 			available -= 4;
 
-			int ID = read2Bytes("ID", is, "Not a Valid PSD File");
+			int id = read2Bytes("ID", is, "Not a Valid PSD File");
 			available -= 2;
 
-			int NameLength = readByte("NameLength", is, "Not a Valid PSD File");
+			int nameLength = readByte("NameLength", is, "Not a Valid PSD File");
 
 			available -= 1;
-			// int ActualNameLength = (((NameLength + 1) % 2) == 0)
-			// ? NameLength
-			// : NameLength + 1; // pad to make even
-			byte NameData[] = readByteArray("NameData", NameLength, is,
+			byte nameBytes[] = readByteArray("NameData", nameLength, is,
 					"Not a Valid PSD File");
-			available -= NameLength;
-			if (((NameLength + 1) % 2) != 0) {
+			available -= nameLength;
+			if (((nameLength + 1) % 2) != 0)
+			{
 				int NameDiscard = readByte("NameDiscard", is,
 						"Not a Valid PSD File");
 				available -= 1;
@@ -215,17 +230,19 @@ public class PsdImageParser extends ImageParser {
 					"Not a Valid PSD File");
 			available -= DataSize;
 
-			if ((DataSize % 2) != 0) {
+			if ((DataSize % 2) != 0)
+			{
 				int DataDiscard = readByte("DataDiscard", is,
 						"Not a Valid PSD File");
 				available -= 1;
 			}
 
-			if (keepImageResourceBlock(ID, fImageResourceIDs)) {
-				result.add(new ImageResourceBlock(ID, NameData, Data));
+			if (keepImageResourceBlock(id, imageResourceIDs))
+			{
+				result.add(new ImageResourceBlock(id, nameBytes, Data));
 
-				if ((max_blocks_to_read >= 0)
-						&& (result.size() >= max_blocks_to_read))
+				if ((maxBlocksToRead >= 0)
+						&& (result.size() >= maxBlocksToRead))
 					return result;
 			}
 			// debugNumber("ID", ID, 2);
@@ -236,11 +253,13 @@ public class PsdImageParser extends ImageParser {
 	}
 
 	private ArrayList readImageResourceBlocks(ByteSource byteSource,
-			int fImageResourceIDs[], int max_blocks_to_read)
-			throws ImageReadException, IOException {
+			int imageResourceIDs[], int maxBlocksToRead)
+			throws ImageReadException, IOException
+	{
 		InputStream is = null;
 
-		try {
+		try
+		{
 			is = byteSource.getInputStream();
 
 			ImageContents imageContents = readImageContents(is);
@@ -252,29 +271,20 @@ public class PsdImageParser extends ImageParser {
 					imageContents.ImageResourcesLength, is,
 					"Not a Valid PSD File");
 
-			return readImageResourceBlocks(ImageResources, fImageResourceIDs,
-					max_blocks_to_read);
-		}
-		// catch (Exception e)
-		// {
-		// // System.out.println("Error: " + file.getAbsolutePath());
-		// Debug.debug(e); }
-		finally {
-			try {
+			return readImageResourceBlocks(ImageResources, imageResourceIDs,
+					maxBlocksToRead);
+		} finally
+		{
+			try
+			{
 				is.close();
-			} catch (Exception e) {
+			} catch (Exception e)
+			{
 				Debug.debug(e);
 			}
 
 		}
-		// is.reset();
-		// if (debug)
-		// System.out.println("");
-		//
-		// return null;
 	}
-
-	// InputStream is = getInputStream(byteSource, kPSD_SECTION_IMAGE_DATA);
 
 	private static final int PSD_SECTION_HEADER = 0;
 	private static final int PSD_SECTION_COLOR_MODE = 1;
@@ -285,7 +295,8 @@ public class PsdImageParser extends ImageParser {
 	private static final int PSD_HEADER_LENGTH = 26;
 
 	private InputStream getInputStream(ByteSource byteSource, int section)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		InputStream is = byteSource.getInputStream();
 
 		if (section == PSD_SECTION_HEADER)
@@ -337,10 +348,12 @@ public class PsdImageParser extends ImageParser {
 	}
 
 	private byte[] getData(ByteSource byteSource, int section)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		InputStream is = null;
 
-		try {
+		try
+		{
 			is = byteSource.getInputStream();
 
 			// PSDHeaderInfo header = readHeader(is);
@@ -393,10 +406,13 @@ public class PsdImageParser extends ImageParser {
 			// is,
 			// "Not a Valid PSD File");
 
-		} finally {
-			try {
+		} finally
+		{
+			try
+			{
 				is.close();
-			} catch (Exception e) {
+			} catch (Exception e)
+			{
 				Debug.debug(e);
 			}
 
@@ -406,18 +422,23 @@ public class PsdImageParser extends ImageParser {
 	}
 
 	private ImageContents readImageContents(ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		InputStream is = null;
 
-		try {
+		try
+		{
 			is = byteSource.getInputStream();
 
 			ImageContents imageContents = readImageContents(is);
 			return imageContents;
-		} finally {
-			try {
+		} finally
+		{
+			try
+			{
 				is.close();
-			} catch (Exception e) {
+			} catch (Exception e)
+			{
 				Debug.debug(e);
 			}
 
@@ -425,25 +446,27 @@ public class PsdImageParser extends ImageParser {
 
 	}
 
-	public final static int IMAGE_RESOURCE_Id_ICC_PROFILE = 0x040F;
+	public final static int IMAGE_RESOURCE_ID_ICC_PROFILE = 0x040F;
 
 	public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
-		ArrayList segments = readImageResourceBlocks(byteSource,
-				new int[] { IMAGE_RESOURCE_Id_ICC_PROFILE, }, 1);
+			throws ImageReadException, IOException
+	{
+		ArrayList blocks = readImageResourceBlocks(byteSource,
+				new int[] { IMAGE_RESOURCE_ID_ICC_PROFILE, }, 1);
 
-		if ((segments == null) || (segments.size() < 1))
+		if ((blocks == null) || (blocks.size() < 1))
 			return null;
 
-		ImageResourceBlock irb = (ImageResourceBlock) segments.get(0);
-		byte bytes[] = irb.Data;
+		ImageResourceBlock irb = (ImageResourceBlock) blocks.get(0);
+		byte bytes[] = irb.data;
 		if ((bytes == null) || (bytes.length < 1))
 			return null;
 		return bytes;
 	}
 
 	public Dimension getImageSize(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		PSDHeaderInfo bhi = readHeader(byteSource);
 		if (bhi == null)
 			throw new ImageReadException("PSD: couldn't read header");
@@ -452,21 +475,26 @@ public class PsdImageParser extends ImageParser {
 
 	}
 
-	public byte[] embedICCProfile(byte image[], byte profile[]) {
+	public byte[] embedICCProfile(byte image[], byte profile[])
+	{
 		return null;
 	}
 
-	public boolean embedICCProfile(File src, File dst, byte profile[]) {
+	public boolean embedICCProfile(File src, File dst, byte profile[])
+	{
 		return false;
 	}
 
 	public IImageMetadata getMetadata(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return null;
 	}
 
-	private int getChannelsPerMode(int mode) {
-		switch (mode) {
+	private int getChannelsPerMode(int mode)
+	{
+		switch (mode)
+		{
 		case 0: // Bitmap
 			return 1;
 		case 1: // Grayscale
@@ -490,7 +518,8 @@ public class PsdImageParser extends ImageParser {
 	}
 
 	public ImageInfo getImageInfo(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		ImageContents imageContents = readImageContents(byteSource);
 		// ImageContents imageContents = readImage(byteSource, false);
 
@@ -534,7 +563,8 @@ public class PsdImageParser extends ImageParser {
 		int ColorType = ImageInfo.COLOR_TYPE_UNKNOWN;
 
 		String compressionAlgorithm;
-		switch (imageContents.Compression) {
+		switch (imageContents.Compression)
+		{
 		case 0:
 			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
 			break;
@@ -555,18 +585,21 @@ public class PsdImageParser extends ImageParser {
 	}
 
 	private ImageResourceBlock findImageResourceBlock(ArrayList blocks, int ID)
-			throws ImageReadException, IOException {
-		for (int i = 0; i < blocks.size(); i++) {
+			throws ImageReadException, IOException
+	{
+		for (int i = 0; i < blocks.size(); i++)
+		{
 			ImageResourceBlock block = (ImageResourceBlock) blocks.get(i);
 
-			if (block.ID == ID)
+			if (block.id == ID)
 				return block;
 		}
 		return null;
 	}
 
 	public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		pw.println("gif.dumpImageFile");
 
 		{
@@ -589,18 +622,19 @@ public class PsdImageParser extends ImageParser {
 			pw.println("blocks.size(): " + blocks.size());
 
 			// System.out.println("gif.blocks: " + blocks.blocks.size());
-			for (int i = 0; i < blocks.size(); i++) {
+			for (int i = 0; i < blocks.size(); i++)
+			{
 				ImageResourceBlock block = (ImageResourceBlock) blocks.get(i);
-				pw.println("\t" + i + " (" + Integer.toHexString(block.ID)
+				pw.println("\t" + i + " (" + Integer.toHexString(block.id)
 						+ ", " + "'"
-						+ new String(block.NameData)
+						+ new String(block.nameData)
 						+ "' ("
-						+ block.NameData.length
+						+ block.nameData.length
 						+ "), "
 						// + block.getClass().getName()
 						// + ", "
-						+ " data: " + block.Data.length + " type: '"
-						+ new PSDConstants().getDescription(block.ID) + "' "
+						+ " data: " + block.data.length + " type: '"
+						+ new PSDConstants().getDescription(block.id) + "' "
 						+ ")");
 
 			}
@@ -615,7 +649,8 @@ public class PsdImageParser extends ImageParser {
 	private static final int COLOR_MODE_INDEXED = 2;
 
 	public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		ImageContents imageContents = readImageContents(byteSource);
 		// ImageContents imageContents = readImage(byteSource, false);
 
@@ -651,7 +686,8 @@ public class PsdImageParser extends ImageParser {
 				.getColorBufferedImage(width, height, hasAlpha);
 
 		DataParser dataParser;
-		switch (imageContents.header.Mode) {
+		switch (imageContents.header.Mode)
+		{
 		case 0: // bitmap
 			dataParser = new DataParserBitmap();
 			break;
@@ -695,7 +731,8 @@ public class PsdImageParser extends ImageParser {
 					+ imageContents.header.Mode);
 		}
 		DataReader fDataReader;
-		switch (imageContents.Compression) {
+		switch (imageContents.Compression)
+		{
 		case 0:
 			fDataReader = new UncompressedDataReader(dataParser);
 			break;
@@ -709,7 +746,8 @@ public class PsdImageParser extends ImageParser {
 		{
 			InputStream is = null;
 
-			try {
+			try
+			{
 				is = getInputStream(byteSource, PSD_SECTION_IMAGE_DATA);
 				fDataReader.readData(is, result, imageContents, this);
 
@@ -717,11 +755,14 @@ public class PsdImageParser extends ImageParser {
 				// is.
 				// ImageContents imageContents = readImageContents(is);
 				// return imageContents;
-			} finally {
-				try {
+			} finally
+			{
+				try
+				{
 					if (is != null)
 						is.close();
-				} catch (Exception e) {
+				} catch (Exception e)
+				{
 					Debug.debug(e);
 				}
 
@@ -733,6 +774,10 @@ public class PsdImageParser extends ImageParser {
 
 	}
 
+	public final static int IMAGE_RESOURCE_ID_XMP = 0x0424;
+
+	public final static String BLOCK_NAME_XMP = "XMP";
+
 	/**
 	 * Extracts embedded XML metadata as XML string.
 	 * <p>
@@ -741,11 +786,58 @@ public class PsdImageParser extends ImageParser {
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present. Otherwise, returns null..
 	 */
 	public String getXmpXml(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
-		// TODO: implement.
-		return null;
+			throws ImageReadException, IOException
+	{
+
+		ImageContents imageContents = readImageContents(byteSource);
+
+		if (imageContents == null)
+			throw new ImageReadException("PSD: Couldn't read blocks");
+
+		PSDHeaderInfo header = imageContents.header;
+		if (header == null)
+			throw new ImageReadException("PSD: Couldn't read Header");
+
+		ArrayList blocks = readImageResourceBlocks(byteSource,
+				new int[] { IMAGE_RESOURCE_ID_XMP, }, -1);
+
+		if ((blocks == null) || (blocks.size() < 1))
+			return null;
+
+		List xmpBlocks = new ArrayList();
+		if (false)
+		{
+			// TODO: for PSD 7 and later, verify "XMP" name.
+			for (int i = 0; i < blocks.size(); i++)
+			{
+				ImageResourceBlock block = (ImageResourceBlock) blocks.get(i);
+				if (!block.getName().equals(BLOCK_NAME_XMP))
+					continue;
+				xmpBlocks.add(block);
+			}
+		} else
+			xmpBlocks.addAll(blocks);
+
+		if (xmpBlocks.size() < 1)
+			return null;
+		if (xmpBlocks.size() > 1)
+			throw new ImageReadException(
+					"PSD contains more than one XMP block.");
+
+		ImageResourceBlock block = (ImageResourceBlock) xmpBlocks.get(0);
+
+		try
+		{
+			// segment data is UTF-8 encoded xml.
+			String xml = new String(block.data, 0, block.data.length, "utf-8");
+			return xml;
+		} catch (UnsupportedEncodingException e)
+		{
+			throw new ImageReadException("Invalid JPEG XMP Segment.");
+		}
 	}
+
 }

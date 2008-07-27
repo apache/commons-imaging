@@ -16,16 +16,26 @@
  */
 package org.apache.sanselan.formats.psd;
 
+import java.io.UnsupportedEncodingException;
+
+import org.apache.sanselan.util.Debug;
+
 class ImageResourceBlock
 {
-	protected final int ID;
-	protected final byte NameData[];
-	protected final byte Data[];
+	protected final int id;
+	protected final byte nameData[];
+	protected final byte data[];
 
 	public ImageResourceBlock(int ID, byte NameData[], byte Data[])
 	{
-		this.ID = ID;
-		this.NameData = NameData;
-		this.Data = Data;
+		this.id = ID;
+		this.nameData = NameData;
+		this.data = Data;
+	}
+
+	public String getName() throws UnsupportedEncodingException
+	{
+		Debug.debug("getName", nameData.length);
+		return new String(nameData, "ISO-8859-1");
 	}
 }

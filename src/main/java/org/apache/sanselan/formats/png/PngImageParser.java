@@ -879,6 +879,8 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 		if (xmpChunks.size() < 1)
 			return null;
+		if (xmpChunks.size() > 1)
+			throw new ImageReadException("PNG contains more than one XMP chunk.");
 
 		PNGChunkiTXt chunk = (PNGChunkiTXt) xmpChunks.get(0);
 		return chunk.getText();

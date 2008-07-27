@@ -116,7 +116,8 @@ public abstract class SanselanTest extends TestCase implements
 		File testFolder = new File(srcFolder, "test");
 		File dataFolder = new File(testFolder, "data");
 		File imagesFolder = new File(dataFolder, "images");
-
+		
+//		 imagesFolder = new File(imagesFolder, "ignore\\xml-sdk-examples\\BlueSquare.psd");
 //		 imagesFolder = new File(imagesFolder, "ignore\\PngSuite\\BGYN6A16.PNG");
 		// imagesFolder = new File(imagesFolder, "jpg\\3");
 		// imagesFolder = new File(imagesFolder, "");
