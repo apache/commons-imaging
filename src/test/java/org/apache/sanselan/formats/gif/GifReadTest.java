@@ -15,28 +15,31 @@
  * limitations under the License.
  */
 
-package org.apache.sanselan.formats.jpeg.xmp;
+package org.apache.sanselan.formats.gif;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.apache.sanselan.ImageFormat;
+import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.common.byteSources.ByteSource;
-import org.apache.sanselan.common.byteSources.ByteSourceFile;
-import org.apache.sanselan.formats.jpeg.JpegImageParser;
+import org.apache.sanselan.Sanselan;
+import org.apache.sanselan.SanselanTest;
+import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.util.Debug;
 
-public class JpegXmpDumpTest extends JpegXmpBaseTest
+public class GifReadTest extends GifBaseTest
 {
 
 	public void test() throws IOException, ImageReadException,
 			ImageWriteException
 	{
-		List images = getImagesWithIptcData();
+		Debug.debug("start");
+
+		List images = getGifImages();
 		for (int i = 0; i < images.size(); i++)
 		{
 			if (i % 10 == 0)
@@ -44,15 +47,15 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest
 
 			File imageFile = (File) images.get(i);
 			Debug.debug("imageFile", imageFile);
-			Debug.debug();
 
-			ByteSource byteSource = new ByteSourceFile(imageFile);
-			Map params = new HashMap();
-			String xmpXml = new JpegImageParser().getXmpXml(byteSource, params );
-			assertNotNull(xmpXml);
+			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
+//			assertNotNull(metadata);
 
-			Debug.debug("xmpXml", xmpXml);
-			Debug.debug();
+			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
+			assertNotNull(imageInfo);
+
+			BufferedImage image = Sanselan.getBufferedImage(imageFile);
+			assertNotNull(image);
 		}
 	}
 

@@ -309,6 +309,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 		if (null == exif && null == photoshop)
 			return null;
 
+		
 		JpegImageMetadata result = new JpegImageMetadata(photoshop, exif);
 
 		return result;
@@ -488,14 +489,19 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 		return result[0];
 	}
 
-	/*
-	 * Locates the XMP XML if present.
+	/**
+	 * Extracts embedded XML metadata as XML string.
+	 * <p>
 	 * 
-	 * returns null if no XMP segment is found.
+	 * @param file
+	 *            File containing image data.
+	 * @param params
+	 *            Map of optional parameters, defined in SanselanConstants.
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
 	 */
-	public String getXmpXml(ByteSource byteSource) throws ImageReadException,
-			IOException
-	{
+	public String getXmpXml(ByteSource byteSource, Map params)
+			throws ImageReadException, IOException {
+
 		final List result = new ArrayList();
 
 		JpegUtils.Visitor visitor = new JpegUtils.Visitor() {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.sanselan.formats.jpeg.xmp;
+package org.apache.sanselan.formats.xmp;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,18 +25,20 @@ import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
+import org.apache.sanselan.Sanselan;
+import org.apache.sanselan.SanselanTest;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.formats.jpeg.JpegImageParser;
 import org.apache.sanselan.util.Debug;
 
-public class JpegXmpDumpTest extends JpegXmpBaseTest
+public class XmpDumpTest extends SanselanTest
 {
 
 	public void test() throws IOException, ImageReadException,
 			ImageWriteException
 	{
-		List images = getImagesWithIptcData();
+		List images = getTestImages();
 		for (int i = 0; i < images.size(); i++)
 		{
 			if (i % 10 == 0)
@@ -46,9 +48,10 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest
 			Debug.debug("imageFile", imageFile);
 			Debug.debug();
 
-			ByteSource byteSource = new ByteSourceFile(imageFile);
-			Map params = new HashMap();
-			String xmpXml = new JpegImageParser().getXmpXml(byteSource, params );
+			String xmpXml = Sanselan.getXmpXml(imageFile);
+			if(null==xmpXml)
+				continue;
+			
 			assertNotNull(xmpXml);
 
 			Debug.debug("xmpXml", xmpXml);

@@ -845,4 +845,20 @@ public class PngImageParser extends ImageParser implements PngConstants
 	{
 		new PngWriter(params).writeImage(src, os, params);
 	}
+	
+	/**
+	 * Extracts embedded XML metadata as XML string.
+	 * <p>
+	 * 
+	 * @param file
+	 *            File containing image data.
+	 * @param params
+	 *            Map of optional parameters, defined in SanselanConstants.
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 */
+	public String getXmpXml(ByteSource byteSource, Map params)
+			throws ImageReadException, IOException {
+		// TODO: implement.
+		return null;
+	}
 }

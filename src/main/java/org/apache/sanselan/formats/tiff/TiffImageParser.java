@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -304,6 +305,33 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				usesPalette, colorType, compressionAlgorithm);
 
 		return result;
+	}
+
+	
+
+	public String getXmpXml(ByteSource byteSource, Map params)
+			throws ImageReadException, IOException
+	{
+		FormatCompliance formatCompliance = FormatCompliance.getDefault();
+		TiffContents contents = new TiffReader(isStrict(params)).readDirectories(byteSource,
+				false, formatCompliance);
+		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
+
+		TiffField xmpField = directory.findField(TIFF_TAG_XMP, false);
+		if(xmpField==null)
+			return null;
+		
+		byte bytes[] = xmpField.getByteArrayValue();
+		
+		try
+		{
+			// segment data is UTF-8 encoded xml.
+			String xml = new String(bytes, "utf-8");
+			return xml;
+		} catch (UnsupportedEncodingException e)
+		{
+			throw new ImageReadException("Invalid JPEG XMP Segment.");
+		}
 	}
 
 	public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)

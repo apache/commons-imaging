@@ -621,6 +621,7 @@ public abstract class Sanselan implements SanselanConstants {
 		throw new ImageReadException("Can't parse this format.");
 	}
 
+
 	/**
 	 * Determines the width and height of an image.
 	 * <p>
@@ -714,6 +715,112 @@ public abstract class Sanselan implements SanselanConstants {
 		ImageParser imageParser = getImageParser(byteSource);
 
 		return imageParser.getImageSize(byteSource, params);
+	}
+	
+
+	/**
+	 * Determines the width and height of an image.
+	 * <p>
+	 * 
+	 * @param is
+	 *            InputStream from which to read image data.
+	 * @param filename
+	 *            Filename associated with image data (optional).
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 */
+	public static String getXmpXml(InputStream is, String filename)
+			throws ImageReadException, IOException {
+		return getXmpXml(is, filename, null);
+	}
+
+	/**
+	 * Determines the width and height of an image.
+	 * <p>
+	 * 
+	 * @param is
+	 *            InputStream from which to read image data.
+	 * @param filename
+	 *            Filename associated with image data (optional).
+	 * @param params
+	 *            Map of optional parameters, defined in SanselanConstants.
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 */
+	public static String getXmpXml(InputStream is, String filename,
+			Map params) throws ImageReadException, IOException {
+		return getXmpXml(new ByteSourceInputStream(is, filename), params);
+	}
+
+	/**
+	 * Determines the width and height of an image.
+	 * <p>
+	 * 
+	 * @param bytes
+	 *            Byte array containing an image file.
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 */
+	public static String getXmpXml(byte bytes[])
+			throws ImageReadException, IOException {
+		return getXmpXml(bytes, null);
+	}
+
+	/**
+	 * Determines the width and height of an image.
+	 * <p>
+	 * 
+	 * @param bytes
+	 *            Byte array containing an image file.
+	 * @param params
+	 *            Map of optional parameters, defined in SanselanConstants.
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 */
+	public static String getXmpXml(byte bytes[], Map params)
+			throws ImageReadException, IOException {
+		return getXmpXml(new ByteSourceArray(bytes), params);
+	}
+
+	/**
+	 * Extracts embedded XML metadata as XML string.
+	 * <p>
+	 * 
+	 * @param file
+	 *            File containing image data.
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 */
+	public static String getXmpXml(File file) throws ImageReadException,
+			IOException {
+		return getXmpXml(file, null);
+	}
+
+	/**
+	 * Extracts embedded XML metadata as XML string.
+	 * <p>
+	 * 
+	 * @param file
+	 *            File containing image data.
+	 * @param params
+	 *            Map of optional parameters, defined in SanselanConstants.
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 */
+	public static String getXmpXml(File file, Map params)
+			throws ImageReadException, IOException {
+		return getXmpXml(new ByteSourceFile(file), params);
+	}
+
+	/**
+	 * Extracts embedded XML metadata as XML string.
+	 * <p>
+	 * 
+	 * @param file
+	 *            File containing image data.
+	 * @param params
+	 *            Map of optional parameters, defined in SanselanConstants.
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 */
+	public static String getXmpXml(ByteSource byteSource, Map params)
+			throws ImageReadException, IOException {
+		ImageParser imageParser = getImageParser(byteSource);
+
+		return imageParser.getXmpXml(byteSource, params);
 	}
 
 	/**

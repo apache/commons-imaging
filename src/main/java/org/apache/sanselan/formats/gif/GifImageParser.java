@@ -25,8 +25,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.FormatCompliance;
@@ -222,10 +224,11 @@ public class GifImageParser extends ImageParser
 	private final static int GRAPHIC_CONTROL_EXTENSION = (0x2100 | 0xf9);
 	private final static int COMMENT_EXTENSION = 0xfe;
 	private final static int PLAIN_TEXT_EXTENSION = 0x01;
+	private final static int XMP_EXTENSION = 0xff;
 	private final static int TERMINATOR_BYTE = 0x3b;
 
 	private ArrayList readBlocks(GIFHeaderInfo ghi, InputStream is,
-			boolean stop_before_image_data, FormatCompliance formatCompliance)
+			boolean stopBeforeImageData, FormatCompliance formatCompliance)
 			throws ImageReadException, IOException
 	{
 		ArrayList result = new ArrayList();
@@ -233,7 +236,7 @@ public class GifImageParser extends ImageParser
 		while (true)
 		{
 			int code = is.read();
-			// this.debugNumber("code: ", code);
+//			 this.debugNumber("code: ", code);
 
 			switch (code)
 			{
@@ -242,8 +245,10 @@ public class GifImageParser extends ImageParser
 
 			case IMAGE_SEPARATOR:
 				ImageDescriptor id = readImageDescriptor(ghi, code, is,
-						stop_before_image_data, formatCompliance);
+						stopBeforeImageData, formatCompliance);
 				result.add(id);
+//				if(stopBeforeImageData)
+//					return result;
 
 				break;
 
@@ -262,13 +267,7 @@ public class GifImageParser extends ImageParser
 					result.add(gce);
 					break;
 
-				case COMMENT_EXTENSION: {
-					GenericGIFBlock block = readGenericGIFBlock(is,
-							complete_code);
-					result.add(block);
-					break;
-				}
-
+				case COMMENT_EXTENSION:
 				case PLAIN_TEXT_EXTENSION: {
 					GenericGIFBlock block = readGenericGIFBlock(is,
 							complete_code);
@@ -330,7 +329,7 @@ public class GifImageParser extends ImageParser
 	}
 
 	private ImageDescriptor readImageDescriptor(GIFHeaderInfo ghi,
-			int blockCode, InputStream is, boolean stop_before_image_data,
+			int blockCode, InputStream is, boolean stopBeforeImageData,
 			FormatCompliance formatCompliance) throws ImageReadException,
 			IOException
 	{
@@ -379,7 +378,7 @@ public class GifImageParser extends ImageParser
 					formatCompliance);
 
 		byte imageData[] = null;
-		if (!stop_before_image_data)
+		if (!stopBeforeImageData)
 		{
 			int LZWMinimumCodeSize = is.read();
 
@@ -461,23 +460,22 @@ public class GifImageParser extends ImageParser
 	{
 		for (int i = 0; i < v.size(); i++)
 		{
-			GIFBlock fGIFBlock = (GIFBlock) v.get(i);
-			if (fGIFBlock.blockCode == code)
-				return fGIFBlock;
+			GIFBlock gifBlock = (GIFBlock) v.get(i);
+			if (gifBlock.blockCode == code)
+				return gifBlock;
 		}
 		return null;
 	}
 
 	private ImageContents readFile(ByteSource byteSource,
-			boolean stop_before_image_data) throws ImageReadException,
-			IOException
+			boolean stopBeforeImageData) throws ImageReadException, IOException
 	{
-		return readFile(byteSource, stop_before_image_data, FormatCompliance
+		return readFile(byteSource, stopBeforeImageData, FormatCompliance
 				.getDefault());
 	}
 
 	private ImageContents readFile(ByteSource byteSource,
-			boolean stop_before_image_data, FormatCompliance formatCompliance)
+			boolean stopBeforeImageData, FormatCompliance formatCompliance)
 			throws ImageReadException, IOException
 	{
 		InputStream is = null;
@@ -492,7 +490,7 @@ public class GifImageParser extends ImageParser
 				globalColorTable = readColorTable(is,
 						ghi.sizeOfGlobalColorTable, formatCompliance);
 
-			ArrayList blocks = readBlocks(ghi, is, stop_before_image_data,
+			ArrayList blocks = readBlocks(ghi, is, stopBeforeImageData,
 					formatCompliance);
 
 			ImageContents result = new ImageContents(ghi, globalColorTable,
@@ -652,10 +650,10 @@ public class GifImageParser extends ImageParser
 			pw.println("gif.blocks: " + blocks.blocks.size());
 			for (int i = 0; i < blocks.blocks.size(); i++)
 			{
-				GIFBlock fGIFBlock = (GIFBlock) blocks.blocks.get(i);
+				GIFBlock gifBlock = (GIFBlock) blocks.blocks.get(i);
 				this.debugNumber(pw, "\t" + i + " ("
-						+ fGIFBlock.getClass().getName() + ")",
-						fGIFBlock.blockCode, 4);
+						+ gifBlock.getClass().getName() + ")",
+						gifBlock.blockCode, 4);
 			}
 
 		}
@@ -1044,5 +1042,108 @@ public class GifImageParser extends ImageParser
 
 		bos.close();
 		os.close();
+	}
+
+	private static final byte XMP_APPLICATION_ID_AND_AUTH_CODE[] = { 0x58, // X
+			0x4D, // M
+			0x50, // P
+			0x20, //
+			0x44, // D
+			0x61, // a
+			0x74, // t
+			0x61, // a
+			0x58, // X
+			0x4D, // M
+			0x50, // P
+	};
+
+	/**
+	 * Extracts embedded XML metadata as XML string.
+	 * <p>
+	 * 
+	 * @param file
+	 *            File containing image data.
+	 * @param params
+	 *            Map of optional parameters, defined in SanselanConstants.
+	 * @return Xmp Xml as String, if present. Otherwise, returns null..
+	 */
+	public String getXmpXml(ByteSource byteSource, Map params)
+			throws ImageReadException, IOException
+	{
+
+		InputStream is = null;
+		try
+		{
+			is = byteSource.getInputStream();
+
+			FormatCompliance formatCompliance = null;
+			GIFHeaderInfo ghi = readHeader(is, formatCompliance);
+
+
+			byte globalColorTable[] = null;
+			if (ghi.globalColorTableFlag)
+				globalColorTable = readColorTable(is,
+						ghi.sizeOfGlobalColorTable, formatCompliance);
+			
+			ArrayList blocks = readBlocks(ghi, is, true, formatCompliance);
+
+			List result = new ArrayList();
+			for (int i = 0; i < blocks.size(); i++)
+			{
+				GIFBlock block = (GIFBlock) blocks.get(i);
+				if (block.blockCode != XMP_EXTENSION)
+					continue;
+
+				GenericGIFBlock genericBlock = (GenericGIFBlock) block;
+
+				byte blockBytes[] = genericBlock.appendSubBlocks();
+				if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length)
+					continue;
+				if (!compareByteArrays(blockBytes, 0,
+						XMP_APPLICATION_ID_AND_AUTH_CODE, 0,
+						XMP_APPLICATION_ID_AND_AUTH_CODE.length))
+					continue;
+				
+//				this.debugByteArray("xmp block bytes", blockBytes);
+				byte GIF_MAGIC_TRAILER[] = new byte[256];
+				for(int magic=0;magic<=0xff;magic++)
+					GIF_MAGIC_TRAILER[magic] = (byte) (0xff-magic);
+				
+				if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length + GIF_MAGIC_TRAILER.length)
+					continue;
+				if (!compareByteArrays(blockBytes, blockBytes.length-GIF_MAGIC_TRAILER.length,
+						GIF_MAGIC_TRAILER, 0,
+						GIF_MAGIC_TRAILER.length))
+					throw new ImageReadException("XMP block in GIF missing magic trailer.");
+				
+				try
+				{
+					// XMP is UTF-8 encoded xml.
+					String xml = new String(blockBytes, XMP_APPLICATION_ID_AND_AUTH_CODE.length, blockBytes.length
+							- (XMP_APPLICATION_ID_AND_AUTH_CODE.length + GIF_MAGIC_TRAILER.length), "utf-8");
+					result.add(xml);
+				} catch (UnsupportedEncodingException e)
+				{
+					throw new ImageReadException("Invalid XMP Block in GIF.");
+				}
+			}
+			
+			if(result.size()<1)
+				return null;
+			if(result.size()>1)
+				throw new ImageReadException("More than one XMP Block in GIF.");
+			return (String) result.get(0);
+
+		} finally
+		{
+			try
+			{
+				is.close();
+			} catch (Exception e)
+			{
+				Debug.debug(e);
+			}
+
+		}
 	}
 }

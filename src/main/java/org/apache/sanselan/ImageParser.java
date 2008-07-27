@@ -44,14 +44,16 @@ import org.apache.sanselan.formats.tiff.TiffImageParser;
 import org.apache.sanselan.util.Debug;
 
 public abstract class ImageParser extends BinaryFileParser implements
-		SanselanConstants {
+		SanselanConstants
+{
 
-	public static final ImageParser[] getAllImageParsers() {
+	public static final ImageParser[] getAllImageParsers()
+	{
 		ImageParser result[] = { new JpegImageParser(), new TiffImageParser(),
 				new PngImageParser(), new BmpImageParser(),
 				new GifImageParser(), new PsdImageParser(),
 				new PNMImageParser(), new IcoImageParser(),
-				//new JBig2ImageParser(),
+		// new JBig2ImageParser(),
 		// new TgaImageParser(),
 		};
 
@@ -59,7 +61,8 @@ public abstract class ImageParser extends BinaryFileParser implements
 	}
 
 	public final IImageMetadata getMetadata(ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getMetadata(byteSource, null);
 	}
 
@@ -67,22 +70,26 @@ public abstract class ImageParser extends BinaryFileParser implements
 			throws ImageReadException, IOException;
 
 	public final IImageMetadata getMetadata(byte bytes[])
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getMetadata(bytes);
 	}
 
 	public final IImageMetadata getMetadata(byte bytes[], Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getMetadata(new ByteSourceArray(bytes), params);
 	}
 
 	public final IImageMetadata getMetadata(File file)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getMetadata(file, null);
 	}
 
 	public final IImageMetadata getMetadata(File file, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		if (debug)
 			System.out.println(getName() + ".getMetadata" + ": "
 					+ file.getName());
@@ -97,17 +104,20 @@ public abstract class ImageParser extends BinaryFileParser implements
 			throws ImageReadException, IOException;
 
 	public final ImageInfo getImageInfo(ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getImageInfo(byteSource, null);
 	}
 
 	public final ImageInfo getImageInfo(byte bytes[], Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getImageInfo(new ByteSourceArray(bytes), params);
 	}
 
 	public final ImageInfo getImageInfo(File file, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		if (!canAcceptExtension(file))
 			return null;
 
@@ -115,17 +125,20 @@ public abstract class ImageParser extends BinaryFileParser implements
 	}
 
 	public FormatCompliance getFormatCompliance(ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return null;
 	}
 
 	public final FormatCompliance getFormatCompliance(byte bytes[])
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getFormatCompliance(new ByteSourceArray(bytes));
 	}
 
 	public final FormatCompliance getFormatCompliance(File file)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		if (!canAcceptExtension(file))
 			return null;
 
@@ -133,7 +146,8 @@ public abstract class ImageParser extends BinaryFileParser implements
 	}
 
 	public ArrayList getAllBufferedImages(ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		BufferedImage bi = getBufferedImage(byteSource, null);
 
 		ArrayList result = new ArrayList();
@@ -144,12 +158,14 @@ public abstract class ImageParser extends BinaryFileParser implements
 	}
 
 	public final ArrayList getAllBufferedImages(byte bytes[])
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getAllBufferedImages(new ByteSourceArray(bytes));
 	}
 
 	public final ArrayList getAllBufferedImages(File file)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		if (!canAcceptExtension(file))
 			return null;
 
@@ -201,12 +217,14 @@ public abstract class ImageParser extends BinaryFileParser implements
 			Map params) throws ImageReadException, IOException;
 
 	public final BufferedImage getBufferedImage(byte bytes[], Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getBufferedImage(new ByteSourceArray(bytes), params);
 	}
 
 	public final BufferedImage getBufferedImage(File file, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		if (!canAcceptExtension(file))
 			return null;
 
@@ -214,10 +232,13 @@ public abstract class ImageParser extends BinaryFileParser implements
 	}
 
 	public void writeImage(BufferedImage src, OutputStream os, Map params)
-			throws ImageWriteException, IOException {
-		try {
+			throws ImageWriteException, IOException
+	{
+		try
+		{
 			os.close(); // we are obligated to close stream.
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			Debug.debug(e);
 		}
 
@@ -226,23 +247,27 @@ public abstract class ImageParser extends BinaryFileParser implements
 	}
 
 	public final Dimension getImageSize(byte bytes[])
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getImageSize(bytes, null);
 	}
 
 	public final Dimension getImageSize(byte bytes[], Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getImageSize(new ByteSourceArray(bytes), params);
 	}
 
 	public final Dimension getImageSize(File file) throws ImageReadException,
-			IOException {
+			IOException
+	{
 
 		return getImageSize(file, null);
 	}
 
 	public final Dimension getImageSize(File file, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 
 		if (!canAcceptExtension(file))
 			return null;
@@ -253,23 +278,30 @@ public abstract class ImageParser extends BinaryFileParser implements
 	public abstract Dimension getImageSize(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException;
 
+	public abstract String getXmpXml(ByteSource byteSource, Map params)
+			throws ImageReadException, IOException;
+
 	public final byte[] getICCProfileBytes(byte bytes[])
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getICCProfileBytes(bytes, null);
 	}
 
 	public final byte[] getICCProfileBytes(byte bytes[], Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getICCProfileBytes(new ByteSourceArray(bytes), params);
 	}
 
 	public final byte[] getICCProfileBytes(File file)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return getICCProfileBytes(file, null);
 	}
 
 	public final byte[] getICCProfileBytes(File file, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		if (!canAcceptExtension(file))
 			return null;
 
@@ -283,12 +315,14 @@ public abstract class ImageParser extends BinaryFileParser implements
 			throws ImageReadException, IOException;
 
 	public final String dumpImageFile(byte bytes[]) throws ImageReadException,
-			IOException {
+			IOException
+	{
 		return dumpImageFile(new ByteSourceArray(bytes));
 	}
 
 	public final String dumpImageFile(File file) throws ImageReadException,
-			IOException {
+			IOException
+	{
 		if (!canAcceptExtension(file))
 			return null;
 
@@ -299,7 +333,8 @@ public abstract class ImageParser extends BinaryFileParser implements
 	}
 
 	public final String dumpImageFile(ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 
@@ -311,7 +346,8 @@ public abstract class ImageParser extends BinaryFileParser implements
 	}
 
 	public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return false;
 	}
 
@@ -325,7 +361,8 @@ public abstract class ImageParser extends BinaryFileParser implements
 
 	protected abstract ImageFormat[] getAcceptedTypes();
 
-	public boolean canAcceptType(ImageFormat type) {
+	public boolean canAcceptType(ImageFormat type)
+	{
 		ImageFormat types[] = getAcceptedTypes();
 
 		for (int i = 0; i < types.length; i++)
@@ -334,17 +371,20 @@ public abstract class ImageParser extends BinaryFileParser implements
 		return false;
 	}
 
-	protected final boolean canAcceptExtension(File file) {
+	protected final boolean canAcceptExtension(File file)
+	{
 		return canAcceptExtension(file.getName());
 	}
 
-	protected final boolean canAcceptExtension(String filename) {
+	protected final boolean canAcceptExtension(String filename)
+	{
 		String exts[] = getAcceptedExtensions();
 		if (exts == null)
 			return true;
 
 		int index = filename.lastIndexOf('.');
-		if (index >= 0) {
+		if (index >= 0)
+		{
 			String ext = filename.substring(index);
 			ext = ext.toLowerCase();
 
@@ -355,7 +395,8 @@ public abstract class ImageParser extends BinaryFileParser implements
 		return false;
 	}
 
-	protected IBufferedImageFactory getBufferedImageFactory(Map params) {
+	protected IBufferedImageFactory getBufferedImageFactory(Map params)
+	{
 		if (params == null)
 			return new SimpleBufferedImageFactory();
 
@@ -368,7 +409,8 @@ public abstract class ImageParser extends BinaryFileParser implements
 		return new SimpleBufferedImageFactory();
 	}
 
-	public static final boolean isStrict(Map params) {
+	public static final boolean isStrict(Map params)
+	{
 		if (params == null || !params.containsKey(PARAM_KEY_STRICT))
 			return false;
 		return ((Boolean) params.get(PARAM_KEY_STRICT)).booleanValue();

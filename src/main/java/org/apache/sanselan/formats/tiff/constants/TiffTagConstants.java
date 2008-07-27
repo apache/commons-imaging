@@ -299,6 +299,9 @@ public interface TiffTagConstants
 	public static final TagInfo TIFF_TAG_COPYRIGHT = new TagInfo("Copyright",
 			0x8298, FIELD_TYPE_DESCRIPTION_ASCII, -1, TIFF_DIRECTORY_ROOT);
 
+	public static final TagInfo TIFF_TAG_XMP = new TagInfo("XMP",
+			0x2BC, FIELD_TYPE_DESCRIPTION_BYTE, -1, TIFF_DIRECTORY_ROOT);
+
 	// TODO:
 	//	public static final TagInfo2 TIFF_TAG_UNKNOWN = null;
 	public static final TagInfo TIFF_TAG_UNKNOWN = new TagInfo.Unknown(
@@ -338,7 +341,9 @@ public interface TiffTagConstants
 			TIFF_TAG_JPEG_DCTABLES, TIFF_TAG_JPEG_ACTABLES,
 			TIFF_TAG_YCBCR_COEFFICIENTS, TIFF_TAG_YCBCR_SUB_SAMPLING,
 			TIFF_TAG_YCBCR_POSITIONING, TIFF_TAG_REFERENCE_BLACK_WHITE,
-			TIFF_TAG_COPYRIGHT
+			TIFF_TAG_COPYRIGHT,
+			//
+			TIFF_TAG_XMP,
 	};
 
 }
