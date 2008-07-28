@@ -123,13 +123,16 @@ public class BinaryFileFunctions implements BinaryConstants
 			int data = is.read();
 			byte b = (byte) (0xff & data);
 
-			if ((data < 0) || (b != expected[i]))
-			{
-				//				System.out.println("i" + ": " + i);
+			if (data < 0)
+				throw new ImageReadException("Unexpected EOF.");
 
-				//				this.debugByteArray("expected", expected);
-				//				debugNumber("data[" + i + "]", b);
-				//				debugNumber("expected[" + i + "]", expected[i]);
+			if(b != expected[i])
+			{
+				// System.out.println("i" + ": " + i);
+
+				// this.debugByteArray("expected", expected);
+				// debugNumber("data[" + i + "]", b);
+				// debugNumber("expected[" + i + "]", expected[i]);
 
 				throw new ImageReadException(exception);
 			}
@@ -146,9 +149,9 @@ public class BinaryFileFunctions implements BinaryConstants
 		{
 			if (bytes[i] != expected[i])
 			{
-				//				System.out.println("i" + ": " + i);
-				//				debugNumber("bytes[" + i + "]", bytes[i]);
-				//				debugNumber("expected[" + i + "]", expected[i]);
+				// System.out.println("i" + ": " + i);
+				// debugNumber("bytes[" + i + "]", bytes[i]);
+				// debugNumber("expected[" + i + "]", expected[i]);
 
 				throw new ImageReadException(exception);
 			}
@@ -173,7 +176,7 @@ public class BinaryFileFunctions implements BinaryConstants
 	{
 		int count = 0;
 		for (int i = 0; count < 3; i++)
-		//		while(count<3)
+		// while(count<3)
 		{
 			int b = is.read();
 			if (b < 0)
@@ -261,8 +264,7 @@ public class BinaryFileFunctions implements BinaryConstants
 		{
 			result = ((0xff & byte0) << 24) | ((0xff & byte1) << 16)
 					| ((0xff & byte2) << 8) | ((0xff & byte3) << 0);
-		}
-		else
+		} else
 		{
 			// intel, little endian
 			result = ((0xff & byte3) << 24) | ((0xff & byte2) << 16)
@@ -307,14 +309,21 @@ public class BinaryFileFunctions implements BinaryConstants
 			bytes[start + 1] = (byte) (value >> 16);
 			bytes[start + 2] = (byte) (value >> 8);
 			bytes[start + 3] = (byte) (value >> 0);
-		}
-		else
+		} else
 		{
 			bytes[start + 3] = (byte) (value >> 24);
 			bytes[start + 2] = (byte) (value >> 16);
 			bytes[start + 1] = (byte) (value >> 8);
 			bytes[start + 0] = (byte) (value >> 0);
 		}
+	}
+
+	protected static final byte[] int2ToByteArray(int value, int byteOrder)
+	{
+		if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+			return new byte[] { (byte) (value >> 8), (byte) (value >> 0), };
+		else
+			return new byte[] { (byte) (value >> 0), (byte) (value >> 8), };
 	}
 
 	protected final byte[] convertIntArrayToByteArray(int values[],
@@ -343,8 +352,7 @@ public class BinaryFileFunctions implements BinaryConstants
 			{
 				result[i * 2 + 0] = (byte) (value >> 8);
 				result[i * 2 + 1] = (byte) (value >> 0);
-			}
-			else
+			} else
 			{
 				result[i * 2 + 1] = (byte) (value >> 8);
 				result[i * 2 + 0] = (byte) (value >> 0);
@@ -362,8 +370,7 @@ public class BinaryFileFunctions implements BinaryConstants
 		{
 			result[0] = (byte) (value >> 8);
 			result[1] = (byte) (value >> 0);
-		}
-		else
+		} else
 		{
 			result[1] = (byte) (value >> 8);
 			result[0] = (byte) (value >> 0);
@@ -394,7 +401,7 @@ public class BinaryFileFunctions implements BinaryConstants
 	protected final byte[] convertRationalArrayToByteArray(
 			RationalNumber numbers[], int byteOrder) throws ImageWriteException
 	{
-		//		Debug.debug("convertRationalArrayToByteArray 2");
+		// Debug.debug("convertRationalArrayToByteArray 2");
 		byte result[] = new byte[numbers.length * 8];
 
 		for (int i = 0; i < numbers.length; i++)
@@ -435,7 +442,7 @@ public class BinaryFileFunctions implements BinaryConstants
 		int byte0 = 0xff & bytes[index + 0];
 		int byte1 = 0xff & bytes[index + 1];
 
-		//		return convert2BytesToShort(name, byte0, byte1, byteOrder);
+		// return convert2BytesToShort(name, byte0, byte1, byteOrder);
 
 		int result;
 
@@ -492,7 +499,7 @@ public class BinaryFileFunctions implements BinaryConstants
 		while (read < length)
 		{
 			int count = is.read(result, read, length - read);
-			//			Debug.debug("count", count);
+			// Debug.debug("count", count);
 			if (count < 1)
 				throw new IOException(exception);
 
@@ -583,8 +590,8 @@ public class BinaryFileFunctions implements BinaryConstants
 	{
 		if (a.length != b.length)
 		{
-			//			System.out.println("length mismatch: " + a.length + " != "
-			//					+ b.length);
+			// System.out.println("length mismatch: " + a.length + " != "
+			// + b.length);
 			return false;
 		}
 
@@ -605,8 +612,8 @@ public class BinaryFileFunctions implements BinaryConstants
 		{
 			if (a[aStart + i] != b[bStart + i])
 			{
-				//				debugNumber("\t" + "a[" + (aStart + i) + "]", a[aStart + i]);
-				//				debugNumber("\t" + "b[" + (bStart + i) + "]", b[bStart + i]);
+				// debugNumber("\t" + "a[" + (aStart + i) + "]", a[aStart + i]);
+				// debugNumber("\t" + "b[" + (bStart + i) + "]", b[bStart + i]);
 
 				return false;
 			}
@@ -684,20 +691,20 @@ public class BinaryFileFunctions implements BinaryConstants
 		return result;
 		//		
 		//		
-		//		int size = 3;
-		//		byte bytes[] = new byte[size];
+		// int size = 3;
+		// byte bytes[] = new byte[size];
 		//
-		//		int read = 0;
-		//		while (read < size)
-		//		{
-		//			int count = is.read(bytes, read, size - read);
-		//			if (count < 1)
-		//				throw new IOException(exception);
+		// int read = 0;
+		// while (read < size)
+		// {
+		// int count = is.read(bytes, read, size - read);
+		// if (count < 1)
+		// throw new IOException(exception);
 		//
-		//			read += count;
-		//		}
+		// read += count;
+		// }
 		//
-		//		return convertByteArrayToInt(name, bytes, 0, 3, byteOrder);
+		// return convertByteArrayToInt(name, bytes, 0, 3, byteOrder);
 	}
 
 	protected final int read2Bytes(String name, InputStream is,
@@ -811,8 +818,7 @@ public class BinaryFileFunctions implements BinaryConstants
 		{
 			bits = ((0xff & byte0) << 24) | ((0xff & byte1) << 16)
 					| ((0xff & byte2) << 8) | ((0xff & byte3) << 0);
-		}
-		else
+		} else
 		{
 			// intel, little endian
 			bits = ((0xff & byte3) << 24) | ((0xff & byte2) << 16)
@@ -821,8 +827,8 @@ public class BinaryFileFunctions implements BinaryConstants
 
 		float result = Float.intBitsToFloat(bits);
 
-		//		if (debug)
-		//			debugNumber(name, result, 4);
+		// if (debug)
+		// debugNumber(name, result, 4);
 
 		return result;
 	}
@@ -863,8 +869,7 @@ public class BinaryFileFunctions implements BinaryConstants
 			result[1] = (byte) (0xff & (bits >> 8));
 			result[2] = (byte) (0xff & (bits >> 16));
 			result[3] = (byte) (0xff & (bits >> 24));
-		}
-		else
+		} else
 		{
 			result[3] = (byte) (0xff & (bits >> 0));
 			result[2] = (byte) (0xff & (bits >> 8));
@@ -892,8 +897,7 @@ public class BinaryFileFunctions implements BinaryConstants
 				result[start + 1] = (byte) (0xff & (bits >> 8));
 				result[start + 2] = (byte) (0xff & (bits >> 16));
 				result[start + 3] = (byte) (0xff & (bits >> 24));
-			}
-			else
+			} else
 			{
 				result[start + 3] = (byte) (0xff & (bits >> 0));
 				result[start + 2] = (byte) (0xff & (bits >> 8));
@@ -921,8 +925,7 @@ public class BinaryFileFunctions implements BinaryConstants
 			result[5] = (byte) (0xff & (bits >> 40));
 			result[6] = (byte) (0xff & (bits >> 48));
 			result[7] = (byte) (0xff & (bits >> 56));
-		}
-		else
+		} else
 		{
 			result[7] = (byte) (0xff & (bits >> 0));
 			result[6] = (byte) (0xff & (bits >> 8));
@@ -958,8 +961,7 @@ public class BinaryFileFunctions implements BinaryConstants
 				result[start + 5] = (byte) (0xff & (bits >> 40));
 				result[start + 6] = (byte) (0xff & (bits >> 48));
 				result[start + 7] = (byte) (0xff & (bits >> 56));
-			}
-			else
+			} else
 			{
 				result[start + 7] = (byte) (0xff & (bits >> 0));
 				result[start + 6] = (byte) (0xff & (bits >> 8));
@@ -1003,8 +1005,7 @@ public class BinaryFileFunctions implements BinaryConstants
 					| ((0xff & byte4) << 24) | ((0xff & byte5) << 16)
 					| ((0xff & byte6) << 8) | ((0xff & byte7) << 0);
 
-		}
-		else
+		} else
 		{
 			// intel, little endian
 			bits = ((0xff & byte7) << 56) | ((0xff & byte6) << 48)
@@ -1015,49 +1016,49 @@ public class BinaryFileFunctions implements BinaryConstants
 
 		double result = Double.longBitsToDouble(bits);
 
-		//		if (debug)
-		//			debugNumber(name, result, 4);
+		// if (debug)
+		// debugNumber(name, result, 4);
 
 		return result;
 
-		//		byte array[];
-		//		if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
-		//			//			 ?? dunno byte order very likely wrong here.
-		//			array = new byte[]{
-		//					bytes[start + 0], bytes[start + 1], bytes[start + 2],
-		//					bytes[start + 3], bytes[start + 4], bytes[start + 5],
-		//					bytes[start + 6], bytes[start + 7],
+		// byte array[];
+		// if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+		// // ?? dunno byte order very likely wrong here.
+		// array = new byte[]{
+		// bytes[start + 0], bytes[start + 1], bytes[start + 2],
+		// bytes[start + 3], bytes[start + 4], bytes[start + 5],
+		// bytes[start + 6], bytes[start + 7],
 		//
-		//			};
-		//		else
-		//			// ?? dunno byte order very likely wrong here.
-		//			array = new byte[]{
-		//					bytes[start + 3], bytes[start + 2], bytes[start + 1],
-		//					bytes[start + 0], bytes[start + 7], bytes[start + 6],
-		//					bytes[start + 5], bytes[start + 4],
-		//			};
+		// };
+		// else
+		// // ?? dunno byte order very likely wrong here.
+		// array = new byte[]{
+		// bytes[start + 3], bytes[start + 2], bytes[start + 1],
+		// bytes[start + 0], bytes[start + 7], bytes[start + 6],
+		// bytes[start + 5], bytes[start + 4],
+		// };
 		//
-		//		double result = Double.NaN;
+		// double result = Double.NaN;
 		//
-		//		try
-		//		{
-		//			ByteArrayInputStream bais = new ByteArrayInputStream(array);
-		//			if (start > 0)
-		//			{
-		//				skipBytes(bais, start);
-		//				//				bais.skip(start);
-		//			}
-		//			DataInputStream dis = new DataInputStream(bais);
-		//			result = dis.readDouble();
+		// try
+		// {
+		// ByteArrayInputStream bais = new ByteArrayInputStream(array);
+		// if (start > 0)
+		// {
+		// skipBytes(bais, start);
+		// // bais.skip(start);
+		// }
+		// DataInputStream dis = new DataInputStream(bais);
+		// result = dis.readDouble();
 		//
-		//			dis.close();
-		//		}
-		//		catch (Exception e)
-		//		{
-		//			Debug.debug(e);
-		//		}
+		// dis.close();
+		// }
+		// catch (Exception e)
+		// {
+		// Debug.debug(e);
+		// }
 		//
-		//		return result;
+		// return result;
 	}
 
 	protected final double[] convertByteArrayToDoubleArray(String name,

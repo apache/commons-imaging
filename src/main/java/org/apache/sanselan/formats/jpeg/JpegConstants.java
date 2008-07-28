@@ -18,40 +18,66 @@ package org.apache.sanselan.formats.jpeg;
 
 public interface JpegConstants
 {
+	public static final int MAX_SEGMENT_SIZE = 0xffff;
 
-	public static final byte JFIF0_SIGNATURE[] = new byte[]{
-			0x4a, // J
+	public static final byte JFIF0_SIGNATURE[] = new byte[] { 0x4a, // J
 			0x46, // F
 			0x49, // I
 			0x46, // F
 			0x0, //  
 	};
-	public static final byte JFIF0_SIGNATURE_ALTERNATIVE[] = new byte[]{
-			0x4a, // J
+	public static final byte JFIF0_SIGNATURE_ALTERNATIVE[] = new byte[] { 0x4a, // J
 			0x46, // F
 			0x49, // I
 			0x46, // F
 			0x20, //  
 	};
 
-	public static final byte ExifIdentifierCode[] = {
-			0xff & 'E', 0xff & 'x', 0xff & 'i', 0xff & 'f',
+	public static final byte EXIF_IDENTIFIER_CODE[] = { 0xff & 'E', 0xff & 'x',
+			0xff & 'i', 0xff & 'f', };
+
+	public static final byte XMP_IDENTIFIER[] = { //
+	0x68, // h
+			0x74, // t
+			0x74, // t
+			0x70, // p
+			0x3A, // :
+			0x2F, // /
+			0x2F, // /
+			0x6E, // n
+			0x73, // s
+			0x2E, // .
+			0x61, // a
+			0x64, // d
+			0x6F, // o
+			0x62, // b
+			0x65, // e
+			0x2E, // .
+			0x63, // c
+			0x6F, // o
+			0x6D, // m
+			0x2F, // /
+			0x78, // x
+			0x61, // a
+			0x70, // p
+			0x2F, // /
+			0x31, // 1
+			0x2E, // .
+			0x30, // 0
+			0x2F, // /
+			0, // 0-terminated us-ascii string.
 	};
 
-	public static final byte SOI[] = new byte[]{
-			(byte) 0xff, (byte) 0xd8
-	};
-	public static final byte EOI[] = new byte[]{
-			(byte) 0xff, (byte) 0xd9
-	};
+	public static final byte SOI[] = new byte[] { (byte) 0xff, (byte) 0xd8 };
+	public static final byte EOI[] = new byte[] { (byte) 0xff, (byte) 0xd9 };
 	public static final int SOS_Marker = (0xff00) | (0xda);
 
 	public static final int JPEG_APP0 = 0xE0;
-	//	public static final  int JPEG_APP1 = JPEG_APP0 + 1;
-	//	public static final  int JPEG_APP1_Marker = (0xff00) | JPEG_APP1;
+	// public static final int JPEG_APP1 = JPEG_APP0 + 1;
+	// public static final int JPEG_APP1_Marker = (0xff00) | JPEG_APP1;
 	public static final int JPEG_APP0_Marker = (0xff00) | (JPEG_APP0);
 	public static final int JPEG_APP1_Marker = (0xff00) | (JPEG_APP0 + 1);
-	//	public static final  int JPEG_APP2 = ;
+	// public static final int JPEG_APP2 = ;
 	public static final int JPEG_APP2_Marker = (0xff00) | (JPEG_APP0 + 2);
 	public static final int JPEG_APP13_Marker = (0xff00) | (JPEG_APP0 + 13);
 	public static final int JPEG_APP14_Marker = (0xff00) | (JPEG_APP0 + 14);
@@ -75,34 +101,28 @@ public interface JpegConstants
 	public static final int SOF14Marker = 0xFFc0 + 0xe;
 	public static final int SOF15Marker = 0xFFc0 + 0xf;
 
-	public static final int MARKERS[] = {
-			SOS_Marker, JPEG_APP0, JPEG_APP0_Marker, JPEG_APP1_Marker,
-			JPEG_APP2_Marker, JPEG_APP13_Marker, JPEG_APP14_Marker,
-			JPEG_APP15_Marker, JFIFMarker, SOF0Marker, SOF1Marker, SOF2Marker,
-			SOF3Marker, SOF4Marker, SOF5Marker, SOF6Marker, SOF7Marker,
-			SOF8Marker, SOF9Marker, SOF10Marker, SOF11Marker, SOF12Marker,
-			SOF13Marker, SOF14Marker, SOF15Marker,
-	};
+	public static final int MARKERS[] = { SOS_Marker, JPEG_APP0,
+			JPEG_APP0_Marker, JPEG_APP1_Marker, JPEG_APP2_Marker,
+			JPEG_APP13_Marker, JPEG_APP14_Marker, JPEG_APP15_Marker,
+			JFIFMarker, SOF0Marker, SOF1Marker, SOF2Marker, SOF3Marker,
+			SOF4Marker, SOF5Marker, SOF6Marker, SOF7Marker, SOF8Marker,
+			SOF9Marker, SOF10Marker, SOF11Marker, SOF12Marker, SOF13Marker,
+			SOF14Marker, SOF15Marker, };
 
-	public static final byte icc_profile_label[] = {
-			0x49, 0x43, 0x43, 0x5F, 0x50, 0x52, 0x4F, 0x46, 0x49, 0x4C, 0x45,
-			0x0
-	};
+	public static final byte icc_profile_label[] = { 0x49, 0x43, 0x43, 0x5F,
+			0x50, 0x52, 0x4F, 0x46, 0x49, 0x4C, 0x45, 0x0 };
 
-	//	public static final byte PhotoshopIdentificationString[] = "Photoshop 3.0"
-	//		.getBytes();
-	public static final byte PhotoshopIdentificationString[] = {
-			0xff & 'P', 0xff & 'h', 0xff & 'o', 0xff & 't', 0xff & 'o',
-			0xff & 's', 0xff & 'h', 0xff & 'o', 0xff & 'p', 0xff & ' ',
-			0xff & '3', 0xff & '.', 0xff & '0', 0,
-	};
-	public static final byte CONST_8BIM[] = {
-			0xff & '8', 0xff & 'B', 0xff & 'I', 0xff & 'M',
-	};
+	// public static final byte PhotoshopIdentificationString[] =
+	// "Photoshop 3.0"
+	// .getBytes();
+	public static final byte PhotoshopIdentificationString[] = { 0xff & 'P',
+			0xff & 'h', 0xff & 'o', 0xff & 't', 0xff & 'o', 0xff & 's',
+			0xff & 'h', 0xff & 'o', 0xff & 'p', 0xff & ' ', 0xff & '3',
+			0xff & '.', 0xff & '0', 0, };
+	public static final byte CONST_8BIM[] = { 0xff & '8', 0xff & 'B',
+			0xff & 'I', 0xff & 'M', };
 
-	public static final byte IPTCPrefix[] = {
-			0x1C, 0x02,
-	};
+	public static final byte IPTCPrefix[] = { 0x1C, 0x02, };
 
 	public static final IptcType IPTC_TYPE_RecordVersion = new IptcType(0,
 			"RecordVersion");
@@ -213,13 +233,13 @@ public interface JpegConstants
 			201, "ObjectDataPreview,FileFormatVersion");
 	public static final IptcType IPTC_TYPE_ObjectDataPreviewData = new IptcType(
 			202, "ObjectDataPreviewData");
-	//--
+	// --
 	public static final IptcType IPTC_TYPE_Unknown = new IptcType(-1, "Unknown");
 
-	public static final IptcType IPTC_TYPES[] = {
-			IPTC_TYPE_RecordVersion, IPTC_TYPE_ObjectTypeReference,
-			IPTC_TYPE_ObjectAttributeReference, IPTC_TYPE_ObjectName,
-			IPTC_TYPE_EditStatus, IPTC_TYPE_EditorialUpdate, IPTC_TYPE_Urgency,
+	public static final IptcType IPTC_TYPES[] = { IPTC_TYPE_RecordVersion,
+			IPTC_TYPE_ObjectTypeReference, IPTC_TYPE_ObjectAttributeReference,
+			IPTC_TYPE_ObjectName, IPTC_TYPE_EditStatus,
+			IPTC_TYPE_EditorialUpdate, IPTC_TYPE_Urgency,
 			IPTC_TYPE_SubjectReference, IPTC_TYPE_Category,
 			IPTC_TYPE_SupplementalCategory, IPTC_TYPE_FixtureIdentifier,
 			IPTC_TYPE_Keywords, IPTC_TYPE_ContentLocationCode,
@@ -245,6 +265,5 @@ public interface JpegConstants
 			IPTC_TYPE_AudioDuration, IPTC_TYPE_AudioOutcue,
 			IPTC_TYPE_ObjectDataPreview_FileFormat,
 			IPTC_TYPE_ObjectDataPreview_FileFormatVersion,
-			IPTC_TYPE_ObjectDataPreviewData,
-	};
+			IPTC_TYPE_ObjectDataPreviewData, };
 }

@@ -73,19 +73,7 @@ public class XmpUpdateTest extends SanselanTest
 
 			// ----
 
-			String testSrc = "<test>hi</test>";
 			Map params = new HashMap();
-			params.put(PARAM_KEY_XMP_XML, testSrc);
-			Sanselan.writeImage(image, tempFile, imageFormat, params);
-
-			String testDst = Sanselan.getXmpXml(tempFile);
-
-			assertNotNull(testDst);
-
-			assertEquals(testDst, testSrc);
-
-			// ----
-
 			params.put(PARAM_KEY_XMP_XML, xmpXml);
 			Sanselan.writeImage(image, tempFile, imageFormat, params);
 

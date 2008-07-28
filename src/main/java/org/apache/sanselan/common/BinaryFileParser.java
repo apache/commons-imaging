@@ -36,7 +36,7 @@ public class BinaryFileParser extends BinaryFileFunctions
 	// default byte order for Java, many file formats.
 	private int byteOrder = BYTE_ORDER_NETWORK;
 
-	//	protected boolean BYTE_ORDER_reversed = true;
+	// protected boolean BYTE_ORDER_reversed = true;
 
 	protected void setByteOrder(int a, int b) throws ImageReadException,
 			IOException
@@ -63,7 +63,8 @@ public class BinaryFileParser extends BinaryFileFunctions
 		return byteOrder;
 	}
 
-	protected final int convertByteArrayToInt(String name, int start, byte bytes[])
+	protected final int convertByteArrayToInt(String name, int start,
+			byte bytes[])
 	{
 		return convertByteArrayToInt(name, bytes, start, byteOrder);
 	}
@@ -113,6 +114,11 @@ public class BinaryFileParser extends BinaryFileFunctions
 				return false;
 
 		return true;
+	}
+
+	protected final byte[] int2ToByteArray(int value)
+	{
+		return int2ToByteArray(value, byteOrder);
 	}
 
 }

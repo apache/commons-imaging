@@ -41,15 +41,15 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 
 		// return false to exit traversal.
 		public boolean visitSegment(int marker, byte markerBytes[],
-				int markerLength, byte markerLengthBytes[], byte segmentData[])
-				throws ImageReadException,
-				//				ImageWriteException, 
+				int segmentLength, byte segmentLengthBytes[],
+				byte segmentData[]) throws ImageReadException,
+		// ImageWriteException,
 				IOException;
 	}
 
 	public void traverseJFIF(ByteSource byteSource, Visitor visitor)
 			throws ImageReadException,
-			//			ImageWriteException, 
+			// ImageWriteException,
 			IOException
 	{
 		InputStream is = null;
@@ -70,6 +70,9 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 				int marker = convertByteArrayToShort("marker", markerBytes,
 						byteOrder);
 
+//				Debug.debug("marker", marker + " (0x" + Integer.toHexString(marker) + ")");
+//				Debug.debug("markerBytes", markerBytes);
+				
 				if (marker == 0xffd9 || marker == SOS_Marker)
 				{
 					if (!visitor.beginSOS())
@@ -80,30 +83,31 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 					break;
 				}
 
-				byte markerLengthBytes[] = readByteArray("markerLengthBytes",
-						2, is, "markerLengthBytes");
-				int markerLength = convertByteArrayToShort("markerLength",
-						markerLengthBytes, byteOrder);
+				byte segmentLengthBytes[] = readByteArray("segmentLengthBytes",
+						2, is, "segmentLengthBytes");
+				int segmentLength = convertByteArrayToShort("segmentLength",
+						segmentLengthBytes, byteOrder);
+
+//				Debug.debug("segmentLength", segmentLength + " (0x" + Integer.toHexString(segmentLength) + ")");
+//				Debug.debug("segmentLengthBytes", segmentLengthBytes);
 
 				byte segmentData[] = readByteArray("Segment Data",
-						markerLength - 2, is,
+						segmentLength - 2, is,
 						"Invalid Segment: insufficient data");
 
-				//				Debug.debug("markerLength", markerLength);
+				// Debug.debug("segmentLength", segmentLength);
 
-				if (!visitor.visitSegment(marker, markerBytes, markerLength,
-						markerLengthBytes, segmentData))
+				if (!visitor.visitSegment(marker, markerBytes, segmentLength,
+						segmentLengthBytes, segmentData))
 					return;
 			}
 
-		}
-		finally
+		} finally
 		{
 			try
 			{
 				is.close();
-			}
-			catch (Exception e)
+			} catch (Exception e)
 			{
 				Debug.debug(e);
 			}
@@ -114,66 +118,65 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 	{
 		switch (marker)
 		{
-			case SOS_Marker :
-				return "SOS_Marker";
-				//			case JPEG_APP0 :
-				//				return "JPEG_APP0";
-				//			case JPEG_APP0_Marker :
-				//				return "JPEG_APP0_Marker";
-			case JPEG_APP1_Marker :
-				return "JPEG_APP1_Marker";
-			case JPEG_APP2_Marker :
-				return "JPEG_APP2_Marker";
-			case JPEG_APP13_Marker :
-				return "JPEG_APP13_Marker";
-			case JPEG_APP14_Marker :
-				return "JPEG_APP14_Marker";
-			case JPEG_APP15_Marker :
-				return "JPEG_APP15_Marker";
-			case JFIFMarker :
-				return "JFIFMarker";
-			case SOF0Marker :
-				return "SOF0Marker";
-			case SOF1Marker :
-				return "SOF1Marker";
-			case SOF2Marker :
-				return "SOF2Marker";
-			case SOF3Marker :
-				return "SOF3Marker";
-			case SOF4Marker :
-				return "SOF4Marker";
-			case SOF5Marker :
-				return "SOF5Marker";
-			case SOF6Marker :
-				return "SOF6Marker";
-			case SOF7Marker :
-				return "SOF7Marker";
-			case SOF8Marker :
-				return "SOF8Marker";
-			case SOF9Marker :
-				return "SOF9Marker";
-			case SOF10Marker :
-				return "SOF10Marker";
-			case SOF11Marker :
-				return "SOF11Marker";
-			case SOF12Marker :
-				return "SOF12Marker";
-			case SOF13Marker :
-				return "SOF13Marker";
-			case SOF14Marker :
-				return "SOF14Marker";
-			case SOF15Marker :
-				return "SOF15Marker";
-			default :
-				return "Unknown";
+		case SOS_Marker:
+			return "SOS_Marker";
+			// case JPEG_APP0 :
+			// return "JPEG_APP0";
+			// case JPEG_APP0_Marker :
+			// return "JPEG_APP0_Marker";
+		case JPEG_APP1_Marker:
+			return "JPEG_APP1_Marker";
+		case JPEG_APP2_Marker:
+			return "JPEG_APP2_Marker";
+		case JPEG_APP13_Marker:
+			return "JPEG_APP13_Marker";
+		case JPEG_APP14_Marker:
+			return "JPEG_APP14_Marker";
+		case JPEG_APP15_Marker:
+			return "JPEG_APP15_Marker";
+		case JFIFMarker:
+			return "JFIFMarker";
+		case SOF0Marker:
+			return "SOF0Marker";
+		case SOF1Marker:
+			return "SOF1Marker";
+		case SOF2Marker:
+			return "SOF2Marker";
+		case SOF3Marker:
+			return "SOF3Marker";
+		case SOF4Marker:
+			return "SOF4Marker";
+		case SOF5Marker:
+			return "SOF5Marker";
+		case SOF6Marker:
+			return "SOF6Marker";
+		case SOF7Marker:
+			return "SOF7Marker";
+		case SOF8Marker:
+			return "SOF8Marker";
+		case SOF9Marker:
+			return "SOF9Marker";
+		case SOF10Marker:
+			return "SOF10Marker";
+		case SOF11Marker:
+			return "SOF11Marker";
+		case SOF12Marker:
+			return "SOF12Marker";
+		case SOF13Marker:
+			return "SOF13Marker";
+		case SOF14Marker:
+			return "SOF14Marker";
+		case SOF15Marker:
+			return "SOF15Marker";
+		default:
+			return "Unknown";
 		}
 	}
 
 	public void dumpJFIF(ByteSource byteSource) throws ImageReadException,
 			IOException, ImageWriteException
 	{
-		Visitor visitor = new Visitor()
-		{
+		Visitor visitor = new Visitor() {
 			// return false to exit before reading image data.
 			public boolean beginSOS()
 			{
@@ -190,7 +193,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 
 			// return false to exit traversal.
 			public boolean visitSegment(int marker, byte markerBytes[],
-					int markerLength, byte markerLengthBytes[],
+					int segmentLength, byte segmentLengthBytes[],
 					byte segmentData[])
 			{
 				Debug.debug("Segment marker: " + Integer.toHexString(marker)

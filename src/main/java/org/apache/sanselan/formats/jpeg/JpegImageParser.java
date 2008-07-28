@@ -317,7 +317,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 
 	public static boolean isExifAPP1Segment(GenericSegment segment)
 	{
-		return byteArrayHasPrefix(segment.bytes, ExifIdentifierCode);
+		return byteArrayHasPrefix(segment.bytes, EXIF_IDENTIFIER_CODE);
 	}
 
 	private ArrayList filterAPP1Segments(ArrayList v)
@@ -431,7 +431,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 
 				if (marker == JPEG_APP1_Marker)
 				{
-					if (byteArrayHasPrefix(segmentData, ExifIdentifierCode))
+					if (byteArrayHasPrefix(segmentData, EXIF_IDENTIFIER_CODE))
 					{
 						result[0] = true;
 						return false;

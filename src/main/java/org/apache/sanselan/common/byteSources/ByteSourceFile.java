@@ -42,7 +42,6 @@ public class ByteSourceFile extends ByteSource
 		BufferedInputStream bis = null;
 		is = new FileInputStream(file);
 		bis = new BufferedInputStream(is);
-
 		return bis;
 	}
 

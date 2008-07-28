@@ -15,6 +15,7 @@ Version History:
 Release 0.95
 ------------
 
+ * Added ability to remove and update XMP XML in existing JPEG files.
  * Added ability to embed XMP XML when writing the following formats: GIF, PNG, TIFF.
  * Improved handling of tEXt and zTXt PNG text blocks.
  * Added XMP XML extraction for the following formats: GIF (untested), JPEG, TIFF, PNG, PSD.

@@ -130,6 +130,8 @@ public abstract class SanselanTest extends TestCase implements
 		// src\\test\\data\\images\\exif\\drewNoakes\\007_FujiFilm FinePixS1Pro
 		// (5).jpg
 
+		imagesFolder = imagesFolder.getAbsoluteFile();
+		
 		assertTrue(imagesFolder.exists());
 
 		Debug.debug("imagesFolder", imagesFolder);

@@ -17,24 +17,13 @@
 
 package org.apache.sanselan.formats.jpeg.xmp;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.SanselanConstants;
 import org.apache.sanselan.common.BinaryFileParser;
-import org.apache.sanselan.common.BinaryOutputStream;
-import org.apache.sanselan.util.Debug;
-import org.apache.sanselan.util.ParamMap;
+import org.apache.sanselan.formats.jpeg.JpegConstants;
 
-public class JpegXmpParser extends BinaryFileParser
+public class JpegXmpParser extends BinaryFileParser implements JpegConstants
 {
 
 	public JpegXmpParser()
@@ -42,39 +31,6 @@ public class JpegXmpParser extends BinaryFileParser
 		setByteOrder(BYTE_ORDER_NETWORK);
 	}
 
-	public static final String XMP_NAMESPACE_URI = "http://ns.adobe.com/xap/1.0/";
-
-	public static final byte XMP_IDENTIFIER[] = { //
-	0x68, // h
-			0x74, // t
-			0x74, // t
-			0x70, // p
-			0x3A, // :
-			0x2F, // /
-			0x2F, // /
-			0x6E, // n
-			0x73, // s
-			0x2E, // .
-			0x61, // a
-			0x64, // d
-			0x6F, // o
-			0x62, // b
-			0x65, // e
-			0x2E, // .
-			0x63, // c
-			0x6F, // o
-			0x6D, // m
-			0x2F, // /
-			0x78, // x
-			0x61, // a
-			0x70, // p
-			0x2F, // /
-			0x31, // 1
-			0x2E, // .
-			0x30, // 0
-			0x2F, // /
-			0, // 0-terminated us-ascii string.
-	};
 
 	public boolean isXmpJpegSegment(byte segmentData[])
 	{
