@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.FormatCompliance;
@@ -50,7 +51,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 {
 	public TiffImageParser()
 	{
-		//        setDebug(true);
+		// setDebug(true);
 	}
 
 	public String getName()
@@ -65,9 +66,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 	private static final String DEFAULT_EXTENSION = ".tif";
 
-	private static final String ACCEPTED_EXTENSIONS[] = {
-			".tif", ".tiff",
-	};
+	private static final String ACCEPTED_EXTENSIONS[] = { ".tif", ".tiff", };
 
 	protected String[] getAcceptedExtensions()
 	{
@@ -76,8 +75,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 	protected ImageFormat[] getAcceptedTypes()
 	{
-		return new ImageFormat[]{
-			ImageFormat.IMAGE_FORMAT_TIFF, //
+		return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_TIFF, //
 		};
 	}
 
@@ -85,8 +83,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(byteSource,
-				params, false, formatCompliance);
+		TiffContents contents = new TiffReader(isStrict(params))
+				.readFirstDirectory(byteSource, params, false, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 
 		TiffField field = directory.findField(EXIF_TAG_ICC_PROFILE);
@@ -99,8 +97,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(byteSource,
-				params, false, formatCompliance);
+		TiffContents contents = new TiffReader(isStrict(params))
+				.readFirstDirectory(byteSource, params, false, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 
 		int width = directory.findField(TIFF_TAG_IMAGE_WIDTH).getIntValue();
@@ -123,8 +121,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		TiffContents contents = new TiffReader(isStrict(params)).readContents(byteSource,
-				params, formatCompliance);
+		TiffContents contents = new TiffReader(isStrict(params)).readContents(
+				byteSource, params, formatCompliance);
 
 		ArrayList directories = contents.directories;
 
@@ -155,8 +153,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		TiffContents contents = new TiffReader(isStrict(params)).readDirectories(byteSource,
-				false, formatCompliance);
+		TiffContents contents = new TiffReader(isStrict(params))
+				.readDirectories(byteSource, false, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 
 		TiffField widthField = directory.findField(TIFF_TAG_IMAGE_WIDTH, true);
@@ -169,7 +167,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		int height = heightField.getIntValue();
 		int width = widthField.getIntValue();
 
-		//-------------------
+		// -------------------
 
 		TiffField resolutionUnitField = directory
 				.findField(TIFF_TAG_RESOLUTION_UNIT);
@@ -181,16 +179,16 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		double unitsPerInch = -1;
 		switch (resolutionUnit)
 		{
-			case 1 :
-				break;
-			case 2 : // Inch
-				unitsPerInch = 1.0;
-				break;
-			case 3 : // Meter
-				unitsPerInch = 0.0254;
-				break;
-			default :
-				break;
+		case 1:
+			break;
+		case 2: // Inch
+			unitsPerInch = 1.0;
+			break;
+		case 3: // Meter
+			unitsPerInch = 0.0254;
+			break;
+		default:
+			break;
 
 		}
 		TiffField xResolutionField = directory.findField(TIFF_TAG_XRESOLUTION);
@@ -221,7 +219,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 			}
 		}
 
-		//-------------------
+		// -------------------
 
 		TiffField bitsPerSampleField = directory
 				.findField(TIFF_TAG_BITS_PER_SAMPLE);
@@ -234,7 +232,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		int bitsPerPixel = bitsPerSample; // assume grayscale;
 		// dunno if this handles colormapped images correctly.
 
-		//-------------------
+		// -------------------
 
 		ArrayList comments = new ArrayList();
 		ArrayList entries = directory.entries;
@@ -269,33 +267,33 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 		switch (compression)
 		{
-			case TIFF_COMPRESSION_UNCOMPRESSED_1 :
-				compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
-				break;
-			case TIFF_COMPRESSION_CCITT_1D :
-				compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_CCITT_1D;
-				break;
-			case TIFF_COMPRESSION_CCITT_GROUP_3 :
-				compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_CCITT_GROUP_3;
-				break;
-			case TIFF_COMPRESSION_CCITT_GROUP_4 :
-				compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_CCITT_GROUP_4;
-				break;
-			case TIFF_COMPRESSION_LZW :
-				compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_LZW;
-				break;
-			case TIFF_COMPRESSION_JPEG :
-				compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_JPEG;
-				break;
-			case TIFF_COMPRESSION_UNCOMPRESSED_2 :
-				compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
-				break;
-			case TIFF_COMPRESSION_PACKBITS :
-				compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_PACKBITS;
-				break;
-			default :
-				compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN;
-				break;
+		case TIFF_COMPRESSION_UNCOMPRESSED_1:
+			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
+			break;
+		case TIFF_COMPRESSION_CCITT_1D:
+			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_CCITT_1D;
+			break;
+		case TIFF_COMPRESSION_CCITT_GROUP_3:
+			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_CCITT_GROUP_3;
+			break;
+		case TIFF_COMPRESSION_CCITT_GROUP_4:
+			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_CCITT_GROUP_4;
+			break;
+		case TIFF_COMPRESSION_LZW:
+			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_LZW;
+			break;
+		case TIFF_COMPRESSION_JPEG:
+			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_JPEG;
+			break;
+		case TIFF_COMPRESSION_UNCOMPRESSED_2:
+			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
+			break;
+		case TIFF_COMPRESSION_PACKBITS:
+			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_PACKBITS;
+			break;
+		default:
+			compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN;
+			break;
 		}
 
 		ImageInfo result = new ImageInfo(formatDetails, bitsPerPixel, comments,
@@ -307,22 +305,20 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 		return result;
 	}
 
-	
-
 	public String getXmpXml(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		TiffContents contents = new TiffReader(isStrict(params)).readDirectories(byteSource,
-				false, formatCompliance);
+		TiffContents contents = new TiffReader(isStrict(params))
+				.readDirectories(byteSource, false, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 
 		TiffField xmpField = directory.findField(TIFF_TAG_XMP, false);
-		if(xmpField==null)
+		if (xmpField == null)
 			return null;
-		
+
 		byte bytes[] = xmpField.getByteArrayValue();
-		
+
 		try
 		{
 			// segment data is UTF-8 encoded xml.
@@ -351,7 +347,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 			pw.println("");
 
-			//		try
+			// try
 			{
 				FormatCompliance formatCompliance = FormatCompliance
 						.getDefault();
@@ -374,7 +370,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 					if (entries == null)
 						return false;
 
-					//					Debug.debug("directory offset", directory.offset);
+					// Debug.debug("directory offset", directory.offset);
 
 					for (int i = 0; i < entries.size(); i++)
 					{
@@ -386,16 +382,15 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
 				pw.println("");
 			}
-			//		catch (Exception e)
-			//		{
-			//			Debug.debug(e);
-			//			pw.println("");
-			//			return false;
-			//		}
+			// catch (Exception e)
+			// {
+			// Debug.debug(e);
+			// pw.println("");
+			// return false;
+			// }
 
 			return true;
-		}
-		finally
+		} finally
 		{
 			pw.println("");
 		}
@@ -406,16 +401,42 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
 		Map params = null;
-		new TiffReader(isStrict(params)).readContents(byteSource, params, formatCompliance);
+		new TiffReader(isStrict(params)).readContents(byteSource, params,
+				formatCompliance);
 		return formatCompliance;
+	}
+
+	public List collectRawImageData(ByteSource byteSource, Map params)
+			throws ImageReadException, IOException
+	{
+		FormatCompliance formatCompliance = FormatCompliance.getDefault();
+		TiffContents contents = new TiffReader(isStrict(params))
+				.readDirectories(byteSource, true, formatCompliance);
+
+		List result = new ArrayList();
+		for (int i = 0; i < contents.directories.size(); i++)
+		{
+			TiffDirectory directory = (TiffDirectory) contents.directories
+					.get(i);
+			List dataElements = directory.getTiffRawImageDataElements();
+			for (int j = 0; j < dataElements.size(); j++)
+			{
+				TiffDirectory.ImageDataElement element = (TiffDirectory.ImageDataElement) dataElements
+						.get(j);
+				byte bytes[] = byteSource.getBlock(element.offset,
+						element.length);
+				result.add(bytes);
+			}
+		}
+		return result;
 	}
 
 	public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
 		FormatCompliance formatCompliance = FormatCompliance.getDefault();
-		TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(byteSource,
-				params, true, formatCompliance);
+		TiffContents contents = new TiffReader(isStrict(params))
+				.readFirstDirectory(byteSource, params, true, formatCompliance);
 		TiffDirectory directory = (TiffDirectory) contents.directories.get(0);
 		BufferedImage result = directory.getTiffImage(params);
 		if (null == result)
@@ -443,20 +464,20 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 				true).getIntValue();
 		int bitsPerSample[] = directory.findField(TIFF_TAG_BITS_PER_SAMPLE,
 				true).getIntArrayValue();
-		// TODO: why are we using bits per sample twice?  because one is a sum.
+		// TODO: why are we using bits per sample twice? because one is a sum.
 		int bitsPerPixel = directory.findField(TIFF_TAG_BITS_PER_SAMPLE, true)
 				.getIntValueOrArraySum();
 
-		//		int bitsPerPixel = getTagAsValueOrArraySum(entries,
-		//				TIFF_TAG_BITS_PER_SAMPLE);
+		// int bitsPerPixel = getTagAsValueOrArraySum(entries,
+		// TIFF_TAG_BITS_PER_SAMPLE);
 
 		int predictor = -1;
 		{
-			//			dumpOptionalNumberTag(entries, TIFF_TAG_FILL_ORDER);
-			//			dumpOptionalNumberTag(entries, TIFF_TAG_FREE_BYTE_COUNTS);
-			//			dumpOptionalNumberTag(entries, TIFF_TAG_FREE_OFFSETS);
-			//			dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
-			//			dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
+			// dumpOptionalNumberTag(entries, TIFF_TAG_FILL_ORDER);
+			// dumpOptionalNumberTag(entries, TIFF_TAG_FREE_BYTE_COUNTS);
+			// dumpOptionalNumberTag(entries, TIFF_TAG_FREE_OFFSETS);
+			// dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
+			// dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
 			TiffField predictorField = directory.findField(TIFF_TAG_PREDICTOR);
 			if (null != predictorField)
 				predictor = predictorField.getIntValueOrArraySum();
@@ -496,70 +517,67 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 	{
 		switch (photometricInterpretation)
 		{
-			case 0 :
-			case 1 :
-				boolean invert = photometricInterpretation == 0;
+		case 0:
+		case 1:
+			boolean invert = photometricInterpretation == 0;
 
-				return new PhotometricInterpreterBiLevel(bitsPerPixel,
-						samplesPerPixel, bitsPerSample, predictor, width,
-						height, invert);
-			case 3 : // Palette
-			{
-				int colorMap[] = directory.findField(TIFF_TAG_COLOR_MAP, true)
-						.getIntArrayValue();
+			return new PhotometricInterpreterBiLevel(bitsPerPixel,
+					samplesPerPixel, bitsPerSample, predictor, width, height,
+					invert);
+		case 3: // Palette
+		{
+			int colorMap[] = directory.findField(TIFF_TAG_COLOR_MAP, true)
+					.getIntArrayValue();
 
-				int expected_colormap_size = 3 * (1 << bitsPerPixel);
+			int expected_colormap_size = 3 * (1 << bitsPerPixel);
 
-				if (colorMap.length != expected_colormap_size)
-					throw new ImageReadException("Tiff: fColorMap.length ("
-							+ colorMap.length + ")!=expected_colormap_size ("
-							+ expected_colormap_size + ")");
+			if (colorMap.length != expected_colormap_size)
+				throw new ImageReadException("Tiff: fColorMap.length ("
+						+ colorMap.length + ")!=expected_colormap_size ("
+						+ expected_colormap_size + ")");
 
-				return new PhotometricInterpreterPalette(samplesPerPixel,
-						bitsPerSample, predictor, width, height, colorMap);
-			}
-			case 2 : // RGB
-				return new PhotometricInterpreterRGB(samplesPerPixel,
-						bitsPerSample, predictor, width, height);
-			case 5 : // CMYK
-				return new PhotometricInterpreterCMYK(samplesPerPixel,
-						bitsPerSample, predictor, width, height);
-			case 6 : //
-			{
-				double yCbCrCoefficients[] = directory.findField(
-						TIFF_TAG_YCBCR_COEFFICIENTS, true)
-						.getDoubleArrayValue();
+			return new PhotometricInterpreterPalette(samplesPerPixel,
+					bitsPerSample, predictor, width, height, colorMap);
+		}
+		case 2: // RGB
+			return new PhotometricInterpreterRGB(samplesPerPixel,
+					bitsPerSample, predictor, width, height);
+		case 5: // CMYK
+			return new PhotometricInterpreterCMYK(samplesPerPixel,
+					bitsPerSample, predictor, width, height);
+		case 6: //
+		{
+			double yCbCrCoefficients[] = directory.findField(
+					TIFF_TAG_YCBCR_COEFFICIENTS, true).getDoubleArrayValue();
 
-				int yCbCrPositioning[] = directory.findField(
-						TIFF_TAG_YCBCR_POSITIONING, true).getIntArrayValue();
-				int yCbCrSubSampling[] = directory.findField(
-						TIFF_TAG_YCBCR_SUB_SAMPLING, true).getIntArrayValue();
+			int yCbCrPositioning[] = directory.findField(
+					TIFF_TAG_YCBCR_POSITIONING, true).getIntArrayValue();
+			int yCbCrSubSampling[] = directory.findField(
+					TIFF_TAG_YCBCR_SUB_SAMPLING, true).getIntArrayValue();
 
-				double referenceBlackWhite[] = directory.findField(
-						TIFF_TAG_REFERENCE_BLACK_WHITE, true)
-						.getDoubleArrayValue();
+			double referenceBlackWhite[] = directory.findField(
+					TIFF_TAG_REFERENCE_BLACK_WHITE, true).getDoubleArrayValue();
 
-				return new PhotometricInterpreterYCbCr(yCbCrCoefficients,
-						yCbCrPositioning, yCbCrSubSampling,
-						referenceBlackWhite, samplesPerPixel, bitsPerSample,
-						predictor, width, height);
-			}
+			return new PhotometricInterpreterYCbCr(yCbCrCoefficients,
+					yCbCrPositioning, yCbCrSubSampling, referenceBlackWhite,
+					samplesPerPixel, bitsPerSample, predictor, width, height);
+		}
 
-			case 8 :
-				return new PhotometricInterpreterCIELAB(samplesPerPixel,
-						bitsPerSample, predictor, width, height);
+		case 8:
+			return new PhotometricInterpreterCIELAB(samplesPerPixel,
+					bitsPerSample, predictor, width, height);
 
-			case 32844 :
-			case 32845 : {
-				boolean yonly = (photometricInterpretation == 32844);
-				return new PhotometricInterpreterLogLUV(samplesPerPixel,
-						bitsPerSample, predictor, width, height, yonly);
-			}
+		case 32844:
+		case 32845: {
+			boolean yonly = (photometricInterpretation == 32844);
+			return new PhotometricInterpreterLogLUV(samplesPerPixel,
+					bitsPerSample, predictor, width, height, yonly);
+		}
 
-			default :
-				throw new ImageReadException(
-						"TIFF: Unknown fPhotometricInterpretation: "
-								+ photometricInterpretation);
+		default:
+			throw new ImageReadException(
+					"TIFF: Unknown fPhotometricInterpretation: "
+							+ photometricInterpretation);
 		}
 	}
 

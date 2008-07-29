@@ -33,7 +33,7 @@ public class TiffOutputField implements TiffConstants
 
 	private byte bytes[];
 
-	private final TiffOutputItem separateValueItem;
+	private final TiffOutputItem.Value separateValueItem;
 
 	public TiffOutputField(TagInfo tagInfo, FieldType tagtype, int count,
 			byte bytes[])
@@ -77,7 +77,6 @@ public class TiffOutputField implements TiffConstants
 		return new TiffOutputField(tagInfo.tag, tagInfo, fieldType, 1, bytes);
 	}
 
-
 	public static TiffOutputField create(TagInfo tagInfo, int byteOrder,
 			Number value[]) throws ImageWriteException
 	{
@@ -90,7 +89,8 @@ public class TiffOutputField implements TiffConstants
 
 		byte bytes[] = fieldType.writeData(value, byteOrder);
 
-		return new TiffOutputField(tagInfo.tag, tagInfo, fieldType, value.length, bytes);
+		return new TiffOutputField(tagInfo.tag, tagInfo, fieldType,
+				value.length, bytes);
 	}
 
 	public static TiffOutputField create(TagInfo tagInfo, int byteOrder,
@@ -113,27 +113,12 @@ public class TiffOutputField implements TiffConstants
 			int byteOrder) throws ImageWriteException
 	{
 		return new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1, FIELD_TYPE_LONG
-				.writeData(new int[]{
-					0,
-				}, byteOrder));
+				.writeData(new int[] { 0, }, byteOrder));
 	}
 
 	protected void writeField(BinaryOutputStream bos) throws IOException,
 			ImageWriteException
 	{
-		//		CachingOutputStream cos = null;
-		//		if (tagInfo.isUnknown())
-		//		{
-		//			cos = new CachingOutputStream(bos);
-		//			int byteOrder = bos.getByteOrder();
-		//			bos = new BinaryOutputStream(cos, byteOrder);
-		//			
-		//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
-		//					+ ") isLocalValue()", isLocalValue());
-		//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
-		//					+ ") bytes", bytes);
-		//		}
-
 		bos.write2Bytes(tag);
 		bos.write2Bytes(fieldType.type);
 		bos.write4Bytes(count);
@@ -142,28 +127,21 @@ public class TiffOutputField implements TiffConstants
 		{
 			if (separateValueItem != null)
 				throw new ImageWriteException("Unexpected separate value item.");
+			if (bytes.length > 4)
+				throw new ImageWriteException(
+						"Local value has invalid length: " + bytes.length);
 
 			bos.writeByteArray(bytes);
 			int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
 			for (int i = 0; i < remainder; i++)
 				bos.write(0);
-		}
-		else
+		} else
 		{
 			if (separateValueItem == null)
 				throw new ImageWriteException("Missing separate value item.");
 
 			bos.write4Bytes(separateValueItem.getOffset());
-
-			int written = bytes.length;
-			if ((written % 2) != 0)
-				written++;
 		}
-		//		if (null != cos)
-		//		{
-		//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
-		//					+ ") written field", cos.getCache());
-		//		}
 	}
 
 	protected TiffOutputItem getSeperateValue()
@@ -178,18 +156,20 @@ public class TiffOutputField implements TiffConstants
 
 	protected void setData(byte bytes[]) throws ImageWriteException
 	{
-		//		if(tagInfo.isUnknown())
-		//			Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
-		//					+ ") setData", bytes);
+		// if(tagInfo.isUnknown())
+		// Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
+		// + ") setData", bytes);
 
 		if (this.bytes.length != bytes.length)
 			throw new ImageWriteException("Cannot change size of value.");
 
-		//		boolean wasLocalValue = isLocalValue();
+		// boolean wasLocalValue = isLocalValue();
 		this.bytes = bytes;
-		//		if (isLocalValue() != wasLocalValue)
-		//			throw new Error("Bug. Locality disrupted! "
-		//					+ tagInfo.getDescription());
+		if (separateValueItem != null)
+			separateValueItem.updateValue(bytes);
+		// if (isLocalValue() != wasLocalValue)
+		// throw new Error("Bug. Locality disrupted! "
+		// + tagInfo.getDescription());
 	}
 
 	private static final String newline = System.getProperty("line.separator");

@@ -24,7 +24,7 @@ import java.util.Map;
 public class MyLZWCompressor
 {
 
-	//	private static final int MAX_TABLE_SIZE = 1 << 12;
+	// private static final int MAX_TABLE_SIZE = 1 << 12;
 
 	private int codeSize;
 	private final int initialCodeSize;
@@ -34,18 +34,28 @@ public class MyLZWCompressor
 	private final boolean earlyLimit;
 	private final int clearCode;
 	private final int eoiCode;
+	private final Listener listener;
 
 	public MyLZWCompressor(int initialCodeSize, int byteOrder,
-			boolean early_limit)
+			boolean earlyLimit)
 	{
+		this(initialCodeSize, byteOrder, earlyLimit, null);
+	}
 
+	public MyLZWCompressor(int initialCodeSize, int byteOrder,
+			boolean earlyLimit, Listener listener)
+	{
+		this.listener = listener;
 		this.byteOrder = byteOrder;
-		this.earlyLimit = early_limit;
+		this.earlyLimit = earlyLimit;
 
 		this.initialCodeSize = initialCodeSize;
 
 		clearCode = 1 << initialCodeSize;
 		eoiCode = clearCode + 1;
+
+		if (null != listener)
+			listener.init(clearCode, eoiCode);
 
 		InitializeStringTable();
 	}
@@ -84,9 +94,7 @@ public class MyLZWCompressor
 
 	private final Object arrayToKey(byte b)
 	{
-		return arrayToKey(new byte[]{
-			b,
-		}, 0, 1);
+		return arrayToKey(new byte[] { b, }, 0, 1);
 	}
 
 	private final static class ByteArray
@@ -146,6 +154,29 @@ public class MyLZWCompressor
 		return new ByteArray(bytes, start, length);
 	}
 
+	private final void writeDataCode(MyBitOutputStream bos, int code)
+			throws IOException
+	{
+		if (null != listener)
+			listener.dataCode(code);
+		writeCode(bos, code);
+	}
+
+
+	private final void writeClearCode(MyBitOutputStream bos) throws IOException
+	{
+		if (null != listener)
+			listener.dataCode(clearCode);
+		writeCode(bos, clearCode);
+	}
+
+	private final void writeEoiCode(MyBitOutputStream bos) throws IOException
+	{
+		if (null != listener)
+			listener.eoiCode(eoiCode);
+		writeCode(bos, eoiCode);
+	}
+
 	private final void writeCode(MyBitOutputStream bos, int code)
 			throws IOException
 	{
@@ -192,7 +223,7 @@ public class MyLZWCompressor
 					incrementCodeSize();
 				else
 				{
-					writeCode(bos, clearCode);
+					writeClearCode(bos);
 					clearTable();
 					cleared = true;
 				}
@@ -208,6 +239,17 @@ public class MyLZWCompressor
 		return cleared;
 	}
 
+	public static interface Listener
+	{
+		public void dataCode(int code);
+
+		public void eoiCode(int code);
+
+		public void clearCode(int code);
+		
+		public void init(int clearCode, int eoiCode);
+	};
+
 	public byte[] compress(byte bytes[]) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(bytes.length);
@@ -215,7 +257,7 @@ public class MyLZWCompressor
 
 		InitializeStringTable();
 		clearTable();
-		writeCode(bos, clearCode);
+		writeClearCode(bos);
 		boolean cleared = false;
 
 		int w_start = 0;
@@ -228,10 +270,10 @@ public class MyLZWCompressor
 				w_length++;
 
 				cleared = false;
-			}
-			else
+			} else
 			{
-				writeCode(bos, codeFromString(bytes, w_start, w_length));
+				int code = codeFromString(bytes, w_start, w_length);
+				writeDataCode(bos, code);
 				cleared = addTableEntry(bos, bytes, w_start, w_length + 1);
 
 				w_start = i;
@@ -239,8 +281,10 @@ public class MyLZWCompressor
 			}
 		} /* end of for loop */
 
-		writeCode(bos, codeFromString(bytes, w_start, w_length));
-		writeCode(bos, eoiCode);
+		int code = codeFromString(bytes, w_start, w_length);
+		writeDataCode(bos, code);
+
+		writeEoiCode(bos);
 
 		bos.flushCache();
 

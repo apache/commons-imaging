@@ -24,6 +24,7 @@ import org.apache.sanselan.ImageWriteException;
 public class BinaryOutputStream extends OutputStream implements BinaryConstants
 {
 	protected boolean debug = false;
+	private int count = 0;
 
 	public final void setDebug(boolean b)
 	{
@@ -78,8 +79,13 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
 
 	public void write(int i) throws IOException
 	{
-		//		os.write(0xff & i); // unnecessary
 		os.write(i);
+		count++;
+	}
+
+	public int getByteCount()
+	{
+		return count;
 	}
 
 	public final void write4Bytes(int value) throws ImageWriteException,
@@ -103,6 +109,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
 	public final void writeByteArray(byte bytes[]) throws IOException
 	{
 		os.write(bytes, 0, bytes.length);
+		count+=bytes.length;
 	}
 
 	private byte[] convertValueToByteArray(int value, int n)
@@ -116,8 +123,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
 				int b = 0xff & (value >> (8 * (n - i - 1)));
 				result[i] = (byte) b;
 			}
-		}
-		else
+		} else
 		{
 			for (int i = 0; i < n; i++)
 			{

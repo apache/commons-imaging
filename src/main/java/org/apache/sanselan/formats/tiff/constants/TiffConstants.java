@@ -30,8 +30,8 @@ public interface TiffConstants
 	public static final int DEFAULT_TIFF_BYTE_ORDER = BYTE_ORDER_INTEL;
 
 	public static final int TIFF_HEADER_SIZE = 8;
-	public static final int TIFF_DIRECTORY_HEADER_LENGTH = 4;
-	public static final int TIFF_DIRECTORY_FOOTER_LENGTH = 2;
+	public static final int TIFF_DIRECTORY_HEADER_LENGTH = 2;
+	public static final int TIFF_DIRECTORY_FOOTER_LENGTH = 4;
 	public static final int TIFF_ENTRY_LENGTH = 12;
 	public static final int TIFF_ENTRY_MAX_VALUE_LENGTH = 4;
 

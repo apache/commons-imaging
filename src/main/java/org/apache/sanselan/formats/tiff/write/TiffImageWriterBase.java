@@ -303,7 +303,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
 			}
 			params.remove(PARAM_KEY_COMPRESSION);
 		}
-
+		
 		final int samplesPerPixel = 3; // TODO:
 		final int bitsPerSample = 8; // TODO:
 
@@ -339,10 +339,10 @@ public abstract class TiffImageWriterBase implements TiffConstants,
 			{
 				byte uncompressed[] = strips[i];
 
-				int LZWMinimumCodeSize = 8;
+				int LZW_MINIMUM_CODE_SIZE = 8;
 
 				MyLZWCompressor compressor = new MyLZWCompressor(
-						LZWMinimumCodeSize, BYTE_ORDER_MSB, true);
+						LZW_MINIMUM_CODE_SIZE, BYTE_ORDER_MSB, true);
 				byte compressed[] = compressor.compress(uncompressed);
 
 				strips[i] = compressed;

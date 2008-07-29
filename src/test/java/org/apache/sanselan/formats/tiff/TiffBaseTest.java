@@ -31,30 +31,26 @@ import org.apache.sanselan.SanselanTest;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.util.Debug;
 
-public class TiffReadTest extends TiffBaseTest
+public abstract class TiffBaseTest extends SanselanTest
 {
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException
+	private static boolean isTiff(File file) throws IOException,
+			ImageReadException
 	{
-		List images = getTiffImages();
-		for (int i = 0; i < images.size(); i++)
+		ImageFormat format = Sanselan.guessFormat(file);
+		return format == ImageFormat.IMAGE_FORMAT_TIFF;
+	}
+
+	private static final ImageFilter imageFilter = new ImageFilter() {
+		public boolean accept(File file) throws IOException, ImageReadException
 		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
-
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
-
-			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-			assertNotNull(metadata);
-
-			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-			assertNotNull(imageInfo);
-
-			BufferedImage image = Sanselan.getBufferedImage(imageFile);
-			assertNotNull(image);
+			return isTiff(file);
 		}
+	};
+
+	protected List getTiffImages() throws IOException, ImageReadException
+	{
+		return getTestImages(imageFilter);
 	}
 
 }

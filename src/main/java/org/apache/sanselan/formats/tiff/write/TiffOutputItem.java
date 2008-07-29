@@ -66,6 +66,14 @@ abstract class TiffOutputItem implements AllTagConstants
 			return name;
 		}
 
+		public void updateValue(byte bytes[]) throws ImageWriteException
+		{
+			if (this.bytes.length != bytes.length)
+				throw new ImageWriteException("Updated data size mismatch: "
+						+ this.bytes.length + " vs. " + bytes.length);
+			System.arraycopy(bytes, 0, this.bytes, 0, bytes.length);
+		}
+
 		public void writeItem(BinaryOutputStream bos) throws IOException,
 				ImageWriteException
 		{

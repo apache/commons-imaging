@@ -20,18 +20,19 @@ package org.apache.sanselan.formats.tiff;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
-import org.apache.sanselan.SanselanTest;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.util.Debug;
 
-public class TiffReadTest extends TiffBaseTest
+public class TiffRoundtripTest extends TiffBaseTest
 {
 
 	public void test() throws IOException, ImageReadException,
@@ -53,6 +54,14 @@ public class TiffReadTest extends TiffBaseTest
 			assertNotNull(imageInfo);
 
 			BufferedImage image = Sanselan.getBufferedImage(imageFile);
+			assertNotNull(image);
+
+			File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
+			Map params = new HashMap();
+			Sanselan.writeImage(image, tempFile,
+					ImageFormat.IMAGE_FORMAT_TIFF, params);
+
+			BufferedImage image2 = Sanselan.getBufferedImage(tempFile);
 			assertNotNull(image);
 		}
 	}

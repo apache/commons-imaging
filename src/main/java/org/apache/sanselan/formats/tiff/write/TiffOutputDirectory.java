@@ -33,9 +33,8 @@ import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 
-public final class TiffOutputDirectory extends TiffOutputItem
-		implements
-			TiffConstants
+public final class TiffOutputDirectory extends TiffOutputItem implements
+		TiffConstants
 {
 	public final int type;
 	private final ArrayList fields = new ArrayList();
@@ -97,8 +96,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 
 	public void sortFields()
 	{
-		Comparator comparator = new Comparator()
-		{
+		Comparator comparator = new Comparator() {
 			public int compare(Object o1, Object o2)
 			{
 				TiffOutputField e1 = (TiffOutputField) o1;
@@ -129,9 +127,10 @@ public final class TiffOutputDirectory extends TiffOutputItem
 			TiffOutputField field = (TiffOutputField) fields.get(i);
 			field.writeField(bos);
 
-			//			Debug.debug("\t" + "writing field (" + field.tag + ", 0x" + Integer.toHexString(field.tag) + ")", field.tagInfo);
-			//			if(field.tagInfo.isOffset())
-			//				Debug.debug("\t\tOFFSET!", field.bytes);
+//			 Debug.debug("\t" + "writing field (" + field.tag + ", 0x" +
+//			 Integer.toHexString(field.tag) + ")", field.tagInfo);
+//			 if(field.tagInfo.isOffset())
+//			 Debug.debug("\t\tOFFSET!", field.bytes);
 		}
 
 		int nextDirectoryOffset = 0;
@@ -205,9 +204,9 @@ public final class TiffOutputDirectory extends TiffOutputItem
 					FieldType.getStubLocalValue());
 			add(jpegOffsetField);
 
-			byte lengthValue[] = FIELD_TYPE_LONG.writeData(new int[]{
-				jpegImageData.length,
-			}, outputSummary.byteOrder);
+			byte lengthValue[] = FIELD_TYPE_LONG.writeData(
+					new int[] { jpegImageData.length, },
+					outputSummary.byteOrder);
 
 			TiffOutputField jpegLengthField = new TiffOutputField(
 					TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH, FIELD_TYPE_LONG,
@@ -235,8 +234,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 			{
 				offsetTag = TIFF_TAG_STRIP_OFFSETS;
 				byteCountsTag = TIFF_TAG_STRIP_BYTE_COUNTS;
-			}
-			else
+			} else
 			{
 				offsetTag = TIFF_TAG_TILE_OFFSETS;
 				byteCountsTag = TIFF_TAG_TILE_BYTE_COUNTS;
@@ -248,7 +246,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 
 			int imageDataOffsets[] = null;
 			int imageDataByteCounts[] = null;
-			//			TiffOutputField imageDataOffsetsField = null;
+			// TiffOutputField imageDataOffsetsField = null;
 
 			imageDataOffsets = new int[imageData.length];
 			imageDataByteCounts = new int[imageData.length];
@@ -295,7 +293,7 @@ public final class TiffOutputDirectory extends TiffOutputItem
 
 			TiffOutputItem item = field.getSeperateValue();
 			result.add(item);
-			//			outputSummary.add(item, field);
+			// outputSummary.add(item, field);
 		}
 
 		if (null != imageDataInfo)
