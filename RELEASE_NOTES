@@ -15,6 +15,9 @@ Version History:
 Release 0.95
 ------------
 
+ * Found a regression in writing TIFFs around strip offsets being properly updated.  Not a LZW issue after all.
+	Added a few unit tests around this issue.	
+	see: https://issues.apache.org/jira/browse/SANSELAN-6
  * Added ability to remove and update XMP XML in existing JPEG files.
  * Added ability to embed XMP XML when writing the following formats: GIF, PNG, TIFF.
  * Improved handling of tEXt and zTXt PNG text blocks.
