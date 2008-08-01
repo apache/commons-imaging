@@ -38,16 +38,16 @@ public abstract class PixelParserSimple extends PixelParser
 	public void processImage(BufferedImage bi) throws ImageReadException,
 			IOException
 	{
-		DataBuffer db = bi.getRaster().getDataBuffer();
+//		DataBuffer db = bi.getRaster().getDataBuffer();
 
 		for (int y = bhi.height - 1; y >= 0; y--)
 		{
 			for (int x = 0; x < bhi.width; x++)
 			{
-				int rgb = 0xff000000;
-				rgb = getNextRGB();
+				int rgb = getNextRGB();
 
-				db.setElem(y * bhi.width + x, rgb);
+				bi.setRGB(x, y, rgb);
+//				db.setElem(y * bhi.width + x, rgb);
 			}
 			newline();
 		}

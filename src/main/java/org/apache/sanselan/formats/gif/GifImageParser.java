@@ -1023,7 +1023,7 @@ public class GifImageParser extends ImageParser
 
 				int LZWMinimumCodeSize = colorTableScaleLessOne + 1;
 				LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
-				Debug.debug("LZWMinimumCodeSize", LZWMinimumCodeSize);
+
 				// TODO:
 				// make
 				// better

@@ -26,11 +26,9 @@ import org.apache.sanselan.palette.SimplePalette;
 public class BMPWriterPalette extends BMPWriter
 {
 	private final SimplePalette palette;
-	//	private final int palette[];
 	private final int bits_per_sample;
 
 	public BMPWriterPalette(SimplePalette palette)
-	//	public BMPWriterPalette(int palette[])
 	{
 		this.palette = palette;
 
@@ -40,8 +38,6 @@ public class BMPWriterPalette extends BMPWriter
 			bits_per_sample = 4;
 		else
 			bits_per_sample = 8;
-
-		System.out.println("bits_per_sample: " + bits_per_sample);
 	}
 
 	public int getPaletteSize()
@@ -77,7 +73,6 @@ public class BMPWriterPalette extends BMPWriter
 		int height = src.getHeight();
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		//			BinaryOutputStream bos = new BinaryOutputStream(baos, BYTE_ORDER_Network);
 
 		int bit_cache = 0;
 		int bits_in_cache = 0;
@@ -85,21 +80,18 @@ public class BMPWriterPalette extends BMPWriter
 		int bytecount = 0;
 		for (int y = height - 1; y >= 0; y--)
 		{
-			//			for (int y = 0; y < height; y++)
 			for (int x = 0; x < width; x++)
 			{
 				int argb = src.getRGB(x, y);
 				int rgb = 0xffffff & argb;
 
 				int index = palette.getPaletteIndex(rgb);
-				//				int index = getPaletteIndex(rgb);
 
 				if (bits_per_sample == 8)
 				{
 					baos.write(0xff & index);
 					bytecount++;
-				}
-				else
+				} else
 				// 4 or 1
 				{
 					bit_cache = (bit_cache << bits_per_sample) | index;
@@ -111,9 +103,19 @@ public class BMPWriterPalette extends BMPWriter
 						bit_cache = 0;
 						bits_in_cache = 0;
 					}
-
 				}
 			}
+			
+			if (bits_in_cache > 0)
+			{
+				bit_cache = (bit_cache << (8 - bits_in_cache));
+
+				baos.write(0xff & bit_cache);
+				bytecount++;
+				bit_cache = 0;
+				bits_in_cache = 0;
+			}
+			
 			while ((bytecount % 4) != 0)
 			{
 				baos.write(0);

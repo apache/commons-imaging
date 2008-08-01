@@ -34,15 +34,14 @@ public class PixelParserRgb extends PixelParserSimple
 	private int cached_bit_count = 0;
 	private int cached_byte = 0;
 
-	int pixel_count = 0;
+	int pixelCount = 0;
 
 	public int getNextRGB() throws ImageReadException, IOException
 	{
-		pixel_count++;
+		pixelCount++;
 
 		if ((bhi.bitsPerPixel == 1) // always grayscale?
 				|| (bhi.bitsPerPixel == 4)) // always grayscale?
-
 		{
 			if (cached_bit_count < bhi.bitsPerPixel)
 			{
@@ -50,16 +49,9 @@ public class PixelParserRgb extends PixelParserSimple
 					throw new ImageReadException("Unexpected leftover bits: "
 							+ cached_bit_count + "/" + bhi.bitsPerPixel);
 
-				//				cached_byte = 0;
-
 				cached_bit_count += 8;
 				cached_byte =
-				//					(cached_byte << 8)
-				//						|
 				(0xff & imageData[bytecount]);
-				//				if (pixel_count < 500)
-				//					System.out.println("reading byte on pixel # "
-				//							+ (pixel_count - 1));
 				bytecount++;
 			}
 			int cache_mask = (1 << bhi.bitsPerPixel) - 1;
@@ -70,8 +62,7 @@ public class PixelParserRgb extends PixelParserSimple
 			int rgb = getColorTableRGB(sample);
 
 			return rgb;
-		}
-		else if (bhi.bitsPerPixel == 8) // always grayscale?
+		} else if (bhi.bitsPerPixel == 8) // always grayscale?
 		{
 			int sample = 0xff & imageData[bytecount + 0];
 
@@ -80,8 +71,7 @@ public class PixelParserRgb extends PixelParserSimple
 			bytecount += 1;
 
 			return rgb;
-		}
-		else if (bhi.bitsPerPixel == 16)
+		} else if (bhi.bitsPerPixel == 16)
 		{
 			int data = bfp.read2Bytes("Pixel", is, "BMP Image Data");
 
@@ -95,8 +85,7 @@ public class PixelParserRgb extends PixelParserSimple
 			bytecount += 2;
 
 			return rgb;
-		}
-		else if (bhi.bitsPerPixel == 24)
+		} else if (bhi.bitsPerPixel == 24)
 		{
 			int blue = 0xff & imageData[bytecount + 0];
 			int green = 0xff & imageData[bytecount + 1];
@@ -108,8 +97,7 @@ public class PixelParserRgb extends PixelParserSimple
 			bytecount += 3;
 
 			return rgb;
-		}
-		else if (bhi.bitsPerPixel == 32)
+		} else if (bhi.bitsPerPixel == 32)
 		{
 			int blue = 0xff & imageData[bytecount + 0];
 			int green = 0xff & imageData[bytecount + 1];

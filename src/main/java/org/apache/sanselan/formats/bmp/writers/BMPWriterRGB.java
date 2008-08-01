@@ -43,7 +43,6 @@ public class BMPWriterRGB extends BMPWriter
 	}
 
 	public void writePalette(BinaryOutputStream bos) throws IOException
-
 	{
 	}
 
