@@ -36,18 +36,22 @@ import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.util.Debug;
 
-public class PNMImageParser extends ImageParser {
+public class PNMImageParser extends ImageParser implements PNMConstants
+{
 
-	public PNMImageParser() {
+	public PNMImageParser()
+	{
 		super.setByteOrder(BYTE_ORDER_LSB);
 		// setDebug(true);
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return "Pbm-Custom";
 	}
 
-	public String getDefaultExtension() {
+	public String getDefaultExtension()
+	{
 		return DEFAULT_EXTENSION;
 	}
 
@@ -56,11 +60,13 @@ public class PNMImageParser extends ImageParser {
 	private static final String ACCEPTED_EXTENSIONS[] = { ".pbm", ".pgm",
 			".ppm", ".pnm", };
 
-	protected String[] getAcceptedExtensions() {
+	protected String[] getAcceptedExtensions()
+	{
 		return ACCEPTED_EXTENSIONS;
 	}
 
-	protected ImageFormat[] getAcceptedTypes() {
+	protected ImageFormat[] getAcceptedTypes()
+	{
 		return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PBM, //
 				ImageFormat.IMAGE_FORMAT_PGM, //
 				ImageFormat.IMAGE_FORMAT_PPM, //
@@ -68,9 +74,10 @@ public class PNMImageParser extends ImageParser {
 	}
 
 	private FileInfo readHeader(InputStream is) throws ImageReadException,
-			IOException {
-		byte Identifier1 = readByte("Identifier1", is, "Not a Valid PNM File");
-		byte Identifier2 = readByte("Identifier2", is, "Not a Valid PNM File");
+			IOException
+	{
+		byte identifier1 = readByte("Identifier1", is, "Not a Valid PNM File");
+		byte identifier2 = readByte("Identifier2", is, "Not a Valid PNM File");
 
 		WhiteSpaceReader wsr = new WhiteSpaceReader(is);
 
@@ -84,61 +91,65 @@ public class PNMImageParser extends ImageParser {
 		// System.out.println("((width*height+7)/8): "
 		// + ((width * height + 7) / 8));
 
-		if ((Identifier1 == 'P') && (Identifier2 == '1')) {
+		if (identifier1 != PNM_PREFIX_BYTE)
+			throw new ImageReadException("PNM file has invalid header.");
+
+		if (identifier2 == PBM_TEXT_CODE)
 			return new PBMFileInfo(width, height, false);
-		}
-		if ((Identifier1 == 'P') && (Identifier2 == '2')) {
-			int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
-			// System.out.println("maxgray: " + maxgray);
-			return new PGMFileInfo(width, height, false, maxgray);
-		}
-		if ((Identifier1 == 'P') && (Identifier2 == '3')) {
-			int max = Integer.parseInt(wsr.readtoWhiteSpace());
-			// System.out.println("max: " + max);
-			return new PPMFileInfo(width, height, false, max);
-		}
-		if ((Identifier1 == 'P') && (Identifier2 == '4')) {
+		else if (identifier2 == PBM_RAW_CODE)
 			return new PBMFileInfo(width, height, true);
-		}
-		if ((Identifier1 == 'P') && (Identifier2 == '5')) {
+		else if (identifier2 == PGM_TEXT_CODE)
+		{
 			int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
-			// System.out.println("maxgray: " + maxgray);
+			return new PGMFileInfo(width, height, false, maxgray);
+		} else if (identifier2 == PGM_RAW_CODE)
+		{
+			int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
 			return new PGMFileInfo(width, height, true, maxgray);
-		}
-		if ((Identifier1 == 'P') && (Identifier2 == '6')) {
+		} else if (identifier2 == PPM_TEXT_CODE)
+		{
+			int max = Integer.parseInt(wsr.readtoWhiteSpace());
+			return new PPMFileInfo(width, height, false, max);
+		} else if (identifier2 == PPM_RAW_CODE)
+		{
 			int max = Integer.parseInt(wsr.readtoWhiteSpace());
 			// System.out.println("max: " + max);
 			return new PPMFileInfo(width, height, true, max);
-		}
-
-		throw new ImageReadException("PNM: Bad Magic Number: " + Identifier1
-				+ ", " + Identifier2);
+		} else
+			throw new ImageReadException("PNM file has invalid header.");
 	}
 
 	private FileInfo readHeader(ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		InputStream is = null;
 
-		try {
+		try
+		{
 			is = byteSource.getInputStream();
 
 			return readHeader(is);
-		} finally {
-			try {
+		} finally
+		{
+			try
+			{
 				is.close();
-			} catch (Exception e) {
+			} catch (Exception e)
+			{
 				Debug.debug(e);
 			}
 		}
 	}
 
 	public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return null;
 	}
 
 	public Dimension getImageSize(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		FileInfo info = readHeader(byteSource);
 
 		if (info == null)
@@ -147,21 +158,25 @@ public class PNMImageParser extends ImageParser {
 		return new Dimension(info.width, info.height);
 	}
 
-	public byte[] embedICCProfile(byte image[], byte profile[]) {
+	public byte[] embedICCProfile(byte image[], byte profile[])
+	{
 		return null;
 	}
 
-	public boolean embedICCProfile(File src, File dst, byte profile[]) {
+	public boolean embedICCProfile(File src, File dst, byte profile[])
+	{
 		return false;
 	}
 
 	public IImageMetadata getMetadata(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return null;
 	}
 
 	public ImageInfo getImageInfo(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		FileInfo info = readHeader(byteSource);
 
 		if (info == null)
@@ -201,15 +216,16 @@ public class PNMImageParser extends ImageParser {
 	}
 
 	public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		pw.println("pnm.dumpImageFile");
 
 		{
-			ImageInfo fImageData = getImageInfo(byteSource);
-			if (fImageData == null)
+			ImageInfo imageData = getImageInfo(byteSource);
+			if (imageData == null)
 				return false;
 
-			fImageData.toString(pw, "");
+			imageData.toString(pw, "");
 		}
 
 		pw.println("");
@@ -218,7 +234,8 @@ public class PNMImageParser extends ImageParser {
 	}
 
 	private int[] getColorTable(byte bytes[]) throws ImageReadException,
-			IOException {
+			IOException
+	{
 		if ((bytes.length % 3) != 0)
 			throw new ImageReadException("Bad Color Table Length: "
 					+ bytes.length);
@@ -226,7 +243,8 @@ public class PNMImageParser extends ImageParser {
 
 		int result[] = new int[length];
 
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < length; i++)
+		{
 			int red = 0xff & bytes[(i * 3) + 0];
 			int green = 0xff & bytes[(i * 3) + 1];
 			int blue = 0xff & bytes[(i * 3) + 2];
@@ -241,10 +259,12 @@ public class PNMImageParser extends ImageParser {
 	}
 
 	public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		InputStream is = null;
 
-		try {
+		try
+		{
 			is = byteSource.getInputStream();
 
 			FileInfo info = readHeader(is);
@@ -259,10 +279,13 @@ public class PNMImageParser extends ImageParser {
 			info.readImage(result, is);
 
 			return result;
-		} finally {
-			try {
+		} finally
+		{
+			try
+			{
 				is.close();
-			} catch (Exception e) {
+			} catch (Exception e)
+			{
 				Debug.debug(e);
 			}
 		}
@@ -273,30 +296,34 @@ public class PNMImageParser extends ImageParser {
 	public static final String PARAM_VALUE_PNM_RAWBITS_NO = "NO";
 
 	public void writeImage(BufferedImage src, OutputStream os, Map params)
-			throws ImageWriteException, IOException {
+			throws ImageWriteException, IOException
+	{
 		PNMWriter writer = null;
-		boolean RAWBITS = true;
+		boolean useRawbits = true;
 
-		if (params != null) {
-			Object fRAWBITS = params.get(PARAM_KEY_PNM_RAWBITS);
-			if (fRAWBITS != null) {
-				if (fRAWBITS.equals(PARAM_VALUE_PNM_RAWBITS_NO))
-					RAWBITS = false;
+		if (params != null)
+		{
+			Object useRawbitsParam = params.get(PARAM_KEY_PNM_RAWBITS);
+			if (useRawbitsParam != null)
+			{
+				if (useRawbitsParam.equals(PARAM_VALUE_PNM_RAWBITS_NO))
+					useRawbits = false;
 			}
 
 			Object subtype = params.get(PARAM_KEY_FORMAT);
-			if (subtype != null) {
+			if (subtype != null)
+			{
 				if (subtype.equals(ImageFormat.IMAGE_FORMAT_PBM))
-					writer = new PBMWriter(RAWBITS);
+					writer = new PBMWriter(useRawbits);
 				else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PGM))
-					writer = new PGMWriter(RAWBITS);
+					writer = new PGMWriter(useRawbits);
 				else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PPM))
-					writer = new PPMWriter(RAWBITS);
+					writer = new PPMWriter(useRawbits);
 			}
 		}
 
 		if (writer == null)
-			writer = new PPMWriter(RAWBITS);
+			writer = new PPMWriter(useRawbits);
 
 		// make copy of params; we'll clear keys as we consume them.
 		params = new HashMap(params);
@@ -305,7 +332,8 @@ public class PNMImageParser extends ImageParser {
 		if (params.containsKey(PARAM_KEY_FORMAT))
 			params.remove(PARAM_KEY_FORMAT);
 
-		if (params.size() > 0) {
+		if (params.size() > 0)
+		{
 			Object firstKey = params.keySet().iterator().next();
 			throw new ImageWriteException("Unknown parameter: " + firstKey);
 		}
@@ -321,10 +349,11 @@ public class PNMImageParser extends ImageParser {
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present. Otherwise, returns null..
 	 */
 	public String getXmpXml(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 		return null;
 	}
 }

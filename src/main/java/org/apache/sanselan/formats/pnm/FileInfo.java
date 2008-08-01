@@ -51,13 +51,18 @@ public abstract class FileInfo
 
 	public abstract int getRGB(InputStream is) throws IOException;
 
+	protected void newline()
+	{
+		// do nothing by default.
+	}
+
 	public void readImage(BufferedImage bi, InputStream is) throws IOException
 	{
-		//			is = new BufferedInputStream(is);
-		//			int count = 0;
+		// is = new BufferedInputStream(is);
+		// int count = 0;
 		//
-		//			try
-		//			{
+		// try
+		// {
 		DataBuffer buffer = bi.getRaster().getDataBuffer();
 
 		if (!RAWBITS)
@@ -65,33 +70,36 @@ public abstract class FileInfo
 			WhiteSpaceReader wsr = new WhiteSpaceReader(is);
 
 			for (int y = 0; y < height; y++)
+			{
 				for (int x = 0; x < width; x++)
 				{
 					int rgb = getRGB(wsr);
 
 					buffer.setElem(y * width + x, rgb);
-					//							count++;
+					// count++;
 				}
-		}
-		else
+				newline();
+			}
+		} else
 		{
 			for (int y = 0; y < height; y++)
 			{
-				//					System.out.println("y: " + y);
+				// System.out.println("y: " + y);
 				for (int x = 0; x < width; x++)
 				{
 					int rgb = getRGB(is);
 					buffer.setElem(y * width + x, rgb);
-					//							count++;
+					// count++;
 				}
+				newline();
 			}
 		}
-		//			}
-		//			finally
-		//			{
-		//				System.out.println("count: " + count);
-		//				dump();
-		//			}
+		// }
+		// finally
+		// {
+		// System.out.println("count: " + count);
+		// dump();
+		// }
 	}
 
 	public void dump()

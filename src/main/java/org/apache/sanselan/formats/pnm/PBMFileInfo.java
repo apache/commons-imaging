@@ -59,6 +59,13 @@ public class PBMFileInfo extends FileInfo
 		return "image/x-portable-bitmap";
 	}
 
+	protected void newline()
+	{
+		bitcache = 0;
+		bits_in_cache = 0;
+	}
+
+	
 	private int bitcache = 0;
 	private int bits_in_cache = 0;
 

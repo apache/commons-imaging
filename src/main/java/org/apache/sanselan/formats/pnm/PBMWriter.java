@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.sanselan.ImageWriteException;
 
-public class PBMWriter extends PNMWriter
+public class PBMWriter extends PNMWriter implements PNMConstants
 {
 	public PBMWriter(boolean RAWBITS)
 	{
@@ -33,23 +33,18 @@ public class PBMWriter extends PNMWriter
 	public void writeImage(BufferedImage src, OutputStream os, Map params)
 			throws ImageWriteException, IOException
 	{
-		//			System.out.println
-		// (b1 == 0x50 && b2 == 0x36)
-		os.write(0x50);
-		os.write(RAWBITS ? 0x34 : 0x31);
-		os.write(' ');
+		os.write(PNM_PREFIX_BYTE);
+		os.write(RAWBITS ? PBM_RAW_CODE : PBM_TEXT_CODE);
+		os.write(PNM_SEPARATOR);
 
 		int width = src.getWidth();
 		int height = src.getHeight();
 
 		os.write(("" + width).getBytes());
-		os.write(' ');
+		os.write(PNM_SEPARATOR);
 
 		os.write(("" + height).getBytes());
-		os.write(' ');
-
-		//			os.write(("" + 255).getBytes()); // max component value
-		//			os.write('\n');
+		os.write(PNM_SEPARATOR);
 
 		int bitcache = 0;
 		int bits_in_cache = 0;
@@ -79,16 +74,16 @@ public class PBMWriter extends PNMWriter
 						bitcache = 0;
 						bits_in_cache = 0;
 					}
-				}
-				else
+				} else
 				{
 					os.write(("" + sample).getBytes()); // max component value
-					os.write(' ');
+					os.write(PNM_SEPARATOR);
 				}
 			}
 
 			if ((RAWBITS) && (bits_in_cache > 0))
 			{
+				bitcache = bitcache << (8-bits_in_cache);
 				os.write((byte) bitcache);
 				bitcache = 0;
 				bits_in_cache = 0;
