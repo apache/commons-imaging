@@ -240,7 +240,7 @@ public class GifImageParser extends ImageParser
 		while (true)
 		{
 			int code = is.read();
-			// this.debugNumber("code: ", code);
+//			 this.debugNumber("code: ", code);
 
 			switch (code)
 			{
@@ -614,11 +614,8 @@ public class GifImageParser extends ImageParser
 				+ ((char) blocks.gifHeaderInfo.version3);
 
 		boolean isTransparent = false;
-		if (gce != null)
-		{
-			if (gce.transparency)
+		if (gce != null && gce.transparency)
 				isTransparent = true;
-		}
 
 		boolean usesPalette = true;
 		int colorType = ImageInfo.COLOR_TYPE_RGB;
@@ -639,11 +636,11 @@ public class GifImageParser extends ImageParser
 		pw.println("gif.dumpImageFile");
 
 		{
-			ImageInfo fImageData = getImageInfo(byteSource);
-			if (fImageData == null)
+			ImageInfo imageData = getImageInfo(byteSource);
+			if (imageData == null)
 				return false;
 
-			fImageData.toString(pw, "");
+			imageData.toString(pw, "");
 		}
 		{
 			ImageContents blocks = readFile(byteSource, false);
@@ -725,7 +722,10 @@ public class GifImageParser extends ImageParser
 		int width = ghi.logicalScreenWidth;
 		int height = ghi.logicalScreenHeight;
 
-		boolean hasAlpha = gce.transparency;
+		boolean hasAlpha = false;
+		if (gce != null && gce.transparency)
+			hasAlpha = true;
+
 		BufferedImage result = getBufferedImageFactory(params)
 				.getColorBufferedImage(width, height, hasAlpha);
 
@@ -739,7 +739,7 @@ public class GifImageParser extends ImageParser
 				throw new ImageReadException("Gif: No Color Table");
 
 			int transparentIndex = -1;
-			if (gce.transparency)
+			if (hasAlpha)
 				transparentIndex = gce.transparentColorIndex;
 
 			// Debug.debug("charles TransparentIndex", TransparentIndex);
@@ -935,16 +935,15 @@ public class GifImageParser extends ImageParser
 
 			}
 
-			if (hasAlpha)
-			{ // write GraphicControlExtension
+			{ // ALWAYS write GraphicControlExtension
 				bos.write(EXTENSION_CODE);
 				bos.write((byte) 0xf9);
 				// bos.write(0xff & (kGraphicControlExtension >> 8));
 				// bos.write(0xff & (kGraphicControlExtension >> 0));
 
 				bos.write((byte) 4); // block size;
-				int fPackedFields = hasAlpha ? 1 : 0; // transparency flag
-				bos.write((byte) fPackedFields);
+				int packedFields = hasAlpha ? 1 : 0; // transparency flag
+				bos.write((byte) packedFields);
 				bos.write((byte) 0); // Delay Time
 				bos.write((byte) 0); // Delay Time
 				bos.write((byte) (hasAlpha ? palette2.length() : 0)); // Transparent
@@ -1023,6 +1022,8 @@ public class GifImageParser extends ImageParser
 				int image_data_total = 0;
 
 				int LZWMinimumCodeSize = colorTableScaleLessOne + 1;
+				LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
+				Debug.debug("LZWMinimumCodeSize", LZWMinimumCodeSize);
 				// TODO:
 				// make
 				// better
