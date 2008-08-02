@@ -76,6 +76,8 @@ public class IccTag implements BinaryConstants, IccConstants
 		PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
 
 		dump(pw, prefix);
+		
+		pw.flush();
 	}
 
 	public void dump(PrintWriter pw, String prefix) throws ImageReadException,

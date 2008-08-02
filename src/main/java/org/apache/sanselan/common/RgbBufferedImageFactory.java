@@ -21,7 +21,7 @@ import java.awt.image.BufferedImage;
 
 import org.apache.sanselan.util.Debug;
 
-public class SimpleBufferedImageFactory implements IBufferedImageFactory
+public class RgbBufferedImageFactory implements IBufferedImageFactory
 {
 	public BufferedImage getColorBufferedImage(int width, int height,
 			boolean hasAlpha)
@@ -34,9 +34,7 @@ public class SimpleBufferedImageFactory implements IBufferedImageFactory
 	public BufferedImage getGrayscaleBufferedImage(int width, int height,
 			boolean hasAlpha)
 	{
-		if (hasAlpha)
-			return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-		return new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+		// always use color.
+		return getColorBufferedImage(width, height, hasAlpha);
 	}
 }

@@ -62,7 +62,7 @@ public class TiffRoundtripTest extends TiffBaseTest
 					ImageFormat.IMAGE_FORMAT_TIFF, params);
 
 			BufferedImage image2 = Sanselan.getBufferedImage(tempFile);
-			assertNotNull(image);
+			assertNotNull(image2);
 		}
 	}
 

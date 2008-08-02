@@ -253,7 +253,7 @@ public class BmpImageParser extends ImageParser
 			if (debug)
 				System.out.println("Compression: BI_BITFIELDS");
 			paletteLength = 3 * 4; // TODO: is this right? are the masks always
-									// LONGs?
+			// LONGs?
 			// BytesPerPixel = 2;
 			// BytesPerPaletteEntry = 4;
 			break;
@@ -267,7 +267,7 @@ public class BmpImageParser extends ImageParser
 		if (paletteLength > 0)
 			colorTable = this.readByteArray("ColorTable", paletteLength, is,
 					"Not a Valid BMP File");
-		
+
 		if (debug)
 		{
 			this.debugNumber("paletteLength", paletteLength, 4);
@@ -306,10 +306,10 @@ public class BmpImageParser extends ImageParser
 		}
 		int extraBytes = bhi.bitmapDataOffset - expectedDataOffset;
 		if (extraBytes < 0)
-			throw new ImageReadException("BMP has valid image data offset: "
+			throw new ImageReadException("BMP has invalid image data offset: "
 					+ bhi.bitmapDataOffset + " (expected: "
-					+ expectedDataOffset + ", paletteLength: "
-					+ paletteLength + ", headerSize: " + headerSize + ")");
+					+ expectedDataOffset + ", paletteLength: " + paletteLength
+					+ ", headerSize: " + headerSize + ")");
 		else if (extraBytes > 0)
 			this.readByteArray("BitmapDataOffset", extraBytes, is,
 					"Not a Valid BMP File");
@@ -584,7 +584,7 @@ public class BmpImageParser extends ImageParser
 			os.write(0x4d); // M
 
 			int filesize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + // header
-																				// size
+					// size
 					4 * writer.getPaletteSize() + // palette size in bytes
 					imagedata.length;
 			bos.write4Bytes(filesize);
@@ -608,7 +608,10 @@ public class BmpImageParser extends ImageParser
 			bos.write4Bytes(imagedata.length); // Bitmap Data Size
 			bos.write4Bytes(0); // HResolution
 			bos.write4Bytes(0); // VResolution
-			bos.write4Bytes(0); // Colors
+			if (palette == null)
+				bos.write4Bytes(0); // Colors
+			else
+				bos.write4Bytes(palette.length()); // Colors
 			bos.write4Bytes(0); // Important Colors
 			// bos.write_4_bytes(0); // Compression
 		}

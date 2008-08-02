@@ -297,7 +297,8 @@ public class ImageInfo
 			PrintWriter pw = new PrintWriter(sw);
 
 			toString(pw, "");
-
+			pw.flush();
+			
 			return sw.toString();
 		}
 		catch (Exception e)

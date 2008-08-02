@@ -110,21 +110,21 @@ public class PngWriter implements PngConstants
 		public final int height;
 		public final byte bit_depth;
 		public final byte colorType;
-		public final byte compression_method;
-		public final byte filter_method;
-		public final byte interlace_method;
+		public final byte compressionMethod;
+		public final byte filterMethod;
+		public final byte interlaceMethod;
 
 		public ImageHeader(int width, int height, byte bit_depth,
-				byte colorType, byte compression_method, byte filter_method,
-				byte interlace_method)
+				byte colorType, byte compressionMethod, byte filterMethod,
+				byte interlaceMethod)
 		{
 			this.width = width;
 			this.height = height;
 			this.bit_depth = bit_depth;
 			this.colorType = colorType;
-			this.compression_method = compression_method;
-			this.filter_method = filter_method;
-			this.interlace_method = interlace_method;
+			this.compressionMethod = compressionMethod;
+			this.filterMethod = filterMethod;
+			this.interlaceMethod = interlaceMethod;
 		}
 
 	}
@@ -137,9 +137,9 @@ public class PngWriter implements PngConstants
 		writeInt(baos, value.height);
 		baos.write(0xff & value.bit_depth);
 		baos.write(0xff & value.colorType);
-		baos.write(0xff & value.compression_method);
-		baos.write(0xff & value.filter_method);
-		baos.write(0xff & value.interlace_method);
+		baos.write(0xff & value.compressionMethod);
+		baos.write(0xff & value.filterMethod);
+		baos.write(0xff & value.interlaceMethod);
 
 		// Debug.debug("baos", baos.toByteArray());
 
@@ -319,18 +319,18 @@ public class PngWriter implements PngConstants
 
 		byte colorType;
 		{
-			boolean force_indexed_color = ParamMap.getParamBoolean(params,
+			boolean forceIndexedColor = ParamMap.getParamBoolean(params,
 					PARAM_KEY_PNG_FORCE_INDEXED_COLOR, false);
-			boolean force_true_color = ParamMap.getParamBoolean(params,
+			boolean forceTrueColor = ParamMap.getParamBoolean(params,
 					PARAM_KEY_PNG_FORCE_TRUE_COLOR, false);
 
-			if (force_indexed_color && force_true_color)
+			if (forceIndexedColor && forceTrueColor)
 				throw new ImageWriteException(
 						"Params: Cannot force both indexed and true color modes");
-			else if (force_indexed_color)
+			else if (forceIndexedColor)
 			{
 				colorType = COLOR_TYPE_INDEXED_COLOR;
-			} else if (force_true_color)
+			} else if (forceTrueColor)
 			{
 				colorType = (byte) (hasAlpha ? COLOR_TYPE_TRUE_COLOR_WITH_ALPHA
 						: COLOR_TYPE_TRUE_COLOR);
@@ -340,33 +340,32 @@ public class PngWriter implements PngConstants
 				Debug.debug("colorType", colorType);
 		}
 
-		byte bit_depth = getBitDepth(colorType, params);
+		byte bitDepth = getBitDepth(colorType, params);
 		if (verbose)
-			Debug.debug("bit_depth", bit_depth);
+			Debug.debug("bit_depth", bitDepth);
 
-		int sample_depth;
+		int sampleDepth;
 		if (colorType == COLOR_TYPE_INDEXED_COLOR)
-			sample_depth = 8;
+			sampleDepth = 8;
 		else
-			sample_depth = bit_depth;
+			sampleDepth = bitDepth;
 		if (verbose)
-			Debug.debug("sample_depth", sample_depth);
+			Debug.debug("sample_depth", sampleDepth);
 
 		{
 			os.write(PNG_Signature);
 		}
 		{
-			// IHDR Shall be first
+			// IHDR must be first
 
-			byte compression_method = COMPRESSION_TYPE_INFLATE_DEFLATE;
-			byte filter_method = FILTER_METHOD_ADAPTIVE;
-			byte interlace_method = INTERLACE_METHOD_NONE; // charles
+			byte compressionMethod = COMPRESSION_TYPE_INFLATE_DEFLATE;
+			byte filterMethod = FILTER_METHOD_ADAPTIVE;
+			byte interlaceMethod = INTERLACE_METHOD_NONE;
 
-			ImageHeader image_header = new ImageHeader(width, height,
-					bit_depth, colorType, compression_method, filter_method,
-					interlace_method);
+			ImageHeader imageHeader = new ImageHeader(width, height, bitDepth,
+					colorType, compressionMethod, filterMethod, interlaceMethod);
 
-			writeChunkIHDR(os, image_header);
+			writeChunkIHDR(os, imageHeader);
 		}
 
 		{
@@ -439,8 +438,9 @@ public class PngWriter implements PngConstants
 								int gray = (red + green + blue) / 3;
 								// if(y==0)
 								// {
-								// Debug.debug(x + ", " + y + " argb",
-								// Integer.toHexString(argb));
+								// Debug.debug("gray: " + x + ", " + y + " argb: 0x"
+								//		+ Integer.toHexString(argb) + " gray: 0x"
+								// 		+ Integer.toHexString(gray));
 								// // Debug.debug(x + ", " + y + " gray", gray);
 								// // Debug.debug(x + ", " + y + " gray", gray);
 								// Debug.debug(x + ", " + y + " gray", gray +
@@ -456,13 +456,13 @@ public class PngWriter implements PngConstants
 							}
 							if (useAlpha)
 								baos.write(alpha);
-
 						}
 					}
 				}
 				uncompressed = baos.toByteArray();
 			}
-			// Debug.debug("uncompressed", uncompressed.length);
+
+			 // Debug.debug("uncompressed", uncompressed.length);
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			DeflaterOutputStream dos = new DeflaterOutputStream(baos);

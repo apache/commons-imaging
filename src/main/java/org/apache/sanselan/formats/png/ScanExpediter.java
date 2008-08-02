@@ -232,14 +232,14 @@ public abstract class ScanExpediter extends BinaryFileParser
 	protected byte[] getNextScanline(InputStream is, int length, byte prev[],
 			int BytesPerPixel) throws ImageReadException, IOException
 	{
-		int filter_type = is.read();
-		if (filter_type < 0)
+		int filterType = is.read();
+		if (filterType < 0)
 			throw new ImageReadException("PNG: missing filter type");
 
 		byte scanline[] = this.readByteArray("scanline", length, is,
 				"PNG: missing image data");
 
-		byte unfiltered[] = unfilterScanline(filter_type, scanline, prev,
+		byte unfiltered[] = unfilterScanline(filterType, scanline, prev,
 				BytesPerPixel);
 
 		return unfiltered;

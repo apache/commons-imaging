@@ -840,6 +840,8 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 		pw.println("");
 
+		pw.flush();
+		
 		return true;
 	}
 

@@ -58,9 +58,12 @@ public class BinaryFileFunctions implements BinaryConstants
 
 	public final void debugNumber(String msg, int data, int bytes)
 	{
-		debugNumber(new PrintWriter(new OutputStreamWriter(System.out)), msg,
+		PrintWriter pw = new PrintWriter(System.out);
+		debugNumber(pw, msg,
 				data, bytes);
+		pw.flush();
 	}
+	
 
 	public final void debugNumber(PrintWriter pw, String msg, int data)
 	{
@@ -126,7 +129,7 @@ public class BinaryFileFunctions implements BinaryConstants
 			if (data < 0)
 				throw new ImageReadException("Unexpected EOF.");
 
-			if(b != expected[i])
+			if (b != expected[i])
 			{
 				// System.out.println("i" + ": " + i);
 

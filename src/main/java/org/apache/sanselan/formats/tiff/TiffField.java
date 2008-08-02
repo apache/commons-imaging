@@ -509,7 +509,9 @@ public class TiffField implements TiffConstants
 
 	public void dump()
 	{
-		dump(new PrintWriter(new OutputStreamWriter(System.out)));
+		PrintWriter pw = new PrintWriter(System.out);
+		dump(pw);
+		pw.flush();
 	}
 
 	public void dump(PrintWriter pw)

@@ -45,7 +45,6 @@ public class ScanExpediterSimple extends ScanExpediter
 
 		for (int y = 0; y < height; y++)
 		{
-
 			byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
 					prev, bytesPerPixel);
 
