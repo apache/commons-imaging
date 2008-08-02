@@ -15,6 +15,14 @@ Version History:
 Release 0.95
 ------------
 
+ * Added a wide-reaching unit test around reading and writing images.
+ * We now sort some (but not all) GIF color tables.
+ * Applied the BMP "buffer flushing" bug to the PBM reading and writing code.
+ * Fixed a regression around flushing the bit buffer when writing BMPs with very small palettes.
+ * Removed assumption about DataBuffer type when reading BMPs.
+ * When writing a GIF, we now always include a Graphic Control Extension block, even if its not necessary.
+ * We are more defensive about missing GCEs.
+ * Lastly, we now set a minimum bound on initial code sizes for LZW-compressed Gif image data.
  * Found a regression in writing TIFFs around strip offsets being properly updated.  Not a LZW issue after all.
 	Added a few unit tests around this issue.	
 	see: https://issues.apache.org/jira/browse/SANSELAN-6

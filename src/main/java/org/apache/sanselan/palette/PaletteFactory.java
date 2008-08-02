@@ -20,6 +20,7 @@ import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -467,6 +468,7 @@ public class PaletteFactory
 
 		int result[] = new int[rgb_count];
 		System.arraycopy(rgbs, 0, result, 0, rgb_count);
+		Arrays.sort(result);
 
 		//		return result;
 		return new SimplePalette(result);
