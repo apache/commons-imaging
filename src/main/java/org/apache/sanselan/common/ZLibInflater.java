@@ -17,11 +17,10 @@
 package org.apache.sanselan.common;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.zip.DeflaterInputStream;
+import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
-
-import org.apache.sanselan.ImageReadException;
 
 public class ZLibInflater extends BinaryFileFunctions
 {
@@ -35,9 +34,11 @@ public class ZLibInflater extends BinaryFileFunctions
 
 	public final byte[] deflate(byte bytes[]) throws IOException
 	{
-		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		DeflaterInputStream zIn = new DeflaterInputStream(in);
-		return getStreamBytes(zIn);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+		dos.write(bytes);
+		dos.flush();
+		return baos.toByteArray();
 	}
 
 }

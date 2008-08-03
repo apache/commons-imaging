@@ -15,7 +15,8 @@ Version History:
 Release 0.95
 ------------
 
- * Added a wide-reaching unit test around reading and writing images.
+ * Replaced dependency on java.util.zip.DeflaterOutputStream, which is only available in Java 1.6.
+ * Added a unit test around reading and writing images in every format.
  * We now sort some (but not all) GIF color tables.
  * Applied the BMP "buffer flushing" bug to the PBM reading and writing code.
  * Fixed a regression around flushing the bit buffer when writing BMPs with very small palettes.

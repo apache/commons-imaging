@@ -272,75 +272,75 @@ public class RoundtripTest extends SanselanTest
 		}
 	}
 
-	 public void testBitmapRoundtrip() throws IOException, ImageReadException,
-	 ImageWriteException
-	 {
-	 BufferedImage testImages[] = { //
-	
-	 createArgbBitmapImage(1, 1), // minimal
-	 createArgbBitmapImage(2, 2), //
-	 createArgbBitmapImage(10, 10), // larger than 8
-	 createArgbBitmapImage(300, 300), // larger than 256
-	
-	 createBitmapBitmapImage(1, 1), // minimal
-	 createBitmapBitmapImage(2, 2), //
-	 createBitmapBitmapImage(10, 10), // larger than 8
-	 createBitmapBitmapImage(300, 300), // larger than 256
-	 };
-	
-	 for (int j = 0; j < testImages.length; j++)
-	 {
-	 BufferedImage testImage = testImages[j];
-	
-	 for (int i = 0; i < FORMAT_INFOS.length; i++)
-	 {
-	 FormatInfo formatInfo = FORMAT_INFOS[i];
-	 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
-	 continue;
-	
-	 Debug.debug("bitmap test: " + formatInfo.format.name);
-	
-	 testRoundtrip(formatInfo, testImage, "bitmap", true);
-	 }
-	 }
-	 }
+	public void testBitmapRoundtrip() throws IOException, ImageReadException,
+			ImageWriteException
+	{
+		BufferedImage testImages[] = { //
 
-	 public void testGrayscaleRoundtrip() throws IOException,
-	 ImageReadException, ImageWriteException
-	 {
-	 BufferedImage testImages[] = { //
-	
-	 createArgbBitmapImage(1, 1), // minimal
-	 createArgbGrayscaleImage(2, 2), //
-	 createArgbGrayscaleImage(10, 10), // larger than 8
-	 createArgbGrayscaleImage(300, 300), // larger than 256
-	
-	 createGrayscaleGrayscaleImage(1, 1), // minimal
-	 createGrayscaleGrayscaleImage(2, 2), //
-	 createGrayscaleGrayscaleImage(10, 10), // larger than 8
-	 createGrayscaleGrayscaleImage(300, 300), // larger than 256
-	 };
-	
-	 for (int j = 0; j < testImages.length; j++)
-	 {
-	 BufferedImage testImage = testImages[j];
-	
-	 for (int i = 0; i < FORMAT_INFOS.length; i++)
-	 {
-	 FormatInfo formatInfo = FORMAT_INFOS[i];
-	 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
-	 continue;
-	
-	 Debug.debug("grayscale test: " + formatInfo.format.name);
-	
-	 boolean imageExact = true;
-	 if (formatInfo.colorSupport == COLOR_BITMAP)
-	 imageExact = false;
-	
-	 testRoundtrip(formatInfo, testImage, "gray", imageExact);
-	 }
-	 }
-	 }
+		createArgbBitmapImage(1, 1), // minimal
+				createArgbBitmapImage(2, 2), //
+				createArgbBitmapImage(10, 10), // larger than 8
+				createArgbBitmapImage(300, 300), // larger than 256
+
+				createBitmapBitmapImage(1, 1), // minimal
+				createBitmapBitmapImage(2, 2), //
+				createBitmapBitmapImage(10, 10), // larger than 8
+				createBitmapBitmapImage(300, 300), // larger than 256
+		};
+
+		for (int j = 0; j < testImages.length; j++)
+		{
+			BufferedImage testImage = testImages[j];
+
+			for (int i = 0; i < FORMAT_INFOS.length; i++)
+			{
+				FormatInfo formatInfo = FORMAT_INFOS[i];
+				if ((!formatInfo.canRead) || (!formatInfo.canWrite))
+					continue;
+
+				Debug.debug("bitmap test: " + formatInfo.format.name);
+
+				roundtrip(formatInfo, testImage, "bitmap", true);
+			}
+		}
+	}
+
+	public void testGrayscaleRoundtrip() throws IOException,
+			ImageReadException, ImageWriteException
+	{
+		BufferedImage testImages[] = { //
+
+		createArgbBitmapImage(1, 1), // minimal
+				createArgbGrayscaleImage(2, 2), //
+				createArgbGrayscaleImage(10, 10), // larger than 8
+				createArgbGrayscaleImage(300, 300), // larger than 256
+
+				createGrayscaleGrayscaleImage(1, 1), // minimal
+				createGrayscaleGrayscaleImage(2, 2), //
+				createGrayscaleGrayscaleImage(10, 10), // larger than 8
+				createGrayscaleGrayscaleImage(300, 300), // larger than 256
+		};
+
+		for (int j = 0; j < testImages.length; j++)
+		{
+			BufferedImage testImage = testImages[j];
+
+			for (int i = 0; i < FORMAT_INFOS.length; i++)
+			{
+				FormatInfo formatInfo = FORMAT_INFOS[i];
+				if ((!formatInfo.canRead) || (!formatInfo.canWrite))
+					continue;
+
+				Debug.debug("grayscale test: " + formatInfo.format.name);
+
+				boolean imageExact = true;
+				if (formatInfo.colorSupport == COLOR_BITMAP)
+					imageExact = false;
+
+				roundtrip(formatInfo, testImage, "gray", imageExact);
+			}
+		}
+	}
 
 	public void testLimitedColorRoundtrip() throws IOException,
 			ImageReadException, ImageWriteException
@@ -371,11 +371,10 @@ public class RoundtripTest extends SanselanTest
 				if (formatInfo.colorSupport == COLOR_GRAYSCALE)
 					imageExact = false;
 
-				testRoundtrip(formatInfo, testImage, "indexable", imageExact);
+				roundtrip(formatInfo, testImage, "indexable", imageExact);
 			}
 		}
 	}
-
 
 	public void testFullColorRoundtrip() throws IOException,
 			ImageReadException, ImageWriteException
@@ -407,13 +406,13 @@ public class RoundtripTest extends SanselanTest
 					imageExact = false;
 				if (formatInfo.colorSupport == COLOR_LIMITED_INDEX)
 					imageExact = false;
-				
-				testRoundtrip(formatInfo, testImage, "fullColor", imageExact);
+
+				roundtrip(formatInfo, testImage, "fullColor", imageExact);
 			}
 		}
 	}
 
-	private void testRoundtrip(FormatInfo formatInfo, BufferedImage testImage,
+	private void roundtrip(FormatInfo formatInfo, BufferedImage testImage,
 			String tempPrefix, boolean imageExact) throws IOException,
 			ImageReadException, ImageWriteException
 	{
