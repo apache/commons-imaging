@@ -19,6 +19,8 @@ package org.apache.sanselan.formats.png.chunks;
 import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
+import org.apache.sanselan.ImageWriteException;
+import org.apache.sanselan.formats.png.PngText;
 
 public class PNGChunktEXt extends PNGTextChunk
 {
@@ -31,7 +33,8 @@ public class PNGChunktEXt extends PNGTextChunk
 		{
 			int index = findNull(bytes);
 			if (index < 0)
-				throw new ImageReadException("PNG tEXt chunk keyword is not terminated.");
+				throw new ImageReadException(
+						"PNG tEXt chunk keyword is not terminated.");
 
 			keyword = new String(bytes, 0, index, "ISO-8859-1");
 
@@ -62,4 +65,10 @@ public class PNGChunktEXt extends PNGTextChunk
 	{
 		return text;
 	}
+
+	public PngText getContents()
+	{
+		return new PngText.tEXt(keyword, text);
+	}
+
 }

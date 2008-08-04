@@ -14,19 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.sanselan;
+package org.apache.sanselan.common;
 
-public class ImageWriteException extends SanselanException
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
+
+public class ZLibUtils extends BinaryFileFunctions
 {
-	static final long serialVersionUID = -1L;
-
-	public ImageWriteException(String s)
+	public final byte[] inflate(byte bytes[]) throws IOException
+	// slow, probably.
 	{
-		super(s);
+		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+		InflaterInputStream zIn = new InflaterInputStream(in);
+		return getStreamBytes(zIn);
 	}
 
-	public ImageWriteException(String s, Exception e)
+	public final byte[] deflate(byte bytes[]) throws IOException
 	{
-		super(s, e);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+		dos.write(bytes);
+		dos.close();
+		return baos.toByteArray();
 	}
+
 }

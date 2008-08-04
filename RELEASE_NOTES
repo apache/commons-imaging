@@ -15,6 +15,11 @@ Version History:
 Release 0.95
 ------------
 
+ * Added improved support for reading and writing iTXt, tEXt, zTXt Png chunks.
+ 	Added a unit test that demonstrates the feature.
+ * Found a new regression wherein DeflaterOutputStream needs to be closed.
+ * Added the .tar.bz2 distributions back into the maven assembly descriptors.
+ * Moved the example/sample code to a new top-level source folder, "example."
  * Replaced dependency on java.util.zip.DeflaterOutputStream, which is only available in Java 1.6.
  * Added a unit test around reading and writing images in every format.
  * We now sort some (but not all) GIF color tables.

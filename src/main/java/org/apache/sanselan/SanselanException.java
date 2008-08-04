@@ -14,31 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.sanselan.common;
+package org.apache.sanselan;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.zip.DeflaterOutputStream;
-import java.util.zip.InflaterInputStream;
-
-public class ZLibInflater extends BinaryFileFunctions
+public class SanselanException extends Exception
 {
-	public final byte[] inflate(byte bytes[]) throws IOException
-	// slow, probably.
+	static final long serialVersionUID = -1L;
+
+	public SanselanException(String s)
 	{
-		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		InflaterInputStream zIn = new InflaterInputStream(in);
-		return getStreamBytes(zIn);
+		super(s);
 	}
 
-	public final byte[] deflate(byte bytes[]) throws IOException
+	public SanselanException(String s, Exception e)
 	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		DeflaterOutputStream dos = new DeflaterOutputStream(baos);
-		dos.write(bytes);
-		dos.flush();
-		return baos.toByteArray();
+		super(s, e);
 	}
-
 }

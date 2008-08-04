@@ -19,8 +19,10 @@ package org.apache.sanselan.formats.png.chunks;
 import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.common.ZLibInflater;
+import org.apache.sanselan.common.ZLibUtils;
 import org.apache.sanselan.formats.png.PngConstants;
+import org.apache.sanselan.formats.png.PngText;
+import org.apache.sanselan.util.Debug;
 
 public class PNGChunkzTXt extends PNGTextChunk
 {
@@ -39,19 +41,20 @@ public class PNGChunkzTXt extends PNGTextChunk
 						"PNG zTXt chunk keyword is unterminated.");
 
 			keyword = new String(bytes, 0, index, "ISO-8859-1");
+			index++;
 
-			int compressionMethod = bytes[index + 1];
+			int compressionMethod = bytes[index++];
 			if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE)
 				throw new ImageReadException(
 						"PNG zTXt chunk has unexpected compression method: "
 								+ compressionMethod);
 
-			int compressedTextLength = bytes.length - (index + 1 + 1);
+			int compressedTextLength = bytes.length - index;
 			byte compressedText[] = new byte[compressedTextLength];
-			System.arraycopy(bytes, index + 1 + 1, compressedText, 0,
+			System.arraycopy(bytes, index, compressedText, 0,
 					compressedTextLength);
 
-			text = new String(new ZLibInflater().inflate(compressedText),
+			text = new String(new ZLibUtils().inflate(compressedText),
 					"ISO-8859-1");
 		}
 	}
@@ -70,6 +73,11 @@ public class PNGChunkzTXt extends PNGTextChunk
 	public String getText()
 	{
 		return text;
+	}
+
+	public PngText getContents()
+	{
+		return new PngText.zTXt(keyword, text);
 	}
 
 }

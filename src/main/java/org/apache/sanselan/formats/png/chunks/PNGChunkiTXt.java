@@ -19,8 +19,9 @@ package org.apache.sanselan.formats.png.chunks;
 import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.common.ZLibInflater;
+import org.apache.sanselan.common.ZLibUtils;
 import org.apache.sanselan.formats.png.PngConstants;
+import org.apache.sanselan.formats.png.PngText;
 
 public class PNGChunkiTXt extends PNGTextChunk
 {
@@ -91,13 +92,14 @@ public class PNGChunkiTXt extends PNGTextChunk
 
 			if (compressed)
 			{
-				int compressedTextLength = bytes.length - index;;
+				int compressedTextLength = bytes.length - index;
+				;
 				byte compressedText[] = new byte[compressedTextLength];
 				System.arraycopy(bytes, index, compressedText, 0,
 						compressedTextLength);
 
-				text = new String(new ZLibInflater()
-						.inflate(compressedText), "utf-8");
+				text = new String(new ZLibUtils().inflate(compressedText),
+						"utf-8");
 
 			} else
 				text = new String(bytes, index, bytes.length - index, "utf-8");
@@ -118,5 +120,10 @@ public class PNGChunkiTXt extends PNGTextChunk
 	public String getText()
 	{
 		return text;
+	}
+
+	public PngText getContents()
+	{
+		return new PngText.iTXt(keyword, text, languageTag, translatedKeyword);
 	}
 }

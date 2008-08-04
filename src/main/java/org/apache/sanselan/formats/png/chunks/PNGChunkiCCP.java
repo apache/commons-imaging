@@ -19,7 +19,7 @@ package org.apache.sanselan.formats.png.chunks;
 import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.common.ZLibInflater;
+import org.apache.sanselan.common.ZLibUtils;
 
 public class PNGChunkiCCP extends PNGChunk
 {
@@ -63,7 +63,7 @@ public class PNGChunkiCCP extends PNGChunk
 				System.out.println("bytes.length: " + bytes.length);
 			}
 
-			UncompressedProfile = new ZLibInflater()
+			UncompressedProfile = new ZLibUtils()
 					.inflate(CompressedProfile);
 
 			if (getDebug())

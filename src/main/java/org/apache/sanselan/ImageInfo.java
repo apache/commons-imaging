@@ -22,8 +22,8 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 
 /**
- * ImageInfo represents a collection of basic properties of an image, 
- * such as width, height, format, bit depth, etc.
+ * ImageInfo represents a collection of basic properties of an image, such as
+ * width, height, format, bit depth, etc.
  */
 public class ImageInfo
 {
@@ -71,40 +71,40 @@ public class ImageInfo
 
 	private final String compressionAlgorithm;
 
-	public ImageInfo(String FormatDetails, int BitsPerPixel,
-			ArrayList Comments, ImageFormat Format, String FormatName,
-			int Height, String MimeType, int NumberOfImages,
-			int PhysicalHeightDpi, float PhysicalHeightInch,
-			int PhysicalWidthDpi, float PhysicalWidthInch, int Width,
+	public ImageInfo(String formatDetails, int bitsPerPixel,
+			ArrayList comments, ImageFormat format, String formatName,
+			int height, String mimeType, int numberOfImages,
+			int physicalHeightDpi, float physicalHeightInch,
+			int physicalWidthDpi, float physicalWidthInch, int width,
 			boolean isProgressive, boolean isTransparent, boolean usesPalette,
-			int ColorType, String compressionAlgorithm)
+			int colorType, String compressionAlgorithm)
 	{
-		this.formatDetails = FormatDetails;
+		this.formatDetails = formatDetails;
 
-		this.bitsPerPixel = BitsPerPixel;
-		this.comments = Comments;
+		this.bitsPerPixel = bitsPerPixel;
+		this.comments = comments;
 
-		this.format = Format;
-		this.formatName = FormatName;
-		this.height = Height;
-		this.mimeType = MimeType;
+		this.format = format;
+		this.formatName = formatName;
+		this.height = height;
+		this.mimeType = mimeType;
 
-		this.numberOfImages = NumberOfImages;
-		this.physicalHeightDpi = PhysicalHeightDpi;
-		this.physicalHeightInch = PhysicalHeightInch;
-		this.physicalWidthDpi = PhysicalWidthDpi;
-		this.physicalWidthInch = PhysicalWidthInch;
-		this.width = Width;
+		this.numberOfImages = numberOfImages;
+		this.physicalHeightDpi = physicalHeightDpi;
+		this.physicalHeightInch = physicalHeightInch;
+		this.physicalWidthDpi = physicalWidthDpi;
+		this.physicalWidthInch = physicalWidthInch;
+		this.width = width;
 		this.isProgressive = isProgressive;
 
 		this.isTransparent = isTransparent;
 		this.usesPalette = usesPalette;
 
-		this.colorType = ColorType;
+		this.colorType = colorType;
 		this.compressionAlgorithm = compressionAlgorithm;
 	}
 
-	/** 
+	/**
 	 * Returns the bits per pixel of the image data.
 	 */
 	public int getBitsPerPixel()
@@ -112,30 +112,28 @@ public class ImageInfo
 		return bitsPerPixel;
 	}
 
-	/** 
-	 * Returns a list of comments from the image file.
-	 * <p/>
-	 * This is mostly obsolete.
+	/**
+	 * Returns a list of comments from the image file. <p/> This is mostly
+	 * obsolete.
 	 */
 	public ArrayList getComments()
 	{
 		return new ArrayList(comments);
 	}
 
-	/** 
-	 * Returns the image file format, ie. ImageFormat.IMAGE_FORMAT_PNG.
-	 * <p/>
+	/**
+	 * Returns the image file format, ie. ImageFormat.IMAGE_FORMAT_PNG. <p/>
 	 * Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if format is unknown.
 	 * 
-	 * @return      A constant defined in ImageFormat.
-	 * @see         ImageFormat
+	 * @return A constant defined in ImageFormat.
+	 * @see ImageFormat
 	 */
 	public ImageFormat getFormat()
 	{
 		return format;
 	}
 
-	/** 
+	/**
 	 * Returns a string with the name of the image file format.
 	 * 
 	 * @see #getFormat()
@@ -145,7 +143,7 @@ public class ImageInfo
 		return formatName;
 	}
 
-	/** 
+	/**
 	 * Returns the height of the image in pixels.
 	 * 
 	 * @see #getWidth()
@@ -155,7 +153,7 @@ public class ImageInfo
 		return height;
 	}
 
-	/** 
+	/**
 	 * Returns the MIME type of the image.
 	 * 
 	 * @see #getFormat()
@@ -165,70 +163,74 @@ public class ImageInfo
 		return mimeType;
 	}
 
-	/** 
+	/**
 	 * Returns the number of images in the file.
 	 * <p>
-	 * Applies mostly to GIF and TIFF; reading PSD/Photoshop layers is not supported, 
-	 * and Jpeg/JFIF EXIF thumbnails are not included in this count.
+	 * Applies mostly to GIF and TIFF; reading PSD/Photoshop layers is not
+	 * supported, and Jpeg/JFIF EXIF thumbnails are not included in this count.
 	 */
 	public int getNumberOfImages()
 	{
 		return numberOfImages;
 	}
 
-	/** 
+	/**
 	 * Returns horizontal dpi of the image, if available.
 	 * <p>
-	 * Applies to TIFF (optional), BMP (always), GIF (constant: 72),
-	 * Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
+	 * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
+	 * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
+	 * 72).
 	 * 
-	 * @return      returns -1 if not present.
+	 * @return returns -1 if not present.
 	 */
 	public int getPhysicalHeightDpi()
 	{
 		return physicalHeightDpi;
 	}
 
-	/** 
+	/**
 	 * Returns physical height of the image in inches, if available.
 	 * <p>
-	 * Applies to TIFF (optional), BMP (always), GIF (constant: 72),
-	 * Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
+	 * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
+	 * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
+	 * 72).
 	 * 
-	 * @return      returns -1 if not present.
+	 * @return returns -1 if not present.
 	 */
 	public float getPhysicalHeightInch()
 	{
 		return physicalHeightInch;
 	}
 
-	/** 
+	/**
 	 * Returns vertical dpi of the image, if available.
 	 * <p>
-	 * Applies to TIFF (optional), BMP (always), GIF (constant: 72),
-	 * Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
+	 * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
+	 * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
+	 * 72).
 	 * 
-	 * @return      returns -1 if not present.
+	 * @return returns -1 if not present.
 	 */
 	public int getPhysicalWidthDpi()
 	{
 		return physicalWidthDpi;
 	}
 
-	/** 
+	/**
 	 * Returns physical width of the image in inches, if available.
 	 * <p>
-	 * Applies to TIFF (optional), BMP (always), GIF (constant: 72),
-	 * Jpeg (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant: 72).
+	 * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
+	 * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
+	 * 72).
 	 * 
-	 * @return      returns -1 if not present.
+	 * @return returns -1 if not present.
 	 */
 	public float getPhysicalWidthInch()
 	{
 		return physicalWidthInch;
 	}
 
-	/** 
+	/**
 	 * Returns the width of the image in pixels.
 	 * 
 	 * @see #getHeight()
@@ -238,7 +240,7 @@ public class ImageInfo
 		return width;
 	}
 
-	/** 
+	/**
 	 * Returns true if the image is progressive or interlaced.
 	 */
 	public boolean getIsProgressive()
@@ -246,8 +248,9 @@ public class ImageInfo
 		return isProgressive;
 	}
 
-	/** 
-	 * Returns the color type of the image, as a constant (ie. ImageFormat.COLOR_TYPE_CMYK).
+	/**
+	 * Returns the color type of the image, as a constant (ie.
+	 * ImageFormat.COLOR_TYPE_CMYK).
 	 * 
 	 * @see #getColorTypeDescription()
 	 */
@@ -256,7 +259,7 @@ public class ImageInfo
 		return colorType;
 	}
 
-	/** 
+	/**
 	 * Returns a description of the color type of the image.
 	 * 
 	 * @see #getColorType()
@@ -265,21 +268,21 @@ public class ImageInfo
 	{
 		switch (colorType)
 		{
-			case COLOR_TYPE_BW :
-				return "Black and White";
-			case COLOR_TYPE_GRAYSCALE :
-				return "Grayscale";
-			case COLOR_TYPE_RGB :
-				return "RGB";
-			case COLOR_TYPE_CMYK :
-				return "CMYK";
-			case COLOR_TYPE_OTHER :
-				return "Other";
-			case COLOR_TYPE_UNKNOWN :
-				return "Unknown";
+		case COLOR_TYPE_BW:
+			return "Black and White";
+		case COLOR_TYPE_GRAYSCALE:
+			return "Grayscale";
+		case COLOR_TYPE_RGB:
+			return "RGB";
+		case COLOR_TYPE_CMYK:
+			return "CMYK";
+		case COLOR_TYPE_OTHER:
+			return "Other";
+		case COLOR_TYPE_UNKNOWN:
+			return "Unknown";
 
-			default :
-				return "Unknown";
+		default:
+			return "Unknown";
 		}
 
 	}
@@ -298,10 +301,9 @@ public class ImageInfo
 
 			toString(pw, "");
 			pw.flush();
-			
+
 			return sw.toString();
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			return "Image Data: Error";
 		}

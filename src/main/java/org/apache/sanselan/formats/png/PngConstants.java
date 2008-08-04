@@ -27,7 +27,24 @@ public interface PngConstants extends SanselanConstants
 	public final static byte[] PLTE_CHUNK_TYPE = new byte[] { 80, 76, 84, 69 };
 	public final static byte[] IEND_CHUNK_TYPE = new byte[] { 73, 69, 78, 68 };
 	public final static byte[] IDAT_CHUNK_TYPE = new byte[] { 73, 68, 65, 84 };
-	public final static byte[] iTXt_CHUNK_TYPE = new byte[] { 105, 84, 88, 116 };
+	public final static byte[] iTXt_CHUNK_TYPE = new byte[] { // 
+	105, // 
+			84, // 
+			88, // 
+			116, // 
+	};
+	public final static byte[] tEXt_CHUNK_TYPE = new byte[] { // 
+	0x74, //
+			0x45, //
+			0x58, //
+			0x74, //
+	};
+	public final static byte[] zTXt_CHUNK_TYPE = new byte[] { //
+	0x7A, //
+			0x54, //
+			0x58, //
+			0x74, //
+	};
 
 	public final static int IEND = PngImageParser.CharsToQuad('I', 'E', 'N',
 			'D');
@@ -107,5 +124,15 @@ public interface PngConstants extends SanselanConstants
 	 */
 
 	public final String XMP_KEYWORD = "XML:com.adobe.xmp";
+
+	/**
+	 * Parameter key.
+	 * 
+	 * Only used when writing Png images.
+	 * <p>
+	 * Valid values: a list of WriteTexts.
+	 * <p>
+	 */
+	public static final String PARAM_KEY_PNG_TEXT_CHUNKS = "PNG_TEXT_CHUNKS";
 
 }

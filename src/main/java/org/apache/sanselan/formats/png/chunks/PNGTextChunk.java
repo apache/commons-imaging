@@ -18,6 +18,8 @@ package org.apache.sanselan.formats.png.chunks;
 
 import java.io.IOException;
 
+import org.apache.sanselan.formats.png.PngText;
+
 public abstract class PNGTextChunk extends PNGChunk
 {
 
@@ -31,5 +33,7 @@ public abstract class PNGTextChunk extends PNGChunk
 	public abstract String getKeyword();
 
 	public abstract String getText();
+
+	public abstract PngText getContents();
 
 }
