@@ -34,6 +34,9 @@ import org.apache.sanselan.ImageParser;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
+import org.apache.sanselan.formats.jpeg.iptc.IPTCRecord;
+import org.apache.sanselan.formats.jpeg.iptc.IPTCParser;
+import org.apache.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.sanselan.formats.jpeg.segments.App13Segment;
 import org.apache.sanselan.formats.jpeg.segments.App2Segment;
 import org.apache.sanselan.formats.jpeg.segments.GenericSegment;
@@ -304,12 +307,12 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 	{
 		TiffImageMetadata exif = getExifMetadata(byteSource, params);
 
-		JpegImageMetadata.Photoshop photoshop = getPhotoshopMetadata(byteSource);
+		JpegPhotoshopMetadata photoshop = getPhotoshopMetadata(byteSource,
+				params);
 
 		if (null == exif && null == photoshop)
 			return null;
 
-		
 		JpegImageMetadata result = new JpegImageMetadata(photoshop, exif);
 
 		return result;
@@ -447,6 +450,49 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 		return result[0];
 	}
 
+	public boolean hasIptcSegment(ByteSource byteSource)
+			throws ImageReadException, IOException
+	{
+		final boolean result[] = { false, };
+
+		JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
+			// return false to exit before reading image data.
+			public boolean beginSOS()
+			{
+				return false;
+			}
+
+			public void visitSOS(int marker, byte markerBytes[],
+					byte imageData[])
+			{
+			}
+
+			// return false to exit traversal.
+			public boolean visitSegment(int marker, byte markerBytes[],
+					int markerLength, byte markerLengthBytes[],
+					byte segmentData[]) throws ImageReadException, IOException
+			{
+				if (marker == 0xffd9)
+					return false;
+
+				if (marker == JPEG_APP13_Marker)
+				{
+					if (new IPTCParser().isPhotoshopJpegSegment(segmentData))
+					{
+						result[0] = true;
+						return false;
+					}
+				}
+
+				return true;
+			}
+		};
+
+		new JpegUtils().traverseJFIF(byteSource, visitor);
+
+		return result[0];
+	}
+
 	public boolean hasXmpSegment(ByteSource byteSource)
 			throws ImageReadException, IOException
 	{
@@ -497,10 +543,11 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present. Otherwise, returns null..
 	 */
 	public String getXmpXml(ByteSource byteSource, Map params)
-			throws ImageReadException, IOException {
+			throws ImageReadException, IOException
+	{
 
 		final List result = new ArrayList();
 
@@ -547,8 +594,8 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 		return (String) result.get(0);
 	}
 
-	private JpegImageMetadata.Photoshop getPhotoshopMetadata(
-			ByteSource byteSource) throws ImageReadException, IOException
+	public JpegPhotoshopMetadata getPhotoshopMetadata(ByteSource byteSource,
+			Map params) throws ImageReadException, IOException
 	{
 		ArrayList segments = readSegments(byteSource,
 				new int[] { JPEG_APP13_Marker, }, false);
@@ -556,22 +603,23 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 		if ((segments == null) || (segments.size() < 1))
 			return null;
 
-		JpegImageMetadata.Photoshop result = new JpegImageMetadata.Photoshop();
+		PhotoshopApp13Data photoshopApp13Data = null;
 
 		for (int i = 0; i < segments.size(); i++)
 		{
 			App13Segment segment = (App13Segment) segments.get(i);
 
-			ArrayList elements = segment.elements;
+			PhotoshopApp13Data data = segment.parsePhotoshopSegment(params);
+			if (data != null && photoshopApp13Data != null)
+				throw new ImageReadException(
+						"Jpeg contains more than one Photoshop App13 segment.");
 
-			for (int j = 0; j < elements.size(); j++)
-			{
-				IptcElement element = (IptcElement) elements.get(j);
-				result.add(element.getIptcTypeName(), element.getValue());
-			}
+			photoshopApp13Data = data;
 		}
 
-		return result;
+		if(null==photoshopApp13Data)
+			return null;
+		return new JpegPhotoshopMetadata(photoshopApp13Data);
 	}
 
 	public Dimension getImageSize(ByteSource byteSource, Map params)

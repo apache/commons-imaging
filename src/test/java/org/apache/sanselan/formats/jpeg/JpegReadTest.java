@@ -56,6 +56,7 @@ public class JpegReadTest extends JpegBaseTest
 
 			IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
 			//			assertNotNull(metadata);
+			Debug.debug("metadata", metadata);
 
 			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile, params);
 			assertNotNull(imageInfo);

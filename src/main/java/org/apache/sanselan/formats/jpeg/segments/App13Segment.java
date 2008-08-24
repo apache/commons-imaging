@@ -19,17 +19,19 @@ package org.apache.sanselan.formats.jpeg.segments;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.formats.jpeg.IptcElement;
-import org.apache.sanselan.formats.jpeg.IptcType;
 import org.apache.sanselan.formats.jpeg.JpegImageParser;
+import org.apache.sanselan.formats.jpeg.iptc.IPTCParser;
+import org.apache.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;
 
 public class App13Segment extends APPNSegment
 {
 	protected final JpegImageParser parser;
-	public final ArrayList elements = new ArrayList();
+
+	// public final ArrayList elements = new ArrayList();
+	// public final boolean isIPTCJpegSegment;
 
 	public App13Segment(JpegImageParser parser, int marker, byte segmentData[])
 			throws ImageReadException, IOException
@@ -38,97 +40,43 @@ public class App13Segment extends APPNSegment
 				segmentData));
 	}
 
-	// TODO:
 	public App13Segment(JpegImageParser parser, int marker, int marker_length,
 			InputStream is) throws ImageReadException, IOException
 	{
 		super(marker, marker_length, is);
 		this.parser = parser;
 
-		boolean verbose = false;
-
-		if (!compareByteArrays(bytes, 0,
-				JpegImageParser.PhotoshopIdentificationString, 0,
-				JpegImageParser.PhotoshopIdentificationString.length))
-			throw new ImageReadException("Invalid App13 Segment");
-		//			readAndVerifyBytes("Photoshop Identification String", bais,
-		//					kPhotoshopIdentificationString, "Invalid App13 Segment");
-
-		int index = JpegImageParser.PhotoshopIdentificationString.length;
-		while (index < bytes.length)
-		{
-			if (!compareByteArrays(bytes, index, JpegImageParser.CONST_8BIM, 0,
-					JpegImageParser.CONST_8BIM.length))
-			{
-				//					dump(index);
-				throw new ImageReadException("Invalid .CONST_8BIM Segment");
-			}
-			index += JpegImageParser.CONST_8BIM.length;
-
-			int segmentType = convertByteArrayToShort("SegmentType", index,
-					bytes);
-			if (verbose)
-				debugNumber("segmentType", segmentType, 2);
-			index += 2;
-
-			// padding
-			index += 4;
-
-			int segmentSize = convertByteArrayToShort("SegmentSize", index,
-					bytes);
-			if (verbose)
-				debugNumber("segmentSize", segmentSize, 2);
-			index += 2;
-
-			int index2 = index;
-
-			index += segmentSize;
-
-			while (index2 + 1 < index)
-			{
-				int iptcPrefix = convertByteArrayToShort("IPTCPrefix", index2,
-						bytes);
-				if (verbose)
-					debugNumber("IPTCPrefix", iptcPrefix, 2);
-				index2 += 2;
-
-				if (iptcPrefix == 0x1c02)
-				{
-					//						System.out.println("								TEXTBLOCK:  "
-					//								+ fSegmentType);
-				}
-				else
-				{
-					//						System.out.println("								!TEXTBLOCK: " + fSegmentType);
-					break;
-				}
-
-				byte iptcSegmentType = bytes[index2];
-				//					debugNumber("fIPTCSegmentType", fIPTCSegmentType);
-				index2++;
-
-				int iptcSegmentSize = convertByteArrayToShort(
-						"IPTCSegmentSize", index2, bytes);
-				//					debugNumber("fIPTCegmentSize", fIPTCegmentSize, 2);
-				index2 += 2;
-
-				byte iptcData[] = readBytearray("iptc_data", bytes, index2,
-						iptcSegmentSize);
-				index2 += iptcSegmentSize;
-
-				String value = new String(iptcData);
-				//					System.out.println("iptc_data: '" + value + "' ("
-				//							+ fIPTCegmentSize + ")");
-
-				IptcType iptcType = IptcType.getIptcType(iptcSegmentType);
-				IptcElement element = new IptcElement(iptcType, value);
-				elements.add(element);
-			}
-
-			if ((segmentSize % 2) != 0)
-				index++;
-		}
-
+		// isIPTCJpegSegment = new IPTCParser().isIPTCJpegSegment(bytes);
+		// if (isIPTCJpegSegment)
+		// {
+		// /*
+		// * In practice, App13 segments are only used for Photoshop/IPTC
+		// * metadata. However, we should not treat App13 signatures without
+		// * Photoshop's signature as Photoshop/IPTC segments.
+		// */
+		// boolean verbose = false;
+		// boolean strict = false;
+		// elements.addAll(new IPTCParser().parseIPTCJPEGSegment(bytes,
+		// verbose, strict));
+		// }
 	}
 
+	public boolean isPhotoshopJpegSegment() throws ImageReadException, IOException
+	{
+		return new IPTCParser().isPhotoshopJpegSegment(bytes);
+	}
+
+	public PhotoshopApp13Data parsePhotoshopSegment(Map params)
+			throws ImageReadException, IOException
+	{
+		/*
+		 * In practice, App13 segments are only used for Photoshop/IPTC
+		 * metadata. However, we should not treat App13 signatures without
+		 * Photoshop's signature as Photoshop/IPTC segments.
+		 */
+		if (!new IPTCParser().isPhotoshopJpegSegment(bytes))
+			return null;
+
+		return new IPTCParser().parsePhotoshopSegment(bytes, params);
+	}
 }

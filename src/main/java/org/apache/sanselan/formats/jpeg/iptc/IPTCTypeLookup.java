@@ -14,31 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.sanselan.formats.tiff.fieldtypes;
+package org.apache.sanselan.formats.jpeg.iptc;
 
-import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.formats.tiff.TiffField;
+import java.util.HashMap;
+import java.util.Map;
 
-public class FieldTypeASCII extends FieldType
-{
-	public FieldTypeASCII(int type, String name)
-	{
-		super(type, 1, name);
+public abstract class IPTCTypeLookup implements IPTCConstants {
+
+	private static final Map IPTC_TYPE_MAP = new HashMap();
+	static {
+		for (int i = 0; i < IPTC_TYPES.length; i++) {
+			IPTCType iptcType = IPTC_TYPES[i];
+			Integer key = new Integer(iptcType.type);
+			IPTC_TYPE_MAP.put(key, iptcType);
+		}
 	}
 
-	public Object getSimpleValue(TiffField entry) 
-	{
-		return new String(getRawBytes(entry));
+	public static final IPTCType getIptcType(int type) {
+		Integer key = new Integer(type);
+		if (!IPTC_TYPE_MAP.containsKey(key))
+			return IPTCType.getUnknown(type);
+		return (IPTCType) IPTC_TYPE_MAP.get(key);
 	}
-
-	public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
-	{
-		if (o instanceof byte[])
-			return (byte[]) o;
-		else if (o instanceof String)
-			return ((String) o).getBytes();
-		else
-			throw new ImageWriteException("Unknown data type: " + o);
-	}
-
 }

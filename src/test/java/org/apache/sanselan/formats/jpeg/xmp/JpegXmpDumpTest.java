@@ -36,7 +36,7 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest
 	public void test() throws IOException, ImageReadException,
 			ImageWriteException
 	{
-		List images = getImagesWithIptcData();
+		List images = getImagesWithXmpData();
 		for (int i = 0; i < images.size(); i++)
 		{
 			if (i % 10 == 0)

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.sanselan.formats.jpeg.xmp;
+package org.apache.sanselan.formats.jpeg.iptc;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,12 +27,18 @@ import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.formats.jpeg.JpegImageParser;
 
-public abstract class JpegXmpBaseTest extends SanselanTest
+public abstract class IptcBaseTest extends SanselanTest
 {
+	//	public IptcBaseTest(String name)
+	//	{
+	//		super(name);
+	//	}
 
-	protected static boolean hasJpegXmpData(File file) throws IOException,
+	protected static boolean hasIptcData(File file) throws IOException,
 			ImageReadException
 	{
+		//		Debug.debug("hasIptcData file", file.getAbsoluteFile());
+
 		if (!file.getName().toLowerCase().endsWith(".jpg"))
 			return false;
 		//ImageFormat format = Sanselan.guessFormat(file);
@@ -44,7 +50,7 @@ public abstract class JpegXmpBaseTest extends SanselanTest
 		try
 		{
 			ByteSource byteSource = new ByteSourceFile(file);
-			return new JpegImageParser().hasXmpSegment(byteSource);
+			return new JpegImageParser().hasIptcSegment(byteSource);
 		}
 		catch (Exception e)
 		{
@@ -54,54 +60,54 @@ public abstract class JpegXmpBaseTest extends SanselanTest
 		}
 	}
 
-	private static final ImageFilter HAS_JPEG_XMP_IMAGE_FILTER = new ImageFilter()
+	private static final ImageFilter HAS_IPTC_IMAGE_FILTER = new ImageFilter()
 	{
 		public boolean accept(File file) throws IOException, ImageReadException
 		{
-			return hasJpegXmpData(file);
+			return hasIptcData(file);
 		}
 	};
 
-//	private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter()
-//	{
-//		public boolean accept(File file) throws IOException, ImageReadException
-//		{
-//			return file.getName().toLowerCase().endsWith(".jpg");
-//		}
-//	};
+	private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter()
+	{
+		public boolean accept(File file) throws IOException, ImageReadException
+		{
+			return file.getName().toLowerCase().endsWith(".jpg");
+		}
+	};
 
-	protected File getImageWithXmpData() throws IOException,
+	protected File getImageWithIptcData() throws IOException,
 			ImageReadException
 	{
-		return getTestImage(HAS_JPEG_XMP_IMAGE_FILTER);
+		return getTestImage(HAS_IPTC_IMAGE_FILTER);
 	}
 
-	protected List getImagesWithXmpData() throws IOException,
+	protected List getImagesWithIptcData() throws IOException,
 			ImageReadException
 	{
-		return getTestImages(HAS_JPEG_XMP_IMAGE_FILTER);
+		return getTestImages(HAS_IPTC_IMAGE_FILTER);
 	}
 
-	protected List getImagesWithXmpData(int max) throws IOException,
+	protected List getImagesWithIptcData(int max) throws IOException,
 			ImageReadException
 	{
-		return getTestImages(HAS_JPEG_XMP_IMAGE_FILTER, max);
+		return getTestImages(HAS_IPTC_IMAGE_FILTER, max);
 	}
 
-//	protected File getJpegImage() throws IOException, ImageReadException
-//	{
-//		return getTestImage(JPEG_IMAGE_FILTER);
-//	}
-//
-//	protected List getJpegImages() throws IOException, ImageReadException
-//	{
-//		return getTestImages(JPEG_IMAGE_FILTER);
-//	}
-//
-//	protected List getJpegImages(int max) throws IOException,
-//			ImageReadException
-//	{
-//		return getTestImages(JPEG_IMAGE_FILTER, max);
-//	}
+	protected File getJpegImage() throws IOException, ImageReadException
+	{
+		return getTestImage(JPEG_IMAGE_FILTER);
+	}
+
+	protected List getJpegImages() throws IOException, ImageReadException
+	{
+		return getTestImages(JPEG_IMAGE_FILTER);
+	}
+
+	protected List getJpegImages(int max) throws IOException,
+			ImageReadException
+	{
+		return getTestImages(JPEG_IMAGE_FILTER, max);
+	}
 
 }

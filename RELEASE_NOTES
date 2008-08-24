@@ -15,6 +15,11 @@ Version History:
 Release 0.95
 ------------
 
+ * Started shift towards moving field-level parsing into BinaryInputStream and BinaryOutputStream.
+ * Fixed a png unit test that used a piece of Java 1.6 syntax.
+ * Added unit tests around the new IPTC functionality.
+ * Added IPTC remove/update/insert functionality.
+ * Rewrote the IPTC parsing support.  
  * Added improved support for reading and writing iTXt, tEXt, zTXt Png chunks.
  	Added a unit test that demonstrates the feature.
  * Found a new regression wherein DeflaterOutputStream needs to be closed.

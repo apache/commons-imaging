@@ -20,9 +20,7 @@ package org.apache.sanselan.formats.png;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.ImageFormat;
@@ -38,7 +36,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest
 			ImageWriteException
 	{
 		File imagesFolder = new File("src\\test\\data\\images\\png\\3");
-		assert(imagesFolder.exists() && imagesFolder.isDirectory());
+		assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());
 		
 		File files[] = imagesFolder.listFiles();
 		for (int i = 0; i < files.length; i++)

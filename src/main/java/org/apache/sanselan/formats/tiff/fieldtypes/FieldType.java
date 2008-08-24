@@ -22,9 +22,8 @@ import org.apache.sanselan.common.BinaryFileFunctions;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
-public abstract class FieldType extends BinaryFileFunctions
-		implements
-			TiffConstants
+public abstract class FieldType extends BinaryFileFunctions implements
+		TiffConstants
 {
 	public final int type, length;
 	public final String name;
@@ -49,7 +48,8 @@ public abstract class FieldType extends BinaryFileFunctions
 		return length * entry.length;
 	}
 
-	//	public static final byte[] STUB_LOCAL_VALUE  = new byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
+	// public static final byte[] STUB_LOCAL_VALUE = new
+	// byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
 
 	public static final byte[] getStubLocalValue()
 	{
@@ -73,10 +73,14 @@ public abstract class FieldType extends BinaryFileFunctions
 	{
 		if (isLocalValue(entry))
 		{
-			return readBytearray(name, entry.valueOffsetBytes, 0, length
-					* entry.length);
-			//			return getBytearrayHead(name + " (" + entry.tagInfo.name + ")",
-			//					entry.valueOffsetBytes, length * entry.length);
+			int rawLength = length * entry.length;
+			byte result[] = new byte[rawLength];
+			System.arraycopy(entry.valueOffsetBytes, 0, result, 0, rawLength);
+			return result;
+//			return readBytearray(name, entry.valueOffsetBytes, 0, length
+//					* entry.length);
+			// return getBytearrayHead(name + " (" + entry.tagInfo.name + ")",
+			// entry.valueOffsetBytes, length * entry.length);
 		}
 
 		return entry.oversizeValue;
@@ -85,17 +89,17 @@ public abstract class FieldType extends BinaryFileFunctions
 	public abstract Object getSimpleValue(TiffField entry)
 			throws ImageReadException;
 
-	//	public final Object getSimpleValue(TiffField entry)
-	//	{
-	//		Object array[] = getValueArray(entry);
-	//		if (null == array)
-	//			return null;
-	//		if (array.length == 1)
-	//			return array[0];
-	//		return array;
-	//	}
+	// public final Object getSimpleValue(TiffField entry)
+	// {
+	// Object array[] = getValueArray(entry);
+	// if (null == array)
+	// return null;
+	// if (array.length == 1)
+	// return array[0];
+	// return array;
+	// }
 	//
-	//	public abstract Object[] getValueArray(TiffField entry);
+	// public abstract Object[] getValueArray(TiffField entry);
 
 	public String toString()
 	{

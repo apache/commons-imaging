@@ -14,27 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.sanselan.formats.jpeg;
+package org.apache.sanselan.formats.jpeg.iptc;
 
-public class IptcElement
-{
-	public final IptcType iptcType;
-	public final String value;
+import org.apache.sanselan.formats.jpeg.JpegConstants;
 
-	public IptcElement(IptcType fIptcType, String value)
-	{
-		this.iptcType = fIptcType;
-		this.value = value;
+public class IPTCType implements JpegConstants, IPTCConstants {
+	public final int type;
+	public final String name;
+
+	public IPTCType(int type, String name) {
+		this.type = type;
+		this.name = name;
 	}
 
-	public String getValue()
-	{
-		return value;
+	public String toString() {
+		return name + " (" + type + ")";
 	}
-
-	public String getIptcTypeName()
+	
+	public static IPTCType getUnknown(int type)
 	{
-		return iptcType.name;
+		return new IPTCType(type, "Unknown");
 	}
 
 }

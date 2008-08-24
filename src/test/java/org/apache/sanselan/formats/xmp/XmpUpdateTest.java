@@ -44,6 +44,11 @@ public class XmpUpdateTest extends SanselanTest
 				Debug.purgeMemory();
 
 			File imageFile = (File) images.get(i);
+
+			if (imageFile.getName().toLowerCase().endsWith(".png")
+					&& isInvalidPNGTestFile(imageFile))
+				continue;
+			
 			Debug.debug("imageFile", imageFile);
 			Debug.debug();
 

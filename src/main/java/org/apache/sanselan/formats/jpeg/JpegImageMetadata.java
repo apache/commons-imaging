@@ -22,44 +22,33 @@ import java.util.ArrayList;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.IImageMetadata;
-import org.apache.sanselan.common.ImageMetadata;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.util.Debug;
 
-public class JpegImageMetadata implements IImageMetadata
-{
-	public static class Photoshop extends ImageMetadata
-	{
-	}
-
-	private final Photoshop photoshop;
+public class JpegImageMetadata implements IImageMetadata {
+	private final JpegPhotoshopMetadata photoshop;
 	private final TiffImageMetadata exif;
 
-	public JpegImageMetadata(final Photoshop photoshop,
-			final TiffImageMetadata exif)
-	{
+	public JpegImageMetadata(final JpegPhotoshopMetadata photoshop,
+			final TiffImageMetadata exif) {
 		this.photoshop = photoshop;
 		this.exif = exif;
 	}
 
-	public TiffImageMetadata getExif()
-	{
+	public TiffImageMetadata getExif() {
 		return exif;
 	}
 
-	public Photoshop getPhotoshop()
-	{
+	public JpegPhotoshopMetadata getPhotoshop() {
 		return photoshop;
 	}
 
-	public TiffField findEXIFValue(TagInfo tagInfo)
-	{
+	public TiffField findEXIFValue(TagInfo tagInfo) {
 		ArrayList items = getItems();
-		for (int i = 0; i < items.size(); i++)
-		{
+		for (int i = 0; i < items.size(); i++) {
 			Object o = items.get(i);
 			if (!(o instanceof TiffImageMetadata.Item))
 				continue;
@@ -74,14 +63,12 @@ public class JpegImageMetadata implements IImageMetadata
 	}
 
 	public BufferedImage getEXIFThumbnail() throws ImageReadException,
-			IOException
-	{
+			IOException {
 		ArrayList dirs = exif.getDirectories();
-		for (int i = 0; i < dirs.size(); i++)
-		{
+		for (int i = 0; i < dirs.size(); i++) {
 			TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
 					.get(i);
-			//			Debug.debug("dir", dir);
+			// Debug.debug("dir", dir);
 			BufferedImage image = dir.getThumbnail();
 			if (null != image)
 				return image;
@@ -90,14 +77,12 @@ public class JpegImageMetadata implements IImageMetadata
 		return null;
 	}
 
-	public TiffImageData getRawImageData()
-	{
+	public TiffImageData getRawImageData() {
 		ArrayList dirs = exif.getDirectories();
-		for (int i = 0; i < dirs.size(); i++)
-		{
+		for (int i = 0; i < dirs.size(); i++) {
 			TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
 					.get(i);
-			//			Debug.debug("dir", dir);
+			// Debug.debug("dir", dir);
 			TiffImageData rawImageData = dir.getTiffImageData();
 			if (null != rawImageData)
 				return rawImageData;
@@ -106,8 +91,7 @@ public class JpegImageMetadata implements IImageMetadata
 		return null;
 	}
 
-	public ArrayList getItems()
-	{
+	public ArrayList getItems() {
 		ArrayList result = new ArrayList();
 
 		if (null != exif)
@@ -121,13 +105,11 @@ public class JpegImageMetadata implements IImageMetadata
 
 	private static final String newline = System.getProperty("line.separator");
 
-	public String toString()
-	{
+	public String toString() {
 		return toString(null);
 	}
 
-	public String toString(String prefix)
-	{
+	public String toString(String prefix) {
 		if (prefix == null)
 			prefix = "";
 
@@ -136,21 +118,19 @@ public class JpegImageMetadata implements IImageMetadata
 		result.append(prefix);
 		if (null == exif)
 			result.append("No Exif metadata.");
-		else
-		{
+		else {
 			result.append("Exif metadata:");
 			result.append(newline);
 			result.append(exif.toString("\t"));
 		}
 
-		//		if (null != exif && null != photoshop)
+		// if (null != exif && null != photoshop)
 		result.append(newline);
 
 		result.append(prefix);
 		if (null == photoshop)
 			result.append("No Photoshop (IPTC) metadata.");
-		else
-		{
+		else {
 			result.append("Photoshop (IPTC) metadata:");
 			result.append(newline);
 			result.append(photoshop.toString("\t"));
@@ -159,8 +139,7 @@ public class JpegImageMetadata implements IImageMetadata
 		return result.toString();
 	}
 
-	public void dump()
-	{
+	public void dump() {
 		Debug.debug(this.toString());
 	}
 

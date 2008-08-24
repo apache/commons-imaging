@@ -445,8 +445,6 @@ public class BinaryFileFunctions implements BinaryConstants
 		int byte0 = 0xff & bytes[index + 0];
 		int byte1 = 0xff & bytes[index + 1];
 
-		// return convert2BytesToShort(name, byte0, byte1, byteOrder);
-
 		int result;
 
 		if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
@@ -540,11 +538,14 @@ public class BinaryFileFunctions implements BinaryConstants
 	}
 
 	public final byte[] readBytearray(String name, byte bytes[], int start,
-			int count)
+			int count) throws ImageReadException
 	{
 		if (bytes.length < (start + count))
-			return null;
-
+		{
+			throw new ImageReadException("Invalid read. bytes.length: " + bytes.length+ ", start: " + start + ", count: " + count);
+			// return null;
+		}
+		
 		byte result[] = new byte[count];
 		System.arraycopy(bytes, start, result, 0, count);
 
@@ -554,12 +555,12 @@ public class BinaryFileFunctions implements BinaryConstants
 		return result;
 	}
 
-	protected final byte[] getByteArrayTail(String name, byte bytes[], int count)
+	protected final byte[] getByteArrayTail(String name, byte bytes[], int count) throws ImageReadException
 	{
 		return readBytearray(name, bytes, count, bytes.length - count);
 	}
 
-	protected final byte[] getBytearrayHead(String name, byte bytes[], int count)
+	protected final byte[] getBytearrayHead(String name, byte bytes[], int count) throws ImageReadException
 	{
 		return readBytearray(name, bytes, 0, bytes.length - count);
 	}
@@ -592,11 +593,7 @@ public class BinaryFileFunctions implements BinaryConstants
 	public final boolean compareByteArrays(byte a[], byte b[])
 	{
 		if (a.length != b.length)
-		{
-			// System.out.println("length mismatch: " + a.length + " != "
-			// + b.length);
 			return false;
-		}
 
 		return compareByteArrays(a, 0, b, 0, a.length);
 	}

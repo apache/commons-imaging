@@ -16,10 +16,7 @@
  */
 package org.apache.sanselan.formats.jpeg.xmp;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +25,9 @@ import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryFileParser;
 import org.apache.sanselan.common.byteSources.ByteSource;
-import org.apache.sanselan.common.byteSources.ByteSourceArray;
-import org.apache.sanselan.common.byteSources.ByteSourceFile;
-import org.apache.sanselan.common.byteSources.ByteSourceInputStream;
 import org.apache.sanselan.formats.jpeg.JpegConstants;
 import org.apache.sanselan.formats.jpeg.JpegUtils;
-import org.apache.sanselan.formats.tiff.write.TiffImageWriterBase;
-import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossless;
-import org.apache.sanselan.formats.tiff.write.TiffImageWriterLossy;
-import org.apache.sanselan.formats.tiff.write.TiffOutputSet;
-import org.apache.sanselan.util.Debug;
+import org.apache.sanselan.formats.jpeg.iptc.IPTCParser;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -76,6 +66,11 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 	protected abstract static class JFIFPiece
 	{
 		protected abstract void write(OutputStream os) throws IOException;
+		
+		public String toString()
+		{
+			return "[" + this.getClass().getSimpleName() + "]";
+		}
 	}
 
 	protected static class JFIFPieceSegment extends JFIFPiece
@@ -88,7 +83,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 		public JFIFPieceSegment(final int marker, final byte[] segmentData)
 		{
 			this(marker, int2ToByteArray(marker, JPEG_BYTE_ORDER),
-					int2ToByteArray(segmentData.length+2, JPEG_BYTE_ORDER),
+					int2ToByteArray(segmentData.length + 2, JPEG_BYTE_ORDER),
 					segmentData);
 		}
 
@@ -99,6 +94,11 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 			this.markerBytes = markerBytes;
 			this.segmentLengthBytes = segmentLengthBytes;
 			this.segmentData = segmentData;
+		}
+
+		public String toString()
+		{
+			return "[" + this.getClass().getSimpleName() + " (0x" + Integer.toHexString(marker) + ")]";
 		}
 
 		protected void write(OutputStream os) throws IOException
@@ -123,6 +123,15 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 			if (marker != JPEG_APP1_Marker)
 				return false;
 			if (!byteArrayHasPrefix(segmentData, EXIF_IDENTIFIER_CODE))
+				return false;
+			return true;
+		}
+
+		public boolean isPhotoshopApp13Segment()
+		{
+			if (marker != JPEG_APP13_Marker)
+				return false;
+			if (!new IPTCParser().isPhotoshopJpegSegment(segmentData))
 				return false;
 			return true;
 		}
@@ -216,9 +225,26 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 		}
 	};
 
+	private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = new SegmentFilter() {
+		public boolean filter(JFIFPieceSegment segment)
+		{
+			return segment.isPhotoshopApp13Segment();
+		}
+	};
+
 	protected List removeXmpSegments(List segments)
 	{
 		return filterSegments(segments, XMP_SEGMENT_FILTER);
+	}
+
+	protected List removePhotoshopApp13Segments(List segments)
+	{
+		return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER);
+	}
+
+	protected List findPhotoshopApp13Segments(List segments)
+	{
+		return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER, true);
 	}
 
 	protected List removeExifSegments(List segments)
@@ -228,6 +254,12 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 
 	protected List filterSegments(List segments, SegmentFilter filter)
 	{
+		return filterSegments(segments, filter, false);
+	}
+
+	protected List filterSegments(List segments, SegmentFilter filter,
+			boolean reverse)
+	{
 		List result = new ArrayList();
 
 		for (int i = 0; i < segments.size(); i++)
@@ -235,9 +267,9 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 			JFIFPiece piece = (JFIFPiece) segments.get(i);
 			if (piece instanceof JFIFPieceSegment)
 			{
-				if (!filter.filter((JFIFPieceSegment) piece))
+				if (filter.filter((JFIFPieceSegment) piece) ^ !reverse)
 					result.add(piece);
-			} else
+			} else if(!reverse)
 				result.add(piece);
 		}
 

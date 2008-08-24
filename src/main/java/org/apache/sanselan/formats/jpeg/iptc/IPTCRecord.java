@@ -14,27 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.sanselan.formats.jpeg;
+package org.apache.sanselan.formats.jpeg.iptc;
 
-public class IptcType implements JpegConstants
+import java.util.Comparator;
+
+public class IPTCRecord
 {
-	public final int type;
-	public final String name;
+	public final IPTCType iptcType;
+	public final String value;
 
-	public IptcType(int type, String name)
+	public IPTCRecord(IPTCType iptcType, String value)
 	{
-		this.type = type;
-		this.name = name;
+		this.iptcType = iptcType;
+		this.value = value;
 	}
 
-	public static final IptcType getIptcType(int type)
+	public String getValue()
 	{
-		for (int i = 0; i < IPTC_TYPES.length; i++)
+		return value;
+	}
+
+	public String getIptcTypeName()
+	{
+		return iptcType.name;
+	}
+
+	public static final Comparator COMPARATOR = new Comparator() {
+		public int compare(Object o1, Object o2)
 		{
-			IptcType fIptcType = IPTC_TYPES[i];
-			if (fIptcType.type == type)
-				return fIptcType;
+			IPTCRecord e1 = (IPTCRecord) o1;
+			IPTCRecord e2 = (IPTCRecord) o2;
+			return e1.iptcType.type - e2.iptcType.type;
 		}
-		return IPTC_TYPE_Unknown;
-	}
+	};
+
 }

@@ -37,10 +37,10 @@ import org.apache.sanselan.util.Debug;
 public class JpegXmpRewriteTest extends JpegXmpBaseTest
 {
 
-	public void testRemove() throws IOException, ImageReadException,
+	public void testRemoveInsertUpdate() throws IOException, ImageReadException,
 			ImageWriteException
 	{
-		List images = getImagesWithIptcData();
+		List images = getImagesWithXmpData();
 		for (int i = 0; i < images.size(); i++)
 		{
 			if (i % 10 == 0)

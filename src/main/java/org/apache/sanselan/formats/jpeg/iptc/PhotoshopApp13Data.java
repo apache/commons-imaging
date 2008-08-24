@@ -15,44 +15,55 @@
  * limitations under the License.
  */
 
-package org.apache.sanselan.formats.png;
+package org.apache.sanselan.formats.jpeg.iptc;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.sanselan.ImageFormat;
-import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.Sanselan;
-import org.apache.sanselan.SanselanTest;
-import org.apache.sanselan.common.IImageMetadata;
+import org.apache.sanselan.SanselanConstants;
+import org.apache.sanselan.common.BinaryFileParser;
+import org.apache.sanselan.common.BinaryOutputStream;
 import org.apache.sanselan.util.Debug;
+import org.apache.sanselan.util.ParamMap;
 
-public abstract class PngBaseTest extends SanselanTest
+public class PhotoshopApp13Data implements IPTCConstants
 {
+	private final List records;
+	private final List rawBlocks;
 
-	private static boolean isPng(File file) throws IOException,
-			ImageReadException
+	public PhotoshopApp13Data(List records, List rawBlocks)
 	{
-		ImageFormat format = Sanselan.guessFormat(file);
-		return format == ImageFormat.IMAGE_FORMAT_PNG;
+		this.rawBlocks = rawBlocks;
+		this.records = records;
 	}
 
-	private static final ImageFilter imageFilter = new ImageFilter() {
-		public boolean accept(File file) throws IOException, ImageReadException
+	public List getRecords()
+	{
+		return new ArrayList(records);
+	}
+
+	public List getRawBlocks()
+	{
+		return new ArrayList(rawBlocks);
+	}
+
+	public List getNonIptcBlocks()
+	{
+		List result = new ArrayList();
+		for (int i = 0; i < rawBlocks.size(); i++)
 		{
-			return isPng(file);
+			IPTCBlock block = (IPTCBlock) rawBlocks.get(i);
+			if (!block.isIPTCBlock())
+				result.add(block);
 		}
-	};
-
-	protected List getPngImages() throws IOException, ImageReadException
-	{
-		return getTestImages(imageFilter);
+		return result;
 	}
-
-
 
 }

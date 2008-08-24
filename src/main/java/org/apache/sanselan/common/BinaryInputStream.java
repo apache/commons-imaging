@@ -16,6 +16,7 @@
  */
 package org.apache.sanselan.common;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -37,6 +38,12 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
 	}
 
 	private final InputStream is;
+
+	public BinaryInputStream(byte bytes[], int byteOrder)
+	{
+		this.byteOrder = byteOrder;
+		this.is = new ByteArrayInputStream(bytes);
+	}
 
 	public BinaryInputStream(InputStream is, int byteOrder)
 	{
@@ -161,7 +168,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
 
 				this.debugByteArray("expected", expected);
 				debugNumber("data[" + i + "]", b);
-				//				debugNumber("expected[" + i + "]", expected[i]);
+				// debugNumber("expected[" + i + "]", expected[i]);
 
 				throw new ImageReadException(exception);
 			}
@@ -203,7 +210,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
 	{
 		int count = 0;
 		for (int i = 0; count < 3; i++)
-		//		while(count<3)
+		// while(count<3)
 		{
 			int b = is.read();
 			if (b < 0)
@@ -289,21 +296,22 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
 		if (length == 4)
 			byte3 = bytes[start + 3];
 
-		//		return convert4BytesToInt(name, byte0, byte1, byte2, byte3, byteOrder);
+		// return convert4BytesToInt(name, byte0, byte1, byte2, byte3,
+		// byteOrder);
 
 		int result;
 
 		if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
 			result = ((0xff & byte0) << 24) + ((0xff & byte1) << 16)
 					+ ((0xff & byte2) << 8) + ((0xff & byte3) << 0);
-		//		result = (( byte0) << 24) + ((byte1) << 16)
-		//		+ (( byte2) << 8) + (( byte3) << 0);
+		// result = (( byte0) << 24) + ((byte1) << 16)
+		// + (( byte2) << 8) + (( byte3) << 0);
 		else
 			// intel, little endian
 			result = ((0xff & byte3) << 24) + ((0xff & byte2) << 16)
 					+ ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
-		//		result = (( byte3) << 24) + (( byte2) << 16)
-		//		+ (( byte1) << 8) + (( byte0) << 0);
+		// result = (( byte3) << 24) + (( byte2) << 16)
+		// + (( byte1) << 8) + (( byte0) << 0);
 
 		if (debug)
 			debugNumber(name, result, 4);
@@ -346,7 +354,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
 		byte byte0 = bytes[start + 0];
 		byte byte1 = bytes[start + 1];
 
-		//		return convert2BytesToShort(name, byte0, byte1, byteOrder);
+		// return convert2BytesToShort(name, byte0, byte1, byteOrder);
 
 		int result;
 
@@ -381,9 +389,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
 			result[i] = convertByteArrayToShort(name, start + i * 2, bytes,
 					byteOrder);
 
-			//			byte byte0 = bytes[start + i * 2];
-			//			byte byte1 = bytes[start + i * 2 + 1];
-			//			result[i] = convertBytesToShort(name, byte0, byte1, byteOrder);
+			// byte byte0 = bytes[start + i * 2];
+			// byte byte1 = bytes[start + i * 2 + 1];
+			// result[i] = convertBytesToShort(name, byte0, byte1, byteOrder);
 		}
 
 		return result;
@@ -447,6 +455,34 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
 			debugByteArray(name, result);
 
 		return result;
+	}
+
+	public final byte[] readByteArray(int length, String error)
+			throws ImageReadException, IOException
+	{
+		boolean verbose = false;
+		boolean strict = true;
+		return readByteArray(length, error, verbose, strict);
+	}
+
+	public final byte[] readByteArray(int length, String error,
+			boolean verbose, boolean strict) throws ImageReadException,
+			IOException
+	{
+		byte bytes[] = new byte[length];
+		int total = 0;
+		int read;
+		while ((read = read(bytes, total, length - total)) > 0)
+			total += read;
+		if (total < length)
+		{
+			if (strict)
+				throw new ImageReadException(error);
+			else if(verbose)
+				System.out.println(error);
+			return null;
+		}
+		return bytes;
 	}
 
 	protected final byte[] getBytearrayTail(String name, byte bytes[], int count)
@@ -539,6 +575,50 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
 		return convertByteArrayToShort(name, bytes, byteOrder);
 	}
 
+	public final int read1ByteInteger(String exception)
+			throws ImageReadException, IOException
+	{
+		int byte0 = is.read();
+		if (byte0 < 0)
+			throw new ImageReadException(exception);
+
+		return 0xff & byte0;
+	}
+
+	public final int read2ByteInteger(String exception)
+			throws ImageReadException, IOException
+	{
+		int byte0 = is.read();
+		int byte1 = is.read();
+		if (byte0 < 0 || byte1 < 0)
+			throw new ImageReadException(exception);
+
+		if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+			return ((0xff & byte0) << 8) + ((0xff & byte1) << 0);
+		else
+			// intel, little endian
+			return ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
+	}
+
+	public final int read4ByteInteger(String exception)
+			throws ImageReadException, IOException
+	{
+		int byte0 = is.read();
+		int byte1 = is.read();
+		int byte2 = is.read();
+		int byte3 = is.read();
+		if (byte0 < 0 || byte1 < 0 || byte2 < 0 || byte3 < 0)
+			throw new ImageReadException(exception);
+
+		if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+			return ((0xff & byte0) << 24) + ((0xff & byte1) << 16)
+					+ ((0xff & byte2) << 8) + ((0xff & byte3) << 0);
+		else
+			// intel, little endian
+			return ((0xff & byte3) << 24) + ((0xff & byte2) << 16)
+					+ ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
+	}
+	
 	protected final void printCharQuad(String msg, int i)
 	{
 		System.out.println(msg + ": '" + (char) (0xff & (i >> 24))

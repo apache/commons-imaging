@@ -106,10 +106,42 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
 		writeNBytes(value, 2);
 	}
 
+	public final void write4ByteInteger(int value) throws ImageWriteException,
+			IOException
+	{
+		if (byteOrder == BYTE_ORDER_MOTOROLA)
+		{
+			write(0xff & (value >> 24));
+			write(0xff & (value >> 16));
+			write(0xff & (value >> 8));
+			write(0xff & value);
+		} else
+		{
+			write(0xff & value);
+			write(0xff & (value >> 8));
+			write(0xff & (value >> 16));
+			write(0xff & (value >> 24));
+		}
+	}
+
+	public final void write2ByteInteger(int value) throws ImageWriteException,
+			IOException
+	{
+		if (byteOrder == BYTE_ORDER_MOTOROLA)
+		{
+			write(0xff & (value >> 8));
+			write(0xff & value);
+		} else
+		{
+			write(0xff & value);
+			write(0xff & (value >> 8));
+		}
+	}
+
 	public final void writeByteArray(byte bytes[]) throws IOException
 	{
 		os.write(bytes, 0, bytes.length);
-		count+=bytes.length;
+		count += bytes.length;
 	}
 
 	private byte[] convertValueToByteArray(int value, int n)

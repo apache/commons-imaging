@@ -116,22 +116,43 @@ public abstract class SanselanTest extends TestCase implements
 		File testFolder = new File(srcFolder, "test");
 		File dataFolder = new File(testFolder, "data");
 		File imagesFolder = new File(dataFolder, "images");
-		
-//		 imagesFolder = new File(imagesFolder, "ignore\\xml-sdk-examples\\BlueSquare.psd");
-//		 imagesFolder = new File(imagesFolder, "ignore\\PngSuite\\BGYN6A16.PNG");
+
+		// imagesFolder = new File(imagesFolder,
+		// "ignore\\xml-sdk-examples\\BlueSquare.psd");
+		// imagesFolder = new File(imagesFolder,
+		// "exif\\drewNoakes\\007_Canon EOS D60.jpg");
+		// imagesFolder = new File(imagesFolder,
+		// "ignore\\PngSuite\\BGYN6A16.PNG");
 		// imagesFolder = new File(imagesFolder, "jpg\\3");
 		// imagesFolder = new File(imagesFolder, "");
 		// imagesFolder = new File(imagesFolder,
 		// "exif\\philHarvey\\Nokia\\Nokia5500.jpg");
-//		imagesFolder = new File(imagesFolder, "png\\2\\");
+		// imagesFolder = new File(imagesFolder, "png\\2\\");
 		// imagesFolder = new File(imagesFolder,
 		// "exif\\drewNoakes\\007_FujiFilm FinePixS1Pro (5).jpg");
+		// imagesFolder = new File(imagesFolder,
+		// "iptc");
 		// src\\test\\data\\images\\exif\\drewNoakes\\007_Nikon D1X.jpg
 		// src\\test\\data\\images\\exif\\drewNoakes\\007_FujiFilm FinePixS1Pro
 		// (5).jpg
+		// imagesFolder = new File(imagesFolder,
+		// "exif\\drewNoakes\\007_Nikon D70.jpg");
+		// imagesFolder = new File(imagesFolder,
+		// "exif\\philHarvey\\Canon\\CanonEOS_D2000.jpg");
+		// imagesFolder = new File(imagesFolder,
+		// "exif\\philHarvey\\Motorola\\MotorolaE365.jpg");
+		// imagesFolder = new File(
+		// "C:\\work\\personal\\apache\\sanselan\\src\\test\\data\\images\\exif\\drewNoakes\\007_Canon EOS D60.jpg"
+		// );
+		// imagesFolder = new File(
+		// "C:\\work\\personal\\apache\\sanselan\\src\\test\\data\\images\\exif\\drewNoakes\\007_FujiFilm FinePixS1Pro (1).jpg"
+		// );
+		// imagesFolder = new File(
+		// "C:\\work\\personal\\apache\\sanselan\\src\\test\\data\\images\\exif\\philHarvey\\Nikon\\NikonCoolpixS7.jpg"
+		// );
 
 		imagesFolder = imagesFolder.getAbsoluteFile();
-		
+
 		assertTrue(imagesFolder.exists());
 
 		Debug.debug("imagesFolder", imagesFolder);
@@ -187,5 +208,11 @@ public abstract class SanselanTest extends TestCase implements
 		assertTrue(filtered.size() > 0);
 
 		return filtered;
+	}
+
+	protected boolean isInvalidPNGTestFile(File file)
+	{
+		return (file.getParentFile().getName().equalsIgnoreCase("pngsuite") && file
+				.getName().toLowerCase().startsWith("x"));
 	}
 }
