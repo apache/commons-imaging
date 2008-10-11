@@ -318,8 +318,14 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 
 		List result = new ArrayList(segments);
 		if (lastAppIndex == -1)
-			throw new ImageWriteException("JPEG file has no APP segments.");
+		{
+			if(segments.size()<1)
+				throw new ImageWriteException("JPEG file has no APP segments.");
+			result.addAll(1, newSegments);
+		}
+		else
 		result.addAll(lastAppIndex + 1, newSegments);
+		
 		return result;
 	}
 

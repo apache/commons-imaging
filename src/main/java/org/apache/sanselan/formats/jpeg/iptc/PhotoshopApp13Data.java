@@ -17,21 +17,8 @@
 
 package org.apache.sanselan.formats.jpeg.iptc;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.SanselanConstants;
-import org.apache.sanselan.common.BinaryFileParser;
-import org.apache.sanselan.common.BinaryOutputStream;
-import org.apache.sanselan.util.Debug;
-import org.apache.sanselan.util.ParamMap;
 
 public class PhotoshopApp13Data implements IPTCConstants
 {

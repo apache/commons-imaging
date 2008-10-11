@@ -34,7 +34,6 @@ import org.apache.sanselan.ImageParser;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
-import org.apache.sanselan.formats.png.chunks.PNGChunkiTXt;
 import org.apache.sanselan.formats.psd.dataparsers.DataParser;
 import org.apache.sanselan.formats.psd.dataparsers.DataParserBitmap;
 import org.apache.sanselan.formats.psd.dataparsers.DataParserCMYK;

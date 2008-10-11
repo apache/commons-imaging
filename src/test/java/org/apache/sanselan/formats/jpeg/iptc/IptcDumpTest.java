@@ -26,10 +26,8 @@ import java.util.Map;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
-import org.apache.sanselan.common.byteSources.ByteSource;
-import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.formats.jpeg.JpegImageMetadata;
-import org.apache.sanselan.formats.jpeg.JpegUtils;
+import org.apache.sanselan.formats.jpeg.JpegPhotoshopMetadata;
 import org.apache.sanselan.util.Debug;
 
 public class IptcDumpTest extends IptcBaseTest
@@ -57,7 +55,7 @@ public class IptcDumpTest extends IptcBaseTest
 			params
 					.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
 							!ignoreImageData));
-//			params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
+			// params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
 
 			JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
 					.getMetadata(imageFile, params);
@@ -66,7 +64,22 @@ public class IptcDumpTest extends IptcBaseTest
 
 			metadata.getPhotoshop().dump();
 			// if(metadata.getPhotoshop().getItems().size()>0)
-//			Debug.debug("iptc size", metadata.getPhotoshop().getItems().size());
+			// Debug.debug("iptc size",
+			// metadata.getPhotoshop().getItems().size());
+
+			JpegPhotoshopMetadata psMetadata = metadata.getPhotoshop();
+			List oldRecords = psMetadata.photoshopApp13Data.getRecords();
+
+			System.out.println();
+			for (int j = 0; j < oldRecords.size(); j++)
+			{
+				IPTCRecord record = (IPTCRecord) oldRecords.get(j);
+				if (record.iptcType.type != IPTCConstants.IPTC_TYPE_CITY.type)
+					System.out.println("Key: " + record.iptcType.name + " (0x"
+							+ Integer.toHexString(record.iptcType.type)
+							+ "), value: " + record.value);
+			}
+			System.out.println();
 		}
 	}
 

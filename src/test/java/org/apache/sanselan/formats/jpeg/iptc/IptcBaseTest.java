@@ -29,11 +29,6 @@ import org.apache.sanselan.formats.jpeg.JpegImageParser;
 
 public abstract class IptcBaseTest extends SanselanTest
 {
-	//	public IptcBaseTest(String name)
-	//	{
-	//		super(name);
-	//	}
-
 	protected static boolean hasIptcData(File file) throws IOException,
 			ImageReadException
 	{
@@ -44,8 +39,6 @@ public abstract class IptcBaseTest extends SanselanTest
 		//ImageFormat format = Sanselan.guessFormat(file);
 		//if (format != ImageFormat.IMAGE_FORMAT_JPEG)
 		//	return false;
-
-		//		Debug.debug("possible file", file);
 
 		try
 		{

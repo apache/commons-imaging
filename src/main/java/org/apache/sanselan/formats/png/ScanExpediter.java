@@ -30,7 +30,6 @@ import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterPaeth;
 import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterSub;
 import org.apache.sanselan.formats.png.scanlinefilters.ScanlineFilterUp;
 import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
-import org.apache.sanselan.util.Debug;
 
 public abstract class ScanExpediter extends BinaryFileParser
 {

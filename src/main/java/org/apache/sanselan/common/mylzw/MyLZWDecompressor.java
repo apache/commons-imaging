@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.sanselan.util.Debug;
-
 public final class MyLZWDecompressor
 {
 	private static final int MAX_TABLE_SIZE = 1 << 12;

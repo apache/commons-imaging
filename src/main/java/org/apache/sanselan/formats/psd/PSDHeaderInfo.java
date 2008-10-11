@@ -16,7 +16,6 @@
  */
 package org.apache.sanselan.formats.psd;
 
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 public class PSDHeaderInfo

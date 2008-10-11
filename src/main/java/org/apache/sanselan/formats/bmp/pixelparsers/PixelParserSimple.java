@@ -17,7 +17,6 @@
 package org.apache.sanselan.formats.bmp.pixelparsers;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
 import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;

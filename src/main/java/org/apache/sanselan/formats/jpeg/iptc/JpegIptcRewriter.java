@@ -16,7 +16,6 @@
  */
 package org.apache.sanselan.formats.jpeg.iptc;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +33,6 @@ import org.apache.sanselan.common.byteSources.ByteSourceArray;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.common.byteSources.ByteSourceInputStream;
 import org.apache.sanselan.formats.jpeg.xmp.JpegRewriter;
-import org.apache.sanselan.util.Debug;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -235,13 +233,13 @@ public class JpegIptcRewriter extends JpegRewriter implements IPTCConstants
 			List newBlocks = newData.getNonIptcBlocks();
 			byte[] newBlockBytes = new IPTCParser().writeIPTCBlock(newData
 					.getRecords());
-			
+
 			int blockType = IMAGE_RESOURCE_BLOCK_IPTC_DATA;
 			byte[] blockNameBytes = new byte[0];
 			IPTCBlock newBlock = new IPTCBlock(blockType, blockNameBytes,
 					newBlockBytes);
 			newBlocks.add(newBlock);
-			
+
 			newData = new PhotoshopApp13Data(newData.getRecords(), newBlocks);
 
 			byte segmentBytes[] = new IPTCParser()

@@ -45,7 +45,6 @@ public class IPTCParser extends BinaryFileParser implements IPTCConstants
 
 	public boolean isPhotoshopJpegSegment(byte segmentData[])
 	{
-
 		if (!compareByteArrays(segmentData, 0, PHOTOSHOP_IDENTIFICATION_STRING,
 				0, PHOTOSHOP_IDENTIFICATION_STRING.length))
 			return false;
@@ -200,10 +199,9 @@ public class IPTCParser extends BinaryFileParser implements IPTCConstants
 					recordSize);
 			index += recordSize;
 
+			// Debug.debug("recordSize", recordSize + " (0x"
+			// + Integer.toHexString(recordSize) + ")");
 
-//			Debug.debug("recordSize", recordSize + " (0x"
-//					+ Integer.toHexString(recordSize) + ")");
-			
 			if (recordType == 0)
 			{
 				if (verbose)
@@ -392,7 +390,8 @@ public class IPTCParser extends BinaryFileParser implements IPTCConstants
 			// first, right record version record
 			bos.write(IPTC_RECORD_TAG_MARKER);
 			bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
-			bos.write(IPTC_TYPE_RECORD_VERSION.type); // record version record type.
+			bos.write(IPTC_TYPE_RECORD_VERSION.type); // record version record
+														// type.
 			bos.write2Bytes(2); // record version record size
 			bos.write2Bytes(2); // record version value
 
@@ -415,10 +414,10 @@ public class IPTCParser extends BinaryFileParser implements IPTCConstants
 			for (int i = 0; i < elements.size(); i++)
 			{
 				IPTCRecord element = (IPTCRecord) elements.get(i);
-				
-				if(element.iptcType.type == IPTC_TYPE_RECORD_VERSION.type)
+
+				if (element.iptcType.type == IPTC_TYPE_RECORD_VERSION.type)
 					continue; // ignore
-				
+
 				bos.write(IPTC_RECORD_TAG_MARKER);
 				bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
 				if (element.iptcType.type < 0 || element.iptcType.type > 0xff)
@@ -437,7 +436,7 @@ public class IPTCParser extends BinaryFileParser implements IPTCConstants
 
 			blockData = baos.toByteArray();
 		}
-		
+
 		return blockData;
 	}
 

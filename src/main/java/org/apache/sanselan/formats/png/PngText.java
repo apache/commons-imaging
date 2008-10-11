@@ -1,8 +1,5 @@
 package org.apache.sanselan.formats.png;
 
-import org.apache.sanselan.ImageWriteException;
-import org.apache.sanselan.SanselanException;
-import org.apache.sanselan.util.UnicodeUtils;
 
 public abstract class PngText
 {

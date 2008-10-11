@@ -30,7 +30,6 @@ import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceArray;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.common.byteSources.ByteSourceInputStream;
-import org.apache.sanselan.util.Debug;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.

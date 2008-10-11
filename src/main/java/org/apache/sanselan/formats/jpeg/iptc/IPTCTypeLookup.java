@@ -19,18 +19,22 @@ package org.apache.sanselan.formats.jpeg.iptc;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class IPTCTypeLookup implements IPTCConstants {
+public abstract class IPTCTypeLookup implements IPTCConstants
+{
 
 	private static final Map IPTC_TYPE_MAP = new HashMap();
-	static {
-		for (int i = 0; i < IPTC_TYPES.length; i++) {
+	static
+	{
+		for (int i = 0; i < IPTC_TYPES.length; i++)
+		{
 			IPTCType iptcType = IPTC_TYPES[i];
 			Integer key = new Integer(iptcType.type);
 			IPTC_TYPE_MAP.put(key, iptcType);
 		}
 	}
 
-	public static final IPTCType getIptcType(int type) {
+	public static final IPTCType getIptcType(int type)
+	{
 		Integer key = new Integer(type);
 		if (!IPTC_TYPE_MAP.containsKey(key))
 			return IPTCType.getUnknown(type);

@@ -19,7 +19,6 @@ package org.apache.sanselan.formats.png.chunks;
 import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.formats.png.PngText;
 
 public class PNGChunktEXt extends PNGTextChunk

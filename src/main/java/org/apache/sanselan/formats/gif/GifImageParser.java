@@ -42,7 +42,6 @@ import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.mylzw.MyLZWCompressor;
 import org.apache.sanselan.common.mylzw.MyLZWDecompressor;
-import org.apache.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.sanselan.palette.Palette;
 import org.apache.sanselan.palette.PaletteFactory;
 import org.apache.sanselan.util.Debug;

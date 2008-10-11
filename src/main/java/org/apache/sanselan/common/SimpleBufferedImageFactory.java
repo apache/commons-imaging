@@ -19,8 +19,6 @@ package org.apache.sanselan.common;
 
 import java.awt.image.BufferedImage;
 
-import org.apache.sanselan.util.Debug;
-
 public class SimpleBufferedImageFactory implements IBufferedImageFactory
 {
 	public BufferedImage getColorBufferedImage(int width, int height,

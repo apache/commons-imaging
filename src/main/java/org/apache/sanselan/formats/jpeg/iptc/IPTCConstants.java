@@ -16,24 +16,15 @@
  */
 package org.apache.sanselan.formats.jpeg.iptc;
 
-public interface IPTCConstants
+import org.apache.sanselan.formats.jpeg.JpegConstants;
+
+public interface IPTCConstants extends JpegConstants
 {
 
-	// public static final byte PhotoshopIdentificationString[] =
-	// "Photoshop 3.0"
-	// .getBytes();
-	public static final byte PHOTOSHOP_IDENTIFICATION_STRING[] = { 0xff & 'P',
-			0xff & 'h', 0xff & 'o', 0xff & 't', 0xff & 'o', 0xff & 's',
-			0xff & 'h', 0xff & 'o', 0xff & 'p', 0xff & ' ', 0xff & '3',
-			0xff & '.', 0xff & '0', 0, };
-	public static final byte CONST_8BIM[] = { 0xff & '8', 0xff & 'B',
-			0xff & 'I', 0xff & 'M', };
+	public static final byte IPTC_PREFIX[] = { 0x1C, 0x02, };
 
-	public static final byte IPTCPrefix[] = { 0x1C, 0x02, };
-
-	
 	public static final int IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE = 32767;
-	
+
 	public static final int IMAGE_RESOURCE_BLOCK_PHOTOSHOP2_INFO = 0x03e8;
 	public static final int IMAGE_RESOURCE_BLOCK_MACINTOSH_PRINT_INFO = 0x03e9;
 	public static final int IMAGE_RESOURCE_BLOCK_XML_DATA = 0x03ea;
@@ -99,90 +90,90 @@ public interface IPTCConstants
 	public static final int IMAGE_RESOURCE_BLOCK_CLIPPING_PATH_NAME = 0x0bb7;
 	public static final int IMAGE_RESOURCE_BLOCK_PRINT_FLAGS_INFO = 0x2710;
 
-//	public static final int IPTC_RECORD_PREFIX = 0x1c02;
+	// public static final int IPTC_RECORD_PREFIX = 0x1c02;
 	public static final int IPTC_RECORD_TAG_MARKER = 0x1c;
 	public static final int IPTC_ENVELOPE_RECORD_NUMBER = 0x01;
 	public static final int IPTC_APPLICATION_2_RECORD_NUMBER = 0x02;
 
 	public static final IPTCType IPTC_TYPE_RECORD_VERSION = new IPTCType(0,
-			"RecordVersion");
+			"Record Version");
 	public static final IPTCType IPTC_TYPE_OBJECT_TYPE_REFERENCE = new IPTCType(
-			3, "ObjectTypeReference");
+			3, "Object Type Reference");
 	public static final IPTCType IPTC_TYPE_OBJECT_ATTRIBUTE_REFERENCE = new IPTCType(
-			4, "ObjectAttributeReference");
+			4, "Object Attribute Reference");
 	public static final IPTCType IPTC_TYPE_OBJECT_NAME = new IPTCType(5,
-			"ObjectName");
+			"Object Name");
 	public static final IPTCType IPTC_TYPE_EDIT_STATUS = new IPTCType(7,
-			"EditStatus");
+			"Edit Status");
 	public static final IPTCType IPTC_TYPE_EDITORIAL_UPDATE = new IPTCType(8,
-			"EditorialUpdate");
+			"Editorial Update");
 	public static final IPTCType IPTC_TYPE_URGENCY = new IPTCType(10, "Urgency");
 	public static final IPTCType IPTC_TYPE_SUBJECT_REFERENCE = new IPTCType(12,
-			"SubjectReference");
+			"Subject Reference");
 	public static final IPTCType IPTC_TYPE_CATEGORY = new IPTCType(15,
 			"Category");
 	public static final IPTCType IPTC_TYPE_SUPPLEMENTAL_CATEGORY = new IPTCType(
-			20, "SupplementalCategory");
+			20, "Supplemental Category");
 	public static final IPTCType IPTC_TYPE_FIXTURE_IDENTIFIER = new IPTCType(
-			22, "FixtureIdentifier");
+			22, "Fixture Identifier");
 	public static final IPTCType IPTC_TYPE_KEYWORDS = new IPTCType(25,
 			"Keywords");
 	public static final IPTCType IPTC_TYPE_CONTENT_LOCATION_CODE = new IPTCType(
-			26, "ContentLocationCode");
+			26, "Content Location Code");
 	public static final IPTCType IPTC_TYPE_CONTENT_LOCATION_NAME = new IPTCType(
-			27, "ContentLocationName");
+			27, "Content Location Name");
 	public static final IPTCType IPTC_TYPE_RELEASE_DATE = new IPTCType(30,
-			"ReleaseDate");
+			"Release Date");
 	public static final IPTCType IPTC_TYPE_RELEASE_TIME = new IPTCType(35,
-			"ReleaseTime");
+			"Release Time");
 	public static final IPTCType IPTC_TYPE_EXPIRATION_DATE = new IPTCType(37,
-			"ExpirationDate");
+			"Expiration Date");
 	public static final IPTCType IPTC_TYPE_EXPIRATION_TIME = new IPTCType(38,
-			"ExpirationTime");
+			"Expiration Time");
 	public static final IPTCType IPTC_TYPE_SPECIAL_INSTRUCTIONS = new IPTCType(
-			40, "SpecialInstructions");
+			40, "Special Instructions");
 	public static final IPTCType IPTC_TYPE_ACTION_ADVISED = new IPTCType(42,
-			"ActionAdvised");
+			"Action Advised");
 	public static final IPTCType IPTC_TYPE_REFERENCE_SERVICE = new IPTCType(45,
-			"ReferenceService");
+			"Reference Service");
 	public static final IPTCType IPTC_TYPE_REFERENCE_DATE = new IPTCType(47,
-			"ReferenceDate");
+			"Reference Date");
 	public static final IPTCType IPTC_TYPE_REFERENCE_NUMBER = new IPTCType(50,
-			"ReferenceNumber");
+			"Reference Number");
 	public static final IPTCType IPTC_TYPE_DATE_CREATED = new IPTCType(55,
-			"DateCreated");
+			"Date Created");
 	public static final IPTCType IPTC_TYPE_TIME_CREATED = new IPTCType(60,
-			"TimeCreated");
+			"Time Created");
 	public static final IPTCType IPTC_TYPE_DIGITAL_CREATION_DATE = new IPTCType(
-			62, "DigitalCreationDate");
+			62, "Digital Creation Date");
 	public static final IPTCType IPTC_TYPE_DIGITAL_CREATION_TIME = new IPTCType(
-			63, "DigitalCreationTime");
+			63, "Digital Creation Time");
 	public static final IPTCType IPTC_TYPE_ORIGINATING_PROGRAM = new IPTCType(
-			65, "OriginatingProgram");
+			65, "Originating Program");
 	public static final IPTCType IPTC_TYPE_PROGRAM_VERSION = new IPTCType(70,
-			"ProgramVersion");
+			"Program Version");
 	public static final IPTCType IPTC_TYPE_OBJECT_CYCLE = new IPTCType(75,
-			"ObjectCycle");
+			"Object Cycle");
 	public static final IPTCType IPTC_TYPE_BYLINE = new IPTCType(80, "By-line");
 	public static final IPTCType IPTC_TYPE_BYLINE_TITLE = new IPTCType(85,
-			"By-lineTitle");
+			"By-line Title");
 	public static final IPTCType IPTC_TYPE_CITY = new IPTCType(90, "City");
 	public static final IPTCType IPTC_TYPE_SUBLOCATION = new IPTCType(92,
 			"Sublocation");
 	public static final IPTCType IPTC_TYPE_PROVINCE_STATE = new IPTCType(95,
 			"Province/State");
 	public static final IPTCType IPTC_TYPE_COUNTRY_PRIMARY_LOCATION_CODE = new IPTCType(
-			100, "Country/PrimaryLocationCode");
+			100, "Country/Primary Location Code");
 	public static final IPTCType IPTC_TYPE_COUNTRY_PRIMARY_LOCATION_NAME = new IPTCType(
-			101, "Country/PrimaryLocationName");
+			101, "Country/Primary Location Name");
 	public static final IPTCType IPTC_TYPE_ORIGINAL_TRANSMISSION_REFERENCE = new IPTCType(
-			103, "OriginalTransmission,Reference");
+			103, "Original Transmission, Reference");
 	public static final IPTCType IPTC_TYPE_HEADLINE = new IPTCType(105,
 			"Headline");
 	public static final IPTCType IPTC_TYPE_CREDIT = new IPTCType(110, "Credit");
 	public static final IPTCType IPTC_TYPE_SOURCE = new IPTCType(115, "Source");
 	public static final IPTCType IPTC_TYPE_COPYRIGHT_NOTICE = new IPTCType(116,
-			"CopyrightNotice");
+			"Copyright Notice");
 	public static final IPTCType IPTC_TYPE_CONTACT = new IPTCType(118,
 			"Contact");
 	public static final IPTCType IPTC_TYPE_CAPTION_ABSTRACT = new IPTCType(120,
@@ -190,29 +181,29 @@ public interface IPTCConstants
 	public static final IPTCType IPTC_TYPE_WRITER_EDITOR = new IPTCType(122,
 			"Writer/Editor");
 	public static final IPTCType IPTC_TYPE_RASTERIZED_CAPTION = new IPTCType(
-			125, "RasterizedCaption");
+			125, "Rasterized Caption");
 	public static final IPTCType IPTC_TYPE_IMAGE_TYPE = new IPTCType(130,
 			"ImageType");
 	public static final IPTCType IPTC_TYPE_IMAGE_ORIENTATION = new IPTCType(
-			131, "ImageOrientation");
+			131, "Image Orientation");
 	public static final IPTCType IPTC_TYPE_LANGUAGE_IDENTIFIER = new IPTCType(
-			135, "LanguageIdentifier");
+			135, "Language Identifier");
 	public static final IPTCType IPTC_TYPE_AUDIO_TYPE = new IPTCType(150,
-			"AudioType");
+			"Audio Type");
 	public static final IPTCType IPTC_TYPE_AUDIO_SAMPLING_RATE = new IPTCType(
-			151, "AudioSamplingRate");
+			151, "Audio Sampling Rate");
 	public static final IPTCType IPTC_TYPE_AUDIO_SAMPLING_RESOLUTION = new IPTCType(
-			152, "AudioSamplingResolution");
+			152, "Audio Sampling Resolution");
 	public static final IPTCType IPTC_TYPE_AUDIO_DURATION = new IPTCType(153,
-			"AudioDuration");
+			"Audio Duration");
 	public static final IPTCType IPTC_TYPE_AUDIO_OUTCUE = new IPTCType(154,
-			"AudioOutcue");
+			"Audio Outcue");
 	public static final IPTCType IPTC_TYPE_OBJECT_DATA_PREVIEW_FILE_FORMAT = new IPTCType(
-			200, "ObjectDataPreview,FileFormat");
+			200, "Object Data Preview, File Format");
 	public static final IPTCType IPTC_TYPE_OBJECT_DATA_PREVIEW_FILE_FORMAT_VERSION = new IPTCType(
-			201, "ObjectDataPreview,FileFormatVersion");
+			201, "Object Data Preview, File Format Version");
 	public static final IPTCType IPTC_TYPE_OBJECT_DATA_PREVIEW_DATA = new IPTCType(
-			202, "ObjectDataPreviewData");
+			202, "Object Data Preview Data");
 	// --
 	// public static final IPTCType IPTC_TYPE_UNKNOWN = new IPTCType(-1,
 	// "Unknown");

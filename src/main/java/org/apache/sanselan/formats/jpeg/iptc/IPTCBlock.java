@@ -3,6 +3,9 @@
  */
 package org.apache.sanselan.formats.jpeg.iptc;
 
+/*
+ * Represents an IPTC block, a set of key-value pairs of Photoshop IPTC data.
+ */
 public class IPTCBlock
 {
 	public final int blockType;

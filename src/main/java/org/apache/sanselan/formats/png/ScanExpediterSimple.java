@@ -23,7 +23,6 @@ import java.io.InputStream;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.formats.png.chunks.PNGChunkPLTE;
 import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
-import org.apache.sanselan.util.Debug;
 
 public class ScanExpediterSimple extends ScanExpediter
 {

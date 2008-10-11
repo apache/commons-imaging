@@ -16,27 +16,31 @@
  */
 package org.apache.sanselan.formats.jpeg;
 
-import org.apache.sanselan.formats.jpeg.iptc.IPTCType;
-
-
-public interface JpegConstants {
+public interface JpegConstants
+{
 	public static final int MAX_SEGMENT_SIZE = 0xffff;
 
-	public static final byte JFIF0_SIGNATURE[] = new byte[] { 0x4a, // J
+	public static final byte JFIF0_SIGNATURE[] = new byte[] { //
+	0x4a, // J
 			0x46, // F
 			0x49, // I
 			0x46, // F
 			0x0, //  
 	};
-	public static final byte JFIF0_SIGNATURE_ALTERNATIVE[] = new byte[] { 0x4a, // J
+	public static final byte JFIF0_SIGNATURE_ALTERNATIVE[] = new byte[] { //
+	0x4a, // J
 			0x46, // F
 			0x49, // I
 			0x46, // F
 			0x20, //  
 	};
 
-	public static final byte EXIF_IDENTIFIER_CODE[] = { 0xff & 'E', 0xff & 'x',
-			0xff & 'i', 0xff & 'f', };
+	public static final byte EXIF_IDENTIFIER_CODE[] = { //
+	0x45, // E
+			0x78, // x
+			0x69, // i
+			0x66, // f
+	};
 
 	public static final byte XMP_IDENTIFIER[] = { //
 	0x68, // h
@@ -115,15 +119,26 @@ public interface JpegConstants {
 	public static final byte icc_profile_label[] = { 0x49, 0x43, 0x43, 0x5F,
 			0x50, 0x52, 0x4F, 0x46, 0x49, 0x4C, 0x45, 0x0 };
 
-	// public static final byte PhotoshopIdentificationString[] =
-	// "Photoshop 3.0"
-	// .getBytes();
-	public static final byte PhotoshopIdentificationString[] = { 0xff & 'P',
-			0xff & 'h', 0xff & 'o', 0xff & 't', 0xff & 'o', 0xff & 's',
-			0xff & 'h', 0xff & 'o', 0xff & 'p', 0xff & ' ', 0xff & '3',
-			0xff & '.', 0xff & '0', 0, };
-	public static final byte CONST_8BIM[] = { 0xff & '8', 0xff & 'B',
-			0xff & 'I', 0xff & 'M', };
-
+	public static final byte PHOTOSHOP_IDENTIFICATION_STRING[] = { //
+	0x50, // P
+			0x68, // h
+			0x6F, // o
+			0x74, // t
+			0x6F, // o
+			0x73, // s
+			0x68, // h
+			0x6F, // o
+			0x70, // p
+			0x20, //
+			0x33, // 3
+			0x2E, // .
+			0x30, // 0
+	};
+	public static final byte CONST_8BIM[] = { //
+	0x38, // 8
+			0x42, // B
+			0x49, // I
+			0x4D, // M
+	};
 
 }

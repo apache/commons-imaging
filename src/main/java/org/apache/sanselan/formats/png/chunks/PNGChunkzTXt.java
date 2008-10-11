@@ -22,7 +22,6 @@ import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.ZLibUtils;
 import org.apache.sanselan.formats.png.PngConstants;
 import org.apache.sanselan.formats.png.PngText;
-import org.apache.sanselan.util.Debug;
 
 public class PNGChunkzTXt extends PNGTextChunk
 {

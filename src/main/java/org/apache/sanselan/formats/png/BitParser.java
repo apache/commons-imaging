@@ -19,7 +19,6 @@ package org.apache.sanselan.formats.png;
 import java.io.IOException;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.util.Debug;
 
 public class BitParser
 {

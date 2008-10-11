@@ -18,6 +18,9 @@ package org.apache.sanselan.formats.jpeg.iptc;
 
 import java.util.Comparator;
 
+/*
+ * Represents an IPTC record, a single key-value pair of Photoshop IPTC data.
+ */
 public class IPTCRecord
 {
 	public final IPTCType iptcType;

@@ -30,10 +30,6 @@ import java.awt.image.ImagingOpException;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.sanselan.common.byteSources.ByteSource;
-import org.apache.sanselan.common.byteSources.ByteSourceArray;
-import org.apache.sanselan.common.byteSources.ByteSourceFile;
-
 /**
  * This class is a mess and needs to be cleaned up.
  */

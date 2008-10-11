@@ -17,7 +17,6 @@
 package org.apache.sanselan.formats.tiff;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,7 +31,6 @@ import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
-import org.apache.sanselan.util.Debug;
 
 public class TiffField implements TiffConstants
 {
