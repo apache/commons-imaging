@@ -133,6 +133,7 @@ public interface JpegConstants
 			0x33, // 3
 			0x2E, // .
 			0x30, // 0
+			0,
 	};
 	public static final byte CONST_8BIM[] = { //
 	0x38, // 8
