@@ -15,6 +15,7 @@ Version History:
 Release 0.95
 ------------
 
+ * Moved the example code into the test source directory, to comply with Maven's standard project layout.
  * Added a couple of images to the sample image library that demonstrate a couple variations on Photoshop/IPTC data.  
  * Fixed a small bug in the IPTC constants introduced while cleaning up the constants.
  * Started shift towards moving field-level parsing into BinaryInputStream and BinaryOutputStream.
