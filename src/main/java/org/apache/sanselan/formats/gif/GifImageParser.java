@@ -239,7 +239,7 @@ public class GifImageParser extends ImageParser
 		while (true)
 		{
 			int code = is.read();
-//			 this.debugNumber("code: ", code);
+			// this.debugNumber("code: ", code);
 
 			switch (code)
 			{
@@ -614,7 +614,7 @@ public class GifImageParser extends ImageParser
 
 		boolean isTransparent = false;
 		if (gce != null && gce.transparency)
-				isTransparent = true;
+			isTransparent = true;
 
 		boolean usesPalette = true;
 		int colorType = ImageInfo.COLOR_TYPE_RGB;
@@ -1021,7 +1021,9 @@ public class GifImageParser extends ImageParser
 				int image_data_total = 0;
 
 				int LZWMinimumCodeSize = colorTableScaleLessOne + 1;
-				LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
+//				LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
+				if (LZWMinimumCodeSize < 2)
+					LZWMinimumCodeSize = 2;
 
 				// TODO:
 				// make
