@@ -77,7 +77,7 @@ public class BinaryFileFunctions implements BinaryConstants
 		for (int i = 0; i < bytes; i++)
 		{
 			if (i > 0)
-				System.out.print(",");
+				pw.print(",");
 			int singleByte = 0xff & byteData;
 			pw.print((char) singleByte + " [" + singleByte + "]");
 			byteData >>= 8;

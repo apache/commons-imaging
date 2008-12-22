@@ -15,6 +15,9 @@ Version History:
 Release 0.95
 ------------
 
+ * Added more unit tests around BMP.
+ * Added more images to the test image suite.
+ * Fixed a bug where errors were being wrongly logged to System.out.
  * Moved the example code into the test source directory, to comply with Maven's standard project layout.
  * Added a couple of images to the sample image library that demonstrate a couple variations on Photoshop/IPTC data.  
  * Fixed a small bug in the IPTC constants introduced while cleaning up the constants.

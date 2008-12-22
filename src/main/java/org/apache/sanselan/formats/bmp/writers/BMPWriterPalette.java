@@ -26,18 +26,18 @@ import org.apache.sanselan.palette.SimplePalette;
 public class BMPWriterPalette extends BMPWriter
 {
 	private final SimplePalette palette;
-	private final int bits_per_sample;
+	private final int bitsPerSample;
 
 	public BMPWriterPalette(SimplePalette palette)
 	{
 		this.palette = palette;
 
 		if (palette.length() <= 2)
-			bits_per_sample = 1;
+			bitsPerSample = 1;
 		else if (palette.length() <= 16)
-			bits_per_sample = 4;
+			bitsPerSample = 4;
 		else
-			bits_per_sample = 8;
+			bitsPerSample = 8;
 	}
 
 	public int getPaletteSize()
@@ -47,7 +47,7 @@ public class BMPWriterPalette extends BMPWriter
 
 	public int getBitsPerPixel()
 	{
-		return bits_per_sample;
+		return bitsPerSample;
 	}
 
 	public void writePalette(BinaryOutputStream bos) throws IOException
@@ -87,15 +87,15 @@ public class BMPWriterPalette extends BMPWriter
 
 				int index = palette.getPaletteIndex(rgb);
 
-				if (bits_per_sample == 8)
+				if (bitsPerSample == 8)
 				{
 					baos.write(0xff & index);
 					bytecount++;
 				} else
 				// 4 or 1
 				{
-					bit_cache = (bit_cache << bits_per_sample) | index;
-					bits_in_cache += bits_per_sample;
+					bit_cache = (bit_cache << bitsPerSample) | index;
+					bits_in_cache += bitsPerSample;
 					if (bits_in_cache >= 8)
 					{
 						baos.write(0xff & bit_cache);

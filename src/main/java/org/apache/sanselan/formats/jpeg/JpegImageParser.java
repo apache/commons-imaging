@@ -363,10 +363,6 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 		if (!params.containsKey(PARAM_KEY_READ_THUMBNAILS))
 			params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.TRUE);
 
-		// Debug.debug("read thumbs?", params.get(PARAM_KEY_READ_THUMBNAILS));
-
-		// Debug.debug("exif bytes", bytes.length);
-
 		return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes,
 				params);
 	}

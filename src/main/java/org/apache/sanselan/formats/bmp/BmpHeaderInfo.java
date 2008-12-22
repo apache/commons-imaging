@@ -43,31 +43,30 @@ public class BmpHeaderInfo
 	public final int colorsUsed;
 	public final int colorsImportant;
 
-	public BmpHeaderInfo(byte Identifier1, byte Identifier2, int FileSize,
-			int Reserved, int BitmapDataOffset,
-
-			int BitmapHeaderSize, int Width, int Height, int Planes,
-			int BitsPerPixel, int Compression, int BitmapDataSize,
-			int HResolution, int VResolution, int ColorsUsed,
-			int ColorsImportant)
+	public BmpHeaderInfo(byte identifier1, byte identifier2, int fileSize,
+			int reserved, int bitmapDataOffset,
+			int bitmapHeaderSize, int width, int height, int planes,
+			int bitsPerPixel, int compression, int bitmapDataSize,
+			int hResolution, int vResolution, int colorsUsed,
+			int colorsImportant)
 	{
-		this.identifier1 = Identifier1;
-		this.identifier2 = Identifier2;
-		this.fileSize = FileSize;
-		this.reserved = Reserved;
-		this.bitmapDataOffset = BitmapDataOffset;
+		this.identifier1 = identifier1;
+		this.identifier2 = identifier2;
+		this.fileSize = fileSize;
+		this.reserved = reserved;
+		this.bitmapDataOffset = bitmapDataOffset;
 
-		this.bitmapHeaderSize = BitmapHeaderSize;
-		this.width = Width;
-		this.height = Height;
-		this.planes = Planes;
-		this.bitsPerPixel = BitsPerPixel;
-		this.compression = Compression;
-		this.bitmapDataSize = BitmapDataSize;
-		this.hResolution = HResolution;
-		this.vResolution = VResolution;
-		this.colorsUsed = ColorsUsed;
-		this.colorsImportant = ColorsImportant;
+		this.bitmapHeaderSize = bitmapHeaderSize;
+		this.width = width;
+		this.height = height;
+		this.planes = planes;
+		this.bitsPerPixel = bitsPerPixel;
+		this.compression = compression;
+		this.bitmapDataSize = bitmapDataSize;
+		this.hResolution = hResolution;
+		this.vResolution = vResolution;
+		this.colorsUsed = colorsUsed;
+		this.colorsImportant = colorsImportant;
 	}
 
 }

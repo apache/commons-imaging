@@ -108,25 +108,17 @@ public abstract class SanselanTest extends TestCase implements
 		return getTestImages(filter, -1);
 	}
 
-	protected List getTestImages(final ImageFilter filter, final int max)
-			throws IOException, ImageReadException
-	{
+	private static final List ALL_IMAGES = new ArrayList();
 
+	static
+	{
 		File srcFolder = new File("src");
 		File testFolder = new File(srcFolder, "test");
 		File dataFolder = new File(testFolder, "data");
 		File imagesFolder = new File(dataFolder, "images");
 
 		// imagesFolder = new File(
-		// "C:\\work\\personal\\apache\\sanselan\\src\\test\\data\\images\\exif\\drewNoakes\\007_Canon EOS D60.jpg"
-		// );
-		// imagesFolder = new File(
-		// "C:\\work\\personal\\apache\\sanselan\\src\\test\\data\\images\\exif\\drewNoakes\\007_FujiFilm FinePixS1Pro (1).jpg"
-		// );
-		// imagesFolder = new File(
-		// "C:\\work\\personal\\apache\\sanselan\\src\\test\\data\\images\\exif\\philHarvey\\Nikon\\NikonCoolpixS7.jpg"
-		// );
-//		imagesFolder = new File("C:\\work\\personal\\apache\\sanselan\\src\\test\\data\\images\\exif\\philHarvey\\UMAX\\UmaxAstraCam.jpg");
+		// "C:\\personal\\apache\\sanselan\\src\\test\\data\\images\\bmp\\2");
 
 		imagesFolder = imagesFolder.getAbsoluteFile();
 
@@ -134,57 +126,50 @@ public abstract class SanselanTest extends TestCase implements
 
 		Debug.debug("imagesFolder", imagesFolder);
 
-		final List images = new ArrayList();
-
 		FSTraversal.Visitor visitor = new FSTraversal.Visitor() {
-			long counter = 0;
 
 			public boolean visit(File file, double progressEstimate)
 			{
-
 				if (!Sanselan.hasImageFileExtension(file))
 					return true;
-
-				if (counter++ % 10 == 0)
-					Debug.purgeMemory();
-
-				try
-				{
-					if (filter != null && !filter.accept(file))
-						return true;
-				} catch (Exception e)
-				{
-					Debug.debug(e);
-					return false;
-				}
-
-				images.add(file);
-
-				if (max < 1)
-					return true;
-				return images.size() < max;
+				ALL_IMAGES.add(file);
+				return true;
 			}
 		};
 		new FSTraversal().traverseFiles(imagesFolder, visitor);
+	}
 
-		List filtered = new ArrayList();
-		// long last = System.currentTimeMillis();
-		for (int i = 0; i < images.size(); i++)
+	protected List getTestImages(final ImageFilter filter, final int max)
+			throws IOException, ImageReadException
+	{
+		final List images = new ArrayList();
+		int counter = 0;
+		
+		for (int i = 0; i < ALL_IMAGES.size(); i++)
 		{
-			// if (i % 10 == 0)
-			// Debug.purgeMemory();
+			File file = (File) ALL_IMAGES.get(i);
 
-			File file = (File) images.get(i);
-			// Debug.debug("considering file", file.getAbsoluteFile());
+			if (!Sanselan.hasImageFileExtension(file))
+				continue;
+
+			if (counter++ % 10 == 0)
+				Debug.purgeMemory();
 
 			if (file.getParentFile().getName().toLowerCase().equals("@broken"))
 				continue;
-			filtered.add(file);
+
+			if (filter != null && !filter.accept(file))
+				continue;
+
+			images.add(file);
+
+			if (max > 0 && images.size() >= max)
+				break;
 		}
 
-		assertTrue(filtered.size() > 0);
+		assertTrue(images.size() > 0);
 
-		return filtered;
+		return images;
 	}
 
 	protected boolean isInvalidPNGTestFile(File file)

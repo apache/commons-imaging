@@ -47,6 +47,7 @@ import org.apache.sanselan.formats.bmp.writers.BMPWriterRGB;
 import org.apache.sanselan.palette.PaletteFactory;
 import org.apache.sanselan.palette.SimplePalette;
 import org.apache.sanselan.util.Debug;
+import org.apache.sanselan.util.ParamMap;
 
 public class BmpImageParser extends ImageParser
 {
@@ -84,43 +85,63 @@ public class BmpImageParser extends ImageParser
 	private static final byte BMP_HEADER_SIGNATURE[] = { 0x42, 0x4d, };
 
 	private BmpHeaderInfo readBmpHeaderInfo(InputStream is,
-			FormatCompliance formatCompliance) throws ImageReadException,
-			IOException
+			FormatCompliance formatCompliance, boolean verbose)
+			throws ImageReadException, IOException
 	{
-		byte Identifier1 = readByte("Identifier1", is, "Not a Valid BMP File");
-		byte Identifier2 = readByte("Identifier2", is, "Not a Valid BMP File");
+		byte identifier1 = readByte("Identifier1", is, "Not a Valid BMP File");
+		byte identifier2 = readByte("Identifier2", is, "Not a Valid BMP File");
 
 		if (formatCompliance != null)
 		{
 			formatCompliance.compare_bytes("Signature", BMP_HEADER_SIGNATURE,
-					new byte[] { Identifier1, Identifier2, });
+					new byte[] { identifier1, identifier2, });
 		}
 
-		int FileSize = read4Bytes("File Size", is, "Not a Valid BMP File");
-		int Reserved = read4Bytes("Reserved", is, "Not a Valid BMP File");
-		int BitmapDataOffset = read4Bytes("Bitmap Data Offset", is,
+		int fileSize = read4Bytes("File Size", is, "Not a Valid BMP File");
+		int reserved = read4Bytes("Reserved", is, "Not a Valid BMP File");
+		int bitmapDataOffset = read4Bytes("Bitmap Data Offset", is,
 				"Not a Valid BMP File");
 
-		int BitmapHeaderSize = read4Bytes("Bitmap Header Size", is,
+		int bitmapHeaderSize = read4Bytes("Bitmap Header Size", is,
 				"Not a Valid BMP File");
-		int Width = read4Bytes("Width", is, "Not a Valid BMP File");
-		int Height = read4Bytes("Height", is, "Not a Valid BMP File");
-		int Planes = read2Bytes("Planes", is, "Not a Valid BMP File");
-		int BitsPerPixel = read2Bytes("Bits Per Pixel", is,
+		int width = read4Bytes("Width", is, "Not a Valid BMP File");
+		int height = read4Bytes("Height", is, "Not a Valid BMP File");
+		int planes = read2Bytes("Planes", is, "Not a Valid BMP File");
+		int bitsPerPixel = read2Bytes("Bits Per Pixel", is,
 				"Not a Valid BMP File");
-		int Compression = read4Bytes("Compression", is, "Not a Valid BMP File");
-		int BitmapDataSize = read4Bytes("Bitmap Data Size", is,
+		int compression = read4Bytes("Compression", is, "Not a Valid BMP File");
+		int bitmapDataSize = read4Bytes("Bitmap Data Size", is,
 				"Not a Valid BMP File");
-		int HResolution = read4Bytes("HResolution", is, "Not a Valid BMP File");
-		int VResolution = read4Bytes("VResolution", is, "Not a Valid BMP File");
-		int ColorsUsed = read4Bytes("ColorsUsed", is, "Not a Valid BMP File");
-		int ColorsImportant = read4Bytes("ColorsImportant", is,
+		int hResolution = read4Bytes("HResolution", is, "Not a Valid BMP File");
+		int vResolution = read4Bytes("VResolution", is, "Not a Valid BMP File");
+		int colorsUsed = read4Bytes("ColorsUsed", is, "Not a Valid BMP File");
+		int colorsImportant = read4Bytes("ColorsImportant", is,
 				"Not a Valid BMP File");
 
-		BmpHeaderInfo result = new BmpHeaderInfo(Identifier1, Identifier2,
-				FileSize, Reserved, BitmapDataOffset, BitmapHeaderSize, Width,
-				Height, Planes, BitsPerPixel, Compression, BitmapDataSize,
-				HResolution, VResolution, ColorsUsed, ColorsImportant);
+		if (verbose)
+		{
+			this.debugNumber("identifier1", identifier1, 1);
+			this.debugNumber("identifier2", identifier2, 1);
+			this.debugNumber("fileSize", fileSize, 4);
+			this.debugNumber("reserved", reserved, 4);
+			this.debugNumber("bitmapDataOffset", bitmapDataOffset, 4);
+			this.debugNumber("bitmapHeaderSize", bitmapHeaderSize, 4);
+			this.debugNumber("width", width, 4);
+			this.debugNumber("height", height, 4);
+			this.debugNumber("planes", planes, 2);
+			this.debugNumber("bitsPerPixel", bitsPerPixel, 2);
+			this.debugNumber("compression", compression, 4);
+			this.debugNumber("bitmapDataSize", bitmapDataSize, 4);
+			this.debugNumber("hResolution", hResolution, 4);
+			this.debugNumber("vResolution", vResolution, 4);
+			this.debugNumber("colorsUsed", colorsUsed, 4);
+			this.debugNumber("colorsImportant", colorsImportant, 4);
+		}
+
+		BmpHeaderInfo result = new BmpHeaderInfo(identifier1, identifier2,
+				fileSize, reserved, bitmapDataOffset, bitmapHeaderSize, width,
+				height, planes, bitsPerPixel, compression, bitmapDataSize,
+				hResolution, vResolution, colorsUsed, colorsImportant);
 		return result;
 	}
 
@@ -151,12 +172,12 @@ public class BmpImageParser extends ImageParser
 				case 0: // EOL
 					break;
 				case 1: // EOF
-					//System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+					// System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 					// );
 					done = true;
 					break;
 				case 2: {
-					//System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+					// System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 					// );
 					int c = 0xff & this.readByte("RLE c", is, "BMP: Bad RLE");
 					baos.write(c);
@@ -176,7 +197,7 @@ public class BmpImageParser extends ImageParser
 					// System.out.println("size: " + size);
 					// System.out.println("RLESamplesPerByte: " +
 					// RLESamplesPerByte);
-					//System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+					// System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 					// );
 					byte bytes[] = this.readByteArray("bytes", size, is,
 							"RLE: Absolute Mode");
@@ -191,20 +212,21 @@ public class BmpImageParser extends ImageParser
 	}
 
 	private ImageContents readImageContents(InputStream is,
-			FormatCompliance formatCompliance) throws ImageReadException,
-			IOException
+			FormatCompliance formatCompliance, boolean verbose)
+			throws ImageReadException, IOException
 	{
-		BmpHeaderInfo bhi = readBmpHeaderInfo(is, formatCompliance);
+		BmpHeaderInfo bhi = readBmpHeaderInfo(is, formatCompliance, verbose);
 
 		int colorTableSize = bhi.colorsUsed;
 		if (colorTableSize == 0)
 			colorTableSize = (1 << bhi.bitsPerPixel);
 
-		if (debug)
+		if (verbose)
 		{
 			this.debugNumber("ColorsUsed", bhi.colorsUsed, 4);
 			this.debugNumber("BitsPerPixel", bhi.bitsPerPixel, 4);
 			this.debugNumber("ColorTableSize", colorTableSize, 4);
+			this.debugNumber("bhi.colorsUsed", bhi.colorsUsed, 4);
 			this.debugNumber("Compression", bhi.compression, 4);
 		}
 
@@ -215,7 +237,7 @@ public class BmpImageParser extends ImageParser
 		switch (bhi.compression)
 		{
 		case BI_RGB:
-			if (debug)
+			if (verbose)
 				System.out.println("Compression: BI_RGB");
 			if (bhi.bitsPerPixel <= 8)
 				paletteLength = 4 * colorTableSize;
@@ -228,7 +250,7 @@ public class BmpImageParser extends ImageParser
 			break;
 
 		case BI_RLE4:
-			if (debug)
+			if (verbose)
 				System.out.println("Compression: BI_RLE4");
 			paletteLength = 4 * colorTableSize;
 			rleSamplesPerByte = 2;
@@ -239,7 +261,7 @@ public class BmpImageParser extends ImageParser
 			break;
 		//
 		case BI_RLE8:
-			if (debug)
+			if (verbose)
 				System.out.println("Compression: BI_RLE8");
 			paletteLength = 4 * colorTableSize;
 			rleSamplesPerByte = 1;
@@ -250,7 +272,7 @@ public class BmpImageParser extends ImageParser
 			break;
 		//
 		case BI_BITFIELDS:
-			if (debug)
+			if (verbose)
 				System.out.println("Compression: BI_BITFIELDS");
 			paletteLength = 3 * 4; // TODO: is this right? are the masks always
 			// LONGs?
@@ -268,7 +290,7 @@ public class BmpImageParser extends ImageParser
 			colorTable = this.readByteArray("ColorTable", paletteLength, is,
 					"Not a Valid BMP File");
 
-		if (debug)
+		if (verbose)
 		{
 			this.debugNumber("paletteLength", paletteLength, 4);
 			System.out.println("ColorTable: "
@@ -279,7 +301,7 @@ public class BmpImageParser extends ImageParser
 
 		int imageLineLength = ((((bhi.bitsPerPixel) * bhi.width) + 7) / 8);
 
-		if (debug)
+		if (verbose)
 		{
 			// this.debugNumber("Total BitsPerPixel",
 			// (ExtraBitsPerPixel + bhi.BitsPerPixel), 4);
@@ -296,10 +318,11 @@ public class BmpImageParser extends ImageParser
 		while ((imageLineLength % 4) != 0)
 			imageLineLength++;
 
-		final int headerSize = 54;
+		final int headerSize = BITMAP_FILE_HEADER_SIZE
+				+ BITMAP_INFO_HEADER_SIZE;
 		int expectedDataOffset = headerSize + paletteLength;
 
-		if (debug)
+		if (verbose)
 		{
 			this.debugNumber("bhi.BitmapDataOffset", bhi.bitmapDataOffset, 4);
 			this.debugNumber("expectedDataOffset", expectedDataOffset, 4);
@@ -316,7 +339,7 @@ public class BmpImageParser extends ImageParser
 
 		int imageDataSize = bhi.height * imageLineLength;
 
-		if (debug)
+		if (verbose)
 			this.debugNumber("imageDataSize", imageDataSize, 4);
 
 		byte imageData[];
@@ -326,7 +349,7 @@ public class BmpImageParser extends ImageParser
 			imageData = this.readByteArray("ImageData", imageDataSize, is,
 					"Not a Valid BMP File");
 
-		if (debug)
+		if (verbose)
 			this.debugNumber("ImageData.length", imageData.length, 4);
 
 		PixelParser pixelParser;
@@ -351,8 +374,8 @@ public class BmpImageParser extends ImageParser
 		return new ImageContents(bhi, colorTable, imageData, pixelParser);
 	}
 
-	private BmpHeaderInfo readBmpHeaderInfo(ByteSource byteSource)
-			throws ImageReadException, IOException
+	private BmpHeaderInfo readBmpHeaderInfo(ByteSource byteSource,
+			boolean verbose) throws ImageReadException, IOException
 	{
 		InputStream is = null;
 		try
@@ -360,7 +383,7 @@ public class BmpImageParser extends ImageParser
 			is = byteSource.getInputStream();
 
 			// readSignature(is);
-			return readBmpHeaderInfo(is, null);
+			return readBmpHeaderInfo(is, null, verbose);
 		} finally
 		{
 			try
@@ -383,7 +406,22 @@ public class BmpImageParser extends ImageParser
 	public Dimension getImageSize(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
-		BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource);
+		// make copy of params; we'll clear keys as we consume them.
+		params = (params == null) ? new HashMap() : new HashMap(params);
+
+		boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
+				false);
+
+		if (params.containsKey(PARAM_KEY_VERBOSE))
+			params.remove(PARAM_KEY_VERBOSE);
+
+		if (params.size() > 0)
+		{
+			Object firstKey = params.keySet().iterator().next();
+			throw new ImageReadException("Unknown parameter: " + firstKey);
+		}
+
+		BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource, verbose);
 
 		if (bhi == null)
 			throw new ImageReadException("BMP: couldn't read header");
@@ -429,29 +467,42 @@ public class BmpImageParser extends ImageParser
 	public ImageInfo getImageInfo(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
+		// make copy of params; we'll clear keys as we consume them.
+		params = (params == null) ? new HashMap() : new HashMap(params);
+
+		boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
+				false);
+
+		if (params.containsKey(PARAM_KEY_VERBOSE))
+			params.remove(PARAM_KEY_VERBOSE);
+
+		if (params.size() > 0)
+		{
+			Object firstKey = params.keySet().iterator().next();
+			throw new ImageReadException("Unknown parameter: " + firstKey);
+		}
+
 		ImageContents ic = readImageContents(byteSource.getInputStream(),
-				FormatCompliance.getDefault());
+				FormatCompliance.getDefault(), verbose);
 
 		if (ic == null)
 			throw new ImageReadException("Couldn't read BMP Data");
 
 		BmpHeaderInfo bhi = ic.bhi;
 		byte colorTable[] = ic.colorTable;
-		// byte ImageData[] = ic.ImageData;
 
-		// BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource);
 		if (bhi == null)
 			throw new ImageReadException("BMP: couldn't read header");
 
-		int Height = bhi.height;
-		int Width = bhi.width;
+		int height = bhi.height;
+		int width = bhi.width;
 
-		ArrayList Comments = new ArrayList();
+		ArrayList comments = new ArrayList();
 		// TODO: comments...
 
 		int bitsPerPixel = bhi.bitsPerPixel;
 		ImageFormat format = ImageFormat.IMAGE_FORMAT_BMP;
-		String fName = "BMP Windows Bitmap";
+		String name = "BMP Windows Bitmap";
 		String mimeType = "image/x-ms-bmp";
 		// we ought to count images, but don't yet.
 		int numberOfImages = -1;
@@ -461,10 +512,10 @@ public class BmpImageParser extends ImageParser
 		//
 		// pixels per meter
 		int physicalWidthDpi = (int) ((double) bhi.hResolution * 1000.0 / 2.54);
-		float physicalWidthInch = (float) ((double) Width / (double) physicalWidthDpi);
+		float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
 		// int physicalHeightDpi = 72;
 		int physicalHeightDpi = (int) ((double) bhi.vResolution * 1000.0 / 2.54);
-		float physicalHeightInch = (float) ((double) Height / (double) physicalHeightDpi);
+		float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
 
 		String formatDetails = "Bmp (" + (char) bhi.identifier1
 				+ (char) bhi.identifier2 + ": "
@@ -473,14 +524,14 @@ public class BmpImageParser extends ImageParser
 		boolean isTransparent = false;
 
 		boolean usesPalette = colorTable != null;
-		int ColorType = ImageInfo.COLOR_TYPE_RGB;
+		int colorType = ImageInfo.COLOR_TYPE_RGB;
 		String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_RLE;
 
-		ImageInfo result = new ImageInfo(formatDetails, bitsPerPixel, Comments,
-				format, fName, Height, mimeType, numberOfImages,
+		ImageInfo result = new ImageInfo(formatDetails, bitsPerPixel, comments,
+				format, name, height, mimeType, numberOfImages,
 				physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-				physicalWidthInch, Width, isProgressive, isTransparent,
-				usesPalette, ColorType, compressionAlgorithm);
+				physicalWidthInch, width, isProgressive, isTransparent,
+				usesPalette, colorType, compressionAlgorithm);
 
 		return result;
 	}
@@ -504,10 +555,12 @@ public class BmpImageParser extends ImageParser
 	public FormatCompliance getFormatCompliance(ByteSource byteSource)
 			throws ImageReadException, IOException
 	{
+		boolean verbose = false;
+
 		FormatCompliance result = new FormatCompliance(byteSource
 				.getDescription());
 
-		readImageContents(byteSource.getInputStream(), result);
+		readImageContents(byteSource.getInputStream(), result, verbose);
 
 		return result;
 	}
@@ -515,8 +568,25 @@ public class BmpImageParser extends ImageParser
 	public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
+		// make copy of params; we'll clear keys as we consume them.
+		params = (params == null) ? new HashMap() : new HashMap(params);
+
+		boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
+				false);
+
+		if (params.containsKey(PARAM_KEY_VERBOSE))
+			params.remove(PARAM_KEY_VERBOSE);
+		if (params.containsKey(BUFFERED_IMAGE_FACTORY))
+			params.remove(BUFFERED_IMAGE_FACTORY);
+
+		if (params.size() > 0)
+		{
+			Object firstKey = params.keySet().iterator().next();
+			throw new ImageReadException("Unknown parameter: " + firstKey);
+		}
+
 		ImageContents ic = readImageContents(byteSource.getInputStream(),
-				FormatCompliance.getDefault());
+				FormatCompliance.getDefault(), verbose);
 		if (ic == null)
 			throw new ImageReadException("Couldn't read BMP Data");
 
@@ -531,7 +601,7 @@ public class BmpImageParser extends ImageParser
 		BufferedImage result = getBufferedImageFactory(params)
 				.getColorBufferedImage(width, height, hasAlpha);
 
-		if (debug)
+		if (verbose)
 		{
 			System.out.println("width: " + width);
 			System.out.println("height: " + height);
@@ -554,7 +624,7 @@ public class BmpImageParser extends ImageParser
 			throws ImageWriteException, IOException
 	{
 		// make copy of params; we'll clear keys as we consume them.
-		params = new HashMap(params);
+		params = (params == null) ? new HashMap() : new HashMap(params);
 
 		// clear format key.
 		if (params.containsKey(PARAM_KEY_FORMAT))
@@ -566,8 +636,8 @@ public class BmpImageParser extends ImageParser
 			throw new ImageWriteException("Unknown parameter: " + firstKey);
 		}
 
-		SimplePalette palette = new PaletteFactory()
-				.makePaletteSimple(src, 256);
+		final SimplePalette palette = new PaletteFactory().makePaletteSimple(
+				src, 256);
 
 		BMPWriter writer = null;
 		if (palette == null)
@@ -604,7 +674,7 @@ public class BmpImageParser extends ImageParser
 			bos.write2Bytes(1); // Number of Planes
 			bos.write2Bytes(writer.getBitsPerPixel()); // Bits Per Pixel
 
-			bos.write4Bytes(0); // Compression
+			bos.write4Bytes(BI_RGB); // Compression
 			bos.write4Bytes(imagedata.length); // Bitmap Data Size
 			bos.write4Bytes(0); // HResolution
 			bos.write4Bytes(0); // VResolution
