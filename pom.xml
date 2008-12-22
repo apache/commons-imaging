@@ -35,7 +35,7 @@
   <artifactId>sanselan</artifactId>
   <name>Apache Sanselan</name>
   
-  <version>0.95-incubator</version>
+  <version>0.96-incubator-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <!--
@@ -49,9 +49,9 @@
   </organization>
   
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/incubator/sanselan/tags/sanselan-0.95-incubator</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/incubator/sanselan/tags/sanselan-0.95-incubator</developerConnection>
-    <url>http://svn.apache.org/viewvc/incubator/sanselan/tags/sanselan-0.95-incubator</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/incubator/sanselan/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/incubator/sanselan/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/incubator/sanselan/trunk</url>
   </scm>
 
   <issueManagement>
