@@ -15,6 +15,7 @@ Version History:
 Release 0.95
 ------------
 
+ * Updated KEYS file.
  * Added more unit tests around BMP.
  * Added more images to the test image suite.
  * Fixed a bug where errors were being wrongly logged to System.out.
