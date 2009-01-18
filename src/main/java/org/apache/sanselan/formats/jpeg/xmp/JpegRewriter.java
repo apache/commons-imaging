@@ -69,7 +69,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 		
 		public String toString()
 		{
-			return "[" + this.getClass().getSimpleName() + "]";
+			return "[" + this.getClass().getName() + "]";
 		}
 	}
 
@@ -98,7 +98,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
 
 		public String toString()
 		{
-			return "[" + this.getClass().getSimpleName() + " (0x" + Integer.toHexString(marker) + ")]";
+			return "[" + this.getClass().getName() + " (0x" + Integer.toHexString(marker) + ")]";
 		}
 
 		protected void write(OutputStream os) throws IOException
