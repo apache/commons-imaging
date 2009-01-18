@@ -23,6 +23,13 @@ import org.apache.sanselan.common.BinaryConstants;
 
 public abstract class UnicodeUtils implements BinaryConstants
 {
+	/**
+	 * This class should never be instantiated.
+	 */
+	private UnicodeUtils()
+	{
+	}
+	
 	public static class UnicodeException extends Exception
 	{
 		public UnicodeException(String message)

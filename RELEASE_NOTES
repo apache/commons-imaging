@@ -12,6 +12,24 @@ http://incubator.apache.org/sanselan/site/index.html
 Version History:
 ----------------
 
+Release 0.97
+------------
+	
+ * Improved the examples illustrating how to change EXIF metadata.
+ * Applied a patch from Niall Pemberton around jdk1.5 compatibility:
+	"""
+	Sanselan claims JDK 1.4 compatibility, but a JDK 1.5 method (Class's getSimpleName() [1]) has been used in JpegRewriter
+	"""
+ * Applied a "Build Improvements" patch from Niall Pemberton:
+	"""
+	I took a look at the propsed 0.96 relelase and have some suggestions to improve the build:
+	 * Add standard manifest entries to jar
+	 * Lock down version numbers for maven compiler, surefire and javadoc plugins
+	 * generate sources jar for the release
+	 * include the RELEASE-NOTES in the binary distribution
+	 * include NOTICE/LICENSE files in the javadoc jar
+	"""
+
 Release 0.96
 ------------
 

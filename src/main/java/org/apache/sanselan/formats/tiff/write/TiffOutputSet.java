@@ -135,8 +135,12 @@ public final class TiffOutputSet implements TiffConstants
 		return null;
 	}
 
-	/*
-	 * Expects longitude in degrees E, latitude in degrees N
+	/**
+	 * A convenience method to update GPS values in EXIF metadata.
+	 * 
+	 * @param longitude Longitude in degrees E, negative values are W.
+	 * @param latitude latitude in degrees N, negative values are S.
+	 * @throws ImageWriteException
 	 */
 	public void setGPSInDegrees(double longitude, double latitude)
 			throws ImageWriteException

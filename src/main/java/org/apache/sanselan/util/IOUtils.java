@@ -26,16 +26,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 
 import org.apache.sanselan.SanselanConstants;
 
-public abstract class IOUtils implements SanselanConstants
+public class IOUtils implements SanselanConstants
 {
+	/**
+	 * This class should never be instantiated.
+	 */
+	private IOUtils()
+	{
+	}
 
 	/**
 	 * Reads an InputStream to the end.
 	 * <p>
-	 * @param  is The InputStream to read.
+	 * 
+	 * @param is
+	 *            The InputStream to read.
 	 * @return A byte array containing the contents of the InputStream
 	 * @see InputStream
 	 */
@@ -59,15 +68,13 @@ public abstract class IOUtils implements SanselanConstants
 			os.flush();
 
 			return os.toByteArray();
-		}
-		finally
+		} finally
 		{
 			try
 			{
 				if (os != null)
 					os.close();
-			}
-			catch (IOException e)
+			} catch (IOException e)
 			{
 				Debug.debug(e);
 			}
@@ -77,7 +84,9 @@ public abstract class IOUtils implements SanselanConstants
 	/**
 	 * Reads a File into memory.
 	 * <p>
-	 * @param  file The File to read.
+	 * 
+	 * @param file
+	 *            The File to read.
 	 * @return A byte array containing the contents of the File
 	 * @see InputStream
 	 */
@@ -90,15 +99,13 @@ public abstract class IOUtils implements SanselanConstants
 			is = new FileInputStream(file);
 
 			return getInputStreamBytes(is);
-		}
-		finally
+		} finally
 		{
 			try
 			{
 				if (is != null)
 					is.close();
-			}
-			catch (IOException e)
+			} catch (IOException e)
 			{
 				Debug.debug(e);
 			}
@@ -114,15 +121,13 @@ public abstract class IOUtils implements SanselanConstants
 			stream = new ByteArrayInputStream(src);
 
 			putInputStreamToFile(stream, file);
-		}
-		finally
+		} finally
 		{
 			try
 			{
 				if (stream != null)
 					stream.close();
-			}
-			catch (Exception e)
+			} catch (Exception e)
 			{
 				Debug.debug(e);
 
@@ -142,15 +147,13 @@ public abstract class IOUtils implements SanselanConstants
 			stream = new FileOutputStream(file);
 
 			copyStreamToStream(src, stream);
-		}
-		finally
+		} finally
 		{
 			try
 			{
 				if (stream != null)
 					stream.close();
-			}
-			catch (Exception e)
+			} catch (Exception e)
 			{
 				Debug.debug(e);
 			}
@@ -180,8 +183,7 @@ public abstract class IOUtils implements SanselanConstants
 				dst.write(buffer, 0, count);
 
 			bos.flush();
-		}
-		finally
+		} finally
 		{
 			if (close_streams)
 			{
@@ -189,8 +191,7 @@ public abstract class IOUtils implements SanselanConstants
 				{
 					if (bis != null)
 						bis.close();
-				}
-				catch (IOException e)
+				} catch (IOException e)
 				{
 					Debug.debug(e);
 				}
@@ -198,14 +199,71 @@ public abstract class IOUtils implements SanselanConstants
 				{
 					if (bos != null)
 						bos.close();
-				}
-				catch (IOException e)
+				} catch (IOException e)
 				{
 					Debug.debug(e);
 				}
 			}
 		}
 
+	}
+
+	public static final boolean copyFileNio(File src, File dst)
+			throws IOException
+	{
+		FileChannel srcChannel = null, dstChannel = null;
+		try
+		{
+			// Create channel on the source
+			srcChannel = new FileInputStream(src).getChannel();
+
+			// Create channel on the destination
+			dstChannel = new FileOutputStream(dst).getChannel();
+
+			// // Copy file contents from source to destination
+			// dstChannel.transferFrom(srcChannel, 0, srcChannel.size());
+
+			{
+				// long theoretical_max = (64 * 1024 * 1024) - (32 * 1024);
+				int safe_max = (64 * 1024 * 1024) / 4;
+				long size = srcChannel.size();
+				long position = 0;
+				while (position < size)
+				{
+					position += srcChannel.transferTo(position, safe_max,
+							dstChannel);
+				}
+			}
+
+			// Close the channels
+			 srcChannel.close();
+			 srcChannel = null;
+			 dstChannel.close();
+			 dstChannel = null;
+			 
+			return true;
+		}
+		finally
+		{
+			try
+			{
+				if (srcChannel != null)
+					srcChannel.close();
+			} catch (IOException e)
+			{
+				Debug.debug(e);
+
+			}
+			try
+			{
+				if (dstChannel != null)
+					dstChannel.close();
+			} catch (IOException e)
+			{
+				Debug.debug(e);
+
+			}
+		}
 	}
 
 }
