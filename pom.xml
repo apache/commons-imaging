@@ -85,12 +85,44 @@
           <instructions>
             <Bundle-SymbolicName>${pom.groupId}.${pom.artifactId}</Bundle-SymbolicName>
             <Export-Package>org.apache.sanselan.*</Export-Package>
+            <Specification-Title>${project.name}</Specification-Title>
+            <Specification-Version>${project.version}</Specification-Version>
+            <Specification-Vendor>${project.organization.name}</Specification-Vendor>
+            <Implementation-Title>${project.name}</Implementation-Title>
+            <Implementation-Version>${project.version}</Implementation-Version>
+            <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+            <Implementation-Vendor-Id>org.apache</Implementation-Vendor-Id>
           </instructions>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.0.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.4.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.0.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
         <configuration>
           <tagBase>https://svn.apache.org/repos/asf/incubator/sanselan/tags</tagBase>
           <useReleaseProfile>false</useReleaseProfile>
@@ -141,6 +173,7 @@
         <includes>
           <include>LICENSE</include>
           <include>NOTICE</include>
+          <include>README.txt</include>
         </includes>
       </resource>
     </resources>
@@ -181,6 +214,47 @@
             </executions>
 	      </plugin>
 
+          <plugin>
+            <!--
+              - Copy LICENSE.txt and NOTICE.txt so that they are included
+              - in the -javadoc jar file for the component.
+              -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>javadoc.resources</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <tasks>
+                    <copy todir="${project.build.directory}/apidocs/META-INF">
+                      <fileset dir="${basedir}">
+                        <include name="LICENSE" />
+                        <include name="NOTICE" />
+                      </fileset>
+                    </copy>
+                  </tasks>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>create-source-jar</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          
           <!-- The release artifacts -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
