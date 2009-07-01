@@ -31,7 +31,6 @@ import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.formats.jpeg.JpegImageParser;
-import org.apache.sanselan.formats.jpeg.JpegUtils;
 import org.apache.sanselan.util.Debug;
 
 public class JpegXmpRewriteTest extends JpegXmpBaseTest

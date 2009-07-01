@@ -18,19 +18,12 @@
 package org.apache.sanselan.formats.tiff;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryConstants;
-import org.apache.sanselan.common.byteSources.ByteSource;
-import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.common.mylzw.MyLZWCompressor;
 import org.apache.sanselan.common.mylzw.MyLZWDecompressor;
 import org.apache.sanselan.util.Debug;

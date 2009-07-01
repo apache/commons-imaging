@@ -20,7 +20,6 @@ package org.apache.sanselan.roundtrip;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +30,6 @@ import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanConstants;
 import org.apache.sanselan.SanselanTest;
 import org.apache.sanselan.common.RgbBufferedImageFactory;
-import org.apache.sanselan.common.byteSources.ByteSourceFile;
-import org.apache.sanselan.formats.png.PngImageParser;
 import org.apache.sanselan.util.Debug;
 import org.apache.sanselan.util.IOUtils;
 

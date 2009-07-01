@@ -17,19 +17,14 @@
 
 package org.apache.sanselan.formats.png;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import org.apache.sanselan.ImageFormat;
-import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanTest;
-import org.apache.sanselan.common.IImageMetadata;
-import org.apache.sanselan.util.Debug;
 
 public abstract class PngBaseTest extends SanselanTest
 {

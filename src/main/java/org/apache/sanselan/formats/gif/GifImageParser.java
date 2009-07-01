@@ -239,7 +239,6 @@ public class GifImageParser extends ImageParser
 		while (true)
 		{
 			int code = is.read();
-			// this.debugNumber("code: ", code);
 
 			switch (code)
 			{
@@ -258,7 +257,6 @@ public class GifImageParser extends ImageParser
 			case EXTENSION_CODE: // extension
 			{
 				int extensionCode = is.read();
-				// this.debugNumber("extension_code: ", extension_code);
 				int completeCode = ((0xff & code) << 8)
 						| (0xff & extensionCode);
 
@@ -297,8 +295,6 @@ public class GifImageParser extends ImageParser
 					{
 						GenericGIFBlock block = readGenericGIFBlock(is,
 								completeCode, label);
-						byte bytes[] = block.appendSubBlocks();
-
 						result.add(block);
 					}
 					break;
@@ -504,7 +500,6 @@ public class GifImageParser extends ImageParser
 		{
 			try
 			{
-				// bis.close();
 				is.close();
 			} catch (Exception e)
 			{
@@ -523,13 +518,23 @@ public class GifImageParser extends ImageParser
 	public Dimension getImageSize(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
-		GIFHeaderInfo bhi = readHeader(byteSource);
+		ImageContents blocks = readFile(byteSource, false);
 
+		if (blocks == null)
+			throw new ImageReadException("GIF: Couldn't read blocks");
+
+		GIFHeaderInfo bhi = blocks.gifHeaderInfo;
 		if (bhi == null)
 			throw new ImageReadException("GIF: Couldn't read Header");
 
-		return new Dimension(bhi.logicalScreenWidth, bhi.logicalScreenHeight);
+		ImageDescriptor id = (ImageDescriptor) findBlock(blocks.blocks,
+				IMAGE_SEPARATOR);
+		if (id == null)
+			throw new ImageReadException("GIF: Couldn't read ImageDescriptor");
 
+		// Prefer the size information in the ImageDescriptor; it is more reliable
+		// than the size information in the header.
+		return new Dimension(id.imageWidth, id.imageHeight);
 	}
 
 	public byte[] embedICCProfile(byte image[], byte profile[])
@@ -587,8 +592,10 @@ public class GifImageParser extends ImageParser
 		GraphicControlExtension gce = (GraphicControlExtension) findBlock(
 				blocks.blocks, GRAPHIC_CONTROL_EXTENSION);
 
-		int Height = bhi.logicalScreenHeight;
-		int Width = bhi.logicalScreenWidth;
+		// Prefer the size information in the ImageDescriptor; it is more reliable
+		// than the size information in the header.
+		int height = id.imageWidth;
+		int width = id.imageHeight;
 
 		ArrayList Comments;
 
@@ -604,9 +611,9 @@ public class GifImageParser extends ImageParser
 		boolean isProgressive = id.interlaceFlag;
 
 		int PhysicalWidthDpi = 72;
-		float PhysicalWidthInch = (float) ((double) Width / (double) PhysicalWidthDpi);
+		float PhysicalWidthInch = (float) ((double) width / (double) PhysicalWidthDpi);
 		int PhysicalHeightDpi = 72;
-		float PhysicalHeightInch = (float) ((double) Height / (double) PhysicalHeightDpi);
+		float PhysicalHeightInch = (float) ((double) height / (double) PhysicalHeightDpi);
 
 		String FormatDetails = "Gif " + ((char) blocks.gifHeaderInfo.version1)
 				+ ((char) blocks.gifHeaderInfo.version2)
@@ -621,9 +628,9 @@ public class GifImageParser extends ImageParser
 		String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_LZW;
 
 		ImageInfo result = new ImageInfo(FormatDetails, BitsPerPixel, Comments,
-				Format, FormatName, Height, MimeType, NumberOfImages,
+				Format, FormatName, height, MimeType, NumberOfImages,
 				PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
-				PhysicalWidthInch, Width, isProgressive, isTransparent,
+				PhysicalWidthInch, width, isProgressive, isTransparent,
 				usesPalette, colorType, compressionAlgorithm);
 
 		return result;
@@ -718,8 +725,10 @@ public class GifImageParser extends ImageParser
 		GraphicControlExtension gce = (GraphicControlExtension) findBlock(
 				imageContents.blocks, GRAPHIC_CONTROL_EXTENSION);
 
-		int width = ghi.logicalScreenWidth;
-		int height = ghi.logicalScreenHeight;
+		// Prefer the size information in the ImageDescriptor; it is more reliable
+		// than the size information in the header.
+		int width = id.imageWidth;
+		int height = id.imageHeight;
 
 		boolean hasAlpha = false;
 		if (gce != null && gce.transparency)
@@ -729,11 +738,11 @@ public class GifImageParser extends ImageParser
 				.getColorBufferedImage(width, height, hasAlpha);
 
 		{
-			int colortable[];
+			int colorTable[];
 			if (id.localColorTable != null)
-				colortable = getColorTable(id.localColorTable);
+				colorTable = getColorTable(id.localColorTable);
 			else if (imageContents.globalColorTable != null)
-				colortable = getColorTable(imageContents.globalColorTable);
+				colorTable = getColorTable(imageContents.globalColorTable);
 			else
 				throw new ImageReadException("Gif: No Color Table");
 
@@ -741,43 +750,37 @@ public class GifImageParser extends ImageParser
 			if (hasAlpha)
 				transparentIndex = gce.transparentColorIndex;
 
-			// Debug.debug("charles TransparentIndex", TransparentIndex);
-
 			int counter = 0;
-			// ByteArrayInputStream bais = new
-			// ByteArrayInputStream(id.ImageData);
-			// for (int y = 0; y < height; y++)
 
-			int rows_in_pass_1 = (height + 7) / 8;
-			int rows_in_pass_2 = (height + 3) / 8;
-			int rows_in_pass_3 = (height + 1) / 4;
-			int rows_in_pass_4 = (height) / 2;
+			int rowsInPass1 = (height + 7) / 8;
+			int rowsInPass2 = (height + 3) / 8;
+			int rowsInPass3 = (height + 1) / 4;
+			int rowsInPass4 = (height) / 2;
 
 			DataBuffer db = result.getRaster().getDataBuffer();
 
 			for (int row = 0; row < height; row++)
 			{
-
 				int y;
 				if (id.interlaceFlag)
 				{
 					int the_row = row;
-					if (the_row < rows_in_pass_1)
+					if (the_row < rowsInPass1)
 						y = the_row * 8;
 					else
 					{
-						the_row -= rows_in_pass_1;
-						if (the_row < (rows_in_pass_2))
+						the_row -= rowsInPass1;
+						if (the_row < (rowsInPass2))
 							y = 4 + (the_row * 8);
 						else
 						{
-							the_row -= rows_in_pass_2;
-							if (the_row < (rows_in_pass_3))
+							the_row -= rowsInPass2;
+							if (the_row < (rowsInPass3))
 								y = 2 + (the_row * 4);
 							else
 							{
-								the_row -= rows_in_pass_3;
-								if (the_row < (rows_in_pass_4))
+								the_row -= rowsInPass3;
+								if (the_row < (rowsInPass4))
 									y = 1 + (the_row * 2);
 								else
 									throw new ImageReadException(
@@ -785,15 +788,13 @@ public class GifImageParser extends ImageParser
 							}
 						}
 					}
-					// System.out.println("row(" + row + "): " + y);
 				} else
 					y = row;
 
 				for (int x = 0; x < width; x++)
 				{
-
 					int index = 0xff & id.imageData[counter++];
-					int rgb = colortable[index];
+					int rgb = colorTable[index];
 
 					if (transparentIndex == index)
 						rgb = 0x00;
@@ -1097,7 +1098,7 @@ public class GifImageParser extends ImageParser
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present. Otherwise, returns null..
+	 * @return Xmp Xml as String, if present. Otherwise, returns null.
 	 */
 	public String getXmpXml(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
@@ -1111,10 +1112,8 @@ public class GifImageParser extends ImageParser
 			FormatCompliance formatCompliance = null;
 			GIFHeaderInfo ghi = readHeader(is, formatCompliance);
 
-			byte globalColorTable[] = null;
 			if (ghi.globalColorTableFlag)
-				globalColorTable = readColorTable(is,
-						ghi.sizeOfGlobalColorTable, formatCompliance);
+				readColorTable(is, ghi.sizeOfGlobalColorTable, formatCompliance);
 
 			ArrayList blocks = readBlocks(ghi, is, true, formatCompliance);
 
@@ -1131,14 +1130,11 @@ public class GifImageParser extends ImageParser
 				if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length)
 					continue;
 
-				// this.debugByteArray("blockBytes", blockBytes);
-
 				if (!compareByteArrays(blockBytes, 0,
 						XMP_APPLICATION_ID_AND_AUTH_CODE, 0,
 						XMP_APPLICATION_ID_AND_AUTH_CODE.length))
 					continue;
 
-				// this.debugByteArray("xmp block bytes", blockBytes);
 				byte GIF_MAGIC_TRAILER[] = new byte[256];
 				for (int magic = 0; magic <= 0xff; magic++)
 					GIF_MAGIC_TRAILER[magic] = (byte) (0xff - magic);

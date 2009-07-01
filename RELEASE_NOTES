@@ -12,6 +12,13 @@ http://incubator.apache.org/sanselan/site/index.html
 Version History:
 ----------------
 
+Next Release
+------------
+ * Fixed a bug in which gifs have incorrect size information in the the Logical Screen Descriptor.
+   This appears to be a bug in how Microsoft Office writes gifs.
+   The Image Descriptor has the correct value.
+
+
 Release 0.97
 ------------
 	

@@ -40,18 +40,6 @@ import org.apache.sanselan.util.IOUtils;
 
 public class ByteSourceImageTest extends ByteSourceTest
 {
-	// public ByteSourceImageTest()
-	// {
-	// super(ByteSourceImageTest.class.getName());
-	// }
-
-	/**
-	 * @return the suite of tests being tested
-	 */
-	public static Test suite()
-	{
-		return new TestSuite(ByteSourceImageTest.class);
-	}
 
 	public void test() throws IOException, ImageReadException,
 			IllegalAccessException, IllegalArgumentException,

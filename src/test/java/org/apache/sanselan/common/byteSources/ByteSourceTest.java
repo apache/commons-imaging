@@ -28,11 +28,6 @@ import org.apache.sanselan.SanselanTest;
 
 public abstract class ByteSourceTest extends SanselanTest
 {
-	// public ByteSourceTest(String name)
-	// {
-	// super(name);
-	// }
-
 	protected File createTempFile(byte src[]) throws IOException
 	{
 		File file = createTempFile("raw_", ".bin");

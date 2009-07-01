@@ -33,7 +33,6 @@ import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.formats.jpeg.JpegImageParser;
 import org.apache.sanselan.formats.jpeg.JpegPhotoshopMetadata;
-import org.apache.sanselan.formats.jpeg.JpegUtils;
 import org.apache.sanselan.util.Debug;
 
 public class IptcUpdateTest extends IptcBaseTest

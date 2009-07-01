@@ -57,7 +57,5 @@ class GIFHeaderInfo
 		this.colorResolution = ColorResolution;
 		this.sortFlag = SortFlag;
 		this.sizeOfGlobalColorTable = SizeofGlobalColorTable;
-
 	}
-
 }

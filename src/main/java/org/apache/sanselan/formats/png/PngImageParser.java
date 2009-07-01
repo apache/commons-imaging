@@ -854,7 +854,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present. Otherwise, returns null..
+	 * @return Xmp Xml as String, if present. Otherwise, returns null.
 	 */
 	public String getXmpXml(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException

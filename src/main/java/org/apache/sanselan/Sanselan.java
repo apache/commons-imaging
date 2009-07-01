@@ -726,7 +726,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            InputStream from which to read image data.
 	 * @param filename
 	 *            Filename associated with image data (optional).
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
 	 */
 	public static String getXmpXml(InputStream is, String filename)
 			throws ImageReadException, IOException {
@@ -743,7 +743,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            Filename associated with image data (optional).
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
 	 */
 	public static String getXmpXml(InputStream is, String filename,
 			Map params) throws ImageReadException, IOException {
@@ -756,7 +756,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 * 
 	 * @param bytes
 	 *            Byte array containing an image file.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
 	 */
 	public static String getXmpXml(byte bytes[])
 			throws ImageReadException, IOException {
@@ -771,7 +771,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            Byte array containing an image file.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
 	 */
 	public static String getXmpXml(byte bytes[], Map params)
 			throws ImageReadException, IOException {
@@ -784,7 +784,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 * 
 	 * @param file
 	 *            File containing image data.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
 	 */
 	public static String getXmpXml(File file) throws ImageReadException,
 			IOException {
@@ -799,7 +799,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
 	 */
 	public static String getXmpXml(File file, Map params)
 			throws ImageReadException, IOException {
@@ -814,7 +814,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null..
+	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
 	 */
 	public static String getXmpXml(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException {
