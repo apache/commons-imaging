@@ -14,6 +14,7 @@ Version History:
 
 Next Release
 ------------
+ * Fixed a possible NPE in Sanselan.getICCProfile pointed out by Jon Weygandt.
  * Fixed a bug in which gifs have incorrect size information in the the Logical Screen Descriptor.
    This appears to be a bug in how Microsoft Office writes gifs.
    The Image Descriptor has the correct value.

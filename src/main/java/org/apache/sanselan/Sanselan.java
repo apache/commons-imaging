@@ -320,6 +320,8 @@ public abstract class Sanselan implements SanselanConstants {
 
 		IccProfileParser parser = new IccProfileParser();
 		IccProfileInfo info = parser.getICCProfileInfo(bytes);
+		if (info == null)
+			return null;
 		if (info.issRGB())
 			return null;
 
