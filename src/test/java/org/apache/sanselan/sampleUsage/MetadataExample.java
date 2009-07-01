@@ -83,7 +83,7 @@ public class MetadataExample
 					double longitude = gpsInfo.getLongitudeAsDegreesEast();
 					double latitude = gpsInfo.getLatitudeAsDegreesNorth();
 
-					System.out.println("	" + "GPS Description: " + gpsInfo);
+					System.out.println("	" + "GPS Description: " + gpsDescription);
 					System.out.println("	" + "GPS Longitude (Degrees East): " + longitude);
 					System.out.println("	" + "GPS Latitude (Degrees North): " + latitude);
 				}
@@ -91,13 +91,13 @@ public class MetadataExample
 
 			// more specific example of how to manually access GPS values
 			TiffField gpsLatitudeRefField = jpegMetadata
-					.findEXIFValue(TiffConstants.GPS_TAG_GPS_LATITUDE_REF);
+					.findEXIFValueWithExactMatch(TiffConstants.GPS_TAG_GPS_LATITUDE_REF);
 			TiffField gpsLatitudeField = jpegMetadata
-					.findEXIFValue(TiffConstants.GPS_TAG_GPS_LATITUDE);
+					.findEXIFValueWithExactMatch(TiffConstants.GPS_TAG_GPS_LATITUDE);
 			TiffField gpsLongitudeRefField = jpegMetadata
-					.findEXIFValue(TiffConstants.GPS_TAG_GPS_LONGITUDE_REF);
+					.findEXIFValueWithExactMatch(TiffConstants.GPS_TAG_GPS_LONGITUDE_REF);
 			TiffField gpsLongitudeField = jpegMetadata
-					.findEXIFValue(TiffConstants.GPS_TAG_GPS_LONGITUDE);
+					.findEXIFValueWithExactMatch(TiffConstants.GPS_TAG_GPS_LONGITUDE);
 			if (gpsLatitudeRefField != null && gpsLatitudeField != null
 					&& gpsLongitudeRefField != null
 					&& gpsLongitudeField != null)
@@ -153,7 +153,7 @@ public class MetadataExample
 	private static void printTagValue(JpegImageMetadata jpegMetadata,
 			TagInfo tagInfo) throws ImageReadException, IOException
 	{
-		TiffField field = jpegMetadata.findEXIFValue(tagInfo);
+		TiffField field = jpegMetadata.findEXIFValueWithExactMatch(tagInfo);
 		if (field == null)
 			System.out.println(tagInfo.name + ": " + "Not Found.");
 		else

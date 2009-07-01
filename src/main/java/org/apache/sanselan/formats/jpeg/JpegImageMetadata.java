@@ -47,6 +47,22 @@ public class JpegImageMetadata implements IImageMetadata {
 	}
 
 	public TiffField findEXIFValue(TagInfo tagInfo) {
+		TiffField field = findEXIFValue(tagInfo, true);
+		if (field == null) {
+			// In some cases, we want an exact directory match (such as GPS values).
+			// In other cases, we are more permissive (ie. with tags that may appear 
+			// in a number of different directories, depending on the camera manufacturer, etc.
+			// TODO: Modify TagInfo class to include a "permissive/exact" flag.
+			field = findEXIFValue(tagInfo, false);
+		}
+		return field;
+	}
+
+	public TiffField findEXIFValueWithExactMatch(TagInfo tagInfo) {
+		return findEXIFValue(tagInfo, true);
+	}
+
+	private TiffField findEXIFValue(TagInfo tagInfo, boolean requireDirectoryMatch) {
 		ArrayList items = getItems();
 		for (int i = 0; i < items.size(); i++) {
 			Object o = items.get(i);
@@ -55,6 +71,10 @@ public class JpegImageMetadata implements IImageMetadata {
 
 			TiffImageMetadata.Item item = (TiffImageMetadata.Item) o;
 			TiffField field = item.getTiffField();
+			if (requireDirectoryMatch &&
+					(field.directoryType != tagInfo.directoryType.directoryType)) {
+				continue;
+			}
 			if (field.tag == tagInfo.tag)
 				return field;
 		}
