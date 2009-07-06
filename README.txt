@@ -2,15 +2,6 @@
 Welcome to Apache Sanselan  <http://sanselan.apache.org/>
 =============================================================
 
-Apache Sanselan is an effort undergoing incubation at the Apache Software
-Foundation (ASF), sponsored by the Apache Incubator PMC. Incubation is required
-of all newly accepted projects until a further review indicates that the
-infrastructure, communications, and decision making process have stabilized in a
-manner consistent with other successful ASF projects. While incubation status is
-not necessarily a reflection of the completeness or stability of the code, it
-does indicate that the project has yet to be fully endorsed by the ASF.
-
-
 License (see also LICENSE)
 ==============================
 
@@ -56,19 +47,19 @@ Downloading
 
 The Sanselan source code is available via Subversion at
 
-   https://svn.apache.org/repos/asf/incubator/sanselan/trunk
+   https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk
 
 and anonymous access is available at
 
-   http://svn.apache.org/repos/asf/incubator/sanselan/trunk
+   http://svn.apache.org/repos/asf/commons/proper/sanselan/trunk
 
 or with ViewVC at
 
-   http://svn.apache.org/viewvc/incubator/sanselan/trunk/
+   http://svn.apache.org/viewvc/commons/proper/sanselan/trunk/
 
 To checkout the main Sanselan source tree, run
 
-   svn checkout http://svn.apache.org/repos/asf/incubator/sanselan/trunk/sanselan
+   svn checkout http://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/sanselan
 
 Once you have a copy of the source code tree, you can use Apache Maven
 
