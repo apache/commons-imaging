@@ -26,27 +26,23 @@
   <!-- ====================================================================== -->
 
   <parent>
-    <groupId>org.apache</groupId>
-    <artifactId>apache</artifactId>
-    <version>4</version>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-parent</artifactId>
+    <version>11</version>
   </parent>
     
-  <groupId>org.apache.sanselan</groupId>
-  <artifactId>sanselan</artifactId>
-  <name>Apache Sanselan</name>
+  <groupId>org.apache.commons</groupId>
+  <artifactId>commons-sanselan</artifactId>
+  <name>Commons Sanselan</name>
   
   <version>0.98-SNAPSHOT</version>
-  <packaging>bundle</packaging>
 
   <!--
     Keep the description on a single line. Otherwise Maven might generate
     a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
    -->
-  <description>Apache Sanselan is a pure-Java image library.</description>
-  <url>http://sanselan.apache.org/</url>
-  <organization>
-  	<url>http://cwiki.apache.org/SANSELAN/</url>
-  </organization>
+  <description>Commons Sanselan is a pure-Java image library.</description>
+  <url>http://commons.apache.org/sanselan/</url>
   
   <scm>
     <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/sanselan/trunk</connection>
@@ -64,69 +60,27 @@
     <maven>2.0.7</maven>
   </prerequisites>
 
+  <properties>
+    <maven.compile.source>1.4</maven.compile.source>
+    <maven.compile.target>1.4</maven.compile.target>
+    <commons.componentid>sanselan</commons.componentid>
+    <commons.release.version>0.97</commons.release.version>
+    <commons.jira.id>SANSELAN</commons.jira.id>
+    <commons.jira.pid>12310720</commons.jira.pid>
+  </properties> 
+
   <build>
     <plugins>
     
-      <!-- Use Java 1.4 everywhere -->
-      <plugin>
-        <inherited>true</inherited>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <target>1.4</target>
-          <source>1.4</source>
-        </configuration>
-      </plugin>
-      <!-- Add manifest entries for OSGi environments -->
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Bundle-SymbolicName>${pom.groupId}.${pom.artifactId}</Bundle-SymbolicName>
-            <Export-Package>org.apache.sanselan.*</Export-Package>
-            <Specification-Title>${project.name}</Specification-Title>
-            <Specification-Version>${project.version}</Specification-Version>
-            <Specification-Vendor>${project.organization.name}</Specification-Vendor>
-            <Implementation-Title>${project.name}</Implementation-Title>
-            <Implementation-Version>${project.version}</Implementation-Version>
-            <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
-            <Implementation-Vendor-Id>org.apache</Implementation-Vendor-Id>
-          </instructions>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.0.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.4.3</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.5</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>2.0.4</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.3</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <tagBase>https://svn.apache.org/repos/asf/commons/proper/sanselan/tags</tagBase>
-          <useReleaseProfile>false</useReleaseProfile>
-          <goals>deploy</goals>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>          
+          <descriptors>
+            <descriptor>src/assemble/bin.xml</descriptor>
+            <descriptor>src/assemble/src.xml</descriptor>
+          </descriptors>
+          <tarLongFileMode>gnu</tarLongFileMode>
         </configuration>
       </plugin>
       <plugin>
@@ -137,151 +91,8 @@
         </configuration>
       </plugin>
     </plugins>  
-    <!-- Let's be sure that we use the latest releases of the plugins -->
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.0-beta-7</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-gpg-plugin</artifactId>
-          <version>1.0-alpha-4</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.2-beta-2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.felix</groupId>
-          <artifactId>maven-bundle-plugin</artifactId>
-          <version>1.4.0</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <!-- Include LICENSE and NOTICE in binary distributions -->
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-      </resource>
-      <resource>
-        <directory>.</directory>
-        <targetPath>META-INF</targetPath>
-        <includes>
-          <include>LICENSE</include>
-          <include>NOTICE</include>
-          <include>README.txt</include>
-        </includes>
-      </resource>
-    </resources>
+
   </build>
-    
-  <profiles>
-    <profile>
-      <!-- The release profile contains specifal configuration of releases. -->
-      <id>release</id>
-      <build>
-        <plugins>
-          <!-- Sign the release -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>generate-javadocs</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-	      </plugin>
-
-          <plugin>
-            <!--
-              - Copy LICENSE.txt and NOTICE.txt so that they are included
-              - in the -javadoc jar file for the component.
-              -->
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>javadoc.resources</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <tasks>
-                    <copy todir="${project.build.directory}/apidocs/META-INF">
-                      <fileset dir="${basedir}">
-                        <include name="LICENSE" />
-                        <include name="NOTICE" />
-                      </fileset>
-                    </copy>
-                  </tasks>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>create-source-jar</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          
-          <!-- The release artifacts -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <configuration>          
-	            <descriptors>
-	            	<descriptor>src/assemble/bin.xml</descriptor>
-	            	<descriptor>src/assemble/src.xml</descriptor>
-	          	</descriptors>
-
-              <descriptorRefs>
-              </descriptorRefs>
-            </configuration>
-            <executions>
-              <execution>
-                <id>make-assembly</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>attached</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
   
   <dependencies>
     <dependency>
@@ -294,35 +105,10 @@
   
   <reporting>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
     </plugins>
 
   </reporting>
 
-  <!-- ====================================================================== -->
-  <!-- M A I L I N G   L I S T S                                              -->
-  <!-- ====================================================================== -->
-  
-  <mailingLists>
-
-    <mailingList>
-      <name>Sanselan Development List</name>
-      <subscribe>sanselan-dev-subscribe at incubator.apache.org</subscribe>
-      <unsubscribe>sanselan-dev-unsubscribe at incubator.apache.org</unsubscribe>
-      <post>sanselan-dev at incubator.apache.org</post>
-      <archive>http://mail-archives.apache.org/mod_mbox/sanselan-dev/</archive>
-    </mailingList>
-    <mailingList>
-      <name>Sanselan Source Control List</name>
-      <subscribe>sanselan-commits-subscribe@apache.org</subscribe>
-      <unsubscribe>sanselan-commits-unsubscribe@apache.org</unsubscribe>
-      <archive>http://mail-archives.apache.org/mod_mbox/sanselan-commits/</archive>
-    </mailingList>
-  </mailingLists>
-	
   <!-- ====================================================================== -->
   <!-- P E O P L E                                                            -->
   <!-- ====================================================================== -->
