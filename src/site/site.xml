@@ -30,6 +30,7 @@
       <item name="Source Repository"       href="/source-repository.html"/>
       <item name="Documentation"           href="http://cwiki.apache.org/SANSELAN/"/>
       <item name="Javadoc"                 href="api-release/index.html"/>
+      <item name="Download"                href="/download_sanselan.cgi"/>
     </menu>
 
   </body>
