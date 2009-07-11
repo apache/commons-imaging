@@ -39,9 +39,9 @@ limitations under the License.
 
 <p>
   <ul>
-      <li>Download the latest release from the <a href="download_sanselan.cgi">download page</a>.</li>
+      <li>Download the latest release from the <a href="http://commons.apache.org/sanselan/download_sanselan.cgi">download page</a>.</li>
       <li>Add the jar to your project's classpath.</li>
-      <li>See our <a href="samplecode.html">Sample Code</a> for examples.</li>
+      <li>See our <a href="sampleusage.html">Sample Code</a> for examples.</li>
       <li>Refer to the project's <a href="api-release/index.html">javadoc</a></li>
       <li>Have questions? Subscribe to the commons user <a href="mail-lists.html">mailing list</a>.</li>
   </ul>
@@ -57,7 +57,7 @@ limitations under the License.
           <ul>
               <li>1. mkdir sanselan-snapshot</li>
               <li>2. cd sanselan-snapshot</li>
-              <li>3. svn checkout <a href="https://svn.apache.org/repos/asf/incubator/sanselan/">https://svn.apache.org/repos/asf/incubator/sanselan/</a></li>
+              <li>3. svn checkout <a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/">https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/</a></li>
           </ul>
       <li>Build using <a href="http://maven.apache.org">Maven 2</a></li>
           <ul>
