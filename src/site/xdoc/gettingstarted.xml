@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Building</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="Requirements">
+
+<p>
+  <ul>
+      <li>Sanselan requires Java 1.4 or higher. It could easily be converted to require only 1.2.</li>
+      <li>The question of porting to J2ME has been raised, but not yet pursued.</li>
+      <li>Sanselan has no dependencies.</li>
+      <li>It does not use ImageIO/AWT.</li>
+  </ul>
+</p>
+
+</section>
+
+<section name="Getting Started">
+
+<p>
+  <ul>
+      <li>Download the latest release from the <a href="download_sanselan.cgi">download page</a>.</li>
+      <li>Add the jar to your project's classpath.</li>
+      <li>See our <a href="samplecode.html">Sample Code</a> for examples.</li>
+      <li>Refer to the project's <a href="api-release/index.html">javadoc</a></li>
+      <li>Have questions? Subscribe to the commons user <a href="mail-lists.html">mailing list</a>.</li>
+  </ul>
+</p>
+
+</section>
+
+<section name="Building from the latest Source">
+<p>
+  There are two steps to building Commons Sanselan from the latest source:
+  <ul>
+      <li>Check out the latest source from <a href="source-repository.html">Subversion</a></li>
+          <ul>
+              <li>1. mkdir sanselan-snapshot</li>
+              <li>2. cd sanselan-snapshot</li>
+              <li>3. svn checkout <a href="https://svn.apache.org/repos/asf/incubator/sanselan/">https://svn.apache.org/repos/asf/incubator/sanselan/</a></li>
+          </ul>
+      <li>Build using <a href="http://maven.apache.org">Maven 2</a></li>
+          <ul>
+              <li>1. Install the latest version of Maven</li>
+              <li>2. cd sanselan-snapshot (if you are not already in the project directory)</li>
+              <li>3. mvn -Prc package</li>
+              <li>4. The build will be in the "target" folder.</li>
+          </ul>
+  </ul>
+</p>
+</section>
+
+</body>
+</document>
