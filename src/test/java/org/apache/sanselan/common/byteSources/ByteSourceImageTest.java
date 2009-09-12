@@ -48,7 +48,7 @@ public class ByteSourceImageTest extends ByteSourceTest
 		List imageFiles = getTestImages();
 		for (int i = 0; i < imageFiles.size(); i++)
 		{
-			if (i % 10 == 0)
+			if (i % 1 == 0)
 				Debug.purgeMemory();
 
 			File imageFile = (File) imageFiles.get(i);
@@ -101,11 +101,14 @@ public class ByteSourceImageTest extends ByteSourceTest
 		assertTrue(imageFile != null);
 		assertTrue(imageFile.getWidth() > 0);
 		assertTrue(imageFile.getHeight() > 0);
+		int imageFileWidth = imageFile.getWidth();
+		int imageFileHeight = imageFile.getHeight();
+		imageFile = null;
 
 		BufferedImage imageBytes = Sanselan.getBufferedImage(bytes);
 		assertTrue(imageBytes != null);
-		assertTrue(imageFile.getWidth() == imageBytes.getWidth());
-		assertTrue(imageFile.getHeight() == imageBytes.getHeight());
+		assertTrue(imageFileWidth == imageBytes.getWidth());
+		assertTrue(imageFileHeight == imageBytes.getHeight());
 	}
 
 	public void checkGetImageSize(File imageFile, byte[] imageFileBytes)

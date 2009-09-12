@@ -134,6 +134,29 @@ public abstract class Sanselan implements SanselanConstants {
 		return guessFormat(new ByteSourceFile(file));
 	}
 
+	private static final int[] MAGIC_NUMBERS_GIF = { 0x47, 0x49, };
+	private static final int[] MAGIC_NUMBERS_PNG = { 0x89, 0x50, };
+	private static final int[] MAGIC_NUMBERS_JPEG = { 0xff, 0xd8, };
+	private static final int[] MAGIC_NUMBERS_BMP = { 0x42, 0x4d, };
+	private static final int[] MAGIC_NUMBERS_TIFF_MOTOROLA = { 0x4D, 0x4D, };
+	private static final int[] MAGIC_NUMBERS_TIFF_INTEL = { 0x49, 0x49, };
+	private static final int[] MAGIC_NUMBERS_PSD = { 0x38, 0x42, };
+	private static final int[] MAGIC_NUMBERS_PBM_A = { 0x50, 0x31, };
+	private static final int[] MAGIC_NUMBERS_PBM_B = { 0x50, 0x34, };
+	private static final int[] MAGIC_NUMBERS_PGM_A = { 0x50, 0x32, };
+	private static final int[] MAGIC_NUMBERS_PGM_B = { 0x50, 0x35, };
+	private static final int[] MAGIC_NUMBERS_PPM_A = { 0x50, 0x33, };
+	private static final int[] MAGIC_NUMBERS_PPM_B = { 0x50, 0x36, };
+	private static final int[] MAGIC_NUMBERS_JBIG2_1 = { 0x97, 0x4A, };
+	private static final int[] MAGIC_NUMBERS_JBIG2_2 = { 0x42, 0x32, };
+
+	private static boolean compareBytePair(int[] a, int b[]) {
+		if (a.length != 2 && b.length != 2) {
+			throw new RuntimeException("Invalid Byte Pair.");
+		}
+		return (a[0] == b[0]) && (a[1] == b[1]);
+	}
+
 	public static ImageFormat guessFormat(ByteSource byteSource)
 			throws ImageReadException, IOException {
 		InputStream is = null;
@@ -149,42 +172,40 @@ public abstract class Sanselan implements SanselanConstants {
 
 			int b1 = i1 & 0xff;
 			int b2 = i2 & 0xff;
+			int bytePair[] = { b1, b2, };
 
-			if (b1 == 0x47 && b2 == 0x49) {
+			if (compareBytePair(MAGIC_NUMBERS_GIF, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_GIF;
 			}
-			// else if (b1 == 0x00 && b2 == 0x00) // too similar to tga
+			// else if (b1 == 0x00 && b2 == 0x00) // too similar to TGA
 			// {
 			// return ImageFormat.IMAGE_FORMAT_ICO;
 			// }
-			else if (b1 == 0x89 && b2 == 0x50) {
+			else if (compareBytePair(MAGIC_NUMBERS_PNG, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_PNG;
-			} else if (b1 == 0xff && b2 == 0xd8) {
+			} else if (compareBytePair(MAGIC_NUMBERS_JPEG, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_JPEG;
-			} else if (b1 == 0x42 && b2 == 0x4d) {
+			} else if (compareBytePair(MAGIC_NUMBERS_BMP, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_BMP;
-			} else if (b1 == 0x4D && b2 == 0x4D) // Motorola byte order TIFF
-			{
+			} else if (compareBytePair(MAGIC_NUMBERS_TIFF_MOTOROLA, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_TIFF;
-			} else if (b1 == 0x49 && b2 == 0x49) // Intel byte order TIFF
-			{
+			} else if (compareBytePair(MAGIC_NUMBERS_TIFF_INTEL, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_TIFF;
-			} else if (b1 == 0x38 && b2 == 0x42) {
+			} else if (compareBytePair(MAGIC_NUMBERS_PSD, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_PSD;
-			} else if (b1 == 0x50 && b2 == 0x31) {
+			} else if (compareBytePair(MAGIC_NUMBERS_PBM_A, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_PBM;
-			} else if (b1 == 0x50 && b2 == 0x34) {
+			} else if (compareBytePair(MAGIC_NUMBERS_PBM_B, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_PBM;
-			} else if (b1 == 0x50 && b2 == 0x32) {
+			} else if (compareBytePair(MAGIC_NUMBERS_PGM_A, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_PGM;
-			} else if (b1 == 0x50 && b2 == 0x35) {
+			} else if (compareBytePair(MAGIC_NUMBERS_PGM_B, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_PGM;
-			} else if (b1 == 0x50 && b2 == 0x33) {
+			} else if (compareBytePair(MAGIC_NUMBERS_PPM_A, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_PPM;
-			} else if (b1 == 0x50 && b2 == 0x36) {
+			} else if (compareBytePair(MAGIC_NUMBERS_PPM_B, bytePair)) {
 				return ImageFormat.IMAGE_FORMAT_PPM;
-			} else if (b1 == 0x97 && b2 == 0x4A) {
-
+			} else if (compareBytePair(MAGIC_NUMBERS_JBIG2_1, bytePair)) {
 				int i3 = is.read();
 				int i4 = is.read();
 				if ((i3 < 0) || (i4 < 0))
@@ -193,9 +214,10 @@ public abstract class Sanselan implements SanselanConstants {
 
 				int b3 = i3 & 0xff;
 				int b4 = i4 & 0xff;
-
-				if (b3 == 0x42 && b4 == 0x32)
+				int bytePair2[] = { b3, b4, };
+				if (compareBytePair(MAGIC_NUMBERS_JBIG2_2, bytePair2)) {
 					return ImageFormat.IMAGE_FORMAT_JBIG2;
+				}
 			}
 
 			return ImageFormat.IMAGE_FORMAT_UNKNOWN;
@@ -623,7 +645,6 @@ public abstract class Sanselan implements SanselanConstants {
 		throw new ImageReadException("Can't parse this format.");
 	}
 
-
 	/**
 	 * Determines the width and height of an image.
 	 * <p>
@@ -718,7 +739,6 @@ public abstract class Sanselan implements SanselanConstants {
 
 		return imageParser.getImageSize(byteSource, params);
 	}
-	
 
 	/**
 	 * Determines the width and height of an image.
@@ -728,7 +748,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            InputStream from which to read image data.
 	 * @param filename
 	 *            Filename associated with image data (optional).
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
+	 * @return Xmp Xml as String, if present. Otherwise, returns null.
 	 */
 	public static String getXmpXml(InputStream is, String filename)
 			throws ImageReadException, IOException {
@@ -745,10 +765,10 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            Filename associated with image data (optional).
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
+	 * @return Xmp Xml as String, if present. Otherwise, returns null.
 	 */
-	public static String getXmpXml(InputStream is, String filename,
-			Map params) throws ImageReadException, IOException {
+	public static String getXmpXml(InputStream is, String filename, Map params)
+			throws ImageReadException, IOException {
 		return getXmpXml(new ByteSourceInputStream(is, filename), params);
 	}
 
@@ -758,10 +778,10 @@ public abstract class Sanselan implements SanselanConstants {
 	 * 
 	 * @param bytes
 	 *            Byte array containing an image file.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
+	 * @return Xmp Xml as String, if present. Otherwise, returns null.
 	 */
-	public static String getXmpXml(byte bytes[])
-			throws ImageReadException, IOException {
+	public static String getXmpXml(byte bytes[]) throws ImageReadException,
+			IOException {
 		return getXmpXml(bytes, null);
 	}
 
@@ -773,7 +793,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            Byte array containing an image file.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
+	 * @return Xmp Xml as String, if present. Otherwise, returns null.
 	 */
 	public static String getXmpXml(byte bytes[], Map params)
 			throws ImageReadException, IOException {
@@ -786,7 +806,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 * 
 	 * @param file
 	 *            File containing image data.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
+	 * @return Xmp Xml as String, if present. Otherwise, returns null.
 	 */
 	public static String getXmpXml(File file) throws ImageReadException,
 			IOException {
@@ -801,7 +821,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
+	 * @return Xmp Xml as String, if present. Otherwise, returns null.
 	 */
 	public static String getXmpXml(File file, Map params)
 			throws ImageReadException, IOException {
@@ -816,7 +836,7 @@ public abstract class Sanselan implements SanselanConstants {
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
-	 * @return Xmp Xml as String, if present.  Otherwise, returns null.
+	 * @return Xmp Xml as String, if present. Otherwise, returns null.
 	 */
 	public static String getXmpXml(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException {
