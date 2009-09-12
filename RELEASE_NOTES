@@ -22,6 +22,9 @@ Next Release
  * Added accessor methods for a number of ImageInfo properties.
  * Applied patch contributed by Nicolas Richeton, adding getEXIFThumbnailSize() and getEXIFThumbnailData() 
  	methods to JpegImageMetadata.
+ * Fixed a couple of platform-dependent paths in the tests.
+ * Constant-ized the magic numbers used when guessing formats.  
+ * Added a test for the format guessing.
 
 Release 0.97
 ------------
