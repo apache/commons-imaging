@@ -22,7 +22,7 @@ import java.io.File;
 public interface SanselanTestConstants {
 
 	static final File PHIL_HARVEY_TEST_IMAGE_FOLDER = new File(
-			"src\\test\\data\\images\\exif\\philHarvey\\".replace("\\", System
+			"src\\test\\data\\images\\exif\\philHarvey\\".replaceAll("\\\\", System
 					.getProperty("file.separator")));
 
 	static final File SOURCE_FOLDER = new File("src");

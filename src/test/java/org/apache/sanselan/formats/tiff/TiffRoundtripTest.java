@@ -32,15 +32,12 @@ import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.util.Debug;
 
-public class TiffRoundtripTest extends TiffBaseTest
-{
+public class TiffRoundtripTest extends TiffBaseTest {
 
 	public void test() throws IOException, ImageReadException,
-			ImageWriteException
-	{
+			ImageWriteException {
 		List images = getTiffImages();
-		for (int i = 0; i < images.size(); i++)
-		{
+		for (int i = 0; i < images.size(); i++) {
 			if (i % 10 == 0)
 				Debug.purgeMemory();
 
@@ -58,8 +55,9 @@ public class TiffRoundtripTest extends TiffBaseTest
 
 			File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
 			Map params = new HashMap();
-			Sanselan.writeImage(image, tempFile,
-					ImageFormat.IMAGE_FORMAT_TIFF, params);
+			Sanselan.writeImage(image, tempFile, ImageFormat.IMAGE_FORMAT_TIFF,
+					params);
+			image = null;
 
 			BufferedImage image2 = Sanselan.getBufferedImage(tempFile);
 			assertNotNull(image2);
