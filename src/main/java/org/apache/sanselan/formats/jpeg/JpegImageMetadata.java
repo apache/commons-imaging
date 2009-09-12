@@ -16,11 +16,13 @@
  */
 package org.apache.sanselan.formats.jpeg;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.sanselan.ImageReadException;
+import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageData;
@@ -79,6 +81,48 @@ public class JpegImageMetadata implements IImageMetadata {
 				return field;
 		}
 
+		return null;
+	}
+
+	/**
+	 * Returns the size of the first JPEG thumbnail found in the EXIF metadata.
+	 * 
+	 * @return Thumbnail width and height or null if no thumbnail.
+	 * @throws ImageReadException
+	 * @throws IOException
+	 */
+	public Dimension getEXIFThumbnailSize() throws ImageReadException, IOException {
+		byte[] data = getEXIFThumbnailData();
+			
+		if( data != null ){
+			return Sanselan.getImageSize(data);
+		}
+	    return null;
+	}	
+	
+	/**
+	 * Returns the data of the first JPEG thumbnail found in the EXIF metadata.  
+	 * 
+	 * @return JPEG data or null if no thumbnail.
+	 * @throws ImageReadException
+	 * @throws IOException
+	 */
+	public byte[] getEXIFThumbnailData() throws ImageReadException, IOException {
+		ArrayList dirs = exif.getDirectories();
+		for (int i = 0; i < dirs.size(); i++) {
+			TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
+					.get(i);
+			
+			byte[] data = null;
+			if( dir.getJpegImageData() != null ){
+				data = dir.getJpegImageData().data;
+			}
+			// Support other image formats here.
+			
+			if( data != null ){
+				return data;
+			}
+		}
 		return null;
 	}
 

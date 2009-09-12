@@ -20,6 +20,8 @@ Next Release
    This appears to be a bug in how Microsoft Office writes gifs.
    The Image Descriptor has the correct value.
  * Added accessor methods for a number of ImageInfo properties.
+ * Applied patch contributed by Nicolas Richeton, adding getEXIFThumbnailSize() and getEXIFThumbnailData() 
+ 	methods to JpegImageMetadata.
 
 Release 0.97
 ------------
