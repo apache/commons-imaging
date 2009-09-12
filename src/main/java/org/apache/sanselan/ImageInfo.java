@@ -243,7 +243,7 @@ public class ImageInfo
 	/**
 	 * Returns true if the image is progressive or interlaced.
 	 */
-	public boolean getIsProgressive()
+	public boolean isProgressive()
 	{
 		return isProgressive;
 	}
@@ -341,6 +341,34 @@ public class ImageInfo
 
 		pw.flush();
 
+	}
+
+	/**
+	 * Returns a description of the file format, ie. format version.
+	 */
+	public String getFormatDetails() {
+		return formatDetails;
+	}
+
+	/**
+	 * Returns true if the image has transparency.
+	 */
+	public boolean isTransparent() {
+		return isTransparent;
+	}
+
+	/**
+	 * Returns true if the image uses a palette.
+	 */
+	public boolean usesPalette() {
+		return usesPalette;
+	}
+
+	/**
+	 * Returns a description of the compression algorithm, if any.
+	 */
+	public String getCompressionAlgorithm() {
+		return compressionAlgorithm;
 	}
 
 }

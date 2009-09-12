@@ -19,7 +19,7 @@ Next Release
  * Fixed a bug in which gifs have incorrect size information in the the Logical Screen Descriptor.
    This appears to be a bug in how Microsoft Office writes gifs.
    The Image Descriptor has the correct value.
-
+ * Added accessor methods for a number of ImageInfo properties.
 
 Release 0.97
 ------------
