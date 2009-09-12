@@ -20,43 +20,19 @@ package org.apache.sanselan;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.sanselan.util.Debug;
-
 public class SanselanGuessFormatTest extends SanselanTest {
 
-	public static final File BMP_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"bmp\\1\\Oregon Scientific DS6639 - DSC_0307 - small.bmp".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File PNG_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"png\\1\\Oregon Scientific DS6639 - DSC_0307 - small.png".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File GIF_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"gif\\1\\Oregon Scientific DS6639 - DSC_0307 - small.gif".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File ICO_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"ico\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ico".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File TIFF_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"tiff\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tif".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File JPEG_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"jpg\\1\\Oregon Scientific DS6639 - DSC_0307 - small.jpg".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File PSD_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"psd\\1\\Oregon Scientific DS6639 - DSC_0307 - small.psd".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File PBM_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.pbm".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File PGM_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.pgm".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File PPM_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ppm".replace(
-					"\\", System.getProperty("file.separator")));
-	public static final File TGA_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"tga\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tga".replace(
-					"\\", System.getProperty("file.separator")));
+	public static final String BMP_IMAGE_FILE = "bmp\\1\\Oregon Scientific DS6639 - DSC_0307 - small.bmp";
+	public static final String PNG_IMAGE_FILE = "png\\1\\Oregon Scientific DS6639 - DSC_0307 - small.png";
+	public static final String GIF_IMAGE_FILE = "gif\\1\\Oregon Scientific DS6639 - DSC_0307 - small.gif";
+	public static final String ICO_IMAGE_FILE = "ico\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ico";
+	public static final String TIFF_IMAGE_FILE = "tiff\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tif";
+	public static final String JPEG_IMAGE_FILE = "jpg\\1\\Oregon Scientific DS6639 - DSC_0307 - small.jpg";
+	public static final String PSD_IMAGE_FILE = "psd\\1\\Oregon Scientific DS6639 - DSC_0307 - small.psd";
+	public static final String PBM_IMAGE_FILE = "pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.pbm";
+	public static final String PGM_IMAGE_FILE = "pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.pgm";
+	public static final String PPM_IMAGE_FILE = "pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ppm";
+	public static final String TGA_IMAGE_FILE = "tga\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tga";
 
 	public void testGuess_all() throws IOException, ImageReadException,
 			ImageWriteException {
@@ -78,17 +54,19 @@ public class SanselanGuessFormatTest extends SanselanTest {
 		// testGuess(ImageFormat.IMAGE_FORMAT_JBIG2, JBIG2_IMAGE_FILE);
 	}
 
-	public static final File UNKNOWN_IMAGE_FILE = new File(TEST_IMAGE_FOLDER,
-			"jpg\\1\\info.txt".replace("\\", System
-					.getProperty("file.separator")));
+	public static final String UNKNOWN_IMAGE_FILE = "jpg\\1\\info.txt";
 
 	public void testGuess_unknown() throws IOException, ImageReadException,
 			ImageWriteException {
 		testGuess(ImageFormat.IMAGE_FORMAT_UNKNOWN, UNKNOWN_IMAGE_FILE);
 	}
 
-	public void testGuess(ImageFormat expectedFormat, File imageFile)
+	public void testGuess(ImageFormat expectedFormat, String imagePath)
 			throws IOException, ImageReadException, ImageWriteException {
+		imagePath = imagePath.replaceAll("\\\\", System
+				.getProperty("file.separator"));
+		File imageFile = new File(TEST_IMAGE_FOLDER, imagePath);
+
 		assertTrue(imageFile.exists());
 		assertTrue(imageFile.isFile());
 		ImageFormat guessedFormat = Sanselan.guessFormat(imageFile);
