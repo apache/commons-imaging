@@ -28,6 +28,7 @@ import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.util.Debug;
+import org.apache.commons.io.FilenameUtils;
 
 public class PngMultipleRoundtripTest extends PngBaseTest
 {
@@ -35,7 +36,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest
 	public void test() throws IOException, ImageReadException,
 			ImageWriteException
 	{
-		String imagesFolderPath = "src\\test\\data\\images\\png\\3".replaceAll("\\\\", System.getProperty("file.separator"));
+		String imagesFolderPath = FilenameUtils.separatorsToSystem("src\\test\\data\\images\\png\\3");
 		File imagesFolder = new File(imagesFolderPath);
 		assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());
 		

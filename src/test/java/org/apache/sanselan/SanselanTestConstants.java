@@ -18,12 +18,12 @@
 package org.apache.sanselan;
 
 import java.io.File;
+import org.apache.commons.io.FilenameUtils;
 
 public interface SanselanTestConstants {
 
 	static final File PHIL_HARVEY_TEST_IMAGE_FOLDER = new File(
-			"src\\test\\data\\images\\exif\\philHarvey\\".replaceAll("\\\\", System
-					.getProperty("file.separator")));
+			FilenameUtils.separatorsToSystem("src\\test\\data\\images\\exif\\philHarvey\\"));
 
 	static final File SOURCE_FOLDER = new File("src");
 	static final File TEST_SOURCE_FOLDER = new File(SOURCE_FOLDER, "test");

@@ -19,6 +19,7 @@ package org.apache.sanselan;
 
 import java.io.File;
 import java.io.IOException;
+import org.apache.commons.io.FilenameUtils;
 
 public class SanselanGuessFormatTest extends SanselanTest {
 
@@ -63,8 +64,7 @@ public class SanselanGuessFormatTest extends SanselanTest {
 
 	public void testGuess(ImageFormat expectedFormat, String imagePath)
 			throws IOException, ImageReadException, ImageWriteException {
-		imagePath = imagePath.replaceAll("\\\\", System
-				.getProperty("file.separator"));
+		imagePath = FilenameUtils.separatorsToSystem(imagePath);
 		File imageFile = new File(TEST_IMAGE_FOLDER, imagePath);
 
 		assertTrue(imageFile.exists());
