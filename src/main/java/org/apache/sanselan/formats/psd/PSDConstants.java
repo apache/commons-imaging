@@ -200,5 +200,5 @@ public class PSDConstants
 			Debug.debug(PSDConstants.class, e);
 		}
 		fImageResourceTypes = temp;
-	};
+	}
 }

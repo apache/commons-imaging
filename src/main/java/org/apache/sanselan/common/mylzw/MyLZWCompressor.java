@@ -248,7 +248,7 @@ public class MyLZWCompressor
 		public void clearCode(int code);
 		
 		public void init(int clearCode, int eoiCode);
-	};
+	}
 
 	public byte[] compress(byte bytes[]) throws IOException
 	{

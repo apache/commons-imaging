@@ -93,7 +93,7 @@ public class PNGChunkiTXt extends PNGTextChunk
 			if (compressed)
 			{
 				int compressedTextLength = bytes.length - index;
-				;
+
 				byte compressedText[] = new byte[compressedTextLength];
 				System.arraycopy(bytes, index, compressedText, 0,
 						compressedTextLength);
