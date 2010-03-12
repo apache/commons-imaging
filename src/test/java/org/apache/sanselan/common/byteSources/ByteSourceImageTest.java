@@ -50,10 +50,10 @@ public class ByteSourceImageTest extends ByteSourceTest
 
 			File imageFile = (File) imageFiles.get(i);
 			Debug.debug("imageFile", imageFile);
-			assertTrue(imageFile != null);
+			assertNotNull(imageFile);
 
 			byte imageFileBytes[] = IOUtils.getFileBytes(imageFile);
-			assertTrue(imageFileBytes != null);
+			assertNotNull(imageFileBytes);
 			assertTrue(imageFileBytes.length == imageFile.length());
 
 			if (imageFile.getName().toLowerCase().endsWith(".ico")
@@ -95,7 +95,7 @@ public class ByteSourceImageTest extends ByteSourceTest
 			throws IOException, ImageReadException
 	{
 		BufferedImage imageFile = Sanselan.getBufferedImage(file);
-		assertTrue(imageFile != null);
+		assertNotNull(imageFile);
 		assertTrue(imageFile.getWidth() > 0);
 		assertTrue(imageFile.getHeight() > 0);
 		int imageFileWidth = imageFile.getWidth();
@@ -103,7 +103,7 @@ public class ByteSourceImageTest extends ByteSourceTest
 		imageFile = null;
 
 		BufferedImage imageBytes = Sanselan.getBufferedImage(bytes);
-		assertTrue(imageBytes != null);
+		assertNotNull(imageBytes);
 		assertTrue(imageFileWidth == imageBytes.getWidth());
 		assertTrue(imageFileHeight == imageBytes.getHeight());
 	}
@@ -112,12 +112,12 @@ public class ByteSourceImageTest extends ByteSourceTest
 			throws IOException, ImageReadException
 	{
 		Dimension imageSizeFile = Sanselan.getImageSize(imageFile);
-		assertTrue(imageSizeFile != null);
+		assertNotNull(imageSizeFile);
 		assertTrue(imageSizeFile.width > 0);
 		assertTrue(imageSizeFile.height > 0);
 
 		Dimension imageSizeBytes = Sanselan.getImageSize(imageFileBytes);
-		assertTrue(imageSizeBytes != null);
+		assertNotNull(imageSizeBytes);
 		assertTrue(imageSizeFile.width == imageSizeBytes.width);
 		assertTrue(imageSizeFile.height == imageSizeBytes.height);
 	}
@@ -127,12 +127,12 @@ public class ByteSourceImageTest extends ByteSourceTest
 	{
 		// check guessFormat()
 		ImageFormat imageFormatFile = Sanselan.guessFormat(imageFile);
-		assertTrue(imageFormatFile != null);
+		assertNotNull(imageFormatFile);
 		assertTrue(imageFormatFile != ImageFormat.IMAGE_FORMAT_UNKNOWN);
 		// Debug.debug("imageFormatFile", imageFormatFile);
 
 		ImageFormat imageFormatBytes = Sanselan.guessFormat(imageFileBytes);
-		assertTrue(imageFormatBytes != null);
+		assertNotNull(imageFormatBytes);
 		assertTrue(imageFormatBytes != ImageFormat.IMAGE_FORMAT_UNKNOWN);
 		// Debug.debug("imageFormatBytes", imageFormatBytes);
 
@@ -173,8 +173,8 @@ public class ByteSourceImageTest extends ByteSourceTest
 		ImageInfo imageInfoBytes = Sanselan
 				.getImageInfo(imageFileBytes, params);
 
-		assertTrue(imageInfoFile != null);
-		assertTrue(imageInfoBytes != null);
+		assertNotNull(imageInfoFile);
+		assertNotNull(imageInfoBytes);
 
 		Method methods[] = ImageInfo.class.getMethods();
 		for (int i = 0; i < methods.length; i++)
@@ -200,15 +200,15 @@ public class ByteSourceImageTest extends ByteSourceTest
 		// match.
 		assertTrue(imageInfoFile.getBitsPerPixel() > 0);
 
-		assertTrue(imageInfoFile.getFormat() != null);
+		assertNotNull(imageInfoFile.getFormat());
 		assertTrue(imageInfoFile.getFormat() != ImageFormat.IMAGE_FORMAT_UNKNOWN);
 
-		assertTrue(imageInfoFile.getFormatName() != null);
+		assertNotNull(imageInfoFile.getFormatName());
 
 		assertTrue(imageInfoFile.getWidth() > 0);
 		assertTrue(imageInfoFile.getHeight() > 0);
 
-		assertTrue(imageInfoFile.getMimeType() != null);
+		assertNotNull(imageInfoFile.getMimeType());
 
 		// TODO: not all adapters count images yet.
 		// assertTrue(imageInfoFile.getNumberOfImages() > 0);

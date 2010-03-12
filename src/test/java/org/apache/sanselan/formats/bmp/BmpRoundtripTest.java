@@ -166,7 +166,7 @@ public class BmpRoundtripTest extends BmpBaseTest
 
 		BufferedImage dstImage = Sanselan.getBufferedImage(bytes);
 
-		assertTrue(null != dstImage);
+		assertNotNull(dstImage);
 		assertTrue(srcImage.getWidth() == dstImage.getWidth());
 		assertTrue(srcImage.getHeight() == dstImage.getHeight());
 
@@ -176,8 +176,8 @@ public class BmpRoundtripTest extends BmpBaseTest
 
 	private void compare(int[][] a, int[][] b)
 	{
-		assertTrue(null != a);
-		assertTrue(null != b);
+		assertNotNull(a);
+		assertNotNull(b);
 		assertTrue(a.length == b.length);
 
 		for (int y = 0; y < a.length; y++)
