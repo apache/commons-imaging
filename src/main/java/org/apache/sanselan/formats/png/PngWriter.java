@@ -322,6 +322,7 @@ public class PngWriter implements PngConstants
 			case 8:
 			case 16:
 				result = (byte) value;
+				break;
 			default:
 			}
 			switch (colorType)
