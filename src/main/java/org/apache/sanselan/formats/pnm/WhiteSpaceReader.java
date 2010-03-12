@@ -40,13 +40,13 @@ class WhiteSpaceReader
 
 	public char nextChar() throws IOException
 	{
-		char c = (char) read();
+		char c = read();
 
 		if (c == '#')
 		{
 			while ((c != '\n') && (c != '\r'))
 			{
-				c = (char) read();
+				c = read();
 			}
 		}
 		return c;

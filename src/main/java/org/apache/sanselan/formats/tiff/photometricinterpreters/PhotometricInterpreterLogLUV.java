@@ -139,9 +139,9 @@ public class PhotometricInterpreterLogLUV extends PhotometricInterpreter
 		//					R, G, B,
 		//			}, maxRGB, minRGB);
 
-		int red = (int) R;
-		int green = (int) G;
-		int blue = (int) B;
+		int red = R;
+		int green = G;
+		int blue = B;
 
 		red = Math.min(255, Math.max(0, red));
 		green = Math.min(255, Math.max(0, green));

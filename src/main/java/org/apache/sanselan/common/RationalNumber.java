@@ -91,7 +91,7 @@ public class RationalNumber extends Number
 
 	public int intValue()
 	{
-		return (int) numerator / (int) divisor;
+		return numerator / divisor;
 	}
 
 	public long longValue()
