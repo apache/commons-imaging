@@ -153,8 +153,8 @@ public class JpegIptcRewriter extends JpegRewriter implements IPTCConstants
 	 *            Byte array containing Jpeg image data.
 	 * @param os
 	 *            OutputStream to write the image to.
-	 * @param xmpXml
-	 *            String containing IPTC data.
+	 * @param newData
+	 *            structure containing IPTC data.
 	 */
 	public void writeIPTC(byte src[], OutputStream os,
 			PhotoshopApp13Data newData) throws ImageReadException, IOException,
@@ -173,8 +173,8 @@ public class JpegIptcRewriter extends JpegRewriter implements IPTCConstants
 	 *            InputStream containing Jpeg image data.
 	 * @param os
 	 *            OutputStream to write the image to.
-	 * @param xmpXml
-	 *            String containing IPTC data.
+	 * @param newData
+	 *            structure containing IPTC data.
 	 */
 	public void writeIPTC(InputStream src, OutputStream os,
 			PhotoshopApp13Data newData) throws ImageReadException, IOException,
@@ -193,8 +193,8 @@ public class JpegIptcRewriter extends JpegRewriter implements IPTCConstants
 	 *            Image file.
 	 * @param os
 	 *            OutputStream to write the image to.
-	 * @param xmpXml
-	 *            String containing IPTC data.
+	 * @param newData
+	 *            structure containing IPTC data.
 	 */
 	public void writeIPTC(File src, OutputStream os, PhotoshopApp13Data newData)
 			throws ImageReadException, IOException, ImageWriteException
@@ -212,8 +212,8 @@ public class JpegIptcRewriter extends JpegRewriter implements IPTCConstants
 	 *            ByteSource containing Jpeg image data.
 	 * @param os
 	 *            OutputStream to write the image to.
-	 * @param xmpXml
-	 *            String containing IPTC data.
+	 * @param newData
+	 *            structure containing IPTC data.
 	 */
 	public void writeIPTC(ByteSource byteSource, OutputStream os,
 			PhotoshopApp13Data newData) throws ImageReadException, IOException,

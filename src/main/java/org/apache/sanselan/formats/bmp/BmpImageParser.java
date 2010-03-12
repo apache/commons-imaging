@@ -698,7 +698,7 @@ public class BmpImageParser extends ImageParser
 	 * Extracts embedded XML metadata as XML string.
 	 * <p>
 	 * 
-	 * @param file
+	 * @param byteSource
 	 *            File containing image data.
 	 * @param params
 	 *            Map of optional parameters, defined in SanselanConstants.
