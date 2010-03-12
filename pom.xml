@@ -16,7 +16,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
   -->
-  
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
@@ -30,11 +30,11 @@
     <artifactId>commons-parent</artifactId>
     <version>13</version>
   </parent>
-    
+
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-sanselan</artifactId>
   <name>Commons Sanselan</name>
-  
+
   <version>0.98-SNAPSHOT</version>
 
   <!--
@@ -43,7 +43,7 @@
    -->
   <description>Commons Sanselan is a pure-Java image library.</description>
   <url>http://commons.apache.org/sanselan/</url>
-  
+
   <scm>
     <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/sanselan/trunk</connection>
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk</developerConnection>
@@ -67,15 +67,15 @@
     <commons.release.version>incubating-0.97</commons.release.version>
     <commons.jira.id>SANSELAN</commons.jira.id>
     <commons.jira.pid>12310720</commons.jira.pid>
-  </properties> 
+  </properties>
 
   <build>
     <plugins>
-    
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>          
+        <configuration>
           <descriptors>
             <descriptor>src/assemble/bin.xml</descriptor>
             <descriptor>src/assemble/src.xml</descriptor>
@@ -90,10 +90,10 @@
           <argLine>-Xmx512m</argLine>
         </configuration>
       </plugin>
-    </plugins>  
+    </plugins>
 
   </build>
-  
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -108,7 +108,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
+
   <reporting>
     <plugins>
     </plugins>
@@ -118,7 +118,7 @@
   <!-- ====================================================================== -->
   <!-- P E O P L E                                                            -->
   <!-- ====================================================================== -->
-  
+
   <developers>
     <developer>
       <name>Charles M. Chen</name>
@@ -145,5 +145,4 @@
       <id>cziegeler</id>
     </developer>
   </developers>
-	
 </project>
