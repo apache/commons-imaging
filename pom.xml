@@ -67,6 +67,7 @@
     <commons.release.version>incubating-0.97</commons.release.version>
     <commons.jira.id>SANSELAN</commons.jira.id>
     <commons.jira.pid>12310720</commons.jira.pid>
+    <commons.osgi.export>org.apache.sanselan.*;version=${project.version};-noimport:=true</commons.osgi.export>
   </properties>
 
   <build>
