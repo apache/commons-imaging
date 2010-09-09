@@ -75,6 +75,15 @@ public abstract class SanselanTest extends TestCase implements
 		return getTestImage(null);
 	}
 
+	protected File getTestImageByName(final String filename) 
+			throws IOException, ImageReadException {
+		return getTestImage(new ImageFilter() {
+			public boolean accept(File file) throws IOException, ImageReadException {
+				return file.getName().equals(filename);
+			}
+		});
+	}
+
 	protected File getTestImage(ImageFilter filter) throws IOException,
 			ImageReadException {
 		List images = getTestImages(filter, 1);

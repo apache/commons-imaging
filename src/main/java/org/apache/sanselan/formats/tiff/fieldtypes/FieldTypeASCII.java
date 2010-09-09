@@ -26,9 +26,11 @@ public class FieldTypeASCII extends FieldType
 		super(type, 1, name);
 	}
 
-	public Object getSimpleValue(TiffField entry) 
-	{
-		return new String(getRawBytes(entry));
+	public Object getSimpleValue(TiffField entry) {
+		// According to EXIF specification "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL." 
+		byte bytes[] = getRawBytes(entry);
+		// Ignore last (should be NULL) byte.
+		return new String(bytes, 0, bytes.length-1);
 	}
 
 	public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
