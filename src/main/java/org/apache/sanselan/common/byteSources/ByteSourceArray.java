@@ -36,17 +36,19 @@ public class ByteSourceArray extends ByteSource
 		this.bytes = bytes;
 	}
 
-	public InputStream getInputStream() //throws IOException
+	public InputStream getInputStream()
 	{
 		return new ByteArrayInputStream(bytes);
 	}
 
 	public byte[] getBlock(int start, int length) throws IOException
 	{
-		if (start + length > bytes.length)
+		// We include a separate check for int overflow.
+		if ((start < 0) || (length < 0) || (start + length < 0) || (start + length > bytes.length)) {
 			throw new IOException("Could not read block (block start: " + start
 					+ ", block length: " + length + ", data length: "
 					+ bytes.length + ").");
+		}
 
 		byte result[] = new byte[length];
 		System.arraycopy(bytes, start, result, 0, length);

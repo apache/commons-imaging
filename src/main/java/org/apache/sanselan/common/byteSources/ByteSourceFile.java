@@ -47,10 +47,18 @@ public class ByteSourceFile extends ByteSource
 
 	public byte[] getBlock(int start, int length) throws IOException
 	{
+		
 		RandomAccessFile raf = null;
 		try
 		{
 			raf = new RandomAccessFile(file, "r");
+			
+			// We include a separate check for int overflow.
+			if ((start < 0) || (length < 0) || (start + length < 0) || (start + length > raf.length())) {
+				throw new IOException("Could not read block (block start: " + start
+						+ ", block length: " + length + ", data length: "
+						+ raf.length() + ").");
+			}
 
 			return getRAFBytes(raf, start, length,
 					"Could not read value from file");

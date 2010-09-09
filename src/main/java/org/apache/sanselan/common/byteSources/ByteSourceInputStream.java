@@ -167,12 +167,22 @@ public class ByteSourceInputStream extends ByteSource
 		return new CacheReadingInputStream();
 	}
 
-	public byte[] getBlock(int start, int length) throws IOException
+	public byte[] getBlock(int blockStart, int blockLength) throws IOException
 	{
-		InputStream is = getInputStream();
-		is.skip(start);
+		// We include a separate check for int overflow.
+		if ((blockStart < 0)
+				|| (blockLength < 0)
+				|| (blockStart + blockLength < 0)
+				|| (blockStart + blockLength > streamLength.longValue())) {
+			throw new IOException("Could not read block (block start: " + blockStart
+					+ ", block length: " + blockLength + ", data length: "
+					+ streamLength + ").");
+		}
 
-		byte bytes[] = new byte[length];
+		InputStream is = getInputStream();
+		is.skip(blockStart);
+
+		byte bytes[] = new byte[blockLength];
 		int total = 0;
 		while (true)
 		{
@@ -180,24 +190,24 @@ public class ByteSourceInputStream extends ByteSource
 			if (read < 1)
 				throw new IOException("Could not read block.");
 			total += read;
-			if (total >= length)
+			if (total >= blockLength)
 				return bytes;
 		}
 	}
 
-	private Long length = null;
+	private Long streamLength = null;
 
 	public long getLength() throws IOException
 	{
-		if (length != null)
-			return length.longValue();
+		if (streamLength != null)
+			return streamLength.longValue();
 
 		InputStream is = getInputStream();
 		long result = 0;
 		long skipped;
 		while ((skipped = is.skip(1024)) > 0)
 			result += skipped;
-		length = new Long(result);
+		streamLength = new Long(result);
 		return result;
 	}
 
