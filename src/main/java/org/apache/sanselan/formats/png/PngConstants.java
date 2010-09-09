@@ -73,8 +73,8 @@ public interface PngConstants extends SanselanConstants
 	public final static int iTXt = PngImageParser.CharsToQuad('i', 'T', 'X',
 			't');
 
-	public static final byte PNG_Signature[] = { (byte) 137, 80, 78, 71, 13,
-			10, 26, 10, };
+	public static final byte PNG_Signature[] = { 
+		(byte) 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, };
 
 	public static final String PARAM_KEY_PNG_BIT_DEPTH = "PNG_BIT_DEPTH";
 	public static final String PARAM_KEY_PNG_FORCE_INDEXED_COLOR = "PNG_FORCE_INDEXED_COLOR";

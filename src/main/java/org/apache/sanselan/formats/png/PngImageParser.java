@@ -96,7 +96,55 @@ public class PngImageParser extends ImageParser implements PngConstants
 	}
 
 	// private final static int tRNS = CharsToQuad('t', 'R', 'N', 's');
+	
+	public static final String getChunkTypeName(int chunkType) {
+		StringBuffer result = new StringBuffer();
+		result.append((char) (0xff & (chunkType >> 24)));
+		result.append((char) (0xff & (chunkType >> 16)));
+		result.append((char) (0xff & (chunkType >> 8)));
+		result.append((char) (0xff & (chunkType >> 0)));
+		return result.toString();
+	}
+	
+	/**
+	 * @return List of String-formatted chunk types, ie. "tRNs".
+	 */
+	public List getChuckTypes(InputStream is) throws ImageReadException, IOException {
+		List chunks = readChunks(is, null, false);
+		List chunkTypes = new ArrayList();
+		for (int i=0; i<chunks.size(); i++) {
+			PNGChunk chunk = (PNGChunk) chunks.get(i);
+			chunkTypes.add(getChunkTypeName(chunk.chunkType));
+		}
+		return chunkTypes;
+	}
+	
+	public boolean hasChuckType(ByteSource byteSource, int chunkType) throws ImageReadException, IOException
+	{
+		InputStream is = null;
 
+		try
+		{
+			is = byteSource.getInputStream();
+
+			ArrayList chunks = null;
+
+			readSignature(is);
+			chunks = readChunks(is, new int[] { chunkType, }, true);
+			return chunks.size() > 0;
+		} finally
+		{
+			try
+			{
+				is.close();
+			} catch (Exception e)
+			{
+				Debug.debug(e);
+			}
+		}
+	}
+	
+	
 	private boolean keepChunk(int ChunkType, int chunkTypes[])
 	{
 		// System.out.println("keepChunk: ");
@@ -123,7 +171,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 			int length = read4Bytes("Length", is, "Not a Valid PNG File");
 			int chunkType = read4Bytes("ChunkType", is, "Not a Valid PNG File");
-
+			
 			if (debug)
 			{
 				printCharQuad("ChunkType", chunkType);
@@ -144,7 +192,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 					debugNumber("bytes", bytes.length, 4);
 
 			int CRC = read4Bytes("CRC", is, "Not a Valid PNG File");
-
+			
 			if (keep)
 			{
 				if (chunkType == iCCP)
@@ -181,7 +229,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 
 	}
 
-	private void readSignature(InputStream is) throws ImageReadException,
+	public void readSignature(InputStream is) throws ImageReadException,
 			IOException
 	{
 		readAndVerifyBytes(is, PNG_Signature,
@@ -622,7 +670,6 @@ public class PngImageParser extends ImageParser implements PngConstants
 	public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
-
 		boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
 				false);
 

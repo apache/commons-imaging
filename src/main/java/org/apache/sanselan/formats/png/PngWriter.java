@@ -420,6 +420,7 @@ public class PngWriter implements PngConstants
 			{
 				colorType = (byte) (hasAlpha ? COLOR_TYPE_TRUE_COLOR_WITH_ALPHA
 						: COLOR_TYPE_TRUE_COLOR);
+				isGrayscale = false;
 			} else
 				colorType = getColourType(hasAlpha, isGrayscale);
 			if (verbose)
