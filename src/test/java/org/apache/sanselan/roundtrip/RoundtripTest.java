@@ -66,7 +66,7 @@ public class RoundtripTest extends SanselanTest
 					COLOR_FULL_RGB, true), //
 			new FormatInfo(ImageFormat.IMAGE_FORMAT_GIF, true, true,
 					COLOR_LIMITED_INDEX, true), //
-			new FormatInfo(ImageFormat.IMAGE_FORMAT_ICO, true, false,
+			new FormatInfo(ImageFormat.IMAGE_FORMAT_ICO, true, true,
 					COLOR_FULL_RGB, true), //
 			new FormatInfo(ImageFormat.IMAGE_FORMAT_TIFF, true, true,
 					COLOR_FULL_RGB, true), //

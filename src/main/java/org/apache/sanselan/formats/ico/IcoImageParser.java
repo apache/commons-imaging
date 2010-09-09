@@ -23,18 +23,28 @@ import java.awt.image.DataBufferInt;
 import java.awt.image.Raster;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageParser;
 import org.apache.sanselan.ImageReadException;
+import org.apache.sanselan.ImageWriteException;
+import org.apache.sanselan.Sanselan;
+import org.apache.sanselan.formats.bmp.BmpImageParser;
+import org.apache.sanselan.common.BinaryOutputStream;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
+import org.apache.sanselan.palette.PaletteFactory;
+import org.apache.sanselan.palette.SimplePalette;
 import org.apache.sanselan.util.Debug;
 
 public class IcoImageParser extends ImageParser
@@ -135,6 +145,11 @@ public class IcoImageParser extends ImageParser
 		int Reserved = read2Bytes("Reserved", is, "Not a Valid ICO File");
 		int IconType = read2Bytes("IconType", is, "Not a Valid ICO File");
 		int IconCount = read2Bytes("IconCount", is, "Not a Valid ICO File");
+
+		if (Reserved != 0)
+			throw new ImageReadException("Not a Valid ICO File: reserved is " + Reserved);
+		if (IconType != 1 && IconType != 2)
+			throw new ImageReadException("Not a Valid ICO File: icon type is " + IconType);
 
 		return new FileHeader(Reserved, IconType, IconCount);
 
@@ -250,60 +265,76 @@ public class IcoImageParser extends ImageParser
 		}
 	}
 
-	private static class IconData
+	private static abstract class IconData
 	{
 		public final IconInfo iconInfo;
-		public final BitmapHeader header;
-		public final byte palette[];
-		public final byte color_map[];
-		public final int scanline_size;
-		public final byte transparency_map[];
-		public final int t_scanline_size;
 
-		public IconData(final IconInfo iconInfo, final BitmapHeader header,
-				final byte[] palette, final byte[] color_map,
-				final int scanline_size, final byte[] transparency_map,
-				final int t_scanline_size)
+		public IconData(final IconInfo iconInfo)
 		{
-			super();
 			this.iconInfo = iconInfo;
+		}
+
+		public abstract BufferedImage readBufferedImage() throws ImageReadException;
+	}
+
+	private static class BitmapIconData extends IconData
+	{
+		public final BitmapHeader header;
+		public final BufferedImage bufferedImage;
+
+		public BitmapIconData(final IconInfo iconInfo, final BitmapHeader header,
+				final BufferedImage bufferedImage)
+		{
+			super(iconInfo);
 			this.header = header;
-			this.palette = palette;
-			this.color_map = color_map;
-			this.scanline_size = scanline_size;
-			this.transparency_map = transparency_map;
-			this.t_scanline_size = t_scanline_size;
+			this.bufferedImage = bufferedImage;
+		}
+
+		public BufferedImage readBufferedImage() throws ImageReadException
+		{
+			return bufferedImage;
 		}
 
 		public void dump()
 		{
-			System.out.println("IconData");
+			System.out.println("BitmapIconData");
 
 			iconInfo.dump();
 			header.dump();
-
-			System.out.println("scanline_size: " + scanline_size);
-			System.out.println("t_scanline_size: " + t_scanline_size);
-			System.out.println("palette: "
-					+ ((palette == null) ? "null" : "" + palette.length));
-			System.out.println("color_map: "
-					+ ((color_map == null) ? "null" : "" + color_map.length));
-			System.out.println("transparency_map: "
-					+ ((transparency_map == null) ? "null" : ""
-							+ transparency_map.length));
-
-			System.out.println("");
 		}
 	}
 
-	private IconData readIconData(InputStream is, IconInfo fIconInfo)
-			throws ImageReadException, IOException
+	private static class PNGIconData extends IconData
 	{
+		public final BufferedImage bufferedImage;
+
+		public PNGIconData(final IconInfo iconInfo, final BufferedImage bufferedImage)
+		{
+			super(iconInfo);
+			this.bufferedImage = bufferedImage;
+		}
+
+		public BufferedImage readBufferedImage()
+		{
+			return bufferedImage;
+		}
+
+		public void dump()
+		{
+			System.out.println("PNGIconData");
+
+			iconInfo.dump();
+		}
+	}
+
+	private IconData readBitmapIconData(byte[] iconData, IconInfo fIconInfo) throws ImageReadException, ImageWriteException, IOException
+	{
+		ByteArrayInputStream is = new ByteArrayInputStream(iconData);
 		int Size = read4Bytes("Size", is, "Not a Valid ICO File"); // Size (4 bytes), size of this structure (always 40)
 		int Width = read4Bytes("Width", is, "Not a Valid ICO File"); // Width (4 bytes), width of the image (same as iconinfo.width)
 		int Height = read4Bytes("Height", is, "Not a Valid ICO File"); // Height (4 bytes), scanlines in the color map + transparent map (iconinfo.height * 2)
 		int Planes = read2Bytes("Planes", is, "Not a Valid ICO File"); // Planes (2 bytes), always 1
-		int BitCount = read2Bytes("BitCount", is, "Not a Valid ICO File"); // BitCount (2 bytes), 1,4,8,24,32 (see iconinfo for details)
+		int BitCount = read2Bytes("BitCount", is, "Not a Valid ICO File"); // BitCount (2 bytes), 1,4,8,16,24,32 (see iconinfo for details)
 		int Compression = read4Bytes("Compression", is, "Not a Valid ICO File"); // Compression (4 bytes), we don?t use this (0)
 		int SizeImage = read4Bytes("SizeImage", is, "Not a Valid ICO File"); // SizeImage (4 bytes), we don?t use this (0)
 		int XPelsPerMeter = read4Bytes("XPelsPerMeter", is,
@@ -314,50 +345,125 @@ public class IcoImageParser extends ImageParser
 		int ColorsImportant = read4Bytes("ColorsImportant", is,
 				"Not a Valid ICO File"); // ColorsImportant (4 bytes), we don?t use this (0)
 
+		if (Size != 40)
+			throw new ImageReadException("Not a Valid ICO File: Wrong bitmap header size " + Size);
+		if (Planes != 1)
+			throw new ImageReadException("Not a Valid ICO File: Planes can't be " + Planes);
+
 		BitmapHeader header = new BitmapHeader(Size, Width, Height, Planes,
 				BitCount, Compression, SizeImage, XPelsPerMeter, YPelsPerMeter,
 				ColorsUsed, ColorsImportant);
 
-		//		System.out.println("XXXXXXXXXXXXXXXXXXXX");
-		//		fIconInfo.dump();
-		//		header.dump();
-		//		System.out.println("XXXXXXXXXXXXXXXXXXXX");
+		int bitmapPixelsOffset = 14 + 40 + ((Compression == 3) ? 3*4 : 0) +
+				4 * ((ColorsUsed == 0 && BitCount <= 8) ? (1 << BitCount) : ColorsUsed);
+		int bitmapSize = 14 + iconData.length;
 
-		int palette_size = 0;
-		byte palette[] = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(14 + iconData.length);
+		BinaryOutputStream bos = new BinaryOutputStream(baos,
+				BinaryOutputStream.BYTE_ORDER_LITTLE_ENDIAN);
 
-		if ((fIconInfo.BitCount == 1) || (fIconInfo.BitCount == 4)
-				|| (fIconInfo.BitCount == 8))
-		{
-			palette_size = 4 * (1 << fIconInfo.BitCount);
-			palette = this.readByteArray("palette", palette_size, is,
-					"Not a Valid ICO File");
-		}
+		bos.write((int)'B');
+		bos.write((int)'M');
+		bos.write4Bytes(bitmapSize);
+		bos.write4Bytes(0);
+		bos.write4Bytes(bitmapPixelsOffset);
 
-		byte color_map[] = null;
-		int scanline_size = (fIconInfo.BitCount * fIconInfo.Width + 7) / 8;
-		if ((scanline_size % 4) != 0)
-			scanline_size += 4 - (scanline_size % 4); // pad scanline to 4 byte size.
+		bos.write4Bytes(Size);
+		bos.write4Bytes(Width);
+		bos.write4Bytes(Height / 2);
+		bos.write2Bytes(Planes);
+		bos.write2Bytes(BitCount);
+		bos.write4Bytes(Compression);
+		bos.write4Bytes(SizeImage);
+		bos.write4Bytes(XPelsPerMeter);
+		bos.write4Bytes(YPelsPerMeter);
+		bos.write4Bytes(ColorsUsed);
+		bos.write4Bytes(ColorsImportant);
+		bos.write(iconData, 40, iconData.length - 40);
+		bos.flush();
 
-		int color_map_size_bytes = scanline_size * fIconInfo.Height;
-		{
-			color_map = this.readByteArray("color_map", color_map_size_bytes,
-					is, "Not a Valid ICO File");
-		}
+		ByteArrayInputStream bmpInputStream = new ByteArrayInputStream(baos.toByteArray());
+		BufferedImage bmpImage = new BmpImageParser().getBufferedImage(bmpInputStream, null);
 
-		byte transparency_map[] = null;
-		int t_scanline_size = (fIconInfo.Width + 7) / 8;
+		// Transparency map is optional with 32 BPP icons, because they already have
+		// an alpha channel, and Windows only uses the transparency map when it has to
+		// display the icon on a < 32 BPP screen. But it's still used instead of alpha
+		// if the image would be completely transparent with alpha...
+		int t_scanline_size = (Width + 7) / 8;
 		if ((t_scanline_size % 4) != 0)
 			t_scanline_size += 4 - (t_scanline_size % 4); // pad scanline to 4 byte size.
-
-		int tcolor_map_size_bytes = t_scanline_size * fIconInfo.Height;
+		int tcolor_map_size_bytes = t_scanline_size * (Height/2);
+		byte[] transparency_map = null;
+		try
 		{
 			transparency_map = this.readByteArray("transparency_map",
-					tcolor_map_size_bytes, is, "Not a Valid ICO File");
+					tcolor_map_size_bytes, bmpInputStream, "Not a Valid ICO File");
+		}
+		catch (IOException ioEx)
+		{
+			if (BitCount != 32)
+			throw ioEx;
 		}
 
-		return new IconData(fIconInfo, header, palette, color_map,
-				scanline_size, transparency_map, t_scanline_size);
+		// FIXME: get BmpImageParser to support alpha, then uncomment below
+//		boolean allAlphasZero = true;
+//		if (BitCount == 32)
+//		{
+//			for (int y = 0; allAlphasZero && y < bmpImage.getHeight(); y++)
+//			{
+//				for (int x = 0; x < bmpImage.getWidth(); x++)
+//				{
+//					if ((bmpImage.getRGB(x, y) & 0xff000000) != 0)
+//					{
+//						allAlphasZero = false;
+//						break;
+//					}
+//				}
+//			}
+//		}
+		BufferedImage resultImage = new BufferedImage(bmpImage.getWidth(), bmpImage.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		for (int y = 0; y < resultImage.getHeight(); y++)
+		{
+			for (int x = 0; x < resultImage.getWidth(); x++)
+			{
+				int alpha = 0xff;
+				if (transparency_map != null)
+				{
+					int alpha_byte = 0xff & transparency_map[t_scanline_size
+							* (bmpImage.getHeight() - y - 1) + (x / 8)];
+					alpha = 0x01 & (alpha_byte >> (7 - (x % 8)));
+					alpha = (alpha == 0) ? 0xff : 0x00;
+				}
+				// FIXME: get the BMP decoder to support alpha, then uncomment below
+				//if (BitCount < 32 || allAlphasZero)
+					resultImage.setRGB(x, y, (alpha << 24) | (0xffffff & bmpImage.getRGB(x, y)));
+			}
+		}
+		return new BitmapIconData(fIconInfo, header, resultImage);
+	}
+
+	private IconData readIconData(byte[] iconData, IconInfo fIconInfo)
+			throws ImageReadException, IOException
+	{
+		ImageFormat imageFormat = Sanselan.guessFormat(iconData);
+		if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_PNG))
+		{
+			BufferedImage bufferedImage = Sanselan.getBufferedImage(iconData);
+			PNGIconData pngIconData = new PNGIconData(fIconInfo, bufferedImage);
+			return pngIconData;
+		}
+		else
+		{
+			try
+			{
+				return readBitmapIconData(iconData, fIconInfo);
+			}
+			catch (ImageWriteException imageWriteException)
+			{
+				throw new IOException(imageWriteException);
+			}
+		}
 	}
 
 	private static class ImageContents
@@ -395,7 +501,9 @@ public class IcoImageParser extends ImageParser
 			IconData fIconDatas[] = new IconData[fileHeader.iconCount];
 			for (int i = 0; i < fileHeader.iconCount; i++)
 			{
-				fIconDatas[i] = readIconData(is, fIconInfos[i]);
+				byte[] iconData = byteSource.getBlock(fIconInfos[i].ImageOffset,
+						fIconInfos[i].ImageSize);
+				fIconDatas[i] = readIconData(iconData, fIconInfos[i]);
 				//				fIconDatas[i].dump();
 			}
 
@@ -418,82 +526,12 @@ public class IcoImageParser extends ImageParser
 	public final BufferedImage getBufferedImage(ByteSource byteSource,
 			Map params) throws ImageReadException, IOException
 	{
-		throw new ImageReadException(
-				"Use getAllBufferedImages() instead for .ico images.");
-	}
-
-	private BufferedImage readBufferedImage(IconData fIconData)
-			throws ImageReadException
-	{
-		IconInfo fIconInfo = fIconData.iconInfo;
-
-		int width = fIconInfo.Width;
-		int height = fIconInfo.Height;
-		int data[] = new int[width * height];
-
-		for (int y = 0; y < height; y++)
-		{
-			for (int x = 0; x < width; x++)
-			{
-				int rgb;
-
-				int alpha_byte = 0xff & fIconData.transparency_map[fIconData.t_scanline_size
-						* y + (x / 8)];
-				int alpha = 0x01 & (alpha_byte >> (7 - (x % 8)));
-				alpha = (alpha == 0) ? 0xff : 0x00;
-
-				if ((fIconInfo.BitCount == 1) || (fIconInfo.BitCount == 4)
-						|| (fIconInfo.BitCount == 8))
-				{
-					int bit_index = fIconData.scanline_size * y * 8 + x
-							* fIconInfo.BitCount;
-					int b = 0xff & fIconData.color_map[(bit_index >> 3)];
-					int mask = (1 << fIconInfo.BitCount) - 1;
-					int shift = 8 - (bit_index % 8) - fIconInfo.BitCount;
-					int color_index = mask & (b >> shift);
-
-					int red = 0xff & fIconData.palette[4 * color_index + 2];
-					int green = 0xff & fIconData.palette[4 * color_index + 1];
-					int blue = 0xff & fIconData.palette[4 * color_index + 0];
-					rgb = ((0xff & red) << 16) | ((0xff & green) << 8)
-							| ((0xff & blue) << 0);
-				}
-				else if ((fIconInfo.BitCount == 24)
-						|| (fIconInfo.BitCount == 32))
-				{
-					int byte_count = fIconInfo.BitCount >> 3;
-					int index = fIconData.scanline_size * y + x * byte_count;
-					int red = 0xff & fIconData.color_map[index + 2];
-					int green = 0xff & fIconData.color_map[index + 1];
-					int blue = 0xff & fIconData.color_map[index + 0];
-
-					rgb = ((0xff & red) << 16) | ((0xff & green) << 8)
-							| ((0xff & blue) << 0);
-				}
-				else
-					throw new ImageReadException("Unknown BitCount: "
-							+ fIconInfo.BitCount);
-
-				int argb = ((alpha & 0xff) << 24) | (rgb & 0xffffff);
-
-				//				argb = 0xff000000 | argb;
-
-				data[(height - y - 1) * width + x] = argb;
-			}
-		}
-
-		ColorModel cModel = ColorModel.getRGBdefault();
-		DataBufferInt intBuf = new DataBufferInt(data, (width * height));
-		SampleModel sModel = cModel.createCompatibleSampleModel(width, height);
-
-		// create our raster
-		WritableRaster raster = Raster.createWritableRaster(sModel, intBuf,
-				null);
-
-		// now create and return our buffered image
-		BufferedImage result = new BufferedImage(cModel, raster, false, null);
-
-		return result;
+		ImageContents contents = readImage(byteSource);
+		FileHeader fileHeader = contents.fileHeader;
+		if (fileHeader.iconCount > 0)
+			return contents.iconDatas[0].readBufferedImage();
+		else
+			throw new ImageReadException("No icons in ICO file");
 	}
 
 	public ArrayList getAllBufferedImages(ByteSource byteSource)
@@ -507,7 +545,7 @@ public class IcoImageParser extends ImageParser
 		{
 			IconData iconData = contents.iconDatas[i];
 
-			BufferedImage image = readBufferedImage(iconData);
+			BufferedImage image = iconData.readBufferedImage();
 
 			result.add(image);
 		}
@@ -538,6 +576,196 @@ public class IcoImageParser extends ImageParser
 	//
 	//		return true;
 	//	}
+
+	public void writeImage(BufferedImage src, OutputStream os, Map params)
+			throws ImageWriteException, IOException
+	{
+		// make copy of params; we'll clear keys as we consume them.
+		params = (params == null) ? new HashMap() : new HashMap(params);
+
+		// clear format key.
+		if (params.containsKey(PARAM_KEY_FORMAT))
+			params.remove(PARAM_KEY_FORMAT);
+
+		if (params.size() > 0)
+		{
+			Object firstKey = params.keySet().iterator().next();
+			throw new ImageWriteException("Unknown parameter: " + firstKey);
+		}
+
+		final PaletteFactory paletteFactory = new PaletteFactory();
+		final SimplePalette palette = paletteFactory.makePaletteSimple(src, 256);
+		final int bitCount;
+		final boolean hasTransparency = paletteFactory.hasTransparency(src);
+		if (palette == null)
+		{
+			if (hasTransparency)
+				bitCount = 32;
+			else
+				bitCount = 24;
+		}
+		else if (palette.length() <= 2)
+			bitCount = 1;
+		else if (palette.length() <= 16)
+			bitCount = 4;
+		else
+			bitCount = 8;
+
+		BinaryOutputStream bos = new BinaryOutputStream(os, BYTE_ORDER_INTEL);
+
+		int scanline_size = (bitCount * src.getWidth() + 7) / 8;
+		if ((scanline_size % 4) != 0)
+			scanline_size += 4 - (scanline_size % 4); // pad scanline to 4 byte size.
+		int t_scanline_size = (src.getWidth() + 7) / 8;
+		if ((t_scanline_size % 4) != 0)
+			t_scanline_size += 4 - (t_scanline_size % 4); // pad scanline to 4 byte size.
+		int imageSize = 40 + 4 * (bitCount <= 8 ? (1 << bitCount) : 0) +
+				src.getHeight() * scanline_size +
+				src.getHeight() * t_scanline_size;
+
+		// ICONDIR
+		bos.write2Bytes(0); // reserved
+		bos.write2Bytes(1); // 1=ICO, 2=CUR
+		bos.write2Bytes(1); // count
+
+		// ICONDIRENTRY
+		int iconDirEntryWidth = src.getWidth();
+		int iconDirEntryHeight = src.getHeight();
+		if (iconDirEntryWidth > 255 || iconDirEntryHeight > 255)
+		{
+			iconDirEntryWidth = 0;
+			iconDirEntryHeight = 0;
+		}
+		bos.write(iconDirEntryWidth);
+		bos.write(iconDirEntryHeight);
+		bos.write((bitCount >= 8) ? 0 : (1 << bitCount));
+		bos.write(0); // reserved
+		bos.write2Bytes(1); // color planes
+		bos.write2Bytes(bitCount);
+		bos.write4Bytes(imageSize);
+		bos.write4Bytes(22); // image offset
+
+		// BITMAPINFOHEADER
+		bos.write4Bytes(40); // size
+		bos.write4Bytes(src.getWidth());
+		bos.write4Bytes(2 * src.getHeight());
+		bos.write2Bytes(1); // planes
+		bos.write2Bytes(bitCount);
+		bos.write4Bytes(0); // compression
+		bos.write4Bytes(0); // image size
+		bos.write4Bytes(0); // x pixels per meter
+		bos.write4Bytes(0); // y pixels per meter
+		bos.write4Bytes(0); // colors used, 0 = (1 << bitCount) (ignored)
+		bos.write4Bytes(0); // colors important
+
+		if (palette != null)
+		{
+			for (int i = 0; i < (1 << bitCount); i++)
+			{
+				if (i < palette.length())
+				{
+					int argb = palette.getEntry(i);
+					bos.write(0xff & argb);
+					bos.write(0xff & (argb >> 8));
+					bos.write(0xff & (argb >> 16));
+					bos.write(0);
+				}
+				else
+				{
+					bos.write(0);
+					bos.write(0);
+					bos.write(0);
+					bos.write(0);
+				}
+			}
+		}
+
+		int bit_cache = 0;
+		int bits_in_cache = 0;
+		int row_padding = scanline_size - (bitCount * src.getWidth() + 7) / 8;
+		for (int y = src.getHeight() - 1; y >= 0; y--)
+		{
+			for (int x = 0; x < src.getHeight(); x++)
+			{
+				int argb = src.getRGB(x, y);
+				if (bitCount < 8)
+				{
+					int rgb = 0xffffff & argb;
+					int index = palette.getPaletteIndex(rgb);
+					bit_cache <<= bitCount;
+					bit_cache |= index;
+					bits_in_cache += bitCount;
+					if (bits_in_cache >= 8)
+					{
+						bos.write(0xff & bit_cache);
+						bit_cache = 0;
+						bits_in_cache = 0;
+					}
+				}
+				else if (bitCount == 8)
+				{
+					int rgb = 0xffffff & argb;
+					int index = palette.getPaletteIndex(rgb);
+					bos.write(0xff & index);
+				}
+				else if (bitCount == 24)
+				{
+					bos.write(0xff & argb);
+					bos.write(0xff & (argb >> 8));
+					bos.write(0xff & (argb >> 16));
+				}
+				else if (bitCount == 32)
+				{
+					bos.write(0xff & argb);
+					bos.write(0xff & (argb >> 8));
+					bos.write(0xff & (argb >> 16));
+					bos.write(0xff & (argb >> 24));
+				}
+			}
+
+			if (bits_in_cache > 0)
+			{
+				bit_cache <<= (8 - bits_in_cache);
+				bos.write(0xff & bit_cache);
+				bit_cache = 0;
+				bits_in_cache = 0;
+			}
+
+			for (int x = 0; x < row_padding; x++)
+				bos.write(0);
+		}
+
+		int t_row_padding = t_scanline_size - (src.getWidth() + 7) / 8;
+		for (int y = src.getHeight() - 1; y >= 0; y--)
+		{
+			for (int x = 0; x < src.getWidth(); x++)
+			{
+				int argb = src.getRGB(x, y);
+				int alpha = 0xff & (argb >> 24);
+				bit_cache <<= 1;
+				if (alpha == 0)
+					bit_cache |= 1;
+				bits_in_cache++;
+				if (bits_in_cache >= 8)
+				{
+					bos.write(0xff & bit_cache);
+					bit_cache = 0;
+					bits_in_cache = 0;
+				}
+			}
+
+			if (bits_in_cache > 0)
+			{
+				bit_cache <<= (8 - bits_in_cache);
+				bos.write(0xff & bit_cache);
+				bit_cache = 0;
+				bits_in_cache = 0;
+			}
+
+			for (int x = 0; x < t_row_padding; x++)
+				bos.write(0);
+		}
+	}
 
 	/**
 	 * Extracts embedded XML metadata as XML string.

@@ -568,6 +568,12 @@ public class BmpImageParser extends ImageParser
 	public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
 			throws ImageReadException, IOException
 	{
+		return getBufferedImage(byteSource.getInputStream(), params);
+	}
+
+	public BufferedImage getBufferedImage(InputStream inputStream, Map params)
+			throws ImageReadException, IOException
+	{
 		// make copy of params; we'll clear keys as we consume them.
 		params = (params == null) ? new HashMap() : new HashMap(params);
 
@@ -585,7 +591,7 @@ public class BmpImageParser extends ImageParser
 			throw new ImageReadException("Unknown parameter: " + firstKey);
 		}
 
-		ImageContents ic = readImageContents(byteSource.getInputStream(),
+		ImageContents ic = readImageContents(inputStream,
 				FormatCompliance.getDefault(), verbose);
 		if (ic == null)
 			throw new ImageReadException("Couldn't read BMP Data");
