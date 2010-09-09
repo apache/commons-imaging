@@ -1,0 +1,34 @@
+Index: src/main/java/org/apache/sanselan/formats/jpeg/JpegImageMetadata.java
+===================================================================
+--- src/main/java/org/apache/sanselan/formats/jpeg/JpegImageMetadata.java	(revision 922056)
++++ src/main/java/org/apache/sanselan/formats/jpeg/JpegImageMetadata.java	(working copy)
+@@ -18,12 +18,15 @@
+ 
+ import java.awt.Dimension;
+ import java.awt.image.BufferedImage;
++import java.io.ByteArrayInputStream;
+ import java.io.IOException;
+ import java.util.ArrayList;
++import javax.imageio.ImageIO;
+ 
+ import org.apache.sanselan.ImageReadException;
+ import org.apache.sanselan.Sanselan;
+ import org.apache.sanselan.common.IImageMetadata;
++import org.apache.sanselan.formats.tiff.JpegImageData;
+ import org.apache.sanselan.formats.tiff.TiffField;
+ import org.apache.sanselan.formats.tiff.TiffImageData;
+ import org.apache.sanselan.formats.tiff.TiffImageMetadata;
+@@ -136,6 +139,13 @@
+ 			BufferedImage image = dir.getThumbnail();
+ 			if (null != image)
+ 				return image;
++                        JpegImageData jpegImageData = dir.getJpegImageData();
++                        if(jpegImageData!=null){
++                            ByteArrayInputStream input = new ByteArrayInputStream(jpegImageData.data);
++                            image = ImageIO.read(input);
++                            if (image!=null)
++                                return image;
++                        }
+ 		}
+ 
+ 		return null;

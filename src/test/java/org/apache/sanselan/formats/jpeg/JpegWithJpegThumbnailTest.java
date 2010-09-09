@@ -17,38 +17,30 @@
 
 package org.apache.sanselan.formats.jpeg;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageReadException;
+import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanTest;
+import org.apache.sanselan.common.IImageMetadata;
 
-public abstract class JpegBaseTest extends SanselanTest
-{
+public class JpegWithJpegThumbnailTest extends SanselanTest {
 
-	protected static boolean isJpeg(File file) throws IOException,
-			ImageReadException
-	{
-		ImageFormat format = Sanselan.guessFormat(file);
-		return format == ImageFormat.IMAGE_FORMAT_JPEG;
+	public void testSingleImage() throws IOException, ImageReadException,
+			ImageWriteException {
+		File imageFile = getTestImageByName("img_F028c_small.jpg");
+
+		Map params = new HashMap();
+		IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+		assertNotNull(metadata);
+		JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+		BufferedImage image = jpegMetadata.getEXIFThumbnail(); 
+		assertNotNull(image);
 	}
-
-	public static final ImageFilter imageFilter = new ImageFilter()
-	{
-		public boolean accept(File file) throws IOException, ImageReadException
-		{
-			return isJpeg(file);
-		}
-	};
-
-
-
-	protected List getJpegImages() throws IOException, ImageReadException
-	{
-		return getTestImages(imageFilter);
-	}
-
 }
+

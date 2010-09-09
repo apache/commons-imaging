@@ -18,12 +18,16 @@ package org.apache.sanselan.formats.jpeg;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.IImageMetadata;
+import org.apache.sanselan.formats.tiff.JpegImageData;
 import org.apache.sanselan.formats.tiff.TiffField;
 import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
@@ -134,8 +138,19 @@ public class JpegImageMetadata implements IImageMetadata {
 					.get(i);
 			// Debug.debug("dir", dir);
 			BufferedImage image = dir.getThumbnail();
-			if (null != image)
+			if (null != image) {
 				return image;
+			}
+		
+            JpegImageData jpegImageData = dir.getJpegImageData();
+            if (jpegImageData != null) {
+                ByteArrayInputStream input = new ByteArrayInputStream(jpegImageData.data);
+                // JPEG thumbnail as JPEG or other format; try to parse.
+               	image = ImageIO.read(input);
+                if (image != null) {
+                    return image;
+                }
+            }
 		}
 
 		return null;
