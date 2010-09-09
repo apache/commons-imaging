@@ -41,13 +41,9 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 		File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 
 		Map params = new HashMap();
-//		boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-//		params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
-		// note that metadata might be null if no metadata is found.
 		IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
-		if (null == metadata)
-			return;
+		assertNotNull(metadata);
 		JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 
 		// note that exif might be null if no Exif metadata is found.
@@ -61,8 +57,6 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 		// Good enough for our purposes, since the image in question is known.
 		for (int i = 0; i < fields.size(); i++) {
 			TiffField field = (TiffField) fields.get(i);
-//			Debug.debug("field", field);
-			// checkField(imageFile, field);
 			fieldMap.put(new Integer(field.tag), field);
 		}
 		

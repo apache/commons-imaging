@@ -35,10 +35,19 @@ public class FieldTypeASCII extends FieldType
 
 	public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
 	{
-		if (o instanceof byte[])
-			return (byte[]) o;
-		else if (o instanceof String)
-			return ((String) o).getBytes();
+		if (o instanceof byte[]) {
+			byte bytes[] = (byte[]) o;
+			byte result[] = new byte[bytes.length + 1];
+			System.arraycopy(bytes, 0, result, 0, bytes.length);
+			result[result.length - 1] = 0;
+			return result;
+		} else if (o instanceof String) {
+			byte bytes[] = ((String) o).getBytes();
+			byte result[] = new byte[bytes.length + 1];
+			System.arraycopy(bytes, 0, result, 0, bytes.length);
+			result[result.length - 1] = 0;
+			return result;
+		}
 		else
 			throw new ImageWriteException("Unknown data type: " + o);
 	}
