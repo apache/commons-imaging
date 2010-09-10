@@ -75,7 +75,9 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest
 					new JpegXmpRewriter().removeXmpXml(byteSource, os);
 				} finally
 				{
-					os.close();
+					if (os != null) {
+					    os.close();
+					}
 					os = null;
 				}
 
@@ -101,7 +103,9 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest
 							newXmpXml);
 				} finally
 				{
-					os.close();
+				    if (os != null) {
+				        os.close();
+				    }
 					os = null;
 				}
 
@@ -128,7 +132,9 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest
 							newXmpXml);
 				} finally
 				{
-					os.close();
+				    if (os != null) {
+				        os.close();
+				    }
 					os = null;
 				}
 

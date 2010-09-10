@@ -95,7 +95,9 @@ public class IptcUpdateTest extends IptcBaseTest
 					new JpegIptcRewriter().removeIPTC(byteSource, os);
 				} finally
 				{
-					os.close();
+				    if (os != null) {
+				        os.close();
+				    }
 					os = null;
 				}
 
@@ -152,7 +154,9 @@ public class IptcUpdateTest extends IptcBaseTest
 					new JpegIptcRewriter().removeIPTC(byteSource, os);
 				} finally
 				{
-					os.close();
+                    if (os != null) {
+                        os.close();
+                    }
 					os = null;
 				}
 
@@ -197,7 +201,9 @@ public class IptcUpdateTest extends IptcBaseTest
 					new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
 				} finally
 				{
-					os.close();
+                    if (os != null) {
+                        os.close();
+                    }
 					os = null;
 				}
 
@@ -241,7 +247,9 @@ public class IptcUpdateTest extends IptcBaseTest
 					new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
 				} finally
 				{
-					os.close();
+                    if (os != null) {
+                        os.close();
+                    }
 					os = null;
 				}
 
@@ -286,7 +294,9 @@ public class IptcUpdateTest extends IptcBaseTest
 							noIptcFile), os, newData);
 				} finally
 				{
-					os.close();
+                    if (os != null) {
+                        os.close();
+                    }
 					os = null;
 				}
 
@@ -385,7 +395,9 @@ public class IptcUpdateTest extends IptcBaseTest
 					new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
 				} finally
 				{
-					os.close();
+                    if (os != null) {
+                        os.close();
+                    }
 					os = null;
 				}
 
