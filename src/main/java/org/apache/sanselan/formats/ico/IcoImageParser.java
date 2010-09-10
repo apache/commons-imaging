@@ -461,7 +461,9 @@ public class IcoImageParser extends ImageParser
 			}
 			catch (ImageWriteException imageWriteException)
 			{
-				throw new IOException(imageWriteException);
+			    IOException ioe = new IOException();
+			    ioe.initCause(imageWriteException);
+			    throw ioe;
 			}
 		}
 	}
