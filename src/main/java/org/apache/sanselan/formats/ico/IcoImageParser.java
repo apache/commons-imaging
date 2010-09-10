@@ -510,7 +510,9 @@ public class IcoImageParser extends ImageParser
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			}
 			catch (Exception e)
 			{

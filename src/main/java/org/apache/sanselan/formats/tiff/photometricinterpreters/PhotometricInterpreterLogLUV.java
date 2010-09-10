@@ -56,7 +56,7 @@ public class PhotometricInterpreterLogLUV extends PhotometricInterpreter
 
 		{
 
-			float var_Y = (((float) cieL * 100.0f / 255.0f) + 16.0f) / 116.0f;
+			float var_Y = ((cieL * 100.0f / 255.0f) + 16.0f) / 116.0f;
 			float var_X = cieA / 500.0f + var_Y;
 			float var_Z = var_Y - cieB / 200.0f;
 

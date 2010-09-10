@@ -36,7 +36,7 @@ public class PNGChunkgAMA extends PNGChunk
 
 	public double getGamma()
 	{
-		return 1.0 / ((double) Gamma / 100000.0);
+		return 1.0 / (Gamma / 100000.0);
 	}
 
 }
