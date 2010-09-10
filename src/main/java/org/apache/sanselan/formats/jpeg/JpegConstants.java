@@ -120,7 +120,7 @@ public interface JpegConstants
             0x50, 0x52, 0x4F, 0x46, 0x49, 0x4C, 0x45, 0x0 };
 
     public static final byte PHOTOSHOP_IDENTIFICATION_STRING[] = { //
-    0x50, // P
+            0x50, // P
             0x68, // h
             0x6F, // o
             0x74, // t
@@ -136,7 +136,7 @@ public interface JpegConstants
             0,
     };
     public static final byte CONST_8BIM[] = { //
-    0x38, // 8
+            0x38, // 8
             0x42, // B
             0x49, // I
             0x4D, // M
