@@ -136,7 +136,9 @@ public class PngImageParser extends ImageParser implements PngConstants
 		{
 			try
 			{
-				is.close();
+				if (is != null) {
+				    is.close();
+				}
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -255,7 +257,9 @@ public class PngImageParser extends ImageParser implements PngConstants
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -441,8 +445,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 		return result;
 	}
 
-	private boolean hasAlphaChannel(int ColorType) throws ImageReadException,
-			IOException
+	private boolean hasAlphaChannel(int ColorType) throws ImageReadException
 	{
 		switch (ColorType)
 		{

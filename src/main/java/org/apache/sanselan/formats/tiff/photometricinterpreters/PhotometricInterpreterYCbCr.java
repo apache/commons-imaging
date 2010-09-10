@@ -51,10 +51,10 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter
 	 */
 	public int convertYCbCrtoRGB(int Y, int Cb, int Cr)
 	{
-		double r1 = (((1.164 * ((double) Y - 16.0))) + (1.596 * ((double) Cr - 128.0)));
-		double g1 = (((1.164 * ((double) Y - 16.0)))
-				- (0.813 * ((double) Cr - 128.0)) - (0.392 * ((double) Cb - 128.0)));
-		double b1 = (((1.164 * ((double) Y - 16.0))) + (2.017 * ((double) Cb - 128.0)));
+		double r1 = (((1.164 * (Y - 16.0))) + (1.596 * (Cr - 128.0)));
+		double g1 = (((1.164 * (Y - 16.0)))
+				- (0.813 * (Cr - 128.0)) - (0.392 * (Cb - 128.0)));
+		double b1 = (((1.164 * (Y - 16.0))) + (2.017 * (Cb - 128.0)));
 
 		int r = limit((int) r1, 0, 255);
 		int g = limit((int) g1, 0, 255);

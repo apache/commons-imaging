@@ -106,7 +106,9 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);

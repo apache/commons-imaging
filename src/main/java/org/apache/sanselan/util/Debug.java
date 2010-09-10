@@ -379,15 +379,18 @@ public final class Debug
 
 	public static void debug(String message, Object value[])
 	{
-		if (value == null)
+		if (value == null) {
 			debug(message, "null");
-
-		debug(message, value.length);
-		final int max = 10;
-		for (int i = 0; i < value.length && i < max; i++)
-			debug("\t" + i, value[i]);
-		if (value.length > max)
-			debug("\t...");
+		} else {
+    		debug(message, value.length);
+    		final int max = 10;
+    		for (int i = 0; i < value.length && i < max; i++) {
+    		    debug("\t" + i, value[i]);
+    		}
+    		if (value.length > max) {
+    		    debug("\t...");
+    		}
+		}
 		debug();
 	}
 
@@ -478,15 +481,18 @@ public final class Debug
 	{
 		StringBuffer result = new StringBuffer();
 
-		if (value == null)
+		if (value == null) {
 			result.append(getDebug(message, "null") + newline);
-
-		result.append(getDebug(message, value.length));
-		final int max = 10;
-		for (int i = 0; i < value.length && i < max; i++)
-			result.append(getDebug("\t" + i, value[i]) + newline);
-		if (value.length > max)
-			result.append(getDebug("\t...") + newline);
+		} else {
+    		result.append(getDebug(message, value.length));
+    		final int max = 10;
+    		for (int i = 0; i < value.length && i < max; i++) {
+    		    result.append(getDebug("\t" + i, value[i]) + newline);
+    		}
+    		if (value.length > max) {
+    		    result.append(getDebug("\t...") + newline);
+    		}
+		}
 		result.append(newline);
 
 		return result.toString();

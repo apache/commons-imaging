@@ -67,7 +67,9 @@ public class ByteSourceFile extends ByteSource
 		{
 			try
 			{
-				raf.close();
+				if (raf != null) {
+				    raf.close();
+				}
 			}
 			catch (Exception e)
 			{

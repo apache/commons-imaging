@@ -174,8 +174,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 
 	public static final boolean permissive = true;
 
-	private byte[] assembleSegments(ArrayList v) throws ImageReadException,
-			IOException
+	private byte[] assembleSegments(ArrayList v) throws ImageReadException
 	{
 		try
 		{
@@ -187,7 +186,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 	}
 
 	private byte[] assembleSegments(ArrayList v, boolean start_with_zero)
-			throws ImageReadException, IOException
+			throws ImageReadException
 	{
 		if (v.size() < 1)
 			throw new ImageReadException("No App2 Segments Found.");
@@ -336,6 +335,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 		return result;
 	}
 
+	// TODO unused
 	private ArrayList filterSegments(ArrayList v, List markers)
 	{
 		ArrayList result = new ArrayList();
@@ -780,12 +780,10 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 
 		if (units_per_inch > 0)
 		{
-			PhysicalWidthDpi = (int) Math.round((double) x_density
-					/ units_per_inch);
-			PhysicalWidthInch = (float) ((double) Width / (x_density * units_per_inch));
-			PhysicalHeightDpi = (int) Math.round((double) y_density
-					* units_per_inch);
-			PhysicalHeightInch = (float) ((double) Height / (y_density * units_per_inch));
+			PhysicalWidthDpi = (int) Math.round(x_density / units_per_inch);
+			PhysicalWidthInch = (float) (Width / (x_density * units_per_inch));
+			PhysicalHeightDpi = (int) Math.round(y_density 	* units_per_inch);
+			PhysicalHeightInch = (float) (Height / (y_density * units_per_inch));
 		}
 
 		ArrayList Comments = new ArrayList();

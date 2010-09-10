@@ -18,11 +18,6 @@ package org.apache.sanselan.formats.ico;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.DataBufferInt;
-import java.awt.image.Raster;
-import java.awt.image.SampleModel;
-import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -362,8 +357,8 @@ public class IcoImageParser extends ImageParser
 		BinaryOutputStream bos = new BinaryOutputStream(baos,
 				BinaryOutputStream.BYTE_ORDER_LITTLE_ENDIAN);
 
-		bos.write((int)'B');
-		bos.write((int)'M');
+		bos.write('B');
+		bos.write('M');
 		bos.write4Bytes(bitmapSize);
 		bos.write4Bytes(0);
 		bos.write4Bytes(bitmapPixelsOffset);

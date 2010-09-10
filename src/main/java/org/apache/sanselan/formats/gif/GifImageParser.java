@@ -422,8 +422,7 @@ public class GifImageParser extends ImageParser
 	}
 
 	private byte[] readColorTable(InputStream is, int ct_size,
-			FormatCompliance formatCompliance) throws ImageReadException,
-			IOException
+			FormatCompliance formatCompliance) throws IOException
 	{
 		int actual_size = convertColorTableSize(ct_size);
 
@@ -433,6 +432,7 @@ public class GifImageParser extends ImageParser
 		return bytes;
 	}
 
+	// TODO - unused
 	private GIFHeaderInfo readHeader(ByteSource byteSource)
 			throws ImageReadException, IOException
 	{
@@ -446,7 +446,9 @@ public class GifImageParser extends ImageParser
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -500,7 +502,9 @@ public class GifImageParser extends ImageParser
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -553,8 +557,7 @@ public class GifImageParser extends ImageParser
 		return null;
 	}
 
-	private ArrayList getComments(ArrayList v) throws ImageReadException,
-			IOException
+	private ArrayList getComments(ArrayList v) throws IOException
 	{
 		ArrayList result = new ArrayList();
 		int code = 0x21fe;
@@ -670,8 +673,7 @@ public class GifImageParser extends ImageParser
 		return true;
 	}
 
-	private int[] getColorTable(byte bytes[]) throws ImageReadException,
-			IOException
+	private int[] getColorTable(byte bytes[]) throws ImageReadException
 	{
 		if ((bytes.length % 3) != 0)
 			throw new ImageReadException("Bad Color Table Length: "
@@ -1174,7 +1176,9 @@ public class GifImageParser extends ImageParser
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);

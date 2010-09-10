@@ -388,7 +388,9 @@ public class BmpImageParser extends ImageParser
 		{
 			try
 			{
-				is.close();
+				if (is != null) {
+				    is.close();
+				}
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -511,10 +513,10 @@ public class BmpImageParser extends ImageParser
 		// boolean isProgressive = (fPNGChunkIHDR.InterlaceMethod != 0);
 		//
 		// pixels per meter
-		int physicalWidthDpi = (int) ((double) bhi.hResolution * 1000.0 / 2.54);
+		int physicalWidthDpi = (int) (bhi.hResolution * 1000.0 / 2.54);
 		float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
 		// int physicalHeightDpi = 72;
-		int physicalHeightDpi = (int) ((double) bhi.vResolution * 1000.0 / 2.54);
+		int physicalHeightDpi = (int) (bhi.vResolution * 1000.0 / 2.54);
 		float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
 
 		String formatDetails = "Bmp (" + (char) bhi.identifier1

@@ -94,7 +94,9 @@ public class PsdImageParser extends ImageParser
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -276,7 +278,9 @@ public class PsdImageParser extends ImageParser
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -409,7 +413,9 @@ public class PsdImageParser extends ImageParser
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -435,7 +441,9 @@ public class PsdImageParser extends ImageParser
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -583,8 +591,8 @@ public class PsdImageParser extends ImageParser
 		return result;
 	}
 
+	// TODO not used
 	private ImageResourceBlock findImageResourceBlock(ArrayList blocks, int ID)
-			throws ImageReadException, IOException
 	{
 		for (int i = 0; i < blocks.size(); i++)
 		{

@@ -133,7 +133,9 @@ public class PNMImageParser extends ImageParser implements PNMConstants
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);
@@ -283,7 +285,9 @@ public class PNMImageParser extends ImageParser implements PNMConstants
 		{
 			try
 			{
-				is.close();
+			    if (is != null) {
+			        is.close();
+			    }
 			} catch (Exception e)
 			{
 				Debug.debug(e);

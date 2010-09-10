@@ -703,7 +703,7 @@ public abstract class ColorConversions
 
 		{
 
-			double var_Y = (((double) cieL * 100.0 / 255.0) + 16.0) / 116.0;
+			double var_Y = ((cieL * 100.0 / 255.0) + 16.0) / 116.0;
 			double var_X = cieA / 500.0 + var_Y;
 			double var_Z = var_Y - cieB / 200.0;
 
