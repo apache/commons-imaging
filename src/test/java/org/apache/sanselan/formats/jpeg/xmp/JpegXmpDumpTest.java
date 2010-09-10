@@ -32,26 +32,26 @@ import org.apache.sanselan.util.Debug;
 public class JpegXmpDumpTest extends JpegXmpBaseTest
 {
 
-	public void test() throws IOException, ImageReadException
-	{
-		List images = getImagesWithXmpData();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+    public void test() throws IOException, ImageReadException
+    {
+        List images = getImagesWithXmpData();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
-			Debug.debug();
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile);
+            Debug.debug();
 
-			ByteSource byteSource = new ByteSourceFile(imageFile);
-			Map params = new HashMap();
-			String xmpXml = new JpegImageParser().getXmpXml(byteSource, params );
-			assertNotNull(xmpXml);
+            ByteSource byteSource = new ByteSourceFile(imageFile);
+            Map params = new HashMap();
+            String xmpXml = new JpegImageParser().getXmpXml(byteSource, params );
+            assertNotNull(xmpXml);
 
-			Debug.debug("xmpXml", xmpXml);
-			Debug.debug();
-		}
-	}
+            Debug.debug("xmpXml", xmpXml);
+            Debug.debug();
+        }
+    }
 
 }

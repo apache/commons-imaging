@@ -34,42 +34,42 @@ import org.apache.sanselan.util.Debug;
 
 public class ExifDumpTest extends ExifBaseTest
 {
-	//	public ExifDumpTest(String name)
-	//	{
-	//		super(name);
-	//	}
+    //    public ExifDumpTest(String name)
+    //    {
+    //        super(name);
+    //    }
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		List images = getImagesWithExifData();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if(i%10==0)
-			Debug.purgeMemory();
+    public void test() throws IOException, ImageReadException,
+            ImageWriteException
+    {
+        List images = getImagesWithExifData();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if(i%10==0)
+            Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
-			Debug.debug();
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile);
+            Debug.debug();
 
-			ByteSource byteSource = new ByteSourceFile(imageFile);
-			Debug.debug("Segments:");
-			new JpegUtils().dumpJFIF(byteSource);
+            ByteSource byteSource = new ByteSourceFile(imageFile);
+            Debug.debug("Segments:");
+            new JpegUtils().dumpJFIF(byteSource);
 
-			Map params = new HashMap();
-			boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-			params
-					.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
-							!ignoreImageData));
+            Map params = new HashMap();
+            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            params
+                    .put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
+                            !ignoreImageData));
 
-			JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
-					.getMetadata(imageFile, params);
-			if (null == metadata)
-				continue;
-			//			assertNotNull(metadata.getExif());
+            JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
+                    .getMetadata(imageFile, params);
+            if (null == metadata)
+                continue;
+            //            assertNotNull(metadata.getExif());
 
-			metadata.dump();
-		}
-	}
+            metadata.dump();
+        }
+    }
 
 }

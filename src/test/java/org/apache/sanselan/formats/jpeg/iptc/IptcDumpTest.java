@@ -32,53 +32,53 @@ import org.apache.sanselan.util.Debug;
 public class IptcDumpTest extends IptcBaseTest
 {
 
-	public void test() throws IOException, ImageReadException
-	{
-		List images = getImagesWithIptcData();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+    public void test() throws IOException, ImageReadException
+    {
+        List images = getImagesWithIptcData();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
-			Debug.debug();
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile);
+            Debug.debug();
 
-			// ByteSource byteSource = new ByteSourceFile(imageFile);
-			// Debug.debug("Segments:");
-			// new JpegUtils().dumpJFIF(byteSource);
+            // ByteSource byteSource = new ByteSourceFile(imageFile);
+            // Debug.debug("Segments:");
+            // new JpegUtils().dumpJFIF(byteSource);
 
-			Map params = new HashMap();
-			boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-			params
-					.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
-							!ignoreImageData));
-			// params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
+            Map params = new HashMap();
+            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            params
+                    .put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
+                            !ignoreImageData));
+            // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-			JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
-					.getMetadata(imageFile, params);
-			assertNotNull(metadata);
-			assertNotNull(metadata.getPhotoshop());
+            JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
+                    .getMetadata(imageFile, params);
+            assertNotNull(metadata);
+            assertNotNull(metadata.getPhotoshop());
 
-			metadata.getPhotoshop().dump();
-			// if(metadata.getPhotoshop().getItems().size()>0)
-			// Debug.debug("iptc size",
-			// metadata.getPhotoshop().getItems().size());
+            metadata.getPhotoshop().dump();
+            // if(metadata.getPhotoshop().getItems().size()>0)
+            // Debug.debug("iptc size",
+            // metadata.getPhotoshop().getItems().size());
 
-			JpegPhotoshopMetadata psMetadata = metadata.getPhotoshop();
-			List oldRecords = psMetadata.photoshopApp13Data.getRecords();
+            JpegPhotoshopMetadata psMetadata = metadata.getPhotoshop();
+            List oldRecords = psMetadata.photoshopApp13Data.getRecords();
 
-			System.out.println();
-			for (int j = 0; j < oldRecords.size(); j++)
-			{
-				IPTCRecord record = (IPTCRecord) oldRecords.get(j);
-				if (record.iptcType.type != IPTCConstants.IPTC_TYPE_CITY.type)
-					System.out.println("Key: " + record.iptcType.name + " (0x"
-							+ Integer.toHexString(record.iptcType.type)
-							+ "), value: " + record.value);
-			}
-			System.out.println();
-		}
-	}
+            System.out.println();
+            for (int j = 0; j < oldRecords.size(); j++)
+            {
+                IPTCRecord record = (IPTCRecord) oldRecords.get(j);
+                if (record.iptcType.type != IPTCConstants.IPTC_TYPE_CITY.type)
+                    System.out.println("Key: " + record.iptcType.name + " (0x"
+                            + Integer.toHexString(record.iptcType.type)
+                            + "), value: " + record.value);
+            }
+            System.out.println();
+        }
+    }
 
 }

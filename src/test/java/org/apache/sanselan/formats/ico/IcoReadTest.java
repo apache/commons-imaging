@@ -33,29 +33,29 @@ import org.apache.sanselan.util.Debug;
 public class IcoReadTest extends IcoBaseTest
 {
 
-	public void test() throws IOException, ImageReadException
-	{
-		Debug.debug("start");
+    public void test() throws IOException, ImageReadException
+    {
+        Debug.debug("start");
 
-		List images = getIcoImages();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+        List images = getIcoImages();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile);
 
-			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-			// assertNotNull(metadata);
+            IImageMetadata metadata = Sanselan.getMetadata(imageFile);
+            // assertNotNull(metadata);
 
-			Map params = new HashMap();
-			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile, params);
-			// assertNotNull(imageInfo);
+            Map params = new HashMap();
+            ImageInfo imageInfo = Sanselan.getImageInfo(imageFile, params);
+            // assertNotNull(imageInfo);
 
-			BufferedImage image = Sanselan.getBufferedImage(imageFile);
-			assertNotNull(image);
-		}
-	}
+            BufferedImage image = Sanselan.getBufferedImage(imageFile);
+            assertNotNull(image);
+        }
+    }
 
 }

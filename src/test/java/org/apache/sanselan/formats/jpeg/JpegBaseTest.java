@@ -29,26 +29,26 @@ import org.apache.sanselan.SanselanTest;
 public abstract class JpegBaseTest extends SanselanTest
 {
 
-	protected static boolean isJpeg(File file) throws IOException,
-			ImageReadException
-	{
-		ImageFormat format = Sanselan.guessFormat(file);
-		return format == ImageFormat.IMAGE_FORMAT_JPEG;
-	}
+    protected static boolean isJpeg(File file) throws IOException,
+            ImageReadException
+    {
+        ImageFormat format = Sanselan.guessFormat(file);
+        return format == ImageFormat.IMAGE_FORMAT_JPEG;
+    }
 
-	public static final ImageFilter imageFilter = new ImageFilter()
-	{
-		public boolean accept(File file) throws IOException, ImageReadException
-		{
-			return isJpeg(file);
-		}
-	};
+    public static final ImageFilter imageFilter = new ImageFilter()
+    {
+        public boolean accept(File file) throws IOException, ImageReadException
+        {
+            return isJpeg(file);
+        }
+    };
 
 
 
-	protected List getJpegImages() throws IOException, ImageReadException
-	{
-		return getTestImages(imageFilter);
-	}
+    protected List getJpegImages() throws IOException, ImageReadException
+    {
+        return getTestImages(imageFilter);
+    }
 
 }

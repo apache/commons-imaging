@@ -30,15 +30,15 @@ import org.apache.sanselan.common.IImageMetadata;
 
 public class JpegWithJpegThumbnailTest extends SanselanTest {
 
-	public void testSingleImage() throws IOException, ImageReadException {
-		File imageFile = getTestImageByName("img_F028c_small.jpg");
+    public void testSingleImage() throws IOException, ImageReadException {
+        File imageFile = getTestImageByName("img_F028c_small.jpg");
 
-		Map params = new HashMap();
-		IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
-		assertNotNull(metadata);
-		JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-		BufferedImage image = jpegMetadata.getEXIFThumbnail(); 
-		assertNotNull(image);
-	}
+        Map params = new HashMap();
+        IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+        assertNotNull(metadata);
+        JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+        BufferedImage image = jpegMetadata.getEXIFThumbnail();
+        assertNotNull(image);
+    }
 }
 

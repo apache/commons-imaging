@@ -34,173 +34,173 @@ import org.apache.sanselan.util.IOUtils;
 public class BmpRoundtripTest extends BmpBaseTest
 {
 
-	private int[][] getSimpleRawData(int width, int height, int value)
-	{
-		int[][] result = new int[height][width];
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++)
-				result[y][x] = value;
-		return result;
-	}
+    private int[][] getSimpleRawData(int width, int height, int value)
+    {
+        int[][] result = new int[height][width];
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+                result[y][x] = value;
+        return result;
+    }
 
-	private int[][] getAscendingRawData(int width, int height)
-	{
-		int[][] result = new int[height][width];
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++)
-			{
-				int alpha = (x + y) % 256;
-				int value = (x + y) % 256;
-				int argb = (0xff & alpha) << 24 | (0xff & value) << 16
-						| (0xff & value) << 8 | (0xff & value) << 0;
+    private int[][] getAscendingRawData(int width, int height)
+    {
+        int[][] result = new int[height][width];
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+            {
+                int alpha = (x + y) % 256;
+                int value = (x + y) % 256;
+                int argb = (0xff & alpha) << 24 | (0xff & value) << 16
+                        | (0xff & value) << 8 | (0xff & value) << 0;
 
-				result[y][x] = argb;
-			}
-		return result;
-	}
+                result[y][x] = argb;
+            }
+        return result;
+    }
 
-	private int[][] randomRawData(int width, int height)
-	{
-		Random random = new Random();
-		int[][] result = new int[height][width];
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++)
-			{
-				int argb = random.nextInt();
-				result[y][x] = argb;
-			}
-		return result;
-	}
+    private int[][] randomRawData(int width, int height)
+    {
+        Random random = new Random();
+        int[][] result = new int[height][width];
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+            {
+                int argb = random.nextInt();
+                result[y][x] = argb;
+            }
+        return result;
+    }
 
-	 public void testSmallBlackPixels() throws IOException,
-	 ImageReadException,
-	 ImageWriteException
-	 {
-	 int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
-	 writeAndReadImageData(smallBlackPixels);
-	 }
-	
-	public void testSingleBlackPixel() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
-		writeAndReadImageData(singleBlackPixel);
-	}
+     public void testSmallBlackPixels() throws IOException,
+     ImageReadException,
+     ImageWriteException
+     {
+     int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
+     writeAndReadImageData(smallBlackPixels);
+     }
 
-	
-	 public void testSmallRedPixels() throws IOException, ImageReadException,
-	 ImageWriteException
-	 {
-	 int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
-	 writeAndReadImageData(smallRedPixels);
-	 }
-	
-	 public void testSingleRedPixel() throws IOException, ImageReadException,
-	 ImageWriteException
-	 {
-	 int[][] singleRedPixel = getSimpleRawData(1, 1, 0xffff0000);
-	 writeAndReadImageData(singleRedPixel);
-	 }
-	
-	 public void testSmallAscendingPixels() throws IOException,
-	 ImageReadException, ImageWriteException
-	 {
-	 int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-	 writeAndReadImageData(smallAscendingPixels);
-	 }
-	
-	 public void testSmallRandomPixels() throws IOException,
-	 ImageReadException,
-	 ImageWriteException
-	 {
-	 int[][] smallRandomPixels = randomRawData(256, 256);
-	 writeAndReadImageData(smallRandomPixels);
-	 }
+    public void testSingleBlackPixel() throws IOException, ImageReadException,
+            ImageWriteException
+    {
+        int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
+        writeAndReadImageData(singleBlackPixel);
+    }
 
-	private BufferedImage imageDataToBufferedImage(int[][] rawData)
-	{
-		int width = rawData[0].length;
-		int height = rawData.length;
-		BufferedImage image = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_ARGB);
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++)
-			{
-				image.setRGB(x, y, rawData[y][x]);
-			}
-		return image;
-	}
 
-	private int[][] bufferedImageToImageData(BufferedImage image)
-	{
-		int width = image.getWidth();
-		int height = image.getHeight();
-		int[][] result = new int[height][width];
+     public void testSmallRedPixels() throws IOException, ImageReadException,
+     ImageWriteException
+     {
+     int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
+     writeAndReadImageData(smallRedPixels);
+     }
 
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++)
-			{
-				result[y][x] = image.getRGB(x, y);
-			}
-		return result;
-	}
+     public void testSingleRedPixel() throws IOException, ImageReadException,
+     ImageWriteException
+     {
+     int[][] singleRedPixel = getSimpleRawData(1, 1, 0xffff0000);
+     writeAndReadImageData(singleRedPixel);
+     }
 
-	private void writeAndReadImageData(int[][] rawData) throws IOException,
-			ImageReadException, ImageWriteException
-	{
-		BufferedImage srcImage = imageDataToBufferedImage(rawData);
+     public void testSmallAscendingPixels() throws IOException,
+     ImageReadException, ImageWriteException
+     {
+     int[][] smallAscendingPixels = getAscendingRawData(256, 256);
+     writeAndReadImageData(smallAscendingPixels);
+     }
 
-		Map writeParams = new HashMap();
-		// writeParams.put(SanselanConstants.PARAM_KEY_FORMAT,
-		// ImageFormat.IMAGE_FORMAT_BMP);
-		// writeParams.put(PngConstants.PARAM_KEY_BMP_FORCE_TRUE_COLOR,
-		// Boolean.TRUE);
+     public void testSmallRandomPixels() throws IOException,
+     ImageReadException,
+     ImageWriteException
+     {
+     int[][] smallRandomPixels = randomRawData(256, 256);
+     writeAndReadImageData(smallRandomPixels);
+     }
 
-		byte bytes[] = Sanselan.writeImageToBytes(srcImage,
-				ImageFormat.IMAGE_FORMAT_BMP, writeParams);
+    private BufferedImage imageDataToBufferedImage(int[][] rawData)
+    {
+        int width = rawData[0].length;
+        int height = rawData.length;
+        BufferedImage image = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_ARGB);
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+            {
+                image.setRGB(x, y, rawData[y][x]);
+            }
+        return image;
+    }
 
-		// Debug.debug("bytes", bytes);
+    private int[][] bufferedImageToImageData(BufferedImage image)
+    {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int[][] result = new int[height][width];
 
-		File tempFile = createTempFile("temp", ".bmp");
-		IOUtils.writeToFile(bytes, tempFile);
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+            {
+                result[y][x] = image.getRGB(x, y);
+            }
+        return result;
+    }
 
-		BufferedImage dstImage = Sanselan.getBufferedImage(bytes);
+    private void writeAndReadImageData(int[][] rawData) throws IOException,
+            ImageReadException, ImageWriteException
+    {
+        BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
-		assertNotNull(dstImage);
-		assertTrue(srcImage.getWidth() == dstImage.getWidth());
-		assertTrue(srcImage.getHeight() == dstImage.getHeight());
+        Map writeParams = new HashMap();
+        // writeParams.put(SanselanConstants.PARAM_KEY_FORMAT,
+        // ImageFormat.IMAGE_FORMAT_BMP);
+        // writeParams.put(PngConstants.PARAM_KEY_BMP_FORCE_TRUE_COLOR,
+        // Boolean.TRUE);
 
-		int dstData[][] = bufferedImageToImageData(dstImage);
-		compare(rawData, dstData);
-	}
+        byte bytes[] = Sanselan.writeImageToBytes(srcImage,
+                ImageFormat.IMAGE_FORMAT_BMP, writeParams);
 
-	private void compare(int[][] a, int[][] b)
-	{
-		assertNotNull(a);
-		assertNotNull(b);
-		assertTrue(a.length == b.length);
+        // Debug.debug("bytes", bytes);
 
-		for (int y = 0; y < a.length; y++)
-		{
-			assertTrue(a[y].length == b[y].length);
-			// make sure row lengths consistent.
-			assertTrue(a[0].length == b[y].length);
-			for (int x = 0; x < a[y].length; x++)
-			{
-				// ignore alpha channel - BMP has no transparency.
-				int rgbA = 0xffffff & a[y][x];
-				int rgbB = 0xffffff & b[y][x];
+        File tempFile = createTempFile("temp", ".bmp");
+        IOUtils.writeToFile(bytes, tempFile);
 
-				if (rgbA != rgbB)
-				{
-					Debug.debug("x: " + x + ", y: " + y + ", rgbA: " + rgbA
-							+ " (0x" + Integer.toHexString(rgbA) + ")"
-							+ ", rgbB: " + rgbB + " (0x"
-							+ Integer.toHexString(rgbB) + ")");
-				}
-				assertTrue(rgbA == rgbB);
-			}
-		}
-	}
+        BufferedImage dstImage = Sanselan.getBufferedImage(bytes);
+
+        assertNotNull(dstImage);
+        assertTrue(srcImage.getWidth() == dstImage.getWidth());
+        assertTrue(srcImage.getHeight() == dstImage.getHeight());
+
+        int dstData[][] = bufferedImageToImageData(dstImage);
+        compare(rawData, dstData);
+    }
+
+    private void compare(int[][] a, int[][] b)
+    {
+        assertNotNull(a);
+        assertNotNull(b);
+        assertTrue(a.length == b.length);
+
+        for (int y = 0; y < a.length; y++)
+        {
+            assertTrue(a[y].length == b[y].length);
+            // make sure row lengths consistent.
+            assertTrue(a[0].length == b[y].length);
+            for (int x = 0; x < a[y].length; x++)
+            {
+                // ignore alpha channel - BMP has no transparency.
+                int rgbA = 0xffffff & a[y][x];
+                int rgbB = 0xffffff & b[y][x];
+
+                if (rgbA != rgbB)
+                {
+                    Debug.debug("x: " + x + ", y: " + y + ", rgbA: " + rgbA
+                            + " (0x" + Integer.toHexString(rgbA) + ")"
+                            + ", rgbB: " + rgbB + " (0x"
+                            + Integer.toHexString(rgbB) + ")");
+                }
+                assertTrue(rgbA == rgbB);
+            }
+        }
+    }
 
 }

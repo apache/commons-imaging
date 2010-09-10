@@ -29,32 +29,32 @@ import org.apache.sanselan.util.Debug;
 public class XmpDumpTest extends SanselanTest
 {
 
-	public void test() throws IOException, ImageReadException
-	{
-		List images = getTestImages();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+    public void test() throws IOException, ImageReadException
+    {
+        List images = getTestImages();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
+            File imageFile = (File) images.get(i);
 
-			if (imageFile.getName().toLowerCase().endsWith(".png")
-					&& isInvalidPNGTestFile(imageFile))
-				continue;
+            if (imageFile.getName().toLowerCase().endsWith(".png")
+                    && isInvalidPNGTestFile(imageFile))
+                continue;
 
-			Debug.debug("imageFile", imageFile);
-			Debug.debug();
+            Debug.debug("imageFile", imageFile);
+            Debug.debug();
 
-			String xmpXml = Sanselan.getXmpXml(imageFile);
-			if (null == xmpXml)
-				continue;
+            String xmpXml = Sanselan.getXmpXml(imageFile);
+            if (null == xmpXml)
+                continue;
 
-			assertNotNull(xmpXml);
+            assertNotNull(xmpXml);
 
-			Debug.debug("xmpXml", xmpXml);
-			Debug.debug();
-		}
-	}
+            Debug.debug("xmpXml", xmpXml);
+            Debug.debug();
+        }
+    }
 
 }

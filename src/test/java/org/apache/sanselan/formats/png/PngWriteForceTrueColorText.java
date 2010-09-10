@@ -29,45 +29,45 @@ import org.apache.sanselan.util.Debug;
 
 public class PngWriteForceTrueColorText extends PngBaseTest {
 
-	public void test() throws Exception {
+    public void test() throws Exception {
 
-		List images = getPngImages();
-		for (int i = 0; i < images.size(); i++) {
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+        List images = getPngImages();
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			try {
-				if (isInvalidPNGTestFile(imageFile))
-					continue;
+            File imageFile = (File) images.get(i);
+            try {
+                if (isInvalidPNGTestFile(imageFile))
+                    continue;
 
-				Debug.debug("imageFile", imageFile);
-				// Debug.debug();
+                Debug.debug("imageFile", imageFile);
+                // Debug.debug();
 
-				// params.put(SanselanConstants.PARAM_KEY_VERBOSE,
-				// Boolean.TRUE);
+                // params.put(SanselanConstants.PARAM_KEY_VERBOSE,
+                // Boolean.TRUE);
 
-				BufferedImage image = Sanselan.getBufferedImage(imageFile,
-						new HashMap());
-				assertNotNull(image);
+                BufferedImage image = Sanselan.getBufferedImage(imageFile,
+                        new HashMap());
+                assertNotNull(image);
 
-				File outFile = createTempFile(imageFile.getName() + ".", ".gif");
-				// Debug.debug("outFile", outFile);
+                File outFile = createTempFile(imageFile.getName() + ".", ".gif");
+                // Debug.debug("outFile", outFile);
 
-				Map params = new HashMap();
-				params.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
-						Boolean.TRUE);
-				Sanselan.writeImage(image, outFile,
-						ImageFormat.IMAGE_FORMAT_PNG, params);
+                Map params = new HashMap();
+                params.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
+                        Boolean.TRUE);
+                Sanselan.writeImage(image, outFile,
+                        ImageFormat.IMAGE_FORMAT_PNG, params);
 
-				BufferedImage image2 = Sanselan.getBufferedImage(outFile,
-						new HashMap());
-			} catch (Exception e) {
-				Debug.debug("imageFile", imageFile);
-				throw e;
-			}
-		}
-		Debug.debug("complete.");
-	}
+                BufferedImage image2 = Sanselan.getBufferedImage(outFile,
+                        new HashMap());
+            } catch (Exception e) {
+                Debug.debug("imageFile", imageFile);
+                throw e;
+            }
+        }
+        Debug.debug("complete.");
+    }
 
 }

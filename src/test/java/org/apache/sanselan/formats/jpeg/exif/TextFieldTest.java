@@ -27,47 +27,47 @@ import org.apache.sanselan.util.Debug;
 
 public class TextFieldTest extends SpecificExifTagTest
 {
-	//	public TextFieldTest(String name)
-	//	{
-	//		super(name);
-	//	}
+    //    public TextFieldTest(String name)
+    //    {
+    //        super(name);
+    //    }
 
-	protected void checkField(File imageFile, TiffField field)
-			throws IOException, ImageReadException, ImageWriteException
-	{
-		if (field.tag == EXIF_TAG_USER_COMMENT.tag)
-			;
-		else if (field.tag == GPS_TAG_GPS_PROCESSING_METHOD.tag
-				&& field.directoryType == EXIF_DIRECTORY_GPS.directoryType)
-			;
-		else if (field.tag == GPS_TAG_GPS_AREA_INFORMATION.tag
-				&& field.directoryType == EXIF_DIRECTORY_GPS.directoryType)
-			;
-		else
-			return;
+    protected void checkField(File imageFile, TiffField field)
+            throws IOException, ImageReadException, ImageWriteException
+    {
+        if (field.tag == EXIF_TAG_USER_COMMENT.tag)
+            ;
+        else if (field.tag == GPS_TAG_GPS_PROCESSING_METHOD.tag
+                && field.directoryType == EXIF_DIRECTORY_GPS.directoryType)
+            ;
+        else if (field.tag == GPS_TAG_GPS_AREA_INFORMATION.tag
+                && field.directoryType == EXIF_DIRECTORY_GPS.directoryType)
+            ;
+        else
+            return;
 
-		//		Debug.debug("field", field);
-		//		Debug.debug("field", Debug.getType(field));
-		//
-		//		Debug.debug("field", field.tag);
-		//		Debug.debug("field", field.tagInfo);
-		//		Debug.debug("field", Debug.getType(field));
+        //        Debug.debug("field", field);
+        //        Debug.debug("field", Debug.getType(field));
+        //
+        //        Debug.debug("field", field.tag);
+        //        Debug.debug("field", field.tagInfo);
+        //        Debug.debug("field", Debug.getType(field));
 
-		try
-		{
-			Object textFieldValue = field.getValue();
-			//			Debug.debug("imageFile", imageFile.getAbsoluteFile());
-			//			Debug.debug("Text field value(" + field.tagInfo.name + ")",
-			//					textFieldValue);
-			//		Debug.debug("userCommentValue", Debug.getType(userCommentValue));
-		}
-		catch (ImageReadException e)
-		{
-			Debug.debug("imageFile", imageFile.getAbsoluteFile());
-			Debug.debug(e);
-			throw e;
-		}
+        try
+        {
+            Object textFieldValue = field.getValue();
+            //            Debug.debug("imageFile", imageFile.getAbsoluteFile());
+            //            Debug.debug("Text field value(" + field.tagInfo.name + ")",
+            //                    textFieldValue);
+            //        Debug.debug("userCommentValue", Debug.getType(userCommentValue));
+        }
+        catch (ImageReadException e)
+        {
+            Debug.debug("imageFile", imageFile.getAbsoluteFile());
+            Debug.debug(e);
+            throw e;
+        }
 
-	}
+    }
 
 }

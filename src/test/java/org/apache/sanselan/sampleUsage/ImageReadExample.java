@@ -33,44 +33,44 @@ import org.apache.sanselan.common.IBufferedImageFactory;
 
 public class ImageReadExample
 {
-	public static BufferedImage imageReadExample(File file)
-			throws ImageReadException, IOException
-	{
-		Map params = new HashMap();
+    public static BufferedImage imageReadExample(File file)
+            throws ImageReadException, IOException
+    {
+        Map params = new HashMap();
 
-		// set optional parameters if you like
-		params.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
-				new ManagedImageBufferedImageFactory());
+        // set optional parameters if you like
+        params.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
+                new ManagedImageBufferedImageFactory());
 
-		//		params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
+        //        params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-		// read image
-		BufferedImage image = Sanselan.getBufferedImage(file, params);
+        // read image
+        BufferedImage image = Sanselan.getBufferedImage(file, params);
 
-		return image;
-	}
+        return image;
+    }
 
-	public static class ManagedImageBufferedImageFactory
-			implements
-				IBufferedImageFactory
-	{
+    public static class ManagedImageBufferedImageFactory
+            implements
+                IBufferedImageFactory
+    {
 
-		public BufferedImage getColorBufferedImage(int width, int height,
-				boolean hasAlpha)
-		{
-			GraphicsEnvironment ge = GraphicsEnvironment
-					.getLocalGraphicsEnvironment();
-			GraphicsDevice gd = ge.getDefaultScreenDevice();
-			GraphicsConfiguration gc = gd.getDefaultConfiguration();
-			return gc.createCompatibleImage(width, height,
-					Transparency.TRANSLUCENT);
-		}
+        public BufferedImage getColorBufferedImage(int width, int height,
+                boolean hasAlpha)
+        {
+            GraphicsEnvironment ge = GraphicsEnvironment
+                    .getLocalGraphicsEnvironment();
+            GraphicsDevice gd = ge.getDefaultScreenDevice();
+            GraphicsConfiguration gc = gd.getDefaultConfiguration();
+            return gc.createCompatibleImage(width, height,
+                    Transparency.TRANSLUCENT);
+        }
 
-		public BufferedImage getGrayscaleBufferedImage(int width, int height,
-				boolean hasAlpha)
-		{
-			return getColorBufferedImage(width, height, hasAlpha);
-		}
-	}
+        public BufferedImage getGrayscaleBufferedImage(int width, int height,
+                boolean hasAlpha)
+        {
+            return getColorBufferedImage(width, height, hasAlpha);
+        }
+    }
 
 }

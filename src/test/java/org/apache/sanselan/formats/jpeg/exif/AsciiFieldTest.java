@@ -35,44 +35,44 @@ import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
 
 public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 
-	public void testSingleImage() throws IOException, ImageReadException {
-		File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
+    public void testSingleImage() throws IOException, ImageReadException {
+        File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 
-		Map params = new HashMap();
+        Map params = new HashMap();
 
-		IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
-		assertNotNull(metadata);
-		JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+        IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+        assertNotNull(metadata);
+        JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 
-		// note that exif might be null if no Exif metadata is found.
-		TiffImageMetadata exif = jpegMetadata.getExif();
-		if (null == exif)
-			return;
+        // note that exif might be null if no Exif metadata is found.
+        TiffImageMetadata exif = jpegMetadata.getExif();
+        if (null == exif)
+            return;
 
-		List fields = exif.getAllFields();
-		Map fieldMap = new Hashtable();
-		// Build a simplified field tag -> field map, ignoring directory structures.
-		// Good enough for our purposes, since the image in question is known.
-		for (int i = 0; i < fields.size(); i++) {
-			TiffField field = (TiffField) fields.get(i);
-			fieldMap.put(new Integer(field.tag), field);
-		}
-		
-		Map expectedFieldValues = new Hashtable();
-		expectedFieldValues.put(new Integer(EXIF_TAG_MAKE.tag), "Canon");
-		expectedFieldValues.put(new Integer(EXIF_TAG_MODEL.tag), "Canon PowerShot SD750");
-		expectedFieldValues.put(new Integer(EXIF_TAG_MODIFY_DATE.tag), "2007:12:25 13:34:39");
-		Iterator expectedTags = expectedFieldValues.keySet().iterator();
-		while (expectedTags.hasNext()) {
-			Integer tag = (Integer) expectedTags.next();
-			Object expectedValue = expectedFieldValues.get(tag);
+        List fields = exif.getAllFields();
+        Map fieldMap = new Hashtable();
+        // Build a simplified field tag -> field map, ignoring directory structures.
+        // Good enough for our purposes, since the image in question is known.
+        for (int i = 0; i < fields.size(); i++) {
+            TiffField field = (TiffField) fields.get(i);
+            fieldMap.put(new Integer(field.tag), field);
+        }
 
-			assertTrue(fieldMap.containsKey(tag));
-			TiffField field = (TiffField) fieldMap.get(tag);
-			assertNotNull(field);
-			Object value = field.getValue();
-			assertNotNull(value);
-			assertEquals(value, expectedValue);
-		}
-	}
+        Map expectedFieldValues = new Hashtable();
+        expectedFieldValues.put(new Integer(EXIF_TAG_MAKE.tag), "Canon");
+        expectedFieldValues.put(new Integer(EXIF_TAG_MODEL.tag), "Canon PowerShot SD750");
+        expectedFieldValues.put(new Integer(EXIF_TAG_MODIFY_DATE.tag), "2007:12:25 13:34:39");
+        Iterator expectedTags = expectedFieldValues.keySet().iterator();
+        while (expectedTags.hasNext()) {
+            Integer tag = (Integer) expectedTags.next();
+            Object expectedValue = expectedFieldValues.get(tag);
+
+            assertTrue(fieldMap.containsKey(tag));
+            TiffField field = (TiffField) fieldMap.get(tag);
+            assertNotNull(field);
+            Object value = field.getValue();
+            assertNotNull(value);
+            assertEquals(value, expectedValue);
+        }
+    }
 }

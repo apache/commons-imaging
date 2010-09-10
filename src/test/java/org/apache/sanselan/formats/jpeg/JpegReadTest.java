@@ -32,33 +32,33 @@ import org.apache.sanselan.util.Debug;
 public class JpegReadTest extends JpegBaseTest
 {
 
-	public void test() throws IOException, ImageReadException
-	{
-		List images = getJpegImages();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if(i%10==0)
-			Debug.purgeMemory();
+    public void test() throws IOException, ImageReadException
+    {
+        List images = getJpegImages();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if(i%10==0)
+            Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile.getAbsoluteFile());
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-			//			ByteSource byteSource = new ByteSourceFile(imageFile);
-			//			new JpegUtils().dumpJFIF(byteSource);
+            //            ByteSource byteSource = new ByteSourceFile(imageFile);
+            //            new JpegUtils().dumpJFIF(byteSource);
 
-			Map params = new HashMap();
-			boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-			params
-					.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
-							!ignoreImageData));
+            Map params = new HashMap();
+            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            params
+                    .put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
+                            !ignoreImageData));
 
-			IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
-			//			assertNotNull(metadata);
-			Debug.debug("metadata", metadata);
+            IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+            //            assertNotNull(metadata);
+            Debug.debug("metadata", metadata);
 
-			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile, params);
-			assertNotNull(imageInfo);
-		}
-	}
+            ImageInfo imageInfo = Sanselan.getImageInfo(imageFile, params);
+            assertNotNull(imageInfo);
+        }
+    }
 
 }

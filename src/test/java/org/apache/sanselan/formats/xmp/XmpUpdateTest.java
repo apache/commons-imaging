@@ -34,63 +34,63 @@ import org.apache.sanselan.util.Debug;
 public class XmpUpdateTest extends SanselanTest
 {
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		List images = getTestImages();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+    public void test() throws IOException, ImageReadException,
+            ImageWriteException
+    {
+        List images = getTestImages();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
+            File imageFile = (File) images.get(i);
 
-			if (imageFile.getName().toLowerCase().endsWith(".png")
-					&& isInvalidPNGTestFile(imageFile))
-				continue;
-			
-			Debug.debug("imageFile", imageFile);
-			Debug.debug();
+            if (imageFile.getName().toLowerCase().endsWith(".png")
+                    && isInvalidPNGTestFile(imageFile))
+                continue;
 
-			ImageFormat imageFormat = Sanselan.guessFormat(imageFile);
+            Debug.debug("imageFile", imageFile);
+            Debug.debug();
 
-			String xmpXml = Sanselan.getXmpXml(imageFile);
-			if (null == xmpXml
-					&& imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF))
-				xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
-			if (null == xmpXml)
-				continue;
+            ImageFormat imageFormat = Sanselan.guessFormat(imageFile);
 
-			assertNotNull(xmpXml);
+            String xmpXml = Sanselan.getXmpXml(imageFile);
+            if (null == xmpXml
+                    && imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF))
+                xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
+            if (null == xmpXml)
+                continue;
 
-			if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_PNG))
-				;
-			else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF))
-				;
-			else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF))
-				;
-			else
-				continue;
+            assertNotNull(xmpXml);
 
-			File tempFile = this.createTempFile(imageFile.getName() + ".", "."
-					+ imageFormat.extension);
-			BufferedImage image = Sanselan.getBufferedImage(imageFile);
+            if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_PNG))
+                ;
+            else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF))
+                ;
+            else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF))
+                ;
+            else
+                continue;
 
-			// ----
+            File tempFile = this.createTempFile(imageFile.getName() + ".", "."
+                    + imageFormat.extension);
+            BufferedImage image = Sanselan.getBufferedImage(imageFile);
 
-			Map params = new HashMap();
-			params.put(PARAM_KEY_XMP_XML, xmpXml);
-			Sanselan.writeImage(image, tempFile, imageFormat, params);
+            // ----
 
-			String xmpXmlOut = Sanselan.getXmpXml(tempFile);
+            Map params = new HashMap();
+            params.put(PARAM_KEY_XMP_XML, xmpXml);
+            Sanselan.writeImage(image, tempFile, imageFormat, params);
 
-			assertNotNull(xmpXmlOut);
+            String xmpXmlOut = Sanselan.getXmpXml(tempFile);
 
-			assertEquals(xmpXmlOut, xmpXml);
+            assertNotNull(xmpXmlOut);
 
-//			Debug.debug("xmpXmlOut", xmpXmlOut.length());
-			// Debug.debug("xmpXml", xmpXml);
-			// Debug.debug();
-		}
-	}
+            assertEquals(xmpXmlOut, xmpXml);
+
+//            Debug.debug("xmpXmlOut", xmpXmlOut.length());
+            // Debug.debug("xmpXml", xmpXml);
+            // Debug.debug();
+        }
+    }
 }

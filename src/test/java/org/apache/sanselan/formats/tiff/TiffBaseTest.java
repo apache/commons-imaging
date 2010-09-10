@@ -29,23 +29,23 @@ import org.apache.sanselan.SanselanTest;
 public abstract class TiffBaseTest extends SanselanTest
 {
 
-	private static boolean isTiff(File file) throws IOException,
-			ImageReadException
-	{
-		ImageFormat format = Sanselan.guessFormat(file);
-		return format == ImageFormat.IMAGE_FORMAT_TIFF;
-	}
+    private static boolean isTiff(File file) throws IOException,
+            ImageReadException
+    {
+        ImageFormat format = Sanselan.guessFormat(file);
+        return format == ImageFormat.IMAGE_FORMAT_TIFF;
+    }
 
-	private static final ImageFilter imageFilter = new ImageFilter() {
-		public boolean accept(File file) throws IOException, ImageReadException
-		{
-			return isTiff(file);
-		}
-	};
+    private static final ImageFilter imageFilter = new ImageFilter() {
+        public boolean accept(File file) throws IOException, ImageReadException
+        {
+            return isTiff(file);
+        }
+    };
 
-	protected List getTiffImages() throws IOException, ImageReadException
-	{
-		return getTestImages(imageFilter);
-	}
+    protected List getTiffImages() throws IOException, ImageReadException
+    {
+        return getTestImages(imageFilter);
+    }
 
 }

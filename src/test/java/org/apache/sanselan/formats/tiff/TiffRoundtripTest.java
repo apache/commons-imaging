@@ -34,34 +34,34 @@ import org.apache.sanselan.util.Debug;
 
 public class TiffRoundtripTest extends TiffBaseTest {
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException {
-		List images = getTiffImages();
-		for (int i = 0; i < images.size(); i++) {
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+    public void test() throws IOException, ImageReadException,
+            ImageWriteException {
+        List images = getTiffImages();
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile);
 
-			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-			assertNotNull(metadata);
+            IImageMetadata metadata = Sanselan.getMetadata(imageFile);
+            assertNotNull(metadata);
 
-			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-			assertNotNull(imageInfo);
+            ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
+            assertNotNull(imageInfo);
 
-			BufferedImage image = Sanselan.getBufferedImage(imageFile);
-			assertNotNull(image);
+            BufferedImage image = Sanselan.getBufferedImage(imageFile);
+            assertNotNull(image);
 
-			File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
-			Map params = new HashMap();
-			Sanselan.writeImage(image, tempFile, ImageFormat.IMAGE_FORMAT_TIFF,
-					params);
-			image = null;
+            File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
+            Map params = new HashMap();
+            Sanselan.writeImage(image, tempFile, ImageFormat.IMAGE_FORMAT_TIFF,
+                    params);
+            image = null;
 
-			BufferedImage image2 = Sanselan.getBufferedImage(tempFile);
-			assertNotNull(image2);
-		}
-	}
+            BufferedImage image2 = Sanselan.getBufferedImage(tempFile);
+            assertNotNull(image2);
+        }
+    }
 
 }

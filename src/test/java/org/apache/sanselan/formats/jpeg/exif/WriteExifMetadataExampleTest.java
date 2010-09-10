@@ -29,75 +29,75 @@ import org.apache.sanselan.sampleUsage.WriteExifMetadataExample;
 import org.apache.sanselan.util.Debug;
 
 public class WriteExifMetadataExampleTest extends ExifBaseTest
-		implements
-			AllTagConstants
+        implements
+            AllTagConstants
 {
-	//	public WriteExifMetadataExampleTest(String name)
-	//	{
-	//		super(name);
-	//	}
+    //    public WriteExifMetadataExampleTest(String name)
+    //    {
+    //        super(name);
+    //    }
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		List images = getJpegImages();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+    public void test() throws IOException, ImageReadException,
+            ImageWriteException
+    {
+        List images = getJpegImages();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile.getAbsoluteFile());
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-			File tempFile = createTempFile("test", ".jpg");
-			Debug.debug("tempFile", tempFile.getAbsoluteFile());
+            File tempFile = createTempFile("test", ".jpg");
+            Debug.debug("tempFile", tempFile.getAbsoluteFile());
 
-			try
-			{
-				boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-				if (ignoreImageData)
-					continue;
-				new WriteExifMetadataExample().changeExifMetadata(imageFile,
-						tempFile);
-			}
-			catch (ExifRewriter.ExifOverflowException e)
-			{
-				Debug.debug("Error image", imageFile.getAbsoluteFile());
-				Debug.debug(e, 4);
-			}
-		}
-	}
+            try
+            {
+                boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+                if (ignoreImageData)
+                    continue;
+                new WriteExifMetadataExample().changeExifMetadata(imageFile,
+                        tempFile);
+            }
+            catch (ExifRewriter.ExifOverflowException e)
+            {
+                Debug.debug("Error image", imageFile.getAbsoluteFile());
+                Debug.debug(e, 4);
+            }
+        }
+    }
 
-	public void testInsert() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		List images = getJpegImages();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+    public void testInsert() throws IOException, ImageReadException,
+            ImageWriteException
+    {
+        List images = getJpegImages();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile.getAbsoluteFile());
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-			File tempFile = createTempFile("test", ".jpg");
-			Debug.debug("tempFile", tempFile.getAbsoluteFile());
+            File tempFile = createTempFile("test", ".jpg");
+            Debug.debug("tempFile", tempFile.getAbsoluteFile());
 
-			try
-			{
-				boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-				if (ignoreImageData)
-					continue;
-				new WriteExifMetadataExample().changeExifMetadata(imageFile,
-						tempFile);
-			}
-			catch (ExifRewriter.ExifOverflowException e)
-			{
-				Debug.debug("Ignoring unavoidable ExifOverflowException", e.getMessage());
-				Debug.debug("Error image", imageFile.getAbsoluteFile());
-//				Debug.debug(e, 4);
-			}
-		}
-	}
+            try
+            {
+                boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+                if (ignoreImageData)
+                    continue;
+                new WriteExifMetadataExample().changeExifMetadata(imageFile,
+                        tempFile);
+            }
+            catch (ExifRewriter.ExifOverflowException e)
+            {
+                Debug.debug("Ignoring unavoidable ExifOverflowException", e.getMessage());
+                Debug.debug("Error image", imageFile.getAbsoluteFile());
+//                Debug.debug(e, 4);
+            }
+        }
+    }
 
 }

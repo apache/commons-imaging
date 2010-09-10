@@ -33,55 +33,55 @@ public class PngReadTest extends PngBaseTest
 
 
 
-	public void test() throws IOException, ImageReadException
-	{
-		Debug.debug("start");
+    public void test() throws IOException, ImageReadException
+    {
+        Debug.debug("start");
 
-		List images = getPngImages();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+        List images = getPngImages();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
-			if (isInvalidPNGTestFile(imageFile))
-			{
-				try
-				{
-					Sanselan.getMetadata(imageFile);
-					fail("Image read should have failed.");
-				} catch (Exception e)
-				{
-				}
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile);
+            if (isInvalidPNGTestFile(imageFile))
+            {
+                try
+                {
+                    Sanselan.getMetadata(imageFile);
+                    fail("Image read should have failed.");
+                } catch (Exception e)
+                {
+                }
 
-				try
-				{
-					Sanselan.getImageInfo(imageFile);
-					fail("Image read should have failed.");
-				} catch (Exception e)
-				{
-				}
+                try
+                {
+                    Sanselan.getImageInfo(imageFile);
+                    fail("Image read should have failed.");
+                } catch (Exception e)
+                {
+                }
 
-				try
-				{
-					Sanselan.getBufferedImage(imageFile);
-					fail("Image read should have failed.");
-				} catch (Exception e)
-				{
-				}
-			} else
-			{
-				IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-				// assertNotNull(metadata);
+                try
+                {
+                    Sanselan.getBufferedImage(imageFile);
+                    fail("Image read should have failed.");
+                } catch (Exception e)
+                {
+                }
+            } else
+            {
+                IImageMetadata metadata = Sanselan.getMetadata(imageFile);
+                // assertNotNull(metadata);
 
-				ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-				assertNotNull(imageInfo);
+                ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
+                assertNotNull(imageInfo);
 
-				BufferedImage image = Sanselan.getBufferedImage(imageFile);
-				assertNotNull(image);
-			}
-		}
-	}
+                BufferedImage image = Sanselan.getBufferedImage(imageFile);
+                assertNotNull(image);
+            }
+        }
+    }
 
 }

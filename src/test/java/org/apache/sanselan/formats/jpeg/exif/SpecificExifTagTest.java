@@ -34,68 +34,68 @@ import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
 import org.apache.sanselan.util.Debug;
 
 public abstract class SpecificExifTagTest extends ExifBaseTest
-		implements
-			AllTagConstants
+        implements
+            AllTagConstants
 {
-	//	public SpecificExifTagTest(String name)
-	//	{
-	//		super(name);
-	//	}
+    //    public SpecificExifTagTest(String name)
+    //    {
+    //        super(name);
+    //    }
 
-	public void testSingleImage() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		File imageFile = getImageWithExifData();
-		checkImage(imageFile);
-	}
+    public void testSingleImage() throws IOException, ImageReadException,
+            ImageWriteException
+    {
+        File imageFile = getImageWithExifData();
+        checkImage(imageFile);
+    }
 
-	public void testAllImages() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		List images = getImagesWithExifData();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if(i%10==0)
-			Debug.purgeMemory();
+    public void testAllImages() throws IOException, ImageReadException,
+            ImageWriteException
+    {
+        List images = getImagesWithExifData();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if(i%10==0)
+            Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			if (imageFile.getParentFile().getName().toLowerCase().equals(
-					"@broken"))
-				continue;
-			checkImage(imageFile);
-		}
-	}
+            File imageFile = (File) images.get(i);
+            if (imageFile.getParentFile().getName().toLowerCase().equals(
+                    "@broken"))
+                continue;
+            checkImage(imageFile);
+        }
+    }
 
-	protected abstract void checkField(File imageFile, TiffField field)
-			throws IOException, ImageReadException, ImageWriteException;
+    protected abstract void checkField(File imageFile, TiffField field)
+            throws IOException, ImageReadException, ImageWriteException;
 
-	private void checkImage(File imageFile) throws IOException,
-			ImageReadException, ImageWriteException
-	{
-		//		Debug.debug("imageFile", imageFile.getAbsoluteFile());
+    private void checkImage(File imageFile) throws IOException,
+            ImageReadException, ImageWriteException
+    {
+        //        Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-		Map params = new HashMap();
-		boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-		params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
+        Map params = new HashMap();
+        boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+        params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
-		// note that metadata might be null if no metadata is found.
-		IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
-		if (null == metadata)
-			return;
-		JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+        // note that metadata might be null if no metadata is found.
+        IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+        if (null == metadata)
+            return;
+        JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 
-		// note that exif might be null if no Exif metadata is found.
-		TiffImageMetadata exif = jpegMetadata.getExif();
-		if (null == exif)
-			return;
+        // note that exif might be null if no Exif metadata is found.
+        TiffImageMetadata exif = jpegMetadata.getExif();
+        if (null == exif)
+            return;
 
-		List fields = exif.getAllFields();
-		for (int i = 0; i < fields.size(); i++)
-		{
-			TiffField field = (TiffField) fields.get(i);
-			checkField(imageFile, field);
-		}
+        List fields = exif.getAllFields();
+        for (int i = 0; i < fields.size(); i++)
+        {
+            TiffField field = (TiffField) fields.get(i);
+            checkField(imageFile, field);
+        }
 
-	}
+    }
 
 }

@@ -29,24 +29,24 @@ import org.apache.sanselan.SanselanTest;
 public abstract class BmpBaseTest extends SanselanTest
 {
 
-	private static boolean isBmp(File file) throws IOException,
-			ImageReadException
-	{
-		ImageFormat format = Sanselan.guessFormat(file);
-		return format == ImageFormat.IMAGE_FORMAT_BMP;
-	}
+    private static boolean isBmp(File file) throws IOException,
+            ImageReadException
+    {
+        ImageFormat format = Sanselan.guessFormat(file);
+        return format == ImageFormat.IMAGE_FORMAT_BMP;
+    }
 
-	private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-		public boolean accept(File file) throws IOException, ImageReadException
-		{
-			return isBmp(file);
-		}
-	};
+    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
+        public boolean accept(File file) throws IOException, ImageReadException
+        {
+            return isBmp(file);
+        }
+    };
 
-	protected List getBmpImages() throws IOException, ImageReadException
-	{
-		return getTestImages(IMAGE_FILTER);
-	}
+    protected List getBmpImages() throws IOException, ImageReadException
+    {
+        return getTestImages(IMAGE_FILTER);
+    }
 
 
 }

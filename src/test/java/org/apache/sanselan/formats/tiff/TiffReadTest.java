@@ -31,26 +31,26 @@ import org.apache.sanselan.util.Debug;
 public class TiffReadTest extends TiffBaseTest
 {
 
-	public void test() throws IOException, ImageReadException
-	{
-		List images = getTiffImages();
-		for (int i = 0; i < images.size(); i++)
-		{
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+    public void test() throws IOException, ImageReadException
+    {
+        List images = getTiffImages();
+        for (int i = 0; i < images.size(); i++)
+        {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			Debug.debug("imageFile", imageFile);
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile);
 
-			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-			assertNotNull(metadata);
+            IImageMetadata metadata = Sanselan.getMetadata(imageFile);
+            assertNotNull(metadata);
 
-			ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-			assertNotNull(imageInfo);
+            ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
+            assertNotNull(imageInfo);
 
-			BufferedImage image = Sanselan.getBufferedImage(imageFile);
-			assertNotNull(image);
-		}
-	}
+            BufferedImage image = Sanselan.getBufferedImage(imageFile);
+            assertNotNull(image);
+        }
+    }
 
 }

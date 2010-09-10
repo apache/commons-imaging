@@ -33,46 +33,46 @@ import org.apache.commons.io.FilenameUtils;
 public class PngMultipleRoundtripTest extends PngBaseTest
 {
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException
-	{
-		String imagesFolderPath = FilenameUtils.separatorsToSystem("src\\test\\data\\images\\png\\3");
-		File imagesFolder = new File(imagesFolderPath);
-		assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());
-		
-		File files[] = imagesFolder.listFiles();
-		for (int i = 0; i < files.length; i++)
-		{
-			File imageFile = files[i];
-			if(!imageFile.isFile() )
-				continue;
-			if(!imageFile.getName().toLowerCase().endsWith(".png"))
-				continue;
-			
-			Debug.debug();
-			Debug.debug("imageFile", imageFile);
+    public void test() throws IOException, ImageReadException,
+            ImageWriteException
+    {
+        String imagesFolderPath = FilenameUtils.separatorsToSystem("src\\test\\data\\images\\png\\3");
+        File imagesFolder = new File(imagesFolderPath);
+        assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());
 
-			File lastFile = imageFile;
-			for (int j = 0; j < 10; j++)
-			{
-				Map readParams = new HashMap();
-				// readParams.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
-				// new RgbBufferedImageFactory());
-				BufferedImage image = Sanselan.getBufferedImage(lastFile,
-						readParams);
-				assertNotNull(image);
+        File files[] = imagesFolder.listFiles();
+        for (int i = 0; i < files.length; i++)
+        {
+            File imageFile = files[i];
+            if(!imageFile.isFile() )
+                continue;
+            if(!imageFile.getName().toLowerCase().endsWith(".png"))
+                continue;
 
-				File tempFile = createTempFile(imageFile.getName() + "." + j
-						+ ".", ".png");
-				Debug.debug("tempFile", tempFile);
+            Debug.debug();
+            Debug.debug("imageFile", imageFile);
 
-				Map writeParams = new HashMap();
-				Sanselan.writeImage(image, tempFile,
-						ImageFormat.IMAGE_FORMAT_PNG, writeParams);
+            File lastFile = imageFile;
+            for (int j = 0; j < 10; j++)
+            {
+                Map readParams = new HashMap();
+                // readParams.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
+                // new RgbBufferedImageFactory());
+                BufferedImage image = Sanselan.getBufferedImage(lastFile,
+                        readParams);
+                assertNotNull(image);
 
-				lastFile = tempFile;
-			}
-		}
-	}
+                File tempFile = createTempFile(imageFile.getName() + "." + j
+                        + ".", ".png");
+                Debug.debug("tempFile", tempFile);
+
+                Map writeParams = new HashMap();
+                Sanselan.writeImage(image, tempFile,
+                        ImageFormat.IMAGE_FORMAT_PNG, writeParams);
+
+                lastFile = tempFile;
+            }
+        }
+    }
 
 }

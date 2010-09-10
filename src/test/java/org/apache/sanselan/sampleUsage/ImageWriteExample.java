@@ -31,22 +31,22 @@ import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 public class ImageWriteExample
 {
-	public static byte[] imageWriteExample(File file)
-			throws ImageReadException, ImageWriteException, IOException
-	{
-		// read image
-		BufferedImage image = Sanselan.getBufferedImage(file);
+    public static byte[] imageWriteExample(File file)
+            throws ImageReadException, ImageWriteException, IOException
+    {
+        // read image
+        BufferedImage image = Sanselan.getBufferedImage(file);
 
-		ImageFormat format = ImageFormat.IMAGE_FORMAT_TIFF;
-		Map params = new HashMap();
+        ImageFormat format = ImageFormat.IMAGE_FORMAT_TIFF;
+        Map params = new HashMap();
 
-		// set optional parameters if you like
-		params.put(SanselanConstants.PARAM_KEY_COMPRESSION, new Integer(
-				TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED));
+        // set optional parameters if you like
+        params.put(SanselanConstants.PARAM_KEY_COMPRESSION, new Integer(
+                TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED));
 
-		byte bytes[] = Sanselan.writeImageToBytes(image, format, params);
+        byte bytes[] = Sanselan.writeImageToBytes(image, format, params);
 
-		return bytes;
-	}
+        return bytes;
+    }
 
 }

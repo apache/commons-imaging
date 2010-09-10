@@ -29,77 +29,77 @@ import org.apache.sanselan.formats.jpeg.JpegImageParser;
 
 public abstract class IptcBaseTest extends SanselanTest
 {
-	protected static boolean hasIptcData(File file)
-	{
-		//		Debug.debug("hasIptcData file", file.getAbsoluteFile());
+    protected static boolean hasIptcData(File file)
+    {
+        //        Debug.debug("hasIptcData file", file.getAbsoluteFile());
 
-		if (!file.getName().toLowerCase().endsWith(".jpg"))
-			return false;
-		//ImageFormat format = Sanselan.guessFormat(file);
-		//if (format != ImageFormat.IMAGE_FORMAT_JPEG)
-		//	return false;
+        if (!file.getName().toLowerCase().endsWith(".jpg"))
+            return false;
+        //ImageFormat format = Sanselan.guessFormat(file);
+        //if (format != ImageFormat.IMAGE_FORMAT_JPEG)
+        //    return false;
 
-		try
-		{
-			ByteSource byteSource = new ByteSourceFile(file);
-			return new JpegImageParser().hasIptcSegment(byteSource);
-		}
-		catch (Exception e)
-		{
-			//			Debug.debug("Error file", file.getAbsoluteFile());
-			//			Debug.debug(e, 4);
-			return false;
-		}
-	}
+        try
+        {
+            ByteSource byteSource = new ByteSourceFile(file);
+            return new JpegImageParser().hasIptcSegment(byteSource);
+        }
+        catch (Exception e)
+        {
+            //            Debug.debug("Error file", file.getAbsoluteFile());
+            //            Debug.debug(e, 4);
+            return false;
+        }
+    }
 
-	private static final ImageFilter HAS_IPTC_IMAGE_FILTER = new ImageFilter()
-	{
-		public boolean accept(File file) throws IOException, ImageReadException
-		{
-			return hasIptcData(file);
-		}
-	};
+    private static final ImageFilter HAS_IPTC_IMAGE_FILTER = new ImageFilter()
+    {
+        public boolean accept(File file) throws IOException, ImageReadException
+        {
+            return hasIptcData(file);
+        }
+    };
 
-	private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter()
-	{
-		public boolean accept(File file) throws IOException, ImageReadException
-		{
-			return file.getName().toLowerCase().endsWith(".jpg");
-		}
-	};
+    private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter()
+    {
+        public boolean accept(File file) throws IOException, ImageReadException
+        {
+            return file.getName().toLowerCase().endsWith(".jpg");
+        }
+    };
 
-	protected File getImageWithIptcData() throws IOException,
-			ImageReadException
-	{
-		return getTestImage(HAS_IPTC_IMAGE_FILTER);
-	}
+    protected File getImageWithIptcData() throws IOException,
+            ImageReadException
+    {
+        return getTestImage(HAS_IPTC_IMAGE_FILTER);
+    }
 
-	protected List getImagesWithIptcData() throws IOException,
-			ImageReadException
-	{
-		return getTestImages(HAS_IPTC_IMAGE_FILTER);
-	}
+    protected List getImagesWithIptcData() throws IOException,
+            ImageReadException
+    {
+        return getTestImages(HAS_IPTC_IMAGE_FILTER);
+    }
 
-	protected List getImagesWithIptcData(int max) throws IOException,
-			ImageReadException
-	{
-		return getTestImages(HAS_IPTC_IMAGE_FILTER, max);
-	}
+    protected List getImagesWithIptcData(int max) throws IOException,
+            ImageReadException
+    {
+        return getTestImages(HAS_IPTC_IMAGE_FILTER, max);
+    }
 
-	protected File getJpegImage() throws IOException, ImageReadException
-	{
-		return getTestImage(JPEG_IMAGE_FILTER);
-	}
+    protected File getJpegImage() throws IOException, ImageReadException
+    {
+        return getTestImage(JPEG_IMAGE_FILTER);
+    }
 
-	protected List getJpegImages() throws IOException, ImageReadException
-	{
-		return getTestImages(JPEG_IMAGE_FILTER);
-	}
+    protected List getJpegImages() throws IOException, ImageReadException
+    {
+        return getTestImages(JPEG_IMAGE_FILTER);
+    }
 
-	protected List getJpegImages(int max) throws IOException,
-			ImageReadException
-	{
-		return getTestImages(JPEG_IMAGE_FILTER, max);
-	}
+    protected List getJpegImages(int max) throws IOException,
+            ImageReadException
+    {
+        return getTestImages(JPEG_IMAGE_FILTER, max);
+    }
 
 }

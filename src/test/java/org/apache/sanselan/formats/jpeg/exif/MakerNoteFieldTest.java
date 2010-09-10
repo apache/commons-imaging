@@ -27,46 +27,46 @@ import org.apache.sanselan.util.Debug;
 
 public class MakerNoteFieldTest extends SpecificExifTagTest
 {
-	//	public MakerNoteFieldTest(String name)
-	//	{
-	//		super(name);
-	//	}
+    //    public MakerNoteFieldTest(String name)
+    //    {
+    //        super(name);
+    //    }
 
-	protected void checkField(File imageFile, TiffField field)
-			throws IOException, ImageReadException, ImageWriteException
-	{
-		if (field.tag == EXIF_TAG_MAKER_NOTE.tag)
-			;
-		else
-			//			if (field.tag == EXIF_TAG_EXIF_OFFSET.tag)
-			//				;
-			//			else
-			return;
+    protected void checkField(File imageFile, TiffField field)
+            throws IOException, ImageReadException, ImageWriteException
+    {
+        if (field.tag == EXIF_TAG_MAKER_NOTE.tag)
+            ;
+        else
+            //            if (field.tag == EXIF_TAG_EXIF_OFFSET.tag)
+            //                ;
+            //            else
+            return;
 
-		Debug.debug("imageFile", imageFile);
-		Debug.debug("field", field);
-		Debug.debug("field", Debug.getType(field));
+        Debug.debug("imageFile", imageFile);
+        Debug.debug("field", field);
+        Debug.debug("field", Debug.getType(field));
 
-		Debug.debug("field", field.tag);
-		Debug.debug("field", field.tagInfo);
-		Debug.debug("length", field.length);
-		Debug.debug("fieldType", field.fieldType);
-		//				Debug.debug("field", Debug.getType(field));
-		Debug.debug();
+        Debug.debug("field", field.tag);
+        Debug.debug("field", field.tagInfo);
+        Debug.debug("length", field.length);
+        Debug.debug("fieldType", field.fieldType);
+        //                Debug.debug("field", Debug.getType(field));
+        Debug.debug();
 
-		//		try
-		//		{
-		//			Object userCommentValue = field.getValue();
-		//			Debug.debug("Text field value(" + field.tagInfo.name + ")",
-		//					userCommentValue);
-		//			//		Debug.debug("userCommentValue", Debug.getType(userCommentValue));
-		//		}
-		//		catch (ImageReadException e)
-		//		{
-		//			Debug.debug("imageFile", imageFile);
-		//			Debug.debug(e);
-		//		}
+        //        try
+        //        {
+        //            Object userCommentValue = field.getValue();
+        //            Debug.debug("Text field value(" + field.tagInfo.name + ")",
+        //                    userCommentValue);
+        //            //        Debug.debug("userCommentValue", Debug.getType(userCommentValue));
+        //        }
+        //        catch (ImageReadException e)
+        //        {
+        //            Debug.debug("imageFile", imageFile);
+        //            Debug.debug(e);
+        //        }
 
-	}
+    }
 
 }

@@ -31,250 +31,250 @@ import org.apache.sanselan.util.Debug;
 public class TiffLZWTest extends TiffBaseTest implements BinaryConstants
 {
 
-	public void testTrivial() throws IOException
-	{
-		byte bytes[] = { 0, };
-		compressRoundtripAndValidate(bytes);
-	}
+    public void testTrivial() throws IOException
+    {
+        byte bytes[] = { 0, };
+        compressRoundtripAndValidate(bytes);
+    }
 
-	public void testMedium() throws IOException
-	{
-		int LENGTH = 1024 * 32;
-		byte bytes[] = new byte[LENGTH];
-		for (int modulator = 1; modulator < 255; modulator += 3)
-		{
-			for (int i = 0; i < LENGTH; i++)
-				bytes[i] = (byte) (0xff & (i % modulator));
+    public void testMedium() throws IOException
+    {
+        int LENGTH = 1024 * 32;
+        byte bytes[] = new byte[LENGTH];
+        for (int modulator = 1; modulator < 255; modulator += 3)
+        {
+            for (int i = 0; i < LENGTH; i++)
+                bytes[i] = (byte) (0xff & (i % modulator));
 
-			compressRoundtripAndValidate(bytes);
-		}
-	}
+            compressRoundtripAndValidate(bytes);
+        }
+    }
 
-//	public void testTiffImageData() throws IOException, ImageReadException,
-//			ImageWriteException
-//	{
-//		List images = getTiffImages();
-//		for (int i = 0; i < images.size(); i++)
-//		{
-//			if (i % 10 == 0)
-//				Debug.purgeMemory();
+//    public void testTiffImageData() throws IOException, ImageReadException,
+//            ImageWriteException
+//    {
+//        List images = getTiffImages();
+//        for (int i = 0; i < images.size(); i++)
+//        {
+//            if (i % 10 == 0)
+//                Debug.purgeMemory();
 //
-//			File imageFile = (File) images.get(i);
-//			Debug.debug("imageFile", imageFile);
+//            File imageFile = (File) images.get(i);
+//            Debug.debug("imageFile", imageFile);
 //
-//			ByteSource byteSource = new ByteSourceFile(imageFile);
-//			Map params = new HashMap();
-//			List data = new TiffImageParser().collectRawImageData(byteSource,
-//					params);
+//            ByteSource byteSource = new ByteSourceFile(imageFile);
+//            Map params = new HashMap();
+//            List data = new TiffImageParser().collectRawImageData(byteSource,
+//                    params);
 //
-//			for (int j = 0; j < data.size(); j++)
-//			{
-//				byte bytes[] = (byte[]) data.get(j);
-//				decompressRoundtripAndValidate(bytes);
-//			}
-//		}
-//	}
+//            for (int j = 0; j < data.size(); j++)
+//            {
+//                byte bytes[] = (byte[]) data.get(j);
+//                decompressRoundtripAndValidate(bytes);
+//            }
+//        }
+//    }
 
-	private void compressRoundtripAndValidate(byte src[]) throws IOException
-	{
-		final boolean DEBUG = false;
+    private void compressRoundtripAndValidate(byte src[]) throws IOException
+    {
+        final boolean DEBUG = false;
 
-		if (DEBUG)
-		{
-			Debug.debug();
-			Debug.debug("roundtripAndValidate: " + src.length);
-			Debug.debug();
-		}
+        if (DEBUG)
+        {
+            Debug.debug();
+            Debug.debug("roundtripAndValidate: " + src.length);
+            Debug.debug();
+        }
 
-		int LZW_MINIMUM_CODE_SIZE = 8;
-		final List codes = new ArrayList();
-		MyLZWCompressor.Listener compressionListener = new MyLZWCompressor.Listener() {
-			public void dataCode(int code)
-			{
-				codes.add(new Integer(code));
-			}
+        int LZW_MINIMUM_CODE_SIZE = 8;
+        final List codes = new ArrayList();
+        MyLZWCompressor.Listener compressionListener = new MyLZWCompressor.Listener() {
+            public void dataCode(int code)
+            {
+                codes.add(new Integer(code));
+            }
 
-			public void eoiCode(int code)
-			{
-				codes.add(new Integer(code));
-			}
+            public void eoiCode(int code)
+            {
+                codes.add(new Integer(code));
+            }
 
-			public void clearCode(int code)
-			{
-				codes.add(new Integer(code));
-			}
+            public void clearCode(int code)
+            {
+                codes.add(new Integer(code));
+            }
 
-			public void init(int clearCode, int eoiCode)
-			{
-			}
-		};
+            public void init(int clearCode, int eoiCode)
+            {
+            }
+        };
 
-		MyLZWCompressor compressor = new MyLZWCompressor(LZW_MINIMUM_CODE_SIZE,
-				BYTE_ORDER_MSB, true, compressionListener);
-		byte compressed[] = compressor.compress(src);
+        MyLZWCompressor compressor = new MyLZWCompressor(LZW_MINIMUM_CODE_SIZE,
+                BYTE_ORDER_MSB, true, compressionListener);
+        byte compressed[] = compressor.compress(src);
 
-		MyLZWDecompressor.Listener decompressionListener = new MyLZWDecompressor.Listener() {
+        MyLZWDecompressor.Listener decompressionListener = new MyLZWDecompressor.Listener() {
 
-			int index = 0;
-			int clearCode, eoiCode;
+            int index = 0;
+            int clearCode, eoiCode;
 
-			public void code(int code)
-			{
-				if (DEBUG)
-				{
-					if (code == clearCode)
-					{
-						Debug.debug("clearCode: " + index + "/" + codes.size());
-						Debug.debug();
-					}
-					if (code == eoiCode)
-					{
-						Debug.debug("eoiCode: " + index + "/" + codes.size());
-						Debug.debug();
-					}
-				}
-				Integer expectedCode = (Integer) codes.get(index++);
-				if (code != expectedCode.intValue())
-				{
-					Debug.debug("bad code: " + index + "/" + codes.size());
-					Debug.debug("code: " + code + " (0x"
-							+ Integer.toHexString(code) + ") "
-							+ Integer.toBinaryString(code));
-					Debug.debug("expected: " + expectedCode + " (0x"
-							+ Integer.toHexString(expectedCode.intValue())
-							+ ") "
-							+ Integer.toBinaryString(expectedCode.intValue()));
-					Debug.debug("clearCode: " + clearCode + " (0x"
-							+ Integer.toHexString(clearCode) + ") "
-							+ Integer.toBinaryString(clearCode));
-					Debug.debug("eoiCode: " + eoiCode + " (0x"
-							+ Integer.toHexString(eoiCode) + ") "
-							+ Integer.toBinaryString(eoiCode));
-					Debug.debug();
-				}
-			}
+            public void code(int code)
+            {
+                if (DEBUG)
+                {
+                    if (code == clearCode)
+                    {
+                        Debug.debug("clearCode: " + index + "/" + codes.size());
+                        Debug.debug();
+                    }
+                    if (code == eoiCode)
+                    {
+                        Debug.debug("eoiCode: " + index + "/" + codes.size());
+                        Debug.debug();
+                    }
+                }
+                Integer expectedCode = (Integer) codes.get(index++);
+                if (code != expectedCode.intValue())
+                {
+                    Debug.debug("bad code: " + index + "/" + codes.size());
+                    Debug.debug("code: " + code + " (0x"
+                            + Integer.toHexString(code) + ") "
+                            + Integer.toBinaryString(code));
+                    Debug.debug("expected: " + expectedCode + " (0x"
+                            + Integer.toHexString(expectedCode.intValue())
+                            + ") "
+                            + Integer.toBinaryString(expectedCode.intValue()));
+                    Debug.debug("clearCode: " + clearCode + " (0x"
+                            + Integer.toHexString(clearCode) + ") "
+                            + Integer.toBinaryString(clearCode));
+                    Debug.debug("eoiCode: " + eoiCode + " (0x"
+                            + Integer.toHexString(eoiCode) + ") "
+                            + Integer.toBinaryString(eoiCode));
+                    Debug.debug();
+                }
+            }
 
-			public void init(int clearCode, int eoiCode)
-			{
-				this.clearCode = clearCode;
-				this.eoiCode = eoiCode;
-			}
+            public void init(int clearCode, int eoiCode)
+            {
+                this.clearCode = clearCode;
+                this.eoiCode = eoiCode;
+            }
 
-		};
-		InputStream is = new ByteArrayInputStream(compressed);
-		MyLZWDecompressor decompressor = new MyLZWDecompressor(
-				LZW_MINIMUM_CODE_SIZE, BYTE_ORDER_NETWORK,
-				decompressionListener);
-		decompressor.setTiffLZWMode();
-		byte decompressed[] = decompressor.decompress(is, src.length);
+        };
+        InputStream is = new ByteArrayInputStream(compressed);
+        MyLZWDecompressor decompressor = new MyLZWDecompressor(
+                LZW_MINIMUM_CODE_SIZE, BYTE_ORDER_NETWORK,
+                decompressionListener);
+        decompressor.setTiffLZWMode();
+        byte decompressed[] = decompressor.decompress(is, src.length);
 
-		assertEquals(src.length, decompressed.length);
-		for (int i = 0; i < src.length; i++)
-			assertEquals(src[i], decompressed[i]);
-	}
+        assertEquals(src.length, decompressed.length);
+        for (int i = 0; i < src.length; i++)
+            assertEquals(src[i], decompressed[i]);
+    }
 
-	private void decompressRoundtripAndValidate(byte src[]) throws IOException
-	{
-		Debug.debug();
-		Debug.debug("roundtripAndValidate: " + src.length);
-		Debug.debug();
+    private void decompressRoundtripAndValidate(byte src[]) throws IOException
+    {
+        Debug.debug();
+        Debug.debug("roundtripAndValidate: " + src.length);
+        Debug.debug();
 
-		int LZW_MINIMUM_CODE_SIZE = 8;
-		final List codes = new ArrayList();
+        int LZW_MINIMUM_CODE_SIZE = 8;
+        final List codes = new ArrayList();
 
-		MyLZWDecompressor.Listener decompressionListener = new MyLZWDecompressor.Listener() {
+        MyLZWDecompressor.Listener decompressionListener = new MyLZWDecompressor.Listener() {
 
-			public void code(int code)
-			{
-				Debug.debug("listener code: " + code + " (0x"
-						+ Integer.toHexString(code) + ") "
-						+ Integer.toBinaryString(code) + ", index: "
-						+ codes.size());
-				codes.add(new Integer(code));
-			}
+            public void code(int code)
+            {
+                Debug.debug("listener code: " + code + " (0x"
+                        + Integer.toHexString(code) + ") "
+                        + Integer.toBinaryString(code) + ", index: "
+                        + codes.size());
+                codes.add(new Integer(code));
+            }
 
-			public void init(int clearCode, int eoiCode)
-			{
-			}
+            public void init(int clearCode, int eoiCode)
+            {
+            }
 
-		};
-		InputStream is = new ByteArrayInputStream(src);
-		MyLZWDecompressor decompressor = new MyLZWDecompressor(
-				LZW_MINIMUM_CODE_SIZE, BYTE_ORDER_NETWORK,
-				decompressionListener);
-		decompressor.setTiffLZWMode();
-		byte decompressed[] = decompressor.decompress(is, src.length);
+        };
+        InputStream is = new ByteArrayInputStream(src);
+        MyLZWDecompressor decompressor = new MyLZWDecompressor(
+                LZW_MINIMUM_CODE_SIZE, BYTE_ORDER_NETWORK,
+                decompressionListener);
+        decompressor.setTiffLZWMode();
+        byte decompressed[] = decompressor.decompress(is, src.length);
 
-		MyLZWCompressor.Listener compressionListener = new MyLZWCompressor.Listener() {
+        MyLZWCompressor.Listener compressionListener = new MyLZWCompressor.Listener() {
 
-			int clearCode, eoiCode;
+            int clearCode, eoiCode;
 
-			public void init(int clearCode, int eoiCode)
-			{
-				this.clearCode = clearCode;
-				this.eoiCode = eoiCode;
-			}
+            public void init(int clearCode, int eoiCode)
+            {
+                this.clearCode = clearCode;
+                this.eoiCode = eoiCode;
+            }
 
-			int index = 0;
+            int index = 0;
 
-			private void code(int code)
-			{
+            private void code(int code)
+            {
 
-				if (code == clearCode)
-				{
-					Debug.debug("clearCode: " + index + "/" + codes.size());
-					Debug.debug();
-				}
-				if (code == eoiCode)
-				{
-					Debug.debug("eoiCode: " + index + "/" + codes.size());
-					Debug.debug();
-				}
-				Integer expectedCode = (Integer) codes.get(index++);
-				if (code != expectedCode.intValue())
-				{
-					Debug.debug("bad code: " + index + "/" + codes.size());
-					Debug.debug("code: " + code + " (0x"
-							+ Integer.toHexString(code) + ") "
-							+ Integer.toBinaryString(code));
-					Debug.debug("expected: " + expectedCode + " (0x"
-							+ Integer.toHexString(expectedCode.intValue())
-							+ ") "
-							+ Integer.toBinaryString(expectedCode.intValue()));
-					Debug.debug("clearCode: " + clearCode + " (0x"
-							+ Integer.toHexString(clearCode) + ") "
-							+ Integer.toBinaryString(clearCode));
-					Debug.debug("eoiCode: " + eoiCode + " (0x"
-							+ Integer.toHexString(eoiCode) + ") "
-							+ Integer.toBinaryString(eoiCode));
-					Debug.debug();
-				}
-			}
+                if (code == clearCode)
+                {
+                    Debug.debug("clearCode: " + index + "/" + codes.size());
+                    Debug.debug();
+                }
+                if (code == eoiCode)
+                {
+                    Debug.debug("eoiCode: " + index + "/" + codes.size());
+                    Debug.debug();
+                }
+                Integer expectedCode = (Integer) codes.get(index++);
+                if (code != expectedCode.intValue())
+                {
+                    Debug.debug("bad code: " + index + "/" + codes.size());
+                    Debug.debug("code: " + code + " (0x"
+                            + Integer.toHexString(code) + ") "
+                            + Integer.toBinaryString(code));
+                    Debug.debug("expected: " + expectedCode + " (0x"
+                            + Integer.toHexString(expectedCode.intValue())
+                            + ") "
+                            + Integer.toBinaryString(expectedCode.intValue()));
+                    Debug.debug("clearCode: " + clearCode + " (0x"
+                            + Integer.toHexString(clearCode) + ") "
+                            + Integer.toBinaryString(clearCode));
+                    Debug.debug("eoiCode: " + eoiCode + " (0x"
+                            + Integer.toHexString(eoiCode) + ") "
+                            + Integer.toBinaryString(eoiCode));
+                    Debug.debug();
+                }
+            }
 
-			public void dataCode(int code)
-			{
-				code(code);
-			}
+            public void dataCode(int code)
+            {
+                code(code);
+            }
 
-			public void eoiCode(int code)
-			{
-				code(code);
-			}
+            public void eoiCode(int code)
+            {
+                code(code);
+            }
 
-			public void clearCode(int code)
-			{
-				code(code);
-			}
+            public void clearCode(int code)
+            {
+                code(code);
+            }
 
-		};
+        };
 
-		MyLZWCompressor compressor = new MyLZWCompressor(LZW_MINIMUM_CODE_SIZE,
-				BYTE_ORDER_MSB, true, compressionListener);
-		byte compressed[] = compressor.compress(decompressed);
+        MyLZWCompressor compressor = new MyLZWCompressor(LZW_MINIMUM_CODE_SIZE,
+                BYTE_ORDER_MSB, true, compressionListener);
+        byte compressed[] = compressor.compress(decompressed);
 
-		assertEquals(src.length, compressed.length);
-		for (int i = 0; i < src.length; i++)
-			assertEquals(src[i], compressed[i]);
-	}
+        assertEquals(src.length, compressed.length);
+        for (int i = 0; i < src.length; i++)
+            assertEquals(src[i], compressed[i]);
+    }
 
 }

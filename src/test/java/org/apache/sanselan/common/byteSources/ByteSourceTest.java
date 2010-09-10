@@ -28,46 +28,46 @@ import org.apache.sanselan.SanselanTest;
 
 public abstract class ByteSourceTest extends SanselanTest
 {
-	protected File createTempFile(byte src[]) throws IOException
-	{
-		File file = createTempFile("raw_", ".bin");
+    protected File createTempFile(byte src[]) throws IOException
+    {
+        File file = createTempFile("raw_", ".bin");
 
-		// write test bytes to file.
-		OutputStream os = new FileOutputStream(file);
-		os = new BufferedOutputStream(os);
-		os.write(src);
-		os.close();
+        // write test bytes to file.
+        OutputStream os = new FileOutputStream(file);
+        os = new BufferedOutputStream(os);
+        os.write(src);
+        os.close();
 
-		// test that all bytes written to file.
-		assertTrue(src.length == file.length());
+        // test that all bytes written to file.
+        assertTrue(src.length == file.length());
 
-		return file;
-	}
+        return file;
+    }
 
-	protected byte[][] getTestByteArrays()
-	{
-		byte emptyArray[] = (new byte[0]);
+    protected byte[][] getTestByteArrays()
+    {
+        byte emptyArray[] = (new byte[0]);
 
-		byte single[] = new byte[1];
-		for (int i = 0; i < single.length; i++)
-			single[i] = (byte) i;
+        byte single[] = new byte[1];
+        for (int i = 0; i < single.length; i++)
+            single[i] = (byte) i;
 
-		byte simple[] = new byte[256];
-		for (int i = 0; i < simple.length; i++)
-			simple[i] = (byte) i;
+        byte simple[] = new byte[256];
+        for (int i = 0; i < simple.length; i++)
+            simple[i] = (byte) i;
 
-		byte zeroes[] = new byte[256];
-		for (int i = 0; i < zeroes.length; i++)
-			zeroes[i] = 0;
+        byte zeroes[] = new byte[256];
+        for (int i = 0; i < zeroes.length; i++)
+            zeroes[i] = 0;
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		for (int i = 0; i < 256 * 256; i++)
-		{
-			baos.write(0xff & i);
-			baos.write(0xff & (i >> 8));
-		}
-		byte longArray[] = (baos.toByteArray());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        for (int i = 0; i < 256 * 256; i++)
+        {
+            baos.write(0xff & i);
+            baos.write(0xff & (i >> 8));
+        }
+        byte longArray[] = (baos.toByteArray());
 
-		return new byte[][] { emptyArray, single, simple, zeroes, longArray, };
-	}
+        return new byte[][] { emptyArray, single, simple, zeroes, longArray, };
+    }
 }

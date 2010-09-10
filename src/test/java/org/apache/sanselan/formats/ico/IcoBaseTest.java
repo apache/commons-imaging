@@ -27,23 +27,23 @@ import org.apache.sanselan.SanselanTest;
 public abstract class IcoBaseTest extends SanselanTest
 {
 
-	private static boolean isIco(File file)
-	{
-		return file.getName().toLowerCase().endsWith(".ico") ||
-			file.getName().toLowerCase().endsWith(".cur");
-	}
+    private static boolean isIco(File file)
+    {
+        return file.getName().toLowerCase().endsWith(".ico") ||
+            file.getName().toLowerCase().endsWith(".cur");
+    }
 
-	private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-		public boolean accept(File file) throws IOException, ImageReadException
-		{
-			return isIco(file);
-		}
-	};
+    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
+        public boolean accept(File file) throws IOException, ImageReadException
+        {
+            return isIco(file);
+        }
+    };
 
-	protected List getIcoImages() throws IOException, ImageReadException
-	{
-		return getTestImages(IMAGE_FILTER);
-	}
+    protected List getIcoImages() throws IOException, ImageReadException
+    {
+        return getTestImages(IMAGE_FILTER);
+    }
 
 
 }

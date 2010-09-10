@@ -33,33 +33,33 @@ public class ConvertPngToGifTest extends PngBaseTest {
 
 
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException {
+    public void test() throws IOException, ImageReadException,
+            ImageWriteException {
 
-		List images = getPngImages();
-		for (int i = 0; i < images.size(); i++) {
-			if (i % 10 == 0)
-				Debug.purgeMemory();
+        List images = getPngImages();
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
-			File imageFile = (File) images.get(i);
-			if (isInvalidPNGTestFile(imageFile))
-				continue;
-			// Debug.debug("imageFile", imageFile);
-			// Debug.debug();
+            File imageFile = (File) images.get(i);
+            if (isInvalidPNGTestFile(imageFile))
+                continue;
+            // Debug.debug("imageFile", imageFile);
+            // Debug.debug();
 
-			Hashtable params = new Hashtable();
-//			params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
+            Hashtable params = new Hashtable();
+//            params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-			BufferedImage image = Sanselan.getBufferedImage(imageFile, params);
-			assertNotNull(image);
+            BufferedImage image = Sanselan.getBufferedImage(imageFile, params);
+            assertNotNull(image);
 
-			File outFile = createTempFile(imageFile.getName()+".", ".gif");
-//			Debug.debug("outFile", outFile);
+            File outFile = createTempFile(imageFile.getName()+".", ".gif");
+//            Debug.debug("outFile", outFile);
 
-			Sanselan.writeImage(image, outFile, ImageFormat.IMAGE_FORMAT_GIF,
-					params);
-		}
-		Debug.debug("complete.");
-	}
+            Sanselan.writeImage(image, outFile, ImageFormat.IMAGE_FORMAT_GIF,
+                    params);
+        }
+        Debug.debug("complete.");
+    }
 
 }
