@@ -49,8 +49,7 @@ public class PngReadTest extends PngBaseTest
 			{
 				try
 				{
-					IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-					// assertNotNull(metadata);
+					Sanselan.getMetadata(imageFile);
 					fail("Image read should have failed.");
 				} catch (Exception e)
 				{
@@ -58,8 +57,7 @@ public class PngReadTest extends PngBaseTest
 
 				try
 				{
-					ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
-					// assertNotNull(imageInfo);
+					Sanselan.getImageInfo(imageFile);
 					fail("Image read should have failed.");
 				} catch (Exception e)
 				{
@@ -67,8 +65,7 @@ public class PngReadTest extends PngBaseTest
 
 				try
 				{
-					BufferedImage image = Sanselan.getBufferedImage(imageFile);
-					// assertNotNull(image);
+					Sanselan.getBufferedImage(imageFile);
 					fail("Image read should have failed.");
 				} catch (Exception e)
 				{
