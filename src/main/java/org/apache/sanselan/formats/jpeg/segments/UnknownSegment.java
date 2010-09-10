@@ -23,20 +23,20 @@ import org.apache.sanselan.ImageReadException;
 
 public class UnknownSegment extends GenericSegment
 {
-	public UnknownSegment(int marker, int marker_length, InputStream is)
-			throws ImageReadException, IOException
-	{
-		super(marker, marker_length, is);
-	}
+    public UnknownSegment(int marker, int marker_length, InputStream is)
+            throws ImageReadException, IOException
+    {
+        super(marker, marker_length, is);
+    }
 
-	public UnknownSegment(int marker, byte bytes[]) throws ImageReadException,
-			IOException
-	{
-		super(marker, bytes);
-	}
+    public UnknownSegment(int marker, byte bytes[]) throws ImageReadException,
+            IOException
+    {
+        super(marker, bytes);
+    }
 
-	public String getDescription()
-	{
-		return "Unknown (" + getSegmentType() + ")";
-	}
+    public String getDescription()
+    {
+        return "Unknown (" + getSegmentType() + ")";
+    }
 }

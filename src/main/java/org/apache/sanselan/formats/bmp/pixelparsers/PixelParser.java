@@ -26,36 +26,36 @@ import org.apache.sanselan.formats.bmp.BmpHeaderInfo;
 
 public abstract class PixelParser
 {
-	public final BmpHeaderInfo bhi;
-	public final byte colorTable[];
-	public final byte imageData[];
+    public final BmpHeaderInfo bhi;
+    public final byte colorTable[];
+    public final byte imageData[];
 
-	protected final BinaryFileParser bfp;
-	protected final ByteArrayInputStream is;
+    protected final BinaryFileParser bfp;
+    protected final ByteArrayInputStream is;
 
-	public PixelParser(BmpHeaderInfo bhi, byte ColorTable[], byte ImageData[])
-	{
-		this.bhi = bhi;
-		this.colorTable = ColorTable;
-		this.imageData = ImageData;
+    public PixelParser(BmpHeaderInfo bhi, byte ColorTable[], byte ImageData[])
+    {
+        this.bhi = bhi;
+        this.colorTable = ColorTable;
+        this.imageData = ImageData;
 
-		bfp = new BinaryFileParser(BinaryFileParser.BYTE_ORDER_INTEL);
-		is = new ByteArrayInputStream(ImageData);
-	}
+        bfp = new BinaryFileParser(BinaryFileParser.BYTE_ORDER_INTEL);
+        is = new ByteArrayInputStream(ImageData);
+    }
 
-	public abstract void processImage(BufferedImage bi)
-			throws ImageReadException, IOException;
+    public abstract void processImage(BufferedImage bi)
+            throws ImageReadException, IOException;
 
-	protected int getColorTableRGB(int index)
-	{
-		index *= 4;
-		int blue = 0xff & colorTable[index + 0];
-		int green = 0xff & colorTable[index + 1];
-		int red = 0xff & colorTable[index + 2];
-		int alpha = 0xff;
+    protected int getColorTableRGB(int index)
+    {
+        index *= 4;
+        int blue = 0xff & colorTable[index + 0];
+        int green = 0xff & colorTable[index + 1];
+        int red = 0xff & colorTable[index + 2];
+        int alpha = 0xff;
 
-		int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-		return rgb;
-	}
+        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        return rgb;
+    }
 
 }

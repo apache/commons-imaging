@@ -20,51 +20,51 @@ import java.io.PrintWriter;
 
 public class PSDHeaderInfo
 {
-	public final int Version;
-	public final byte Reserved[];
-	public final int Channels;
-	public final int Rows;
-	public final int Columns;
-	public final int Depth;
-	public final int Mode;
+    public final int Version;
+    public final byte Reserved[];
+    public final int Channels;
+    public final int Rows;
+    public final int Columns;
+    public final int Depth;
+    public final int Mode;
 
-	public PSDHeaderInfo(int Version, byte Reserved[], int Channels, int Rows,
-			int Columns, int Depth, int Mode)
-	{
-		this.Version = Version;
-		this.Reserved = Reserved;
-		this.Channels = Channels;
-		this.Rows = Rows;
-		this.Columns = Columns;
-		this.Depth = Depth;
-		this.Mode = Mode;
+    public PSDHeaderInfo(int Version, byte Reserved[], int Channels, int Rows,
+            int Columns, int Depth, int Mode)
+    {
+        this.Version = Version;
+        this.Reserved = Reserved;
+        this.Channels = Channels;
+        this.Rows = Rows;
+        this.Columns = Columns;
+        this.Depth = Depth;
+        this.Mode = Mode;
 
-	}
+    }
 
-	public void dump()
-	{
-		PrintWriter pw = new PrintWriter(System.out);
-		dump(pw);
-		pw.flush();
-	}
+    public void dump()
+    {
+        PrintWriter pw = new PrintWriter(System.out);
+        dump(pw);
+        pw.flush();
+    }
 
-	public void dump(PrintWriter pw)
-	{
-		pw.println("");
-		pw.println("Header");
-		pw.println("Version: " + Version + " (" + Integer.toHexString(Version)
-				+ ")");
-		pw.println("Channels: " + Channels + " ("
-				+ Integer.toHexString(Channels) + ")");
-		pw.println("Rows: " + Rows + " (" + Integer.toHexString(Rows) + ")");
-		pw.println("Columns: " + Columns + " (" + Integer.toHexString(Columns)
-				+ ")");
-		pw.println("Depth: " + Depth + " (" + Integer.toHexString(Depth) + ")");
-		pw.println("Mode: " + Mode + " (" + Integer.toHexString(Mode) + ")");
-		pw.println("Reserved: " + Reserved.length);
-		pw.println("");
-		pw.flush();
+    public void dump(PrintWriter pw)
+    {
+        pw.println("");
+        pw.println("Header");
+        pw.println("Version: " + Version + " (" + Integer.toHexString(Version)
+                + ")");
+        pw.println("Channels: " + Channels + " ("
+                + Integer.toHexString(Channels) + ")");
+        pw.println("Rows: " + Rows + " (" + Integer.toHexString(Rows) + ")");
+        pw.println("Columns: " + Columns + " (" + Integer.toHexString(Columns)
+                + ")");
+        pw.println("Depth: " + Depth + " (" + Integer.toHexString(Depth) + ")");
+        pw.println("Mode: " + Mode + " (" + Integer.toHexString(Mode) + ")");
+        pw.println("Reserved: " + Reserved.length);
+        pw.println("");
+        pw.flush();
 
-	}
+    }
 
 }

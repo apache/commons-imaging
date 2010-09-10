@@ -22,41 +22,41 @@ import org.apache.sanselan.common.BinaryFileParser;
 
 public class PNGChunk extends BinaryFileParser
 {
-	public final int length;
-	public final int chunkType;
-	public final int crc;
-	public final byte bytes[];
+    public final int length;
+    public final int chunkType;
+    public final int crc;
+    public final byte bytes[];
 
-	public final boolean propertyBits[];
-	public final boolean ancillary, isPrivate, reserved, safeToCopy;
+    public final boolean propertyBits[];
+    public final boolean ancillary, isPrivate, reserved, safeToCopy;
 
-	public PNGChunk(int Length, int ChunkType, int CRC, byte bytes[])
-	{
-		this.length = Length;
-		this.chunkType = ChunkType;
-		this.crc = CRC;
-		this.bytes = bytes;
+    public PNGChunk(int Length, int ChunkType, int CRC, byte bytes[])
+    {
+        this.length = Length;
+        this.chunkType = ChunkType;
+        this.crc = CRC;
+        this.bytes = bytes;
 
-		propertyBits = new boolean[4];
-		int shift = 24;
-		for (int i = 0; i < 4; i++)
-		{
-			int theByte = 0xff & (ChunkType >> shift);
-			shift -= 8;
-			int theMask = 1 << 5;
-			propertyBits[i] = ((theByte & theMask) > 0);
-		}
+        propertyBits = new boolean[4];
+        int shift = 24;
+        for (int i = 0; i < 4; i++)
+        {
+            int theByte = 0xff & (ChunkType >> shift);
+            shift -= 8;
+            int theMask = 1 << 5;
+            propertyBits[i] = ((theByte & theMask) > 0);
+        }
 
-		ancillary = propertyBits[0];
-		isPrivate = propertyBits[1];
-		reserved = propertyBits[2];
-		safeToCopy = propertyBits[3];
-	}
+        ancillary = propertyBits[0];
+        isPrivate = propertyBits[1];
+        reserved = propertyBits[2];
+        safeToCopy = propertyBits[3];
+    }
 
-	protected ByteArrayInputStream getDataStream()
-	{
-		ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-		return is;
-	}
+    protected ByteArrayInputStream getDataStream()
+    {
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        return is;
+    }
 
 }

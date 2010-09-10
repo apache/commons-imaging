@@ -21,28 +21,28 @@ import org.apache.sanselan.formats.psd.ImageContents;
 
 public class DataParserCMYK extends DataParser
 {
-	protected int getRGB(int data[][][], int x, int y,
-			ImageContents imageContents)
-	{
-		int sc = 0xff & data[0][y][x];
-		int sm = 0xff & data[1][y][x];
-		int sy = 0xff & data[2][y][x];
-		int sk = 0xff & data[3][y][x];
+    protected int getRGB(int data[][][], int x, int y,
+            ImageContents imageContents)
+    {
+        int sc = 0xff & data[0][y][x];
+        int sm = 0xff & data[1][y][x];
+        int sy = 0xff & data[2][y][x];
+        int sk = 0xff & data[3][y][x];
 
-		// CRAZY adobe has to store the bytes in reverse form.
-		sc = 255 - sc;
-		sm = 255 - sm;
-		sy = 255 - sy;
-		sk = 255 - sk;
+        // CRAZY adobe has to store the bytes in reverse form.
+        sc = 255 - sc;
+        sm = 255 - sm;
+        sy = 255 - sy;
+        sk = 255 - sk;
 
-		int rgb = ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
+        int rgb = ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
-	public int getBasicChannelsCount()
-	{
-		return 4;
-	}
+    public int getBasicChannelsCount()
+    {
+        return 4;
+    }
 
 }

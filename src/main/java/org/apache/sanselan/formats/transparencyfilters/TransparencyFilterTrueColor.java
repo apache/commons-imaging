@@ -23,36 +23,36 @@ import org.apache.sanselan.ImageReadException;
 
 public class TransparencyFilterTrueColor extends TransparencyFilter
 {
-	private final int transparent_red;
-	private final int transparent_green;
-	private final int transparent_blue;
-	private final int transparent_color;
+    private final int transparent_red;
+    private final int transparent_green;
+    private final int transparent_blue;
+    private final int transparent_color;
 
-	public TransparencyFilterTrueColor(byte bytes[]) throws ImageReadException,
-			IOException
-	{
-		super(bytes);
+    public TransparencyFilterTrueColor(byte bytes[]) throws ImageReadException,
+            IOException
+    {
+        super(bytes);
 
-		ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-		transparent_red = read2Bytes("transparent_red", is,
-				"tRNS: Missing transparent_color");
-		transparent_green = read2Bytes("transparent_green", is,
-				"tRNS: Missing transparent_color");
-		transparent_blue = read2Bytes("transparent_blue", is,
-				"tRNS: Missing transparent_color");
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        transparent_red = read2Bytes("transparent_red", is,
+                "tRNS: Missing transparent_color");
+        transparent_green = read2Bytes("transparent_green", is,
+                "tRNS: Missing transparent_color");
+        transparent_blue = read2Bytes("transparent_blue", is,
+                "tRNS: Missing transparent_color");
 
-		transparent_color = ((0xff & transparent_red) << 16)
-				| ((0xff & transparent_green) << 8)
-				| ((0xff & transparent_blue) << 0);
+        transparent_color = ((0xff & transparent_red) << 16)
+                | ((0xff & transparent_green) << 8)
+                | ((0xff & transparent_blue) << 0);
 
-	}
+    }
 
-	public int filter(int rgb, int sample) throws ImageReadException,
-			IOException
-	{
-		if ((0x00ffffff & rgb) == transparent_color)
-			return 0x00;
+    public int filter(int rgb, int sample) throws ImageReadException,
+            IOException
+    {
+        if ((0x00ffffff & rgb) == transparent_color)
+            return 0x00;
 
-		return rgb;
-	}
+        return rgb;
+    }
 }

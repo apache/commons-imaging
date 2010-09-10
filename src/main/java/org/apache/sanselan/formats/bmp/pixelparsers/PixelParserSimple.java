@@ -24,31 +24,31 @@ import org.apache.sanselan.formats.bmp.BmpHeaderInfo;
 
 public abstract class PixelParserSimple extends PixelParser
 {
-	public PixelParserSimple(BmpHeaderInfo bhi, byte ColorTable[],
-			byte ImageData[])
-	{
-		super(bhi, ColorTable, ImageData);
-	}
+    public PixelParserSimple(BmpHeaderInfo bhi, byte ColorTable[],
+            byte ImageData[])
+    {
+        super(bhi, ColorTable, ImageData);
+    }
 
-	public abstract int getNextRGB() throws ImageReadException, IOException;
+    public abstract int getNextRGB() throws ImageReadException, IOException;
 
-	public abstract void newline() throws ImageReadException, IOException;
+    public abstract void newline() throws ImageReadException, IOException;
 
-	public void processImage(BufferedImage bi) throws ImageReadException,
-			IOException
-	{
-//		DataBuffer db = bi.getRaster().getDataBuffer();
+    public void processImage(BufferedImage bi) throws ImageReadException,
+            IOException
+    {
+//        DataBuffer db = bi.getRaster().getDataBuffer();
 
-		for (int y = bhi.height - 1; y >= 0; y--)
-		{
-			for (int x = 0; x < bhi.width; x++)
-			{
-				int rgb = getNextRGB();
+        for (int y = bhi.height - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < bhi.width; x++)
+            {
+                int rgb = getNextRGB();
 
-				bi.setRGB(x, y, rgb);
-//				db.setElem(y * bhi.width + x, rgb);
-			}
-			newline();
-		}
-	}
+                bi.setRGB(x, y, rgb);
+//                db.setElem(y * bhi.width + x, rgb);
+            }
+            newline();
+        }
+    }
 }

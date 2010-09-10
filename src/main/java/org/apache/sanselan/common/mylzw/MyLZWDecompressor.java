@@ -23,204 +23,204 @@ import java.io.OutputStream;
 
 public final class MyLZWDecompressor
 {
-	private static final int MAX_TABLE_SIZE = 1 << 12;
+    private static final int MAX_TABLE_SIZE = 1 << 12;
 
-	private final byte[][] table;
-	private int codeSize;
-	private final int initialCodeSize;
-	private int codes = -1;
+    private final byte[][] table;
+    private int codeSize;
+    private final int initialCodeSize;
+    private int codes = -1;
 
-	private final int byteOrder;
+    private final int byteOrder;
 
-	private final Listener listener;
+    private final Listener listener;
 
-	public static interface Listener
-	{
-		public void code(int code);
-		
-		public void init(int clearCode, int eoiCode);
-	}
+    public static interface Listener
+    {
+        public void code(int code);
 
-	public MyLZWDecompressor(int initialCodeSize, int byteOrder)
-	{
-		this(initialCodeSize, byteOrder, null);
-	}
+        public void init(int clearCode, int eoiCode);
+    }
 
-	public MyLZWDecompressor(int initialCodeSize, int byteOrder,
-			Listener listener)
-	{
-		this.listener = listener;
-		this.byteOrder = byteOrder;
+    public MyLZWDecompressor(int initialCodeSize, int byteOrder)
+    {
+        this(initialCodeSize, byteOrder, null);
+    }
 
-		this.initialCodeSize = initialCodeSize;
+    public MyLZWDecompressor(int initialCodeSize, int byteOrder,
+            Listener listener)
+    {
+        this.listener = listener;
+        this.byteOrder = byteOrder;
 
-		table = new byte[MAX_TABLE_SIZE][];
-		clearCode = 1 << initialCodeSize;
-		eoiCode = clearCode + 1;
+        this.initialCodeSize = initialCodeSize;
 
-		if (null != listener)
-			listener.init(clearCode, eoiCode);
+        table = new byte[MAX_TABLE_SIZE][];
+        clearCode = 1 << initialCodeSize;
+        eoiCode = clearCode + 1;
 
-		InitializeTable();
-	}
+        if (null != listener)
+            listener.init(clearCode, eoiCode);
 
-	private final void InitializeTable()
-	{
-		codeSize = initialCodeSize;
+        InitializeTable();
+    }
 
-		int intial_entries_count = 1 << codeSize + 2;
+    private final void InitializeTable()
+    {
+        codeSize = initialCodeSize;
 
-		for (int i = 0; i < intial_entries_count; i++)
-			table[i] = new byte[] { (byte) i, };
-	}
+        int intial_entries_count = 1 << codeSize + 2;
 
-	private final void clearTable()
-	{
-		codes = (1 << initialCodeSize) + 2;
-		codeSize = initialCodeSize;
-		incrementCodeSize();
-	}
+        for (int i = 0; i < intial_entries_count; i++)
+            table[i] = new byte[] { (byte) i, };
+    }
 
-	private final int clearCode;
-	private final int eoiCode;
+    private final void clearTable()
+    {
+        codes = (1 << initialCodeSize) + 2;
+        codeSize = initialCodeSize;
+        incrementCodeSize();
+    }
 
-	private final int getNextCode(MyBitInputStream is) throws IOException
-	{
-		int code = is.readBits(codeSize);
+    private final int clearCode;
+    private final int eoiCode;
 
-		if (null != listener)
-			listener.code(code);
-		return code;
-	}
+    private final int getNextCode(MyBitInputStream is) throws IOException
+    {
+        int code = is.readBits(codeSize);
 
-	private final byte[] stringFromCode(int code) throws IOException
-	{
-		if ((code >= codes) || (code < 0))
-			throw new IOException("Bad Code: " + code + " codes: " + codes
-					+ " code_size: " + codeSize + ", table: " + table.length);
+        if (null != listener)
+            listener.code(code);
+        return code;
+    }
 
-		return table[code];
-	}
+    private final byte[] stringFromCode(int code) throws IOException
+    {
+        if ((code >= codes) || (code < 0))
+            throw new IOException("Bad Code: " + code + " codes: " + codes
+                    + " code_size: " + codeSize + ", table: " + table.length);
 
-	private final boolean isInTable(int Code)
-	{
-		return Code < codes;
-	}
+        return table[code];
+    }
 
-	private final byte firstChar(byte bytes[])
-	{
-		return bytes[0];
-	}
+    private final boolean isInTable(int Code)
+    {
+        return Code < codes;
+    }
 
-	private final void addStringToTable(byte bytes[]) throws IOException
-	{
-		if (codes < (1 << codeSize))
-		{
-			table[codes] = bytes;
-			codes++;
-		} else
-			throw new IOException("AddStringToTable: codes: " + codes
-					+ " code_size: " + codeSize);
+    private final byte firstChar(byte bytes[])
+    {
+        return bytes[0];
+    }
 
-		checkCodeSize();
-	}
+    private final void addStringToTable(byte bytes[]) throws IOException
+    {
+        if (codes < (1 << codeSize))
+        {
+            table[codes] = bytes;
+            codes++;
+        } else
+            throw new IOException("AddStringToTable: codes: " + codes
+                    + " code_size: " + codeSize);
 
-	private final byte[] appendBytes(byte bytes[], byte b)
-	{
-		byte result[] = new byte[bytes.length + 1];
+        checkCodeSize();
+    }
 
-		System.arraycopy(bytes, 0, result, 0, bytes.length);
-		result[result.length - 1] = b;
-		return result;
-	}
+    private final byte[] appendBytes(byte bytes[], byte b)
+    {
+        byte result[] = new byte[bytes.length + 1];
 
-	private int written = 0;
+        System.arraycopy(bytes, 0, result, 0, bytes.length);
+        result[result.length - 1] = b;
+        return result;
+    }
 
-	private final void writeToResult(OutputStream os, byte bytes[])
-			throws IOException
-	{
-		os.write(bytes);
-		written += bytes.length;
-	}
+    private int written = 0;
 
-	private boolean tiffLZWMode = false;
+    private final void writeToResult(OutputStream os, byte bytes[])
+            throws IOException
+    {
+        os.write(bytes);
+        written += bytes.length;
+    }
 
-	public void setTiffLZWMode()
-	{
-		tiffLZWMode = true;
-	}
+    private boolean tiffLZWMode = false;
 
-	public byte[] decompress(InputStream is, int expectedLength)
-			throws IOException
-	{
-		int code, oldCode = -1;
-		MyBitInputStream mbis = new MyBitInputStream(is, byteOrder);
-		if (tiffLZWMode)
-			mbis.setTiffLZWMode();
+    public void setTiffLZWMode()
+    {
+        tiffLZWMode = true;
+    }
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream(expectedLength);
+    public byte[] decompress(InputStream is, int expectedLength)
+            throws IOException
+    {
+        int code, oldCode = -1;
+        MyBitInputStream mbis = new MyBitInputStream(is, byteOrder);
+        if (tiffLZWMode)
+            mbis.setTiffLZWMode();
 
-		clearTable();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(expectedLength);
 
-		while ((code = getNextCode(mbis)) != eoiCode)
-		{
-			if (code == clearCode)
-			{
-				clearTable();
+        clearTable();
 
-				if (written >= expectedLength)
-					break;
-				code = getNextCode(mbis);
+        while ((code = getNextCode(mbis)) != eoiCode)
+        {
+            if (code == clearCode)
+            {
+                clearTable();
 
-				if (code == eoiCode)
-				{
-					break;
-				}
-				writeToResult(baos, stringFromCode(code));
+                if (written >= expectedLength)
+                    break;
+                code = getNextCode(mbis);
 
-				oldCode = code;
-			} // end of ClearCode case
-			else
-			{
-				if (isInTable(code))
-				{
-					writeToResult(baos, stringFromCode(code));
+                if (code == eoiCode)
+                {
+                    break;
+                }
+                writeToResult(baos, stringFromCode(code));
 
-					addStringToTable(appendBytes(stringFromCode(oldCode),
-							firstChar(stringFromCode(code))));
-					oldCode = code;
-				} else
-				{
-					byte OutString[] = appendBytes(stringFromCode(oldCode),
-							firstChar(stringFromCode(oldCode)));
-					writeToResult(baos, OutString);
-					addStringToTable(OutString);
-					oldCode = code;
-				}
-			} // end of not-ClearCode case
+                oldCode = code;
+            } // end of ClearCode case
+            else
+            {
+                if (isInTable(code))
+                {
+                    writeToResult(baos, stringFromCode(code));
 
-			if (written >= expectedLength)
-				break;
-		} // end of while loop
+                    addStringToTable(appendBytes(stringFromCode(oldCode),
+                            firstChar(stringFromCode(code))));
+                    oldCode = code;
+                } else
+                {
+                    byte OutString[] = appendBytes(stringFromCode(oldCode),
+                            firstChar(stringFromCode(oldCode)));
+                    writeToResult(baos, OutString);
+                    addStringToTable(OutString);
+                    oldCode = code;
+                }
+            } // end of not-ClearCode case
 
-		byte result[] = baos.toByteArray();
+            if (written >= expectedLength)
+                break;
+        } // end of while loop
 
-		return result;
-	}
+        byte result[] = baos.toByteArray();
 
-	private final void checkCodeSize() // throws IOException
-	{
-		int limit = (1 << codeSize);
-		if (tiffLZWMode)
-			limit--;
+        return result;
+    }
 
-		if (codes == limit)
-			incrementCodeSize();
-	}
+    private final void checkCodeSize() // throws IOException
+    {
+        int limit = (1 << codeSize);
+        if (tiffLZWMode)
+            limit--;
 
-	private final void incrementCodeSize() // throws IOException
-	{
-		if (codeSize != 12)
-			codeSize++;
-	}
+        if (codes == limit)
+            incrementCodeSize();
+    }
+
+    private final void incrementCodeSize() // throws IOException
+    {
+        if (codeSize != 12)
+            codeSize++;
+    }
 }

@@ -18,14 +18,14 @@ package org.apache.sanselan.icc;
 
 public class IccTagType
 {
-	public final String name;
-	public final String type_description;
-	public final int signature;
+    public final String name;
+    public final String type_description;
+    public final int signature;
 
-	public IccTagType(String name, String type_description, int signature)
-	{
-		this.name = name;
-		this.type_description = type_description;
-		this.signature = signature;
-	}
+    public IccTagType(String name, String type_description, int signature)
+    {
+        this.name = name;
+        this.type_description = type_description;
+        this.signature = signature;
+    }
 }

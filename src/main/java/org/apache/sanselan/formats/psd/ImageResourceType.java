@@ -22,21 +22,21 @@ import org.apache.sanselan.ImageReadException;
 
 public class ImageResourceType
 {
-	public final int ID;
-	public final String Description;
+    public final int ID;
+    public final String Description;
 
-	public ImageResourceType(int ID, String Description)
-	{
-		this.ID = ID;
-		this.Description = Description;
-	}
+    public ImageResourceType(int ID, String Description)
+    {
+        this.ID = ID;
+        this.Description = Description;
+    }
 
-	public ImageResourceType(int ID, int ID2, String Description)
-			throws ImageReadException, IOException
-	{
-		this(ID, Description);
-		if (ID != ID2)
-			throw new ImageReadException("Mismatch ID: " + ID + " ID2: " + ID2);
+    public ImageResourceType(int ID, int ID2, String Description)
+            throws ImageReadException, IOException
+    {
+        this(ID, Description);
+        if (ID != ID2)
+            throw new ImageReadException("Mismatch ID: " + ID + " ID2: " + ID2);
 
-	}
+    }
 }

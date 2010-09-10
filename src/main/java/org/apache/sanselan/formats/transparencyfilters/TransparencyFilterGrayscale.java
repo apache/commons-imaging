@@ -23,23 +23,23 @@ import org.apache.sanselan.ImageReadException;
 
 public class TransparencyFilterGrayscale extends TransparencyFilter
 {
-	private final int transparent_color;
+    private final int transparent_color;
 
-	public TransparencyFilterGrayscale(byte bytes[]) throws ImageReadException,
-			IOException
-	{
-		super(bytes);
+    public TransparencyFilterGrayscale(byte bytes[]) throws ImageReadException,
+            IOException
+    {
+        super(bytes);
 
-		ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-		transparent_color = read2Bytes("transparent_color", is,
-				"tRNS: Missing transparent_color");
-	}
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        transparent_color = read2Bytes("transparent_color", is,
+                "tRNS: Missing transparent_color");
+    }
 
-	public int filter(int rgb, int index) throws ImageReadException,
-			IOException
-	{
-		if (index != transparent_color)
-			return rgb;
-		return 0x00;
-	}
+    public int filter(int rgb, int index) throws ImageReadException,
+            IOException
+    {
+        if (index != transparent_color)
+            return rgb;
+        return 0x00;
+    }
 }

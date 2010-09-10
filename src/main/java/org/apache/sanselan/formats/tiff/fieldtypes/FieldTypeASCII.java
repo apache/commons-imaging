@@ -21,35 +21,35 @@ import org.apache.sanselan.formats.tiff.TiffField;
 
 public class FieldTypeASCII extends FieldType
 {
-	public FieldTypeASCII(int type, String name)
-	{
-		super(type, 1, name);
-	}
+    public FieldTypeASCII(int type, String name)
+    {
+        super(type, 1, name);
+    }
 
-	public Object getSimpleValue(TiffField entry) {
-		// According to EXIF specification "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL." 
-		byte bytes[] = getRawBytes(entry);
-		// Ignore last (should be NULL) byte.
-		return new String(bytes, 0, bytes.length-1);
-	}
+    public Object getSimpleValue(TiffField entry) {
+        // According to EXIF specification "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL."
+        byte bytes[] = getRawBytes(entry);
+        // Ignore last (should be NULL) byte.
+        return new String(bytes, 0, bytes.length-1);
+    }
 
-	public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
-	{
-		if (o instanceof byte[]) {
-			byte bytes[] = (byte[]) o;
-			byte result[] = new byte[bytes.length + 1];
-			System.arraycopy(bytes, 0, result, 0, bytes.length);
-			result[result.length - 1] = 0;
-			return result;
-		} else if (o instanceof String) {
-			byte bytes[] = ((String) o).getBytes();
-			byte result[] = new byte[bytes.length + 1];
-			System.arraycopy(bytes, 0, result, 0, bytes.length);
-			result[result.length - 1] = 0;
-			return result;
-		}
-		else
-			throw new ImageWriteException("Unknown data type: " + o);
-	}
+    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
+    {
+        if (o instanceof byte[]) {
+            byte bytes[] = (byte[]) o;
+            byte result[] = new byte[bytes.length + 1];
+            System.arraycopy(bytes, 0, result, 0, bytes.length);
+            result[result.length - 1] = 0;
+            return result;
+        } else if (o instanceof String) {
+            byte bytes[] = ((String) o).getBytes();
+            byte result[] = new byte[bytes.length + 1];
+            System.arraycopy(bytes, 0, result, 0, bytes.length);
+            result[result.length - 1] = 0;
+            return result;
+        }
+        else
+            throw new ImageWriteException("Unknown data type: " + o);
+    }
 
 }

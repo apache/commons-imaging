@@ -21,38 +21,38 @@ import java.io.InputStream;
 
 public class BitsToByteInputStream extends InputStream
 {
-	private final MyBitInputStream is;
-	private final int desiredDepth;
+    private final MyBitInputStream is;
+    private final int desiredDepth;
 
-	public BitsToByteInputStream(MyBitInputStream is, int desiredDepth)
-	{
-		this.is = is;
-		this.desiredDepth = desiredDepth;
-	}
+    public BitsToByteInputStream(MyBitInputStream is, int desiredDepth)
+    {
+        this.is = is;
+        this.desiredDepth = desiredDepth;
+    }
 
-	public int read() throws IOException
-	{
-		return readBits(8);
-	}
+    public int read() throws IOException
+    {
+        return readBits(8);
+    }
 
-	public int readBits(int bitCount) throws IOException
-	{
-		int i = is.readBits(bitCount);
-		if (bitCount < desiredDepth)
-			i <<= (desiredDepth - bitCount);
-		else if (bitCount > desiredDepth)
-			i >>= (bitCount - desiredDepth);
+    public int readBits(int bitCount) throws IOException
+    {
+        int i = is.readBits(bitCount);
+        if (bitCount < desiredDepth)
+            i <<= (desiredDepth - bitCount);
+        else if (bitCount > desiredDepth)
+            i >>= (bitCount - desiredDepth);
 
-		return i;
-	}
+        return i;
+    }
 
-	public int[] readBitsArray(int sampleBits, int length) throws IOException
-	{
-		int result[] = new int[length];
+    public int[] readBitsArray(int sampleBits, int length) throws IOException
+    {
+        int result[] = new int[length];
 
-		for (int i = 0; i < length; i++)
-			result[i] = readBits(sampleBits);
+        for (int i = 0; i < length; i++)
+            result[i] = readBits(sampleBits);
 
-		return result;
-	}
+        return result;
+    }
 }

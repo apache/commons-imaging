@@ -27,35 +27,35 @@ import org.apache.sanselan.common.mylzw.MyLZWDecompressor;
 public class Compression
 {
 
-	public byte[] decompressLZW(byte compressed[], int LZWMinimumCodeSize,
-			int expectedSize, int byteOrder) throws IOException
-	{
-		InputStream is = new ByteArrayInputStream(compressed);
+    public byte[] decompressLZW(byte compressed[], int LZWMinimumCodeSize,
+            int expectedSize, int byteOrder) throws IOException
+    {
+        InputStream is = new ByteArrayInputStream(compressed);
 
-		MyLZWDecompressor decompressor = new MyLZWDecompressor(
-				LZWMinimumCodeSize, byteOrder);
-		byte[] result = decompressor.decompress(is, expectedSize);
+        MyLZWDecompressor decompressor = new MyLZWDecompressor(
+                LZWMinimumCodeSize, byteOrder);
+        byte[] result = decompressor.decompress(is, expectedSize);
 
-		return result;
-	}
+        return result;
+    }
 
-	public byte[] decompressPackBits(byte compressed[], int expectedSize,
-			int byteOrder) throws ImageReadException, IOException
-	{
-		byte unpacked[] = new PackBits().decompress(compressed, expectedSize);
-		return unpacked;
-	}
+    public byte[] decompressPackBits(byte compressed[], int expectedSize,
+            int byteOrder) throws ImageReadException, IOException
+    {
+        byte unpacked[] = new PackBits().decompress(compressed, expectedSize);
+        return unpacked;
+    }
 
-	public byte[] compressLZW(byte src[], int LZWMinimumCodeSize,
-			int byteOrder, boolean earlyLimit) throws IOException
+    public byte[] compressLZW(byte src[], int LZWMinimumCodeSize,
+            int byteOrder, boolean earlyLimit) throws IOException
 
-	{
-		MyLZWCompressor compressor = new MyLZWCompressor(LZWMinimumCodeSize,
-				byteOrder, earlyLimit);
+    {
+        MyLZWCompressor compressor = new MyLZWCompressor(LZWMinimumCodeSize,
+                byteOrder, earlyLimit);
 
-		byte compressed[] = compressor.compress(src);
+        byte compressed[] = compressor.compress(src);
 
-		return compressed;
-	}
+        return compressed;
+    }
 
 }

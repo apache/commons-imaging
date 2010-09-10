@@ -27,83 +27,83 @@ import org.apache.sanselan.icc.IccProfileParser;
 
 public class ImageDump
 {
-	private String colorSpaceTypeToName(ColorSpace cs)
-	{
-		//		System.out.println(prefix + ": " + "type: "
-		//				+ cs.getType() );
-		switch (cs.getType())
-		{
-			case ColorSpace.TYPE_CMYK :
-				return "TYPE_CMYK";
-			case ColorSpace.TYPE_RGB :
-				return "TYPE_RGB";
+    private String colorSpaceTypeToName(ColorSpace cs)
+    {
+        //        System.out.println(prefix + ": " + "type: "
+        //                + cs.getType() );
+        switch (cs.getType())
+        {
+            case ColorSpace.TYPE_CMYK :
+                return "TYPE_CMYK";
+            case ColorSpace.TYPE_RGB :
+                return "TYPE_RGB";
 
-			case ColorSpace.CS_sRGB :
-				return "CS_sRGB";
-			case ColorSpace.CS_GRAY :
-				return "CS_GRAY";
-			case ColorSpace.CS_CIEXYZ :
-				return "CS_CIEXYZ";
-			case ColorSpace.CS_LINEAR_RGB :
-				return "CS_LINEAR_RGB";
-			case ColorSpace.CS_PYCC :
-				return "CS_PYCC";
-		}
+            case ColorSpace.CS_sRGB :
+                return "CS_sRGB";
+            case ColorSpace.CS_GRAY :
+                return "CS_GRAY";
+            case ColorSpace.CS_CIEXYZ :
+                return "CS_CIEXYZ";
+            case ColorSpace.CS_LINEAR_RGB :
+                return "CS_LINEAR_RGB";
+            case ColorSpace.CS_PYCC :
+                return "CS_PYCC";
+        }
 
-		return "unknown";
-	}
+        return "unknown";
+    }
 
-	public void dumpColorSpace(String prefix, ColorSpace cs)
-			throws ImageReadException, IOException
-	{
-		System.out.println(prefix + ": " + "type: " + cs.getType() + " ("
-				+ colorSpaceTypeToName(cs) + ")");
+    public void dumpColorSpace(String prefix, ColorSpace cs)
+            throws ImageReadException, IOException
+    {
+        System.out.println(prefix + ": " + "type: " + cs.getType() + " ("
+                + colorSpaceTypeToName(cs) + ")");
 
-		if (!(cs instanceof ICC_ColorSpace))
-		{
-			System.out.println(prefix + ": " + "Unknown ColorSpace: "
-					+ cs.getClass().getName());
-			return;
-		}
+        if (!(cs instanceof ICC_ColorSpace))
+        {
+            System.out.println(prefix + ": " + "Unknown ColorSpace: "
+                    + cs.getClass().getName());
+            return;
+        }
 
-		ICC_ColorSpace fICC_ColorSpace = (ICC_ColorSpace) cs;
-		ICC_Profile fICC_Profile = fICC_ColorSpace.getProfile();
+        ICC_ColorSpace fICC_ColorSpace = (ICC_ColorSpace) cs;
+        ICC_Profile fICC_Profile = fICC_ColorSpace.getProfile();
 
-		byte bytes[] = fICC_Profile.getData();
+        byte bytes[] = fICC_Profile.getData();
 
-		IccProfileParser parser = new IccProfileParser();
+        IccProfileParser parser = new IccProfileParser();
 
-		IccProfileInfo info = parser.getICCProfileInfo(bytes);
-		info.dump(prefix);
-	}
+        IccProfileInfo info = parser.getICCProfileInfo(bytes);
+        info.dump(prefix);
+    }
 
-	public void dump(BufferedImage src) throws ImageReadException, IOException
-	{
-		dump("", src);
-	}
+    public void dump(BufferedImage src) throws ImageReadException, IOException
+    {
+        dump("", src);
+    }
 
-	public void dump(String prefix, BufferedImage src)
-			throws ImageReadException, IOException
-	{
-		System.out.println(prefix + ": " + "dump");
-		dumpColorSpace(prefix, src.getColorModel().getColorSpace());
-		dumpBIProps(prefix, src);
-	}
+    public void dump(String prefix, BufferedImage src)
+            throws ImageReadException, IOException
+    {
+        System.out.println(prefix + ": " + "dump");
+        dumpColorSpace(prefix, src.getColorModel().getColorSpace());
+        dumpBIProps(prefix, src);
+    }
 
-	public void dumpBIProps(String prefix, BufferedImage src)
-	{
-		String keys[] = src.getPropertyNames();
-		if (keys == null)
-		{
-			System.out.println(prefix + ": no props");
-			return;
-		}
-		for (int i = 0; i < keys.length; i++)
-		{
-			String key = keys[i];
-			System.out.println(prefix + ": " + key + ": "
-					+ src.getProperty(key));
-		}
-	}
+    public void dumpBIProps(String prefix, BufferedImage src)
+    {
+        String keys[] = src.getPropertyNames();
+        if (keys == null)
+        {
+            System.out.println(prefix + ": no props");
+            return;
+        }
+        for (int i = 0; i < keys.length; i++)
+        {
+            String key = keys[i];
+            System.out.println(prefix + ": " + key + ": "
+                    + src.getProperty(key));
+        }
+    }
 
 }

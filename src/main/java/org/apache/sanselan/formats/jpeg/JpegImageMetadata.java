@@ -35,191 +35,191 @@ import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.util.Debug;
 
 public class JpegImageMetadata implements IImageMetadata {
-	private final JpegPhotoshopMetadata photoshop;
-	private final TiffImageMetadata exif;
+    private final JpegPhotoshopMetadata photoshop;
+    private final TiffImageMetadata exif;
 
-	public JpegImageMetadata(final JpegPhotoshopMetadata photoshop,
-			final TiffImageMetadata exif) {
-		this.photoshop = photoshop;
-		this.exif = exif;
-	}
+    public JpegImageMetadata(final JpegPhotoshopMetadata photoshop,
+            final TiffImageMetadata exif) {
+        this.photoshop = photoshop;
+        this.exif = exif;
+    }
 
-	public TiffImageMetadata getExif() {
-		return exif;
-	}
+    public TiffImageMetadata getExif() {
+        return exif;
+    }
 
-	public JpegPhotoshopMetadata getPhotoshop() {
-		return photoshop;
-	}
+    public JpegPhotoshopMetadata getPhotoshop() {
+        return photoshop;
+    }
 
-	public TiffField findEXIFValue(TagInfo tagInfo) {
-		TiffField field = findEXIFValue(tagInfo, true);
-		if (field == null) {
-			// In some cases, we want an exact directory match (such as GPS values).
-			// In other cases, we are more permissive (ie. with tags that may appear 
-			// in a number of different directories, depending on the camera manufacturer, etc.
-			// TODO: Modify TagInfo class to include a "permissive/exact" flag.
-			field = findEXIFValue(tagInfo, false);
-		}
-		return field;
-	}
+    public TiffField findEXIFValue(TagInfo tagInfo) {
+        TiffField field = findEXIFValue(tagInfo, true);
+        if (field == null) {
+            // In some cases, we want an exact directory match (such as GPS values).
+            // In other cases, we are more permissive (ie. with tags that may appear
+            // in a number of different directories, depending on the camera manufacturer, etc.
+            // TODO: Modify TagInfo class to include a "permissive/exact" flag.
+            field = findEXIFValue(tagInfo, false);
+        }
+        return field;
+    }
 
-	public TiffField findEXIFValueWithExactMatch(TagInfo tagInfo) {
-		return findEXIFValue(tagInfo, true);
-	}
+    public TiffField findEXIFValueWithExactMatch(TagInfo tagInfo) {
+        return findEXIFValue(tagInfo, true);
+    }
 
-	private TiffField findEXIFValue(TagInfo tagInfo, boolean requireDirectoryMatch) {
-		ArrayList items = getItems();
-		for (int i = 0; i < items.size(); i++) {
-			Object o = items.get(i);
-			if (!(o instanceof TiffImageMetadata.Item))
-				continue;
+    private TiffField findEXIFValue(TagInfo tagInfo, boolean requireDirectoryMatch) {
+        ArrayList items = getItems();
+        for (int i = 0; i < items.size(); i++) {
+            Object o = items.get(i);
+            if (!(o instanceof TiffImageMetadata.Item))
+                continue;
 
-			TiffImageMetadata.Item item = (TiffImageMetadata.Item) o;
-			TiffField field = item.getTiffField();
-			if (requireDirectoryMatch &&
-					(field.directoryType != tagInfo.directoryType.directoryType)) {
-				continue;
-			}
-			if (field.tag == tagInfo.tag)
-				return field;
-		}
+            TiffImageMetadata.Item item = (TiffImageMetadata.Item) o;
+            TiffField field = item.getTiffField();
+            if (requireDirectoryMatch &&
+                    (field.directoryType != tagInfo.directoryType.directoryType)) {
+                continue;
+            }
+            if (field.tag == tagInfo.tag)
+                return field;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * Returns the size of the first JPEG thumbnail found in the EXIF metadata.
-	 * 
-	 * @return Thumbnail width and height or null if no thumbnail.
-	 * @throws ImageReadException
-	 * @throws IOException
-	 */
-	public Dimension getEXIFThumbnailSize() throws ImageReadException, IOException {
-		byte[] data = getEXIFThumbnailData();
-			
-		if( data != null ){
-			return Sanselan.getImageSize(data);
-		}
-	    return null;
-	}	
-	
-	/**
-	 * Returns the data of the first JPEG thumbnail found in the EXIF metadata.  
-	 * 
-	 * @return JPEG data or null if no thumbnail.
-	 * @throws ImageReadException
-	 * @throws IOException
-	 */
-	public byte[] getEXIFThumbnailData() throws ImageReadException, IOException {
-		ArrayList dirs = exif.getDirectories();
-		for (int i = 0; i < dirs.size(); i++) {
-			TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
-					.get(i);
-			
-			byte[] data = null;
-			if( dir.getJpegImageData() != null ){
-				data = dir.getJpegImageData().data;
-			}
-			// Support other image formats here.
-			
-			if( data != null ){
-				return data;
-			}
-		}
-		return null;
-	}
+    /**
+     * Returns the size of the first JPEG thumbnail found in the EXIF metadata.
+     *
+     * @return Thumbnail width and height or null if no thumbnail.
+     * @throws ImageReadException
+     * @throws IOException
+     */
+    public Dimension getEXIFThumbnailSize() throws ImageReadException, IOException {
+        byte[] data = getEXIFThumbnailData();
 
-	public BufferedImage getEXIFThumbnail() throws ImageReadException,
-			IOException {
-		ArrayList dirs = exif.getDirectories();
-		for (int i = 0; i < dirs.size(); i++) {
-			TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
-					.get(i);
-			// Debug.debug("dir", dir);
-			BufferedImage image = dir.getThumbnail();
-			if (null != image) {
-				return image;
-			}
-		
+        if( data != null ){
+            return Sanselan.getImageSize(data);
+        }
+        return null;
+    }
+
+    /**
+     * Returns the data of the first JPEG thumbnail found in the EXIF metadata.
+     *
+     * @return JPEG data or null if no thumbnail.
+     * @throws ImageReadException
+     * @throws IOException
+     */
+    public byte[] getEXIFThumbnailData() throws ImageReadException, IOException {
+        ArrayList dirs = exif.getDirectories();
+        for (int i = 0; i < dirs.size(); i++) {
+            TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
+                    .get(i);
+
+            byte[] data = null;
+            if( dir.getJpegImageData() != null ){
+                data = dir.getJpegImageData().data;
+            }
+            // Support other image formats here.
+
+            if( data != null ){
+                return data;
+            }
+        }
+        return null;
+    }
+
+    public BufferedImage getEXIFThumbnail() throws ImageReadException,
+            IOException {
+        ArrayList dirs = exif.getDirectories();
+        for (int i = 0; i < dirs.size(); i++) {
+            TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
+                    .get(i);
+            // Debug.debug("dir", dir);
+            BufferedImage image = dir.getThumbnail();
+            if (null != image) {
+                return image;
+            }
+
             JpegImageData jpegImageData = dir.getJpegImageData();
             if (jpegImageData != null) {
                 ByteArrayInputStream input = new ByteArrayInputStream(jpegImageData.data);
                 // JPEG thumbnail as JPEG or other format; try to parse.
-               	image = ImageIO.read(input);
+                   image = ImageIO.read(input);
                 if (image != null) {
                     return image;
                 }
             }
-		}
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public TiffImageData getRawImageData() {
-		ArrayList dirs = exif.getDirectories();
-		for (int i = 0; i < dirs.size(); i++) {
-			TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
-					.get(i);
-			// Debug.debug("dir", dir);
-			TiffImageData rawImageData = dir.getTiffImageData();
-			if (null != rawImageData)
-				return rawImageData;
-		}
+    public TiffImageData getRawImageData() {
+        ArrayList dirs = exif.getDirectories();
+        for (int i = 0; i < dirs.size(); i++) {
+            TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
+                    .get(i);
+            // Debug.debug("dir", dir);
+            TiffImageData rawImageData = dir.getTiffImageData();
+            if (null != rawImageData)
+                return rawImageData;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public ArrayList getItems() {
-		ArrayList result = new ArrayList();
+    public ArrayList getItems() {
+        ArrayList result = new ArrayList();
 
-		if (null != exif)
-			result.addAll(exif.getItems());
+        if (null != exif)
+            result.addAll(exif.getItems());
 
-		if (null != photoshop)
-			result.addAll(photoshop.getItems());
+        if (null != photoshop)
+            result.addAll(photoshop.getItems());
 
-		return result;
-	}
+        return result;
+    }
 
-	private static final String newline = System.getProperty("line.separator");
+    private static final String newline = System.getProperty("line.separator");
 
-	public String toString() {
-		return toString(null);
-	}
+    public String toString() {
+        return toString(null);
+    }
 
-	public String toString(String prefix) {
-		if (prefix == null)
-			prefix = "";
+    public String toString(String prefix) {
+        if (prefix == null)
+            prefix = "";
 
-		StringBuffer result = new StringBuffer();
+        StringBuffer result = new StringBuffer();
 
-		result.append(prefix);
-		if (null == exif)
-			result.append("No Exif metadata.");
-		else {
-			result.append("Exif metadata:");
-			result.append(newline);
-			result.append(exif.toString("\t"));
-		}
+        result.append(prefix);
+        if (null == exif)
+            result.append("No Exif metadata.");
+        else {
+            result.append("Exif metadata:");
+            result.append(newline);
+            result.append(exif.toString("\t"));
+        }
 
-		// if (null != exif && null != photoshop)
-		result.append(newline);
+        // if (null != exif && null != photoshop)
+        result.append(newline);
 
-		result.append(prefix);
-		if (null == photoshop)
-			result.append("No Photoshop (IPTC) metadata.");
-		else {
-			result.append("Photoshop (IPTC) metadata:");
-			result.append(newline);
-			result.append(photoshop.toString("\t"));
-		}
+        result.append(prefix);
+        if (null == photoshop)
+            result.append("No Photoshop (IPTC) metadata.");
+        else {
+            result.append("Photoshop (IPTC) metadata:");
+            result.append(newline);
+            result.append(photoshop.toString("\t"));
+        }
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 
-	public void dump() {
-		Debug.debug(this.toString());
-	}
+    public void dump() {
+        Debug.debug(this.toString());
+    }
 
 }

@@ -24,21 +24,21 @@ import java.util.zip.InflaterInputStream;
 
 public class ZLibUtils extends BinaryFileFunctions
 {
-	public final byte[] inflate(byte bytes[]) throws IOException
-	// slow, probably.
-	{
-		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		InflaterInputStream zIn = new InflaterInputStream(in);
-		return getStreamBytes(zIn);
-	}
+    public final byte[] inflate(byte bytes[]) throws IOException
+    // slow, probably.
+    {
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        InflaterInputStream zIn = new InflaterInputStream(in);
+        return getStreamBytes(zIn);
+    }
 
-	public final byte[] deflate(byte bytes[]) throws IOException
-	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		DeflaterOutputStream dos = new DeflaterOutputStream(baos);
-		dos.write(bytes);
-		dos.close();
-		return baos.toByteArray();
-	}
+    public final byte[] deflate(byte bytes[]) throws IOException
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+        dos.write(bytes);
+        dos.close();
+        return baos.toByteArray();
+    }
 
 }

@@ -23,20 +23,20 @@ import org.apache.sanselan.ImageReadException;
 
 public class PNGChunkgAMA extends PNGChunk
 {
-	public final int Gamma;
+    public final int Gamma;
 
-	public PNGChunkgAMA(int Length, int ChunkType, int CRC, byte bytes[])
-			throws ImageReadException, IOException
-	{
-		super(Length, ChunkType, CRC, bytes);
+    public PNGChunkgAMA(int Length, int ChunkType, int CRC, byte bytes[])
+            throws ImageReadException, IOException
+    {
+        super(Length, ChunkType, CRC, bytes);
 
-		ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-		Gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt");
-	}
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        Gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt");
+    }
 
-	public double getGamma()
-	{
-		return 1.0 / (Gamma / 100000.0);
-	}
+    public double getGamma()
+    {
+        return 1.0 / (Gamma / 100000.0);
+    }
 
 }

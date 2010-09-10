@@ -24,69 +24,69 @@ import org.apache.sanselan.ImageInfo;
 
 public class PGMFileInfo extends FileInfo
 {
-	private final int max; // TODO: handle max
+    private final int max; // TODO: handle max
 
-	public PGMFileInfo(int width, int height, boolean RAWBITS, int max)
-	{
-		super(width, height, RAWBITS);
+    public PGMFileInfo(int width, int height, boolean RAWBITS, int max)
+    {
+        super(width, height, RAWBITS);
 
-		this.max = max;
-	}
+        this.max = max;
+    }
 
-	public int getNumComponents()
-	{
-		return 1;
-	}
+    public int getNumComponents()
+    {
+        return 1;
+    }
 
-	public int getBitDepth()
-	{
-		return 8;
-	}
+    public int getBitDepth()
+    {
+        return 8;
+    }
 
-	public ImageFormat getImageType()
-	{
-		return ImageFormat.IMAGE_FORMAT_PPM;
-	}
+    public ImageFormat getImageType()
+    {
+        return ImageFormat.IMAGE_FORMAT_PPM;
+    }
 
-	public String getImageTypeDescription()
-	{
-		return "PGM: portable pixmap file	format";
-	}
+    public String getImageTypeDescription()
+    {
+        return "PGM: portable pixmap file    format";
+    }
 
-	public String getMIMEType()
-	{
-		return "image/x-portable-pixmap";
-	}
+    public String getMIMEType()
+    {
+        return "image/x-portable-pixmap";
+    }
 
-	public int getColorType()
-	{
-		return ImageInfo.COLOR_TYPE_RGB;
-	}
+    public int getColorType()
+    {
+        return ImageInfo.COLOR_TYPE_RGB;
+    }
 
-	public int getRGB(InputStream is) throws IOException
-	{
-		int sample = is.read();
-		if (sample < 0)
-			throw new IOException("PGM: Unexpected EOF");
+    public int getRGB(InputStream is) throws IOException
+    {
+        int sample = is.read();
+        if (sample < 0)
+            throw new IOException("PGM: Unexpected EOF");
 
-		int alpha = 0xff;
+        int alpha = 0xff;
 
-		int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
-				| ((0xff & sample) << 8) | ((0xff & sample) << 0);
+        int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
+                | ((0xff & sample) << 8) | ((0xff & sample) << 0);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
-	public int getRGB(WhiteSpaceReader wsr) throws IOException
-	{
-		int sample = Integer.parseInt(wsr.readtoWhiteSpace());
+    public int getRGB(WhiteSpaceReader wsr) throws IOException
+    {
+        int sample = Integer.parseInt(wsr.readtoWhiteSpace());
 
-		int alpha = 0xff;
+        int alpha = 0xff;
 
-		int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
-				| ((0xff & sample) << 8) | ((0xff & sample) << 0);
+        int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
+                | ((0xff & sample) << 8) | ((0xff & sample) << 0);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
 }

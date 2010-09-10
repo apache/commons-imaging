@@ -22,34 +22,34 @@ import java.util.ArrayList;
 
 class GenericGIFBlock extends GIFBlock
 {
-	public final ArrayList subblocks;
+    public final ArrayList subblocks;
 
-	public GenericGIFBlock(int blockCode, ArrayList subblocks)
-	{
-		super(blockCode);
+    public GenericGIFBlock(int blockCode, ArrayList subblocks)
+    {
+        super(blockCode);
 
-		this.subblocks = subblocks;
+        this.subblocks = subblocks;
 
-	}
+    }
 
-	public byte[] appendSubBlocks() throws IOException
-	{
-		return appendSubBlocks(false);
-	}
+    public byte[] appendSubBlocks() throws IOException
+    {
+        return appendSubBlocks(false);
+    }
 
-	public byte[] appendSubBlocks(boolean includeLengths) throws IOException
-	{
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
+    public byte[] appendSubBlocks(boolean includeLengths) throws IOException
+    {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-		for (int i = 0; i < subblocks.size(); i++)
-		{
-			byte subblock[] = (byte[]) subblocks.get(i);
-			if(includeLengths && i>0)
-				out.write(subblock.length);
-			out.write(subblock);
-		}
+        for (int i = 0; i < subblocks.size(); i++)
+        {
+            byte subblock[] = (byte[]) subblocks.get(i);
+            if(includeLengths && i>0)
+                out.write(subblock.length);
+            out.write(subblock);
+        }
 
-		return out.toByteArray();
-	}
+        return out.toByteArray();
+    }
 
 }

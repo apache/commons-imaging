@@ -22,29 +22,29 @@ import org.apache.sanselan.ImageReadException;
 
 public class ScanlineFilterSub extends ScanlineFilter
 {
-	private final int BytesPerPixel;
+    private final int BytesPerPixel;
 
-	public ScanlineFilterSub(int BytesPerPixel)
-	{
-		this.BytesPerPixel = BytesPerPixel;
-	}
+    public ScanlineFilterSub(int BytesPerPixel)
+    {
+        this.BytesPerPixel = BytesPerPixel;
+    }
 
-	public void unfilter(byte src[], byte dst[], byte up[])
-			throws ImageReadException, IOException
-	{
-		for (int i = 0; i < src.length; i++)
-		{
-			int prev_index = i - BytesPerPixel;
-			if (prev_index >= 0)
-				dst[i] = (byte) ((src[i] + dst[prev_index]) % 256);
-			//				dst[i] = 0xff &  (src[i] + src[prev_index]);
-			else
-				dst[i] = src[i];
+    public void unfilter(byte src[], byte dst[], byte up[])
+            throws ImageReadException, IOException
+    {
+        for (int i = 0; i < src.length; i++)
+        {
+            int prev_index = i - BytesPerPixel;
+            if (prev_index >= 0)
+                dst[i] = (byte) ((src[i] + dst[prev_index]) % 256);
+            //                dst[i] = 0xff &  (src[i] + src[prev_index]);
+            else
+                dst[i] = src[i];
 
-			//				if(i<10) 
-			//					System.out.println("\t" + i + ": " + dst[i] + " (" + src[i] + ", " + prev_index + ")");
+            //                if(i<10)
+            //                    System.out.println("\t" + i + ": " + dst[i] + " (" + src[i] + ", " + prev_index + ")");
 
-			//				dst[i] = src[i];
-		}
-	}
+            //                dst[i] = src[i];
+        }
+    }
 }

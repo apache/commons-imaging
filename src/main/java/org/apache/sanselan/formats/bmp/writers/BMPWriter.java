@@ -23,12 +23,12 @@ import org.apache.sanselan.common.BinaryOutputStream;
 
 public abstract class BMPWriter
 {
-	public abstract int getPaletteSize();
+    public abstract int getPaletteSize();
 
-	public abstract int getBitsPerPixel();
+    public abstract int getBitsPerPixel();
 
-	public abstract void writePalette(BinaryOutputStream bos)
-			throws IOException;
+    public abstract void writePalette(BinaryOutputStream bos)
+            throws IOException;
 
-	public abstract byte[] getImageData(BufferedImage src);
+    public abstract byte[] getImageData(BufferedImage src);
 }

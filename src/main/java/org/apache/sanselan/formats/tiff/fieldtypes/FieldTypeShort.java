@@ -23,58 +23,58 @@ import org.apache.sanselan.util.Debug;
 
 public class FieldTypeShort extends FieldType
 {
-	public FieldTypeShort(int type, String name)
-	{
-		super(type, 2, name);
-	}
+    public FieldTypeShort(int type, String name)
+    {
+        super(type, 2, name);
+    }
 
-	//	public Object[] getValueArray(TiffField entry)
-	//	{
-	//		if(isLocalValue(entry))
-	//			return convertByteArrayToShortArray(name + " (" + entry.tagInfo.name
-	//					+ ")", entry.valueOffsetBytes, 0, entry.length, entry.byteOrder);
-	//
-	////		return new Integer(convertByteArrayToShort(name + " ("
-	////				+ entry.tagInfo.name + ")", entry.valueOffsetBytes,
-	////				entry.byteOrder));
-	//
-	//		return convertByteArrayToShortArray(name + " (" + entry.tagInfo.name
-	//				+ ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
-	//	}
+    //    public Object[] getValueArray(TiffField entry)
+    //    {
+    //        if(isLocalValue(entry))
+    //            return convertByteArrayToShortArray(name + " (" + entry.tagInfo.name
+    //                    + ")", entry.valueOffsetBytes, 0, entry.length, entry.byteOrder);
+    //
+    ////        return new Integer(convertByteArrayToShort(name + " ("
+    ////                + entry.tagInfo.name + ")", entry.valueOffsetBytes,
+    ////                entry.byteOrder));
+    //
+    //        return convertByteArrayToShortArray(name + " (" + entry.tagInfo.name
+    //                + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
+    //    }
 
-	public Object getSimpleValue(TiffField entry) throws ImageReadException
-	{
-		if (entry.length == 1)
-			return new Integer(convertByteArrayToShort(name + " ("
-					+ entry.tagInfo.name + ")", entry.valueOffsetBytes,
-					entry.byteOrder));
+    public Object getSimpleValue(TiffField entry) throws ImageReadException
+    {
+        if (entry.length == 1)
+            return new Integer(convertByteArrayToShort(name + " ("
+                    + entry.tagInfo.name + ")", entry.valueOffsetBytes,
+                    entry.byteOrder));
 
-		return convertByteArrayToShortArray(name + " (" + entry.tagInfo.name
-				+ ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
-	}
+        return convertByteArrayToShortArray(name + " (" + entry.tagInfo.name
+                + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
+    }
 
-	public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
-	{
-		if (o instanceof Integer)
-			return convertShortArrayToByteArray(new int[]{
-				((Integer) o).intValue(),
-			}, byteOrder);
-		else if (o instanceof int[])
-		{
-			int numbers[] = (int[]) o;
-			return convertShortArrayToByteArray(numbers, byteOrder);
-		}
-		else if (o instanceof Integer[])
-		{
-			Integer numbers[] = (Integer[]) o;
-			int values[] = new int[numbers.length];
-			for (int i = 0; i < values.length; i++)
-				values[i] = numbers[i].intValue();
-			return convertShortArrayToByteArray(values, byteOrder);
-		}
-		else
-			throw new ImageWriteException("Invalid data: " + o + " ("
-					+ Debug.getType(o) + ")");
-	}
+    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
+    {
+        if (o instanceof Integer)
+            return convertShortArrayToByteArray(new int[]{
+                ((Integer) o).intValue(),
+            }, byteOrder);
+        else if (o instanceof int[])
+        {
+            int numbers[] = (int[]) o;
+            return convertShortArrayToByteArray(numbers, byteOrder);
+        }
+        else if (o instanceof Integer[])
+        {
+            Integer numbers[] = (Integer[]) o;
+            int values[] = new int[numbers.length];
+            for (int i = 0; i < values.length; i++)
+                values[i] = numbers[i].intValue();
+            return convertShortArrayToByteArray(values, byteOrder);
+        }
+        else
+            throw new ImageWriteException("Invalid data: " + o + " ("
+                    + Debug.getType(o) + ")");
+    }
 
 }

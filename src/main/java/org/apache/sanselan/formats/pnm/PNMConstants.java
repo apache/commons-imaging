@@ -18,15 +18,15 @@ package org.apache.sanselan.formats.pnm;
 
 public interface PNMConstants
 {
-	public static final byte PNM_PREFIX_BYTE = 0x50; // P
+    public static final byte PNM_PREFIX_BYTE = 0x50; // P
 
-	public static final byte PBM_TEXT_CODE = 0x31; // Textual Bitmap
-	public static final byte PGM_TEXT_CODE = 0x32; // Textual GrayMap
-	public static final byte PPM_TEXT_CODE = 0x33; // Textual Pixmap
-	public static final byte PGM_RAW_CODE = 0x35; // RAW GrayMap
-	public static final byte PBM_RAW_CODE = 0x34; // RAW Bitmap
-	public static final byte PPM_RAW_CODE = 0x36; // RAW Pixmap
+    public static final byte PBM_TEXT_CODE = 0x31; // Textual Bitmap
+    public static final byte PGM_TEXT_CODE = 0x32; // Textual GrayMap
+    public static final byte PPM_TEXT_CODE = 0x33; // Textual Pixmap
+    public static final byte PGM_RAW_CODE = 0x35; // RAW GrayMap
+    public static final byte PBM_RAW_CODE = 0x34; // RAW Bitmap
+    public static final byte PPM_RAW_CODE = 0x36; // RAW Pixmap
 
-	public static final byte PNM_SEPARATOR = 0x20; // Space
+    public static final byte PNM_SEPARATOR = 0x20; // Space
 
 }

@@ -25,69 +25,69 @@ import org.apache.sanselan.ImageWriteException;
 
 public class PBMWriter extends PNMWriter implements PNMConstants
 {
-	public PBMWriter(boolean RAWBITS)
-	{
-		super(RAWBITS);
-	}
+    public PBMWriter(boolean RAWBITS)
+    {
+        super(RAWBITS);
+    }
 
-	public void writeImage(BufferedImage src, OutputStream os, Map params)
-			throws ImageWriteException, IOException
-	{
-		os.write(PNM_PREFIX_BYTE);
-		os.write(RAWBITS ? PBM_RAW_CODE : PBM_TEXT_CODE);
-		os.write(PNM_SEPARATOR);
+    public void writeImage(BufferedImage src, OutputStream os, Map params)
+            throws ImageWriteException, IOException
+    {
+        os.write(PNM_PREFIX_BYTE);
+        os.write(RAWBITS ? PBM_RAW_CODE : PBM_TEXT_CODE);
+        os.write(PNM_SEPARATOR);
 
-		int width = src.getWidth();
-		int height = src.getHeight();
+        int width = src.getWidth();
+        int height = src.getHeight();
 
-		os.write(("" + width).getBytes());
-		os.write(PNM_SEPARATOR);
+        os.write(("" + width).getBytes());
+        os.write(PNM_SEPARATOR);
 
-		os.write(("" + height).getBytes());
-		os.write(PNM_SEPARATOR);
+        os.write(("" + height).getBytes());
+        os.write(PNM_SEPARATOR);
 
-		int bitcache = 0;
-		int bits_in_cache = 0;
+        int bitcache = 0;
+        int bits_in_cache = 0;
 
-		for (int y = 0; y < height; y++)
-		{
-			for (int x = 0; x < width; x++)
-			{
-				int argb = src.getRGB(x, y);
-				int red = 0xff & (argb >> 16);
-				int green = 0xff & (argb >> 8);
-				int blue = 0xff & (argb >> 0);
-				int sample = (red + green + blue) / 3;
-				if (sample > 127)
-					sample = 0;
-				else
-					sample = 1;
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int argb = src.getRGB(x, y);
+                int red = 0xff & (argb >> 16);
+                int green = 0xff & (argb >> 8);
+                int blue = 0xff & (argb >> 0);
+                int sample = (red + green + blue) / 3;
+                if (sample > 127)
+                    sample = 0;
+                else
+                    sample = 1;
 
-				if (RAWBITS)
-				{
-					bitcache = (bitcache << 1) | (0x1 & sample);
-					bits_in_cache++;
+                if (RAWBITS)
+                {
+                    bitcache = (bitcache << 1) | (0x1 & sample);
+                    bits_in_cache++;
 
-					if (bits_in_cache >= 8)
-					{
-						os.write((byte) bitcache);
-						bitcache = 0;
-						bits_in_cache = 0;
-					}
-				} else
-				{
-					os.write(("" + sample).getBytes()); // max component value
-					os.write(PNM_SEPARATOR);
-				}
-			}
+                    if (bits_in_cache >= 8)
+                    {
+                        os.write((byte) bitcache);
+                        bitcache = 0;
+                        bits_in_cache = 0;
+                    }
+                } else
+                {
+                    os.write(("" + sample).getBytes()); // max component value
+                    os.write(PNM_SEPARATOR);
+                }
+            }
 
-			if ((RAWBITS) && (bits_in_cache > 0))
-			{
-				bitcache = bitcache << (8-bits_in_cache);
-				os.write((byte) bitcache);
-				bitcache = 0;
-				bits_in_cache = 0;
-			}
-		}
-	}
+            if ((RAWBITS) && (bits_in_cache > 0))
+            {
+                bitcache = bitcache << (8-bits_in_cache);
+                os.write((byte) bitcache);
+                bitcache = 0;
+                bits_in_cache = 0;
+            }
+        }
+    }
 }

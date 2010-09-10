@@ -24,60 +24,60 @@ import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
 
 abstract class TiffOutputItem implements AllTagConstants
 {
-	public static final int UNDEFINED_VALUE = -1;
+    public static final int UNDEFINED_VALUE = -1;
 
-	private int offset = UNDEFINED_VALUE;
+    private int offset = UNDEFINED_VALUE;
 
-	protected int getOffset()
-	{
-		return offset;
-	}
+    protected int getOffset()
+    {
+        return offset;
+    }
 
-	protected void setOffset(int offset)
-	{
-		this.offset = offset;
-	}
+    protected void setOffset(int offset)
+    {
+        this.offset = offset;
+    }
 
-	public abstract int getItemLength();
+    public abstract int getItemLength();
 
-	public abstract String getItemDescription();
+    public abstract String getItemDescription();
 
-	public abstract void writeItem(BinaryOutputStream bos) throws IOException,
-			ImageWriteException;
+    public abstract void writeItem(BinaryOutputStream bos) throws IOException,
+            ImageWriteException;
 
-	public static class Value extends TiffOutputItem
-	{
-		private final byte bytes[];
-		private final String name;
+    public static class Value extends TiffOutputItem
+    {
+        private final byte bytes[];
+        private final String name;
 
-		public Value(final String name, final byte[] bytes)
-		{
-			this.name = name;
-			this.bytes = bytes;
-		}
+        public Value(final String name, final byte[] bytes)
+        {
+            this.name = name;
+            this.bytes = bytes;
+        }
 
-		public int getItemLength()
-		{
-			return bytes.length;
-		}
+        public int getItemLength()
+        {
+            return bytes.length;
+        }
 
-		public String getItemDescription()
-		{
-			return name;
-		}
+        public String getItemDescription()
+        {
+            return name;
+        }
 
-		public void updateValue(byte bytes[]) throws ImageWriteException
-		{
-			if (this.bytes.length != bytes.length)
-				throw new ImageWriteException("Updated data size mismatch: "
-						+ this.bytes.length + " vs. " + bytes.length);
-			System.arraycopy(bytes, 0, this.bytes, 0, bytes.length);
-		}
+        public void updateValue(byte bytes[]) throws ImageWriteException
+        {
+            if (this.bytes.length != bytes.length)
+                throw new ImageWriteException("Updated data size mismatch: "
+                        + this.bytes.length + " vs. " + bytes.length);
+            System.arraycopy(bytes, 0, this.bytes, 0, bytes.length);
+        }
 
-		public void writeItem(BinaryOutputStream bos) throws IOException,
-				ImageWriteException
-		{
-			bos.write(bytes);
-		}
-	}
+        public void writeItem(BinaryOutputStream bos) throws IOException,
+                ImageWriteException
+        {
+            bos.write(bytes);
+        }
+    }
 }

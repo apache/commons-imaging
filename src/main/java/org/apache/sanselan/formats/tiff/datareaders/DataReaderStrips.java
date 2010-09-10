@@ -28,77 +28,77 @@ import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInter
 public final class DataReaderStrips extends DataReader
 {
 
-	private final int bitsPerPixel;
-	private final int width, height;
-	private final int compression;
-	private final int rowsPerStrip;
+    private final int bitsPerPixel;
+    private final int width, height;
+    private final int compression;
+    private final int rowsPerStrip;
 
-	private final TiffImageData.Strips imageData;
+    private final TiffImageData.Strips imageData;
 
-	public DataReaderStrips(PhotometricInterpreter photometricInterpreter,
-			int bitsPerPixel, int bitsPerSample[], int predictor,
-			int samplesPerPixel, int width, int height, int compression,
-			int rowsPerStrip, TiffImageData.Strips imageData)
-	{
-		super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel);
+    public DataReaderStrips(PhotometricInterpreter photometricInterpreter,
+            int bitsPerPixel, int bitsPerSample[], int predictor,
+            int samplesPerPixel, int width, int height, int compression,
+            int rowsPerStrip, TiffImageData.Strips imageData)
+    {
+        super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel);
 
-		this.bitsPerPixel = bitsPerPixel;
-		this.width = width;
-		this.height = height;
-		this.compression = compression;
-		this.rowsPerStrip = rowsPerStrip;
-		this.imageData = imageData;
-	}
+        this.bitsPerPixel = bitsPerPixel;
+        this.width = width;
+        this.height = height;
+        this.compression = compression;
+        this.rowsPerStrip = rowsPerStrip;
+        this.imageData = imageData;
+    }
 
-	private void interpretStrip(BufferedImage bi, byte bytes[],
-			int pixels_per_strip) throws ImageReadException, IOException
-	{
-		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-		BitInputStream bis = new BitInputStream(bais);
+    private void interpretStrip(BufferedImage bi, byte bytes[],
+            int pixels_per_strip) throws ImageReadException, IOException
+    {
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        BitInputStream bis = new BitInputStream(bais);
 
-		for (int i = 0; i < pixels_per_strip; i++)
-		{
-			int samples[] = getSamplesAsBytes(bis);
+        for (int i = 0; i < pixels_per_strip; i++)
+        {
+            int samples[] = getSamplesAsBytes(bis);
 
-			if ((x < width) && (y < height))
-			{
-				samples = applyPredictor(samples, x);
+            if ((x < width) && (y < height))
+            {
+                samples = applyPredictor(samples, x);
 
-				photometricInterpreter.interpretPixel(bi, samples, x, y);
-			}
+                photometricInterpreter.interpretPixel(bi, samples, x, y);
+            }
 
-			x++;
-			if (x >= width)
-			{
-				x = 0;
-				y++;
-				bis.flushCache();
-				if (y >= height)
-					break;
-			}
-		}
-	}
+            x++;
+            if (x >= width)
+            {
+                x = 0;
+                y++;
+                bis.flushCache();
+                if (y >= height)
+                    break;
+            }
+        }
+    }
 
-	private int x = 0, y = 0;
+    private int x = 0, y = 0;
 
-	public void readImageData(BufferedImage bi) throws ImageReadException,
-			IOException
-	{
-		for (int strip = 0; strip < imageData.strips.length; strip++)
-		{
-			int rowsRemaining = height - (strip * rowsPerStrip);
-			int rowsInThisStrip = Math.min(rowsRemaining, rowsPerStrip);
-			int pixelsPerStrip = rowsInThisStrip * width;
-			int bytesPerStrip = ((pixelsPerStrip * bitsPerPixel) + 7) / 8;
+    public void readImageData(BufferedImage bi) throws ImageReadException,
+            IOException
+    {
+        for (int strip = 0; strip < imageData.strips.length; strip++)
+        {
+            int rowsRemaining = height - (strip * rowsPerStrip);
+            int rowsInThisStrip = Math.min(rowsRemaining, rowsPerStrip);
+            int pixelsPerStrip = rowsInThisStrip * width;
+            int bytesPerStrip = ((pixelsPerStrip * bitsPerPixel) + 7) / 8;
 
-			byte compressed[] = imageData.strips[strip].data;
+            byte compressed[] = imageData.strips[strip].data;
 
-			byte decompressed[] = decompress(compressed, compression,
-					bytesPerStrip);
+            byte decompressed[] = decompress(compressed, compression,
+                    bytesPerStrip);
 
-			interpretStrip(bi, decompressed, pixelsPerStrip);
+            interpretStrip(bi, decompressed, pixelsPerStrip);
 
-		}
-	}
+        }
+    }
 
 }

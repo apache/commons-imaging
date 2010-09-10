@@ -20,9 +20,9 @@ import java.io.IOException;
 
 public class PNGChunkIDAT extends PNGChunk
 {
-	public PNGChunkIDAT(int Length, int ChunkType, int CRC, byte bytes[])
-			throws IOException
-	{
-		super(Length, ChunkType, CRC, bytes);
-	}
+    public PNGChunkIDAT(int Length, int ChunkType, int CRC, byte bytes[])
+            throws IOException
+    {
+        super(Length, ChunkType, CRC, bytes);
+    }
 }

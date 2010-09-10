@@ -23,32 +23,32 @@ import java.util.Comparator;
  */
 public class IPTCRecord
 {
-	public final IPTCType iptcType;
-	public final String value;
+    public final IPTCType iptcType;
+    public final String value;
 
-	public IPTCRecord(IPTCType iptcType, String value)
-	{
-		this.iptcType = iptcType;
-		this.value = value;
-	}
+    public IPTCRecord(IPTCType iptcType, String value)
+    {
+        this.iptcType = iptcType;
+        this.value = value;
+    }
 
-	public String getValue()
-	{
-		return value;
-	}
+    public String getValue()
+    {
+        return value;
+    }
 
-	public String getIptcTypeName()
-	{
-		return iptcType.name;
-	}
+    public String getIptcTypeName()
+    {
+        return iptcType.name;
+    }
 
-	public static final Comparator COMPARATOR = new Comparator() {
-		public int compare(Object o1, Object o2)
-		{
-			IPTCRecord e1 = (IPTCRecord) o1;
-			IPTCRecord e2 = (IPTCRecord) o2;
-			return e1.iptcType.type - e2.iptcType.type;
-		}
-	};
+    public static final Comparator COMPARATOR = new Comparator() {
+        public int compare(Object o1, Object o2)
+        {
+            IPTCRecord e1 = (IPTCRecord) o1;
+            IPTCRecord e2 = (IPTCRecord) o2;
+            return e1.iptcType.type - e2.iptcType.type;
+        }
+    };
 
 }

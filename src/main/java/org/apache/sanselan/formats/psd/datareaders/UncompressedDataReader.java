@@ -30,37 +30,37 @@ import org.apache.sanselan.formats.psd.dataparsers.DataParser;
 
 public class UncompressedDataReader extends DataReader
 {
-	public UncompressedDataReader(DataParser fDataParser)
-	{
-		super(fDataParser);
-	}
+    public UncompressedDataReader(DataParser fDataParser)
+    {
+        super(fDataParser);
+    }
 
-	public void readData(InputStream is, BufferedImage bi,
-			ImageContents imageContents, BinaryFileParser bfp)
-			throws ImageReadException, IOException
-	{
-		PSDHeaderInfo header = imageContents.header;
-		int width = header.Columns;
-		int height = header.Rows;
+    public void readData(InputStream is, BufferedImage bi,
+            ImageContents imageContents, BinaryFileParser bfp)
+            throws ImageReadException, IOException
+    {
+        PSDHeaderInfo header = imageContents.header;
+        int width = header.Columns;
+        int height = header.Rows;
 
-		bfp.setDebug(false);
+        bfp.setDebug(false);
 
-		int channel_count = dataParser.getBasicChannelsCount();
-		int depth = header.Depth;
-		MyBitInputStream mbis = new MyBitInputStream(is, BYTE_ORDER_MSB);
-		BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we want all samples to be bytes
+        int channel_count = dataParser.getBasicChannelsCount();
+        int depth = header.Depth;
+        MyBitInputStream mbis = new MyBitInputStream(is, BYTE_ORDER_MSB);
+        BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we want all samples to be bytes
 
-		int data[][][] = new int[channel_count][height][width];
-		for (int channel = 0; channel < channel_count; channel++)
-			for (int y = 0; y < height; y++)
-				for (int x = 0; x < width; x++)
-				{
-					int b = bbis.readBits(depth);
+        int data[][][] = new int[channel_count][height][width];
+        for (int channel = 0; channel < channel_count; channel++)
+            for (int y = 0; y < height; y++)
+                for (int x = 0; x < width; x++)
+                {
+                    int b = bbis.readBits(depth);
 
-					data[channel][y][x] = (byte) b;
-				}
+                    data[channel][y][x] = (byte) b;
+                }
 
-		dataParser.parseData(data, bi, imageContents);
+        dataParser.parseData(data, bi, imageContents);
 
-	}
+    }
 }

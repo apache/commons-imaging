@@ -26,46 +26,46 @@ import org.apache.sanselan.formats.jpeg.JpegConstants;
 public class JpegXmpParser extends BinaryFileParser implements JpegConstants
 {
 
-	public JpegXmpParser()
-	{
-		setByteOrder(BYTE_ORDER_NETWORK);
-	}
+    public JpegXmpParser()
+    {
+        setByteOrder(BYTE_ORDER_NETWORK);
+    }
 
 
-	public boolean isXmpJpegSegment(byte segmentData[])
-	{
-		int index = 0;
+    public boolean isXmpJpegSegment(byte segmentData[])
+    {
+        int index = 0;
 
-		if (segmentData.length < XMP_IDENTIFIER.length)
-			return false;
-		for (; index < XMP_IDENTIFIER.length; index++)
-			if (segmentData[index] < XMP_IDENTIFIER[index])
-				return false;
+        if (segmentData.length < XMP_IDENTIFIER.length)
+            return false;
+        for (; index < XMP_IDENTIFIER.length; index++)
+            if (segmentData[index] < XMP_IDENTIFIER[index])
+                return false;
 
-		return true;
-	}
+        return true;
+    }
 
-	public String parseXmpJpegSegment(byte segmentData[])
-			throws ImageReadException
-	{
-		int index = 0;
+    public String parseXmpJpegSegment(byte segmentData[])
+            throws ImageReadException
+    {
+        int index = 0;
 
-		if (segmentData.length < XMP_IDENTIFIER.length)
-			throw new ImageReadException("Invalid JPEG XMP Segment.");
-		for (; index < XMP_IDENTIFIER.length; index++)
-			if (segmentData[index] < XMP_IDENTIFIER[index])
-				throw new ImageReadException("Invalid JPEG XMP Segment.");
+        if (segmentData.length < XMP_IDENTIFIER.length)
+            throw new ImageReadException("Invalid JPEG XMP Segment.");
+        for (; index < XMP_IDENTIFIER.length; index++)
+            if (segmentData[index] < XMP_IDENTIFIER[index])
+                throw new ImageReadException("Invalid JPEG XMP Segment.");
 
-		try
-		{
-			// segment data is UTF-8 encoded xml.
-			String xml = new String(segmentData, index, segmentData.length
-					- index, "utf-8");
-			return xml;
-		} catch (UnsupportedEncodingException e)
-		{
-			throw new ImageReadException("Invalid JPEG XMP Segment.");
-		}
-	}
+        try
+        {
+            // segment data is UTF-8 encoded xml.
+            String xml = new String(segmentData, index, segmentData.length
+                    - index, "utf-8");
+            return xml;
+        } catch (UnsupportedEncodingException e)
+        {
+            throw new ImageReadException("Invalid JPEG XMP Segment.");
+        }
+    }
 
 }

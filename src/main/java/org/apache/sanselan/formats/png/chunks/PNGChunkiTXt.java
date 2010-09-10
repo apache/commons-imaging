@@ -25,105 +25,105 @@ import org.apache.sanselan.formats.png.PngText;
 
 public class PNGChunkiTXt extends PNGTextChunk
 {
-	public final String keyword, text;
+    public final String keyword, text;
 
-	/*
-	 * The language tag defined in [RFC-3066] indicates the human language used
-	 * by the translated keyword and the text. Unlike the keyword, the language
-	 * tag is case-insensitive. It is an ISO 646.IRV:1991 [ISO 646] string
-	 * consisting of hyphen-separated words of 1-8 alphanumeric characters each
-	 * (for example cn, en-uk, no-bok, x-klingon, x-KlInGoN). If the first word
-	 * is two or three letters long, it is an ISO language code [ISO-639]. If
-	 * the language tag is empty, the language is unspecified.
-	 */
-	public final String languageTag;
+    /*
+     * The language tag defined in [RFC-3066] indicates the human language used
+     * by the translated keyword and the text. Unlike the keyword, the language
+     * tag is case-insensitive. It is an ISO 646.IRV:1991 [ISO 646] string
+     * consisting of hyphen-separated words of 1-8 alphanumeric characters each
+     * (for example cn, en-uk, no-bok, x-klingon, x-KlInGoN). If the first word
+     * is two or three letters long, it is an ISO language code [ISO-639]. If
+     * the language tag is empty, the language is unspecified.
+     */
+    public final String languageTag;
 
-	public final String translatedKeyword;
+    public final String translatedKeyword;
 
-	public PNGChunkiTXt(int length, int chunkType, int crc, byte bytes[])
-			throws ImageReadException, IOException
-	{
-		super(length, chunkType, crc, bytes);
-		{
-			int terminator = findNull(bytes);
-			if (terminator < 0)
-				throw new ImageReadException(
-						"PNG iTXt chunk keyword is not terminated.");
+    public PNGChunkiTXt(int length, int chunkType, int crc, byte bytes[])
+            throws ImageReadException, IOException
+    {
+        super(length, chunkType, crc, bytes);
+        {
+            int terminator = findNull(bytes);
+            if (terminator < 0)
+                throw new ImageReadException(
+                        "PNG iTXt chunk keyword is not terminated.");
 
-			keyword = new String(bytes, 0, terminator, "ISO-8859-1");
-			int index = terminator + 1;
+            keyword = new String(bytes, 0, terminator, "ISO-8859-1");
+            int index = terminator + 1;
 
-			int compressionFlag = bytes[index++];
-			if (compressionFlag != 0 && compressionFlag != 1)
-				throw new ImageReadException(
-						"PNG iTXt chunk has invalid compression flag: "
-								+ compressionFlag);
+            int compressionFlag = bytes[index++];
+            if (compressionFlag != 0 && compressionFlag != 1)
+                throw new ImageReadException(
+                        "PNG iTXt chunk has invalid compression flag: "
+                                + compressionFlag);
 
-			boolean compressed = compressionFlag == 1;
+            boolean compressed = compressionFlag == 1;
 
-			int compressionMethod = bytes[index++];
-			if (compressed)
-				if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE)
-					throw new ImageReadException(
-							"PNG iTXt chunk has unexpected compression method: "
-									+ compressionMethod);
-				else if (compressionMethod != 0)
-					throw new ImageReadException(
-							"PNG iTXt chunk has unexpected compression method: "
-									+ compressionMethod);
+            int compressionMethod = bytes[index++];
+            if (compressed)
+                if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE)
+                    throw new ImageReadException(
+                            "PNG iTXt chunk has unexpected compression method: "
+                                    + compressionMethod);
+                else if (compressionMethod != 0)
+                    throw new ImageReadException(
+                            "PNG iTXt chunk has unexpected compression method: "
+                                    + compressionMethod);
 
-			terminator = findNull(bytes, index);
-			if (terminator < 0)
-				throw new ImageReadException(
-						"PNG iTXt chunk language tag is not terminated.");
+            terminator = findNull(bytes, index);
+            if (terminator < 0)
+                throw new ImageReadException(
+                        "PNG iTXt chunk language tag is not terminated.");
 
-			languageTag = new String(bytes, index, terminator - index,
-					"ISO-8859-1");
-			index = terminator + 1;
+            languageTag = new String(bytes, index, terminator - index,
+                    "ISO-8859-1");
+            index = terminator + 1;
 
-			terminator = findNull(bytes, index);
-			if (terminator < 0)
-				throw new ImageReadException(
-						"PNG iTXt chunk translated keyword is not terminated.");
+            terminator = findNull(bytes, index);
+            if (terminator < 0)
+                throw new ImageReadException(
+                        "PNG iTXt chunk translated keyword is not terminated.");
 
-			translatedKeyword = new String(bytes, index, terminator - index,
-					"utf-8");
-			index = terminator + 1;
+            translatedKeyword = new String(bytes, index, terminator - index,
+                    "utf-8");
+            index = terminator + 1;
 
-			if (compressed)
-			{
-				int compressedTextLength = bytes.length - index;
+            if (compressed)
+            {
+                int compressedTextLength = bytes.length - index;
 
-				byte compressedText[] = new byte[compressedTextLength];
-				System.arraycopy(bytes, index, compressedText, 0,
-						compressedTextLength);
+                byte compressedText[] = new byte[compressedTextLength];
+                System.arraycopy(bytes, index, compressedText, 0,
+                        compressedTextLength);
 
-				text = new String(new ZLibUtils().inflate(compressedText),
-						"utf-8");
+                text = new String(new ZLibUtils().inflate(compressedText),
+                        "utf-8");
 
-			} else
-				text = new String(bytes, index, bytes.length - index, "utf-8");
-		}
-	}
+            } else
+                text = new String(bytes, index, bytes.length - index, "utf-8");
+        }
+    }
 
-	/**
-	 * @return Returns the keyword.
-	 */
-	public String getKeyword()
-	{
-		return keyword;
-	}
+    /**
+     * @return Returns the keyword.
+     */
+    public String getKeyword()
+    {
+        return keyword;
+    }
 
-	/**
-	 * @return Returns the text.
-	 */
-	public String getText()
-	{
-		return text;
-	}
+    /**
+     * @return Returns the text.
+     */
+    public String getText()
+    {
+        return text;
+    }
 
-	public PngText getContents()
-	{
-		return new PngText.iTXt(keyword, text, languageTag, translatedKeyword);
-	}
+    public PngText getContents()
+    {
+        return new PngText.iTXt(keyword, text, languageTag, translatedKeyword);
+    }
 }

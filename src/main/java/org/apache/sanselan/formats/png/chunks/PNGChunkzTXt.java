@@ -26,57 +26,57 @@ import org.apache.sanselan.formats.png.PngText;
 public class PNGChunkzTXt extends PNGTextChunk
 {
 
-	public final String keyword, text;
+    public final String keyword, text;
 
-	public PNGChunkzTXt(int length, int chunkType, int crc, byte bytes[])
-			throws ImageReadException, IOException
-	{
-		super(length, chunkType, crc, bytes);
+    public PNGChunkzTXt(int length, int chunkType, int crc, byte bytes[])
+            throws ImageReadException, IOException
+    {
+        super(length, chunkType, crc, bytes);
 
-		{
-			int index = findNull(bytes);
-			if (index < 0)
-				throw new ImageReadException(
-						"PNG zTXt chunk keyword is unterminated.");
+        {
+            int index = findNull(bytes);
+            if (index < 0)
+                throw new ImageReadException(
+                        "PNG zTXt chunk keyword is unterminated.");
 
-			keyword = new String(bytes, 0, index, "ISO-8859-1");
-			index++;
+            keyword = new String(bytes, 0, index, "ISO-8859-1");
+            index++;
 
-			int compressionMethod = bytes[index++];
-			if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE)
-				throw new ImageReadException(
-						"PNG zTXt chunk has unexpected compression method: "
-								+ compressionMethod);
+            int compressionMethod = bytes[index++];
+            if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE)
+                throw new ImageReadException(
+                        "PNG zTXt chunk has unexpected compression method: "
+                                + compressionMethod);
 
-			int compressedTextLength = bytes.length - index;
-			byte compressedText[] = new byte[compressedTextLength];
-			System.arraycopy(bytes, index, compressedText, 0,
-					compressedTextLength);
+            int compressedTextLength = bytes.length - index;
+            byte compressedText[] = new byte[compressedTextLength];
+            System.arraycopy(bytes, index, compressedText, 0,
+                    compressedTextLength);
 
-			text = new String(new ZLibUtils().inflate(compressedText),
-					"ISO-8859-1");
-		}
-	}
+            text = new String(new ZLibUtils().inflate(compressedText),
+                    "ISO-8859-1");
+        }
+    }
 
-	/**
-	 * @return Returns the keyword.
-	 */
-	public String getKeyword()
-	{
-		return keyword;
-	}
+    /**
+     * @return Returns the keyword.
+     */
+    public String getKeyword()
+    {
+        return keyword;
+    }
 
-	/**
-	 * @return Returns the text.
-	 */
-	public String getText()
-	{
-		return text;
-	}
+    /**
+     * @return Returns the text.
+     */
+    public String getText()
+    {
+        return text;
+    }
 
-	public PngText getContents()
-	{
-		return new PngText.zTXt(keyword, text);
-	}
+    public PngText getContents()
+    {
+        return new PngText.zTXt(keyword, text);
+    }
 
 }

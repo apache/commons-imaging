@@ -26,97 +26,97 @@ import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
 
 public class ScanExpediterInterlaced extends ScanExpediter
 {
-	public ScanExpediterInterlaced(int width, int height, InputStream is,
-			BufferedImage bi, int color_type, int BitDepth, int bits_per_pixel,
-			PNGChunkPLTE fPNGChunkPLTE, GammaCorrection fGammaCorrection,
-			TransparencyFilter fTransparencyFilter)
+    public ScanExpediterInterlaced(int width, int height, InputStream is,
+            BufferedImage bi, int color_type, int BitDepth, int bits_per_pixel,
+            PNGChunkPLTE fPNGChunkPLTE, GammaCorrection fGammaCorrection,
+            TransparencyFilter fTransparencyFilter)
 
-	{
-		super(width, height, is, bi, color_type, BitDepth, bits_per_pixel,
-				fPNGChunkPLTE, fGammaCorrection, fTransparencyFilter);
-	}
+    {
+        super(width, height, is, bi, color_type, BitDepth, bits_per_pixel,
+                fPNGChunkPLTE, fGammaCorrection, fTransparencyFilter);
+    }
 
-	private void visit(int x, int y, BufferedImage bi, BitParser fBitParser,
-			int color_type, int pixel_index_in_scanline,
-			PNGChunkPLTE fPNGChunkPLTE, GammaCorrection fGammaCorrection)
-			throws ImageReadException, IOException
-	{
-		int rgb = getRGB(fBitParser,
-		//					color_type, 
-				pixel_index_in_scanline
-		//					,
-		//					fPNGChunkPLTE, fGammaCorrection
-		);
+    private void visit(int x, int y, BufferedImage bi, BitParser fBitParser,
+            int color_type, int pixel_index_in_scanline,
+            PNGChunkPLTE fPNGChunkPLTE, GammaCorrection fGammaCorrection)
+            throws ImageReadException, IOException
+    {
+        int rgb = getRGB(fBitParser,
+        //                    color_type,
+                pixel_index_in_scanline
+        //                    ,
+        //                    fPNGChunkPLTE, fGammaCorrection
+        );
 
-		bi.setRGB(x, y, rgb);
+        bi.setRGB(x, y, rgb);
 
-		//				buffer.setElem(y * width +x , rgb);
+        //                buffer.setElem(y * width +x , rgb);
 
-	}
+    }
 
-	public static final int Starting_Row[] = {
-			0, 0, 4, 0, 2, 0, 1
-	};
-	public static final int Starting_Col[] = {
-			0, 4, 0, 2, 0, 1, 0
-	};
-	public static final int Row_Increment[] = {
-			8, 8, 8, 4, 4, 2, 2
-	};
-	public static final int Col_Increment[] = {
-			8, 8, 4, 4, 2, 2, 1
-	};
-	public static final int Block_Height[] = {
-			8, 8, 4, 4, 2, 2, 1
-	};
-	public static final int Block_Width[] = {
-			8, 4, 4, 2, 2, 1, 1
-	};
+    public static final int Starting_Row[] = {
+            0, 0, 4, 0, 2, 0, 1
+    };
+    public static final int Starting_Col[] = {
+            0, 4, 0, 2, 0, 1, 0
+    };
+    public static final int Row_Increment[] = {
+            8, 8, 8, 4, 4, 2, 2
+    };
+    public static final int Col_Increment[] = {
+            8, 8, 4, 4, 2, 2, 1
+    };
+    public static final int Block_Height[] = {
+            8, 8, 4, 4, 2, 2, 1
+    };
+    public static final int Block_Width[] = {
+            8, 4, 4, 2, 2, 1, 1
+    };
 
-	public void drive() throws ImageReadException, IOException
-	{
+    public void drive() throws ImageReadException, IOException
+    {
 
-		int pass = 1;
-		while (pass <= 7)
-		{
-			byte prev[] = null;
+        int pass = 1;
+        while (pass <= 7)
+        {
+            byte prev[] = null;
 
-			int y = Starting_Row[pass - 1];
-			//				int y_stride = Row_Increment[pass - 1];
-			boolean rows_in_pass = (y < height);
-			while (y < height)
-			{
-				int x = Starting_Col[pass - 1];
-				int pixel_index_in_scanline = 0;
+            int y = Starting_Row[pass - 1];
+            //                int y_stride = Row_Increment[pass - 1];
+            boolean rows_in_pass = (y < height);
+            while (y < height)
+            {
+                int x = Starting_Col[pass - 1];
+                int pixel_index_in_scanline = 0;
 
-				if (x < width)
-				{
-					//						 only get data if there are pixels in this scanline/pass
-					int ColumnsInRow = 1 + ((width - Starting_Col[pass - 1] - 1) / Col_Increment[pass - 1]);
-					int bitsPerScanLine = bitsPerPixel * ColumnsInRow;
-					int pixel_bytes_per_scan_line = getBitsToBytesRoundingUp(bitsPerScanLine);
+                if (x < width)
+                {
+                    //                         only get data if there are pixels in this scanline/pass
+                    int ColumnsInRow = 1 + ((width - Starting_Col[pass - 1] - 1) / Col_Increment[pass - 1]);
+                    int bitsPerScanLine = bitsPerPixel * ColumnsInRow;
+                    int pixel_bytes_per_scan_line = getBitsToBytesRoundingUp(bitsPerScanLine);
 
-					byte unfiltered[] = getNextScanline(is,
-							pixel_bytes_per_scan_line, prev, bytesPerPixel);
+                    byte unfiltered[] = getNextScanline(is,
+                            pixel_bytes_per_scan_line, prev, bytesPerPixel);
 
-					prev = unfiltered;
+                    prev = unfiltered;
 
-					BitParser fBitParser = new BitParser(unfiltered,
-							bitsPerPixel, bitDepth);
+                    BitParser fBitParser = new BitParser(unfiltered,
+                            bitsPerPixel, bitDepth);
 
-					while (x < width)
-					{
-						visit(x, y, bi, fBitParser, colorType,
-								pixel_index_in_scanline, pngChunkPLTE,
-								gammaCorrection);
+                    while (x < width)
+                    {
+                        visit(x, y, bi, fBitParser, colorType,
+                                pixel_index_in_scanline, pngChunkPLTE,
+                                gammaCorrection);
 
-						x = x + Col_Increment[pass - 1];
-						pixel_index_in_scanline++;
-					}
-				}
-				y = y + Row_Increment[pass - 1];
-			}
-			pass = pass + 1;
-		}
-	}
+                        x = x + Col_Increment[pass - 1];
+                        pixel_index_in_scanline++;
+                    }
+                }
+                y = y + Row_Increment[pass - 1];
+            }
+            pass = pass + 1;
+        }
+    }
 }

@@ -18,17 +18,17 @@ package org.apache.sanselan.color;
 
 public final class ColorHunterLab
 {
-	public final double L, a, b;
+    public final double L, a, b;
 
-	public ColorHunterLab(double l, double a, double b)
-	{
-		L = l;
-		this.a = a;
-		this.b = b;
-	}
+    public ColorHunterLab(double l, double a, double b)
+    {
+        L = l;
+        this.a = a;
+        this.b = b;
+    }
 
-	public final String toString()
-	{
-		return "{L: " + L + ", a: " + a + ", b: " + b + "}";
-	}
+    public final String toString()
+    {
+        return "{L: " + L + ", a: " + a + ", b: " + b + "}";
+    }
 }

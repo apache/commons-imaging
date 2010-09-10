@@ -19,23 +19,23 @@ package org.apache.sanselan.formats.gif;
 class GraphicControlExtension extends GIFBlock
 {
 
-	public final int packed;
-	public final int dispose;
-	public final boolean transparency;
-	public final int delay;
-	public final int transparentColorIndex;
+    public final int packed;
+    public final int dispose;
+    public final boolean transparency;
+    public final int delay;
+    public final int transparentColorIndex;
 
-	public GraphicControlExtension(int blockCode, int packed, int dispose,
-			boolean transparency, int delay, int transparentColorIndex)
-	{
-		super(blockCode);
+    public GraphicControlExtension(int blockCode, int packed, int dispose,
+            boolean transparency, int delay, int transparentColorIndex)
+    {
+        super(blockCode);
 
-		this.packed = packed;
-		this.dispose = dispose;
-		this.transparency = transparency;
-		this.delay = delay;
-		this.transparentColorIndex = transparentColorIndex;
+        this.packed = packed;
+        this.dispose = dispose;
+        this.transparency = transparency;
+        this.delay = delay;
+        this.transparentColorIndex = transparentColorIndex;
 
-	}
+    }
 
 }

@@ -19,39 +19,39 @@ package org.apache.sanselan.formats.gif;
 public class ImageDescriptor extends GIFBlock
 {
 
-	public final int imageLeftPosition;
-	public final int imageTopPosition;
-	public final int imageWidth;
-	public final int imageHeight;
-	public final byte packedFields;
-	public final boolean localColorTableFlag;
-	public final boolean interlaceFlag;
-	public final boolean sortFlag;
-	public final byte sizeOfLocalColorTable;
+    public final int imageLeftPosition;
+    public final int imageTopPosition;
+    public final int imageWidth;
+    public final int imageHeight;
+    public final byte packedFields;
+    public final boolean localColorTableFlag;
+    public final boolean interlaceFlag;
+    public final boolean sortFlag;
+    public final byte sizeOfLocalColorTable;
 
-	public final byte localColorTable[];
-	public final byte imageData[];
+    public final byte localColorTable[];
+    public final byte imageData[];
 
-	public ImageDescriptor(int blockCode, int ImageLeftPosition,
-			int ImageTopPosition, int ImageWidth, int ImageHeight,
-			byte PackedFields, boolean LocalColorTableFlag,
-			boolean InterlaceFlag, boolean SortFlag,
-			byte SizeofLocalColorTable, byte LocalColorTable[],
-			byte ImageData[])
-	{
-		super(blockCode);
+    public ImageDescriptor(int blockCode, int ImageLeftPosition,
+            int ImageTopPosition, int ImageWidth, int ImageHeight,
+            byte PackedFields, boolean LocalColorTableFlag,
+            boolean InterlaceFlag, boolean SortFlag,
+            byte SizeofLocalColorTable, byte LocalColorTable[],
+            byte ImageData[])
+    {
+        super(blockCode);
 
-		this.imageLeftPosition = ImageLeftPosition;
-		this.imageTopPosition = ImageTopPosition;
-		this.imageWidth = ImageWidth;
-		this.imageHeight = ImageHeight;
-		this.packedFields = PackedFields;
-		this.localColorTableFlag = LocalColorTableFlag;
-		this.interlaceFlag = InterlaceFlag;
-		this.sortFlag = SortFlag;
-		this.sizeOfLocalColorTable = SizeofLocalColorTable;
+        this.imageLeftPosition = ImageLeftPosition;
+        this.imageTopPosition = ImageTopPosition;
+        this.imageWidth = ImageWidth;
+        this.imageHeight = ImageHeight;
+        this.packedFields = PackedFields;
+        this.localColorTableFlag = LocalColorTableFlag;
+        this.interlaceFlag = InterlaceFlag;
+        this.sortFlag = SortFlag;
+        this.sizeOfLocalColorTable = SizeofLocalColorTable;
 
-		this.localColorTable = LocalColorTable;
-		this.imageData = ImageData;
-	}
+        this.localColorTable = LocalColorTable;
+        this.imageData = ImageData;
+    }
 }

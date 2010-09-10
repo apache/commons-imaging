@@ -24,25 +24,25 @@ import org.apache.sanselan.color.ColorConversions;
 
 public class PhotometricInterpreterCIELAB extends PhotometricInterpreter
 {
-	public PhotometricInterpreterCIELAB(int fSamplesPerPixel,
-			int fBitsPerSample[], int Predictor, int width, int height)
-	{
-		super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
-	}
+    public PhotometricInterpreterCIELAB(int fSamplesPerPixel,
+            int fBitsPerSample[], int Predictor, int width, int height)
+    {
+        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+    }
 
-	public void dumpstats() throws ImageReadException, IOException
-	{
-	}
+    public void dumpstats() throws ImageReadException, IOException
+    {
+    }
 
-	public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
-			throws ImageReadException, IOException
-	{
-		int cieL = samples[0];
-		int cieA = (byte) samples[1];
-		int cieB = (byte) samples[2];
+    public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
+            throws ImageReadException, IOException
+    {
+        int cieL = samples[0];
+        int cieA = (byte) samples[1];
+        int cieB = (byte) samples[2];
 
-		int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
-		bi.setRGB(x, y, rgb);
-	}
+        int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
+        bi.setRGB(x, y, rgb);
+    }
 
 }

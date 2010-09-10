@@ -22,20 +22,20 @@ import org.apache.sanselan.util.Debug;
 
 class ImageResourceBlock
 {
-	protected final int id;
-	protected final byte nameData[];
-	protected final byte data[];
+    protected final int id;
+    protected final byte nameData[];
+    protected final byte data[];
 
-	public ImageResourceBlock(int ID, byte NameData[], byte Data[])
-	{
-		this.id = ID;
-		this.nameData = NameData;
-		this.data = Data;
-	}
+    public ImageResourceBlock(int ID, byte NameData[], byte Data[])
+    {
+        this.id = ID;
+        this.nameData = NameData;
+        this.data = Data;
+    }
 
-	public String getName() throws UnsupportedEncodingException
-	{
-		Debug.debug("getName", nameData.length);
-		return new String(nameData, "ISO-8859-1");
-	}
+    public String getName() throws UnsupportedEncodingException
+    {
+        Debug.debug("getName", nameData.length);
+        return new String(nameData, "ISO-8859-1");
+    }
 }

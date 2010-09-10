@@ -18,17 +18,17 @@ package org.apache.sanselan.color;
 
 public final class ColorXYZ
 {
-	public final double X, Y, Z;
+    public final double X, Y, Z;
 
-	public ColorXYZ(double x, double y, double z)
-	{
-		X = x;
-		Y = y;
-		Z = z;
-	}
+    public ColorXYZ(double x, double y, double z)
+    {
+        X = x;
+        Y = y;
+        Z = z;
+    }
 
-	public final String toString()
-	{
-		return "{X: " + X + ", Y: " + Y + ", Z: " + Z + "}";
-	}
+    public final String toString()
+    {
+        return "{X: " + X + ", Y: " + Y + ", Z: " + Z + "}";
+    }
 }

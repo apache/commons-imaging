@@ -18,10 +18,10 @@ package org.apache.sanselan.formats.gif;
 
 class GIFBlock
 {
-	public final int blockCode;
+    public final int blockCode;
 
-	public GIFBlock(int blockCode)
-	{
-		this.blockCode = blockCode;
-	}
+    public GIFBlock(int blockCode)
+    {
+        this.blockCode = blockCode;
+    }
 }

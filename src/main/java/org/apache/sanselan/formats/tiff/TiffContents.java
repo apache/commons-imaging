@@ -25,90 +25,90 @@ import org.apache.sanselan.util.Debug;
 
 public class TiffContents
 {
-	public final TiffHeader header;
-	public final ArrayList directories;
+    public final TiffHeader header;
+    public final ArrayList directories;
 
-	public TiffContents(TiffHeader tiffHeader, ArrayList directories)
-	{
-		this.header = tiffHeader;
-		this.directories = directories;
-	}
+    public TiffContents(TiffHeader tiffHeader, ArrayList directories)
+    {
+        this.header = tiffHeader;
+        this.directories = directories;
+    }
 
-	public ArrayList getElements() throws ImageReadException
-	{
-		ArrayList result = new ArrayList();
+    public ArrayList getElements() throws ImageReadException
+    {
+        ArrayList result = new ArrayList();
 
-		result.add(header);
+        result.add(header);
 
-		for (int i = 0; i < directories.size(); i++)
-		{
-			TiffDirectory directory = (TiffDirectory) directories.get(i);
+        for (int i = 0; i < directories.size(); i++)
+        {
+            TiffDirectory directory = (TiffDirectory) directories.get(i);
 
-			result.add(directory);
+            result.add(directory);
 
-			ArrayList fields = directory.entries;
-			for (int j = 0; j < fields.size(); j++)
-			{
-				TiffField field = (TiffField) fields.get(j);
-				TiffElement oversizeValue = field.getOversizeValueElement();
-				if (null != oversizeValue)
-					result.add(oversizeValue);
-			}
+            ArrayList fields = directory.entries;
+            for (int j = 0; j < fields.size(); j++)
+            {
+                TiffField field = (TiffField) fields.get(j);
+                TiffElement oversizeValue = field.getOversizeValueElement();
+                if (null != oversizeValue)
+                    result.add(oversizeValue);
+            }
 
-			if (directory.hasTiffImageData())
-				result.addAll(directory.getTiffRawImageDataElements());
-			if (directory.hasJpegImageData())
-				result.add(directory.getJpegRawImageDataElement());
-		}
+            if (directory.hasTiffImageData())
+                result.addAll(directory.getTiffRawImageDataElements());
+            if (directory.hasJpegImageData())
+                result.add(directory.getJpegRawImageDataElement());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public TiffField findField(TagInfo tag) throws ImageReadException
-	{
-		for (int i = 0; i < directories.size(); i++)
-		{
-			TiffDirectory directory = (TiffDirectory) directories.get(i);
+    public TiffField findField(TagInfo tag) throws ImageReadException
+    {
+        for (int i = 0; i < directories.size(); i++)
+        {
+            TiffDirectory directory = (TiffDirectory) directories.get(i);
 
-			TiffField field = directory.findField(tag);
-			if (null != field)
-				return field;
-		}
+            TiffField field = directory.findField(tag);
+            if (null != field)
+                return field;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public void dissect(boolean verbose) throws ImageReadException
-	{
-		ArrayList elements = getElements();
+    public void dissect(boolean verbose) throws ImageReadException
+    {
+        ArrayList elements = getElements();
 
-		Collections.sort(elements, TiffElement.COMPARATOR);
+        Collections.sort(elements, TiffElement.COMPARATOR);
 
-		int lastEnd = 0;
-		for (int i = 0; i < elements.size(); i++)
-		{
-			TiffElement element = (TiffElement) elements.get(i);
+        int lastEnd = 0;
+        for (int i = 0; i < elements.size(); i++)
+        {
+            TiffElement element = (TiffElement) elements.get(i);
 
-			if (element.offset > lastEnd)
-				Debug.debug("\t" + "gap: " + (element.offset - lastEnd));
-			if (element.offset < lastEnd)
-				Debug.debug("\t" + "overlap");
+            if (element.offset > lastEnd)
+                Debug.debug("\t" + "gap: " + (element.offset - lastEnd));
+            if (element.offset < lastEnd)
+                Debug.debug("\t" + "overlap");
 
-			Debug.debug("element, start: " + element.offset + ", length: "
-					+ element.length + ", end: "
-					+ (element.offset + element.length) + ": "
-					+ element.getElementDescription(false));
-			if (verbose)
-			{
-				String verbosity = element.getElementDescription(true);
-				if (null != verbosity)
-					Debug.debug(verbosity);
-			}
+            Debug.debug("element, start: " + element.offset + ", length: "
+                    + element.length + ", end: "
+                    + (element.offset + element.length) + ": "
+                    + element.getElementDescription(false));
+            if (verbose)
+            {
+                String verbosity = element.getElementDescription(true);
+                if (null != verbosity)
+                    Debug.debug(verbosity);
+            }
 
-			lastEnd = element.offset + element.length;
-		}
-		Debug.debug("end: " + lastEnd);
-		Debug.debug();
-	}
+            lastEnd = element.offset + element.length;
+        }
+        Debug.debug("end: " + lastEnd);
+        Debug.debug();
+    }
 
 }

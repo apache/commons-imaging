@@ -24,40 +24,40 @@ import org.apache.sanselan.ImageReadException;
 
 public abstract class GenericSegment extends Segment
 {
-	public final byte bytes[];
+    public final byte bytes[];
 
-	public GenericSegment(int marker, int marker_length, InputStream is)
-			throws ImageReadException, IOException
-	{
-		super(marker, marker_length);
+    public GenericSegment(int marker, int marker_length, InputStream is)
+            throws ImageReadException, IOException
+    {
+        super(marker, marker_length);
 
-		bytes = readByteArray("Segment Data", marker_length, is,
-				"Invalid Segment: insufficient data");
-	}
+        bytes = readByteArray("Segment Data", marker_length, is,
+                "Invalid Segment: insufficient data");
+    }
 
-	public GenericSegment(int marker, byte bytes[]) throws ImageReadException,
-			IOException
-	{
-		super(marker, bytes.length);
+    public GenericSegment(int marker, byte bytes[]) throws ImageReadException,
+            IOException
+    {
+        super(marker, bytes.length);
 
-		this.bytes = bytes;
-	}
+        this.bytes = bytes;
+    }
 
-	public void dump(PrintWriter pw)
-	{
-		dump(pw, 0);
-	}
+    public void dump(PrintWriter pw)
+    {
+        dump(pw, 0);
+    }
 
-	public void dump(PrintWriter pw, int start)
-	{
-		for (int i = 0; (i < 50) && ((i + start) < bytes.length); i++)
-		{
-			debugNumber(pw, "\t" + (i + start), bytes[i + start]);
-		}
-	}
+    public void dump(PrintWriter pw, int start)
+    {
+        for (int i = 0; (i < 50) && ((i + start) < bytes.length); i++)
+        {
+            debugNumber(pw, "\t" + (i + start), bytes[i + start]);
+        }
+    }
 
-	//	public String getDescription()
-	//	{
-	//		return "Unknown";
-	//	}
+    //    public String getDescription()
+    //    {
+    //        return "Unknown";
+    //    }
 }

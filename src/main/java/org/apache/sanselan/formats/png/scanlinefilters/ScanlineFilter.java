@@ -22,6 +22,6 @@ import org.apache.sanselan.ImageReadException;
 
 public abstract class ScanlineFilter
 {
-	public abstract void unfilter(byte src[], byte dst[], byte up[])
-			throws ImageReadException, IOException;
+    public abstract void unfilter(byte src[], byte dst[], byte up[])
+            throws ImageReadException, IOException;
 }

@@ -25,55 +25,55 @@ import org.apache.sanselan.ImageWriteException;
 
 public class PPMWriter extends PNMWriter
 {
-	public PPMWriter(boolean RAWBITS)
-	{
-		super(RAWBITS);
-	}
+    public PPMWriter(boolean RAWBITS)
+    {
+        super(RAWBITS);
+    }
 
-	public void writeImage(BufferedImage src, OutputStream os, Map params)
-			throws ImageWriteException, IOException
-	{
-		//			System.out.println
-		// (b1 == 0x50 && b2 == 0x36)
-		os.write(0x50);
-		os.write(RAWBITS ? 0x36 : 0x33);
-		os.write(' ');
+    public void writeImage(BufferedImage src, OutputStream os, Map params)
+            throws ImageWriteException, IOException
+    {
+        //            System.out.println
+        // (b1 == 0x50 && b2 == 0x36)
+        os.write(0x50);
+        os.write(RAWBITS ? 0x36 : 0x33);
+        os.write(' ');
 
-		int width = src.getWidth();
-		int height = src.getHeight();
+        int width = src.getWidth();
+        int height = src.getHeight();
 
-		os.write(("" + width).getBytes());
-		os.write(' ');
+        os.write(("" + width).getBytes());
+        os.write(' ');
 
-		os.write(("" + height).getBytes());
-		os.write(' ');
+        os.write(("" + height).getBytes());
+        os.write(' ');
 
-		os.write(("" + 255).getBytes()); // max component value
-		os.write('\n');
+        os.write(("" + 255).getBytes()); // max component value
+        os.write('\n');
 
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++)
-			{
-				int argb = src.getRGB(x, y);
-				int red = 0xff & (argb >> 16);
-				int green = 0xff & (argb >> 8);
-				int blue = 0xff & (argb >> 0);
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+            {
+                int argb = src.getRGB(x, y);
+                int red = 0xff & (argb >> 16);
+                int green = 0xff & (argb >> 8);
+                int blue = 0xff & (argb >> 0);
 
-				if (RAWBITS)
-				{
-					os.write((byte) red);
-					os.write((byte) green);
-					os.write((byte) blue);
-				}
-				else
-				{
-					os.write(("" + red).getBytes()); // max component value
-					os.write(' ');
-					os.write(("" + green).getBytes()); // max component value
-					os.write(' ');
-					os.write(("" + blue).getBytes()); // max component value
-					os.write(' ');
-				}
-			}
-	}
+                if (RAWBITS)
+                {
+                    os.write((byte) red);
+                    os.write((byte) green);
+                    os.write((byte) blue);
+                }
+                else
+                {
+                    os.write(("" + red).getBytes()); // max component value
+                    os.write(' ');
+                    os.write(("" + green).getBytes()); // max component value
+                    os.write(' ');
+                    os.write(("" + blue).getBytes()); // max component value
+                    os.write(' ');
+                }
+            }
+    }
 }

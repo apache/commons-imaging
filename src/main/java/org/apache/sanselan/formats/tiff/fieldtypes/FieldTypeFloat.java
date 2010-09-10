@@ -22,44 +22,44 @@ import org.apache.sanselan.util.Debug;
 
 public class FieldTypeFloat extends FieldType
 {
-	public FieldTypeFloat()
-	{
-		super(11, 4, "Float");
-	}
+    public FieldTypeFloat()
+    {
+        super(11, 4, "Float");
+    }
 
-	//	= new FieldType(11, 4, "Float")
+    //    = new FieldType(11, 4, "Float")
 
-	public Object getSimpleValue(TiffField entry)
-	{
-		if (entry.length == 1)
-			return new Float(convertByteArrayToFloat(name + " ("
-					+ entry.tagInfo.name + ")", entry.valueOffsetBytes,
-					entry.byteOrder));
+    public Object getSimpleValue(TiffField entry)
+    {
+        if (entry.length == 1)
+            return new Float(convertByteArrayToFloat(name + " ("
+                    + entry.tagInfo.name + ")", entry.valueOffsetBytes,
+                    entry.byteOrder));
 
-		return convertByteArrayToFloatArray(name + " (" + entry.tagInfo.name
-				+ ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
-	}
+        return convertByteArrayToFloatArray(name + " (" + entry.tagInfo.name
+                + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
+    }
 
-	public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
-	{
-		if (o instanceof Float)
-			return convertFloatToByteArray(((Float) o).floatValue(), byteOrder);
-		else if (o instanceof float[])
-		{
-			float numbers[] = (float[]) o;
-			return convertFloatArrayToByteArray(numbers, byteOrder);
-		}
-		else if (o instanceof Float[])
-		{
-			Float numbers[] = (Float[]) o;
-			float values[] = new float[numbers.length];
-			for (int i = 0; i < values.length; i++)
-				values[i] = numbers[i].floatValue();
-			return convertFloatArrayToByteArray(values, byteOrder);
-		}
-		else
-			throw new ImageWriteException("Invalid data: " + o + " ("
-					+ Debug.getType(o) + ")");
-	}
+    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
+    {
+        if (o instanceof Float)
+            return convertFloatToByteArray(((Float) o).floatValue(), byteOrder);
+        else if (o instanceof float[])
+        {
+            float numbers[] = (float[]) o;
+            return convertFloatArrayToByteArray(numbers, byteOrder);
+        }
+        else if (o instanceof Float[])
+        {
+            Float numbers[] = (Float[]) o;
+            float values[] = new float[numbers.length];
+            for (int i = 0; i < values.length; i++)
+                values[i] = numbers[i].floatValue();
+            return convertFloatArrayToByteArray(values, byteOrder);
+        }
+        else
+            throw new ImageWriteException("Invalid data: " + o + " ("
+                    + Debug.getType(o) + ")");
+    }
 
 }

@@ -21,107 +21,107 @@ import java.text.NumberFormat;
 
 public class RationalNumber extends Number
 {
-	private static final long serialVersionUID = -1;
+    private static final long serialVersionUID = -1;
 
-	public final int numerator;
-	public final int divisor;
+    public final int numerator;
+    public final int divisor;
 
-	public RationalNumber(int numerator, int divisor)
-	{
-		this.numerator = numerator;
-		this.divisor = divisor;
-	}
+    public RationalNumber(int numerator, int divisor)
+    {
+        this.numerator = numerator;
+        this.divisor = divisor;
+    }
 
-	public static final RationalNumber factoryMethod(long n, long d)
-	{
-		// safer than constructor - handles values outside min/max range.
-		// also does some simple finding of common denominators.
+    public static final RationalNumber factoryMethod(long n, long d)
+    {
+        // safer than constructor - handles values outside min/max range.
+        // also does some simple finding of common denominators.
 
-		if (n > Integer.MAX_VALUE || n < Integer.MIN_VALUE
-				|| d > Integer.MAX_VALUE || d < Integer.MIN_VALUE)
-		{
-			while ((n > Integer.MAX_VALUE || n < Integer.MIN_VALUE
-					|| d > Integer.MAX_VALUE || d < Integer.MIN_VALUE)
-					&& (Math.abs(n) > 1) && (Math.abs(d) > 1))
-			{
-				// brutal, inprecise truncation =(
-				// use the sign-preserving right shift operator.
-				n >>= 1;
-				d >>= 1;
-			}
+        if (n > Integer.MAX_VALUE || n < Integer.MIN_VALUE
+                || d > Integer.MAX_VALUE || d < Integer.MIN_VALUE)
+        {
+            while ((n > Integer.MAX_VALUE || n < Integer.MIN_VALUE
+                    || d > Integer.MAX_VALUE || d < Integer.MIN_VALUE)
+                    && (Math.abs(n) > 1) && (Math.abs(d) > 1))
+            {
+                // brutal, inprecise truncation =(
+                // use the sign-preserving right shift operator.
+                n >>= 1;
+                d >>= 1;
+            }
 
-			if (d == 0)
-				throw new NumberFormatException("Invalid value, numerator: "
-						+ n + ", divisor: " + d);
-		}
+            if (d == 0)
+                throw new NumberFormatException("Invalid value, numerator: "
+                        + n + ", divisor: " + d);
+        }
 
-		long gcd = gcd(n, d);
-		d = d / gcd;
-		n = n / gcd;
+        long gcd = gcd(n, d);
+        d = d / gcd;
+        n = n / gcd;
 
-		return new RationalNumber((int) n, (int) d);
-	}
+        return new RationalNumber((int) n, (int) d);
+    }
 
-	/**
-	 * Return the greatest common divisor
-	 */
-	private static long gcd(long a, long b)
-	{
+    /**
+     * Return the greatest common divisor
+     */
+    private static long gcd(long a, long b)
+    {
 
-		if (b == 0)
-			return a;
-		else
-			return gcd(b, a % b);
-	}
+        if (b == 0)
+            return a;
+        else
+            return gcd(b, a % b);
+    }
 
-	public RationalNumber negate()
-	{
-		return new RationalNumber(-numerator, divisor);
-	}
+    public RationalNumber negate()
+    {
+        return new RationalNumber(-numerator, divisor);
+    }
 
-	public double doubleValue()
-	{
-		return (double) numerator / (double) divisor;
-	}
+    public double doubleValue()
+    {
+        return (double) numerator / (double) divisor;
+    }
 
-	public float floatValue()
-	{
-		return (float) numerator / (float) divisor;
-	}
+    public float floatValue()
+    {
+        return (float) numerator / (float) divisor;
+    }
 
-	public int intValue()
-	{
-		return numerator / divisor;
-	}
+    public int intValue()
+    {
+        return numerator / divisor;
+    }
 
-	public long longValue()
-	{
-		return (long) numerator / (long) divisor;
-	}
+    public long longValue()
+    {
+        return (long) numerator / (long) divisor;
+    }
 
-	public boolean isValid()
-	{
-		return divisor != 0;
-	}
+    public boolean isValid()
+    {
+        return divisor != 0;
+    }
 
-	private static final NumberFormat nf = DecimalFormat.getInstance();
+    private static final NumberFormat nf = DecimalFormat.getInstance();
 
-	public String toString()
-	{
-		if (divisor == 0)
-			return "Invalid rational (" + numerator + "/" + divisor + ")";
-		if ((numerator % divisor) == 0)
-			return nf.format(numerator / divisor);
-		return numerator + "/" + divisor + " ("
-				+ nf.format((double) numerator / divisor) + ")";
-	}
+    public String toString()
+    {
+        if (divisor == 0)
+            return "Invalid rational (" + numerator + "/" + divisor + ")";
+        if ((numerator % divisor) == 0)
+            return nf.format(numerator / divisor);
+        return numerator + "/" + divisor + " ("
+                + nf.format((double) numerator / divisor) + ")";
+    }
 
-	public String toDisplayString()
-	{
-		if ((numerator % divisor) == 0)
-			return "" + (numerator / divisor);
-		NumberFormat nf = DecimalFormat.getInstance();
-		nf.setMaximumFractionDigits(3);
-		return nf.format((double) numerator / (double) divisor);
-	}
+    public String toDisplayString()
+    {
+        if ((numerator % divisor) == 0)
+            return "" + (numerator / divisor);
+        NumberFormat nf = DecimalFormat.getInstance();
+        nf.setMaximumFractionDigits(3);
+        return nf.format((double) numerator / (double) divisor);
+    }
 }

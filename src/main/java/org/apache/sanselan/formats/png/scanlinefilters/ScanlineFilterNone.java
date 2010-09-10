@@ -22,12 +22,12 @@ import org.apache.sanselan.ImageReadException;
 
 public class ScanlineFilterNone extends ScanlineFilter
 {
-	public void unfilter(byte src[], byte dst[], byte up[])
-			throws ImageReadException, IOException
-	{
-		for (int i = 0; i < src.length; i++)
-		{
-			dst[i] = src[i];
-		}
-	}
+    public void unfilter(byte src[], byte dst[], byte up[])
+            throws ImageReadException, IOException
+    {
+        for (int i = 0; i < src.length; i++)
+        {
+            dst[i] = src[i];
+        }
+    }
 }

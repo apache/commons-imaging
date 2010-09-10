@@ -23,22 +23,22 @@ import org.apache.sanselan.ImageReadException;
 
 public class PhotometricInterpreterRGB extends PhotometricInterpreter
 {
-	public PhotometricInterpreterRGB(int fSamplesPerPixel,
-			int fBitsPerSample[], int Predictor, int width, int height)
-	{
-		super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
-	}
+    public PhotometricInterpreterRGB(int fSamplesPerPixel,
+            int fBitsPerSample[], int Predictor, int width, int height)
+    {
+        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+    }
 
-	public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
-			throws ImageReadException, IOException
-	{
-		int red = samples[0];
-		int green = samples[1];
-		int blue = samples[2];
+    public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
+            throws ImageReadException, IOException
+    {
+        int red = samples[0];
+        int green = samples[1];
+        int blue = samples[2];
 
-		int alpha = 0xff;
-		int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-		bi.setRGB(x, y, rgb);
+        int alpha = 0xff;
+        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        bi.setRGB(x, y, rgb);
 
-	}
+    }
 }

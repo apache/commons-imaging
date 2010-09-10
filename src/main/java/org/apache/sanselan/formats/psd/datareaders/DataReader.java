@@ -28,19 +28,19 @@ import org.apache.sanselan.formats.psd.dataparsers.DataParser;
 
 public abstract class DataReader implements BinaryConstants
 {
-	protected final DataParser dataParser;
+    protected final DataParser dataParser;
 
-	public DataReader(DataParser fDataParser)
-	{
-		this.dataParser = fDataParser;
-	}
+    public DataReader(DataParser fDataParser)
+    {
+        this.dataParser = fDataParser;
+    }
 
-	public abstract void readData(InputStream is, BufferedImage bi,
-			ImageContents imageContents, BinaryFileParser bfp)
-			throws ImageReadException, IOException;
+    public abstract void readData(InputStream is, BufferedImage bi,
+            ImageContents imageContents, BinaryFileParser bfp)
+            throws ImageReadException, IOException;
 
-	public void dump()
-	{
-		dataParser.dump();
-	}
+    public void dump()
+    {
+        dataParser.dump();
+    }
 }

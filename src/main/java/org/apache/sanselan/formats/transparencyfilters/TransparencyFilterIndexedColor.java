@@ -23,31 +23,31 @@ import org.apache.sanselan.ImageReadException;
 public class TransparencyFilterIndexedColor extends TransparencyFilter
 {
 
-	public TransparencyFilterIndexedColor(byte bytes[])
-	{
-		super(bytes);
-	}
+    public TransparencyFilterIndexedColor(byte bytes[])
+    {
+        super(bytes);
+    }
 
-	int count = 0;
+    int count = 0;
 
-	public int filter(int rgb, int index) throws ImageReadException,
-			IOException
-	{
-		if (index >= bytes.length)
-			return rgb;
+    public int filter(int rgb, int index) throws ImageReadException,
+            IOException
+    {
+        if (index >= bytes.length)
+            return rgb;
 
-		if ((index < 0) || (index > bytes.length))
-			throw new ImageReadException(
-					"TransparencyFilterIndexedColor index: " + index
-							+ ", bytes.length: " + bytes.length);
+        if ((index < 0) || (index > bytes.length))
+            throw new ImageReadException(
+                    "TransparencyFilterIndexedColor index: " + index
+                            + ", bytes.length: " + bytes.length);
 
-		int alpha = bytes[index];
-		int result = ((0xff & alpha) << 24) | (0x00ffffff & rgb);
+        int alpha = bytes[index];
+        int result = ((0xff & alpha) << 24) | (0x00ffffff & rgb);
 
-		if ((count < 100) && (index > 0))
-		{
-			count++;
-		}
-		return result;
-	}
+        if ((count < 100) && (index > 0))
+        {
+            count++;
+        }
+        return result;
+    }
 }

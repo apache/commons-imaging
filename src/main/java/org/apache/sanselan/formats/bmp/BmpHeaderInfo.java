@@ -18,55 +18,55 @@ package org.apache.sanselan.formats.bmp;
 
 public class BmpHeaderInfo
 {
-	//		‘BM’ - Windows 3.1x, 95, NT, …
-	//		‘BA’ - OS/2 Bitmap Array
-	//		‘CI’ - OS/2 Color Icon‘
-	//		CP’ - OS/2 Color Pointer
-	//		‘IC’ - OS/2 Icon
-	//		‘PT’ - OS/2 Pointer
-	public final byte identifier1;
-	public final byte identifier2;
+    //        ‘BM’ - Windows 3.1x, 95, NT, …
+    //        ‘BA’ - OS/2 Bitmap Array
+    //        ‘CI’ - OS/2 Color Icon‘
+    //        CP’ - OS/2 Color Pointer
+    //        ‘IC’ - OS/2 Icon
+    //        ‘PT’ - OS/2 Pointer
+    public final byte identifier1;
+    public final byte identifier2;
 
-	public final int fileSize;
-	public final int reserved;
-	public final int bitmapDataOffset;
+    public final int fileSize;
+    public final int reserved;
+    public final int bitmapDataOffset;
 
-	public final int bitmapHeaderSize;
-	public final int width;
-	public final int height;
-	public final int planes;
-	public final int bitsPerPixel;
-	public final int compression;
-	public final int bitmapDataSize;
-	public final int hResolution;
-	public final int vResolution;
-	public final int colorsUsed;
-	public final int colorsImportant;
+    public final int bitmapHeaderSize;
+    public final int width;
+    public final int height;
+    public final int planes;
+    public final int bitsPerPixel;
+    public final int compression;
+    public final int bitmapDataSize;
+    public final int hResolution;
+    public final int vResolution;
+    public final int colorsUsed;
+    public final int colorsImportant;
 
-	public BmpHeaderInfo(byte identifier1, byte identifier2, int fileSize,
-			int reserved, int bitmapDataOffset,
-			int bitmapHeaderSize, int width, int height, int planes,
-			int bitsPerPixel, int compression, int bitmapDataSize,
-			int hResolution, int vResolution, int colorsUsed,
-			int colorsImportant)
-	{
-		this.identifier1 = identifier1;
-		this.identifier2 = identifier2;
-		this.fileSize = fileSize;
-		this.reserved = reserved;
-		this.bitmapDataOffset = bitmapDataOffset;
+    public BmpHeaderInfo(byte identifier1, byte identifier2, int fileSize,
+            int reserved, int bitmapDataOffset,
+            int bitmapHeaderSize, int width, int height, int planes,
+            int bitsPerPixel, int compression, int bitmapDataSize,
+            int hResolution, int vResolution, int colorsUsed,
+            int colorsImportant)
+    {
+        this.identifier1 = identifier1;
+        this.identifier2 = identifier2;
+        this.fileSize = fileSize;
+        this.reserved = reserved;
+        this.bitmapDataOffset = bitmapDataOffset;
 
-		this.bitmapHeaderSize = bitmapHeaderSize;
-		this.width = width;
-		this.height = height;
-		this.planes = planes;
-		this.bitsPerPixel = bitsPerPixel;
-		this.compression = compression;
-		this.bitmapDataSize = bitmapDataSize;
-		this.hResolution = hResolution;
-		this.vResolution = vResolution;
-		this.colorsUsed = colorsUsed;
-		this.colorsImportant = colorsImportant;
-	}
+        this.bitmapHeaderSize = bitmapHeaderSize;
+        this.width = width;
+        this.height = height;
+        this.planes = planes;
+        this.bitsPerPixel = bitsPerPixel;
+        this.compression = compression;
+        this.bitmapDataSize = bitmapDataSize;
+        this.hResolution = hResolution;
+        this.vResolution = vResolution;
+        this.colorsUsed = colorsUsed;
+        this.colorsImportant = colorsImportant;
+    }
 
 }

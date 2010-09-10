@@ -23,32 +23,32 @@ import org.apache.sanselan.ImageReadException;
 
 public class PhotometricInterpreterPalette extends PhotometricInterpreter
 {
-	private final int[] fColorMap;
+    private final int[] fColorMap;
 
-	public PhotometricInterpreterPalette(int fSamplesPerPixel,
-			int fBitsPerSample[], int Predictor, int width, int height,
-			int[] fColorMap)
-	{
-		super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+    public PhotometricInterpreterPalette(int fSamplesPerPixel,
+            int fBitsPerSample[], int Predictor, int width, int height,
+            int[] fColorMap)
+    {
+        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
-		this.fColorMap = fColorMap;
-	}
+        this.fColorMap = fColorMap;
+    }
 
-	public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
-			throws ImageReadException, IOException
-	{
-		int fBitsPerPixel = bitsPerSample[0];
-		int colormap_scale = (1 << fBitsPerPixel);
-		//			int expected_colormap_size = 3 * (1 << fBitsPerPixel);
+    public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
+            throws ImageReadException, IOException
+    {
+        int fBitsPerPixel = bitsPerSample[0];
+        int colormap_scale = (1 << fBitsPerPixel);
+        //            int expected_colormap_size = 3 * (1 << fBitsPerPixel);
 
-		int index = samples[0];
-		int red = fColorMap[index] >> 8;
-		int green = fColorMap[index + (colormap_scale)] >> 8;
-		int blue = fColorMap[index + (2 * colormap_scale)] >> 8;
+        int index = samples[0];
+        int red = fColorMap[index] >> 8;
+        int green = fColorMap[index + (colormap_scale)] >> 8;
+        int blue = fColorMap[index + (2 * colormap_scale)] >> 8;
 
-		int alpha = 0xff;
-		int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-		bi.setRGB(x, y, rgb);
+        int alpha = 0xff;
+        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        bi.setRGB(x, y, rgb);
 
-	}
+    }
 }

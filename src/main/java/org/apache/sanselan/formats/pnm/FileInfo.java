@@ -25,85 +25,85 @@ import org.apache.sanselan.ImageFormat;
 
 public abstract class FileInfo
 {
-	protected final int width, height;
-	protected final boolean RAWBITS;
+    protected final int width, height;
+    protected final boolean RAWBITS;
 
-	public FileInfo(int width, int height, boolean RAWBITS)
-	{
-		this.width = width;
-		this.height = height;
-		this.RAWBITS = RAWBITS;
-	}
+    public FileInfo(int width, int height, boolean RAWBITS)
+    {
+        this.width = width;
+        this.height = height;
+        this.RAWBITS = RAWBITS;
+    }
 
-	public abstract int getNumComponents();
+    public abstract int getNumComponents();
 
-	public abstract int getBitDepth();
+    public abstract int getBitDepth();
 
-	public abstract ImageFormat getImageType();
+    public abstract ImageFormat getImageType();
 
-	public abstract String getImageTypeDescription();
+    public abstract String getImageTypeDescription();
 
-	public abstract String getMIMEType();
+    public abstract String getMIMEType();
 
-	public abstract int getColorType();
+    public abstract int getColorType();
 
-	public abstract int getRGB(WhiteSpaceReader wsr) throws IOException;
+    public abstract int getRGB(WhiteSpaceReader wsr) throws IOException;
 
-	public abstract int getRGB(InputStream is) throws IOException;
+    public abstract int getRGB(InputStream is) throws IOException;
 
-	protected void newline()
-	{
-		// do nothing by default.
-	}
+    protected void newline()
+    {
+        // do nothing by default.
+    }
 
-	public void readImage(BufferedImage bi, InputStream is) throws IOException
-	{
-		// is = new BufferedInputStream(is);
-		// int count = 0;
-		//
-		// try
-		// {
-		DataBuffer buffer = bi.getRaster().getDataBuffer();
+    public void readImage(BufferedImage bi, InputStream is) throws IOException
+    {
+        // is = new BufferedInputStream(is);
+        // int count = 0;
+        //
+        // try
+        // {
+        DataBuffer buffer = bi.getRaster().getDataBuffer();
 
-		if (!RAWBITS)
-		{
-			WhiteSpaceReader wsr = new WhiteSpaceReader(is);
+        if (!RAWBITS)
+        {
+            WhiteSpaceReader wsr = new WhiteSpaceReader(is);
 
-			for (int y = 0; y < height; y++)
-			{
-				for (int x = 0; x < width; x++)
-				{
-					int rgb = getRGB(wsr);
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int rgb = getRGB(wsr);
 
-					buffer.setElem(y * width + x, rgb);
-					// count++;
-				}
-				newline();
-			}
-		} else
-		{
-			for (int y = 0; y < height; y++)
-			{
-				// System.out.println("y: " + y);
-				for (int x = 0; x < width; x++)
-				{
-					int rgb = getRGB(is);
-					buffer.setElem(y * width + x, rgb);
-					// count++;
-				}
-				newline();
-			}
-		}
-		// }
-		// finally
-		// {
-		// System.out.println("count: " + count);
-		// dump();
-		// }
-	}
+                    buffer.setElem(y * width + x, rgb);
+                    // count++;
+                }
+                newline();
+            }
+        } else
+        {
+            for (int y = 0; y < height; y++)
+            {
+                // System.out.println("y: " + y);
+                for (int x = 0; x < width; x++)
+                {
+                    int rgb = getRGB(is);
+                    buffer.setElem(y * width + x, rgb);
+                    // count++;
+                }
+                newline();
+            }
+        }
+        // }
+        // finally
+        // {
+        // System.out.println("count: " + count);
+        // dump();
+        // }
+    }
 
-	public void dump()
-	{
+    public void dump()
+    {
 
-	}
+    }
 }

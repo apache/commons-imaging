@@ -24,61 +24,61 @@ import org.apache.sanselan.common.BinaryOutputStream;
 
 public class BMPWriterRGB extends BMPWriter
 {
-	//		private final boolean alpha;
-	//		
-	//		public BMPWriterRGB(boolean alpha)
-	//		{
-	//			this.alpha = alpha;
-	//		}
+    //        private final boolean alpha;
+    //
+    //        public BMPWriterRGB(boolean alpha)
+    //        {
+    //            this.alpha = alpha;
+    //        }
 
-	public int getPaletteSize()
-	{
-		return 0;
-	}
+    public int getPaletteSize()
+    {
+        return 0;
+    }
 
-	public int getBitsPerPixel()
-	{
-		//			return alpha ? 32 : 24;
-		return 24;
-	}
+    public int getBitsPerPixel()
+    {
+        //            return alpha ? 32 : 24;
+        return 24;
+    }
 
-	public void writePalette(BinaryOutputStream bos) throws IOException
-	{
-	}
+    public void writePalette(BinaryOutputStream bos) throws IOException
+    {
+    }
 
-	public byte[] getImageData(BufferedImage src)
-	{
-		int width = src.getWidth();
-		int height = src.getHeight();
+    public byte[] getImageData(BufferedImage src)
+    {
+        int width = src.getWidth();
+        int height = src.getHeight();
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		//			BinaryOutputStream bos = new BinaryOutputStream(baos, BYTE_ORDER_Network);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //            BinaryOutputStream bos = new BinaryOutputStream(baos, BYTE_ORDER_Network);
 
-		int bytecount = 0;
-		for (int y = height - 1; y >= 0; y--)
-		{
-			//			for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++)
-			{
-				int argb = src.getRGB(x, y);
-				int rgb = 0xffffff & argb;
+        int bytecount = 0;
+        for (int y = height - 1; y >= 0; y--)
+        {
+            //            for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+            {
+                int argb = src.getRGB(x, y);
+                int rgb = 0xffffff & argb;
 
-				int red = 0xff & (rgb >> 16);
-				int green = 0xff & (rgb >> 8);
-				int blue = 0xff & (rgb >> 0);
+                int red = 0xff & (rgb >> 16);
+                int green = 0xff & (rgb >> 8);
+                int blue = 0xff & (rgb >> 0);
 
-				baos.write(blue);
-				baos.write(green);
-				baos.write(red);
-				bytecount += 3;
-			}
-			while ((bytecount % 4) != 0)
-			{
-				baos.write(0);
-				bytecount++;
-			}
-		}
+                baos.write(blue);
+                baos.write(green);
+                baos.write(red);
+                bytecount += 3;
+            }
+            while ((bytecount % 4) != 0)
+            {
+                baos.write(0);
+                bytecount++;
+            }
+        }
 
-		return baos.toByteArray();
-	}
+        return baos.toByteArray();
+    }
 }

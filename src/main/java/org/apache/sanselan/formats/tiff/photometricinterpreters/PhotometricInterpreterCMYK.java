@@ -24,23 +24,23 @@ import org.apache.sanselan.color.ColorConversions;
 
 public class PhotometricInterpreterCMYK extends PhotometricInterpreter
 {
-	public PhotometricInterpreterCMYK(int fSamplesPerPixel,
-			int fBitsPerSample[], int Predictor, int width, int height)
-	{
-		super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
-	}
+    public PhotometricInterpreterCMYK(int fSamplesPerPixel,
+            int fBitsPerSample[], int Predictor, int width, int height)
+    {
+        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+    }
 
-	public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
-			throws ImageReadException, IOException
-	{
+    public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
+            throws ImageReadException, IOException
+    {
 
-		int sc = samples[0];
-		int sm = samples[1];
-		int sy = samples[2];
-		int sk = samples[3];
+        int sc = samples[0];
+        int sm = samples[1];
+        int sy = samples[2];
+        int sk = samples[3];
 
-		int rgb = ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
-		bi.setRGB(x, y, rgb);
-	}
+        int rgb = ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
+        bi.setRGB(x, y, rgb);
+    }
 
 }

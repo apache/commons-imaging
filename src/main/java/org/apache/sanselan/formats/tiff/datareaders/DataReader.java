@@ -31,110 +31,110 @@ import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInter
 
 public abstract class DataReader implements TiffConstants, BinaryConstants
 {
-	protected final PhotometricInterpreter photometricInterpreter;
-	protected final int bitsPerSample[];
-	protected final int last[];
+    protected final PhotometricInterpreter photometricInterpreter;
+    protected final int bitsPerSample[];
+    protected final int last[];
 
-	protected final int predictor;
-	protected final int samplesPerPixel;
+    protected final int predictor;
+    protected final int samplesPerPixel;
 
-	public DataReader(PhotometricInterpreter photometricInterpreter,
-			int bitsPerSample[], int predictor, int samplesPerPixel)
-	{
-		this.photometricInterpreter = photometricInterpreter;
-		this.bitsPerSample = bitsPerSample;
-		this.samplesPerPixel = samplesPerPixel;
-		this.predictor = predictor;
-		last = new int[samplesPerPixel];
-	}
+    public DataReader(PhotometricInterpreter photometricInterpreter,
+            int bitsPerSample[], int predictor, int samplesPerPixel)
+    {
+        this.photometricInterpreter = photometricInterpreter;
+        this.bitsPerSample = bitsPerSample;
+        this.samplesPerPixel = samplesPerPixel;
+        this.predictor = predictor;
+        last = new int[samplesPerPixel];
+    }
 
-	//	public abstract void readImageData(BufferedImage bi, ByteSource byteSource)
-	public abstract void readImageData(BufferedImage bi)
-			throws ImageReadException, IOException;
+    //    public abstract void readImageData(BufferedImage bi, ByteSource byteSource)
+    public abstract void readImageData(BufferedImage bi)
+            throws ImageReadException, IOException;
 
-	protected int[] getSamplesAsBytes(BitInputStream bis)
-			throws ImageReadException, IOException
-	{
-		int result[] = new int[bitsPerSample.length];
-		for (int i = 0; i < bitsPerSample.length; i++)
-		{
-			int bits = bitsPerSample[i];
-			int sample = bis.readBits(bits);
-			if (bits < 8)
-			{
-				int sign = sample & 1;
-				sample = sample << (8 - bits); // scale to byte.
-				if (sign > 0)
-					sample = sample | ((1 << (8 - bits)) - 1); // extend to byte
-			}
-			else if (bits > 8)
-			{
-				sample = sample >> (bits - 8); // extend to byte.
-			}
-			result[i] = sample;
-		}
+    protected int[] getSamplesAsBytes(BitInputStream bis)
+            throws ImageReadException, IOException
+    {
+        int result[] = new int[bitsPerSample.length];
+        for (int i = 0; i < bitsPerSample.length; i++)
+        {
+            int bits = bitsPerSample[i];
+            int sample = bis.readBits(bits);
+            if (bits < 8)
+            {
+                int sign = sample & 1;
+                sample = sample << (8 - bits); // scale to byte.
+                if (sign > 0)
+                    sample = sample | ((1 << (8 - bits)) - 1); // extend to byte
+            }
+            else if (bits > 8)
+            {
+                sample = sample >> (bits - 8); // extend to byte.
+            }
+            result[i] = sample;
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	protected int[] applyPredictor(int samples[], int x)
-	{
-		if (predictor == 2) // Horizontal differencing.
-		{
-			for (int i = 0; i < samples.length; i++)
-			{
-				if (x > 0)
-				{
-					samples[i] = 0xff & (samples[i] + last[i]);
-				}
-				last[i] = samples[i];
-			}
-		}
+    protected int[] applyPredictor(int samples[], int x)
+    {
+        if (predictor == 2) // Horizontal differencing.
+        {
+            for (int i = 0; i < samples.length; i++)
+            {
+                if (x > 0)
+                {
+                    samples[i] = 0xff & (samples[i] + last[i]);
+                }
+                last[i] = samples[i];
+            }
+        }
 
-		return samples;
-	}
+        return samples;
+    }
 
-	private int count = 0;
+    private int count = 0;
 
-	protected byte[] decompress(byte compressed[], int compression,
-			int expected_size) throws ImageReadException, IOException
-	{
-		switch (compression)
-		{
-			case 1 : // None;
-				return compressed;
-			case 2 : // CCITT Group 3 1-Dimensional Modified Huffman run-length encoding.
-				throw new ImageReadException("Tiff: unknown compression: "
-						+ compression);
-			case TIFF_COMPRESSION_LZW : // LZW
-			{
-				InputStream is = new ByteArrayInputStream(compressed);
+    protected byte[] decompress(byte compressed[], int compression,
+            int expected_size) throws ImageReadException, IOException
+    {
+        switch (compression)
+        {
+            case 1 : // None;
+                return compressed;
+            case 2 : // CCITT Group 3 1-Dimensional Modified Huffman run-length encoding.
+                throw new ImageReadException("Tiff: unknown compression: "
+                        + compression);
+            case TIFF_COMPRESSION_LZW : // LZW
+            {
+                InputStream is = new ByteArrayInputStream(compressed);
 
-				int LZWMinimumCodeSize = 8;
+                int LZWMinimumCodeSize = 8;
 
-				MyLZWDecompressor myLzwDecompressor = new MyLZWDecompressor(
-						LZWMinimumCodeSize, BYTE_ORDER_NETWORK);
+                MyLZWDecompressor myLzwDecompressor = new MyLZWDecompressor(
+                        LZWMinimumCodeSize, BYTE_ORDER_NETWORK);
 
-				myLzwDecompressor.setTiffLZWMode();
+                myLzwDecompressor.setTiffLZWMode();
 
-				byte[] result = myLzwDecompressor.decompress(is, expected_size);
+                byte[] result = myLzwDecompressor.decompress(is, expected_size);
 
-				return result;
-			}
+                return result;
+            }
 
-			case TIFF_COMPRESSION_PACKBITS : // Packbits
-			{
-				byte unpacked[] = new PackBits().decompress(compressed,
-						expected_size);
-				count++;
+            case TIFF_COMPRESSION_PACKBITS : // Packbits
+            {
+                byte unpacked[] = new PackBits().decompress(compressed,
+                        expected_size);
+                count++;
 
-				return unpacked;
-			}
+                return unpacked;
+            }
 
-			default :
-				throw new ImageReadException("Tiff: unknown compression: "
-						+ compression);
-		}
-	}
+            default :
+                throw new ImageReadException("Tiff: unknown compression: "
+                        + compression);
+        }
+    }
 
 }

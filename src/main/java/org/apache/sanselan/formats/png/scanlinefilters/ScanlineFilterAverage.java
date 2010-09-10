@@ -22,32 +22,32 @@ import org.apache.sanselan.ImageReadException;
 
 public class ScanlineFilterAverage extends ScanlineFilter
 {
-	private final int BytesPerPixel;
+    private final int BytesPerPixel;
 
-	public ScanlineFilterAverage(int BytesPerPixel)
-	{
-		this.BytesPerPixel = BytesPerPixel;
-	}
+    public ScanlineFilterAverage(int BytesPerPixel)
+    {
+        this.BytesPerPixel = BytesPerPixel;
+    }
 
-	public void unfilter(byte src[], byte dst[], byte up[])
-			throws ImageReadException, IOException
-	{
-		for (int i = 0; i < src.length; i++)
-		{
-			int Raw = 0;
-			int prev_index = i - BytesPerPixel;
-			if (prev_index >= 0)
-				Raw = dst[prev_index];
+    public void unfilter(byte src[], byte dst[], byte up[])
+            throws ImageReadException, IOException
+    {
+        for (int i = 0; i < src.length; i++)
+        {
+            int Raw = 0;
+            int prev_index = i - BytesPerPixel;
+            if (prev_index >= 0)
+                Raw = dst[prev_index];
 
-			int Prior = 0;
-			if (up != null)
-				Prior = up[i];
+            int Prior = 0;
+            if (up != null)
+                Prior = up[i];
 
-			int Average = ((0xff & Raw) + (0xff & Prior)) / 2;
+            int Average = ((0xff & Raw) + (0xff & Prior)) / 2;
 
-			dst[i] = (byte) ((src[i] + Average) % 256);
-			//				dst[i] = src[i];
-			//				dst[i] = (byte) 255;
-		}
-	}
+            dst[i] = (byte) ((src[i] + Average) % 256);
+            //                dst[i] = src[i];
+            //                dst[i] = (byte) 255;
+        }
+    }
 }

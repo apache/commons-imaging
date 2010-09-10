@@ -19,30 +19,30 @@ package org.apache.sanselan.formats.tiff.constants;
 public class TagConstantsUtils implements TiffDirectoryConstants
 {
 
-	public static TagInfo[] mergeTagLists(TagInfo lists[][])
-	{
-		int count = 0;
-		for (int i = 0; i < lists.length; i++)
-			count += lists[i].length;
+    public static TagInfo[] mergeTagLists(TagInfo lists[][])
+    {
+        int count = 0;
+        for (int i = 0; i < lists.length; i++)
+            count += lists[i].length;
 
-		TagInfo result[] = new TagInfo[count];
+        TagInfo result[] = new TagInfo[count];
 
-		int index = 0;
-		for (int i = 0; i < lists.length; i++)
-		{
-			System.arraycopy(lists[i], 0, result, index, lists[i].length);
-			index += lists[i].length;
-		}
+        int index = 0;
+        for (int i = 0; i < lists.length; i++)
+        {
+            System.arraycopy(lists[i], 0, result, index, lists[i].length);
+            index += lists[i].length;
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public static ExifDirectoryType getExifDirectoryType(int type)
-	{
-		for (int i = 0; i < EXIF_DIRECTORIES.length; i++)
-			if (EXIF_DIRECTORIES[i].directoryType == type)
-				return EXIF_DIRECTORIES[i];
-		return EXIF_DIRECTORY_UNKNOWN;
-	}
+    public static ExifDirectoryType getExifDirectoryType(int type)
+    {
+        for (int i = 0; i < EXIF_DIRECTORIES.length; i++)
+            if (EXIF_DIRECTORIES[i].directoryType == type)
+                return EXIF_DIRECTORIES[i];
+        return EXIF_DIRECTORY_UNKNOWN;
+    }
 
 }

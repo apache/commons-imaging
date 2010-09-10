@@ -22,22 +22,22 @@ import java.util.Map;
 public abstract class IPTCTypeLookup implements IPTCConstants
 {
 
-	private static final Map IPTC_TYPE_MAP = new HashMap();
-	static
-	{
-		for (int i = 0; i < IPTC_TYPES.length; i++)
-		{
-			IPTCType iptcType = IPTC_TYPES[i];
-			Integer key = new Integer(iptcType.type);
-			IPTC_TYPE_MAP.put(key, iptcType);
-		}
-	}
+    private static final Map IPTC_TYPE_MAP = new HashMap();
+    static
+    {
+        for (int i = 0; i < IPTC_TYPES.length; i++)
+        {
+            IPTCType iptcType = IPTC_TYPES[i];
+            Integer key = new Integer(iptcType.type);
+            IPTC_TYPE_MAP.put(key, iptcType);
+        }
+    }
 
-	public static final IPTCType getIptcType(int type)
-	{
-		Integer key = new Integer(type);
-		if (!IPTC_TYPE_MAP.containsKey(key))
-			return IPTCType.getUnknown(type);
-		return (IPTCType) IPTC_TYPE_MAP.get(key);
-	}
+    public static final IPTCType getIptcType(int type)
+    {
+        Integer key = new Integer(type);
+        if (!IPTC_TYPE_MAP.containsKey(key))
+            return IPTCType.getUnknown(type);
+        return (IPTCType) IPTC_TYPE_MAP.get(key);
+    }
 }

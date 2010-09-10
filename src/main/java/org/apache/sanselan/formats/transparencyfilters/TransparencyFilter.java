@@ -23,14 +23,14 @@ import org.apache.sanselan.common.BinaryFileParser;
 
 public abstract class TransparencyFilter extends BinaryFileParser
 {
-	protected final byte bytes[];
+    protected final byte bytes[];
 
-	public TransparencyFilter(byte bytes[])
-	{
-		this.bytes = bytes;
+    public TransparencyFilter(byte bytes[])
+    {
+        this.bytes = bytes;
 
-	}
+    }
 
-	public abstract int filter(int rgb, int index) throws ImageReadException,
-			IOException;
+    public abstract int filter(int rgb, int index) throws ImageReadException,
+            IOException;
 }

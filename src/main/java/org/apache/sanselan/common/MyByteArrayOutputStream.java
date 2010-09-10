@@ -22,38 +22,38 @@ import java.io.OutputStream;
 public class MyByteArrayOutputStream extends OutputStream
 // some performace benefit, because not thread safe.
 {
-	private final byte bytes[];
+    private final byte bytes[];
 
-	public MyByteArrayOutputStream(int length)
-	{
-		bytes = new byte[length];
-	}
+    public MyByteArrayOutputStream(int length)
+    {
+        bytes = new byte[length];
+    }
 
-	private int count = 0;
+    private int count = 0;
 
-	public void write(int value) throws IOException
-	{
-		if (count >= bytes.length)
-			throw new IOException("Write exceeded expected length (" + count
-					+ ", " + bytes.length + ")");
+    public void write(int value) throws IOException
+    {
+        if (count >= bytes.length)
+            throw new IOException("Write exceeded expected length (" + count
+                    + ", " + bytes.length + ")");
 
-		bytes[count] = (byte) value;
-		count++;
-	}
+        bytes[count] = (byte) value;
+        count++;
+    }
 
-	public byte[] toByteArray()
-	{
-		if (count < bytes.length)
-		{
-			byte result[] = new byte[count];
-			System.arraycopy(bytes, 0, result, 0, count);
-			return result;
-		}
-		return bytes;
-	}
+    public byte[] toByteArray()
+    {
+        if (count < bytes.length)
+        {
+            byte result[] = new byte[count];
+            System.arraycopy(bytes, 0, result, 0, count);
+            return result;
+        }
+        return bytes;
+    }
 
-	public int getBytesWritten()
-	{
-		return count;
-	}
+    public int getBytesWritten()
+    {
+        return count;
+    }
 }

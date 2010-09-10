@@ -25,73 +25,73 @@ import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 class TiffOutputSummary implements TiffConstants
 {
-	public final int byteOrder;
-	public final TiffOutputDirectory rootDirectory;
-	public final Map directoryTypeMap;
+    public final int byteOrder;
+    public final TiffOutputDirectory rootDirectory;
+    public final Map directoryTypeMap;
 
-	public TiffOutputSummary(final int byteOrder,
-			final TiffOutputDirectory rootDirectory, final Map directoryTypeMap)
-	{
-		this.byteOrder = byteOrder;
-		this.rootDirectory = rootDirectory;
-		this.directoryTypeMap = directoryTypeMap;
-	}
+    public TiffOutputSummary(final int byteOrder,
+            final TiffOutputDirectory rootDirectory, final Map directoryTypeMap)
+    {
+        this.byteOrder = byteOrder;
+        this.rootDirectory = rootDirectory;
+        this.directoryTypeMap = directoryTypeMap;
+    }
 
-	private static class OffsetItem
-	{
-		public final TiffOutputItem item;
-		public final TiffOutputField itemOffsetField;
+    private static class OffsetItem
+    {
+        public final TiffOutputItem item;
+        public final TiffOutputField itemOffsetField;
 
-		public OffsetItem(final TiffOutputItem item,
-				final TiffOutputField itemOffsetField)
-		{
-			super();
-			this.itemOffsetField = itemOffsetField;
-			this.item = item;
-		}
-	}
+        public OffsetItem(final TiffOutputItem item,
+                final TiffOutputField itemOffsetField)
+        {
+            super();
+            this.itemOffsetField = itemOffsetField;
+            this.item = item;
+        }
+    }
 
-	private List offsetItems = new ArrayList();
+    private List offsetItems = new ArrayList();
 
-	public void add(final TiffOutputItem item,
-			final TiffOutputField itemOffsetField)
-	{
-		offsetItems.add(new OffsetItem(item, itemOffsetField));
-	}
+    public void add(final TiffOutputItem item,
+            final TiffOutputField itemOffsetField)
+    {
+        offsetItems.add(new OffsetItem(item, itemOffsetField));
+    }
 
-	public void updateOffsets(int byteOrder) throws ImageWriteException
-	{
-		for (int i = 0; i < offsetItems.size(); i++)
-		{
-			OffsetItem offset = (OffsetItem) offsetItems.get(i);
+    public void updateOffsets(int byteOrder) throws ImageWriteException
+    {
+        for (int i = 0; i < offsetItems.size(); i++)
+        {
+            OffsetItem offset = (OffsetItem) offsetItems.get(i);
 
-			byte value[] = FIELD_TYPE_LONG.writeData(new int[]{
-				offset.item.getOffset(),
-			}, byteOrder);
-			offset.itemOffsetField.setData(value);
-		}
+            byte value[] = FIELD_TYPE_LONG.writeData(new int[]{
+                offset.item.getOffset(),
+            }, byteOrder);
+            offset.itemOffsetField.setData(value);
+        }
 
-		for (int i = 0; i < imageDataItems.size(); i++)
-		{
-			ImageDataOffsets imageDataInfo = (ImageDataOffsets) imageDataItems
-					.get(i);
+        for (int i = 0; i < imageDataItems.size(); i++)
+        {
+            ImageDataOffsets imageDataInfo = (ImageDataOffsets) imageDataItems
+                    .get(i);
 
-			for (int j = 0; j < imageDataInfo.outputItems.length; j++)
-			{
-				TiffOutputItem item = imageDataInfo.outputItems[j];
-				imageDataInfo.imageDataOffsets[j] = item.getOffset();
-			}
+            for (int j = 0; j < imageDataInfo.outputItems.length; j++)
+            {
+                TiffOutputItem item = imageDataInfo.outputItems[j];
+                imageDataInfo.imageDataOffsets[j] = item.getOffset();
+            }
 
-			imageDataInfo.imageDataOffsetsField.setData(FIELD_TYPE_LONG
-					.writeData(imageDataInfo.imageDataOffsets, byteOrder));
-		}
-	}
+            imageDataInfo.imageDataOffsetsField.setData(FIELD_TYPE_LONG
+                    .writeData(imageDataInfo.imageDataOffsets, byteOrder));
+        }
+    }
 
-	private List imageDataItems = new ArrayList();
+    private List imageDataItems = new ArrayList();
 
-	public void addTiffImageData(final ImageDataOffsets imageDataInfo)
-	{
-		imageDataItems.add(imageDataInfo);
-	}
+    public void addTiffImageData(final ImageDataOffsets imageDataInfo)
+    {
+        imageDataItems.add(imageDataInfo);
+    }
 
 }

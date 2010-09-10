@@ -22,35 +22,35 @@ import java.util.List;
 
 public class PhotoshopApp13Data implements IPTCConstants
 {
-	private final List records;
-	private final List rawBlocks;
+    private final List records;
+    private final List rawBlocks;
 
-	public PhotoshopApp13Data(List records, List rawBlocks)
-	{
-		this.rawBlocks = rawBlocks;
-		this.records = records;
-	}
+    public PhotoshopApp13Data(List records, List rawBlocks)
+    {
+        this.rawBlocks = rawBlocks;
+        this.records = records;
+    }
 
-	public List getRecords()
-	{
-		return new ArrayList(records);
-	}
+    public List getRecords()
+    {
+        return new ArrayList(records);
+    }
 
-	public List getRawBlocks()
-	{
-		return new ArrayList(rawBlocks);
-	}
+    public List getRawBlocks()
+    {
+        return new ArrayList(rawBlocks);
+    }
 
-	public List getNonIptcBlocks()
-	{
-		List result = new ArrayList();
-		for (int i = 0; i < rawBlocks.size(); i++)
-		{
-			IPTCBlock block = (IPTCBlock) rawBlocks.get(i);
-			if (!block.isIPTCBlock())
-				result.add(block);
-		}
-		return result;
-	}
+    public List getNonIptcBlocks()
+    {
+        List result = new ArrayList();
+        for (int i = 0; i < rawBlocks.size(); i++)
+        {
+            IPTCBlock block = (IPTCBlock) rawBlocks.get(i);
+            if (!block.isIPTCBlock())
+                result.add(block);
+        }
+        return result;
+    }
 
 }

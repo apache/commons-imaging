@@ -23,17 +23,17 @@ import org.apache.sanselan.formats.png.PngText;
 public abstract class PNGTextChunk extends PNGChunk
 {
 
-	public PNGTextChunk(int Length, int ChunkType, int CRC, byte bytes[])
-			throws IOException
-	{
-		super(Length, ChunkType, CRC, bytes);
+    public PNGTextChunk(int Length, int ChunkType, int CRC, byte bytes[])
+            throws IOException
+    {
+        super(Length, ChunkType, CRC, bytes);
 
-	}
+    }
 
-	public abstract String getKeyword();
+    public abstract String getKeyword();
 
-	public abstract String getText();
+    public abstract String getText();
 
-	public abstract PngText getContents();
+    public abstract PngText getContents();
 
 }

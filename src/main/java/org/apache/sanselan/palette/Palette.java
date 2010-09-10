@@ -21,14 +21,14 @@ import org.apache.sanselan.ImageWriteException;
 public abstract class Palette
 {
 
-	public abstract int getPaletteIndex(int rgb) throws ImageWriteException;
+    public abstract int getPaletteIndex(int rgb) throws ImageWriteException;
 
-	public abstract int getEntry(int index);
+    public abstract int getEntry(int index);
 
-	public abstract int length();
+    public abstract int length();
 
-	public void dump()
-	{
-	}
+    public void dump()
+    {
+    }
 
 }

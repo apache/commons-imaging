@@ -24,32 +24,32 @@ import org.apache.sanselan.formats.psd.PSDHeaderInfo;
 
 public abstract class DataParser
 {
-	public final void parseData(int data[][][], BufferedImage bi,
-			ImageContents imageContents)
-	{
-		DataBuffer buffer = bi.getRaster().getDataBuffer();
+    public final void parseData(int data[][][], BufferedImage bi,
+            ImageContents imageContents)
+    {
+        DataBuffer buffer = bi.getRaster().getDataBuffer();
 
-		PSDHeaderInfo header = imageContents.header;
-		int width = header.Columns;
-		int height = header.Rows;
+        PSDHeaderInfo header = imageContents.header;
+        int width = header.Columns;
+        int height = header.Rows;
 
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++)
-			{
-				int rgb = getRGB(data, x, y, imageContents);
-				buffer.setElem(y * width + x, rgb);
-			}
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+            {
+                int rgb = getRGB(data, x, y, imageContents);
+                buffer.setElem(y * width + x, rgb);
+            }
 
-	}
+    }
 
-	protected abstract int getRGB(int data[][][], int x, int y,
-			ImageContents imageContents);
+    protected abstract int getRGB(int data[][][], int x, int y,
+            ImageContents imageContents);
 
-	public abstract int getBasicChannelsCount();
+    public abstract int getBasicChannelsCount();
 
-	public void dump()
-	{
+    public void dump()
+    {
 
-	}
+    }
 
 }

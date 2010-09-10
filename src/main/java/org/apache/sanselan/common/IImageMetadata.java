@@ -20,14 +20,14 @@ import java.util.ArrayList;
 
 public interface IImageMetadata
 {
-	public String toString(String prefix);
+    public String toString(String prefix);
 
-	public ArrayList getItems();
+    public ArrayList getItems();
 
-	public interface IImageMetadataItem
-	{
-		public String toString(String prefix);
+    public interface IImageMetadataItem
+    {
+        public String toString(String prefix);
 
-		public String toString();
-	}
+        public String toString();
+    }
 }

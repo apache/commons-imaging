@@ -22,15 +22,15 @@ import org.apache.sanselan.ImageReadException;
 
 public abstract class IccTagDataType
 {
-	public final String name;
-	public final int signature;
+    public final String name;
+    public final int signature;
 
-	public IccTagDataType(String name, int signature)
-	{
-		this.name = name;
-		this.signature = signature;
-	}
+    public IccTagDataType(String name, int signature)
+    {
+        this.name = name;
+        this.signature = signature;
+    }
 
-	public abstract void dump(String prefix, byte bytes[])
-			throws ImageReadException, IOException;
+    public abstract void dump(String prefix, byte bytes[])
+            throws ImageReadException, IOException;
 }

@@ -23,28 +23,28 @@ import org.apache.sanselan.ImageReadException;
 
 public abstract class PhotometricInterpreter
 {
-	protected final int samplesPerPixel;
-	protected final int bitsPerSample[];
-	protected final int predictor;
-	protected final int width;
-	protected final int height;
+    protected final int samplesPerPixel;
+    protected final int bitsPerSample[];
+    protected final int predictor;
+    protected final int width;
+    protected final int height;
 
-	public PhotometricInterpreter(int fSamplesPerPixel, int fBitsPerSample[],
-			int Predictor, int width, int height)
-	{
-		this.samplesPerPixel = fSamplesPerPixel;
-		this.bitsPerSample = fBitsPerSample;
-		this.predictor = Predictor;
-		this.width = width;
-		this.height = height;
-	}
+    public PhotometricInterpreter(int fSamplesPerPixel, int fBitsPerSample[],
+            int Predictor, int width, int height)
+    {
+        this.samplesPerPixel = fSamplesPerPixel;
+        this.bitsPerSample = fBitsPerSample;
+        this.predictor = Predictor;
+        this.width = width;
+        this.height = height;
+    }
 
-	public abstract void interpretPixel(BufferedImage bi, int samples[], int x,
-			int y) throws ImageReadException, IOException;
+    public abstract void interpretPixel(BufferedImage bi, int samples[], int x,
+            int y) throws ImageReadException, IOException;
 
-	public void dumpstats() throws ImageReadException, IOException
-	{
+    public void dumpstats() throws ImageReadException, IOException
+    {
 
-	}
+    }
 
 }

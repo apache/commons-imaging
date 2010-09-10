@@ -26,66 +26,66 @@ import org.apache.sanselan.common.BinaryOutputStream;
 public class TiffImageWriterLossy extends TiffImageWriterBase
 {
 
-	public TiffImageWriterLossy()
-	{
-	}
+    public TiffImageWriterLossy()
+    {
+    }
 
-	public TiffImageWriterLossy(int byteOrder)
-	{
-		super(byteOrder);
-	}
+    public TiffImageWriterLossy(int byteOrder)
+    {
+        super(byteOrder);
+    }
 
-	public void write(OutputStream os, TiffOutputSet outputSet)
-			throws IOException, ImageWriteException
-	{
-		TiffOutputSummary outputSummary = validateDirectories(outputSet);
+    public void write(OutputStream os, TiffOutputSet outputSet)
+            throws IOException, ImageWriteException
+    {
+        TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
-		List outputItems = outputSet.getOutputItems(outputSummary);
+        List outputItems = outputSet.getOutputItems(outputSummary);
 
-		updateOffsetsStep(outputItems);
+        updateOffsetsStep(outputItems);
 
-		outputSummary.updateOffsets(byteOrder);
+        outputSummary.updateOffsets(byteOrder);
 
-		BinaryOutputStream bos = new BinaryOutputStream(os, byteOrder);
+        BinaryOutputStream bos = new BinaryOutputStream(os, byteOrder);
 
-		writeStep(bos, outputItems);
-	}
+        writeStep(bos, outputItems);
+    }
 
-	private void updateOffsetsStep(List outputItems) throws IOException,
-			ImageWriteException
-	{
-		int offset = TIFF_HEADER_SIZE;
+    private void updateOffsetsStep(List outputItems) throws IOException,
+            ImageWriteException
+    {
+        int offset = TIFF_HEADER_SIZE;
 
-		for (int i = 0; i < outputItems.size(); i++)
-		{
-			TiffOutputItem outputItem = (TiffOutputItem) outputItems.get(i);
+        for (int i = 0; i < outputItems.size(); i++)
+        {
+            TiffOutputItem outputItem = (TiffOutputItem) outputItems.get(i);
 
-			outputItem.setOffset(offset);
-			int itemLength = outputItem.getItemLength();
-			offset += itemLength;
+            outputItem.setOffset(offset);
+            int itemLength = outputItem.getItemLength();
+            offset += itemLength;
 
-			int remainder = imageDataPaddingLength(itemLength);
-			offset += remainder;
-		}
-	}
+            int remainder = imageDataPaddingLength(itemLength);
+            offset += remainder;
+        }
+    }
 
-	private void writeStep(BinaryOutputStream bos, List outputItems)
-			throws IOException, ImageWriteException
-	{
-		writeImageFileHeader(bos);
+    private void writeStep(BinaryOutputStream bos, List outputItems)
+            throws IOException, ImageWriteException
+    {
+        writeImageFileHeader(bos);
 
-		for (int i = 0; i < outputItems.size(); i++)
-		{
-			TiffOutputItem outputItem = (TiffOutputItem) outputItems.get(i);
+        for (int i = 0; i < outputItems.size(); i++)
+        {
+            TiffOutputItem outputItem = (TiffOutputItem) outputItems.get(i);
 
-			outputItem.writeItem(bos);
+            outputItem.writeItem(bos);
 
-			int length = outputItem.getItemLength();
+            int length = outputItem.getItemLength();
 
-			int remainder = imageDataPaddingLength(length);
-			for (int j = 0; j < remainder; j++)
-				bos.write(0);
-		}
+            int remainder = imageDataPaddingLength(length);
+            for (int j = 0; j < remainder; j++)
+                bos.write(0);
+        }
 
-	}
+    }
 }

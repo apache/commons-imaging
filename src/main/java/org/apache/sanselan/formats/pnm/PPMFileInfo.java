@@ -24,78 +24,78 @@ import org.apache.sanselan.ImageInfo;
 
 public class PPMFileInfo extends FileInfo
 {
-	private final int max; // TODO: handle max
+    private final int max; // TODO: handle max
 
-	public PPMFileInfo(int width, int height, boolean RAWBITS, int max)
-	{
-		super(width, height, RAWBITS);
+    public PPMFileInfo(int width, int height, boolean RAWBITS, int max)
+    {
+        super(width, height, RAWBITS);
 
-		this.max = max;
-	}
+        this.max = max;
+    }
 
-	public int getNumComponents()
-	{
-		return 3;
-	}
+    public int getNumComponents()
+    {
+        return 3;
+    }
 
-	public int getBitDepth()
-	{
-		return 8;
-	}
+    public int getBitDepth()
+    {
+        return 8;
+    }
 
-	public ImageFormat getImageType()
-	{
-		return ImageFormat.IMAGE_FORMAT_PGM;
-	}
+    public ImageFormat getImageType()
+    {
+        return ImageFormat.IMAGE_FORMAT_PGM;
+    }
 
-	public String getImageTypeDescription()
-	{
-		return "PGM: portable graymap file	format";
-	}
+    public String getImageTypeDescription()
+    {
+        return "PGM: portable graymap file    format";
+    }
 
-	public String getMIMEType()
-	{
-		return "image/x-portable-graymap";
-	}
+    public String getMIMEType()
+    {
+        return "image/x-portable-graymap";
+    }
 
-	public int getColorType()
-	{
-		return ImageInfo.COLOR_TYPE_GRAYSCALE;
-	}
+    public int getColorType()
+    {
+        return ImageInfo.COLOR_TYPE_GRAYSCALE;
+    }
 
-	public int getRGB(InputStream is) throws IOException
-	{
-		int red = is.read();
-		int green = is.read();
-		int blue = is.read();
+    public int getRGB(InputStream is) throws IOException
+    {
+        int red = is.read();
+        int green = is.read();
+        int blue = is.read();
 
-		if ((red < 0) || (green < 0) || (blue < 0))
-			throw new IOException("PPM: Unexpected EOF");
+        if ((red < 0) || (green < 0) || (blue < 0))
+            throw new IOException("PPM: Unexpected EOF");
 
-		int alpha = 0xff;
+        int alpha = 0xff;
 
-		int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
-				| ((0xff & green) << 8) | ((0xff & blue) << 0);
+        int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
+                | ((0xff & green) << 8) | ((0xff & blue) << 0);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
-	public int getRGB(WhiteSpaceReader wsr) throws IOException
-	{
-		int red = Integer.parseInt(wsr.readtoWhiteSpace());
-		int green = Integer.parseInt(wsr.readtoWhiteSpace());
-		int blue = Integer.parseInt(wsr.readtoWhiteSpace());
+    public int getRGB(WhiteSpaceReader wsr) throws IOException
+    {
+        int red = Integer.parseInt(wsr.readtoWhiteSpace());
+        int green = Integer.parseInt(wsr.readtoWhiteSpace());
+        int blue = Integer.parseInt(wsr.readtoWhiteSpace());
 
-		int alpha = 0xff;
+        int alpha = 0xff;
 
-		int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
-				| ((0xff & green) << 8) | ((0xff & blue) << 0);
+        int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
+                | ((0xff & green) << 8) | ((0xff & blue) << 0);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
-	public void dump()
-	{
-		//			System.out.println("count: " + count);
-	}
+    public void dump()
+    {
+        //            System.out.println("count: " + count);
+    }
 }

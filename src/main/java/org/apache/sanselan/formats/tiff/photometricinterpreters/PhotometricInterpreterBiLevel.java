@@ -23,35 +23,35 @@ import org.apache.sanselan.ImageReadException;
 
 public class PhotometricInterpreterBiLevel extends PhotometricInterpreter
 {
-	private final boolean invert;
+    private final boolean invert;
 
-	//	private final int bitsPerPixel;
+    //    private final int bitsPerPixel;
 
-	public PhotometricInterpreterBiLevel(int fBitsPerPixel,
-			int fSamplesPerPixel, int fBitsPerSample[], int Predictor,
-			int width, int height, boolean invert)
-	{
-		super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+    public PhotometricInterpreterBiLevel(int fBitsPerPixel,
+            int fSamplesPerPixel, int fBitsPerSample[], int Predictor,
+            int width, int height, boolean invert)
+    {
+        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
-		this.invert = invert;
-		//		this.bitsPerPixel = fBitsPerPixel;
-	}
+        this.invert = invert;
+        //        this.bitsPerPixel = fBitsPerPixel;
+    }
 
-	public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
-			throws ImageReadException, IOException
-	{
-		int sample = samples[0];
+    public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
+            throws ImageReadException, IOException
+    {
+        int sample = samples[0];
 
-		if (invert)
-			sample = 255 - sample;
+        if (invert)
+            sample = 255 - sample;
 
-		int red = sample;
-		int green = sample;
-		int blue = sample;
+        int red = sample;
+        int green = sample;
+        int blue = sample;
 
-		int alpha = 0xff;
-		int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        int alpha = 0xff;
+        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
-		bi.setRGB(x, y, rgb);
-	}
+        bi.setRGB(x, y, rgb);
+    }
 }

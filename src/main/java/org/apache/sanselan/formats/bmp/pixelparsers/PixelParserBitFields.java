@@ -26,104 +26,104 @@ import org.apache.sanselan.formats.bmp.BmpHeaderInfo;
 public class PixelParserBitFields extends PixelParserSimple
 {
 
-	private final int redShift;
-	private final int greenShift;
-	private final int blueShift;
+    private final int redShift;
+    private final int greenShift;
+    private final int blueShift;
 
-	private final int redMask;
-	private final int greenMask;
-	private final int blueMask;
+    private final int redMask;
+    private final int greenMask;
+    private final int blueMask;
 
-	public PixelParserBitFields(BmpHeaderInfo bhi, byte ColorTable[],
-			byte ImageData[]) throws ImageReadException, IOException
-	{
-		super(bhi, ColorTable, ImageData);
+    public PixelParserBitFields(BmpHeaderInfo bhi, byte ColorTable[],
+            byte ImageData[]) throws ImageReadException, IOException
+    {
+        super(bhi, ColorTable, ImageData);
 
-		InputStream bais = new ByteArrayInputStream(ColorTable);
+        InputStream bais = new ByteArrayInputStream(ColorTable);
 
-		redMask = bfp.read4Bytes("redMask", bais,
-				"BMP BI_BITFIELDS Bad Color Table");
-		greenMask = bfp.read4Bytes("greenMask", bais,
-				"BMP BI_BITFIELDS Bad Color Table");
-		blueMask = bfp.read4Bytes("blueMask", bais,
-				"BMP BI_BITFIELDS Bad Color Table");
+        redMask = bfp.read4Bytes("redMask", bais,
+                "BMP BI_BITFIELDS Bad Color Table");
+        greenMask = bfp.read4Bytes("greenMask", bais,
+                "BMP BI_BITFIELDS Bad Color Table");
+        blueMask = bfp.read4Bytes("blueMask", bais,
+                "BMP BI_BITFIELDS Bad Color Table");
 
-		redShift = getMaskShift(redMask);
-		greenShift = getMaskShift(greenMask);
-		blueShift = getMaskShift(blueMask);
-	}
+        redShift = getMaskShift(redMask);
+        greenShift = getMaskShift(greenMask);
+        blueShift = getMaskShift(blueMask);
+    }
 
-	private int getMaskShift(int mask)
-	{
-		int trailingZeroes = 0;
+    private int getMaskShift(int mask)
+    {
+        int trailingZeroes = 0;
 
-		while ((0x1 & mask) == 0)
-		{
-			mask = 0x7fffffff & (mask >> 1);
-			trailingZeroes++;
-		}
+        while ((0x1 & mask) == 0)
+        {
+            mask = 0x7fffffff & (mask >> 1);
+            trailingZeroes++;
+        }
 
-		int maskLength = 0;
+        int maskLength = 0;
 
-		while ((0x1 & mask) == 1)
-		{
-			mask = 0x7fffffff & (mask >> 1);
-			maskLength++;
-		}
+        while ((0x1 & mask) == 1)
+        {
+            mask = 0x7fffffff & (mask >> 1);
+            maskLength++;
+        }
 
-		return (trailingZeroes - (8 - maskLength));
-	}
-	private int bytecount = 0;
+        return (trailingZeroes - (8 - maskLength));
+    }
+    private int bytecount = 0;
 
-	public int getNextRGB() throws ImageReadException, IOException
-	{
-		int data;
+    public int getNextRGB() throws ImageReadException, IOException
+    {
+        int data;
 
-		if (bhi.bitsPerPixel == 8)
-		{
-			data = 0xff & imageData[bytecount + 0];
-			bytecount += 1;
-		}
-		else if (bhi.bitsPerPixel == 24)
-		{
-			data = bfp.read3Bytes("Pixel", is, "BMP Image Data");
-			bytecount += 3;
-		}
-		else if (bhi.bitsPerPixel == 32)
-		{
-			data = bfp.read4Bytes("Pixel", is, "BMP Image Data");
-			bytecount += 4;
-		}
-		else if (bhi.bitsPerPixel == 16)
-		{
-			data = bfp.read2Bytes("Pixel", is, "BMP Image Data");
-			bytecount += 2;
-		}
-		else
-			throw new ImageReadException("Unknown BitsPerPixel: "
-					+ bhi.bitsPerPixel);
+        if (bhi.bitsPerPixel == 8)
+        {
+            data = 0xff & imageData[bytecount + 0];
+            bytecount += 1;
+        }
+        else if (bhi.bitsPerPixel == 24)
+        {
+            data = bfp.read3Bytes("Pixel", is, "BMP Image Data");
+            bytecount += 3;
+        }
+        else if (bhi.bitsPerPixel == 32)
+        {
+            data = bfp.read4Bytes("Pixel", is, "BMP Image Data");
+            bytecount += 4;
+        }
+        else if (bhi.bitsPerPixel == 16)
+        {
+            data = bfp.read2Bytes("Pixel", is, "BMP Image Data");
+            bytecount += 2;
+        }
+        else
+            throw new ImageReadException("Unknown BitsPerPixel: "
+                    + bhi.bitsPerPixel);
 
-		int red = (redMask & data);
-		int green = (greenMask & data);
-		int blue = (blueMask & data);
+        int red = (redMask & data);
+        int green = (greenMask & data);
+        int blue = (blueMask & data);
 
-		red = (redShift >= 0) ? red >> redShift : red << -redShift;
-		green = (greenShift >= 0) ? green >> greenShift : green << -greenShift;
-		blue = (blueShift >= 0) ? blue >> blueShift : blue << -blueShift;
+        red = (redShift >= 0) ? red >> redShift : red << -redShift;
+        green = (greenShift >= 0) ? green >> greenShift : green << -greenShift;
+        blue = (blueShift >= 0) ? blue >> blueShift : blue << -blueShift;
 
-		int alpha = 0xff;
+        int alpha = 0xff;
 
-		int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
-	public void newline() throws ImageReadException, IOException
-	{
-		while (((bytecount) % 4) != 0)
-		{
-			bfp.readByte("Pixel", is, "BMP Image Data");
-			bytecount++;
-		}
-	}
+    public void newline() throws ImageReadException, IOException
+    {
+        while (((bytecount) % 4) != 0)
+        {
+            bfp.readByte("Pixel", is, "BMP Image Data");
+            bytecount++;
+        }
+    }
 }

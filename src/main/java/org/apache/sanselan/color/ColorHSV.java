@@ -18,17 +18,17 @@ package org.apache.sanselan.color;
 
 public final class ColorHSV
 {
-	public final double H, S, V;
+    public final double H, S, V;
 
-	public ColorHSV(double h, double s, double v)
-	{
-		H = h;
-		S = s;
-		V = v;
-	}
+    public ColorHSV(double h, double s, double v)
+    {
+        H = h;
+        S = s;
+        V = v;
+    }
 
-	public final String toString()
-	{
-		return "{H: " + H + ", S: " + S + ", V: " + V + "}";
-	}
+    public final String toString()
+    {
+        return "{H: " + H + ", S: " + S + ", V: " + V + "}";
+    }
 }

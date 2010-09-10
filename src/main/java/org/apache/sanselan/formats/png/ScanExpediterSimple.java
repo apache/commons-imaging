@@ -26,39 +26,39 @@ import org.apache.sanselan.formats.transparencyfilters.TransparencyFilter;
 
 public class ScanExpediterSimple extends ScanExpediter
 {
-	public ScanExpediterSimple(int width, int height, InputStream is,
-			BufferedImage bi, int color_type, int BitDepth, int bitsPerPixel,
-			PNGChunkPLTE pngChunkPLTE, GammaCorrection gammaCorrection,
-			TransparencyFilter transparencyFilter)
+    public ScanExpediterSimple(int width, int height, InputStream is,
+            BufferedImage bi, int color_type, int BitDepth, int bitsPerPixel,
+            PNGChunkPLTE pngChunkPLTE, GammaCorrection gammaCorrection,
+            TransparencyFilter transparencyFilter)
 
-	{
-		super(width, height, is, bi, color_type, BitDepth, bitsPerPixel,
-				pngChunkPLTE, gammaCorrection, transparencyFilter);
-	}
+    {
+        super(width, height, is, bi, color_type, BitDepth, bitsPerPixel,
+                pngChunkPLTE, gammaCorrection, transparencyFilter);
+    }
 
-	public void drive() throws ImageReadException, IOException
-	{
-		int bitsPerScanLine = bitsPerPixel * width;
-		int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
-		byte prev[] = null;
+    public void drive() throws ImageReadException, IOException
+    {
+        int bitsPerScanLine = bitsPerPixel * width;
+        int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
+        byte prev[] = null;
 
-		for (int y = 0; y < height; y++)
-		{
-			byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
-					prev, bytesPerPixel);
+        for (int y = 0; y < height; y++)
+        {
+            byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
+                    prev, bytesPerPixel);
 
-			prev = unfiltered;
+            prev = unfiltered;
 
-			BitParser bitParser = new BitParser(unfiltered, bitsPerPixel,
-					bitDepth);
+            BitParser bitParser = new BitParser(unfiltered, bitsPerPixel,
+                    bitDepth);
 
-			for (int x = 0; x < width; x++)
-			{
-				int rgb = getRGB(bitParser, x);
+            for (int x = 0; x < width; x++)
+            {
+                int rgb = getRGB(bitParser, x);
 
-				bi.setRGB(x, y, rgb);
-			}
-		}
+                bi.setRGB(x, y, rgb);
+            }
+        }
 
-	}
+    }
 }

@@ -22,36 +22,36 @@ import org.apache.sanselan.formats.psd.ImageContents;
 public class DataParserLab extends DataParser
 {
 
-	public DataParserLab()
-	{
+    public DataParserLab()
+    {
 
-	}
+    }
 
-	protected int getRGB(int data[][][], int x, int y,
-			ImageContents imageContents)
-	{
-		int cieL = 0xff & data[0][y][x];
-		int cieA = 0xff & data[1][y][x];
-		int cieB = 0xff & data[2][y][x];
+    protected int getRGB(int data[][][], int x, int y,
+            ImageContents imageContents)
+    {
+        int cieL = 0xff & data[0][y][x];
+        int cieA = 0xff & data[1][y][x];
+        int cieB = 0xff & data[2][y][x];
 
-		cieA -= 128;
-		cieB -= 128;
+        cieA -= 128;
+        cieB -= 128;
 
-		int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
+        int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
-	public int getBasicChannelsCount()
-	{
-		return 3;
-	}
+    public int getBasicChannelsCount()
+    {
+        return 3;
+    }
 
-	public void dump()
-	{
-		//		for(int i=0;i<3;i++)
-		//		{
-		//			System.out.println("CIE: " + i + ": min: " + mins[i] + ", max: " + maxs[i]);
-		//		}
-	}
+    public void dump()
+    {
+        //        for(int i=0;i<3;i++)
+        //        {
+        //            System.out.println("CIE: " + i + ": min: " + mins[i] + ", max: " + maxs[i]);
+        //        }
+    }
 }

@@ -23,34 +23,34 @@ import java.io.InputStream;
 
 public class CachingInputStream extends InputStream
 {
-	private final InputStream is;
-	private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    private final InputStream is;
+    private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-	public CachingInputStream(InputStream is)
-	{
-		this.is = is;
-	}
+    public CachingInputStream(InputStream is)
+    {
+        this.is = is;
+    }
 
-	public byte[] getCache()
-	{
-		return baos.toByteArray();
-	}
+    public byte[] getCache()
+    {
+        return baos.toByteArray();
+    }
 
-	public int read() throws IOException
-	{
-		int result = is.read();
-		baos.write(result);
-		return result;
-	}
+    public int read() throws IOException
+    {
+        int result = is.read();
+        baos.write(result);
+        return result;
+    }
 
-	public int available() throws IOException
-	{
-		return is.available();
-	}
+    public int available() throws IOException
+    {
+        return is.available();
+    }
 
-	public void close() throws IOException
-	{
-		is.close();
-	}
+    public void close() throws IOException
+    {
+        is.close();
+    }
 
 }

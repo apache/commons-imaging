@@ -18,64 +18,64 @@ package org.apache.sanselan.formats.png;
 
 public class GammaCorrection
 {
-	private static final boolean DEBUG = false;
+    private static final boolean DEBUG = false;
 
-	private final int lookupTable[];
+    private final int lookupTable[];
 
-	public GammaCorrection(double src_gamma, double dst_gamma)
-	{
+    public GammaCorrection(double src_gamma, double dst_gamma)
+    {
 
-		if (DEBUG)
-		{
-			System.out.println("src_gamma: " + src_gamma);
-			System.out.println("dst_gamma: " + dst_gamma);
-		}
+        if (DEBUG)
+        {
+            System.out.println("src_gamma: " + src_gamma);
+            System.out.println("dst_gamma: " + dst_gamma);
+        }
 
-		lookupTable = new int[256];
-		for (int i = 0; i < 256; i++)
-		{
-			lookupTable[i] = correctSample(i, src_gamma, dst_gamma);
-			if (DEBUG)
-			{
-				System.out
-						.println("lookup_table[" + i + "]: " + lookupTable[i]);
-			}
-		}
-	}
+        lookupTable = new int[256];
+        for (int i = 0; i < 256; i++)
+        {
+            lookupTable[i] = correctSample(i, src_gamma, dst_gamma);
+            if (DEBUG)
+            {
+                System.out
+                        .println("lookup_table[" + i + "]: " + lookupTable[i]);
+            }
+        }
+    }
 
-	public int correctSample(int sample)
-	{
-		return lookupTable[sample];
-	}
+    public int correctSample(int sample)
+    {
+        return lookupTable[sample];
+    }
 
-	public int correctARGB(int pixel)
-	{
-		int alpha = (0xff000000) & pixel;
-		int red = (pixel >> 16) & 0xff;
-		int green = (pixel >> 8) & 0xff;
-		int blue = (pixel >> 0) & 0xff;
+    public int correctARGB(int pixel)
+    {
+        int alpha = (0xff000000) & pixel;
+        int red = (pixel >> 16) & 0xff;
+        int green = (pixel >> 8) & 0xff;
+        int blue = (pixel >> 0) & 0xff;
 
-		red = correctSample(red);
-		green = correctSample(green);
-		blue = correctSample(blue);
+        red = correctSample(red);
+        green = correctSample(green);
+        blue = correctSample(blue);
 
-		int rgb = alpha | ((0xff & red) << 16) | ((0xff & green) << 8)
-				| ((0xff & blue) << 0);
+        int rgb = alpha | ((0xff & red) << 16) | ((0xff & green) << 8)
+                | ((0xff & blue) << 0);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
-	private int correctSample(int sample, double src_gamma, double dst_gamma)
-	{
-		// if (kUseAdobeGammaMethod && val <= 32)
-		// {
-		// double slope = Math.round(255.0d * Math.pow((32.0 / 255.0d),
-		// src_gamma / dst_gamma)) / 32.d;
-		// return (int) (sample * slope);
-		// }
+    private int correctSample(int sample, double src_gamma, double dst_gamma)
+    {
+        // if (kUseAdobeGammaMethod && val <= 32)
+        // {
+        // double slope = Math.round(255.0d * Math.pow((32.0 / 255.0d),
+        // src_gamma / dst_gamma)) / 32.d;
+        // return (int) (sample * slope);
+        // }
 
-		return (int) Math.round(255.0d * Math.pow((sample / 255.0d), src_gamma
-				/ dst_gamma));
-	}
+        return (int) Math.round(255.0d * Math.pow((sample / 255.0d), src_gamma
+                / dst_gamma));
+    }
 
 }

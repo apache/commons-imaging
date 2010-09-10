@@ -22,52 +22,52 @@ import java.io.InputStream;
 
 public class ByteSourceArray extends ByteSource
 {
-	private final byte bytes[];
+    private final byte bytes[];
 
-	public ByteSourceArray(String filename, byte bytes[])
-	{
-		super(filename);
-		this.bytes = bytes;
-	}
+    public ByteSourceArray(String filename, byte bytes[])
+    {
+        super(filename);
+        this.bytes = bytes;
+    }
 
-	public ByteSourceArray(byte bytes[])
-	{
-		super(null);
-		this.bytes = bytes;
-	}
+    public ByteSourceArray(byte bytes[])
+    {
+        super(null);
+        this.bytes = bytes;
+    }
 
-	public InputStream getInputStream()
-	{
-		return new ByteArrayInputStream(bytes);
-	}
+    public InputStream getInputStream()
+    {
+        return new ByteArrayInputStream(bytes);
+    }
 
-	public byte[] getBlock(int start, int length) throws IOException
-	{
-		// We include a separate check for int overflow.
-		if ((start < 0) || (length < 0) || (start + length < 0) || (start + length > bytes.length)) {
-			throw new IOException("Could not read block (block start: " + start
-					+ ", block length: " + length + ", data length: "
-					+ bytes.length + ").");
-		}
+    public byte[] getBlock(int start, int length) throws IOException
+    {
+        // We include a separate check for int overflow.
+        if ((start < 0) || (length < 0) || (start + length < 0) || (start + length > bytes.length)) {
+            throw new IOException("Could not read block (block start: " + start
+                    + ", block length: " + length + ", data length: "
+                    + bytes.length + ").");
+        }
 
-		byte result[] = new byte[length];
-		System.arraycopy(bytes, start, result, 0, length);
-		return result;
-	}
+        byte result[] = new byte[length];
+        System.arraycopy(bytes, start, result, 0, length);
+        return result;
+    }
 
-	public long getLength()
-	{
-		return bytes.length;
-	}
+    public long getLength()
+    {
+        return bytes.length;
+    }
 
-	public byte[] getAll() throws IOException
-	{
-		return bytes;
-	}
+    public byte[] getAll() throws IOException
+    {
+        return bytes;
+    }
 
-	public String getDescription()
-	{
-		return bytes.length + " byte array";
-	}
+    public String getDescription()
+    {
+        return bytes.length + " byte array";
+    }
 
 }

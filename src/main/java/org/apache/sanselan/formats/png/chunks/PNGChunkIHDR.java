@@ -23,31 +23,31 @@ import org.apache.sanselan.ImageReadException;
 
 public class PNGChunkIHDR extends PNGChunk
 {
-	public final int width;
-	public final int height;
-	public final int bitDepth;
-	public final int colorType;
-	public final int compressionMethod;
-	public final int filterMethod;
-	public final int interlaceMethod;
+    public final int width;
+    public final int height;
+    public final int bitDepth;
+    public final int colorType;
+    public final int compressionMethod;
+    public final int filterMethod;
+    public final int interlaceMethod;
 
-	public PNGChunkIHDR(int Length, int ChunkType, int CRC, byte bytes[])
-			throws ImageReadException, IOException
-	{
-		super(Length, ChunkType, CRC, bytes);
+    public PNGChunkIHDR(int Length, int ChunkType, int CRC, byte bytes[])
+            throws ImageReadException, IOException
+    {
+        super(Length, ChunkType, CRC, bytes);
 
-		ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-		width = read4Bytes("Width", is, "Not a Valid Png File: IHDR Corrupt");
-		height = read4Bytes("Height", is, "Not a Valid Png File: IHDR Corrupt");
-		bitDepth = readByte("BitDepth", is,
-				"Not a Valid Png File: IHDR Corrupt");
-		colorType = readByte("ColorType", is,
-				"Not a Valid Png File: IHDR Corrupt");
-		compressionMethod = readByte("CompressionMethod", is,
-				"Not a Valid Png File: IHDR Corrupt");
-		filterMethod = readByte("FilterMethod", is,
-				"Not a Valid Png File: IHDR Corrupt");
-		interlaceMethod = readByte("InterlaceMethod", is,
-				"Not a Valid Png File: IHDR Corrupt");
-	}
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        width = read4Bytes("Width", is, "Not a Valid Png File: IHDR Corrupt");
+        height = read4Bytes("Height", is, "Not a Valid Png File: IHDR Corrupt");
+        bitDepth = readByte("BitDepth", is,
+                "Not a Valid Png File: IHDR Corrupt");
+        colorType = readByte("ColorType", is,
+                "Not a Valid Png File: IHDR Corrupt");
+        compressionMethod = readByte("CompressionMethod", is,
+                "Not a Valid Png File: IHDR Corrupt");
+        filterMethod = readByte("FilterMethod", is,
+                "Not a Valid Png File: IHDR Corrupt");
+        interlaceMethod = readByte("InterlaceMethod", is,
+                "Not a Valid Png File: IHDR Corrupt");
+    }
 }

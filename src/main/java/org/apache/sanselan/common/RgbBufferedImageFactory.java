@@ -21,18 +21,18 @@ import java.awt.image.BufferedImage;
 
 public class RgbBufferedImageFactory implements IBufferedImageFactory
 {
-	public BufferedImage getColorBufferedImage(int width, int height,
-			boolean hasAlpha)
-	{
-		if (hasAlpha)
-			return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		return new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	}
+    public BufferedImage getColorBufferedImage(int width, int height,
+            boolean hasAlpha)
+    {
+        if (hasAlpha)
+            return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        return new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    }
 
-	public BufferedImage getGrayscaleBufferedImage(int width, int height,
-			boolean hasAlpha)
-	{
-		// always use color.
-		return getColorBufferedImage(width, height, hasAlpha);
-	}
+    public BufferedImage getGrayscaleBufferedImage(int width, int height,
+            boolean hasAlpha)
+    {
+        // always use color.
+        return getColorBufferedImage(width, height, hasAlpha);
+    }
 }

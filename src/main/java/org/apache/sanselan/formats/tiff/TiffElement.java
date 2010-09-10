@@ -20,57 +20,57 @@ import java.util.Comparator;
 
 public abstract class TiffElement
 {
-	public final int offset;
-	public final int length;
+    public final int offset;
+    public final int length;
 
-	public TiffElement(int offset, int length)
-	{
-		this.offset = offset;
-		this.length = length;
-	}
+    public TiffElement(int offset, int length)
+    {
+        this.offset = offset;
+        this.length = length;
+    }
 
-	public String getElementDescription()
-	{
-		return getElementDescription(false);
-	}
+    public String getElementDescription()
+    {
+        return getElementDescription(false);
+    }
 
-	public abstract String getElementDescription(boolean verbose);
+    public abstract String getElementDescription(boolean verbose);
 
-	public static final Comparator COMPARATOR = new Comparator()
-	{
-		public int compare(Object o1, Object o2)
-		{
-			TiffElement e1 = (TiffElement) o1;
-			TiffElement e2 = (TiffElement) o2;
-			return e1.offset - e2.offset;
-		}
-	};
+    public static final Comparator COMPARATOR = new Comparator()
+    {
+        public int compare(Object o1, Object o2)
+        {
+            TiffElement e1 = (TiffElement) o1;
+            TiffElement e2 = (TiffElement) o2;
+            return e1.offset - e2.offset;
+        }
+    };
 
-	public static abstract class DataElement extends TiffElement
-	{
-		public final byte data[];
+    public static abstract class DataElement extends TiffElement
+    {
+        public final byte data[];
 
-		public DataElement(int offset, int length, final byte data[])
-		{
-			super(offset, length);
+        public DataElement(int offset, int length, final byte data[])
+        {
+            super(offset, length);
 
-			this.data = data;
-		}
+            this.data = data;
+        }
 
-	}
+    }
 
-	public static final class Stub extends TiffElement
-	{
-		public Stub(int offset, int length)
-		{
-			super(offset, length);
-		}
+    public static final class Stub extends TiffElement
+    {
+        public Stub(int offset, int length)
+        {
+            super(offset, length);
+        }
 
-		public String getElementDescription(boolean verbose)
-		{
-			return "Element, offset: " + offset + ", length: " + length
-					+ ", last: " + (offset + length) + "";
-		}
+        public String getElementDescription(boolean verbose)
+        {
+            return "Element, offset: " + offset + ", length: " + length
+                    + ", last: " + (offset + length) + "";
+        }
 
-	}
+    }
 }

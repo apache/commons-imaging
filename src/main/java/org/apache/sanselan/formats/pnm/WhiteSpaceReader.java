@@ -21,52 +21,52 @@ import java.io.InputStream;
 
 class WhiteSpaceReader
 {
-	private final InputStream is;
+    private final InputStream is;
 
-	public WhiteSpaceReader(InputStream is)
-	{
-		this.is = is;
-	}
+    public WhiteSpaceReader(InputStream is)
+    {
+        this.is = is;
+    }
 
-	int count = 0;
+    int count = 0;
 
-	private char read() throws IOException
-	{
-		int result = is.read();
-		if (result < 0)
-			throw new IOException("PNM: Unexpected EOF");
-		return (char) result;
-	}
+    private char read() throws IOException
+    {
+        int result = is.read();
+        if (result < 0)
+            throw new IOException("PNM: Unexpected EOF");
+        return (char) result;
+    }
 
-	public char nextChar() throws IOException
-	{
-		char c = read();
+    public char nextChar() throws IOException
+    {
+        char c = read();
 
-		if (c == '#')
-		{
-			while ((c != '\n') && (c != '\r'))
-			{
-				c = read();
-			}
-		}
-		return c;
-	}
+        if (c == '#')
+        {
+            while ((c != '\n') && (c != '\r'))
+            {
+                c = read();
+            }
+        }
+        return c;
+    }
 
-	public String readtoWhiteSpace() throws IOException
-	{
-		char c = nextChar();
+    public String readtoWhiteSpace() throws IOException
+    {
+        char c = nextChar();
 
-		while (Character.isWhitespace(c))
-			c = nextChar();
+        while (Character.isWhitespace(c))
+            c = nextChar();
 
-		StringBuffer buffer = new StringBuffer();
+        StringBuffer buffer = new StringBuffer();
 
-		while (!Character.isWhitespace(c))
-		{
-			buffer.append(c);
-			c = nextChar();
-		}
+        while (!Character.isWhitespace(c))
+        {
+            buffer.append(c);
+            c = nextChar();
+        }
 
-		return buffer.toString();
-	}
+        return buffer.toString();
+    }
 }

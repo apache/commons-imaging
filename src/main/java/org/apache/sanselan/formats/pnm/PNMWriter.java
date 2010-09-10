@@ -25,13 +25,13 @@ import org.apache.sanselan.ImageWriteException;
 
 public abstract class PNMWriter
 {
-	protected final boolean RAWBITS;
+    protected final boolean RAWBITS;
 
-	public PNMWriter(boolean RAWBITS)
-	{
-		this.RAWBITS = RAWBITS;
-	}
+    public PNMWriter(boolean RAWBITS)
+    {
+        this.RAWBITS = RAWBITS;
+    }
 
-	public abstract void writeImage(BufferedImage src, OutputStream os,
-			Map params) throws ImageWriteException, IOException;
+    public abstract void writeImage(BufferedImage src, OutputStream os,
+            Map params) throws ImageWriteException, IOException;
 }

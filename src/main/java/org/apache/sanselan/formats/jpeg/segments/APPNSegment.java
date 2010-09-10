@@ -24,15 +24,15 @@ import org.apache.sanselan.formats.jpeg.JpegImageParser;
 
 public class APPNSegment extends GenericSegment
 {
-	public APPNSegment(int marker, int marker_length, InputStream is)
-			throws ImageReadException, IOException
-	{
-		super(marker, marker_length, is);
-	}
+    public APPNSegment(int marker, int marker_length, InputStream is)
+            throws ImageReadException, IOException
+    {
+        super(marker, marker_length, is);
+    }
 
-	public String getDescription()
-	{
-		return "APPN (APP" + (marker - JpegImageParser.JPEG_APP0_Marker)
-				+ ") (" + getSegmentType() + ")";
-	}
+    public String getDescription()
+    {
+        return "APPN (APP" + (marker - JpegImageParser.JPEG_APP0_Marker)
+                + ") (" + getSegmentType() + ")";
+    }
 }

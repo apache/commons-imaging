@@ -20,23 +20,23 @@ import org.apache.sanselan.formats.psd.ImageContents;
 
 public class DataParserRGB extends DataParser
 {
-	protected int getRGB(int data[][][], int x, int y,
-			ImageContents imageContents)
-	{
-		int red = 0xff & data[0][y][x];
-		int green = 0xff & data[1][y][x];
-		int blue = 0xff & data[2][y][x];
-		int alpha = 0xff;
+    protected int getRGB(int data[][][], int x, int y,
+            ImageContents imageContents)
+    {
+        int red = 0xff & data[0][y][x];
+        int green = 0xff & data[1][y][x];
+        int blue = 0xff & data[2][y][x];
+        int alpha = 0xff;
 
-		int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
-				| ((0xff & green) << 8) | ((0xff & blue) << 0);
+        int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
+                | ((0xff & green) << 8) | ((0xff & blue) << 0);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
-	public int getBasicChannelsCount()
-	{
-		return 3;
-	}
+    public int getBasicChannelsCount()
+    {
+        return 3;
+    }
 
 }

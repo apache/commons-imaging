@@ -20,23 +20,23 @@ import org.apache.sanselan.formats.jpeg.JpegConstants;
 
 public class IPTCType implements JpegConstants, IPTCConstants
 {
-	public final int type;
-	public final String name;
+    public final int type;
+    public final String name;
 
-	public IPTCType(int type, String name)
-	{
-		this.type = type;
-		this.name = name;
-	}
+    public IPTCType(int type, String name)
+    {
+        this.type = type;
+        this.name = name;
+    }
 
-	public String toString()
-	{
-		return name + " (" + type + ")";
-	}
+    public String toString()
+    {
+        return name + " (" + type + ")";
+    }
 
-	public static IPTCType getUnknown(int type)
-	{
-		return new IPTCType(type, "Unknown");
-	}
+    public static IPTCType getUnknown(int type)
+    {
+        return new IPTCType(type, "Unknown");
+    }
 
 }

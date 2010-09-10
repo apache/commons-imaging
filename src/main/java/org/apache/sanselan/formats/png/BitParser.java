@@ -22,53 +22,53 @@ import org.apache.sanselan.ImageReadException;
 
 public class BitParser
 {
-	private final byte bytes[];
-	private final int bitsPerPixel;
-	private final int bitDepth;
+    private final byte bytes[];
+    private final int bitsPerPixel;
+    private final int bitDepth;
 
-	public BitParser(byte bytes[], int bitsPerPixel, int bitDepth)
-	{
-		this.bytes = bytes;
-		this.bitsPerPixel = bitsPerPixel;
-		this.bitDepth = bitDepth;
-	}
+    public BitParser(byte bytes[], int bitsPerPixel, int bitDepth)
+    {
+        this.bytes = bytes;
+        this.bitsPerPixel = bitsPerPixel;
+        this.bitDepth = bitDepth;
+    }
 
-	public int getSample(int pixelIndexInScanline, int sampleIndex)
-			throws ImageReadException, IOException
-	{
-		int pixelIndexBits = bitsPerPixel * pixelIndexInScanline;
-		int sampleIndexBits = pixelIndexBits + (sampleIndex * bitDepth);
-		int sampleIndexBytes = sampleIndexBits >> 3;
+    public int getSample(int pixelIndexInScanline, int sampleIndex)
+            throws ImageReadException, IOException
+    {
+        int pixelIndexBits = bitsPerPixel * pixelIndexInScanline;
+        int sampleIndexBits = pixelIndexBits + (sampleIndex * bitDepth);
+        int sampleIndexBytes = sampleIndexBits >> 3;
 
-		if (bitDepth == 8)
-			return 0xff & bytes[sampleIndexBytes];
-		else if (bitDepth < 8)
-		{
-			int b = 0xff & bytes[sampleIndexBytes];
-			int bitsToShift = 8 - ((pixelIndexBits & 7) + bitDepth);
-			b >>= bitsToShift;
+        if (bitDepth == 8)
+            return 0xff & bytes[sampleIndexBytes];
+        else if (bitDepth < 8)
+        {
+            int b = 0xff & bytes[sampleIndexBytes];
+            int bitsToShift = 8 - ((pixelIndexBits & 7) + bitDepth);
+            b >>= bitsToShift;
 
-			int bitmask = (1 << bitDepth) - 1;
-			return b & bitmask;
-		} else if (bitDepth == 16)
-		{
-			return (((0xff & bytes[sampleIndexBytes]) << 8) | (0xff & bytes[sampleIndexBytes + 1]));
-		}
+            int bitmask = (1 << bitDepth) - 1;
+            return b & bitmask;
+        } else if (bitDepth == 16)
+        {
+            return (((0xff & bytes[sampleIndexBytes]) << 8) | (0xff & bytes[sampleIndexBytes + 1]));
+        }
 
-		throw new ImageReadException("PNG: bad BitDepth: " + bitDepth);
-	}
+        throw new ImageReadException("PNG: bad BitDepth: " + bitDepth);
+    }
 
-	public int getSampleAsByte(int pixelIndexInScanline, int sampleIndex)
-			throws ImageReadException, IOException
-	{
-		int sample = getSample(pixelIndexInScanline, sampleIndex);
+    public int getSampleAsByte(int pixelIndexInScanline, int sampleIndex)
+            throws ImageReadException, IOException
+    {
+        int sample = getSample(pixelIndexInScanline, sampleIndex);
 
-		int rot = 8 - bitDepth;
-		if (rot > 0)
-			sample <<= rot;
-		else if (rot < 0)
-			sample >>= -rot;
+        int rot = 8 - bitDepth;
+        if (rot > 0)
+            sample <<= rot;
+        else if (rot < 0)
+            sample >>= -rot;
 
-		return 0xff & sample;
-	}
+        return 0xff & sample;
+    }
 }

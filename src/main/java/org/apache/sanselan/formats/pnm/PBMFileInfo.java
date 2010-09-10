@@ -24,81 +24,81 @@ import org.apache.sanselan.ImageInfo;
 
 public class PBMFileInfo extends FileInfo
 {
-	public PBMFileInfo(int width, int height, boolean RAWBITS)
-	{
-		super(width, height, RAWBITS);
-	}
+    public PBMFileInfo(int width, int height, boolean RAWBITS)
+    {
+        super(width, height, RAWBITS);
+    }
 
-	public int getNumComponents()
-	{
-		return 1;
-	}
+    public int getNumComponents()
+    {
+        return 1;
+    }
 
-	public int getBitDepth()
-	{
-		return 1;
-	}
+    public int getBitDepth()
+    {
+        return 1;
+    }
 
-	public ImageFormat getImageType()
-	{
-		return ImageFormat.IMAGE_FORMAT_PBM;
-	}
+    public ImageFormat getImageType()
+    {
+        return ImageFormat.IMAGE_FORMAT_PBM;
+    }
 
-	public int getColorType()
-	{
-		return ImageInfo.COLOR_TYPE_BW;
-	}
+    public int getColorType()
+    {
+        return ImageInfo.COLOR_TYPE_BW;
+    }
 
-	public String getImageTypeDescription()
-	{
-		return "PBM: portable bitmap fileformat";
-	}
+    public String getImageTypeDescription()
+    {
+        return "PBM: portable bitmap fileformat";
+    }
 
-	public String getMIMEType()
-	{
-		return "image/x-portable-bitmap";
-	}
+    public String getMIMEType()
+    {
+        return "image/x-portable-bitmap";
+    }
 
-	protected void newline()
-	{
-		bitcache = 0;
-		bits_in_cache = 0;
-	}
+    protected void newline()
+    {
+        bitcache = 0;
+        bits_in_cache = 0;
+    }
 
-	
-	private int bitcache = 0;
-	private int bits_in_cache = 0;
 
-	public int getRGB(InputStream is) throws IOException
-	{
-		if (bits_in_cache < 1)
-		{
-			int bits = is.read();
-			if (bits < 0)
-				throw new IOException("PBM: Unexpected EOF");
-			bitcache = 0xff & bits;
-			bits_in_cache += 8;
-		}
+    private int bitcache = 0;
+    private int bits_in_cache = 0;
 
-		int bit = 0x1 & (bitcache >> 7);
-		bitcache <<= 1;
-		bits_in_cache--;
+    public int getRGB(InputStream is) throws IOException
+    {
+        if (bits_in_cache < 1)
+        {
+            int bits = is.read();
+            if (bits < 0)
+                throw new IOException("PBM: Unexpected EOF");
+            bitcache = 0xff & bits;
+            bits_in_cache += 8;
+        }
 
-		if (bit == 0)
-			return 0xffffffff;
-		if (bit == 1)
-			return 0xff000000;
-		throw new IOException("PBM: bad bit: " + bit);
-	}
+        int bit = 0x1 & (bitcache >> 7);
+        bitcache <<= 1;
+        bits_in_cache--;
 
-	public int getRGB(WhiteSpaceReader wsr) throws IOException
-	{
-		int bit = Integer.parseInt(wsr.readtoWhiteSpace());
-		if (bit == 0)
-			return 0xff000000;
-		if (bit == 1)
-			return 0xffffffff;
-		throw new IOException("PBM: bad bit: " + bit);
-	}
+        if (bit == 0)
+            return 0xffffffff;
+        if (bit == 1)
+            return 0xff000000;
+        throw new IOException("PBM: bad bit: " + bit);
+    }
+
+    public int getRGB(WhiteSpaceReader wsr) throws IOException
+    {
+        int bit = Integer.parseInt(wsr.readtoWhiteSpace());
+        if (bit == 0)
+            return 0xff000000;
+        if (bit == 1)
+            return 0xffffffff;
+        throw new IOException("PBM: bad bit: " + bit);
+    }
 
 }

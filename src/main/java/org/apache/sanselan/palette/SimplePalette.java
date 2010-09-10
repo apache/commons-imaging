@@ -20,53 +20,53 @@ import org.apache.sanselan.util.Debug;
 
 public class SimplePalette extends Palette
 {
-	private final int palette[];
+    private final int palette[];
 
-	public SimplePalette(int palette[])
-	{
-		this.palette = palette;
-	}
+    public SimplePalette(int palette[])
+    {
+        this.palette = palette;
+    }
 
-	public int getPaletteIndex(int rgb)
-	{
-		return getPaletteIndex(palette, rgb);
-	}
+    public int getPaletteIndex(int rgb)
+    {
+        return getPaletteIndex(palette, rgb);
+    }
 
-	public int getEntry(int index)
-	{
-		return palette[index];
-		//			return getPaletteIndex(palette, rgb);
-	}
+    public int getEntry(int index)
+    {
+        return palette[index];
+        //            return getPaletteIndex(palette, rgb);
+    }
 
-	private int getPaletteIndex(int palette[], int argb)
-	{
+    private int getPaletteIndex(int palette[], int argb)
+    {
 
-		//		Debug.debug("getPaletteIndex argb", argb + " ("
-		//				+ Integer.toHexString(argb) + ")");
+        //        Debug.debug("getPaletteIndex argb", argb + " ("
+        //                + Integer.toHexString(argb) + ")");
 
-		for (int i = 0; i < palette.length; i++)
-		{
-			//			Debug.debug("\t" + "palette[" + i + "]", palette[i] + " ("
-			//					+ Integer.toHexString(palette[i]) + ")");
+        for (int i = 0; i < palette.length; i++)
+        {
+            //            Debug.debug("\t" + "palette[" + i + "]", palette[i] + " ("
+            //                    + Integer.toHexString(palette[i]) + ")");
 
-			if (palette[i] == argb)
-				return i;
-		}
+            if (palette[i] == argb)
+                return i;
+        }
 
-		return -1;
-	}
+        return -1;
+    }
 
-	public void dump()
-	{
-		for (int i = 0; i < palette.length; i++)
-		{
-			Debug.debug("\t" + "palette[" + i + "]", palette[i] + " (0x"
-					+ Integer.toHexString(palette[i]) + ")");
-		}
-	}
+    public void dump()
+    {
+        for (int i = 0; i < palette.length; i++)
+        {
+            Debug.debug("\t" + "palette[" + i + "]", palette[i] + " (0x"
+                    + Integer.toHexString(palette[i]) + ")");
+        }
+    }
 
-	public int length()
-	{
-		return palette.length;
-	}
+    public int length()
+    {
+        return palette.length;
+    }
 }

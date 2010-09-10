@@ -20,24 +20,24 @@ import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 
 public class TiffHeader extends TiffElement
 {
-	public final int byteOrder;
-	public final int tiffVersion;
-	public final int offsetToFirstIFD;
+    public final int byteOrder;
+    public final int tiffVersion;
+    public final int offsetToFirstIFD;
 
-	public TiffHeader(final int byteOrder, int tiffVersion, int offsetToFirstIFD)
-	{
-		super(0, TiffConstants.TIFF_HEADER_SIZE);
+    public TiffHeader(final int byteOrder, int tiffVersion, int offsetToFirstIFD)
+    {
+        super(0, TiffConstants.TIFF_HEADER_SIZE);
 
-		this.byteOrder = byteOrder;
-		this.tiffVersion = tiffVersion;
-		this.offsetToFirstIFD = offsetToFirstIFD;
-	}
+        this.byteOrder = byteOrder;
+        this.tiffVersion = tiffVersion;
+        this.offsetToFirstIFD = offsetToFirstIFD;
+    }
 
-	public String getElementDescription(boolean verbose)
-	{
-		if (verbose)
-			return null;
+    public String getElementDescription(boolean verbose)
+    {
+        if (verbose)
+            return null;
 
-		return "TIFF Header";
-	}
+        return "TIFF Header";
+    }
 }

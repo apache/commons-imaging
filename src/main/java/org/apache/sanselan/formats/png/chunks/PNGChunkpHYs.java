@@ -23,23 +23,23 @@ import org.apache.sanselan.ImageReadException;
 
 public class PNGChunkpHYs extends PNGChunk
 {
-	public final int PixelsPerUnitXAxis;
-	public final int PixelsPerUnitYAxis;
-	public final int UnitSpecifier;
+    public final int PixelsPerUnitXAxis;
+    public final int PixelsPerUnitYAxis;
+    public final int UnitSpecifier;
 
-	public PNGChunkpHYs(int Length, int ChunkType, int CRC, byte bytes[])
-			throws ImageReadException, IOException
-	{
-		super(Length, ChunkType, CRC, bytes);
+    public PNGChunkpHYs(int Length, int ChunkType, int CRC, byte bytes[])
+            throws ImageReadException, IOException
+    {
+        super(Length, ChunkType, CRC, bytes);
 
-		ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 
-		PixelsPerUnitXAxis = read4Bytes("PixelsPerUnitXAxis", is,
-				"Not a Valid Png File: pHYs Corrupt");
-		PixelsPerUnitYAxis = read4Bytes("PixelsPerUnitYAxis", is,
-				"Not a Valid Png File: pHYs Corrupt");
-		UnitSpecifier = readByte("Unit specifier", is,
-				"Not a Valid Png File: pHYs Corrupt");
-	}
+        PixelsPerUnitXAxis = read4Bytes("PixelsPerUnitXAxis", is,
+                "Not a Valid Png File: pHYs Corrupt");
+        PixelsPerUnitYAxis = read4Bytes("PixelsPerUnitYAxis", is,
+                "Not a Valid Png File: pHYs Corrupt");
+        UnitSpecifier = readByte("Unit specifier", is,
+                "Not a Valid Png File: pHYs Corrupt");
+    }
 
 }

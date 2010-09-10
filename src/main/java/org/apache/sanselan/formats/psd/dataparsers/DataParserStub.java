@@ -20,15 +20,15 @@ import org.apache.sanselan.formats.psd.ImageContents;
 
 public class DataParserStub extends DataParser
 {
-	protected int getRGB(int data[][][], int x, int y,
-			ImageContents imageContents)
-	{
-		return 0;
-	}
+    protected int getRGB(int data[][][], int x, int y,
+            ImageContents imageContents)
+    {
+        return 0;
+    }
 
-	public int getBasicChannelsCount()
-	{
-		return 1;
-	}
+    public int getBasicChannelsCount()
+    {
+        return 1;
+    }
 
 }

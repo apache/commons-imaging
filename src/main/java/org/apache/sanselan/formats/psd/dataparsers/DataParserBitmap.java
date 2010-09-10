@@ -21,26 +21,26 @@ import org.apache.sanselan.formats.psd.ImageContents;
 public class DataParserBitmap extends DataParser
 {
 
-	protected int getRGB(int data[][][], int x, int y,
-			ImageContents imageContents)
-	{
-		int sample = 0xff & data[0][y][x];
-		if (sample == 0)
-			sample = 255;
-		else
-			sample = 0;
-		//					sample = 255- sample;
-		int alpha = 0xff;
+    protected int getRGB(int data[][][], int x, int y,
+            ImageContents imageContents)
+    {
+        int sample = 0xff & data[0][y][x];
+        if (sample == 0)
+            sample = 255;
+        else
+            sample = 0;
+        //                    sample = 255- sample;
+        int alpha = 0xff;
 
-		int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
-				| ((0xff & sample) << 8) | ((0xff & sample) << 0);
+        int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
+                | ((0xff & sample) << 8) | ((0xff & sample) << 0);
 
-		return rgb;
-	}
+        return rgb;
+    }
 
-	public int getBasicChannelsCount()
-	{
-		return 1;
-	}
+    public int getBasicChannelsCount()
+    {
+        return 1;
+    }
 
 }
