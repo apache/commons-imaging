@@ -75,7 +75,7 @@ public class PngTextTest extends PngBaseTest
 		IOUtils.writeToFile(bytes, tempFile);
 
 		PngImageInfo imageInfo = (PngImageInfo) Sanselan.getImageInfo(bytes);
-		assertTrue(null != imageInfo);
+		assertNotNull(imageInfo);
 
 		List readTexts = imageInfo.getTextChunks();
 		assertEquals(readTexts.size(), 3);
