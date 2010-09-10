@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.common.byteSources.ByteSourceFile;
 import org.apache.sanselan.formats.jpeg.JpegImageParser;
@@ -33,8 +32,7 @@ import org.apache.sanselan.util.Debug;
 public class JpegXmpDumpTest extends JpegXmpBaseTest
 {
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException
+	public void test() throws IOException, ImageReadException
 	{
 		List images = getImagesWithXmpData();
 		for (int i = 0; i < images.size(); i++)

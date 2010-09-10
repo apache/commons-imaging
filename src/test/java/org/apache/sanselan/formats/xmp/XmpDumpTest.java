@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanTest;
 import org.apache.sanselan.util.Debug;
@@ -30,8 +29,7 @@ import org.apache.sanselan.util.Debug;
 public class XmpDumpTest extends SanselanTest
 {
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException
+	public void test() throws IOException, ImageReadException
 	{
 		List images = getTestImages();
 		for (int i = 0; i < images.size(); i++)

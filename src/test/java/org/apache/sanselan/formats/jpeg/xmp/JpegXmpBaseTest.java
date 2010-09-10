@@ -30,8 +30,7 @@ import org.apache.sanselan.formats.jpeg.JpegImageParser;
 public abstract class JpegXmpBaseTest extends SanselanTest
 {
 
-	protected static boolean hasJpegXmpData(File file) throws IOException,
-			ImageReadException
+	protected static boolean hasJpegXmpData(File file)
 	{
 		if (!file.getName().toLowerCase().endsWith(".jpg"))
 			return false;

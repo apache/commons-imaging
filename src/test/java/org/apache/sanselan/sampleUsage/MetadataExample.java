@@ -151,7 +151,7 @@ public class MetadataExample
 	}
 
 	private static void printTagValue(JpegImageMetadata jpegMetadata,
-			TagInfo tagInfo) throws ImageReadException, IOException
+			TagInfo tagInfo)
 	{
 		TiffField field = jpegMetadata.findEXIFValueWithExactMatch(tagInfo);
 		if (field == null)

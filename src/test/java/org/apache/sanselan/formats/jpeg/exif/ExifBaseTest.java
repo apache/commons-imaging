@@ -34,8 +34,7 @@ public abstract class ExifBaseTest extends SanselanTest
 	//		super(name);
 	//	}
 
-	protected static boolean hasExifData(File file) throws IOException,
-			ImageReadException
+	protected static boolean hasExifData(File file)
 	{
 		//		Debug.debug("hasExifData file", file.getAbsoluteFile());
 

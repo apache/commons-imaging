@@ -35,8 +35,7 @@ public class SanselanGuessFormatTest extends SanselanTest {
 	public static final String PPM_IMAGE_FILE = "pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ppm";
 	public static final String TGA_IMAGE_FILE = "tga\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tga";
 
-	public void testGuess_all() throws IOException, ImageReadException,
-			ImageWriteException {
+	public void testGuess_all() throws IOException, ImageReadException {
 		testGuess(ImageFormat.IMAGE_FORMAT_PNG, PNG_IMAGE_FILE);
 		testGuess(ImageFormat.IMAGE_FORMAT_GIF, GIF_IMAGE_FILE);
 		// TODO(cmchen): add ability to sniff ICOs if possible.
@@ -57,13 +56,12 @@ public class SanselanGuessFormatTest extends SanselanTest {
 
 	public static final String UNKNOWN_IMAGE_FILE = "jpg\\1\\info.txt";
 
-	public void testGuess_unknown() throws IOException, ImageReadException,
-			ImageWriteException {
+	public void testGuess_unknown() throws IOException, ImageReadException {
 		testGuess(ImageFormat.IMAGE_FORMAT_UNKNOWN, UNKNOWN_IMAGE_FILE);
 	}
 
 	public void testGuess(ImageFormat expectedFormat, String imagePath)
-			throws IOException, ImageReadException, ImageWriteException {
+			throws IOException, ImageReadException {
 		imagePath = FilenameUtils.separatorsToSystem(imagePath);
 		File imageFile = new File(TEST_IMAGE_FOLDER, imagePath);
 

@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.util.Debug;
@@ -32,8 +31,7 @@ import org.apache.sanselan.util.Debug;
 public class GifReadTest extends GifBaseTest
 {
 
-	public void test() throws IOException, ImageReadException,
-			ImageWriteException
+	public void test() throws IOException, ImageReadException
 	{
 		Debug.debug("start");
 

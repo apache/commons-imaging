@@ -29,8 +29,7 @@ import org.apache.sanselan.formats.jpeg.JpegImageParser;
 
 public abstract class IptcBaseTest extends SanselanTest
 {
-	protected static boolean hasIptcData(File file) throws IOException,
-			ImageReadException
+	protected static boolean hasIptcData(File file)
 	{
 		//		Debug.debug("hasIptcData file", file.getAbsoluteFile());
 
