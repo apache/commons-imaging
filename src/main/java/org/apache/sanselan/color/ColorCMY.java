@@ -18,17 +18,17 @@ package org.apache.sanselan.color;
 
 public final class ColorCMY
 {
-	public final double C, M, Y;
+    public final double C, M, Y;
 
-	public ColorCMY(double C, double M, double Y)
-	{
-		this.C = C;
-		this.M = M;
-		this.Y = Y;
-	}
+    public ColorCMY(double C, double M, double Y)
+    {
+        this.C = C;
+        this.M = M;
+        this.Y = Y;
+    }
 
-	public final String toString()
-	{
-		return "{C: " + C + ", M: " + M + ", Y: " + Y + "}";
-	}
+    public final String toString()
+    {
+        return "{C: " + C + ", M: " + M + ", Y: " + Y + "}";
+    }
 }

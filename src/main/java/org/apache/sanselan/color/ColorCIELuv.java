@@ -18,17 +18,17 @@ package org.apache.sanselan.color;
 
 public final class ColorCIELuv
 {
-	public final double L, u, v;
+    public final double L, u, v;
 
-	public ColorCIELuv(double l, double u, double v)
-	{
-		L = l;
-		this.u = u;
-		this.v = v;
-	}
+    public ColorCIELuv(double l, double u, double v)
+    {
+        L = l;
+        this.u = u;
+        this.v = v;
+    }
 
-	public String toString()
-	{
-		return "{L: " + L + ", u: " + u + ", v: " + v + "}";
-	}
+    public String toString()
+    {
+        return "{L: " + L + ", u: " + u + ", v: " + v + "}";
+    }
 }

@@ -18,18 +18,18 @@ package org.apache.sanselan.color;
 
 public final class ColorCMYK
 {
-	public final double C, M, Y, K;
+    public final double C, M, Y, K;
 
-	public ColorCMYK(double C, double M, double Y, double K)
-	{
-		this.C = C;
-		this.M = M;
-		this.Y = Y;
-		this.K = K;
-	}
+    public ColorCMYK(double C, double M, double Y, double K)
+    {
+        this.C = C;
+        this.M = M;
+        this.Y = Y;
+        this.K = K;
+    }
 
-	public final String toString()
-	{
-		return "{C: " + C + ", M: " + M + ", Y: " + Y + ", K: " + K + "}";
-	}
+    public final String toString()
+    {
+        return "{C: " + C + ", M: " + M + ", Y: " + Y + ", K: " + K + "}";
+    }
 }
