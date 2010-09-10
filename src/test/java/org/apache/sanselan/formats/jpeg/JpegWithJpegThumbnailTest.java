@@ -24,15 +24,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanTest;
 import org.apache.sanselan.common.IImageMetadata;
 
 public class JpegWithJpegThumbnailTest extends SanselanTest {
 
-	public void testSingleImage() throws IOException, ImageReadException,
-			ImageWriteException {
+	public void testSingleImage() throws IOException, ImageReadException {
 		File imageFile = getTestImageByName("img_F028c_small.jpg");
 
 		Map params = new HashMap();

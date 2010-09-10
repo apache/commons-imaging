@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.formats.jpeg.JpegImageMetadata;
@@ -36,8 +35,7 @@ import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
 
 public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 
-	public void testSingleImage() throws IOException, ImageReadException,
-			ImageWriteException {
+	public void testSingleImage() throws IOException, ImageReadException {
 		File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 
 		Map params = new HashMap();

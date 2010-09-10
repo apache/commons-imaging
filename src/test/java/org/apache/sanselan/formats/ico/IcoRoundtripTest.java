@@ -24,10 +24,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 
-import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.Sanselan;
@@ -440,7 +437,7 @@ public class IcoRoundtripTest extends IcoBaseTest
 		}
 	}
 
-	public void testZeroColorPlanes() throws IOException, ImageWriteException, ImageReadException
+	public void testZeroColorPlanes() throws IOException, ImageWriteException
 	{
 		final int foreground = 0xFFF000E0;
 		final int background = 0xFF102030;
@@ -549,7 +546,7 @@ public class IcoRoundtripTest extends IcoBaseTest
 
 	private void writeAndReadImageData(String description, byte[] rawData,
 			int foreground, int background) throws IOException,
-			ImageReadException, ImageWriteException
+			ImageReadException
 	{
 		// Uncomment to generate ICO files that can be tested with Windows:
 		//File exportFile = new File("/tmp/" + description + ".ico");

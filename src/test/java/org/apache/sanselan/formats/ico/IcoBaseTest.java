@@ -21,16 +21,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanTest;
 
 public abstract class IcoBaseTest extends SanselanTest
 {
 
-	private static boolean isIco(File file) throws IOException,
-			ImageReadException
+	private static boolean isIco(File file)
 	{
 		return file.getName().toLowerCase().endsWith(".ico") ||
 			file.getName().toLowerCase().endsWith(".cur");
