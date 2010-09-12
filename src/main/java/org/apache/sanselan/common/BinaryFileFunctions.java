@@ -501,7 +501,7 @@ public class BinaryFileFunctions implements BinaryConstants
             int count = is.read(result, read, length - read);
             // Debug.debug("count", count);
             if (count < 1)
-                throw new IOException(exception);
+                throw new IOException(exception+" count: "+ count + " read: "+read+" length: "+length);
 
             read += count;
         }
