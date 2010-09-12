@@ -23,25 +23,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.sanselan.util.IOUtils;
 
 public class ByteSourceDataTest extends ByteSourceTest
 {
-    //    public ByteSourceDataTest()
-    //    {
-    //        super(ByteSourceDataTest.class.getName());
-    //    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite(ByteSourceDataTest.class);
-    }
 
     private interface ByteSourceFactory
     {
