@@ -320,6 +320,14 @@ public class IPTCParser extends BinaryFileParser implements IPTCConstants
                 Debug.debug("blockSize", blockSize + " (0x"
                         + Integer.toHexString(blockSize) + ")");
 
+            /*
+             * doesn't catch cases where blocksize is invalid but is still less than bytes.length 
+             * but will at least prevent OutOfMemory errors
+             */
+            if(blockSize > bytes.length) {
+                throw new ImageReadException("Invalid Block Size : "+blockSize+ " > "+bytes.length);
+            }
+
             byte[] blockData = bis.readByteArray(blockSize,
                     "Invalid Image Resource Block data", verbose, strict);
             if (null == blockData)
