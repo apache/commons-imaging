@@ -130,8 +130,21 @@ public class JpegImageMetadata implements IImageMetadata {
         return null;
     }
 
+    /**
+     * Get the thumbnail image if available.
+     * 
+     * @return the thumbnail image. 
+     *         May be <code>null</code> if no image could be found.
+     * @throws ImageReadException
+     * @throws IOException
+     */
     public BufferedImage getEXIFThumbnail() throws ImageReadException,
             IOException {
+
+        if (exif == null) {
+            return null;
+        }
+
         ArrayList dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
             TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
