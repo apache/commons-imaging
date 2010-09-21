@@ -28,7 +28,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>15</version>
+    <version>17</version>
   </parent>
 
   <groupId>org.apache.commons</groupId>
@@ -64,8 +64,7 @@
     <maven.compile.source>1.4</maven.compile.source>
     <maven.compile.target>1.4</maven.compile.target>
     <commons.componentid>sanselan</commons.componentid>
-    <commons.release.version>incubating-0.97</commons.release.version>
-    <commons.release.name>apache-sanselan-${commons.release.version}</commons.release.name>
+    <commons.release.version>0.98</commons.release.version>
     <commons.jira.id>SANSELAN</commons.jira.id>
     <commons.jira.pid>12310720</commons.jira.pid>
     <commons.osgi.export>org.apache.sanselan.*;version=${project.version};-noimport:=true</commons.osgi.export>
