@@ -1,0 +1,3 @@
+These icons are taken from http://openiconlibrary.sourceforge.net, the Mac icon package,
+file poedit.icns, which is listed as public domain.
+Contributed to the project by Damjan Jovanovic.
