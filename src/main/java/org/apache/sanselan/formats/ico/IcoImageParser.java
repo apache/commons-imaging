@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +49,6 @@ public class IcoImageParser extends ImageParser
     public IcoImageParser()
     {
         super.setByteOrder(BYTE_ORDER_LSB);
-        //        setDebug(true);
     }
 
     public String getName()
@@ -124,13 +124,13 @@ public class IcoImageParser extends ImageParser
             this.iconCount = iconCount;
         }
 
-        public void dump()
+        public void dump(PrintWriter pw)
         {
-            System.out.println("FileHeader");
-            System.out.println("Reserved: " + reserved);
-            System.out.println("IconType: " + iconType);
-            System.out.println("IconCount: " + iconCount);
-            System.out.println("");
+            pw.println("FileHeader");
+            pw.println("Reserved: " + reserved);
+            pw.println("IconType: " + iconType);
+            pw.println("IconCount: " + iconCount);
+            pw.println();
         }
     }
 
@@ -175,19 +175,17 @@ public class IcoImageParser extends ImageParser
             ImageOffset = imageOffset;
         }
 
-        public void dump()
+        public void dump(PrintWriter pw)
         {
-            System.out.println("IconInfo");
-
-            System.out.println("Width: " + Width);
-            System.out.println("Height: " + Height);
-            System.out.println("ColorCount: " + ColorCount);
-            System.out.println("Reserved: " + Reserved);
-            System.out.println("Planes: " + Planes);
-            System.out.println("BitCount: " + BitCount);
-            System.out.println("ImageSize: " + ImageSize);
-            System.out.println("ImageOffset: " + ImageOffset);
-            System.out.println("");
+            pw.println("IconInfo");
+            pw.println("Width: " + Width);
+            pw.println("Height: " + Height);
+            pw.println("ColorCount: " + ColorCount);
+            pw.println("Reserved: " + Reserved);
+            pw.println("Planes: " + Planes);
+            pw.println("BitCount: " + BitCount);
+            pw.println("ImageSize: " + ImageSize);
+            pw.println("ImageOffset: " + ImageOffset);
         }
     }
 
@@ -240,23 +238,21 @@ public class IcoImageParser extends ImageParser
             ColorsImportant = colorsImportant;
         }
 
-        public void dump()
+        public void dump(PrintWriter pw)
         {
-            System.out.println("BitmapHeader");
+            pw.println("BitmapHeader");
 
-            System.out.println("Size: " + Size);
-            System.out.println("Width: " + Width);
-            System.out.println("Height: " + Height);
-            System.out.println("Planes: " + Planes);
-            System.out.println("BitCount: " + BitCount);
-            System.out.println("Compression: " + Compression);
-            System.out.println("SizeImage: " + SizeImage);
-            System.out.println("XPelsPerMeter: " + XPelsPerMeter);
-            System.out.println("YPelsPerMeter: " + YPelsPerMeter);
-            System.out.println("ColorsUsed: " + ColorsUsed);
-            System.out.println("ColorsImportant: " + ColorsImportant);
-
-            System.out.println("");
+            pw.println("Size: " + Size);
+            pw.println("Width: " + Width);
+            pw.println("Height: " + Height);
+            pw.println("Planes: " + Planes);
+            pw.println("BitCount: " + BitCount);
+            pw.println("Compression: " + Compression);
+            pw.println("SizeImage: " + SizeImage);
+            pw.println("XPelsPerMeter: " + XPelsPerMeter);
+            pw.println("YPelsPerMeter: " + YPelsPerMeter);
+            pw.println("ColorsUsed: " + ColorsUsed);
+            pw.println("ColorsImportant: " + ColorsImportant);
         }
     }
 
@@ -269,6 +265,14 @@ public class IcoImageParser extends ImageParser
             this.iconInfo = iconInfo;
         }
 
+		public void dump(PrintWriter pw)
+		{
+			iconInfo.dump(pw);
+			pw.println();
+			dumpSubclass(pw);
+		}
+
+		protected abstract void dumpSubclass(PrintWriter pw);
         public abstract BufferedImage readBufferedImage() throws ImageReadException;
     }
 
@@ -290,12 +294,11 @@ public class IcoImageParser extends ImageParser
             return bufferedImage;
         }
 
-        public void dump()
+        protected void dumpSubclass(PrintWriter pw)
         {
-            System.out.println("BitmapIconData");
-
-            iconInfo.dump();
-            header.dump();
+            pw.println("BitmapIconData");
+            header.dump(pw);
+			pw.println();
         }
     }
 
@@ -314,11 +317,10 @@ public class IcoImageParser extends ImageParser
             return bufferedImage;
         }
 
-        public void dump()
+        protected void dumpSubclass(PrintWriter pw)
         {
-            System.out.println("PNGIconData");
-
-            iconInfo.dump();
+            pw.println("PNGIconData");
+            pw.println();
         }
     }
 
@@ -486,13 +488,10 @@ public class IcoImageParser extends ImageParser
             is = byteSource.getInputStream();
             FileHeader fileHeader = readFileHeader(is);
 
-            //            fileHeader.dump();
-
             IconInfo fIconInfos[] = new IconInfo[fileHeader.iconCount];
             for (int i = 0; i < fileHeader.iconCount; i++)
             {
                 fIconInfos[i] = readIconInfo(is);
-                //                fIconInfos[i].dump();
             }
 
             IconData fIconDatas[] = new IconData[fileHeader.iconCount];
@@ -501,7 +500,6 @@ public class IcoImageParser extends ImageParser
                 byte[] iconData = byteSource.getBlock(fIconInfos[i].ImageOffset,
                         fIconInfos[i].ImageSize);
                 fIconDatas[i] = readIconData(iconData, fIconInfos[i]);
-                //                fIconDatas[i].dump();
             }
 
             return new ImageContents(fileHeader, fIconDatas);
@@ -521,6 +519,16 @@ public class IcoImageParser extends ImageParser
 
         }
     }
+
+	public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
+			throws ImageReadException, IOException
+	{
+		ImageContents contents = readImage(byteSource);
+		contents.fileHeader.dump(pw);
+		for (int i = 0; i < contents.iconDatas.length; i++)
+			contents.iconDatas[i].dump(pw);
+		return true;
+	}
 
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException
@@ -684,7 +692,7 @@ public class IcoImageParser extends ImageParser
         int row_padding = scanline_size - (bitCount * src.getWidth() + 7) / 8;
         for (int y = src.getHeight() - 1; y >= 0; y--)
         {
-            for (int x = 0; x < src.getHeight(); x++)
+            for (int x = 0; x < src.getWidth(); x++)
             {
                 int argb = src.getRGB(x, y);
                 if (bitCount < 8)
