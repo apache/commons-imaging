@@ -58,12 +58,12 @@ public class IcoRoundtripTest extends IcoBaseTest
 
     public IcoRoundtripTest()
     {
-        generatorMap.put(Integer.valueOf(1), new GeneratorFor1BitBitmaps());
-        generatorMap.put(Integer.valueOf(4), new GeneratorFor4BitBitmaps());
-        generatorMap.put(Integer.valueOf(8), new GeneratorFor8BitBitmaps());
-        generatorMap.put(Integer.valueOf(16), new GeneratorFor16BitBitmaps());
-        generatorMap.put(Integer.valueOf(24), new GeneratorFor24BitBitmaps());
-        generatorMap.put(Integer.valueOf(32), new GeneratorFor32BitBitmaps());
+        generatorMap.put(new Integer(1), new GeneratorFor1BitBitmaps());
+        generatorMap.put(new Integer(4), new GeneratorFor4BitBitmaps());
+        generatorMap.put(new Integer(8), new GeneratorFor8BitBitmaps());
+        generatorMap.put(new Integer(16), new GeneratorFor16BitBitmaps());
+        generatorMap.put(new Integer(24), new GeneratorFor24BitBitmaps());
+        generatorMap.put(new Integer(32), new GeneratorFor32BitBitmaps());
     }
 
     private static interface BitmapGenerator
