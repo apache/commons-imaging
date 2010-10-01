@@ -167,7 +167,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 assertNotNull(newExifMetadata);
                 //                newMetadata.dump();
 
-                compare(oldExifMetadata, newExifMetadata);
+                compare(imageFile, oldExifMetadata, newExifMetadata);
             }
 
         }
@@ -246,7 +246,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 assertNotNull(newExifMetadata);
                 //                newMetadata.dump();
 
-                compare(oldExifMetadata, newExifMetadata);
+                compare(imageFile, oldExifMetadata, newExifMetadata);
             }
             catch (IOException e)
             {
@@ -330,7 +330,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         return fieldMap;
     }
 
-    private void compare(TiffImageMetadata oldExifMetadata,
+    private void compare(File imageFile, TiffImageMetadata oldExifMetadata,
             TiffImageMetadata newExifMetadata) throws ImageReadException
     {
         assertNotNull(oldExifMetadata);
@@ -460,13 +460,16 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                         //                        Debug.debug("newField.valueOffsetBytes",
                         //                                newField.valueOffsetBytes);
 
+                        String label = imageFile.getName() + 
+                                       ", dirType[" + i + "]=" + dirType +
+                                       ", fieldTag[" + j + "]=" + fieldTag;
                         if (oldField.tag == 0x116 || oldField.tag == 0x117)
-                            compare(oldField, newField);
+                            compare(label, oldField, newField);
                         else {
-                            compare(oldField.valueOffsetBytes,
-                                    newField.valueOffsetBytes, oldField
-                                            .getBytesLength(), newField
-                                            .getBytesLength());
+                            compare(label, oldField.valueOffsetBytes,
+                                           newField.valueOffsetBytes,
+                                           oldField.getBytesLength(),
+                                           newField.getBytesLength());
                         }
                     }
                     else
@@ -492,7 +495,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         }
     }
 
-    private void compare(byte a[], byte b[], int aLength, int bLength)
+    private void compare(String label, byte a[], byte b[], int aLength, int bLength)
     {
         //        Debug.debug("c0 a", a);
         //        Debug.debug("c0 b", b);
@@ -516,20 +519,20 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             //            Debug.debug("i: " + i + ", a[i]: " + ba + ", b[i]: " + bb + " = "
             //                    + (ba == bb) + " " + eq);
             //            assertTrue(eq == true);
-            assertTrue("0x" + Integer.toHexString(0xff & a[i]) + " != " + "0x" + Integer.toHexString(0xff & b[i]), a[i] == b[i]);
+            assertEquals(label + ", byte[" + i + "]", a[i], b[i]);
             //            Debug.debug("c");
             //            assertTrue((0xff & a[i]) == (0xff & b[i]));
         }
     }
 
-    private void compare(TiffField a, TiffField b) throws ImageReadException
+    private void compare(String label, TiffField a, TiffField b) throws ImageReadException
     {
         Object v1 = a.getValue();
         Object v2 = b.getValue();
 
         //        Debug.debug("v1", v1 + " (" + Debug.getType(v1) + ")");
         //        Debug.debug("v2", v2 + " (" + Debug.getType(v2) + ")");
-        assertTrue(v1.equals(v2));
+        assertEquals(label, v1, v2);
     }
 
     private void compare(byte a[], byte b[])
