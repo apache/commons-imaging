@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.sanselan.ImageWriteException;
 
-public class PPMWriter extends PNMWriter
+public class PPMWriter extends PNMWriter implements PNMConstants
 {
     public PPMWriter(boolean RAWBITS)
     {
@@ -37,19 +37,19 @@ public class PPMWriter extends PNMWriter
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);
         os.write(RAWBITS ? 0x36 : 0x33);
-        os.write(' ');
+        os.write(PNM_SEPARATOR);
 
         int width = src.getWidth();
         int height = src.getHeight();
 
         os.write(("" + width).getBytes());
-        os.write(' ');
+        os.write(PNM_SEPARATOR);
 
         os.write(("" + height).getBytes());
-        os.write(' ');
+        os.write(PNM_SEPARATOR);
 
         os.write(("" + 255).getBytes()); // max component value
-        os.write('\n');
+        os.write(PNM_NEWLINE);
 
         for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++)
@@ -68,11 +68,11 @@ public class PPMWriter extends PNMWriter
                 else
                 {
                     os.write(("" + red).getBytes()); // max component value
-                    os.write(' ');
+                    os.write(PNM_SEPARATOR);
                     os.write(("" + green).getBytes()); // max component value
-                    os.write(' ');
+                    os.write(PNM_SEPARATOR);
                     os.write(("" + blue).getBytes()); // max component value
-                    os.write(' ');
+                    os.write(PNM_SEPARATOR);
                 }
             }
     }

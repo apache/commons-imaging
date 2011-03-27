@@ -28,5 +28,5 @@ public interface PNMConstants
     public static final byte PPM_RAW_CODE = 0x36; // RAW Pixmap
 
     public static final byte PNM_SEPARATOR = 0x20; // Space
-
+    public static final byte PNM_NEWLINE = 0x0A; // "usually a newline" (http://netpbm.sourceforge.net/doc/pbm.html)
 }

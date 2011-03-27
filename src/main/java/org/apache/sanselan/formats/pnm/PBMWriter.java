@@ -44,7 +44,7 @@ public class PBMWriter extends PNMWriter implements PNMConstants
         os.write(PNM_SEPARATOR);
 
         os.write(("" + height).getBytes());
-        os.write(PNM_SEPARATOR);
+        os.write(PNM_NEWLINE);
 
         int bitcache = 0;
         int bits_in_cache = 0;
