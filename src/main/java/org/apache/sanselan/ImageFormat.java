@@ -73,6 +73,7 @@ public class ImageFormat
     public static final ImageFormat IMAGE_FORMAT_TGA = new ImageFormat("TGA");
     public static final ImageFormat IMAGE_FORMAT_JBIG2 = new ImageFormat("JBig2");
     public static final ImageFormat IMAGE_FORMAT_ICNS = new ImageFormat("ICNS");
+    public static final ImageFormat IMAGE_FORMAT_WBMP = new ImageFormat("WBMP");
 
     public static final ImageFormat[] getAllFormats()
     {
@@ -81,7 +82,7 @@ public class ImageFormat
                 IMAGE_FORMAT_TIFF, IMAGE_FORMAT_JPEG, IMAGE_FORMAT_BMP,
                 IMAGE_FORMAT_PSD, IMAGE_FORMAT_PBM, IMAGE_FORMAT_PGM,
                 IMAGE_FORMAT_PPM, IMAGE_FORMAT_PNM, IMAGE_FORMAT_TGA,
-                IMAGE_FORMAT_JBIG2, IMAGE_FORMAT_ICNS,
+                IMAGE_FORMAT_JBIG2, IMAGE_FORMAT_ICNS, IMAGE_FORMAT_WBMP,
         };
 
         return result;

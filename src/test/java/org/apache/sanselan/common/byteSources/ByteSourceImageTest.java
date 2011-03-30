@@ -59,7 +59,8 @@ public class ByteSourceImageTest extends ByteSourceTest
             if (imageFile.getName().toLowerCase().endsWith(".ico")
                     || imageFile.getName().toLowerCase().endsWith(".tga")
                     || imageFile.getName().toLowerCase().endsWith(".jb2")
-                    || imageFile.getName().toLowerCase().endsWith(".psd"))
+                    || imageFile.getName().toLowerCase().endsWith(".psd")
+                    || imageFile.getName().toLowerCase().endsWith(".wbmp"))
             {
                 // these formats can't be parsed without a filename hint.
                 // they have ambiguous "magic number" signatures.
