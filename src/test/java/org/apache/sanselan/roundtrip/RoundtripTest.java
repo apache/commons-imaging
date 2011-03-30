@@ -433,12 +433,15 @@ public class RoundtripTest extends SanselanTest
             compareImagesExact(testImage, image2);
         }
 
-        File temp2 = createTempFile(tempPrefix + ".", "."
-                + formatInfo.format.extension);
-        // Debug.debug("tempFile: " + tempFile.getName());
-        Sanselan.writeImage(image2, temp2, formatInfo.format, params);
+        if (formatInfo.identicalSecondWrite)
+        {
+            File temp2 = createTempFile(tempPrefix + ".", "."
+                    + formatInfo.format.extension);
+            // Debug.debug("tempFile: " + tempFile.getName());
+            Sanselan.writeImage(image2, temp2, formatInfo.format, params);
 
-        compareFilesExact(temp1, temp2);
+            compareFilesExact(temp1, temp2);
+        }
     }
 
 }
