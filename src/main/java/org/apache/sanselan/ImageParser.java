@@ -38,6 +38,7 @@ import org.apache.sanselan.formats.gif.GifImageParser;
 import org.apache.sanselan.formats.icns.IcnsImageParser;
 import org.apache.sanselan.formats.ico.IcoImageParser;
 import org.apache.sanselan.formats.jpeg.JpegImageParser;
+import org.apache.sanselan.formats.pcx.PcxImageParser;
 import org.apache.sanselan.formats.png.PngImageParser;
 import org.apache.sanselan.formats.pnm.PNMImageParser;
 import org.apache.sanselan.formats.psd.PsdImageParser;
@@ -56,6 +57,7 @@ public abstract class ImageParser extends BinaryFileParser implements
                 new GifImageParser(), new PsdImageParser(),
                 new PNMImageParser(), new IcoImageParser(),
                 new IcnsImageParser(), new WbmpImageParser(),
+                new PcxImageParser(),
         // new JBig2ImageParser(),
         // new TgaImageParser(),
         };

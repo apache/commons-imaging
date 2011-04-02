@@ -59,6 +59,7 @@ public class ByteSourceImageTest extends ByteSourceTest
             if (imageFile.getName().toLowerCase().endsWith(".ico")
                     || imageFile.getName().toLowerCase().endsWith(".tga")
                     || imageFile.getName().toLowerCase().endsWith(".jb2")
+                    || imageFile.getName().toLowerCase().endsWith(".pcx")
                     || imageFile.getName().toLowerCase().endsWith(".psd")
                     || imageFile.getName().toLowerCase().endsWith(".wbmp"))
             {
