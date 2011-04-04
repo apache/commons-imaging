@@ -149,7 +149,8 @@ public abstract class Sanselan implements SanselanConstants {
     private static final int[] MAGIC_NUMBERS_PPM_B = { 0x50, 0x36, };
     private static final int[] MAGIC_NUMBERS_JBIG2_1 = { 0x97, 0x4A, };
     private static final int[] MAGIC_NUMBERS_JBIG2_2 = { 0x42, 0x32, };
-	private static final int[] MAGIC_NUMBERS_ICNS = { 0x69, 0x63, };
+    private static final int[] MAGIC_NUMBERS_ICNS = { 0x69, 0x63, };
+    private static final int[] MAGIC_NUMBERS_DCX = {0xB1, 0x68,};
 
     private static boolean compareBytePair(int[] a, int b[]) {
         if (a.length != 2 && b.length != 2) {
@@ -219,8 +220,10 @@ public abstract class Sanselan implements SanselanConstants {
                 if (compareBytePair(MAGIC_NUMBERS_JBIG2_2, bytePair2)) {
                     return ImageFormat.IMAGE_FORMAT_JBIG2;
                 }
-			} else if (compareBytePair(MAGIC_NUMBERS_ICNS, bytePair)) {
-				return ImageFormat.IMAGE_FORMAT_ICNS;
+            } else if (compareBytePair(MAGIC_NUMBERS_ICNS, bytePair)) {
+                return ImageFormat.IMAGE_FORMAT_ICNS;
+            } else if (compareBytePair(MAGIC_NUMBERS_DCX, bytePair)) {
+                return ImageFormat.IMAGE_FORMAT_DCX;
             }
 
             return ImageFormat.IMAGE_FORMAT_UNKNOWN;
