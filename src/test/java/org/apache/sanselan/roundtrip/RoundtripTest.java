@@ -92,6 +92,8 @@ public class RoundtripTest extends SanselanTest
                     COLOR_FULL_RGB, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_DCX, true, true,
                     COLOR_FULL_RGB, true), //
+            new FormatInfo(ImageFormat.IMAGE_FORMAT_XBM, true, true,
+                    COLOR_BITMAP, false), //
     };
 
     private BufferedImage createArgbBitmapImage(int width, int height)
