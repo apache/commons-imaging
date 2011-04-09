@@ -145,5 +145,9 @@
       <name>Carsten Ziegeler</name>
       <id>cziegeler</id>
     </developer>
+    <developer>
+      <name>Damjan Jovanovic</name>
+      <id>damjan</id>
+    </developer>
   </developers>
 </project>
