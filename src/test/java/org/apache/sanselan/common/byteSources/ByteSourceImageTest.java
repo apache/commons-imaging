@@ -63,7 +63,8 @@ public class ByteSourceImageTest extends ByteSourceTest
                     || imageFile.getName().toLowerCase().endsWith(".dcx")
                     || imageFile.getName().toLowerCase().endsWith(".psd")
                     || imageFile.getName().toLowerCase().endsWith(".wbmp")
-                    || imageFile.getName().toLowerCase().endsWith(".xbm"))
+                    || imageFile.getName().toLowerCase().endsWith(".xbm")
+                    || imageFile.getName().toLowerCase().endsWith(".xpm"))
             {
                 // these formats can't be parsed without a filename hint.
                 // they have ambiguous "magic number" signatures.
