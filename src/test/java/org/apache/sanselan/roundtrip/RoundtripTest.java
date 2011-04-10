@@ -70,7 +70,7 @@ public class RoundtripTest extends SanselanTest
                     COLOR_FULL_RGB, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_TIFF, true, true,
                     COLOR_FULL_RGB, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_JPEG, false, false,
+            new FormatInfo(ImageFormat.IMAGE_FORMAT_JPEG, true, false,
                     COLOR_FULL_RGB, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_BMP, true, true,
                     COLOR_FULL_RGB, true), //

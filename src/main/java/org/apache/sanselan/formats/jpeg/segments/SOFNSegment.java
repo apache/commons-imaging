@@ -28,7 +28,27 @@ public class SOFNSegment extends Segment
     public final int width, height;
     public final int numberOfComponents;
     public final int precision;
+    public final Component[] components;
 
+    public static class Component
+    {
+        public final int componentIdentifier;
+        public final int horizontalSamplingFactor;
+        public final int verticalSamplingFactor;
+        public final int quantTabDestSelector;
+
+        public Component(int componentIdentifier,
+                int horizontalSamplingFactor,
+                int veritcalSamplingFactor,
+                int quantTabDestSelector)
+        {
+            this.componentIdentifier = componentIdentifier;
+            this.horizontalSamplingFactor = horizontalSamplingFactor;
+            this.verticalSamplingFactor = veritcalSamplingFactor;
+            this.quantTabDestSelector = quantTabDestSelector;
+        }
+    }
+    
     public SOFNSegment(int marker, byte segmentData[])
             throws ImageReadException, IOException
     {
@@ -43,23 +63,26 @@ public class SOFNSegment extends Segment
         if (getDebug())
             System.out.println("SOF0Segment marker_length: " + marker_length);
 
+        precision = readByte("Data_precision", is, "Not a Valid JPEG File");
+        height = read2Bytes("Image_height", is, "Not a Valid JPEG File");
+        width = read2Bytes("Image_Width", is, "Not a Valid JPEG File");
+        numberOfComponents = readByte("Number_of_components", is,
+                "Not a Valid JPEG File");
+        components = new Component[numberOfComponents];
+        for (int i = 0; i < numberOfComponents; i++)
         {
-            precision = readByte("Data_precision", is, "Not a Valid JPEG File");
-            height = read2Bytes("Image_height", is, "Not a Valid JPEG File");
-            width = read2Bytes("Image_Width", is, "Not a Valid JPEG File");
-            numberOfComponents = readByte("Number_of_components", is,
+            int componentIdentifier = readByte("ComponentIdentifier", is,
                     "Not a Valid JPEG File");
 
-            // ignore the rest of the segment for now...
-            skipBytes(is, marker_length - 6,
-                    "Not a Valid JPEG File: SOF0 Segment");
-
-            //                int Each_component1 = read_byte("Each_component1", is,
-            //                        "Not a Valid JPEG File");
-            //                int Each_component2 = read_byte("Each_component2", is,
-            //                        "Not a Valid JPEG File");
-            //                int Each_component3 = read_byte("Each_component3", is,
-            //                        "Not a Valid JPEG File");
+            int hvSamplingFactors = readByte("SamplingFactors", is,
+                    "Not a Valid JPEG File");
+            int horizontalSamplingFactor = (hvSamplingFactors >> 4) & 0xf;
+            int verticalSamplingFactor = hvSamplingFactors & 0xf;
+            int quantTabDestSelector = readByte("QuantTabDestSel", is,
+                    "Not a Valid JPEG File");
+            components[i] = new Component(componentIdentifier,
+                        horizontalSamplingFactor, verticalSamplingFactor,
+                        quantTabDestSelector);
         }
 
         if (getDebug())

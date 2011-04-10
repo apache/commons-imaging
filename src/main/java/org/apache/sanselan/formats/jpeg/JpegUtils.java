@@ -73,7 +73,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 //                Debug.debug("marker", marker + " (0x" + Integer.toHexString(marker) + ")");
 //                Debug.debug("markerBytes", markerBytes);
 
-                if (marker == 0xffd9 || marker == SOS_Marker)
+                if (marker == EOIMarker || marker == SOS_Marker)
                 {
                     if (!visitor.beginSOS())
                         return;
@@ -146,7 +146,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
             return "SOF2Marker";
         case SOF3Marker:
             return "SOF3Marker";
-        case SOF4Marker:
+        case DHTMarker:
             return "SOF4Marker";
         case SOF5Marker:
             return "SOF5Marker";
@@ -162,14 +162,16 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
             return "SOF10Marker";
         case SOF11Marker:
             return "SOF11Marker";
-        case SOF12Marker:
-            return "SOF12Marker";
+        case DACMarker:
+            return "DACMarker";
         case SOF13Marker:
             return "SOF13Marker";
         case SOF14Marker:
             return "SOF14Marker";
         case SOF15Marker:
             return "SOF15Marker";
+        case DQTMarker:
+            return "DQTMarker";
         default:
             return "Unknown";
         }

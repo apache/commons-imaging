@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -34,10 +35,12 @@ import org.apache.sanselan.ImageParser;
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.IImageMetadata;
 import org.apache.sanselan.common.byteSources.ByteSource;
+import org.apache.sanselan.formats.jpeg.decoder.JpegDecoder;
 import org.apache.sanselan.formats.jpeg.iptc.IPTCParser;
 import org.apache.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.sanselan.formats.jpeg.segments.App13Segment;
 import org.apache.sanselan.formats.jpeg.segments.App2Segment;
+import org.apache.sanselan.formats.jpeg.segments.DQTSegment;
 import org.apache.sanselan.formats.jpeg.segments.GenericSegment;
 import org.apache.sanselan.formats.jpeg.segments.JFIFSegment;
 import org.apache.sanselan.formats.jpeg.segments.SOFNSegment;
@@ -87,8 +90,8 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException
     {
-        throw new ImageReadException(
-                "Sanselan cannot read or write JPEG images.");
+        JpegDecoder jpegDecoder = new JpegDecoder();
+        return jpegDecoder.decode(byteSource);
     }
 
     private boolean keepMarker(int marker, int markers[])
@@ -111,6 +114,14 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     {
         final ArrayList result = new ArrayList();
         final JpegImageParser parser = this;
+        final int[] sofnSegments = {
+                // kJFIFMarker,
+                SOF0Marker,
+
+                SOF1Marker, SOF2Marker, SOF3Marker, SOF5Marker, SOF6Marker,
+                SOF7Marker, SOF9Marker, SOF10Marker, SOF11Marker, SOF13Marker,
+                SOF14Marker, SOF15Marker,
+        };
 
         JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
@@ -129,7 +140,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
                     int markerLength, byte markerLengthBytes[],
                     byte segmentData[]) throws ImageReadException, IOException
             {
-                if (marker == 0xffd9)
+                if (marker == EOIMarker)
                     return false;
 
                 // Debug.debug("visitSegment marker", marker);
@@ -151,9 +162,12 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
                 } else if (marker == JFIFMarker)
                 {
                     result.add(new JFIFSegment(marker, segmentData));
-                } else if ((marker >= SOF0Marker) && (marker <= SOF15Marker))
+                } else if (Arrays.binarySearch(sofnSegments, marker) >= 0)
                 {
                     result.add(new SOFNSegment(marker, segmentData));
+                } else if (marker == DQTMarker)
+                {
+                    result.add(new DQTSegment(marker, segmentData));
                 } else if ((marker >= JPEG_APP1_Marker)
                         && (marker <= JPEG_APP15_Marker))
                 {

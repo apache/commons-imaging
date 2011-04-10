@@ -16,6 +16,7 @@
  */
 package org.apache.sanselan.formats.jpeg.segments;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -24,12 +25,34 @@ import org.apache.sanselan.util.Debug;
 
 public class SOSSegment extends Segment
 {
-    //    public final int width, height;
-    //    public final int Number_of_components;
-    //    public final int Precision;
+    public final int numberOfComponents;
+    public final Component[] components;
+    public final int startOfSpectralSelection;
+    public final int endOfSpectralSelection;
+    public final int successiveApproximationBitHigh;
+    public final int successiveApproximationBitLow;
 
-    //        public final byte bytes[];
-    //        public final int cur_marker, num_markers;
+    public static class Component
+    {
+        public final int scanComponentSelector;
+        public final int dcCodingTableSelector;
+        public final int acCodingTableSelector;
+
+        public Component(int scanComponentSelector,
+                int dcCodingTableSelector,
+                int acCodingTableSelector)
+        {
+            this.scanComponentSelector = scanComponentSelector;
+            this.dcCodingTableSelector = dcCodingTableSelector;
+            this.acCodingTableSelector = acCodingTableSelector;
+        }
+    }
+
+    public SOSSegment(int marker, byte[] segmentData)
+            throws ImageReadException, IOException
+    {
+        this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
+    }
 
     public SOSSegment(int marker, int marker_length, InputStream is)
             throws ImageReadException, IOException
@@ -39,54 +62,45 @@ public class SOSSegment extends Segment
         if (getDebug())
             System.out.println("SOSSegment marker_length: " + marker_length);
 
-        Debug.debug("SOS", marker_length);
-        //        {
-        int number_of_components_in_scan = readByte(
-                "number_of_components_in_scan", is, "Not a Valid JPEG File");
-        Debug.debug("number_of_components_in_scan",
-                number_of_components_in_scan);
+//        Debug.debug("SOS", marker_length);
 
-        for (int i = 0; i < number_of_components_in_scan; i++)
+        numberOfComponents = readByte(
+                "number_of_components_in_scan", is, "Not a Valid JPEG File");
+//        Debug.debug("number_of_components_in_scan",
+//                numberOfComponents);
+
+        components = new Component[numberOfComponents];
+        for (int i = 0; i < numberOfComponents; i++)
         {
             int scan_component_selector = readByte("scan_component_selector",
                     is, "Not a Valid JPEG File");
-            Debug.debug("scan_component_selector", scan_component_selector);
+//            Debug.debug("scan_component_selector", scan_component_selector);
 
-            int ac_dc_entrooy_coding_table_selector = readByte(
+            int ac_dc_entropy_coding_table_selector = readByte(
                     "ac_dc_entrooy_coding_table_selector", is,
                     "Not a Valid JPEG File");
-            Debug.debug("ac_dc_entrooy_coding_table_selector",
-                    ac_dc_entrooy_coding_table_selector);
+//            Debug.debug("ac_dc_entrooy_coding_table_selector",
+//                    ac_dc_entropy_coding_table_selector);
+
+            int dcCodingTableSelector = (ac_dc_entropy_coding_table_selector >> 4) & 0xf;
+            int acCodingTableSelector = ac_dc_entropy_coding_table_selector & 0xf;
+            components[i] = new Component(scan_component_selector,
+                    dcCodingTableSelector, acCodingTableSelector);
         }
 
-        int start_of_spectral_selection = readByte(
+        startOfSpectralSelection = readByte(
                 "start_of_spectral_selection", is, "Not a Valid JPEG File");
-        Debug.debug("start_of_spectral_selection", start_of_spectral_selection);
-        int end_of_spectral_selection = readByte("end_of_spectral_selection",
+//        Debug.debug("start_of_spectral_selection", startOfSpectralSelection);
+        endOfSpectralSelection = readByte("end_of_spectral_selection",
                 is, "Not a Valid JPEG File");
-        Debug.debug("end_of_spectral_selection", end_of_spectral_selection);
+//        Debug.debug("end_of_spectral_selection", endOfSpectralSelection);
         int successive_approximation_bit_position = readByte(
                 "successive_approximation_bit_position", is,
                 "Not a Valid JPEG File");
-        Debug.debug("successive_approximation_bit_position",
-                successive_approximation_bit_position);
-
-        //            height = read2Bytes("Image_height", is, "Not a Valid JPEG File");
-        //            width = read2Bytes("Image_Width", is, "Not a Valid JPEG File");
-        //            Number_of_components = read_byte("Number_of_components", is,
-        //                    "Not a Valid JPEG File");
-        //
-        //            // ignore the rest of the segment for now...
-        //            skipBytes(is, marker_length - 6,
-        //                    "Not a Valid JPEG File: SOF0 Segment");
-        //
-        //            //                int Each_component1 = read_byte("Each_component1", is,
-        //            //                        "Not a Valid JPEG File");
-        //            //                int Each_component2 = read_byte("Each_component2", is,
-        //            //                        "Not a Valid JPEG File");
-        //            //                int Each_component3 = read_byte("Each_component3", is,
-        //            //                        "Not a Valid JPEG File");
-        //        }
+//        Debug.debug("successive_approximation_bit_position",
+//                successive_approximation_bit_position);
+        successiveApproximationBitHigh = (successive_approximation_bit_position >> 4) & 0xf;
+        successiveApproximationBitLow = successive_approximation_bit_position & 0xf;
 
         if (getDebug())
             System.out.println("");
