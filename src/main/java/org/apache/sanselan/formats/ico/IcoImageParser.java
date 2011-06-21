@@ -341,21 +341,43 @@ public class IcoImageParser extends ImageParser
         int ColorsUsed = read4Bytes("ColorsUsed", is, "Not a Valid ICO File"); // ColorsUsed (4 bytes), we don?t use this (0)
         int ColorsImportant = read4Bytes("ColorsImportant", is,
                 "Not a Valid ICO File"); // ColorsImportant (4 bytes), we don?t use this (0)
+        int RedMask = 0;
+        int GreenMask = 0;
+        int BlueMask = 0;
+        int AlphaMask = 0;
+        if (Compression == 3)
+        {
+            RedMask = read4Bytes("RedMask", is, "Not a Valid ICO File");
+            GreenMask = read4Bytes("GreenMask", is, "Not a Valid ICO File");
+            BlueMask = read4Bytes("BlueMask", is, "Not a Valid ICO File");
+        }
+        byte[] RestOfFile = readByteArray("RestOfFile", is.available(), is);
 
         if (Size != 40)
             throw new ImageReadException("Not a Valid ICO File: Wrong bitmap header size " + Size);
         if (Planes != 1)
             throw new ImageReadException("Not a Valid ICO File: Planes can't be " + Planes);
 
+        if (Compression == 0 && BitCount == 32)
+        {
+            // 32 BPP RGB icons need an alpha channel, but BMP files don't have
+            // one unless BI_BITFIELDS is used...
+            Compression = 3;
+            RedMask = 0x00ff0000;
+            GreenMask = 0x0000ff00;
+            BlueMask = 0x000000ff;
+            AlphaMask = 0xff000000;
+        }
+
         BitmapHeader header = new BitmapHeader(Size, Width, Height, Planes,
                 BitCount, Compression, SizeImage, XPelsPerMeter, YPelsPerMeter,
                 ColorsUsed, ColorsImportant);
 
-        int bitmapPixelsOffset = 14 + 40 + ((Compression == 3) ? 3*4 : 0) +
+        int bitmapPixelsOffset = 14 + 56 +
                 4 * ((ColorsUsed == 0 && BitCount <= 8) ? (1 << BitCount) : ColorsUsed);
-        int bitmapSize = 14 + iconData.length;
+        int bitmapSize = 14 + 56 + RestOfFile.length;
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(14 + iconData.length);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(bitmapSize);
         BinaryOutputStream bos = new BinaryOutputStream(baos,
                 BinaryOutputStream.BYTE_ORDER_LITTLE_ENDIAN);
 
@@ -365,7 +387,7 @@ public class IcoImageParser extends ImageParser
         bos.write4Bytes(0);
         bos.write4Bytes(bitmapPixelsOffset);
 
-        bos.write4Bytes(Size);
+        bos.write4Bytes(56);
         bos.write4Bytes(Width);
         bos.write4Bytes(Height / 2);
         bos.write2Bytes(Planes);
@@ -376,7 +398,11 @@ public class IcoImageParser extends ImageParser
         bos.write4Bytes(YPelsPerMeter);
         bos.write4Bytes(ColorsUsed);
         bos.write4Bytes(ColorsImportant);
-        bos.write(iconData, 40, iconData.length - 40);
+        bos.write4Bytes(RedMask);
+        bos.write4Bytes(GreenMask);
+        bos.write4Bytes(BlueMask);
+        bos.write4Bytes(AlphaMask);
+        bos.write(RestOfFile);
         bos.flush();
 
         ByteArrayInputStream bmpInputStream = new ByteArrayInputStream(baos.toByteArray());
@@ -402,41 +428,44 @@ public class IcoImageParser extends ImageParser
             throw ioEx;
         }
 
-        // FIXME: get BmpImageParser to support alpha, then uncomment below
-//        boolean allAlphasZero = true;
-//        if (BitCount == 32)
-//        {
-//            for (int y = 0; allAlphasZero && y < bmpImage.getHeight(); y++)
-//            {
-//                for (int x = 0; x < bmpImage.getWidth(); x++)
-//                {
-//                    if ((bmpImage.getRGB(x, y) & 0xff000000) != 0)
-//                    {
-//                        allAlphasZero = false;
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-        BufferedImage resultImage = new BufferedImage(bmpImage.getWidth(), bmpImage.getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
-        for (int y = 0; y < resultImage.getHeight(); y++)
+        boolean allAlphasZero = true;
+        if (BitCount == 32)
         {
-            for (int x = 0; x < resultImage.getWidth(); x++)
+            for (int y = 0; allAlphasZero && y < bmpImage.getHeight(); y++)
             {
-                int alpha = 0xff;
-                if (transparency_map != null)
+                for (int x = 0; x < bmpImage.getWidth(); x++)
                 {
-                    int alpha_byte = 0xff & transparency_map[t_scanline_size
-                            * (bmpImage.getHeight() - y - 1) + (x / 8)];
-                    alpha = 0x01 & (alpha_byte >> (7 - (x % 8)));
-                    alpha = (alpha == 0) ? 0xff : 0x00;
+                    if ((bmpImage.getRGB(x, y) & 0xff000000) != 0)
+                    {
+                        allAlphasZero = false;
+                        break;
+                    }
                 }
-                // FIXME: get the BMP decoder to support alpha, then uncomment below
-                //if (BitCount < 32 || allAlphasZero)
-                    resultImage.setRGB(x, y, (alpha << 24) | (0xffffff & bmpImage.getRGB(x, y)));
             }
         }
+        BufferedImage resultImage;
+        if (allAlphasZero)
+        {
+            resultImage = new BufferedImage(bmpImage.getWidth(), bmpImage.getHeight(),
+                    BufferedImage.TYPE_INT_ARGB);
+            for (int y = 0; y < resultImage.getHeight(); y++)
+            {
+                for (int x = 0; x < resultImage.getWidth(); x++)
+                {
+                    int alpha = 0xff;
+                    if (transparency_map != null)
+                    {
+                        int alpha_byte = 0xff & transparency_map[t_scanline_size
+                                * (bmpImage.getHeight() - y - 1) + (x / 8)];
+                        alpha = 0x01 & (alpha_byte >> (7 - (x % 8)));
+                        alpha = (alpha == 0) ? 0xff : 0x00;
+                    }
+                    resultImage.setRGB(x, y, (alpha << 24) | (0xffffff & bmpImage.getRGB(x, y)));
+                }
+            }
+        }
+        else
+            resultImage = bmpImage;
         return new BitmapIconData(fIconInfo, header, resultImage);
     }
 

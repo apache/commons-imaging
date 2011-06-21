@@ -509,23 +509,22 @@ public class IcoRoundtripTest extends IcoBaseTest
         writeAndReadImageData("16x16x32-no-mask", baos.toByteArray(), foreground, background);
     }
 
-    // FIXME: get the BMP decoder to support alpha, then uncomment below
-//    public void testAlphaVersusANDMask() throws IOException, ImageWriteException, ImageReadException
-//    {
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        BinaryOutputStream bos = new BinaryOutputStream(baos,
-//                BinaryOutputStream.BYTE_ORDER_LITTLE_ENDIAN);
-//        byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
-//                0xFF000000, 0x00000000, 0, true);
-//        writeICONDIR(bos, 0, 1, 1);
-//        writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
-//        writeBITMAPINFOHEADER(bos, 16, 2*16, 1, 32, 0, 0, 0);
-//        bos.write(bitmap);
-//        bos.flush();
-//        // The AND mask is fully opaque, yet the fully transparent alpha should win:
-//        writeAndReadImageData("16x16x32-alpha-vs-mask", baos.toByteArray(),
-//                0xFF000000, 0x00000000);
-//    }
+    public void testAlphaVersusANDMask() throws IOException, ImageWriteException, ImageReadException
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        BinaryOutputStream bos = new BinaryOutputStream(baos,
+                BinaryOutputStream.BYTE_ORDER_LITTLE_ENDIAN);
+        byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
+                0xFF000000, 0x00000000, 0, true);
+        writeICONDIR(bos, 0, 1, 1);
+        writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
+        writeBITMAPINFOHEADER(bos, 16, 2*16, 1, 32, 0, 0, 0);
+        bos.write(bitmap);
+        bos.flush();
+        // The AND mask is fully opaque, yet the fully transparent alpha should win:
+        writeAndReadImageData("16x16x32-alpha-vs-mask", baos.toByteArray(),
+                0xFF000000, 0x00000000);
+    }
 
     public void testFullyTransparent32bitRGBA() throws IOException, ImageWriteException, ImageReadException
     {
