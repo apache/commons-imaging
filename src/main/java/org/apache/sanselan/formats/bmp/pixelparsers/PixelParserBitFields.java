@@ -16,9 +16,7 @@
  */
 package org.apache.sanselan.formats.bmp.pixelparsers;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.formats.bmp.BmpHeaderInfo;
@@ -29,28 +27,27 @@ public class PixelParserBitFields extends PixelParserSimple
     private final int redShift;
     private final int greenShift;
     private final int blueShift;
+    private final int alphaShift;
 
     private final int redMask;
     private final int greenMask;
     private final int blueMask;
+    private final int alphaMask;
 
     public PixelParserBitFields(BmpHeaderInfo bhi, byte ColorTable[],
             byte ImageData[]) throws ImageReadException, IOException
     {
         super(bhi, ColorTable, ImageData);
 
-        InputStream bais = new ByteArrayInputStream(ColorTable);
-
-        redMask = bfp.read4Bytes("redMask", bais,
-                "BMP BI_BITFIELDS Bad Color Table");
-        greenMask = bfp.read4Bytes("greenMask", bais,
-                "BMP BI_BITFIELDS Bad Color Table");
-        blueMask = bfp.read4Bytes("blueMask", bais,
-                "BMP BI_BITFIELDS Bad Color Table");
+        redMask = bhi.redMask;
+        greenMask = bhi.greenMask;
+        blueMask = bhi.blueMask;
+        alphaMask = bhi.alphaMask;
 
         redShift = getMaskShift(redMask);
         greenShift = getMaskShift(greenMask);
         blueShift = getMaskShift(blueMask);
+        alphaShift = (alphaMask != 0 ? getMaskShift(alphaMask) : 0);
     }
 
     private int getMaskShift(int mask)
@@ -106,12 +103,12 @@ public class PixelParserBitFields extends PixelParserSimple
         int red = (redMask & data);
         int green = (greenMask & data);
         int blue = (blueMask & data);
+        int alpha = (alphaMask != 0 ? alphaMask & data : 0xff);
 
         red = (redShift >= 0) ? red >> redShift : red << -redShift;
         green = (greenShift >= 0) ? green >> greenShift : green << -greenShift;
         blue = (blueShift >= 0) ? blue >> blueShift : blue << -blueShift;
-
-        int alpha = 0xff;
+        alpha = (alphaShift >= 0) ? alpha >> alphaShift : alpha << -alphaShift;
 
         int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 

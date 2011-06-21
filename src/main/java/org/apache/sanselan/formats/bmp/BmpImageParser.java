@@ -104,19 +104,93 @@ public class BmpImageParser extends ImageParser
 
         int bitmapHeaderSize = read4Bytes("Bitmap Header Size", is,
                 "Not a Valid BMP File");
-        int width = read4Bytes("Width", is, "Not a Valid BMP File");
-        int height = read4Bytes("Height", is, "Not a Valid BMP File");
-        int planes = read2Bytes("Planes", is, "Not a Valid BMP File");
-        int bitsPerPixel = read2Bytes("Bits Per Pixel", is,
-                "Not a Valid BMP File");
-        int compression = read4Bytes("Compression", is, "Not a Valid BMP File");
-        int bitmapDataSize = read4Bytes("Bitmap Data Size", is,
-                "Not a Valid BMP File");
-        int hResolution = read4Bytes("HResolution", is, "Not a Valid BMP File");
-        int vResolution = read4Bytes("VResolution", is, "Not a Valid BMP File");
-        int colorsUsed = read4Bytes("ColorsUsed", is, "Not a Valid BMP File");
-        int colorsImportant = read4Bytes("ColorsImportant", is,
-                "Not a Valid BMP File");
+        int width = 0;
+        int height = 0;
+        int planes = 0;
+        int bitsPerPixel = 0;
+        int compression = 0;
+        int bitmapDataSize = 0;
+        int hResolution = 0;
+        int vResolution = 0;
+        int colorsUsed = 0;
+        int colorsImportant = 0;
+        int redMask = 0;
+        int greenMask = 0;
+        int blueMask = 0;
+        int alphaMask = 0;
+        int colorSpaceType = 0;
+        BmpHeaderInfo.ColorSpace colorSpace = new BmpHeaderInfo.ColorSpace();
+        colorSpace.red = new BmpHeaderInfo.ColorSpaceCoordinate();
+        colorSpace.green = new BmpHeaderInfo.ColorSpaceCoordinate();
+        colorSpace.blue = new BmpHeaderInfo.ColorSpaceCoordinate();
+        int gammaRed = 0;
+        int gammaGreen = 0;
+        int gammaBlue = 0;
+        int intent = 0;
+        int profileData = 0;
+        int profileSize = 0;
+        int reservedV5 = 0;
+        
+        if (bitmapHeaderSize >= 40)
+        {
+            // BITMAPINFOHEADER
+            width = read4Bytes("Width", is, "Not a Valid BMP File");
+            height = read4Bytes("Height", is, "Not a Valid BMP File");
+            planes = read2Bytes("Planes", is, "Not a Valid BMP File");
+            bitsPerPixel = read2Bytes("Bits Per Pixel", is,
+                    "Not a Valid BMP File");
+            compression = read4Bytes("Compression", is, "Not a Valid BMP File");
+            bitmapDataSize = read4Bytes("Bitmap Data Size", is,
+                    "Not a Valid BMP File");
+            hResolution = read4Bytes("HResolution", is, "Not a Valid BMP File");
+            vResolution = read4Bytes("VResolution", is, "Not a Valid BMP File");
+            colorsUsed = read4Bytes("ColorsUsed", is, "Not a Valid BMP File");
+            colorsImportant = read4Bytes("ColorsImportant", is,
+                    "Not a Valid BMP File");
+            if (bitmapHeaderSize >= 52 || compression == BI_BITFIELDS)
+            {
+                // 52 = BITMAPV2INFOHEADER, now undocumented
+                // see http://en.wikipedia.org/wiki/BMP_file_format
+                redMask = read4Bytes("RedMask", is, "Not a Valid BMP File");
+                greenMask = read4Bytes("GreenMask", is, "Not a Valid BMP File");
+                blueMask = read4Bytes("BlueMask", is, "Not a Valid BMP File");
+            }
+            if (bitmapHeaderSize >= 56)
+            {
+                // 56 = the now undocumented BITMAPV3HEADER sometimes used by Photoshop
+                // see http://forums.adobe.com/thread/751592?tstart=1
+                alphaMask = read4Bytes("AlphaMask", is, "Not a Valid BMP File");
+            }
+            if (bitmapHeaderSize >= 108)
+            {
+                // BITMAPV4HEADER
+                colorSpaceType = read4Bytes("ColorSpaceType", is, "Not a Valid BMP File");
+                colorSpace.red.x = read4Bytes("ColorSpaceRedX", is, "Not a Valid BMP File");
+                colorSpace.red.y = read4Bytes("ColorSpaceRedY", is, "Not a Valid BMP File");
+                colorSpace.red.z = read4Bytes("ColorSpaceRedZ", is, "Not a Valid BMP File");
+                colorSpace.green.x = read4Bytes("ColorSpaceGreenX", is, "Not a Valid BMP File");
+                colorSpace.green.y = read4Bytes("ColorSpaceGreenY", is, "Not a Valid BMP File");
+                colorSpace.green.z = read4Bytes("ColorSpaceGreenZ", is, "Not a Valid BMP File");
+                colorSpace.blue.x = read4Bytes("ColorSpaceBlueX", is, "Not a Valid BMP File");
+                colorSpace.blue.y = read4Bytes("ColorSpaceBlueY", is, "Not a Valid BMP File");
+                colorSpace.blue.z = read4Bytes("ColorSpaceBlueZ", is, "Not a Valid BMP File");
+                gammaRed = read4Bytes("GammaRed", is, "Not a Valid BMP File");
+                gammaGreen = read4Bytes("GammaGreen", is, "Not a Valid BMP File");
+                gammaBlue = read4Bytes("GammaBlue", is, "Not a Valid BMP File");
+            }
+            if (bitmapHeaderSize >= 124)
+            {
+                // BITMAPV5HEADER
+                intent = read4Bytes("Intent", is, "Not a Valid BMP File");
+                profileData = read4Bytes("ProfileData", is, "Not a Valid BMP File");
+                profileSize = read4Bytes("ProfileSize", is, "Not a Valid BMP File");
+                reservedV5 = read4Bytes("Reserved", is, "Not a Valid BMP File");
+            }
+        }
+        else
+        {
+            throw new ImageReadException("Invalid/unsupported BMP file");
+        }
 
         if (verbose)
         {
@@ -136,12 +210,39 @@ public class BmpImageParser extends ImageParser
             this.debugNumber("vResolution", vResolution, 4);
             this.debugNumber("colorsUsed", colorsUsed, 4);
             this.debugNumber("colorsImportant", colorsImportant, 4);
+            if (bitmapHeaderSize >= 52 || compression == BI_BITFIELDS)
+            {
+                this.debugNumber("redMask", redMask, 4);
+                this.debugNumber("greenMask", greenMask, 4);
+                this.debugNumber("blueMask", blueMask, 4);
+            }
+            if (bitmapHeaderSize >= 56)
+            {
+                this.debugNumber("alphaMask", alphaMask, 4);
+            }
+            if (bitmapHeaderSize >= 108)
+            {
+                this.debugNumber("colorSpaceType", colorSpaceType, 4);
+                this.debugNumber("gammaRed", gammaRed, 4);
+                this.debugNumber("gammaGreen", gammaGreen, 4);
+                this.debugNumber("gammaBlue", gammaBlue, 4);
+            }
+            if (bitmapHeaderSize >= 124)
+            {
+                this.debugNumber("intent", intent, 4);
+                this.debugNumber("profileData", profileData, 4);
+                this.debugNumber("profileSize", profileSize, 4);
+                this.debugNumber("reservedV5", reservedV5, 4);
+            }
         }
 
         BmpHeaderInfo result = new BmpHeaderInfo(identifier1, identifier2,
                 fileSize, reserved, bitmapDataOffset, bitmapHeaderSize, width,
                 height, planes, bitsPerPixel, compression, bitmapDataSize,
-                hResolution, vResolution, colorsUsed, colorsImportant);
+                hResolution, vResolution, colorsUsed, colorsImportant,
+                redMask, greenMask, blueMask, alphaMask, colorSpaceType,
+                colorSpace, gammaRed, gammaGreen, gammaBlue, intent,
+                profileData, profileSize, reservedV5);
         return result;
     }
 
@@ -230,6 +331,9 @@ public class BmpImageParser extends ImageParser
             this.debugNumber("Compression", bhi.compression, 4);
         }
 
+        // A palette is always valid, even for images that don't need it
+        // (like 32 bpp), it specifies the "optimal color palette" for
+        // when the image is displayed on a <= 256 color graphics card.
         int paletteLength;
         int rleSamplesPerByte = 0;
         boolean rle = false;
@@ -274,8 +378,10 @@ public class BmpImageParser extends ImageParser
         case BI_BITFIELDS:
             if (verbose)
                 System.out.println("Compression: BI_BITFIELDS");
-            paletteLength = 3 * 4; // TODO: is this right? are the masks always
-            // LONGs?
+            if (bhi.bitsPerPixel <= 8)
+                paletteLength = 4 * colorTableSize;
+            else
+                paletteLength = 0;
             // BytesPerPixel = 2;
             // BytesPerPaletteEntry = 4;
             break;
@@ -319,7 +425,8 @@ public class BmpImageParser extends ImageParser
             imageLineLength++;
 
         final int headerSize = BITMAP_FILE_HEADER_SIZE
-                + BITMAP_INFO_HEADER_SIZE;
+                + bhi.bitmapHeaderSize
+                + (bhi.bitmapHeaderSize == 40 &&  bhi.compression == BI_BITFIELDS ? 3*4 : 0);
         int expectedDataOffset = headerSize + paletteLength;
 
         if (verbose)
@@ -605,9 +712,8 @@ public class BmpImageParser extends ImageParser
         int width = bhi.width;
         int height = bhi.height;
 
-        boolean hasAlpha = false;
         BufferedImage result = getBufferedImageFactory(params)
-                .getColorBufferedImage(width, height, hasAlpha);
+                .getColorBufferedImage(width, height, true);
 
         if (verbose)
         {
