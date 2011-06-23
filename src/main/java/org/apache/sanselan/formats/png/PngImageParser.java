@@ -547,8 +547,11 @@ public class PngImageParser extends ImageParser implements PngConstants
         {
             isTransparent = true;
             pngChunktRNS = (PNGChunk) IHDRs.get(0);
-        } else
-            hasAlphaChannel(pngChunkIHDR.colorType);
+        } else {
+            // CE - Fix Alpha.
+            isTransparent = hasAlphaChannel(pngChunkIHDR.colorType);
+            // END FIX
+        }
 
         PNGChunkpHYs pngChunkpHYs = null;
 

@@ -98,6 +98,16 @@ public class PngWriteReadTest extends SanselanTest
         }
     }
 
+    public void testTransparency() throws IOException, ImageReadException, ImageWriteException
+    {
+        // Test for https://issues.apache.org/jira/browse/SANSELAN-52
+        int[][] smallAscendingPixels = getAscendingRawData(256, 256);
+        byte[] pngBytes = Sanselan.writeImageToBytes(
+                imageDataToBufferedImage(smallAscendingPixels),
+                ImageFormat.IMAGE_FORMAT_PNG, null);
+        assertTrue(Sanselan.getImageInfo(pngBytes).isTransparent());
+    }
+
     private BufferedImage imageDataToBufferedImage(int[][] rawData)
     {
         int width = rawData[0].length;
