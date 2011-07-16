@@ -1,0 +1,7 @@
+Image contributed by Damjan Jovanovic.
+
+This is a badly corrupted JPEG: 0x00 0x01 ... 0xFF
+is written between each segment. A resilient JPEG
+parser must skip this data, and scan forward
+looking for 0xFF followed by a non-0xFF byte
+which marks the next segment.

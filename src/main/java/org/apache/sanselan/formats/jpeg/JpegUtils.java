@@ -65,10 +65,12 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 
             for (int markerCount = 0; true; markerCount++)
             {
-                byte markerBytes[] = readByteArray("markerBytes", 2, is,
-                        "markerBytes");
-                int marker = convertByteArrayToShort("marker", markerBytes,
-                        byteOrder);
+                byte[] markerBytes = new byte[2];
+                do {
+                    markerBytes[0] = markerBytes[1];
+                    markerBytes[1] = readByte("marker", is, "Could not read marker");
+                } while ((0xff & markerBytes[0]) != 0xff || (0xff & markerBytes[1]) == 0xff);
+                int marker = ((0xff & markerBytes[0]) << 8) | (0xff & markerBytes[1]);
 
 //                Debug.debug("marker", marker + " (0x" + Integer.toHexString(marker) + ")");
 //                Debug.debug("markerBytes", markerBytes);
