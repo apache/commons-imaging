@@ -857,12 +857,11 @@ public class BinaryFileFunctions implements BinaryConstants
 
     protected final byte[] convertFloatToByteArray(float value, int byteOrder)
     {
-        // TODO: not tested; probably wrong.
         byte result[] = new byte[4];
 
         int bits = Float.floatToRawIntBits(value);
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+        if (byteOrder == BYTE_ORDER_INTEL) // intel, big endian
         {
             result[0] = (byte) (0xff & (bits >> 0));
             result[1] = (byte) (0xff & (bits >> 8));
@@ -882,7 +881,6 @@ public class BinaryFileFunctions implements BinaryConstants
     protected final byte[] convertFloatArrayToByteArray(float values[],
             int byteOrder)
     {
-        // TODO: not tested; probably wrong.
         byte result[] = new byte[values.length * 4];
         for (int i = 0; i < values.length; i++)
         {
@@ -890,7 +888,7 @@ public class BinaryFileFunctions implements BinaryConstants
             int bits = Float.floatToRawIntBits(value);
 
             int start = i * 4;
-            if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+            if (byteOrder == BYTE_ORDER_INTEL) // intel, little endian
             {
                 result[start + 0] = (byte) (0xff & (bits >> 0));
                 result[start + 1] = (byte) (0xff & (bits >> 8));
@@ -909,12 +907,11 @@ public class BinaryFileFunctions implements BinaryConstants
 
     protected final byte[] convertDoubleToByteArray(double value, int byteOrder)
     {
-        // TODO: not tested; probably wrong.
         byte result[] = new byte[8];
 
         long bits = Double.doubleToRawLongBits(value);
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+        if (byteOrder == BYTE_ORDER_INTEL) // intel, little endian
         {
             result[0] = (byte) (0xff & (bits >> 0));
             result[1] = (byte) (0xff & (bits >> 8));
@@ -942,7 +939,6 @@ public class BinaryFileFunctions implements BinaryConstants
     protected final byte[] convertDoubleArrayToByteArray(double values[],
             int byteOrder)
     {
-        // TODO: not tested; probably wrong.
         byte result[] = new byte[values.length * 8];
         for (int i = 0; i < values.length; i++)
         {
@@ -950,7 +946,7 @@ public class BinaryFileFunctions implements BinaryConstants
             long bits = Double.doubleToRawLongBits(value);
 
             int start = i * 8;
-            if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+            if (byteOrder == BYTE_ORDER_INTEL) // intel, little endian
             {
                 result[start + 0] = (byte) (0xff & (bits >> 0));
                 result[start + 1] = (byte) (0xff & (bits >> 8));
@@ -984,8 +980,6 @@ public class BinaryFileFunctions implements BinaryConstants
     protected final double convertByteArrayToDouble(String name, byte bytes[],
             int start, int byteOrder)
     {
-        // TODO: not tested; probably wrong.
-
         byte byte0 = bytes[start + 0];
         byte byte1 = bytes[start + 1];
         byte byte2 = bytes[start + 2];
@@ -999,18 +993,18 @@ public class BinaryFileFunctions implements BinaryConstants
 
         if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
         {
-            bits = ((0xff & byte0) << 56) | ((0xff & byte1) << 48)
-                    | ((0xff & byte2) << 40) | ((0xff & byte3) << 32)
-                    | ((0xff & byte4) << 24) | ((0xff & byte5) << 16)
-                    | ((0xff & byte6) << 8) | ((0xff & byte7) << 0);
+            bits = ((0xffL & byte0) << 56) | ((0xffL & byte1) << 48)
+                    | ((0xffL & byte2) << 40) | ((0xffL & byte3) << 32)
+                    | ((0xffL & byte4) << 24) | ((0xffL & byte5) << 16)
+                    | ((0xffL & byte6) << 8) | ((0xffL & byte7) << 0);
 
         } else
         {
             // intel, little endian
-            bits = ((0xff & byte7) << 56) | ((0xff & byte6) << 48)
-                    | ((0xff & byte5) << 40) | ((0xff & byte4) << 32)
-                    | ((0xff & byte3) << 24) | ((0xff & byte2) << 16)
-                    | ((0xff & byte1) << 8) | ((0xff & byte0) << 0);
+            bits = ((0xffL & byte7) << 56) | ((0xffL & byte6) << 48)
+                    | ((0xffL & byte5) << 40) | ((0xffL & byte4) << 32)
+                    | ((0xffL & byte3) << 24) | ((0xffL & byte2) << 16)
+                    | ((0xffL & byte1) << 8) | ((0xffL & byte0) << 0);
         }
 
         double result = Double.longBitsToDouble(bits);
