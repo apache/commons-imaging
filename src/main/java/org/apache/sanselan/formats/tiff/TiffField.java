@@ -105,7 +105,7 @@ public class TiffField implements TiffConstants
         this.oversizeValue = bytes;
     }
 
-    private static FieldType getFieldType(int value)
+    static FieldType getFieldType(int value)
     {
         for (int i = 0; i < FIELD_TYPES.length; i++)
         {
@@ -282,7 +282,7 @@ public class TiffField implements TiffConstants
         return result;
     }
 
-    private int getValueLengthInBytes()
+    int getValueLengthInBytes()
     {
         int unit_length = fieldType.length;
         int valueLength = unit_length * length;

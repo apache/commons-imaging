@@ -28,6 +28,7 @@ import org.apache.sanselan.common.BinaryFileParser;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.util.Debug;
 
 public class TiffReader extends BinaryFileParser implements TiffConstants
@@ -188,6 +189,15 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
                 // {
                 TiffField field = new TiffField(tag, dirType, type, length,
                         valueOffset, valueOffsetBytes, getByteOrder());
+                FieldType fieldType = TiffField.getFieldType(type);
+                if (!strict &&
+                    !fieldType.isLocalValue(field) &&
+                    (valueOffset < 0 || ((long)valueOffset) + ((long)field.getValueLengthInBytes()) > byteSource.getLength()))
+                {
+                    // corrupt field would throw, ignore it
+                    continue;
+                }
+
                 field.setSortHint(i);
 
                 // Debug.debug("tagInfo", field.tagInfo);
