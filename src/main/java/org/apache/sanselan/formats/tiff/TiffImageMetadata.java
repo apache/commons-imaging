@@ -19,12 +19,15 @@ package org.apache.sanselan.formats.tiff;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.ImageMetadata;
 import org.apache.sanselan.common.RationalNumber;
+import org.apache.sanselan.formats.tiff.constants.AllTagConstants;
 import org.apache.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.constants.TiffDirectoryConstants;
@@ -38,10 +41,30 @@ public class TiffImageMetadata extends ImageMetadata
             TiffDirectoryConstants
 {
     public final TiffContents contents;
+    private static final Map tagCounts = countTags(AllTagConstants.ALL_TAGS);
 
     public TiffImageMetadata(final TiffContents contents)
     {
         this.contents = contents;
+    }
+
+    private static final Map countTags(TagInfo tags[])
+    {
+        Map map = new Hashtable();
+
+        for (int i = 0; i < tags.length; i++)
+        {
+            TagInfo tag = tags[i];
+            Object key = new Integer(tag.tag);
+
+            Integer count = (Integer) map.get(key);
+            if (count == null)
+                map.put(key, new Integer(1));
+            else
+            	map.put(key, new Integer(count.intValue() + 1));
+        }
+
+        return map;
     }
 
     public static class Directory extends ImageMetadata
@@ -230,14 +253,59 @@ public class TiffImageMetadata extends ImageMetadata
 
     public TiffField findField(TagInfo tagInfo) throws ImageReadException
     {
+        return findField(tagInfo, false);
+    }
+    
+    public TiffField findField(TagInfo tagInfo, boolean exactDirectoryMatch) throws ImageReadException
+    {
+    	// Please keep this method in sync with TiffField's getTag()
+    	Integer tagCount = (Integer)tagCounts.get(new Integer(tagInfo.tag));
+    	int tagsMatching = tagCount == null ? 0 : tagCount.intValue();
+    	
         ArrayList directories = getDirectories();
+        if (exactDirectoryMatch || tagInfo.directoryType != EXIF_DIRECTORY_UNKNOWN)
+        {
+            for (int i = 0; i < directories.size(); i++)
+            {
+                Directory directory = (Directory) directories.get(i);
+                if (directory.type == tagInfo.directoryType.directoryType) {
+                    TiffField field = directory.findField(tagInfo);
+                    if (field != null) {
+                    	return field;
+                    }
+                }
+            }
+            if (exactDirectoryMatch || tagsMatching > 1) {
+            	return null;
+            }
+            for (int i = 0; i < directories.size(); i++)
+            {
+                Directory directory = (Directory) directories.get(i);
+                if (tagInfo.directoryType.isImageDirectory() &&
+                		directory.type >= 0) {
+                    TiffField field = directory.findField(tagInfo);
+                    if (field != null) {
+                    	return field;
+                    }
+                } else if (!tagInfo.directoryType.isImageDirectory() &&
+                		directory.type < 0) {
+                    TiffField field = directory.findField(tagInfo);
+                    if (field != null) {
+                    	return field;
+                    }
+                }
+            }
+        }
+        
         for (int i = 0; i < directories.size(); i++)
         {
             Directory directory = (Directory) directories.get(i);
             TiffField field = directory.findField(tagInfo);
-            if (null != field)
-                return field;
+            if (field != null) {
+            	return field;
+            }
         }
+    	
         return null;
     }
 

@@ -120,6 +120,8 @@ public class TiffField implements TiffConstants
     private static TagInfo getTag(int directoryType, int tag,
             List possibleMatches)
     {
+    	// Please keep this method in sync with TiffImageMetadata's findField()
+    	
         if (possibleMatches.size() < 1)
             return null;
         // else if (possibleMatches.size() == 1)
@@ -135,29 +137,7 @@ public class TiffField implements TiffConstants
             if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
                 // pass
                 continue;
-            else if (directoryType == DIRECTORY_TYPE_EXIF
-                    && tagInfo.directoryType == EXIF_DIRECTORY_EXIF_IFD)
-                return tagInfo;
-            else if (directoryType == DIRECTORY_TYPE_INTEROPERABILITY
-                    && tagInfo.directoryType == EXIF_DIRECTORY_INTEROP_IFD)
-                return tagInfo;
-            else if (directoryType == DIRECTORY_TYPE_GPS
-                    && tagInfo.directoryType == EXIF_DIRECTORY_GPS)
-                return tagInfo;
-            else if (directoryType == DIRECTORY_TYPE_MAKER_NOTES
-                    && tagInfo.directoryType == EXIF_DIRECTORY_MAKER_NOTES)
-                return tagInfo;
-            else if (directoryType == DIRECTORY_TYPE_DIR_0
-                    && tagInfo.directoryType == TIFF_DIRECTORY_IFD0)
-                return tagInfo;
-            else if (directoryType == DIRECTORY_TYPE_DIR_1
-                    && tagInfo.directoryType == TIFF_DIRECTORY_IFD1)
-                return tagInfo;
-            else if (directoryType == DIRECTORY_TYPE_DIR_2
-                    && tagInfo.directoryType == TIFF_DIRECTORY_IFD2)
-                return tagInfo;
-            else if (directoryType == DIRECTORY_TYPE_DIR_3
-                    && tagInfo.directoryType == TIFF_DIRECTORY_IFD3)
+            else if (directoryType == tagInfo.directoryType.directoryType)
                 return tagInfo;
         }
 
@@ -271,7 +251,7 @@ public class TiffField implements TiffConstants
     {
         Object key = new Integer(tag);
 
-        List possibleMatches = (List) EXIF_TAG_MAP.get(key);
+        List possibleMatches = (List) ALL_TAG_MAP.get(key);
 
         if (null == possibleMatches)
         {
