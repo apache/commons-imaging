@@ -105,7 +105,7 @@ public class TiffField implements TiffConstants
         this.oversizeValue = bytes;
     }
 
-    static FieldType getFieldType(int value)
+    private static FieldType getFieldType(int value)
     {
         for (int i = 0; i < FIELD_TYPES.length; i++)
         {
@@ -262,7 +262,7 @@ public class TiffField implements TiffConstants
         return result;
     }
 
-    int getValueLengthInBytes()
+    private int getValueLengthInBytes()
     {
         int unit_length = fieldType.length;
         int valueLength = unit_length * length;
@@ -274,7 +274,7 @@ public class TiffField implements TiffConstants
     }
 
     public void fillInValue(ByteSource byteSource) throws ImageReadException,
-            IOException
+            IOException, TiffValueOutsideFileBoundsException
     {
         if (fieldType.isLocalValue(this))
             return;
@@ -286,6 +286,13 @@ public class TiffField implements TiffConstants
         // Debug.debug("fillInValue valueOffset", valueOffset);
         // Debug.debug("fillInValue valueLength", valueLength);
 
+        if (valueOffset < 0 ||
+            ((long)valueOffset) + ((long)valueLength) > byteSource.getLength()) {
+            throw new TiffValueOutsideFileBoundsException(
+                "Attempt to read byte range starting from " + valueOffset + " " +
+                "of length " + valueLength + " " +
+                "which is outside the file's size of " + byteSource.getLength());
+        }
         byte bytes[] = byteSource.getBlock(valueOffset, valueLength);
         setOversizeValue(bytes);
     }

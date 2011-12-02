@@ -189,20 +189,20 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
                 // {
                 TiffField field = new TiffField(tag, dirType, type, length,
                         valueOffset, valueOffsetBytes, getByteOrder());
-                FieldType fieldType = TiffField.getFieldType(type);
-                if (!strict &&
-                    !fieldType.isLocalValue(field) &&
-                    (valueOffset < 0 || ((long)valueOffset) + ((long)field.getValueLengthInBytes()) > byteSource.getLength()))
-                {
-                    // corrupt field would throw, ignore it
-                    continue;
-                }
-
                 field.setSortHint(i);
 
                 // Debug.debug("tagInfo", field.tagInfo);
 
-                field.fillInValue(byteSource);
+                try {
+                    field.fillInValue(byteSource);
+                } catch (TiffValueOutsideFileBoundsException valueOutsideFileException) {
+                    if (strict) {
+                        throw new IOException(valueOutsideFileException);
+                    } else {
+                        // corrupt field, ignore it
+                        continue;
+                    }
+                }
 
                 // Debug.debug("\t" + "value", field.getValueDescription());
 
