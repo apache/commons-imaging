@@ -108,17 +108,6 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         return new ArrayList(entries);
     }
 
-    protected void fillInValues(ByteSource byteSource)
-            throws ImageReadException, IOException
-    {
-        for (int i = 0; i < entries.size(); i++)
-        {
-            TiffField entry = (TiffField) entries.get(i);
-
-            entry.fillInValue(byteSource);
-        }
-    }
-
     public void dump()
     {
         for (int i = 0; i < entries.size(); i++)
