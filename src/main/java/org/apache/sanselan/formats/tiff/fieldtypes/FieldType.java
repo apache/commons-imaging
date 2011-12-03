@@ -37,7 +37,12 @@ public abstract class FieldType extends BinaryFileFunctions implements
 
     public boolean isLocalValue(TiffField entry)
     {
-        return ((length > 0) && ((length * entry.length) <= TIFF_ENTRY_MAX_VALUE_LENGTH));
+        // FIXME: we should use unsigned ints for offsets and lengths
+        // when parsing TIFF files. But since we don't,
+        // at least make this method treat length as unsigned,
+        // so that corrupt lengths are caught early.
+        long entryLength = 0xffffffffL & entry.length;
+        return ((length > 0) && ((length * entryLength) <= TIFF_ENTRY_MAX_VALUE_LENGTH));
     }
 
     public int getBytesLength(TiffField entry) throws ImageReadException
