@@ -224,7 +224,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         TiffField bitsPerSampleField = directory
                 .findField(TIFF_TAG_BITS_PER_SAMPLE);
 
-        int bitsPerSample = -1;
+        int bitsPerSample = 1;
         if ((bitsPerSampleField != null)
                 && (bitsPerSampleField.getValue() != null))
             bitsPerSample = bitsPerSampleField.getIntValueOrArraySum();
@@ -460,13 +460,18 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                 .getIntValue();
         int height = directory.findField(TIFF_TAG_IMAGE_LENGTH, true)
                 .getIntValue();
-        int samplesPerPixel = directory.findField(TIFF_TAG_SAMPLES_PER_PIXEL,
-                true).getIntValue();
-        int bitsPerSample[] = directory.findField(TIFF_TAG_BITS_PER_SAMPLE,
-                true).getIntArrayValue();
-        // TODO: why are we using bits per sample twice? because one is a sum.
-        int bitsPerPixel = directory.findField(TIFF_TAG_BITS_PER_SAMPLE, true)
-                .getIntValueOrArraySum();
+        int samplesPerPixel = 1;
+        TiffField samplesPerPixelField = directory.findField(TIFF_TAG_SAMPLES_PER_PIXEL);
+        if (samplesPerPixelField != null)
+            samplesPerPixel = samplesPerPixelField.getIntValue();
+        int bitsPerSample[] = { 1 };
+        int bitsPerPixel = samplesPerPixel;
+        TiffField bitsPerSampleField = directory.findField(TIFF_TAG_BITS_PER_SAMPLE);
+        if (bitsPerSampleField != null)
+        {
+            bitsPerSample = bitsPerSampleField.getIntArrayValue();
+            bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
+        }
 
         // int bitsPerPixel = getTagAsValueOrArraySum(entries,
         // TIFF_TAG_BITS_PER_SAMPLE);
