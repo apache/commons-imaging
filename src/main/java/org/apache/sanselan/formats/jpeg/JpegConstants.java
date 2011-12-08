@@ -110,6 +110,7 @@ public interface JpegConstants
     public static final int SOS_Marker = 0xFFda;
     public static final int DQTMarker = 0xFFdb;
     public static final int DNLMarker = 0xFFdc;
+    public static final int COMMarker = 0xFFfe;
 
     public static final int MARKERS[] = { JPEG_APP0,
             JPEG_APP0_Marker, JPEG_APP1_Marker, JPEG_APP2_Marker,
@@ -118,7 +119,7 @@ public interface JpegConstants
             DHTMarker, SOF5Marker, SOF6Marker, SOF7Marker, SOF8Marker,
             SOF9Marker, SOF10Marker, SOF11Marker, DACMarker, SOF13Marker,
             SOF14Marker, SOF15Marker, EOIMarker, SOS_Marker,
-            DQTMarker, DNLMarker };
+            DQTMarker, DNLMarker, COMMarker };
 
     public static final byte icc_profile_label[] = { 0x49, 0x43, 0x43, 0x5F,
             0x50, 0x52, 0x4F, 0x46, 0x49, 0x4C, 0x45, 0x0 };

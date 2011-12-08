@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +41,7 @@ import org.apache.sanselan.formats.jpeg.iptc.IPTCParser;
 import org.apache.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.sanselan.formats.jpeg.segments.App13Segment;
 import org.apache.sanselan.formats.jpeg.segments.App2Segment;
+import org.apache.sanselan.formats.jpeg.segments.COMSegment;
 import org.apache.sanselan.formats.jpeg.segments.DQTSegment;
 import org.apache.sanselan.formats.jpeg.segments.GenericSegment;
 import org.apache.sanselan.formats.jpeg.segments.JFIFSegment;
@@ -172,6 +174,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
                         && (marker <= JPEG_APP15_Marker))
                 {
                     result.add(new UnknownSegment(marker, segmentData));
+                } else if (marker == COMMarker)
+                {
+                    result.add(new COMSegment(marker, segmentData));
                 }
 
                 if (returnAfterFirst)
@@ -801,7 +806,18 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         }
 
         ArrayList Comments = new ArrayList();
-        // TODO: comments...
+        ArrayList commentSegments = readSegments(byteSource,
+                new int[] { COMMarker }, false);
+        for (int i = 0; i < commentSegments.size(); i++)
+        {
+            COMSegment comSegment = (COMSegment) commentSegments.get(i);
+            String comment = "";
+            try {
+                comment = new String(comSegment.comment, "ISO-8859-1");
+            } catch (UnsupportedEncodingException cannotHappen) {
+            }
+            Comments.add(comment);
+        }
 
         int Number_of_components = fSOFNSegment.numberOfComponents;
         int Precision = fSOFNSegment.precision;
