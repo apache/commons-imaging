@@ -105,11 +105,6 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             File imageFile = (File) images.get(i);
             Debug.debug("imageFile", imageFile);
 
-            // This test image contains invalid EXIF and would break the test.
-            if (imageFile.getName().equals("Oregon Scientific DS6639 - DSC_0307.JPG")) {
-                continue;
-            }
-
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             if (ignoreImageData)
                 continue;
@@ -190,11 +185,6 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             Debug.purgeMemory();
 
             File imageFile = (File) images.get(i);
-
-            // This test image contains invalid EXIF and would break the test.
-            if (imageFile.getName().equals("Oregon Scientific DS6639 - DSC_0307.JPG")) {
-                continue;
-            }
 
             try
             {
@@ -436,6 +426,25 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                     // ignore "jpg from raw length" value. may have off-by-one bug in certain cameras.
                     // i.e. Sony DCR-PC110
                     continue;
+                }
+
+                if (oldField.fieldType == FIELD_TYPE_ASCII)
+                {
+                    // Sanselan currently doesn't correctly rewrite
+                    // strings if any byte had the highest bit set,
+                    // so if the source had that, all bets are off.
+                    byte[] rawBytes = oldField.fieldType.getRawBytes(oldField);
+                    boolean hasInvalidByte = false;
+                    for (int k = 0; k < rawBytes.length; k++)
+                    {
+                        if ((rawBytes[k] & 0x80) != 0)
+                        {
+                            hasInvalidByte = true;
+                            break;
+                        }
+                    }
+                    if (hasInvalidByte)
+                        continue;
                 }
 
                 if (!oldField.tagInfo.isOffset())
