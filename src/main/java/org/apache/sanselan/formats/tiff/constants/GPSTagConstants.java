@@ -51,14 +51,14 @@ public interface GPSTagConstants
 
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_ALTITUDE_REF = new TagInfo(
-            "GPS Altitude Ref", 0x0005, FIELD_TYPE_DESCRIPTION_BYTE, -1,
+            "GPS Altitude Ref", 0x0005, FIELD_TYPE_DESCRIPTION_BYTE, 1,
             EXIF_DIRECTORY_GPS);
 
     public static final int GPS_TAG_GPS_ALTITUDE_REF_VALUE_ABOVE_SEA_LEVEL = 0;
     public static final int GPS_TAG_GPS_ALTITUDE_REF_VALUE_BELOW_SEA_LEVEL = 1;
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_ALTITUDE = new TagInfo(
-            "GPS Altitude", 0x0006, FIELD_TYPE_DESCRIPTION_RATIONAL, -1,
+            "GPS Altitude", 0x0006, FIELD_TYPE_DESCRIPTION_RATIONAL, 1,
             EXIF_DIRECTORY_GPS);
 
     // ************************************************************
@@ -86,7 +86,7 @@ public interface GPSTagConstants
     public static final int GPS_TAG_GPS_MEASURE_MODE_VALUE_3_DIMENSIONAL_MEASUREMENT = 3;
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_DOP = new TagInfo("GPS DOP",
-            0x000b, FIELD_TYPE_DESCRIPTION_RATIONAL, -1, EXIF_DIRECTORY_GPS);
+            0x000b, FIELD_TYPE_DESCRIPTION_RATIONAL, 1, EXIF_DIRECTORY_GPS);
 
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_SPEED_REF = new TagInfo(
@@ -98,7 +98,7 @@ public interface GPSTagConstants
     public static final String GPS_TAG_GPS_SPEED_REF_VALUE_KNOTS = "N";
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_SPEED = new TagInfo("GPS Speed",
-            0x000d, FIELD_TYPE_DESCRIPTION_RATIONAL, -1, EXIF_DIRECTORY_GPS);
+            0x000d, FIELD_TYPE_DESCRIPTION_RATIONAL, 1, EXIF_DIRECTORY_GPS);
 
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_TRACK_REF = new TagInfo(
@@ -109,7 +109,7 @@ public interface GPSTagConstants
     public static final String GPS_TAG_GPS_TRACK_REF_VALUE_TRUE_NORTH = "T";
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_TRACK = new TagInfo("GPS Track",
-            0x000f, FIELD_TYPE_DESCRIPTION_RATIONAL, -1, EXIF_DIRECTORY_GPS);
+            0x000f, FIELD_TYPE_DESCRIPTION_RATIONAL, 1, EXIF_DIRECTORY_GPS);
 
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_IMG_DIRECTION_REF = new TagInfo(
@@ -120,7 +120,7 @@ public interface GPSTagConstants
     public static final String GPS_TAG_GPS_IMG_DIRECTION_REF_VALUE_TRUE_NORTH = "T";
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_IMG_DIRECTION = new TagInfo(
-            "GPS Img Direction", 0x0011, FIELD_TYPE_DESCRIPTION_RATIONAL, -1,
+            "GPS Img Direction", 0x0011, FIELD_TYPE_DESCRIPTION_RATIONAL, 1,
             EXIF_DIRECTORY_GPS);
 
     // ************************************************************
@@ -161,7 +161,7 @@ public interface GPSTagConstants
     public static final String GPS_TAG_GPS_DEST_BEARING_REF_VALUE_TRUE_NORTH = "T";
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_DEST_BEARING = new TagInfo(
-            "GPS Dest Bearing", 0x0018, FIELD_TYPE_DESCRIPTION_RATIONAL, -1,
+            "GPS Dest Bearing", 0x0018, FIELD_TYPE_DESCRIPTION_RATIONAL, 1,
             EXIF_DIRECTORY_GPS);
 
     // ************************************************************
@@ -174,7 +174,7 @@ public interface GPSTagConstants
     public static final String GPS_TAG_GPS_DEST_DISTANCE_REF_VALUE_NAUTICAL_MILES = "N";
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_DEST_DISTANCE = new TagInfo(
-            "GPS Dest Distance", 0x001a, FIELD_TYPE_DESCRIPTION_RATIONAL, -1,
+            "GPS Dest Distance", 0x001a, FIELD_TYPE_DESCRIPTION_RATIONAL, 1,
             EXIF_DIRECTORY_GPS);
 
     // ************************************************************
@@ -194,7 +194,7 @@ public interface GPSTagConstants
 
     // ************************************************************
     public static final TagInfo GPS_TAG_GPS_DIFFERENTIAL = new TagInfo(
-            "GPS Differential", 0x001e, FIELD_TYPE_DESCRIPTION_SHORT, -1,
+            "GPS Differential", 0x001e, FIELD_TYPE_DESCRIPTION_SHORT, 1,
             EXIF_DIRECTORY_GPS);
 
     public static final int GPS_TAG_GPS_DIFFERENTIAL_VALUE_NO_CORRECTION = 0;
