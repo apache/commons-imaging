@@ -32,14 +32,20 @@ import java.util.Map;
 public final class Debug
 {
 
+    private static final boolean DEBUG = false;
+    
     public static void debug(String message)
     {
-        System.out.println(message);
+        if (DEBUG) {
+            System.out.println(message);
+        }
     }
 
     public static void debug(Object o)
     {
-        System.out.println(o == null ? "null" : o.toString());
+        if (DEBUG) {
+            System.out.println(o == null ? "null" : o.toString());
+        }
     }
 
     public static String getDebug(String message)
@@ -54,7 +60,9 @@ public final class Debug
 
     public static void newline()
     {
-        System.out.print(newline);
+        if (DEBUG) {
+            System.out.print(newline);
+        }
     }
 
     public static String getDebug(String message, int value)
