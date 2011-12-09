@@ -106,7 +106,7 @@ public class PackBits
         int i;
 
         for (i = start + 1; (i < bytes.length) && (bytes[i] == b); i++)
-            ;
+        { /* do nothing */ }
 
         return i - start;
     }

@@ -36,13 +36,13 @@ public class TextFieldTest extends SpecificExifTagTest
             throws IOException, ImageReadException, ImageWriteException
     {
         if (field.tag == EXIF_TAG_USER_COMMENT.tag)
-            ;
+        { /* do nothing */ }
         else if (field.tag == GPS_TAG_GPS_PROCESSING_METHOD.tag
                 && field.directoryType == EXIF_DIRECTORY_GPS.directoryType)
-            ;
+        { /* do nothing */ }
         else if (field.tag == GPS_TAG_GPS_AREA_INFORMATION.tag
                 && field.directoryType == EXIF_DIRECTORY_GPS.directoryType)
-            ;
+        { /* do nothing */ }
         else
             return;
 

@@ -266,7 +266,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants
             {
                 // read stream to end, filling cache.
                 while (is.read() >= 0)
-                    ;
+                { /* do nothing */ }
             }
 
             byte data[] = cis.getCache();

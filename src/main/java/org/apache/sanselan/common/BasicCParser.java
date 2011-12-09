@@ -96,7 +96,7 @@ public class BasicCParser
                     return token.toString();
                 }
                 else if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
-                    ;
+                { /* do nothing */ }
                 else
                     throw new ImageReadException("Unhandled/invalid character '" +
                             ((char)c) + "' found in XPM file");

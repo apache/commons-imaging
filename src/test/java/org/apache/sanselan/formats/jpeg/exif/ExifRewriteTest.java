@@ -450,7 +450,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 if (!oldField.tagInfo.isOffset())
                 {
                     if (oldField.tagInfo.isText())
-                        ;
+                    { /* do nothing */ }
                     else if (oldField.isLocalValue())
                     {
                         //                        Debug.debug("oldField.tag", oldField.tag);

@@ -88,11 +88,11 @@ public class ByteSourceImageTest extends ByteSourceTest
             checkGetImageSize(imageFile, imageFileBytes);
 
             ImageFormat imageFormat = Sanselan.guessFormat(imageFile);
-            if (ImageFormat.IMAGE_FORMAT_JPEG == imageFormat
-                    || ImageFormat.IMAGE_FORMAT_UNKNOWN == imageFormat)
-                ;
-            else
+            if (ImageFormat.IMAGE_FORMAT_JPEG != imageFormat
+             && ImageFormat.IMAGE_FORMAT_UNKNOWN != imageFormat)
+            {
                 checkGetBufferedImage(imageFile, imageFileBytes);
+            }
         }
     }
 

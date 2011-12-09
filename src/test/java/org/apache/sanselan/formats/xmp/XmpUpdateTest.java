@@ -64,11 +64,11 @@ public class XmpUpdateTest extends SanselanTest
             assertNotNull(xmpXml);
 
             if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_PNG))
-                ;
+            { /* do nothing */ }
             else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF))
-                ;
+            { /* do nothing */ }
             else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF))
-                ;
+            { /* do nothing */ }
             else
                 continue;
 

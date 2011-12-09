@@ -250,7 +250,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
                     if (entry.tag == TiffConstants.EXIF_TAG_EXIF_OFFSET.tag
                             || entry.tag == TiffConstants.EXIF_TAG_GPSINFO.tag
                             || entry.tag == TiffConstants.EXIF_TAG_INTEROP_OFFSET.tag)
-                        ;
+                    { /* do nothing */ }
                     else
                         continue;
 

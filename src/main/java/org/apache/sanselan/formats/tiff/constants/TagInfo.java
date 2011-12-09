@@ -344,9 +344,9 @@ public class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
             if (entry.type == FIELD_TYPE_ASCII.type)
                 return FIELD_TYPE_ASCII.getSimpleValue(entry);
             else if (entry.type == FIELD_TYPE_UNDEFINED.type)
-                ;
+            { /* do nothing */ }
             else if (entry.type == FIELD_TYPE_BYTE.type)
-                ;
+            { /* do nothing */ }
             else
             {
                 Debug.debug("entry.type", entry.type);
