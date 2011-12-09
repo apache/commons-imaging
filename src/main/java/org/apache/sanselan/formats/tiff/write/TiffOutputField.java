@@ -84,8 +84,8 @@ public class TiffOutputField implements TiffConstants
             throw new ImageWriteException("Tag has no default data type.");
         FieldType fieldType = tagInfo.dataTypes[0];
 
-        if (tagInfo.length != value.length)
-            throw new ImageWriteException("Tag does not expect a single value.");
+        if (tagInfo.length >= 0 && tagInfo.length != value.length)
+            throw new ImageWriteException("Tag expects " + tagInfo.length + " values.");
 
         byte bytes[] = fieldType.writeData(value, byteOrder);
 
