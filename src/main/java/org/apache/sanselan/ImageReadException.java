@@ -18,7 +18,7 @@ package org.apache.sanselan;
 
 public class ImageReadException extends SanselanException
 {
-    static final long serialVersionUID = -1L;
+    private static final long serialVersionUID = -1L;
 
     public ImageReadException(String s)
     {
