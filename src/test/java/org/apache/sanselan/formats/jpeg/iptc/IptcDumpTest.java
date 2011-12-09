@@ -68,16 +68,16 @@ public class IptcDumpTest extends IptcBaseTest
             JpegPhotoshopMetadata psMetadata = metadata.getPhotoshop();
             List oldRecords = psMetadata.photoshopApp13Data.getRecords();
 
-            System.out.println();
+            Debug.debug();
             for (int j = 0; j < oldRecords.size(); j++)
             {
                 IPTCRecord record = (IPTCRecord) oldRecords.get(j);
                 if (record.iptcType.type != IPTCConstants.IPTC_TYPE_CITY.type)
-                    System.out.println("Key: " + record.iptcType.name + " (0x"
+                    Debug.debug("Key: " + record.iptcType.name + " (0x"
                             + Integer.toHexString(record.iptcType.type)
                             + "), value: " + record.value);
             }
-            System.out.println();
+            Debug.debug();
         }
     }
 
