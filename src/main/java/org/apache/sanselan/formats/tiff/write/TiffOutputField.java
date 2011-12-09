@@ -97,16 +97,19 @@ public class TiffOutputField implements TiffConstants
             String value) throws ImageWriteException
     {
         FieldType fieldType;
-        if (tagInfo.dataTypes == null)
-            fieldType = FIELD_TYPE_ASCII;
-        else if (tagInfo.dataTypes == FIELD_TYPE_DESCRIPTION_ASCII)
+        if (tagInfo.dataTypes == null || tagInfo.dataTypes.length < 1)
             fieldType = FIELD_TYPE_ASCII;
         else
-            throw new ImageWriteException("Tag has unexpected data type.");
+        {
+            if (tagInfo.dataTypes[0] == FIELD_TYPE_ASCII)
+                fieldType = FIELD_TYPE_ASCII;
+            else
+                throw new ImageWriteException("Tag has unexpected data type.");
+        }
 
         byte bytes[] = fieldType.writeData(value, byteOrder);
 
-        return new TiffOutputField(tagInfo.tag, tagInfo, fieldType, 1, bytes);
+        return new TiffOutputField(tagInfo.tag, tagInfo, fieldType, bytes.length, bytes);
     }
 
     protected static final TiffOutputField createOffsetField(TagInfo tagInfo,
