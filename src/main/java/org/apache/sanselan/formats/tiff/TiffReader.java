@@ -197,7 +197,10 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
                     field.fillInValue(byteSource);
                 } catch (TiffValueOutsideFileBoundsException valueOutsideFileException) {
                     if (strict) {
-                        throw new IOException(valueOutsideFileException);
+                        // Java 1.5+ throw new IOException(valueOutsideFileException);
+                        IOException ioe = new IOException();
+                        ioe.initCause(valueOutsideFileException);
+                        throw ioe;
                     } else {
                         // corrupt field, ignore it
                         continue;
