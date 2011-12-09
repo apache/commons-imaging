@@ -17,17 +17,9 @@
 
 package org.apache.sanselan.formats.jpeg.exif;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.SanselanConstants;
 import org.apache.sanselan.ImageWriteException;
 import org.apache.sanselan.common.BinaryConstants;
-import org.apache.sanselan.formats.jpeg.JpegImageMetadata;
-import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.sanselan.util.Debug;

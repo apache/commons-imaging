@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.formats.jpeg.JpegImageParser;
 
 public class COMSegment extends Segment
 {

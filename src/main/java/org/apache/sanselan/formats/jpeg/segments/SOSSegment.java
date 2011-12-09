@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.sanselan.ImageReadException;
-import org.apache.sanselan.util.Debug;
 
 public class SOSSegment extends Segment
 {

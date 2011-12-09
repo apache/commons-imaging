@@ -28,7 +28,6 @@ import org.apache.sanselan.common.BinaryFileParser;
 import org.apache.sanselan.common.byteSources.ByteSource;
 import org.apache.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
-import org.apache.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.sanselan.util.Debug;
 
 public class TiffReader extends BinaryFileParser implements TiffConstants
