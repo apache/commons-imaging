@@ -25,6 +25,7 @@ import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.common.BinaryConstants;
 import org.apache.sanselan.common.BitInputStream;
 import org.apache.sanselan.common.PackBits;
+import org.apache.sanselan.common.itu_t4.T4Compression;
 import org.apache.sanselan.common.mylzw.MyLZWDecompressor;
 import org.apache.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -37,14 +38,18 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
 
     protected final int predictor;
     protected final int samplesPerPixel;
+    protected final int width, height;
 
     public DataReader(PhotometricInterpreter photometricInterpreter,
-            int bitsPerSample[], int predictor, int samplesPerPixel)
+            int bitsPerSample[], int predictor, int samplesPerPixel,
+            int width, int height)
     {
         this.photometricInterpreter = photometricInterpreter;
         this.bitsPerSample = bitsPerSample;
         this.samplesPerPixel = samplesPerPixel;
         this.predictor = predictor;
+        this.width = width;
+        this.height = height;
         last = new int[samplesPerPixel];
     }
 
@@ -101,11 +106,10 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
     {
         switch (compression)
         {
-            case 1 : // None;
+            case TIFF_COMPRESSION_UNCOMPRESSED : // None;
                 return compressed;
-            case 2 : // CCITT Group 3 1-Dimensional Modified Huffman run-length encoding.
-                throw new ImageReadException("Tiff: unknown compression: "
-                        + compression);
+            case TIFF_COMPRESSION_CCITT_1D : // CCITT Group 3 1-Dimensional Modified Huffman run-length encoding.
+                return T4Compression.decompress1D(compressed, width, height);
             case TIFF_COMPRESSION_LZW : // LZW
             {
                 InputStream is = new ByteArrayInputStream(compressed);
@@ -132,7 +136,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             }
 
             default :
-                throw new ImageReadException("Tiff: unknown compression: "
+                throw new ImageReadException("Tiff: unknown/unsupported compression: "
                         + compression);
         }
     }

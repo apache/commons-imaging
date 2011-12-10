@@ -29,7 +29,6 @@ public final class DataReaderStrips extends DataReader
 {
 
     private final int bitsPerPixel;
-    private final int width, height;
     private final int compression;
     private final int rowsPerStrip;
 
@@ -40,11 +39,9 @@ public final class DataReaderStrips extends DataReader
             int samplesPerPixel, int width, int height, int compression,
             int rowsPerStrip, TiffImageData.Strips imageData)
     {
-        super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel);
+        super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
 
         this.bitsPerPixel = bitsPerPixel;
-        this.width = width;
-        this.height = height;
         this.compression = compression;
         this.rowsPerStrip = rowsPerStrip;
         this.imageData = imageData;

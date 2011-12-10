@@ -73,9 +73,9 @@ public class BitInputStreamFlexible extends InputStream
                 cache = is.read();
                 if (cache < 0)
                     throw new IOException("couldn't read bits");
-                System.out.println("cache 1: " + cache + " ("
-                        + Integer.toHexString(cache) + ", "
-                        + Integer.toBinaryString(cache) + ")");
+//                System.out.println("cache 1: " + cache + " ("
+//                        + Integer.toHexString(cache) + ", "
+//                        + Integer.toBinaryString(cache) + ")");
                 bytesRead++;
                 result = (result << 8) | (0xff & cache);
                 count -= 8;
@@ -85,9 +85,9 @@ public class BitInputStreamFlexible extends InputStream
                 cache = is.read();
                 if (cache < 0)
                     throw new IOException("couldn't read bits");
-                System.out.println("cache 2: " + cache + " ("
-                        + Integer.toHexString(cache) + ", "
-                        + Integer.toBinaryString(cache) + ")");
+//                System.out.println("cache 2: " + cache + " ("
+//                        + Integer.toHexString(cache) + ", "
+//                        + Integer.toBinaryString(cache) + ")");
                 bytesRead++;
                 cacheBitsRemaining = 8 - count;
                 result = (result << count)

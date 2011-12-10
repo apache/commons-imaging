@@ -33,8 +33,6 @@ public final class DataReaderTiled extends DataReader
 
     private final int bitsPerPixel;
 
-    private final int width, height;
-
     private final int compression;
 
     private final TiffImageData.Tiles imageData;
@@ -44,14 +42,12 @@ public final class DataReaderTiled extends DataReader
             int bitsPerSample[], int predictor, int samplesPerPixel, int width,
             int height, int compression, TiffImageData.Tiles imageData)
     {
-        super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel);
+        super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
 
         this.tileWidth = tileWidth;
         this.tileLength = tileLength;
 
         this.bitsPerPixel = bitsPerPixel;
-        this.width = width;
-        this.height = height;
         this.compression = compression;
 
         this.imageData = imageData;
