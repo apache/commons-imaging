@@ -31,9 +31,9 @@ public class SanselanGuessFormatTest extends SanselanTest {
     public static final String TIFF_IMAGE_FILE = "tiff\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tif";
     public static final String JPEG_IMAGE_FILE = "jpg\\1\\Oregon Scientific DS6639 - DSC_0307 - small.jpg";
     public static final String PSD_IMAGE_FILE = "psd\\1\\Oregon Scientific DS6639 - DSC_0307 - small.psd";
-    public static final String PBM_IMAGE_FILE = "pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.pbm";
-    public static final String PGM_IMAGE_FILE = "pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.pgm";
-    public static final String PPM_IMAGE_FILE = "pxm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ppm";
+    public static final String PBM_IMAGE_FILE = "pbm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.pbm";
+    public static final String PGM_IMAGE_FILE = "pbm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.pgm";
+    public static final String PPM_IMAGE_FILE = "pbm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ppm";
     public static final String TGA_IMAGE_FILE = "tga\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tga";
 
     public void testGuess_all() throws IOException, ImageReadException {
