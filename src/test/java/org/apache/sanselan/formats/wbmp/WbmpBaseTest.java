@@ -23,7 +23,7 @@ import org.apache.sanselan.SanselanTest;
 
 public abstract class WbmpBaseTest extends SanselanTest
 {
-    private static boolean isWbmp(File file) throws IOException, ImageReadException
+    private static boolean isWbmp(File file)
     {
         return file.getName().toLowerCase().endsWith(".wbmp");
     }

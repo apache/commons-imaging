@@ -27,7 +27,7 @@ import org.apache.sanselan.SanselanTest;
 public abstract class PcxBaseTest extends SanselanTest
 {
 
-    private static boolean isPcx(File file) throws IOException, ImageReadException
+    private static boolean isPcx(File file)
     {
         return file.getName().toLowerCase().endsWith(".pcx");
     }

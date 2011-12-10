@@ -24,7 +24,7 @@ import org.apache.sanselan.SanselanTest;
 public abstract class XpmBaseTest extends SanselanTest
 {
 
-    private static boolean isXpm(File file) throws IOException, ImageReadException
+    private static boolean isXpm(File file)
     {
         return file.getName().toLowerCase().endsWith(".xpm");
     }

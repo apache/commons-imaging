@@ -345,7 +345,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
 		writeAndReadImageData("32bpp-image-1bpp-mask", baos.toByteArray(), foreground, background);
 	}
 
-	public void test32BPPHalfMaskedIcon() throws ImageReadException, ImageWriteException, IOException
+	public void test32BPPHalfMaskedIcon() throws ImageWriteException, IOException
 	{
 		final int foreground = 0xff000000;
 		final int background = 0xff0000ff;

@@ -24,7 +24,7 @@ import org.apache.sanselan.SanselanTest;
 public abstract class XbmBaseTest extends SanselanTest
 {
 
-    private static boolean isXbm(File file) throws IOException, ImageReadException
+    private static boolean isXbm(File file)
     {
         return file.getName().toLowerCase().endsWith(".xbm");
     }
