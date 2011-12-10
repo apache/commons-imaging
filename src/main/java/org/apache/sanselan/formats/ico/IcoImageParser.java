@@ -265,14 +265,14 @@ public class IcoImageParser extends ImageParser
             this.iconInfo = iconInfo;
         }
 
-		public void dump(PrintWriter pw)
-		{
-			iconInfo.dump(pw);
-			pw.println();
-			dumpSubclass(pw);
-		}
+        public void dump(PrintWriter pw)
+        {
+            iconInfo.dump(pw);
+            pw.println();
+            dumpSubclass(pw);
+        }
 
-		protected abstract void dumpSubclass(PrintWriter pw);
+        protected abstract void dumpSubclass(PrintWriter pw);
         public abstract BufferedImage readBufferedImage() throws ImageReadException;
     }
 
@@ -298,7 +298,7 @@ public class IcoImageParser extends ImageParser
         {
             pw.println("BitmapIconData");
             header.dump(pw);
-			pw.println();
+            pw.println();
         }
     }
 
@@ -549,15 +549,15 @@ public class IcoImageParser extends ImageParser
         }
     }
 
-	public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
-			throws ImageReadException, IOException
-	{
-		ImageContents contents = readImage(byteSource);
-		contents.fileHeader.dump(pw);
-		for (int i = 0; i < contents.iconDatas.length; i++)
-			contents.iconDatas[i].dump(pw);
-		return true;
-	}
+    public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
+            throws ImageReadException, IOException
+    {
+        ImageContents contents = readImage(byteSource);
+        contents.fileHeader.dump(pw);
+        for (int i = 0; i < contents.iconDatas.length; i++)
+            contents.iconDatas[i].dump(pw);
+        return true;
+    }
 
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException

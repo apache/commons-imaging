@@ -61,7 +61,7 @@ public class TiffImageMetadata extends ImageMetadata
             if (count == null)
                 map.put(key, new Integer(1));
             else
-            	map.put(key, new Integer(count.intValue() + 1));
+                map.put(key, new Integer(count.intValue() + 1));
         }
 
         return map;
@@ -255,13 +255,13 @@ public class TiffImageMetadata extends ImageMetadata
     {
         return findField(tagInfo, false);
     }
-    
+
     public TiffField findField(TagInfo tagInfo, boolean exactDirectoryMatch) throws ImageReadException
     {
-    	// Please keep this method in sync with TiffField's getTag()
-    	Integer tagCount = (Integer)tagCounts.get(new Integer(tagInfo.tag));
-    	int tagsMatching = tagCount == null ? 0 : tagCount.intValue();
-    	
+        // Please keep this method in sync with TiffField's getTag()
+        Integer tagCount = (Integer)tagCounts.get(new Integer(tagInfo.tag));
+        int tagsMatching = tagCount == null ? 0 : tagCount.intValue();
+
         ArrayList directories = getDirectories();
         if (exactDirectoryMatch || tagInfo.directoryType != EXIF_DIRECTORY_UNKNOWN)
         {
@@ -271,41 +271,41 @@ public class TiffImageMetadata extends ImageMetadata
                 if (directory.type == tagInfo.directoryType.directoryType) {
                     TiffField field = directory.findField(tagInfo);
                     if (field != null) {
-                    	return field;
+                        return field;
                     }
                 }
             }
             if (exactDirectoryMatch || tagsMatching > 1) {
-            	return null;
+                return null;
             }
             for (int i = 0; i < directories.size(); i++)
             {
                 Directory directory = (Directory) directories.get(i);
                 if (tagInfo.directoryType.isImageDirectory() &&
-                		directory.type >= 0) {
+                        directory.type >= 0) {
                     TiffField field = directory.findField(tagInfo);
                     if (field != null) {
-                    	return field;
+                        return field;
                     }
                 } else if (!tagInfo.directoryType.isImageDirectory() &&
-                		directory.type < 0) {
+                        directory.type < 0) {
                     TiffField field = directory.findField(tagInfo);
                     if (field != null) {
-                    	return field;
+                        return field;
                     }
                 }
             }
         }
-        
+
         for (int i = 0; i < directories.size(); i++)
         {
             Directory directory = (Directory) directories.get(i);
             TiffField field = directory.findField(tagInfo);
             if (field != null) {
-            	return field;
+                return field;
             }
         }
-    	
+
         return null;
     }
 

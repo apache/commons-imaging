@@ -120,8 +120,8 @@ public class TiffField implements TiffConstants
     private static TagInfo getTag(int directoryType, int tag,
             List possibleMatches)
     {
-    	// Please keep this method in sync with TiffImageMetadata's findField()
-    	
+        // Please keep this method in sync with TiffImageMetadata's findField()
+
         if (possibleMatches.size() < 1)
             return null;
         // else if (possibleMatches.size() == 1)
