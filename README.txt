@@ -1,6 +1,6 @@
-=============================================================
-Welcome to Apache Sanselan  <http://sanselan.apache.org/>
-=============================================================
+=========================================================================
+Welcome to Apache Commons Sanselan  <http://commons.apache.org/sanselan/>
+=========================================================================
 
 License (see also LICENSE)
 ==============================
@@ -29,23 +29,24 @@ Getting Started
 Mailing Lists
 -------------
 
-To get involved with the Apache Sanselan project, start by having a
-look at our website (link at top of page) and join our mailing
-lists by sending an empty message to
+To get involved with the Apache Commons Sanselan project, start by
+having a look at our website (link at top of page) and join our mailing
+lists by sending an empty message to the Apache Commons mailing lists
 
-   sanselan-dev-subscribe     :at: incubator.apache.org
+   user-subscribe :at: commons.apache.org
 and
-   sanselan-commits-subscribe :at: incubator.apache.org
+    dev-subscribe :at: commons.apache.org
 
 and the dev mailing list archives can be found at
 
-   http://incubator.apache.org/mail/sanselan-dev/
+   http://mail-archives.apache.org/mod_mbox/commons-dev/
 
+Please prefix the subject line of any messages with [sanselan].
 
 Downloading
 -----------
 
-The Sanselan source code is available via Subversion at
+The Commons Sanselan source code is available via Subversion at
 
    https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk
 
@@ -73,10 +74,10 @@ components is:
 
 For more instructions, please see the documentation at:
 
-   http://sanselan.apache.org/doc/building.html
+   http://commons.apache.org/building.html
 
 Credits
 =======
 
-See http://sanselan.apache.org/team-list.html for the list of 
+See http://commons.apache.org/sanselan/team-list.html for the list of 
 Sanselan committers and main contributors.

@@ -1,12 +1,12 @@
 
-Apache Sanselan Release Notes 
------------------------------
+Apache Commons Sanselan Release Notes 
+-------------------------------------
 
-Apache Sanselan is a pure-Java image library for reading and writing a variety of image formats.
+Apache Commons Sanselan is a pure-Java image library for reading and writing a variety of image formats.
 
 See the project site for details and sample code.
 
-http://incubator.apache.org/sanselan/site/index.html
+http://commons.apache.org/sanselan/
 
 
 Version History:
