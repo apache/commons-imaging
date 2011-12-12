@@ -319,8 +319,6 @@ public abstract class UnicodeUtils implements BinaryConstants
 
     private abstract static class UnicodeMetricsUTF16 extends UnicodeUtils
     {
-        protected static final int BYTE_ORDER_BIG_ENDIAN = 0;
-        protected static final int BYTE_ORDER_LITTLE_ENDIAN = 1;
         protected int byteOrder = BYTE_ORDER_BIG_ENDIAN;
 
         public UnicodeMetricsUTF16(int byteOrder)
