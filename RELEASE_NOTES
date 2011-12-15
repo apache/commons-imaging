@@ -12,7 +12,7 @@ http://commons.apache.org/sanselan/
 Version History:
 ----------------
 
-Next Release
+Release 0.98
 ------------
  * SANSELAN-44 - JpegImageMetadata getEXIFThumbnail may raise a null pointer exception
  * Fixed a problem in the metadata example code not using exact matching for GPS values.
@@ -26,6 +26,22 @@ Next Release
  * Fixed a couple of platform-dependent paths in the tests.
  * Constant-ized the magic numbers used when guessing formats.  
  * Added a test for the format guessing.
+ * Improvements to ICO parsing and support for PNG images in ICO files.
+ * Added support for the ICNS icon format.
+ * Added support for the PCX and DCX image formats.
+ * Improvements to BMP parsing.
+ * Added support for the WBMP format.
+ * Added support for reading simple baseline YCbCr JPEG images.
+ * Added support for XBM and XPM images.
+ * SANSELAN-54 - TIFF float and double values are written in the wrong byteorder.
+ * SANSELAN-52 - fixed PNG transparency in getImageInfo().
+ * SANSELAN-13, SANSELAN-47, SANSELAN-55, others - made TIFF tag parsing a lot
+   more rigorous, allowing EXIF to be read even from very corrupt files.
+ * Added the ability to read comments from a JPEG file using getImageInfo().
+ * Added support for compression=2 TIFF images.
+ * SANSELAN-46 - allowed all Sanselan tests to pass.
+ * SANSELAN-59 - deleted confusing redefinition of some constants.
+ * Altered TIFF tag searching to do an exact directory match when possible.
 
 Release 0.97
 ------------

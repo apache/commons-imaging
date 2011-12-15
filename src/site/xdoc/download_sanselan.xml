@@ -95,32 +95,32 @@ limitations under the License.
       </p>
     </subsection>
     </section>
-    <section name="Commons Sanselan incubating-0.97 ">
+    <section name="Commons Sanselan 0.98 ">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/sanselan/binaries/apache-sanselan-incubating-0.97-bin.tar.gz">apache-sanselan-incubating-0.97-bin.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/sanselan/binaries/apache-sanselan-incubating-0.97-bin.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/sanselan/binaries/apache-sanselan-incubating-0.97-bin.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/sanselan/binaries/commons-sanselan-0.98-bin.tar.gz">commons-sanselan-0.98-bin.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/sanselan/binaries/commons-sanselan-0.98-bin.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/sanselan/binaries/commons-sanselan-0.98-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/sanselan/binaries/apache-sanselan-incubating-0.97-bin.zip">apache-sanselan-incubating-0.97-bin.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/sanselan/binaries/apache-sanselan-incubating-0.97-bin.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/sanselan/binaries/apache-sanselan-incubating-0.97-bin.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/sanselan/binaries/commons-sanselan-0.98-bin.zip">commons-sanselan-0.98-bin.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/sanselan/binaries/commons-sanselan-0.98-bin.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/sanselan/binaries/commons-sanselan-0.98-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/sanselan/source/apache-sanselan-incubating-0.97-src.tar.gz">apache-sanselan-incubating-0.97-src.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/sanselan/source/apache-sanselan-incubating-0.97-src.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/sanselan/source/apache-sanselan-incubating-0.97-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/sanselan/source/commons-sanselan-0.98-src.tar.gz">commons-sanselan-0.98-src.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/sanselan/source/commons-sanselan-0.98-src.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/sanselan/source/commons-sanselan-0.98-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/sanselan/source/apache-sanselan-incubating-0.97-src.zip">apache-sanselan-incubating-0.97-src.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/sanselan/source/apache-sanselan-incubating-0.97-src.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/sanselan/source/apache-sanselan-incubating-0.97-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/sanselan/source/commons-sanselan-0.98-src.zip">commons-sanselan-0.98-src.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/sanselan/source/commons-sanselan-0.98-src.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/sanselan/source/commons-sanselan-0.98-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>

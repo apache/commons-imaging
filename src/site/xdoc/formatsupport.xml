@@ -22,7 +22,7 @@ limitations under the License.
  </properties>
 <body>
 <!-- ================================================== -->
-<section name="Format Support">
+<section name="Image Format Support">
 
 <table>
   <tr>
@@ -31,6 +31,99 @@ limitations under the License.
     <th>Write</th>
     <th>Notes</th>
     <th>References</th>
+  </tr>
+
+  <!-- BMP Format -->
+  <tr>
+    <td>BMP</td><td>yes</td><td>yes</td>
+    <td>
+        Mostly Complete. May not read some cursors, icons and OS/2 bitmaps.
+        Controlling the exact format when writing is incomplete.
+    </td>
+    <td>
+       No spec, see:
+       <a href="http://en.wikipedia.org/wiki/Windows_bitmap">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- GIF Format -->
+  <tr>
+    <td>GIF</td><td>yes</td><td>yes</td>
+    <td>
+        Both versions 87a and 89a Reading of animated GIFs is supported to the extent that
+        you can read all of the images contained in a GIF, but timing/loop info is ignored.
+        Controlling the exact format when writing is incomplete.
+    </td>
+    <td>
+       <a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">spec</a>
+       <a href="http://en.wikipedia.org/wiki/GIF">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- JPEG/JFIF Format -->
+  <tr>
+    <td>JPEG/JFIF</td><td>some</td><td>no</td>
+    <td>
+        Reads only simple grayscale and YCbCr baseline sequential JPEG images without RST markers,
+        which must use 8 bits per component and be Huffman encoded.
+        Can read image info, metadata and extract ICC Profiles. Both JFIF and DCF/EXIF.
+        Provides JPEG comments in ImageInfo.
+    </td>
+    <td>
+       <a href="http://www.jpeg.org/public/jfif.pdf">JFIF spec</a>
+       <a href="http://www.jpeg.org/jpeg/index.html">JPEG Group</a>
+       <a href="http://en.wikipedia.org/wiki/JPEG">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- ICNS Format -->
+  <tr>
+    <td>ICNS</td><td>mostly</td><td>mostly</td>
+    <td>
+        Missing support for JPEG2000 icons, but all other formats and sizes are correctly read and written.
+        Extensively tested for correctness against MacOS X, including behavior with missing masks.
+    </td>
+    <td>
+       <a href="http://en.wikipedia.org/wiki/Apple_Icon_Image">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- ICO/CUR Format -->
+  <tr>
+    <td>ICO/CUR</td><td>yes</td><td>mostly</td>
+    <td>
+        Reads 1/4/8/16/24/32 bpp .ico and .cur files. Supports the new Windows Vista ICO files with embedded PNGs.
+        Deals correctly with alpha vs bitmask transparency issues in 32 bpp. Supports bitfield compressed bitmaps.
+        Extensively tested. Probably the best open-source implementation under the sun.
+    </td>
+    <td>
+       No spec, see:
+       <a href="http://en.wikipedia.org/wiki/ICO_(icon_image_file_format)">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- PCX/DCX -->
+  <tr>
+    <td>PCX/DCX</td><td>yes</td><td>yes</td>
+    <td>
+        Reads 1 plane 1/2/4/8 bit, 1 bit 1/2/3/4 plane, 3 plane 8 bit, 1 plane 24 bit, and 1 plane 32 bit images.
+        Monochrome is parsed correctly. Reads and can write the undocumented uncompressed PCX format.
+        Reading short DCX tables is supported. Thoroughly tested.
+    </td>
+    <td>
+    </td>
+  </tr>
+
+  <!-- PNM/PGM/PBM/PPM Portable Pixmap -->
+  <tr>
+    <td>PNM/PGM/PBM/PPM Portable Pixmap</td><td>yes</td><td>yes</td>
+    <td>
+        Complete.
+    </td>
+    <td>
+       No spec, see:
+       <a href="http://en.wikipedia.org/wiki/Portable_pixmap">wikipedia</a>
+    </td>
   </tr>
 
   <!-- PNG Format -->
@@ -46,17 +139,17 @@ limitations under the License.
     </td>
   </tr>
 
-  <!-- GIF Format -->
+  <!-- PSD/Photoshop Format -->
   <tr>
-    <td>GIF</td><td>yes</td><td>yes</td>
+    <td>PSD/Photoshop</td><td>yes</td><td>no</td>
     <td>
-        Both versions 87a and 89a Reading of animated GIFs is supported to the extent that
-        you can read all of the images contained in a GIF, but timing/loop info is ignored.
-        Controlling the exact format when writing is incomplete.
+        Basic support. Can only read the first Layer. No support for extra channels.
+        Supports all modes except Multichannel. Can read some image metadata.
     </td>
     <td>
-       <a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">spec</a>
-       <a href="http://en.wikipedia.org/wiki/GIF">wikipedia</a>
+       <a href="http://www.fileformat.info/format/psd/egff.htm">Unofficial spec</a>
+       <a href="http://www.fileformat.info/format/psd/egff.htm">spec</a>
+       <a href="http://en.wikipedia.org/wiki/PSD">wikipedia</a>
     </td>
   </tr>
 
@@ -79,17 +172,57 @@ limitations under the License.
     </td>
   </tr>
 
-  <!-- JPEG/JFIF Format -->
+  <!-- WBMP Format -->
   <tr>
-    <td>JPEG/JFIF</td><td>no</td><td>no</td>
+    <td>WBMP</td><td>yes</td><td>yes</td>
     <td>
-        Can read image info, metadata and extract ICC Profiles. Both JFIF and DCF/EXIF.
+        Complete support for WBMP type 0 bitmaps.
     </td>
     <td>
-       <a href="http://www.jpeg.org/public/jfif.pdf">JFIF spec</a>
-       <a href="http://www.jpeg.org/jpeg/index.html">JPEG Group</a>
-       <a href="http://en.wikipedia.org/wiki/JPEG">wikipedia</a>
+       <a href="http://en.wikipedia.org/wiki/WBMP">wikipedia</a>
+       <a href="http://www.wapforum.org/what/technical/SPEC-WAESpec-19990524.pdf">spec</a>
     </td>
+  </tr>
+
+  <!-- XBM Format -->
+  <tr>
+    <td>XBM</td><td>yes</td><td>yes</td>
+    <td>
+        Complete.
+    </td>
+    <td>
+       <a href="http://en.wikipedia.org/wiki/XBM">wikipedia</a>
+       <a href="www.xfree86.org/current/xlib.pdf">spec</a>
+    </td>
+  </tr>
+
+  <!-- XPM Format -->
+  <tr>
+    <td>XPM</td><td>mostly</td><td>yes</td>
+    <td>
+        Only XPM version 3 is currently supported, but the other versions are obsolete.
+        Reads XPM files, except those with colors given by rgb.txt name. Writing only writes color data.
+    </td>
+    <td>
+       <a href="http://en.wikipedia.org/wiki/X_PixMap">wikipedia</a>
+       <a href="http://www.xfree86.org/current/xpm.pdf">spec</a>
+    </td>
+  </tr>
+</table>
+
+</section>
+
+<!-- ================================================== -->
+
+<section name="Metadata Format Support">
+
+<table>
+  <tr>
+    <th>Format</th>
+    <th>Read</th>
+    <th>Write</th>
+    <th>Notes</th>
+    <th>References</th>
   </tr>
 
   <!-- JPEG/JFIF EXIF Metadata -->
@@ -120,57 +253,6 @@ limitations under the License.
     </td>
   </tr>
 
-  <!-- BMP Format -->
-  <tr>
-    <td>BMP</td><td>yes</td><td>yes</td>
-    <td>
-        Mostly Complete. May not read some cursors, icons and OS/2 bitmaps.
-        Controlling the exact format when writing is incomplete.
-    </td>
-    <td>
-       No spec, see:
-       <a href="http://en.wikipedia.org/wiki/Windows_bitmap">wikipedia</a>
-    </td>
-  </tr>
-
-  <!-- ico Format -->
-  <tr>
-    <td>ico</td><td>yes</td><td>no</td>
-    <td>
-        Not complete. Can do simple reads.
-    </td>
-    <td>
-       No spec, see:
-       <a href="http://en.wikipedia.org/wiki/ICO_(icon_image_file_format)">wikipedia</a>
-    </td>
-  </tr>
-
-  <!-- PNM/PGM/PBM/PPM Portable Pixmap -->
-  <tr>
-    <td>PNM/PGM/PBM/PPM Portable Pixmap</td><td>yes</td><td>yes</td>
-    <td>
-        Complete.
-    </td>
-    <td>
-       No spec, see:
-       <a href="http://en.wikipedia.org/wiki/Portable_pixmap">wikipedia</a>
-    </td>
-  </tr>
-
-  <!-- PSD/Photoshop Format -->
-  <tr>
-    <td>PSD/Photoshop</td><td>yes</td><td>no</td>
-    <td>
-        Basic support. Can only read the first Layer. No support for extra channels.
-        Supports all modes except Multichannel. Can read some image metadata.
-    </td>
-    <td>
-       <a href="http://www.fileformat.info/format/psd/egff.htm">Unofficial spec</a>
-       <a href="http://www.fileformat.info/format/psd/egff.htm">spec</a>
-       <a href="http://en.wikipedia.org/wiki/PSD">wikipedia</a>
-    </td>
-  </tr>
-
   <!-- XMP Format -->
   <tr>
     <td>XMP</td><td>yes</td><td>yes</td>
@@ -184,9 +266,9 @@ limitations under the License.
        <a href="http://en.wikipedia.org/wiki/Extensible_Metadata_Platform">wikipedia</a>
     </td>
   </tr>
-
 </table>
 
 </section>
+
 </body>
 </document>
