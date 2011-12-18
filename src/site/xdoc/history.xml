@@ -46,7 +46,7 @@ limitations under the License.
 <p>
   Version 0.88 released November 17th, 2007.
   <ul>
-    <li>Restored original package structure. (org.apache.sanselan.* -> org.cmc.sanselan.*)</li>
+    <li>Restored original package structure. (org.apache.commons.sanselan.* -> org.cmc.sanselan.*)</li>
     <li>Refactored "byte sources," improving performance reading image data from InputStreams.</li>
     <li>More code cleanup, mostly removing debugging code and applying naming conventions.</li>
     <li>Fixed two bugs around pngs: alpha channels weren't be written properly, and alpha channel was not being preserved when reading grayscale pngs.</li>
@@ -120,7 +120,7 @@ limitations under the License.
   Version 0.80 released July 25th, 2007.
   <ul>
     <li>I've begun a overhaul of the codebase in anticipation of becoming an Apache Incubator project.</li>
-    <li>I've changed the package names (again) to be org.apache.sanselan.*.</li>
+    <li>I've changed the package names (again) to be org.apache.commons.sanselan.*.</li>
     <li>I've removed the dependency on sharedlib.</li>
     <li>I've removed a great deal of old cruft.</li>
     <li>I've begun to apply a consistent naming convention to variables (lowerCamelCase) and constant names (ALL_CAPS).</li>

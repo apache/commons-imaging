@@ -26,12 +26,12 @@ limitations under the License.
 
 <subsection name="Example Code">
 <p>
-  Can be found in the source distribution in org.apache.sanselan.sampleUsage package
+  Can be found in the source distribution in org.apache.commons.sanselan.sampleUsage package
   <ul>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/sanselan/sampleUsage/SampleUsage.java">SampleUsage.java</a>(includes the above code)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/sanselan/sampleUsage/MetadataExample.java">MetadataExample.java</a>(illustrates how to find JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/sanselan/sampleUsage/ImageWriteExample.java">ImageWriteExample.java</a>(illustrates how to write an image)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/sanselan/sampleUsage/ImageReadExample.java">ImageReadExample.java</a>(illustrates how to read an image)</li>
+      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/SampleUsage.java">SampleUsage.java</a>(includes the above code)</li>
+      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/MetadataExample.java">MetadataExample.java</a>(illustrates how to find JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>
+      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/ImageWriteExample.java">ImageWriteExample.java</a>(illustrates how to write an image)</li>
+      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/ImageReadExample.java">ImageReadExample.java</a>(illustrates how to read an image)</li>
   </ul>
 </p>
 </subsection>
@@ -49,7 +49,7 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.apache.sanselan.*;
+import org.apache.commons.sanselan.*;
 
 // Code won't work unless these variables are properly initialized. 
 // Sanselan works equally well with File, byte array or InputStream inputs.
