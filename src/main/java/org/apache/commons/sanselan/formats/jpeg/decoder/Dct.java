@@ -107,13 +107,17 @@ public class Dct
     public static void scaleQuantizationVector(float[] vector)
     {
         for (int x = 0; x < 8; x++)
+        {
             vector[x] *= dctScalingFactors[x];
+        }
     }
 
     public static void scaleDequantizationVector(float[] vector)
     {
         for (int x = 0; x < 8; x++)
+        {
             vector[x] *= idctScalingFactors[x];
+        }
     }
 
     public static void scaleQuantizationMatrix(float[] matrix)
@@ -121,7 +125,9 @@ public class Dct
         for (int y = 0; y < 8; y++)
         {
             for (int x = 0; x < 8; x++)
-                matrix[8*y + x] *= dctScalingFactors[y] * dctScalingFactors[x];
+            {
+                matrix[8 * y + x] *= dctScalingFactors[y] * dctScalingFactors[x];
+            }
         }
     }
 
@@ -130,7 +136,9 @@ public class Dct
         for (int y = 0; y < 8; y++)
         {
             for (int x = 0; x < 8; x++)
-                matrix[8*y + x] *= idctScalingFactors[y] * idctScalingFactors[x];
+            {
+                matrix[8 * y + x] *= idctScalingFactors[y] * idctScalingFactors[x];
+            }
         }
     }
 
@@ -391,204 +399,6 @@ public class Dct
             matrix[40 + i] = m5 + n0;
             matrix[48 + i] = m3 - tmp3;
             matrix[56 + i] = m4 - a7;
-        }
-    }
-
-    private static float[][] REFERENCE_inverseDCT(float[][] matrix)
-    {
-        float[][] ret = new float[8][8];
-        for (int y = 0; y < 8; y++)
-        {
-            for (int x = 0; x < 8; x++)
-            {
-                float sum = 0;
-                for (int u = 0; u < 8; u++)
-                {
-                    for (int v = 0; v < 8; v++)
-                    {
-                        float cu = (u == 0) ? ((float)(1.0/Math.sqrt(2))) : 1;
-                        float cv = (v == 0) ? ((float)(1.0/Math.sqrt(2))) : 1;
-                        sum += cu*cv*matrix[v][u]*
-                                Math.cos((2*x + 1)*u*Math.PI/16)*
-                                Math.cos((2*y + 1)*v*Math.PI/16);
-                    }
-                }
-                ret[y][x] = 0.25f * sum;
-            }
-        }
-        return ret;
-    }
-
-    private static float[] REFERENCE_inverseDCT(float[] vector)
-    {
-        float[] ret = new float[8];
-        for (int x = 0; x < 8; x++)
-        {
-            float sum = 0;
-            for (int u = 0; u < 8; u++)
-            {
-                float cu = (u == 0) ? ((float)(1.0/Math.sqrt(2))) : 1;
-                sum += cu*vector[u]*
-                        Math.cos((2*x + 1)*u*Math.PI/16);
-            }
-            ret[x] = 0.5f * sum;
-        }
-        return ret;
-    }
-
-    private static float[][] REFERENCE_forwardDCT(float[][] matrix)
-    {
-        float[][] ret = new float[8][8];
-        for (int u = 0; u < 8; u++)
-        {
-            for (int v = 0; v < 8; v++)
-            {
-                float sum = 0;
-                float cu = (u == 0) ? ((float)(1.0/Math.sqrt(2))) : 1;
-                float cv = (v == 0) ? ((float)(1.0/Math.sqrt(2))) : 1;
-                for (int x = 0; x < 8; x++)
-                {
-                    for (int y = 0; y < 8; y++)
-                    {
-                        sum += matrix[y][x] *
-                                Math.cos((2*x + 1)*u*Math.PI/16) *
-                                Math.cos((2*y + 1)*v*Math.PI/16);
-                    }
-                }
-                ret[v][u] = 0.25f * cu * cv * sum;
-            }
-        }
-        return ret;
-    }
-
-    private static float[] REFERENCE_forwardDCT(float[] vector)
-    {
-        float[] ret = new float[8];
-        for (int u = 0; u < 8; u++)
-        {
-            float sum = 0;
-            float cu = (u == 0) ? ((float)(1.0/Math.sqrt(2))) : 1;
-            for (int x = 0; x < 8; x++)
-            {
-                sum += vector[x]*
-                        Math.cos((2*x + 1)*u*Math.PI/16);
-            }
-            ret[u] = 0.5f * cu * sum;
-        }
-        return ret;
-    }
-
-    private static boolean isClose(float a, float b)
-    {
-        return Math.abs(a - b) < 0.001;
-    }
-
-    private static void testVectors() throws Exception
-    {
-        float[] originalData = new float[8];
-        for (int i = 0; i < 8; i++)
-            originalData[i] = i;
-
-        float[] transformed = REFERENCE_forwardDCT(originalData);
-        float[] reversed = REFERENCE_inverseDCT(transformed);
-        for (int i = 0; i < 8; i++)
-        {
-            if (!isClose(originalData[i], reversed[i]))
-            {
-                throw new Exception("Reference transforms broken, " +
-                        "at x=" + i + ", " +
-                        "original " + originalData[i] + " " +
-                        "actual " + reversed[i]);
-            }
-        }
-
-        float[] data = (float[]) originalData.clone();
-        forwardDCT8(data);
-        scaleQuantizationVector(data);
-        for (int i = 0; i < 8; i++)
-        {
-            if (!isClose(data[i], transformed[i]))
-            {
-                throw new Exception("Forward transform broken, " +
-                        "at x=" + i + " " +
-                        "reference " + originalData[i] + ", " +
-                        "actual " + data[i]);
-            }
-        }
-        scaleDequantizationVector(data);
-        inverseDCT8(data);
-        for (int i = 0; i < 8; i++)
-        {
-            if (!isClose(data[i], originalData[i]))
-            {
-                throw new Exception("Inverse transform broken, " +
-                        "at x=" + i + " " +
-                        "reference " + originalData[i] + ", " +
-                        "actual " + data[i]);
-            }
-        }
-    }
-
-    private static void testMatrices() throws Exception
-    {
-        float[] originalData = new float[8*8];
-        float[][] originalData8x8 = new float[8][8];
-        for (int y = 0; y < 8; y++)
-        {
-            for (int x = 0; x < 8; x++)
-            {
-                float value = 8*y + x;
-                originalData8x8[y][x] = value;
-                originalData[8*y + x] = value;
-            }
-        }
-
-        float[][] transformed8x8 = REFERENCE_forwardDCT(originalData8x8);
-        float[][] reversed8x8 = REFERENCE_inverseDCT(transformed8x8);
-        for (int y = 0; y < 8; y++)
-        {
-            for (int x = 0; x < 8; x++)
-            {
-                if (!isClose(originalData8x8[y][x], reversed8x8[y][x]))
-                {
-                    throw new Exception("Reference transforms broken, " +
-                            "at x=" + x + ",y=" + y + " " +
-                            "original " + originalData8x8[y][x] + ", " +
-                            "actual " + reversed8x8[y][x]);
-                }
-            }
-        }
-
-        float[] data = (float[]) originalData.clone();
-        forwardDCT8x8(data);
-        scaleQuantizationMatrix(data);
-        for (int y = 0; y < 8; y++)
-        {
-            for (int x = 0; x < 8; x++)
-            {
-                if (!isClose(transformed8x8[y][x], data[8*y + x]))
-                {
-                    throw new Exception("Forward transform broken, " +
-                            "at x=" + x + ",y=" + y + " " +
-                            "reference " + originalData8x8[y][x] + ", " +
-                            "actual " + data[8*y  + x]);
-                }
-            }
-        }
-        scaleDequantizationMatrix(data);
-        inverseDCT8x8(data);
-        for (int y = 0; y < 8; y++)
-        {
-            for (int x = 0; x < 8; x++)
-            {
-                if (!isClose(originalData8x8[y][x], data[8*y + x]))
-                {
-                    throw new Exception("Inverse transform broken, " +
-                            "at x=" + x + ",y=" + y + " " +
-                            "reference " + originalData8x8[y][x] + ", " +
-                            "actual " + data[8*y  + x]);
-                }
-            }
         }
     }
 }
