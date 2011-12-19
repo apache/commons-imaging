@@ -36,7 +36,7 @@ import org.apache.commons.sanselan.common.bytesource.ByteSourceArray;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.sanselan.formats.jpeg.JpegUtils;
-import org.apache.commons.sanselan.formats.jpeg.exifRewrite.ExifRewriter;
+import org.apache.commons.sanselan.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;

@@ -27,7 +27,7 @@ import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
-import org.apache.commons.sanselan.formats.jpeg.exifRewrite.ExifRewriter;
+import org.apache.commons.sanselan.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputDirectory;
