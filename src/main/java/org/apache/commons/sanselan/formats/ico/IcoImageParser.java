@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageFormat;
@@ -570,10 +571,10 @@ public class IcoImageParser extends ImageParser
             throw new ImageReadException("No icons in ICO file");
     }
 
-    public ArrayList getAllBufferedImages(ByteSource byteSource)
+    public List getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
         ImageContents contents = readImage(byteSource);
 
         FileHeader fileHeader = contents.fileHeader;

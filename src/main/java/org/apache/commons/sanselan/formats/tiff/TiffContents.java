@@ -18,6 +18,7 @@ package org.apache.commons.sanselan.formats.tiff;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
@@ -26,17 +27,17 @@ import org.apache.commons.sanselan.util.Debug;
 public class TiffContents
 {
     public final TiffHeader header;
-    public final ArrayList directories;
+    public final List directories;
 
-    public TiffContents(TiffHeader tiffHeader, ArrayList directories)
+    public TiffContents(TiffHeader tiffHeader, List directories)
     {
         this.header = tiffHeader;
         this.directories = directories;
     }
 
-    public ArrayList getElements() throws ImageReadException
+    public List getElements() throws ImageReadException
     {
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
 
         result.add(header);
 
@@ -46,7 +47,7 @@ public class TiffContents
 
             result.add(directory);
 
-            ArrayList fields = directory.entries;
+            List fields = directory.entries;
             for (int j = 0; j < fields.size(); j++)
             {
                 TiffField field = (TiffField) fields.get(j);
@@ -80,7 +81,7 @@ public class TiffContents
 
     public void dissect(boolean verbose) throws ImageReadException
     {
-        ArrayList elements = getElements();
+        List elements = getElements();
 
         Collections.sort(elements, TiffElement.COMPARATOR);
 

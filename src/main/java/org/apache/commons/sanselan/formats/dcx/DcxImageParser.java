@@ -25,6 +25,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageFormat;
@@ -138,7 +139,7 @@ public class DcxImageParser extends ImageParser
         {
             is = byteSource.getInputStream();
             int id = read4Bytes("Id", is, "Not a Valid DCX File");
-            ArrayList pageTable = new ArrayList(1024);
+            List pageTable = new ArrayList(1024);
             for (int i = 0; i < 1024; i++)
             {
                 int pageOffset = read4Bytes("PageTable", is, "Not a Valid DCX File");
@@ -184,17 +185,17 @@ public class DcxImageParser extends ImageParser
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException
     {
-        ArrayList list = getAllBufferedImages(byteSource);
+        List list = getAllBufferedImages(byteSource);
         if (list.isEmpty())
             return null;
         return (BufferedImage) list.get(0);
     }
 
-    public ArrayList getAllBufferedImages(ByteSource byteSource)
+    public List getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
         DcxHeader dcxHeader = readDcxHeader(byteSource);
-        ArrayList images = new ArrayList();
+        List images = new ArrayList();
         PcxImageParser pcxImageParser = new PcxImageParser();
         for (int i = 0; i < dcxHeader.pageTable.length; i++)
         {

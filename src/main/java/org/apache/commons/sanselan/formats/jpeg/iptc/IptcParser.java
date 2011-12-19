@@ -111,7 +111,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
             boolean verbose, boolean strict) throws ImageReadException,
             IOException
     {
-        ArrayList records = new ArrayList();
+        List records = new ArrayList();
 
         List allBlocks = parseAllBlocks(bytes, verbose, strict);
 
@@ -132,7 +132,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
     protected List parseIPTCBlock(byte bytes[], boolean verbose)
             throws ImageReadException, IOException
     {
-        ArrayList elements = new ArrayList();
+        List elements = new ArrayList();
 
         int index = 0;
         // Integer recordVersion = null;

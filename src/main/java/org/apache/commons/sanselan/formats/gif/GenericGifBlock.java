@@ -18,13 +18,13 @@ package org.apache.commons.sanselan.formats.gif;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 class GenericGifBlock extends GifBlock
 {
-    public final ArrayList subblocks;
+    public final List subblocks;
 
-    public GenericGifBlock(int blockCode, ArrayList subblocks)
+    public GenericGifBlock(int blockCode, List subblocks)
     {
         super(blockCode);
 

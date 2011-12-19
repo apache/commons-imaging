@@ -18,7 +18,7 @@
 package org.apache.commons.sanselan.formats.tiff;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.formats.tiff.datareaders.DataReader;
@@ -53,7 +53,7 @@ public abstract class TiffImageData
             return false;
         }
 
-        public DataReader getDataReader(ArrayList entries,
+        public DataReader getDataReader(List entries,
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
                 int samplesPerPixel, int width, int height, int compression)
@@ -93,7 +93,7 @@ public abstract class TiffImageData
             return true;
         }
 
-        public DataReader getDataReader(ArrayList entries,
+        public DataReader getDataReader(List entries,
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
                 int samplesPerPixel, int width, int height, int compression)
@@ -117,7 +117,7 @@ public abstract class TiffImageData
 
     public abstract boolean stripsNotTiles();
 
-    public abstract DataReader getDataReader(ArrayList entries,
+    public abstract DataReader getDataReader(List entries,
             PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
             int bitsPerSample[], int predictor, int samplesPerPixel, int width,
             int height, int compression) throws IOException, ImageReadException;

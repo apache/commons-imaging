@@ -110,11 +110,11 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         return false;
     }
 
-    public ArrayList readSegments(ByteSource byteSource, final int markers[],
+    public List readSegments(ByteSource byteSource, final int markers[],
             final boolean returnAfterFirst, boolean readEverything)
             throws ImageReadException, IOException
     {
-        final ArrayList result = new ArrayList();
+        final List result = new ArrayList();
         final JpegImageParser parser = this;
         final int[] sofnSegments = {
                 // kJFIFMarker,
@@ -193,7 +193,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 
     public static final boolean permissive = true;
 
-    private byte[] assembleSegments(ArrayList v) throws ImageReadException
+    private byte[] assembleSegments(List v) throws ImageReadException
     {
         try
         {
@@ -204,7 +204,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         }
     }
 
-    private byte[] assembleSegments(ArrayList v, boolean start_with_zero)
+    private byte[] assembleSegments(List v, boolean start_with_zero)
             throws ImageReadException
     {
         if (v.size() < 1)
@@ -264,7 +264,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         return result;
     }
 
-    private void dumpSegments(ArrayList v)
+    private void dumpSegments(List v)
     {
         Debug.debug();
         Debug.debug("dumpSegments", v.size());
@@ -279,7 +279,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         Debug.debug();
     }
 
-    public ArrayList readSegments(ByteSource byteSource, int markers[],
+    public List readSegments(ByteSource byteSource, int markers[],
             boolean returnAfterFirst) throws ImageReadException, IOException
     {
         return readSegments(byteSource, markers, returnAfterFirst, false);
@@ -288,13 +288,13 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
-        ArrayList segments = readSegments(byteSource,
+        List segments = readSegments(byteSource,
                 new int[] { JPEG_APP2_Marker, }, false);
 
         if (segments != null)
         {
             // throw away non-icc profile app2 segments.
-            ArrayList filtered = new ArrayList();
+            List filtered = new ArrayList();
             for (int i = 0; i < segments.size(); i++)
             {
                 App2Segment segment = (App2Segment) segments.get(i);
@@ -340,9 +340,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         return byteArrayHasPrefix(segment.bytes, EXIF_IDENTIFIER_CODE);
     }
 
-    private ArrayList filterAPP1Segments(ArrayList v)
+    private List filterAPP1Segments(List v)
     {
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
 
         for (int i = 0; i < v.size(); i++)
         {
@@ -355,9 +355,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     }
 
     // TODO unused
-    private ArrayList filterSegments(ArrayList v, List markers)
+    private List filterSegments(List v, List markers)
     {
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
 
         for (int i = 0; i < v.size(); i++)
         {
@@ -389,13 +389,13 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     public byte[] getExifRawData(ByteSource byteSource)
             throws ImageReadException, IOException
     {
-        ArrayList segments = readSegments(byteSource,
+        List segments = readSegments(byteSource,
                 new int[] { JPEG_APP1_Marker, }, false);
 
         if ((segments == null) || (segments.size() < 1))
             return null;
 
-        ArrayList exifSegments = filterAPP1Segments(segments);
+        List exifSegments = filterAPP1Segments(segments);
         if (debug)
             System.out.println("exif_segments.size" + ": "
                     + exifSegments.size());
@@ -611,7 +611,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     public JpegPhotoshopMetadata getPhotoshopMetadata(ByteSource byteSource,
             Map params) throws ImageReadException, IOException
     {
-        ArrayList segments = readSegments(byteSource,
+        List segments = readSegments(byteSource,
                 new int[] { JPEG_APP13_Marker, }, false);
 
         if ((segments == null) || (segments.size() < 1))
@@ -639,7 +639,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     public Dimension getImageSize(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
-        ArrayList segments = readSegments(byteSource, new int[] {
+        List segments = readSegments(byteSource, new int[] {
                 // kJFIFMarker,
                 SOF0Marker,
 
@@ -673,9 +673,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
-        // ArrayList allSegments = readSegments(byteSource, null, false);
+        // List allSegments = readSegments(byteSource, null, false);
 
-        ArrayList SOF_segments = readSegments(byteSource, new int[] {
+        List SOF_segments = readSegments(byteSource, new int[] {
                 // kJFIFMarker,
 
                 SOF0Marker, SOF1Marker, SOF2Marker, SOF3Marker, SOF5Marker,
@@ -691,7 +691,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         // System.out.println("Incoherent SOFN Data Found: "
         // + SOF_segments.size());
 
-        ArrayList jfifSegments = readSegments(byteSource,
+        List jfifSegments = readSegments(byteSource,
                 new int[] { JFIFMarker, }, true);
 
         SofnSegment fSOFNSegment = (SofnSegment) SOF_segments.get(0);
@@ -805,8 +805,8 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
             PhysicalHeightInch = (float) (Height / (y_density * units_per_inch));
         }
 
-        ArrayList Comments = new ArrayList();
-        ArrayList commentSegments = readSegments(byteSource,
+        List Comments = new ArrayList();
+        List commentSegments = readSegments(byteSource,
                 new int[] { COMMarker }, false);
         for (int i = 0; i < commentSegments.size(); i++)
         {
@@ -858,7 +858,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     // throws ImageReadException, IOException
     // {
     //
-    // ArrayList allSegments = readSegments(byteSource, null, false);
+    // List allSegments = readSegments(byteSource, null, false);
     //
     // final int SOF_MARKERS[] = new int[]{
     // SOF0Marker, SOF1Marker, SOF2Marker, SOF3Marker, SOF5Marker,
@@ -866,16 +866,16 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     // SOF13Marker, SOF14Marker, SOF15Marker,
     // };
     //
-    // ArrayList sofMarkers = new ArrayList();
+    // List sofMarkers = new ArrayList();
     // for(int i=0;i<SOF_MARKERS.length;i++)
     // sofMarkers.add(new Integer(SOF_MARKERS[i]));
-    // ArrayList SOFSegments = filterSegments(allSegments, sofMarkers);
+    // List SOFSegments = filterSegments(allSegments, sofMarkers);
     // if (SOFSegments == null || SOFSegments.size()<1)
     // throw new ImageReadException("No SOFN Data Found.");
     //
     // List jfifMarkers = new ArrayList();
     // jfifMarkers.add(new Integer(JFIFMarker));
-    // ArrayList jfifSegments = filterSegments(allSegments, jfifMarkers);
+    // List jfifSegments = filterSegments(allSegments, jfifMarkers);
     //
     // SofnSegment firstSOFNSegment = (SofnSegment) SOFSegments.get(0);
     //
@@ -985,7 +985,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     // units_per_inch));
     // }
     //
-    // ArrayList Comments = new ArrayList();
+    // List Comments = new ArrayList();
     // // TODO: comments...
     //
     // int Number_of_components = firstSOFNSegment.numberOfComponents;
@@ -1039,7 +1039,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         pw.println("");
 
         {
-            ArrayList segments = readSegments(byteSource, null, false);
+            List segments = readSegments(byteSource, null, false);
 
             if (segments == null)
                 throw new ImageReadException("No Segments Found.");

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PaletteFactory
@@ -169,7 +170,7 @@ public class PaletteFactory
             return null;
         }
 
-        //        ArrayList result = new ArrayList();
+        //        List result = new ArrayList();
 
         int slice_mins[] = new int[subset.mins.length];
         System.arraycopy(subset.mins, 0, slice_mins, 0, subset.mins.length);
@@ -199,7 +200,7 @@ public class PaletteFactory
 
     }
 
-    private ArrayList divideSubset2(int table[], ColorSpaceSubset subset,
+    private List divideSubset2(int table[], ColorSpaceSubset subset,
             int component, int precision)
     {
         if (debug)
@@ -242,7 +243,7 @@ public class PaletteFactory
         DivisionCandidate dc2 = finishDivision(table, subset, component,
                 precision, sum2, slice2);
 
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
 
         if (dc1 != null)
             result.add(dc1);
@@ -255,7 +256,7 @@ public class PaletteFactory
     private DivisionCandidate divideSubset2(int table[],
             ColorSpaceSubset subset, int precision)
     {
-        ArrayList dcs = new ArrayList();
+        List dcs = new ArrayList();
 
         dcs.addAll(divideSubset2(table, subset, 0, precision));
         dcs.addAll(divideSubset2(table, subset, 1, precision));
@@ -311,10 +312,10 @@ public class PaletteFactory
         }
     }
 
-    private ArrayList divide(ArrayList v, int desired_count, int table[],
+    private List divide(List v, int desired_count, int table[],
             int precision)
     {
-        ArrayList ignore = new ArrayList();
+        List ignore = new ArrayList();
 
         int count = 0;
         while (true)
@@ -386,7 +387,7 @@ public class PaletteFactory
         int width = src.getWidth();
         int height = src.getHeight();
 
-        ArrayList subsets = new ArrayList();
+        List subsets = new ArrayList();
         ColorSpaceSubset all = new ColorSpaceSubset(width * height, precision);
         subsets.add(all);
 

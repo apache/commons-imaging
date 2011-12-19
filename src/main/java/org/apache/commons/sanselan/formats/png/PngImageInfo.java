@@ -27,7 +27,7 @@ public class PngImageInfo extends ImageInfo
     private final List textChunks;
 
     public PngImageInfo(String formatDetails, int bitsPerPixel,
-            ArrayList comments, ImageFormat format, String formatName,
+            List comments, ImageFormat format, String formatName,
             int height, String mimeType, int numberOfImages,
             int physicalHeightDpi, float physicalHeightInch,
             int physicalWidthDpi, float physicalWidthInch, int width,

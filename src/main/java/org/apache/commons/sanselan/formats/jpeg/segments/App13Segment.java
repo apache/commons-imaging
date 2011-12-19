@@ -30,7 +30,7 @@ public class App13Segment extends AppnSegment
 {
     protected final JpegImageParser parser;
 
-    // public final ArrayList elements = new ArrayList();
+    // public final List elements = new ArrayList();
     // public final boolean isIPTCJpegSegment;
 
     public App13Segment(JpegImageParser parser, int marker, byte segmentData[])

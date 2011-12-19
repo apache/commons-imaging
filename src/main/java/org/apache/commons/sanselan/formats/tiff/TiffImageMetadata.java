@@ -130,7 +130,7 @@ public class TiffImageMetadata extends ImageMetadata
             {
                 TiffOutputDirectory dstDir = new TiffOutputDirectory(type);
 
-                ArrayList entries = getItems();
+                List entries = getItems();
                 for (int i = 0; i < entries.size(); i++)
                 {
                     TiffImageMetadata.Item item = (TiffImageMetadata.Item) entries
@@ -187,16 +187,16 @@ public class TiffImageMetadata extends ImageMetadata
 
     }
 
-    public ArrayList getDirectories()
+    public List getDirectories()
     {
         return super.getItems();
     }
 
-    public ArrayList getItems()
+    public List getItems()
     {
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
 
-        ArrayList items = super.getItems();
+        List items = super.getItems();
         for (int i = 0; i < items.size(); i++)
         {
             Directory dir = (Directory) items.get(i);
@@ -229,7 +229,7 @@ public class TiffImageMetadata extends ImageMetadata
         int byteOrder = contents.header.byteOrder;
         TiffOutputSet result = new TiffOutputSet(byteOrder);
 
-        ArrayList srcDirs = getDirectories();
+        List srcDirs = getDirectories();
         for (int i = 0; i < srcDirs.size(); i++)
         {
             TiffImageMetadata.Directory srcDir = (TiffImageMetadata.Directory) srcDirs
@@ -262,7 +262,7 @@ public class TiffImageMetadata extends ImageMetadata
         Integer tagCount = (Integer)tagCounts.get(new Integer(tagInfo.tag));
         int tagsMatching = tagCount == null ? 0 : tagCount.intValue();
 
-        ArrayList directories = getDirectories();
+        List directories = getDirectories();
         if (exactDirectoryMatch || tagInfo.directoryType != EXIF_DIRECTORY_UNKNOWN)
         {
             for (int i = 0; i < directories.size(); i++)
@@ -311,7 +311,7 @@ public class TiffImageMetadata extends ImageMetadata
 
     public TiffDirectory findDirectory(int directoryType)
     {
-        ArrayList directories = getDirectories();
+        List directories = getDirectories();
         for (int i = 0; i < directories.size(); i++)
         {
             Directory directory = (Directory) directories.get(i);
@@ -324,7 +324,7 @@ public class TiffImageMetadata extends ImageMetadata
     public List getAllFields() throws ImageReadException
     {
         List result = new ArrayList();
-        ArrayList directories = getDirectories();
+        List directories = getDirectories();
         for (int i = 0; i < directories.size(); i++)
         {
             Directory directory = (Directory) directories.get(i);

@@ -25,6 +25,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageFormat;
@@ -184,7 +185,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         if (info == null)
             throw new ImageReadException("PNM: Couldn't read Header");
 
-        ArrayList Comments = new ArrayList();
+        List Comments = new ArrayList();
 
         int BitsPerPixel = info.getBitDepth() * info.getNumComponents();
         ImageFormat Format = info.getImageType();

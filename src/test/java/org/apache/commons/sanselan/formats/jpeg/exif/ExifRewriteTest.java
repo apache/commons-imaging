@@ -294,7 +294,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         rewrite(rewriter, "lossless");
     }
 
-    private Hashtable makeDirectoryMap(ArrayList directories)
+    private Hashtable makeDirectoryMap(List directories)
     {
         Hashtable directoryMap = new Hashtable();
         for (int i = 0; i < directories.size(); i++)
@@ -306,7 +306,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         return directoryMap;
     }
 
-    private Hashtable makeFieldMap(ArrayList items)
+    private Hashtable makeFieldMap(List items)
     {
         Hashtable fieldMap = new Hashtable();
         for (int i = 0; i < items.size(); i++)
@@ -326,8 +326,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         assertNotNull(oldExifMetadata);
         assertNotNull(newExifMetadata);
 
-        ArrayList oldDirectories = oldExifMetadata.getDirectories();
-        ArrayList newDirectories = newExifMetadata.getDirectories();
+        List oldDirectories = oldExifMetadata.getDirectories();
+        List newDirectories = newExifMetadata.getDirectories();
 
         assertTrue(oldDirectories.size() == newDirectories.size());
 
@@ -335,9 +335,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         Hashtable newDirectoryMap = makeDirectoryMap(newDirectories);
 
         assertEquals(oldDirectories.size(), oldDirectoryMap.keySet().size());
-        ArrayList oldDirectoryTypes = new ArrayList(oldDirectoryMap.keySet());
+        List oldDirectoryTypes = new ArrayList(oldDirectoryMap.keySet());
         Collections.sort(oldDirectoryTypes);
-        ArrayList newDirectoryTypes = new ArrayList(newDirectoryMap.keySet());
+        List newDirectoryTypes = new ArrayList(newDirectoryMap.keySet());
         Collections.sort(newDirectoryTypes);
         assertEquals(oldDirectoryTypes, newDirectoryTypes);
 
@@ -354,8 +354,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             assertNotNull(oldDirectory);
             assertNotNull(newDirectory);
 
-            ArrayList oldItems = oldDirectory.getItems();
-            ArrayList newItems = newDirectory.getItems();
+            List oldItems = oldDirectory.getItems();
+            List newItems = newDirectory.getItems();
 
             //            Debug.debug("oldItems.size()", oldItems.size());
             //            Debug.debug("newItems.size()", newItems.size());
@@ -394,9 +394,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             //            assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
             //            assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
 
-            ArrayList oldFieldTags = new ArrayList(oldFieldMap.keySet());
+            List oldFieldTags = new ArrayList(oldFieldMap.keySet());
             Collections.sort(oldFieldTags);
-            ArrayList newFieldTags = new ArrayList(newFieldMap.keySet());
+            List newFieldTags = new ArrayList(newFieldMap.keySet());
             Collections.sort(newFieldTags);
             assertEquals(oldFieldTags, newFieldTags);
 

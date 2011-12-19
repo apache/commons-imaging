@@ -17,11 +17,12 @@
 package org.apache.commons.sanselan.common;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImageMetadata implements IImageMetadata
 {
 
-    private final ArrayList items = new ArrayList();
+    private final List items = new ArrayList();
 
     public void add(String keyword, String text)
     {
@@ -33,7 +34,7 @@ public class ImageMetadata implements IImageMetadata
         items.add(item);
     }
 
-    public ArrayList getItems()
+    public List getItems()
     {
         return new ArrayList(items);
     }

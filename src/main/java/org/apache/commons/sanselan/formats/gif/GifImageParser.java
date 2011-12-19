@@ -203,7 +203,7 @@ public class GifImageParser extends ImageParser
     protected GenericGifBlock readGenericGIFBlock(InputStream is, int code,
             byte first[]) throws ImageReadException, IOException
     {
-        ArrayList subblocks = new ArrayList();
+        List subblocks = new ArrayList();
 
         if (first != null)
             subblocks.add(first);
@@ -230,11 +230,11 @@ public class GifImageParser extends ImageParser
     private final static int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8)
             | XMP_EXTENSION;
 
-    private ArrayList readBlocks(GifHeaderInfo ghi, InputStream is,
+    private List readBlocks(GifHeaderInfo ghi, InputStream is,
             boolean stopBeforeImageData, FormatCompliance formatCompliance)
             throws ImageReadException, IOException
     {
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
 
         while (true)
         {
@@ -457,7 +457,7 @@ public class GifImageParser extends ImageParser
         }
     }
 
-    private GifBlock findBlock(ArrayList v, int code)
+    private GifBlock findBlock(List v, int code)
     {
         for (int i = 0; i < v.size(); i++)
         {
@@ -491,11 +491,9 @@ public class GifImageParser extends ImageParser
                 globalColorTable = readColorTable(is,
                         ghi.sizeOfGlobalColorTable, formatCompliance);
 
-            ArrayList blocks = readBlocks(ghi, is, stopBeforeImageData,
-                    formatCompliance);
+            List blocks = readBlocks(ghi, is, stopBeforeImageData, formatCompliance);
 
-            ImageContents result = new ImageContents(ghi, globalColorTable,
-                    blocks);
+            ImageContents result = new ImageContents(ghi, globalColorTable, blocks);
 
             return result;
         } finally
@@ -531,8 +529,7 @@ public class GifImageParser extends ImageParser
         if (bhi == null)
             throw new ImageReadException("GIF: Couldn't read Header");
 
-        ImageDescriptor id = (ImageDescriptor) findBlock(blocks.blocks,
-                IMAGE_SEPARATOR);
+        ImageDescriptor id = (ImageDescriptor) findBlock(blocks.blocks, IMAGE_SEPARATOR);
         if (id == null)
             throw new ImageReadException("GIF: Couldn't read ImageDescriptor");
 
@@ -557,9 +554,9 @@ public class GifImageParser extends ImageParser
         return null;
     }
 
-    private ArrayList getComments(ArrayList v) throws IOException
+    private List getComments(List v) throws IOException
     {
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
         int code = 0x21fe;
 
         for (int i = 0; i < v.size(); i++)
@@ -600,7 +597,7 @@ public class GifImageParser extends ImageParser
         int height = id.imageWidth;
         int width = id.imageHeight;
 
-        ArrayList Comments;
+        List Comments;
 
         Comments = getComments(blocks.blocks);
 
@@ -1117,7 +1114,7 @@ public class GifImageParser extends ImageParser
             if (ghi.globalColorTableFlag)
                 readColorTable(is, ghi.sizeOfGlobalColorTable, formatCompliance);
 
-            ArrayList blocks = readBlocks(ghi, is, true, formatCompliance);
+            List blocks = readBlocks(ghi, is, true, formatCompliance);
 
             List result = new ArrayList();
             for (int i = 0; i < blocks.size(); i++)

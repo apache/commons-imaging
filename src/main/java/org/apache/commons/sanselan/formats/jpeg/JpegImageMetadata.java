@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -92,7 +93,7 @@ public class JpegImageMetadata implements IImageMetadata {
      * @throws IOException
      */
     public byte[] getEXIFThumbnailData() throws ImageReadException, IOException {
-        ArrayList dirs = exif.getDirectories();
+        List dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
             TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
                     .get(i);
@@ -125,7 +126,7 @@ public class JpegImageMetadata implements IImageMetadata {
             return null;
         }
 
-        ArrayList dirs = exif.getDirectories();
+        List dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
             TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
                     .get(i);
@@ -150,7 +151,7 @@ public class JpegImageMetadata implements IImageMetadata {
     }
 
     public TiffImageData getRawImageData() {
-        ArrayList dirs = exif.getDirectories();
+        List dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
             TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
                     .get(i);
@@ -163,8 +164,8 @@ public class JpegImageMetadata implements IImageMetadata {
         return null;
     }
 
-    public ArrayList getItems() {
-        ArrayList result = new ArrayList();
+    public List getItems() {
+        List result = new ArrayList();
 
         if (null != exif)
             result.addAll(exif.getItems());

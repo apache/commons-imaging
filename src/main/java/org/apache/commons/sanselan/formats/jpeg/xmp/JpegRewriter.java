@@ -171,7 +171,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
             throws ImageReadException, IOException
     // , ImageWriteException
     {
-        final ArrayList pieces = new ArrayList();
+        final List pieces = new ArrayList();
         final List segmentPieces = new ArrayList();
 
         JpegUtils.Visitor visitor = new JpegUtils.Visitor() {

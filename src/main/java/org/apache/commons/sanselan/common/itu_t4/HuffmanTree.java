@@ -18,6 +18,7 @@ package org.apache.commons.sanselan.common.itu_t4;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.sanselan.common.BitInputStreamFlexible;
 
@@ -29,7 +30,7 @@ public class HuffmanTree {
         boolean isEmpty = true;
         Object value = null;
     }
-    private ArrayList nodes = new ArrayList();
+    private List nodes = new ArrayList();
 
     public final void insert(String pattern, Object value) throws HuffmanTreeException {
         int position = 0;

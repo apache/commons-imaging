@@ -25,6 +25,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageFormat;
@@ -105,7 +106,7 @@ public class IcnsImageParser extends ImageParser
         }
 
         IcnsContents contents = readImage(byteSource);
-        ArrayList images = IcnsDecoder.decodeAllImages(contents.icnsElements);
+        List images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty())
             throw new ImageReadException("No icons in ICNS file");
         BufferedImage image0 = (BufferedImage) images.get(0);
@@ -135,7 +136,7 @@ public class IcnsImageParser extends ImageParser
         }
 
         IcnsContents contents = readImage(byteSource);
-        ArrayList images = IcnsDecoder.decodeAllImages(contents.icnsElements);
+        List images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty())
             throw new ImageReadException("No icons in ICNS file");
         BufferedImage image0 = (BufferedImage) images.get(0);
@@ -246,7 +247,7 @@ public class IcnsImageParser extends ImageParser
             is = byteSource.getInputStream();
             IcnsHeader icnsHeader = readIcnsHeader(is);
 
-            ArrayList icnsElementList = new ArrayList();
+            List icnsElementList = new ArrayList();
             for (int remainingSize = icnsHeader.fileSize - 8;
                 remainingSize > 0; )
             {
@@ -288,14 +289,14 @@ public class IcnsImageParser extends ImageParser
             Map params) throws ImageReadException, IOException
     {
         IcnsContents icnsContents = readImage(byteSource);
-        ArrayList result = IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
+        List result = IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
         if (result.size() > 0)
             return (BufferedImage) result.get(0);
         else
             throw new ImageReadException("No icons in ICNS file");
     }
 
-    public ArrayList getAllBufferedImages(ByteSource byteSource)
+    public List getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
         IcnsContents icnsContents = readImage(byteSource);

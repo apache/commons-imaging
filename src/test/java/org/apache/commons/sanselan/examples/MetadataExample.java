@@ -19,6 +19,7 @@ package org.apache.commons.sanselan.examples;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
@@ -139,7 +140,7 @@ public class MetadataExample
 
             System.out.println();
 
-            ArrayList items = jpegMetadata.getItems();
+            List items = jpegMetadata.getItems();
             for (int i = 0; i < items.size(); i++)
             {
                 Object item = items.get(i);

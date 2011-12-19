@@ -173,7 +173,7 @@ public class PsdImageParser extends ImageParser
         return result;
     }
 
-    private ArrayList readImageResourceBlocks(byte bytes[],
+    private List readImageResourceBlocks(byte bytes[],
             int imageResourceIDs[], int maxBlocksToRead)
             throws ImageReadException, IOException
     {
@@ -193,11 +193,11 @@ public class PsdImageParser extends ImageParser
         return false;
     }
 
-    private ArrayList readImageResourceBlocks(InputStream is,
+    private List readImageResourceBlocks(InputStream is,
             int imageResourceIDs[], int maxBlocksToRead, int available)
             throws ImageReadException, IOException
     {
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
 
         while (available > 0)
         {
@@ -253,7 +253,7 @@ public class PsdImageParser extends ImageParser
         return result;
     }
 
-    private ArrayList readImageResourceBlocks(ByteSource byteSource,
+    private List readImageResourceBlocks(ByteSource byteSource,
             int imageResourceIDs[], int maxBlocksToRead)
             throws ImageReadException, IOException
     {
@@ -458,7 +458,7 @@ public class PsdImageParser extends ImageParser
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
-        ArrayList blocks = readImageResourceBlocks(byteSource,
+        List blocks = readImageResourceBlocks(byteSource,
                 new int[] { IMAGE_RESOURCE_ID_ICC_PROFILE, }, 1);
 
         if ((blocks == null) || (blocks.size() < 1))
@@ -540,7 +540,7 @@ public class PsdImageParser extends ImageParser
         int Width = header.Columns;
         int Height = header.Rows;
 
-        ArrayList Comments = new ArrayList();
+        List Comments = new ArrayList();
         // TODO: comments...
 
         int BitsPerPixel = header.Depth * getChannelsPerMode(header.Mode);
@@ -592,7 +592,7 @@ public class PsdImageParser extends ImageParser
     }
 
     // TODO not used
-    private ImageResourceBlock findImageResourceBlock(ArrayList blocks, int ID)
+    private ImageResourceBlock findImageResourceBlock(List blocks, int ID)
     {
         for (int i = 0; i < blocks.size(); i++)
         {
@@ -622,7 +622,7 @@ public class PsdImageParser extends ImageParser
             imageContents.dump(pw);
             imageContents.header.dump(pw);
 
-            ArrayList blocks = readImageResourceBlocks(byteSource,
+            List blocks = readImageResourceBlocks(byteSource,
             // fImageContents.ImageResources,
                     null, -1);
 
@@ -676,7 +676,7 @@ public class PsdImageParser extends ImageParser
         // GraphicControlExtension gce = (GraphicControlExtension) findBlock(
         // fImageContents.blocks, kGraphicControlExtension);
 
-        ArrayList blocks = readImageResourceBlocks(byteSource,
+        List blocks = readImageResourceBlocks(byteSource,
         // fImageContents.ImageResources,
                 null, -1);
 
@@ -808,7 +808,7 @@ public class PsdImageParser extends ImageParser
         if (header == null)
             throw new ImageReadException("PSD: Couldn't read Header");
 
-        ArrayList blocks = readImageResourceBlocks(byteSource,
+        List blocks = readImageResourceBlocks(byteSource,
                 new int[] { IMAGE_RESOURCE_ID_XMP, }, -1);
 
         if ((blocks == null) || (blocks.size() < 1))

@@ -16,17 +16,17 @@
  */
 package org.apache.commons.sanselan.palette;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.sanselan.ImageWriteException;
 
 public class QuantizedPalette extends Palette
 {
     private final int precision;
-    private final ArrayList subsets;
+    private final List subsets;
     private final ColorSpaceSubset straight[];
 
-    public QuantizedPalette(ArrayList subsets, int precision)
+    public QuantizedPalette(List subsets, int precision)
     {
         this.subsets = subsets;
         this.precision = precision;

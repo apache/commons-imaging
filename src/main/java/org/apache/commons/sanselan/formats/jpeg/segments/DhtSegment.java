@@ -19,12 +19,13 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.sanselan.ImageReadException;
 
 public class DhtSegment extends Segment
 {
-    public final ArrayList huffmanTables = new ArrayList();
+    public final List huffmanTables = new ArrayList();
 
     public static class HuffmanTable
     {

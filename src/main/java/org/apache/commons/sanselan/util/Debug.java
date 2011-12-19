@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public final class Debug
@@ -185,7 +186,7 @@ public final class Debug
         if (map == null)
             return getDebug(message + " map: " + null);
 
-        ArrayList keys = new ArrayList(map.keySet());
+        List keys = new ArrayList(map.keySet());
         result.append(getDebug(message + " map: " + keys.size()) + newline);
         for (int i = 0; i < keys.size(); i++)
         {
@@ -217,7 +218,7 @@ public final class Debug
     }
 
     public static boolean compare(String prefix, Map a, Map b,
-            ArrayList ignore, StringBuffer buffer)
+            List ignore, StringBuffer buffer)
     {
         if ((a == null) && (b == null))
         {
@@ -235,8 +236,8 @@ public final class Debug
             return false;
         }
 
-        ArrayList keys_a = new ArrayList(a.keySet());
-        ArrayList keys_b = new ArrayList(b.keySet());
+        List keys_a = new ArrayList(a.keySet());
+        List keys_b = new ArrayList(b.keySet());
 
         if (ignore != null)
         {
@@ -886,7 +887,7 @@ public final class Debug
         {
             java.util.Map map = (java.util.Map) value;
             debug(prefix, "map");
-            ArrayList keys = new ArrayList(map.keySet());
+            List keys = new ArrayList(map.keySet());
             Collections.sort(keys);
             for (int i = 0; i < keys.size(); i++)
             {

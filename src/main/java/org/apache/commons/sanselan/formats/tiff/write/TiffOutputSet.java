@@ -27,7 +27,7 @@ import org.apache.commons.sanselan.util.Debug;
 public final class TiffOutputSet implements TiffConstants
 {
     public final int byteOrder;
-    private final ArrayList directories = new ArrayList();
+    private final List directories = new ArrayList();
 
     public TiffOutputSet()
     {
@@ -308,7 +308,7 @@ public final class TiffOutputSet implements TiffConstants
                     + directory.description() + " (" + directory.type + ")");
             result.append(newline);
 
-            ArrayList fields = directory.getFields();
+            List fields = directory.getFields();
             for (int j = 0; j < fields.size(); j++)
             {
                 TiffOutputField field = (TiffOutputField) fields.get(j);

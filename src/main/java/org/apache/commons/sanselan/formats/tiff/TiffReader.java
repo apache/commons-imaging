@@ -138,7 +138,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             if (offset > 0)
                 is.skip(offset);
 
-            ArrayList fields = new ArrayList();
+            List fields = new ArrayList();
 
             if (offset >= byteSource.getLength())
             {
@@ -321,8 +321,8 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
     private static class Collector implements Listener
     {
         private TiffHeader tiffHeader = null;
-        private ArrayList directories = new ArrayList();
-        private ArrayList fields = new ArrayList();
+        private List directories = new ArrayList();
+        private List fields = new ArrayList();
         private final boolean readThumbnails;
 
         public Collector()
@@ -464,7 +464,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             TiffDirectory directory) throws ImageReadException, IOException
     {
 
-        ArrayList elements = directory.getTiffRawImageDataElements();
+        List elements = directory.getTiffRawImageDataElements();
         TiffImageData.Data data[] = new TiffImageData.Data[elements.size()];
         for (int i = 0; i < elements.size(); i++)
         {

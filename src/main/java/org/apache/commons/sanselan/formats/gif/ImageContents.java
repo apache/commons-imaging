@@ -16,17 +16,16 @@
  */
 package org.apache.commons.sanselan.formats.gif;
 
-import java.util.ArrayList;
+import java.util.List;
 
 class ImageContents
 {
     public final GifHeaderInfo gifHeaderInfo;
 
-    public final ArrayList blocks;
+    public final List blocks;
     public final byte globalColorTable[];
 
-    public ImageContents(GifHeaderInfo gifHeaderInfo, byte globalColorTable[],
-            ArrayList blocks)
+    public ImageContents(GifHeaderInfo gifHeaderInfo, byte globalColorTable[], List blocks)
     {
         this.gifHeaderInfo = gifHeaderInfo;
         this.globalColorTable = globalColorTable;

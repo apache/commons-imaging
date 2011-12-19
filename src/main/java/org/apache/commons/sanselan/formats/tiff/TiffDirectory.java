@@ -19,6 +19,7 @@ package org.apache.commons.sanselan.formats.tiff;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageReadException;
@@ -87,11 +88,11 @@ public class TiffDirectory extends TiffElement implements TiffConstants
     }
 
     public final int type;
-    public final ArrayList entries;
+    public final List entries;
     //    public final int offset;
     public final int nextDirectoryOffset;
 
-    public TiffDirectory(int type, ArrayList entries, final int offset,
+    public TiffDirectory(int type, List entries, final int offset,
             int nextDirectoryOffset)
     {
         super(offset, TIFF_DIRECTORY_HEADER_LENGTH + entries.size()
@@ -102,7 +103,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         this.nextDirectoryOffset = nextDirectoryOffset;
     }
 
-    public ArrayList getDirectoryEntrys()
+    public List getDirectoryEntrys()
     {
         return new ArrayList(entries);
     }
@@ -192,7 +193,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         }
     }
 
-    private ArrayList getRawImageDataElements(TiffField offsetsField,
+    private List getRawImageDataElements(TiffField offsetsField,
             TiffField byteCountsField) throws ImageReadException
     {
         int offsets[] = offsetsField.getIntArrayValue();
@@ -202,7 +203,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
             throw new ImageReadException("offsets.length(" + offsets.length
                     + ") != byteCounts.length(" + byteCounts.length + ")");
 
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
         for (int i = 0; i < offsets.length; i++)
         {
             result.add(new ImageDataElement(offsets[i], byteCounts[i]));
@@ -210,7 +211,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         return result;
     }
 
-    public ArrayList getTiffRawImageDataElements() throws ImageReadException
+    public List getTiffRawImageDataElements() throws ImageReadException
     {
         TiffField tileOffsets = findField(TIFF_TAG_TILE_OFFSETS);
         TiffField tileByteCounts = findField(TIFF_TAG_TILE_BYTE_COUNTS);

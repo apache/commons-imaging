@@ -198,7 +198,7 @@ package org.apache.commons.sanselan.formats.tga;
 //        }
 //        String FormatDetails;
 //        int BitsPerPixel;
-//        ArrayList Comments;
+//        List Comments;
 //        ImageFormat Format = ImageFormat.IMAGE_FORMAT_TGA;
 //        String FormatName = Format.name;
 //        String MimeType = "image/tga";

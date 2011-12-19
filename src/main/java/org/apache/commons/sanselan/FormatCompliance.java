@@ -20,12 +20,13 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FormatCompliance
 {
     private final boolean failOnError;
     private final String description;
-    private final ArrayList comments = new ArrayList();
+    private final List comments = new ArrayList();
 
     public FormatCompliance(String description)
     {

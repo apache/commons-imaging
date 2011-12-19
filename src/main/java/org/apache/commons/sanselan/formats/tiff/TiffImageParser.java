@@ -124,7 +124,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         TiffContents contents = new TiffReader(isStrict(params)).readContents(
                 byteSource, params, formatCompliance);
 
-        ArrayList directories = contents.directories;
+        List directories = contents.directories;
 
         TiffImageMetadata result = new TiffImageMetadata(contents);
 
@@ -132,10 +132,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         {
             TiffDirectory dir = (TiffDirectory) directories.get(i);
 
-            TiffImageMetadata.Directory metadataDirectory = new TiffImageMetadata.Directory(
-                    dir);
+            TiffImageMetadata.Directory metadataDirectory = new TiffImageMetadata.Directory(dir);
 
-            ArrayList entries = dir.getDirectoryEntrys();
+            List entries = dir.getDirectoryEntrys();
 
             for (int j = 0; j < entries.size(); j++)
             {
@@ -234,8 +233,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
         // -------------------
 
-        ArrayList comments = new ArrayList();
-        ArrayList entries = directory.entries;
+        List comments = new ArrayList();
+        List entries = directory.entries;
         for (int i = 0; i < entries.size(); i++)
         {
             TiffField field = (TiffField) entries.get(i);
@@ -355,7 +354,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                 TiffContents contents = new TiffReader(true).readContents(
                         byteSource, params, formatCompliance);
 
-                ArrayList directories = contents.directories;
+                List directories = contents.directories;
 
                 if (directories == null)
                     return false;
@@ -365,7 +364,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                     TiffDirectory directory = (TiffDirectory) directories
                             .get(d);
 
-                    ArrayList entries = directory.entries;
+                    List entries = directory.entries;
 
                     if (entries == null)
                         return false;
@@ -444,12 +443,12 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         return result;
     }
 
-    public ArrayList getAllBufferedImages(ByteSource byteSource)
+    public List getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
         TiffContents contents = new TiffReader(true).readDirectories(byteSource, true, formatCompliance);
-        ArrayList results = new ArrayList();
+        List results = new ArrayList();
         for (int i = 0; i < contents.directories.size(); i++)
         {
             TiffDirectory directory = (TiffDirectory) contents.directories.get(i);
@@ -465,7 +464,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
     protected BufferedImage getBufferedImage(TiffDirectory directory, Map params)
             throws ImageReadException, IOException
     {
-        ArrayList entries = directory.entries;
+        List entries = directory.entries;
 
         if (entries == null)
             throw new ImageReadException("TIFF missing entries");

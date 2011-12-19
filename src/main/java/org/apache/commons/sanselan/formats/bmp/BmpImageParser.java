@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.FormatCompliance;
@@ -606,7 +607,7 @@ public class BmpImageParser extends ImageParser
         int height = bhi.height;
         int width = bhi.width;
 
-        ArrayList comments = new ArrayList();
+        List comments = new ArrayList();
         // TODO: comments...
 
         int bitsPerPixel = bhi.bitsPerPixel;

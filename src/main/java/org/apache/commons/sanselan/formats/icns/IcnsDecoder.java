@@ -19,6 +19,7 @@ package org.apache.commons.sanselan.formats.icns;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.sanselan.ImageReadException;
 
@@ -428,10 +429,10 @@ public class IcnsDecoder
         }
     }
 
-    public static ArrayList decodeAllImages(IcnsImageParser.IcnsElement[] icnsElements)
+    public static List decodeAllImages(IcnsImageParser.IcnsElement[] icnsElements)
             throws ImageReadException, IOException
     {
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
         for (int i = 0; i < icnsElements.length; i++)
         {
             IcnsImageParser.IcnsElement imageElement = icnsElements[i];

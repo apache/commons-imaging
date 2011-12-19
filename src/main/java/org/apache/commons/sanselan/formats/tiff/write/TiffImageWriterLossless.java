@@ -129,7 +129,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
             TiffContents contents = new TiffReader(false).readContents(byteSource,
                     params, formatCompliance);
 
-            ArrayList elements = new ArrayList();
+            List elements = new ArrayList();
             //            result.add(contents.header); // ?
 
             List directories = contents.directories;

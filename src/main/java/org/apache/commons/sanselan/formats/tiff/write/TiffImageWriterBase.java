@@ -74,7 +74,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         TiffOutputField gpsDirectoryOffsetField = null;
         TiffOutputField interoperabilityDirectoryOffsetField = null;
 
-        ArrayList directoryIndices = new ArrayList();
+        List directoryIndices = new ArrayList();
         Map directoryTypeMap = new HashMap();
         for (int i = 0; i < directories.size(); i++)
         {
@@ -125,7 +125,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             }
 
             HashSet fieldTags = new HashSet();
-            ArrayList fields = directory.getFields();
+            List fields = directory.getFields();
             for (int j = 0; j < fields.size(); j++)
             {
                 TiffOutputField field = (TiffOutputField) fields.get(j);
@@ -286,7 +286,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         //
         // writeImageFileHeader(bos, WRITE_BYTE_ORDER);
 
-        // ArrayList directoryFields = new ArrayList();
+        // List directoryFields = new ArrayList();
 
         final int photometricInterpretation = 2; // TODO:
 

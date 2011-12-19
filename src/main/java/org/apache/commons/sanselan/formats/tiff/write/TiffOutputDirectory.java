@@ -37,7 +37,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         TiffConstants
 {
     public final int type;
-    private final ArrayList fields = new ArrayList();
+    private final List fields = new ArrayList();
 
     private TiffOutputDirectory nextDirectory = null;
 
@@ -56,7 +56,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         fields.add(field);
     }
 
-    public ArrayList getFields()
+    public List getFields()
     {
         return new ArrayList(fields);
     }
@@ -68,7 +68,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
     public void removeField(int tag)
     {
-        ArrayList matches = new ArrayList();
+        List matches = new ArrayList();
         for (int i = 0; i < fields.size(); i++)
         {
             TiffOutputField field = (TiffOutputField) fields.get(i);

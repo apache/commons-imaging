@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.common.IImageMetadata;
@@ -1073,7 +1074,7 @@ public abstract class Sanselan implements SanselanConstants {
      *            Filename associated with image data (optional).
      * @return A vector of BufferedImages.
      */
-    public static ArrayList getAllBufferedImages(InputStream is, String filename)
+    public static List getAllBufferedImages(InputStream is, String filename)
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceInputStream(is, filename));
     }
@@ -1089,7 +1090,7 @@ public abstract class Sanselan implements SanselanConstants {
      *            Byte array containing an image file.
      * @return A vector of BufferedImages.
      */
-    public static ArrayList getAllBufferedImages(byte bytes[])
+    public static List getAllBufferedImages(byte bytes[])
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceArray(bytes));
     }
@@ -1105,12 +1106,12 @@ public abstract class Sanselan implements SanselanConstants {
      *            File containing image data.
      * @return A vector of BufferedImages.
      */
-    public static ArrayList getAllBufferedImages(File file)
+    public static List getAllBufferedImages(File file)
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceFile(file));
     }
 
-    private static ArrayList getAllBufferedImages(ByteSource byteSource)
+    private static List getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
 

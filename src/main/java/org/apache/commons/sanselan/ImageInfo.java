@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ImageInfo represents a collection of basic properties of an image, such as
@@ -30,7 +31,7 @@ public class ImageInfo
     private final String formatDetails; // ie version
 
     private final int bitsPerPixel;
-    private final ArrayList comments;
+    private final List comments;
 
     private final ImageFormat format;
     private final String formatName;
@@ -72,7 +73,7 @@ public class ImageInfo
     private final String compressionAlgorithm;
 
     public ImageInfo(String formatDetails, int bitsPerPixel,
-            ArrayList comments, ImageFormat format, String formatName,
+            List comments, ImageFormat format, String formatName,
             int height, String mimeType, int numberOfImages,
             int physicalHeightDpi, float physicalHeightInch,
             int physicalWidthDpi, float physicalWidthInch, int width,
@@ -116,7 +117,7 @@ public class ImageInfo
      * Returns a list of comments from the image file. <p/> This is mostly
      * obsolete.
      */
-    public ArrayList getComments()
+    public List getComments()
     {
         return new ArrayList(comments);
     }
