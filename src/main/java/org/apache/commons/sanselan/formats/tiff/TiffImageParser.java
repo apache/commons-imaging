@@ -444,6 +444,24 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         return result;
     }
 
+    public ArrayList getAllBufferedImages(ByteSource byteSource)
+            throws ImageReadException, IOException
+    {
+        FormatCompliance formatCompliance = FormatCompliance.getDefault();
+        TiffContents contents = new TiffReader(true).readDirectories(byteSource, true, formatCompliance);
+        ArrayList results = new ArrayList();
+        for (int i = 0; i < contents.directories.size(); i++)
+        {
+            TiffDirectory directory = (TiffDirectory) contents.directories.get(i);
+            BufferedImage result = directory.getTiffImage(null);
+            if (result != null)
+            {
+                results.add(result);
+            }
+        }
+        return results;
+    } 
+
     protected BufferedImage getBufferedImage(TiffDirectory directory, Map params)
             throws ImageReadException, IOException
     {

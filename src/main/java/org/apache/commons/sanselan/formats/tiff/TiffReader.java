@@ -432,7 +432,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             boolean readImageData, FormatCompliance formatCompliance)
             throws ImageReadException, IOException
     {
-        Collector collector = new FirstDirectoryCollector(readImageData);
+        Collector collector = new Collector(null);
         readDirectories(byteSource, formatCompliance, collector);
         TiffContents contents = collector.getContents();
         if (contents.directories.size() < 1)
