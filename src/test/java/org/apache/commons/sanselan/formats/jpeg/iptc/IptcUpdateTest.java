@@ -33,8 +33,8 @@ import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
 import org.apache.commons.sanselan.formats.jpeg.JpegPhotoshopMetadata;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCConstants;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCRecord;
+import org.apache.commons.sanselan.formats.jpeg.iptc.IptcConstants;
+import org.apache.commons.sanselan.formats.jpeg.iptc.IptcRecord;
 import org.apache.commons.sanselan.formats.jpeg.iptc.JpegIptcRewriter;
 import org.apache.commons.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.commons.sanselan.util.Debug;
@@ -181,15 +181,15 @@ public class IptcUpdateTest extends IptcBaseTest
                 List newRecords = new ArrayList();
                 for (int j = 0; j < oldRecords.size(); j++)
                 {
-                    IPTCRecord record = (IPTCRecord) oldRecords.get(j);
-                    if (record.iptcType.type != IPTCConstants.IPTC_TYPE_CITY.type
-                            && record.iptcType.type != IPTCConstants.IPTC_TYPE_CREDIT.type)
+                    IptcRecord record = (IptcRecord) oldRecords.get(j);
+                    if (record.iptcType.type != IptcConstants.IPTC_TYPE_CITY.type
+                            && record.iptcType.type != IptcConstants.IPTC_TYPE_CREDIT.type)
                         newRecords.add(record);
                 }
 
-                newRecords.add(new IPTCRecord(IPTCConstants.IPTC_TYPE_CITY,
+                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CITY,
                         "Albany, NY"));
-                newRecords.add(new IPTCRecord(IPTCConstants.IPTC_TYPE_CREDIT,
+                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CREDIT,
                         "William Sorensen"));
 
                 PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
@@ -233,9 +233,9 @@ public class IptcUpdateTest extends IptcBaseTest
                 List newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
                 List newRecords = new ArrayList();
 
-                newRecords.add(new IPTCRecord(IPTCConstants.IPTC_TYPE_CITY,
+                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CITY,
                         "Albany, NY"));
-                newRecords.add(new IPTCRecord(IPTCConstants.IPTC_TYPE_CREDIT,
+                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CREDIT,
                         "William Sorensen"));
 
                 PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
@@ -279,9 +279,9 @@ public class IptcUpdateTest extends IptcBaseTest
                 List newBlocks = new ArrayList();
                 List newRecords = new ArrayList();
 
-                newRecords.add(new IPTCRecord(IPTCConstants.IPTC_TYPE_CITY,
+                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CITY,
                         "Albany, NY"));
-                newRecords.add(new IPTCRecord(IPTCConstants.IPTC_TYPE_CREDIT,
+                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CREDIT,
                         "William Sorensen"));
 
                 PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
@@ -373,17 +373,17 @@ public class IptcUpdateTest extends IptcBaseTest
                         newRecords = new ArrayList();
                         for (int j = 0; j < oldRecords.size(); j++)
                         {
-                            IPTCRecord record = (IPTCRecord) oldRecords.get(j);
-                            if (record.iptcType.type != IPTCConstants.IPTC_TYPE_CITY.type
-                                    && record.iptcType.type != IPTCConstants.IPTC_TYPE_CREDIT.type)
+                            IptcRecord record = (IptcRecord) oldRecords.get(j);
+                            if (record.iptcType.type != IptcConstants.IPTC_TYPE_CITY.type
+                                    && record.iptcType.type != IptcConstants.IPTC_TYPE_CREDIT.type)
                                 newRecords.add(record);
                         }
                     }
                 }
 
-                newRecords.add(new IPTCRecord(IPTCConstants.IPTC_TYPE_CITY,
+                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CITY,
                         "Albany, NY"));
-                newRecords.add(new IPTCRecord(IPTCConstants.IPTC_TYPE_CREDIT,
+                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CREDIT,
                         "William Sorensen"));
 
                 PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,

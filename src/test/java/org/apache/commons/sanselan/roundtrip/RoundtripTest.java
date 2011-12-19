@@ -31,7 +31,7 @@ import org.apache.commons.sanselan.SanselanConstants;
 import org.apache.commons.sanselan.SanselanTest;
 import org.apache.commons.sanselan.common.RgbBufferedImageFactory;
 import org.apache.commons.sanselan.util.Debug;
-import org.apache.commons.sanselan.util.IOUtils;
+import org.apache.commons.sanselan.util.IoUtils;
 
 public class RoundtripTest extends SanselanTest
 {
@@ -257,8 +257,8 @@ public class RoundtripTest extends SanselanTest
         assertTrue(b.exists() && b.isFile());
         assertEquals(a.length(), b.length());
 
-        byte aData[] = IOUtils.getFileBytes(a);
-        byte bData[] = IOUtils.getFileBytes(b);
+        byte aData[] = IoUtils.getFileBytes(a);
+        byte bData[] = IoUtils.getFileBytes(b);
 
         for (int i = 0; i < a.length(); i++)
         {

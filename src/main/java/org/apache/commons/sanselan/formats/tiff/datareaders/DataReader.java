@@ -26,7 +26,7 @@ import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.common.BitInputStream;
 import org.apache.commons.sanselan.common.PackBits;
 import org.apache.commons.sanselan.common.itu_t4.T4Compression;
-import org.apache.commons.sanselan.common.mylzw.MyLZWDecompressor;
+import org.apache.commons.sanselan.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
@@ -116,7 +116,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
 
                 int LZWMinimumCodeSize = 8;
 
-                MyLZWDecompressor myLzwDecompressor = new MyLZWDecompressor(
+                MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
                         LZWMinimumCodeSize, BYTE_ORDER_NETWORK);
 
                 myLzwDecompressor.setTiffLZWMode();

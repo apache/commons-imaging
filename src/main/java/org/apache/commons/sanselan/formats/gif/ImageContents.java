@@ -20,12 +20,12 @@ import java.util.ArrayList;
 
 class ImageContents
 {
-    public final GIFHeaderInfo gifHeaderInfo;
+    public final GifHeaderInfo gifHeaderInfo;
 
     public final ArrayList blocks;
     public final byte globalColorTable[];
 
-    public ImageContents(GIFHeaderInfo gifHeaderInfo, byte globalColorTable[],
+    public ImageContents(GifHeaderInfo gifHeaderInfo, byte globalColorTable[],
             ArrayList blocks)
     {
         this.gifHeaderInfo = gifHeaderInfo;

@@ -23,7 +23,7 @@ public interface AllTagConstants
             SanselanConstants,
             TiffTagConstants,
             ExifTagConstants,
-            GPSTagConstants
+            GpsTagConstants
 {
     public static final TagInfo ALL_TAGS[] = TagConstantsUtils
             .mergeTagLists(new TagInfo[][]{

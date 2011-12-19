@@ -42,7 +42,7 @@ import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.sanselan.util.Debug;
-import org.apache.commons.sanselan.util.IOUtils;
+import org.apache.commons.sanselan.util.IoUtils;
 
 public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 {
@@ -83,7 +83,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 byte bytes[] = baos.toByteArray();
                 File tempFile = createTempFile("test", ".jpg");
                 Debug.debug("tempFile", tempFile);
-                IOUtils.writeToFile(bytes, tempFile);
+                IoUtils.writeToFile(bytes, tempFile);
 
                 Debug.debug("Output Segments:");
                 new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
@@ -127,7 +127,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 byte bytes[] = baos.toByteArray();
                 File tempFile = createTempFile("removed", ".jpg");
                 Debug.debug("tempFile", tempFile);
-                IOUtils.writeToFile(bytes, tempFile);
+                IoUtils.writeToFile(bytes, tempFile);
 
                 Debug.debug("Output Segments:");
                 stripped = new ByteSourceArray(bytes);
@@ -148,7 +148,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 byte bytes[] = baos.toByteArray();
                 File tempFile = createTempFile("inserted" + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
-                IOUtils.writeToFile(bytes, tempFile);
+                IoUtils.writeToFile(bytes, tempFile);
 
                 Debug.debug("Output Segments:");
                 new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
@@ -222,7 +222,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 byte bytes[] = baos.toByteArray();
                 File tempFile = createTempFile(name + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
-                IOUtils.writeToFile(bytes, tempFile);
+                IoUtils.writeToFile(bytes, tempFile);
 
                 Debug.debug("Output Segments:");
                 new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));

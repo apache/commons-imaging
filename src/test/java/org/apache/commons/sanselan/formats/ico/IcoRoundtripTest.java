@@ -30,7 +30,7 @@ import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.util.Debug;
-import org.apache.commons.sanselan.util.IOUtils;
+import org.apache.commons.sanselan.util.IoUtils;
 
 public class IcoRoundtripTest extends IcoBaseTest
 {
@@ -549,10 +549,10 @@ public class IcoRoundtripTest extends IcoBaseTest
     {
         // Uncomment to generate ICO files that can be tested with Windows:
         //File exportFile = new File("/tmp/" + description + ".ico");
-        //IOUtils.writeToFile(rawData, exportFile);
+        //IoUtils.writeToFile(rawData, exportFile);
 
         File tempFile = createTempFile("temp", ".ico");
-        IOUtils.writeToFile(rawData, tempFile);
+        IoUtils.writeToFile(rawData, tempFile);
 
         BufferedImage dstImage = Sanselan.getBufferedImage(tempFile);
 

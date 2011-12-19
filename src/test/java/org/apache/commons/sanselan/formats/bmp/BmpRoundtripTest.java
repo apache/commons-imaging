@@ -29,7 +29,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.util.Debug;
-import org.apache.commons.sanselan.util.IOUtils;
+import org.apache.commons.sanselan.util.IoUtils;
 
 public class BmpRoundtripTest extends BmpBaseTest
 {
@@ -162,7 +162,7 @@ public class BmpRoundtripTest extends BmpBaseTest
         // Debug.debug("bytes", bytes);
 
         File tempFile = createTempFile("temp", ".bmp");
-        IOUtils.writeToFile(bytes, tempFile);
+        IoUtils.writeToFile(bytes, tempFile);
 
         BufferedImage dstImage = Sanselan.getBufferedImage(bytes);
 

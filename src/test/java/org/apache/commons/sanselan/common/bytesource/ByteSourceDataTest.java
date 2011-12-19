@@ -26,7 +26,7 @@ import java.io.InputStream;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceInputStream;
-import org.apache.commons.sanselan.util.IOUtils;
+import org.apache.commons.sanselan.util.IoUtils;
 
 public class ByteSourceDataTest extends ByteSourceTest
 {
@@ -95,7 +95,7 @@ public class ByteSourceDataTest extends ByteSourceTest
         for (int j = 0; j < 5; j++)
         {
             InputStream is = byteSource.getInputStream();
-            byte dst[] = IOUtils.getInputStreamBytes(is);
+            byte dst[] = IoUtils.getInputStreamBytes(is);
 
             compareByteArrays(src, dst);
         }
@@ -113,7 +113,7 @@ public class ByteSourceDataTest extends ByteSourceTest
             int start = src.length / 2;
 
             InputStream is = byteSource.getInputStream(start);
-            byte dst[] = IOUtils.getInputStreamBytes(is);
+            byte dst[] = IoUtils.getInputStreamBytes(is);
 
             assertTrue(src.length == dst.length + start);
             for (int i = 0; i < dst.length; i++)

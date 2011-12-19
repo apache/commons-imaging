@@ -39,11 +39,11 @@ import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.datareaders.DataReader;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterBiLevel;
-import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterCIELAB;
-import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterCMYK;
-import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterLogLUV;
+import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterCieLab;
+import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterCmyk;
+import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterLogLuv;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterPalette;
-import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterRGB;
+import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.sanselan.formats.tiff.write.TiffImageWriterLossy;
 
@@ -563,10 +563,10 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                     bitsPerSample, predictor, width, height, colorMap);
         }
         case 2: // RGB
-            return new PhotometricInterpreterRGB(samplesPerPixel,
+            return new PhotometricInterpreterRgb(samplesPerPixel,
                     bitsPerSample, predictor, width, height);
         case 5: // CMYK
-            return new PhotometricInterpreterCMYK(samplesPerPixel,
+            return new PhotometricInterpreterCmyk(samplesPerPixel,
                     bitsPerSample, predictor, width, height);
         case 6: //
         {
@@ -587,13 +587,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         }
 
         case 8:
-            return new PhotometricInterpreterCIELAB(samplesPerPixel,
+            return new PhotometricInterpreterCieLab(samplesPerPixel,
                     bitsPerSample, predictor, width, height);
 
         case 32844:
         case 32845: {
             boolean yonly = (photometricInterpretation == 32844);
-            return new PhotometricInterpreterLogLUV(samplesPerPixel,
+            return new PhotometricInterpreterLogLuv(samplesPerPixel,
                     bitsPerSample, predictor, width, height, yonly);
         }
 

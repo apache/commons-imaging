@@ -48,9 +48,9 @@ import org.apache.commons.sanselan.util.Debug;
  * All of Sanselan's methods are static.
  * <p>
  * See the source of the SampleUsage class and other classes in the
- * org.apache.commons.sanselan.sampleUsage package for examples.
+ * org.apache.commons.sanselan.examples package for examples.
  *
- * @see org.apache.commons.sanselan.sampleUsage.SampleUsage
+ * @see org.apache.commons.sanselan.examples.SampleUsage
  */
 public abstract class Sanselan implements SanselanConstants {
 

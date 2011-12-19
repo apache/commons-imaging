@@ -26,7 +26,7 @@ limitations under the License.
 
 <subsection name="Example Code">
 <p>
-  Can be found in the source distribution in org.apache.commons.sanselan.sampleUsage package
+  Can be found in the source distribution in org.apache.commons.sanselan.examples package
   <ul>
       <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/SampleUsage.java">SampleUsage.java</a>(includes the above code)</li>
       <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/MetadataExample.java">MetadataExample.java</a>(illustrates how to find JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>

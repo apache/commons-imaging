@@ -27,8 +27,8 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.sanselan.formats.jpeg.JpegPhotoshopMetadata;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCConstants;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCRecord;
+import org.apache.commons.sanselan.formats.jpeg.iptc.IptcConstants;
+import org.apache.commons.sanselan.formats.jpeg.iptc.IptcRecord;
 import org.apache.commons.sanselan.util.Debug;
 
 public class IptcDumpTest extends IptcBaseTest
@@ -73,8 +73,8 @@ public class IptcDumpTest extends IptcBaseTest
             Debug.debug();
             for (int j = 0; j < oldRecords.size(); j++)
             {
-                IPTCRecord record = (IPTCRecord) oldRecords.get(j);
-                if (record.iptcType.type != IPTCConstants.IPTC_TYPE_CITY.type)
+                IptcRecord record = (IptcRecord) oldRecords.get(j);
+                if (record.iptcType.type != IptcConstants.IPTC_TYPE_CITY.type)
                     Debug.debug("Key: " + record.iptcType.name + " (0x"
                             + Integer.toHexString(record.iptcType.type)
                             + "), value: " + record.value);

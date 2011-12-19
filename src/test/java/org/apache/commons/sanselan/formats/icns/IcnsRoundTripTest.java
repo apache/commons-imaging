@@ -29,7 +29,7 @@ import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.formats.icns.IcnsImageParser;
 import org.apache.commons.sanselan.formats.icns.IcnsType;
 import org.apache.commons.sanselan.util.Debug;
-import org.apache.commons.sanselan.util.IOUtils;
+import org.apache.commons.sanselan.util.IoUtils;
 
 public class IcnsRoundTripTest extends IcnsBaseTest
 {
@@ -443,10 +443,10 @@ public class IcnsRoundTripTest extends IcnsBaseTest
     {
         // Uncomment to generate ICNS files that can be tested with MacOS:
         File exportFile = new File("/tmp/" + description + ".icns");
-        IOUtils.writeToFile(rawData, exportFile);
+        IoUtils.writeToFile(rawData, exportFile);
 
         File tempFile = createTempFile("temp", ".icns");
-        IOUtils.writeToFile(rawData, tempFile);
+        IoUtils.writeToFile(rawData, tempFile);
 
         BufferedImage dstImage = Sanselan.getBufferedImage(tempFile);
 

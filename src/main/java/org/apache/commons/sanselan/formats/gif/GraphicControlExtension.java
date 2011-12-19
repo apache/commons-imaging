@@ -16,7 +16,7 @@
  */
 package org.apache.commons.sanselan.formats.gif;
 
-class GraphicControlExtension extends GIFBlock
+class GraphicControlExtension extends GifBlock
 {
 
     public final int packed;

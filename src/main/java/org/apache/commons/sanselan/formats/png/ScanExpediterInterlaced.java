@@ -21,14 +21,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.formats.png.chunks.PNGChunkPLTE;
+import org.apache.commons.sanselan.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.sanselan.formats.transparencyfilters.TransparencyFilter;
 
 public class ScanExpediterInterlaced extends ScanExpediter
 {
     public ScanExpediterInterlaced(int width, int height, InputStream is,
             BufferedImage bi, int color_type, int BitDepth, int bits_per_pixel,
-            PNGChunkPLTE fPNGChunkPLTE, GammaCorrection fGammaCorrection,
+            PngChunkPlte fPNGChunkPLTE, GammaCorrection fGammaCorrection,
             TransparencyFilter fTransparencyFilter)
 
     {
@@ -38,7 +38,7 @@ public class ScanExpediterInterlaced extends ScanExpediter
 
     private void visit(int x, int y, BufferedImage bi, BitParser fBitParser,
             int color_type, int pixel_index_in_scanline,
-            PNGChunkPLTE fPNGChunkPLTE, GammaCorrection fGammaCorrection)
+            PngChunkPlte fPNGChunkPLTE, GammaCorrection fGammaCorrection)
             throws ImageReadException, IOException
     {
         int rgb = getRGB(fBitParser,

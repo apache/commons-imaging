@@ -45,7 +45,7 @@ import org.apache.commons.sanselan.util.Debug;
  * <p>
  * See the source of the ExifMetadataUpdateExample class for example usage.
  *
- * @see org.apache.commons.sanselan.sampleUsage.WriteExifMetadataExample
+ * @see org.apache.commons.sanselan.examples.WriteExifMetadataExample
  */
 public class ExifRewriter extends BinaryFileParser implements JpegConstants
 {

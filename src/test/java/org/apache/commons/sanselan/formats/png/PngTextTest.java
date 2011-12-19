@@ -33,7 +33,7 @@ import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.formats.png.PngConstants;
 import org.apache.commons.sanselan.formats.png.PngImageInfo;
 import org.apache.commons.sanselan.formats.png.PngText;
-import org.apache.commons.sanselan.util.IOUtils;
+import org.apache.commons.sanselan.util.IoUtils;
 
 public class PngTextTest extends PngBaseTest
 {
@@ -75,7 +75,7 @@ public class PngTextTest extends PngBaseTest
                 ImageFormat.IMAGE_FORMAT_PNG, writeParams);
 
         File tempFile = createTempFile("temp", ".png");
-        IOUtils.writeToFile(bytes, tempFile);
+        IoUtils.writeToFile(bytes, tempFile);
 
         PngImageInfo imageInfo = (PngImageInfo) Sanselan.getImageInfo(bytes);
         assertNotNull(imageInfo);

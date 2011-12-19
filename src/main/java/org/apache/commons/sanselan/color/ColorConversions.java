@@ -69,7 +69,7 @@ public abstract class ColorConversions
             {
                 int rgb = sample_rgbs[i];
 
-                ColorXYZ xyz;
+                ColorXyz xyz;
                 {
                     xyz = ColorConversions.convertRGBtoXYZ(rgb);
                     int xyz_rgb = ColorConversions.convertXYZtoRGB(xyz);
@@ -83,10 +83,10 @@ public abstract class ColorConversions
                     if ((0xffffff & xyz_rgb) != (0xffffff & rgb))
                         Debug.debug("!!!!!!!!!!!!!!!!!!!!!!!");
                 }
-                ColorCIELab cielab;
+                ColorCieLab cielab;
                 {
                     cielab = ColorConversions.convertXYZtoCIELab(xyz);
-                    ColorXYZ cielab_xyz = ColorConversions
+                    ColorXyz cielab_xyz = ColorConversions
                             .convertCIELabtoXYZ(cielab);
                     int cielab_xyz_rgb = ColorConversions
                             .convertXYZtoRGB(cielab_xyz);
@@ -102,7 +102,7 @@ public abstract class ColorConversions
                 {
                     ColorHunterLab hunterlab = ColorConversions
                             .convertXYZtoHunterLab(xyz);
-                    ColorXYZ hunterlab_xyz = ColorConversions
+                    ColorXyz hunterlab_xyz = ColorConversions
                             .convertHunterLabtoXYZ(hunterlab);
                     int hunterlab_xyz_rgb = ColorConversions
                             .convertXYZtoRGB(hunterlab_xyz);
@@ -116,9 +116,9 @@ public abstract class ColorConversions
                 }
 
                 {
-                    ColorCMY cmy = ColorConversions.convertRGBtoCMY(rgb);
-                    ColorCMYK cmyk = ColorConversions.convertCMYtoCMYK(cmy);
-                    ColorCMY cmyk_cmy = ColorConversions.convertCMYKtoCMY(cmyk);
+                    ColorCmy cmy = ColorConversions.convertRGBtoCMY(rgb);
+                    ColorCmyk cmyk = ColorConversions.convertCMYtoCMYK(cmy);
+                    ColorCmy cmyk_cmy = ColorConversions.convertCMYKtoCMY(cmyk);
                     int cmyk_cmy_rgb = ColorConversions
                             .convertCMYtoRGB(cmyk_cmy);
 
@@ -132,7 +132,7 @@ public abstract class ColorConversions
                 }
 
                 {
-                    ColorHSL hsl = ColorConversions.convertRGBtoHSL(rgb);
+                    ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
                     int hsl_rgb = ColorConversions.convertHSLtoRGB(hsl);
 
                     Debug.debug("hsl", hsl);
@@ -142,7 +142,7 @@ public abstract class ColorConversions
                         Debug.debug("!!!!!!!!!!!!!!!!!!!!!!!");
                 }
                 {
-                    ColorHSV hsv = ColorConversions.convertRGBtoHSV(rgb);
+                    ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
                     int hsv_rgb = ColorConversions.convertHSVtoRGB(hsv);
 
                     Debug.debug("hsv", hsv);
@@ -153,9 +153,9 @@ public abstract class ColorConversions
                 }
 
                 {
-                    ColorCIELCH cielch = ColorConversions
+                    ColorCieLch cielch = ColorConversions
                             .convertCIELabtoCIELCH(cielab);
-                    ColorCIELab cielch_cielab = ColorConversions
+                    ColorCieLab cielch_cielab = ColorConversions
                             .convertCIELCHtoCIELab(cielch);
 
                     Debug.debug("cielch", cielch);
@@ -163,9 +163,9 @@ public abstract class ColorConversions
                 }
 
                 {
-                    ColorCIELuv cieluv = ColorConversions
+                    ColorCieLuv cieluv = ColorConversions
                             .convertXYZtoCIELuv(xyz);
-                    ColorXYZ cieluv_xyz = ColorConversions
+                    ColorXyz cieluv_xyz = ColorConversions
                             .convertCIELuvtoXYZ(cieluv);
 
                     Debug.debug("cieluv", cieluv);
@@ -180,7 +180,7 @@ public abstract class ColorConversions
         }
     }
 
-    public static final ColorCIELab convertXYZtoCIELab(ColorXYZ xyz)
+    public static final ColorCieLab convertXYZtoCIELab(ColorXyz xyz)
     {
         return convertXYZtoCIELab(xyz.X, xyz.Y, xyz.Z);
     }
@@ -189,7 +189,7 @@ public abstract class ColorConversions
     private static final double ref_Y = 100.000;
     private static final double ref_Z = 108.883;
 
-    public static final ColorCIELab convertXYZtoCIELab(double X, double Y,
+    public static final ColorCieLab convertXYZtoCIELab(double X, double Y,
             double Z)
     {
 
@@ -213,15 +213,15 @@ public abstract class ColorConversions
         double L = (116 * var_Y) - 16;
         double a = 500 * (var_X - var_Y);
         double b = 200 * (var_Y - var_Z);
-        return new ColorCIELab(L, a, b);
+        return new ColorCieLab(L, a, b);
     }
 
-    public static final ColorXYZ convertCIELabtoXYZ(ColorCIELab cielab)
+    public static final ColorXyz convertCIELabtoXYZ(ColorCieLab cielab)
     {
         return convertCIELabtoXYZ(cielab.L, cielab.a, cielab.b);
     }
 
-    public static final ColorXYZ convertCIELabtoXYZ(double L, double a, double b)
+    public static final ColorXyz convertCIELabtoXYZ(double L, double a, double b)
     {
         double var_Y = (L + 16) / 116.0;
         double var_X = a / 500 + var_Y;
@@ -244,10 +244,10 @@ public abstract class ColorConversions
         double Y = ref_Y * var_Y; //ref_Y = 100.000
         double Z = ref_Z * var_Z; //ref_Z = 108.883
 
-        return new ColorXYZ(X, Y, Z);
+        return new ColorXyz(X, Y, Z);
     }
 
-    public static final ColorHunterLab convertXYZtoHunterLab(ColorXYZ xyz)
+    public static final ColorHunterLab convertXYZtoHunterLab(ColorXyz xyz)
     {
         return convertXYZtoHunterLab(xyz.X, xyz.Y, xyz.Z);
     }
@@ -262,12 +262,12 @@ public abstract class ColorConversions
         return new ColorHunterLab(L, a, b);
     }
 
-    public static final ColorXYZ convertHunterLabtoXYZ(ColorHunterLab cielab)
+    public static final ColorXyz convertHunterLabtoXYZ(ColorHunterLab cielab)
     {
         return convertHunterLabtoXYZ(cielab.L, cielab.a, cielab.b);
     }
 
-    public static final ColorXYZ convertHunterLabtoXYZ(double L, double a,
+    public static final ColorXyz convertHunterLabtoXYZ(double L, double a,
             double b)
     {
         double var_Y = L / 10;
@@ -278,10 +278,10 @@ public abstract class ColorConversions
         double X = (var_X + Y) / 1.02;
         double Z = -(var_Z - Y) / 0.847;
 
-        return new ColorXYZ(X, Y, Z);
+        return new ColorXyz(X, Y, Z);
     }
 
-    public static final int convertXYZtoRGB(ColorXYZ xyz)
+    public static final int convertXYZtoRGB(ColorXyz xyz)
     {
         return convertXYZtoRGB(xyz.X, xyz.Y, xyz.Z);
     }
@@ -317,7 +317,7 @@ public abstract class ColorConversions
         return convertRGBtoRGB(R, G, B);
     }
 
-    public static final ColorXYZ convertRGBtoXYZ(int rgb)
+    public static final ColorXyz convertRGBtoXYZ(int rgb)
     {
         int r = 0xff & (rgb >> 16);
         int g = 0xff & (rgb >> 8);
@@ -349,10 +349,10 @@ public abstract class ColorConversions
         double Y = var_R * 0.2126 + var_G * 0.7152 + var_B * 0.0722;
         double Z = var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505;
 
-        return new ColorXYZ(X, Y, Z);
+        return new ColorXyz(X, Y, Z);
     }
 
-    public static final ColorCMY convertRGBtoCMY(int rgb)
+    public static final ColorCmy convertRGBtoCMY(int rgb)
     {
         int R = 0xff & (rgb >> 16);
         int G = 0xff & (rgb >> 8);
@@ -365,10 +365,10 @@ public abstract class ColorConversions
         double M = 1 - (G / 255.0);
         double Y = 1 - (B / 255.0);
 
-        return new ColorCMY(C, M, Y);
+        return new ColorCmy(C, M, Y);
     }
 
-    public static final int convertCMYtoRGB(ColorCMY cmy)
+    public static final int convertCMYtoRGB(ColorCmy cmy)
     {
         //        CMY values = 0 ÷ 1
         //        RGB values = 0 ÷ 255
@@ -380,7 +380,7 @@ public abstract class ColorConversions
         return convertRGBtoRGB(R, G, B);
     }
 
-    public static final ColorCMYK convertCMYtoCMYK(ColorCMY cmy)
+    public static final ColorCmyk convertCMYtoCMYK(ColorCmy cmy)
     {
         //        Where CMYK and CMY values = 0 ÷ 1
 
@@ -408,15 +408,15 @@ public abstract class ColorConversions
             M = (M - var_K) / (1 - var_K);
             Y = (Y - var_K) / (1 - var_K);
         }
-        return new ColorCMYK(C, M, Y, var_K);
+        return new ColorCmyk(C, M, Y, var_K);
     }
 
-    public static final ColorCMY convertCMYKtoCMY(ColorCMYK cmyk)
+    public static final ColorCmy convertCMYKtoCMY(ColorCmyk cmyk)
     {
         return convertCMYKtoCMY(cmyk.C, cmyk.M, cmyk.Y, cmyk.K);
     }
 
-    public static final ColorCMY convertCMYKtoCMY(double C, double M, double Y,
+    public static final ColorCmy convertCMYKtoCMY(double C, double M, double Y,
             double K)
     {
         //    Where CMYK and CMY values = 0 ÷ 1
@@ -425,7 +425,7 @@ public abstract class ColorConversions
         M = (M * (1 - K) + K);
         Y = (Y * (1 - K) + K);
 
-        return new ColorCMY(C, M, Y);
+        return new ColorCmy(C, M, Y);
     }
 
     public static final int convertCMYKtoRGB(int c, int m, int y, int k)
@@ -439,7 +439,7 @@ public abstract class ColorConversions
         return convertCMYtoRGB(convertCMYKtoCMY(C, M, Y, K));
     }
 
-    public static final ColorHSL convertRGBtoHSL(int rgb)
+    public static final ColorHsl convertRGBtoHSL(int rgb)
     {
 
         int R = 0xff & (rgb >> 16);
@@ -501,10 +501,10 @@ public abstract class ColorConversions
             //            Debug.debug("H2", H);
         }
 
-        return new ColorHSL(H, S, L);
+        return new ColorHsl(H, S, L);
     }
 
-    public static int convertHSLtoRGB(ColorHSL hsl)
+    public static int convertHSLtoRGB(ColorHsl hsl)
     {
         return convertHSLtoRGB(hsl.H, hsl.S, hsl.L);
     }
@@ -553,7 +553,7 @@ public abstract class ColorConversions
         return (v1);
     }
 
-    public static final ColorHSV convertRGBtoHSV(int rgb)
+    public static final ColorHsv convertRGBtoHSV(int rgb)
     {
         int R = 0xff & (rgb >> 16);
         int G = 0xff & (rgb >> 8);
@@ -602,10 +602,10 @@ public abstract class ColorConversions
                 H -= 1;
         }
 
-        return new ColorHSV(H, S, V);
+        return new ColorHsv(H, S, V);
     }
 
-    public static int convertHSVtoRGB(ColorHSV HSV)
+    public static int convertHSVtoRGB(ColorHsv HSV)
     {
         return convertHSVtoRGB(HSV.H, HSV.S, HSV.V);
     }
@@ -796,12 +796,12 @@ public abstract class ColorConversions
         return rgb;
     }
 
-    public static ColorCIELCH convertCIELabtoCIELCH(ColorCIELab cielab)
+    public static ColorCieLch convertCIELabtoCIELCH(ColorCieLab cielab)
     {
         return convertCIELabtoCIELCH(cielab.L, cielab.a, cielab.b);
     }
 
-    public static ColorCIELCH convertCIELabtoCIELCH(double L, double a, double b)
+    public static ColorCieLch convertCIELabtoCIELCH(double L, double a, double b)
     {
         double var_H = Math.atan2(b, a); //Quadrant by signs
 
@@ -814,15 +814,15 @@ public abstract class ColorConversions
         double C = Math.sqrt(square(a) + square(b));
         double H = var_H;
 
-        return new ColorCIELCH(L, C, H);
+        return new ColorCieLch(L, C, H);
     }
 
-    public static ColorCIELab convertCIELCHtoCIELab(ColorCIELCH cielch)
+    public static ColorCieLab convertCIELCHtoCIELab(ColorCieLch cielch)
     {
         return convertCIELCHtoCIELab(cielch.L, cielch.C, cielch.H);
     }
 
-    public static ColorCIELab convertCIELCHtoCIELab(double L, double C, double H)
+    public static ColorCieLab convertCIELCHtoCIELab(double L, double C, double H)
     {
         //        Where CIE-H° = 0 ÷ 360°
 
@@ -830,7 +830,7 @@ public abstract class ColorConversions
         double a = Math.cos(degree_2_radian(H)) * C;
         double b = Math.sin(degree_2_radian(H)) * C;
 
-        return new ColorCIELab(L, a, b);
+        return new ColorCieLab(L, a, b);
     }
 
     public static double degree_2_radian(double degree)
@@ -843,12 +843,12 @@ public abstract class ColorConversions
         return radian * 180.0 / Math.PI;
     }
 
-    public static ColorCIELuv convertXYZtoCIELuv(ColorXYZ xyz)
+    public static ColorCieLuv convertXYZtoCIELuv(ColorXyz xyz)
     {
         return convertXYZtoCIELuv(xyz.X, xyz.Y, xyz.Z);
     }
 
-    public static ColorCIELuv convertXYZtoCIELuv(double X, double Y, double Z)
+    public static ColorCieLuv convertXYZtoCIELuv(double X, double Y, double Z)
     {
         // problems here with div by zero
 
@@ -882,15 +882,15 @@ public abstract class ColorConversions
         double u = 13 * L * (var_U - ref_U);
         double v = 13 * L * (var_V - ref_V);
 
-        return new ColorCIELuv(L, u, v);
+        return new ColorCieLuv(L, u, v);
     }
 
-    public static ColorXYZ convertCIELuvtoXYZ(ColorCIELuv cielch)
+    public static ColorXyz convertCIELuvtoXYZ(ColorCieLuv cielch)
     {
         return convertCIELuvtoXYZ(cielch.L, cielch.u, cielch.v);
     }
 
-    public static ColorXYZ convertCIELuvtoXYZ(double L, double u, double v)
+    public static ColorXyz convertCIELuvtoXYZ(double L, double u, double v)
     {
         // problems here with div by zero
 
@@ -913,6 +913,6 @@ public abstract class ColorConversions
         double X = -(9 * Y * var_U) / ((var_U - 4) * var_V - var_U * var_V);
         double Z = (9 * Y - (15 * var_V * Y) - (var_V * X)) / (3 * var_V);
 
-        return new ColorXYZ(X, Y, Z);
+        return new ColorXyz(X, Y, Z);
     }
 }

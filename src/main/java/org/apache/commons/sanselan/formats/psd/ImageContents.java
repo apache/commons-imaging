@@ -20,14 +20,14 @@ import java.io.PrintWriter;
 
 public class ImageContents
 {
-    public final PSDHeaderInfo header;
+    public final PsdHeaderInfo header;
 
     public final int ColorModeDataLength;
     public final int ImageResourcesLength;
     public final int LayerAndMaskDataLength;
     public final int Compression;
 
-    public ImageContents(PSDHeaderInfo header,
+    public ImageContents(PsdHeaderInfo header,
 
     int ColorModeDataLength, int ImageResourcesLength,
             int LayerAndMaskDataLength, int Compression)

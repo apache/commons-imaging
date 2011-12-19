@@ -41,9 +41,9 @@ import org.apache.commons.sanselan.formats.bmp.pixelparsers.PixelParser;
 import org.apache.commons.sanselan.formats.bmp.pixelparsers.PixelParserBitFields;
 import org.apache.commons.sanselan.formats.bmp.pixelparsers.PixelParserRgb;
 import org.apache.commons.sanselan.formats.bmp.pixelparsers.PixelParserRle;
-import org.apache.commons.sanselan.formats.bmp.writers.BMPWriter;
-import org.apache.commons.sanselan.formats.bmp.writers.BMPWriterPalette;
-import org.apache.commons.sanselan.formats.bmp.writers.BMPWriterRGB;
+import org.apache.commons.sanselan.formats.bmp.writers.BmpWriter;
+import org.apache.commons.sanselan.formats.bmp.writers.BmpWriterPalette;
+import org.apache.commons.sanselan.formats.bmp.writers.BmpWriterRgb;
 import org.apache.commons.sanselan.palette.PaletteFactory;
 import org.apache.commons.sanselan.palette.SimplePalette;
 import org.apache.commons.sanselan.util.Debug;
@@ -753,11 +753,11 @@ public class BmpImageParser extends ImageParser
         final SimplePalette palette = new PaletteFactory().makePaletteSimple(
                 src, 256);
 
-        BMPWriter writer = null;
+        BmpWriter writer = null;
         if (palette == null)
-            writer = new BMPWriterRGB();
+            writer = new BmpWriterRgb();
         else
-            writer = new BMPWriterPalette(palette);
+            writer = new BmpWriterPalette(palette);
 
         byte imagedata[] = writer.getImageData(src);
         BinaryOutputStream bos = new BinaryOutputStream(os, BYTE_ORDER_INTEL);

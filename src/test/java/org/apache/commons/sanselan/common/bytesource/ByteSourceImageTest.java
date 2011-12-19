@@ -33,7 +33,7 @@ import org.apache.commons.sanselan.ImageInfo;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.util.Debug;
-import org.apache.commons.sanselan.util.IOUtils;
+import org.apache.commons.sanselan.util.IoUtils;
 
 public class ByteSourceImageTest extends ByteSourceTest
 {
@@ -52,7 +52,7 @@ public class ByteSourceImageTest extends ByteSourceTest
             Debug.debug("imageFile", imageFile);
             assertNotNull(imageFile);
 
-            byte imageFileBytes[] = IOUtils.getFileBytes(imageFile);
+            byte imageFileBytes[] = IoUtils.getFileBytes(imageFile);
             assertNotNull(imageFileBytes);
             assertTrue(imageFileBytes.length == imageFile.length());
 

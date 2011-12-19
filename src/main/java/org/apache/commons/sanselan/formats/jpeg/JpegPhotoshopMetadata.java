@@ -20,13 +20,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.sanselan.common.ImageMetadata;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCConstants;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCRecord;
+import org.apache.commons.sanselan.formats.jpeg.iptc.IptcConstants;
+import org.apache.commons.sanselan.formats.jpeg.iptc.IptcRecord;
 import org.apache.commons.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.commons.sanselan.util.Debug;
 
 public class JpegPhotoshopMetadata extends ImageMetadata implements
-        IPTCConstants
+        IptcConstants
 {
 
     public final PhotoshopApp13Data photoshopApp13Data;
@@ -36,10 +36,10 @@ public class JpegPhotoshopMetadata extends ImageMetadata implements
         this.photoshopApp13Data = photoshopApp13Data;
 
         List records = photoshopApp13Data.getRecords();
-        Collections.sort(records, IPTCRecord.COMPARATOR);
+        Collections.sort(records, IptcRecord.COMPARATOR);
         for (int j = 0; j < records.size(); j++)
         {
-            IPTCRecord element = (IPTCRecord) records.get(j);
+            IptcRecord element = (IptcRecord) records.get(j);
             if (element.iptcType.type != IPTC_TYPE_RECORD_VERSION.type)
                 add(element.getIptcTypeName(), element.getValue());
         }

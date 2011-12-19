@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.common.mylzw.MyLZWCompressor;
-import org.apache.commons.sanselan.common.mylzw.MyLZWDecompressor;
+import org.apache.commons.sanselan.common.mylzw.MyLzwCompressor;
+import org.apache.commons.sanselan.common.mylzw.MyLzwDecompressor;
 
 public class Compression
 {
@@ -32,7 +32,7 @@ public class Compression
     {
         InputStream is = new ByteArrayInputStream(compressed);
 
-        MyLZWDecompressor decompressor = new MyLZWDecompressor(
+        MyLzwDecompressor decompressor = new MyLzwDecompressor(
                 LZWMinimumCodeSize, byteOrder);
         byte[] result = decompressor.decompress(is, expectedSize);
 
@@ -50,7 +50,7 @@ public class Compression
             int byteOrder, boolean earlyLimit) throws IOException
 
     {
-        MyLZWCompressor compressor = new MyLZWCompressor(LZWMinimumCodeSize,
+        MyLzwCompressor compressor = new MyLzwCompressor(LZWMinimumCodeSize,
                 byteOrder, earlyLimit);
 
         byte compressed[] = compressor.compress(src);

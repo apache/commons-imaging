@@ -23,10 +23,10 @@ import java.util.Map;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCParser;
+import org.apache.commons.sanselan.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;
 
-public class App13Segment extends APPNSegment
+public class App13Segment extends AppnSegment
 {
     protected final JpegImageParser parser;
 
@@ -46,7 +46,7 @@ public class App13Segment extends APPNSegment
         super(marker, marker_length, is);
         this.parser = parser;
 
-        // isIPTCJpegSegment = new IPTCParser().isIPTCJpegSegment(bytes);
+        // isIPTCJpegSegment = new IptcParser().isIPTCJpegSegment(bytes);
         // if (isIPTCJpegSegment)
         // {
         // /*
@@ -56,14 +56,14 @@ public class App13Segment extends APPNSegment
         // */
         // boolean verbose = false;
         // boolean strict = false;
-        // elements.addAll(new IPTCParser().parseIPTCJPEGSegment(bytes,
+        // elements.addAll(new IptcParser().parseIPTCJPEGSegment(bytes,
         // verbose, strict));
         // }
     }
 
     public boolean isPhotoshopJpegSegment() throws ImageReadException, IOException
     {
-        return new IPTCParser().isPhotoshopJpegSegment(bytes);
+        return new IptcParser().isPhotoshopJpegSegment(bytes);
     }
 
     public PhotoshopApp13Data parsePhotoshopSegment(Map params)
@@ -74,9 +74,9 @@ public class App13Segment extends APPNSegment
          * metadata. However, we should not treat App13 signatures without
          * Photoshop's signature as Photoshop/IPTC segments.
          */
-        if (!new IPTCParser().isPhotoshopJpegSegment(bytes))
+        if (!new IptcParser().isPhotoshopJpegSegment(bytes))
             return null;
 
-        return new IPTCParser().parsePhotoshopSegment(bytes, params);
+        return new IptcParser().parsePhotoshopSegment(bytes, params);
     }
 }

@@ -32,10 +32,10 @@ import org.apache.commons.sanselan.formats.jpeg.Block;
 import org.apache.commons.sanselan.formats.jpeg.JpegConstants;
 import org.apache.commons.sanselan.formats.jpeg.JpegUtils;
 import org.apache.commons.sanselan.formats.jpeg.ZigZag;
-import org.apache.commons.sanselan.formats.jpeg.segments.DHTSegment;
-import org.apache.commons.sanselan.formats.jpeg.segments.DQTSegment;
-import org.apache.commons.sanselan.formats.jpeg.segments.SOFNSegment;
-import org.apache.commons.sanselan.formats.jpeg.segments.SOSSegment;
+import org.apache.commons.sanselan.formats.jpeg.segments.DhtSegment;
+import org.apache.commons.sanselan.formats.jpeg.segments.DqtSegment;
+import org.apache.commons.sanselan.formats.jpeg.segments.SofnSegment;
+import org.apache.commons.sanselan.formats.jpeg.segments.SosSegment;
 
 public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
         JpegConstants
@@ -53,11 +53,11 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
      *   for positive numbers.
      */
 
-    private DQTSegment.QuantizationTable[] quantizationTables = new DQTSegment.QuantizationTable[4];
-    private DHTSegment.HuffmanTable[] huffmanDCTables = new DHTSegment.HuffmanTable[4];
-    private DHTSegment.HuffmanTable[] huffmanACTables = new DHTSegment.HuffmanTable[4];
-    private SOFNSegment sofnSegment;
-    private SOSSegment sosSegment;
+    private DqtSegment.QuantizationTable[] quantizationTables = new DqtSegment.QuantizationTable[4];
+    private DhtSegment.HuffmanTable[] huffmanDCTables = new DhtSegment.HuffmanTable[4];
+    private DhtSegment.HuffmanTable[] huffmanACTables = new DhtSegment.HuffmanTable[4];
+    private SofnSegment sofnSegment;
+    private SosSegment sosSegment;
     private float[][] scaledQuantizationTables = new float[4][];
     private BufferedImage image = null;
     private ImageReadException imageReadException = null;
@@ -76,9 +76,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
         {
             int segmentLength = read2Bytes("segmentLength", is,
                     "Not a Valid JPEG File");
-            byte[] sosSegmentBytes = readByteArray("SOSSegment",
+            byte[] sosSegmentBytes = readByteArray("SosSegment",
                     segmentLength - 2, is, "Not a Valid JPEG File");
-            sosSegment = new SOSSegment(marker, sosSegmentBytes);
+            sosSegment = new SosSegment(marker, sosSegmentBytes);
 
             int hMax = 0;
             int vMax = 0;
@@ -202,14 +202,14 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             if (marker != SOF0Marker)
                 throw new ImageReadException("Only sequential, baseline JPEGs " +
                         "are supported at the moment");
-            sofnSegment = new SOFNSegment(marker, segmentData);
+            sofnSegment = new SofnSegment(marker, segmentData);
         }
         else if (marker == DQTMarker)
         {
-            DQTSegment dqtSegment = new DQTSegment(marker, segmentData);
+            DqtSegment dqtSegment = new DqtSegment(marker, segmentData);
             for (int i = 0; i < dqtSegment.quantizationTables.size(); i++)
             {
-                DQTSegment.QuantizationTable table = (DQTSegment.QuantizationTable)
+                DqtSegment.QuantizationTable table = (DqtSegment.QuantizationTable)
                         dqtSegment.quantizationTables.get(i);
                 if (0 > table.destinationIdentifier ||
                         table.destinationIdentifier >= quantizationTables.length)
@@ -221,19 +221,19 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                 float[] quantizationMatrixFloat = new float[64];
                 for (int j = 0; j < 64; j++)
                     quantizationMatrixFloat[j] = quantizationMatrixInt[j];
-                DCT.scaleDequantizationMatrix(quantizationMatrixFloat);
+                Dct.scaleDequantizationMatrix(quantizationMatrixFloat);
                 scaledQuantizationTables[table.destinationIdentifier] =
                         quantizationMatrixFloat;
             }
         }
         else if (marker == DHTMarker)
         {
-            DHTSegment dhtSegment = new DHTSegment(marker, segmentData);
+            DhtSegment dhtSegment = new DhtSegment(marker, segmentData);
             for (int i = 0; i < dhtSegment.huffmanTables.size(); i++)
             {
-                DHTSegment.HuffmanTable table = (DHTSegment.HuffmanTable)
+                DhtSegment.HuffmanTable table = (DhtSegment.HuffmanTable)
                         dhtSegment.huffmanTables.get(i);
-                DHTSegment.HuffmanTable[] tables;
+                DhtSegment.HuffmanTable[] tables;
                 if (table.tableClass == 0)
                     tables = huffmanDCTables;
                 else if (table.tableClass == 1)
@@ -301,8 +301,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
         Block[] mcu = new Block[sosSegment.numberOfComponents];
         for (int i = 0; i < sosSegment.numberOfComponents; i++)
         {
-            SOSSegment.Component scanComponent = sosSegment.components[i];
-            SOFNSegment.Component frameComponent = null;
+            SosSegment.Component scanComponent = sosSegment.components[i];
+            SofnSegment.Component frameComponent = null;
             for (int j = 0; j < sofnSegment.numberOfComponents; j++)
             {
                 if (sofnSegment.components[j].componentIdentifier ==
@@ -330,8 +330,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
     {
         for (int i = 0; i < sosSegment.numberOfComponents; i++)
         {
-            SOSSegment.Component scanComponent = sosSegment.components[i];
-            SOFNSegment.Component frameComponent = null;
+            SosSegment.Component scanComponent = sosSegment.components[i];
+            SofnSegment.Component frameComponent = null;
             for (int j = 0; j < sofnSegment.numberOfComponents; j++)
             {
                 if (sofnSegment.components[j].componentIdentifier ==
@@ -397,7 +397,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                     ZigZag.zigZagToBlock(zz, blockInt);
                     for (int j = 0; j < 64; j++)
                         block[j] = blockInt[j] * scaledQuantizationTable[j];
-                    DCT.inverseDCT8x8(block);
+                    Dct.inverseDCT8x8(block);
 
                     int dstRowOffset = 8*y*8*frameComponent.horizontalSamplingFactor +
                             8*x;
@@ -455,7 +455,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
         return v;
     }
 
-    private int decode(JpegInputStream is, DHTSegment.HuffmanTable huffmanTable)
+    private int decode(JpegInputStream is, DhtSegment.HuffmanTable huffmanTable)
             throws IOException, ImageReadException
     {
         // "DECODE", section F.2.2.3, figure F.16, page 109 of T.81

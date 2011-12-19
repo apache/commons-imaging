@@ -37,15 +37,15 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.jpeg.decoder.JpegDecoder;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCParser;
+import org.apache.commons.sanselan.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.commons.sanselan.formats.jpeg.segments.App13Segment;
 import org.apache.commons.sanselan.formats.jpeg.segments.App2Segment;
-import org.apache.commons.sanselan.formats.jpeg.segments.COMSegment;
-import org.apache.commons.sanselan.formats.jpeg.segments.DQTSegment;
+import org.apache.commons.sanselan.formats.jpeg.segments.ComSegment;
+import org.apache.commons.sanselan.formats.jpeg.segments.DqtSegment;
 import org.apache.commons.sanselan.formats.jpeg.segments.GenericSegment;
-import org.apache.commons.sanselan.formats.jpeg.segments.JFIFSegment;
-import org.apache.commons.sanselan.formats.jpeg.segments.SOFNSegment;
+import org.apache.commons.sanselan.formats.jpeg.segments.JfifSegment;
+import org.apache.commons.sanselan.formats.jpeg.segments.SofnSegment;
 import org.apache.commons.sanselan.formats.jpeg.segments.Segment;
 import org.apache.commons.sanselan.formats.jpeg.segments.UnknownSegment;
 import org.apache.commons.sanselan.formats.jpeg.xmp.JpegXmpParser;
@@ -163,20 +163,20 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
                     result.add(new App2Segment(marker, segmentData));
                 } else if (marker == JFIFMarker)
                 {
-                    result.add(new JFIFSegment(marker, segmentData));
+                    result.add(new JfifSegment(marker, segmentData));
                 } else if (Arrays.binarySearch(sofnSegments, marker) >= 0)
                 {
-                    result.add(new SOFNSegment(marker, segmentData));
+                    result.add(new SofnSegment(marker, segmentData));
                 } else if (marker == DQTMarker)
                 {
-                    result.add(new DQTSegment(marker, segmentData));
+                    result.add(new DqtSegment(marker, segmentData));
                 } else if ((marker >= JPEG_APP1_Marker)
                         && (marker <= JPEG_APP15_Marker))
                 {
                     result.add(new UnknownSegment(marker, segmentData));
                 } else if (marker == COMMarker)
                 {
-                    result.add(new COMSegment(marker, segmentData));
+                    result.add(new ComSegment(marker, segmentData));
                 }
 
                 if (returnAfterFirst)
@@ -491,7 +491,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 
                 if (marker == JPEG_APP13_Marker)
                 {
-                    if (new IPTCParser().isPhotoshopJpegSegment(segmentData))
+                    if (new IptcParser().isPhotoshopJpegSegment(segmentData))
                     {
                         result[0] = true;
                         return false;
@@ -655,7 +655,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         if (segments.size() > 1)
             throw new ImageReadException("Redundant JFIF Data Found.");
 
-        SOFNSegment fSOFNSegment = (SOFNSegment) segments.get(0);
+        SofnSegment fSOFNSegment = (SofnSegment) segments.get(0);
 
         return new Dimension(fSOFNSegment.width, fSOFNSegment.height);
     }
@@ -694,8 +694,8 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         ArrayList jfifSegments = readSegments(byteSource,
                 new int[] { JFIFMarker, }, true);
 
-        SOFNSegment fSOFNSegment = (SOFNSegment) SOF_segments.get(0);
-        // SOFNSegment fSOFNSegment = (SOFNSegment) findSegment(segments,
+        SofnSegment fSOFNSegment = (SofnSegment) SOF_segments.get(0);
+        // SofnSegment fSOFNSegment = (SofnSegment) findSegment(segments,
         // SOFNmarkers);
 
         if (fSOFNSegment == null)
@@ -704,12 +704,12 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
         int Width = fSOFNSegment.width;
         int Height = fSOFNSegment.height;
 
-        JFIFSegment jfifSegment = null;
+        JfifSegment jfifSegment = null;
 
         if ((jfifSegments != null) && (jfifSegments.size() > 0))
-            jfifSegment = (JFIFSegment) jfifSegments.get(0);
+            jfifSegment = (JfifSegment) jfifSegments.get(0);
 
-        // JFIFSegment fTheJFIFSegment = (JFIFSegment) findSegment(segments,
+        // JfifSegment fTheJFIFSegment = (JfifSegment) findSegment(segments,
         // kJFIFMarker);
 
         double x_density = -1.0;
@@ -810,7 +810,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
                 new int[] { COMMarker }, false);
         for (int i = 0; i < commentSegments.size(); i++)
         {
-            COMSegment comSegment = (COMSegment) commentSegments.get(i);
+            ComSegment comSegment = (ComSegment) commentSegments.get(i);
             String comment = "";
             try {
                 comment = new String(comSegment.comment, "ISO-8859-1");
@@ -877,15 +877,15 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
     // jfifMarkers.add(new Integer(JFIFMarker));
     // ArrayList jfifSegments = filterSegments(allSegments, jfifMarkers);
     //
-    // SOFNSegment firstSOFNSegment = (SOFNSegment) SOFSegments.get(0);
+    // SofnSegment firstSOFNSegment = (SofnSegment) SOFSegments.get(0);
     //
     // int Width = firstSOFNSegment.width;
     // int Height = firstSOFNSegment.height;
     //
-    // JFIFSegment jfifSegment = null;
+    // JfifSegment jfifSegment = null;
     //
     // if (jfifSegments != null && jfifSegments.size() > 0)
-    // jfifSegment = (JFIFSegment) jfifSegments.get(0);
+    // jfifSegment = (JfifSegment) jfifSegments.get(0);
     //
     // double x_density = -1.0;
     // double y_density = -1.0;

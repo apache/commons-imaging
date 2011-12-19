@@ -36,11 +36,11 @@ import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.psd.dataparsers.DataParser;
 import org.apache.commons.sanselan.formats.psd.dataparsers.DataParserBitmap;
-import org.apache.commons.sanselan.formats.psd.dataparsers.DataParserCMYK;
+import org.apache.commons.sanselan.formats.psd.dataparsers.DataParserCmyk;
 import org.apache.commons.sanselan.formats.psd.dataparsers.DataParserGrayscale;
 import org.apache.commons.sanselan.formats.psd.dataparsers.DataParserIndexed;
 import org.apache.commons.sanselan.formats.psd.dataparsers.DataParserLab;
-import org.apache.commons.sanselan.formats.psd.dataparsers.DataParserRGB;
+import org.apache.commons.sanselan.formats.psd.dataparsers.DataParserRgb;
 import org.apache.commons.sanselan.formats.psd.datareaders.CompressedDataReader;
 import org.apache.commons.sanselan.formats.psd.datareaders.DataReader;
 import org.apache.commons.sanselan.formats.psd.datareaders.UncompressedDataReader;
@@ -80,7 +80,7 @@ public class PsdImageParser extends ImageParser
         };
     }
 
-    private PSDHeaderInfo readHeader(ByteSource byteSource)
+    private PsdHeaderInfo readHeader(ByteSource byteSource)
             throws ImageReadException, IOException
     {
         InputStream is = null;
@@ -105,7 +105,7 @@ public class PsdImageParser extends ImageParser
         }
     }
 
-    private PSDHeaderInfo readHeader(InputStream is) throws ImageReadException,
+    private PsdHeaderInfo readHeader(InputStream is) throws ImageReadException,
             IOException
     {
         readAndVerifyBytes(is, new byte[] { 56, 66, 80, 83 },
@@ -122,7 +122,7 @@ public class PsdImageParser extends ImageParser
         int Depth = read2Bytes("Depth", is, "Not a Valid PSD File");
         int Mode = read2Bytes("Mode", is, "Not a Valid PSD File");
 
-        PSDHeaderInfo result = new PSDHeaderInfo(Version, Reserved, Channels,
+        PsdHeaderInfo result = new PsdHeaderInfo(Version, Reserved, Channels,
                 Rows, Columns, Depth, Mode);
 
         return result;
@@ -131,7 +131,7 @@ public class PsdImageParser extends ImageParser
     private ImageContents readImageContents(InputStream is)
             throws ImageReadException, IOException
     {
-        PSDHeaderInfo header = readHeader(is);
+        PsdHeaderInfo header = readHeader(is);
 
         int ColorModeDataLength = read4Bytes("ColorModeDataLength", is,
                 "Not a Valid PSD File");
@@ -359,7 +359,7 @@ public class PsdImageParser extends ImageParser
         {
             is = byteSource.getInputStream();
 
-            // PSDHeaderInfo header = readHeader(is);
+            // PsdHeaderInfo header = readHeader(is);
             if (section == PSD_SECTION_HEADER)
                 return readByteArray("Header", PSD_HEADER_LENGTH, is,
                         "Not a Valid PSD File");
@@ -474,7 +474,7 @@ public class PsdImageParser extends ImageParser
     public Dimension getImageSize(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
-        PSDHeaderInfo bhi = readHeader(byteSource);
+        PsdHeaderInfo bhi = readHeader(byteSource);
         if (bhi == null)
             throw new ImageReadException("PSD: couldn't read header");
 
@@ -533,7 +533,7 @@ public class PsdImageParser extends ImageParser
         if (imageContents == null)
             throw new ImageReadException("PSD: Couldn't read blocks");
 
-        PSDHeaderInfo header = imageContents.header;
+        PsdHeaderInfo header = imageContents.header;
         if (header == null)
             throw new ImageReadException("PSD: Couldn't read Header");
 
@@ -641,7 +641,7 @@ public class PsdImageParser extends ImageParser
                         // + block.getClass().getName()
                         // + ", "
                         + " data: " + block.data.length + " type: '"
-                        + new PSDConstants().getDescription(block.id) + "' "
+                        + new PsdConstants().getDescription(block.id) + "' "
                         + ")");
 
             }
@@ -664,7 +664,7 @@ public class PsdImageParser extends ImageParser
         if (imageContents == null)
             throw new ImageReadException("PSD: Couldn't read blocks");
 
-        PSDHeaderInfo header = imageContents.header;
+        PsdHeaderInfo header = imageContents.header;
         if (header == null)
             throw new ImageReadException("PSD: Couldn't read Header");
 
@@ -703,10 +703,10 @@ public class PsdImageParser extends ImageParser
             dataParser = new DataParserGrayscale();
             break;
         case 3:
-            dataParser = new DataParserRGB();
+            dataParser = new DataParserRgb();
             break;
         case 4:
-            dataParser = new DataParserCMYK();
+            dataParser = new DataParserCmyk();
             break;
         case 9:
             dataParser = new DataParserLab();
@@ -804,7 +804,7 @@ public class PsdImageParser extends ImageParser
         if (imageContents == null)
             throw new ImageReadException("PSD: Couldn't read blocks");
 
-        PSDHeaderInfo header = imageContents.header;
+        PsdHeaderInfo header = imageContents.header;
         if (header == null)
             throw new ImageReadException("PSD: Couldn't read Header");
 

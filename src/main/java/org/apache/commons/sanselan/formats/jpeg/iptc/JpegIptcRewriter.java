@@ -40,9 +40,9 @@ import org.apache.commons.sanselan.formats.jpeg.xmp.JpegRewriter;
  * <p>
  * See the source of the IPTCUpdateExample class for example usage.
  *
- * @see org.apache.commons.sanselan.sampleUsage.WriteIPTCExample
+ * @see org.apache.commons.sanselan.examples.WriteIPTCExample
  */
-public class JpegIptcRewriter extends JpegRewriter implements IPTCConstants
+public class JpegIptcRewriter extends JpegRewriter implements IptcConstants
 {
 
     /**
@@ -129,13 +129,13 @@ public class JpegIptcRewriter extends JpegRewriter implements IPTCConstants
             JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments
                     .get(0);
             Map params = new HashMap();
-            PhotoshopApp13Data oldData = new IPTCParser()
+            PhotoshopApp13Data oldData = new IptcParser()
                     .parsePhotoshopSegment(oldSegment.segmentData, params);
             List newBlocks = oldData.getNonIptcBlocks();
             List newRecords = new ArrayList();
             PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                     newBlocks);
-            byte segmentBytes[] = new IPTCParser()
+            byte segmentBytes[] = new IptcParser()
                     .writePhotoshopApp13Segment(newData);
             JFIFPieceSegment newSegment = new JFIFPieceSegment(
                     oldSegment.marker, segmentBytes);
@@ -231,18 +231,18 @@ public class JpegIptcRewriter extends JpegRewriter implements IPTCConstants
         {
             // discard old iptc blocks.
             List newBlocks = newData.getNonIptcBlocks();
-            byte[] newBlockBytes = new IPTCParser().writeIPTCBlock(newData
+            byte[] newBlockBytes = new IptcParser().writeIPTCBlock(newData
                     .getRecords());
 
             int blockType = IMAGE_RESOURCE_BLOCK_IPTC_DATA;
             byte[] blockNameBytes = new byte[0];
-            IPTCBlock newBlock = new IPTCBlock(blockType, blockNameBytes,
+            IptcBlock newBlock = new IptcBlock(blockType, blockNameBytes,
                     newBlockBytes);
             newBlocks.add(newBlock);
 
             newData = new PhotoshopApp13Data(newData.getRecords(), newBlocks);
 
-            byte segmentBytes[] = new IPTCParser()
+            byte segmentBytes[] = new IptcParser()
                     .writePhotoshopApp13Segment(newData);
             JFIFPieceSegment newSegment = new JFIFPieceSegment(
                     JPEG_APP13_Marker, segmentBytes);

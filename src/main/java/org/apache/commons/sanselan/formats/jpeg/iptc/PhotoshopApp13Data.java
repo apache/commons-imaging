@@ -20,7 +20,7 @@ package org.apache.commons.sanselan.formats.jpeg.iptc;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoshopApp13Data implements IPTCConstants
+public class PhotoshopApp13Data implements IptcConstants
 {
     private final List records;
     private final List rawBlocks;
@@ -46,7 +46,7 @@ public class PhotoshopApp13Data implements IPTCConstants
         List result = new ArrayList();
         for (int i = 0; i < rawBlocks.size(); i++)
         {
-            IPTCBlock block = (IPTCBlock) rawBlocks.get(i);
+            IptcBlock block = (IptcBlock) rawBlocks.get(i);
             if (!block.isIPTCBlock())
                 result.add(block);
         }

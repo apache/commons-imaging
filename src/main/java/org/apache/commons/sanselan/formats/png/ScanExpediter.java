@@ -22,7 +22,7 @@ import java.io.InputStream;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BinaryFileParser;
-import org.apache.commons.sanselan.formats.png.chunks.PNGChunkPLTE;
+import org.apache.commons.sanselan.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.sanselan.formats.png.scanlinefilters.ScanlineFilter;
 import org.apache.commons.sanselan.formats.png.scanlinefilters.ScanlineFilterAverage;
 import org.apache.commons.sanselan.formats.png.scanlinefilters.ScanlineFilterNone;
@@ -41,13 +41,13 @@ public abstract class ScanExpediter extends BinaryFileParser
     protected final int bitDepth;
     protected final int bytesPerPixel;
     protected final int bitsPerPixel;
-    protected final PNGChunkPLTE pngChunkPLTE;
+    protected final PngChunkPlte pngChunkPLTE;
     protected final GammaCorrection gammaCorrection;
     protected final TransparencyFilter transparencyFilter;
 
     public ScanExpediter(int width, int height, InputStream is,
             BufferedImage bi, int color_type, int bitDepth, int bitsPerPixel,
-            PNGChunkPLTE pngChunkPLTE, GammaCorrection gammaCorrection,
+            PngChunkPlte pngChunkPLTE, GammaCorrection gammaCorrection,
             TransparencyFilter transparencyFilter)
 
     {

@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 
 import org.apache.commons.sanselan.formats.psd.ImageContents;
-import org.apache.commons.sanselan.formats.psd.PSDHeaderInfo;
+import org.apache.commons.sanselan.formats.psd.PsdHeaderInfo;
 
 public abstract class DataParser
 {
@@ -29,7 +29,7 @@ public abstract class DataParser
     {
         DataBuffer buffer = bi.getRaster().getDataBuffer();
 
-        PSDHeaderInfo header = imageContents.header;
+        PsdHeaderInfo header = imageContents.header;
         int width = header.Columns;
         int height = header.Rows;
 

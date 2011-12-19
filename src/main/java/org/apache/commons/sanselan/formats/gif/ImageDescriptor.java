@@ -16,7 +16,7 @@
  */
 package org.apache.commons.sanselan.formats.gif;
 
-public class ImageDescriptor extends GIFBlock
+public class ImageDescriptor extends GifBlock
 {
 
     public final int imageLeftPosition;

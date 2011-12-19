@@ -25,7 +25,7 @@ import org.apache.commons.sanselan.common.BinaryFileParser;
 import org.apache.commons.sanselan.common.mylzw.BitsToByteInputStream;
 import org.apache.commons.sanselan.common.mylzw.MyBitInputStream;
 import org.apache.commons.sanselan.formats.psd.ImageContents;
-import org.apache.commons.sanselan.formats.psd.PSDHeaderInfo;
+import org.apache.commons.sanselan.formats.psd.PsdHeaderInfo;
 import org.apache.commons.sanselan.formats.psd.dataparsers.DataParser;
 
 public class UncompressedDataReader extends DataReader
@@ -39,7 +39,7 @@ public class UncompressedDataReader extends DataReader
             ImageContents imageContents, BinaryFileParser bfp)
             throws ImageReadException, IOException
     {
-        PSDHeaderInfo header = imageContents.header;
+        PsdHeaderInfo header = imageContents.header;
         int width = header.Columns;
         int height = header.Rows;
 

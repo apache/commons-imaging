@@ -29,7 +29,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.SanselanTest;
-import org.apache.commons.sanselan.util.IOUtils;
+import org.apache.commons.sanselan.util.IoUtils;
 
 public class PngWriteReadTest extends SanselanTest
 {
@@ -152,7 +152,7 @@ public class PngWriteReadTest extends SanselanTest
         //        Debug.debug("bytes", bytes);
 
         File tempFile = createTempFile("temp", ".png");
-        IOUtils.writeToFile(bytes, tempFile);
+        IoUtils.writeToFile(bytes, tempFile);
 
         BufferedImage dstImage = Sanselan.getBufferedImage(bytes);
 

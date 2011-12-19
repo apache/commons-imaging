@@ -50,34 +50,34 @@ public abstract class Segment extends BinaryFileParser
         switch (marker)
         {
             case 0xffc0 :
-                return "Start Of Frame, Baseline DCT, Huffman coding";
+                return "Start Of Frame, Baseline Dct, Huffman coding";
             case 0xffc1 :
-                return "Start Of Frame, Extended sequential DCT, Huffman coding";
+                return "Start Of Frame, Extended sequential Dct, Huffman coding";
             case 0xffc2 :
-                return "Start Of Frame, Progressive DCT, Huffman coding";
+                return "Start Of Frame, Progressive Dct, Huffman coding";
             case 0xffc3 :
                 return "Start Of Frame, Lossless (sequential), Huffman coding";
 
             case 0xffc5 :
-                return "Start Of Frame, Differential sequential DCT, Huffman coding";
+                return "Start Of Frame, Differential sequential Dct, Huffman coding";
             case 0xffc6 :
-                return "Start Of Frame, Differential progressive DCT, Huffman coding";
+                return "Start Of Frame, Differential progressive Dct, Huffman coding";
             case 0xffc7 :
                 return "Start Of Frame, Differential lossless (sequential), Huffman coding";
 
             case 0xffc8 :
                 return "Start Of Frame, Reserved for JPEG extensions, arithmetic coding";
             case 0xffc9 :
-                return "Start Of Frame, Extended sequential DCT, arithmetic coding";
+                return "Start Of Frame, Extended sequential Dct, arithmetic coding";
             case 0xffca :
-                return "Start Of Frame, Progressive DCT, arithmetic coding";
+                return "Start Of Frame, Progressive Dct, arithmetic coding";
             case 0xffcb :
                 return "Start Of Frame, Lossless (sequential), arithmetic coding";
 
             case 0xffcd :
-                return "Start Of Frame, Differential sequential DCT, arithmetic coding";
+                return "Start Of Frame, Differential sequential Dct, arithmetic coding";
             case 0xffce :
-                return "Start Of Frame, Differential progressive DCT, arithmetic coding";
+                return "Start Of Frame, Differential progressive Dct, arithmetic coding";
             case 0xffcf :
                 return "Start Of Frame, Differential lossless (sequential), arithmetic coding";
 

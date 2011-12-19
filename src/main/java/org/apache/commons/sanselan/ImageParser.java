@@ -41,7 +41,7 @@ import org.apache.commons.sanselan.formats.ico.IcoImageParser;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
 import org.apache.commons.sanselan.formats.pcx.PcxImageParser;
 import org.apache.commons.sanselan.formats.png.PngImageParser;
-import org.apache.commons.sanselan.formats.pnm.PNMImageParser;
+import org.apache.commons.sanselan.formats.pnm.PnmImageParser;
 import org.apache.commons.sanselan.formats.psd.PsdImageParser;
 import org.apache.commons.sanselan.formats.tiff.TiffImageParser;
 import org.apache.commons.sanselan.formats.wbmp.WbmpImageParser;
@@ -58,7 +58,7 @@ public abstract class ImageParser extends BinaryFileParser implements
         ImageParser result[] = { new JpegImageParser(), new TiffImageParser(),
                 new PngImageParser(), new BmpImageParser(),
                 new GifImageParser(), new PsdImageParser(),
-                new PNMImageParser(), new IcoImageParser(),
+                new PnmImageParser(), new IcoImageParser(),
                 new IcnsImageParser(), new WbmpImageParser(),
                 new PcxImageParser(), new DcxImageParser(),
                 new XbmImageParser(), new XpmImageParser(),

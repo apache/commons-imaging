@@ -27,7 +27,7 @@ import org.apache.commons.sanselan.common.BinaryFileParser;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.jpeg.JpegConstants;
 import org.apache.commons.sanselan.formats.jpeg.JpegUtils;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCParser;
+import org.apache.commons.sanselan.formats.jpeg.iptc.IptcParser;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -35,7 +35,7 @@ import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCParser;
  * <p>
  * See the source of the XmpXmlUpdateExample class for example usage.
  *
- * @see org.apache.commons.sanselan.sampleUsage.WriteXmpXmlExample
+ * @see org.apache.commons.sanselan.examples.WriteXmpXmlExample
  */
 public class JpegRewriter extends BinaryFileParser implements JpegConstants
 {
@@ -131,7 +131,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
         {
             if (marker != JPEG_APP13_Marker)
                 return false;
-            if (!new IPTCParser().isPhotoshopJpegSegment(segmentData))
+            if (!new IptcParser().isPhotoshopJpegSegment(segmentData))
                 return false;
             return true;
         }

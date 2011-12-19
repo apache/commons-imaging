@@ -21,14 +21,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.formats.png.chunks.PNGChunkPLTE;
+import org.apache.commons.sanselan.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.sanselan.formats.transparencyfilters.TransparencyFilter;
 
 public class ScanExpediterSimple extends ScanExpediter
 {
     public ScanExpediterSimple(int width, int height, InputStream is,
             BufferedImage bi, int color_type, int BitDepth, int bitsPerPixel,
-            PNGChunkPLTE pngChunkPLTE, GammaCorrection gammaCorrection,
+            PngChunkPlte pngChunkPLTE, GammaCorrection gammaCorrection,
             TransparencyFilter transparencyFilter)
 
     {

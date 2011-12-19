@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.SanselanConstants;
-import org.apache.commons.sanselan.test.util.FSTraversal;
+import org.apache.commons.sanselan.test.util.FileSystemTraversal;
 import org.apache.commons.sanselan.util.Debug;
 
 public abstract class SanselanTest extends TestCase implements
@@ -118,7 +118,7 @@ public abstract class SanselanTest extends TestCase implements
         Debug.debug("imagesFolder", imagesFolder);
         assertTrue(imagesFolder.exists());
 
-        FSTraversal.Visitor visitor = new FSTraversal.Visitor() {
+        FileSystemTraversal.Visitor visitor = new FileSystemTraversal.Visitor() {
 
             public boolean visit(File file, double progressEstimate) {
                 if (!Sanselan.hasImageFileExtension(file))
@@ -127,7 +127,7 @@ public abstract class SanselanTest extends TestCase implements
                 return true;
             }
         };
-        new FSTraversal().traverseFiles(imagesFolder, visitor);
+        new FileSystemTraversal().traverseFiles(imagesFolder, visitor);
     }
 
     protected List getTestImages(final ImageFilter filter, final int max)

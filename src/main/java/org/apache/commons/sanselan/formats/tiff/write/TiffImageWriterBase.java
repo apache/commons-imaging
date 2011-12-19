@@ -30,7 +30,7 @@ import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.common.PackBits;
-import org.apache.commons.sanselan.common.mylzw.MyLZWCompressor;
+import org.apache.commons.sanselan.common.mylzw.MyLzwCompressor;
 import org.apache.commons.sanselan.formats.tiff.TiffElement;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
@@ -341,7 +341,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
 
                 int LZW_MINIMUM_CODE_SIZE = 8;
 
-                MyLZWCompressor compressor = new MyLZWCompressor(
+                MyLzwCompressor compressor = new MyLzwCompressor(
                         LZW_MINIMUM_CODE_SIZE, BYTE_ORDER_MSB, true);
                 byte compressed[] = compressor.compress(uncompressed);
 

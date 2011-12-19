@@ -40,8 +40,8 @@ import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
-import org.apache.commons.sanselan.common.mylzw.MyLZWCompressor;
-import org.apache.commons.sanselan.common.mylzw.MyLZWDecompressor;
+import org.apache.commons.sanselan.common.mylzw.MyLzwCompressor;
+import org.apache.commons.sanselan.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.sanselan.palette.Palette;
 import org.apache.commons.sanselan.palette.PaletteFactory;
 import org.apache.commons.sanselan.util.Debug;
@@ -82,7 +82,7 @@ public class GifImageParser extends ImageParser
 
     private static final byte GIF_HEADER_SIGNATURE[] = { 71, 73, 70 };
 
-    private GIFHeaderInfo readHeader(InputStream is,
+    private GifHeaderInfo readHeader(InputStream is,
             FormatCompliance formatCompliance) throws ImageReadException,
             IOException
     {
@@ -156,7 +156,7 @@ public class GifImageParser extends ImageParser
                         backgroundColorIndex);
         }
 
-        return new GIFHeaderInfo(identifier1, identifier2, identifier3,
+        return new GifHeaderInfo(identifier1, identifier2, identifier3,
                 version1, version2, version3, logicalScreenWidth,
                 logicalScreenHeight, packedFields, backgroundColorIndex,
                 pixelAspectRatio, globalColorTableFlag, colorResolution,
@@ -194,13 +194,13 @@ public class GifImageParser extends ImageParser
         return bytes;
     }
 
-    protected GenericGIFBlock readGenericGIFBlock(InputStream is, int code)
+    protected GenericGifBlock readGenericGIFBlock(InputStream is, int code)
             throws ImageReadException, IOException
     {
         return readGenericGIFBlock(is, code, null);
     }
 
-    protected GenericGIFBlock readGenericGIFBlock(InputStream is, int code,
+    protected GenericGifBlock readGenericGIFBlock(InputStream is, int code,
             byte first[]) throws ImageReadException, IOException
     {
         ArrayList subblocks = new ArrayList();
@@ -216,7 +216,7 @@ public class GifImageParser extends ImageParser
             subblocks.add(bytes);
         }
 
-        return new GenericGIFBlock(code, subblocks);
+        return new GenericGifBlock(code, subblocks);
     }
 
     private final static int EXTENSION_CODE = 0x21;
@@ -230,7 +230,7 @@ public class GifImageParser extends ImageParser
     private final static int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8)
             | XMP_EXTENSION;
 
-    private ArrayList readBlocks(GIFHeaderInfo ghi, InputStream is,
+    private ArrayList readBlocks(GifHeaderInfo ghi, InputStream is,
             boolean stopBeforeImageData, FormatCompliance formatCompliance)
             throws ImageReadException, IOException
     {
@@ -270,7 +270,7 @@ public class GifImageParser extends ImageParser
 
                 case COMMENT_EXTENSION:
                 case PLAIN_TEXT_EXTENSION: {
-                    GenericGIFBlock block = readGenericGIFBlock(is,
+                    GenericGifBlock block = readGenericGIFBlock(is,
                             completeCode);
                     result.add(block);
                     break;
@@ -293,7 +293,7 @@ public class GifImageParser extends ImageParser
 
                     if ((label != null) && (label.length > 0))
                     {
-                        GenericGIFBlock block = readGenericGIFBlock(is,
+                        GenericGifBlock block = readGenericGIFBlock(is,
                                 completeCode, label);
                         result.add(block);
                     }
@@ -306,7 +306,7 @@ public class GifImageParser extends ImageParser
                         formatCompliance.addComment("Unknown block",
                                 completeCode);
 
-                    GenericGIFBlock block = readGenericGIFBlock(is,
+                    GenericGifBlock block = readGenericGIFBlock(is,
                             completeCode);
                     result.add(block);
                     break;
@@ -327,7 +327,7 @@ public class GifImageParser extends ImageParser
         }
     }
 
-    private ImageDescriptor readImageDescriptor(GIFHeaderInfo ghi,
+    private ImageDescriptor readImageDescriptor(GifHeaderInfo ghi,
             int blockCode, InputStream is, boolean stopBeforeImageData,
             FormatCompliance formatCompliance) throws ImageReadException,
             IOException
@@ -381,12 +381,12 @@ public class GifImageParser extends ImageParser
         {
             int LZWMinimumCodeSize = is.read();
 
-            GenericGIFBlock block = readGenericGIFBlock(is, -1);
+            GenericGifBlock block = readGenericGIFBlock(is, -1);
             byte bytes[] = block.appendSubBlocks();
             InputStream bais = new ByteArrayInputStream(bytes);
 
             int size = imageWidth * imageHeight;
-            MyLZWDecompressor myLzwDecompressor = new MyLZWDecompressor(
+            MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
                     LZWMinimumCodeSize, BYTE_ORDER_LSB);
             imageData = myLzwDecompressor.decompress(bais, size);
         } else
@@ -433,7 +433,7 @@ public class GifImageParser extends ImageParser
     }
 
     // TODO - unused
-    private GIFHeaderInfo readHeader(ByteSource byteSource)
+    private GifHeaderInfo readHeader(ByteSource byteSource)
             throws ImageReadException, IOException
     {
         InputStream is = null;
@@ -457,11 +457,11 @@ public class GifImageParser extends ImageParser
         }
     }
 
-    private GIFBlock findBlock(ArrayList v, int code)
+    private GifBlock findBlock(ArrayList v, int code)
     {
         for (int i = 0; i < v.size(); i++)
         {
-            GIFBlock gifBlock = (GIFBlock) v.get(i);
+            GifBlock gifBlock = (GifBlock) v.get(i);
             if (gifBlock.blockCode == code)
                 return gifBlock;
         }
@@ -484,7 +484,7 @@ public class GifImageParser extends ImageParser
         {
             is = byteSource.getInputStream();
 
-            GIFHeaderInfo ghi = readHeader(is, formatCompliance);
+            GifHeaderInfo ghi = readHeader(is, formatCompliance);
 
             byte globalColorTable[] = null;
             if (ghi.globalColorTableFlag)
@@ -527,7 +527,7 @@ public class GifImageParser extends ImageParser
         if (blocks == null)
             throw new ImageReadException("GIF: Couldn't read blocks");
 
-        GIFHeaderInfo bhi = blocks.gifHeaderInfo;
+        GifHeaderInfo bhi = blocks.gifHeaderInfo;
         if (bhi == null)
             throw new ImageReadException("GIF: Couldn't read Header");
 
@@ -564,10 +564,10 @@ public class GifImageParser extends ImageParser
 
         for (int i = 0; i < v.size(); i++)
         {
-            GIFBlock block = (GIFBlock) v.get(i);
+            GifBlock block = (GifBlock) v.get(i);
             if (block.blockCode == code)
             {
-                byte bytes[] = ((GenericGIFBlock) block).appendSubBlocks();
+                byte bytes[] = ((GenericGifBlock) block).appendSubBlocks();
                 result.add(new String(bytes));
             }
         }
@@ -583,7 +583,7 @@ public class GifImageParser extends ImageParser
         if (blocks == null)
             throw new ImageReadException("GIF: Couldn't read blocks");
 
-        GIFHeaderInfo bhi = blocks.gifHeaderInfo;
+        GifHeaderInfo bhi = blocks.gifHeaderInfo;
         if (bhi == null)
             throw new ImageReadException("GIF: Couldn't read Header");
 
@@ -660,7 +660,7 @@ public class GifImageParser extends ImageParser
             pw.println("gif.blocks: " + blocks.blocks.size());
             for (int i = 0; i < blocks.blocks.size(); i++)
             {
-                GIFBlock gifBlock = (GIFBlock) blocks.blocks.get(i);
+                GifBlock gifBlock = (GifBlock) blocks.blocks.get(i);
                 this.debugNumber(pw, "\t" + i + " ("
                         + gifBlock.getClass().getName() + ")",
                         gifBlock.blockCode, 4);
@@ -716,7 +716,7 @@ public class GifImageParser extends ImageParser
         if (imageContents == null)
             throw new ImageReadException("GIF: Couldn't read blocks");
 
-        GIFHeaderInfo ghi = imageContents.gifHeaderInfo;
+        GifHeaderInfo ghi = imageContents.gifHeaderInfo;
         if (ghi == null)
             throw new ImageReadException("GIF: Couldn't read Header");
 
@@ -1035,7 +1035,7 @@ public class GifImageParser extends ImageParser
                 // here.
                 bos.write(LZWMinimumCodeSize);
 
-                MyLZWCompressor compressor = new MyLZWCompressor(
+                MyLzwCompressor compressor = new MyLzwCompressor(
                         LZWMinimumCodeSize, BYTE_ORDER_LSB, false); // GIF
                 // Mode);
 
@@ -1112,7 +1112,7 @@ public class GifImageParser extends ImageParser
             is = byteSource.getInputStream();
 
             FormatCompliance formatCompliance = null;
-            GIFHeaderInfo ghi = readHeader(is, formatCompliance);
+            GifHeaderInfo ghi = readHeader(is, formatCompliance);
 
             if (ghi.globalColorTableFlag)
                 readColorTable(is, ghi.sizeOfGlobalColorTable, formatCompliance);
@@ -1122,11 +1122,11 @@ public class GifImageParser extends ImageParser
             List result = new ArrayList();
             for (int i = 0; i < blocks.size(); i++)
             {
-                GIFBlock block = (GIFBlock) blocks.get(i);
+                GifBlock block = (GifBlock) blocks.get(i);
                 if (block.blockCode != XMP_COMPLETE_CODE)
                     continue;
 
-                GenericGIFBlock genericBlock = (GenericGIFBlock) block;
+                GenericGifBlock genericBlock = (GenericGifBlock) block;
 
                 byte blockBytes[] = genericBlock.appendSubBlocks(true);
                 if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length)

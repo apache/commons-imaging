@@ -18,7 +18,7 @@ package org.apache.commons.sanselan.formats.tiff.constants;
 
 import org.apache.commons.sanselan.SanselanConstants;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
-import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldTypeASCII;
+import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldTypeAscii;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldTypeByte;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldTypeDouble;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldTypeFloat;
@@ -33,7 +33,7 @@ public interface TiffFieldTypeConstants extends SanselanConstants
     public static final FieldTypeByte FIELD_TYPE_BYTE = new FieldTypeByte(1,
             "Byte");
 
-    public static final FieldTypeASCII FIELD_TYPE_ASCII = new FieldTypeASCII(2,
+    public static final FieldTypeAscii FIELD_TYPE_ASCII = new FieldTypeAscii(2,
             "ASCII");
 
     public static final FieldTypeShort FIELD_TYPE_SHORT = new FieldTypeShort(3,
