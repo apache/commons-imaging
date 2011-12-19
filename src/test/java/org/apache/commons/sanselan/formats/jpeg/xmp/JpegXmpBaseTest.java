@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.SanselanTest;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceFile;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
 
 public abstract class JpegXmpBaseTest extends SanselanTest

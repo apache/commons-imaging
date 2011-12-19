@@ -39,7 +39,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.common.IImageMetadata;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.common.mylzw.MyLZWCompressor;
 import org.apache.commons.sanselan.common.mylzw.MyLZWDecompressor;
 import org.apache.commons.sanselan.palette.Palette;

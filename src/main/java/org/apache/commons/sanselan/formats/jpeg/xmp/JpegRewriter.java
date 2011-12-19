@@ -24,7 +24,7 @@ import java.util.List;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryFileParser;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.jpeg.JpegConstants;
 import org.apache.commons.sanselan.formats.jpeg.JpegUtils;
 import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCParser;

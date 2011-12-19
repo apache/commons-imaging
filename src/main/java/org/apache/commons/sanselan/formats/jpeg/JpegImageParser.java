@@ -35,7 +35,7 @@ import org.apache.commons.sanselan.ImageInfo;
 import org.apache.commons.sanselan.ImageParser;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.IImageMetadata;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.jpeg.decoder.JpegDecoder;
 import org.apache.commons.sanselan.formats.jpeg.iptc.IPTCParser;
 import org.apache.commons.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;

@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.commons.sanselan.FormatCompliance;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BinaryFileParser;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.util.Debug;

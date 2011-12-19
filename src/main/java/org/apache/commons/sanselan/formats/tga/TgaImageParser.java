@@ -31,7 +31,7 @@ package org.apache.commons.sanselan.formats.tga;
 //import org.apache.commons.sanselan.ImageParser;
 //import org.apache.commons.sanselan.ImageReadException;
 //import org.apache.commons.sanselan.common.IImageMetadata;
-//import org.apache.commons.sanselan.common.byteSources.ByteSource;
+//import org.apache.commons.sanselan.common.bytesource.ByteSource;
 //import org.apache.commons.sanselan.util.Debug;
 //
 ///*

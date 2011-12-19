@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.sanselan.common.byteSources;
+package org.apache.commons.sanselan.common.bytesource;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;

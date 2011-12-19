@@ -43,7 +43,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BasicCParser;
 import org.apache.commons.sanselan.common.IImageMetadata;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 
 public class XbmImageParser extends ImageParser
 {

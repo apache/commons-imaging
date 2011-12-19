@@ -42,7 +42,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.common.ImageMetadata;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.png.chunks.PNGChunk;
 import org.apache.commons.sanselan.formats.png.chunks.PNGChunkIDAT;
 import org.apache.commons.sanselan.formats.png.chunks.PNGChunkIHDR;

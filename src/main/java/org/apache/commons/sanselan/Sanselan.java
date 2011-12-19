@@ -31,10 +31,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.sanselan.common.IImageMetadata;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceArray;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceFile;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceInputStream;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceArray;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.sanselan.icc.IccProfileInfo;
 import org.apache.commons.sanselan.icc.IccProfileParser;
 import org.apache.commons.sanselan.util.Debug;

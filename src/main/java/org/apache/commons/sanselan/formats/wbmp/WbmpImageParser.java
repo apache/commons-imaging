@@ -37,7 +37,7 @@ import org.apache.commons.sanselan.ImageParser;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.IImageMetadata;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 
 public class WbmpImageParser extends ImageParser
 {

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.sanselan.common.byteSources;
+package org.apache.commons.sanselan.common.bytesource;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -46,7 +46,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BasicCParser;
 import org.apache.commons.sanselan.common.IImageMetadata;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.palette.PaletteFactory;
 import org.apache.commons.sanselan.palette.SimplePalette;
 import org.apache.commons.sanselan.util.Debug;

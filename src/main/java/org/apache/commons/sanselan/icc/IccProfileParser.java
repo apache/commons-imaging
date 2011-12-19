@@ -22,9 +22,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.sanselan.common.BinaryFileParser;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceArray;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceFile;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceArray;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.util.CachingInputStream;
 import org.apache.commons.sanselan.util.Debug;
 

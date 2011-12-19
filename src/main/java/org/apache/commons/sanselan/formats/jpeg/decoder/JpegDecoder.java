@@ -27,7 +27,7 @@ import java.util.Properties;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BinaryFileParser;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.jpeg.Block;
 import org.apache.commons.sanselan.formats.jpeg.JpegConstants;
 import org.apache.commons.sanselan.formats.jpeg.JpegUtils;

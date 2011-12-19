@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.sanselan.common.byteSources;
+package org.apache.commons.sanselan.common.bytesource;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;

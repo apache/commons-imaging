@@ -37,7 +37,7 @@ import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.common.IImageMetadata;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.bmp.BmpImageParser;
 import org.apache.commons.sanselan.palette.PaletteFactory;
 import org.apache.commons.sanselan.palette.SimplePalette;

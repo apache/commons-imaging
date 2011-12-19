@@ -28,10 +28,10 @@ import java.util.Map;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceArray;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceFile;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceInputStream;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceArray;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.sanselan.formats.jpeg.xmp.JpegRewriter;
 
 /**

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;

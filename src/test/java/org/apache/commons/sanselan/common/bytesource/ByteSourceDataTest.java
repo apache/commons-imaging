@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.sanselan.common.byteSources;
+package org.apache.commons.sanselan.common.bytesource;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -23,9 +23,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.sanselan.common.byteSources.ByteSource;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceFile;
-import org.apache.commons.sanselan.common.byteSources.ByteSourceInputStream;
+import org.apache.commons.sanselan.common.bytesource.ByteSource;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
+import org.apache.commons.sanselan.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.sanselan.util.IOUtils;
 
 public class ByteSourceDataTest extends ByteSourceTest
