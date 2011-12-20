@@ -19,14 +19,11 @@ package org.apache.commons.sanselan.formats.xmp;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageFormat;
-import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.SanselanTest;
 import org.apache.commons.sanselan.util.Debug;
@@ -34,8 +31,7 @@ import org.apache.commons.sanselan.util.Debug;
 public class XmpUpdateTest extends SanselanTest
 {
 
-    public void test() throws IOException, ImageReadException,
-            ImageWriteException
+    public void test() throws Exception
     {
         List images = getTestImages();
         for (int i = 0; i < images.size(); i++)

@@ -279,8 +279,7 @@ public class RoundtripTest extends SanselanTest
         }
     }
 
-    public void testBitmapRoundtrip() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testBitmapRoundtrip() throws Exception
     {
         BufferedImage testImages[] = { //
 
@@ -312,8 +311,7 @@ public class RoundtripTest extends SanselanTest
         }
     }
 
-    public void testGrayscaleRoundtrip() throws IOException,
-            ImageReadException, ImageWriteException
+    public void testGrayscaleRoundtrip() throws Exception
     {
         BufferedImage testImages[] = { //
 
@@ -349,8 +347,7 @@ public class RoundtripTest extends SanselanTest
         }
     }
 
-    public void testLimitedColorRoundtrip() throws IOException,
-            ImageReadException, ImageWriteException
+    public void testLimitedColorRoundtrip() throws Exception
     {
         BufferedImage testImages[] = { //
 
@@ -383,8 +380,7 @@ public class RoundtripTest extends SanselanTest
         }
     }
 
-    public void testFullColorRoundtrip() throws IOException,
-            ImageReadException, ImageWriteException
+    public void testFullColorRoundtrip() throws Exception
     {
         BufferedImage testImages[] = { //
 

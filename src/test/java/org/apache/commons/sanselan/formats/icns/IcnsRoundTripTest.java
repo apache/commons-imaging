@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.formats.icns.IcnsImageParser;
@@ -53,7 +52,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
-    public void test1BPPIconMaskVersus8BPPMask() throws ImageReadException, ImageWriteException, IOException
+    public void test1BPPIconMaskVersus8BPPMask() throws Exception
     {
         final int foreground = 0xff000000;
         final int background = 0xff000000;
@@ -94,7 +93,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
                 baos.toByteArray(), foreground, background);
     }
 
-    public void test8BPPIcon8BPPMask() throws ImageReadException, ImageWriteException, IOException
+    public void test8BPPIcon8BPPMask() throws Exception
     {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
@@ -133,8 +132,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         writeAndReadImageData("8bpp-image-8bpp-mask", baos.toByteArray(), foreground, background);
     }
 
-    public void test8BPPIcon8BPPMaskVersus1BPPMask()
-            throws ImageReadException, ImageWriteException, IOException
+    public void test8BPPIcon8BPPMaskVersus1BPPMask() throws Exception
     {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
@@ -197,8 +195,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
                 baos.toByteArray(), foreground, background);
     }
 
-    public void test8BPPIcon1BPPMaskVersus8BPPMask()
-            throws ImageReadException, ImageWriteException, IOException
+    public void test8BPPIcon1BPPMaskVersus8BPPMask() throws Exception
     {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
@@ -261,7 +258,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
                 baos.toByteArray(), foreground, background);
     }
 
-    public void test8BPPIconNoMask() throws ImageReadException, ImageWriteException, IOException
+    public void test8BPPIconNoMask() throws Exception
     {
         final int foreground = 0xff000000;
         final int background = 0xffcccccc;
@@ -287,7 +284,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         writeAndReadImageData("8bpp-image-no-mask", baos.toByteArray(), foreground, background);
     }
 
-    public void test32BPPMaskedIcon() throws ImageReadException, ImageWriteException, IOException
+    public void test32BPPMaskedIcon() throws Exception
     {
         final int foreground = 0xff000000;
         final int background = 0x000000ff;
@@ -348,7 +345,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         writeAndReadImageData("32bpp-image-1bpp-mask", baos.toByteArray(), foreground, background);
     }
 
-    public void test32BPPHalfMaskedIcon() throws ImageWriteException, IOException
+    public void test32BPPHalfMaskedIcon() throws Exception
     {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
@@ -406,7 +403,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         assertTrue("ICNS file with corrupt mask didn't fail to parse", threw);
     }
 
-    public void test32BPPMaskMissingIcon() throws ImageReadException, ImageWriteException, IOException
+    public void test32BPPMaskMissingIcon() throws Exception
     {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;

@@ -122,7 +122,7 @@ public class ByteSourceDataTest extends ByteSourceTest
 
     }
 
-    public void test() throws IOException
+    public void test() throws Exception
     {
         ByteSourceFactory byteSourceFactories[] = {
                 new ByteSourceFileFactory(),

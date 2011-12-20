@@ -31,13 +31,13 @@ import org.apache.commons.sanselan.util.Debug;
 public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
 {
 
-    public void testTrivial() throws IOException
+    public void testTrivial() throws Exception
     {
         byte bytes[] = { 0, };
         compressRoundtripAndValidate(bytes);
     }
 
-    public void testMedium() throws IOException
+    public void testMedium() throws Exception
     {
         int LENGTH = 1024 * 32;
         byte bytes[] = new byte[LENGTH];

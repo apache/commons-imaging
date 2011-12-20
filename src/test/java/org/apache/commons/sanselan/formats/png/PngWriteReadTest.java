@@ -76,8 +76,7 @@ public class PngWriteReadTest extends SanselanTest
         return result;
     }
 
-    public void test() throws IOException, ImageReadException,
-            ImageWriteException
+    public void test() throws Exception
     {
         int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
         int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
@@ -98,7 +97,7 @@ public class PngWriteReadTest extends SanselanTest
         }
     }
 
-    public void testTransparency() throws IOException, ImageReadException, ImageWriteException
+    public void testTransparency() throws Exception
     {
         // Test for https://issues.apache.org/jira/browse/SANSELAN-52
         int[][] smallAscendingPixels = getAscendingRawData(256, 256);

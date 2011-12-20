@@ -18,14 +18,12 @@
 package org.apache.commons.sanselan.formats.jpeg.exif;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
@@ -35,7 +33,8 @@ import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;
 
 public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 
-    public void testSingleImage() throws IOException, ImageReadException {
+    public void testSingleImage() throws Exception
+    {
         File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 
         Map params = new HashMap();

@@ -38,9 +38,7 @@ import org.apache.commons.sanselan.util.IoUtils;
 public class ByteSourceImageTest extends ByteSourceTest
 {
 
-    public void test() throws IOException, ImageReadException,
-            IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException
+    public void test() throws Exception
     {
         List imageFiles = getTestImages();
         for (int i = 0; i < imageFiles.size(); i++)
@@ -96,8 +94,7 @@ public class ByteSourceImageTest extends ByteSourceTest
         }
     }
 
-    public void checkGetBufferedImage(File file, byte[] bytes)
-            throws IOException, ImageReadException
+    public void checkGetBufferedImage(File file, byte[] bytes) throws Exception
     {
         BufferedImage imageFile = Sanselan.getBufferedImage(file);
         assertNotNull(imageFile);
@@ -113,8 +110,7 @@ public class ByteSourceImageTest extends ByteSourceTest
         assertTrue(imageFileHeight == imageBytes.getHeight());
     }
 
-    public void checkGetImageSize(File imageFile, byte[] imageFileBytes)
-            throws IOException, ImageReadException
+    public void checkGetImageSize(File imageFile, byte[] imageFileBytes) throws Exception
     {
         Dimension imageSizeFile = Sanselan.getImageSize(imageFile);
         assertNotNull(imageSizeFile);
@@ -127,8 +123,7 @@ public class ByteSourceImageTest extends ByteSourceTest
         assertTrue(imageSizeFile.height == imageSizeBytes.height);
     }
 
-    public void checkGuessFormat(File imageFile, byte[] imageFileBytes)
-            throws IOException, ImageReadException
+    public void checkGuessFormat(File imageFile, byte[] imageFileBytes) throws Exception
     {
         // check guessFormat()
         ImageFormat imageFormatFile = Sanselan.guessFormat(imageFile);
@@ -144,8 +139,7 @@ public class ByteSourceImageTest extends ByteSourceTest
         assertTrue(imageFormatBytes == imageFormatFile);
     }
 
-    public void checkGetICCProfileBytes(File imageFile, byte[] imageFileBytes)
-            throws IOException, ImageReadException
+    public void checkGetICCProfileBytes(File imageFile, byte[] imageFileBytes)  throws Exception
     {
         // check guessFormat()
         byte iccBytesFile[] = Sanselan.getICCProfileBytes(imageFile);

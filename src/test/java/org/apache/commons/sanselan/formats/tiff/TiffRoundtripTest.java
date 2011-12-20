@@ -19,23 +19,20 @@ package org.apache.commons.sanselan.formats.tiff;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageFormat;
 import org.apache.commons.sanselan.ImageInfo;
-import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.util.Debug;
 
 public class TiffRoundtripTest extends TiffBaseTest {
 
-    public void test() throws IOException, ImageReadException,
-            ImageWriteException {
+    public void test() throws Exception
+    {
         List images = getTiffImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)

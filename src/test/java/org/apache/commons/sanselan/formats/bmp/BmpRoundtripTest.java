@@ -72,46 +72,38 @@ public class BmpRoundtripTest extends BmpBaseTest
         return result;
     }
 
-     public void testSmallBlackPixels() throws IOException,
-     ImageReadException,
-     ImageWriteException
+     public void testSmallBlackPixels() throws Exception
      {
      int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
      writeAndReadImageData(smallBlackPixels);
      }
 
-    public void testSingleBlackPixel() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testSingleBlackPixel() throws Exception
     {
         int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
         writeAndReadImageData(singleBlackPixel);
     }
 
 
-     public void testSmallRedPixels() throws IOException, ImageReadException,
-     ImageWriteException
+     public void testSmallRedPixels() throws Exception
      {
      int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
      writeAndReadImageData(smallRedPixels);
      }
 
-     public void testSingleRedPixel() throws IOException, ImageReadException,
-     ImageWriteException
+     public void testSingleRedPixel() throws Exception
      {
      int[][] singleRedPixel = getSimpleRawData(1, 1, 0xffff0000);
      writeAndReadImageData(singleRedPixel);
      }
 
-     public void testSmallAscendingPixels() throws IOException,
-     ImageReadException, ImageWriteException
+     public void testSmallAscendingPixels() throws Exception
      {
      int[][] smallAscendingPixels = getAscendingRawData(256, 256);
      writeAndReadImageData(smallAscendingPixels);
      }
 
-     public void testSmallRandomPixels() throws IOException,
-     ImageReadException,
-     ImageWriteException
+     public void testSmallRandomPixels() throws Exception
      {
      int[][] smallRandomPixels = randomRawData(256, 256);
      writeAndReadImageData(smallRandomPixels);

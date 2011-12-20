@@ -280,8 +280,7 @@ public class IcoRoundtripTest extends IcoBaseTest
         }
 
         public byte[] generate32bitRGBABitmap(int foreground, int background,
-                int paletteSize, boolean writeMask) throws IOException,
-                ImageWriteException
+                int paletteSize, boolean writeMask) throws IOException
         {
             ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
             BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
@@ -318,7 +317,7 @@ public class IcoRoundtripTest extends IcoBaseTest
     }
 
     private void writeICONDIR(BinaryOutputStream bos, int reserved, int type, int count)
-            throws IOException, ImageWriteException
+            throws IOException
     {
         bos.write2Bytes(reserved);
         bos.write2Bytes(type);
@@ -327,7 +326,7 @@ public class IcoRoundtripTest extends IcoBaseTest
 
     private void writeICONDIRENTRY(BinaryOutputStream bos, int width, int height,
             int colorCount, int reserved, int planes, int bitCount, int bytesInRes)
-            throws IOException, ImageWriteException
+            throws IOException
     {
         bos.write(width);
         bos.write(height);
@@ -341,7 +340,7 @@ public class IcoRoundtripTest extends IcoBaseTest
 
     private void writeBITMAPINFOHEADER(BinaryOutputStream bos, int width, int height,
             int colorPlanes, int bitCount, int compression, int colorsUsed,
-            int colorsImportant) throws IOException, ImageWriteException
+            int colorsImportant) throws IOException
     {
         // BITMAPINFOHEADER
         bos.write4Bytes(40); // biSize, always 40 for BITMAPINFOHEADER
@@ -357,7 +356,7 @@ public class IcoRoundtripTest extends IcoBaseTest
         bos.write4Bytes(colorsImportant); // colors important
     }
 
-    public void testNormalIcons() throws IOException, ImageWriteException, ImageReadException
+    public void testNormalIcons() throws Exception
     {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -381,7 +380,7 @@ public class IcoRoundtripTest extends IcoBaseTest
         }
     }
 
-    public void testBadICONDIRENTRYIcons() throws IOException, ImageWriteException, ImageReadException
+    public void testBadICONDIRENTRYIcons() throws Exception
     {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -413,7 +412,7 @@ public class IcoRoundtripTest extends IcoBaseTest
         }
     }
 
-    public void testColorsUsed() throws IOException, ImageWriteException, ImageReadException
+    public void testColorsUsed() throws Exception
     {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -437,7 +436,7 @@ public class IcoRoundtripTest extends IcoBaseTest
         }
     }
 
-    public void testZeroColorPlanes() throws IOException, ImageWriteException
+    public void testZeroColorPlanes() throws Exception
     {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -472,7 +471,7 @@ public class IcoRoundtripTest extends IcoBaseTest
         }
     }
 
-    public void testBitfieldCompression() throws IOException, ImageWriteException, ImageReadException
+    public void testBitfieldCompression() throws Exception
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
@@ -491,7 +490,7 @@ public class IcoRoundtripTest extends IcoBaseTest
                 0xFF0000FF, 0xFFFFFFFF);
     }
 
-    public void test32bitMask() throws IOException, ImageWriteException, ImageReadException
+    public void test32bitMask() throws Exception
     {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -509,7 +508,7 @@ public class IcoRoundtripTest extends IcoBaseTest
         writeAndReadImageData("16x16x32-no-mask", baos.toByteArray(), foreground, background);
     }
 
-    public void testAlphaVersusANDMask() throws IOException, ImageWriteException, ImageReadException
+    public void testAlphaVersusANDMask() throws Exception
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
@@ -526,7 +525,7 @@ public class IcoRoundtripTest extends IcoBaseTest
                 0xFF000000, 0x00000000);
     }
 
-    public void testFullyTransparent32bitRGBA() throws IOException, ImageWriteException, ImageReadException
+    public void testFullyTransparent32bitRGBA() throws Exception
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,

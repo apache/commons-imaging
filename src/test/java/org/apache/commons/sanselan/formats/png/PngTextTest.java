@@ -20,15 +20,12 @@ package org.apache.commons.sanselan.formats.png;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageFormat;
-import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.formats.png.PngConstants;
 import org.apache.commons.sanselan.formats.png.PngImageInfo;
@@ -38,8 +35,7 @@ import org.apache.commons.sanselan.util.IoUtils;
 public class PngTextTest extends PngBaseTest
 {
 
-    public void test() throws IOException, ImageReadException,
-            ImageWriteException
+    public void test() throws Exception
     {
         int width = 1;
         int height = 1;

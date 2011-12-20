@@ -30,7 +30,8 @@ import org.apache.commons.sanselan.util.Debug;
 
 public class PngWriteForceTrueColorText extends PngBaseTest {
 
-    public void test() throws Exception {
+    public void test() throws Exception 
+    {
 
         List images = getPngImages();
         for (int i = 0; i < images.size(); i++) {

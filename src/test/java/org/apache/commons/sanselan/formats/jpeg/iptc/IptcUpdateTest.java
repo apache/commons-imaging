@@ -20,15 +20,12 @@ package org.apache.commons.sanselan.formats.jpeg.iptc;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
@@ -60,8 +57,7 @@ public class IptcUpdateTest extends IptcBaseTest
     /*
      * Remove all Photoshop IPTC data from a JPEG file.
      */
-    public void testRemove() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testRemove() throws Exception
     {
         List images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++)
@@ -115,8 +111,7 @@ public class IptcUpdateTest extends IptcBaseTest
         }
     }
 
-    public void testRemoveInsertUpdate() throws IOException,
-            ImageReadException, ImageWriteException
+    public void testRemoveInsertUpdate() throws Exception
     {
         List images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++)
@@ -327,8 +322,7 @@ public class IptcUpdateTest extends IptcBaseTest
      * Add a few IPTC values to JPEG images, whether or not they have existing
      * IPTC data.
      */
-    public void testAddIptcData() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testAddIptcData() throws Exception
     {
         List images = getJpegImages();
         for (int i = 0; i < images.size(); i++)

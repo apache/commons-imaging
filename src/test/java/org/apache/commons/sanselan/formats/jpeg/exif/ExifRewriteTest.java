@@ -51,8 +51,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
     //        super(name);
     //    }
 
-    public void testRemove() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testRemove() throws Exception
     {
         List images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++)
@@ -93,8 +92,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         }
     }
 
-    public void testInsert() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testInsert() throws Exception
     {
         List images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++)
@@ -260,8 +258,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         }
     }
 
-    public void testRewriteLossy() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testRewriteLossy() throws Exception
     {
         Rewriter rewriter = new Rewriter()
         {
@@ -277,8 +274,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         rewrite(rewriter, "lossy");
     }
 
-    public void testRewriteLossless() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testRewriteLossless() throws Exception
     {
         Rewriter rewriter = new Rewriter()
         {

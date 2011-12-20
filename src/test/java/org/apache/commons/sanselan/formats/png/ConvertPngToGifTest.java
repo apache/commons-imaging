@@ -19,13 +19,10 @@ package org.apache.commons.sanselan.formats.png;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.commons.sanselan.ImageFormat;
-import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.util.Debug;
 
@@ -33,8 +30,8 @@ public class ConvertPngToGifTest extends PngBaseTest {
 
 
 
-    public void test() throws IOException, ImageReadException,
-            ImageWriteException {
+    public void test() throws Exception
+    {
 
         List images = getPngImages();
         for (int i = 0; i < images.size(); i++) {

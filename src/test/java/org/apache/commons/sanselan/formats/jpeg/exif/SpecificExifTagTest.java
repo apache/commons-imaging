@@ -42,15 +42,13 @@ public abstract class SpecificExifTagTest extends ExifBaseTest
     //        super(name);
     //    }
 
-    public void testSingleImage() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testSingleImage() throws Exception
     {
         File imageFile = getImageWithExifData();
         checkImage(imageFile);
     }
 
-    public void testAllImages() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testAllImages() throws Exception
     {
         List images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++)

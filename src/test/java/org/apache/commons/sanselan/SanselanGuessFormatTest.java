@@ -18,10 +18,8 @@
 package org.apache.commons.sanselan;
 
 import java.io.File;
-import java.io.IOException;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.sanselan.ImageFormat;
-import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
 
 public class SanselanGuessFormatTest extends SanselanTest {
@@ -39,7 +37,8 @@ public class SanselanGuessFormatTest extends SanselanTest {
     public static final String PPM_IMAGE_FILE = "pbm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ppm";
     public static final String TGA_IMAGE_FILE = "tga\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tga";
 
-    public void testGuess_all() throws IOException, ImageReadException {
+    public void testGuess_all() throws Exception
+    {
         testGuess(ImageFormat.IMAGE_FORMAT_PNG, PNG_IMAGE_FILE);
         testGuess(ImageFormat.IMAGE_FORMAT_GIF, GIF_IMAGE_FILE);
         testGuess(ImageFormat.IMAGE_FORMAT_ICNS, ICNS_IMAGE_FILE);
@@ -61,12 +60,12 @@ public class SanselanGuessFormatTest extends SanselanTest {
 
     public static final String UNKNOWN_IMAGE_FILE = "jpg\\1\\info.txt";
 
-    public void testGuess_unknown() throws IOException, ImageReadException {
+    public void testGuess_unknown() throws Exception {
         testGuess(ImageFormat.IMAGE_FORMAT_UNKNOWN, UNKNOWN_IMAGE_FILE);
     }
 
-    public void testGuess(ImageFormat expectedFormat, String imagePath)
-            throws IOException, ImageReadException {
+    public void testGuess(ImageFormat expectedFormat, String imagePath) throws Exception
+    {
         imagePath = FilenameUtils.separatorsToSystem(imagePath);
         File imageFile = new File(TEST_IMAGE_FOLDER, imagePath);
 

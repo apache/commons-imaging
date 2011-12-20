@@ -18,13 +18,10 @@
 package org.apache.commons.sanselan.formats.jpeg.exif;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
@@ -39,8 +36,7 @@ public class ExifDumpTest extends ExifBaseTest
     //        super(name);
     //    }
 
-    public void test() throws IOException, ImageReadException,
-            ImageWriteException
+    public void test() throws Exception
     {
         List images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++)

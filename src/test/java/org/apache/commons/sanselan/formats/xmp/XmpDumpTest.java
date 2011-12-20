@@ -18,10 +18,8 @@
 package org.apache.commons.sanselan.formats.xmp;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.SanselanTest;
 import org.apache.commons.sanselan.util.Debug;
@@ -29,7 +27,7 @@ import org.apache.commons.sanselan.util.Debug;
 public class XmpDumpTest extends SanselanTest
 {
 
-    public void test() throws IOException, ImageReadException
+    public void test() throws Exception
     {
         List images = getTestImages();
         for (int i = 0; i < images.size(); i++)

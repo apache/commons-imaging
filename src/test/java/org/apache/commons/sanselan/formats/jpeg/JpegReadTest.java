@@ -18,13 +18,11 @@
 package org.apache.commons.sanselan.formats.jpeg;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageInfo;
-import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.util.Debug;
@@ -32,7 +30,7 @@ import org.apache.commons.sanselan.util.Debug;
 public class JpegReadTest extends JpegBaseTest
 {
 
-    public void test() throws IOException, ImageReadException
+    public void test() throws Exception
     {
         List images = getJpegImages();
         for (int i = 0; i < images.size(); i++)

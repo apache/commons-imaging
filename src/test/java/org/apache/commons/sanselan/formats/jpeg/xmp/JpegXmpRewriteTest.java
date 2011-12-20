@@ -20,14 +20,11 @@ package org.apache.commons.sanselan.formats.jpeg.xmp;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
@@ -37,8 +34,7 @@ import org.apache.commons.sanselan.util.Debug;
 public class JpegXmpRewriteTest extends JpegXmpBaseTest
 {
 
-    public void testRemoveInsertUpdate() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testRemoveInsertUpdate() throws Exception
     {
         List images = getImagesWithXmpData();
         for (int i = 0; i < images.size(); i++)

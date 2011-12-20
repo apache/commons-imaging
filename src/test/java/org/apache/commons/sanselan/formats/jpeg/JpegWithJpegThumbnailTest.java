@@ -19,11 +19,9 @@ package org.apache.commons.sanselan.formats.jpeg;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.SanselanTest;
 import org.apache.commons.sanselan.common.IImageMetadata;
@@ -31,7 +29,8 @@ import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 
 public class JpegWithJpegThumbnailTest extends SanselanTest {
 
-    public void testSingleImage() throws IOException, ImageReadException {
+    public void testSingleImage() throws Exception
+    {
         File imageFile = getTestImageByName("img_F028c_small.jpg");
 
         Map params = new HashMap();

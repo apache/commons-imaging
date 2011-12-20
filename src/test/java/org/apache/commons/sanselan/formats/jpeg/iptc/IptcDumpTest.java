@@ -18,12 +18,10 @@
 package org.apache.commons.sanselan.formats.jpeg.iptc;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.sanselan.formats.jpeg.JpegPhotoshopMetadata;
@@ -34,7 +32,7 @@ import org.apache.commons.sanselan.util.Debug;
 public class IptcDumpTest extends IptcBaseTest
 {
 
-    public void test() throws IOException, ImageReadException
+    public void test() throws Exception
     {
         List images = getImagesWithIptcData();
         for (int i = 0; i < images.size(); i++)

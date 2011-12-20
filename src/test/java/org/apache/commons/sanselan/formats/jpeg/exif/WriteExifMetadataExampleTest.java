@@ -18,11 +18,8 @@
 package org.apache.commons.sanselan.formats.jpeg.exif;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.examples.WriteExifMetadataExample;
 import org.apache.commons.sanselan.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;
@@ -37,8 +34,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
     //        super(name);
     //    }
 
-    public void test() throws IOException, ImageReadException,
-            ImageWriteException
+    public void test() throws Exception
     {
         List images = getJpegImages();
         for (int i = 0; i < images.size(); i++)
@@ -68,8 +64,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
         }
     }
 
-    public void testInsert() throws IOException, ImageReadException,
-            ImageWriteException
+    public void testInsert() throws Exception
     {
         List images = getJpegImages();
         for (int i = 0; i < images.size(); i++)
