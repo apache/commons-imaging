@@ -19,18 +19,15 @@ package org.apache.commons.sanselan.formats.jpeg.segments;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.sanselan.ImageReadException;
-
 public class UnknownSegment extends GenericSegment
 {
     public UnknownSegment(int marker, int marker_length, InputStream is)
-            throws ImageReadException, IOException
+            throws IOException
     {
         super(marker, marker_length, is);
     }
 
-    public UnknownSegment(int marker, byte bytes[]) throws ImageReadException,
-            IOException
+    public UnknownSegment(int marker, byte bytes[])
     {
         super(marker, bytes);
     }

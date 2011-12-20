@@ -16,15 +16,12 @@
  */
 package org.apache.commons.sanselan.formats.png.chunks;
 
-import java.io.IOException;
-
 import org.apache.commons.sanselan.formats.png.PngText;
 
 public abstract class PngTextChunk extends PngChunk
 {
 
     public PngTextChunk(int Length, int ChunkType, int CRC, byte bytes[])
-            throws IOException
     {
         super(Length, ChunkType, CRC, bytes);
 

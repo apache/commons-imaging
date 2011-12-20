@@ -20,14 +20,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
-import org.apache.commons.sanselan.ImageReadException;
-
 public abstract class GenericSegment extends Segment
 {
     public final byte bytes[];
 
     public GenericSegment(int marker, int marker_length, InputStream is)
-            throws ImageReadException, IOException
+            throws IOException
     {
         super(marker, marker_length);
 
@@ -35,8 +33,7 @@ public abstract class GenericSegment extends Segment
                 "Invalid Segment: insufficient data");
     }
 
-    public GenericSegment(int marker, byte bytes[]) throws ImageReadException,
-            IOException
+    public GenericSegment(int marker, byte bytes[])
     {
         super(marker, bytes.length);
 

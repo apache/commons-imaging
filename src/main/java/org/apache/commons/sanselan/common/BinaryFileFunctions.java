@@ -41,7 +41,7 @@ public class BinaryFileFunctions implements BinaryConstants
     }
 
     protected final void readRandomBytes(InputStream is)
-            throws ImageReadException, IOException
+            throws IOException
     {
 
         for (int counter = 0; counter < 100; counter++)
@@ -106,7 +106,7 @@ public class BinaryFileFunctions implements BinaryConstants
     }
 
     public final byte[] readBytes(InputStream is, int count)
-            throws ImageReadException, IOException
+            throws IOException
     {
         byte result[] = new byte[count];
         for (int i = 0; i < count; i++)
@@ -192,7 +192,7 @@ public class BinaryFileFunctions implements BinaryConstants
     }
 
     public final byte readByte(String name, InputStream is, String exception)
-            throws ImageReadException, IOException
+            throws IOException
     {
         int result = is.read();
 
@@ -401,7 +401,7 @@ public class BinaryFileFunctions implements BinaryConstants
     }
 
     protected final byte[] convertRationalArrayToByteArray(
-            RationalNumber numbers[], int byteOrder) throws ImageWriteException
+            RationalNumber numbers[], int byteOrder)
     {
         // Debug.debug("convertRationalArrayToByteArray 2");
         byte result[] = new byte[numbers.length * 8];
@@ -418,7 +418,7 @@ public class BinaryFileFunctions implements BinaryConstants
     }
 
     protected final byte[] convertRationalToByteArray(RationalNumber number,
-            int byteOrder) throws ImageWriteException
+            int byteOrder)
     {
         byte result[] = new byte[8];
 
@@ -647,8 +647,7 @@ public class BinaryFileFunctions implements BinaryConstants
     }
 
     protected final int read4Bytes(String name, InputStream is,
-            String exception, int byteOrder) throws ImageReadException,
-            IOException
+            String exception, int byteOrder) throws IOException
     {
         int size = 4;
         byte bytes[] = new byte[size];
@@ -667,8 +666,7 @@ public class BinaryFileFunctions implements BinaryConstants
     }
 
     protected final int read3Bytes(String name, InputStream is,
-            String exception, int byteOrder) throws ImageReadException,
-            IOException
+            String exception, int byteOrder) throws IOException
     {
         byte byte0 = (byte) is.read();
         byte byte1 = (byte) is.read();

@@ -53,7 +53,7 @@ public class PngChunkPlte extends PngChunk
         }
     }
 
-    public int getRGB(int index) throws ImageReadException, IOException
+    public int getRGB(int index) throws ImageReadException
     {
         if ((index < 0) || (index >= rgb.length))
             throw new ImageReadException("PNG: unknown Palette reference: "

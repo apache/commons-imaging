@@ -38,8 +38,7 @@ public class BinaryFileParser extends BinaryFileFunctions
 
     // protected boolean BYTE_ORDER_reversed = true;
 
-    protected void setByteOrder(int a, int b) throws ImageReadException,
-            IOException
+    protected void setByteOrder(int a, int b) throws ImageReadException
     {
         if (a != b)
             throw new ImageReadException("Byte Order bytes don't match (" + a
@@ -87,13 +86,13 @@ public class BinaryFileParser extends BinaryFileFunctions
     }
 
     public final int read4Bytes(String name, InputStream is, String exception)
-            throws ImageReadException, IOException
+            throws IOException
     {
         return read4Bytes(name, is, exception, byteOrder);
     }
 
     public final int read3Bytes(String name, InputStream is, String exception)
-            throws ImageReadException, IOException
+            throws IOException
     {
         return read3Bytes(name, is, exception, byteOrder);
     }

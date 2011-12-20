@@ -16,8 +16,6 @@
  */
 package org.apache.commons.sanselan.formats.png;
 
-import java.io.IOException;
-
 import org.apache.commons.sanselan.ImageReadException;
 
 public class BitParser
@@ -34,7 +32,7 @@ public class BitParser
     }
 
     public int getSample(int pixelIndexInScanline, int sampleIndex)
-            throws ImageReadException, IOException
+            throws ImageReadException
     {
         int pixelIndexBits = bitsPerPixel * pixelIndexInScanline;
         int sampleIndexBits = pixelIndexBits + (sampleIndex * bitDepth);
@@ -59,7 +57,7 @@ public class BitParser
     }
 
     public int getSampleAsByte(int pixelIndexInScanline, int sampleIndex)
-            throws ImageReadException, IOException
+            throws ImageReadException
     {
         int sample = getSample(pixelIndexInScanline, sampleIndex);
 

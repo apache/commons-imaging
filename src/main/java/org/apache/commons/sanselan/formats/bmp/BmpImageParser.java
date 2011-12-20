@@ -253,7 +253,7 @@ public class BmpImageParser extends ImageParser
     private static final int BI_BITFIELDS = 3;
 
     private byte[] getRLEBytes(InputStream is, int RLESamplesPerByte)
-            throws ImageReadException, IOException
+            throws IOException
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

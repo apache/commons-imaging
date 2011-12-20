@@ -19,13 +19,12 @@ package org.apache.commons.sanselan.formats.jpeg.segments;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
 
 public class AppnSegment extends GenericSegment
 {
     public AppnSegment(int marker, int marker_length, InputStream is)
-            throws ImageReadException, IOException
+            throws IOException
     {
         super(marker, marker_length, is);
     }

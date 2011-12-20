@@ -19,8 +19,6 @@ package org.apache.commons.sanselan.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.apache.commons.sanselan.ImageReadException;
-
 public class PngChunkPhys extends PngChunk
 {
     public final int PixelsPerUnitXAxis;
@@ -28,7 +26,7 @@ public class PngChunkPhys extends PngChunk
     public final int UnitSpecifier;
 
     public PngChunkPhys(int Length, int ChunkType, int CRC, byte bytes[])
-            throws ImageReadException, IOException
+            throws IOException
     {
         super(Length, ChunkType, CRC, bytes);
 

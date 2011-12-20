@@ -21,8 +21,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.sanselan.ImageReadException;
-
 public class DhtSegment extends Segment
 {
     public final List huffmanTables = new ArrayList();
@@ -124,13 +122,13 @@ public class DhtSegment extends Segment
 
 
     public DhtSegment(int marker, byte[] segmentData)
-            throws ImageReadException, IOException
+            throws IOException
     {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public DhtSegment(int marker, int length, InputStream is)
-            throws ImageReadException, IOException
+            throws IOException
     {
         super(marker, length);
 

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.sanselan;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -311,7 +310,6 @@ public class ImageInfo
     }
 
     public void toString(PrintWriter pw, String prefix)
-            throws ImageReadException, IOException
     {
         pw.println("Format Details: " + formatDetails);
 

@@ -40,7 +40,7 @@ public class Compression
     }
 
     public byte[] decompressPackBits(byte compressed[], int expectedSize,
-            int byteOrder) throws ImageReadException, IOException
+            int byteOrder) throws ImageReadException
     {
         byte unpacked[] = new PackBits().decompress(compressed, expectedSize);
         return unpacked;

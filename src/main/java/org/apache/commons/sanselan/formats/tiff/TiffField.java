@@ -273,8 +273,7 @@ public class TiffField implements TiffConstants
         return valueLength;
     }
 
-    public void fillInValue(ByteSource byteSource) throws ImageReadException,
-            IOException, TiffValueOutsideFileBoundsException
+    public void fillInValue(ByteSource byteSource) throws IOException, TiffValueOutsideFileBoundsException
     {
         if (fieldType.isLocalValue(this))
             return;
@@ -767,7 +766,7 @@ public class TiffField implements TiffConstants
         return ((Number) o).doubleValue();
     }
 
-    public byte[] getByteArrayValue() throws ImageReadException
+    public byte[] getByteArrayValue()
     {
         return fieldType.getRawBytes(this);
     }

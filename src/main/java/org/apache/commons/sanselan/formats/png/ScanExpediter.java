@@ -183,7 +183,7 @@ public abstract class ScanExpediter extends BinaryFileParser
     }
 
     protected ScanlineFilter getScanlineFilter(int filter_type,
-            int BytesPerPixel) throws ImageReadException, IOException
+            int BytesPerPixel) throws ImageReadException
     {
         ScanlineFilter filter;
 

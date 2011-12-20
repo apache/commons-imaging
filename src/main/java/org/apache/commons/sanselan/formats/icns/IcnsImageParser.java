@@ -214,8 +214,7 @@ public class IcnsImageParser extends ImageParser
         }
     }
 
-    private IcnsElement readIcnsElement(InputStream is) throws ImageReadException,
-            IOException
+    private IcnsElement readIcnsElement(InputStream is) throws IOException
     {
         int type = read4Bytes("Type", is, "Not a Valid ICNS File"); // Icon type (4 bytes)
         int elementSize = read4Bytes("ElementSize", is, "Not a Valid ICNS File"); // Length of data (4 bytes), in bytes, including this header

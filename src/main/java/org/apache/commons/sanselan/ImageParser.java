@@ -134,6 +134,10 @@ public abstract class ImageParser extends BinaryFileParser implements
         return getImageInfo(new ByteSourceFile(file), params);
     }
 
+    /**
+     * @throws ImageReadException may be thrown by sub-classes
+     * @throws IOException  may be thrown by sub-classes
+     */
     public FormatCompliance getFormatCompliance(ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -241,6 +245,9 @@ public abstract class ImageParser extends BinaryFileParser implements
         return getBufferedImage(new ByteSourceFile(file), params);
     }
 
+    /**
+     * @throws IOException may be thrown by sub-classes 
+     */
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {
@@ -355,6 +362,10 @@ public abstract class ImageParser extends BinaryFileParser implements
         return sw.toString();
     }
 
+    /**
+     * @throws ImageReadException  may be thrown by sub-classes
+     * @throws IOException may be thrown by sub-classes
+     */
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {

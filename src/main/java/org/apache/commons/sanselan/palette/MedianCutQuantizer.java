@@ -184,7 +184,6 @@ public class MedianCutQuantizer
     }
 
     public Map groupColors1(BufferedImage image, int max, int mask)
-            throws ImageWriteException
     {
         Map color_map = new HashMap();
 
@@ -220,7 +219,6 @@ public class MedianCutQuantizer
     }
 
     public Map groupColors(BufferedImage image, int max_colors)
-            throws ImageWriteException
     {
         int max = Integer.MAX_VALUE;
 

@@ -51,8 +51,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase
         writeStep(bos, outputItems);
     }
 
-    private void updateOffsetsStep(List outputItems) throws IOException,
-            ImageWriteException
+    private void updateOffsetsStep(List outputItems)
     {
         int offset = TIFF_HEADER_SIZE;
 

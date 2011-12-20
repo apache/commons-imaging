@@ -33,7 +33,7 @@ public class PixelParserRle extends PixelParser
 
     }
 
-    private int getSamplesPerByte() throws ImageReadException, IOException
+    private int getSamplesPerByte() throws ImageReadException
     {
         if (bhi.bitsPerPixel == 8)
             return 1;
@@ -44,8 +44,7 @@ public class PixelParserRle extends PixelParser
                     + bhi.bitsPerPixel);
     }
 
-    private int[] convertDataToSamples(int data) throws ImageReadException,
-            IOException
+    private int[] convertDataToSamples(int data) throws ImageReadException
     {
         int rgbs[];
         if (bhi.bitsPerPixel == 8)
@@ -72,7 +71,6 @@ public class PixelParserRle extends PixelParser
 
     private int processByteOfData(int rgbs[], int repeat, int x, int y,
             int width, int height, DataBuffer db, BufferedImage bi)
-            throws ImageReadException
     {
         //                int rbg
         int pixels_written = 0;

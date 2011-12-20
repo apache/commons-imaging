@@ -328,7 +328,6 @@ public abstract class UnicodeUtils implements BinaryConstants
 
         public boolean isValid(byte bytes[], int index,
                 boolean mayHaveTerminator, boolean mustHaveTerminator)
-                throws UnicodeException
         {
             // http://en.wikipedia.org/wiki/UTF-16/UCS-2
 

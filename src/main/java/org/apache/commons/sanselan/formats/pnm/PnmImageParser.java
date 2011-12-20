@@ -236,8 +236,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         return true;
     }
 
-    private int[] getColorTable(byte bytes[]) throws ImageReadException,
-            IOException
+    private int[] getColorTable(byte bytes[]) throws ImageReadException
     {
         if ((bytes.length % 3) != 0)
             throw new ImageReadException("Bad Color Table Length: "

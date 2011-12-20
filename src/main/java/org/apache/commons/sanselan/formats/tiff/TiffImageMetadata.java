@@ -104,7 +104,7 @@ public class TiffImageMetadata extends ImageMetadata
             return directory.findField(tagInfo);
         }
 
-        public List getAllFields() throws ImageReadException
+        public List getAllFields()
         {
             return directory.getDirectoryEntrys();
         }
@@ -321,7 +321,7 @@ public class TiffImageMetadata extends ImageMetadata
         return null;
     }
 
-    public List getAllFields() throws ImageReadException
+    public List getAllFields()
     {
         List result = new ArrayList();
         List directories = getDirectories();

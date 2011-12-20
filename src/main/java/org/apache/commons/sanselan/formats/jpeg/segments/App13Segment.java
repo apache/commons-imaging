@@ -34,14 +34,14 @@ public class App13Segment extends AppnSegment
     // public final boolean isIPTCJpegSegment;
 
     public App13Segment(JpegImageParser parser, int marker, byte segmentData[])
-            throws ImageReadException, IOException
+            throws IOException
     {
         this(parser, marker, segmentData.length, new ByteArrayInputStream(
                 segmentData));
     }
 
     public App13Segment(JpegImageParser parser, int marker, int marker_length,
-            InputStream is) throws ImageReadException, IOException
+            InputStream is) throws IOException
     {
         super(marker, marker_length, is);
         this.parser = parser;
@@ -61,7 +61,7 @@ public class App13Segment extends AppnSegment
         // }
     }
 
-    public boolean isPhotoshopJpegSegment() throws ImageReadException, IOException
+    public boolean isPhotoshopJpegSegment()
     {
         return new IptcParser().isPhotoshopJpegSegment(bytes);
     }

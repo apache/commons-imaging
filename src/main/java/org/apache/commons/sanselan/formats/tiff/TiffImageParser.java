@@ -534,8 +534,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
     private PhotometricInterpreter getPhotometricInterpreter(
             TiffDirectory directory, int photometricInterpretation,
             int bitsPerPixel, int bitsPerSample[], int predictor,
-            int samplesPerPixel, int width, int height) throws IOException,
-            ImageReadException
+            int samplesPerPixel, int width, int height) throws ImageReadException
     {
         switch (photometricInterpretation)
         {

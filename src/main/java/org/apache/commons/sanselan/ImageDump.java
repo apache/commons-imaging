@@ -20,7 +20,6 @@ import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import org.apache.commons.sanselan.icc.IccProfileInfo;
 import org.apache.commons.sanselan.icc.IccProfileParser;
@@ -54,7 +53,6 @@ public class ImageDump
     }
 
     public void dumpColorSpace(String prefix, ColorSpace cs)
-            throws ImageReadException, IOException
     {
         System.out.println(prefix + ": " + "type: " + cs.getType() + " ("
                 + colorSpaceTypeToName(cs) + ")");
@@ -77,13 +75,12 @@ public class ImageDump
         info.dump(prefix);
     }
 
-    public void dump(BufferedImage src) throws ImageReadException, IOException
+    public void dump(BufferedImage src)
     {
         dump("", src);
     }
 
     public void dump(String prefix, BufferedImage src)
-            throws ImageReadException, IOException
     {
         System.out.println(prefix + ": " + "dump");
         dumpColorSpace(prefix, src.getColorModel().getColorSpace());

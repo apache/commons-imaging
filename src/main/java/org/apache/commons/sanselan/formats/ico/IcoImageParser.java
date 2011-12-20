@@ -325,7 +325,7 @@ public class IcoImageParser extends ImageParser
         }
     }
 
-    private IconData readBitmapIconData(byte[] iconData, IconInfo fIconInfo) throws ImageReadException, ImageWriteException, IOException
+    private IconData readBitmapIconData(byte[] iconData, IconInfo fIconInfo) throws ImageReadException, IOException
     {
         ByteArrayInputStream is = new ByteArrayInputStream(iconData);
         int Size = read4Bytes("Size", is, "Not a Valid ICO File"); // Size (4 bytes), size of this structure (always 40)
@@ -482,16 +482,7 @@ public class IcoImageParser extends ImageParser
         }
         else
         {
-            try
-            {
-                return readBitmapIconData(iconData, fIconInfo);
-            }
-            catch (ImageWriteException imageWriteException)
-            {
-                IOException ioe = new IOException();
-                ioe.initCause(imageWriteException);
-                throw ioe;
-            }
+            return readBitmapIconData(iconData, fIconInfo);
         }
     }
 

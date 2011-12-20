@@ -365,7 +365,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants
     }
 
     private int[] read256ColorPaletteFromEndOfFile(ByteSource byteSource)
-            throws IOException, ImageReadException
+            throws IOException
     {
         InputStream stream = null;
         try

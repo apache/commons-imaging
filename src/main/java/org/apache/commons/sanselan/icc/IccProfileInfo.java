@@ -83,7 +83,7 @@ public class IccProfileInfo implements IccConstants
                 + (char) (0xff & (i >> 0)) + "'");
     }
 
-    public void dump(String prefix) throws IOException
+    public void dump(String prefix)
     {
         System.out.print(toString());
     }

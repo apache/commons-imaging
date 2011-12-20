@@ -20,8 +20,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.sanselan.ImageReadException;
-
 public class SosSegment extends Segment
 {
     public final int numberOfComponents;
@@ -48,13 +46,13 @@ public class SosSegment extends Segment
     }
 
     public SosSegment(int marker, byte[] segmentData)
-            throws ImageReadException, IOException
+            throws IOException
     {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public SosSegment(int marker, int marker_length, InputStream is)
-            throws ImageReadException, IOException
+            throws IOException
     {
         super(marker, marker_length);
 

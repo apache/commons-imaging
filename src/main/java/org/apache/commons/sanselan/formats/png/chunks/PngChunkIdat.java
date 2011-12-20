@@ -16,12 +16,9 @@
  */
 package org.apache.commons.sanselan.formats.png.chunks;
 
-import java.io.IOException;
-
 public class PngChunkIdat extends PngChunk
 {
     public PngChunkIdat(int Length, int ChunkType, int CRC, byte bytes[])
-            throws IOException
     {
         super(Length, ChunkType, CRC, bytes);
     }

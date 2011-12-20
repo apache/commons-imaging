@@ -21,20 +21,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.sanselan.ImageReadException;
-
 public class ComSegment extends Segment
 {
     public final byte[] comment;
 
     public ComSegment(int marker, byte segmentData[])
-            throws ImageReadException, IOException
+            throws IOException
     {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public ComSegment(int marker, int marker_length, InputStream is)
-            throws ImageReadException, IOException
+            throws IOException
     {
         super(marker, marker_length);
 

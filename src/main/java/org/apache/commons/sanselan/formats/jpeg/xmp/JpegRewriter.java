@@ -330,7 +330,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
     }
 
     protected void writeSegments(OutputStream os, List segments)
-            throws ImageWriteException, IOException
+            throws IOException
     {
         try
         {

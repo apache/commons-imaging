@@ -268,7 +268,6 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
     };
 
     private int updateOffsetsStep(List analysis, List outputItems)
-            throws IOException, ImageWriteException
     {
         // items we cannot fit into a gap, we shall append to tail.
         int overflowIndex = exifBytes.length;

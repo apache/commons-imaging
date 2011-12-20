@@ -63,7 +63,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             throws ImageReadException, IOException;
 
     protected int[] getSamplesAsBytes(BitInputStream bis)
-            throws ImageReadException, IOException
+            throws IOException
     {
         int result[] = new int[bitsPerSample.length];
         for (int i = 0; i < bitsPerSample.length; i++)

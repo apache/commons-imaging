@@ -157,7 +157,7 @@ public class WbmpImageParser extends ImageParser
     }
 
     private void writeMultiByteInteger(OutputStream os, int value)
-            throws ImageWriteException, IOException
+            throws IOException
     {
         boolean wroteYet = false;
         for (int position = 4*7; position > 0; position -= 7)
@@ -221,7 +221,7 @@ public class WbmpImageParser extends ImageParser
     }
 
     private BufferedImage readImage(WbmpHeader wbmpHeader, InputStream is)
-            throws ImageReadException, IOException
+            throws IOException
     {
         int rowLength = (wbmpHeader.width + 7) / 8;
         byte[] image = readByteArray("Pixels", rowLength * wbmpHeader.height, is,

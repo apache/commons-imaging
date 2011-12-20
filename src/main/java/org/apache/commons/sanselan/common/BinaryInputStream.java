@@ -59,8 +59,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
     // default byte order for Java, many file formats.
     private int byteOrder = BYTE_ORDER_NETWORK;
 
-    protected void setByteOrder(int a, int b) throws ImageReadException,
-            IOException
+    protected void setByteOrder(int a, int b) throws ImageReadException
     {
         if (a != b)
             throw new ImageReadException("Byte Order bytes don't match (" + a
@@ -106,25 +105,24 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
     }
 
     public final int read4Bytes(String name, String exception)
-            throws ImageReadException, IOException
+            throws IOException
     {
         return read4Bytes(name, exception, byteOrder);
     }
 
     public final int read3Bytes(String name, String exception)
-            throws ImageReadException, IOException
+            throws IOException
     {
         return read3Bytes(name, exception, byteOrder);
     }
 
     public final int read2Bytes(String name, String exception)
-            throws ImageReadException, IOException
+            throws IOException
     {
         return read2Bytes(name, exception, byteOrder);
     }
 
-    protected final void readRandomBytes() throws ImageReadException,
-            IOException
+    protected final void readRandomBytes() throws IOException
     {
 
         for (int counter = 0; counter < 100; counter++)
@@ -398,7 +396,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
     }
 
     public final byte[] readByteArray(String name, int length, String exception)
-            throws ImageReadException, IOException
+            throws IOException
     {
         byte result[] = new byte[length];
 
@@ -518,7 +516,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
     }
 
     protected final int read4Bytes(String name, String exception, int byteOrder)
-            throws ImageReadException, IOException
+            throws IOException
     {
         int size = 4;
         byte bytes[] = new byte[size];
@@ -537,7 +535,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
     }
 
     protected final int read3Bytes(String name, String exception, int byteOrder)
-            throws ImageReadException, IOException
+            throws IOException
     {
         int size = 3;
         byte bytes[] = new byte[size];
@@ -557,7 +555,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
     }
 
     protected final int read2Bytes(String name, String exception, int byteOrder)
-            throws ImageReadException, IOException
+            throws IOException
     {
         int size = 2;
         byte bytes[] = new byte[size];

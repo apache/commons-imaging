@@ -533,7 +533,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
     }
 
     protected void writeImageFileHeader(BinaryOutputStream bos)
-            throws IOException, ImageWriteException
+            throws IOException
     {
         int offsetToFirstIFD = TIFF_HEADER_SIZE;
 
@@ -541,7 +541,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
     }
 
     protected void writeImageFileHeader(BinaryOutputStream bos,
-            int offsetToFirstIFD) throws IOException, ImageWriteException
+            int offsetToFirstIFD) throws IOException
     {
         bos.write(byteOrder);
         bos.write(byteOrder);

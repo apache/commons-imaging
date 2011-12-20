@@ -19,8 +19,6 @@ package org.apache.commons.sanselan.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.apache.commons.sanselan.ImageReadException;
-
 public class PngChunkIhdr extends PngChunk
 {
     public final int width;
@@ -32,7 +30,7 @@ public class PngChunkIhdr extends PngChunk
     public final int interlaceMethod;
 
     public PngChunkIhdr(int Length, int ChunkType, int CRC, byte bytes[])
-            throws ImageReadException, IOException
+            throws IOException
     {
         super(Length, ChunkType, CRC, bytes);
 

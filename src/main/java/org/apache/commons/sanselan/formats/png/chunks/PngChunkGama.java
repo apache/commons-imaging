@@ -19,14 +19,12 @@ package org.apache.commons.sanselan.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.apache.commons.sanselan.ImageReadException;
-
 public class PngChunkGama extends PngChunk
 {
     public final int Gamma;
 
     public PngChunkGama(int Length, int ChunkType, int CRC, byte bytes[])
-            throws ImageReadException, IOException
+            throws IOException
     {
         super(Length, ChunkType, CRC, bytes);
 

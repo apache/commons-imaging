@@ -45,7 +45,7 @@ public class IccTag implements BinaryConstants, IccConstants
     private IccTagDataType itdt = null;
     private int data_type_signature;
 
-    public void setData(byte bytes[]) throws ImageReadException, IOException
+    public void setData(byte bytes[]) throws IOException
     {
         data = bytes;
 

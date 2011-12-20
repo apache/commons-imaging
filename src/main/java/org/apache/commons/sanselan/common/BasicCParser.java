@@ -258,7 +258,6 @@ public class BasicCParser
     }
 
     public static String[] tokenizeRow(String row)
-            throws ImageReadException
     {
         String[] tokens = row.split("[ \t]");
         int numLiveTokens = 0;

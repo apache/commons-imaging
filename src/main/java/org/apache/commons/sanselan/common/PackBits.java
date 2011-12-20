@@ -25,7 +25,7 @@ public class PackBits
 {
 
     public byte[] decompress(byte bytes[], int expected)
-            throws ImageReadException, IOException
+            throws ImageReadException
     {
         int total = 0;
 

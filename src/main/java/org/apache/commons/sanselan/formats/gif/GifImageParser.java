@@ -183,8 +183,7 @@ public class GifImageParser extends ImageParser
                 delay, transparentColorIndex);
     }
 
-    private byte[] readSubBlock(InputStream is) throws ImageReadException,
-            IOException
+    private byte[] readSubBlock(InputStream is) throws IOException
     {
         int block_size = 0xff & readByte("block_size", is, "GIF: corrupt block");
 
@@ -195,13 +194,13 @@ public class GifImageParser extends ImageParser
     }
 
     protected GenericGifBlock readGenericGIFBlock(InputStream is, int code)
-            throws ImageReadException, IOException
+            throws IOException
     {
         return readGenericGIFBlock(is, code, null);
     }
 
     protected GenericGifBlock readGenericGIFBlock(InputStream is, int code,
-            byte first[]) throws ImageReadException, IOException
+            byte first[]) throws IOException
     {
         List subblocks = new ArrayList();
 

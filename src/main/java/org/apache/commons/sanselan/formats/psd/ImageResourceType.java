@@ -16,8 +16,6 @@
  */
 package org.apache.commons.sanselan.formats.psd;
 
-import java.io.IOException;
-
 import org.apache.commons.sanselan.ImageReadException;
 
 public class ImageResourceType
@@ -32,7 +30,7 @@ public class ImageResourceType
     }
 
     public ImageResourceType(int ID, int ID2, String Description)
-            throws ImageReadException, IOException
+            throws ImageReadException
     {
         this(ID, Description);
         if (ID != ID2)

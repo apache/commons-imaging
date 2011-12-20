@@ -52,8 +52,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
     // default byte order for Java, many file formats.
     private int byteOrder = BYTE_ORDER_NETWORK;
 
-    protected void setByteOrder(int a, int b) throws ImageWriteException,
-            IOException
+    protected void setByteOrder(int a, int b) throws ImageWriteException
     {
         if (a != b)
             throw new ImageWriteException("Byte Order bytes don't match (" + a
@@ -88,26 +87,22 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
         return count;
     }
 
-    public final void write4Bytes(int value) throws ImageWriteException,
-            IOException
+    public final void write4Bytes(int value) throws IOException
     {
         writeNBytes(value, 4);
     }
 
-    public final void write3Bytes(int value) throws ImageWriteException,
-            IOException
+    public final void write3Bytes(int value) throws IOException
     {
         writeNBytes(value, 3);
     }
 
-    public final void write2Bytes(int value) throws ImageWriteException,
-            IOException
+    public final void write2Bytes(int value) throws IOException
     {
         writeNBytes(value, 2);
     }
 
-    public final void write4ByteInteger(int value) throws ImageWriteException,
-            IOException
+    public final void write4ByteInteger(int value) throws IOException
     {
         if (byteOrder == BYTE_ORDER_MOTOROLA)
         {
@@ -124,8 +119,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
         }
     }
 
-    public final void write2ByteInteger(int value) throws ImageWriteException,
-            IOException
+    public final void write2ByteInteger(int value) throws IOException
     {
         if (byteOrder == BYTE_ORDER_MOTOROLA)
         {
@@ -168,7 +162,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
     }
 
     private final void writeNBytes(int value, int n)
-            throws ImageWriteException, IOException
+            throws IOException
     {
         write(convertValueToByteArray(value, n));
     }

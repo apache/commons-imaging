@@ -42,6 +42,10 @@ public abstract class PhotometricInterpreter
     public abstract void interpretPixel(BufferedImage bi, int samples[], int x,
             int y) throws ImageReadException, IOException;
 
+    /**
+     * @throws ImageReadException may be thrown by sub-classes
+     * @throws IOException may be thrown by sub-classes
+     */
     public void dumpstats() throws ImageReadException, IOException
     {
 

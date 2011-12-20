@@ -35,7 +35,7 @@ public class PixelParserBitFields extends PixelParserSimple
     private final int alphaMask;
 
     public PixelParserBitFields(BmpHeaderInfo bhi, byte ColorTable[],
-            byte ImageData[]) throws ImageReadException, IOException
+            byte ImageData[])
     {
         super(bhi, ColorTable, ImageData);
 
