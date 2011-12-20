@@ -82,8 +82,8 @@ public class T4AndT6Compression {
      * @param compressed
      * @param width
      * @param height
-     * @return
-     * @throws
+     * @return the decompressed data
+     * @throws ImageReadException
      */
     public static byte[] decompressModifiedHuffman(byte[] compressed, int width, int height) throws ImageReadException {
         BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
@@ -117,7 +117,7 @@ public class T4AndT6Compression {
      * @param compressed
      * @param width
      * @param height
-     * @return
+     * @return the decompressed data
      * @throws ImageReadException
      */
     public static byte[] decompressT4_1D(byte[] compressed, int width, int height, boolean hasFill) throws ImageReadException {
@@ -169,7 +169,7 @@ public class T4AndT6Compression {
      * @param compressed
      * @param width
      * @param height
-     * @return
+     * @return the decompressed data
      * @throws ImageReadException
      */
     public static byte[] decompressT4_2D(byte[] compressed, int width, int height, boolean hasFill) throws ImageReadException {
@@ -281,7 +281,7 @@ public class T4AndT6Compression {
      * @param compressed
      * @param width
      * @param height
-     * @return
+     * @return the decompressed data
      * @throws ImageReadException
      */
     public static byte[] decompressT6(byte[] compressed, int width, int height) throws ImageReadException {
@@ -385,8 +385,9 @@ public class T4AndT6Compression {
     
     private static int nextChangingElement(int[] line, int currentColour, int start) {
         int position;
-        for (position = start; position < line.length && line[position] == currentColour; position++)
-            ;
+        for (position = start; position < line.length && line[position] == currentColour; position++) {
+            // noop
+        }
         return position < line.length ? position : line.length;
     }
     
