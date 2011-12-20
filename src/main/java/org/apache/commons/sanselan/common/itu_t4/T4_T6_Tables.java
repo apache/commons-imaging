@@ -16,7 +16,7 @@
  */
 package org.apache.commons.sanselan.common.itu_t4;
 
-public class T4_T6_Tables {
+class T4_T6_Tables {
     public static class Entry {
         String bitString;
         Integer value;

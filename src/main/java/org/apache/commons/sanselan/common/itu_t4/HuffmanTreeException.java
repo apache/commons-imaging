@@ -16,7 +16,7 @@
  */
 package org.apache.commons.sanselan.common.itu_t4;
 
-public class HuffmanTreeException extends Exception {
+class HuffmanTreeException extends Exception {
     private static final long serialVersionUID = 1L;
 
     public HuffmanTreeException(String message) {

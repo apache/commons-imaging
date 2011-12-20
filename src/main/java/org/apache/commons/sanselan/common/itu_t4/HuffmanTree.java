@@ -25,7 +25,7 @@ import org.apache.commons.sanselan.common.BitInputStreamFlexible;
 /**
  * A Huffman tree implemented as 1 array for high locality of reference.
  */
-public class HuffmanTree {
+class HuffmanTree {
     private static class Node {
         boolean isEmpty = true;
         Object value = null;
