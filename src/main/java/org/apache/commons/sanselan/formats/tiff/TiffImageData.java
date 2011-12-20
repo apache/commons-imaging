@@ -18,7 +18,6 @@
 package org.apache.commons.sanselan.formats.tiff;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.formats.tiff.datareaders.DataReader;
