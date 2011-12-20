@@ -53,15 +53,15 @@ public abstract class TiffImageData
             return false;
         }
 
-        public DataReader getDataReader(List entries,
+        public DataReader getDataReader(TiffDirectory directory,
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
                 int samplesPerPixel, int width, int height, int compression)
                 throws IOException, ImageReadException
         {
-            return new DataReaderTiled(photometricInterpreter, tileWidth,
-                    tileLength, bitsPerPixel, bitsPerSample, predictor,
-                    samplesPerPixel, width, height, compression, this);
+            return new DataReaderTiled(directory, photometricInterpreter,
+                    tileWidth, tileLength, bitsPerPixel, bitsPerSample,
+                    predictor, samplesPerPixel, width, height, compression, this);
         }
 
         //        public TiffElement[] getElements()
@@ -93,15 +93,15 @@ public abstract class TiffImageData
             return true;
         }
 
-        public DataReader getDataReader(List entries,
+        public DataReader getDataReader(TiffDirectory directory,
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
                 int samplesPerPixel, int width, int height, int compression)
                 throws IOException, ImageReadException
         {
-            return new DataReaderStrips(photometricInterpreter, bitsPerPixel,
-                    bitsPerSample, predictor, samplesPerPixel, width, height,
-                    compression, rowsPerStrip, this);
+            return new DataReaderStrips(directory, photometricInterpreter,
+                    bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
+                    width, height, compression, rowsPerStrip, this);
         }
 
         //        public TiffElement[] getElements()
@@ -117,7 +117,7 @@ public abstract class TiffImageData
 
     public abstract boolean stripsNotTiles();
 
-    public abstract DataReader getDataReader(List entries,
+    public abstract DataReader getDataReader(TiffDirectory directory,
             PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
             int bitsPerSample[], int predictor, int samplesPerPixel, int width,
             int height, int compression) throws IOException, ImageReadException;

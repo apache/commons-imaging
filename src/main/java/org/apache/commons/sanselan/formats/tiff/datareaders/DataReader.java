@@ -25,13 +25,16 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.common.BitInputStream;
 import org.apache.commons.sanselan.common.PackBits;
-import org.apache.commons.sanselan.common.itu_t4.T4Compression;
+import org.apache.commons.sanselan.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.sanselan.common.mylzw.MyLzwDecompressor;
+import org.apache.commons.sanselan.formats.tiff.TiffDirectory;
+import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
 public abstract class DataReader implements TiffConstants, BinaryConstants
 {
+    protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
     protected final int bitsPerSample[];
     protected final int last[];
@@ -40,10 +43,12 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
     protected final int samplesPerPixel;
     protected final int width, height;
 
-    public DataReader(PhotometricInterpreter photometricInterpreter,
+    public DataReader(TiffDirectory directory,
+            PhotometricInterpreter photometricInterpreter,
             int bitsPerSample[], int predictor, int samplesPerPixel,
             int width, int height)
     {
+        this.directory = directory;
         this.photometricInterpreter = photometricInterpreter;
         this.bitsPerSample = bitsPerSample;
         this.samplesPerPixel = samplesPerPixel;
@@ -109,7 +114,39 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             case TIFF_COMPRESSION_UNCOMPRESSED : // None;
                 return compressed;
             case TIFF_COMPRESSION_CCITT_1D : // CCITT Group 3 1-Dimensional Modified Huffman run-length encoding.
-                return T4Compression.decompress1D(compressed, width, height);
+                return T4AndT6Compression.decompressModifiedHuffman(compressed, width, height);
+            case TIFF_COMPRESSION_CCITT_GROUP_3 :
+            {
+                int t4Options = 0;
+                TiffField field = directory.findField(TIFF_TAG_T4_OPTIONS);
+                if (field != null) {
+                    t4Options = field.getIntValue();
+                }
+                boolean is2D = (t4Options & 1) != 0;
+                boolean usesUncompressedMode = (t4Options & 2) != 0;
+                if (usesUncompressedMode) {
+                    throw new ImageReadException("T.4 compression with the uncompressed mode extension is not yet supported");
+                }
+                boolean hasFillBitsBeforeEOL = (t4Options & 4) != 0;
+                if (is2D) {
+                    return T4AndT6Compression.decompressT4_2D(compressed, width, height, hasFillBitsBeforeEOL);
+                } else {
+                    return T4AndT6Compression.decompressT4_1D(compressed, width, height, hasFillBitsBeforeEOL);
+                }
+            }
+            case TIFF_COMPRESSION_CCITT_GROUP_4 :
+            {
+                int t6Options = 0;
+                TiffField field = directory.findField(TIFF_TAG_T6_OPTIONS);
+                if (field != null) {
+                    t6Options = field.getIntValue();
+                }
+                boolean usesUncompressedMode = (t6Options & 2) != 0;
+                if (usesUncompressedMode) {
+                    throw new ImageReadException("T.6 compression with the uncompressed mode extension is not yet supported");
+                }
+                return T4AndT6Compression.decompressT6(compressed, width, height);
+            }
             case TIFF_COMPRESSION_LZW : // LZW
             {
                 InputStream is = new ByteArrayInputStream(compressed);

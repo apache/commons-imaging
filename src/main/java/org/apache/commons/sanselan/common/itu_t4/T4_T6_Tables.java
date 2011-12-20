@@ -189,7 +189,6 @@ class T4_T6_Tables {
         new Entry("010011010", Integer.valueOf(1600)),
         new Entry("011000", Integer.valueOf(1664)),
         new Entry("010011011", Integer.valueOf(1728)),
-        new Entry("000000000001", Integer.valueOf(0)) // EOL
     };
     
     public static final Entry[] blackMakeUpCodes = {
@@ -220,7 +219,6 @@ class T4_T6_Tables {
         new Entry("0000001011011", Integer.valueOf(1600)),
         new Entry("0000001100100", Integer.valueOf(1664)),
         new Entry("0000001100101", Integer.valueOf(1728)),
-        new Entry("00000000000", Integer.valueOf(0)) // EOL
     };
     
     public static final Entry[] additionalMakeUpCodes = {
@@ -238,4 +236,23 @@ class T4_T6_Tables {
         new Entry("000000011110", Integer.valueOf(2496)),
         new Entry("000000011111", Integer.valueOf(2560)),
     };
+    
+    public static final Entry EOL = new Entry("000000000001", Integer.valueOf(0));
+    public static final Entry EOL13 = new Entry("0000000000001", Integer.valueOf(0));
+    public static final Entry EOL14 = new Entry("00000000000001", Integer.valueOf(0));
+    public static final Entry EOL15 = new Entry("000000000000001", Integer.valueOf(0));
+    public static final Entry EOL16 = new Entry("0000000000000001", Integer.valueOf(0));
+    // FIXME: why are there EOLs with more than 16 bits?
+    public static final Entry EOL17 = new Entry("00000000000000001", Integer.valueOf(0));
+    public static final Entry EOL18 = new Entry("000000000000000001", Integer.valueOf(0));
+    public static final Entry EOL19 = new Entry("0000000000000000001", Integer.valueOf(0));
+    public static final Entry P = new Entry("0001", Integer.valueOf(0));
+    public static final Entry H = new Entry("001", Integer.valueOf(0));
+    public static final Entry V0 = new Entry("1", Integer.valueOf(0));
+    public static final Entry VR1 = new Entry("011", Integer.valueOf(0));
+    public static final Entry VR2 = new Entry("000011", Integer.valueOf(0));
+    public static final Entry VR3 = new Entry("0000011", Integer.valueOf(0));
+    public static final Entry VL1 = new Entry("010", Integer.valueOf(0));
+    public static final Entry VL2 = new Entry("000010", Integer.valueOf(0));
+    public static final Entry VL3 = new Entry("0000010", Integer.valueOf(0));
 }

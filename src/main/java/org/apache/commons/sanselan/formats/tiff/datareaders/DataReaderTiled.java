@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BitInputStream;
+import org.apache.commons.sanselan.formats.tiff.TiffDirectory;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
@@ -37,12 +38,13 @@ public final class DataReaderTiled extends DataReader
 
     private final TiffImageData.Tiles imageData;
 
-    public DataReaderTiled(PhotometricInterpreter photometricInterpreter,
+    public DataReaderTiled(TiffDirectory directory,
+            PhotometricInterpreter photometricInterpreter,
             int tileWidth, int tileLength, int bitsPerPixel,
             int bitsPerSample[], int predictor, int samplesPerPixel, int width,
             int height, int compression, TiffImageData.Tiles imageData)
     {
-        super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
+        super(directory, photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
 
         this.tileWidth = tileWidth;
         this.tileLength = tileLength;

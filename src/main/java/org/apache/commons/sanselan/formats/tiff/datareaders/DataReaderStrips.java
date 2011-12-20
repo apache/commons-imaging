@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BitInputStream;
+import org.apache.commons.sanselan.formats.tiff.TiffDirectory;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
@@ -34,12 +35,13 @@ public final class DataReaderStrips extends DataReader
 
     private final TiffImageData.Strips imageData;
 
-    public DataReaderStrips(PhotometricInterpreter photometricInterpreter,
+    public DataReaderStrips(TiffDirectory directory,
+            PhotometricInterpreter photometricInterpreter,
             int bitsPerPixel, int bitsPerSample[], int predictor,
             int samplesPerPixel, int width, int height, int compression,
             int rowsPerStrip, TiffImageData.Strips imageData)
     {
-        super(photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
+        super(directory, photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
 
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;

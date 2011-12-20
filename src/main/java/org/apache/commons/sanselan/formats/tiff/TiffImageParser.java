@@ -520,7 +520,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
         TiffImageData imageData = directory.getTiffImageData();
 
-        DataReader dataReader = imageData.getDataReader(entries,
+        DataReader dataReader = imageData.getDataReader(directory,
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
                 samplesPerPixel, width, height, compression);
 
