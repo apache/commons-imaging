@@ -607,7 +607,7 @@ public class BmpImageParser extends ImageParser
         int height = bhi.height;
         int width = bhi.width;
 
-        List comments = new ArrayList();
+        List<String> comments = new ArrayList<String>();
         // TODO: comments...
 
         int bitsPerPixel = bhi.bitsPerPixel;

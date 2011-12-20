@@ -200,8 +200,8 @@ public class PaletteFactory
 
     }
 
-    private List divideSubset2(int table[], ColorSpaceSubset subset,
-            int component, int precision)
+    private List<DivisionCandidate> divideSubset2(int table[], ColorSpaceSubset subset,
+                                                  int component, int precision)
     {
         if (debug)
             subset.dump("trying (" + component + "): ");
@@ -243,7 +243,7 @@ public class PaletteFactory
         DivisionCandidate dc2 = finishDivision(table, subset, component,
                 precision, sum2, slice2);
 
-        List result = new ArrayList();
+        List<DivisionCandidate> result = new ArrayList<DivisionCandidate>();
 
         if (dc1 != null)
             result.add(dc1);
@@ -256,7 +256,7 @@ public class PaletteFactory
     private DivisionCandidate divideSubset2(int table[],
             ColorSpaceSubset subset, int precision)
     {
-        List dcs = new ArrayList();
+        List<DivisionCandidate> dcs = new ArrayList<DivisionCandidate>();
 
         dcs.addAll(divideSubset2(table, subset, 0, precision));
         dcs.addAll(divideSubset2(table, subset, 1, precision));
@@ -268,7 +268,7 @@ public class PaletteFactory
 
         for (int i = 0; i < dcs.size(); i++)
         {
-            DivisionCandidate dc = (DivisionCandidate) dcs.get(i);
+            DivisionCandidate dc = dcs.get(i);
 
             ColorSpaceSubset first = dc.dst_a;
             ColorSpaceSubset second = dc.dst_b;
@@ -312,10 +312,10 @@ public class PaletteFactory
         }
     }
 
-    private List divide(List v, int desired_count, int table[],
-            int precision)
+    private List<ColorSpaceSubset> divide(List<ColorSpaceSubset> v, int desired_count, int table[],
+                                          int precision)
     {
-        List ignore = new ArrayList();
+        List<ColorSpaceSubset> ignore = new ArrayList<ColorSpaceSubset>();
 
         int count = 0;
         while (true)
@@ -331,7 +331,7 @@ public class PaletteFactory
 
             for (int i = 0; i < v.size(); i++)
             {
-                ColorSpaceSubset subset = (ColorSpaceSubset) v.get(i);
+                ColorSpaceSubset subset = v.get(i);
                 if (ignore.contains(subset))
                     continue;
                 int area = subset.total;
@@ -387,7 +387,7 @@ public class PaletteFactory
         int width = src.getWidth();
         int height = src.getHeight();
 
-        List subsets = new ArrayList();
+        List<ColorSpaceSubset> subsets = new ArrayList<ColorSpaceSubset>();
         ColorSpaceSubset all = new ColorSpaceSubset(width * height, precision);
         subsets.add(all);
 
@@ -426,7 +426,7 @@ public class PaletteFactory
 
         for (int i = 0; i < subsets.size(); i++)
         {
-            ColorSpaceSubset subset = (ColorSpaceSubset) subsets.get(i);
+            ColorSpaceSubset subset = subsets.get(i);
 
             subset.setAverageRGB(table);
 
@@ -442,7 +442,7 @@ public class PaletteFactory
     public SimplePalette makePaletteSimple(BufferedImage src, int max)
     // This is not efficient for large values of max, say, max > 256;
     {
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap<String, String>();
         int rgbs[] = new int[max];
         int rgb_count = 0;
 

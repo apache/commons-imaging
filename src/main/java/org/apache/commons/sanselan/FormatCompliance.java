@@ -26,7 +26,7 @@ public class FormatCompliance
 {
     private final boolean failOnError;
     private final String description;
-    private final List comments = new ArrayList();
+    private final List<String> comments = new ArrayList<String>();
 
     public FormatCompliance(String description)
     {

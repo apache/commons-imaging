@@ -209,8 +209,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             DqtSegment dqtSegment = new DqtSegment(marker, segmentData);
             for (int i = 0; i < dqtSegment.quantizationTables.size(); i++)
             {
-                DqtSegment.QuantizationTable table = (DqtSegment.QuantizationTable)
-                        dqtSegment.quantizationTables.get(i);
+                DqtSegment.QuantizationTable table = dqtSegment.quantizationTables.get(i);
                 if (0 > table.destinationIdentifier ||
                         table.destinationIdentifier >= quantizationTables.length)
                     throw new ImageReadException("Invalid quantization table identifier " +
@@ -231,8 +230,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             DhtSegment dhtSegment = new DhtSegment(marker, segmentData);
             for (int i = 0; i < dhtSegment.huffmanTables.size(); i++)
             {
-                DhtSegment.HuffmanTable table = (DhtSegment.HuffmanTable)
-                        dhtSegment.huffmanTables.get(i);
+                DhtSegment.HuffmanTable table = dhtSegment.huffmanTables.get(i);
                 DhtSegment.HuffmanTable[] tables;
                 if (table.tableClass == 0)
                     tables = huffmanDCTables;

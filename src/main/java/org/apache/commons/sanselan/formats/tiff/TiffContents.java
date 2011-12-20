@@ -27,9 +27,9 @@ import org.apache.commons.sanselan.util.Debug;
 public class TiffContents
 {
     public final TiffHeader header;
-    public final List directories;
+    public final List<TiffDirectory> directories;
 
-    public TiffContents(TiffHeader tiffHeader, List directories)
+    public TiffContents(TiffHeader tiffHeader, List<TiffDirectory> directories)
     {
         this.header = tiffHeader;
         this.directories = directories;
@@ -43,14 +43,14 @@ public class TiffContents
 
         for (int i = 0; i < directories.size(); i++)
         {
-            TiffDirectory directory = (TiffDirectory) directories.get(i);
+            TiffDirectory directory = directories.get(i);
 
             result.add(directory);
 
-            List fields = directory.entries;
+            List<TiffField> fields = directory.entries;
             for (int j = 0; j < fields.size(); j++)
             {
-                TiffField field = (TiffField) fields.get(j);
+                TiffField field = fields.get(j);
                 TiffElement oversizeValue = field.getOversizeValueElement();
                 if (null != oversizeValue)
                     result.add(oversizeValue);
@@ -69,7 +69,7 @@ public class TiffContents
     {
         for (int i = 0; i < directories.size(); i++)
         {
-            TiffDirectory directory = (TiffDirectory) directories.get(i);
+            TiffDirectory directory = directories.get(i);
 
             TiffField field = directory.findField(tag);
             if (null != field)

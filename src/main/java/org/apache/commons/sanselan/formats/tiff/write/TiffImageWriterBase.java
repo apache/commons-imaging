@@ -62,7 +62,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
     protected TiffOutputSummary validateDirectories(TiffOutputSet outputSet)
             throws ImageWriteException
     {
-        List directories = outputSet.getDirectories();
+        List<TiffOutputDirectory> directories = outputSet.getDirectories();
 
         if (1 > directories.size())
             throw new ImageWriteException("No directories.");
@@ -74,11 +74,11 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         TiffOutputField gpsDirectoryOffsetField = null;
         TiffOutputField interoperabilityDirectoryOffsetField = null;
 
-        List directoryIndices = new ArrayList();
-        Map directoryTypeMap = new HashMap();
+        List<Integer> directoryIndices = new ArrayList<Integer>();
+        Map<Integer, TiffOutputDirectory> directoryTypeMap = new HashMap<Integer, TiffOutputDirectory>();
         for (int i = 0; i < directories.size(); i++)
         {
-            TiffOutputDirectory directory = (TiffOutputDirectory) directories
+            TiffOutputDirectory directory = directories
                     .get(i);
             int dirType = directory.type;
             Integer key = new Integer(dirType);
@@ -124,7 +124,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
                 // dirMap.put(arg0, arg1)
             }
 
-            HashSet fieldTags = new HashSet();
+            HashSet<Integer> fieldTags = new HashSet<Integer>();
             List fields = directory.getFields();
             for (int j = 0; j < fields.size(); j++)
             {
@@ -170,19 +170,19 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         TiffOutputDirectory previousDirectory = null;
         for (int i = 0; i < directoryIndices.size(); i++)
         {
-            Integer index = (Integer) directoryIndices.get(i);
+            Integer index = directoryIndices.get(i);
             if (index.intValue() != i)
                 throw new ImageWriteException("Missing directory: " + i + ".");
 
             // set up chain of directory references for "normal" directories.
-            TiffOutputDirectory directory = (TiffOutputDirectory) directoryTypeMap
+            TiffOutputDirectory directory = directoryTypeMap
                     .get(index);
             if (null != previousDirectory)
                 previousDirectory.setNextDirectory(directory);
             previousDirectory = directory;
         }
 
-        TiffOutputDirectory rootDirectory = (TiffOutputDirectory) directoryTypeMap
+        TiffOutputDirectory rootDirectory = directoryTypeMap
                 .get(new Integer(DIRECTORY_TYPE_ROOT));
 
         // prepare results

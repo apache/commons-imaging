@@ -97,14 +97,14 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
         int offset = tiffHeader.offsetToFirstIFD;
         int dirType = TiffDirectory.DIRECTORY_TYPE_ROOT;
 
-        List visited = new ArrayList();
+        List<Number> visited = new ArrayList<Number>();
         readDirectory(byteSource, offset, dirType, formatCompliance, listener,
                 visited);
     }
 
     private boolean readDirectory(ByteSource byteSource, int offset,
             int dirType, FormatCompliance formatCompliance, Listener listener,
-            List visited) throws ImageReadException, IOException
+            List<Number> visited) throws ImageReadException, IOException
     {
         boolean ignoreNextDirectory = false;
         return readDirectory(byteSource, offset, dirType, formatCompliance,
@@ -113,7 +113,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 
     private boolean readDirectory(ByteSource byteSource, int offset,
             int dirType, FormatCompliance formatCompliance, Listener listener,
-            boolean ignoreNextDirectory, List visited)
+            boolean ignoreNextDirectory, List<Number> visited)
             throws ImageReadException, IOException
     {
         Number key = new Integer(offset);
@@ -138,7 +138,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             if (offset > 0)
                 is.skip(offset);
 
-            List fields = new ArrayList();
+            List<TiffField> fields = new ArrayList<TiffField>();
 
             if (offset >= byteSource.getLength())
             {
@@ -242,10 +242,10 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
 
             if (listener.readOffsetDirectories())
             {
-                List fieldsToRemove = new ArrayList();
+                List<TiffField> fieldsToRemove = new ArrayList<TiffField>();
                 for (int j = 0; j < fields.size(); j++)
                 {
-                    TiffField entry = (TiffField) fields.get(j);
+                    TiffField entry = fields.get(j);
 
                     if (entry.tag == TiffConstants.EXIF_TAG_EXIF_OFFSET.tag
                             || entry.tag == TiffConstants.EXIF_TAG_GPSINFO.tag
@@ -321,8 +321,8 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
     private static class Collector implements Listener
     {
         private TiffHeader tiffHeader = null;
-        private List directories = new ArrayList();
-        private List fields = new ArrayList();
+        private List<TiffDirectory> directories = new ArrayList<TiffDirectory>();
+        private List<TiffField> fields = new ArrayList<TiffField>();
         private final boolean readThumbnails;
 
         public Collector()

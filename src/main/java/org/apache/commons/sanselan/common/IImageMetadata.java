@@ -22,7 +22,7 @@ public interface IImageMetadata
 {
     public String toString(String prefix);
 
-    public List getItems();
+    public List<? extends IImageMetadataItem> getItems();
 
     public interface IImageMetadataItem
     {

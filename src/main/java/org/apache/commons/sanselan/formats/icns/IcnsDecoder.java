@@ -428,10 +428,10 @@ public class IcnsDecoder
         }
     }
 
-    public static List decodeAllImages(IcnsImageParser.IcnsElement[] icnsElements)
+    public static List<BufferedImage> decodeAllImages(IcnsImageParser.IcnsElement[] icnsElements)
             throws ImageReadException
     {
-        List result = new ArrayList();
+        List<BufferedImage> result = new ArrayList<BufferedImage>();
         for (int i = 0; i < icnsElements.length; i++)
         {
             IcnsImageParser.IcnsElement imageElement = icnsElements[i];

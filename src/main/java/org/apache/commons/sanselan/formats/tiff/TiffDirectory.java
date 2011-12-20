@@ -45,7 +45,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         StringBuffer result = new StringBuffer();
         for (int i = 0; i < entries.size(); i++)
         {
-            TiffField entry = (TiffField) entries.get(i);
+            TiffField entry = entries.get(i);
 
             result.append("\t");
             result.append("[" + entryOffset + "]: ");
@@ -88,11 +88,11 @@ public class TiffDirectory extends TiffElement implements TiffConstants
     }
 
     public final int type;
-    public final List entries;
+    public final List<TiffField> entries;
     //    public final int offset;
     public final int nextDirectoryOffset;
 
-    public TiffDirectory(int type, List entries, final int offset,
+    public TiffDirectory(int type, List<TiffField> entries, final int offset,
             int nextDirectoryOffset)
     {
         super(offset, TIFF_DIRECTORY_HEADER_LENGTH + entries.size()
@@ -103,16 +103,16 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         this.nextDirectoryOffset = nextDirectoryOffset;
     }
 
-    public List getDirectoryEntrys()
+    public List<TiffField> getDirectoryEntrys()
     {
-        return new ArrayList(entries);
+        return new ArrayList<TiffField>(entries);
     }
 
     public void dump()
     {
         for (int i = 0; i < entries.size(); i++)
         {
-            TiffField entry = (TiffField) entries.get(i);
+            TiffField entry = entries.get(i);
             entry.dump();
         }
 
@@ -166,7 +166,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
         for (int i = 0; i < entries.size(); i++)
         {
-            TiffField field = (TiffField) entries.get(i);
+            TiffField field = entries.get(i);
             if (field.tag == tag.tag)
                 return field;
         }

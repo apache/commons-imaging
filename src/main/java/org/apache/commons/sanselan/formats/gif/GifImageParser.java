@@ -202,7 +202,7 @@ public class GifImageParser extends ImageParser
     protected GenericGifBlock readGenericGIFBlock(InputStream is, int code,
             byte first[]) throws IOException
     {
-        List subblocks = new ArrayList();
+        List<byte[]> subblocks = new ArrayList<byte[]>();
 
         if (first != null)
             subblocks.add(first);
@@ -229,11 +229,11 @@ public class GifImageParser extends ImageParser
     private final static int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8)
             | XMP_EXTENSION;
 
-    private List readBlocks(GifHeaderInfo ghi, InputStream is,
-            boolean stopBeforeImageData, FormatCompliance formatCompliance)
+    private List<GifBlock> readBlocks(GifHeaderInfo ghi, InputStream is,
+                                      boolean stopBeforeImageData, FormatCompliance formatCompliance)
             throws ImageReadException, IOException
     {
-        List result = new ArrayList();
+        List<GifBlock> result = new ArrayList<GifBlock>();
 
         while (true)
         {
@@ -456,11 +456,11 @@ public class GifImageParser extends ImageParser
         }
     }
 
-    private GifBlock findBlock(List v, int code)
+    private GifBlock findBlock(List<GifBlock> v, int code)
     {
         for (int i = 0; i < v.size(); i++)
         {
-            GifBlock gifBlock = (GifBlock) v.get(i);
+            GifBlock gifBlock = v.get(i);
             if (gifBlock.blockCode == code)
                 return gifBlock;
         }
@@ -490,7 +490,7 @@ public class GifImageParser extends ImageParser
                 globalColorTable = readColorTable(is,
                         ghi.sizeOfGlobalColorTable, formatCompliance);
 
-            List blocks = readBlocks(ghi, is, stopBeforeImageData, formatCompliance);
+            List<GifBlock> blocks = readBlocks(ghi, is, stopBeforeImageData, formatCompliance);
 
             ImageContents result = new ImageContents(ghi, globalColorTable, blocks);
 
@@ -553,14 +553,14 @@ public class GifImageParser extends ImageParser
         return null;
     }
 
-    private List getComments(List v) throws IOException
+    private List<String> getComments(List<GifBlock> v) throws IOException
     {
-        List result = new ArrayList();
+        List<String> result = new ArrayList<String>();
         int code = 0x21fe;
 
         for (int i = 0; i < v.size(); i++)
         {
-            GifBlock block = (GifBlock) v.get(i);
+            GifBlock block = v.get(i);
             if (block.blockCode == code)
             {
                 byte bytes[] = ((GenericGifBlock) block).appendSubBlocks();
@@ -596,7 +596,7 @@ public class GifImageParser extends ImageParser
         int height = id.imageWidth;
         int width = id.imageHeight;
 
-        List Comments;
+        List<String> Comments;
 
         Comments = getComments(blocks.blocks);
 
@@ -656,7 +656,7 @@ public class GifImageParser extends ImageParser
             pw.println("gif.blocks: " + blocks.blocks.size());
             for (int i = 0; i < blocks.blocks.size(); i++)
             {
-                GifBlock gifBlock = (GifBlock) blocks.blocks.get(i);
+                GifBlock gifBlock = blocks.blocks.get(i);
                 this.debugNumber(pw, "\t" + i + " ("
                         + gifBlock.getClass().getName() + ")",
                         gifBlock.blockCode, 4);
@@ -1113,12 +1113,12 @@ public class GifImageParser extends ImageParser
             if (ghi.globalColorTableFlag)
                 readColorTable(is, ghi.sizeOfGlobalColorTable, formatCompliance);
 
-            List blocks = readBlocks(ghi, is, true, formatCompliance);
+            List<GifBlock> blocks = readBlocks(ghi, is, true, formatCompliance);
 
-            List result = new ArrayList();
+            List<String> result = new ArrayList<String>();
             for (int i = 0; i < blocks.size(); i++)
             {
-                GifBlock block = (GifBlock) blocks.get(i);
+                GifBlock block = blocks.get(i);
                 if (block.blockCode != XMP_COMPLETE_CODE)
                     continue;
 
@@ -1166,7 +1166,7 @@ public class GifImageParser extends ImageParser
                 return null;
             if (result.size() > 1)
                 throw new ImageReadException("More than one XMP Block in GIF.");
-            return (String) result.get(0);
+            return result.get(0);
 
         } finally
         {

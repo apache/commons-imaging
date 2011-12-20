@@ -53,9 +53,9 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
     protected static class JFIFPieces
     {
         public final List pieces;
-        public final List segmentPieces;
+        public final List<JFIFPiece> segmentPieces;
 
-        public JFIFPieces(final List pieces, final List segmentPieces)
+        public JFIFPieces(final List pieces, final List<JFIFPiece> segmentPieces)
         {
             this.pieces = pieces;
             this.segmentPieces = segmentPieces;
@@ -172,7 +172,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
     // , ImageWriteException
     {
         final List pieces = new ArrayList();
-        final List segmentPieces = new ArrayList();
+        final List<JFIFPiece> segmentPieces = new ArrayList<JFIFPiece>();
 
         JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
@@ -276,13 +276,13 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
         return result;
     }
 
-    protected List insertBeforeFirstAppSegments(List segments, List newSegments)
+    protected List<JFIFPiece> insertBeforeFirstAppSegments(List<JFIFPiece> segments, List<JFIFPiece> newSegments)
             throws ImageWriteException
     {
         int firstAppIndex = -1;
         for (int i = 0; i < segments.size(); i++)
         {
-            JFIFPiece piece = (JFIFPiece) segments.get(i);
+            JFIFPiece piece = segments.get(i);
             if (!(piece instanceof JFIFPieceSegment))
                 continue;
 
@@ -294,7 +294,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
             }
         }
 
-        List result = new ArrayList(segments);
+        List<JFIFPiece> result = new ArrayList<JFIFPiece>(segments);
         if (firstAppIndex == -1)
             throw new ImageWriteException("JPEG file has no APP segments.");
         result.addAll(firstAppIndex, newSegments);

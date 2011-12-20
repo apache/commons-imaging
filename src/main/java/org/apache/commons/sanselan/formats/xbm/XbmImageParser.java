@@ -95,7 +95,7 @@ public class XbmImageParser extends ImageParser
     {
         XbmHeader xbmHeader = readXbmHeader(byteSource);
         return new ImageInfo("XBM", 1,
-                new ArrayList(), ImageFormat.IMAGE_FORMAT_XBM,
+                new ArrayList<String>(), ImageFormat.IMAGE_FORMAT_XBM,
                 "X BitMap",
                 xbmHeader.height, "image/x-xbitmap", 1,
                 0, 0, 0, 0,
@@ -167,25 +167,25 @@ public class XbmImageParser extends ImageParser
         try
         {
             is = byteSource.getInputStream();
-            Map defines = new HashMap();
+            Map<String, String> defines = new HashMap<String, String>();
             ByteArrayOutputStream preprocessedFile = BasicCParser.preprocess(
                     is, null, defines);
             int width = -1;
             int height = -1;
             int xHot = -1;
             int yHot = -1;
-            for (Iterator it = defines.entrySet().iterator(); it.hasNext();)
+            for (Iterator<Map.Entry<String,String>> it = defines.entrySet().iterator(); it.hasNext();)
             {
-                Map.Entry entry = (Map.Entry)it.next();
-                String name = (String)entry.getKey();
+                Map.Entry<String, String> entry = it.next();
+                String name = entry.getKey();
                 if (name.endsWith("_width"))
-                    width = Integer.parseInt((String)entry.getValue());
+                    width = Integer.parseInt(entry.getValue());
                 else if (name.endsWith("_height"))
-                    height = Integer.parseInt((String)entry.getValue());
+                    height = Integer.parseInt(entry.getValue());
                 else if (name.endsWith("_x_hot"))
-                    xHot = Integer.parseInt((String)entry.getValue());
+                    xHot = Integer.parseInt(entry.getValue());
                 else if (name.endsWith("_y_hot"))
-                    yHot = Integer.parseInt((String)entry.getValue());
+                    yHot = Integer.parseInt(entry.getValue());
             }
             if (width == -1)
                 throw new ImageReadException("width not found");

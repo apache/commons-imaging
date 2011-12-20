@@ -88,7 +88,7 @@ public class WbmpImageParser extends ImageParser
             throws ImageReadException, IOException
     {
         WbmpHeader wbmpHeader = readWbmpHeader(byteSource);
-        return new ImageInfo("WBMP", 1, new ArrayList(),
+        return new ImageInfo("WBMP", 1, new ArrayList<String>(),
                 ImageFormat.IMAGE_FORMAT_WBMP,
                 "Wireless Application Protocol Bitmap",
                 wbmpHeader.height, "image/vnd.wap.wbmp", 1,

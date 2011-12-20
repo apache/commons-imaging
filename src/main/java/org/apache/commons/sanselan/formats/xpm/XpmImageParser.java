@@ -53,7 +53,7 @@ import org.apache.commons.sanselan.util.Debug;
 
 public class XpmImageParser extends ImageParser
 {
-    private static Map colorNames = null;
+    private static Map<String, Integer> colorNames = null;
 
     public XpmImageParser()
     {
@@ -74,7 +74,7 @@ public class XpmImageParser extends ImageParser
             }
             reader = new BufferedReader(new InputStreamReader(rgbTxtStream,
                     "US-ASCII"));
-            Map colors = new HashMap();
+            Map<String, Integer> colors = new HashMap<String, Integer>();
             String line;
             while ((line = reader.readLine()) != null)
             {
@@ -159,10 +159,10 @@ public class XpmImageParser extends ImageParser
         XpmHeader xpmHeader = readXpmHeader(byteSource);
         boolean isTransparent = false;
         int colorType = ImageInfo.COLOR_TYPE_BW;
-        for (Iterator it = xpmHeader.palette.entrySet().iterator(); it.hasNext();)
+        for (Iterator<Map.Entry<Object,PaletteEntry>> it = xpmHeader.palette.entrySet().iterator(); it.hasNext();)
         {
-            Map.Entry entry = (Map.Entry)it.next();
-            PaletteEntry paletteEntry = (PaletteEntry)entry.getValue();
+            Map.Entry<Object, PaletteEntry> entry = it.next();
+            PaletteEntry paletteEntry = entry.getValue();
             if ((paletteEntry.getBestARGB() & 0xff000000) != 0xff000000)
                 isTransparent = true;
             if (paletteEntry.haveColor)
@@ -172,7 +172,7 @@ public class XpmImageParser extends ImageParser
                 colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
         }
         return new ImageInfo("XPM version 3", xpmHeader.numCharsPerPixel * 8,
-                new ArrayList(), ImageFormat.IMAGE_FORMAT_XPM,
+                new ArrayList<String>(), ImageFormat.IMAGE_FORMAT_XPM,
                 "X PixMap",
                 xpmHeader.height, "image/x-xpixmap", 1,
                 0, 0, 0, 0,
@@ -206,7 +206,7 @@ public class XpmImageParser extends ImageParser
         int yHotSpot = -1;
         boolean xpmExt;
         
-        Map palette = new HashMap();
+        Map<Object, PaletteEntry> palette = new HashMap<Object, PaletteEntry>();
 
         public XpmHeader(int width, int height, int numColors,
                 int numCharsPerPixel, int xHotSpot, int yHotSpot,
@@ -416,7 +416,7 @@ public class XpmImageParser extends ImageParser
             if (!loadColorNames())
                 return 0x00000000;
             if (colorNames.containsKey(color))
-                return ((Integer)colorNames.get(color)).intValue();
+                return (colorNames.get(color)).intValue();
             else
                 return 0x00000000;
         }
@@ -587,10 +587,10 @@ public class XpmImageParser extends ImageParser
         if (xpmHeader.palette.size() <= (1 << 8))
         {
             int[] palette = new int[xpmHeader.palette.size()];
-            for (Iterator it = xpmHeader.palette.entrySet().iterator(); it.hasNext();)
+            for (Iterator<Map.Entry<Object,PaletteEntry>> it = xpmHeader.palette.entrySet().iterator(); it.hasNext();)
             {
-                Map.Entry entry = (Map.Entry)it.next();
-                PaletteEntry paletteEntry = (PaletteEntry)entry.getValue();
+                Map.Entry<Object, PaletteEntry> entry = it.next();
+                PaletteEntry paletteEntry = entry.getValue();
                 palette[paletteEntry.index] = paletteEntry.getBestARGB();
             }
             colorModel = new IndexColorModel(8, xpmHeader.palette.size(),
@@ -602,10 +602,10 @@ public class XpmImageParser extends ImageParser
         else if (xpmHeader.palette.size() <= (1 << 16))
         {
             int[] palette = new int[xpmHeader.palette.size()];
-            for (Iterator it = xpmHeader.palette.entrySet().iterator(); it.hasNext();)
+            for (Iterator<Map.Entry<Object,PaletteEntry>> it = xpmHeader.palette.entrySet().iterator(); it.hasNext();)
             {
-                Map.Entry entry = (Map.Entry)it.next();
-                PaletteEntry paletteEntry = (PaletteEntry)entry.getValue();
+                Map.Entry<Object, PaletteEntry> entry = it.next();
+                PaletteEntry paletteEntry = entry.getValue();
                 palette[paletteEntry.index] = paletteEntry.getBestARGB();
             }
             colorModel = new IndexColorModel(16, xpmHeader.palette.size(),
@@ -641,7 +641,7 @@ public class XpmImageParser extends ImageParser
             {
                 String index = row.substring(x*xpmHeader.numCharsPerPixel,
                         (x + 1)*xpmHeader.numCharsPerPixel);
-                PaletteEntry paletteEntry = (PaletteEntry) xpmHeader.palette.get(index);
+                PaletteEntry paletteEntry = xpmHeader.palette.get(index);
                 if (paletteEntry == null) {
                     throw new ImageReadException("No palette entry was defined " +
                             "for " + index);

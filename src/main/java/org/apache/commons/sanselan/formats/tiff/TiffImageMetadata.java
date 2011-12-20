@@ -41,23 +41,23 @@ public class TiffImageMetadata extends ImageMetadata
             TiffDirectoryConstants
 {
     public final TiffContents contents;
-    private static final Map tagCounts = countTags(AllTagConstants.ALL_TAGS);
+    private static final Map<Object, Integer> tagCounts = countTags(AllTagConstants.ALL_TAGS);
 
     public TiffImageMetadata(final TiffContents contents)
     {
         this.contents = contents;
     }
 
-    private static final Map countTags(TagInfo tags[])
+    private static final Map<Object, Integer> countTags(TagInfo tags[])
     {
-        Map map = new Hashtable();
+        Map<Object, Integer> map = new Hashtable<Object, Integer>();
 
         for (int i = 0; i < tags.length; i++)
         {
             TagInfo tag = tags[i];
             Object key = new Integer(tag.tag);
 
-            Integer count = (Integer) map.get(key);
+            Integer count = map.get(key);
             if (count == null)
                 map.put(key, new Integer(1));
             else
@@ -67,9 +67,7 @@ public class TiffImageMetadata extends ImageMetadata
         return map;
     }
 
-    public static class Directory extends ImageMetadata
-            implements
-                ImageMetadata.IImageMetadataItem
+    public static class Directory extends ImageMetadata implements ImageMetadata.IImageMetadataItem
     {
         //        private BufferedImage thumbnail = null;
 
@@ -104,7 +102,7 @@ public class TiffImageMetadata extends ImageMetadata
             return directory.findField(tagInfo);
         }
 
-        public List getAllFields()
+        public List<TiffField> getAllFields()
         {
             return directory.getDirectoryEntrys();
         }
@@ -192,7 +190,7 @@ public class TiffImageMetadata extends ImageMetadata
         return super.getItems();
     }
 
-    public List getItems()
+    public List<? extends IImageMetadataItem> getItems()
     {
         List result = new ArrayList();
 
@@ -259,7 +257,7 @@ public class TiffImageMetadata extends ImageMetadata
     public TiffField findField(TagInfo tagInfo, boolean exactDirectoryMatch) throws ImageReadException
     {
         // Please keep this method in sync with TiffField's getTag()
-        Integer tagCount = (Integer)tagCounts.get(new Integer(tagInfo.tag));
+        Integer tagCount = tagCounts.get(new Integer(tagInfo.tag));
         int tagsMatching = tagCount == null ? 0 : tagCount.intValue();
 
         List directories = getDirectories();
@@ -321,9 +319,9 @@ public class TiffImageMetadata extends ImageMetadata
         return null;
     }
 
-    public List getAllFields()
+    public List<TiffField> getAllFields()
     {
-        List result = new ArrayList();
+        List<TiffField> result = new ArrayList<TiffField>();
         List directories = getDirectories();
         for (int i = 0; i < directories.size(); i++)
         {

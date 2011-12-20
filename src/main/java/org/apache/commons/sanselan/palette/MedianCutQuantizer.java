@@ -74,7 +74,7 @@ public class MedianCutQuantizer
         //        public final List children = new ArrayList();
         public int palette_index = -1;
 
-        public final List color_counts;
+        public final List<ColorCount> color_counts;
         public int min_red = Integer.MAX_VALUE;
         public int max_red = Integer.MIN_VALUE;
         public int min_green = Integer.MAX_VALUE;
@@ -92,7 +92,7 @@ public class MedianCutQuantizer
         public final int max_diff;
         public final int diff_total;
 
-        public ColorGroup(final List color_counts) throws ImageWriteException
+        public ColorGroup(final List<ColorCount> color_counts) throws ImageWriteException
         {
             this.color_counts = color_counts;
 
@@ -101,7 +101,7 @@ public class MedianCutQuantizer
 
             for (int i = 0; i < color_counts.size(); i++)
             {
-                ColorCount color = (ColorCount) color_counts.get(i);
+                ColorCount color = color_counts.get(i);
 
                 min_alpha = Math.min(min_alpha, color.alpha);
                 max_alpha = Math.max(max_alpha, color.alpha);
@@ -149,7 +149,7 @@ public class MedianCutQuantizer
 
             for (int i = 0; i < color_counts.size(); i++)
             {
-                ColorCount color = (ColorCount) color_counts.get(i);
+                ColorCount color = color_counts.get(i);
 
                 count_total += color.count;
                 alpha_total += color.count * color.alpha;
@@ -183,9 +183,9 @@ public class MedianCutQuantizer
 
     }
 
-    public Map groupColors1(BufferedImage image, int max, int mask)
+    public Map<Integer, ColorCount> groupColors1(BufferedImage image, int max, int mask)
     {
-        Map color_map = new HashMap();
+        Map<Integer, ColorCount> color_map = new HashMap<Integer, ColorCount>();
 
         int width = image.getWidth();
         int height = image.getHeight();
@@ -202,7 +202,7 @@ public class MedianCutQuantizer
                     argb &= 0xffffff;
                 argb &= mask;
 
-                ColorCount color = (ColorCount) color_map
+                ColorCount color = color_map
                         .get(new Integer(argb));
                 if (color == null)
                 {
@@ -218,7 +218,7 @@ public class MedianCutQuantizer
         return color_map;
     }
 
-    public Map groupColors(BufferedImage image, int max_colors)
+    public Map<Integer, ColorCount> groupColors(BufferedImage image, int max_colors)
     {
         int max = Integer.MAX_VALUE;
 
@@ -227,10 +227,9 @@ public class MedianCutQuantizer
             int mask = 0xff & (0xff << i);
             mask = mask | (mask << 8) | (mask << 16) | (mask << 24);
 
-            Debug.debug("mask(" + i + ")", mask + " ("
-                    + Integer.toHexString(mask) + ")");
+            Debug.debug("mask(" + i + ")", mask + " (" + Integer.toHexString(mask) + ")");
 
-            Map result = groupColors1(image, max, mask);
+            Map<Integer, ColorCount> result = groupColors1(image, max, mask);
             if (result != null)
                 return result;
         }
@@ -240,7 +239,7 @@ public class MedianCutQuantizer
     public Palette process(BufferedImage image, int max_colors, boolean verbose)
             throws ImageWriteException
     {
-        Map color_map = groupColors(image, max_colors);
+        Map<Integer, ColorCount> color_map = groupColors(image, max_colors);
 
         int discrete_colors = color_map.keySet().size();
         if (discrete_colors <= max_colors)
@@ -249,11 +248,11 @@ public class MedianCutQuantizer
                 Debug.debug("lossless palette: " + discrete_colors);
 
             int palette[] = new int[discrete_colors];
-            List color_counts = new ArrayList(color_map.values());
+            List<ColorCount> color_counts = new ArrayList<ColorCount>(color_map.values());
 
             for (int i = 0; i < color_counts.size(); i++)
             {
-                ColorCount color_count = (ColorCount) color_counts.get(i);
+                ColorCount color_count = color_counts.get(i);
                 palette[i] = color_count.argb;
                 if (ignoreAlpha)
                     palette[i] |= 0xff000000;
@@ -265,18 +264,15 @@ public class MedianCutQuantizer
         if (verbose)
             Debug.debug("discrete colors: " + discrete_colors);
 
-        List color_groups = new ArrayList();
-        ColorGroup root = new ColorGroup(new ArrayList(color_map.values()));
+        List<ColorGroup> color_groups = new ArrayList<ColorGroup>();
+        ColorGroup root = new ColorGroup(new ArrayList<ColorCount>(color_map.values()));
         {
             color_groups.add(root);
 
-            final Comparator comparator = new Comparator()
+            final Comparator<ColorGroup> comparator = new Comparator<ColorGroup>()
             {
-                public int compare(Object o1, Object o2)
+                public int compare(ColorGroup cg1, ColorGroup cg2)
                 {
-                    ColorGroup cg1 = (ColorGroup) o1;
-                    ColorGroup cg2 = (ColorGroup) o2;
-
                     if (cg1.max_diff == cg2.max_diff)
                         return cg2.diff_total - cg1.diff_total;
                     return cg2.max_diff - cg1.max_diff;
@@ -287,7 +283,7 @@ public class MedianCutQuantizer
             {
                 Collections.sort(color_groups, comparator);
 
-                ColorGroup color_group = (ColorGroup) color_groups.get(0);
+                ColorGroup color_group = color_groups.get(0);
 
                 if (color_group.max_diff == 0)
                     break;
@@ -323,7 +319,7 @@ public class MedianCutQuantizer
 
             for (int i = 0; i < color_groups.size(); i++)
             {
-                ColorGroup color_group = (ColorGroup) color_groups.get(i);
+                ColorGroup color_group = color_groups.get(i);
 
                 palette[i] = color_group.getMedianValue();
 
@@ -351,24 +347,19 @@ public class MedianCutQuantizer
     private static final int GREEN = 2;
     private static final int BLUE = 3;
 
-    private void doCut(ColorGroup color_group, final int mode,
-            final List color_groups) throws ImageWriteException
+    private void doCut(ColorGroup color_group, final int mode, final List<ColorGroup> color_groups) throws ImageWriteException
     {
         int count_total = 0;
         for (int i = 0; i < color_group.color_counts.size(); i++)
         {
-            ColorCount color_count = (ColorCount) color_group.color_counts
-                    .get(i);
+            ColorCount color_count = color_group.color_counts.get(i);
             count_total += color_count.count;
         }
 
-        Comparator comparator = new Comparator()
+        Comparator<ColorCount> comparator = new Comparator<ColorCount>()
         {
-            public int compare(Object o1, Object o2)
+            public int compare(ColorCount c1, ColorCount c2)
             {
-                ColorCount c1 = (ColorCount) o1;
-                ColorCount c2 = (ColorCount) o2;
-
                 switch (mode)
                 {
                     case ALPHA :
@@ -391,8 +382,7 @@ public class MedianCutQuantizer
         int median_index;
         for (median_index = 0; median_index < color_group.color_counts.size(); median_index++)
         {
-            ColorCount color_count = (ColorCount) color_group.color_counts
-                    .get(median_index);
+            ColorCount color_count = color_group.color_counts.get(median_index);
 
             new_count += color_count.count;
 
@@ -416,23 +406,20 @@ public class MedianCutQuantizer
 
         color_groups.remove(color_group);
         {
-            List color_counts1 = new ArrayList(color_group.color_counts
-                    .subList(0, median_index + 1));
-            List color_counts2 = new ArrayList(color_group.color_counts
-                    .subList(median_index + 1, color_group.color_counts.size()));
+            List<ColorCount> color_counts1 = new ArrayList<ColorCount>(color_group.color_counts.subList(0, median_index + 1));
+            List<ColorCount> color_counts2 = new ArrayList<ColorCount>(color_group.color_counts.subList(median_index + 1, color_group.color_counts.size()));
 
             ColorGroup less, more;
             {
-                less = new ColorGroup(new ArrayList(color_counts1));
+                less = new ColorGroup(new ArrayList<ColorCount>(color_counts1));
                 color_groups.add(less);
             }
             {
-                more = new ColorGroup(new ArrayList(color_counts2));
+                more = new ColorGroup(new ArrayList<ColorCount>(color_counts2));
                 color_groups.add(more);
             }
 
-            ColorCount median_value = (ColorCount) color_group.color_counts
-                    .get(median_index);
+            ColorCount median_value = color_group.color_counts.get(median_index);
             int limit;
             switch (mode)
             {
@@ -512,9 +499,7 @@ public class MedianCutQuantizer
 
             while (cg.cut != null)
             {
-                ColorGroup next = cg.cut.getColorGroup(rgb);
-
-                cg = next;
+                cg = cg.cut.getColorGroup(rgb);
             }
 
             return cg.palette_index;

@@ -562,10 +562,10 @@ public class IcoImageParser extends ImageParser
             throw new ImageReadException("No icons in ICO file");
     }
 
-    public List getAllBufferedImages(ByteSource byteSource)
+    public List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
-        List result = new ArrayList();
+        List<BufferedImage> result = new ArrayList<BufferedImage>();
         ImageContents contents = readImage(byteSource);
 
         FileHeader fileHeader = contents.fileHeader;

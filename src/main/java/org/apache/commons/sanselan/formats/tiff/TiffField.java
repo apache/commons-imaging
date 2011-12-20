@@ -118,7 +118,7 @@ public class TiffField implements TiffConstants
     }
 
     private static TagInfo getTag(int directoryType, int tag,
-            List possibleMatches)
+            List<TagInfo> possibleMatches)
     {
         // Please keep this method in sync with TiffImageMetadata's findField()
 
@@ -133,7 +133,7 @@ public class TiffField implements TiffConstants
         // first search for exact match.
         for (int i = 0; i < possibleMatches.size(); i++)
         {
-            TagInfo tagInfo = (TagInfo) possibleMatches.get(i);
+            TagInfo tagInfo = possibleMatches.get(i);
             if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
                 // pass
                 continue;
@@ -144,7 +144,7 @@ public class TiffField implements TiffConstants
         // accept an inexact match.
         for (int i = 0; i < possibleMatches.size(); i++)
         {
-            TagInfo tagInfo = (TagInfo) possibleMatches.get(i);
+            TagInfo tagInfo = possibleMatches.get(i);
 
             if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
                 // pass
@@ -160,7 +160,7 @@ public class TiffField implements TiffConstants
         // accept a wildcard match.
         for (int i = 0; i < possibleMatches.size(); i++)
         {
-            TagInfo tagInfo = (TagInfo) possibleMatches.get(i);
+            TagInfo tagInfo = possibleMatches.get(i);
 
             if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
                 return tagInfo;
@@ -251,7 +251,7 @@ public class TiffField implements TiffConstants
     {
         Object key = new Integer(tag);
 
-        List possibleMatches = (List) ALL_TAG_MAP.get(key);
+        List<TagInfo> possibleMatches = ALL_TAG_MAP.get(key);
 
         if (null == possibleMatches)
         {
@@ -575,21 +575,21 @@ public class TiffField implements TiffConstants
         return (String) o;
     }
 
-    private static final Map makeTagMap(TagInfo tags[],
-            boolean ignoreDuplicates, String name)
+    private static final Map<Object, List<TagInfo>> makeTagMap(TagInfo tags[],
+                                                               boolean ignoreDuplicates, String name)
     {
         // make sure to use the thread-safe version; this is shared state.
-        Map map = new Hashtable();
+        Map<Object, List<TagInfo>> map = new Hashtable<Object, List<TagInfo>>();
 
         for (int i = 0; i < tags.length; i++)
         {
             TagInfo tag = tags[i];
             Object key = new Integer(tag.tag);
 
-            List tagList = (List) map.get(key);
+            List<TagInfo> tagList = map.get(key);
             if (tagList == null)
             {
-                tagList = new ArrayList();
+                tagList = new ArrayList<TagInfo>();
                 map.put(key, tagList);
             }
             tagList.add(tag);
@@ -609,13 +609,13 @@ public class TiffField implements TiffConstants
         return map;
     }
 
-    private static final Map GPS_TAG_MAP = makeTagMap(ALL_GPS_TAGS, false,
+    private static final Map<Object, List<TagInfo>> GPS_TAG_MAP = makeTagMap(ALL_GPS_TAGS, false,
             "GPS");
-    private static final Map TIFF_TAG_MAP = makeTagMap(ALL_TIFF_TAGS, false,
+    private static final Map<Object, List<TagInfo>> TIFF_TAG_MAP = makeTagMap(ALL_TIFF_TAGS, false,
             "TIFF");
-    private static final Map EXIF_TAG_MAP = makeTagMap(ALL_EXIF_TAGS, true,
+    private static final Map<Object, List<TagInfo>> EXIF_TAG_MAP = makeTagMap(ALL_EXIF_TAGS, true,
             "EXIF");
-    private static final Map ALL_TAG_MAP = makeTagMap(ALL_TAGS, true, "All");
+    private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(ALL_TAGS, true, "All");
 
     // static
     // {

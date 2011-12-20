@@ -165,7 +165,7 @@ public class JpegImageMetadata implements IImageMetadata {
     }
 
     public List getItems() {
-        List result = new ArrayList();
+        List<Object> result = new ArrayList<Object>();
 
         if (null != exif)
             result.addAll(exif.getItems());

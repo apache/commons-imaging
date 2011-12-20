@@ -68,7 +68,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
     public void removeField(int tag)
     {
-        List matches = new ArrayList();
+        List<TiffOutputField> matches = new ArrayList<TiffOutputField>();
         for (int i = 0; i < fields.size(); i++)
         {
             TiffOutputField field = (TiffOutputField) fields.get(i);

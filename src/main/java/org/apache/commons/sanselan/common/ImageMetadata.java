@@ -21,8 +21,7 @@ import java.util.List;
 
 public class ImageMetadata implements IImageMetadata
 {
-
-    private final List items = new ArrayList();
+    private final List<IImageMetadataItem> items = new ArrayList<IImageMetadataItem>();
 
     public void add(String keyword, String text)
     {
@@ -34,13 +33,12 @@ public class ImageMetadata implements IImageMetadata
         items.add(item);
     }
 
-    public List getItems()
+    public List<? extends IImageMetadataItem> getItems()
     {
-        return new ArrayList(items);
+        return new ArrayList<IImageMetadataItem>(items);
     }
 
-    protected static final String newline = System
-            .getProperty("line.separator");
+    protected static final String newline = System.getProperty("line.separator");
 
     public String toString()
     {
@@ -60,7 +58,7 @@ public class ImageMetadata implements IImageMetadata
             //            if (null != prefix)
             //                result.append(prefix);
 
-            ImageMetadata.IImageMetadataItem item = (ImageMetadata.IImageMetadataItem) items
+            ImageMetadata.IImageMetadataItem item = items
                     .get(i);
             result.append(item.toString(prefix + "\t"));
 

@@ -24,15 +24,15 @@ import org.apache.commons.sanselan.ImageInfo;
 
 public class PngImageInfo extends ImageInfo
 {
-    private final List textChunks;
+    private final List<PngText> textChunks;
 
     public PngImageInfo(String formatDetails, int bitsPerPixel,
-            List comments, ImageFormat format, String formatName,
+            List<String> comments, ImageFormat format, String formatName,
             int height, String mimeType, int numberOfImages,
             int physicalHeightDpi, float physicalHeightInch,
             int physicalWidthDpi, float physicalWidthInch, int width,
             boolean isProgressive, boolean isTransparent, boolean usesPalette,
-            int colorType, String compressionAlgorithm, final List textChunks)
+            int colorType, String compressionAlgorithm, final List<PngText> textChunks)
     {
         super(formatDetails, bitsPerPixel, comments, format, formatName,
                 height, mimeType, numberOfImages, physicalHeightDpi,
@@ -43,9 +43,9 @@ public class PngImageInfo extends ImageInfo
         this.textChunks = textChunks;
     }
 
-    public List getTextChunks()
+    public List<PngText> getTextChunks()
     {
-        return new ArrayList(textChunks);
+        return new ArrayList<PngText>(textChunks);
     }
 
 }

@@ -185,7 +185,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         if (info == null)
             throw new ImageReadException("PNM: Couldn't read Header");
 
-        List Comments = new ArrayList();
+        List<String> Comments = new ArrayList<String>();
 
         int BitsPerPixel = info.getBitDepth() * info.getNumComponents();
         ImageFormat Format = info.getImageType();

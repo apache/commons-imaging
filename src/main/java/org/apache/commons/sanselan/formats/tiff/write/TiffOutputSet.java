@@ -27,7 +27,7 @@ import org.apache.commons.sanselan.util.Debug;
 public final class TiffOutputSet implements TiffConstants
 {
     public final int byteOrder;
-    private final List directories = new ArrayList();
+    private final List<TiffOutputDirectory> directories = new ArrayList<TiffOutputDirectory>();
 
     public TiffOutputSet()
     {
@@ -47,7 +47,7 @@ public final class TiffOutputSet implements TiffConstants
 
         for (int i = 0; i < directories.size(); i++)
         {
-            TiffOutputDirectory directory = (TiffOutputDirectory) directories
+            TiffOutputDirectory directory = directories
                     .get(i);
 
             result.addAll(directory.getOutputItems(outputSummary));
@@ -65,9 +65,9 @@ public final class TiffOutputSet implements TiffConstants
         directories.add(directory);
     }
 
-    public List getDirectories()
+    public List<TiffOutputDirectory> getDirectories()
     {
-        return new ArrayList(directories);
+        return new ArrayList<TiffOutputDirectory>(directories);
     }
 
     public TiffOutputDirectory getRootDirectory()
@@ -127,7 +127,7 @@ public final class TiffOutputSet implements TiffConstants
     {
         for (int i = 0; i < directories.size(); i++)
         {
-            TiffOutputDirectory directory = (TiffOutputDirectory) directories
+            TiffOutputDirectory directory = directories
                     .get(i);
             if (directory.type == directoryType)
                 return directory;
@@ -219,7 +219,7 @@ public final class TiffOutputSet implements TiffConstants
     {
         for (int i = 0; i < directories.size(); i++)
         {
-            TiffOutputDirectory directory = (TiffOutputDirectory) directories
+            TiffOutputDirectory directory = directories
                     .get(i);
             directory.removeField(tag);
         }
@@ -234,7 +234,7 @@ public final class TiffOutputSet implements TiffConstants
     {
         for (int i = 0; i < directories.size(); i++)
         {
-            TiffOutputDirectory directory = (TiffOutputDirectory) directories
+            TiffOutputDirectory directory = directories
                     .get(i);
             TiffOutputField field = directory.findField(tag);
             if (null != field)
@@ -301,7 +301,7 @@ public final class TiffOutputSet implements TiffConstants
 
         for (int i = 0; i < directories.size(); i++)
         {
-            TiffOutputDirectory directory = (TiffOutputDirectory) directories
+            TiffOutputDirectory directory = directories
                     .get(i);
             result.append(prefix);
             result.append("\t" + "directory " + i + ": "

@@ -106,11 +106,11 @@ public class IcnsImageParser extends ImageParser
         }
 
         IcnsContents contents = readImage(byteSource);
-        List images = IcnsDecoder.decodeAllImages(contents.icnsElements);
+        List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty())
             throw new ImageReadException("No icons in ICNS file");
-        BufferedImage image0 = (BufferedImage) images.get(0);
-        return new ImageInfo("Icns", 32, new ArrayList(), ImageFormat.IMAGE_FORMAT_ICNS,
+        BufferedImage image0 = images.get(0);
+        return new ImageInfo("Icns", 32, new ArrayList<String>(), ImageFormat.IMAGE_FORMAT_ICNS,
                 "ICNS Apple Icon Image", image0.getHeight(), "image/x-icns", images.size(),
                 0, 0, 0, 0, image0.getWidth(), false, true, false, ImageInfo.COLOR_TYPE_RGB,
                 ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN);
@@ -136,10 +136,10 @@ public class IcnsImageParser extends ImageParser
         }
 
         IcnsContents contents = readImage(byteSource);
-        List images = IcnsDecoder.decodeAllImages(contents.icnsElements);
+        List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty())
             throw new ImageReadException("No icons in ICNS file");
-        BufferedImage image0 = (BufferedImage) images.get(0);
+        BufferedImage image0 = images.get(0);
         return new Dimension(image0.getWidth(), image0.getHeight());
     }
 
@@ -246,7 +246,7 @@ public class IcnsImageParser extends ImageParser
             is = byteSource.getInputStream();
             IcnsHeader icnsHeader = readIcnsHeader(is);
 
-            List icnsElementList = new ArrayList();
+            List<IcnsElement> icnsElementList = new ArrayList<IcnsElement>();
             for (int remainingSize = icnsHeader.fileSize - 8;
                 remainingSize > 0; )
             {
@@ -257,7 +257,7 @@ public class IcnsImageParser extends ImageParser
 
             IcnsElement[] icnsElements = new IcnsElement[icnsElementList.size()];
             for (int i = 0; i < icnsElements.length; i++)
-                icnsElements[i] = (IcnsElement) icnsElementList.get(i);
+                icnsElements[i] = icnsElementList.get(i);
 
             return new IcnsContents(icnsHeader, icnsElements);
         }
@@ -288,14 +288,14 @@ public class IcnsImageParser extends ImageParser
             Map params) throws ImageReadException, IOException
     {
         IcnsContents icnsContents = readImage(byteSource);
-        List result = IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
+        List<BufferedImage> result = IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
         if (result.size() > 0)
-            return (BufferedImage) result.get(0);
+            return result.get(0);
         else
             throw new ImageReadException("No icons in ICNS file");
     }
 
-    public List getAllBufferedImages(ByteSource byteSource)
+    public List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
         IcnsContents icnsContents = readImage(byteSource);

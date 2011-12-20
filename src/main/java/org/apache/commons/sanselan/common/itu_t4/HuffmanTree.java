@@ -30,7 +30,7 @@ class HuffmanTree {
         boolean isEmpty = true;
         Object value = null;
     }
-    private List nodes = new ArrayList();
+    private List<Node> nodes = new ArrayList<Node>();
 
     public final void insert(String pattern, Object value) throws HuffmanTreeException {
         int position = 0;
@@ -57,14 +57,14 @@ class HuffmanTree {
         while (position >= nodes.size()) {
             nodes.add(new Node());
         }
-        Node node = (Node) nodes.get(position);
+        Node node = nodes.get(position);
         node.isEmpty = false;
         return node;
     }
     
     public final Object decode(BitInputStreamFlexible bitStream) throws HuffmanTreeException {
         int position = 0;
-        Node node = (Node) nodes.get(0);
+        Node node = nodes.get(0);
         while (node.value == null) {
             int nextBit;
             try {
@@ -80,7 +80,7 @@ class HuffmanTree {
             if (position >= nodes.size()) {
                 throw new HuffmanTreeException("Invalid bit pattern");
             }
-            node = (Node) nodes.get(position);
+            node = nodes.get(position);
             if (node.isEmpty) {
                 throw new HuffmanTreeException("Invalid bit pattern");
             }

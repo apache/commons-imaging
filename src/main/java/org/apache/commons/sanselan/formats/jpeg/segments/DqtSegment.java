@@ -25,7 +25,7 @@ import org.apache.commons.sanselan.ImageReadException;
 
 public class DqtSegment extends Segment
 {
-    public final List quantizationTables = new ArrayList();
+    public final List<QuantizationTable> quantizationTables = new ArrayList<QuantizationTable>();
 
     public static class QuantizationTable
     {

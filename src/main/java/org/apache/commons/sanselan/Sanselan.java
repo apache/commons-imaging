@@ -1073,7 +1073,7 @@ public abstract class Sanselan implements SanselanConstants {
      *            Filename associated with image data (optional).
      * @return A vector of BufferedImages.
      */
-    public static List getAllBufferedImages(InputStream is, String filename)
+    public static List<BufferedImage> getAllBufferedImages(InputStream is, String filename)
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceInputStream(is, filename));
     }
@@ -1089,7 +1089,7 @@ public abstract class Sanselan implements SanselanConstants {
      *            Byte array containing an image file.
      * @return A vector of BufferedImages.
      */
-    public static List getAllBufferedImages(byte bytes[])
+    public static List<BufferedImage> getAllBufferedImages(byte bytes[])
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceArray(bytes));
     }
@@ -1105,12 +1105,12 @@ public abstract class Sanselan implements SanselanConstants {
      *            File containing image data.
      * @return A vector of BufferedImages.
      */
-    public static List getAllBufferedImages(File file)
+    public static List<BufferedImage> getAllBufferedImages(File file)
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceFile(file));
     }
 
-    private static List getAllBufferedImages(ByteSource byteSource)
+    private static List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
 

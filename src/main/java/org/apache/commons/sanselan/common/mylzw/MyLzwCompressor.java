@@ -60,7 +60,7 @@ public class MyLzwCompressor
         InitializeStringTable();
     }
 
-    private final Map map = new HashMap();
+    private final Map<Object, Integer> map = new HashMap<Object, Integer>();
 
     private final void InitializeStringTable()
     {

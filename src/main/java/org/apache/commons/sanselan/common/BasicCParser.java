@@ -112,7 +112,7 @@ public class BasicCParser
     }
 
     public static ByteArrayOutputStream preprocess(InputStream is,
-            StringBuilder firstComment, Map defines)
+            StringBuilder firstComment, Map<String, String> defines)
             throws IOException, ImageReadException
     {
         boolean inString = false;

@@ -159,25 +159,25 @@ public abstract class ImageParser extends BinaryFileParser implements
         return getFormatCompliance(new ByteSourceFile(file));
     }
 
-    public List getAllBufferedImages(ByteSource byteSource)
+    public List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
         BufferedImage bi = getBufferedImage(byteSource, null);
 
-        List result = new ArrayList();
+        List<BufferedImage> result = new ArrayList<BufferedImage>();
 
         result.add(bi);
 
         return result;
     }
 
-    public final List getAllBufferedImages(byte bytes[])
+    public final List<BufferedImage> getAllBufferedImages(byte bytes[])
             throws ImageReadException, IOException
     {
         return getAllBufferedImages(new ByteSourceArray(bytes));
     }
 
-    public final List getAllBufferedImages(File file)
+    public final List<BufferedImage> getAllBufferedImages(File file)
             throws ImageReadException, IOException
     {
         if (!canAcceptExtension(file))

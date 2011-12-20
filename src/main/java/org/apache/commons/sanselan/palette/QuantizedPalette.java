@@ -23,10 +23,10 @@ import org.apache.commons.sanselan.ImageWriteException;
 public class QuantizedPalette extends Palette
 {
     private final int precision;
-    private final List subsets;
+    private final List<ColorSpaceSubset> subsets;
     private final ColorSpaceSubset straight[];
 
-    public QuantizedPalette(List subsets, int precision)
+    public QuantizedPalette(List<ColorSpaceSubset> subsets, int precision)
     {
         this.subsets = subsets;
         this.precision = precision;
@@ -36,7 +36,7 @@ public class QuantizedPalette extends Palette
 
             for (int i = 0; i < subsets.size(); i++)
             {
-                ColorSpaceSubset subset = (ColorSpaceSubset) subsets.get(i);
+                ColorSpaceSubset subset = subsets.get(i);
                 subset.setIndex(i);
 
                 for (int u = subset.mins[0]; u <= subset.maxs[0]; u++)
@@ -74,7 +74,7 @@ public class QuantizedPalette extends Palette
 
     public int getEntry(int index)
     {
-        ColorSpaceSubset subset = (ColorSpaceSubset) subsets.get(index);
+        ColorSpaceSubset subset = subsets.get(index);
         return subset.rgb;
     }
 

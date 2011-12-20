@@ -30,7 +30,7 @@ public class ImageInfo
     private final String formatDetails; // ie version
 
     private final int bitsPerPixel;
-    private final List comments;
+    private final List<String> comments;
 
     private final ImageFormat format;
     private final String formatName;
@@ -72,7 +72,7 @@ public class ImageInfo
     private final String compressionAlgorithm;
 
     public ImageInfo(String formatDetails, int bitsPerPixel,
-            List comments, ImageFormat format, String formatName,
+            List<String> comments, ImageFormat format, String formatName,
             int height, String mimeType, int numberOfImages,
             int physicalHeightDpi, float physicalHeightInch,
             int physicalWidthDpi, float physicalWidthInch, int width,
@@ -116,9 +116,9 @@ public class ImageInfo
      * Returns a list of comments from the image file. <p/> This is mostly
      * obsolete.
      */
-    public List getComments()
+    public List<String> getComments()
     {
-        return new ArrayList(comments);
+        return new ArrayList<String>(comments);
     }
 
     /**
@@ -317,7 +317,7 @@ public class ImageInfo
         pw.println("Comments: " + comments.size());
         for (int i = 0; i < comments.size(); i++)
         {
-            String s = (String) comments.get(i);
+            String s = comments.get(i);
             pw.println("\t" + i + ": '" + s + "'");
 
         }

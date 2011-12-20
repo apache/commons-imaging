@@ -61,8 +61,8 @@
   </prerequisites>
 
   <properties>
-    <maven.compile.source>1.4</maven.compile.source>
-    <maven.compile.target>1.4</maven.compile.target>
+    <maven.compile.source>1.5</maven.compile.source>
+    <maven.compile.target>1.5</maven.compile.target>
     <commons.componentid>sanselan</commons.componentid>
     <commons.release.version>0.98</commons.release.version>
     <commons.jira.id>SANSELAN</commons.jira.id>

@@ -67,7 +67,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
     //        }
     //    }
 
-    private void dumpElements(List elements) throws IOException
+    private void dumpElements(List<TiffElement> elements) throws IOException
     {
         //        try
         //        {
@@ -81,13 +81,13 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
         //        }
     }
 
-    private void dumpElements(ByteSource byteSource, List elements)
+    private void dumpElements(ByteSource byteSource, List<TiffElement> elements)
             throws IOException
     {
         int last = TIFF_HEADER_SIZE;
         for (int i = 0; i < elements.size(); i++)
         {
-            TiffElement element = (TiffElement) elements.get(i);
+            TiffElement element = elements.get(i);
             if (element.offset > last)
             {
                 final int SLICE_SIZE = 32;
@@ -132,16 +132,16 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
             List elements = new ArrayList();
             //            result.add(contents.header); // ?
 
-            List directories = contents.directories;
+            List<TiffDirectory> directories = contents.directories;
             for (int d = 0; d < directories.size(); d++)
             {
-                TiffDirectory directory = (TiffDirectory) directories.get(d);
+                TiffDirectory directory = directories.get(d);
                 elements.add(directory);
 
-                List fields = directory.getDirectoryEntrys();
+                List<TiffField> fields = directory.getDirectoryEntrys();
                 for (int f = 0; f < fields.size(); f++)
                 {
-                    TiffField field = (TiffField) fields.get(f);
+                    TiffField field = fields.get(f);
                     TiffElement oversizeValue = field.getOversizeValueElement();
                     if (oversizeValue != null)
                         elements.add(oversizeValue);

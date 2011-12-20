@@ -173,8 +173,8 @@ public class PsdImageParser extends ImageParser
         return result;
     }
 
-    private List readImageResourceBlocks(byte bytes[],
-            int imageResourceIDs[], int maxBlocksToRead)
+    private List<ImageResourceBlock> readImageResourceBlocks(byte bytes[],
+                                                             int imageResourceIDs[], int maxBlocksToRead)
             throws ImageReadException, IOException
     {
         return readImageResourceBlocks(new ByteArrayInputStream(bytes),
@@ -193,11 +193,11 @@ public class PsdImageParser extends ImageParser
         return false;
     }
 
-    private List readImageResourceBlocks(InputStream is,
-            int imageResourceIDs[], int maxBlocksToRead, int available)
+    private List<ImageResourceBlock> readImageResourceBlocks(InputStream is,
+                                                             int imageResourceIDs[], int maxBlocksToRead, int available)
             throws ImageReadException, IOException
     {
-        List result = new ArrayList();
+        List<ImageResourceBlock> result = new ArrayList<ImageResourceBlock>();
 
         while (available > 0)
         {
@@ -253,8 +253,8 @@ public class PsdImageParser extends ImageParser
         return result;
     }
 
-    private List readImageResourceBlocks(ByteSource byteSource,
-            int imageResourceIDs[], int maxBlocksToRead)
+    private List<ImageResourceBlock> readImageResourceBlocks(ByteSource byteSource,
+                                                             int imageResourceIDs[], int maxBlocksToRead)
             throws ImageReadException, IOException
     {
         InputStream is = null;
@@ -458,13 +458,13 @@ public class PsdImageParser extends ImageParser
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
-        List blocks = readImageResourceBlocks(byteSource,
-                new int[] { IMAGE_RESOURCE_ID_ICC_PROFILE, }, 1);
+        List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
+                new int[]{IMAGE_RESOURCE_ID_ICC_PROFILE,}, 1);
 
         if ((blocks == null) || (blocks.size() < 1))
             return null;
 
-        ImageResourceBlock irb = (ImageResourceBlock) blocks.get(0);
+        ImageResourceBlock irb = blocks.get(0);
         byte bytes[] = irb.data;
         if ((bytes == null) || (bytes.length < 1))
             return null;
@@ -540,7 +540,7 @@ public class PsdImageParser extends ImageParser
         int Width = header.Columns;
         int Height = header.Rows;
 
-        List Comments = new ArrayList();
+        List<String> Comments = new ArrayList<String>();
         // TODO: comments...
 
         int BitsPerPixel = header.Depth * getChannelsPerMode(header.Mode);
@@ -592,11 +592,11 @@ public class PsdImageParser extends ImageParser
     }
 
     // TODO not used
-    private ImageResourceBlock findImageResourceBlock(List blocks, int ID)
+    private ImageResourceBlock findImageResourceBlock(List<ImageResourceBlock> blocks, int ID)
     {
         for (int i = 0; i < blocks.size(); i++)
         {
-            ImageResourceBlock block = (ImageResourceBlock) blocks.get(i);
+            ImageResourceBlock block = blocks.get(i);
 
             if (block.id == ID)
                 return block;
@@ -622,8 +622,8 @@ public class PsdImageParser extends ImageParser
             imageContents.dump(pw);
             imageContents.header.dump(pw);
 
-            List blocks = readImageResourceBlocks(byteSource,
-            // fImageContents.ImageResources,
+            List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
+                    // fImageContents.ImageResources,
                     null, -1);
 
             pw.println("blocks.size(): " + blocks.size());
@@ -631,7 +631,7 @@ public class PsdImageParser extends ImageParser
             // System.out.println("gif.blocks: " + blocks.blocks.size());
             for (int i = 0; i < blocks.size(); i++)
             {
-                ImageResourceBlock block = (ImageResourceBlock) blocks.get(i);
+                ImageResourceBlock block = blocks.get(i);
                 pw.println("\t" + i + " (" + Integer.toHexString(block.id)
                         + ", " + "'"
                         + new String(block.nameData)
@@ -676,8 +676,8 @@ public class PsdImageParser extends ImageParser
         // GraphicControlExtension gce = (GraphicControlExtension) findBlock(
         // fImageContents.blocks, kGraphicControlExtension);
 
-        List blocks = readImageResourceBlocks(byteSource,
-        // fImageContents.ImageResources,
+        List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
+                // fImageContents.ImageResources,
                 null, -1);
 
         int width = header.Columns;
@@ -808,19 +808,19 @@ public class PsdImageParser extends ImageParser
         if (header == null)
             throw new ImageReadException("PSD: Couldn't read Header");
 
-        List blocks = readImageResourceBlocks(byteSource,
-                new int[] { IMAGE_RESOURCE_ID_XMP, }, -1);
+        List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
+                new int[]{IMAGE_RESOURCE_ID_XMP,}, -1);
 
         if ((blocks == null) || (blocks.size() < 1))
             return null;
 
-        List xmpBlocks = new ArrayList();
+        List<ImageResourceBlock> xmpBlocks = new ArrayList<ImageResourceBlock>();
         if (false)
         {
             // TODO: for PSD 7 and later, verify "XMP" name.
             for (int i = 0; i < blocks.size(); i++)
             {
-                ImageResourceBlock block = (ImageResourceBlock) blocks.get(i);
+                ImageResourceBlock block = blocks.get(i);
                 if (!block.getName().equals(BLOCK_NAME_XMP))
                     continue;
                 xmpBlocks.add(block);
@@ -834,7 +834,7 @@ public class PsdImageParser extends ImageParser
             throw new ImageReadException(
                     "PSD contains more than one XMP block.");
 
-        ImageResourceBlock block = (ImageResourceBlock) xmpBlocks.get(0);
+        ImageResourceBlock block = xmpBlocks.get(0);
 
         try
         {

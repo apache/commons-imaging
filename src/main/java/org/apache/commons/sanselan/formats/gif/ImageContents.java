@@ -22,10 +22,10 @@ class ImageContents
 {
     public final GifHeaderInfo gifHeaderInfo;
 
-    public final List blocks;
+    public final List<GifBlock> blocks;
     public final byte globalColorTable[];
 
-    public ImageContents(GifHeaderInfo gifHeaderInfo, byte globalColorTable[], List blocks)
+    public ImageContents(GifHeaderInfo gifHeaderInfo, byte globalColorTable[], List<GifBlock> blocks)
     {
         this.gifHeaderInfo = gifHeaderInfo;
         this.globalColorTable = globalColorTable;
