@@ -17,44 +17,27 @@
 
 package org.apache.commons.sanselan.formats.jpeg.exif;
 
-import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.SanselanConstants;
 import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputField;
-import org.apache.commons.sanselan.util.Debug;
 
 public class WriteTagsTest extends ExifBaseTest implements SanselanConstants
 {
 
-    public void test() throws Exception
+    public void test2SHORTS() throws Exception
     {
-        boolean worked;
+        TiffOutputField.create(
+            TiffConstants.EXIF_TAG_PAGE_NUMBER,
+            BinaryConstants.BYTE_ORDER_LITTLE_ENDIAN,
+            new Integer[] { new Integer(1), new Integer(10) } );
+    }
 
-        // 2 SHORTs
-        worked = true;
-        try {
-            TiffOutputField pageNumber = TiffOutputField.create(
-                TiffConstants.EXIF_TAG_PAGE_NUMBER,
-                BinaryConstants.BYTE_ORDER_LITTLE_ENDIAN,
-                new Integer[] { new Integer(1), new Integer(10) } );
-        } catch (ImageWriteException e) {
-            Debug.debug(e);
-            worked = false;
-        }
-        assertTrue(worked);
-
-        // any number of SHORTS
-        worked = true;
-        try {
-            TiffOutputField gpsAreaInfo = TiffOutputField.create(
-                TiffConstants.TIFF_TAG_BITS_PER_SAMPLE,
-                BinaryConstants.BYTE_ORDER_LITTLE_ENDIAN,
-                new Integer[] { new Integer(1), new Integer(1) } );
-        } catch (ImageWriteException e) {
-            Debug.debug(e);
-            worked = false;
-        }
-        assertTrue(worked);
+    public void testSHORTS() throws Exception
+    {
+        TiffOutputField.create(
+            TiffConstants.TIFF_TAG_BITS_PER_SAMPLE,
+            BinaryConstants.BYTE_ORDER_LITTLE_ENDIAN,
+            new Integer[] { new Integer(1), new Integer(1) } );
     }
 }
