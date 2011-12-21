@@ -16,6 +16,8 @@
  */
 package org.apache.commons.sanselan.common.itu_t4;
 
+import org.apache.commons.sanselan.common.BitArrayOutputStream;
+
 class T4_T6_Tables {
     public static class Entry {
         String bitString;
@@ -24,6 +26,16 @@ class T4_T6_Tables {
         public Entry(String bitString, Integer value) {
             this.bitString = bitString;
             this.value = value;
+        }
+        
+        public void writeBits(BitArrayOutputStream outputStream) {
+            for (int i = 0; i < bitString.length(); i++) {
+                if (bitString.charAt(i) == '0') {
+                    outputStream.writeBit(0);
+                } else {
+                    outputStream.writeBit(1);
+                }
+            }
         }
     }
     

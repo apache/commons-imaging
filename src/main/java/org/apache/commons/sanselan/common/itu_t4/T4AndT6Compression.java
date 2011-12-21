@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
+import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BitArrayOutputStream;
 import org.apache.commons.sanselan.common.BitInputStreamFlexible;
 
@@ -74,6 +75,42 @@ public class T4AndT6Compression {
             controlCodes.insert(T4_T6_Tables.VR3.bitString, T4_T6_Tables.VR3);
         } catch (HuffmanTreeException cannotHappen) {
         }
+    }
+    
+    /**
+     * Compressed with the "Modified Huffman" encoding of section 10 in the TIFF6 specification.
+     * No EOLs, no RTC, rows are padded to end on a byte boundary.
+     * @param uncompressed
+     * @param width
+     * @param height
+     * @return the compressed data
+     * @throws ImageReadException
+     */
+    public static byte[] compressModifiedHuffman(byte[] uncompressed, int width, int height) throws ImageWriteException {
+        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+                new ByteArrayInputStream(uncompressed));
+        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        for (int y = 0; y < height; y++) {
+            int color = WHITE;
+            int runLength = 0;
+            for (int x = 0; x < width; x++) {
+                try {
+                    int nextColor = inputStream.readBits(1);
+                    if (color == nextColor) {
+                        ++runLength;
+                    } else {
+                        writeRunLength(outputStream, runLength, color);
+                        color = nextColor;
+                        runLength = 1;
+                    }
+                } catch (IOException ioException) {
+                    throw new ImageWriteException("Error reading image to compress", ioException);
+                }
+            }
+            writeRunLength(outputStream, runLength, color);
+            outputStream.flush();
+        }
+        return outputStream.toByteArray();
     }
     
     /**
@@ -356,6 +393,47 @@ public class T4AndT6Compression {
             }
         }
         return outputStream.toByteArray();
+    }
+    
+    private static void writeRunLength(BitArrayOutputStream bitStream, int runLength, int color) {
+        final T4_T6_Tables.Entry[] makeUpCodes;
+        final T4_T6_Tables.Entry[] terminatingCodes;
+        if (color == WHITE) {
+            makeUpCodes = T4_T6_Tables.whiteMakeUpCodes;
+            terminatingCodes = T4_T6_Tables.whiteTerminatingCodes;
+        } else {
+            makeUpCodes = T4_T6_Tables.blackMakeUpCodes;
+            terminatingCodes = T4_T6_Tables.blackTerminatingCodes;
+        }
+        while (runLength >= 1792) {
+            T4_T6_Tables.Entry entry = lowerBound(T4_T6_Tables.additionalMakeUpCodes, runLength);
+            entry.writeBits(bitStream);
+            runLength -= entry.value.intValue();
+        }
+        while (runLength >= 64) {
+            T4_T6_Tables.Entry entry = lowerBound(makeUpCodes, runLength);
+            entry.writeBits(bitStream);
+            runLength -= entry.value.intValue();
+        }
+        T4_T6_Tables.Entry terminatingEntry = terminatingCodes[runLength];
+        terminatingEntry.writeBits(bitStream);
+    }
+    
+    private static T4_T6_Tables.Entry lowerBound(T4_T6_Tables.Entry[] entries, int value) {
+        int first = 0;
+        int last = entries.length - 1;
+        do {
+            int middle = (first + last) / 2;
+            if (entries[middle].value.intValue() <= value &&
+                    ((middle + 1) >= entries.length || value < entries[middle + 1].value.intValue())) {
+                return entries[middle];
+            } else if (entries[middle].value.intValue() > value) {
+                last = middle - 1;
+            } else {
+                first = middle + 1;
+            }
+        } while (first < last);
+        return entries[first];
     }
     
     private static int readTotalRunLength(BitInputStreamFlexible bitStream, int color) throws ImageReadException {

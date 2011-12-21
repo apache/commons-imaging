@@ -61,6 +61,7 @@ public interface SanselanConstants
      * Currently only applies to writing TIFF image files.
      * <p>
      * Valid values: TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
+     * TiffConstants.TIFF_COMPRESSION_CCITT_1D,
      * TiffConstants.TIFF_COMPRESSION_LZW,
      * TiffConstants.TIFF_COMPRESSION_PACKBITS.
      * <p>

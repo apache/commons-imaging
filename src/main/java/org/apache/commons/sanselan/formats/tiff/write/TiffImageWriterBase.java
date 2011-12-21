@@ -30,6 +30,7 @@ import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.common.PackBits;
+import org.apache.commons.sanselan.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.sanselan.common.mylzw.MyLzwCompressor;
 import org.apache.commons.sanselan.formats.tiff.TiffElement;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
@@ -256,14 +257,6 @@ public abstract class TiffImageWriterBase implements TiffConstants,
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {
-        // writeImageNew(src, os, params);
-        // }
-        //
-        // public void writeImageNew(BufferedImage src, OutputStream os, Map
-        // params)
-        // throws ImageWriteException, IOException
-        // {
-
         // make copy of params; we'll clear keys as we consume them.
         params = new HashMap(params);
 
@@ -281,15 +274,6 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         int width = src.getWidth();
         int height = src.getHeight();
 
-        // BinaryOutputStream bos = new BinaryOutputStream(os,
-        // WRITE_BYTE_ORDER);
-        //
-        // writeImageFileHeader(bos, WRITE_BYTE_ORDER);
-
-        // List directoryFields = new ArrayList();
-
-        final int photometricInterpretation = 2; // TODO:
-
         int compression = TIFF_COMPRESSION_LZW; // LZW is default
         if (params.containsKey(PARAM_KEY_COMPRESSION))
         {
@@ -303,25 +287,31 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             }
             params.remove(PARAM_KEY_COMPRESSION);
         }
-
-        final int samplesPerPixel = 3; // TODO:
-        final int bitsPerSample = 8; // TODO:
-
-        // int fRowsPerStrip; // TODO:
-        int rowsPerStrip = 8000 / (width * samplesPerPixel); // TODO:
-        rowsPerStrip = Math.max(1, rowsPerStrip); // must have at least one.
-
-        byte strips[][] = getStrips(src, samplesPerPixel, bitsPerSample,
-                rowsPerStrip);
-
-        // int stripCount = (height + fRowsPerStrip - 1) / fRowsPerStrip;
-        // int stripCount = strips.length;
-
         if (params.size() > 0)
         {
             Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
+
+        int samplesPerPixel;
+        int bitsPerSample;
+        int photometricInterpretation;
+        if (compression == TIFF_COMPRESSION_CCITT_1D) {
+            samplesPerPixel = 1;
+            bitsPerSample = 1;
+            photometricInterpretation = 0;
+        } else {
+            samplesPerPixel = 3;
+            bitsPerSample = 8;
+            photometricInterpretation = 2;
+        }
+
+
+        int rowsPerStrip = 64000 / (width * bitsPerSample * samplesPerPixel); // TODO:
+        rowsPerStrip = Math.max(1, rowsPerStrip); // must have at least one.
+
+        byte strips[][] = getStrips(src, samplesPerPixel, bitsPerSample,
+                rowsPerStrip);
 
         // System.out.println("width: " + width);
         // System.out.println("height: " + height);
@@ -329,7 +319,12 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         // System.out.println("fSamplesPerPixel: " + fSamplesPerPixel);
         // System.out.println("stripCount: " + stripCount);
 
-        if (compression == TIFF_COMPRESSION_PACKBITS)
+        if (compression == TIFF_COMPRESSION_CCITT_1D)
+        {
+            for (int i = 0; i < strips.length; i++)
+                strips[i] = T4AndT6Compression.compressModifiedHuffman(strips[i], width,
+                        strips[i].length / ((width + 7) / 8));
+        } else if (compression == TIFF_COMPRESSION_PACKBITS)
         {
             for (int i = 0; i < strips.length; i++)
                 strips[i] = new PackBits().compress(strips[i]);
@@ -352,18 +347,12 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             // do nothing.
         } else
             throw new ImageWriteException(
-                    "Invalid compression parameter (Only LZW, Packbits and uncompressed supported).");
+                    "Invalid compression parameter (Only CCITT 1D, LZW, Packbits and uncompressed supported).");
 
         TiffElement.DataElement imageData[] = new TiffElement.DataElement[strips.length];
         for (int i = 0; i < strips.length; i++)
             imageData[i] = new TiffImageData.Data(0, strips[i].length,
                     strips[i]);
-
-        // int stripOffsets[] = new int[stripCount];
-        // int stripByteCounts[] = new int[stripCount];
-        //
-        // for (int i = 0; i < strips.length; i++)
-        // stripByteCounts[i] = strips[i].length;
 
         TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
         TiffOutputDirectory directory = outputSet.addRootDirectory();
@@ -407,11 +396,20 @@ public abstract class TiffImageWriterBase implements TiffConstants,
                                 new int[] { samplesPerPixel, }, byteOrder));
                 directory.add(field);
             }
+            
+            if (samplesPerPixel == 3)
             {
                 TiffOutputField field = new TiffOutputField(
                         TIFF_TAG_BITS_PER_SAMPLE, FIELD_TYPE_SHORT, 3,
                         FIELD_TYPE_SHORT.writeData(new int[] { bitsPerSample,
                                 bitsPerSample, bitsPerSample, }, byteOrder));
+                directory.add(field);
+            } else if (samplesPerPixel == 1)
+            {
+                TiffOutputField field = new TiffOutputField(
+                        TIFF_TAG_BITS_PER_SAMPLE, FIELD_TYPE_SHORT, 1,
+                        FIELD_TYPE_SHORT.writeData(
+                                new int[] { bitsPerSample, }, byteOrder));
                 directory.add(field);
             }
             // {
@@ -499,9 +497,9 @@ public abstract class TiffImageWriterBase implements TiffConstants,
                 int rowsInStrip = Math.min(rowsPerStrip, remaining_rows);
                 remaining_rows -= rowsInStrip;
 
-                int bitsInStrip = bitsPerSample * rowsInStrip * width
-                        * samplesPerPixel;
-                int bytesInStrip = (bitsInStrip + 7) / 8;
+                int bitsInRow = bitsPerSample * samplesPerPixel * width;
+                int bytesPerRow = (bitsInRow + 7) / 8;
+                int bytesInStrip = rowsInStrip * bytesPerRow;
 
                 byte uncompressed[] = new byte[bytesInStrip];
 
@@ -511,6 +509,8 @@ public abstract class TiffImageWriterBase implements TiffConstants,
 
                 for (; (y < height) && (y < stop); y++)
                 {
+                    int bitCache = 0;
+                    int bitsInCache = 0;
                     for (int x = 0; x < width; x++)
                     {
                         int rgb = src.getRGB(x, y);
@@ -518,9 +518,34 @@ public abstract class TiffImageWriterBase implements TiffConstants,
                         int green = 0xff & (rgb >> 8);
                         int blue = 0xff & (rgb >> 0);
 
-                        uncompressed[counter++] = (byte) red;
-                        uncompressed[counter++] = (byte) green;
-                        uncompressed[counter++] = (byte) blue;
+                        if (bitsPerSample == 1)
+                        {
+                            int sample = (red + green + blue) / 3;
+                            if (sample > 127)
+                                sample = 0;
+                            else
+                                sample = 1;
+                            bitCache <<= 1;
+                            bitCache |= sample;
+                            bitsInCache++;
+                            if (bitsInCache == 8)
+                            {
+                                uncompressed[counter++] = (byte) bitCache;
+                                bitCache = 0;
+                                bitsInCache = 0;
+                            }
+                        }
+                        else
+                        {
+                            uncompressed[counter++] = (byte) red;
+                            uncompressed[counter++] = (byte) green;
+                            uncompressed[counter++] = (byte) blue;
+                        }
+                    }
+                    if (bitsInCache > 0)
+                    {
+                        bitCache <<= (8 - bitsInCache);
+                        uncompressed[counter++] = (byte) bitCache;
                     }
                 }
 
