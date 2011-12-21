@@ -270,6 +270,13 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             xmpXml = (String) params.get(PARAM_KEY_XMP_XML);
             params.remove(PARAM_KEY_XMP_XML);
         }
+        
+        Integer xResolution = Integer.valueOf(72);
+        if (params.containsKey(PARAM_KEY_X_RESOLUTION))
+            xResolution = (Integer) params.remove(PARAM_KEY_X_RESOLUTION);
+        Integer yResolution = Integer.valueOf(72);
+        if (params.containsKey(PARAM_KEY_Y_RESOLUTION))
+            yResolution = (Integer) params.remove(PARAM_KEY_Y_RESOLUTION);
 
         int width = src.getWidth();
         int height = src.getHeight();
@@ -443,20 +450,18 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             }
 
             {
-                int xResolution = 72;
                 TiffOutputField field = new TiffOutputField(
                         TIFF_TAG_XRESOLUTION, FIELD_TYPE_RATIONAL, 1,
                         FIELD_TYPE_RATIONAL
-                                .writeData(xResolution, 1, byteOrder));
+                                .writeData(xResolution.intValue(), 1, byteOrder));
                 directory.add(field);
             }
 
             {
-                int yResolution = 72;
                 TiffOutputField field = new TiffOutputField(
                         TIFF_TAG_YRESOLUTION, FIELD_TYPE_RATIONAL, 1,
                         FIELD_TYPE_RATIONAL
-                                .writeData(yResolution, 1, byteOrder));
+                                .writeData(yResolution.intValue(), 1, byteOrder));
                 directory.add(field);
             }
 

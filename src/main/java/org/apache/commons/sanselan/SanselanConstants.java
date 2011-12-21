@@ -105,5 +105,20 @@ public interface SanselanConstants
      * <p>
      */
     public static final String PARAM_KEY_XMP_XML = "XMP_XML";
+    
+    /**
+     * Parameter key. Used in write operations to indicate the desired
+     * x resolution to write into the image.
+     * <p>
+     * Valid values: any Integer
+     */
+    public static final String PARAM_KEY_X_RESOLUTION = "X_RESOLUTION";
 
+    /**
+     * Parameter key. Used in write operations to indicate the desired
+     * y resolution to write into the image.
+     * <p>
+     * Valid values: any Integer
+     */
+    public static final String PARAM_KEY_Y_RESOLUTION = "Y_RESOLUTION";
 }
