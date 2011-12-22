@@ -71,6 +71,14 @@ public class BitArrayOutputStream {
         }
     }
 
+    public int getBitsAvailableInCurrentByte() {
+        int count = 0;
+        for (int mask = cacheMask; mask != 0; mask >>>= 1) {
+            ++count;
+        }
+        return count;
+    }
+    
     private void writeByte(int b) {
         if (bytesWritten >= buffer.length) {
             byte[] bigger = new byte[buffer.length * 2];

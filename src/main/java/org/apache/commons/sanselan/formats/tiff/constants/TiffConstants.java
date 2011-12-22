@@ -45,4 +45,27 @@ public interface TiffConstants
     public static final int TIFF_COMPRESSION_UNCOMPRESSED_2 = 32771;
     public static final int TIFF_COMPRESSION_PACKBITS = 32773;
 
+    /**
+     * Parameter key. Used in write operations to indicate the desired
+     * T.4 options to use when using TIFF_COMPRESSION_CCITT_GROUP_3.
+     * <p>
+     * Valid values: any Integer containing a mixture of the
+     * TIFF_FLAG_T4_OPTIONS_2D, TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE,
+     * and TIFF_FLAG_T4_OPTIONS_FILL flags.
+     */
+    public static final String PARAM_KEY_T4_OPTIONS = "T4_OPTIONS";
+
+    /**
+     * Parameter key. Used in write operations to indicate the desired
+     * T.6 options to use when using TIFF_COMPRESSION_CCITT_GROUP_4.
+     * <p>
+     * Valid values: any Integer containing either zero or
+     * TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE.
+     */
+    public static final String PARAM_KEY_T6_OPTIONS = "T6_OPTIONS";
+
+    public static final int TIFF_FLAG_T4_OPTIONS_2D = 1;
+    public static final int TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE = 2;
+    public static final int TIFF_FLAG_T4_OPTIONS_FILL = 4;
+    public static final int TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE = 2;
 }

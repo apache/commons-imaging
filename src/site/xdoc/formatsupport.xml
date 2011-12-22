@@ -160,10 +160,9 @@ limitations under the License.
         Supported through version 6.0. TIFFs is a open-ended container format, so it's not
         possible to support every possibly variation.
         Supports Bi-Level, Palette/Indexed, RGB, CMYK, YCbCr, CIELab and LOGLUV images.
-        Supports reading LZW, CCITT Modified Huffman/T.4/T.6 and Packbits/RLE compression,
-        and writing LZW, CCITT Modified Huffman, and Packbits/RLE compression.
-        Notably missing other forms of compression though, including JPEG.
-        Supports Tiled images.
+        Supports reading and writing LZW, CCITT Modified Huffman/Group 3/Group 4,
+        and Packbits/RLE compression. Notably missing other forms of compression though,
+        including JPEG. Supports reading Tiled images.
     </td>
     <td>
        <a href="http://partners.adobe.com/public/developer/tiff/index.html">Adobe</a>

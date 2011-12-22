@@ -254,7 +254,6 @@ class T4_T6_Tables {
     public static final Entry EOL14 = new Entry("00000000000001", Integer.valueOf(0));
     public static final Entry EOL15 = new Entry("000000000000001", Integer.valueOf(0));
     public static final Entry EOL16 = new Entry("0000000000000001", Integer.valueOf(0));
-    // FIXME: why are there EOLs with more than 16 bits?
     public static final Entry EOL17 = new Entry("00000000000000001", Integer.valueOf(0));
     public static final Entry EOL18 = new Entry("000000000000000001", Integer.valueOf(0));
     public static final Entry EOL19 = new Entry("0000000000000000001", Integer.valueOf(0));

@@ -18,6 +18,7 @@ package org.apache.commons.sanselan.common.itu_t4;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
@@ -77,6 +78,30 @@ public class T4AndT6Compression {
         }
     }
     
+    private static void compress1DLine(BitInputStreamFlexible inputStream, BitArrayOutputStream outputStream,
+            int[] referenceLine, int width) throws ImageWriteException {
+        int color = WHITE;
+        int runLength = 0;
+        for (int x = 0; x < width; x++) {
+            try {
+                int nextColor = inputStream.readBits(1);
+                if (referenceLine != null) {
+                    referenceLine[x] = nextColor;
+                }
+                if (color == nextColor) {
+                    ++runLength;
+                } else {
+                    writeRunLength(outputStream, runLength, color);
+                    color = nextColor;
+                    runLength = 1;
+                }
+            } catch (IOException ioException) {
+                throw new ImageWriteException("Error reading image to compress", ioException);
+            }
+        }
+        writeRunLength(outputStream, runLength, color);
+    }
+    
     /**
      * Compressed with the "Modified Huffman" encoding of section 10 in the TIFF6 specification.
      * No EOLs, no RTC, rows are padded to end on a byte boundary.
@@ -91,23 +116,8 @@ public class T4AndT6Compression {
                 new ByteArrayInputStream(uncompressed));
         BitArrayOutputStream outputStream = new BitArrayOutputStream();
         for (int y = 0; y < height; y++) {
-            int color = WHITE;
-            int runLength = 0;
-            for (int x = 0; x < width; x++) {
-                try {
-                    int nextColor = inputStream.readBits(1);
-                    if (color == nextColor) {
-                        ++runLength;
-                    } else {
-                        writeRunLength(outputStream, runLength, color);
-                        color = nextColor;
-                        runLength = 1;
-                    }
-                } catch (IOException ioException) {
-                    throw new ImageWriteException("Error reading image to compress", ioException);
-                }
-            }
-            writeRunLength(outputStream, runLength, color);
+            compress1DLine(inputStream, outputStream, null, width);
+            inputStream.flushCache();
             outputStream.flush();
         }
         return outputStream.toByteArray();
@@ -148,6 +158,33 @@ public class T4AndT6Compression {
         return outputStream.toByteArray();
     }
 
+    public static byte[] compressT4_1D(byte[] uncompressed, int width, int height, boolean hasFill) throws ImageWriteException {
+        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+                new ByteArrayInputStream(uncompressed));
+        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        if (hasFill) {
+            T4_T6_Tables.EOL16.writeBits(outputStream);
+        } else {
+            T4_T6_Tables.EOL.writeBits(outputStream);
+        }
+        for (int y = 0; y < height; y++) {
+            compress1DLine(inputStream, outputStream, null, width);
+            if (hasFill) {
+                int bitsAvailable = outputStream.getBitsAvailableInCurrentByte();
+                if (bitsAvailable < 4) {
+                    outputStream.flush();
+                    bitsAvailable = 8;
+                }
+                for (; bitsAvailable > 4; bitsAvailable--) {
+                    outputStream.writeBit(0);
+                }
+            }
+            T4_T6_Tables.EOL.writeBits(outputStream);
+            inputStream.flushCache();
+        }
+        return outputStream.toByteArray();
+    }
+    
     /**
      * Decompresses T.4 1D encoded data. EOL at the beginning and after each row,
      * can be preceded by fill bits to fit on a byte boundary, no RTC.
@@ -166,14 +203,7 @@ public class T4AndT6Compression {
             int rowLength;
             try {
                 entry = (T4_T6_Tables.Entry) controlCodes.decode(inputStream);
-                if (entry != T4_T6_Tables.EOL &&
-                        entry != T4_T6_Tables.EOL13 &&
-                        entry != T4_T6_Tables.EOL14 &&
-                        entry != T4_T6_Tables.EOL15 &&
-                        entry != T4_T6_Tables.EOL16 &&
-                        entry != T4_T6_Tables.EOL17 &&
-                        entry != T4_T6_Tables.EOL18 &&
-                        entry != T4_T6_Tables.EOL19) {
+                if (!isEOL(entry, hasFill)) {
                     throw new ImageReadException("Expected EOL not found");
                 }
                 int color = WHITE;
@@ -198,6 +228,108 @@ public class T4AndT6Compression {
         return outputStream.toByteArray();
     }
 
+    public static byte[] compressT4_2D(byte[] uncompressed, int width, int height, boolean hasFill, int parameterK) throws ImageWriteException {
+        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+                new ByteArrayInputStream(uncompressed));
+        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        int[] referenceLine = new int[width];
+        int[] codingLine = new int[width];
+        int kCounter = 0;
+        if (hasFill) {
+            T4_T6_Tables.EOL16.writeBits(outputStream);
+        } else {
+            T4_T6_Tables.EOL.writeBits(outputStream);
+        }
+        for (int y = 0; y < height; y++) {
+            if (kCounter > 0) {
+                // 2D
+                outputStream.writeBit(0);
+                for (int i = 0; i < width; i++) {
+                    try {
+                        codingLine[i] = inputStream.readBits(1);
+                    } catch (IOException ioException) {
+                        throw new ImageWriteException("Error reading image to compress", ioException);
+                    }
+                }
+                int codingA0Color = WHITE;
+                int referenceA0Color = WHITE;
+                int a1 = nextChangingElement(codingLine, codingA0Color, 0);
+                int b1 = nextChangingElement(referenceLine, referenceA0Color, 0);
+                int b2 = nextChangingElement(referenceLine, 1 - referenceA0Color, b1 + 1);
+                for (int a0 = 0; a0 < width; ) {
+                    if (b2 < a1) {
+                        T4_T6_Tables.P.writeBits(outputStream);
+                        a0 = b2;
+                    } else {
+                        int a1b1 = a1 - b1;
+                        if (-3 <= a1b1 && a1b1 <= 3) {
+                            T4_T6_Tables.Entry entry;
+                            if (a1b1 == -3) {
+                                entry = T4_T6_Tables.VL3;
+                            } else if (a1b1 == -2) {
+                                entry = T4_T6_Tables.VL2;
+                            } else if (a1b1 == -1) {
+                                entry = T4_T6_Tables.VL1;
+                            } else if (a1b1 == 0) {
+                                entry = T4_T6_Tables.V0;
+                            } else if (a1b1 == 1) {
+                                entry = T4_T6_Tables.VR1;
+                            } else if (a1b1 == 2) {
+                                entry = T4_T6_Tables.VR2;
+                            } else {
+                                entry = T4_T6_Tables.VR3;
+                            }
+                            entry.writeBits(outputStream);
+                            codingA0Color = 1 - codingA0Color;
+                            a0 = a1;
+                        } else {
+                            int a2 = nextChangingElement(codingLine, 1 - codingA0Color, a1 + 1);
+                            int a0a1 = a1 - a0;
+                            int a1a2 = a2 - a1;
+                            T4_T6_Tables.H.writeBits(outputStream);
+                            writeRunLength(outputStream, a0a1, codingA0Color);
+                            writeRunLength(outputStream, a1a2, 1 - codingA0Color);
+                            a0 = a2;
+                        }
+                    }
+                    referenceA0Color = changingElementAt(referenceLine, a0);
+                    a1 = nextChangingElement(codingLine, codingA0Color, a0 + 1);
+                    if (codingA0Color == referenceA0Color) {
+                        b1 = nextChangingElement(referenceLine, referenceA0Color, a0 + 1);
+                    } else {
+                        b1 = nextChangingElement(referenceLine, referenceA0Color, a0 + 1);
+                        b1 = nextChangingElement(referenceLine, 1 - referenceA0Color, b1 + 1);
+                    }
+                    b2 = nextChangingElement(referenceLine, 1 - codingA0Color, b1 + 1);
+                }
+                int[] swap = referenceLine;
+                referenceLine = codingLine;
+                codingLine = swap;
+            } else {
+                // 1D
+                outputStream.writeBit(1);
+                compress1DLine(inputStream, outputStream, referenceLine, width);
+            }
+            if (hasFill) {
+                int bitsAvailable = outputStream.getBitsAvailableInCurrentByte();
+                if (bitsAvailable < 4) {
+                    outputStream.flush();
+                    bitsAvailable = 8;
+                }
+                for (; bitsAvailable > 4; bitsAvailable--) {
+                    outputStream.writeBit(0);
+                }
+            }
+            T4_T6_Tables.EOL.writeBits(outputStream);
+            kCounter++;
+            if (kCounter == parameterK) {
+                kCounter = 0;
+            }
+            inputStream.flushCache();
+        }
+        return outputStream.toByteArray();
+    }
+    
     /**
      * Decompressed T.4 2D encoded data. EOL at the beginning and after each row,
      * can be preceded by fill bits to fit on a byte boundary, and is succeeded
@@ -219,14 +351,7 @@ public class T4AndT6Compression {
             int rowLength = 0;
             try {
                 entry = (T4_T6_Tables.Entry) controlCodes.decode(inputStream);
-                if (entry != T4_T6_Tables.EOL &&
-                        entry != T4_T6_Tables.EOL13 &&
-                        entry != T4_T6_Tables.EOL14 &&
-                        entry != T4_T6_Tables.EOL15 &&
-                        entry != T4_T6_Tables.EOL16 &&
-                        entry != T4_T6_Tables.EOL17 &&
-                        entry != T4_T6_Tables.EOL18 &&
-                        entry != T4_T6_Tables.EOL19) {
+                if (!isEOL(entry, hasFill)) {
                     throw new ImageReadException("Expected EOL not found");
                 }
                 int tagBit = inputStream.readBits(1);
@@ -312,6 +437,82 @@ public class T4AndT6Compression {
         return outputStream.toByteArray();
     }
 
+    public static byte[] compressT6(byte[] uncompressed, int width, int height) throws ImageWriteException {
+        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+                new ByteArrayInputStream(uncompressed));
+        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        int[] referenceLine = new int[width];
+        int[] codingLine = new int[width];
+        for (int y = 0; y < height; y++) {
+            for (int i = 0; i < width; i++) {
+                try {
+                    codingLine[i] = inputStream.readBits(1);
+                } catch (IOException ioException) {
+                    throw new ImageWriteException("Error reading image to compress", ioException);
+                }
+            }
+            int codingA0Color = WHITE;
+            int referenceA0Color = WHITE;
+            int a1 = nextChangingElement(codingLine, codingA0Color, 0);
+            int b1 = nextChangingElement(referenceLine, referenceA0Color, 0);
+            int b2 = nextChangingElement(referenceLine, 1 - referenceA0Color, b1 + 1);
+            for (int a0 = 0; a0 < width; ) {
+                if (b2 < a1) {
+                    T4_T6_Tables.P.writeBits(outputStream);
+                    a0 = b2;
+                } else {
+                    int a1b1 = a1 - b1;
+                    if (-3 <= a1b1 && a1b1 <= 3) {
+                        T4_T6_Tables.Entry entry;
+                        if (a1b1 == -3) {
+                            entry = T4_T6_Tables.VL3;
+                        } else if (a1b1 == -2) {
+                            entry = T4_T6_Tables.VL2;
+                        } else if (a1b1 == -1) {
+                            entry = T4_T6_Tables.VL1;
+                        } else if (a1b1 == 0) {
+                            entry = T4_T6_Tables.V0;
+                        } else if (a1b1 == 1) {
+                            entry = T4_T6_Tables.VR1;
+                        } else if (a1b1 == 2) {
+                            entry = T4_T6_Tables.VR2;
+                        } else {
+                            entry = T4_T6_Tables.VR3;
+                        }
+                        entry.writeBits(outputStream);
+                        codingA0Color = 1 - codingA0Color;
+                        a0 = a1;
+                    } else {
+                        int a2 = nextChangingElement(codingLine, 1 - codingA0Color, a1 + 1);
+                        int a0a1 = a1 - a0;
+                        int a1a2 = a2 - a1;
+                        T4_T6_Tables.H.writeBits(outputStream);
+                        writeRunLength(outputStream, a0a1, codingA0Color);
+                        writeRunLength(outputStream, a1a2, 1 - codingA0Color);
+                        a0 = a2;
+                    }
+                }
+                referenceA0Color = changingElementAt(referenceLine, a0);
+                a1 = nextChangingElement(codingLine, codingA0Color, a0 + 1);
+                if (codingA0Color == referenceA0Color) {
+                    b1 = nextChangingElement(referenceLine, referenceA0Color, a0 + 1);
+                } else {
+                    b1 = nextChangingElement(referenceLine, referenceA0Color, a0 + 1);
+                    b1 = nextChangingElement(referenceLine, 1 - referenceA0Color, b1 + 1);
+                }
+                b2 = nextChangingElement(referenceLine, 1 - codingA0Color, b1 + 1);
+            }
+            int[] swap = referenceLine;
+            referenceLine = codingLine;
+            codingLine = swap;
+            inputStream.flushCache();
+        }
+        // EOFB
+        T4_T6_Tables.EOL.writeBits(outputStream);
+        T4_T6_Tables.EOL.writeBits(outputStream);
+        return outputStream.toByteArray();
+    }
+    
     /**
      * Decompress T.6 encoded data. No EOLs, except for 2 consecutive ones at the end
      * (the EOFB, end of fax block). No RTC. No fill bits anywhere. All data is 2D encoded.
@@ -393,6 +594,23 @@ public class T4AndT6Compression {
             }
         }
         return outputStream.toByteArray();
+    }
+    
+    private static boolean isEOL(T4_T6_Tables.Entry entry, boolean hasFill) {
+        if (entry == T4_T6_Tables.EOL) {
+            return true;
+        }
+        if (hasFill) {
+            return entry == T4_T6_Tables.EOL13 ||
+                    entry == T4_T6_Tables.EOL14 ||
+                    entry == T4_T6_Tables.EOL15 ||
+                    entry == T4_T6_Tables.EOL16 ||
+                    entry == T4_T6_Tables.EOL17 ||
+                    entry == T4_T6_Tables.EOL18 ||
+                    entry == T4_T6_Tables.EOL19;            
+        } else {
+            return false;
+        }
     }
     
     private static void writeRunLength(BitArrayOutputStream bitStream, int runLength, int color) {

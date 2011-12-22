@@ -106,7 +106,7 @@ public final class DataReaderTiled extends DataReader
             byte compressed[] = imageData.tiles[tile].data;
 
             byte decompressed[] = decompress(compressed, compression,
-                    bytesPerTile);
+                    bytesPerTile, tileWidth, tileLength);
 
             interpretTile(bi, decompressed, x, y);
 

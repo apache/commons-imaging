@@ -107,14 +107,14 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
     private int count = 0;
 
     protected byte[] decompress(byte compressed[], int compression,
-            int expected_size) throws ImageReadException, IOException
+            int expected_size, int tileWidth, int tileHeight) throws ImageReadException, IOException
     {
         switch (compression)
         {
             case TIFF_COMPRESSION_UNCOMPRESSED : // None;
                 return compressed;
             case TIFF_COMPRESSION_CCITT_1D : // CCITT Group 3 1-Dimensional Modified Huffman run-length encoding.
-                return T4AndT6Compression.decompressModifiedHuffman(compressed, width, height);
+                return T4AndT6Compression.decompressModifiedHuffman(compressed, tileWidth, tileHeight);
             case TIFF_COMPRESSION_CCITT_GROUP_3 :
             {
                 int t4Options = 0;
@@ -122,16 +122,16 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
                 if (field != null) {
                     t4Options = field.getIntValue();
                 }
-                boolean is2D = (t4Options & 1) != 0;
-                boolean usesUncompressedMode = (t4Options & 2) != 0;
+                boolean is2D = (t4Options & TIFF_FLAG_T4_OPTIONS_2D) != 0;
+                boolean usesUncompressedMode = (t4Options & TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE) != 0;
                 if (usesUncompressedMode) {
                     throw new ImageReadException("T.4 compression with the uncompressed mode extension is not yet supported");
                 }
-                boolean hasFillBitsBeforeEOL = (t4Options & 4) != 0;
+                boolean hasFillBitsBeforeEOL = (t4Options & TIFF_FLAG_T4_OPTIONS_FILL) != 0;
                 if (is2D) {
-                    return T4AndT6Compression.decompressT4_2D(compressed, width, height, hasFillBitsBeforeEOL);
+                    return T4AndT6Compression.decompressT4_2D(compressed, tileWidth, tileHeight, hasFillBitsBeforeEOL);
                 } else {
-                    return T4AndT6Compression.decompressT4_1D(compressed, width, height, hasFillBitsBeforeEOL);
+                    return T4AndT6Compression.decompressT4_1D(compressed, tileWidth, tileHeight, hasFillBitsBeforeEOL);
                 }
             }
             case TIFF_COMPRESSION_CCITT_GROUP_4 :
@@ -141,11 +141,11 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
                 if (field != null) {
                     t6Options = field.getIntValue();
                 }
-                boolean usesUncompressedMode = (t6Options & 2) != 0;
+                boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
                 if (usesUncompressedMode) {
                     throw new ImageReadException("T.6 compression with the uncompressed mode extension is not yet supported");
                 }
-                return T4AndT6Compression.decompressT6(compressed, width, height);
+                return T4AndT6Compression.decompressT6(compressed, tileWidth, tileHeight);
             }
             case TIFF_COMPRESSION_LZW : // LZW
             {

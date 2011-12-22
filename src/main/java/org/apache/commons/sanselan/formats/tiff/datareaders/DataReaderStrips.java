@@ -93,7 +93,7 @@ public final class DataReaderStrips extends DataReader
             byte compressed[] = imageData.strips[strip].data;
 
             byte decompressed[] = decompress(compressed, compression,
-                    bytesPerStrip);
+                    bytesPerStrip, width, rowsInThisStrip);
 
             interpretStrip(bi, decompressed, pixelsPerStrip);
 

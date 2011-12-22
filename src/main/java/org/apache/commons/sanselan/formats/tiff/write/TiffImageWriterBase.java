@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
@@ -263,7 +264,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT))
             params.remove(PARAM_KEY_FORMAT);
-
+        
         String xmpXml = null;
         if (params.containsKey(PARAM_KEY_XMP_XML))
         {
@@ -294,6 +295,9 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             }
             params.remove(PARAM_KEY_COMPRESSION);
         }
+        HashMap rawParams = new HashMap(params);
+        params.remove(PARAM_KEY_T4_OPTIONS);
+        params.remove(PARAM_KEY_T6_OPTIONS);
         if (params.size() > 0)
         {
             Object firstKey = params.keySet().iterator().next();
@@ -303,7 +307,8 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         int samplesPerPixel;
         int bitsPerSample;
         int photometricInterpretation;
-        if (compression == TIFF_COMPRESSION_CCITT_1D) {
+        if (compression == TIFF_COMPRESSION_CCITT_1D || compression == TIFF_COMPRESSION_CCITT_GROUP_3 ||
+                compression == TIFF_COMPRESSION_CCITT_GROUP_4) {
             samplesPerPixel = 1;
             bitsPerSample = 1;
             photometricInterpretation = 0;
@@ -326,10 +331,47 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         // System.out.println("fSamplesPerPixel: " + fSamplesPerPixel);
         // System.out.println("stripCount: " + stripCount);
 
+        int t4Options = 0;
+        int t6Options = 0;
         if (compression == TIFF_COMPRESSION_CCITT_1D)
         {
             for (int i = 0; i < strips.length; i++)
                 strips[i] = T4AndT6Compression.compressModifiedHuffman(strips[i], width,
+                        strips[i].length / ((width + 7) / 8));
+        } else if (compression == TIFF_COMPRESSION_CCITT_GROUP_3) {
+            Integer t4Parameter = (Integer) rawParams.get(PARAM_KEY_T4_OPTIONS);
+            if (t4Parameter != null) {
+                t4Options = t4Parameter.intValue();
+            }
+            t4Options &= 0x7;
+            boolean is2D = (t4Options & 1) != 0;
+            boolean usesUncompressedMode = (t4Options & 2) != 0;
+            if (usesUncompressedMode) {
+                throw new ImageWriteException("T.4 compression with the uncompressed mode extension is not yet supported");
+            }
+            boolean hasFillBitsBeforeEOL = (t4Options & 4) != 0;
+            for (int i = 0; i < strips.length; i++) {
+                if (is2D) {
+                    strips[i] = T4AndT6Compression.compressT4_2D(strips[i], width,
+                            strips[i].length / ((width + 7) / 8), hasFillBitsBeforeEOL, rowsPerStrip);
+                } else {
+                    strips[i] = T4AndT6Compression.compressT4_1D(strips[i], width,
+                            strips[i].length / ((width + 7) / 8), hasFillBitsBeforeEOL);
+                }
+            }
+        } else if (compression == TIFF_COMPRESSION_CCITT_GROUP_4)
+        {
+            Integer t6Parameter = (Integer) rawParams.get(PARAM_KEY_T6_OPTIONS);
+            if (t6Parameter != null) {
+                t6Options = t6Parameter.intValue();
+            }
+            t6Options &= 0x4;
+            boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
+            if (usesUncompressedMode) {
+                throw new ImageWriteException("T.6 compression with the uncompressed mode extension is not yet supported");
+            }
+            for (int i = 0; i < strips.length; i++)
+                strips[i] = T4AndT6Compression.compressT6(strips[i], width,
                         strips[i].length / ((width + 7) / 8));
         } else if (compression == TIFF_COMPRESSION_PACKBITS)
         {
@@ -354,7 +396,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             // do nothing.
         } else
             throw new ImageWriteException(
-                    "Invalid compression parameter (Only CCITT 1D, LZW, Packbits and uncompressed supported).");
+                    "Invalid compression parameter (Only CCITT 1D/Group 3/Group 4, LZW, Packbits and uncompressed supported).");
 
         TiffElement.DataElement imageData[] = new TiffElement.DataElement[strips.length];
         for (int i = 0; i < strips.length; i++)
@@ -464,6 +506,22 @@ public abstract class TiffImageWriterBase implements TiffConstants,
                                 .writeData(yResolution.intValue(), 1, byteOrder));
                 directory.add(field);
             }
+            
+            if (t4Options != 0) {
+                TiffOutputField field = new TiffOutputField(
+                        TIFF_TAG_T4_OPTIONS, FIELD_TYPE_LONG, 1,
+                        FIELD_TYPE_LONG
+                                .writeData(Integer.valueOf(t4Options), byteOrder));
+                directory.add(field);
+            }
+            if (t6Options != 0) {
+                TiffOutputField field = new TiffOutputField(
+                        TIFF_TAG_T6_OPTIONS, FIELD_TYPE_LONG, 1,
+                        FIELD_TYPE_LONG
+                                .writeData(Integer.valueOf(t6Options), byteOrder));
+                directory.add(field);
+            }
+
 
             if (null != xmpXml)
             {

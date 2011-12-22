@@ -42,8 +42,7 @@ Release 0.98
  * SANSELAN-46 - allowed all Sanselan tests to pass.
  * SANSELAN-59 - deleted confusing redefinition of some constants.
  * Altered TIFF tag searching to do an exact directory match when possible.
- * SANSELAN-48 - added support for reading CCITT Modified Huffman, T.4 and T.6 images,
-        and writing CCITT Modified Huffman images.
+ * SANSELAN-48 - added support for reading and writing CCITT Modified Huffman, Group 3 and Group 4 images.
 
 Release 0.97
 ------------
