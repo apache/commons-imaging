@@ -18,7 +18,6 @@
 package org.apache.commons.sanselan.formats.tiff;
 
 import java.awt.image.BufferedImage;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -198,10 +197,6 @@ public class TiffCcittTest extends TiffBaseTest {
                 params.put(SanselanConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 4);
                 byte[] compressed = Sanselan.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
-                FileOutputStream fos = new FileOutputStream("/tmp/test.tiff");
-                fos.write(compressed);
-                fos.close();
-
                 BufferedImage result = Sanselan.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
