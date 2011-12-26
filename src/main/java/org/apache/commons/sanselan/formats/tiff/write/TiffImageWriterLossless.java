@@ -142,6 +142,19 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
                 for (int f = 0; f < fields.size(); f++)
                 {
                     TiffField field = fields.get(f);
+                    if (field.tag == EXIF_TAG_MAKER_NOTE.tag) {
+                        // Some maker notes reference values stored
+                        // inside the maker note itself
+                        // using addresses relative to the beginning
+                        // of the TIFF file, making it impossible
+                        // to move the note to a different location.
+                        // To avoid corrupting these maker notes,
+                        // pretend all maker notes are a gap in the file
+                        // that must be preserved, so the copy that
+                        // will be written later will reference
+                        // the old copy's values. Happy days.
+                        continue;
+                    }
                     TiffElement oversizeValue = field.getOversizeValueElement();
                     if (oversizeValue != null)
                         elements.add(oversizeValue);
