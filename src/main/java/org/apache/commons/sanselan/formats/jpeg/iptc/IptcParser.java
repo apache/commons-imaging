@@ -156,9 +156,6 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
                 Debug.debug("recordNumber", recordNumber + " (0x"
                         + Integer.toHexString(recordNumber) + ")");
 
-            if (recordNumber != IPTC_APPLICATION_2_RECORD_NUMBER)
-                continue;
-
             // int recordPrefix = convertByteArrayToShort("recordPrefix", index,
             // bytes);
             // if (verbose)
@@ -201,6 +198,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
 
             // Debug.debug("recordSize", recordSize + " (0x"
             // + Integer.toHexString(recordSize) + ")");
+            
+            if (recordNumber != IPTC_APPLICATION_2_RECORD_NUMBER)
+                continue;
 
             if (recordType == 0)
             {
