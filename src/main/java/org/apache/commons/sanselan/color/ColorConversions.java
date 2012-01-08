@@ -209,6 +209,12 @@ public abstract class ColorConversions
 
     public static final int convertCMYtoRGB(ColorCmy cmy)
     {
+        // From Ghostscript's gdevcdj.c: 
+        // *   Ghostscript:    R = (1.0 - C) * (1.0 - K)
+        // *   Adobe:          R = 1.0 - min(1.0, C + K)
+        // and similarly for G and B.
+        // This is Ghostscript's formula with K = 0.
+        
         //        CMY values = 0 ÷ 1
         //        RGB values = 0 ÷ 255
 
@@ -516,7 +522,7 @@ public abstract class ColorConversions
         return convertRGBtoRGB(R, G, B);
     }
 
-    public static final int convertCMYKtoRGB_old(int sc, int sm, int sy, int sk)
+    public static final int convertCMYKtoRGB_Adobe(int sc, int sm, int sy, int sk)
     //    throws ImageReadException, IOException
     {
         int red = 255 - (sc + sk);

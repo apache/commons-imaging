@@ -35,26 +35,6 @@ public class ColorConversionsTest extends TestCase
             0xff7f7f7f,
     };
 
-    public void testCMYKtoRGB() throws Exception
-    {
-        for (int C = 0; C <= 256; C += 64)
-        {
-            for (int M = 0; M <= 256; M += 64)
-            {
-                for (int Y = 0; Y <= 256; Y += 64)
-                {
-                    for (int K = 0; K <= 256; K += 64)
-                    {
-                        int rgb1 = ColorConversions.convertCMYKtoRGB(Math.min(255, C), Math.min(255, M), Math.min(255, Y), Math.min(255, K));
-                        int rgb2 = ColorConversions.convertCMYKtoRGB_old(Math.min(255, C), Math.min(255, M), Math.min(255, Y), Math.min(255, K));
-                        
-                        assertEquals(new ColorCmyk(C, M, Y, K).toString(), Integer.toHexString(rgb1).toUpperCase(), Integer.toHexString(rgb2).toUpperCase());
-                    }
-                }
-            }
-        }
-    }
-
     public void testRGBtoCMYK() throws Exception
     {
         for (int i = 0; i < SAMPLE_RGBS.length; i++)
