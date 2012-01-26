@@ -85,17 +85,18 @@ public final class DataReaderStrips extends DataReader
     {
         for (int strip = 0; strip < imageData.strips.length; strip++)
         {
-            int rowsRemaining = height - (strip * rowsPerStrip);
-            int rowsInThisStrip = Math.min(rowsRemaining, rowsPerStrip);
-            int pixelsPerStrip = rowsInThisStrip * width;
-            int bytesPerStrip = ((pixelsPerStrip * bitsPerPixel) + 7) / 8;
+            long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
+            long rowsRemaining = height - (strip * rowsPerStripLong);
+            long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
+            long pixelsPerStrip = rowsInThisStrip * width;
+            long bytesPerStrip = ((pixelsPerStrip * bitsPerPixel) + 7) / 8;
 
             byte compressed[] = imageData.strips[strip].data;
 
             byte decompressed[] = decompress(compressed, compression,
-                    bytesPerStrip, width, rowsInThisStrip);
+                    (int)bytesPerStrip, width, (int)rowsInThisStrip);
 
-            interpretStrip(bi, decompressed, pixelsPerStrip);
+            interpretStrip(bi, decompressed, (int)pixelsPerStrip);
 
         }
     }
