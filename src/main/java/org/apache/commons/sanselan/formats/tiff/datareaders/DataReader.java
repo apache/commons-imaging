@@ -109,6 +109,21 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
     protected byte[] decompress(byte compressed[], int compression,
             int expected_size, int tileWidth, int tileHeight) throws ImageReadException, IOException
     {
+        TiffField fillOrderField = directory.findField(TIFF_TAG_FILL_ORDER);
+        int fillOrder = 1;
+        if (fillOrderField != null) {
+            fillOrder = fillOrderField.getIntValue();
+        }
+        if (fillOrder == 1) {
+            // good
+        } else if (fillOrder == 2) {
+            for (int i = 0; i < compressed.length; i++) {
+                compressed[i] = (byte) (Integer.reverse(0xff & compressed[i]) >>> 24);
+            }
+        } else {
+            throw new ImageReadException("TIFF FillOrder=" + fillOrder + " is invalid");
+        }
+        
         switch (compression)
         {
             case TIFF_COMPRESSION_UNCOMPRESSED : // None;
