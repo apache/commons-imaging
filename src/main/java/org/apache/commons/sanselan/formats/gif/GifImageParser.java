@@ -600,7 +600,7 @@ public class GifImageParser extends ImageParser
 
         Comments = getComments(blocks.blocks);
 
-        int BitsPerPixel = (bhi.colorResolution + 1) * 3;
+        int BitsPerPixel = (bhi.colorResolution + 1);
         ImageFormat Format = ImageFormat.IMAGE_FORMAT_GIF;
         String FormatName = "GIF Graphics Interchange Format";
         String MimeType = "image/gif";
