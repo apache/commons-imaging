@@ -117,13 +117,13 @@ public class JpegIptcRewriter extends JpegRewriter implements IptcConstants
             throws ImageReadException, IOException, ImageWriteException
     {
         JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List oldPieces = jfifPieces.pieces;
-        List photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
+        List<JFIFPiece> oldPieces = jfifPieces.pieces;
+        List<JFIFPiece> photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
 
         if (photoshopApp13Segments.size() > 1)
             throw new ImageReadException(
                     "Image contains more than one Photoshop App13 segment.");
-        List newPieces = removePhotoshopApp13Segments(oldPieces);
+        List<JFIFPiece> newPieces = removePhotoshopApp13Segments(oldPieces);
         if (photoshopApp13Segments.size() == 1)
         {
             JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments
@@ -220,17 +220,17 @@ public class JpegIptcRewriter extends JpegRewriter implements IptcConstants
             ImageWriteException
     {
         JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List oldPieces = jfifPieces.pieces;
-        List photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
+        List<JFIFPiece> oldPieces = jfifPieces.pieces;
+        List<JFIFPiece> photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
 
         if (photoshopApp13Segments.size() > 1)
             throw new ImageReadException(
                     "Image contains more than one Photoshop App13 segment.");
-        List newPieces = removePhotoshopApp13Segments(oldPieces);
+        List<JFIFPiece> newPieces = removePhotoshopApp13Segments(oldPieces);
 
         {
             // discard old iptc blocks.
-            List newBlocks = newData.getNonIptcBlocks();
+            List<IptcBlock> newBlocks = newData.getNonIptcBlocks();
             byte[] newBlockBytes = new IptcParser().writeIPTCBlock(newData
                     .getRecords());
 
