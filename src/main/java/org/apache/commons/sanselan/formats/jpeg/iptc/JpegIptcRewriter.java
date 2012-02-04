@@ -131,8 +131,8 @@ public class JpegIptcRewriter extends JpegRewriter implements IptcConstants
             Map params = new HashMap();
             PhotoshopApp13Data oldData = new IptcParser()
                     .parsePhotoshopSegment(oldSegment.segmentData, params);
-            List newBlocks = oldData.getNonIptcBlocks();
-            List newRecords = new ArrayList();
+            List<IptcBlock> newBlocks = oldData.getNonIptcBlocks();
+            List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
             PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                     newBlocks);
             byte segmentBytes[] = new IptcParser()

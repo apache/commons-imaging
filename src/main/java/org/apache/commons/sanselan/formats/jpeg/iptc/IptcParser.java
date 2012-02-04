@@ -111,9 +111,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
             boolean verbose, boolean strict) throws ImageReadException,
             IOException
     {
-        List records = new ArrayList();
+        List<IptcRecord> records = new ArrayList<IptcRecord>();
 
-        List allBlocks = parseAllBlocks(bytes, verbose, strict);
+        List<IptcBlock> allBlocks = parseAllBlocks(bytes, verbose, strict);
 
         for (int i = 0; i < allBlocks.size(); i++)
         {
@@ -129,10 +129,10 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
         return new PhotoshopApp13Data(records, allBlocks);
     }
 
-    protected List parseIPTCBlock(byte bytes[], boolean verbose)
+    protected List<IptcRecord> parseIPTCBlock(byte bytes[], boolean verbose)
             throws ImageReadException, IOException
     {
-        List elements = new ArrayList();
+        List<IptcRecord> elements = new ArrayList<IptcRecord>();
 
         int index = 0;
         // Integer recordVersion = null;
@@ -256,10 +256,10 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
         return elements;
     }
 
-    protected List parseAllBlocks(byte bytes[], boolean verbose, boolean strict)
+    protected List<IptcBlock> parseAllBlocks(byte bytes[], boolean verbose, boolean strict)
             throws ImageReadException, IOException
     {
-        List blocks = new ArrayList();
+        List<IptcBlock> blocks = new ArrayList<IptcBlock>();
 
         BinaryInputStream bis = new BinaryInputStream(bytes, APP13_BYTE_ORDER);
 
@@ -353,7 +353,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
 
         bos.write(PHOTOSHOP_IDENTIFICATION_STRING);
 
-        List blocks = data.getRawBlocks();
+        List<IptcBlock> blocks = data.getRawBlocks();
         for (int i = 0; i < blocks.size(); i++)
         {
             IptcBlock block = (IptcBlock) blocks.get(i);
@@ -386,7 +386,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
         return os.toByteArray();
     }
 
-    public byte[] writeIPTCBlock(List elements) throws ImageWriteException,
+    public byte[] writeIPTCBlock(List<IptcRecord> elements) throws ImageWriteException,
             IOException
     {
         byte blockData[];
@@ -398,21 +398,19 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
             // first, right record version record
             bos.write(IPTC_RECORD_TAG_MARKER);
             bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
-            bos.write(IPTC_TYPE_RECORD_VERSION.type); // record version record
+            bos.write(IptcTypes.RECORD_VERSION.type); // record version record
                                                         // type.
             bos.write2Bytes(2); // record version record size
             bos.write2Bytes(2); // record version value
 
             // make a copy of the list.
-            elements = new ArrayList(elements);
+            elements = new ArrayList<IptcRecord>(elements);
 
             // sort the list. Records must be in numerical order.
-            Comparator comparator = new Comparator() {
-                public int compare(Object o1, Object o2)
+            Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {
+                public int compare(IptcRecord e1, IptcRecord e2)
                 {
-                    IptcRecord e1 = (IptcRecord) o1;
-                    IptcRecord e2 = (IptcRecord) o2;
-                    return e2.iptcType.type - e1.iptcType.type;
+                    return e2.iptcType.getType() - e1.iptcType.getType();
                 }
             };
             Collections.sort(elements, comparator);
@@ -423,15 +421,15 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
             {
                 IptcRecord element = (IptcRecord) elements.get(i);
 
-                if (element.iptcType.type == IPTC_TYPE_RECORD_VERSION.type)
+                if (element.iptcType == IptcTypes.RECORD_VERSION)
                     continue; // ignore
 
                 bos.write(IPTC_RECORD_TAG_MARKER);
                 bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
-                if (element.iptcType.type < 0 || element.iptcType.type > 0xff)
+                if (element.iptcType.getType() < 0 || element.iptcType.getType() > 0xff)
                     throw new ImageWriteException("Invalid record type: "
-                            + element.iptcType.type);
-                bos.write(element.iptcType.type);
+                            + element.iptcType.getType());
+                bos.write(element.iptcType.getType());
 
                 byte recordData[] = element.value.getBytes("ISO-8859-1");
                 if (!new String(recordData, "ISO-8859-1").equals(element.value))

@@ -25,19 +25,16 @@ public abstract class IptcTypeLookup implements IptcConstants
     private static final Map<Integer, IptcType> IPTC_TYPE_MAP = new HashMap<Integer, IptcType>();
     static
     {
-        for (int i = 0; i < IPTC_TYPES.length; i++)
+        for (IptcType iptcType : IptcTypes.values())
         {
-            IptcType iptcType = IPTC_TYPES[i];
-            Integer key = new Integer(iptcType.type);
-            IPTC_TYPE_MAP.put(key, iptcType);
+            IPTC_TYPE_MAP.put(iptcType.getType(), iptcType);
         }
     }
 
     public static final IptcType getIptcType(int type)
     {
-        Integer key = new Integer(type);
-        if (!IPTC_TYPE_MAP.containsKey(key))
-            return IptcType.getUnknown(type);
-        return IPTC_TYPE_MAP.get(key);
+        if (!IPTC_TYPE_MAP.containsKey(type))
+            return IptcTypes.getUnknown(type);
+        return IPTC_TYPE_MAP.get(type);
     }
 }

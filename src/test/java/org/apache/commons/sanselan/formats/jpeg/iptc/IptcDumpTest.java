@@ -72,9 +72,9 @@ public class IptcDumpTest extends IptcBaseTest
             for (int j = 0; j < oldRecords.size(); j++)
             {
                 IptcRecord record = (IptcRecord) oldRecords.get(j);
-                if (record.iptcType.type != IptcConstants.IPTC_TYPE_CITY.type)
-                    Debug.debug("Key: " + record.iptcType.name + " (0x"
-                            + Integer.toHexString(record.iptcType.type)
+                if (record.iptcType != IptcTypes.CITY)
+                    Debug.debug("Key: " + record.iptcType.getName() + " (0x"
+                            + Integer.toHexString(record.iptcType.getType())
                             + "), value: " + record.value);
             }
             Debug.debug();

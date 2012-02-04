@@ -16,27 +16,10 @@
  */
 package org.apache.commons.sanselan.formats.jpeg.iptc;
 
-import org.apache.commons.sanselan.formats.jpeg.JpegConstants;
 
-public class IptcType implements JpegConstants, IptcConstants
+public interface IptcType
 {
-    public final int type;
-    public final String name;
-
-    public IptcType(int type, String name)
-    {
-        this.type = type;
-        this.name = name;
-    }
-
-    public String toString()
-    {
-        return name + " (" + type + ")";
-    }
-
-    public static IptcType getUnknown(int type)
-    {
-        return new IptcType(type, "Unknown");
-    }
-
+    public int getType();
+    public String getName();
+    public String toString();
 }

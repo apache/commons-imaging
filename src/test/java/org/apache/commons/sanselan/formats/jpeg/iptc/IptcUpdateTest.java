@@ -177,14 +177,14 @@ public class IptcUpdateTest extends IptcBaseTest
                 for (int j = 0; j < oldRecords.size(); j++)
                 {
                     IptcRecord record = (IptcRecord) oldRecords.get(j);
-                    if (record.iptcType.type != IptcConstants.IPTC_TYPE_CITY.type
-                            && record.iptcType.type != IptcConstants.IPTC_TYPE_CREDIT.type)
+                    if (record.iptcType != IptcTypes.CITY
+                            && record.iptcType != IptcTypes.CREDIT)
                         newRecords.add(record);
                 }
 
-                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CITY,
+                newRecords.add(new IptcRecord(IptcTypes.CITY,
                         "Albany, NY"));
-                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CREDIT,
+                newRecords.add(new IptcRecord(IptcTypes.CREDIT,
                         "William Sorensen"));
 
                 PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
@@ -228,9 +228,9 @@ public class IptcUpdateTest extends IptcBaseTest
                 List newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
                 List newRecords = new ArrayList();
 
-                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CITY,
+                newRecords.add(new IptcRecord(IptcTypes.CITY,
                         "Albany, NY"));
-                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CREDIT,
+                newRecords.add(new IptcRecord(IptcTypes.CREDIT,
                         "William Sorensen"));
 
                 PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
@@ -274,9 +274,9 @@ public class IptcUpdateTest extends IptcBaseTest
                 List newBlocks = new ArrayList();
                 List newRecords = new ArrayList();
 
-                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CITY,
+                newRecords.add(new IptcRecord(IptcTypes.CITY,
                         "Albany, NY"));
-                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CREDIT,
+                newRecords.add(new IptcRecord(IptcTypes.CREDIT,
                         "William Sorensen"));
 
                 PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
@@ -368,16 +368,16 @@ public class IptcUpdateTest extends IptcBaseTest
                         for (int j = 0; j < oldRecords.size(); j++)
                         {
                             IptcRecord record = (IptcRecord) oldRecords.get(j);
-                            if (record.iptcType.type != IptcConstants.IPTC_TYPE_CITY.type
-                                    && record.iptcType.type != IptcConstants.IPTC_TYPE_CREDIT.type)
+                            if (record.iptcType != IptcTypes.CITY
+                                    && record.iptcType != IptcTypes.CREDIT)
                                 newRecords.add(record);
                         }
                     }
                 }
 
-                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CITY,
+                newRecords.add(new IptcRecord(IptcTypes.CITY,
                         "Albany, NY"));
-                newRecords.add(new IptcRecord(IptcConstants.IPTC_TYPE_CREDIT,
+                newRecords.add(new IptcRecord(IptcTypes.CREDIT,
                         "William Sorensen"));
 
                 PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,

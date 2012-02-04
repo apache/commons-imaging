@@ -39,15 +39,13 @@ public class IptcRecord
 
     public String getIptcTypeName()
     {
-        return iptcType.name;
+        return iptcType.getName();
     }
 
-    public static final Comparator COMPARATOR = new Comparator() {
-        public int compare(Object o1, Object o2)
+    public static final Comparator<IptcRecord> COMPARATOR = new Comparator<IptcRecord>() {
+        public int compare(IptcRecord e1, IptcRecord e2)
         {
-            IptcRecord e1 = (IptcRecord) o1;
-            IptcRecord e2 = (IptcRecord) o2;
-            return e1.iptcType.type - e2.iptcType.type;
+            return e1.iptcType.getType() - e2.iptcType.getType();
         }
     };
 
