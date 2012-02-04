@@ -33,6 +33,7 @@ import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.sanselan.formats.jpeg.JpegConstants;
 import org.apache.commons.sanselan.formats.jpeg.JpegUtils;
+import org.apache.commons.sanselan.formats.jpeg.segments.JfifSegment;
 import org.apache.commons.sanselan.formats.tiff.write.TiffImageWriterBase;
 import org.apache.commons.sanselan.formats.tiff.write.TiffImageWriterLossless;
 import org.apache.commons.sanselan.formats.tiff.write.TiffImageWriterLossy;
@@ -71,10 +72,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 
     private static class JFIFPieces
     {
-        public final List pieces;
-        public final List exifPieces;
+        public final List<JFIFPiece> pieces;
+        public final List<JFIFPiece> exifPieces;
 
-        public JFIFPieces(final List pieces, final List exifPieces)
+        public JFIFPieces(final List<JFIFPiece> pieces, final List<JFIFPiece> exifPieces)
         {
             this.pieces = pieces;
             this.exifPieces = exifPieces;
@@ -145,8 +146,8 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
             throws ImageReadException, IOException
     //            , ImageWriteException
     {
-        final List pieces = new ArrayList();
-        final List exifPieces = new ArrayList();
+        final List<JFIFPiece> pieces = new ArrayList<JFIFPiece>();
+        final List<JFIFPiece> exifPieces = new ArrayList<JFIFPiece>();
 
         JpegUtils.Visitor visitor = new JpegUtils.Visitor()
         {
@@ -266,7 +267,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
             throws ImageReadException, IOException, ImageWriteException
     {
         JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List pieces = jfifPieces.pieces;
+        List<JFIFPiece> pieces = jfifPieces.pieces;
 
         //        Debug.debug("pieces", pieces);
 
@@ -359,7 +360,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
     {
         //        List outputDirectories = outputSet.getDirectories();
         JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List pieces = jfifPieces.pieces;
+        List<JFIFPiece> pieces = jfifPieces.pieces;
 
         TiffImageWriterBase writer;
         // Just use first APP1 segment for now.
@@ -453,7 +454,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
             ImageWriteException
     {
         JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List pieces = jfifPieces.pieces;
+        List<JFIFPiece> pieces = jfifPieces.pieces;
 
         TiffImageWriterBase writer = new TiffImageWriterLossy(
                 outputSet.byteOrder);
@@ -464,7 +465,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
         writeSegmentsReplacingExif(os, pieces, newBytes);
     }
 
-    private void writeSegmentsReplacingExif(OutputStream os, List segments,
+    private void writeSegmentsReplacingExif(OutputStream os, List<JFIFPiece> segments,
             byte newBytes[]) throws ImageWriteException, IOException
     {
         int byteOrder = getByteOrder();

@@ -23,7 +23,7 @@ import java.io.InputStream;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
 
-public class App2Segment extends AppnSegment implements Comparable
+public class App2Segment extends AppnSegment implements Comparable<App2Segment>
 {
     public final byte icc_bytes[];
     public final int cur_marker, num_markers;
@@ -64,9 +64,8 @@ public class App2Segment extends AppnSegment implements Comparable
         }
     }
 
-    public int compareTo(Object o)
+    public int compareTo(App2Segment other)
     {
-        App2Segment other = (App2Segment) o;
         return cur_marker - other.cur_marker;
     }
 

@@ -110,7 +110,7 @@ public class JpegXmpRewriter extends JpegRewriter
             throws ImageReadException, IOException
     {
         JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List pieces = jfifPieces.pieces;
+        List<JFIFPiece> pieces = jfifPieces.pieces;
         pieces = removeXmpSegments(pieces);
         writeSegments(os, pieces);
     }
@@ -185,10 +185,10 @@ public class JpegXmpRewriter extends JpegRewriter
             ImageWriteException
     {
         JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List pieces = jfifPieces.pieces;
+        List<JFIFPiece> pieces = jfifPieces.pieces;
         pieces = removeXmpSegments(pieces);
 
-        List newPieces = new ArrayList();
+        List<JFIFPieceSegment> newPieces = new ArrayList<JFIFPieceSegment>();
         byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
         int index = 0;
         while (index < xmpXmlBytes.length)
