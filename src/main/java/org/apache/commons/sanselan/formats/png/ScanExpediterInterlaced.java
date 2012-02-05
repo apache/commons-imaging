@@ -54,22 +54,22 @@ public class ScanExpediterInterlaced extends ScanExpediter
 
     }
 
-    public static final int Starting_Row[] = {
+    private static final int Starting_Row[] = {
             0, 0, 4, 0, 2, 0, 1
     };
-    public static final int Starting_Col[] = {
+    private static final int Starting_Col[] = {
             0, 4, 0, 2, 0, 1, 0
     };
-    public static final int Row_Increment[] = {
+    private static final int Row_Increment[] = {
             8, 8, 8, 4, 4, 2, 2
     };
-    public static final int Col_Increment[] = {
+    private static final int Col_Increment[] = {
             8, 8, 4, 4, 2, 2, 1
     };
-    public static final int Block_Height[] = {
+    private static final int Block_Height[] = {
             8, 8, 4, 4, 2, 2, 1
     };
-    public static final int Block_Width[] = {
+    private static final int Block_Width[] = {
             8, 4, 4, 2, 2, 1, 1
     };
 
