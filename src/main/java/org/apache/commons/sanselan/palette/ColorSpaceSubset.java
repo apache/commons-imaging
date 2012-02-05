@@ -16,7 +16,7 @@
  */
 package org.apache.commons.sanselan.palette;
 
-class ColorSpaceSubset implements Comparable
+class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
 {
     public final int mins[], maxs[];
     public final int precision;
@@ -162,9 +162,8 @@ class ColorSpaceSubset implements Comparable
         }
     }
 
-    public int compareTo(Object o)
+    public int compareTo(ColorSpaceSubset other)
     {
-        ColorSpaceSubset other = (ColorSpaceSubset) o;
         return rgb - other.rgb;
     }
 

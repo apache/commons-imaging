@@ -119,7 +119,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
         Debug.debug();
     }
 
-    private List analyzeOldTiff() throws ImageWriteException, IOException
+    private List<TiffElement> analyzeOldTiff() throws ImageWriteException, IOException
     {
         try
         {
@@ -129,7 +129,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
             TiffContents contents = new TiffReader(false).readContents(byteSource,
                     params, formatCompliance);
 
-            List elements = new ArrayList();
+            List<TiffElement> elements = new ArrayList<TiffElement>();
             //            result.add(contents.header); // ?
 
             List<TiffDirectory> directories = contents.directories;
@@ -179,7 +179,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
 
             //            dumpElements(byteSource, elements);
 
-            List result = new ArrayList();
+            List<TiffElement> result = new ArrayList<TiffElement>();
             {
                 final int TOLERANCE = 3;
                 //                int last = TIFF_HEADER_SIZE;
@@ -224,7 +224,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
     public void write(OutputStream os, TiffOutputSet outputSet)
             throws IOException, ImageWriteException
     {
-        List analysis = analyzeOldTiff();
+        List<TiffElement> analysis = analyzeOldTiff();
         int oldLength = exifBytes.length;
         if (analysis.size() < 1)
             throw new ImageWriteException("Couldn't analyze old tiff data.");
@@ -249,7 +249,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
 
         TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
-        List outputItems = outputSet.getOutputItems(outputSummary);
+        List<TiffOutputItem> outputItems = outputSet.getOutputItems(outputSummary);
 
         int outputLength = updateOffsetsStep(analysis, outputItems);
         //        Debug.debug("outputLength", outputLength);
@@ -260,33 +260,29 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
 
     }
 
-    private static final Comparator ELEMENT_SIZE_COMPARATOR = new Comparator()
+    private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = new Comparator<TiffElement>()
     {
-        public int compare(Object o1, Object o2)
+        public int compare(TiffElement e1, TiffElement e2)
         {
-            TiffElement e1 = (TiffElement) o1;
-            TiffElement e2 = (TiffElement) o2;
             return e1.length - e2.length;
         }
     };
 
-    private static final Comparator ITEM_SIZE_COMPARATOR = new Comparator()
+    private static final Comparator<TiffOutputItem> ITEM_SIZE_COMPARATOR = new Comparator<TiffOutputItem>()
     {
-        public int compare(Object o1, Object o2)
+        public int compare(TiffOutputItem e1, TiffOutputItem e2)
         {
-            TiffOutputItem e1 = (TiffOutputItem) o1;
-            TiffOutputItem e2 = (TiffOutputItem) o2;
             return e1.getItemLength() - e2.getItemLength();
         }
     };
 
-    private int updateOffsetsStep(List analysis, List outputItems)
+    private int updateOffsetsStep(List<TiffElement> analysis, List<TiffOutputItem> outputItems)
     {
         // items we cannot fit into a gap, we shall append to tail.
         int overflowIndex = exifBytes.length;
 
         // make copy.
-        List unusedElements = new ArrayList(analysis);
+        List<TiffElement> unusedElements = new ArrayList<TiffElement>(analysis);
 
         // should already be in order of offset, but make sure.
         Collections.sort(unusedElements, TiffElement.COMPARATOR);
@@ -313,7 +309,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
         //        dumpElements(unusedElements);
 
         // make copy.
-        List unplacedItems = new ArrayList(outputItems);
+        List<TiffOutputItem> unplacedItems = new ArrayList<TiffOutputItem>(outputItems);
         Collections.sort(unplacedItems, ITEM_SIZE_COMPARATOR);
         Collections.reverse(unplacedItems);
 
@@ -411,7 +407,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
     }
 
     private void writeStep(OutputStream os, TiffOutputSet outputSet,
-            List analysis, List outputItems, int outputLength)
+            List<TiffElement> analysis, List<TiffOutputItem> outputItems, int outputLength)
             throws IOException, ImageWriteException
     {
         TiffOutputDirectory rootDirectory = outputSet.getRootDirectory();

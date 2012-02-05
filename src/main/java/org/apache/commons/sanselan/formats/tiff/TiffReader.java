@@ -464,12 +464,11 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             TiffDirectory directory) throws ImageReadException, IOException
     {
 
-        List elements = directory.getTiffRawImageDataElements();
+        List<ImageDataElement> elements = directory.getTiffRawImageDataElements();
         TiffImageData.Data data[] = new TiffImageData.Data[elements.size()];
         for (int i = 0; i < elements.size(); i++)
         {
-            TiffDirectory.ImageDataElement element = (TiffDirectory.ImageDataElement) elements
-                    .get(i);
+            TiffDirectory.ImageDataElement element = elements.get(i);
             byte bytes[] = byteSource.getBlock(element.offset, element.length);
             data[i] = new TiffImageData.Data(element.offset, element.length,
                     bytes);

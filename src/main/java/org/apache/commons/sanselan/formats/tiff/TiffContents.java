@@ -35,9 +35,9 @@ public class TiffContents
         this.directories = directories;
     }
 
-    public List getElements() throws ImageReadException
+    public List<TiffElement> getElements() throws ImageReadException
     {
-        List result = new ArrayList();
+        List<TiffElement> result = new ArrayList<TiffElement>();
 
         result.add(header);
 
@@ -81,14 +81,14 @@ public class TiffContents
 
     public void dissect(boolean verbose) throws ImageReadException
     {
-        List elements = getElements();
+        List<TiffElement> elements = getElements();
 
         Collections.sort(elements, TiffElement.COMPARATOR);
 
         int lastEnd = 0;
         for (int i = 0; i < elements.size(); i++)
         {
-            TiffElement element = (TiffElement) elements.get(i);
+            TiffElement element = elements.get(i);
 
             if (element.offset > lastEnd)
                 Debug.debug("\t" + "gap: " + (element.offset - lastEnd));

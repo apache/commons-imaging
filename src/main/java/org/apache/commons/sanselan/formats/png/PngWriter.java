@@ -487,7 +487,7 @@ public class PngWriter implements PngConstants
 
         if (params.containsKey(PARAM_KEY_PNG_TEXT_CHUNKS))
         {
-            List outputTexts = (List) params.get(PARAM_KEY_PNG_TEXT_CHUNKS);
+            List<PngText> outputTexts = (List<PngText>) params.get(PARAM_KEY_PNG_TEXT_CHUNKS);
             for (int i = 0; i < outputTexts.size(); i++)
             {
                 PngText text = (PngText) outputTexts.get(i);

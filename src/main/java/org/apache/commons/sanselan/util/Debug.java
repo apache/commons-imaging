@@ -158,7 +158,7 @@ public final class Debug
 
     private static long counter = 0;
 
-    public static String getDebug(String message, java.util.List v)
+    public static String getDebug(String message, java.util.List<?> v)
     {
         StringBuffer result = new StringBuffer();
 

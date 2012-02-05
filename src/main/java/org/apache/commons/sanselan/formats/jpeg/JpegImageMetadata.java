@@ -93,7 +93,7 @@ public class JpegImageMetadata implements IImageMetadata {
      * @throws IOException
      */
     public byte[] getEXIFThumbnailData() throws ImageReadException, IOException {
-        List dirs = exif.getDirectories();
+        List<? extends IImageMetadataItem> dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
             TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
                     .get(i);
@@ -126,7 +126,7 @@ public class JpegImageMetadata implements IImageMetadata {
             return null;
         }
 
-        List dirs = exif.getDirectories();
+        List<? extends IImageMetadataItem> dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
             TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
                     .get(i);
@@ -151,7 +151,7 @@ public class JpegImageMetadata implements IImageMetadata {
     }
 
     public TiffImageData getRawImageData() {
-        List dirs = exif.getDirectories();
+        List<? extends IImageMetadataItem> dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
             TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
                     .get(i);
@@ -164,8 +164,8 @@ public class JpegImageMetadata implements IImageMetadata {
         return null;
     }
 
-    public List getItems() {
-        List<Object> result = new ArrayList<Object>();
+    public List<IImageMetadataItem> getItems() {
+        List<IImageMetadataItem> result = new ArrayList<IImageMetadataItem>();
 
         if (null != exif)
             result.addAll(exif.getItems());

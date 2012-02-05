@@ -117,7 +117,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
 
         for (int i = 0; i < allBlocks.size(); i++)
         {
-            IptcBlock block = (IptcBlock) allBlocks.get(i);
+            IptcBlock block = allBlocks.get(i);
 
             // Ignore everything but IPTC data.
             if (!block.isIPTCBlock())
@@ -356,7 +356,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
         List<IptcBlock> blocks = data.getRawBlocks();
         for (int i = 0; i < blocks.size(); i++)
         {
-            IptcBlock block = (IptcBlock) blocks.get(i);
+            IptcBlock block = blocks.get(i);
 
             bos.write(CONST_8BIM);
 
@@ -419,7 +419,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
             // write the list.
             for (int i = 0; i < elements.size(); i++)
             {
-                IptcRecord element = (IptcRecord) elements.get(i);
+                IptcRecord element = elements.get(i);
 
                 if (element.iptcType == IptcTypes.RECORD_VERSION)
                     continue; // ignore

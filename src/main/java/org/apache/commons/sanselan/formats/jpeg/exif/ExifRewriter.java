@@ -33,7 +33,6 @@ import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.sanselan.formats.jpeg.JpegConstants;
 import org.apache.commons.sanselan.formats.jpeg.JpegUtils;
-import org.apache.commons.sanselan.formats.jpeg.segments.JfifSegment;
 import org.apache.commons.sanselan.formats.tiff.write.TiffImageWriterBase;
 import org.apache.commons.sanselan.formats.tiff.write.TiffImageWriterLossless;
 import org.apache.commons.sanselan.formats.tiff.write.TiffImageWriterLossy;
@@ -478,7 +477,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 
             for (int i = 0; i < segments.size(); i++)
             {
-                JFIFPiece piece = (JFIFPiece) segments.get(i);
+                JFIFPiece piece = segments.get(i);
                 if (piece instanceof JFIFPieceSegmentExif)
                     hasExif = true;
             }
@@ -507,7 +506,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 
             for (int i = 0; i < segments.size(); i++)
             {
-                JFIFPiece piece = (JFIFPiece) segments.get(i);
+                JFIFPiece piece = segments.get(i);
                 if (piece instanceof JFIFPieceSegmentExif)
                 {
                     // only replace first APP1 segment; skips others.

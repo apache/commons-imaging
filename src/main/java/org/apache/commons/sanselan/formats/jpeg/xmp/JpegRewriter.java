@@ -232,41 +232,41 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
         }
     };
 
-    protected List<JFIFPiece> removeXmpSegments(List<? extends JFIFPiece> segments)
+    protected <T extends JFIFPiece> List<T> removeXmpSegments(List<T> segments)
     {
         return filterSegments(segments, XMP_SEGMENT_FILTER);
     }
 
-    protected List<JFIFPiece> removePhotoshopApp13Segments(List<? extends JFIFPiece> segments)
+    protected <T extends JFIFPiece> List<T> removePhotoshopApp13Segments(List<T> segments)
     {
         return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER);
     }
 
-    protected List<JFIFPiece> findPhotoshopApp13Segments(List<? extends JFIFPiece> segments)
+    protected <T extends JFIFPiece> List<T> findPhotoshopApp13Segments(List<T> segments)
     {
         return filterSegments(segments, PHOTOSHOP_APP13_SEGMENT_FILTER, true);
     }
 
-    protected List<JFIFPiece> removeExifSegments(List<? extends JFIFPiece> segments)
+    protected <T extends JFIFPiece> List<T> removeExifSegments(List<T> segments)
     {
         return filterSegments(segments, EXIF_SEGMENT_FILTER);
     }
 
-    protected List<JFIFPiece> filterSegments(List<? extends JFIFPiece> segments, SegmentFilter filter)
+    protected <T extends JFIFPiece> List<T> filterSegments(List<T> segments, SegmentFilter filter)
     {
         return filterSegments(segments, filter, false);
     }
 
-    protected List<JFIFPiece> filterSegments(
-            List<? extends JFIFPiece> segments,
+    protected <T extends JFIFPiece> List<T> filterSegments(
+            List<T> segments,
             SegmentFilter filter,
             boolean reverse)
     {
-        List<JFIFPiece> result = new ArrayList<JFIFPiece>();
+        List<T> result = new ArrayList<T>();
 
         for (int i = 0; i < segments.size(); i++)
         {
-            JFIFPiece piece = segments.get(i);
+            T piece = segments.get(i);
             if (piece instanceof JFIFPieceSegment)
             {
                 if (filter.filter((JFIFPieceSegment) piece) ^ !reverse)
@@ -278,9 +278,9 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
         return result;
     }
 
-    protected List<JFIFPiece> insertBeforeFirstAppSegments(
-            List<? extends JFIFPiece> segments,
-            List<? extends JFIFPiece> newSegments)
+    protected <T extends JFIFPiece, U extends JFIFPiece> List<JFIFPiece> insertBeforeFirstAppSegments(
+            List<T> segments,
+            List<U> newSegments)
                     throws ImageWriteException
     {
         int firstAppIndex = -1;
@@ -305,9 +305,9 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
         return result;
     }
 
-    protected List<JFIFPiece> insertAfterLastAppSegments(
-            List<? extends JFIFPiece> segments,
-            List<? extends JFIFPiece> newSegments)
+    protected <T extends JFIFPiece, U extends JFIFPiece> List<JFIFPiece> insertAfterLastAppSegments(
+            List<T> segments,
+            List<U> newSegments)
                     throws ImageWriteException
     {
         int lastAppIndex = -1;

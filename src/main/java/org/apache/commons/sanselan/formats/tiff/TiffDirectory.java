@@ -193,7 +193,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         }
     }
 
-    private List getRawImageDataElements(TiffField offsetsField,
+    private List<ImageDataElement> getRawImageDataElements(TiffField offsetsField,
             TiffField byteCountsField) throws ImageReadException
     {
         int offsets[] = offsetsField.getIntArrayValue();
@@ -203,7 +203,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
             throw new ImageReadException("offsets.length(" + offsets.length
                     + ") != byteCounts.length(" + byteCounts.length + ")");
 
-        List result = new ArrayList();
+        List<ImageDataElement> result = new ArrayList<ImageDataElement>();
         for (int i = 0; i < offsets.length; i++)
         {
             result.add(new ImageDataElement(offsets[i], byteCounts[i]));
@@ -211,7 +211,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         return result;
     }
 
-    public List getTiffRawImageDataElements() throws ImageReadException
+    public List<ImageDataElement> getTiffRawImageDataElements() throws ImageReadException
     {
         TiffField tileOffsets = findField(TIFF_TAG_TILE_OFFSETS);
         TiffField tileByteCounts = findField(TIFF_TAG_TILE_BYTE_COUNTS);

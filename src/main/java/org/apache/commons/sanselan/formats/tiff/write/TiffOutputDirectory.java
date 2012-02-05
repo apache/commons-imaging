@@ -37,7 +37,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         TiffConstants
 {
     public final int type;
-    private final List fields = new ArrayList();
+    private final List<TiffOutputField> fields = new ArrayList<TiffOutputField>();
 
     private TiffOutputDirectory nextDirectory = null;
 
@@ -56,9 +56,9 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         fields.add(field);
     }
 
-    public List getFields()
+    public List<TiffOutputField> getFields()
     {
-        return new ArrayList(fields);
+        return new ArrayList<TiffOutputField>(fields);
     }
 
     public void removeField(TagInfo tagInfo)
@@ -96,12 +96,9 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
     public void sortFields()
     {
-        Comparator comparator = new Comparator() {
-            public int compare(Object o1, Object o2)
+        Comparator<TiffOutputField> comparator = new Comparator<TiffOutputField>() {
+            public int compare(TiffOutputField e1, TiffOutputField e2)
             {
-                TiffOutputField e1 = (TiffOutputField) o1;
-                TiffOutputField e2 = (TiffOutputField) o2;
-
                 if (e1.tag != e2.tag)
                     return e1.tag - e2.tag;
                 return e1.getSortHint() - e2.getSortHint();
@@ -188,7 +185,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
             fields.remove(field);
     }
 
-    protected List getOutputItems(TiffOutputSummary outputSummary)
+    protected List<TiffOutputItem> getOutputItems(TiffOutputSummary outputSummary)
             throws ImageWriteException
     {
         // first validate directory fields.
@@ -281,13 +278,13 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
         // --------------------------------------------------------------
 
-        List result = new ArrayList();
+        List<TiffOutputItem> result = new ArrayList<TiffOutputItem>();
         result.add(this);
         sortFields();
 
         for (int i = 0; i < fields.size(); i++)
         {
-            TiffOutputField field = (TiffOutputField) fields.get(i);
+            TiffOutputField field = fields.get(i);
             if (field.isLocalValue())
                 continue;
 

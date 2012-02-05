@@ -35,6 +35,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
+import org.apache.commons.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.datareaders.DataReader;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -417,7 +418,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         {
             TiffDirectory directory = contents.directories
                     .get(i);
-            List dataElements = directory.getTiffRawImageDataElements();
+            List<ImageDataElement> dataElements = directory.getTiffRawImageDataElements();
             for (int j = 0; j < dataElements.size(); j++)
             {
                 TiffDirectory.ImageDataElement element = (TiffDirectory.ImageDataElement) dataElements

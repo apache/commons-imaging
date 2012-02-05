@@ -40,10 +40,10 @@ public final class TiffOutputSet implements TiffConstants
         this.byteOrder = byteOrder;
     }
 
-    protected List getOutputItems(TiffOutputSummary outputSummary)
+    protected List<TiffOutputItem> getOutputItems(TiffOutputSummary outputSummary)
             throws ImageWriteException
     {
-        List result = new ArrayList();
+        List<TiffOutputItem> result = new ArrayList<TiffOutputItem>();
 
         for (int i = 0; i < directories.size(); i++)
         {
@@ -308,7 +308,7 @@ public final class TiffOutputSet implements TiffConstants
                     + directory.description() + " (" + directory.type + ")");
             result.append(newline);
 
-            List fields = directory.getFields();
+            List<TiffOutputField> fields = directory.getFields();
             for (int j = 0; j < fields.size(); j++)
             {
                 TiffOutputField field = (TiffOutputField) fields.get(j);
