@@ -297,9 +297,11 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants
 
     private IccTagType getIccTagType(int quad)
     {
-        for (int i = 0; i < TagTypes.length; i++)
-            if (TagTypes[i].signature == quad)
-                return TagTypes[i];
+        for (IccTagType iccTagType : IccTagTypes.values()) {
+            if (iccTagType.getSignature() == quad) {
+                return iccTagType;
+            }
+        }
 
         return null;
     }

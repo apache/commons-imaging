@@ -16,16 +16,9 @@
  */
 package org.apache.commons.sanselan.icc;
 
-public class IccTagType
+interface IccTagType
 {
-    public final String name;
-    public final String type_description;
-    public final int signature;
-
-    public IccTagType(String name, String type_description, int signature)
-    {
-        this.name = name;
-        this.type_description = type_description;
-        this.signature = signature;
-    }
+    String getName();
+    String getTypeDescription();
+    int getSignature();
 }

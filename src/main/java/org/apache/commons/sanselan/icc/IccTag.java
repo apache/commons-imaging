@@ -64,9 +64,11 @@ public class IccTag implements BinaryConstants, IccConstants
 
     private IccTagDataType getIccTagDataType(int quad)
     {
-        for (int i = 0; i < IccTagDataTypes.length; i++)
-            if (IccTagDataTypes[i].signature == quad)
-                return IccTagDataTypes[i];
+        for (IccTagDataType iccTagDataType : IccTagDataTypes.values()) {
+            if (iccTagDataType.getSignature() == quad) {
+                return iccTagDataType;
+            }
+        }
 
         return null;
     }
@@ -115,7 +117,7 @@ public class IccTag implements BinaryConstants, IccConstants
                 pw.println(prefix + "IccTagType : " + "unknown");
             else
             {
-                pw.println(prefix + "IccTagType : " + itdt.name);
+                pw.println(prefix + "IccTagType : " + itdt.getName());
                 itdt.dump(prefix, data);
             }
 

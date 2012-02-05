@@ -20,17 +20,12 @@ import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
 
-public abstract class IccTagDataType
+interface IccTagDataType
 {
-    public final String name;
-    public final int signature;
-
-    public IccTagDataType(String name, int signature)
-    {
-        this.name = name;
-        this.signature = signature;
-    }
-
-    public abstract void dump(String prefix, byte bytes[])
+    String getName();
+    
+    int getSignature();
+    
+    void dump(String prefix, byte bytes[])
             throws ImageReadException, IOException;
 }

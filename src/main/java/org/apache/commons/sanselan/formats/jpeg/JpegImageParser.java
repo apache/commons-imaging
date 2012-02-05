@@ -82,11 +82,11 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
 
     private static final String DEFAULT_EXTENSION = ".jpg";
 
-    public static final String AcceptedExtensions[] = { ".jpg", ".jpeg", };
+    private static final String ACCEPTED_EXTENSIONS[] = { ".jpg", ".jpeg", };
 
     protected String[] getAcceptedExtensions()
     {
-        return AcceptedExtensions;
+        return ACCEPTED_EXTENSIONS;
     }
 
     public final BufferedImage getBufferedImage(ByteSource byteSource,
