@@ -29,6 +29,7 @@ import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 
 public class MetadataExample
 {
@@ -55,8 +56,8 @@ public class MetadataExample
             System.out.println("file: " + file.getPath());
 
             // print out various interesting EXIF tags.
-            printTagValue(jpegMetadata, TiffConstants.TIFF_TAG_XRESOLUTION);
-            printTagValue(jpegMetadata, TiffConstants.TIFF_TAG_DATE_TIME);
+            printTagValue(jpegMetadata, TiffTagConstants.XRESOLUTION.tagInfo);
+            printTagValue(jpegMetadata, TiffTagConstants.DATE_TIME.tagInfo);
             printTagValue(jpegMetadata,
                     TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL);
             printTagValue(jpegMetadata, TiffConstants.EXIF_TAG_CREATE_DATE);

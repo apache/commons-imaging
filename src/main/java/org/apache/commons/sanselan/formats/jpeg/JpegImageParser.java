@@ -55,8 +55,7 @@ import org.apache.commons.sanselan.formats.tiff.TiffImageParser;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.util.Debug;
 
-public class JpegImageParser extends ImageParser implements JpegConstants,
-        TiffTagConstants
+public class JpegImageParser extends ImageParser implements JpegConstants
 {
     public JpegImageParser()
     {
@@ -735,19 +734,19 @@ public class JpegImageParser extends ImageParser implements JpegConstants,
             {
                 {
                     TiffField field = metadata
-                            .findEXIFValue(TIFF_TAG_XRESOLUTION);
+                            .findEXIFValue(TiffTagConstants.XRESOLUTION.tagInfo);
                     if (field != null)
                         x_density = ((Number) field.getValue()).doubleValue();
                 }
                 {
                     TiffField field = metadata
-                            .findEXIFValue(TIFF_TAG_YRESOLUTION);
+                            .findEXIFValue(TiffTagConstants.YRESOLUTION.tagInfo);
                     if (field != null)
                         y_density = ((Number) field.getValue()).doubleValue();
                 }
                 {
                     TiffField field = metadata
-                            .findEXIFValue(TIFF_TAG_RESOLUTION_UNIT);
+                            .findEXIFValue(TiffTagConstants.RESOLUTION_UNIT.tagInfo);
                     if (field != null)
                     {
                         int density_units = ((Number) field.getValue())

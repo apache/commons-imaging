@@ -30,6 +30,7 @@ import org.apache.commons.sanselan.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
 public abstract class DataReader implements TiffConstants, BinaryConstants
@@ -109,7 +110,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
     protected byte[] decompress(byte compressed[], int compression,
             int expected_size, int tileWidth, int tileHeight) throws ImageReadException, IOException
     {
-        TiffField fillOrderField = directory.findField(TIFF_TAG_FILL_ORDER);
+        TiffField fillOrderField = directory.findField(TiffTagConstants.FILL_ORDER.tagInfo);
         int fillOrder = 1;
         if (fillOrderField != null) {
             fillOrder = fillOrderField.getIntValue();
@@ -133,7 +134,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             case TIFF_COMPRESSION_CCITT_GROUP_3 :
             {
                 int t4Options = 0;
-                TiffField field = directory.findField(TIFF_TAG_T4_OPTIONS);
+                TiffField field = directory.findField(TiffTagConstants.T4_OPTIONS.tagInfo);
                 if (field != null) {
                     t4Options = field.getIntValue();
                 }
@@ -152,7 +153,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             case TIFF_COMPRESSION_CCITT_GROUP_4 :
             {
                 int t6Options = 0;
-                TiffField field = directory.findField(TIFF_TAG_T6_OPTIONS);
+                TiffField field = directory.findField(TiffTagConstants.T6_OPTIONS.tagInfo);
                 if (field != null) {
                     t6Options = field.getIntValue();
                 }

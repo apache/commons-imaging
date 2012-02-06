@@ -30,6 +30,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
 
 public class TiffField implements TiffConstants
@@ -192,7 +193,7 @@ public class TiffField implements TiffConstants
         // return tagInfo;
         // }
 
-        return TIFF_TAG_UNKNOWN;
+        return TiffTagConstants.UNKNOWN.tagInfo;
 
         // if (true)
         // throw new Error("Why didn't this algorithm work?");
@@ -255,7 +256,7 @@ public class TiffField implements TiffConstants
 
         if (null == possibleMatches)
         {
-            return TIFF_TAG_UNKNOWN;
+            return TiffTagConstants.UNKNOWN.tagInfo;
         }
 
         TagInfo result = getTag(directoryType, tag, possibleMatches);
@@ -546,7 +547,7 @@ public class TiffField implements TiffConstants
 
     public String getTagName()
     {
-        if (tagInfo == TIFF_TAG_UNKNOWN)
+        if (tagInfo == TiffTagConstants.UNKNOWN.tagInfo)
             return tagInfo.name + " (0x" + Integer.toHexString(tag) + ")";
         return tagInfo.name;
     }
@@ -611,7 +612,7 @@ public class TiffField implements TiffConstants
 
     private static final Map<Object, List<TagInfo>> GPS_TAG_MAP = makeTagMap(ALL_GPS_TAGS, false,
             "GPS");
-    private static final Map<Object, List<TagInfo>> TIFF_TAG_MAP = makeTagMap(ALL_TIFF_TAGS, false,
+    private static final Map<Object, List<TagInfo>> TIFF_TAG_MAP = makeTagMap(TiffTagConstants.ALL_TIFF_TAGS, false,
             "TIFF");
     private static final Map<Object, List<TagInfo>> EXIF_TAG_MAP = makeTagMap(ALL_EXIF_TAGS, true,
             "EXIF");

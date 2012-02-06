@@ -21,13 +21,11 @@ import org.apache.commons.sanselan.SanselanConstants;
 public interface AllTagConstants
         extends
             SanselanConstants,
-            TiffTagConstants,
             ExifTagConstants,
             GpsTagConstants
 {
-    public static final TagInfo ALL_TAGS[] = TagConstantsUtils
-            .mergeTagLists(new TagInfo[][]{
-                    ALL_TIFF_TAGS, ALL_EXIF_TAGS, ALL_GPS_TAGS,
-            });
+    public static final TagInfo ALL_TAGS[] = TagConstantsUtils.mergeTagLists(new TagInfo[][]{
+                TiffTagConstants.ALL_TIFF_TAGS, ALL_EXIF_TAGS, ALL_GPS_TAGS,
+        });
 
 }

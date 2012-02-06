@@ -31,6 +31,7 @@ import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.constants.TagConstantsUtils;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
 
 public final class TiffOutputDirectory extends TiffOutputItem implements
@@ -190,14 +191,14 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
     {
         // first validate directory fields.
 
-        removeFieldIfPresent(TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
-        removeFieldIfPresent(TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
+        removeFieldIfPresent(TiffTagConstants.JPEG_INTERCHANGE_FORMAT.tagInfo);
+        removeFieldIfPresent(TiffTagConstants.JPEG_INTERCHANGE_FORMAT_LENGTH.tagInfo);
 
         TiffOutputField jpegOffsetField = null;
         if (null != jpegImageData)
         {
             jpegOffsetField = new TiffOutputField(
-                    TIFF_TAG_JPEG_INTERCHANGE_FORMAT, FIELD_TYPE_LONG, 1,
+                    TiffTagConstants.JPEG_INTERCHANGE_FORMAT.tagInfo, FIELD_TYPE_LONG, 1,
                     FieldType.getStubLocalValue());
             add(jpegOffsetField);
 
@@ -206,7 +207,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
                     outputSummary.byteOrder);
 
             TiffOutputField jpegLengthField = new TiffOutputField(
-                    TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH, FIELD_TYPE_LONG,
+                    TiffTagConstants.JPEG_INTERCHANGE_FORMAT_LENGTH.tagInfo, FIELD_TYPE_LONG,
                     1, lengthValue);
             add(jpegLengthField);
 
@@ -214,10 +215,10 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
         // --------------------------------------------------------------
 
-        removeFieldIfPresent(TIFF_TAG_STRIP_OFFSETS);
-        removeFieldIfPresent(TIFF_TAG_STRIP_BYTE_COUNTS);
-        removeFieldIfPresent(TIFF_TAG_TILE_OFFSETS);
-        removeFieldIfPresent(TIFF_TAG_TILE_BYTE_COUNTS);
+        removeFieldIfPresent(TiffTagConstants.STRIP_OFFSETS.tagInfo);
+        removeFieldIfPresent(TiffTagConstants.STRIP_BYTE_COUNTS.tagInfo);
+        removeFieldIfPresent(TiffTagConstants.TILE_OFFSETS.tagInfo);
+        removeFieldIfPresent(TiffTagConstants.TILE_BYTE_COUNTS.tagInfo);
 
         TiffOutputField imageDataOffsetField;
         ImageDataOffsets imageDataInfo = null;
@@ -229,12 +230,12 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
             TagInfo byteCountsTag;
             if (stripsNotTiles)
             {
-                offsetTag = TIFF_TAG_STRIP_OFFSETS;
-                byteCountsTag = TIFF_TAG_STRIP_BYTE_COUNTS;
+                offsetTag = TiffTagConstants.STRIP_OFFSETS.tagInfo;
+                byteCountsTag = TiffTagConstants.STRIP_BYTE_COUNTS.tagInfo;
             } else
             {
-                offsetTag = TIFF_TAG_TILE_OFFSETS;
-                byteCountsTag = TIFF_TAG_TILE_BYTE_COUNTS;
+                offsetTag = TiffTagConstants.TILE_OFFSETS.tagInfo;
+                byteCountsTag = TiffTagConstants.TILE_BYTE_COUNTS.tagInfo;
             }
 
             // --------

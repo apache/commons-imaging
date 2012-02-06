@@ -28,6 +28,7 @@ import org.apache.commons.sanselan.common.BinaryFileParser;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.util.Debug;
 
 public class TiffReader extends BinaryFileParser implements TiffConstants
@@ -477,7 +478,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
         if (directory.imageDataInStrips())
         {
             TiffField rowsPerStripField = directory
-                    .findField(TIFF_TAG_ROWS_PER_STRIP);
+                    .findField(TiffTagConstants.ROWS_PER_STRIP.tagInfo);
             if (null == rowsPerStripField)
                 throw new ImageReadException("Can't find rows per strip field.");
             int rowsPerStrip = rowsPerStripField.getIntValue();
@@ -485,13 +486,13 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             return new TiffImageData.Strips(data, rowsPerStrip);
         } else
         {
-            TiffField tileWidthField = directory.findField(TIFF_TAG_TILE_WIDTH);
+            TiffField tileWidthField = directory.findField(TiffTagConstants.TILE_WIDTH.tagInfo);
             if (null == tileWidthField)
                 throw new ImageReadException("Can't find tile width field.");
             int tileWidth = tileWidthField.getIntValue();
 
             TiffField tileLengthField = directory
-                    .findField(TIFF_TAG_TILE_LENGTH);
+                    .findField(TiffTagConstants.TILE_LENGTH.tagInfo);
             if (null == tileLengthField)
                 throw new ImageReadException("Can't find tile length field.");
             int tileLength = tileLengthField.getIntValue();

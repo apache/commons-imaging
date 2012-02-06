@@ -36,6 +36,7 @@ import org.apache.commons.sanselan.common.mylzw.MyLzwCompressor;
 import org.apache.commons.sanselan.formats.tiff.TiffElement;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 
 public abstract class TiffImageWriterBase implements TiffConstants,
         BinaryConstants
@@ -411,21 +412,21 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         {
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_IMAGE_WIDTH, FIELD_TYPE_LONG, 1,
+                        TiffTagConstants.IMAGE_WIDTH.tagInfo, FIELD_TYPE_LONG, 1,
                         FIELD_TYPE_LONG.writeData(new int[] { width, },
                                 byteOrder));
                 directory.add(field);
             }
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_IMAGE_LENGTH, FIELD_TYPE_LONG, 1,
+                        TiffTagConstants.IMAGE_LENGTH.tagInfo, FIELD_TYPE_LONG, 1,
                         FIELD_TYPE_LONG.writeData(new int[] { height, },
                                 byteOrder));
                 directory.add(field);
             }
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_PHOTOMETRIC_INTERPRETATION, FIELD_TYPE_SHORT,
+                        TiffTagConstants.PHOTOMETRIC_INTERPRETATION.tagInfo, FIELD_TYPE_SHORT,
                         1, FIELD_TYPE_SHORT.writeData(
                                 new int[] { photometricInterpretation, },
                                 byteOrder));
@@ -433,14 +434,14 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             }
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_COMPRESSION, FIELD_TYPE_SHORT, 1,
+                        TiffTagConstants.COMPRESSION.tagInfo, FIELD_TYPE_SHORT, 1,
                         FIELD_TYPE_SHORT.writeData(new int[] { compression, },
                                 byteOrder));
                 directory.add(field);
             }
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_SAMPLES_PER_PIXEL, FIELD_TYPE_SHORT, 1,
+                        TiffTagConstants.SAMPLES_PER_PIXEL.tagInfo, FIELD_TYPE_SHORT, 1,
                         FIELD_TYPE_SHORT.writeData(
                                 new int[] { samplesPerPixel, }, byteOrder));
                 directory.add(field);
@@ -449,14 +450,14 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             if (samplesPerPixel == 3)
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_BITS_PER_SAMPLE, FIELD_TYPE_SHORT, 3,
+                        TiffTagConstants.BITS_PER_SAMPLE.tagInfo, FIELD_TYPE_SHORT, 3,
                         FIELD_TYPE_SHORT.writeData(new int[] { bitsPerSample,
                                 bitsPerSample, bitsPerSample, }, byteOrder));
                 directory.add(field);
             } else if (samplesPerPixel == 1)
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_BITS_PER_SAMPLE, FIELD_TYPE_SHORT, 1,
+                        TiffTagConstants.BITS_PER_SAMPLE.tagInfo, FIELD_TYPE_SHORT, 1,
                         FIELD_TYPE_SHORT.writeData(
                                 new int[] { bitsPerSample, }, byteOrder));
                 directory.add(field);
@@ -476,7 +477,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             // }
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_ROWS_PER_STRIP, FIELD_TYPE_LONG, 1,
+                        TiffTagConstants.ROWS_PER_STRIP.tagInfo, FIELD_TYPE_LONG, 1,
                         FIELD_TYPE_LONG.writeData(new int[] { rowsPerStrip, },
                                 byteOrder));
                 directory.add(field);
@@ -485,7 +486,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             {
                 int resolutionUnit = 2;// inches.
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_RESOLUTION_UNIT, FIELD_TYPE_SHORT, 1,
+                        TiffTagConstants.RESOLUTION_UNIT.tagInfo, FIELD_TYPE_SHORT, 1,
                         FIELD_TYPE_SHORT.writeData(
                                 new int[] { resolutionUnit, }, byteOrder));
                 directory.add(field);
@@ -493,7 +494,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
 
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_XRESOLUTION, FIELD_TYPE_RATIONAL, 1,
+                        TiffTagConstants.XRESOLUTION.tagInfo, FIELD_TYPE_RATIONAL, 1,
                         FIELD_TYPE_RATIONAL
                                 .writeData(xResolution.intValue(), 1, byteOrder));
                 directory.add(field);
@@ -501,7 +502,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
 
             {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_YRESOLUTION, FIELD_TYPE_RATIONAL, 1,
+                        TiffTagConstants.YRESOLUTION.tagInfo, FIELD_TYPE_RATIONAL, 1,
                         FIELD_TYPE_RATIONAL
                                 .writeData(yResolution.intValue(), 1, byteOrder));
                 directory.add(field);
@@ -509,14 +510,14 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             
             if (t4Options != 0) {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_T4_OPTIONS, FIELD_TYPE_LONG, 1,
+                        TiffTagConstants.T4_OPTIONS.tagInfo, FIELD_TYPE_LONG, 1,
                         FIELD_TYPE_LONG
                                 .writeData(Integer.valueOf(t4Options), byteOrder));
                 directory.add(field);
             }
             if (t6Options != 0) {
                 TiffOutputField field = new TiffOutputField(
-                        TIFF_TAG_T6_OPTIONS, FIELD_TYPE_LONG, 1,
+                        TiffTagConstants.T6_OPTIONS.tagInfo, FIELD_TYPE_LONG, 1,
                         FIELD_TYPE_LONG
                                 .writeData(Integer.valueOf(t6Options), byteOrder));
                 directory.add(field);
@@ -527,7 +528,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             {
                 byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
 
-                TiffOutputField field = new TiffOutputField(TIFF_TAG_XMP,
+                TiffOutputField field = new TiffOutputField(TiffTagConstants.XMP.tagInfo,
                         FIELD_TYPE_BYTE, xmpXmlBytes.length, xmpXmlBytes);
                 directory.add(field);
             }

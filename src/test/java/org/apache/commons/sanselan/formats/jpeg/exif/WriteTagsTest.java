@@ -20,6 +20,7 @@ package org.apache.commons.sanselan.formats.jpeg.exif;
 import org.apache.commons.sanselan.SanselanConstants;
 import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputField;
 
 public class WriteTagsTest extends ExifBaseTest implements SanselanConstants
@@ -36,7 +37,7 @@ public class WriteTagsTest extends ExifBaseTest implements SanselanConstants
     public void testSHORTS() throws Exception
     {
         TiffOutputField.create(
-            TiffConstants.TIFF_TAG_BITS_PER_SAMPLE,
+            TiffTagConstants.BITS_PER_SAMPLE.tagInfo,
             BinaryConstants.BYTE_ORDER_LITTLE_ENDIAN,
             new Integer[] { new Integer(1), new Integer(1) } );
     }
