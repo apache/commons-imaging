@@ -28,6 +28,7 @@ import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.ImageMetadata;
 import org.apache.commons.sanselan.common.RationalNumber;
 import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryConstants;
@@ -339,13 +340,13 @@ public class TiffImageMetadata extends ImageMetadata
 
         // more specific example of how to access GPS values.
         TiffField latitudeRefField = gpsDirectory
-                .findField(TiffConstants.GPS_TAG_GPS_LATITUDE_REF);
+                .findField(GpsTagConstants.GPS_LATITUDE_REF.tagInfo);
         TiffField latitudeField = gpsDirectory
-                .findField(TiffConstants.GPS_TAG_GPS_LATITUDE);
+                .findField(GpsTagConstants.GPS_LATITUDE.tagInfo);
         TiffField longitudeRefField = gpsDirectory
-                .findField(TiffConstants.GPS_TAG_GPS_LONGITUDE_REF);
+                .findField(GpsTagConstants.GPS_LONGITUDE_REF.tagInfo);
         TiffField longitudeField = gpsDirectory
-                .findField(TiffConstants.GPS_TAG_GPS_LONGITUDE);
+                .findField(GpsTagConstants.GPS_LONGITUDE.tagInfo);
 
         if (latitudeRefField == null || latitudeField == null
                 || longitudeRefField == null || longitudeField == null)

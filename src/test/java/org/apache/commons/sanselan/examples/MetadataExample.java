@@ -27,6 +27,7 @@ import org.apache.commons.sanselan.common.RationalNumber;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
+import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
@@ -66,10 +67,10 @@ public class MetadataExample
                     TiffConstants.EXIF_TAG_SHUTTER_SPEED_VALUE);
             printTagValue(jpegMetadata, TiffConstants.EXIF_TAG_APERTURE_VALUE);
             printTagValue(jpegMetadata, TiffConstants.EXIF_TAG_BRIGHTNESS_VALUE);
-            printTagValue(jpegMetadata, TiffConstants.GPS_TAG_GPS_LATITUDE_REF);
-            printTagValue(jpegMetadata, TiffConstants.GPS_TAG_GPS_LATITUDE);
-            printTagValue(jpegMetadata, TiffConstants.GPS_TAG_GPS_LONGITUDE_REF);
-            printTagValue(jpegMetadata, TiffConstants.GPS_TAG_GPS_LONGITUDE);
+            printTagValue(jpegMetadata, GpsTagConstants.GPS_LATITUDE_REF.tagInfo);
+            printTagValue(jpegMetadata, GpsTagConstants.GPS_LATITUDE.tagInfo);
+            printTagValue(jpegMetadata, GpsTagConstants.GPS_LONGITUDE_REF.tagInfo);
+            printTagValue(jpegMetadata, GpsTagConstants.GPS_LONGITUDE.tagInfo);
 
             System.out.println();
 
@@ -92,13 +93,13 @@ public class MetadataExample
 
             // more specific example of how to manually access GPS values
             TiffField gpsLatitudeRefField = jpegMetadata
-                    .findEXIFValueWithExactMatch(TiffConstants.GPS_TAG_GPS_LATITUDE_REF);
+                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_LATITUDE_REF.tagInfo);
             TiffField gpsLatitudeField = jpegMetadata
-                    .findEXIFValueWithExactMatch(TiffConstants.GPS_TAG_GPS_LATITUDE);
+                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_LATITUDE.tagInfo);
             TiffField gpsLongitudeRefField = jpegMetadata
-                    .findEXIFValueWithExactMatch(TiffConstants.GPS_TAG_GPS_LONGITUDE_REF);
+                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_LONGITUDE_REF.tagInfo);
             TiffField gpsLongitudeField = jpegMetadata
-                    .findEXIFValueWithExactMatch(TiffConstants.GPS_TAG_GPS_LONGITUDE);
+                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_LONGITUDE.tagInfo);
             if (gpsLatitudeRefField != null && gpsLatitudeField != null
                     && gpsLongitudeRefField != null
                     && gpsLongitudeField != null)

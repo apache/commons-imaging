@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
+import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
@@ -610,7 +611,7 @@ public class TiffField implements TiffConstants
         return map;
     }
 
-    private static final Map<Object, List<TagInfo>> GPS_TAG_MAP = makeTagMap(ALL_GPS_TAGS, false,
+    private static final Map<Object, List<TagInfo>> GPS_TAG_MAP = makeTagMap(GpsTagConstants.ALL_GPS_TAGS, false,
             "GPS");
     private static final Map<Object, List<TagInfo>> TIFF_TAG_MAP = makeTagMap(TiffTagConstants.ALL_TIFF_TAGS, false,
             "TIFF");

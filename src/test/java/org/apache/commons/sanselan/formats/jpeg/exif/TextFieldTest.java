@@ -23,6 +23,7 @@ import java.io.IOException;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
+import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.util.Debug;
 
 public class TextFieldTest extends SpecificExifTagTest
@@ -37,10 +38,10 @@ public class TextFieldTest extends SpecificExifTagTest
     {
         if (field.tag == EXIF_TAG_USER_COMMENT.tag)
         { /* do nothing */ }
-        else if (field.tag == GPS_TAG_GPS_PROCESSING_METHOD.tag
+        else if (field.tag == GpsTagConstants.GPS_PROCESSING_METHOD.tagInfo.tag
                 && field.directoryType == EXIF_DIRECTORY_GPS.directoryType)
         { /* do nothing */ }
-        else if (field.tag == GPS_TAG_GPS_AREA_INFORMATION.tag
+        else if (field.tag == GpsTagConstants.GPS_AREA_INFORMATION.tagInfo.tag
                 && field.directoryType == EXIF_DIRECTORY_GPS.directoryType)
         { /* do nothing */ }
         else

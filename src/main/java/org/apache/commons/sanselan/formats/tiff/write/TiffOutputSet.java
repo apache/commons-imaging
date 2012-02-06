@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.sanselan.ImageWriteException;
+import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.util.Debug;
@@ -154,17 +155,17 @@ public final class TiffOutputSet implements TiffConstants
 
         {
             TiffOutputField longitudeRefField = TiffOutputField.create(
-                    TiffConstants.GPS_TAG_GPS_LONGITUDE_REF, byteOrder,
+                    GpsTagConstants.GPS_LONGITUDE_REF.tagInfo, byteOrder,
                     longitudeRef);
-            gpsDirectory.removeField(TiffConstants.GPS_TAG_GPS_LONGITUDE_REF);
+            gpsDirectory.removeField(GpsTagConstants.GPS_LONGITUDE_REF.tagInfo);
             gpsDirectory.add(longitudeRefField);
         }
 
         {
             TiffOutputField latitudeRefField = TiffOutputField.create(
-                    TiffConstants.GPS_TAG_GPS_LATITUDE_REF, byteOrder,
+                    GpsTagConstants.GPS_LATITUDE_REF.tagInfo, byteOrder,
                     latitudeRef);
-            gpsDirectory.removeField(TiffConstants.GPS_TAG_GPS_LATITUDE_REF);
+            gpsDirectory.removeField(GpsTagConstants.GPS_LATITUDE_REF.tagInfo);
             gpsDirectory.add(latitudeRefField);
         }
 
@@ -183,8 +184,8 @@ public final class TiffOutputSet implements TiffConstants
             };
 
             TiffOutputField longitudeField = TiffOutputField.create(
-                    TiffConstants.GPS_TAG_GPS_LONGITUDE, byteOrder, values);
-            gpsDirectory.removeField(TiffConstants.GPS_TAG_GPS_LONGITUDE);
+                    GpsTagConstants.GPS_LONGITUDE.tagInfo, byteOrder, values);
+            gpsDirectory.removeField(GpsTagConstants.GPS_LONGITUDE.tagInfo);
             gpsDirectory.add(longitudeField);
         }
 
@@ -203,8 +204,8 @@ public final class TiffOutputSet implements TiffConstants
             };
 
             TiffOutputField latitudeField = TiffOutputField.create(
-                    TiffConstants.GPS_TAG_GPS_LATITUDE, byteOrder, values);
-            gpsDirectory.removeField(TiffConstants.GPS_TAG_GPS_LATITUDE);
+                    GpsTagConstants.GPS_LATITUDE.tagInfo, byteOrder, values);
+            gpsDirectory.removeField(GpsTagConstants.GPS_LATITUDE.tagInfo);
             gpsDirectory.add(latitudeField);
         }
 
