@@ -26,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
@@ -35,6 +34,7 @@ import org.apache.commons.sanselan.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.sanselan.common.mylzw.MyLzwCompressor;
 import org.apache.commons.sanselan.formats.tiff.TiffElement;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
+import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 
@@ -140,19 +140,19 @@ public abstract class TiffImageWriterBase implements TiffConstants,
                             + ") appears twice in directory.");
                 fieldTags.add(fieldKey);
 
-                if (field.tag == EXIF_TAG_EXIF_OFFSET.tag)
+                if (field.tag == ExifTagConstants.EXIF_OFFSET.tagInfo.tag)
                 {
                     if (exifDirectoryOffsetField != null)
                         throw new ImageWriteException(
                                 "More than one Exif directory offset field.");
                     exifDirectoryOffsetField = field;
-                } else if (field.tag == EXIF_TAG_INTEROP_OFFSET.tag)
+                } else if (field.tag == ExifTagConstants.INTEROP_OFFSET.tagInfo.tag)
                 {
                     if (interoperabilityDirectoryOffsetField != null)
                         throw new ImageWriteException(
                                 "More than one Interoperability directory offset field.");
                     interoperabilityDirectoryOffsetField = field;
-                } else if (field.tag == EXIF_TAG_GPSINFO.tag)
+                } else if (field.tag == ExifTagConstants.GPSINFO.tagInfo.tag)
                 {
                     if (gpsDirectoryOffsetField != null)
                         throw new ImageWriteException(
@@ -208,7 +208,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             if (interoperabilityDirectoryOffsetField == null)
             {
                 interoperabilityDirectoryOffsetField = TiffOutputField
-                        .createOffsetField(EXIF_TAG_INTEROP_OFFSET, byteOrder);
+                        .createOffsetField(ExifTagConstants.INTEROP_OFFSET.tagInfo, byteOrder);
                 exifDirectory.add(interoperabilityDirectoryOffsetField);
             }
 
@@ -227,7 +227,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             if (exifDirectoryOffsetField == null)
             {
                 exifDirectoryOffsetField = TiffOutputField.createOffsetField(
-                        EXIF_TAG_EXIF_OFFSET, byteOrder);
+                        ExifTagConstants.EXIF_OFFSET.tagInfo, byteOrder);
                 rootDirectory.add(exifDirectoryOffsetField);
             }
 
@@ -244,7 +244,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             if (gpsDirectoryOffsetField == null)
             {
                 gpsDirectoryOffsetField = TiffOutputField.createOffsetField(
-                        EXIF_TAG_GPSINFO, byteOrder);
+                        ExifTagConstants.GPSINFO.tagInfo, byteOrder);
                 rootDirectory.add(gpsDirectoryOffsetField);
             }
 

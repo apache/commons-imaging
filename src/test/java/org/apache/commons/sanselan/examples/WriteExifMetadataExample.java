@@ -29,6 +29,7 @@ import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.sanselan.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
+import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputField;
@@ -125,14 +126,14 @@ public class WriteExifMetadataExample
                 // org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants
                 //
                 TiffOutputField aperture = TiffOutputField.create(
-                        TiffConstants.EXIF_TAG_APERTURE_VALUE,
+                        ExifTagConstants.APERTURE_VALUE.tagInfo,
                         outputSet.byteOrder, new Double(0.3));
                 TiffOutputDirectory exifDirectory = outputSet
                         .getOrCreateExifDirectory();
                 // make sure to remove old value if present (this method will
                 // not fail if the tag does not exist).
                 exifDirectory
-                        .removeField(TiffConstants.EXIF_TAG_APERTURE_VALUE);
+                        .removeField(ExifTagConstants.APERTURE_VALUE.tagInfo);
                 exifDirectory.add(aperture);
             }
 
@@ -231,7 +232,7 @@ public class WriteExifMetadataExample
                 // Note that this approach is crude: Exif data is organized in
                 // directories. The same tag/field may appear in more than one
                 // directory, and have different meanings in each.
-                outputSet.removeField(TiffConstants.EXIF_TAG_APERTURE_VALUE);
+                outputSet.removeField(ExifTagConstants.APERTURE_VALUE.tagInfo);
 
                 // Option 2: precision
                 // We know the exact directory the tag should appear in, in this
@@ -245,7 +246,7 @@ public class WriteExifMetadataExample
                         .getExifDirectory();
                 if (null != exifDirectory)
                     exifDirectory
-                            .removeField(TiffConstants.EXIF_TAG_APERTURE_VALUE);
+                            .removeField(ExifTagConstants.APERTURE_VALUE.tagInfo);
             }
 
             os = new FileOutputStream(dst);

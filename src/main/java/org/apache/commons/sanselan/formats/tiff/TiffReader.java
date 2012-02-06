@@ -27,6 +27,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BinaryFileParser;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
+import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.util.Debug;
@@ -248,9 +249,9 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
                 {
                     TiffField entry = fields.get(j);
 
-                    if (entry.tag == TiffConstants.EXIF_TAG_EXIF_OFFSET.tag
-                            || entry.tag == TiffConstants.EXIF_TAG_GPSINFO.tag
-                            || entry.tag == TiffConstants.EXIF_TAG_INTEROP_OFFSET.tag)
+                    if (entry.tag == ExifTagConstants.EXIF_OFFSET.tagInfo.tag
+                            || entry.tag == ExifTagConstants.GPSINFO.tagInfo.tag
+                            || entry.tag == ExifTagConstants.INTEROP_OFFSET.tagInfo.tag)
                     { /* do nothing */ }
                     else
                         continue;
@@ -258,11 +259,11 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
                     int subDirectoryOffset = ((Number) entry.getValue())
                             .intValue();
                     int subDirectoryType;
-                    if (entry.tag == TiffConstants.EXIF_TAG_EXIF_OFFSET.tag)
+                    if (entry.tag == ExifTagConstants.EXIF_OFFSET.tagInfo.tag)
                         subDirectoryType = TiffDirectory.DIRECTORY_TYPE_EXIF;
-                    else if (entry.tag == TiffConstants.EXIF_TAG_GPSINFO.tag)
+                    else if (entry.tag == ExifTagConstants.GPSINFO.tagInfo.tag)
                         subDirectoryType = TiffDirectory.DIRECTORY_TYPE_GPS;
-                    else if (entry.tag == TiffConstants.EXIF_TAG_INTEROP_OFFSET.tag)
+                    else if (entry.tag == ExifTagConstants.INTEROP_OFFSET.tagInfo.tag)
                         subDirectoryType = TiffDirectory.DIRECTORY_TYPE_INTEROPERABILITY;
                     else
                         throw new ImageReadException(

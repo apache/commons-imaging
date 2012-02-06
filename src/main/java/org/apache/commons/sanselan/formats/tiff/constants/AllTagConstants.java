@@ -16,15 +16,17 @@
  */
 package org.apache.commons.sanselan.formats.tiff.constants;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.sanselan.SanselanConstants;
 
 public interface AllTagConstants
         extends
-            SanselanConstants,
-            ExifTagConstants
+            SanselanConstants
 {
-    public static final TagInfo ALL_TAGS[] = TagConstantsUtils.mergeTagLists(new TagInfo[][]{
-                TiffTagConstants.ALL_TIFF_TAGS, ALL_EXIF_TAGS, GpsTagConstants.ALL_GPS_TAGS,
-        });
+    public static final List<TagInfo> ALL_TAGS = Collections.unmodifiableList(
+            TagConstantsUtils.mergeTagLists(TiffTagConstants.values(),
+                    GpsTagConstants.values(), ExifTagConstants.values()));
 
 }

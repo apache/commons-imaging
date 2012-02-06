@@ -27,6 +27,7 @@ import org.apache.commons.sanselan.common.RationalNumber;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
+import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
@@ -60,13 +61,13 @@ public class MetadataExample
             printTagValue(jpegMetadata, TiffTagConstants.XRESOLUTION.tagInfo);
             printTagValue(jpegMetadata, TiffTagConstants.DATE_TIME.tagInfo);
             printTagValue(jpegMetadata,
-                    TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL);
-            printTagValue(jpegMetadata, TiffConstants.EXIF_TAG_CREATE_DATE);
-            printTagValue(jpegMetadata, TiffConstants.EXIF_TAG_ISO);
+                    ExifTagConstants.DATE_TIME_ORIGINAL.tagInfo);
+            printTagValue(jpegMetadata, ExifTagConstants.CREATE_DATE.tagInfo);
+            printTagValue(jpegMetadata, ExifTagConstants.ISO.tagInfo);
             printTagValue(jpegMetadata,
-                    TiffConstants.EXIF_TAG_SHUTTER_SPEED_VALUE);
-            printTagValue(jpegMetadata, TiffConstants.EXIF_TAG_APERTURE_VALUE);
-            printTagValue(jpegMetadata, TiffConstants.EXIF_TAG_BRIGHTNESS_VALUE);
+                    ExifTagConstants.SHUTTER_SPEED_VALUE.tagInfo);
+            printTagValue(jpegMetadata, ExifTagConstants.APERTURE_VALUE.tagInfo);
+            printTagValue(jpegMetadata, ExifTagConstants.BRIGHTNESS_VALUE.tagInfo);
             printTagValue(jpegMetadata, GpsTagConstants.GPS_LATITUDE_REF.tagInfo);
             printTagValue(jpegMetadata, GpsTagConstants.GPS_LATITUDE.tagInfo);
             printTagValue(jpegMetadata, GpsTagConstants.GPS_LONGITUDE_REF.tagInfo);

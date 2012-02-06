@@ -16,7 +16,10 @@
  */
 package org.apache.commons.sanselan.formats.tiff.constants;
 
-public enum TiffTagConstants implements TiffFieldTypeConstants, TiffDirectoryConstants
+import java.util.Collections;
+import java.util.List;
+
+public enum TiffTagConstants implements TiffFieldTypeConstants, TiffDirectoryConstants, TagHolder
 {
 
     NEW_SUBFILE_TYPE(new TagInfo(
@@ -311,12 +314,10 @@ public enum TiffTagConstants implements TiffFieldTypeConstants, TiffDirectoryCon
         this.tagInfo = tagInfo;
     }
     
-    public static final TagInfo[] ALL_TIFF_TAGS;
-    static {
-        TiffTagConstants[] tiffTagConstants = values();
-        ALL_TIFF_TAGS = new TagInfo[tiffTagConstants.length];
-        for (int i = 0; i < tiffTagConstants.length; i++) {
-            ALL_TIFF_TAGS[i] = tiffTagConstants[i].tagInfo;
-        }
+    public TagInfo getTagInfo() {
+        return tagInfo;
     }
+    
+    public static final List<TagInfo> ALL_TIFF_TAGS = Collections.unmodifiableList(
+            TagConstantsUtils.mergeTagLists(values()));
 }

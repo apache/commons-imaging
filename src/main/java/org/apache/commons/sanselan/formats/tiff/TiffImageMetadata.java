@@ -49,13 +49,13 @@ public class TiffImageMetadata extends ImageMetadata
         this.contents = contents;
     }
 
-    private static final Map<Object, Integer> countTags(TagInfo tags[])
+    private static final Map<Object, Integer> countTags(List<TagInfo> tags)
     {
         Map<Object, Integer> map = new Hashtable<Object, Integer>();
 
-        for (int i = 0; i < tags.length; i++)
+        for (int i = 0; i < tags.size(); i++)
         {
-            TagInfo tag = tags[i];
+            TagInfo tag = tags.get(i);
             Object key = new Integer(tag.tag);
 
             Integer count = map.get(key);

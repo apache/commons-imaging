@@ -16,10 +16,14 @@
  */
 package org.apache.commons.sanselan.formats.tiff.constants;
 
+import java.util.Collections;
+import java.util.List;
+
 public enum GpsTagConstants
         implements
             TiffDirectoryConstants,
-            TiffFieldTypeConstants
+            TiffFieldTypeConstants,
+            TagHolder
 {
     GPS_VERSION_ID(new TagInfo(
             "GPS Version ID", 0x0000, FIELD_TYPE_DESCRIPTION_BYTE, 4,
@@ -208,12 +212,10 @@ public enum GpsTagConstants
 
     // ************************************************************
 
-    public static final TagInfo[] ALL_GPS_TAGS;
-    static {
-        GpsTagConstants[] gpsTagConstants = values();
-        ALL_GPS_TAGS = new TagInfo[gpsTagConstants.length];
-        for (int i = 0; i < gpsTagConstants.length; i++) {
-            ALL_GPS_TAGS[i] = gpsTagConstants[i].tagInfo;
-        }
+    public TagInfo getTagInfo() {
+        return tagInfo;
     }
+    
+    public static final List<TagInfo> ALL_GPS_TAGS = Collections.unmodifiableList(
+            TagConstantsUtils.mergeTagLists(values()));
 }

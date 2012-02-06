@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
+import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
@@ -577,15 +578,15 @@ public class TiffField implements TiffConstants
         return (String) o;
     }
 
-    private static final Map<Object, List<TagInfo>> makeTagMap(TagInfo tags[],
+    private static final Map<Object, List<TagInfo>> makeTagMap(List<TagInfo> tags,
                                                                boolean ignoreDuplicates, String name)
     {
         // make sure to use the thread-safe version; this is shared state.
         Map<Object, List<TagInfo>> map = new Hashtable<Object, List<TagInfo>>();
 
-        for (int i = 0; i < tags.length; i++)
+        for (int i = 0; i < tags.size(); i++)
         {
-            TagInfo tag = tags[i];
+            TagInfo tag = tags.get(i);
             Object key = new Integer(tag.tag);
 
             List<TagInfo> tagList = map.get(key);
@@ -615,7 +616,7 @@ public class TiffField implements TiffConstants
             "GPS");
     private static final Map<Object, List<TagInfo>> TIFF_TAG_MAP = makeTagMap(TiffTagConstants.ALL_TIFF_TAGS, false,
             "TIFF");
-    private static final Map<Object, List<TagInfo>> EXIF_TAG_MAP = makeTagMap(ALL_EXIF_TAGS, true,
+    private static final Map<Object, List<TagInfo>> EXIF_TAG_MAP = makeTagMap(ExifTagConstants.ALL_EXIF_TAGS, true,
             "EXIF");
     private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(ALL_TAGS, true, "All");
 

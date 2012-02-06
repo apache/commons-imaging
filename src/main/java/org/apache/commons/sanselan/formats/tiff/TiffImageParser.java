@@ -36,6 +36,7 @@ import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
+import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.datareaders.DataReader;
@@ -89,7 +90,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                 .readFirstDirectory(byteSource, params, false, formatCompliance);
         TiffDirectory directory = contents.directories.get(0);
 
-        TiffField field = directory.findField(EXIF_TAG_ICC_PROFILE);
+        TiffField field = directory.findField(ExifTagConstants.ICC_PROFILE.tagInfo);
         if (null == field)
             return null;
         return field.oversizeValue;

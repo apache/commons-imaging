@@ -40,6 +40,7 @@ import org.apache.commons.sanselan.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffFieldTypeConstants;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.sanselan.util.Debug;
 import org.apache.commons.sanselan.util.IoUtils;
@@ -428,7 +429,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                     continue;
                 }
 
-                if (oldField.fieldType == FIELD_TYPE_ASCII)
+                if (oldField.fieldType == TiffFieldTypeConstants.FIELD_TYPE_ASCII)
                 {
                     // Sanselan currently doesn't correctly rewrite
                     // strings if any byte had the highest bit set,

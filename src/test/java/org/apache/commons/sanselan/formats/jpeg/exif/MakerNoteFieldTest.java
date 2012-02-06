@@ -23,6 +23,7 @@ import java.io.IOException;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
+import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.util.Debug;
 
 public class MakerNoteFieldTest extends SpecificExifTagTest
@@ -35,7 +36,7 @@ public class MakerNoteFieldTest extends SpecificExifTagTest
     protected void checkField(File imageFile, TiffField field)
             throws IOException, ImageReadException, ImageWriteException
     {
-        if (field.tag != EXIF_TAG_MAKER_NOTE.tag)
+        if (field.tag != ExifTagConstants.MAKER_NOTE.tagInfo.tag)
         {
             //            if (field.tag == EXIF_TAG_EXIF_OFFSET.tag)
             //                ;

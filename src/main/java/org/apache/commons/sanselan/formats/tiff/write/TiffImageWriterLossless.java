@@ -38,6 +38,7 @@ import org.apache.commons.sanselan.formats.tiff.TiffElement;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.TiffReader;
+import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.util.Debug;
 
 public class TiffImageWriterLossless extends TiffImageWriterBase
@@ -142,7 +143,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
                 for (int f = 0; f < fields.size(); f++)
                 {
                     TiffField field = fields.get(f);
-                    if (field.tag == EXIF_TAG_MAKER_NOTE.tag) {
+                    if (field.tag == ExifTagConstants.MAKER_NOTE.tagInfo.tag) {
                         // Some maker notes reference values stored
                         // inside the maker note itself
                         // using addresses relative to the beginning
