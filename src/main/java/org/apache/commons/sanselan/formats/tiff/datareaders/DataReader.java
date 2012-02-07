@@ -29,6 +29,7 @@ import org.apache.commons.sanselan.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.sanselan.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
+import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -111,13 +112,13 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             int expected_size, int tileWidth, int tileHeight) throws ImageReadException, IOException
     {
         TiffField fillOrderField = directory.findField(TiffTagConstants.FILL_ORDER.tagInfo);
-        int fillOrder = 1;
+        int fillOrder = ExifTagConstants.FILL_ORDER_VALUE_NORMAL;
         if (fillOrderField != null) {
             fillOrder = fillOrderField.getIntValue();
         }
-        if (fillOrder == 1) {
+        if (fillOrder == ExifTagConstants.FILL_ORDER_VALUE_NORMAL) {
             // good
-        } else if (fillOrder == 2) {
+        } else if (fillOrder == ExifTagConstants.FILL_ORDER_VALUE_REVERSED) {
             for (int i = 0; i < compressed.length; i++) {
                 compressed[i] = (byte) (Integer.reverse(0xff & compressed[i]) >>> 24);
             }

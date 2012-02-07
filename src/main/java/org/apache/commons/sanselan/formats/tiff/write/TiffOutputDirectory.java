@@ -31,6 +31,7 @@ import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.constants.TagConstantsUtils;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
 
@@ -174,7 +175,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
     public String getItemDescription()
     {
-        ExifDirectoryType dirType = TagConstantsUtils
+        TiffDirectoryType dirType = TagConstantsUtils
                 .getExifDirectoryType(type);
         return "Directory: " + dirType.name + " (" + type + ")";
     }

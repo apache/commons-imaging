@@ -33,7 +33,7 @@ public class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
     protected static final int LENGTH_UNKNOWN = -1;
 
     public TagInfo(String name, int tag, FieldType dataType, int length,
-            ExifDirectoryType exifDirectory)
+            TiffDirectoryType exifDirectory)
     {
         this(name, tag, new FieldType[]{
             dataType
@@ -44,7 +44,7 @@ public class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
     {
         this(name, tag, new FieldType[]{
             dataType
-        }, length, EXIF_DIRECTORY_UNKNOWN);
+        }, length, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
     public TagInfo(String name, int tag, FieldType dataType,
@@ -52,36 +52,36 @@ public class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
     {
         this(name, tag, new FieldType[]{
             dataType
-        }, LENGTH_UNKNOWN, EXIF_DIRECTORY_UNKNOWN);
+        }, LENGTH_UNKNOWN, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
     public TagInfo(String name, int tag, FieldType dataTypes[],
             String lengthDescription)
     {
-        this(name, tag, dataTypes, LENGTH_UNKNOWN, EXIF_DIRECTORY_UNKNOWN);
+        this(name, tag, dataTypes, LENGTH_UNKNOWN, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
     public TagInfo(String name, int tag, FieldType dataType)
     {
-        this(name, tag, dataType, LENGTH_UNKNOWN, EXIF_DIRECTORY_UNKNOWN);
+        this(name, tag, dataType, LENGTH_UNKNOWN, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
     public TagInfo(String name, int tag, FieldType dataTypes[], int length,
             String lengthDescription)
     {
-        this(name, tag, dataTypes, length, EXIF_DIRECTORY_UNKNOWN);
+        this(name, tag, dataTypes, length, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
     public final String name;
     public final int tag;
     public final FieldType dataTypes[];
     public final int length;
-    public final ExifDirectoryType directoryType;
+    public final TiffDirectoryType directoryType;
 
     //    public final String lengthDescription;
 
     public TagInfo(String name, int tag, FieldType dataTypes[], int length,
-            ExifDirectoryType exifDirectory
+            TiffDirectoryType exifDirectory
     //            , String lengthDescription
     )
     {
@@ -139,13 +139,13 @@ public class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
     public static class Offset extends TagInfo
     {
         public Offset(String name, int tag, FieldType dataTypes[], int length,
-                ExifDirectoryType exifDirectory)
+                TiffDirectoryType exifDirectory)
         {
             super(name, tag, dataTypes, length, exifDirectory);
         }
 
         public Offset(String name, int tag, FieldType dataType, int length,
-                ExifDirectoryType exifDirectory)
+                TiffDirectoryType exifDirectory)
         {
             super(name, tag, dataType, length, exifDirectory);
         }
@@ -234,13 +234,13 @@ public class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
     public static final class Text extends TagInfo
     {
         public Text(String name, int tag, FieldType dataType, int length,
-                ExifDirectoryType exifDirectory)
+                TiffDirectoryType exifDirectory)
         {
             super(name, tag, dataType, length, exifDirectory);
         }
 
         public Text(String name, int tag, FieldType dataTypes[], int length,
-                ExifDirectoryType exifDirectory)
+                TiffDirectoryType exifDirectory)
         {
             super(name, tag, dataTypes, length, exifDirectory);
         }
@@ -414,7 +414,7 @@ public class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
     {
 
         public Unknown(String name, int tag, FieldType dataTypes[], int length,
-                ExifDirectoryType exifDirectory)
+                TiffDirectoryType exifDirectory)
         {
             super(name, tag, dataTypes, length, exifDirectory);
         }

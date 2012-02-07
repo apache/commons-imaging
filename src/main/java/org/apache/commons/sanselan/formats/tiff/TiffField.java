@@ -32,6 +32,7 @@ import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
 
@@ -137,7 +138,7 @@ public class TiffField implements TiffConstants
         for (int i = 0; i < possibleMatches.size(); i++)
         {
             TagInfo tagInfo = possibleMatches.get(i);
-            if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
+            if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN)
                 // pass
                 continue;
             else if (directoryType == tagInfo.directoryType.directoryType)
@@ -149,7 +150,7 @@ public class TiffField implements TiffConstants
         {
             TagInfo tagInfo = possibleMatches.get(i);
 
-            if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
+            if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN)
                 // pass
                 continue;
             else if (directoryType >= 0
@@ -165,7 +166,7 @@ public class TiffField implements TiffConstants
         {
             TagInfo tagInfo = possibleMatches.get(i);
 
-            if (tagInfo.directoryType == EXIF_DIRECTORY_UNKNOWN)
+            if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN)
                 return tagInfo;
         }
 

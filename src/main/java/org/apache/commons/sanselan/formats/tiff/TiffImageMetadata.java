@@ -30,8 +30,8 @@ import org.apache.commons.sanselan.common.RationalNumber;
 import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
-import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputField;
@@ -262,7 +262,7 @@ public class TiffImageMetadata extends ImageMetadata
         int tagsMatching = tagCount == null ? 0 : tagCount.intValue();
 
         List<? extends IImageMetadataItem> directories = getDirectories();
-        if (exactDirectoryMatch || tagInfo.directoryType != EXIF_DIRECTORY_UNKNOWN)
+        if (exactDirectoryMatch || tagInfo.directoryType != TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN)
         {
             for (int i = 0; i < directories.size(); i++)
             {

@@ -21,6 +21,7 @@ import java.util.List;
 
 public class TagConstantsUtils implements TiffDirectoryConstants
 {
+    private static final TiffDirectoryType[] tiffDirectoryTypes = TiffDirectoryType.values();
 
     public static List<TagInfo> mergeTagLists(TagHolder[]... tagHolders)
     {
@@ -40,12 +41,13 @@ public class TagConstantsUtils implements TiffDirectoryConstants
         return result;
     }
 
-    public static ExifDirectoryType getExifDirectoryType(int type)
+    public static TiffDirectoryType getExifDirectoryType(int type)
     {
-        for (int i = 0; i < EXIF_DIRECTORIES.length; i++)
-            if (EXIF_DIRECTORIES[i].directoryType == type)
-                return EXIF_DIRECTORIES[i];
-        return EXIF_DIRECTORY_UNKNOWN;
+        
+        for (int i = 0; i < tiffDirectoryTypes.length; i++)
+            if (tiffDirectoryTypes[i].directoryType == type)
+                return tiffDirectoryTypes[i];
+        return TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN;
     }
 
 }
