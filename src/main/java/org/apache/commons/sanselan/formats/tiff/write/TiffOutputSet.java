@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.sanselan.ImageWriteException;
+import org.apache.commons.sanselan.common.RationalNumberUtilities;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
-import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.sanselan.util.Debug;
 
 public final class TiffOutputSet implements TiffConstants
@@ -153,21 +154,12 @@ public final class TiffOutputSet implements TiffConstants
         String latitudeRef = latitude < 0 ? "S" : "N";
         latitude = Math.abs(latitude);
 
-        {
-            TiffOutputField longitudeRefField = TiffOutputField.create(
-                    GpsTagConstants.GPS_LONGITUDE_REF.tagInfo, byteOrder,
-                    longitudeRef);
-            gpsDirectory.removeField(GpsTagConstants.GPS_LONGITUDE_REF.tagInfo);
-            gpsDirectory.add(longitudeRefField);
-        }
+        gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
+        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LONGITUDE_REF, longitudeRef);
 
-        {
-            TiffOutputField latitudeRefField = TiffOutputField.create(
-                    GpsTagConstants.GPS_LATITUDE_REF.tagInfo, byteOrder,
-                    latitudeRef);
-            gpsDirectory.removeField(GpsTagConstants.GPS_LATITUDE_REF.tagInfo);
-            gpsDirectory.add(latitudeRefField);
-        }
+        gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
+        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LATITUDE_REF, latitudeRef);
+
 
         {
             double value = longitude;
@@ -178,15 +170,12 @@ public final class TiffOutputSet implements TiffConstants
             value %= 1;
             value *= 60.0;
             double longitudeSeconds = value;
-            Double values[] = {
-                    new Double(longitudeDegrees), new Double(longitudeMinutes),
-                    new Double(longitudeSeconds),
-            };
 
-            TiffOutputField longitudeField = TiffOutputField.create(
-                    GpsTagConstants.GPS_LONGITUDE.tagInfo, byteOrder, values);
-            gpsDirectory.removeField(GpsTagConstants.GPS_LONGITUDE.tagInfo);
-            gpsDirectory.add(longitudeField);
+            gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
+            gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LONGITUDE,
+                    RationalNumberUtilities.getRationalNumber(longitudeDegrees),
+                    RationalNumberUtilities.getRationalNumber(longitudeMinutes),
+                    RationalNumberUtilities.getRationalNumber(longitudeSeconds));
         }
 
         {
@@ -198,15 +187,12 @@ public final class TiffOutputSet implements TiffConstants
             value %= 1;
             value *= 60.0;
             double latitudeSeconds = value;
-            Double values[] = {
-                    new Double(latitudeDegrees), new Double(latitudeMinutes),
-                    new Double(latitudeSeconds),
-            };
 
-            TiffOutputField latitudeField = TiffOutputField.create(
-                    GpsTagConstants.GPS_LATITUDE.tagInfo, byteOrder, values);
-            gpsDirectory.removeField(GpsTagConstants.GPS_LATITUDE.tagInfo);
-            gpsDirectory.add(latitudeField);
+            gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LATITUDE);
+            gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_LATITUDE,
+                    RationalNumberUtilities.getRationalNumber(latitudeDegrees),
+                    RationalNumberUtilities.getRationalNumber(latitudeMinutes),
+                    RationalNumberUtilities.getRationalNumber(latitudeSeconds));
         }
 
     }
@@ -247,7 +233,7 @@ public final class TiffOutputSet implements TiffConstants
     public TiffOutputDirectory addRootDirectory() throws ImageWriteException
     {
         TiffOutputDirectory result = new TiffOutputDirectory(
-                DIRECTORY_TYPE_ROOT);
+                DIRECTORY_TYPE_ROOT, byteOrder);
         addDirectory(result);
         return result;
     }
@@ -255,14 +241,14 @@ public final class TiffOutputSet implements TiffConstants
     public TiffOutputDirectory addExifDirectory() throws ImageWriteException
     {
         TiffOutputDirectory result = new TiffOutputDirectory(
-                DIRECTORY_TYPE_EXIF);
+                DIRECTORY_TYPE_EXIF, byteOrder);
         addDirectory(result);
         return result;
     }
 
     public TiffOutputDirectory addGPSDirectory() throws ImageWriteException
     {
-        TiffOutputDirectory result = new TiffOutputDirectory(DIRECTORY_TYPE_GPS);
+        TiffOutputDirectory result = new TiffOutputDirectory(DIRECTORY_TYPE_GPS, byteOrder);
         addDirectory(result);
         return result;
     }
@@ -273,7 +259,7 @@ public final class TiffOutputSet implements TiffConstants
         getOrCreateExifDirectory();
 
         TiffOutputDirectory result = new TiffOutputDirectory(
-                DIRECTORY_TYPE_INTEROPERABILITY);
+                DIRECTORY_TYPE_INTEROPERABILITY, byteOrder);
         addDirectory(result);
         return result;
     }

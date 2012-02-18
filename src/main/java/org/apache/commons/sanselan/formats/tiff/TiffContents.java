@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.sanselan.util.Debug;
 
 public class TiffContents

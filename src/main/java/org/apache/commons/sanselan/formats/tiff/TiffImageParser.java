@@ -90,10 +90,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                 .readFirstDirectory(byteSource, params, false, formatCompliance);
         TiffDirectory directory = contents.directories.get(0);
 
-        TiffField field = directory.findField(ExifTagConstants.ICC_PROFILE.tagInfo);
-        if (null == field)
-            return null;
-        return field.oversizeValue;
+        return directory.getFieldValue(ExifTagConstants.EXIF_TAG_ICC_PROFILE);
     }
 
     public Dimension getImageSize(ByteSource byteSource, Map params)
@@ -104,8 +101,15 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                 .readFirstDirectory(byteSource, params, false, formatCompliance);
         TiffDirectory directory = contents.directories.get(0);
 
-        int width = directory.findField(TiffTagConstants.IMAGE_WIDTH.tagInfo).getIntValue();
-        int height = directory.findField(TiffTagConstants.IMAGE_LENGTH.tagInfo).getIntValue();
+        TiffField widthField = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, true);
+        TiffField heightField = directory
+                .findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true);
+
+        if ((widthField == null) || (heightField == null))
+            throw new ImageReadException("TIFF image missing size info.");
+
+        int height = heightField.getIntValue();
+        int width = widthField.getIntValue();
 
         return new Dimension(width, height);
     }
@@ -159,9 +163,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                 .readDirectories(byteSource, false, formatCompliance);
         TiffDirectory directory = contents.directories.get(0);
 
-        TiffField widthField = directory.findField(TiffTagConstants.IMAGE_WIDTH.tagInfo, true);
+        TiffField widthField = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, true);
         TiffField heightField = directory
-                .findField(TiffTagConstants.IMAGE_LENGTH.tagInfo, true);
+                .findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true);
 
         if ((widthField == null) || (heightField == null))
             throw new ImageReadException("TIFF image missing size info.");
@@ -172,7 +176,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         // -------------------
 
         TiffField resolutionUnitField = directory
-                .findField(TiffTagConstants.RESOLUTION_UNIT.tagInfo);
+                .findField(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT);
         int resolutionUnit = 2; // Inch
         if ((resolutionUnitField != null)
                 && (resolutionUnitField.getValue() != null))
@@ -193,8 +197,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             break;
 
         }
-        TiffField xResolutionField = directory.findField(TiffTagConstants.XRESOLUTION.tagInfo);
-        TiffField yResolutionField = directory.findField(TiffTagConstants.YRESOLUTION.tagInfo);
+        TiffField xResolutionField = directory.findField(TiffTagConstants.TIFF_TAG_XRESOLUTION);
+        TiffField yResolutionField = directory.findField(TiffTagConstants.TIFF_TAG_YRESOLUTION);
 
         int physicalWidthDpi = -1;
         float physicalWidthInch = -1;
@@ -224,7 +228,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         // -------------------
 
         TiffField bitsPerSampleField = directory
-                .findField(TiffTagConstants.BITS_PER_SAMPLE.tagInfo);
+                .findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
 
         int bitsPerSample = 1;
         if ((bitsPerSampleField != null)
@@ -257,13 +261,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
         boolean isTransparent = false; // TODO: wrong
         boolean usesPalette = false;
-        TiffField colorMapField = directory.findField(TiffTagConstants.COLOR_MAP.tagInfo);
+        TiffField colorMapField = directory.findField(TiffTagConstants.TIFF_TAG_COLOR_MAP);
         if (colorMapField != null)
             usesPalette = true;
 
         int colorType = ImageInfo.COLOR_TYPE_RGB;
 
-        int compression = directory.findField(TiffTagConstants.COMPRESSION.tagInfo)
+        int compression = directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION)
                 .getIntValue();
         String compressionAlgorithm;
 
@@ -315,11 +319,10 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                 .readDirectories(byteSource, false, formatCompliance);
         TiffDirectory directory = contents.directories.get(0);
 
-        TiffField xmpField = directory.findField(TiffTagConstants.XMP.tagInfo, false);
-        if (xmpField == null)
+        byte bytes[] = directory.getFieldValue(TiffTagConstants.TIFF_TAG_XMP);
+        if (bytes == null) {
             return null;
-
-        byte bytes[] = xmpField.getByteArrayValue();
+        }
 
         try
         {
@@ -473,20 +476,20 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             throw new ImageReadException("TIFF missing entries");
 
         int photometricInterpretation = directory.findField(
-                TiffTagConstants.PHOTOMETRIC_INTERPRETATION.tagInfo, true).getIntValue();
-        int compression = directory.findField(TiffTagConstants.COMPRESSION.tagInfo, true)
+                TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION, true).getIntValue();
+        int compression = directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION, true)
                 .getIntValue();
-        int width = directory.findField(TiffTagConstants.IMAGE_WIDTH.tagInfo, true)
+        int width = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, true)
                 .getIntValue();
-        int height = directory.findField(TiffTagConstants.IMAGE_LENGTH.tagInfo, true)
+        int height = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true)
                 .getIntValue();
         int samplesPerPixel = 1;
-        TiffField samplesPerPixelField = directory.findField(TiffTagConstants.SAMPLES_PER_PIXEL.tagInfo);
+        TiffField samplesPerPixelField = directory.findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
         if (samplesPerPixelField != null)
             samplesPerPixel = samplesPerPixelField.getIntValue();
         int bitsPerSample[] = { 1 };
         int bitsPerPixel = samplesPerPixel;
-        TiffField bitsPerSampleField = directory.findField(TiffTagConstants.BITS_PER_SAMPLE.tagInfo);
+        TiffField bitsPerSampleField = directory.findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
         if (bitsPerSampleField != null)
         {
             bitsPerSample = bitsPerSampleField.getIntArrayValue();
@@ -503,7 +506,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             // dumpOptionalNumberTag(entries, TIFF_TAG_FREE_OFFSETS);
             // dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
-            TiffField predictorField = directory.findField(TiffTagConstants.PREDICTOR.tagInfo);
+            TiffField predictorField = directory.findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
             if (null != predictorField)
                 predictor = predictorField.getIntValueOrArraySum();
         }
@@ -550,7 +553,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                     invert);
         case 3: // Palette
         {
-            int colorMap[] = directory.findField(TiffTagConstants.COLOR_MAP.tagInfo, true)
+            int colorMap[] = directory.findField(TiffTagConstants.TIFF_TAG_COLOR_MAP, true)
                     .getIntArrayValue();
 
             int expected_colormap_size = 3 * (1 << bitsPerPixel);
@@ -572,15 +575,15 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         case 6: //
         {
             double yCbCrCoefficients[] = directory.findField(
-                    TiffTagConstants.YCBCR_COEFFICIENTS.tagInfo, true).getDoubleArrayValue();
+                    TiffTagConstants.TIFF_TAG_YCBCR_COEFFICIENTS, true).getDoubleArrayValue();
 
             int yCbCrPositioning[] = directory.findField(
-                    TiffTagConstants.YCBCR_POSITIONING.tagInfo, true).getIntArrayValue();
+                    TiffTagConstants.TIFF_TAG_YCBCR_POSITIONING, true).getIntArrayValue();
             int yCbCrSubSampling[] = directory.findField(
-                    TiffTagConstants.YCBCR_SUB_SAMPLING.tagInfo, true).getIntArrayValue();
+                    TiffTagConstants.TIFF_TAG_YCBCR_SUB_SAMPLING, true).getIntArrayValue();
 
             double referenceBlackWhite[] = directory.findField(
-                    TiffTagConstants.REFERENCE_BLACK_WHITE.tagInfo, true).getDoubleArrayValue();
+                    TiffTagConstants.TIFF_TAG_REFERENCE_BLACK_WHITE, true).getDoubleArrayValue();
 
             return new PhotometricInterpreterYCbCr(yCbCrCoefficients,
                     yCbCrPositioning, yCbCrSubSampling, referenceBlackWhite,

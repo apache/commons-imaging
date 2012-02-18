@@ -23,9 +23,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageReadException;
-import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
+import org.apache.commons.sanselan.common.RationalNumber;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoAscii;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByte;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoDouble;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoFloat;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoRational;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSByte;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSLong;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSRational;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSShort;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
 
 public class TiffDirectory extends TiffElement implements TiffConstants
 //extends BinaryFileFunctions
@@ -121,7 +133,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
     public boolean hasJpegImageData() throws ImageReadException
     {
-        if (null != findField(TiffTagConstants.JPEG_INTERCHANGE_FORMAT.tagInfo))
+        if (null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT))
             return true;
 
         return false;
@@ -129,10 +141,10 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
     public boolean hasTiffImageData() throws ImageReadException
     {
-        if (null != findField(TiffTagConstants.TILE_OFFSETS.tagInfo))
+        if (null != findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS))
             return true;
 
-        if (null != findField(TiffTagConstants.STRIP_OFFSETS.tagInfo))
+        if (null != findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS))
             return true;
 
         return false;
@@ -178,7 +190,145 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
         return null;
     }
-
+    
+    public Object getFieldValue(TagInfo tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        return field.getValue();
+    }
+    
+    public byte[] getFieldValue(TagInfoByte tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        return field.fieldType.getRawBytes(field);
+    }
+    
+    public String[] getFieldValue(TagInfoAscii tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public short[] getFieldValue(TagInfoShort tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public int[] getFieldValue(TagInfoLong tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public RationalNumber[] getFieldValue(TagInfoRational tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public byte[] getFieldValue(TagInfoSByte tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        return field.fieldType.getRawBytes(field);
+    }
+    
+    public short[] getFieldValue(TagInfoSShort tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public int[] getFieldValue(TagInfoSLong tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public RationalNumber[] getFieldValue(TagInfoSRational tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public float[] getFieldValue(TagInfoFloat tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public double[] getFieldValue(TagInfoDouble tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
     public final class ImageDataElement extends TiffElement
     {
         public ImageDataElement(int offset, int length)
@@ -214,10 +364,10 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
     public List<ImageDataElement> getTiffRawImageDataElements() throws ImageReadException
     {
-        TiffField tileOffsets = findField(TiffTagConstants.TILE_OFFSETS.tagInfo);
-        TiffField tileByteCounts = findField(TiffTagConstants.TILE_BYTE_COUNTS.tagInfo);
-        TiffField stripOffsets = findField(TiffTagConstants.STRIP_OFFSETS.tagInfo);
-        TiffField stripByteCounts = findField(TiffTagConstants.STRIP_BYTE_COUNTS.tagInfo);
+        TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
+        TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
+        TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
+        TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
 
         if ((tileOffsets != null) && (tileByteCounts != null))
         {
@@ -233,10 +383,10 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
     public boolean imageDataInStrips() throws ImageReadException
     {
-        TiffField tileOffsets = findField(TiffTagConstants.TILE_OFFSETS.tagInfo);
-        TiffField tileByteCounts = findField(TiffTagConstants.TILE_BYTE_COUNTS.tagInfo);
-        TiffField stripOffsets = findField(TiffTagConstants.STRIP_OFFSETS.tagInfo);
-        TiffField stripByteCounts = findField(TiffTagConstants.STRIP_BYTE_COUNTS.tagInfo);
+        TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
+        TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
+        TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
+        TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
 
         if ((tileOffsets != null) && (tileByteCounts != null))
             return false;
@@ -251,8 +401,8 @@ public class TiffDirectory extends TiffElement implements TiffConstants
     public ImageDataElement getJpegRawImageDataElement()
             throws ImageReadException
     {
-        TiffField jpegInterchangeFormat = findField(TiffTagConstants.JPEG_INTERCHANGE_FORMAT.tagInfo);
-        TiffField jpegInterchangeFormatLength = findField(TiffTagConstants.JPEG_INTERCHANGE_FORMAT_LENGTH.tagInfo);
+        TiffField jpegInterchangeFormat = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
+        TiffField jpegInterchangeFormatLength = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
 
         if ((jpegInterchangeFormat != null)
                 && (jpegInterchangeFormatLength != null))

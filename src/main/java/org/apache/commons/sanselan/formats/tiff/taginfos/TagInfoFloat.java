@@ -14,20 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.sanselan.formats.tiff.constants;
+package org.apache.commons.sanselan.formats.tiff.taginfos;
 
-import java.util.Collections;
-import java.util.List;
+import org.apache.commons.sanselan.ImageWriteException;
+import org.apache.commons.sanselan.common.BinaryConversions;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryType;
 
-import org.apache.commons.sanselan.SanselanConstants;
-import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
-
-public interface AllTagConstants
-        extends
-            SanselanConstants
-{
-    public static final List<TagInfo> ALL_TAGS = Collections.unmodifiableList(
-            TagConstantsUtils.mergeTagLists(TiffTagConstants.ALL_TIFF_TAGS,
-                    GpsTagConstants.ALL_GPS_TAGS, ExifTagConstants.ALL_EXIF_TAGS));
-
+public class TagInfoFloat extends TagInfo {
+    public TagInfoFloat(String name, int tag, int length, TiffDirectoryType directoryType) {
+        super(name, tag, FIELD_TYPE_FLOAT, length, directoryType);
+    }
+    
+    public float[] getValue(int byteOrder, byte[] bytes) {
+        return BinaryConversions.convertToFloatArray(bytes, byteOrder);
+    }
+    
+    public byte[] encodeValue(int byteOrder, float... values) throws ImageWriteException {
+        return BinaryConversions.convertToByteArray(values, byteOrder);
+    }
 }

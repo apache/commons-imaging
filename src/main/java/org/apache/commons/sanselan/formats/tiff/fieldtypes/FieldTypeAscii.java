@@ -16,6 +16,8 @@
  */
 package org.apache.commons.sanselan.formats.tiff.fieldtypes;
 
+import java.io.UnsupportedEncodingException;
+
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 
@@ -29,8 +31,42 @@ public class FieldTypeAscii extends FieldType
     public Object getSimpleValue(TiffField entry) {
         // According to EXIF specification "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL."
         byte bytes[] = getRawBytes(entry);
-        // Ignore last (should be NULL) byte.
-        return new String(bytes, 0, bytes.length-1);
+        int nullCount = 1;
+        for (int i = 0; i < bytes.length - 1; i++) {
+            if (bytes[i] == 0) {
+                nullCount++;
+            }
+        }
+        String[] strings = new String[nullCount];
+        int stringsAdded = 0;
+        strings[0] = ""; // if we have a 0 length string
+        int nextStringPos = 0;
+        // According to the Exiftool FAQ, http://www.metadataworkinggroup.org
+        // specifies that the TIFF ASCII fields are actually UTF-8.
+        // Exiftool however allows you to configure the charset used.
+        for (int i = 0; i < bytes.length; i++) {
+            if (bytes[i] == 0) {
+                try {
+                    String string = new String(bytes, nextStringPos, i - nextStringPos, "UTF-8");
+                    strings[stringsAdded++] = string;
+                } catch (UnsupportedEncodingException unsupportedEncoding) {
+                }
+                nextStringPos = i + 1;
+            }
+        }
+        if (nextStringPos < bytes.length) {
+            // Buggy file, string wasn't null terminated
+            try {
+                String string = new String(bytes, nextStringPos, bytes.length - nextStringPos, "UTF-8");
+                strings[stringsAdded++] = string;
+            } catch (UnsupportedEncodingException unsupportedEncoding) {
+            }
+        }
+        if (strings.length == 1) {
+            return strings[0];
+        } else {
+            return strings;
+        }
     }
 
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
@@ -42,10 +78,32 @@ public class FieldTypeAscii extends FieldType
             result[result.length - 1] = 0;
             return result;
         } else if (o instanceof String) {
-            byte bytes[] = ((String) o).getBytes();
+            byte[] bytes = null;
+            try {
+                bytes = ((String) o).getBytes("UTF-8");
+            } catch (UnsupportedEncodingException cannotHappen) {
+            }
             byte result[] = new byte[bytes.length + 1];
             System.arraycopy(bytes, 0, result, 0, bytes.length);
             result[result.length - 1] = 0;
+            return result;
+        } else if (o instanceof String[]) {
+            String[] strings = (String[])o;
+            int totalLength = 0;
+            for (int i = 0; i < strings.length; i++) {
+                totalLength += (strings[i].getBytes().length + 1);
+            }
+            byte[] result = new byte[totalLength];
+            int position = 0;
+            for (int i = 0; i < strings.length; i++) {
+                byte[] bytes = null;
+                try {
+                    bytes = strings[i].getBytes("UTF-8");
+                } catch (UnsupportedEncodingException cannotHappen) {
+                }
+                System.arraycopy(bytes, 0, result, position, bytes.length);
+                position += (bytes.length + 1);
+            }
             return result;
         }
         else

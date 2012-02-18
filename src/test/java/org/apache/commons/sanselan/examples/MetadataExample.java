@@ -29,9 +29,9 @@ import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
-import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 
 public class MetadataExample
 {
@@ -58,20 +58,20 @@ public class MetadataExample
             System.out.println("file: " + file.getPath());
 
             // print out various interesting EXIF tags.
-            printTagValue(jpegMetadata, TiffTagConstants.XRESOLUTION.tagInfo);
-            printTagValue(jpegMetadata, TiffTagConstants.DATE_TIME.tagInfo);
+            printTagValue(jpegMetadata, TiffTagConstants.TIFF_TAG_XRESOLUTION);
+            printTagValue(jpegMetadata, TiffTagConstants.TIFF_TAG_DATE_TIME);
             printTagValue(jpegMetadata,
-                    ExifTagConstants.DATE_TIME_ORIGINAL.tagInfo);
-            printTagValue(jpegMetadata, ExifTagConstants.CREATE_DATE.tagInfo);
-            printTagValue(jpegMetadata, ExifTagConstants.ISO.tagInfo);
+                    ExifTagConstants.EXIF_TAG_DATE_TIME_ORIGINAL);
+            printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_CREATE_DATE);
+            printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_ISO);
             printTagValue(jpegMetadata,
-                    ExifTagConstants.SHUTTER_SPEED_VALUE.tagInfo);
-            printTagValue(jpegMetadata, ExifTagConstants.APERTURE_VALUE.tagInfo);
-            printTagValue(jpegMetadata, ExifTagConstants.BRIGHTNESS_VALUE.tagInfo);
-            printTagValue(jpegMetadata, GpsTagConstants.GPS_LATITUDE_REF.tagInfo);
-            printTagValue(jpegMetadata, GpsTagConstants.GPS_LATITUDE.tagInfo);
-            printTagValue(jpegMetadata, GpsTagConstants.GPS_LONGITUDE_REF.tagInfo);
-            printTagValue(jpegMetadata, GpsTagConstants.GPS_LONGITUDE.tagInfo);
+                    ExifTagConstants.EXIF_TAG_SHUTTER_SPEED_VALUE);
+            printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
+            printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_BRIGHTNESS_VALUE);
+            printTagValue(jpegMetadata, GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
+            printTagValue(jpegMetadata, GpsTagConstants.GPS_TAG_GPS_LATITUDE);
+            printTagValue(jpegMetadata, GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
+            printTagValue(jpegMetadata, GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
 
             System.out.println();
 
@@ -94,13 +94,13 @@ public class MetadataExample
 
             // more specific example of how to manually access GPS values
             TiffField gpsLatitudeRefField = jpegMetadata
-                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_LATITUDE_REF.tagInfo);
+                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
             TiffField gpsLatitudeField = jpegMetadata
-                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_LATITUDE.tagInfo);
+                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LATITUDE);
             TiffField gpsLongitudeRefField = jpegMetadata
-                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_LONGITUDE_REF.tagInfo);
+                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
             TiffField gpsLongitudeField = jpegMetadata
-                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_LONGITUDE.tagInfo);
+                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
             if (gpsLatitudeRefField != null && gpsLatitudeField != null
                     && gpsLongitudeRefField != null
                     && gpsLongitudeField != null)

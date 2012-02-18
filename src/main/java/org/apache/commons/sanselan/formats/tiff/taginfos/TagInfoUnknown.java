@@ -14,20 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.sanselan.formats.tiff.constants;
+package org.apache.commons.sanselan.formats.tiff.taginfos;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
-import org.apache.commons.sanselan.SanselanConstants;
-import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryType;
 
-public interface AllTagConstants
-        extends
-            SanselanConstants
-{
-    public static final List<TagInfo> ALL_TAGS = Collections.unmodifiableList(
-            TagConstantsUtils.mergeTagLists(TiffTagConstants.ALL_TIFF_TAGS,
-                    GpsTagConstants.ALL_GPS_TAGS, ExifTagConstants.ALL_EXIF_TAGS));
+public final class TagInfoUnknown extends TagInfoByte {
+    public TagInfoUnknown(String name, int tag, int length, TiffDirectoryType exifDirectory) {
+        super(name, tag, Arrays.asList(FIELD_TYPE_UNKNOWN), length, exifDirectory);
+    }
 
+    public boolean isUnknown() {
+        return true;
+    }
 }

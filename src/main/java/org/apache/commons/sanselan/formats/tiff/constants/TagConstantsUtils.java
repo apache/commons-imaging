@@ -19,22 +19,24 @@ package org.apache.commons.sanselan.formats.tiff.constants;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
+
 public class TagConstantsUtils implements TiffDirectoryConstants
 {
     private static final TiffDirectoryType[] tiffDirectoryTypes = TiffDirectoryType.values();
 
-    public static List<TagInfo> mergeTagLists(TagHolder[]... tagHolders)
+    public static List<TagInfo> mergeTagLists(List<TagInfo>... tagLists)
     {
         int count = 0;
-        for (int i = 0; i < tagHolders.length; i++) {
-            count += tagHolders[i].length;
+        for (int i = 0; i < tagLists.length; i++) {
+            count += tagLists[i].size();
         }
 
         ArrayList<TagInfo> result = new ArrayList<TagInfo>(count);
 
-        for (int i = 0; i < tagHolders.length; i++) {
-            for (int j = 0; j < tagHolders[i].length; j++) {
-                result.add(tagHolders[i][j].getTagInfo());
+        for (int i = 0; i < tagLists.length; i++) {
+            for (int j = 0; j < tagLists[i].size(); j++) {
+                result.add(tagLists[i].get(j));
             }
         }
 

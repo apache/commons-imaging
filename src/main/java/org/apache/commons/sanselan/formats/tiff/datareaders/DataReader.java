@@ -111,7 +111,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
     protected byte[] decompress(byte compressed[], int compression,
             int expected_size, int tileWidth, int tileHeight) throws ImageReadException, IOException
     {
-        TiffField fillOrderField = directory.findField(TiffTagConstants.FILL_ORDER.tagInfo);
+        TiffField fillOrderField = directory.findField(TiffTagConstants.TIFF_TAG_FILL_ORDER);
         int fillOrder = ExifTagConstants.FILL_ORDER_VALUE_NORMAL;
         if (fillOrderField != null) {
             fillOrder = fillOrderField.getIntValue();
@@ -135,7 +135,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             case TIFF_COMPRESSION_CCITT_GROUP_3 :
             {
                 int t4Options = 0;
-                TiffField field = directory.findField(TiffTagConstants.T4_OPTIONS.tagInfo);
+                TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T4_OPTIONS);
                 if (field != null) {
                     t4Options = field.getIntValue();
                 }
@@ -154,7 +154,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             case TIFF_COMPRESSION_CCITT_GROUP_4 :
             {
                 int t6Options = 0;
-                TiffField field = directory.findField(TiffTagConstants.T6_OPTIONS.tagInfo);
+                TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T6_OPTIONS);
                 if (field != null) {
                     t6Options = field.getIntValue();
                 }

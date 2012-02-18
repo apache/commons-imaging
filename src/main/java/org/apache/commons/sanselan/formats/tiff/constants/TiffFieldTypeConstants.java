@@ -16,6 +16,10 @@
  */
 package org.apache.commons.sanselan.formats.tiff.constants;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.sanselan.SanselanConstants;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldTypeAscii;
@@ -64,40 +68,32 @@ public interface TiffFieldTypeConstants extends SanselanConstants
 
     public static final FieldType FIELD_TYPE_UNKNOWN = new FieldTypeUnknown();
 
-    public static final FieldType FIELD_TYPES[] = {
-            FIELD_TYPE_BYTE, FIELD_TYPE_ASCII, FIELD_TYPE_SHORT,
-            FIELD_TYPE_LONG, FIELD_TYPE_RATIONAL, FIELD_TYPE_SBYTE,
-            FIELD_TYPE_UNDEFINED, FIELD_TYPE_SSHORT, FIELD_TYPE_SLONG,
-            FIELD_TYPE_SRATIONAL, FIELD_TYPE_FLOAT, FIELD_TYPE_DOUBLE,
-    };
+    public static final List<FieldType> FIELD_TYPES =
+            Collections.unmodifiableList(Arrays.asList(
+                    FIELD_TYPE_BYTE, FIELD_TYPE_ASCII, FIELD_TYPE_SHORT,
+                    FIELD_TYPE_LONG, FIELD_TYPE_RATIONAL, FIELD_TYPE_SBYTE,
+                    FIELD_TYPE_UNDEFINED, FIELD_TYPE_SSHORT, FIELD_TYPE_SLONG,
+                    FIELD_TYPE_SRATIONAL, FIELD_TYPE_FLOAT, FIELD_TYPE_DOUBLE));
 
-    public static final FieldType FIELD_TYPE_ANY[] = FIELD_TYPES;
+    public static final List<FieldType> FIELD_TYPE_ANY = FIELD_TYPES;
 
-    public static final FieldType FIELD_TYPE_DESCRIPTION_LONG[] = {
-        FIELD_TYPE_LONG,
-    };
-    public static final FieldType FIELD_TYPE_DESCRIPTION_SHORT[] = {
-        FIELD_TYPE_SHORT,
-    };
-    public static final FieldType FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG[] = {
-            FIELD_TYPE_SHORT, FIELD_TYPE_LONG,
-    };
-    public static final FieldType FIELD_TYPE_DESCRIPTION_ASCII[] = {
-        FIELD_TYPE_ASCII,
-    };
-    public static final FieldType FIELD_TYPE_DESCRIPTION_LONG_OR_SHORT[] = {
-            FIELD_TYPE_SHORT, FIELD_TYPE_LONG,
-    };
-    public static final FieldType FIELD_TYPE_DESCRIPTION_RATIONAL[] = {
-        FIELD_TYPE_RATIONAL,
-    };
-    public static final FieldType FIELD_TYPE_DESCRIPTION_BYTE_OR_SHORT[] = {
-            FIELD_TYPE_SHORT, FIELD_TYPE_BYTE
-    };
-    public static final FieldType FIELD_TYPE_DESCRIPTION_BYTE[] = {
-        FIELD_TYPE_BYTE,
-    };
-    public static final FieldType FIELD_TYPE_DESCRIPTION_ANY[] = FIELD_TYPE_ANY;
-    public static final FieldType FIELD_TYPE_DESCRIPTION_UNKNOWN[] = null;
-
+    public static final List<FieldType> FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG =
+            Collections.unmodifiableList(Arrays.asList(
+                    FIELD_TYPE_SHORT, FIELD_TYPE_LONG));
+    
+    public static final List<FieldType> FIELD_TYPE_DESCRIPTION_SHORT_OR_RATIONAL =
+            Collections.unmodifiableList(Arrays.asList(
+                    FIELD_TYPE_SHORT, FIELD_TYPE_RATIONAL));
+    
+    public static final List<FieldType> FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG_OR_RATIONAL =
+            Collections.unmodifiableList(Arrays.asList(
+                    FIELD_TYPE_SHORT, FIELD_TYPE_LONG, FIELD_TYPE_RATIONAL));
+    
+    public static final List<FieldType> FIELD_TYPE_DESCRIPTION_LONG_OR_SHORT =
+            Collections.unmodifiableList(Arrays.asList(
+                    FIELD_TYPE_SHORT, FIELD_TYPE_LONG));
+    
+    public static final List<FieldType> FIELD_TYPE_DESCRIPTION_BYTE_OR_SHORT =
+            Collections.unmodifiableList(Arrays.asList(
+                    FIELD_TYPE_SHORT, FIELD_TYPE_BYTE));
 }

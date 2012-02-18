@@ -249,9 +249,9 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
                 {
                     TiffField entry = fields.get(j);
 
-                    if (entry.tag == ExifTagConstants.EXIF_OFFSET.tagInfo.tag
-                            || entry.tag == ExifTagConstants.GPSINFO.tagInfo.tag
-                            || entry.tag == ExifTagConstants.INTEROP_OFFSET.tagInfo.tag)
+                    if (entry.tag == ExifTagConstants.EXIF_TAG_EXIF_OFFSET.tag
+                            || entry.tag == ExifTagConstants.EXIF_TAG_GPSINFO.tag
+                            || entry.tag == ExifTagConstants.EXIF_TAG_INTEROP_OFFSET.tag)
                     { /* do nothing */ }
                     else
                         continue;
@@ -259,11 +259,11 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
                     int subDirectoryOffset = ((Number) entry.getValue())
                             .intValue();
                     int subDirectoryType;
-                    if (entry.tag == ExifTagConstants.EXIF_OFFSET.tagInfo.tag)
+                    if (entry.tag == ExifTagConstants.EXIF_TAG_EXIF_OFFSET.tag)
                         subDirectoryType = TiffDirectory.DIRECTORY_TYPE_EXIF;
-                    else if (entry.tag == ExifTagConstants.GPSINFO.tagInfo.tag)
+                    else if (entry.tag == ExifTagConstants.EXIF_TAG_GPSINFO.tag)
                         subDirectoryType = TiffDirectory.DIRECTORY_TYPE_GPS;
-                    else if (entry.tag == ExifTagConstants.INTEROP_OFFSET.tagInfo.tag)
+                    else if (entry.tag == ExifTagConstants.EXIF_TAG_INTEROP_OFFSET.tag)
                         subDirectoryType = TiffDirectory.DIRECTORY_TYPE_INTEROPERABILITY;
                     else
                         throw new ImageReadException(
@@ -479,7 +479,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
         if (directory.imageDataInStrips())
         {
             TiffField rowsPerStripField = directory
-                    .findField(TiffTagConstants.ROWS_PER_STRIP.tagInfo);
+                    .findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
             if (null == rowsPerStripField)
                 throw new ImageReadException("Can't find rows per strip field.");
             int rowsPerStrip = rowsPerStripField.getIntValue();
@@ -487,13 +487,13 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             return new TiffImageData.Strips(data, rowsPerStrip);
         } else
         {
-            TiffField tileWidthField = directory.findField(TiffTagConstants.TILE_WIDTH.tagInfo);
+            TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
             if (null == tileWidthField)
                 throw new ImageReadException("Can't find tile width field.");
             int tileWidth = tileWidthField.getIntValue();
 
             TiffField tileLengthField = directory
-                    .findField(TiffTagConstants.TILE_LENGTH.tagInfo);
+                    .findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
             if (null == tileLengthField)
                 throw new ImageReadException("Can't find tile length field.");
             int tileLength = tileLengthField.getIntValue();

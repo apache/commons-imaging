@@ -20,9 +20,9 @@ import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
-import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 
 public class TiffOutputField implements TiffConstants
 {
@@ -61,56 +61,6 @@ public class TiffOutputField implements TiffConstants
     }
 
     private int sortHint = -1;
-
-    public static TiffOutputField create(TagInfo tagInfo, int byteOrder,
-            Number number) throws ImageWriteException
-    {
-        if (tagInfo.dataTypes == null || tagInfo.dataTypes.length < 1)
-            throw new ImageWriteException("Tag has no default data type.");
-        FieldType fieldType = tagInfo.dataTypes[0];
-
-        if (tagInfo.length != 1)
-            throw new ImageWriteException("Tag does not expect a single value.");
-
-        byte bytes[] = fieldType.writeData(number, byteOrder);
-
-        return new TiffOutputField(tagInfo.tag, tagInfo, fieldType, 1, bytes);
-    }
-
-    public static TiffOutputField create(TagInfo tagInfo, int byteOrder,
-            Number value[]) throws ImageWriteException
-    {
-        if (tagInfo.dataTypes == null || tagInfo.dataTypes.length < 1)
-            throw new ImageWriteException("Tag has no default data type.");
-        FieldType fieldType = tagInfo.dataTypes[0];
-
-        if (tagInfo.length >= 0 && tagInfo.length != value.length)
-            throw new ImageWriteException("Tag expects " + tagInfo.length + " values.");
-
-        byte bytes[] = fieldType.writeData(value, byteOrder);
-
-        return new TiffOutputField(tagInfo.tag, tagInfo, fieldType,
-                value.length, bytes);
-    }
-
-    public static TiffOutputField create(TagInfo tagInfo, int byteOrder,
-            String value) throws ImageWriteException
-    {
-        FieldType fieldType;
-        if (tagInfo.dataTypes == null || tagInfo.dataTypes.length < 1)
-            fieldType = FIELD_TYPE_ASCII;
-        else
-        {
-            if (tagInfo.dataTypes[0] == FIELD_TYPE_ASCII)
-                fieldType = FIELD_TYPE_ASCII;
-            else
-                throw new ImageWriteException("Tag has unexpected data type.");
-        }
-
-        byte bytes[] = fieldType.writeData(value, byteOrder);
-
-        return new TiffOutputField(tagInfo.tag, tagInfo, fieldType, bytes.length, bytes);
-    }
 
     protected static final TiffOutputField createOffsetField(TagInfo tagInfo,
             int byteOrder) throws ImageWriteException

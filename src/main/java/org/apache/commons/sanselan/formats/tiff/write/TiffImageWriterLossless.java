@@ -143,7 +143,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
                 for (int f = 0; f < fields.size(); f++)
                 {
                     TiffField field = fields.get(f);
-                    if (field.tag == ExifTagConstants.MAKER_NOTE.tagInfo.tag) {
+                    if (field.tag == ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag) {
                         // Some maker notes reference values stored
                         // inside the maker note itself
                         // using addresses relative to the beginning

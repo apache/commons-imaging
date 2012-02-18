@@ -16,308 +16,366 @@
  */
 package org.apache.commons.sanselan.formats.tiff.constants;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public enum TiffTagConstants implements TiffFieldTypeConstants, TagHolder
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoAny;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoAscii;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByte;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByteOrShort;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoRational;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrLong;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoUnknown;
+
+public interface TiffTagConstants
+        extends
+            TiffFieldTypeConstants
 {
 
-    NEW_SUBFILE_TYPE(new TagInfo(
-            "New Subfile Type", 0xFE, FIELD_TYPE_DESCRIPTION_LONG, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_NEW_SUBFILE_TYPE = new TagInfoLong(
+            "New Subfile Type", 0xFE, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    SUBFILE_TYPE(new TagInfo(
-            "Subfile Type", 0xFF, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_SUBFILE_TYPE = new TagInfoShort(
+            "Subfile Type", 0xFF, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    IMAGE_WIDTH(new TagInfo(
-            "Image Width", 0x100, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShortOrLong TIFF_TAG_IMAGE_WIDTH = new TagInfoShortOrLong(
+            "Image Width", 0x100, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    IMAGE_LENGTH(new TagInfo(
-            "Image Length", 0x101, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShortOrLong TIFF_TAG_IMAGE_LENGTH = new TagInfoShortOrLong(
+            "Image Length", 0x101, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    BITS_PER_SAMPLE(new TagInfo(
-            "Bits Per Sample", 0x102, FIELD_TYPE_DESCRIPTION_SHORT, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_BITS_PER_SAMPLE = new TagInfoShort(
+            "Bits Per Sample", 0x102, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    COMPRESSION(new TagInfo(
-            "Compression", 0x103, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_COMPRESSION = new TagInfoShort(
+            "Compression", 0x103, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    PHOTOMETRIC_INTERPRETATION(new TagInfo(
-            "Photometric Interpretation", 0x106, FIELD_TYPE_DESCRIPTION_SHORT,
-            1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_PHOTOMETRIC_INTERPRETATION = new TagInfoShort(
+            "Photometric Interpretation", 0x106, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    THRESHHOLDING(new TagInfo(
-            "Threshholding", 0x107, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_THRESHHOLDING = new TagInfoShort(
+            "Threshholding", 0x107, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    CELL_WIDTH(new TagInfo("Cell Width",
-            0x108, FIELD_TYPE_DESCRIPTION_SHORT, 1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_CELL_WIDTH = new TagInfoShort(
+            "Cell Width", 0x108, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    CELL_LENGTH(new TagInfo(
-            "Cell Length", 0x109, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_CELL_LENGTH = new TagInfoShort(
+            "Cell Length", 0x109, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    FILL_ORDER(new TagInfo("Fill Order",
-            0x10A, FIELD_TYPE_DESCRIPTION_SHORT, 1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_FILL_ORDER = new TagInfoShort(
+            "Fill Order", 0x10A, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    DOCUMENT_NAME(new TagInfo(
-            "Document Name", 0x10D, FIELD_TYPE_DESCRIPTION_ASCII, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_DOCUMENT_NAME = new TagInfoAscii(
+            "Document Name", 0x10D, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    IMAGE_DESCRIPTION(new TagInfo(
-            "Image Description", 0x10E, FIELD_TYPE_DESCRIPTION_ASCII, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_IMAGE_DESCRIPTION = new TagInfoAscii(
+            "Image Description", 0x10E, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    MAKE(new TagInfo("Make", 0x10F,
-            FIELD_TYPE_DESCRIPTION_ASCII, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_MAKE = new TagInfoAscii(
+            "Make", 0x10F, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    MODEL(new TagInfo("Model", 0x110,
-            FIELD_TYPE_DESCRIPTION_ASCII, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_MODEL = new TagInfoAscii(
+            "Model", 0x110, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    STRIP_OFFSETS(new TagInfo.Offset(
-            "Strip Offsets", 0x111, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShortOrLong TIFF_TAG_STRIP_OFFSETS = new TagInfoShortOrLong(
+            "Strip Offsets", 0x111, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT, true);
 
-    ORIENTATION(new TagInfo(
-            "Orientation", 0x112, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_ORIENTATION = new TagInfoShort(
+            "Orientation", 0x112, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    SAMPLES_PER_PIXEL(new TagInfo(
-            "Samples Per Pixel", 0x115, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_SAMPLES_PER_PIXEL = new TagInfoShort(
+            "Samples Per Pixel", 0x115, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    ROWS_PER_STRIP(new TagInfo(
-            "Rows Per Strip", 0x116, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShortOrLong TIFF_TAG_ROWS_PER_STRIP = new TagInfoShortOrLong(
+            "Rows Per Strip", 0x116, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    STRIP_BYTE_COUNTS(new TagInfo(
-            "Strip Byte Counts", 0x117, FIELD_TYPE_DESCRIPTION_LONG_OR_SHORT,
-            -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShortOrLong TIFF_TAG_STRIP_BYTE_COUNTS = new TagInfoShortOrLong(
+            "Strip Byte Counts", 0x117, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    MIN_SAMPLE_VALUE(new TagInfo(
-            "Min Sample Value", 0x118, FIELD_TYPE_DESCRIPTION_SHORT, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_MIN_SAMPLE_VALUE = new TagInfoShort(
+            "Min Sample Value", 0x118, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    MAX_SAMPLE_VALUE(new TagInfo(
-            "Max Sample Value", 0x119, FIELD_TYPE_DESCRIPTION_SHORT, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_MAX_SAMPLE_VALUE = new TagInfoShort(
+            "Max Sample Value", 0x119, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    XRESOLUTION(new TagInfo(
-            "XResolution", 0x11A, FIELD_TYPE_DESCRIPTION_RATIONAL, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoRational TIFF_TAG_XRESOLUTION = new TagInfoRational(
+            "XResolution", 0x11A, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    YRESOLUTION(new TagInfo(
-            "YResolution", 0x11B, FIELD_TYPE_DESCRIPTION_RATIONAL, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoRational TIFF_TAG_YRESOLUTION = new TagInfoRational(
+            "YResolution", 0x11B, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    PLANAR_CONFIGURATION(new TagInfo(
-            "Planar Configuration", 0x11C, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_PLANAR_CONFIGURATION = new TagInfoShort(
+            "Planar Configuration", 0x11C, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    PAGE_NAME(new TagInfo("Page Name",
-            0x11D, FIELD_TYPE_DESCRIPTION_ASCII, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_PAGE_NAME = new TagInfoAscii(
+            "Page Name", 0x11D, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    XPOSITION(new TagInfo("XPosition",
-            0x11E, FIELD_TYPE_DESCRIPTION_RATIONAL, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoRational TIFF_TAG_XPOSITION = new TagInfoRational(
+            "XPosition", 0x11E, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    YPOSITION(new TagInfo("YPosition",
-            0x11F, FIELD_TYPE_DESCRIPTION_RATIONAL, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoRational TIFF_TAG_YPOSITION = new TagInfoRational(
+            "YPosition",  0x11F, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    FREE_OFFSETS(new TagInfo(
-            "Free Offsets", 0x120, FIELD_TYPE_DESCRIPTION_LONG, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_FREE_OFFSETS = new TagInfoLong(
+            "Free Offsets", 0x120, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    FREE_BYTE_COUNTS(new TagInfo(
-            "Free Byte Counts", 0x121, FIELD_TYPE_DESCRIPTION_LONG, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_FREE_BYTE_COUNTS = new TagInfoLong(
+            "Free Byte Counts", 0x121, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    GRAY_RESPONSE_UNIT(new TagInfo(
-            "Gray Response Unit", 0x122, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_GRAY_RESPONSE_UNIT = new TagInfoShort(
+            "Gray Response Unit", 0x122, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    GRAY_RESPONSE_CURVE(new TagInfo(
-            "Gray Response Curve", 0x123, FIELD_TYPE_DESCRIPTION_SHORT, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_GRAY_RESPONSE_CURVE = new TagInfoShort(
+            "Gray Response Curve", 0x123, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    T4_OPTIONS(new TagInfo("T4 Options",
-            0x124, FIELD_TYPE_DESCRIPTION_LONG, 1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_T4_OPTIONS = new TagInfoLong(
+            "T4 Options", 0x124, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    T6_OPTIONS(new TagInfo("T6 Options",
-            0x125, FIELD_TYPE_DESCRIPTION_LONG, 1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_T6_OPTIONS = new TagInfoLong(
+            "T6 Options", 0x125, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    RESOLUTION_UNIT(new TagInfo(
-            "Resolution Unit", 0x128, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_RESOLUTION_UNIT = new TagInfoShort(
+            "Resolution Unit", 0x128, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    PAGE_NUMBER(new TagInfo(
-            "Page Number", 0x129, FIELD_TYPE_DESCRIPTION_SHORT, 2,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_PAGE_NUMBER = new TagInfoShort(
+            "Page Number", 0x129, 2,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    TRANSFER_FUNCTION(new TagInfo(
-            "Transfer Function", 0x12D, FIELD_TYPE_DESCRIPTION_SHORT, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_TRANSFER_FUNCTION = new TagInfoShort(
+            "Transfer Function", 0x12D, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    SOFTWARE(new TagInfo("Software",
-            0x131, FIELD_TYPE_DESCRIPTION_ASCII, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_SOFTWARE = new TagInfoAscii(
+            "Software", 0x131, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    DATE_TIME(new TagInfo("Date Time",
-            0x132, FIELD_TYPE_DESCRIPTION_ASCII, 20, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_DATE_TIME = new TagInfoAscii(
+            "Date Time", 0x132, 20,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    ARTIST(new TagInfo("Artist", 0x13B,
-            FIELD_TYPE_DESCRIPTION_ASCII, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_ARTIST = new TagInfoAscii(
+            "Artist", 0x13B, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    HOST_COMPUTER(new TagInfo(
-            "Host Computer", 0x13C, FIELD_TYPE_DESCRIPTION_ASCII, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_HOST_COMPUTER = new TagInfoAscii(
+            "Host Computer", 0x13C, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    PREDICTOR(new TagInfo("Predictor",
-            0x13D, FIELD_TYPE_DESCRIPTION_SHORT, 1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_PREDICTOR = new TagInfoShort(
+            "Predictor", 0x13D, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    WHITE_POINT(new TagInfo(
-            "White Point", 0x13E, FIELD_TYPE_DESCRIPTION_RATIONAL, 2,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoRational TIFF_TAG_WHITE_POINT = new TagInfoRational(
+            "White Point", 0x13E, 2,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    PRIMARY_CHROMATICITIES(new TagInfo(
-            "Primary Chromaticities", 0x13F, FIELD_TYPE_DESCRIPTION_RATIONAL,
-            6, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoRational TIFF_TAG_PRIMARY_CHROMATICITIES = new TagInfoRational(
+            "Primary Chromaticities", 0x13F, 6,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    COLOR_MAP(new TagInfo("Color Map",
-            0x140, FIELD_TYPE_DESCRIPTION_SHORT, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_COLOR_MAP = new TagInfoShort(
+            "Color Map", 0x140, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    HALFTONE_HINTS(new TagInfo(
-            "Halftone Hints", 0x141, FIELD_TYPE_DESCRIPTION_SHORT, 2,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_HALFTONE_HINTS = new TagInfoShort(
+            "Halftone Hints", 0x141, 2,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    TILE_WIDTH(new TagInfo("Tile Width",
-            0x142, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, 1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShortOrLong TIFF_TAG_TILE_WIDTH = new TagInfoShortOrLong(
+            "Tile Width", 0x142, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    TILE_LENGTH(new TagInfo(
-            "Tile Length", 0x143, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShortOrLong TIFF_TAG_TILE_LENGTH = new TagInfoShortOrLong(
+            "Tile Length", 0x143, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    TILE_OFFSETS(new TagInfo.Offset(
-            "Tile Offsets", 0x144, FIELD_TYPE_DESCRIPTION_LONG, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_TILE_OFFSETS = new TagInfoLong(
+            "Tile Offsets", 0x144, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT, true);
 
-    TILE_BYTE_COUNTS(new TagInfo(
-            "Tile Byte Counts", 0x145, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG,
-            -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShortOrLong TIFF_TAG_TILE_BYTE_COUNTS = new TagInfoShortOrLong(
+            "Tile Byte Counts", 0x145, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    INK_SET(new TagInfo("Ink Set",
-            0x14C, FIELD_TYPE_DESCRIPTION_SHORT, 1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_INK_SET = new TagInfoShort(
+            "Ink Set", 0x14C, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    INK_NAMES(new TagInfo("Ink Names",
-            0x14D, FIELD_TYPE_DESCRIPTION_ASCII, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_INK_NAMES = new TagInfoAscii(
+            "Ink Names", 0x14D, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    NUMBER_OF_INKS(new TagInfo(
-            "Number Of Inks", 0x14E, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_NUMBER_OF_INKS = new TagInfoShort(
+            "Number Of Inks", 0x14E, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    DOT_RANGE(new TagInfo("Dot Range",
-            0x150, FIELD_TYPE_DESCRIPTION_BYTE_OR_SHORT, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoByteOrShort TIFF_TAG_DOT_RANGE = new TagInfoByteOrShort(
+            "Dot Range", 0x150, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    TARGET_PRINTER(new TagInfo(
-            "Target Printer", 0x151, FIELD_TYPE_DESCRIPTION_ASCII, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_TARGET_PRINTER = new TagInfoAscii(
+            "Target Printer", 0x151, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    EXTRA_SAMPLES(new TagInfo(
-            "Extra Samples", 0x152, FIELD_TYPE_DESCRIPTION_BYTE, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_EXTRA_SAMPLES = new TagInfoShort(
+            "Extra Samples", 0x152, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    SAMPLE_FORMAT(new TagInfo(
-            "Sample Format", 0x153, FIELD_TYPE_DESCRIPTION_SHORT, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_SAMPLE_FORMAT = new TagInfoShort(
+            "Sample Format", 0x153, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    SMIN_SAMPLE_VALUE(new TagInfo(
-            "SMin Sample Value", 0x154, FIELD_TYPE_DESCRIPTION_ANY, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAny TIFF_TAG_SMIN_SAMPLE_VALUE = new TagInfoAny(
+            "SMin Sample Value", 0x154, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    SMAX_SAMPLE_VALUE(new TagInfo(
-            "SMax Sample Value", 0x155, FIELD_TYPE_DESCRIPTION_ANY, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAny TIFF_TAG_SMAX_SAMPLE_VALUE = new TagInfoAny(
+            "SMax Sample Value", 0x155, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    TRANSFER_RANGE(new TagInfo(
-            "Transfer Range", 0x156, FIELD_TYPE_DESCRIPTION_SHORT, 6,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_TRANSFER_RANGE = new TagInfoShort(
+            "Transfer Range", 0x156, 6,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    JPEG_PROC(new TagInfo("JPEGProc",
-            0x200, FIELD_TYPE_DESCRIPTION_SHORT, 1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_JPEG_PROC = new TagInfoShort(
+            "JPEGProc", 0x200, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    JPEG_INTERCHANGE_FORMAT(new TagInfo.Offset(
-            "JPEGInterchange Format", 0x201, FIELD_TYPE_DESCRIPTION_LONG, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_JPEG_INTERCHANGE_FORMAT = new TagInfoLong(
+            "JPEGInterchange Format", 0x201, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT, true);
 
-    JPEG_INTERCHANGE_FORMAT_LENGTH(new TagInfo(
+    public static final TagInfoLong TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH = new TagInfoLong(
             "JPEGInterchange Format Length", 0x202,
-            FIELD_TYPE_DESCRIPTION_LONG, 1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+            1, TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    JPEG_RESTART_INTERVAL(new TagInfo(
-            "JPEGRestart Interval", 0x203, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_JPEG_RESTART_INTERVAL = new TagInfoShort(
+            "JPEGRestart Interval", 0x203, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    JPEG_LOSSLESS_PREDICTORS(new TagInfo(
-            "JPEGLossless Predictors", 0x205, FIELD_TYPE_DESCRIPTION_SHORT, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_JPEG_LOSSLESS_PREDICTORS = new TagInfoShort(
+            "JPEGLossless Predictors", 0x205, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    JPEG_POINT_TRANSFORMS(new TagInfo(
-            "JPEGPoint Transforms", 0x206, FIELD_TYPE_DESCRIPTION_SHORT, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_JPEG_POINT_TRANSFORMS = new TagInfoShort(
+            "JPEGPoint Transforms", 0x206, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    JPEG_QTABLES(new TagInfo(
-            "JPEGQTables", 0x207, FIELD_TYPE_DESCRIPTION_LONG, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_JPEG_QTABLES = new TagInfoLong(
+            "JPEGQTables", 0x207, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    JPEG_DCTABLES(new TagInfo(
-            "JPEGDCTables", 0x208, FIELD_TYPE_DESCRIPTION_LONG, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_JPEG_DCTABLES = new TagInfoLong(
+            "JPEGDCTables", 0x208, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    JPEG_ACTABLES(new TagInfo(
-            "JPEGACTables", 0x209, FIELD_TYPE_DESCRIPTION_LONG, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_JPEG_ACTABLES = new TagInfoLong(
+            "JPEGACTables", 0x209, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    YCBCR_COEFFICIENTS(new TagInfo(
-            "YCbCr Coefficients", 0x211, FIELD_TYPE_DESCRIPTION_RATIONAL, 3,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoRational TIFF_TAG_YCBCR_COEFFICIENTS = new TagInfoRational(
+            "YCbCr Coefficients", 0x211, 3,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    YCBCR_SUB_SAMPLING(new TagInfo(
-            "YCbCr Sub Sampling", 0x212, FIELD_TYPE_DESCRIPTION_SHORT, 2,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_YCBCR_SUB_SAMPLING = new TagInfoShort(
+            "YCbCr Sub Sampling", 0x212, 2,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    YCBCR_POSITIONING(new TagInfo(
-            "YCbCr Positioning", 0x213, FIELD_TYPE_DESCRIPTION_SHORT, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoShort TIFF_TAG_YCBCR_POSITIONING = new TagInfoShort(
+            "YCbCr Positioning", 0x213, 1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    REFERENCE_BLACK_WHITE(new TagInfo(
-            "Reference Black White", 0x214, FIELD_TYPE_DESCRIPTION_LONG, -1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoLong TIFF_TAG_REFERENCE_BLACK_WHITE = new TagInfoLong(
+            "Reference Black White", 0x214, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    COPYRIGHT(new TagInfo("Copyright",
-            0x8298, FIELD_TYPE_DESCRIPTION_ASCII, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoAscii TIFF_TAG_COPYRIGHT = new TagInfoAscii(
+            "Copyright", 0x8298, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    XMP(new TagInfo("XMP",
-            0x2BC, FIELD_TYPE_DESCRIPTION_BYTE, -1, TiffDirectoryType.TIFF_DIRECTORY_ROOT)),
+    public static final TagInfoByte TIFF_TAG_XMP = new TagInfoByte(
+            "XMP", 0x2BC, -1,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     // TODO:
-    //    public static final TagInfo2 UNKNOWN(null;
-    UNKNOWN(new TagInfo.Unknown(
-            "Unknown Tag", -1, FIELD_TYPE_DESCRIPTION_UNKNOWN,
-            TagInfo.LENGTH_UNKNOWN, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN));
-    
-    public final TagInfo tagInfo;
-    
-    TiffTagConstants(TagInfo tagInfo) {
-        this.tagInfo = tagInfo;
-    }
-    
-    public TagInfo getTagInfo() {
-        return tagInfo;
-    }
-    
-    public static final List<TagInfo> ALL_TIFF_TAGS = Collections.unmodifiableList(
-            TagConstantsUtils.mergeTagLists(values()));
+    //    public static final TagInfo2 TIFF_TAG_UNKNOWN = null;
+    public static final TagInfo TIFF_TAG_UNKNOWN = new TagInfoUnknown(
+            "Unknown Tag", -1, TagInfo.LENGTH_UNKNOWN,
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
+    public static final List<TagInfo> ALL_TIFF_TAGS =
+            Collections.unmodifiableList(Arrays.asList(
+                    TIFF_TAG_NEW_SUBFILE_TYPE, TIFF_TAG_SUBFILE_TYPE,
+                    TIFF_TAG_IMAGE_WIDTH, TIFF_TAG_IMAGE_LENGTH,
+                    TIFF_TAG_BITS_PER_SAMPLE, TIFF_TAG_COMPRESSION,
+                    TIFF_TAG_PHOTOMETRIC_INTERPRETATION, TIFF_TAG_THRESHHOLDING,
+                    TIFF_TAG_CELL_WIDTH, TIFF_TAG_CELL_LENGTH, TIFF_TAG_FILL_ORDER,
+                    TIFF_TAG_DOCUMENT_NAME, TIFF_TAG_IMAGE_DESCRIPTION, TIFF_TAG_MAKE,
+                    TIFF_TAG_MODEL, TIFF_TAG_STRIP_OFFSETS, TIFF_TAG_ORIENTATION,
+                    TIFF_TAG_SAMPLES_PER_PIXEL, TIFF_TAG_ROWS_PER_STRIP,
+                    TIFF_TAG_STRIP_BYTE_COUNTS, TIFF_TAG_MIN_SAMPLE_VALUE,
+                    TIFF_TAG_MAX_SAMPLE_VALUE, TIFF_TAG_XRESOLUTION,
+                    TIFF_TAG_YRESOLUTION, TIFF_TAG_PLANAR_CONFIGURATION,
+                    TIFF_TAG_PAGE_NAME, TIFF_TAG_XPOSITION, TIFF_TAG_YPOSITION,
+                    TIFF_TAG_FREE_OFFSETS, TIFF_TAG_FREE_BYTE_COUNTS,
+                    TIFF_TAG_GRAY_RESPONSE_UNIT, TIFF_TAG_GRAY_RESPONSE_CURVE,
+                    TIFF_TAG_T4_OPTIONS, TIFF_TAG_T6_OPTIONS, TIFF_TAG_RESOLUTION_UNIT,
+                    TIFF_TAG_PAGE_NUMBER, TIFF_TAG_TRANSFER_FUNCTION,
+                    TIFF_TAG_SOFTWARE, TIFF_TAG_DATE_TIME, TIFF_TAG_ARTIST,
+                    TIFF_TAG_HOST_COMPUTER, TIFF_TAG_PREDICTOR, TIFF_TAG_WHITE_POINT,
+                    TIFF_TAG_PRIMARY_CHROMATICITIES, TIFF_TAG_COLOR_MAP,
+                    TIFF_TAG_HALFTONE_HINTS, TIFF_TAG_TILE_WIDTH, TIFF_TAG_TILE_LENGTH,
+                    TIFF_TAG_TILE_OFFSETS, TIFF_TAG_TILE_BYTE_COUNTS, TIFF_TAG_INK_SET,
+                    TIFF_TAG_INK_NAMES, TIFF_TAG_NUMBER_OF_INKS, TIFF_TAG_DOT_RANGE,
+                    TIFF_TAG_TARGET_PRINTER, TIFF_TAG_EXTRA_SAMPLES,
+                    TIFF_TAG_SAMPLE_FORMAT, TIFF_TAG_SMIN_SAMPLE_VALUE,
+                    TIFF_TAG_SMAX_SAMPLE_VALUE, TIFF_TAG_TRANSFER_RANGE,
+                    TIFF_TAG_JPEG_PROC, TIFF_TAG_JPEG_INTERCHANGE_FORMAT,
+                    TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH,
+                    TIFF_TAG_JPEG_RESTART_INTERVAL, TIFF_TAG_JPEG_LOSSLESS_PREDICTORS,
+                    TIFF_TAG_JPEG_POINT_TRANSFORMS, TIFF_TAG_JPEG_QTABLES,
+                    TIFF_TAG_JPEG_DCTABLES, TIFF_TAG_JPEG_ACTABLES,
+                    TIFF_TAG_YCBCR_COEFFICIENTS, TIFF_TAG_YCBCR_SUB_SAMPLING,
+                    TIFF_TAG_YCBCR_POSITIONING, TIFF_TAG_REFERENCE_BLACK_WHITE,
+                    TIFF_TAG_COPYRIGHT,
+                    TIFF_TAG_XMP));
 }

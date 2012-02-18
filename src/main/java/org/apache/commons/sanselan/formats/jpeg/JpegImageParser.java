@@ -734,19 +734,19 @@ public class JpegImageParser extends ImageParser implements JpegConstants
             {
                 {
                     TiffField field = metadata
-                            .findEXIFValue(TiffTagConstants.XRESOLUTION.tagInfo);
+                            .findEXIFValue(TiffTagConstants.TIFF_TAG_XRESOLUTION);
                     if (field != null)
                         x_density = ((Number) field.getValue()).doubleValue();
                 }
                 {
                     TiffField field = metadata
-                            .findEXIFValue(TiffTagConstants.YRESOLUTION.tagInfo);
+                            .findEXIFValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
                     if (field != null)
                         y_density = ((Number) field.getValue()).doubleValue();
                 }
                 {
                     TiffField field = metadata
-                            .findEXIFValue(TiffTagConstants.RESOLUTION_UNIT.tagInfo);
+                            .findEXIFValue(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT);
                     if (field != null)
                     {
                         int density_units = ((Number) field.getValue())

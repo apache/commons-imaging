@@ -29,10 +29,10 @@ import org.apache.commons.sanselan.common.ImageMetadata;
 import org.apache.commons.sanselan.common.RationalNumber;
 import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
-import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputSet;
@@ -127,7 +127,7 @@ public class TiffImageMetadata extends ImageMetadata
         {
             try
             {
-                TiffOutputDirectory dstDir = new TiffOutputDirectory(type);
+                TiffOutputDirectory dstDir = new TiffOutputDirectory(type, byteOrder);
 
                 List<? extends IImageMetadataItem> entries = getItems();
                 for (int i = 0; i < entries.size(); i++)
@@ -141,7 +141,7 @@ public class TiffImageMetadata extends ImageMetadata
                         // ignore duplicate tags in a directory.
                         continue;
                     }
-                    else if (srcField.tagInfo instanceof TagInfo.Offset)
+                    else if (srcField.tagInfo.isOffset())
                     {
                         // ignore offset fields.
                         continue;
@@ -340,13 +340,13 @@ public class TiffImageMetadata extends ImageMetadata
 
         // more specific example of how to access GPS values.
         TiffField latitudeRefField = gpsDirectory
-                .findField(GpsTagConstants.GPS_LATITUDE_REF.tagInfo);
+                .findField(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
         TiffField latitudeField = gpsDirectory
-                .findField(GpsTagConstants.GPS_LATITUDE.tagInfo);
+                .findField(GpsTagConstants.GPS_TAG_GPS_LATITUDE);
         TiffField longitudeRefField = gpsDirectory
-                .findField(GpsTagConstants.GPS_LONGITUDE_REF.tagInfo);
+                .findField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
         TiffField longitudeField = gpsDirectory
-                .findField(GpsTagConstants.GPS_LONGITUDE.tagInfo);
+                .findField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
 
         if (latitudeRefField == null || latitudeField == null
                 || longitudeRefField == null || longitudeField == null)

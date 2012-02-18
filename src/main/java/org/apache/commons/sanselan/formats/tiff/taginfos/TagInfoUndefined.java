@@ -14,8 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.sanselan.formats.tiff.constants;
+package org.apache.commons.sanselan.formats.tiff.taginfos;
 
-public interface TagHolder {
-    TagInfo getTagInfo();
+import java.util.Arrays;
+
+import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryType;
+
+public class TagInfoUndefined extends TagInfoByte {
+    public TagInfoUndefined(String name, int tag, int length, TiffDirectoryType directoryType) {
+        super(name, tag, Arrays.asList(FIELD_TYPE_UNDEFINED), length, directoryType);
+    }
 }

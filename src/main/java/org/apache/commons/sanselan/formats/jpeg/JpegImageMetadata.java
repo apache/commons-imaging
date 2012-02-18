@@ -32,7 +32,7 @@ import org.apache.commons.sanselan.formats.tiff.JpegImageData;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
-import org.apache.commons.sanselan.formats.tiff.constants.TagInfo;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.sanselan.util.Debug;
 
 public class JpegImageMetadata implements IImageMetadata {

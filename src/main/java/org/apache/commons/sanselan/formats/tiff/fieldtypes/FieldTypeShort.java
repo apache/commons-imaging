@@ -18,6 +18,7 @@ package org.apache.commons.sanselan.formats.tiff.fieldtypes;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
+import org.apache.commons.sanselan.common.BinaryConversions;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.util.Debug;
 
@@ -45,32 +46,29 @@ public class FieldTypeShort extends FieldType
     public Object getSimpleValue(TiffField entry) throws ImageReadException
     {
         if (entry.length == 1)
-            return new Integer(convertByteArrayToShort(name + " ("
-                    + entry.tagInfo.name + ")", entry.valueOffsetBytes,
-                    entry.byteOrder));
+            return BinaryConversions.convertToShort(entry.valueOffsetBytes, entry.byteOrder);
 
-        return convertByteArrayToShortArray(name + " (" + entry.tagInfo.name
-                + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
+        return BinaryConversions.convertToShortArray(getRawBytes(entry), entry.byteOrder);
     }
 
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
     {
-        if (o instanceof Integer)
-            return convertShortArrayToByteArray(new int[]{
-                ((Integer) o).intValue(),
+        if (o instanceof Short)
+            return BinaryConversions.convertToByteArray(new short[]{
+                ((Short)o).shortValue(),
             }, byteOrder);
-        else if (o instanceof int[])
+        else if (o instanceof short[])
         {
-            int numbers[] = (int[]) o;
-            return convertShortArrayToByteArray(numbers, byteOrder);
+            short numbers[] = (short[]) o;
+            return BinaryConversions.convertToByteArray(numbers, byteOrder);
         }
-        else if (o instanceof Integer[])
+        else if (o instanceof Short[])
         {
-            Integer numbers[] = (Integer[]) o;
-            int values[] = new int[numbers.length];
+            Short numbers[] = (Short[]) o;
+            short values[] = new short[numbers.length];
             for (int i = 0; i < values.length; i++)
-                values[i] = numbers[i].intValue();
-            return convertShortArrayToByteArray(values, byteOrder);
+                values[i] = numbers[i].shortValue();
+            return BinaryConversions.convertToByteArray(values, byteOrder);
         }
         else
             throw new ImageWriteException("Invalid data: " + o + " ("

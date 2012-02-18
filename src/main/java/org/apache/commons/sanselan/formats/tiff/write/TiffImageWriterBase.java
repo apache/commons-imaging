@@ -30,6 +30,7 @@ import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.common.PackBits;
+import org.apache.commons.sanselan.common.RationalNumberUtilities;
 import org.apache.commons.sanselan.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.sanselan.common.mylzw.MyLzwCompressor;
 import org.apache.commons.sanselan.formats.tiff.TiffElement;
@@ -140,19 +141,19 @@ public abstract class TiffImageWriterBase implements TiffConstants,
                             + ") appears twice in directory.");
                 fieldTags.add(fieldKey);
 
-                if (field.tag == ExifTagConstants.EXIF_OFFSET.tagInfo.tag)
+                if (field.tag == ExifTagConstants.EXIF_TAG_EXIF_OFFSET.tag)
                 {
                     if (exifDirectoryOffsetField != null)
                         throw new ImageWriteException(
                                 "More than one Exif directory offset field.");
                     exifDirectoryOffsetField = field;
-                } else if (field.tag == ExifTagConstants.INTEROP_OFFSET.tagInfo.tag)
+                } else if (field.tag == ExifTagConstants.EXIF_TAG_INTEROP_OFFSET.tag)
                 {
                     if (interoperabilityDirectoryOffsetField != null)
                         throw new ImageWriteException(
                                 "More than one Interoperability directory offset field.");
                     interoperabilityDirectoryOffsetField = field;
-                } else if (field.tag == ExifTagConstants.GPSINFO.tagInfo.tag)
+                } else if (field.tag == ExifTagConstants.EXIF_TAG_GPSINFO.tag)
                 {
                     if (gpsDirectoryOffsetField != null)
                         throw new ImageWriteException(
@@ -208,7 +209,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             if (interoperabilityDirectoryOffsetField == null)
             {
                 interoperabilityDirectoryOffsetField = TiffOutputField
-                        .createOffsetField(ExifTagConstants.INTEROP_OFFSET.tagInfo, byteOrder);
+                        .createOffsetField(ExifTagConstants.EXIF_TAG_INTEROP_OFFSET, byteOrder);
                 exifDirectory.add(interoperabilityDirectoryOffsetField);
             }
 
@@ -227,7 +228,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             if (exifDirectoryOffsetField == null)
             {
                 exifDirectoryOffsetField = TiffOutputField.createOffsetField(
-                        ExifTagConstants.EXIF_OFFSET.tagInfo, byteOrder);
+                        ExifTagConstants.EXIF_TAG_EXIF_OFFSET, byteOrder);
                 rootDirectory.add(exifDirectoryOffsetField);
             }
 
@@ -244,7 +245,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             if (gpsDirectoryOffsetField == null)
             {
                 gpsDirectoryOffsetField = TiffOutputField.createOffsetField(
-                        ExifTagConstants.GPSINFO.tagInfo, byteOrder);
+                        ExifTagConstants.EXIF_TAG_GPSINFO, byteOrder);
                 rootDirectory.add(gpsDirectoryOffsetField);
             }
 
@@ -410,57 +411,20 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         // WriteField stripOffsetsField;
 
         {
-            {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.IMAGE_WIDTH.tagInfo, FIELD_TYPE_LONG, 1,
-                        FIELD_TYPE_LONG.writeData(new int[] { width, },
-                                byteOrder));
-                directory.add(field);
-            }
-            {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.IMAGE_LENGTH.tagInfo, FIELD_TYPE_LONG, 1,
-                        FIELD_TYPE_LONG.writeData(new int[] { height, },
-                                byteOrder));
-                directory.add(field);
-            }
-            {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.PHOTOMETRIC_INTERPRETATION.tagInfo, FIELD_TYPE_SHORT,
-                        1, FIELD_TYPE_SHORT.writeData(
-                                new int[] { photometricInterpretation, },
-                                byteOrder));
-                directory.add(field);
-            }
-            {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.COMPRESSION.tagInfo, FIELD_TYPE_SHORT, 1,
-                        FIELD_TYPE_SHORT.writeData(new int[] { compression, },
-                                byteOrder));
-                directory.add(field);
-            }
-            {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.SAMPLES_PER_PIXEL.tagInfo, FIELD_TYPE_SHORT, 1,
-                        FIELD_TYPE_SHORT.writeData(
-                                new int[] { samplesPerPixel, }, byteOrder));
-                directory.add(field);
-            }
+
+            directory.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
+            directory.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
+            directory.add(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION, (short)photometricInterpretation);
+            directory.add(TiffTagConstants.TIFF_TAG_COMPRESSION, (short)compression);
+            directory.add(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL, (short)samplesPerPixel);
             
             if (samplesPerPixel == 3)
             {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.BITS_PER_SAMPLE.tagInfo, FIELD_TYPE_SHORT, 3,
-                        FIELD_TYPE_SHORT.writeData(new int[] { bitsPerSample,
-                                bitsPerSample, bitsPerSample, }, byteOrder));
-                directory.add(field);
+                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short)bitsPerSample,
+                        (short)bitsPerSample, (short)bitsPerSample);
             } else if (samplesPerPixel == 1)
             {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.BITS_PER_SAMPLE.tagInfo, FIELD_TYPE_SHORT, 1,
-                        FIELD_TYPE_SHORT.writeData(
-                                new int[] { bitsPerSample, }, byteOrder));
-                directory.add(field);
+                directory.add(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, (short)bitsPerSample);
             }
             // {
             // stripOffsetsField = new WriteField(TIFF_TAG_STRIP_OFFSETS,
@@ -475,62 +439,24 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             // WRITE_BYTE_ORDER));
             // directory.add(field);
             // }
-            {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.ROWS_PER_STRIP.tagInfo, FIELD_TYPE_LONG, 1,
-                        FIELD_TYPE_LONG.writeData(new int[] { rowsPerStrip, },
-                                byteOrder));
-                directory.add(field);
-            }
-
-            {
-                int resolutionUnit = 2;// inches.
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.RESOLUTION_UNIT.tagInfo, FIELD_TYPE_SHORT, 1,
-                        FIELD_TYPE_SHORT.writeData(
-                                new int[] { resolutionUnit, }, byteOrder));
-                directory.add(field);
-            }
-
-            {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.XRESOLUTION.tagInfo, FIELD_TYPE_RATIONAL, 1,
-                        FIELD_TYPE_RATIONAL
-                                .writeData(xResolution.intValue(), 1, byteOrder));
-                directory.add(field);
-            }
-
-            {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.YRESOLUTION.tagInfo, FIELD_TYPE_RATIONAL, 1,
-                        FIELD_TYPE_RATIONAL
-                                .writeData(yResolution.intValue(), 1, byteOrder));
-                directory.add(field);
-            }
-            
+            directory.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, rowsPerStrip);
+            directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT, (short)2); // inches
+            directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
+                    RationalNumberUtilities.getRationalNumber(xResolution.doubleValue()));
+            directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
+                    RationalNumberUtilities.getRationalNumber(yResolution.doubleValue()));
             if (t4Options != 0) {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.T4_OPTIONS.tagInfo, FIELD_TYPE_LONG, 1,
-                        FIELD_TYPE_LONG
-                                .writeData(Integer.valueOf(t4Options), byteOrder));
-                directory.add(field);
+                directory.add(TiffTagConstants.TIFF_TAG_T4_OPTIONS, t4Options);
             }
             if (t6Options != 0) {
-                TiffOutputField field = new TiffOutputField(
-                        TiffTagConstants.T6_OPTIONS.tagInfo, FIELD_TYPE_LONG, 1,
-                        FIELD_TYPE_LONG
-                                .writeData(Integer.valueOf(t6Options), byteOrder));
-                directory.add(field);
+                directory.add(TiffTagConstants.TIFF_TAG_T6_OPTIONS, t6Options);
             }
 
 
             if (null != xmpXml)
             {
                 byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
-
-                TiffOutputField field = new TiffOutputField(TiffTagConstants.XMP.tagInfo,
-                        FIELD_TYPE_BYTE, xmpXmlBytes.length, xmpXmlBytes);
-                directory.add(field);
+                directory.add(TiffTagConstants.TIFF_TAG_XMP, xmpXmlBytes);
             }
 
         }
