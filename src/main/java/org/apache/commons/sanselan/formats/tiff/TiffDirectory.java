@@ -31,6 +31,7 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByte;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoDouble;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoFloat;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoGpsText;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoLong;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSByte;
@@ -38,6 +39,7 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSLong;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSRational;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSShort;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoXpString;
 
 public class TiffDirectory extends TiffElement implements TiffConstants
 //extends BinaryFileFunctions
@@ -327,6 +329,22 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         }
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public String getFieldValue(TagInfoGpsText tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        return tag.getValue(field);
+    }
+    
+    public String getFieldValue(TagInfoXpString tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        return tag.getValue(field);
     }
     
     public final class ImageDataElement extends TiffElement

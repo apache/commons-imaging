@@ -26,9 +26,9 @@ import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.sanselan.util.Debug;
 
-public final class TagInfoText extends TagInfo
+public final class TagInfoGpsText extends TagInfo
 {
-    public TagInfoText(String name, int tag, FieldType dataType, int length,
+    public TagInfoGpsText(String name, int tag, FieldType dataType, int length,
             TiffDirectoryType exifDirectory)
     {
         super(name, tag, dataType, length, exifDirectory);
@@ -51,36 +51,37 @@ public final class TagInfoText extends TagInfo
         }
     }
 
-    private static final TagInfoText.TextEncoding TEXT_ENCODING_ASCII = new TextEncoding(
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_ASCII = new TextEncoding(
             new byte[]{
                     0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00,
             }, "US-ASCII"); // ITU-T T.50 IA5
-    private static final TagInfoText.TextEncoding TEXT_ENCODING_JIS = new TextEncoding(
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_JIS = new TextEncoding(
             new byte[]{
                     0x4A, 0x49, 0x53, 0x00, 0x00, 0x00, 0x00, 0x00,
             }, "JIS"); // JIS X208-1990
-    private static final TagInfoText.TextEncoding TEXT_ENCODING_UNICODE = new TextEncoding(
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNICODE = new TextEncoding(
             new byte[]{
                     0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00,
             // Which Unicode encoding to use, UTF-8?
             }, "UTF-8"); // Unicode Standard
-    private static final TagInfoText.TextEncoding TEXT_ENCODING_UNDEFINED = new TextEncoding(
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNDEFINED = new TextEncoding(
             new byte[]{
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             // Try to interpret an undefined text as ISO-8859-1 (Latin)
             }, "ISO-8859-1"); // Undefined
-    private static final TagInfoText.TextEncoding TEXT_ENCODINGS[] = {
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODINGS[] = {
             TEXT_ENCODING_ASCII, //
             TEXT_ENCODING_JIS, //
             TEXT_ENCODING_UNICODE, //
             TEXT_ENCODING_UNDEFINED, //
     };
 
+    @Override
     public byte[] encodeValue(FieldType fieldType, Object value,
             int byteOrder) throws ImageWriteException
     {
         if (!(value instanceof String))
-            throw new ImageWriteException("Text value not String: " + value
+            throw new ImageWriteException("GPS text value not String: " + value
                     + " (" + Debug.getType(value) + ")");
         String s = (String) value;
 
@@ -124,25 +125,33 @@ public final class TagInfoText extends TagInfo
         }
     }
 
-    public Object getValue(TiffField entry) throws ImageReadException
+    @Override
+    public String getValue(TiffField entry) throws ImageReadException
     {
-        //            Debug.debug("entry.type", entry.type);
-        //            Debug.debug("entry.type", entry.getDescriptionWithoutValue());
-        //            Debug.debug("entry.type", entry.fieldType);
-
-        if (entry.type == FIELD_TYPE_ASCII.type)
-            return FIELD_TYPE_ASCII.getSimpleValue(entry);
-        else if (entry.type == FIELD_TYPE_UNDEFINED.type)
-        { /* do nothing */ }
-        else if (entry.type == FIELD_TYPE_BYTE.type)
-        { /* do nothing */ }
-        else
-        {
+        if (entry.type == FIELD_TYPE_ASCII.type) {
+            Object object = FIELD_TYPE_ASCII.getSimpleValue(entry);
+            if (object instanceof String) {
+                return (String) object;
+            } else if (object instanceof String[]) {
+                // Use of arrays with the ASCII type
+                // should be extremely rare, and use of
+                // ASCII type in GPS fields should be
+                // forbidden. So assume the 2 never happen
+                // together and return incomplete strings if they do.
+                return ((String[]) object)[0];
+            } else {
+                throw new ImageReadException("Unexpected ASCII type decoded");
+            }
+        } else if (entry.type == FIELD_TYPE_UNDEFINED.type) {
+            /* later */
+        } else if (entry.type == FIELD_TYPE_BYTE.type) {
+            /* later */
+        } else {
             Debug.debug("entry.type", entry.type);
             Debug.debug("entry.directoryType", entry.directoryType);
             Debug.debug("entry.type", entry.getDescriptionWithoutValue());
             Debug.debug("entry.type", entry.fieldType);
-            throw new ImageReadException("Text field not encoded as bytes.");
+            throw new ImageReadException("GPS text field not encoded as bytes.");
         }
 
         byte bytes[] = entry.fieldType.getRawBytes(entry);
@@ -156,19 +165,18 @@ public final class TagInfoText extends TagInfo
             catch (UnsupportedEncodingException e)
             {
                 throw new ImageReadException(
-                        "Text field missing encoding prefix.");
+                        "GPS text field missing encoding prefix.");
             }
         }
 
         for (int i = 0; i < TEXT_ENCODINGS.length; i++)
         {
-            TagInfoText.TextEncoding encoding = TEXT_ENCODINGS[i];
+            TagInfoGpsText.TextEncoding encoding = TEXT_ENCODINGS[i];
             if (BinaryFileFunctions.compareBytes(bytes, 0, encoding.prefix,
                     0, encoding.prefix.length))
             {
                 try
                 {
-                    //                        Debug.debug("encodingName", encoding.encodingName);
                     return new String(bytes, encoding.prefix.length,
                             bytes.length - encoding.prefix.length,
                             encoding.encodingName);
@@ -180,12 +188,6 @@ public final class TagInfoText extends TagInfo
             }
         }
 
-        //                        Debug.debug("entry.tag", entry.tag + " (0x" + Integer.toHexString(entry.tag ) +")");
-        //                        Debug.debug("entry.type", entry.type);
-        //                        Debug.debug("bytes", bytes, 10);
-        //            throw new ImageReadException(
-        //                    "Unknown Text encoding prefix.");
-
         try
         {
             // try ASCII, with NO prefix.
@@ -193,7 +195,7 @@ public final class TagInfoText extends TagInfo
         }
         catch (UnsupportedEncodingException e)
         {
-            throw new ImageReadException("Unknown text encoding prefix.");
+            throw new ImageReadException("Unknown GPS text encoding prefix.");
         }
 
     }

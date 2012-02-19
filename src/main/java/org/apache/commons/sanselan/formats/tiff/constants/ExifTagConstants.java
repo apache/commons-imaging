@@ -27,6 +27,7 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByte;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByteOrShort;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoDouble;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoFloat;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoGpsText;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoLong;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSLong;
@@ -36,9 +37,9 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrLong;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrLongOrRational;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrRational;
-import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoText;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoUndefined;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoUnknown;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoXpString;
 
 /**
  * References:
@@ -799,7 +800,7 @@ public interface ExifTagConstants
     //     skipping Maker Note!
     public static final TagInfoUndefined EXIF_TAG_MAKER_NOTE = new TagInfoUndefined("Maker Note",
             0x927c, 1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoText EXIF_TAG_USER_COMMENT = new TagInfoText(
+    public static final TagInfoGpsText EXIF_TAG_USER_COMMENT = new TagInfoGpsText(
             "UserComment", 0x9286, FIELD_TYPE_UNDEFINED, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SUB_SEC_TIME = new TagInfoAscii(
@@ -814,15 +815,15 @@ public interface ExifTagConstants
     public static final TagInfoUndefined EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefined(
             "Image Source Data", 0x935c, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoByte EXIF_TAG_XPTITLE = new TagInfoByte("XPTitle",
+    public static final TagInfoXpString EXIF_TAG_XPTITLE = new TagInfoXpString("XPTitle",
             0x9c9b, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoByte EXIF_TAG_XPCOMMENT = new TagInfoByte("XPComment",
+    public static final TagInfoXpString EXIF_TAG_XPCOMMENT = new TagInfoXpString("XPComment",
             0x9c9c, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoByte EXIF_TAG_XPAUTHOR = new TagInfoByte("XPAuthor",
+    public static final TagInfoXpString EXIF_TAG_XPAUTHOR = new TagInfoXpString("XPAuthor",
             0x9c9d, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoByte EXIF_TAG_XPKEYWORDS = new TagInfoByte("XPKeywords",
+    public static final TagInfoXpString EXIF_TAG_XPKEYWORDS = new TagInfoXpString("XPKeywords",
             0x9c9e, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoByte EXIF_TAG_XPSUBJECT = new TagInfoByte("XPSubject",
+    public static final TagInfoXpString EXIF_TAG_XPSUBJECT = new TagInfoXpString("XPSubject",
             0x9c9f, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoUndefined EXIF_TAG_FLASHPIX_VERSION = new TagInfoUndefined(
             "Flashpix Version", 0xa000, 1,

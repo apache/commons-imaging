@@ -25,7 +25,7 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByte;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
-import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoText;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoGpsText;
 
 public interface GpsTagConstants
         extends
@@ -192,12 +192,12 @@ public interface GpsTagConstants
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoText GPS_TAG_GPS_PROCESSING_METHOD = new TagInfoText(
+    public static final TagInfoGpsText GPS_TAG_GPS_PROCESSING_METHOD = new TagInfoGpsText(
             "GPS Processing Method", 0x001b, FIELD_TYPE_UNKNOWN,
             -1, TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoText GPS_TAG_GPS_AREA_INFORMATION = new TagInfoText(
+    public static final TagInfoGpsText GPS_TAG_GPS_AREA_INFORMATION = new TagInfoGpsText(
             "GPS Area Information", 0x001c, FIELD_TYPE_UNKNOWN, -1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 

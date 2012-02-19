@@ -41,6 +41,7 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByte;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByteOrShort;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoDouble;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoFloat;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoGpsText;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoLong;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSByte;
@@ -51,7 +52,7 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrLong;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrLongOrRational;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrRational;
-import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoText;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoXpString;
 
 public final class TiffOutputDirectory extends TiffOutputItem implements
         TiffConstants
@@ -200,7 +201,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
         byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag, tagInfo,
-                TiffFieldTypeConstants.FIELD_TYPE_SHORT, values.length, bytes);
+                TiffFieldTypeConstants.FIELD_TYPE_BYTE, values.length, bytes);
         add(tiffOutputField);
     }
 
@@ -222,7 +223,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
         byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag, tagInfo,
-                TiffFieldTypeConstants.FIELD_TYPE_LONG, values.length, bytes);
+                TiffFieldTypeConstants.FIELD_TYPE_SHORT, values.length, bytes);
         add(tiffOutputField);
     }
 
@@ -244,7 +245,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
         byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag, tagInfo,
-                TiffFieldTypeConstants.FIELD_TYPE_RATIONAL, values.length, bytes);
+                TiffFieldTypeConstants.FIELD_TYPE_SHORT, values.length, bytes);
         add(tiffOutputField);
     }
     
@@ -255,7 +256,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
         byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag, tagInfo,
-                TiffFieldTypeConstants.FIELD_TYPE_RATIONAL, values.length, bytes);
+                TiffFieldTypeConstants.FIELD_TYPE_LONG, values.length, bytes);
         add(tiffOutputField);
     }
 
@@ -277,7 +278,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
         byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag, tagInfo,
-                TiffFieldTypeConstants.FIELD_TYPE_RATIONAL, values.length, bytes);
+                TiffFieldTypeConstants.FIELD_TYPE_SHORT, values.length, bytes);
         add(tiffOutputField);
     }
 
@@ -292,10 +293,17 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         add(tiffOutputField);
     }
 
-    public void add(TagInfoText tagInfo, String value) throws ImageWriteException {
+    public void add(TagInfoGpsText tagInfo, String value) throws ImageWriteException {
         byte[] bytes = tagInfo.encodeValue(TiffFieldTypeConstants.FIELD_TYPE_UNKNOWN, value, byteOrder);
         TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag, tagInfo,
-                TiffFieldTypeConstants.FIELD_TYPE_UNKNOWN, bytes.length, bytes);
+                tagInfo.dataTypes.get(0), bytes.length, bytes);
+        add(tiffOutputField);
+    }
+    
+    public void add(TagInfoXpString tagInfo, String value) throws ImageWriteException {
+        byte[] bytes = tagInfo.encodeValue(TiffFieldTypeConstants.FIELD_TYPE_BYTE, value, byteOrder);
+        TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag, tagInfo,
+                TiffFieldTypeConstants.FIELD_TYPE_BYTE, bytes.length, bytes);
         add(tiffOutputField);
     }
     

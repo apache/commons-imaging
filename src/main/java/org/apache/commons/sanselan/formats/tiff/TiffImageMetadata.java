@@ -33,6 +33,19 @@ import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryConstants
 import org.apache.commons.sanselan.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.sanselan.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoAscii;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByte;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoDouble;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoFloat;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoGpsText;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoRational;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSByte;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSLong;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSRational;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoSShort;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoXpString;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputSet;
@@ -306,6 +319,160 @@ public class TiffImageMetadata extends ImageMetadata
         }
 
         return null;
+    }
+    
+    public Object getFieldValue(TagInfo tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        return field.getValue();
+    }
+    
+    public byte[] getFieldValue(TagInfoByte tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        return field.fieldType.getRawBytes(field);
+    }
+    
+    public String[] getFieldValue(TagInfoAscii tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public short[] getFieldValue(TagInfoShort tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public int[] getFieldValue(TagInfoLong tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public RationalNumber[] getFieldValue(TagInfoRational tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public byte[] getFieldValue(TagInfoSByte tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        return field.fieldType.getRawBytes(field);
+    }
+    
+    public short[] getFieldValue(TagInfoSShort tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public int[] getFieldValue(TagInfoSLong tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public RationalNumber[] getFieldValue(TagInfoSRational tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public float[] getFieldValue(TagInfoFloat tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public double[] getFieldValue(TagInfoDouble tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        if (!tag.dataTypes.contains(field.fieldType)) {
+            return null;
+        }
+        byte[] bytes = field.fieldType.getRawBytes(field);
+        return tag.getValue(field.byteOrder, bytes);
+    }
+    
+    public String getFieldValue(TagInfoGpsText tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        return tag.getValue(field);
+    }
+    
+    public String getFieldValue(TagInfoXpString tag) throws ImageReadException {
+        TiffField field = findField(tag);
+        if (field == null) {
+            return null;
+        }
+        return tag.getValue(field);
     }
 
     public TiffDirectory findDirectory(int directoryType)
