@@ -49,7 +49,7 @@ public class ComSegment extends Segment
     {
         String commentString = "";
         try {
-            commentString = new String(comment, "ISO-8859-1");
+            commentString = new String(comment, "UTF-8");
         } catch (UnsupportedEncodingException cannotHappen) {
         }
         return "COM (" + commentString + ")";
