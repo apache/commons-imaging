@@ -471,7 +471,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 
         try
         {
-            os.write(SOI);
+            SOI.writeTo(os);
 
             boolean hasExif = false;
 
@@ -565,7 +565,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
 
         if (includeEXIFPrefix)
         {
-            os.write(EXIF_IDENTIFIER_CODE);
+            EXIF_IDENTIFIER_CODE.writeTo(os);
             os.write(0);
             os.write(0);
         }

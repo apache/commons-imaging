@@ -16,33 +16,39 @@
  */
 package org.apache.commons.sanselan.formats.jpeg;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.sanselan.common.BinaryConstant;
+
 public interface JpegConstants
 {
     public static final int MAX_SEGMENT_SIZE = 0xffff;
 
-    public static final byte JFIF0_SIGNATURE[] = new byte[] { //
+    public static final BinaryConstant JFIF0_SIGNATURE = new BinaryConstant(new byte[] {
             0x4a, // J
             0x46, // F
             0x49, // I
             0x46, // F
             0x0, //
-    };
-    public static final byte JFIF0_SIGNATURE_ALTERNATIVE[] = new byte[] { //
+    });
+    public static final BinaryConstant JFIF0_SIGNATURE_ALTERNATIVE = new BinaryConstant(new byte[] {
             0x4a, // J
             0x46, // F
             0x49, // I
             0x46, // F
             0x20, //
-    };
+    });
 
-    public static final byte EXIF_IDENTIFIER_CODE[] = { //
+    public static final BinaryConstant EXIF_IDENTIFIER_CODE = new BinaryConstant(new byte[] {
             0x45, // E
             0x78, // x
             0x69, // i
             0x66, // f
-    };
+    });
 
-    public static final byte XMP_IDENTIFIER[] = { //
+    public static final BinaryConstant XMP_IDENTIFIER = new BinaryConstant(new byte[] {
             0x68, // h
             0x74, // t
             0x74, // t
@@ -72,17 +78,14 @@ public interface JpegConstants
             0x30, // 0
             0x2F, // /
             0, // 0-terminated us-ascii string.
-    };
+    });
 
-    public static final byte SOI[] = new byte[] { (byte) 0xff, (byte) 0xd8 };
-    public static final byte EOI[] = new byte[] { (byte) 0xff, (byte) 0xd9 };
+    public static final BinaryConstant SOI = new BinaryConstant(new byte[] { (byte) 0xff, (byte) 0xd8 });
+    public static final BinaryConstant EOI = new BinaryConstant(new byte[] { (byte) 0xff, (byte) 0xd9 });
 
     public static final int JPEG_APP0 = 0xE0;
-    // public static final int JPEG_APP1 = JPEG_APP0 + 1;
-    // public static final int JPEG_APP1_Marker = (0xff00) | JPEG_APP1;
     public static final int JPEG_APP0_Marker = (0xff00) | (JPEG_APP0);
     public static final int JPEG_APP1_Marker = (0xff00) | (JPEG_APP0 + 1);
-    // public static final int JPEG_APP2 = ;
     public static final int JPEG_APP2_Marker = (0xff00) | (JPEG_APP0 + 2);
     public static final int JPEG_APP13_Marker = (0xff00) | (JPEG_APP0 + 13);
     public static final int JPEG_APP14_Marker = (0xff00) | (JPEG_APP0 + 14);
@@ -112,19 +115,22 @@ public interface JpegConstants
     public static final int DNLMarker = 0xFFdc;
     public static final int COMMarker = 0xFFfe;
 
-    public static final int MARKERS[] = { JPEG_APP0,
-            JPEG_APP0_Marker, JPEG_APP1_Marker, JPEG_APP2_Marker,
+    public static final List<Integer> MARKERS = Collections.unmodifiableList(Arrays.asList(
+            JPEG_APP0, JPEG_APP0_Marker, JPEG_APP1_Marker, JPEG_APP2_Marker,
             JPEG_APP13_Marker, JPEG_APP14_Marker, JPEG_APP15_Marker,
             JFIFMarker, SOF0Marker, SOF1Marker, SOF2Marker, SOF3Marker,
             DHTMarker, SOF5Marker, SOF6Marker, SOF7Marker, SOF8Marker,
             SOF9Marker, SOF10Marker, SOF11Marker, DACMarker, SOF13Marker,
             SOF14Marker, SOF15Marker, EOIMarker, SOS_Marker,
-            DQTMarker, DNLMarker, COMMarker };
+            DQTMarker, DNLMarker, COMMarker ));
 
-    public static final byte icc_profile_label[] = { 0x49, 0x43, 0x43, 0x5F,
-            0x50, 0x52, 0x4F, 0x46, 0x49, 0x4C, 0x45, 0x0 };
+    public static final BinaryConstant icc_profile_label = new BinaryConstant(new byte[] {
+            0x49, 0x43, 0x43, 0x5F,
+            0x50, 0x52, 0x4F, 0x46,
+            0x49, 0x4C, 0x45, 0x0
+    });
 
-    public static final byte PHOTOSHOP_IDENTIFICATION_STRING[] = { //
+    public static final BinaryConstant PHOTOSHOP_IDENTIFICATION_STRING = new BinaryConstant(new byte[] {
             0x50, // P
             0x68, // h
             0x6F, // o
@@ -139,12 +145,11 @@ public interface JpegConstants
             0x2E, // .
             0x30, // 0
             0,
-    };
-    public static final byte CONST_8BIM[] = { //
+    });
+    public static final BinaryConstant CONST_8BIM = new BinaryConstant(new byte[] {
             0x38, // 8
             0x42, // B
             0x49, // I
             0x4D, // M
-    };
-
+    });
 }

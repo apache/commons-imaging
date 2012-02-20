@@ -116,7 +116,7 @@ public class BinaryFileFunctions implements BinaryConstants
         }
         return result;
     }
-
+    
     public final void readAndVerifyBytes(InputStream is, byte expected[],
             String exception) throws ImageReadException, IOException
     {
@@ -138,6 +138,22 @@ public class BinaryFileFunctions implements BinaryConstants
 
                 throw new ImageReadException(exception);
             }
+        }
+    }
+
+    public final void readAndVerifyBytes(InputStream is, BinaryConstant expected,
+            String exception) throws ImageReadException, IOException
+    {
+        for (int i = 0; i < expected.size(); i++)
+        {
+            int data = is.read();
+            byte b = (byte) (0xff & data);
+
+            if (data < 0)
+                throw new ImageReadException("Unexpected EOF.");
+
+            if (b != expected.get(i))
+                throw new ImageReadException(exception);
         }
     }
 

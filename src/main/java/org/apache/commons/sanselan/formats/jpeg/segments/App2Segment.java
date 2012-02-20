@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.sanselan.ImageReadException;
+import org.apache.commons.sanselan.common.BinaryFileParser;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
 
 public class App2Segment extends AppnSegment implements Comparable<App2Segment>
@@ -39,7 +40,7 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment>
     {
         super(marker, marker_length, is2);
 
-        if (startsWith(bytes, JpegImageParser.icc_profile_label))
+        if (BinaryFileParser.byteArrayHasPrefix(bytes, JpegImageParser.icc_profile_label))
         {
             InputStream is = new ByteArrayInputStream(bytes);
 
@@ -49,7 +50,7 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment>
             cur_marker = readByte("cur_marker", is, "Not a valid App2 Marker");
             num_markers = readByte("num_markers", is, "Not a valid App2 Marker");
 
-            marker_length -= JpegImageParser.icc_profile_label.length;
+            marker_length -= JpegImageParser.icc_profile_label.size();
             marker_length -= (1 + 1);
 
             icc_bytes = readByteArray("App2 Data", marker_length, is,

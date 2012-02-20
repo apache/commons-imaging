@@ -20,6 +20,7 @@ package org.apache.commons.sanselan.formats.jpeg.iptc;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.Map;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.SanselanConstants;
+import org.apache.commons.sanselan.common.BinaryFileFunctions;
 import org.apache.commons.sanselan.common.BinaryFileParser;
 import org.apache.commons.sanselan.common.BinaryInputStream;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
@@ -45,16 +47,14 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
 
     public boolean isPhotoshopJpegSegment(byte segmentData[])
     {
-        if (!compareByteArrays(segmentData, 0, PHOTOSHOP_IDENTIFICATION_STRING,
-                0, PHOTOSHOP_IDENTIFICATION_STRING.length))
+        if (!BinaryFileParser.byteArrayHasPrefix(segmentData, PHOTOSHOP_IDENTIFICATION_STRING))
             return false;
 
-        int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
-        if (index + CONST_8BIM.length > segmentData.length)
+        int index = PHOTOSHOP_IDENTIFICATION_STRING.size();
+        if (index + CONST_8BIM.size() > segmentData.length)
             return false;
 
-        if (!compareByteArrays(segmentData, index, CONST_8BIM, 0,
-                CONST_8BIM.length))
+        if (!CONST_8BIM.equals(Arrays.copyOfRange(segmentData, index, index + CONST_8BIM.size())))
             return false;
 
         return true;
@@ -267,9 +267,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
         // number of bytes (including the 1st byte, which is the size.)
 
         byte[] idString = bis.readByteArray(
-                PHOTOSHOP_IDENTIFICATION_STRING.length,
+                PHOTOSHOP_IDENTIFICATION_STRING.size(),
                 "App13 Segment missing identification string");
-        if (!compareByteArrays(idString, PHOTOSHOP_IDENTIFICATION_STRING))
+        if (!PHOTOSHOP_IDENTIFICATION_STRING.equals(idString))
             throw new ImageReadException("Not a Photoshop App13 Segment");
 
         // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
@@ -277,12 +277,12 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
         while (true)
         {
             byte[] imageResourceBlockSignature = bis
-                    .readByteArray(CONST_8BIM.length,
+                    .readByteArray(CONST_8BIM.size(),
                             "App13 Segment missing identification string",
                             false, false);
             if (null == imageResourceBlockSignature)
                 break;
-            if (!compareByteArrays(imageResourceBlockSignature, CONST_8BIM))
+            if (!CONST_8BIM.equals(imageResourceBlockSignature))
                 throw new ImageReadException(
                         "Invalid Image Resource Block Signature");
 
@@ -351,14 +351,14 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(os);
 
-        bos.write(PHOTOSHOP_IDENTIFICATION_STRING);
+        PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
 
         List<IptcBlock> blocks = data.getRawBlocks();
         for (int i = 0; i < blocks.size(); i++)
         {
             IptcBlock block = blocks.get(i);
 
-            bos.write(CONST_8BIM);
+            CONST_8BIM.writeTo(bos);
 
             if (block.blockType < 0 || block.blockType > 0xffff)
                 throw new ImageWriteException("Invalid IPTC block type.");

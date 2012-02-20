@@ -210,7 +210,7 @@ public class JpegXmpRewriter extends JpegRewriter
     {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-        os.write(XMP_IDENTIFIER);
+        XMP_IDENTIFIER.writeTo(os);
         os.write(xmpXmlData, start, length);
 
         return os.toByteArray();

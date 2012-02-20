@@ -34,28 +34,17 @@ public class JpegXmpParser extends BinaryFileParser implements JpegConstants
 
     public boolean isXmpJpegSegment(byte segmentData[])
     {
-        int index = 0;
-
-        if (segmentData.length < XMP_IDENTIFIER.length)
-            return false;
-        for (; index < XMP_IDENTIFIER.length; index++)
-            if (segmentData[index] < XMP_IDENTIFIER[index])
-                return false;
-
-        return true;
+        return BinaryFileParser.byteArrayHasPrefix(segmentData, XMP_IDENTIFIER);
     }
 
     public String parseXmpJpegSegment(byte segmentData[])
             throws ImageReadException
     {
-        int index = 0;
-
-        if (segmentData.length < XMP_IDENTIFIER.length)
+        if (!isXmpJpegSegment(segmentData)) {
             throw new ImageReadException("Invalid JPEG XMP Segment.");
-        for (; index < XMP_IDENTIFIER.length; index++)
-            if (segmentData[index] < XMP_IDENTIFIER[index])
-                throw new ImageReadException("Invalid JPEG XMP Segment.");
-
+        }
+        int index = XMP_IDENTIFIER.size();
+        
         try
         {
             // segment data is UTF-8 encoded xml.

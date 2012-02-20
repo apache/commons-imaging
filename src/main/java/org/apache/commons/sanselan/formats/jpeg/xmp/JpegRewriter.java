@@ -342,7 +342,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants
     {
         try
         {
-            os.write(SOI);
+            SOI.writeTo(os);
 
             for (int i = 0; i < segments.size(); i++)
             {
