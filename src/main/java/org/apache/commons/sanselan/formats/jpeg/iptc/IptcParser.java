@@ -29,7 +29,6 @@ import java.util.Map;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.SanselanConstants;
-import org.apache.commons.sanselan.common.BinaryFileFunctions;
 import org.apache.commons.sanselan.common.BinaryFileParser;
 import org.apache.commons.sanselan.common.BinaryInputStream;
 import org.apache.commons.sanselan.common.BinaryOutputStream;

@@ -27,7 +27,6 @@ public interface TiffDirectoryConstants
     public static final int DIRECTORY_TYPE_SUB2 = 3;
     public static final int DIRECTORY_TYPE_THUMBNAIL = 2;
     public static final int DIRECTORY_TYPE_EXIF = -2;
-    //    public static final int DIRECTORY_TYPE_SUB = 5;
     public static final int DIRECTORY_TYPE_GPS = -3;
     public static final int DIRECTORY_TYPE_INTEROPERABILITY = -4;
     public static final int DIRECTORY_TYPE_MAKER_NOTES = -5;
