@@ -87,6 +87,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
      * Record data (unlike block data) is NOT padded to have an even length.
      *
      * Record data, for IPTC record, should always be ISO-8859-1.
+     * But according to SANSELAN-33, this isn't always the case.
      *
      * The exception is the first record in the block, which must always be a
      * record version record, whose value is a two-byte number; the value is
@@ -248,7 +249,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
             // Debug.debug("index", IPTC_TYPE_CREDIT.name);
             // }
 
-            IptcRecord element = new IptcRecord(iptcType, value);
+            IptcRecord element = new IptcRecord(iptcType, recordData, value);
             elements.add(element);
         }
 
