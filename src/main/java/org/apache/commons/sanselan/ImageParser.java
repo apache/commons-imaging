@@ -44,6 +44,7 @@ import org.apache.commons.sanselan.formats.pcx.PcxImageParser;
 import org.apache.commons.sanselan.formats.png.PngImageParser;
 import org.apache.commons.sanselan.formats.pnm.PnmImageParser;
 import org.apache.commons.sanselan.formats.psd.PsdImageParser;
+import org.apache.commons.sanselan.formats.rgbe.RgbeImageParser;
 import org.apache.commons.sanselan.formats.tiff.TiffImageParser;
 import org.apache.commons.sanselan.formats.wbmp.WbmpImageParser;
 import org.apache.commons.sanselan.formats.xbm.XbmImageParser;
@@ -63,6 +64,7 @@ public abstract class ImageParser extends BinaryFileParser implements
                 new IcnsImageParser(), new WbmpImageParser(),
                 new PcxImageParser(), new DcxImageParser(),
                 new XbmImageParser(), new XpmImageParser(),
+                new RgbeImageParser()
         // new JBig2ImageParser(),
         // new TgaImageParser(),
         };

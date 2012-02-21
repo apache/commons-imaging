@@ -78,6 +78,8 @@ public class ImageFormat
     public static final ImageFormat IMAGE_FORMAT_DCX = new ImageFormat("DCX");
     public static final ImageFormat IMAGE_FORMAT_XBM = new ImageFormat("XBM");
     public static final ImageFormat IMAGE_FORMAT_XPM = new ImageFormat("XPM");
+    public static final ImageFormat IMAGE_FORMAT_RGBE = new ImageFormat("RGBE");
+
 
     public static final ImageFormat[] getAllFormats()
     {
@@ -88,7 +90,7 @@ public class ImageFormat
                 IMAGE_FORMAT_PPM, IMAGE_FORMAT_PNM, IMAGE_FORMAT_TGA,
                 IMAGE_FORMAT_JBIG2, IMAGE_FORMAT_ICNS, IMAGE_FORMAT_WBMP,
                 IMAGE_FORMAT_PCX, IMAGE_FORMAT_DCX, IMAGE_FORMAT_XBM,
-                IMAGE_FORMAT_XPM,
+                IMAGE_FORMAT_XPM, IMAGE_FORMAT_RGBE
         };
 
         return result;

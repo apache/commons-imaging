@@ -153,6 +153,17 @@ limitations under the License.
     </td>
   </tr>
 
+  <!-- RGBE/Radiance HDR Format -->
+  <tr>
+    <td>RGBE/Radiance HDR</td><td>yes</td><td>no</td>
+    <td>
+        Basic support.
+    </td>
+    <td>
+      <a href="http://en.wikipedia.org/wiki/RGBE_image_format">Wikipedia</a>
+    </td>
+  </tr>
+
   <!-- TIFF Format -->
   <tr>
     <td>TIFF</td><td>yes</td><td>yes</td>
@@ -244,7 +255,7 @@ limitations under the License.
   <tr>
     <td>JPEG/JFIF IPTC Metadata</td><td>yes</td><td>soon</td>
     <td>
-        Can read IPTC data from exsiting JPEG/JFIF files WITHOUT modifying image data.
+        Can read IPTC data from existing JPEG/JFIF files WITHOUT modifying image data.
     </td>
     <td>
        <a href="http://www.iptc.org/cms/site/index.html?channel=CH0108">IPTC Specs, etc.</a>
