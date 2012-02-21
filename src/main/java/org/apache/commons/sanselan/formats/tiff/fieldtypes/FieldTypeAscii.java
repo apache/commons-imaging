@@ -91,7 +91,12 @@ public class FieldTypeAscii extends FieldType
             String[] strings = (String[])o;
             int totalLength = 0;
             for (int i = 0; i < strings.length; i++) {
-                totalLength += (strings[i].getBytes().length + 1);
+                byte[] bytes = null;
+                try {
+                    bytes = strings[i].getBytes("UTF-8");
+                } catch (UnsupportedEncodingException cannotHappen) {
+                }
+                totalLength += (bytes.length + 1);
             }
             byte[] result = new byte[totalLength];
             int position = 0;

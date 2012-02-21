@@ -133,19 +133,22 @@ public class MyLzwCompressor
 
         public final boolean equals(Object o)
         {
-            ByteArray other = (ByteArray) o;
-            if (other.hash != hash)
-                return false;
-            if (other.length != length)
-                return false;
-
-            for (int i = 0; i < length; i++)
-            {
-                if (other.bytes[i + other.start] != bytes[i + start])
+            if (o instanceof ByteArray) {
+                ByteArray other = (ByteArray) o;
+                if (other.hash != hash)
                     return false;
-            }
+                if (other.length != length)
+                    return false;
 
-            return true;
+                for (int i = 0; i < length; i++)
+                {
+                    if (other.bytes[i + other.start] != bytes[i + start])
+                        return false;
+                }
+
+                return true;
+            }
+            return false;
         }
     }
 

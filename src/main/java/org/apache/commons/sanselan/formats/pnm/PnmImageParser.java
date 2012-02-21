@@ -330,7 +330,11 @@ public class PnmImageParser extends ImageParser implements PnmConstants
             writer = new PpmWriter(useRawbits);
 
         // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap(params);
+        if (params != null) {
+            params = new HashMap(params);
+        } else {
+            params = new HashMap();
+        }
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT))

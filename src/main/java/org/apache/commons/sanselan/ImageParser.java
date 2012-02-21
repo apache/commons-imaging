@@ -82,7 +82,7 @@ public abstract class ImageParser extends BinaryFileParser implements
     public final IImageMetadata getMetadata(byte bytes[])
             throws ImageReadException, IOException
     {
-        return getMetadata(bytes);
+        return getMetadata(bytes, null);
     }
 
     public final IImageMetadata getMetadata(byte bytes[], Map params)

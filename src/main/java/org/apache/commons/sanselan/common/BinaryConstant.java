@@ -29,7 +29,7 @@ public class BinaryConstant implements Cloneable {
     
     @Override
     public BinaryConstant clone() throws CloneNotSupportedException {
-        return new BinaryConstant(value);
+        return (BinaryConstant) super.clone();
     }
     
     @Override

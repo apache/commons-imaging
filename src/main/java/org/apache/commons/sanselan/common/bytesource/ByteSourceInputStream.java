@@ -180,7 +180,12 @@ public class ByteSourceInputStream extends ByteSource
         }
 
         InputStream is = getInputStream();
-        is.skip(blockStart);
+        for (long skipped = 0; skipped < blockStart; ) {
+            long ret = is.skip(blockStart - skipped);
+            if (ret >= 0) {
+                skipped += ret;
+            }
+        }
 
         byte bytes[] = new byte[blockLength];
         int total = 0;

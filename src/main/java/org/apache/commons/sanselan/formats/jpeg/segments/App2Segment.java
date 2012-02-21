@@ -64,6 +64,20 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment>
             icc_bytes = null;
         }
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof App2Segment) {
+            App2Segment other = (App2Segment)obj;
+            return cur_marker == other.cur_marker;
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return cur_marker;
+    }
 
     public int compareTo(App2Segment other)
     {

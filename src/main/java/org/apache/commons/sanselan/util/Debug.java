@@ -208,7 +208,7 @@ public final class Debug
     }
 
     //    public static String newline = System.getProperty("line.separator");
-    public static String newline = "\r\n";
+    public static final String newline = "\r\n";
 
     private static void log(StringBuffer buffer, String s)
     {
@@ -517,9 +517,6 @@ public final class Debug
         debug(fClass.getName(), e);
     }
 
-    private static final SimpleDateFormat timestamp = new SimpleDateFormat(
-            "yyyy-MM-dd kk:mm:ss:SSS");
-
     public static void debug(String message, boolean value)
     {
         debug(message + " " + ((value) ? ("true") : ("false")));
@@ -662,6 +659,8 @@ public final class Debug
     {
         StringBuffer result = new StringBuffer();
 
+        final SimpleDateFormat timestamp = new SimpleDateFormat(
+                "yyyy-MM-dd kk:mm:ss:SSS");
         String datetime = timestamp.format(new Date()).toLowerCase();
 
         result.append(newline);
@@ -869,7 +868,7 @@ public final class Debug
             for (int i = 0; i < array.length; i++)
                 debug(prefix + "\t" + i + ": ", array[i]);
         }
-        else if (value instanceof byte[])
+        else if (value instanceof double[])
         {
             double[] array = (double[]) value;
             debug(prefix, array);

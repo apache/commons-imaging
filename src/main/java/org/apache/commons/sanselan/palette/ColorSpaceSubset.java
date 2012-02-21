@@ -173,5 +173,5 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
     {
         index = i;
     }
-
+    
 }

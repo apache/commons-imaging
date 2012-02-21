@@ -137,8 +137,14 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
         try
         {
             is = byteSource.getInputStream();
-            if (offset > 0)
-                is.skip(offset);
+            if (offset > 0) {
+                for (long skipped = 0; skipped < offset; ) {
+                    long ret = is.skip(offset - skipped);
+                    if (ret >= 0) {
+                        skipped += ret;
+                    }
+                }
+            }
 
             List<TiffField> fields = new ArrayList<TiffField>();
 

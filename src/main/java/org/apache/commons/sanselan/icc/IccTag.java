@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BinaryConstants;
@@ -97,7 +98,7 @@ public class IccTag implements BinaryConstants, IccConstants
                 }) + ")");
 
         if (data == null)
-            pw.println(prefix + "data: " + data);
+            pw.println(prefix + "data: " + Arrays.toString(data));
         else
         {
             pw.println(prefix + "data: " + data.length);

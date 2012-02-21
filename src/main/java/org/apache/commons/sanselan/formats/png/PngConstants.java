@@ -17,6 +17,7 @@
 package org.apache.commons.sanselan.formats.png;
 
 import org.apache.commons.sanselan.SanselanConstants;
+import org.apache.commons.sanselan.common.BinaryFileFunctions;
 
 public interface PngConstants extends SanselanConstants
 {
@@ -46,31 +47,31 @@ public interface PngConstants extends SanselanConstants
             0x74, //
     };
 
-    public final static int IEND = PngImageParser.CharsToQuad('I', 'E', 'N',
+    public final static int IEND = BinaryFileFunctions.charsToQuad('I', 'E', 'N',
             'D');
-    public final static int IHDR = PngImageParser.CharsToQuad('I', 'H', 'D',
+    public final static int IHDR = BinaryFileFunctions.charsToQuad('I', 'H', 'D',
             'R');
-    public final static int iCCP = PngImageParser.CharsToQuad('i', 'C', 'C',
+    public final static int iCCP = BinaryFileFunctions.charsToQuad('i', 'C', 'C',
             'P');
-    public final static int tEXt = PngImageParser.CharsToQuad('t', 'E', 'X',
+    public final static int tEXt = BinaryFileFunctions.charsToQuad('t', 'E', 'X',
             't');
-    public final static int zTXt = PngImageParser.CharsToQuad('z', 'T', 'X',
+    public final static int zTXt = BinaryFileFunctions.charsToQuad('z', 'T', 'X',
             't');
-    public final static int pHYs = PngImageParser.CharsToQuad('p', 'H', 'Y',
+    public final static int pHYs = BinaryFileFunctions.charsToQuad('p', 'H', 'Y',
             's');
-    public final static int PLTE = PngImageParser.CharsToQuad('P', 'L', 'T',
+    public final static int PLTE = BinaryFileFunctions.charsToQuad('P', 'L', 'T',
             'E');
-    public final static int IDAT = PngImageParser.CharsToQuad('I', 'D', 'A',
+    public final static int IDAT = BinaryFileFunctions.charsToQuad('I', 'D', 'A',
             'T');
-    public final static int tRNS = PngImageParser.CharsToQuad('t', 'R', 'N',
+    public final static int tRNS = BinaryFileFunctions.charsToQuad('t', 'R', 'N',
             'S');
-    public final static int gAMA = PngImageParser.CharsToQuad('g', 'A', 'M',
+    public final static int gAMA = BinaryFileFunctions.charsToQuad('g', 'A', 'M',
             'A');
-    public final static int sRGB = PngImageParser.CharsToQuad('s', 'R', 'G',
+    public final static int sRGB = BinaryFileFunctions.charsToQuad('s', 'R', 'G',
             'B');
 
     // XMP chunk type.
-    public final static int iTXt = PngImageParser.CharsToQuad('i', 'T', 'X',
+    public final static int iTXt = BinaryFileFunctions.charsToQuad('i', 'T', 'X',
             't');
 
     public static final byte PNG_Signature[] = {

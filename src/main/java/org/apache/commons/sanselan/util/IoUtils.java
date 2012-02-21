@@ -142,8 +142,11 @@ public class IoUtils implements SanselanConstants
 
         try
         {
-            if (file.getParentFile() != null)
-                file.getParentFile().mkdirs();
+            if (file.getParentFile() != null && !file.getParentFile().exists()) {
+                if (!file.getParentFile().mkdirs()) {
+                    throw new IOException("Could not create directory for file " + file);
+                }
+            }
             stream = new FileOutputStream(file);
 
             copyStreamToStream(src, stream);

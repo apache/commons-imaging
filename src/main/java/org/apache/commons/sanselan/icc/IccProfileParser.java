@@ -370,7 +370,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants
 
             boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
 
-            return new Boolean(result);
+            return result;
         }
         catch (Exception e)
         {

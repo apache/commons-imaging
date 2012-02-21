@@ -761,7 +761,7 @@ public class BinaryFileFunctions implements BinaryConstants
         System.out.println(msg + ": '" + Integer.toBinaryString(0xff & i));
     }
 
-    public final static int CharsToQuad(char c1, char c2, char c3, char c4)
+    public final static int charsToQuad(char c1, char c2, char c3, char c4)
     {
         return (((0xff & c1) << 24) | ((0xff & c2) << 16) | ((0xff & c3) << 8) | ((0xff & c4) << 0));
     }

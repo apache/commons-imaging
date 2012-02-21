@@ -61,8 +61,11 @@ public class MedianCutQuantizer
 
         public boolean equals(Object o)
         {
-            ColorCount other = (ColorCount) o;
-            return other.argb == this.argb;
+            if (o instanceof ColorCount) {
+                ColorCount other = (ColorCount) o;
+                return other.argb == this.argb;
+            }
+            return false;
         }
 
     }
