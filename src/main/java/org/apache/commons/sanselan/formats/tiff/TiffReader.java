@@ -136,23 +136,16 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
         InputStream is = null;
         try
         {
-            is = byteSource.getInputStream();
-            if (offset > 0) {
-                for (long skipped = 0; skipped < offset; ) {
-                    long ret = is.skip(offset - skipped);
-                    if (ret >= 0) {
-                        skipped += ret;
-                    }
-                }
-            }
-
-            List<TiffField> fields = new ArrayList<TiffField>();
-
             if (offset >= byteSource.getLength())
             {
                 // Debug.debug("skipping invalid directory!");
                 return true;
             }
+
+            is = byteSource.getInputStream();
+            skipBytes(is, offset);
+
+            List<TiffField> fields = new ArrayList<TiffField>();
 
             int entryCount;
             try
