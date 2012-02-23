@@ -61,6 +61,17 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
     private final List<TiffOutputField> fields = new ArrayList<TiffOutputField>();
     private final int byteOrder;
     private TiffOutputDirectory nextDirectory = null;
+    public static final Comparator<TiffOutputDirectory> COMPARATOR = new Comparator<TiffOutputDirectory>() {
+        public int compare(TiffOutputDirectory o1, TiffOutputDirectory o2) {
+            if (o1.type < o2.type) {
+                return -1;
+            } else if (o1.type > o2.type) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    };
 
     public void setNextDirectory(TiffOutputDirectory nextDirectory)
     {
@@ -87,8 +98,8 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
     public void add(TagInfoAscii tagInfo, String... values) throws ImageWriteException {
         byte[] bytes = tagInfo.encodeValue(byteOrder, values);
         if (tagInfo.length > 0 && tagInfo.length != bytes.length) {
-            throw new ImageWriteException("Tag expects " + tagInfo.length +
-                    " byte(s), not " + values.length);
+            //throw new ImageWriteException("Tag expects " + tagInfo.length +
+              //      " byte(s), not " + values.length);
         }
         TiffOutputField tiffOutputField = new TiffOutputField(tagInfo.tag, tagInfo,
                 TiffFieldTypeConstants.FIELD_TYPE_ASCII, bytes.length, bytes);

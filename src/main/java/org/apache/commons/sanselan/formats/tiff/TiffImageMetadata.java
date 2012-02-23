@@ -69,13 +69,12 @@ public class TiffImageMetadata extends ImageMetadata
         for (int i = 0; i < tags.size(); i++)
         {
             TagInfo tag = tags.get(i);
-            Object key = new Integer(tag.tag);
 
-            Integer count = map.get(key);
+            Integer count = map.get(tag.tag);
             if (count == null)
-                map.put(key, new Integer(1));
+                map.put(tag.tag, 1);
             else
-                map.put(key, new Integer(count.intValue() + 1));
+                map.put(tag.tag, count + 1);
         }
 
         return map;
@@ -271,7 +270,7 @@ public class TiffImageMetadata extends ImageMetadata
     public TiffField findField(TagInfo tagInfo, boolean exactDirectoryMatch) throws ImageReadException
     {
         // Please keep this method in sync with TiffField's getTag()
-        Integer tagCount = tagCounts.get(new Integer(tagInfo.tag));
+        Integer tagCount = tagCounts.get(tagInfo.tag);
         int tagsMatching = tagCount == null ? 0 : tagCount.intValue();
 
         List<? extends IImageMetadataItem> directories = getDirectories();

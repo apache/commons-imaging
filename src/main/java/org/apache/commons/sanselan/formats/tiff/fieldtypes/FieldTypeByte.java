@@ -30,7 +30,7 @@ public class FieldTypeByte extends FieldType
     public Object getSimpleValue(TiffField entry)
     {
         if (entry.length == 1)
-            return new Byte(entry.valueOffsetBytes[0]);
+            return entry.valueOffsetBytes[0];
 
         return getRawBytes(entry);
     }

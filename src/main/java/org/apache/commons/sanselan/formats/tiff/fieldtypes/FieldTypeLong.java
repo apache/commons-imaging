@@ -30,9 +30,9 @@ public class FieldTypeLong extends FieldType
     public Object getSimpleValue(TiffField entry)
     {
         if (entry.length == 1)
-            return new Integer(convertByteArrayToInt(name + " ("
+            return convertByteArrayToInt(name + " ("
                     + entry.tagInfo.name + ")", entry.valueOffsetBytes,
-                    entry.byteOrder));
+                    entry.byteOrder);
 
         return convertByteArrayToIntArray(name + " (" + entry.tagInfo.name
                 + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);

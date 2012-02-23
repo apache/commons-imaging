@@ -145,7 +145,7 @@ public class DcxImageParser extends ImageParser
                 int pageOffset = read4Bytes("PageTable", is, "Not a Valid DCX File");
                 if (pageOffset == 0)
                     break;
-                pageTable.add(new Integer(pageOffset));
+                pageTable.add(pageOffset);
             }
 
             if (id != DcxHeader.DCX_ID)

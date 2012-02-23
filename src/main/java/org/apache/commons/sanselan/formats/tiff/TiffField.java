@@ -253,9 +253,7 @@ public class TiffField implements TiffConstants
 
     private static TagInfo getTag(int directoryType, int tag)
     {
-        Object key = new Integer(tag);
-
-        List<TagInfo> possibleMatches = ALL_TAG_MAP.get(key);
+        List<TagInfo> possibleMatches = ALL_TAG_MAP.get(tag);
 
         if (null == possibleMatches)
         {
@@ -608,13 +606,12 @@ public class TiffField implements TiffConstants
         for (int i = 0; i < tags.size(); i++)
         {
             TagInfo tag = tags.get(i);
-            Object key = new Integer(tag.tag);
 
-            List<TagInfo> tagList = map.get(key);
+            List<TagInfo> tagList = map.get(tag.tag);
             if (tagList == null)
             {
                 tagList = new ArrayList<TagInfo>();
-                map.put(key, tagList);
+                map.put(tag.tag, tagList);
             }
             tagList.add(tag);
 

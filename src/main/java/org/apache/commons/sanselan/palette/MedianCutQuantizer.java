@@ -206,11 +206,11 @@ public class MedianCutQuantizer
                 argb &= mask;
 
                 ColorCount color = color_map
-                        .get(new Integer(argb));
+                        .get(argb);
                 if (color == null)
                 {
                     color = new ColorCount(argb);
-                    color_map.put(new Integer(argb), color);
+                    color_map.put(argb, color);
                     if (color_map.keySet().size() > max)
                         return null;
                 }

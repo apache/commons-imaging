@@ -101,6 +101,16 @@ public interface SanselanConstants
      *
      * Only used when writing images.
      * <p>
+     * Valid values: TiffOutputSet to write into the image's EXIF metadata.
+     * <p>
+     */
+    public static final String PARAM_KEY_EXIF = "EXIF";
+
+    /**
+     * Parameter key.
+     *
+     * Only used when writing images.
+     * <p>
      * Valid values: String of XMP XML.
      * <p>
      */

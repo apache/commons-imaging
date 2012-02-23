@@ -207,7 +207,7 @@ public class ByteSourceInputStream extends ByteSource
         long skipped;
         while ((skipped = is.skip(1024)) > 0)
             result += skipped;
-        streamLength = new Long(result);
+        streamLength = result;
         return result;
     }
 

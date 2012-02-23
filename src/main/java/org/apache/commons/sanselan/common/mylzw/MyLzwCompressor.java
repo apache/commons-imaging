@@ -75,7 +75,7 @@ public class MyLzwCompressor
             {
                 Object key = arrayToKey((byte) codes);
 
-                map.put(key, new Integer(codes));
+                map.put(key, codes);
             }
         }
     }
@@ -235,7 +235,7 @@ public class MyLzwCompressor
 
         if (!cleared)
         {
-            map.put(key, new Integer(codes));
+            map.put(key, codes);
             codes++;
         }
 

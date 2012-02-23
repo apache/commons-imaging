@@ -37,7 +37,7 @@ public class FieldTypeUnknown extends FieldType
         //        Debug.debug("unknown field type. entry.oversizeValue", entry.oversizeValue);
 
         if (entry.length == 1)
-            return new Byte(entry.valueOffsetBytes[0]);
+            return entry.valueOffsetBytes[0];
 
         return getRawBytes(entry);
     }

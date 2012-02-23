@@ -118,7 +118,6 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             boolean ignoreNextDirectory, List<Number> visited)
             throws ImageReadException, IOException
     {
-        Number key = new Integer(offset);
 
         // Debug.debug();
         // Debug.debug("dir offset", offset + " (0x" +
@@ -129,9 +128,9 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
         // Debug.debug("dirType", dirType);
         // Debug.debug();
 
-        if (visited.contains(key))
+        if (visited.contains(offset))
             return false;
-        visited.add(key);
+        visited.add(offset);
 
         InputStream is = null;
         try

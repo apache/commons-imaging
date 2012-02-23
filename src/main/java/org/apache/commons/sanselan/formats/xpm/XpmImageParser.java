@@ -86,8 +86,8 @@ public class XpmImageParser extends ImageParser
                     int green = Integer.parseInt(line.substring(4, 7));
                     int blue = Integer.parseInt(line.substring(8, 11));
                     String colorName = line.substring(11).trim();
-                    colors.put(colorName, new Integer(0xff000000 |
-                            (red << 16) | (green << 8) | blue));
+                    colors.put(colorName, 0xff000000 |
+                            (red << 16) | (green << 8) | blue);
                 }
                 catch (NumberFormatException nfe)
                 {

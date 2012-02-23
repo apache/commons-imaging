@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -84,9 +85,8 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         {
             TiffOutputDirectory directory = directories
                     .get(i);
-            int dirType = directory.type;
-            Integer key = new Integer(dirType);
-            directoryTypeMap.put(key, directory);
+            final int dirType = directory.type;
+            directoryTypeMap.put(dirType, directory);
             // Debug.debug("validating dirType", dirType + " ("
             // + directory.getFields().size() + " fields)");
 
@@ -120,11 +120,11 @@ public abstract class TiffImageWriterBase implements TiffConstants,
                 }
             } else
             {
-                if (directoryIndices.contains(key))
+                if (directoryIndices.contains(dirType))
                     throw new ImageWriteException(
                             "More than one directory with index: " + dirType
                                     + ".");
-                directoryIndices.add(new Integer(dirType));
+                directoryIndices.add(dirType);
                 // dirMap.put(arg0, arg1)
             }
 
@@ -134,12 +134,11 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             {
                 TiffOutputField field = (TiffOutputField) fields.get(j);
 
-                Integer fieldKey = new Integer(field.tag);
-                if (fieldTags.contains(fieldKey))
+                if (fieldTags.contains(field.tag))
                     throw new ImageWriteException("Tag ("
                             + field.tagInfo.getDescription()
                             + ") appears twice in directory.");
-                fieldTags.add(fieldKey);
+                fieldTags.add(field.tag);
 
                 if (field.tag == ExifTagConstants.EXIF_TAG_EXIF_OFFSET.tag)
                 {
@@ -187,7 +186,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         }
 
         TiffOutputDirectory rootDirectory = directoryTypeMap
-                .get(new Integer(DIRECTORY_TYPE_ROOT));
+                .get(DIRECTORY_TYPE_ROOT);
 
         // prepare results
         TiffOutputSummary result = new TiffOutputSummary(byteOrder,
@@ -266,6 +265,12 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT))
             params.remove(PARAM_KEY_FORMAT);
+        
+        TiffOutputSet userExif = null;
+        if (params.containsKey(PARAM_KEY_EXIF))
+        {
+            userExif = (TiffOutputSet) params.remove(PARAM_KEY_EXIF);
+        }
         
         String xmpXml = null;
         if (params.containsKey(PARAM_KEY_XMP_XML))
@@ -464,8 +469,31 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         TiffImageData tiffImageData = new TiffImageData.Strips(imageData,
                 rowsPerStrip);
         directory.setTiffImageData(tiffImageData);
+        
+        if (userExif != null) {
+            combineUserExifIntoFinalExif(userExif, outputSet);
+        }
 
         write(os, outputSet);
+    }
+    
+    private void combineUserExifIntoFinalExif(TiffOutputSet userExif, TiffOutputSet outputSet) throws ImageWriteException {
+        List<TiffOutputDirectory> outputDirectories = outputSet.getDirectories();
+        Collections.sort(outputDirectories, TiffOutputDirectory.COMPARATOR);
+        for (TiffOutputDirectory userDirectory : userExif.getDirectories()) {
+            int location = Collections.binarySearch(outputDirectories,
+                    userDirectory, TiffOutputDirectory.COMPARATOR);
+            if (location < 0) {
+                outputSet.addDirectory(userDirectory);
+            } else {
+                TiffOutputDirectory outputDirectory = outputDirectories.get(location);
+                for (TiffOutputField userField : userDirectory.getFields()) {
+                    if (outputDirectory.findField(userField.tagInfo) == null) {
+                        outputDirectory.add(userField);
+                    }
+                }
+            }
+        }
     }
 
     private byte[][] getStrips(BufferedImage src, int samplesPerPixel,
