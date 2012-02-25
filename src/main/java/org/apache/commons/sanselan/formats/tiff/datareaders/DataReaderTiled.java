@@ -16,12 +16,12 @@
  */
 package org.apache.commons.sanselan.formats.tiff.datareaders;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BitInputStream;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -55,7 +55,7 @@ public final class DataReaderTiled extends DataReader
         this.imageData = imageData;
     }
 
-    private void interpretTile(BufferedImage bi, byte bytes[], int startX,
+    private void interpretTile(ImageBuilder imageBuilder, byte bytes[], int startX,
             int startY) throws ImageReadException, IOException
     {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
@@ -76,7 +76,7 @@ public final class DataReaderTiled extends DataReader
             if ((x < width) && (y < height))
             {
                 samples = applyPredictor(samples, x);
-                photometricInterpreter.interpretPixel(bi, samples, x, y);
+                photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
             }
 
             tileX++;
@@ -93,7 +93,7 @@ public final class DataReaderTiled extends DataReader
         }
     }
 
-    public void readImageData(BufferedImage bi) throws ImageReadException,
+    public void readImageData(ImageBuilder imageBuilder) throws ImageReadException,
             IOException
     {
         int bitsPerRow = tileWidth * bitsPerPixel;
@@ -108,7 +108,7 @@ public final class DataReaderTiled extends DataReader
             byte decompressed[] = decompress(compressed, compression,
                     bytesPerTile, tileWidth, tileLength);
 
-            interpretTile(bi, decompressed, x, y);
+            interpretTile(imageBuilder, decompressed, x, y);
 
             x += tileWidth;
             if (x >= width)

@@ -16,11 +16,11 @@
  */
 package org.apache.commons.sanselan.formats.tiff.photometricinterpreters;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.color.ColorConversions;
+import org.apache.commons.sanselan.common.ImageBuilder;
 
 public class PhotometricInterpreterCieLab extends PhotometricInterpreter
 {
@@ -34,7 +34,7 @@ public class PhotometricInterpreterCieLab extends PhotometricInterpreter
     {
     }
 
-    public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
+    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
             throws ImageReadException, IOException
     {
         int cieL = samples[0];
@@ -42,7 +42,7 @@ public class PhotometricInterpreterCieLab extends PhotometricInterpreter
         int cieB = (byte) samples[2];
 
         int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
-        bi.setRGB(x, y, rgb);
+        imageBuilder.setRGB(x, y, rgb);
     }
 
 }

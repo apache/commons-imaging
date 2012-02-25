@@ -16,10 +16,10 @@
  */
 package org.apache.commons.sanselan.formats.tiff.photometricinterpreters;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
+import org.apache.commons.sanselan.common.ImageBuilder;
 
 public abstract class PhotometricInterpreter
 {
@@ -39,7 +39,7 @@ public abstract class PhotometricInterpreter
         this.height = height;
     }
 
-    public abstract void interpretPixel(BufferedImage bi, int samples[], int x,
+    public abstract void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
             int y) throws ImageReadException, IOException;
 
     /**

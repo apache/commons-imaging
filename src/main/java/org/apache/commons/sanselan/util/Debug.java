@@ -905,18 +905,18 @@ public final class Debug
 
     public static final void purgeMemory()
     {
-        try
-        {
-            //            Thread.sleep(50);
-            System.runFinalization();
-            Thread.sleep(50);
-            System.gc();
-            Thread.sleep(50);
-        }
-        catch (Throwable e)
-        {
-            Debug.debug(e);
-        }
+//        try
+//        {
+//            //            Thread.sleep(50);
+//            System.runFinalization();
+//            Thread.sleep(50);
+//            System.gc();
+//            Thread.sleep(50);
+//        }
+//        catch (Throwable e)
+//        {
+//            Debug.debug(e);
+//        }
     }
 
 }

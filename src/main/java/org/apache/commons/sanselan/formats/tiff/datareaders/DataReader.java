@@ -16,7 +16,6 @@
  */
 package org.apache.commons.sanselan.formats.tiff.datareaders;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +23,7 @@ import java.io.InputStream;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BinaryConstants;
 import org.apache.commons.sanselan.common.BitInputStream;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.common.PackBits;
 import org.apache.commons.sanselan.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.sanselan.common.mylzw.MyLzwDecompressor;
@@ -61,7 +61,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
     }
 
     //    public abstract void readImageData(BufferedImage bi, ByteSource byteSource)
-    public abstract void readImageData(BufferedImage bi)
+    public abstract void readImageData(ImageBuilder imageBuilder)
             throws ImageReadException, IOException;
 
     protected int[] getSamplesAsBytes(BitInputStream bis)

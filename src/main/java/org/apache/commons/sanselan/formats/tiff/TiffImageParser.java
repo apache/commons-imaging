@@ -34,6 +34,7 @@ import org.apache.commons.sanselan.ImageParser;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.IImageMetadata;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
@@ -517,8 +518,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                     + bitsPerSample.length + ")");
 
         boolean hasAlpha = false;
-        BufferedImage result = getBufferedImageFactory(params)
-                .getColorBufferedImage(width, height, hasAlpha);
+        ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
 
         PhotometricInterpreter photometricInterpreter = getPhotometricInterpreter(
                 directory, photometricInterpretation, bitsPerPixel,
@@ -530,11 +530,11 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
                 samplesPerPixel, width, height, compression);
 
-        dataReader.readImageData(result);
+        dataReader.readImageData(imageBuilder);
 
         photometricInterpreter.dumpstats();
 
-        return result;
+        return imageBuilder.getBufferedImage();
     }
 
     private PhotometricInterpreter getPhotometricInterpreter(

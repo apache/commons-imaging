@@ -16,12 +16,12 @@
  */
 package org.apache.commons.sanselan.formats.tiff.datareaders;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BitInputStream;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory;
 import org.apache.commons.sanselan.formats.tiff.TiffImageData;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -49,7 +49,7 @@ public final class DataReaderStrips extends DataReader
         this.imageData = imageData;
     }
 
-    private void interpretStrip(BufferedImage bi, byte bytes[],
+    private void interpretStrip(ImageBuilder imageBuilder, byte bytes[],
             int pixels_per_strip) throws ImageReadException, IOException
     {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
@@ -63,7 +63,7 @@ public final class DataReaderStrips extends DataReader
             {
                 samples = applyPredictor(samples, x);
 
-                photometricInterpreter.interpretPixel(bi, samples, x, y);
+                photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
             }
 
             x++;
@@ -80,7 +80,7 @@ public final class DataReaderStrips extends DataReader
 
     private int x = 0, y = 0;
 
-    public void readImageData(BufferedImage bi) throws ImageReadException,
+    public void readImageData(ImageBuilder imageBuilder) throws ImageReadException,
             IOException
     {
         for (int strip = 0; strip < imageData.strips.length; strip++)
@@ -96,7 +96,7 @@ public final class DataReaderStrips extends DataReader
             byte decompressed[] = decompress(compressed, compression,
                     (int)bytesPerStrip, width, (int)rowsInThisStrip);
 
-            interpretStrip(bi, decompressed, (int)pixelsPerStrip);
+            interpretStrip(imageBuilder, decompressed, (int)pixelsPerStrip);
 
         }
     }

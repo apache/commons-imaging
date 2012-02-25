@@ -16,10 +16,10 @@
  */
 package org.apache.commons.sanselan.formats.tiff.photometricinterpreters;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
+import org.apache.commons.sanselan.common.ImageBuilder;
 
 public class PhotometricInterpreterYCbCr extends PhotometricInterpreter
 {
@@ -65,7 +65,7 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter
         return rgb;
     }
 
-    public void interpretPixel(BufferedImage bi, int samples[], int x, int y)
+    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
             throws ImageReadException, IOException
     {
         int Y = samples[0];
@@ -81,7 +81,7 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter
 
         int alpha = 0xff;
         int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-        bi.setRGB(x, y, rgb);
+        imageBuilder.setRGB(x, y, rgb);
 
     }
 }
