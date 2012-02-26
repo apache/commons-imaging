@@ -16,12 +16,12 @@
  */
 package org.apache.commons.sanselan.formats.pnm;
 
-import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.sanselan.ImageFormat;
+import org.apache.commons.sanselan.common.ImageBuilder;
 
 public abstract class FileInfo
 {
@@ -56,15 +56,14 @@ public abstract class FileInfo
         // do nothing by default.
     }
 
-    public void readImage(BufferedImage bi, InputStream is) throws IOException
+    public void readImage(ImageBuilder imageBuilder, InputStream is) throws IOException
     {
         // is = new BufferedInputStream(is);
         // int count = 0;
         //
         // try
         // {
-        DataBuffer buffer = bi.getRaster().getDataBuffer();
-
+        
         if (!RAWBITS)
         {
             WhiteSpaceReader wsr = new WhiteSpaceReader(is);
@@ -75,7 +74,7 @@ public abstract class FileInfo
                 {
                     int rgb = getRGB(wsr);
 
-                    buffer.setElem(y * width + x, rgb);
+                    imageBuilder.setRGB(x, y, rgb);
                     // count++;
                 }
                 newline();
@@ -88,7 +87,7 @@ public abstract class FileInfo
                 for (int x = 0; x < width; x++)
                 {
                     int rgb = getRGB(is);
-                    buffer.setElem(y * width + x, rgb);
+                    imageBuilder.setRGB(x, y, rgb);
                     // count++;
                 }
                 newline();

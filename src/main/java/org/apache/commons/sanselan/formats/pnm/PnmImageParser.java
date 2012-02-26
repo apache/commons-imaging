@@ -34,6 +34,7 @@ import org.apache.commons.sanselan.ImageParser;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.IImageMetadata;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.util.Debug;
 
@@ -275,12 +276,10 @@ public class PnmImageParser extends ImageParser implements PnmConstants
             int height = info.height;
 
             boolean hasAlpha = false;
-            BufferedImage result = getBufferedImageFactory(params)
-                    .getColorBufferedImage(width, height, hasAlpha);
+            ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
+            info.readImage(imageBuilder, is);
 
-            info.readImage(result, is);
-
-            return result;
+            return imageBuilder.getBufferedImage();
         } finally
         {
             try
