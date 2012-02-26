@@ -16,10 +16,10 @@
  */
 package org.apache.commons.sanselan.formats.bmp.pixelparsers;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.formats.bmp.BmpHeaderInfo;
 
 public abstract class PixelParserSimple extends PixelParser
@@ -34,7 +34,7 @@ public abstract class PixelParserSimple extends PixelParser
 
     public abstract void newline() throws ImageReadException, IOException;
 
-    public void processImage(BufferedImage bi) throws ImageReadException,
+    public void processImage(ImageBuilder imageBuilder) throws ImageReadException,
             IOException
     {
 //        DataBuffer db = bi.getRaster().getDataBuffer();
@@ -45,7 +45,7 @@ public abstract class PixelParserSimple extends PixelParser
             {
                 int rgb = getNextRGB();
 
-                bi.setRGB(x, y, rgb);
+                imageBuilder.setRGB(x, y, rgb);
 //                db.setElem(y * bhi.width + x, rgb);
             }
             newline();

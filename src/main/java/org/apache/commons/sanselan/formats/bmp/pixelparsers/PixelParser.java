@@ -16,12 +16,12 @@
  */
 package org.apache.commons.sanselan.formats.bmp.pixelparsers;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.common.BinaryFileParser;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.formats.bmp.BmpHeaderInfo;
 
 public abstract class PixelParser
@@ -43,7 +43,7 @@ public abstract class PixelParser
         is = new ByteArrayInputStream(ImageData);
     }
 
-    public abstract void processImage(BufferedImage bi)
+    public abstract void processImage(ImageBuilder imageBuilder)
             throws ImageReadException, IOException;
 
     protected int getColorTableRGB(int index)

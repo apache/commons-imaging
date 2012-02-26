@@ -37,6 +37,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.common.IImageMetadata;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.bmp.pixelparsers.PixelParser;
 import org.apache.commons.sanselan.formats.bmp.pixelparsers.PixelParserBitFields;
@@ -713,9 +714,6 @@ public class BmpImageParser extends ImageParser
         int width = bhi.width;
         int height = bhi.height;
 
-        BufferedImage result = getBufferedImageFactory(params)
-                .getColorBufferedImage(width, height, true);
-
         if (verbose)
         {
             System.out.println("width: " + width);
@@ -725,10 +723,10 @@ public class BmpImageParser extends ImageParser
         }
 
         PixelParser pixelParser = ic.pixelParser;
+        ImageBuilder imageBuilder = new ImageBuilder(width, height, true);
+        pixelParser.processImage(imageBuilder);
 
-        pixelParser.processImage(result);
-
-        return result;
+        return imageBuilder.getBufferedImage();
 
     }
 

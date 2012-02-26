@@ -21,6 +21,7 @@ import java.awt.image.DataBuffer;
 import java.io.IOException;
 
 import org.apache.commons.sanselan.ImageReadException;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.formats.bmp.BmpHeaderInfo;
 
 public class PixelParserRle extends PixelParser
@@ -70,7 +71,7 @@ public class PixelParserRle extends PixelParser
     }
 
     private int processByteOfData(int rgbs[], int repeat, int x, int y,
-            int width, int height, DataBuffer db, BufferedImage bi)
+            int width, int height, ImageBuilder imageBuilder)
     {
         //                int rbg
         int pixels_written = 0;
@@ -83,7 +84,7 @@ public class PixelParserRle extends PixelParser
                 //                    rgb = getNextRGB();
                 int rgb = rgbs[i % rgbs.length];
                 //                                bi.setRGB(x, y, rgb);
-                db.setElem(y * bhi.width + x, rgb);
+                imageBuilder.setRGB(x, y, rgb);
                 //                                bi.setRGB(x, y, 0xff00ff00);
             }
             else
@@ -98,11 +99,9 @@ public class PixelParserRle extends PixelParser
         return pixels_written;
     }
 
-    public void processImage(BufferedImage bi) throws ImageReadException,
+    public void processImage(ImageBuilder imageBuilder) throws ImageReadException,
             IOException
     {
-        DataBuffer db = bi.getRaster().getDataBuffer();
-
         int count = 0;
         int width = bhi.width;
         int height = bhi.height;
@@ -183,7 +182,7 @@ public class PixelParserRle extends PixelParser
                             //                                    + SamplesPerByte);
                             //                            System.out.println("towrite: " + towrite);
                             int written = processByteOfData(samples, towrite,
-                                    x, y, width, height, db, bi);
+                                    x, y, width, height, imageBuilder);
                             //                            System.out.println("written: " + written);
                             //                            System.out.println("");
                             x += written;
@@ -198,7 +197,7 @@ public class PixelParserRle extends PixelParser
             {
                 int rgbs[] = convertDataToSamples(b);
 
-                x += processByteOfData(rgbs, a, x, y, width, height, db, bi);
+                x += processByteOfData(rgbs, a, x, y, width, height, imageBuilder);
                 //                    x += processByteOfData(b, a, x, y, width, height, bi);
 
             }
