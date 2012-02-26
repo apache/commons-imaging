@@ -64,10 +64,15 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
     public abstract void readImageData(ImageBuilder imageBuilder)
             throws ImageReadException, IOException;
 
-    protected int[] getSamplesAsBytes(BitInputStream bis)
+    /**
+     * Reads samples and returns them in an int array.
+     * @param bis the stream to read from
+     * @param result the samples array to populate, must be the same length as bitsPerSample.length
+     * @throws IOException
+     */
+    protected void getSamplesAsBytes(BitInputStream bis, int[] result)
             throws IOException
     {
-        int result[] = new int[bitsPerSample.length];
         for (int i = 0; i < bitsPerSample.length; i++)
         {
             int bits = bitsPerSample[i];
@@ -85,8 +90,6 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             }
             result[i] = sample;
         }
-
-        return result;
     }
 
     protected int[] applyPredictor(int samples[], int x)

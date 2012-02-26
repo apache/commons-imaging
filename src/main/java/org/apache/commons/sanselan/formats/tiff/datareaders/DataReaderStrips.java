@@ -55,11 +55,15 @@ public final class DataReaderStrips extends DataReader
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         BitInputStream bis = new BitInputStream(bais);
 
+        if (y >= height) {
+            return;
+        }
+        int[] samples = new int[bitsPerSample.length];
         for (int i = 0; i < pixels_per_strip; i++)
         {
-            int samples[] = getSamplesAsBytes(bis);
+            getSamplesAsBytes(bis, samples);
 
-            if ((x < width) && (y < height))
+            if (x < width)
             {
                 samples = applyPredictor(samples, x);
 

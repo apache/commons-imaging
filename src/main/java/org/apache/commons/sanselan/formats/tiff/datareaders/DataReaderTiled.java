@@ -65,13 +65,14 @@ public final class DataReaderTiled extends DataReader
 
         int tileX = 0, tileY = 0;
 
+        int[] samples = new int[bitsPerSample.length];
         for (int i = 0; i < pixelsPerTile; i++)
         {
 
             int x = tileX + startX;
             int y = tileY + startY;
 
-            int samples[] = getSamplesAsBytes(bis);
+            getSamplesAsBytes(bis, samples);
 
             if ((x < width) && (y < height))
             {
