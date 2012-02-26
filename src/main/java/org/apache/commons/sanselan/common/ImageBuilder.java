@@ -20,6 +20,19 @@ public class ImageBuilder {
         this.hasAlpha = hasAlpha;
     }
     
+    public int getWidth() {
+        return width;
+    }
+    
+    public int getHeight() {
+        return height;
+    }
+    
+    public int getRGB(int x, int y) {
+        final int rowOffset = y * width;
+        return data[rowOffset + x];
+    }
+
     public void setRGB(int x, int y, int argb) {
         final int rowOffset = y * width;
         data[rowOffset + x] = argb;
