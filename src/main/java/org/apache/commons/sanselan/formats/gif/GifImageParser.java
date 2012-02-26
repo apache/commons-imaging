@@ -39,6 +39,7 @@ import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.common.IImageMetadata;
+import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.common.mylzw.MyLzwCompressor;
 import org.apache.commons.sanselan.common.mylzw.MyLzwDecompressor;
@@ -732,8 +733,7 @@ public class GifImageParser extends ImageParser
         if (gce != null && gce.transparency)
             hasAlpha = true;
 
-        BufferedImage result = getBufferedImageFactory(params)
-                .getColorBufferedImage(width, height, hasAlpha);
+        ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
 
         {
             int colorTable[];
@@ -754,8 +754,6 @@ public class GifImageParser extends ImageParser
             int rowsInPass2 = (height + 3) / 8;
             int rowsInPass3 = (height + 1) / 4;
             int rowsInPass4 = (height) / 2;
-
-            DataBuffer db = result.getRaster().getDataBuffer();
 
             for (int row = 0; row < height; row++)
             {
@@ -797,13 +795,13 @@ public class GifImageParser extends ImageParser
                     if (transparentIndex == index)
                         rgb = 0x00;
 
-                    db.setElem(y * width + x, rgb);
+                    imageBuilder.setRGB(x, y, rgb);
                 }
 
             }
         }
 
-        return result;
+        return imageBuilder.getBufferedImage();
 
     }
 
