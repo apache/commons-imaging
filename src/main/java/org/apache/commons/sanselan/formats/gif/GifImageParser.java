@@ -284,7 +284,7 @@ public class GifImageParser extends ImageParser
                     if (formatCompliance != null)
                         formatCompliance
                                 .addComment("Unknown Application Extension ("
-                                        + new String(label) + ")", completeCode);
+                                        + new String(label, "US-ASCII") + ")", completeCode);
 
                     // if (label == new String("ICCRGBG1"))
                     {
@@ -565,7 +565,7 @@ public class GifImageParser extends ImageParser
             if (block.blockCode == code)
             {
                 byte bytes[] = ((GenericGifBlock) block).appendSubBlocks();
-                result.add(new String(bytes));
+                result.add(new String(bytes, "US-ASCII"));
             }
         }
 

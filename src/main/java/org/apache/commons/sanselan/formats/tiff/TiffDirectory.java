@@ -347,7 +347,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         return tag.getValue(field);
     }
     
-    public final class ImageDataElement extends TiffElement
+    public static final class ImageDataElement extends TiffElement
     {
         public ImageDataElement(int offset, int length)
         {

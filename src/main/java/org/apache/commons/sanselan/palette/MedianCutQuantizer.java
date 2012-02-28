@@ -445,7 +445,7 @@ public class MedianCutQuantizer
 
         }
     }
-    private class ColorGroupCut
+    private static class ColorGroupCut
     {
         public final ColorGroup less, more;
         public final int mode, limit;
@@ -486,7 +486,7 @@ public class MedianCutQuantizer
 
     }
 
-    public class MedianCutPalette extends SimplePalette
+    public static class MedianCutPalette extends SimplePalette
     {
         private final ColorGroup root;
 

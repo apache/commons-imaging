@@ -40,10 +40,10 @@ public class PbmWriter extends PnmWriter implements PnmConstants
         int width = src.getWidth();
         int height = src.getHeight();
 
-        os.write(("" + width).getBytes());
+        os.write(("" + width).getBytes("US-ASCII"));
         os.write(PNM_SEPARATOR);
 
-        os.write(("" + height).getBytes());
+        os.write(("" + height).getBytes("US-ASCII"));
         os.write(PNM_NEWLINE);
 
         int bitcache = 0;
@@ -76,7 +76,7 @@ public class PbmWriter extends PnmWriter implements PnmConstants
                     }
                 } else
                 {
-                    os.write(("" + sample).getBytes()); // max component value
+                    os.write(("" + sample).getBytes("US-ASCII")); // max component value
                     os.write(PNM_SEPARATOR);
                 }
             }

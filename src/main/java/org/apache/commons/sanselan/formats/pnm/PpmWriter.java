@@ -42,13 +42,13 @@ public class PpmWriter extends PnmWriter implements PnmConstants
         int width = src.getWidth();
         int height = src.getHeight();
 
-        os.write(("" + width).getBytes());
+        os.write(("" + width).getBytes("US-ASCII"));
         os.write(PNM_SEPARATOR);
 
-        os.write(("" + height).getBytes());
+        os.write(("" + height).getBytes("US-ASCII"));
         os.write(PNM_SEPARATOR);
 
-        os.write(("" + 255).getBytes()); // max component value
+        os.write(("" + 255).getBytes("US-ASCII")); // max component value
         os.write(PNM_NEWLINE);
 
         for (int y = 0; y < height; y++)
@@ -67,11 +67,11 @@ public class PpmWriter extends PnmWriter implements PnmConstants
                 }
                 else
                 {
-                    os.write(("" + red).getBytes()); // max component value
+                    os.write(("" + red).getBytes("US-ASCII")); // max component value
                     os.write(PNM_SEPARATOR);
-                    os.write(("" + green).getBytes()); // max component value
+                    os.write(("" + green).getBytes("US-ASCII")); // max component value
                     os.write(PNM_SEPARATOR);
-                    os.write(("" + blue).getBytes()); // max component value
+                    os.write(("" + blue).getBytes("US-ASCII")); // max component value
                     os.write(PNM_SEPARATOR);
                 }
             }
