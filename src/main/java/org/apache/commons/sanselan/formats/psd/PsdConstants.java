@@ -20,7 +20,7 @@ import org.apache.commons.sanselan.util.Debug;
 
 public class PsdConstants
 {
-    public static final ImageResourceType fImageResourceTypes[];
+    static final ImageResourceType fImageResourceTypes[];
 
     public String getDescription(int id)
     {

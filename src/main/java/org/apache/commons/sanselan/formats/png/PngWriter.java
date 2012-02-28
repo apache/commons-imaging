@@ -144,7 +144,7 @@ public class PngWriter implements PngConstants
 
         // Debug.debug("baos", baos.toByteArray());
 
-        writeChunk(os, IHDR_CHUNK_TYPE, baos.toByteArray());
+        writeChunk(os, IHDR_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunkiTXt(OutputStream os, PngText.iTXt text)
@@ -177,7 +177,7 @@ public class PngWriter implements PngConstants
 
         baos.write(new ZLibUtils().deflate(text.text.getBytes("utf-8")));
 
-        writeChunk(os, iTXt_CHUNK_TYPE, baos.toByteArray());
+        writeChunk(os, iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunkzTXt(OutputStream os, PngText.zTXt text)
@@ -204,7 +204,7 @@ public class PngWriter implements PngConstants
                 .write(new ZLibUtils().deflate(text.text
                         .getBytes("ISO-8859-1")));
 
-        writeChunk(os, zTXt_CHUNK_TYPE, baos.toByteArray());
+        writeChunk(os, zTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunktEXt(OutputStream os, PngText.tEXt text)
@@ -226,7 +226,7 @@ public class PngWriter implements PngConstants
         // text
         baos.write(text.text.getBytes("ISO-8859-1"));
 
-        writeChunk(os, tEXt_CHUNK_TYPE, baos.toByteArray());
+        writeChunk(os, tEXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunkXmpiTXt(OutputStream os, String xmpXml)
@@ -250,7 +250,7 @@ public class PngWriter implements PngConstants
 
         baos.write(new ZLibUtils().deflate(xmpXml.getBytes("utf-8")));
 
-        writeChunk(os, iTXt_CHUNK_TYPE, baos.toByteArray());
+        writeChunk(os, iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunkPLTE(OutputStream os, Palette palette)
@@ -270,18 +270,18 @@ public class PngWriter implements PngConstants
             bytes[index + 2] = (byte) (0xff & (rgb >> 0));
         }
 
-        writeChunk(os, PLTE_CHUNK_TYPE, bytes);
+        writeChunk(os, PLTE_CHUNK_TYPE.toByteArray(), bytes);
     }
 
     private void writeChunkIEND(OutputStream os) throws IOException
     {
-        writeChunk(os, IEND_CHUNK_TYPE, null);
+        writeChunk(os, IEND_CHUNK_TYPE.toByteArray(), null);
     }
 
     private void writeChunkIDAT(OutputStream os, byte bytes[])
             throws IOException
     {
-        writeChunk(os, IDAT_CHUNK_TYPE, bytes);
+        writeChunk(os, IDAT_CHUNK_TYPE.toByteArray(), bytes);
     }
 
     private byte getColourType(boolean hasAlpha, boolean isGrayscale)
@@ -440,7 +440,7 @@ public class PngWriter implements PngConstants
             Debug.debug("sample_depth", sampleDepth);
 
         {
-            os.write(PNG_Signature);
+            PNG_Signature.writeTo(os);
         }
         {
             // IHDR must be first
