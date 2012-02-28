@@ -344,33 +344,43 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants
             //            if (debug)
             //                Debug.debug("length: " + length);
 
-            InputStream is = byteSource.getInputStream();
+            InputStream is = null;
+            try {
+                is = byteSource.getInputStream();
 
-            int ProfileSize = read4Bytes("ProfileSize", is,
-                    "Not a Valid ICC Profile");
+                int ProfileSize = read4Bytes("ProfileSize", is,
+                        "Not a Valid ICC Profile");
+    
+                //            if (length != ProfileSize)
+                //                return null;
+    
+                this.skipBytes(is, 4 * 5);
+    
+                skipBytes(is, 12, "Not a Valid ICC Profile");
+    
+                this.skipBytes(is, 4 * 3);
+    
+                int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
+                        "Not a Valid ICC Profile");
+                if (debug)
+                    printCharQuad("DeviceManufacturer", DeviceManufacturer);
+    
+                int DeviceModel = read4Bytes("DeviceModel", is,
+                        "Not a Valid ICC Profile");
+                if (debug)
+                    printCharQuad("DeviceModel", DeviceModel);
+                
+                boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
 
-            //            if (length != ProfileSize)
-            //                return null;
-
-            this.skipBytes(is, 4 * 5);
-
-            skipBytes(is, 12, "Not a Valid ICC Profile");
-
-            this.skipBytes(is, 4 * 3);
-
-            int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
-                    "Not a Valid ICC Profile");
-            if (debug)
-                printCharQuad("DeviceManufacturer", DeviceManufacturer);
-
-            int DeviceModel = read4Bytes("DeviceModel", is,
-                    "Not a Valid ICC Profile");
-            if (debug)
-                printCharQuad("DeviceModel", DeviceModel);
-
-            boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
-
-            return result;
+                return result;
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException ignore) {
+                    }
+                }
+            }
         }
         catch (Exception e)
         {

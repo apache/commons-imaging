@@ -593,8 +593,19 @@ public class BmpImageParser extends ImageParser
             throw new ImageReadException("Unknown parameter: " + firstKey);
         }
 
-        ImageContents ic = readImageContents(byteSource.getInputStream(),
-                FormatCompliance.getDefault(), verbose);
+        InputStream is = null;
+        ImageContents ic = null;
+        try {
+            is = byteSource.getInputStream();
+            ic = readImageContents(is, FormatCompliance.getDefault(), verbose);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ignore) {
+                }
+            }
+        }
 
         if (ic == null)
             throw new ImageReadException("Couldn't read BMP Data");
@@ -671,7 +682,18 @@ public class BmpImageParser extends ImageParser
         FormatCompliance result = new FormatCompliance(byteSource
                 .getDescription());
 
-        readImageContents(byteSource.getInputStream(), result, verbose);
+        InputStream is = null;
+        try {
+            is = byteSource.getInputStream();
+            readImageContents(is, result, verbose);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ignore) {
+                }
+            }
+        }
 
         return result;
     }
@@ -679,7 +701,18 @@ public class BmpImageParser extends ImageParser
     public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
-        return getBufferedImage(byteSource.getInputStream(), params);
+        InputStream is = null;
+        try {
+            is = byteSource.getInputStream();
+            return getBufferedImage(is, params);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ignore) {
+                }
+            }
+        }
     }
 
     public BufferedImage getBufferedImage(InputStream inputStream, Map params)

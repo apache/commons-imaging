@@ -32,10 +32,19 @@ public abstract class ByteSource extends BinaryFileFunctions
 
     public final InputStream getInputStream(int start) throws IOException
     {
-        InputStream is = getInputStream();
-
-        skipBytes(is, start);
-
+        InputStream is = null;
+        boolean succeeded = false;
+        try {
+            is = getInputStream();
+            skipBytes(is, start);
+            succeeded = true;
+        } finally {
+            if (!succeeded) {
+                if (is != null) {
+                    is.close();
+                }
+            }
+        }
         return is;
     }
 

@@ -82,13 +82,23 @@ public class ByteSourceDataTest extends ByteSourceTest
 
         // test cache during interrupted read cache by reading only first N bytes.
         {
-            InputStream is = byteSource.getInputStream();
-            byte prefix[] = new byte[256];
-            int read = is.read(prefix);
-
-            assertTrue(read <= src.length);
-            for (int i = 0; i < read; i++)
-                assertTrue(src[i] == prefix[i]);
+            InputStream is = null;
+            try {
+                is = byteSource.getInputStream();
+                byte prefix[] = new byte[256];
+                int read = is.read(prefix);
+    
+                assertTrue(read <= src.length);
+                for (int i = 0; i < read; i++)
+                    assertTrue(src[i] == prefix[i]);
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException ignore) {
+                    }
+                }
+            }
         }
 
         // test cache by completely reading InputStream N times.
@@ -112,12 +122,22 @@ public class ByteSourceDataTest extends ByteSourceTest
 
             int start = src.length / 2;
 
-            InputStream is = byteSource.getInputStream(start);
-            byte dst[] = IoUtils.getInputStreamBytes(is);
+            InputStream is = null;
+            try {
+                is = byteSource.getInputStream(start);
+                byte dst[] = IoUtils.getInputStreamBytes(is);
 
-            assertTrue(src.length == dst.length + start);
-            for (int i = 0; i < dst.length; i++)
-                assertTrue(dst[i] == src[i + start]);
+                assertTrue(src.length == dst.length + start);
+                for (int i = 0; i < dst.length; i++)
+                    assertTrue(dst[i] == src[i + start]);
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException ignored) {
+                    }
+                }
+            }
         }
 
     }

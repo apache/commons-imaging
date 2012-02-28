@@ -300,52 +300,63 @@ public class PsdImageParser extends ImageParser
     private InputStream getInputStream(ByteSource byteSource, int section)
             throws ImageReadException, IOException
     {
-        InputStream is = byteSource.getInputStream();
+        InputStream is = null;
+        boolean notFound = false;
+        try {
+            is = byteSource.getInputStream();
 
-        if (section == PSD_SECTION_HEADER)
-            return is;
-
-        skipBytes(is, PSD_HEADER_LENGTH);
-        // is.skip(kHeaderLength);
-
-        int ColorModeDataLength = read4Bytes("ColorModeDataLength", is,
-                "Not a Valid PSD File");
-
-        if (section == PSD_SECTION_COLOR_MODE)
-            return is;
-
-        skipBytes(is, ColorModeDataLength);
-        // byte ColorModeData[] = readByteArray("ColorModeData",
-        // ColorModeDataLength, is, "Not a Valid PSD File");
-
-        int ImageResourcesLength = read4Bytes("ImageResourcesLength", is,
-                "Not a Valid PSD File");
-
-        if (section == PSD_SECTION_IMAGE_RESOURCES)
-            return is;
-
-        skipBytes(is, ImageResourcesLength);
-        // byte ImageResources[] = readByteArray("ImageResources",
-        // ImageResourcesLength, is, "Not a Valid PSD File");
-
-        int LayerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is,
-                "Not a Valid PSD File");
-
-        if (section == PSD_SECTION_LAYER_AND_MASK_DATA)
-            return is;
-
-        skipBytes(is, LayerAndMaskDataLength);
-        // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
-        // LayerAndMaskDataLength, is, "Not a Valid PSD File");
-
-        int Compression = read2Bytes("Compression", is, "Not a Valid PSD File");
-
-        // byte ImageData[] = readByteArray("ImageData",
-        // LayerAndMaskDataLength, is, "Not a Valid PSD File");
-
-        if (section == PSD_SECTION_IMAGE_DATA)
-            return is;
-
+            if (section == PSD_SECTION_HEADER)
+                return is;
+    
+            skipBytes(is, PSD_HEADER_LENGTH);
+            // is.skip(kHeaderLength);
+    
+            int ColorModeDataLength = read4Bytes("ColorModeDataLength", is,
+                    "Not a Valid PSD File");
+    
+            if (section == PSD_SECTION_COLOR_MODE)
+                return is;
+    
+            skipBytes(is, ColorModeDataLength);
+            // byte ColorModeData[] = readByteArray("ColorModeData",
+            // ColorModeDataLength, is, "Not a Valid PSD File");
+    
+            int ImageResourcesLength = read4Bytes("ImageResourcesLength", is,
+                    "Not a Valid PSD File");
+    
+            if (section == PSD_SECTION_IMAGE_RESOURCES)
+                return is;
+    
+            skipBytes(is, ImageResourcesLength);
+            // byte ImageResources[] = readByteArray("ImageResources",
+            // ImageResourcesLength, is, "Not a Valid PSD File");
+    
+            int LayerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is,
+                    "Not a Valid PSD File");
+    
+            if (section == PSD_SECTION_LAYER_AND_MASK_DATA)
+                return is;
+    
+            skipBytes(is, LayerAndMaskDataLength);
+            // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
+            // LayerAndMaskDataLength, is, "Not a Valid PSD File");
+    
+            int Compression = read2Bytes("Compression", is, "Not a Valid PSD File");
+    
+            // byte ImageData[] = readByteArray("ImageData",
+            // LayerAndMaskDataLength, is, "Not a Valid PSD File");
+    
+            if (section == PSD_SECTION_IMAGE_DATA)
+                return is;
+            notFound = true;
+        } finally {
+            if (notFound && is != null) {
+                try {
+                    is.close();
+                } catch (IOException ignore) {
+                }
+            }
+        }
         throw new ImageReadException("getInputStream: Unknown Section: "
                 + section);
     }

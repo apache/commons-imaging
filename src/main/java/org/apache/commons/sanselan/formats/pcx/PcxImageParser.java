@@ -372,8 +372,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants
         {
             stream = byteSource.getInputStream();
             long toSkip = byteSource.getLength() - 769;
-            while (toSkip > 0)
-                toSkip -= stream.skip(toSkip);
+            skipBytes(stream, (int)toSkip);
             return read256ColorPalette(stream);
         }
         finally
