@@ -209,10 +209,11 @@ limitations under the License.
 
   <!-- XPM Format -->
   <tr>
-    <td>XPM</td><td>mostly</td><td>yes</td>
+    <td>XPM</td><td>yes</td><td>yes</td>
     <td>
         Only XPM version 3 is currently supported, but the other versions are obsolete.
-        Reads XPM files, except those with colors given by rgb.txt name. Writing only writes color data.
+        Reads all color formats, including those using symbolic names from rgb.txt.
+        Writing only writes color data.
     </td>
     <td>
        <a href="http://en.wikipedia.org/wiki/X_PixMap">wikipedia</a>

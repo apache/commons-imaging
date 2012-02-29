@@ -68,7 +68,7 @@ public class XpmImageParser extends ImageParser
         try
         {
             InputStream rgbTxtStream = XpmImageParser.class.getResourceAsStream(
-                    "/rgb.txt");
+                    "rgb.txt");
             if (rgbTxtStream == null) {
                 return false;
             }
@@ -82,9 +82,9 @@ public class XpmImageParser extends ImageParser
                     continue;
                 try
                 {
-                    int red = Integer.parseInt(line.substring(0, 3));
-                    int green = Integer.parseInt(line.substring(4, 7));
-                    int blue = Integer.parseInt(line.substring(8, 11));
+                    int red = Integer.parseInt(line.substring(0, 3).trim());
+                    int green = Integer.parseInt(line.substring(4, 7).trim());
+                    int blue = Integer.parseInt(line.substring(8, 11).trim());
                     String colorName = line.substring(11).trim();
                     colors.put(colorName, 0xff000000 |
                             (red << 16) | (green << 8) | blue);
@@ -476,6 +476,8 @@ public class XpmImageParser extends ImageParser
                         else if (key.equals("s"))
                         {
                             paletteEntry.symbolicName = color;
+                            paletteEntry.colorArgb = parseColor(color);
+                            paletteEntry.haveColor = true;
                         }
                         else if (key.equals("c"))
                         {
@@ -517,6 +519,8 @@ public class XpmImageParser extends ImageParser
                 else if (key.equals("s"))
                 {
                     paletteEntry.symbolicName = color;
+                    paletteEntry.colorArgb = parseColor(color);
+                    paletteEntry.haveColor = true;
                 }
                 else if (key.equals("c"))
                 {
