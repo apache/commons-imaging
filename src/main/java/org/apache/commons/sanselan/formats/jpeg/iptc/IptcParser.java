@@ -53,7 +53,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
         if (index + CONST_8BIM.size() > segmentData.length)
             return false;
 
-        if (!CONST_8BIM.equals(Arrays.copyOfRange(segmentData, index, index + CONST_8BIM.size())))
+        if (!CONST_8BIM.equals(segmentData, index, CONST_8BIM.size()))
             return false;
 
         return true;

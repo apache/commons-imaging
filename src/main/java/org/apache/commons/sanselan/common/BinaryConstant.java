@@ -48,6 +48,18 @@ public class BinaryConstant implements Cloneable {
         return Arrays.equals(value, bytes);
     }
     
+    public boolean equals(byte[] bytes, int offset, int length) {
+        if (value.length != length) {
+            return false;
+        }
+        for (int i = 0; i < length; i++) {
+            if (value[i] != bytes[offset + i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     @Override
     public int hashCode() {
         return Arrays.hashCode(value);
