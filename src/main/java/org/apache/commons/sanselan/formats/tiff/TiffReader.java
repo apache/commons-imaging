@@ -478,18 +478,9 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
         {
             TiffField rowsPerStripField = directory
                     .findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
-            int rowsPerStrip ; 
-
-            if (null != rowsPerStripField) {
-                rowsPerStrip = rowsPerStripField.getIntValue();
-            } else {
-                TiffField imageHeight = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
-                /**
-                 * if rows per strip not present then rowsPerStrip 
-                 * is equal to imageLength or an infinity value;
-                 */
-                rowsPerStrip = imageHeight.getIntValue();           
-            }
+            if (null == rowsPerStripField)
+                throw new ImageReadException("Can't find rows per strip field.");
+            int rowsPerStrip = rowsPerStripField.getIntValue();
 
             return new TiffImageData.Strips(data, rowsPerStrip);
         } else
