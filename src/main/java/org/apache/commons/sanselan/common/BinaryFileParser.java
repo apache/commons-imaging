@@ -57,7 +57,7 @@ public class BinaryFileParser extends BinaryFileFunctions
         this.byteOrder = byteOrder;
     }
 
-    protected int getByteOrder()
+    public int getByteOrder()
     {
         return byteOrder;
     }

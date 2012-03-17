@@ -123,4 +123,12 @@ public interface SanselanConstants
      * Valid values: PixelDensity
      */
     public static final String PARAM_KEY_PIXEL_DENSITY = "PIXEL_DENSITY";
+    
+    /**
+     * Parameter key. Used in Tiff operations to use the byte order
+     * of the Tiff image.
+     * <p>
+     * Valid values: any Integer
+     */
+    public static final String BYTE_ORDER = "BYTE_ORDER";
 }

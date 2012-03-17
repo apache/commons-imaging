@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -441,9 +442,14 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             throws ImageReadException, IOException
     {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        TiffContents contents = new TiffReader(isStrict(params))
-                .readFirstDirectory(byteSource, params, true, formatCompliance);
+        TiffReader reader = new TiffReader(isStrict(params));
+        int byteOrder = reader.getByteOrder();
+        TiffContents contents = reader.readFirstDirectory(byteSource, params, true, formatCompliance);
         TiffDirectory directory = contents.directories.get(0);
+        if(params == null) {
+            params = new HashMap<String, Integer>();
+        }
+        params.put(BYTE_ORDER, byteOrder);
         BufferedImage result = directory.getTiffImage(params);
         if (null == result)
             throw new ImageReadException("TIFF does not contain an image.");
@@ -472,7 +478,17 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             throws ImageReadException, IOException
     {
         List<TiffField> entries = directory.entries;
-
+        
+        int byteOrder = BYTE_ORDER_LITTLE_ENDIAN; //taking little endian to be default
+        if(params != null){
+            if(params.containsKey(BYTE_ORDER)) {
+                Object obj = params.get(BYTE_ORDER);
+                if(obj instanceof Integer) {
+                    Integer a = (Integer)obj;
+                    byteOrder = a.intValue();
+                }
+            }
+        }
         if (entries == null)
             throw new ImageReadException("TIFF missing entries");
 
@@ -528,7 +544,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
         DataReader dataReader = imageData.getDataReader(directory,
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
-                samplesPerPixel, width, height, compression);
+                samplesPerPixel, width, height, compression, byteOrder);
 
         dataReader.readImageData(imageBuilder);
 

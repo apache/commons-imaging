@@ -21,13 +21,14 @@ import java.io.InputStream;
 
 public class BitInputStream extends InputStream implements BinaryConstants
 {
-    // TODO should be byte order conscious, ie TIFF for reading
-    // samples size<8 - shuoldn't that effect their order within byte?
+    
     private final InputStream is;
+    private final int byteOrder;
 
-    public BitInputStream(InputStream is)
+    public BitInputStream(InputStream is, int byteOrder)
     {
         this.is = is;
+        this.byteOrder = byteOrder;
         //            super(is);
     }
 
@@ -88,25 +89,53 @@ public class BitInputStream extends InputStream implements BinaryConstants
             bytes_read++;
             return is.read();
         }
+        
+        /**
+         * Taking default order of the Tiff to be 
+         * Little Endian and reversing the bytes in the end
+         * if its Big Endian.This is done because majority (may be all)
+         * of the files will be of Little Endian.
+         */
+        if(byteOrder == BYTE_ORDER_BIG_ENDIAN) {
+            if (count == 16)
+            {
+                bytes_read += 2;
+                return (is.read() << 8) | (is.read() << 0);
+            }
 
-        if (count == 16)
-        {
-            bytes_read += 2;
-            return (is.read() << 8) | (is.read() << 0);
-        }
+            if (count == 24)
+            {
+                bytes_read += 3;
+                return (is.read() << 16) | (is.read() << 8) | (is.read() << 0);
+            }
 
-        if (count == 24)
+            if (count == 32)
+            {
+                bytes_read += 4;
+                return (is.read() << 24) | (is.read() << 16) | (is.read() << 8)
+                        | (is.read() << 0);
+            }
+        } 
+        else 
         {
-            bytes_read += 3;
-            return (is.read() << 16) | (is.read() << 8) | (is.read() << 0);
-        }
-
-        if (count == 32)
-        {
-            bytes_read += 4;
-            return (is.read() << 24) | (is.read() << 16) | (is.read() << 8)
-                    | (is.read() << 0);
-        }
+            if(count == 16) 
+            {
+                bytes_read +=2;
+                return ((is.read() << 0) | (is.read() << 8));
+            }
+            
+            if(count == 24)
+            {
+                bytes_read += 3;
+                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16));
+            }
+            
+            if(count == 32) 
+            {
+                bytes_read += 4;
+                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16) | (is.read() << 24));
+            }
+         }
 
         throw new IOException("BitInputStream: unknown error");
     }

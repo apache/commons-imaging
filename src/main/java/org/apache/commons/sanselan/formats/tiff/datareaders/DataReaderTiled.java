@@ -35,6 +35,7 @@ public final class DataReaderTiled extends DataReader
     private final int bitsPerPixel;
 
     private final int compression;
+    private final int byteOrder;
 
     private final TiffImageData.Tiles imageData;
 
@@ -42,7 +43,7 @@ public final class DataReaderTiled extends DataReader
             PhotometricInterpreter photometricInterpreter,
             int tileWidth, int tileLength, int bitsPerPixel,
             int bitsPerSample[], int predictor, int samplesPerPixel, int width,
-            int height, int compression, TiffImageData.Tiles imageData)
+            int height, int compression, int byteOrder, TiffImageData.Tiles imageData)
     {
         super(directory, photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
 
@@ -53,13 +54,14 @@ public final class DataReaderTiled extends DataReader
         this.compression = compression;
 
         this.imageData = imageData;
+        this.byteOrder = byteOrder;
     }
 
     private void interpretTile(ImageBuilder imageBuilder, byte bytes[], int startX,
             int startY) throws ImageReadException, IOException
     {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        BitInputStream bis = new BitInputStream(bais);
+        BitInputStream bis = new BitInputStream(bais, byteOrder);
 
         int pixelsPerTile = tileWidth * tileLength;
 

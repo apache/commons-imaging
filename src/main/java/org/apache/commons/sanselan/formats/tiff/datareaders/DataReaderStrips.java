@@ -32,6 +32,7 @@ public final class DataReaderStrips extends DataReader
     private final int bitsPerPixel;
     private final int compression;
     private final int rowsPerStrip;
+    private final int byteOrder;
 
     private final TiffImageData.Strips imageData;
 
@@ -39,7 +40,7 @@ public final class DataReaderStrips extends DataReader
             PhotometricInterpreter photometricInterpreter,
             int bitsPerPixel, int bitsPerSample[], int predictor,
             int samplesPerPixel, int width, int height, int compression,
-            int rowsPerStrip, TiffImageData.Strips imageData)
+            int byteOrder, int rowsPerStrip, TiffImageData.Strips imageData)
     {
         super(directory, photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
 
@@ -47,13 +48,14 @@ public final class DataReaderStrips extends DataReader
         this.compression = compression;
         this.rowsPerStrip = rowsPerStrip;
         this.imageData = imageData;
+        this.byteOrder = byteOrder;
     }
 
     private void interpretStrip(ImageBuilder imageBuilder, byte bytes[],
             int pixels_per_strip) throws ImageReadException, IOException
     {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        BitInputStream bis = new BitInputStream(bais);
+        BitInputStream bis = new BitInputStream(bais, byteOrder);
 
         if (y >= height) {
             return;
