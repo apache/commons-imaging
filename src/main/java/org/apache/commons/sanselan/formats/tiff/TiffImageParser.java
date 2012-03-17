@@ -130,7 +130,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             throws ImageReadException, IOException
     {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        TiffContents contents = new TiffReader(isStrict(params)).readContents(
+        TiffReader tiffReader = new TiffReader(isStrict(params));
+        TiffContents contents = tiffReader.readContents(
                 byteSource, params, formatCompliance);
 
         List<TiffDirectory> directories = contents.directories;
@@ -141,7 +142,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         {
             TiffDirectory dir = directories.get(i);
 
-            TiffImageMetadata.Directory metadataDirectory = new TiffImageMetadata.Directory(dir);
+            TiffImageMetadata.Directory metadataDirectory = new TiffImageMetadata.Directory(tiffReader.getByteOrder(), dir);
 
             List<TiffField> entries = dir.getDirectoryEntrys();
 
@@ -446,11 +447,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         int byteOrder = reader.getByteOrder();
         TiffContents contents = reader.readFirstDirectory(byteSource, params, true, formatCompliance);
         TiffDirectory directory = contents.directories.get(0);
-        if(params == null) {
-            params = new HashMap<String, Integer>();
-        }
-        params.put(BYTE_ORDER, byteOrder);
-        BufferedImage result = directory.getTiffImage(params);
+        BufferedImage result = directory.getTiffImage(byteOrder, params);
         if (null == result)
             throw new ImageReadException("TIFF does not contain an image.");
         return result;
@@ -460,12 +457,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             throws ImageReadException, IOException
     {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        TiffContents contents = new TiffReader(true).readDirectories(byteSource, true, formatCompliance);
+        TiffReader tiffReader = new TiffReader(true);
+        TiffContents contents = tiffReader.readDirectories(byteSource, true, formatCompliance);
         List<BufferedImage> results = new ArrayList<BufferedImage>();
         for (int i = 0; i < contents.directories.size(); i++)
         {
             TiffDirectory directory = contents.directories.get(i);
-            BufferedImage result = directory.getTiffImage(null);
+            BufferedImage result = directory.getTiffImage(tiffReader.getByteOrder(), null);
             if (result != null)
             {
                 results.add(result);
@@ -474,21 +472,11 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         return results;
     } 
 
-    protected BufferedImage getBufferedImage(TiffDirectory directory, Map params)
+    protected BufferedImage getBufferedImage(TiffDirectory directory, int byteOrder, Map params)
             throws ImageReadException, IOException
     {
         List<TiffField> entries = directory.entries;
         
-        int byteOrder = BYTE_ORDER_LITTLE_ENDIAN; //taking little endian to be default
-        if(params != null){
-            if(params.containsKey(BYTE_ORDER)) {
-                Object obj = params.get(BYTE_ORDER);
-                if(obj instanceof Integer) {
-                    Integer a = (Integer)obj;
-                    byteOrder = a.intValue();
-                }
-            }
-        }
         if (entries == null)
             throw new ImageReadException("TIFF missing entries");
 

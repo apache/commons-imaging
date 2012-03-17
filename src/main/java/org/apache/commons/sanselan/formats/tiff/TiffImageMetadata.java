@@ -87,11 +87,13 @@ public class TiffImageMetadata extends ImageMetadata
         public final int type;
 
         private final TiffDirectory directory;
+        private final int byteOrder;
 
-        public Directory(final TiffDirectory directory)
+        public Directory(int byteOrder, final TiffDirectory directory)
         {
             this.type = directory.type;
             this.directory = directory;
+            this.byteOrder = byteOrder;
         }
 
         public void add(TiffField entry)
@@ -102,7 +104,7 @@ public class TiffImageMetadata extends ImageMetadata
         public BufferedImage getThumbnail() throws ImageReadException,
                 IOException
         {
-            return directory.getTiffImage();
+            return directory.getTiffImage(byteOrder);
         }
 
         public TiffImageData getTiffImageData()

@@ -152,19 +152,19 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         return false;
     }
 
-    public BufferedImage getTiffImage() throws ImageReadException, IOException
+    public BufferedImage getTiffImage(int byteOrder) throws ImageReadException, IOException
     {
         Map params = null;
-        return getTiffImage(params);
+        return getTiffImage(byteOrder, params);
     }
 
-    public BufferedImage getTiffImage(Map params) throws ImageReadException,
+    public BufferedImage getTiffImage(int byteOrder, Map params) throws ImageReadException,
             IOException
     {
         if (null == tiffImageData)
             return null;
 
-        return new TiffImageParser().getBufferedImage(this, params);
+        return new TiffImageParser().getBufferedImage(this, byteOrder, params);
     }
 
     public TiffField findField(TagInfo tag) throws ImageReadException
