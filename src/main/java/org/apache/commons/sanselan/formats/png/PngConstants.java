@@ -47,6 +47,12 @@ public interface PngConstants extends SanselanConstants
             0x58, //
             0x74, //
     });
+    public final static BinaryConstant IPHYS_CHUNK_TYPE = new BinaryConstant(new byte[] {
+            'p',
+            'H',
+            'Y',
+            's'
+    });
 
     public final static int IEND = BinaryFileFunctions.charsToQuad('I', 'E', 'N',
             'D');

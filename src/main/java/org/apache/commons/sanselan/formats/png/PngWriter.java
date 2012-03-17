@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.sanselan.ImageWriteException;
+import org.apache.commons.sanselan.PixelDensity;
 import org.apache.commons.sanselan.common.ZLibUtils;
 import org.apache.commons.sanselan.palette.MedianCutQuantizer;
 import org.apache.commons.sanselan.palette.Palette;
@@ -283,6 +284,22 @@ public class PngWriter implements PngConstants
     {
         writeChunk(os, IDAT_CHUNK_TYPE.toByteArray(), bytes);
     }
+    
+    private void writeChunkPHYS(OutputStream os, int xPPU, int yPPU, byte units)
+            throws IOException
+    {
+        byte[] bytes = new byte[9];
+        bytes[0] = (byte) (0xff & (xPPU >> 24));
+        bytes[1] = (byte) (0xff & (xPPU >> 16));
+        bytes[2] = (byte) (0xff & (xPPU >> 8));
+        bytes[3] = (byte) (0xff & (xPPU >> 0));
+        bytes[4] = (byte) (0xff & (yPPU >> 24));
+        bytes[5] = (byte) (0xff & (yPPU >> 16));
+        bytes[6] = (byte) (0xff & (yPPU >> 8));
+        bytes[7] = (byte) (0xff & (yPPU >> 0));
+        bytes[8] = (byte) units;
+        writeChunk(os, IPHYS_CHUNK_TYPE.toByteArray(), bytes);
+    }
 
     private byte getColourType(boolean hasAlpha, boolean isGrayscale)
     {
@@ -384,6 +401,7 @@ public class PngWriter implements PngConstants
             params.remove(PARAM_KEY_XMP_XML);
         if (params.containsKey(PARAM_KEY_PNG_TEXT_CHUNKS))
             params.remove(PARAM_KEY_PNG_TEXT_CHUNKS);
+        params.remove(PARAM_KEY_PIXEL_DENSITY);
         if (params.size() > 0)
         {
             Object firstKey = params.keySet().iterator().next();
@@ -477,6 +495,19 @@ public class PngWriter implements PngConstants
             // palette.dump();
 
             writeChunkPLTE(os, palette);
+        }
+        
+        Object pixelDensityObj = params.get(PARAM_KEY_PIXEL_DENSITY);
+        if (pixelDensityObj instanceof PixelDensity)
+        {
+            PixelDensity pixelDensity = (PixelDensity)pixelDensityObj;
+            if (pixelDensity.isUnitless()) {
+                writeChunkPHYS(os, (int)Math.round(pixelDensity.getRawHorizontalDensity()),
+                        (int)Math.round(pixelDensity.getRawVerticalDensity()), (byte)0);
+            } else {
+                writeChunkPHYS(os, (int)Math.round(pixelDensity.horizontalDensityMetres()),
+                        (int)Math.round(pixelDensity.verticalDensityMetres()), (byte)1);
+            }
         }
 
         if (params.containsKey(PARAM_KEY_XMP_XML))

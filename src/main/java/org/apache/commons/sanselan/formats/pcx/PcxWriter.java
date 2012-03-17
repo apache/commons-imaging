@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.sanselan.ImageWriteException;
+import org.apache.commons.sanselan.PixelDensity;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.palette.PaletteFactory;
 import org.apache.commons.sanselan.palette.SimplePalette;
@@ -31,6 +32,7 @@ public class PcxWriter implements PcxConstants
 {
     private int encoding;
     private int bitDepth = -1;
+    private PixelDensity pixelDensity = null;
 
     public PcxWriter(Map params) throws ImageWriteException
     {
@@ -68,6 +70,23 @@ public class PcxWriter implements PcxConstants
                             "Invalid bit depth parameter: " + value);
                 bitDepth = ((Number)value).intValue();
             }
+        }
+        
+        if (params.containsKey(PARAM_KEY_PIXEL_DENSITY))
+        {
+            Object value = params.remove(PARAM_KEY_PIXEL_DENSITY);
+            if (value != null)
+            {
+                if (!(value instanceof PixelDensity))
+                    throw new ImageWriteException(
+                            "Invalid pixel density parameter");
+                pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
+            }
+        }
+        if (pixelDensity == null)
+        {
+            // DPI is mandatory, so we have to invent something
+            pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
         }
 
         if (params.size() > 0)
@@ -178,8 +197,8 @@ public class PcxWriter implements PcxConstants
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes(300); // hDpi
-        bos.write2Bytes(300); // vDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.writeByteArray(new byte[48]); // 16 color palette
         bos.write(0); // reserved
         bos.write(1); // planes
@@ -220,8 +239,8 @@ public class PcxWriter implements PcxConstants
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes(300); // hDpi
-        bos.write2Bytes(300); // vDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.writeByteArray(new byte[48]); // 16 color palette
         bos.write(0); // reserved
         bos.write(3); // planes
@@ -263,8 +282,8 @@ public class PcxWriter implements PcxConstants
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes(300); // hDpi
-        bos.write2Bytes(300); // vDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.writeByteArray(new byte[48]); // 16 color palette
         bos.write(0); // reserved
         bos.write(1); // planes
@@ -323,8 +342,8 @@ public class PcxWriter implements PcxConstants
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes(300); // hDpi
-        bos.write2Bytes(300); // vDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.writeByteArray(palette16); // 16 color palette
         bos.write(0); // reserved
         bos.write(1); // planes
@@ -363,8 +382,8 @@ public class PcxWriter implements PcxConstants
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes(300); // hDpi
-        bos.write2Bytes(300); // vDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short)Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.writeByteArray(new byte[48]); // 16 color palette
         bos.write(0); // reserved
         bos.write(1); // planes

@@ -112,7 +112,8 @@ public class PcxImageParser extends ImageParser implements PcxConstants
         int metricVDpi = (int) (pcxHeader.vDpi * 1000.0 / 2.54);
         return new ImageInfo("PCX", pcxHeader.nPlanes * pcxHeader.bitsPerPixel, new ArrayList<String>(),
                 ImageFormat.IMAGE_FORMAT_PCX, "ZSoft PCX Image", size.height, "image/x-pcx", 1,
-                metricVDpi, pcxHeader.vDpi / metricVDpi, metricHDpi, pcxHeader.hDpi / metricHDpi,
+                pcxHeader.vDpi, Math.round(size.getHeight() / pcxHeader.vDpi),
+                pcxHeader.hDpi, Math.round(size.getWidth() / pcxHeader.hDpi),
                 size.width, false, false,
                 !(pcxHeader.nPlanes == 3 && pcxHeader.bitsPerPixel == 8),
                 ImageInfo.COLOR_TYPE_RGB,

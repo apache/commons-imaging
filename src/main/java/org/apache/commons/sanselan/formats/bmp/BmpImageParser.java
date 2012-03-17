@@ -35,6 +35,7 @@ import org.apache.commons.sanselan.ImageInfo;
 import org.apache.commons.sanselan.ImageParser;
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;
+import org.apache.commons.sanselan.PixelDensity;
 import org.apache.commons.sanselan.common.BinaryOutputStream;
 import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.common.ImageBuilder;
@@ -772,16 +773,13 @@ public class BmpImageParser extends ImageParser
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap() : new HashMap(params);
 
-        Integer xResolution = Integer.valueOf(0);
-        Integer yResolution = Integer.valueOf(0);
+        PixelDensity pixelDensity = null;
         
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT))
             params.remove(PARAM_KEY_FORMAT);
-        if (params.containsKey(PARAM_KEY_X_RESOLUTION))
-            xResolution = (Integer) params.remove(PARAM_KEY_X_RESOLUTION);
-        if (params.containsKey(PARAM_KEY_Y_RESOLUTION))
-            yResolution = (Integer) params.remove(PARAM_KEY_Y_RESOLUTION);
+        if (params.containsKey(PARAM_KEY_PIXEL_DENSITY))
+            pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
 
         if (params.size() > 0)
         {
@@ -829,8 +827,8 @@ public class BmpImageParser extends ImageParser
 
             bos.write4Bytes(BI_RGB); // Compression
             bos.write4Bytes(imagedata.length); // Bitmap Data Size
-            bos.write4Bytes(xResolution.intValue()); // HResolution
-            bos.write4Bytes(yResolution.intValue()); // VResolution
+            bos.write4Bytes(pixelDensity != null ? (int)Math.round(pixelDensity.horizontalDensityMetres()) : 0); // HResolution
+            bos.write4Bytes(pixelDensity != null ? (int)Math.round(pixelDensity.verticalDensityMetres()) : 0); // VResolution
             if (palette == null)
                 bos.write4Bytes(0); // Colors
             else
