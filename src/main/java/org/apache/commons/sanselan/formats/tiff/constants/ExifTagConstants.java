@@ -46,7 +46,6 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoXpString;
  * http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
  * http://tiki-lounge.com/~raf/tiff/fields.html
  * http://www.awaresystems.be/imaging/tiff/tifftags.html
- * http://cool.conservation-us.org/bytopic/imaging/std/tiff-f.html
  * 
  * DNG: http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/products/photoshop/pdfs/dng_spec.pdf
  * 
@@ -87,38 +86,8 @@ public interface ExifTagConstants
     public static final TagInfoShort EXIF_TAG_COLOR_RESPONSE_UNIT = new TagInfoShort(
             "Color Response Unit", 0x012c, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShortOrLong EXIF_TAG_BAD_FAX_LINES = new TagInfoShortOrLong(
-            "Bad Fax Lines", 0x0146, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_CLEAN_FAX_DATA = new TagInfoShort(
-            "Clean Fax Data", 0x0147, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int CLEAN_FAX_DATA_VALUE_CLEAN = 0;
-    public static final int CLEAN_FAX_DATA_VALUE_REGENERATED = 1;
-    public static final int CLEAN_FAX_DATA_VALUE_UNCLEAN = 2;
-    public static final TagInfoShortOrLong EXIF_TAG_CONSECUTIVE_BAD_FAX_LINES = new TagInfoShortOrLong(
-            "Consecutive Bad Fax Lines", 0x0148,
-            1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_SUB_IFD = new TagInfoLong("Sub IFD",
-            0x014a, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
-    public static final TagInfoByte EXIF_TAG_CLIP_PATH = new TagInfoByte("Clip Path",
-            0x0157, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_XCLIP_PATH_UNITS = new TagInfoLong(
-            "XClip Path Units", 0x0158, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_YCLIP_PATH_UNITS = new TagInfoLong(
-            "YClip Path Units", 0x0159, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_INDEXED = new TagInfoShort("Indexed",
-            0x015a, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int INDEXED_VALUE_NOT_INDEXED = 0;
-    public static final int INDEXED_VALUE_INDEXED = 1;
     public static final TagInfoUndefined EXIF_TAG_JPEGTABLES = new TagInfoUndefined("JPEGTables",
             0x015b, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_OPIPROXY = new TagInfoShort("OPIProxy",
-            0x015f, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_DOES_NOT_EXIST = 0;
-    public static final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_EXISTS = 1;
     public static final TagInfoLong EXIF_TAG_GLOBAL_PARAMETERS_IFD = new TagInfoLong(
             "Global Parameters IFD", 0x0190, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
@@ -194,8 +163,6 @@ public interface ExifTagConstants
             1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoShort EXIF_TAG_RATING_PERCENT = new TagInfoShort(
             "Rating Percent", 0x4749, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoAscii EXIF_TAG_IMAGE_ID = new TagInfoAscii("Image ID",
-            0x800d, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoByte EXIF_TAG_WANG_ANNOTATION = new TagInfoByte(
             "Wang Annotation", 0x80a4, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -1084,11 +1051,7 @@ public interface ExifTagConstants
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_SUB_IFD1,
                     EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD2,
                     EXIF_TAG_COLOR_RESPONSE_UNIT,
-                    EXIF_TAG_BAD_FAX_LINES, EXIF_TAG_CLEAN_FAX_DATA,
-                    EXIF_TAG_CONSECUTIVE_BAD_FAX_LINES, EXIF_TAG_SUB_IFD,
-                    EXIF_TAG_CLIP_PATH,
-                    EXIF_TAG_XCLIP_PATH_UNITS, EXIF_TAG_YCLIP_PATH_UNITS,
-                    EXIF_TAG_INDEXED, EXIF_TAG_JPEGTABLES, EXIF_TAG_OPIPROXY,
+                    EXIF_TAG_JPEGTABLES,
                     EXIF_TAG_GLOBAL_PARAMETERS_IFD, EXIF_TAG_PROFILE_TYPE,
                     EXIF_TAG_FAX_PROFILE, EXIF_TAG_CODING_METHODS,
                     EXIF_TAG_VERSION_YEAR, EXIF_TAG_MODE_NUMBER, EXIF_TAG_DECODE,
@@ -1102,7 +1065,7 @@ public interface ExifTagConstants
                     EXIF_TAG_STRIP_ROW_COUNTS, EXIF_TAG_APPLICATION_NOTES,
                     EXIF_TAG_RELATED_IMAGE_FILE_FORMAT, EXIF_TAG_RELATED_IMAGE_WIDTH,
                     EXIF_TAG_RELATED_IMAGE_LENGTH, EXIF_TAG_RATING,
-                    EXIF_TAG_RATING_PERCENT, EXIF_TAG_IMAGE_ID,
+                    EXIF_TAG_RATING_PERCENT,
                     EXIF_TAG_WANG_ANNOTATION, EXIF_TAG_MATTEING, EXIF_TAG_DATA_TYPE,
                     EXIF_TAG_IMAGE_DEPTH, EXIF_TAG_TILE_DEPTH, EXIF_TAG_MODEL_2,
                     EXIF_TAG_CFAREPEAT_PATTERN_DIM, EXIF_TAG_CFAPATTERN_2,

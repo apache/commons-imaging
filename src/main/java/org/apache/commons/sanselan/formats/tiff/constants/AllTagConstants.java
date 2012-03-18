@@ -28,6 +28,9 @@ public interface AllTagConstants
 {
     public static final List<TagInfo> ALL_TAGS = Collections.unmodifiableList(
             TagConstantsUtils.mergeTagLists(TiffTagConstants.ALL_TIFF_TAGS,
-                    GpsTagConstants.ALL_GPS_TAGS, ExifTagConstants.ALL_EXIF_TAGS));
+                    ExifTagConstants.ALL_EXIF_TAGS,
+                    TiffClassFTagConstants.ALL_TIFF_CLASS_F_TAGS,
+                    AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAG_CONSTANTS,
+                    GpsTagConstants.ALL_GPS_TAGS));
 
 }

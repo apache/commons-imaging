@@ -38,7 +38,6 @@ public interface TiffTagConstants
         extends
             TiffFieldTypeConstants
 {
-
     public static final TagInfoLong TIFF_TAG_NEW_SUBFILE_TYPE = new TagInfoLong(
             "New Subfile Type", 0xFE, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);

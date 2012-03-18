@@ -20,8 +20,10 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import org.apache.commons.sanselan.SanselanTest;
+import org.apache.commons.sanselan.formats.tiff.constants.AdobePageMaker6TagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffClassFTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 
@@ -30,6 +32,8 @@ public class TiffTagIntegrityTest extends SanselanTest {
         verifyFields(TiffTagConstants.class, TiffTagConstants.ALL_TIFF_TAGS);
         verifyFields(GpsTagConstants.class, GpsTagConstants.ALL_GPS_TAGS);
         verifyFields(ExifTagConstants.class, ExifTagConstants.ALL_EXIF_TAGS);
+        verifyFields(TiffClassFTagConstants.class, TiffClassFTagConstants.ALL_TIFF_CLASS_F_TAGS);
+        verifyFields(AdobePageMaker6TagConstants.class, AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAG_CONSTANTS);
     }
     
     private void verifyFields(Class<?> cls, List<TagInfo> tags) {
