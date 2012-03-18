@@ -31,6 +31,9 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrLong;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoUnknown;
 
+/**
+ * Tags from the TIFF6 specification.
+ */
 public interface TiffTagConstants
         extends
             TiffFieldTypeConstants
@@ -39,10 +42,21 @@ public interface TiffTagConstants
     public static final TagInfoLong TIFF_TAG_NEW_SUBFILE_TYPE = new TagInfoLong(
             "New Subfile Type", 0xFE, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int SUBFILE_TYPE_VALUE_FULL_RESOLUTION_IMAGE = 0;
+    public static final int SUBFILE_TYPE_VALUE_REDUCED_RESOLUTION_IMAGE = 1;
+    public static final int SUBFILE_TYPE_VALUE_SINGLE_PAGE_OF_MULTI_PAGE_IMAGE = 2;
+    public static final int SUBFILE_TYPE_VALUE_SINGLE_PAGE_OF_MULTI_PAGE_REDUCED_RESOLUTION_IMAGE = 3;
+    public static final int SUBFILE_TYPE_VALUE_TRANSPARENCY_MASK = 4;
+    public static final int SUBFILE_TYPE_VALUE_TRANSPARENCY_MASK_OF_REDUCED_RESOLUTION_IMAGE = 5;
+    public static final int SUBFILE_TYPE_VALUE_TRANSPARENCY_MASK_OF_MULTI_PAGE_IMAGE = 6;
+    public static final int SUBFILE_TYPE_VALUE_TRANSPARENCY_MASK_OF_REDUCED_RESOLUTION_MULTI_PAGE_IMAGE = 7;
 
     public static final TagInfoShort TIFF_TAG_SUBFILE_TYPE = new TagInfoShort(
             "Subfile Type", 0xFF, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int OLD_SUBFILE_TYPE_VALUE_FULL_RESOLUTION_IMAGE = 1;
+    public static final int OLD_SUBFILE_TYPE_VALUE_REDUCED_RESOLUTION_IMAGE = 2;
+    public static final int OLD_SUBFILE_TYPE_VALUE_SINGLE_PAGE_OF_MULTI_PAGE_IMAGE = 3;
 
     public static final TagInfoShortOrLong TIFF_TAG_IMAGE_WIDTH = new TagInfoShortOrLong(
             "Image Width", 0x100, 1,
@@ -59,14 +73,61 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_COMPRESSION = new TagInfoShort(
             "Compression", 0x103, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int COMPRESSION_VALUE_UNCOMPRESSED = 1;
+    public static final int COMPRESSION_VALUE_CCITT_1D = 2;
+    public static final int COMPRESSION_VALUE_T4_GROUP_3_FAX = 3;
+    public static final int COMPRESSION_VALUE_T6_GROUP_4_FAX = 4;
+    public static final int COMPRESSION_VALUE_LZW = 5;
+    public static final int COMPRESSION_VALUE_JPEG_OLD_STYLE = 6;
+    public static final int COMPRESSION_VALUE_JPEG = 7;
+    public static final int COMPRESSION_VALUE_ADOBE_DEFLATE = 8;
+    public static final int COMPRESSION_VALUE_JBIG_B_AND_W = 9;
+    public static final int COMPRESSION_VALUE_JBIG_COLOR = 10;
+    public static final int COMPRESSION_VALUE_NEXT = 32766;
+    public static final int COMPRESSION_VALUE_EPSON_ERF_COMPRESSED = 32769;
+    public static final int COMPRESSION_VALUE_CCIRLEW = 32771;
+    public static final int COMPRESSION_VALUE_PACK_BITS = 32773;
+    public static final int COMPRESSION_VALUE_THUNDERSCAN = 32809;
+    public static final int COMPRESSION_VALUE_IT8CTPAD = 32895;
+    public static final int COMPRESSION_VALUE_IT8LW = 32896;
+    public static final int COMPRESSION_VALUE_IT8MP = 32897;
+    public static final int COMPRESSION_VALUE_IT8BL = 32898;
+    public static final int COMPRESSION_VALUE_PIXAR_FILM = 32908;
+    public static final int COMPRESSION_VALUE_PIXAR_LOG = 32909;
+    public static final int COMPRESSION_VALUE_DEFLATE = 32946;
+    public static final int COMPRESSION_VALUE_DCS = 32947;
+    public static final int COMPRESSION_VALUE_JBIG = 34661;
+    public static final int COMPRESSION_VALUE_SGILOG = 34676;
+    public static final int COMPRESSION_VALUE_SGILOG_24 = 34677;
+    public static final int COMPRESSION_VALUE_JPEG_2000 = 34712;
+    public static final int COMPRESSION_VALUE_NIKON_NEF_COMPRESSED = 34713;
+    public static final int COMPRESSION_VALUE_KODAK_DCR_COMPRESSED = 65000;
+    public static final int COMPRESSION_VALUE_PENTAX_PEF_COMPRESSED = 65535;
 
     public static final TagInfoShort TIFF_TAG_PHOTOMETRIC_INTERPRETATION = new TagInfoShort(
             "Photometric Interpretation", 0x106, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_WHITE_IS_ZERO = 0;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_BLACK_IS_ZERO = 1;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_RGB = 2;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_RGB_PALETTE = 3;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_TRANSPARENCY_MASK = 4;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_CMYK = 5;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_YCB_CR = 6;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_CIELAB = 8;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_ICCLAB = 9;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_ITULAB = 10;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_COLOR_FILTER_ARRAY = 32803;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_PIXAR_LOG_L = 32844;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_PIXAR_LOG_LUV = 32845;
+    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_LINEAR_RAW = 34892;
 
     public static final TagInfoShort TIFF_TAG_THRESHHOLDING = new TagInfoShort(
             "Threshholding", 0x107, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int THRESHOLDING_VALUE_NO_DITHERING_OR_HALFTONING = 1;
+    public static final int THRESHOLDING_VALUE_ORDERED_DITHER_OR_HALFTONE = 2;
+    public static final int THRESHOLDING_VALUE_RANDOMIZED_DITHER = 3;
 
     public static final TagInfoShort TIFF_TAG_CELL_WIDTH = new TagInfoShort(
             "Cell Width", 0x108, 1,
@@ -79,6 +140,8 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_FILL_ORDER = new TagInfoShort(
             "Fill Order", 0x10A, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int FILL_ORDER_VALUE_NORMAL = 1;
+    public static final int FILL_ORDER_VALUE_REVERSED = 2;
 
     public static final TagInfoAscii TIFF_TAG_DOCUMENT_NAME = new TagInfoAscii(
             "Document Name", 0x10D, -1,
@@ -103,6 +166,14 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_ORIENTATION = new TagInfoShort(
             "Orientation", 0x112, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int ORIENTATION_VALUE_HORIZONTAL_NORMAL = 1;
+    public static final int ORIENTATION_VALUE_MIRROR_HORIZONTAL = 2;
+    public static final int ORIENTATION_VALUE_ROTATE_180 = 3;
+    public static final int ORIENTATION_VALUE_MIRROR_VERTICAL = 4;
+    public static final int ORIENTATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_270_CW = 5;
+    public static final int ORIENTATION_VALUE_ROTATE_90_CW = 6;
+    public static final int ORIENTATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_90_CW = 7;
+    public static final int ORIENTATION_VALUE_ROTATE_270_CW = 8;
 
     public static final TagInfoShort TIFF_TAG_SAMPLES_PER_PIXEL = new TagInfoShort(
             "Samples Per Pixel", 0x115, 1,
@@ -135,6 +206,8 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_PLANAR_CONFIGURATION = new TagInfoShort(
             "Planar Configuration", 0x11C, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int PLANAR_CONFIGURATION_VALUE_CHUNKY = 1;
+    public static final int PLANAR_CONFIGURATION_VALUE_PLANAR = 2;
 
     public static final TagInfoAscii TIFF_TAG_PAGE_NAME = new TagInfoAscii(
             "Page Name", 0x11D, -1,
@@ -159,6 +232,11 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_GRAY_RESPONSE_UNIT = new TagInfoShort(
             "Gray Response Unit", 0x122, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int GRAY_RESPONSE_UNIT_VALUE_0_1 = 1;
+    public static final int GRAY_RESPONSE_UNIT_VALUE_0_001 = 2;
+    public static final int GRAY_RESPONSE_UNIT_VALUE_0_0001 = 3;
+    public static final int GRAY_RESPONSE_UNIT_VALUE_1E_05 = 4;
+    public static final int GRAY_RESPONSE_UNIT_VALUE_1E_06 = 5;
 
     public static final TagInfoShort TIFF_TAG_GRAY_RESPONSE_CURVE = new TagInfoShort(
             "Gray Response Curve", 0x123, -1,
@@ -175,6 +253,9 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_RESOLUTION_UNIT = new TagInfoShort(
             "Resolution Unit", 0x128, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int RESOLUTION_UNIT_VALUE_NONE = 1;
+    public static final int RESOLUTION_UNIT_VALUE_INCHES = 2;
+    public static final int RESOLUTION_UNIT_VALUE_CM = 3;
 
     public static final TagInfoShort TIFF_TAG_PAGE_NUMBER = new TagInfoShort(
             "Page Number", 0x129, 2,
@@ -203,6 +284,8 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_PREDICTOR = new TagInfoShort(
             "Predictor", 0x13D, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int PREDICTOR_VALUE_NONE = 1;
+    public static final int PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING = 2;
 
     public static final TagInfoRational TIFF_TAG_WHITE_POINT = new TagInfoRational(
             "White Point", 0x13E, 2,
@@ -239,6 +322,8 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_INK_SET = new TagInfoShort(
             "Ink Set", 0x14C, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int INK_SET_VALUE_CMYK = 1;
+    public static final int INK_SET_VALUE_NOT_CMYK = 2;
 
     public static final TagInfoAscii TIFF_TAG_INK_NAMES = new TagInfoAscii(
             "Ink Names", 0x14D, -1,
@@ -263,6 +348,12 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_SAMPLE_FORMAT = new TagInfoShort(
             "Sample Format", 0x153, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int SAMPLE_FORMAT_VALUE_UNSIGNED_INTEGER = 1;
+    public static final int SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER = 2;
+    public static final int SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT = 3;
+    public static final int SAMPLE_FORMAT_VALUE_UNDEFINED = 4;
+    public static final int SAMPLE_FORMAT_VALUE_COMPLEX_INTEGER = 5;
+    public static final int SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT_1 = 6;
 
     public static final TagInfoAny TIFF_TAG_SMIN_SAMPLE_VALUE = new TagInfoAny(
             "SMin Sample Value", 0x154, -1,
@@ -279,6 +370,8 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_JPEG_PROC = new TagInfoShort(
             "JPEGProc", 0x200, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int JPEGPROC_VALUE_BASELINE = 1;
+    public static final int JPEGPROC_VALUE_LOSSLESS = 14;
 
     public static final TagInfoLong TIFF_TAG_JPEG_INTERCHANGE_FORMAT = new TagInfoLong(
             "JPEGInterchange Format", 0x201, 1,
@@ -323,6 +416,8 @@ public interface TiffTagConstants
     public static final TagInfoShort TIFF_TAG_YCBCR_POSITIONING = new TagInfoShort(
             "YCbCr Positioning", 0x213, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+    public static final int YCB_CR_POSITIONING_VALUE_CENTERED = 1;
+    public static final int YCB_CR_POSITIONING_VALUE_CO_SITED = 2;
 
     public static final TagInfoLong TIFF_TAG_REFERENCE_BLACK_WHITE = new TagInfoLong(
             "Reference Black White", 0x214, -1,

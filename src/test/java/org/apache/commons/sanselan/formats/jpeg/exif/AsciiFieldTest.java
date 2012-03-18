@@ -30,7 +30,7 @@ import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;
-import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 
 public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 
@@ -59,9 +59,9 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
         }
 
         Map expectedFieldValues = new Hashtable();
-        expectedFieldValues.put(new Integer(ExifTagConstants.EXIF_TAG_MAKE.tag), "Canon");
-        expectedFieldValues.put(new Integer(ExifTagConstants.EXIF_TAG_MODEL.tag), "Canon PowerShot SD750");
-        expectedFieldValues.put(new Integer(ExifTagConstants.EXIF_TAG_MODIFY_DATE.tag), "2007:12:25 13:34:39");
+        expectedFieldValues.put(new Integer(TiffTagConstants.TIFF_TAG_MAKE.tag), "Canon");
+        expectedFieldValues.put(new Integer(TiffTagConstants.TIFF_TAG_MODEL.tag), "Canon PowerShot SD750");
+        expectedFieldValues.put(new Integer(TiffTagConstants.TIFF_TAG_DATE_TIME.tag), "2007:12:25 13:34:39");
         Iterator expectedTags = expectedFieldValues.keySet().iterator();
         while (expectedTags.hasNext()) {
             Integer tag = (Integer) expectedTags.next();

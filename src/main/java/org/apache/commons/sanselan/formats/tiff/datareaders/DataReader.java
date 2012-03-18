@@ -115,13 +115,13 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
             int expected_size, int tileWidth, int tileHeight) throws ImageReadException, IOException
     {
         TiffField fillOrderField = directory.findField(TiffTagConstants.TIFF_TAG_FILL_ORDER);
-        int fillOrder = ExifTagConstants.FILL_ORDER_VALUE_NORMAL;
+        int fillOrder = TiffTagConstants.FILL_ORDER_VALUE_NORMAL;
         if (fillOrderField != null) {
             fillOrder = fillOrderField.getIntValue();
         }
-        if (fillOrder == ExifTagConstants.FILL_ORDER_VALUE_NORMAL) {
+        if (fillOrder == TiffTagConstants.FILL_ORDER_VALUE_NORMAL) {
             // good
-        } else if (fillOrder == ExifTagConstants.FILL_ORDER_VALUE_REVERSED) {
+        } else if (fillOrder == TiffTagConstants.FILL_ORDER_VALUE_REVERSED) {
             for (int i = 0; i < compressed.length; i++) {
                 compressed[i] = (byte) (Integer.reverse(0xff & compressed[i]) >>> 24);
             }

@@ -66,101 +66,6 @@ public interface ExifTagConstants
     public static final TagInfoAscii EXIF_TAG_PROCESSING_SOFTWARE = new TagInfoAscii(
             "Processing Software", 0x000b, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoLong EXIF_TAG_SUBFILE_TYPE = new TagInfoLong(
-            "Subfile Type", 0x00fe, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int SUBFILE_TYPE_VALUE_FULL_RESOLUTION_IMAGE = 0;
-    public static final int SUBFILE_TYPE_VALUE_REDUCED_RESOLUTION_IMAGE = 1;
-    public static final int SUBFILE_TYPE_VALUE_SINGLE_PAGE_OF_MULTI_PAGE_IMAGE = 2;
-    public static final int SUBFILE_TYPE_VALUE_SINGLE_PAGE_OF_MULTI_PAGE_REDUCED_RESOLUTION_IMAGE = 3;
-    public static final int SUBFILE_TYPE_VALUE_TRANSPARENCY_MASK = 4;
-    public static final int SUBFILE_TYPE_VALUE_TRANSPARENCY_MASK_OF_REDUCED_RESOLUTION_IMAGE = 5;
-    public static final int SUBFILE_TYPE_VALUE_TRANSPARENCY_MASK_OF_MULTI_PAGE_IMAGE = 6;
-    public static final int SUBFILE_TYPE_VALUE_TRANSPARENCY_MASK_OF_REDUCED_RESOLUTION_MULTI_PAGE_IMAGE = 7;
-    public static final TagInfoShort EXIF_TAG_OLD_SUBFILE_TYPE = new TagInfoShort(
-            "Old Subfile Type", 0x00ff, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int OLD_SUBFILE_TYPE_VALUE_FULL_RESOLUTION_IMAGE = 1;
-    public static final int OLD_SUBFILE_TYPE_VALUE_REDUCED_RESOLUTION_IMAGE = 2;
-    public static final int OLD_SUBFILE_TYPE_VALUE_SINGLE_PAGE_OF_MULTI_PAGE_IMAGE = 3;
-    public static final TagInfoLong EXIF_TAG_IMAGE_WIDTH_IFD0 = new TagInfoLong(
-            "Image Width", 0x0100, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoLong EXIF_TAG_IMAGE_HEIGHT_IFD0 = new TagInfoLong(
-            "Image Height", 0x0101, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_BITS_PER_SAMPLE = new TagInfoShort(
-            "Bits Per Sample", 0x0102, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_COMPRESSION = new TagInfoShort(
-            "Compression", 0x0103, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int COMPRESSION_VALUE_UNCOMPRESSED = 1;
-    public static final int COMPRESSION_VALUE_CCITT_1D = 2;
-    public static final int COMPRESSION_VALUE_T4_GROUP_3_FAX = 3;
-    public static final int COMPRESSION_VALUE_T6_GROUP_4_FAX = 4;
-    public static final int COMPRESSION_VALUE_LZW = 5;
-    public static final int COMPRESSION_VALUE_JPEG_OLD_STYLE = 6;
-    public static final int COMPRESSION_VALUE_JPEG = 7;
-    public static final int COMPRESSION_VALUE_ADOBE_DEFLATE = 8;
-    public static final int COMPRESSION_VALUE_JBIG_B_AND_W = 9;
-    public static final int COMPRESSION_VALUE_JBIG_COLOR = 10;
-    public static final int COMPRESSION_VALUE_NEXT = 32766;
-    public static final int COMPRESSION_VALUE_EPSON_ERF_COMPRESSED = 32769;
-    public static final int COMPRESSION_VALUE_CCIRLEW = 32771;
-    public static final int COMPRESSION_VALUE_PACK_BITS = 32773;
-    public static final int COMPRESSION_VALUE_THUNDERSCAN = 32809;
-    public static final int COMPRESSION_VALUE_IT8CTPAD = 32895;
-    public static final int COMPRESSION_VALUE_IT8LW = 32896;
-    public static final int COMPRESSION_VALUE_IT8MP = 32897;
-    public static final int COMPRESSION_VALUE_IT8BL = 32898;
-    public static final int COMPRESSION_VALUE_PIXAR_FILM = 32908;
-    public static final int COMPRESSION_VALUE_PIXAR_LOG = 32909;
-    public static final int COMPRESSION_VALUE_DEFLATE = 32946;
-    public static final int COMPRESSION_VALUE_DCS = 32947;
-    public static final int COMPRESSION_VALUE_JBIG = 34661;
-    public static final int COMPRESSION_VALUE_SGILOG = 34676;
-    public static final int COMPRESSION_VALUE_SGILOG_24 = 34677;
-    public static final int COMPRESSION_VALUE_JPEG_2000 = 34712;
-    public static final int COMPRESSION_VALUE_NIKON_NEF_COMPRESSED = 34713;
-    public static final int COMPRESSION_VALUE_KODAK_DCR_COMPRESSED = 65000;
-    public static final int COMPRESSION_VALUE_PENTAX_PEF_COMPRESSED = 65535;
-    public static final TagInfoShort EXIF_TAG_PHOTOMETRIC_INTERPRETATION = new TagInfoShort(
-            "Photometric Interpretation", 0x0106, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_WHITE_IS_ZERO = 0;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_BLACK_IS_ZERO = 1;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_RGB = 2;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_RGB_PALETTE = 3;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_TRANSPARENCY_MASK = 4;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_CMYK = 5;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_YCB_CR = 6;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_CIELAB = 8;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_ICCLAB = 9;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_ITULAB = 10;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_COLOR_FILTER_ARRAY = 32803;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_PIXAR_LOG_L = 32844;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_PIXAR_LOG_LUV = 32845;
-    public static final int PHOTOMETRIC_INTERPRETATION_VALUE_LINEAR_RAW = 34892;
-    public static final TagInfoShort EXIF_TAG_THRESHOLDING = new TagInfoShort(
-            "Thresholding", 0x0107, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int THRESHOLDING_VALUE_NO_DITHERING_OR_HALFTONING = 1;
-    public static final int THRESHOLDING_VALUE_ORDERED_DITHER_OR_HALFTONE = 2;
-    public static final int THRESHOLDING_VALUE_RANDOMIZED_DITHER = 3;
-    public static final TagInfoShort EXIF_TAG_CELL_WIDTH = new TagInfoShort("Cell Width",
-            0x0108, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_CELL_LENGTH = new TagInfoShort(
-            "Cell Length", 0x0109, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_FILL_ORDER = new TagInfoShort("Fill Order",
-            0x010a, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int FILL_ORDER_VALUE_NORMAL = 1;
-    public static final int FILL_ORDER_VALUE_REVERSED = 2;
-    public static final TagInfoAscii EXIF_TAG_DOCUMENT_NAME = new TagInfoAscii(
-            "Document Name", 0x010d, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoAscii EXIF_TAG_IMAGE_DESCRIPTION = new TagInfoAscii(
-            "Image Description", 0x010e, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoAscii EXIF_TAG_MAKE = new TagInfoAscii(
-            "Make", 0x010f, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoAscii EXIF_TAG_MODEL = new TagInfoAscii(
-            "Model", 0x0110, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    // public static final TagInfo2 EXIF_TAG_STRIP_OFFSETS = new TagInfo2( "StripOffsets", 0x0111, , 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoLong EXIF_TAG_PREVIEW_IMAGE_START_IFD0 = new TagInfoLong(
             "Preview Image Start", 0x0111, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0, true);
@@ -170,22 +75,6 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD2 = new TagInfoLong(
             "Jpg From Raw Start", 0x0111, 1,
             TiffDirectoryType.EXIF_DIRECTORY_SUB_IFD2, true);
-    public static final TagInfoShort EXIF_TAG_ORIENTATION = new TagInfoShort(
-            "Orientation", 0x0112, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int ORIENTATION_VALUE_HORIZONTAL_NORMAL = 1;
-    public static final int ORIENTATION_VALUE_MIRROR_HORIZONTAL = 2;
-    public static final int ORIENTATION_VALUE_ROTATE_180 = 3;
-    public static final int ORIENTATION_VALUE_MIRROR_VERTICAL = 4;
-    public static final int ORIENTATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_270_CW = 5;
-    public static final int ORIENTATION_VALUE_ROTATE_90_CW = 6;
-    public static final int ORIENTATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_90_CW = 7;
-    public static final int ORIENTATION_VALUE_ROTATE_270_CW = 8;
-    public static final TagInfoShort EXIF_TAG_SAMPLES_PER_PIXEL = new TagInfoShort(
-            "Samples Per Pixel", 0x0115, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoLong EXIF_TAG_ROWS_PER_STRIP = new TagInfoLong(
-            "Rows Per Strip", 0x0116, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    // poly tag public static final TagInfo2 EXIF_TAG_STRIP_BYTE_COUNTS = new TagInfo2( "StripByteCounts", 0x0117, , 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoLong EXIF_TAG_PREVIEW_IMAGE_LENGTH_IFD0 = new TagInfoLong(
             "Preview Image Length", 0x0117, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
@@ -195,91 +84,8 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD2 = new TagInfoLong(
             "Jpg From Raw Length", 0x0117, 1,
             TiffDirectoryType.EXIF_DIRECTORY_SUB_IFD2);
-    public static final TagInfoShort EXIF_TAG_MIN_SAMPLE_VALUE = new TagInfoShort(
-            "Min Sample Value", 0x0118, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_MAX_SAMPLE_VALUE = new TagInfoShort(
-            "Max Sample Value", 0x0119, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoRational EXIF_TAG_XRESOLUTION = new TagInfoRational(
-            "XResolution", 0x011a, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoRational EXIF_TAG_YRESOLUTION = new TagInfoRational(
-            "YResolution", 0x011b, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_PLANAR_CONFIGURATION = new TagInfoShort(
-            "Planar Configuration", 0x011c, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int PLANAR_CONFIGURATION_VALUE_CHUNKY = 1;
-    public static final int PLANAR_CONFIGURATION_VALUE_PLANAR = 2;
-    public static final TagInfoAscii EXIF_TAG_PAGE_NAME = new TagInfoAscii("Page Name",
-            0x011d, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoRational EXIF_TAG_XPOSITION = new TagInfoRational("XPosition",
-            0x011e, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoRational EXIF_TAG_YPOSITION = new TagInfoRational("YPosition",
-            0x011f, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoLong EXIF_TAG_FREE_OFFSETS = new TagInfoLong(
-            "Free Offsets", 0x0120, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_FREE_BYTE_COUNTS = new TagInfoLong(
-            "Free Byte Counts", 0x0121, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_GRAY_RESPONSE_UNIT = new TagInfoShort(
-            "Gray Response Unit", 0x0122, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int GRAY_RESPONSE_UNIT_VALUE_0_1 = 1;
-    public static final int GRAY_RESPONSE_UNIT_VALUE_0_001 = 2;
-    public static final int GRAY_RESPONSE_UNIT_VALUE_0_0001 = 3;
-    public static final int GRAY_RESPONSE_UNIT_VALUE_1E_05 = 4;
-    public static final int GRAY_RESPONSE_UNIT_VALUE_1E_06 = 5;
-    public static final TagInfoShort EXIF_TAG_GRAY_RESPONSE_CURVE = new TagInfoShort(
-            "Gray Response Curve", 0x0123, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_T4OPTIONS = new TagInfoLong("T4 Options",
-            0x0124, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_T6OPTIONS = new TagInfoLong("T6 Options",
-            0x0125, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_RESOLUTION_UNIT = new TagInfoShort(
-            "Resolution Unit", 0x0128, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int RESOLUTION_UNIT_VALUE_NONE = 1;
-    public static final int RESOLUTION_UNIT_VALUE_INCHES = 2;
-    public static final int RESOLUTION_UNIT_VALUE_CM = 3;
-    public static final TagInfoShort EXIF_TAG_PAGE_NUMBER = new TagInfoShort(
-            "Page Number", 0x0129, 2, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoShort EXIF_TAG_COLOR_RESPONSE_UNIT = new TagInfoShort(
             "Color Response Unit", 0x012c, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_TRANSFER_FUNCTION = new TagInfoShort(
-            "Transfer Function", 0x012d, 3*256,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAscii EXIF_TAG_SOFTWARE = new TagInfoAscii("Software",
-            0x0131, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoAscii EXIF_TAG_MODIFY_DATE = new TagInfoAscii(
-            "Modify Date", 0x0132, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoAscii EXIF_TAG_ARTIST = new TagInfoAscii("Artist", 0x013b,
-            1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoAscii EXIF_TAG_HOST_COMPUTER = new TagInfoAscii(
-            "Host Computer", 0x013c, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_PREDICTOR = new TagInfoShort("Predictor",
-            0x013d, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int PREDICTOR_VALUE_NONE = 1;
-    public static final int PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING = 2;
-    public static final TagInfoRational EXIF_TAG_WHITE_POINT = new TagInfoRational(
-            "White Point", 0x013e, 2, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoRational EXIF_TAG_PRIMARY_CHROMATICITIES = new TagInfoRational(
-            "Primary Chromaticities", 0x013f, 6,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_COLOR_MAP = new TagInfoShort("Color Map",
-            0x0140, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_HALFTONE_HINTS = new TagInfoShort(
-            "Halftone Hints", 0x0141, 2, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShortOrLong EXIF_TAG_TILE_WIDTH = new TagInfoShortOrLong("Tile Width",
-            0x0142, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShortOrLong EXIF_TAG_TILE_LENGTH = new TagInfoShortOrLong(
-            "Tile Length", 0x0143, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoLong EXIF_TAG_TILE_OFFSETS = new TagInfoLong(
-            "Tile Offsets", 0x0144, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShortOrLong EXIF_TAG_TILE_BYTE_COUNTS = new TagInfoShortOrLong(
-            "Tile Byte Counts", 0x0145, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoShortOrLong EXIF_TAG_BAD_FAX_LINES = new TagInfoShortOrLong(
             "Bad Fax Lines", 0x0146, 1,
@@ -295,41 +101,6 @@ public interface ExifTagConstants
             1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoLong EXIF_TAG_SUB_IFD = new TagInfoLong("Sub IFD",
             0x014a, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
-    public static final TagInfoShort EXIF_TAG_INK_SET = new TagInfoShort("Ink Set",
-            0x014c, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int INK_SET_VALUE_CMYK = 1;
-    public static final int INK_SET_VALUE_NOT_CMYK = 2;
-    public static final TagInfoAscii EXIF_TAG_INK_NAMES = new TagInfoAscii("Ink Names",
-            0x014d, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_NUMBEROF_INKS = new TagInfoShort(
-            "Numberof Inks", 0x014e, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoByteOrShort EXIF_TAG_DOT_RANGE = new TagInfoByteOrShort("Dot Range",
-            0x0150, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoAscii EXIF_TAG_TARGET_PRINTER = new TagInfoAscii(
-            "Target Printer", 0x0151, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_EXTRA_SAMPLES = new TagInfoShort(
-            "Extra Samples", 0x0152, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_SAMPLE_FORMAT = new TagInfoShort(
-            "Sample Format", 0x0153, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int SAMPLE_FORMAT_VALUE_UNSIGNED_INTEGER = 1;
-    public static final int SAMPLE_FORMAT_VALUE_TWOS_COMPLEMENT_SIGNED_INTEGER = 2;
-    public static final int SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT = 3;
-    public static final int SAMPLE_FORMAT_VALUE_UNDEFINED = 4;
-    public static final int SAMPLE_FORMAT_VALUE_COMPLEX_INTEGER = 5;
-    public static final int SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT_1 = 6;
-    public static final TagInfoAny EXIF_TAG_SMIN_SAMPLE_VALUE = new TagInfoAny(
-            "SMin Sample Value", 0x0154, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAny EXIF_TAG_SMAX_SAMPLE_VALUE = new TagInfoAny(
-            "SMax Sample Value", 0x0155, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_TRANSFER_RANGE = new TagInfoShort(
-            "Transfer Range", 0x0156, 6,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoByte EXIF_TAG_CLIP_PATH = new TagInfoByte("Clip Path",
             0x0157, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoLong EXIF_TAG_XCLIP_PATH_UNITS = new TagInfoLong(
@@ -380,11 +151,6 @@ public interface ExifTagConstants
     public static final TagInfoShort EXIF_TAG_DEFAULT_IMAGE_COLOR = new TagInfoShort(
             "Default Image Color", 0x01b2, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_JPEGPROC = new TagInfoShort("JPEGProc",
-            0x0200, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int JPEGPROC_VALUE_BASELINE = 1;
-    public static final int JPEGPROC_VALUE_LOSSLESS = 14;
-    // poly tag public static final TagInfo2 EXIF_TAG_THUMBNAIL_OFFSET = new TagInfo2( "ThumbnailOffset", 0x0201, , 1, TiffDirectoryType.EXIF_DIRECTORY_IFD1);
     public static final TagInfoLong EXIF_TAG_PREVIEW_IMAGE_START_MAKER_NOTES = new TagInfoLong(
             "Preview Image Start", 0x0201, 1,
             TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES);
@@ -397,7 +163,6 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_OTHER_IMAGE_START = new TagInfoLong(
             "Other Image Start", 0x0201, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
-    // poly tag public static final TagInfo2 EXIF_TAG_THUMBNAIL_LENGTH = new TagInfo2( "ThumbnailLength", 0x0202, , 1, TiffDirectoryType.EXIF_DIRECTORY_IFD1);
     public static final TagInfoLong EXIF_TAG_PREVIEW_IMAGE_LENGTH_MAKER_NOTES = new TagInfoLong(
             "Preview Image Length", 0x0202, 1,
             TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES);
@@ -410,38 +175,6 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_OTHER_IMAGE_LENGTH = new TagInfoLong(
             "Other Image Length", 0x0202, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_JPEGRESTART_INTERVAL = new TagInfoShort(
-            "JPEGRestart Interval", 0x0203, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_JPEGLOSSLESS_PREDICTORS = new TagInfoShort(
-            "JPEGLossless Predictors", 0x0205, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_JPEGPOINT_TRANSFORMS = new TagInfoShort(
-            "JPEGPoint Transforms", 0x0206, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_JPEGQTABLES = new TagInfoLong(
-            "JPEGQTables", 0x0207, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_JPEGDCTABLES = new TagInfoLong(
-            "JPEGDCTables", 0x0208, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_JPEGACTABLES = new TagInfoLong(
-            "JPEGACTables", 0x0209, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoRational EXIF_TAG_YCBCR_COEFFICIENTS = new TagInfoRational(
-            "YCbCr Coefficients", 0x0211, 3,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_YCBCR_SUB_SAMPLING = new TagInfoShort(
-            "YCbCr Sub Sampling", 0x0212, 2,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_YCBCR_POSITIONING = new TagInfoShort(
-            "YCbCr Positioning", 0x0213, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final int YCB_CR_POSITIONING_VALUE_CENTERED = 1;
-    public static final int YCB_CR_POSITIONING_VALUE_CO_SITED = 2;
-    public static final TagInfoRational EXIF_TAG_REFERENCE_BLACK_WHITE = new TagInfoRational(
-            "Reference Black White", 0x0214, 6,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoLong EXIF_TAG_STRIP_ROW_COUNTS = new TagInfoLong(
             "Strip Row Counts", 0x022f, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -487,8 +220,6 @@ public interface ExifTagConstants
     public static final TagInfoRational EXIF_TAG_BATTERY_LEVEL = new TagInfoRational(
             "Battery Level", 0x828f, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAscii EXIF_TAG_COPYRIGHT = new TagInfoAscii("Copyright",
-            0x8298, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoRational EXIF_TAG_EXPOSURE_TIME = new TagInfoRational(
             "Exposure Time", 0x829a, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -1345,57 +1076,29 @@ public interface ExifTagConstants
     public static final List<TagInfo> ALL_EXIF_TAGS =
             Collections.unmodifiableList(Arrays.asList(
                     EXIF_TAG_INTEROP_INDEX, EXIF_TAG_INTEROP_VERSION,
-                    EXIF_TAG_PROCESSING_SOFTWARE, EXIF_TAG_SUBFILE_TYPE,
-                    EXIF_TAG_OLD_SUBFILE_TYPE, EXIF_TAG_IMAGE_WIDTH_IFD0,
-                    EXIF_TAG_IMAGE_HEIGHT_IFD0, EXIF_TAG_BITS_PER_SAMPLE,
-                    EXIF_TAG_COMPRESSION, EXIF_TAG_PHOTOMETRIC_INTERPRETATION,
-                    EXIF_TAG_THRESHOLDING, EXIF_TAG_CELL_WIDTH, EXIF_TAG_CELL_LENGTH,
-                    EXIF_TAG_FILL_ORDER, EXIF_TAG_DOCUMENT_NAME,
-                    EXIF_TAG_IMAGE_DESCRIPTION, EXIF_TAG_MAKE, EXIF_TAG_MODEL,
+                    EXIF_TAG_PROCESSING_SOFTWARE,
                     EXIF_TAG_PREVIEW_IMAGE_START_IFD0,
                     EXIF_TAG_PREVIEW_IMAGE_START_SUB_IFD1,
-                    EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD2, EXIF_TAG_ORIENTATION,
-                    EXIF_TAG_SAMPLES_PER_PIXEL, EXIF_TAG_ROWS_PER_STRIP,
+                    EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD2,
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_IFD0,
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_SUB_IFD1,
-                    EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD2, EXIF_TAG_MIN_SAMPLE_VALUE,
-                    EXIF_TAG_MAX_SAMPLE_VALUE, EXIF_TAG_XRESOLUTION,
-                    EXIF_TAG_YRESOLUTION, EXIF_TAG_PLANAR_CONFIGURATION,
-                    EXIF_TAG_PAGE_NAME, EXIF_TAG_XPOSITION, EXIF_TAG_YPOSITION,
-                    EXIF_TAG_FREE_OFFSETS, EXIF_TAG_FREE_BYTE_COUNTS,
-                    EXIF_TAG_GRAY_RESPONSE_UNIT, EXIF_TAG_GRAY_RESPONSE_CURVE,
-                    EXIF_TAG_T4OPTIONS, EXIF_TAG_T6OPTIONS, EXIF_TAG_RESOLUTION_UNIT,
-                    EXIF_TAG_PAGE_NUMBER, EXIF_TAG_COLOR_RESPONSE_UNIT,
-                    EXIF_TAG_TRANSFER_FUNCTION, EXIF_TAG_SOFTWARE,
-                    EXIF_TAG_MODIFY_DATE, EXIF_TAG_ARTIST, EXIF_TAG_HOST_COMPUTER,
-                    EXIF_TAG_PREDICTOR, EXIF_TAG_WHITE_POINT,
-                    EXIF_TAG_PRIMARY_CHROMATICITIES, EXIF_TAG_COLOR_MAP,
-                    EXIF_TAG_HALFTONE_HINTS, EXIF_TAG_TILE_WIDTH, EXIF_TAG_TILE_LENGTH,
-                    EXIF_TAG_TILE_OFFSETS, EXIF_TAG_TILE_BYTE_COUNTS,
+                    EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD2,
+                    EXIF_TAG_COLOR_RESPONSE_UNIT,
                     EXIF_TAG_BAD_FAX_LINES, EXIF_TAG_CLEAN_FAX_DATA,
                     EXIF_TAG_CONSECUTIVE_BAD_FAX_LINES, EXIF_TAG_SUB_IFD,
-                    EXIF_TAG_INK_SET, EXIF_TAG_INK_NAMES, EXIF_TAG_NUMBEROF_INKS,
-                    EXIF_TAG_DOT_RANGE, EXIF_TAG_TARGET_PRINTER,
-                    EXIF_TAG_EXTRA_SAMPLES, EXIF_TAG_SAMPLE_FORMAT,
-                    EXIF_TAG_SMIN_SAMPLE_VALUE, EXIF_TAG_SMAX_SAMPLE_VALUE,
-                    EXIF_TAG_TRANSFER_RANGE, EXIF_TAG_CLIP_PATH,
+                    EXIF_TAG_CLIP_PATH,
                     EXIF_TAG_XCLIP_PATH_UNITS, EXIF_TAG_YCLIP_PATH_UNITS,
                     EXIF_TAG_INDEXED, EXIF_TAG_JPEGTABLES, EXIF_TAG_OPIPROXY,
                     EXIF_TAG_GLOBAL_PARAMETERS_IFD, EXIF_TAG_PROFILE_TYPE,
                     EXIF_TAG_FAX_PROFILE, EXIF_TAG_CODING_METHODS,
                     EXIF_TAG_VERSION_YEAR, EXIF_TAG_MODE_NUMBER, EXIF_TAG_DECODE,
-                    EXIF_TAG_DEFAULT_IMAGE_COLOR, EXIF_TAG_JPEGPROC,
+                    EXIF_TAG_DEFAULT_IMAGE_COLOR,
                     EXIF_TAG_PREVIEW_IMAGE_START_MAKER_NOTES,
                     EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD,
                     EXIF_TAG_JPG_FROM_RAW_START_IFD2, EXIF_TAG_OTHER_IMAGE_START,
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_MAKER_NOTES,
                     EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD,
                     EXIF_TAG_JPG_FROM_RAW_LENGTH_IFD2, EXIF_TAG_OTHER_IMAGE_LENGTH,
-                    EXIF_TAG_JPEGRESTART_INTERVAL, EXIF_TAG_JPEGLOSSLESS_PREDICTORS,
-                    EXIF_TAG_JPEGPOINT_TRANSFORMS, EXIF_TAG_JPEGQTABLES,
-                    EXIF_TAG_JPEGDCTABLES, EXIF_TAG_JPEGACTABLES,
-                    EXIF_TAG_YCBCR_COEFFICIENTS, EXIF_TAG_YCBCR_SUB_SAMPLING,
-                    EXIF_TAG_YCBCR_POSITIONING, EXIF_TAG_REFERENCE_BLACK_WHITE,
                     EXIF_TAG_STRIP_ROW_COUNTS, EXIF_TAG_APPLICATION_NOTES,
                     EXIF_TAG_RELATED_IMAGE_FILE_FORMAT, EXIF_TAG_RELATED_IMAGE_WIDTH,
                     EXIF_TAG_RELATED_IMAGE_LENGTH, EXIF_TAG_RATING,
@@ -1403,7 +1106,7 @@ public interface ExifTagConstants
                     EXIF_TAG_WANG_ANNOTATION, EXIF_TAG_MATTEING, EXIF_TAG_DATA_TYPE,
                     EXIF_TAG_IMAGE_DEPTH, EXIF_TAG_TILE_DEPTH, EXIF_TAG_MODEL_2,
                     EXIF_TAG_CFAREPEAT_PATTERN_DIM, EXIF_TAG_CFAPATTERN_2,
-                    EXIF_TAG_BATTERY_LEVEL, EXIF_TAG_COPYRIGHT, EXIF_TAG_EXPOSURE_TIME,
+                    EXIF_TAG_BATTERY_LEVEL, EXIF_TAG_EXPOSURE_TIME,
                     EXIF_TAG_FNUMBER, EXIF_TAG_MDFILE_TAG, EXIF_TAG_MDSCALE_PIXEL,
                     EXIF_TAG_MDCOLOR_TABLE, EXIF_TAG_MDLAB_NAME,
                     EXIF_TAG_MDSAMPLE_INFO, EXIF_TAG_MDPREP_DATE, EXIF_TAG_MDPREP_TIME,
