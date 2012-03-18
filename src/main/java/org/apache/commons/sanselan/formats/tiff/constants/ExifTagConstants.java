@@ -83,38 +83,8 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD2 = new TagInfoLong(
             "Jpg From Raw Length", 0x0117, 1,
             TiffDirectoryType.EXIF_DIRECTORY_SUB_IFD2);
-    public static final TagInfoShort EXIF_TAG_COLOR_RESPONSE_UNIT = new TagInfoShort(
-            "Color Response Unit", 0x012c, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoUndefined EXIF_TAG_JPEGTABLES = new TagInfoUndefined("JPEGTables",
             0x015b, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_GLOBAL_PARAMETERS_IFD = new TagInfoLong(
-            "Global Parameters IFD", 0x0190, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
-    public static final TagInfoLong EXIF_TAG_PROFILE_TYPE = new TagInfoLong(
-            "Profile Type", 0x0191, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int PROFILE_TYPE_VALUE_UNSPECIFIED = 0;
-    public static final int PROFILE_TYPE_VALUE_GROUP_3_FAX = 1;
-    public static final TagInfoByte EXIF_TAG_FAX_PROFILE = new TagInfoByte(
-            "Fax Profile", 0x0192, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int FAX_PROFILE_VALUE_UNKNOWN = 0;
-    public static final int FAX_PROFILE_VALUE_MINIMAL_B_AND_W_LOSSLESS_S = 1;
-    public static final int FAX_PROFILE_VALUE_EXTENDED_B_AND_W_LOSSLESS_F = 2;
-    public static final int FAX_PROFILE_VALUE_LOSSLESS_JBIG_B_AND_W_J = 3;
-    public static final int FAX_PROFILE_VALUE_LOSSY_COLOR_AND_GRAYSCALE_C = 4;
-    public static final int FAX_PROFILE_VALUE_LOSSLESS_COLOR_AND_GRAYSCALE_L = 5;
-    public static final int FAX_PROFILE_VALUE_MIXED_RASTER_CONTENT_M = 6;
-    public static final TagInfoLong EXIF_TAG_CODING_METHODS = new TagInfoLong(
-            "Coding Methods", 0x0193, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoByte EXIF_TAG_VERSION_YEAR = new TagInfoByte(
-            "Version Year", 0x0194, 4,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoByte EXIF_TAG_MODE_NUMBER = new TagInfoByte(
-            "Mode Number", 0x0195, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoRational EXIF_TAG_DECODE = new TagInfoRational("Decode", 0x01b1,
             -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoShort EXIF_TAG_DEFAULT_IMAGE_COLOR = new TagInfoShort(
@@ -1050,11 +1020,8 @@ public interface ExifTagConstants
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_IFD0,
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_SUB_IFD1,
                     EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD2,
-                    EXIF_TAG_COLOR_RESPONSE_UNIT,
                     EXIF_TAG_JPEGTABLES,
-                    EXIF_TAG_GLOBAL_PARAMETERS_IFD, EXIF_TAG_PROFILE_TYPE,
-                    EXIF_TAG_FAX_PROFILE, EXIF_TAG_CODING_METHODS,
-                    EXIF_TAG_VERSION_YEAR, EXIF_TAG_MODE_NUMBER, EXIF_TAG_DECODE,
+                    EXIF_TAG_DECODE,
                     EXIF_TAG_DEFAULT_IMAGE_COLOR,
                     EXIF_TAG_PREVIEW_IMAGE_START_MAKER_NOTES,
                     EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD,

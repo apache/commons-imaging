@@ -27,9 +27,11 @@ public interface AllTagConstants
             SanselanConstants
 {
     public static final List<TagInfo> ALL_TAGS = Collections.unmodifiableList(
-            TagConstantsUtils.mergeTagLists(TiffTagConstants.ALL_TIFF_TAGS,
+            TagConstantsUtils.mergeTagLists(
+                    Tiff4TagConstants.ALL_TIFF_4_TAGS,
+                    TiffTagConstants.ALL_TIFF_TAGS,
                     ExifTagConstants.ALL_EXIF_TAGS,
-                    TiffClassFTagConstants.ALL_TIFF_CLASS_F_TAGS,
+                    Rfc2301TagConstants.ALL_RFC_2301_TAGS,
                     AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAG_CONSTANTS,
                     GpsTagConstants.ALL_GPS_TAGS));
 

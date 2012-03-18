@@ -33,6 +33,8 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoUnknown;
 
 /**
  * Tags from the TIFF6 specification.
+ * <BR>
+ * http://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf
  */
 public interface TiffTagConstants
         extends
@@ -232,10 +234,10 @@ public interface TiffTagConstants
             "Gray Response Unit", 0x122, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int GRAY_RESPONSE_UNIT_VALUE_0_1 = 1;
-    public static final int GRAY_RESPONSE_UNIT_VALUE_0_001 = 2;
-    public static final int GRAY_RESPONSE_UNIT_VALUE_0_0001 = 3;
-    public static final int GRAY_RESPONSE_UNIT_VALUE_1E_05 = 4;
-    public static final int GRAY_RESPONSE_UNIT_VALUE_1E_06 = 5;
+    public static final int GRAY_RESPONSE_UNIT_VALUE_0_01 = 2;
+    public static final int GRAY_RESPONSE_UNIT_VALUE_0_001 = 3;
+    public static final int GRAY_RESPONSE_UNIT_VALUE_0_0001 = 4;
+    public static final int GRAY_RESPONSE_UNIT_VALUE_0_00001 = 5;
 
     public static final TagInfoShort TIFF_TAG_GRAY_RESPONSE_CURVE = new TagInfoShort(
             "Gray Response Curve", 0x123, -1,
