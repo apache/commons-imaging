@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByte;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrLong;
 
@@ -22,18 +23,18 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShortOrLong;
 public interface Rfc2301TagConstants extends TiffFieldTypeConstants {
     public static final TagInfoShortOrLong TIFF_TAG_BAD_FAX_LINES = new TagInfoShortOrLong(
             "Bad Fax Lines", 0x0146, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoShort TIFF_TAG_CLEAN_FAX_DATA = new TagInfoShort(
             "Clean Fax Data", 0x0147, 1,
-            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int CLEAN_FAX_DATA_VALUE_CLEAN = 0;
     public static final int CLEAN_FAX_DATA_VALUE_REGENERATED = 1;
     public static final int CLEAN_FAX_DATA_VALUE_UNCLEAN = 2;
     
     public static final TagInfoShortOrLong TIFF_TAG_CONSECUTIVE_BAD_FAX_LINES = new TagInfoShortOrLong(
-            "Consecutive Bad Fax Lines", 0x0148,
-            1, TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+            "Consecutive Bad Fax Lines", 0x0148, 1,
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoLong TIFF_TAG_GLOBAL_PARAMETERS_IFD = new TagInfoLong(
             "Global Parameters IFD", 0x0190, 1,
@@ -59,6 +60,12 @@ public interface Rfc2301TagConstants extends TiffFieldTypeConstants {
     public static final TagInfoLong TIFF_TAG_CODING_METHODS = new TagInfoLong(
             "Coding Methods", 0x0193, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final int CODING_METHODS_VALUE_T4_1D = 2;
+    public static final int CODING_METHODS_VALUE_T4_2D = 4;
+    public static final int CODING_METHODS_VALUE_T6 = 8;
+    public static final int CODING_METHODS_VALUE_T82_T85 = 16;
+    public static final int CODING_METHODS_VALUE_T81 = 32;
+    public static final int CODING_METHODS_VALUE_T82_T43 = 64;
     
     public static final TagInfoByte TIFF_TAG_VERSION_YEAR = new TagInfoByte(
             "Version Year", 0x0194, 4,
@@ -66,6 +73,22 @@ public interface Rfc2301TagConstants extends TiffFieldTypeConstants {
     
     public static final TagInfoByte TIFF_TAG_MODE_NUMBER = new TagInfoByte(
             "Mode Number", 0x0195, 1,
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
+    public static final TagInfoRational TIFF_TAG_DECODE = new TagInfoRational(
+            "Decode", 0x01b1, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    
+    public static final TagInfoShort TIFF_TAG_DEFAULT_IMAGE_COLOR = new TagInfoShort(
+            "Default Image Color", 0x01b2, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
+    public static final TagInfoLong TIFF_TAG_STRIP_ROW_COUNTS = new TagInfoLong(
+            "Strip Row Counts", 0x022f, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+
+    public static final TagInfoShortOrLong TIFF_TAG_IMAGE_LAYER = new TagInfoShortOrLong(
+            "Image Layer", 0x87ac, 2,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final List<TagInfo> ALL_RFC_2301_TAGS =
@@ -78,5 +101,9 @@ public interface Rfc2301TagConstants extends TiffFieldTypeConstants {
                     TIFF_TAG_FAX_PROFILE,
                     TIFF_TAG_CODING_METHODS,
                     TIFF_TAG_VERSION_YEAR,
-                    TIFF_TAG_MODE_NUMBER));
+                    TIFF_TAG_MODE_NUMBER,
+                    TIFF_TAG_DECODE,
+                    TIFF_TAG_DEFAULT_IMAGE_COLOR,
+                    TIFF_TAG_STRIP_ROW_COUNTS,
+                    TIFF_TAG_IMAGE_LAYER));
 }

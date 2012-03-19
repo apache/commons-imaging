@@ -85,11 +85,6 @@ public interface ExifTagConstants
             TiffDirectoryType.EXIF_DIRECTORY_SUB_IFD2);
     public static final TagInfoUndefined EXIF_TAG_JPEGTABLES = new TagInfoUndefined("JPEGTables",
             0x015b, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoRational EXIF_TAG_DECODE = new TagInfoRational("Decode", 0x01b1,
-            -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_DEFAULT_IMAGE_COLOR = new TagInfoShort(
-            "Default Image Color", 0x01b2, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoLong EXIF_TAG_PREVIEW_IMAGE_START_MAKER_NOTES = new TagInfoLong(
             "Preview Image Start", 0x0201, 1,
             TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES);
@@ -114,27 +109,8 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_OTHER_IMAGE_LENGTH = new TagInfoLong(
             "Other Image Length", 0x0202, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_STRIP_ROW_COUNTS = new TagInfoLong(
-            "Strip Row Counts", 0x022f, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoByte EXIF_TAG_APPLICATION_NOTES = new TagInfoByte(
             "Application Notes", 0x02bc, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAscii EXIF_TAG_RELATED_IMAGE_FILE_FORMAT = new TagInfoAscii(
-            "Related Image File Format", 0x1000, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
-    public static final TagInfoShort EXIF_TAG_RELATED_IMAGE_WIDTH = new TagInfoShort(
-            "Related Image Width", 0x1001, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
-    public static final TagInfoShort EXIF_TAG_RELATED_IMAGE_LENGTH = new TagInfoShort(
-            "Related Image Length", 0x1002, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
-    public static final TagInfoShort EXIF_TAG_RATING = new TagInfoShort("Rating", 0x4746,
-            1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoShort EXIF_TAG_RATING_PERCENT = new TagInfoShort(
-            "Rating Percent", 0x4749, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoByte EXIF_TAG_WANG_ANNOTATION = new TagInfoByte(
-            "Wang Annotation", 0x80a4, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoUnknown EXIF_TAG_MATTEING = new TagInfoUnknown("Matteing",
             0x80e3, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -261,9 +237,6 @@ public interface ExifTagConstants
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
     public static final TagInfoUndefined EXIF_TAG_ICC_PROFILE = new TagInfoUndefined(
             "ICC_ Profile", 0x8773, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShortOrLong EXIF_TAG_IMAGE_LAYER = new TagInfoShortOrLong(
-            "Image Layer", 0x87ac, 2,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoShort EXIF_TAG_GEO_TIFF_DIRECTORY = new TagInfoShort(
             "Geo Tiff Directory", 0x87af, -1,
@@ -496,11 +469,6 @@ public interface ExifTagConstants
     public static final TagInfoUndefined EXIF_TAG_FLASHPIX_VERSION = new TagInfoUndefined(
             "Flashpix Version", 0xa000, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoShort EXIF_TAG_COLOR_SPACE = new TagInfoShort(
-            "Color Space", 0xa001, 1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int COLOR_SPACE_VALUE_SRGB = 1;
-    public static final int COLOR_SPACE_VALUE_ADOBE_RGB = 2;
-    public static final int COLOR_SPACE_VALUE_UNCALIBRATED = 65535;
     public static final TagInfoShort EXIF_TAG_EXIF_IMAGE_WIDTH = new TagInfoShort(
             "Exif Image Width", 0xa002, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -1021,19 +989,14 @@ public interface ExifTagConstants
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_SUB_IFD1,
                     EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD2,
                     EXIF_TAG_JPEGTABLES,
-                    EXIF_TAG_DECODE,
-                    EXIF_TAG_DEFAULT_IMAGE_COLOR,
                     EXIF_TAG_PREVIEW_IMAGE_START_MAKER_NOTES,
                     EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD,
                     EXIF_TAG_JPG_FROM_RAW_START_IFD2, EXIF_TAG_OTHER_IMAGE_START,
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_MAKER_NOTES,
                     EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD,
                     EXIF_TAG_JPG_FROM_RAW_LENGTH_IFD2, EXIF_TAG_OTHER_IMAGE_LENGTH,
-                    EXIF_TAG_STRIP_ROW_COUNTS, EXIF_TAG_APPLICATION_NOTES,
-                    EXIF_TAG_RELATED_IMAGE_FILE_FORMAT, EXIF_TAG_RELATED_IMAGE_WIDTH,
-                    EXIF_TAG_RELATED_IMAGE_LENGTH, EXIF_TAG_RATING,
-                    EXIF_TAG_RATING_PERCENT,
-                    EXIF_TAG_WANG_ANNOTATION, EXIF_TAG_MATTEING, EXIF_TAG_DATA_TYPE,
+                    EXIF_TAG_APPLICATION_NOTES,
+                    EXIF_TAG_MATTEING, EXIF_TAG_DATA_TYPE,
                     EXIF_TAG_IMAGE_DEPTH, EXIF_TAG_TILE_DEPTH, EXIF_TAG_MODEL_2,
                     EXIF_TAG_CFAREPEAT_PATTERN_DIM, EXIF_TAG_CFAPATTERN_2,
                     EXIF_TAG_BATTERY_LEVEL, EXIF_TAG_EXPOSURE_TIME,
@@ -1054,7 +1017,7 @@ public interface ExifTagConstants
                     EXIF_TAG_HCUSAGE, EXIF_TAG_SEMINFO, EXIF_TAG_AFCP_IPTC,
                     EXIF_TAG_MODEL_TRANSFORM, EXIF_TAG_LEAF_DATA,
                     EXIF_TAG_PHOTOSHOP_SETTINGS, EXIF_TAG_EXIF_OFFSET,
-                    EXIF_TAG_ICC_PROFILE, EXIF_TAG_IMAGE_LAYER,
+                    EXIF_TAG_ICC_PROFILE,
                     EXIF_TAG_GEO_TIFF_DIRECTORY, EXIF_TAG_GEO_TIFF_DOUBLE_PARAMS,
                     EXIF_TAG_GEO_TIFF_ASCII_PARAMS, EXIF_TAG_EXPOSURE_PROGRAM,
                     EXIF_TAG_SPECTRAL_SENSITIVITY, EXIF_TAG_GPSINFO, EXIF_TAG_ISO,
@@ -1081,7 +1044,7 @@ public interface ExifTagConstants
                     EXIF_TAG_SUB_SEC_TIME_ORIGINAL, EXIF_TAG_SUB_SEC_TIME_DIGITIZED,
                     EXIF_TAG_IMAGE_SOURCE_DATA, EXIF_TAG_XPTITLE, EXIF_TAG_XPCOMMENT,
                     EXIF_TAG_XPAUTHOR, EXIF_TAG_XPKEYWORDS, EXIF_TAG_XPSUBJECT,
-                    EXIF_TAG_FLASHPIX_VERSION, EXIF_TAG_COLOR_SPACE,
+                    EXIF_TAG_FLASHPIX_VERSION,
                     EXIF_TAG_EXIF_IMAGE_WIDTH, EXIF_TAG_EXIF_IMAGE_LENGTH,
                     EXIF_TAG_RELATED_SOUND_FILE, EXIF_TAG_INTEROP_OFFSET,
                     EXIF_TAG_FLASH_ENERGY_EXIF_IFD,
