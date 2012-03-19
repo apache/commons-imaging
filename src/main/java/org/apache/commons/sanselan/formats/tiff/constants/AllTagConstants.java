@@ -32,6 +32,7 @@ public interface AllTagConstants
                     DcfTagConstants.ALL_DCF_TAGS,
                     ExifTagConstants.ALL_EXIF_TAGS,
                     GpsTagConstants.ALL_GPS_TAGS,
+                    HylaFaxTagConstants.ALL_HYLAFAX_TAGS,
                     MicrosoftTagConstants.ALL_MICROSOFT_TAGS,
                     Rfc2301TagConstants.ALL_RFC_2301_TAGS,
                     Tiff4TagConstants.ALL_TIFF_4_TAGS,

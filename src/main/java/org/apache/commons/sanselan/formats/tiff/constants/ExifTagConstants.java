@@ -277,15 +277,6 @@ public interface ExifTagConstants
     public static final TagInfoShort EXIF_TAG_SELF_TIMER_MODE = new TagInfoShort(
             "Self Timer Mode", 0x882b, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoLong EXIF_TAG_FAX_RECV_PARAMS = new TagInfoLong(
-            "Fax Recv Params", 0x885c, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAscii EXIF_TAG_FAX_SUB_ADDRESS = new TagInfoAscii(
-            "Fax Sub Address", 0x885d, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_FAX_RECV_TIME = new TagInfoLong(
-            "Fax Recv Time", 0x885e, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoLong EXIF_TAG_LEAF_SUB_IFD = new TagInfoLong(
             "Leaf Sub IFD", 0x888a, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -456,16 +447,6 @@ public interface ExifTagConstants
     public static final TagInfoUndefined EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefined(
             "Image Source Data", 0x935c, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoXpString EXIF_TAG_XPTITLE = new TagInfoXpString("XPTitle",
-            0x9c9b, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoXpString EXIF_TAG_XPCOMMENT = new TagInfoXpString("XPComment",
-            0x9c9c, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoXpString EXIF_TAG_XPAUTHOR = new TagInfoXpString("XPAuthor",
-            0x9c9d, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoXpString EXIF_TAG_XPKEYWORDS = new TagInfoXpString("XPKeywords",
-            0x9c9e, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoXpString EXIF_TAG_XPSUBJECT = new TagInfoXpString("XPSubject",
-            0x9c9f, -1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoUndefined EXIF_TAG_FLASHPIX_VERSION = new TagInfoUndefined(
             "Flashpix Version", 0xa000, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -1023,8 +1004,7 @@ public interface ExifTagConstants
                     EXIF_TAG_SPECTRAL_SENSITIVITY, EXIF_TAG_GPSINFO, EXIF_TAG_ISO,
                     EXIF_TAG_OPTO__ELECTRIC_CONV_FACTOR, EXIF_TAG_INTERLACE,
                     EXIF_TAG_TIME_ZONE_OFFSET, EXIF_TAG_SELF_TIMER_MODE,
-                    EXIF_TAG_FAX_RECV_PARAMS, EXIF_TAG_FAX_SUB_ADDRESS,
-                    EXIF_TAG_FAX_RECV_TIME, EXIF_TAG_LEAF_SUB_IFD,
+                    EXIF_TAG_LEAF_SUB_IFD,
                     EXIF_TAG_EXIF_VERSION, EXIF_TAG_DATE_TIME_ORIGINAL,
                     EXIF_TAG_CREATE_DATE, EXIF_TAG_COMPONENTS_CONFIGURATION,
                     EXIF_TAG_COMPRESSED_BITS_PER_PIXEL, EXIF_TAG_SHUTTER_SPEED_VALUE,
@@ -1042,8 +1022,7 @@ public interface ExifTagConstants
                     EXIF_TAG_EXPOSURE_INDEX, EXIF_TAG_TIFF_EPSTANDARD_ID_1,
                     EXIF_TAG_SENSING_METHOD, EXIF_TAG_STO_NITS, EXIF_TAG_SUB_SEC_TIME,
                     EXIF_TAG_SUB_SEC_TIME_ORIGINAL, EXIF_TAG_SUB_SEC_TIME_DIGITIZED,
-                    EXIF_TAG_IMAGE_SOURCE_DATA, EXIF_TAG_XPTITLE, EXIF_TAG_XPCOMMENT,
-                    EXIF_TAG_XPAUTHOR, EXIF_TAG_XPKEYWORDS, EXIF_TAG_XPSUBJECT,
+                    EXIF_TAG_IMAGE_SOURCE_DATA,
                     EXIF_TAG_FLASHPIX_VERSION,
                     EXIF_TAG_EXIF_IMAGE_WIDTH, EXIF_TAG_EXIF_IMAGE_LENGTH,
                     EXIF_TAG_RELATED_SOUND_FILE, EXIF_TAG_INTEROP_OFFSET,
