@@ -50,7 +50,7 @@ public interface AdobePageMaker6TagConstants extends TiffFieldTypeConstants {
             "Image ID", 0x800d, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
-    public static final List<TagInfo> ALL_ADOBE_PAGEMAKER_6_TAG_CONSTANTS =
+    public static final List<TagInfo> ALL_ADOBE_PAGEMAKER_6_TAGS =
             Collections.unmodifiableList(Arrays.asList(
                     TIFF_TAG_SUB_IFD,
                     TIFF_TAG_CLIP_PATH,

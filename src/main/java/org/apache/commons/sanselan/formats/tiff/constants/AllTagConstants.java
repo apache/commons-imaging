@@ -19,16 +19,26 @@ package org.apache.commons.sanselan.formats.tiff.constants;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.sanselan.SanselanConstants;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 
-public interface AllTagConstants
-        extends
-            SanselanConstants
+public interface AllTagConstants extends
+        AdobePhotoshopTagConstants,
+        AdobePageMaker6TagConstants,
+        DcfTagConstants,
+        ExifTagConstants,
+        GpsTagConstants,
+        HylaFaxTagConstants,
+        MicrosoftTagConstants,
+        Rfc2301TagConstants,
+        Tiff4TagConstants,
+        TiffEpTagConstants,
+        TiffTagConstants,
+        WangTagConstants
 {
     public static final List<TagInfo> ALL_TAGS = Collections.unmodifiableList(
             TagConstantsUtils.mergeTagLists(
-                    AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAG_CONSTANTS,
+                    AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS,
+                    AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS,
                     DcfTagConstants.ALL_DCF_TAGS,
                     ExifTagConstants.ALL_EXIF_TAGS,
                     GpsTagConstants.ALL_GPS_TAGS,
@@ -36,6 +46,7 @@ public interface AllTagConstants
                     MicrosoftTagConstants.ALL_MICROSOFT_TAGS,
                     Rfc2301TagConstants.ALL_RFC_2301_TAGS,
                     Tiff4TagConstants.ALL_TIFF_4_TAGS,
+                    TiffEpTagConstants.ALL_TIFF_EP_TAGS,
                     TiffTagConstants.ALL_TIFF_TAGS,
                     WangTagConstants.ALL_WANG_TAGS));
 }

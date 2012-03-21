@@ -83,8 +83,6 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD2 = new TagInfoLong(
             "Jpg From Raw Length", 0x0117, 1,
             TiffDirectoryType.EXIF_DIRECTORY_SUB_IFD2);
-    public static final TagInfoUndefined EXIF_TAG_JPEGTABLES = new TagInfoUndefined("JPEGTables",
-            0x015b, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoLong EXIF_TAG_PREVIEW_IMAGE_START_MAKER_NOTES = new TagInfoLong(
             "Preview Image Start", 0x0201, 1,
             TiffDirectoryType.EXIF_DIRECTORY_MAKER_NOTES);
@@ -123,21 +121,12 @@ public interface ExifTagConstants
             0x80e6, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoUnknown EXIF_TAG_MODEL_2 = new TagInfoUnknown("Model 2",
             0x827d, -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_CFAREPEAT_PATTERN_DIM = new TagInfoShort(
-            "CFARepeat Pattern Dim", 0x828d, 2,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoByte EXIF_TAG_CFAPATTERN_2 = new TagInfoByte(
-            "CFAPattern 2", 0x828e, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    // FIXME: rational or ascii!!! N4378
-    public static final TagInfoRational EXIF_TAG_BATTERY_LEVEL = new TagInfoRational(
-            "Battery Level", 0x828f, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoRational EXIF_TAG_EXPOSURE_TIME = new TagInfoRational(
-            "Exposure Time", 0x829a, 1,
+            "Exposure Time", 0x829a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoRational EXIF_TAG_FNUMBER = new TagInfoRational("FNumber",
-            0x829d, 1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_FNUMBER = new TagInfoRational(
+            "FNumber", 0x829d, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoLong EXIF_TAG_MDFILE_TAG = new TagInfoLong("MDFile Tag",
             0x82a5, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoRational EXIF_TAG_MDSCALE_PIXEL = new TagInfoRational(
@@ -235,9 +224,6 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_EXIF_OFFSET = new TagInfoLong(
             "Exif Offset", 0x8769, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
-    public static final TagInfoUndefined EXIF_TAG_ICC_PROFILE = new TagInfoUndefined(
-            "ICC_ Profile", 0x8773, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoShort EXIF_TAG_GEO_TIFF_DIRECTORY = new TagInfoShort(
             "Geo Tiff Directory", 0x87af, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -259,24 +245,17 @@ public interface ExifTagConstants
     public static final int EXPOSURE_PROGRAM_VALUE_PORTRAIT = 7;
     public static final int EXPOSURE_PROGRAM_VALUE_LANDSCAPE = 8;
     public static final TagInfoAscii EXIF_TAG_SPECTRAL_SENSITIVITY = new TagInfoAscii(
-            "Spectral Sensitivity", 0x8824, 1,
+            "Spectral Sensitivity", 0x8824, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoLong EXIF_TAG_GPSINFO = new TagInfoLong(
             "GPSInfo", 0x8825, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
-    public static final TagInfoShort EXIF_TAG_ISO = new TagInfoShort("ISO", 0x8827,
-            1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoUndefined EXIF_TAG_OPTO__ELECTRIC_CONV_FACTOR = new TagInfoUndefined(
-            "Opto - Electric Conv Factor", 0x8828,
-            -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_INTERLACE = new TagInfoShort("Interlace",
-            0x8829, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoSShort EXIF_TAG_TIME_ZONE_OFFSET = new TagInfoSShort(
-            "Time Zone Offset", 0x882a, -1,
+    public static final TagInfoShort EXIF_TAG_ISO = new TagInfoShort(
+            "PhotographicSensitivity", 0x8827, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoShort EXIF_TAG_SELF_TIMER_MODE = new TagInfoShort(
-            "Self Timer Mode", 0x882b, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoUndefined EXIF_TAG_OPTO_ELECTRIC_CONV_FACTOR = new TagInfoUndefined(
+            "Opto - Electric Conv Factor", 0x8828, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoLong EXIF_TAG_LEAF_SUB_IFD = new TagInfoLong(
             "Leaf Sub IFD", 0x888a, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -310,7 +289,7 @@ public interface ExifTagConstants
             "Max Aperture Value", 0x9205, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoRational EXIF_TAG_SUBJECT_DISTANCE = new TagInfoRational(
-            "Subject Distance", 0x9206, 1,
+            "Subject Distance", 0x9206, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoShort EXIF_TAG_METERING_MODE = new TagInfoShort(
             "Metering Mode", 0x9207, 1,
@@ -345,8 +324,9 @@ public interface ExifTagConstants
     public static final int LIGHT_SOURCE_VALUE_D50 = 23;
     public static final int LIGHT_SOURCE_VALUE_ISO_STUDIO_TUNGSTEN = 24;
     public static final int LIGHT_SOURCE_VALUE_OTHER = 255;
-    public static final TagInfoShort EXIF_TAG_FLASH = new TagInfoShort("Flash", 0x9209,
-            1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoShort EXIF_TAG_FLASH = new TagInfoShort(
+            "Flash", 0x9209, 1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final int FLASH_VALUE_NO_FLASH = 0x0;
     public static final int FLASH_VALUE_FIRED = 0x1;
     public static final int FLASH_VALUE_FIRED_RETURN_NOT_DETECTED = 0x5;
@@ -375,58 +355,11 @@ public interface ExifTagConstants
     public static final int FLASH_VALUE_AUTO_FIRED_RED_EYE_REDUCTION_RETURN_NOT_DETECTED = 0x5d;
     public static final int FLASH_VALUE_AUTO_FIRED_RED_EYE_REDUCTION_RETURN_DETECTED = 0x5f;
     public static final TagInfoRational EXIF_TAG_FOCAL_LENGTH = new TagInfoRational(
-            "Focal Length", 0x920a, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoRational EXIF_TAG_FLASH_ENERGY = new TagInfoRational(
-            "Flash Energy", 0x920b, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoUndefined EXIF_TAG_SPATIAL_FREQUENCY_RESPONSE_1 = new TagInfoUndefined(
-            "Spatial Frequency Response", 0x920c,
-            -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoUndefined EXIF_TAG_NOISE_1 = new TagInfoUndefined("Noise", 0x920d,
-            -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoRational EXIF_TAG_FOCAL_PLANE_XRESOLUTION = new TagInfoRational(
-            "Focal Plane XResolution", 0x920e,
-            1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoRational EXIF_TAG_FOCAL_PLANE_YRESOLUTION = new TagInfoRational(
-            "Focal Plane YResolution", 0x920f,
-            1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT = new TagInfoShort(
-            "Focal Plane Resolution Unit", 0x9210,
-            1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int FOCAL_PLANE_RESOLUTION_UNIT_VALUE_NONE = 1;
-    public static final int FOCAL_PLANE_RESOLUTION_UNIT_VALUE_INCHES = 2;
-    public static final int FOCAL_PLANE_RESOLUTION_UNIT_VALUE_CM = 3;
-    public static final int FOCAL_PLANE_RESOLUTION_UNIT_VALUE_MM = 4;
-    public static final int FOCAL_PLANE_RESOLUTION_UNIT_VALUE_UM = 5;
-    public static final TagInfoLong EXIF_TAG_IMAGE_NUMBER_EXIF_IFD = new TagInfoLong(
-            "Image Number", 0x9211, 1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoAscii EXIF_TAG_SECURITY_CLASSIFICATION_EXIF_IFD = new TagInfoAscii(
-            "Security Classification", 0x9212, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoAscii EXIF_TAG_IMAGE_HISTORY_EXIF_IFD = new TagInfoAscii(
-            "Image History", 0x9213, 1,
+            "Focal Length", 0x920a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoShort EXIF_TAG_SUBJECT_LOCATION_1 = new TagInfoShort(
-            "Subject Location", 0x9214, 4,
+            "Subject Location", 0x9214, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoRational EXIF_TAG_EXPOSURE_INDEX = new TagInfoRational(
-            "Exposure Index", 0x9215, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoByte EXIF_TAG_TIFF_EPSTANDARD_ID_1 = new TagInfoByte(
-            "TIFF- EPStandard ID", 0x9216, 4,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_SENSING_METHOD = new TagInfoShort(
-            "Sensing Method", 0x9217, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int SENSING_METHOD_VALUE_MONOCHROME_AREA = 1;
-    public static final int SENSING_METHOD_VALUE_ONE_CHIP_COLOR_AREA = 2;
-    public static final int SENSING_METHOD_VALUE_TWO_CHIP_COLOR_AREA = 3;
-    public static final int SENSING_METHOD_VALUE_THREE_CHIP_COLOR_AREA = 4;
-    public static final int SENSING_METHOD_VALUE_COLOR_SEQUENTIAL_AREA = 5;
-    public static final int SENSING_METHOD_VALUE_MONOCHROME_LINEAR = 6;
-    public static final int SENSING_METHOD_VALUE_TRILINEAR = 7;
-    public static final int SENSING_METHOD_VALUE_COLOR_SEQUENTIAL_LINEAR = 8;
     public static final TagInfoDouble EXIF_TAG_STO_NITS = new TagInfoDouble("Sto Nits",
             0x923f, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     //     skipping Maker Note!
@@ -444,9 +377,6 @@ public interface ExifTagConstants
     public static final TagInfoAscii EXIF_TAG_SUB_SEC_TIME_DIGITIZED = new TagInfoAscii(
             "Sub Sec Time Digitized", 0x9292, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoUndefined EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefined(
-            "Image Source Data", 0x935c, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoUndefined EXIF_TAG_FLASHPIX_VERSION = new TagInfoUndefined(
             "Flashpix Version", 0xa000, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -969,7 +899,6 @@ public interface ExifTagConstants
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_IFD0,
                     EXIF_TAG_PREVIEW_IMAGE_LENGTH_SUB_IFD1,
                     EXIF_TAG_JPG_FROM_RAW_LENGTH_SUB_IFD2,
-                    EXIF_TAG_JPEGTABLES,
                     EXIF_TAG_PREVIEW_IMAGE_START_MAKER_NOTES,
                     EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD,
                     EXIF_TAG_JPG_FROM_RAW_START_IFD2, EXIF_TAG_OTHER_IMAGE_START,
@@ -979,8 +908,7 @@ public interface ExifTagConstants
                     EXIF_TAG_APPLICATION_NOTES,
                     EXIF_TAG_MATTEING, EXIF_TAG_DATA_TYPE,
                     EXIF_TAG_IMAGE_DEPTH, EXIF_TAG_TILE_DEPTH, EXIF_TAG_MODEL_2,
-                    EXIF_TAG_CFAREPEAT_PATTERN_DIM, EXIF_TAG_CFAPATTERN_2,
-                    EXIF_TAG_BATTERY_LEVEL, EXIF_TAG_EXPOSURE_TIME,
+                    EXIF_TAG_EXPOSURE_TIME,
                     EXIF_TAG_FNUMBER, EXIF_TAG_MDFILE_TAG, EXIF_TAG_MDSCALE_PIXEL,
                     EXIF_TAG_MDCOLOR_TABLE, EXIF_TAG_MDLAB_NAME,
                     EXIF_TAG_MDSAMPLE_INFO, EXIF_TAG_MDPREP_DATE, EXIF_TAG_MDPREP_TIME,
@@ -998,12 +926,10 @@ public interface ExifTagConstants
                     EXIF_TAG_HCUSAGE, EXIF_TAG_SEMINFO, EXIF_TAG_AFCP_IPTC,
                     EXIF_TAG_MODEL_TRANSFORM, EXIF_TAG_LEAF_DATA,
                     EXIF_TAG_PHOTOSHOP_SETTINGS, EXIF_TAG_EXIF_OFFSET,
-                    EXIF_TAG_ICC_PROFILE,
                     EXIF_TAG_GEO_TIFF_DIRECTORY, EXIF_TAG_GEO_TIFF_DOUBLE_PARAMS,
                     EXIF_TAG_GEO_TIFF_ASCII_PARAMS, EXIF_TAG_EXPOSURE_PROGRAM,
                     EXIF_TAG_SPECTRAL_SENSITIVITY, EXIF_TAG_GPSINFO, EXIF_TAG_ISO,
-                    EXIF_TAG_OPTO__ELECTRIC_CONV_FACTOR, EXIF_TAG_INTERLACE,
-                    EXIF_TAG_TIME_ZONE_OFFSET, EXIF_TAG_SELF_TIMER_MODE,
+                    EXIF_TAG_OPTO_ELECTRIC_CONV_FACTOR,
                     EXIF_TAG_LEAF_SUB_IFD,
                     EXIF_TAG_EXIF_VERSION, EXIF_TAG_DATE_TIME_ORIGINAL,
                     EXIF_TAG_CREATE_DATE, EXIF_TAG_COMPONENTS_CONFIGURATION,
@@ -1012,17 +938,9 @@ public interface ExifTagConstants
                     EXIF_TAG_EXPOSURE_COMPENSATION, EXIF_TAG_MAX_APERTURE_VALUE,
                     EXIF_TAG_SUBJECT_DISTANCE, EXIF_TAG_METERING_MODE,
                     EXIF_TAG_LIGHT_SOURCE, EXIF_TAG_FLASH, EXIF_TAG_FOCAL_LENGTH,
-                    EXIF_TAG_FLASH_ENERGY, EXIF_TAG_SPATIAL_FREQUENCY_RESPONSE_1,
-                    EXIF_TAG_NOISE_1, EXIF_TAG_FOCAL_PLANE_XRESOLUTION,
-                    EXIF_TAG_FOCAL_PLANE_YRESOLUTION,
-                    EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT,
-                    EXIF_TAG_IMAGE_NUMBER_EXIF_IFD,
-                    EXIF_TAG_SECURITY_CLASSIFICATION_EXIF_IFD,
-                    EXIF_TAG_IMAGE_HISTORY_EXIF_IFD, EXIF_TAG_SUBJECT_LOCATION_1,
-                    EXIF_TAG_EXPOSURE_INDEX, EXIF_TAG_TIFF_EPSTANDARD_ID_1,
-                    EXIF_TAG_SENSING_METHOD, EXIF_TAG_STO_NITS, EXIF_TAG_SUB_SEC_TIME,
+                    EXIF_TAG_SUBJECT_LOCATION_1,
+                    EXIF_TAG_STO_NITS, EXIF_TAG_SUB_SEC_TIME,
                     EXIF_TAG_SUB_SEC_TIME_ORIGINAL, EXIF_TAG_SUB_SEC_TIME_DIGITIZED,
-                    EXIF_TAG_IMAGE_SOURCE_DATA,
                     EXIF_TAG_FLASHPIX_VERSION,
                     EXIF_TAG_EXIF_IMAGE_WIDTH, EXIF_TAG_EXIF_IMAGE_LENGTH,
                     EXIF_TAG_RELATED_SOUND_FILE, EXIF_TAG_INTEROP_OFFSET,

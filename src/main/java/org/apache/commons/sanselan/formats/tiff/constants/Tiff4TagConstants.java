@@ -12,7 +12,7 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
  * <BR>
  * http://cool.conservation-us.org/bytopic/imaging/std/tiff4.html
  */
-public class Tiff4TagConstants {
+public interface Tiff4TagConstants {
     public static final TagInfoShort TIFF_TAG_COLOR_RESPONSE_UNIT = new TagInfoShort(
             "Color Response Unit", 0x12C, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);

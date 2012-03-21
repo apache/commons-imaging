@@ -24,7 +24,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +37,7 @@ import org.apache.commons.sanselan.common.IImageMetadata;
 import org.apache.commons.sanselan.common.ImageBuilder;
 import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory.ImageDataElement;
-import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.datareaders.DataReader;
@@ -92,7 +91,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
                 .readFirstDirectory(byteSource, params, false, formatCompliance);
         TiffDirectory directory = contents.directories.get(0);
 
-        return directory.getFieldValue(ExifTagConstants.EXIF_TAG_ICC_PROFILE);
+        return directory.getFieldValue(AllTagConstants.EXIF_TAG_ICC_PROFILE);
     }
 
     public Dimension getImageSize(ByteSource byteSource, Map params)

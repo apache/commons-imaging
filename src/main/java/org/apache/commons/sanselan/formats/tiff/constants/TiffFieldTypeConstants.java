@@ -96,4 +96,8 @@ public interface TiffFieldTypeConstants extends SanselanConstants
     public static final List<FieldType> FIELD_TYPE_DESCRIPTION_BYTE_OR_SHORT =
             Collections.unmodifiableList(Arrays.asList(
                     FIELD_TYPE_SHORT, FIELD_TYPE_BYTE));
+    
+    public static final List<FieldType> FIELD_TYPE_DESCRIPTION_ASCII_OR_RATIONAL =
+            Collections.unmodifiableList(Arrays.asList(
+                    FIELD_TYPE_ASCII, FIELD_TYPE_RATIONAL));
 }

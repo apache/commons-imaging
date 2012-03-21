@@ -21,25 +21,29 @@ import java.util.List;
 
 import org.apache.commons.sanselan.SanselanTest;
 import org.apache.commons.sanselan.formats.tiff.constants.AdobePageMaker6TagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.AdobePhotoshopTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.DcfTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.MicrosoftTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.Rfc2301TagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.Tiff4TagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.WangTagConstants;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 
 public class TiffTagIntegrityTest extends SanselanTest {
     public void testTagIntegrity() {
-        verifyFields(AdobePageMaker6TagConstants.class, AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAG_CONSTANTS);
+        verifyFields(AdobePageMaker6TagConstants.class, AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
+        verifyFields(AdobePhotoshopTagConstants.class, AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);
         verifyFields(DcfTagConstants.class, DcfTagConstants.ALL_DCF_TAGS);
         verifyFields(ExifTagConstants.class, ExifTagConstants.ALL_EXIF_TAGS);
         verifyFields(GpsTagConstants.class, GpsTagConstants.ALL_GPS_TAGS);
         verifyFields(MicrosoftTagConstants.class, MicrosoftTagConstants.ALL_MICROSOFT_TAGS);
         verifyFields(Rfc2301TagConstants.class, Rfc2301TagConstants.ALL_RFC_2301_TAGS);
         verifyFields(Tiff4TagConstants.class, Tiff4TagConstants.ALL_TIFF_4_TAGS);
+        verifyFields(TiffEpTagConstants.class, TiffEpTagConstants.ALL_TIFF_EP_TAGS);
         verifyFields(TiffTagConstants.class, TiffTagConstants.ALL_TIFF_TAGS);
         verifyFields(WangTagConstants.class, WangTagConstants.ALL_WANG_TAGS);
     }
