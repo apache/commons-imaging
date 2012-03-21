@@ -26,6 +26,7 @@ import org.apache.commons.sanselan.formats.tiff.constants.DcfTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.MicrosoftTagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.MolecularDynamicsGelTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.Rfc2301TagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.Tiff4TagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffEpTagConstants;
@@ -40,6 +41,7 @@ public class TiffTagIntegrityTest extends SanselanTest {
         verifyFields(DcfTagConstants.class, DcfTagConstants.ALL_DCF_TAGS);
         verifyFields(ExifTagConstants.class, ExifTagConstants.ALL_EXIF_TAGS);
         verifyFields(GpsTagConstants.class, GpsTagConstants.ALL_GPS_TAGS);
+        verifyFields(MolecularDynamicsGelTagConstants.class, MolecularDynamicsGelTagConstants.ALL_MOLECULAR_DYNAMICS_GEL_TAGS);
         verifyFields(MicrosoftTagConstants.class, MicrosoftTagConstants.ALL_MICROSOFT_TAGS);
         verifyFields(Rfc2301TagConstants.class, Rfc2301TagConstants.ALL_RFC_2301_TAGS);
         verifyFields(Tiff4TagConstants.class, Tiff4TagConstants.ALL_TIFF_4_TAGS);
