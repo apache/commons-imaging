@@ -10,6 +10,11 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoLong;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoShort;
 
+/**
+ * Molecular Dynamics GEL file format
+ * <BR>  
+ * http://www.awaresystems.be/imaging/tiff/tifftags/docs/gel.html
+ */
 public interface MolecularDynamicsGelTagConstants extends TiffFieldTypeConstants {
     public static final TagInfoLong EXIF_TAG_MDFILE_TAG = new TagInfoLong(
             "MDFile Tag", 0x82a5, 1,

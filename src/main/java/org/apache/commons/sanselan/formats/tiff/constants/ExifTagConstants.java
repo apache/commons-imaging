@@ -502,123 +502,6 @@ public interface ExifTagConstants
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoRational EXIF_TAG_GAMMA = new TagInfoRational("Gamma", 0xa500,
             1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoByte EXIF_TAG_PIXEL_FORMAT = new TagInfoByte(
-            "Pixel Format", 0xbc01, 16,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    // FIXME: convert to GUIDs
-    public static final int PIXEL_FORMAT_VALUE_BLACK_AND_WHITE = 0x5;
-    public static final int PIXEL_FORMAT_VALUE_8_BIT_GRAY = 0x8;
-    public static final int PIXEL_FORMAT_VALUE_16_BIT_BGR555 = 0x9;
-    public static final int PIXEL_FORMAT_VALUE_16_BIT_BGR565 = 0xa;
-    public static final int PIXEL_FORMAT_VALUE_16_BIT_GRAY = 0xb;
-    public static final int PIXEL_FORMAT_VALUE_24_BIT_BGR = 0xc;
-    public static final int PIXEL_FORMAT_VALUE_24_BIT_RGB = 0xd;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_BGR = 0xe;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_BGRA = 0xf;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_PBGRA = 0x10;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_GRAY_FLOAT = 0x11;
-    public static final int PIXEL_FORMAT_VALUE_48_BIT_RGB_FIXED_POINT = 0x12;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_BGR101010 = 0x13;
-    public static final int PIXEL_FORMAT_VALUE_48_BIT_RGB = 0x15;
-    public static final int PIXEL_FORMAT_VALUE_64_BIT_RGBA = 0x16;
-    public static final int PIXEL_FORMAT_VALUE_64_BIT_PRGBA = 0x17;
-    public static final int PIXEL_FORMAT_VALUE_96_BIT_RGB_FIXED_POINT = 0x18;
-    public static final int PIXEL_FORMAT_VALUE_128_BIT_RGBA_FLOAT = 0x19;
-    public static final int PIXEL_FORMAT_VALUE_128_BIT_PRGBA_FLOAT = 0x1a;
-    public static final int PIXEL_FORMAT_VALUE_128_BIT_RGB_FLOAT = 0x1b;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_CMYK = 0x1c;
-    public static final int PIXEL_FORMAT_VALUE_64_BIT_RGBA_FIXED_POINT = 0x1d;
-    public static final int PIXEL_FORMAT_VALUE_128_BIT_RGBA_FIXED_POINT = 0x1e;
-    public static final int PIXEL_FORMAT_VALUE_64_BIT_CMYK = 0x1f;
-    public static final int PIXEL_FORMAT_VALUE_24_BIT_3_CHANNELS = 0x20;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_4_CHANNELS = 0x21;
-    public static final int PIXEL_FORMAT_VALUE_40_BIT_5_CHANNELS = 0x22;
-    public static final int PIXEL_FORMAT_VALUE_48_BIT_6_CHANNELS = 0x23;
-    public static final int PIXEL_FORMAT_VALUE_56_BIT_7_CHANNELS = 0x24;
-    public static final int PIXEL_FORMAT_VALUE_64_BIT_8_CHANNELS = 0x25;
-    public static final int PIXEL_FORMAT_VALUE_48_BIT_3_CHANNELS = 0x26;
-    public static final int PIXEL_FORMAT_VALUE_64_BIT_4_CHANNELS = 0x27;
-    public static final int PIXEL_FORMAT_VALUE_80_BIT_5_CHANNELS = 0x28;
-    public static final int PIXEL_FORMAT_VALUE_96_BIT_6_CHANNELS = 0x29;
-    public static final int PIXEL_FORMAT_VALUE_112_BIT_7_CHANNELS = 0x2a;
-    public static final int PIXEL_FORMAT_VALUE_128_BIT_8_CHANNELS = 0x2b;
-    public static final int PIXEL_FORMAT_VALUE_40_BIT_CMYK_ALPHA = 0x2c;
-    public static final int PIXEL_FORMAT_VALUE_80_BIT_CMYK_ALPHA = 0x2d;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_3_CHANNELS_ALPHA = 0x2e;
-    public static final int PIXEL_FORMAT_VALUE_40_BIT_4_CHANNELS_ALPHA = 0x2f;
-    public static final int PIXEL_FORMAT_VALUE_48_BIT_5_CHANNELS_ALPHA = 0x30;
-    public static final int PIXEL_FORMAT_VALUE_56_BIT_6_CHANNELS_ALPHA = 0x31;
-    public static final int PIXEL_FORMAT_VALUE_64_BIT_7_CHANNELS_ALPHA = 0x32;
-    public static final int PIXEL_FORMAT_VALUE_72_BIT_8_CHANNELS_ALPHA = 0x33;
-    public static final int PIXEL_FORMAT_VALUE_64_BIT_3_CHANNELS_ALPHA = 0x34;
-    public static final int PIXEL_FORMAT_VALUE_80_BIT_4_CHANNELS_ALPHA = 0x35;
-    public static final int PIXEL_FORMAT_VALUE_96_BIT_5_CHANNELS_ALPHA = 0x36;
-    public static final int PIXEL_FORMAT_VALUE_112_BIT_6_CHANNELS_ALPHA = 0x37;
-    public static final int PIXEL_FORMAT_VALUE_128_BIT_7_CHANNELS_ALPHA = 0x38;
-    public static final int PIXEL_FORMAT_VALUE_144_BIT_8_CHANNELS_ALPHA = 0x39;
-    public static final int PIXEL_FORMAT_VALUE_64_BIT_RGBA_HALF = 0x3a;
-    public static final int PIXEL_FORMAT_VALUE_48_BIT_RGB_HALF = 0x3b;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_RGBE = 0x3d;
-    public static final int PIXEL_FORMAT_VALUE_16_BIT_GRAY_HALF = 0x3e;
-    public static final int PIXEL_FORMAT_VALUE_32_BIT_GRAY_FIXED_POINT = 0x3f;
-    public static final TagInfoLong EXIF_TAG_TRANSFOMATION = new TagInfoLong(
-            "Transfomation", 0xbc02, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int TRANSFOMATION_VALUE_HORIZONTAL_NORMAL = 0;
-    public static final int TRANSFOMATION_VALUE_MIRROR_VERTICAL = 1;
-    public static final int TRANSFOMATION_VALUE_MIRROR_HORIZONTAL = 2;
-    public static final int TRANSFOMATION_VALUE_ROTATE_180 = 3;
-    public static final int TRANSFOMATION_VALUE_ROTATE_90_CW = 4;
-    public static final int TRANSFOMATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_90_CW = 5;
-    public static final int TRANSFOMATION_VALUE_MIRROR_HORIZONTAL_AND_ROTATE_270_CW = 6;
-    public static final int TRANSFOMATION_VALUE_ROTATE_270_CW = 7;
-    public static final TagInfoLong EXIF_TAG_UNCOMPRESSED = new TagInfoLong(
-            "Uncompressed", 0xbc03, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int UNCOMPRESSED_VALUE_NO = 0;
-    public static final int UNCOMPRESSED_VALUE_YES = 1;
-    public static final TagInfoLong EXIF_TAG_IMAGE_TYPE = new TagInfoLong("Image Type",
-            0xbc04, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_IMAGE_WIDTH = new TagInfoLong(
-            "Image Width", 0xbc80, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_IMAGE_HEIGHT = new TagInfoLong(
-            "Image Height", 0xbc81, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoFloat EXIF_TAG_WIDTH_RESOLUTION = new TagInfoFloat(
-            "Width Resolution", 0xbc82, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoFloat EXIF_TAG_HEIGHT_RESOLUTION = new TagInfoFloat(
-            "Height Resolution", 0xbc83, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    // FIXME: might be an offset?
-    public static final TagInfoLong EXIF_TAG_IMAGE_OFFSET = new TagInfoLong(
-            "Image Offset", 0xbcc0, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_IMAGE_BYTE_COUNT = new TagInfoLong(
-            "Image Byte Count", 0xbcc1, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    // FIXME: might be an offset?
-    public static final TagInfoLong EXIF_TAG_ALPHA_OFFSET = new TagInfoLong(
-            "Alpha Offset", 0xbcc2, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_ALPHA_BYTE_COUNT = new TagInfoLong(
-            "Alpha Byte Count", 0xbcc3, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoByte EXIF_TAG_IMAGE_DATA_DISCARD = new TagInfoByte(
-            "Image Data Discard", 0xbcc4, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int IMAGE_DATA_DISCARD_VALUE_FULL_RESOLUTION = 0;
-    public static final int IMAGE_DATA_DISCARD_VALUE_FLEXBITS_DISCARDED = 1;
-    public static final int IMAGE_DATA_DISCARD_VALUE_HIGH_PASS_FREQUENCY_DATA_DISCARDED = 2;
-    public static final int IMAGE_DATA_DISCARD_VALUE_HIGHPASS_AND_LOW_PASS_FREQUENCY_DATA_DISCARDED = 3;
-    public static final TagInfoByte EXIF_TAG_ALPHA_DATA_DISCARD = new TagInfoByte(
-            "Alpha Data Discard", 0xbcc5, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final int ALPHA_DATA_DISCARD_VALUE_FULL_RESOLUTION = 0;
-    public static final int ALPHA_DATA_DISCARD_VALUE_FLEXBITS_DISCARDED = 1;
-    public static final int ALPHA_DATA_DISCARD_VALUE_HIGH_PASS_FREQUENCY_DATA_DISCARDED = 2;
-    public static final int ALPHA_DATA_DISCARD_VALUE_HIGHPASS_AND_LOW_PASS_FREQUENCY_DATA_DISCARDED = 3;
     public static final TagInfoAscii EXIF_TAG_OCE_SCANJOB_DESC = new TagInfoAscii(
             "Oce Scanjob Desc", 0xc427, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -936,13 +819,7 @@ public interface ExifTagConstants
                     EXIF_TAG_DEVICE_SETTING_DESCRIPTION,
                     EXIF_TAG_SUBJECT_DISTANCE_RANGE, EXIF_TAG_IMAGE_UNIQUE_ID,
                     EXIF_TAG_GDALMETADATA, EXIF_TAG_GDALNO_DATA, EXIF_TAG_GAMMA,
-                    EXIF_TAG_PIXEL_FORMAT, EXIF_TAG_TRANSFOMATION,
-                    EXIF_TAG_UNCOMPRESSED, EXIF_TAG_IMAGE_TYPE, EXIF_TAG_IMAGE_WIDTH,
-                    EXIF_TAG_IMAGE_HEIGHT, EXIF_TAG_WIDTH_RESOLUTION,
-                    EXIF_TAG_HEIGHT_RESOLUTION, EXIF_TAG_IMAGE_OFFSET,
-                    EXIF_TAG_IMAGE_BYTE_COUNT, EXIF_TAG_ALPHA_OFFSET,
-                    EXIF_TAG_ALPHA_BYTE_COUNT, EXIF_TAG_IMAGE_DATA_DISCARD,
-                    EXIF_TAG_ALPHA_DATA_DISCARD, EXIF_TAG_OCE_SCANJOB_DESC,
+                    EXIF_TAG_OCE_SCANJOB_DESC,
                     EXIF_TAG_OCE_APPLICATION_SELECTOR, EXIF_TAG_OCE_IDNUMBER,
                     EXIF_TAG_OCE_IMAGE_LOGIC, EXIF_TAG_ANNOTATIONS, EXIF_TAG_PRINT_IM,
                     EXIF_TAG_DNG_VERSION, EXIF_TAG_DNG_BACKWARD_VERSION,

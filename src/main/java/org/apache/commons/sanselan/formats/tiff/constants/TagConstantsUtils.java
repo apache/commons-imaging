@@ -19,6 +19,7 @@ package org.apache.commons.sanselan.formats.tiff.constants;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.sanselan.common.BinaryConstant;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 
 public class TagConstantsUtils implements TiffDirectoryConstants
@@ -50,6 +51,14 @@ public class TagConstantsUtils implements TiffDirectoryConstants
             if (tiffDirectoryTypes[i].directoryType == type)
                 return tiffDirectoryTypes[i];
         return TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN;
+    }
+    
+    public static BinaryConstant createMicrosoftHdPhotoGuidEndingWith(byte end) {
+        return new BinaryConstant(new byte[] {
+                (byte)0x24, (byte)0xC3, (byte)0xDD, (byte)0x6F,
+                (byte)0x03, (byte)0x4E,
+                (byte)0xFE, (byte)0x4B,
+                (byte)0xB1, (byte)0x85, (byte)0x3D, (byte)0x77, (byte)0x76, (byte)0x8D, (byte)0xC9, end});
     }
 
 }
