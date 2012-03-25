@@ -126,9 +126,6 @@ public interface ExifTagConstants
     public static final TagInfoRational EXIF_TAG_FNUMBER = new TagInfoRational(
             "FNumber", 0x829d, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoDouble EXIF_TAG_PIXEL_SCALE = new TagInfoDouble(
-            "Pixel Scale", 0x830e, 3,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     // FIXME: other types?
     public static final TagInfoLong EXIF_TAG_IPTC_NAA = new TagInfoLong("IPTC-NAA",
             0x83bb, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
@@ -138,12 +135,6 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_INTERGRAPH_FLAG_REGISTERS = new TagInfoLong(
             "Intergraph Flag Registers", 0x847f,
             16, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoDouble EXIF_TAG_INTERGRAPH_MATRIX = new TagInfoDouble(
-            "Intergraph Matrix", 0x8480, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoDouble EXIF_TAG_MODEL_TIE_POINT = new TagInfoDouble(
-            "Model Tie Point", 0x8482, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoAscii EXIF_TAG_SITE = new TagInfoAscii("Site", 0x84e0,
             -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoAscii EXIF_TAG_COLOR_SEQUENCE = new TagInfoAscii(
@@ -190,9 +181,6 @@ public interface ExifTagConstants
             0x8546, 1, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoLong EXIF_TAG_AFCP_IPTC = new TagInfoLong("AFCP_IPTC",
             0x8568, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoDouble EXIF_TAG_MODEL_TRANSFORM = new TagInfoDouble(
-            "Model Transform", 0x85d8, 16,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoLong EXIF_TAG_LEAF_DATA = new TagInfoLong("Leaf Data",
             0x8606, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoByte EXIF_TAG_PHOTOSHOP_SETTINGS = new TagInfoByte(
@@ -552,10 +540,10 @@ public interface ExifTagConstants
                     EXIF_TAG_MATTEING, EXIF_TAG_DATA_TYPE,
                     EXIF_TAG_IMAGE_DEPTH, EXIF_TAG_TILE_DEPTH, EXIF_TAG_MODEL_2,
                     EXIF_TAG_EXPOSURE_TIME,
-                    EXIF_TAG_FNUMBER, EXIF_TAG_PIXEL_SCALE, EXIF_TAG_IPTC_NAA,
+                    EXIF_TAG_FNUMBER, EXIF_TAG_IPTC_NAA,
                     EXIF_TAG_INTERGRAPH_PACKET_DATA,
-                    EXIF_TAG_INTERGRAPH_FLAG_REGISTERS, EXIF_TAG_INTERGRAPH_MATRIX,
-                    EXIF_TAG_MODEL_TIE_POINT, EXIF_TAG_SITE, EXIF_TAG_COLOR_SEQUENCE,
+                    EXIF_TAG_INTERGRAPH_FLAG_REGISTERS,
+                    EXIF_TAG_SITE, EXIF_TAG_COLOR_SEQUENCE,
                     EXIF_TAG_IT8HEADER, EXIF_TAG_RASTER_PADDING,
                     EXIF_TAG_BITS_PER_RUN_LENGTH,
                     EXIF_TAG_BITS_PER_EXTENDED_RUN_LENGTH, EXIF_TAG_COLOR_TABLE,
@@ -564,7 +552,7 @@ public interface ExifTagConstants
                     EXIF_TAG_BACKGROUND_COLOR_VALUE, EXIF_TAG_PIXEL_INTENSITY_RANGE,
                     EXIF_TAG_TRANSPARENCY_INDICATOR, EXIF_TAG_COLOR_CHARACTERIZATION,
                     EXIF_TAG_HCUSAGE, EXIF_TAG_SEMINFO, EXIF_TAG_AFCP_IPTC,
-                    EXIF_TAG_MODEL_TRANSFORM, EXIF_TAG_LEAF_DATA,
+                    EXIF_TAG_LEAF_DATA,
                     EXIF_TAG_PHOTOSHOP_SETTINGS, EXIF_TAG_EXIF_OFFSET,
                     EXIF_TAG_EXPOSURE_PROGRAM,
                     EXIF_TAG_SPECTRAL_SENSITIVITY, EXIF_TAG_GPSINFO, EXIF_TAG_ISO,
