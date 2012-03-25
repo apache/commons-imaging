@@ -22,7 +22,9 @@ import java.util.List;
 import org.apache.commons.sanselan.SanselanTest;
 import org.apache.commons.sanselan.formats.tiff.constants.AdobePageMaker6TagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.AdobePhotoshopTagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.AliasSketchbookProTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.DcfTagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.DngTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.MicrosoftHdPhotoTagConstants;
@@ -39,7 +41,9 @@ public class TiffTagIntegrityTest extends SanselanTest {
     public void testTagIntegrity() {
         verifyFields(AdobePageMaker6TagConstants.class, AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
         verifyFields(AdobePhotoshopTagConstants.class, AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);
+        verifyFields(AliasSketchbookProTagConstants.class, AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS);
         verifyFields(DcfTagConstants.class, DcfTagConstants.ALL_DCF_TAGS);
+        verifyFields(DngTagConstants.class, DngTagConstants.ALL_DNG_TAGS);
         verifyFields(ExifTagConstants.class, ExifTagConstants.ALL_EXIF_TAGS);
         verifyFields(GpsTagConstants.class, GpsTagConstants.ALL_GPS_TAGS);
         verifyFields(MolecularDynamicsGelTagConstants.class, MolecularDynamicsGelTagConstants.ALL_MOLECULAR_DYNAMICS_GEL_TAGS);

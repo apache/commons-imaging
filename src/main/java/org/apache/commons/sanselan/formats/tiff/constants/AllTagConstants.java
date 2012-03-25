@@ -24,7 +24,9 @@ import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 public interface AllTagConstants extends
         AdobePhotoshopTagConstants,
         AdobePageMaker6TagConstants,
+        AliasSketchbookProTagConstants,
         DcfTagConstants,
+        DngTagConstants,
         ExifTagConstants,
         GpsTagConstants,
         HylaFaxTagConstants,
@@ -41,7 +43,9 @@ public interface AllTagConstants extends
             TagConstantsUtils.mergeTagLists(
                     AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS,
                     AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS,
+                    AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS,
                     DcfTagConstants.ALL_DCF_TAGS,
+                    DngTagConstants.ALL_DNG_TAGS,
                     ExifTagConstants.ALL_EXIF_TAGS,
                     GpsTagConstants.ALL_GPS_TAGS,
                     HylaFaxTagConstants.ALL_HYLAFAX_TAGS,
