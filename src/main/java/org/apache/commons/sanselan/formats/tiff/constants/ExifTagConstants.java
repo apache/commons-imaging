@@ -501,18 +501,6 @@ public interface ExifTagConstants
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoRational EXIF_TAG_GAMMA = new TagInfoRational("Gamma", 0xa500,
             1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoAscii EXIF_TAG_OCE_SCANJOB_DESC = new TagInfoAscii(
-            "Oce Scanjob Desc", 0xc427, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAscii EXIF_TAG_OCE_APPLICATION_SELECTOR = new TagInfoAscii(
-            "Oce Application Selector", 0xc428,
-            -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAscii EXIF_TAG_OCE_IDNUMBER = new TagInfoAscii(
-            "Oce IDNumber", 0xc429, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAscii EXIF_TAG_OCE_IMAGE_LOGIC = new TagInfoAscii(
-            "Oce Image Logic", 0xc42a, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoUnknown EXIF_TAG_ANNOTATIONS = new TagInfoUnknown(
             "Annotations", 0xc44f, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -628,9 +616,7 @@ public interface ExifTagConstants
                     EXIF_TAG_DEVICE_SETTING_DESCRIPTION,
                     EXIF_TAG_SUBJECT_DISTANCE_RANGE, EXIF_TAG_IMAGE_UNIQUE_ID,
                     EXIF_TAG_GDALMETADATA, EXIF_TAG_GDALNO_DATA, EXIF_TAG_GAMMA,
-                    EXIF_TAG_OCE_SCANJOB_DESC,
-                    EXIF_TAG_OCE_APPLICATION_SELECTOR, EXIF_TAG_OCE_IDNUMBER,
-                    EXIF_TAG_OCE_IMAGE_LOGIC, EXIF_TAG_ANNOTATIONS, EXIF_TAG_PRINT_IM,
+                    EXIF_TAG_ANNOTATIONS, EXIF_TAG_PRINT_IM,
                     EXIF_TAG_DNG_ADOBE_DATA, EXIF_TAG_DNG_PENTAX_DATA,
                     EXIF_TAG_OFFSET_SCHEMA, EXIF_TAG_OWNER_NAME,
                     EXIF_TAG_SERIAL_NUMBER, EXIF_TAG_LENS, EXIF_TAG_RAW_FILE,
