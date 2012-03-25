@@ -201,15 +201,6 @@ public interface ExifTagConstants
     public static final TagInfoLong EXIF_TAG_EXIF_OFFSET = new TagInfoLong(
             "Exif Offset", 0x8769, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
-    public static final TagInfoShort EXIF_TAG_GEO_TIFF_DIRECTORY = new TagInfoShort(
-            "Geo Tiff Directory", 0x87af, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoDouble EXIF_TAG_GEO_TIFF_DOUBLE_PARAMS = new TagInfoDouble(
-            "Geo Tiff Double Params", 0x87b0,
-            -1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAscii EXIF_TAG_GEO_TIFF_ASCII_PARAMS = new TagInfoAscii(
-            "Geo Tiff Ascii Params", 0x87b1, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoShort EXIF_TAG_EXPOSURE_PROGRAM = new TagInfoShort(
             "Exposure Program", 0x8822, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -575,8 +566,7 @@ public interface ExifTagConstants
                     EXIF_TAG_HCUSAGE, EXIF_TAG_SEMINFO, EXIF_TAG_AFCP_IPTC,
                     EXIF_TAG_MODEL_TRANSFORM, EXIF_TAG_LEAF_DATA,
                     EXIF_TAG_PHOTOSHOP_SETTINGS, EXIF_TAG_EXIF_OFFSET,
-                    EXIF_TAG_GEO_TIFF_DIRECTORY, EXIF_TAG_GEO_TIFF_DOUBLE_PARAMS,
-                    EXIF_TAG_GEO_TIFF_ASCII_PARAMS, EXIF_TAG_EXPOSURE_PROGRAM,
+                    EXIF_TAG_EXPOSURE_PROGRAM,
                     EXIF_TAG_SPECTRAL_SENSITIVITY, EXIF_TAG_GPSINFO, EXIF_TAG_ISO,
                     EXIF_TAG_OPTO_ELECTRIC_CONV_FACTOR,
                     EXIF_TAG_LEAF_SUB_IFD,
