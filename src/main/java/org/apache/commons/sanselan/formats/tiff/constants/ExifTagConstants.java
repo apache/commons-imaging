@@ -493,12 +493,6 @@ public interface ExifTagConstants
     public static final TagInfoAscii EXIF_TAG_IMAGE_UNIQUE_ID = new TagInfoAscii(
             "Image Unique ID", 0xa420, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoAscii EXIF_TAG_GDALMETADATA = new TagInfoAscii(
-            "GDALMetadata", 0xa480, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoAscii EXIF_TAG_GDALNO_DATA = new TagInfoAscii(
-            "GDALNo Data", 0xa481, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoRational EXIF_TAG_GAMMA = new TagInfoRational("Gamma", 0xa500,
             1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoUnknown EXIF_TAG_ANNOTATIONS = new TagInfoUnknown(
@@ -615,7 +609,7 @@ public interface ExifTagConstants
                     EXIF_TAG_CONTRAST_1, EXIF_TAG_SATURATION_1, EXIF_TAG_SHARPNESS_1,
                     EXIF_TAG_DEVICE_SETTING_DESCRIPTION,
                     EXIF_TAG_SUBJECT_DISTANCE_RANGE, EXIF_TAG_IMAGE_UNIQUE_ID,
-                    EXIF_TAG_GDALMETADATA, EXIF_TAG_GDALNO_DATA, EXIF_TAG_GAMMA,
+                    EXIF_TAG_GAMMA,
                     EXIF_TAG_ANNOTATIONS, EXIF_TAG_PRINT_IM,
                     EXIF_TAG_DNG_ADOBE_DATA, EXIF_TAG_DNG_PENTAX_DATA,
                     EXIF_TAG_OFFSET_SCHEMA, EXIF_TAG_OWNER_NAME,

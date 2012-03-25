@@ -26,6 +26,7 @@ import org.apache.commons.sanselan.formats.tiff.constants.AliasSketchbookProTagC
 import org.apache.commons.sanselan.formats.tiff.constants.DcfTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.DngTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
+import org.apache.commons.sanselan.formats.tiff.constants.GdalLibraryTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.MicrosoftHdPhotoTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.MicrosoftTagConstants;
@@ -46,6 +47,7 @@ public class TiffTagIntegrityTest extends SanselanTest {
         verifyFields(DcfTagConstants.class, DcfTagConstants.ALL_DCF_TAGS);
         verifyFields(DngTagConstants.class, DngTagConstants.ALL_DNG_TAGS);
         verifyFields(ExifTagConstants.class, ExifTagConstants.ALL_EXIF_TAGS);
+        verifyFields(GdalLibraryTagConstants.class, GdalLibraryTagConstants.ALL_GDAL_LIBRARY_TAGS);
         verifyFields(GpsTagConstants.class, GpsTagConstants.ALL_GPS_TAGS);
         verifyFields(MolecularDynamicsGelTagConstants.class, MolecularDynamicsGelTagConstants.ALL_MOLECULAR_DYNAMICS_GEL_TAGS);
         verifyFields(MicrosoftTagConstants.class, MicrosoftTagConstants.ALL_MICROSOFT_TAGS);
