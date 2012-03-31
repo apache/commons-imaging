@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoAscii;
+import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoAsciiOrByte;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoByte;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoDouble;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfoFloat;
@@ -36,8 +37,7 @@ public interface DngTagConstants extends TiffFieldTypeConstants {
             "Unique Camera Model", 0xc614, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    // FIXME: byte or ascii
-    public static final TagInfoAscii EXIF_TAG_LOCALIZED_CAMERA_MODEL = new TagInfoAscii(
+    public static final TagInfoAsciiOrByte EXIF_TAG_LOCALIZED_CAMERA_MODEL = new TagInfoAsciiOrByte(
             "Localized Camera Model", 0xc615, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
@@ -236,8 +236,7 @@ public interface DngTagConstants extends TiffFieldTypeConstants {
             "Raw Data Unique ID", 0xc65d, 16,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    // FIXME: byte or ascii
-    public static final TagInfoAscii EXIF_TAG_ORIGINAL_RAW_FILE_NAME = new TagInfoAscii(
+    public static final TagInfoAsciiOrByte EXIF_TAG_ORIGINAL_RAW_FILE_NAME = new TagInfoAsciiOrByte(
             "Original Raw File Name", 0xc68b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
@@ -275,13 +274,11 @@ public interface DngTagConstants extends TiffFieldTypeConstants {
     public static final short COLORIMETRIC_REFERENCE_VALUE_SCENE_REFERRED = 0;
     public static final short COLORIMETRIC_REFERENCE_VALUE_OUTPUT_REFERRED = 1;
     
-    // FIXME: ascii or byte
-    public static final TagInfoAscii EXIF_TAG_CAMERA_CALIBRATION_SIGNATURE = new TagInfoAscii(
+    public static final TagInfoAsciiOrByte EXIF_TAG_CAMERA_CALIBRATION_SIGNATURE = new TagInfoAsciiOrByte(
             "Camera Calibration Signature", 0xc6f3, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     
-    // FIXME: ascii or byte
-    public static final TagInfoAscii EXIF_TAG_PROFILE_CALIBRATION_SIGNATURE = new TagInfoAscii(
+    public static final TagInfoAsciiOrByte EXIF_TAG_PROFILE_CALIBRATION_SIGNATURE = new TagInfoAsciiOrByte(
             "Profile Calibration Signature", 0xc6f4, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     
@@ -289,8 +286,7 @@ public interface DngTagConstants extends TiffFieldTypeConstants {
             "Extra Camera Profiles", 0xc6f5, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     
-    // FIXME: ascii or byte
-    public static final TagInfoAscii EXIF_TAG_AS_SHOT_PROFILE_NAME = new TagInfoAscii(
+    public static final TagInfoAsciiOrByte EXIF_TAG_AS_SHOT_PROFILE_NAME = new TagInfoAsciiOrByte(
             "As Shot Profile Name", 0xc6f6, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     
@@ -326,8 +322,7 @@ public interface DngTagConstants extends TiffFieldTypeConstants {
     public static final int PROFILE_EMBED_POLICY_VALUE_EMBED_NEVER = 2;
     public static final int PROFILE_EMBED_POLICY_VALUE_NO_RESTRICTIONS = 3;
     
-    // FIXME: ascii or byte
-    public static final TagInfoAscii EXIF_TAG_PROFILE_COPYRIGHT = new TagInfoAscii(
+    public static final TagInfoAsciiOrByte EXIF_TAG_PROFILE_COPYRIGHT = new TagInfoAsciiOrByte(
             "Profile Copyright", 0xc6fe, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
@@ -339,18 +334,15 @@ public interface DngTagConstants extends TiffFieldTypeConstants {
             "Forward Matrix 2", 0xc715, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
-    // FIXME: ascii or byte
-    public static final TagInfoAscii EXIF_TAG_PREVIEW_APPLICATION_NAME = new TagInfoAscii(
+    public static final TagInfoAsciiOrByte EXIF_TAG_PREVIEW_APPLICATION_NAME = new TagInfoAsciiOrByte(
             "Preview Application Name", 0xc716, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
-    // FIXME: ascii or byte
-    public static final TagInfoAscii EXIF_TAG_PREVIEW_APPLICATION_VERSION = new TagInfoAscii(
+    public static final TagInfoAsciiOrByte EXIF_TAG_PREVIEW_APPLICATION_VERSION = new TagInfoAsciiOrByte(
             "Preview Application Version", 0xc717, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    // FIXME: ascii or byte
-    public static final TagInfoAscii EXIF_TAG_PREVIEW_SETTINGS_NAME = new TagInfoAscii(
+    public static final TagInfoAsciiOrByte EXIF_TAG_PREVIEW_SETTINGS_NAME = new TagInfoAsciiOrByte(
             "Preview Settings Name", 0xc718, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
