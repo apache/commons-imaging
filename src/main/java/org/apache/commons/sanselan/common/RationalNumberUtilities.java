@@ -38,6 +38,7 @@ public abstract class RationalNumberUtilities extends Number
                     - value));
         }
 
+        @Override
         public String toString()
         {
             return rationalNumber.toString();

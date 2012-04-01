@@ -35,6 +35,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase
         super(byteOrder);
     }
 
+    @Override
     public void write(OutputStream os, TiffOutputSet outputSet)
             throws IOException, ImageWriteException
     {

@@ -382,12 +382,14 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             this.readImageData = readImageData;
         }
 
+        @Override
         public boolean addDirectory(TiffDirectory directory)
         {
             super.addDirectory(directory);
             return false;
         }
 
+        @Override
         public boolean readImageData()
         {
             return readImageData;
@@ -403,12 +405,14 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             this.readImageData = readImageData;
         }
 
+        @Override
         public boolean addDirectory(TiffDirectory directory)
         {
             super.addDirectory(directory);
             return false;
         }
 
+        @Override
         public boolean readImageData()
         {
             return readImageData;

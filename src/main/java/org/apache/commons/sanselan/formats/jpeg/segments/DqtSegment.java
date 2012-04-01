@@ -89,6 +89,7 @@ public class DqtSegment extends Segment
         }
     }
 
+    @Override
     public String getDescription()
     {
         return "DQT (" + getSegmentType() + ")";

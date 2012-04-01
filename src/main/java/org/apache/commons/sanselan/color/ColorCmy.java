@@ -27,6 +27,7 @@ public final class ColorCmy
         this.Y = Y;
     }
 
+    @Override
     public final String toString()
     {
         return "{C: " + C + ", M: " + M + ", Y: " + Y + "}";

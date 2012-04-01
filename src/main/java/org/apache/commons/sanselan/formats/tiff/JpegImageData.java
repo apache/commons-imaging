@@ -24,6 +24,7 @@ public class JpegImageData extends TiffElement.DataElement
         super(offset, length, data);
     }
 
+    @Override
     public String getElementDescription(boolean verbose)
     {
         return "Jpeg image data: " + data.length + " bytes";

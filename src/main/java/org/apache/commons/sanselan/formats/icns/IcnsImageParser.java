@@ -48,11 +48,13 @@ public class IcnsImageParser extends ImageParser
         super.setByteOrder(BYTE_ORDER_MSB);
     }
 
+    @Override
     public String getName()
     {
         return "icns-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -64,11 +66,13 @@ public class IcnsImageParser extends ImageParser
             ".icns",
     };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[]{
@@ -76,17 +80,20 @@ public class IcnsImageParser extends ImageParser
         };
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
         return null;
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -116,6 +123,7 @@ public class IcnsImageParser extends ImageParser
                 ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN);
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource,
             Map params)
             throws ImageReadException, IOException
@@ -143,6 +151,7 @@ public class IcnsImageParser extends ImageParser
         return new Dimension(image0.getWidth(), image0.getHeight());
     }
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource,
             Map params)
             throws ImageReadException, IOException
@@ -274,6 +283,7 @@ public class IcnsImageParser extends ImageParser
         }
     }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -284,6 +294,7 @@ public class IcnsImageParser extends ImageParser
         return true;
     }
 
+    @Override
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException
     {
@@ -295,6 +306,7 @@ public class IcnsImageParser extends ImageParser
             throw new ImageReadException("No icons in ICNS file");
     }
 
+    @Override
     public List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -302,6 +314,7 @@ public class IcnsImageParser extends ImageParser
         return IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
     }
 
+    @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {
@@ -373,6 +386,7 @@ public class IcnsImageParser extends ImageParser
      *            Map of optional parameters, defined in SanselanConstants.
      * @return Xmp Xml as String, if present.  Otherwise, returns null.
      */
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {

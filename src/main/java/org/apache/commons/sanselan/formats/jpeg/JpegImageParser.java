@@ -63,17 +63,20 @@ public class JpegImageParser extends ImageParser implements JpegConstants
         // setDebug(true);
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_JPEG, //
         };
     }
 
+    @Override
     public String getName()
     {
         return "Jpeg-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -83,11 +86,13 @@ public class JpegImageParser extends ImageParser implements JpegConstants
 
     private static final String ACCEPTED_EXTENSIONS[] = { ".jpg", ".jpeg", };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException
     {
@@ -284,6 +289,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
         return readSegments(byteSource, markers, returnAfterFirst, false);
     }
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -317,6 +323,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
         return (bytes);
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -541,6 +548,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
      *            Map of optional parameters, defined in SanselanConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -618,6 +626,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
         return new JpegPhotoshopMetadata(photoshopApp13Data);
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -647,11 +656,13 @@ public class JpegImageParser extends ImageParser implements JpegConstants
         return null;
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -1005,6 +1016,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
     // return result;
     // }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {

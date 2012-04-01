@@ -31,6 +31,7 @@ public class DebugInputStream extends InputStream
 
     private long bytes_read = 0;
 
+    @Override
     public int read() throws IOException
     {
         int result = is.read();
@@ -38,6 +39,7 @@ public class DebugInputStream extends InputStream
         return result;
     }
 
+    @Override
     public long skip(long n) throws IOException
     {
         long result = is.skip(n);
@@ -45,11 +47,13 @@ public class DebugInputStream extends InputStream
         return result;
     }
 
+    @Override
     public int available() throws IOException
     {
         return is.available();
     }
 
+    @Override
     public void close() throws IOException
     {
         is.close();

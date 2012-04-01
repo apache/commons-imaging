@@ -46,6 +46,7 @@ public class ScanlineFilterPaeth extends ScanlineFilter
             return c;
     }
 
+    @Override
     public void unfilter(byte src[], byte dst[], byte up[])
             throws ImageReadException, IOException
     {

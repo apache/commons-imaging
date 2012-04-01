@@ -27,11 +27,13 @@ public class FieldTypeDouble extends FieldType
         super(12, 8, "Double");
     }
 
+    @Override
     public Object getSimpleValue(TiffField entry)
     {
         return "?";
     }
 
+    @Override
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
     {
         if (o instanceof Double)

@@ -30,10 +30,12 @@ public class PhotometricInterpreterCieLab extends PhotometricInterpreter
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
     }
 
+    @Override
     public void dumpstats() throws ImageReadException, IOException
     {
     }
 
+    @Override
     public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
             throws ImageReadException, IOException
     {

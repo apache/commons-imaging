@@ -33,36 +33,43 @@ public class PpmFileInfo extends FileInfo
         this.max = max;
     }
 
+    @Override
     public int getNumComponents()
     {
         return 3;
     }
 
+    @Override
     public int getBitDepth()
     {
         return 8;
     }
 
+    @Override
     public ImageFormat getImageType()
     {
         return ImageFormat.IMAGE_FORMAT_PGM;
     }
 
+    @Override
     public String getImageTypeDescription()
     {
         return "PGM: portable graymap file    format";
     }
 
+    @Override
     public String getMIMEType()
     {
         return "image/x-portable-graymap";
     }
 
+    @Override
     public int getColorType()
     {
         return ImageInfo.COLOR_TYPE_GRAYSCALE;
     }
 
+    @Override
     public int getRGB(InputStream is) throws IOException
     {
         int red = is.read();
@@ -80,6 +87,7 @@ public class PpmFileInfo extends FileInfo
         return rgb;
     }
 
+    @Override
     public int getRGB(WhiteSpaceReader wsr) throws IOException
     {
         int red = Integer.parseInt(wsr.readtoWhiteSpace());
@@ -94,6 +102,7 @@ public class PpmFileInfo extends FileInfo
         return rgb;
     }
 
+    @Override
     public void dump()
     {
         //            System.out.println("count: " + count);

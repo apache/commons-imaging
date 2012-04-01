@@ -21,6 +21,7 @@ import org.apache.commons.sanselan.formats.psd.ImageContents;
 
 public class DataParserCmyk extends DataParser
 {
+    @Override
     protected int getRGB(int data[][][], int x, int y,
             ImageContents imageContents)
     {
@@ -40,6 +41,7 @@ public class DataParserCmyk extends DataParser
         return rgb;
     }
 
+    @Override
     public int getBasicChannelsCount()
     {
         return 4;

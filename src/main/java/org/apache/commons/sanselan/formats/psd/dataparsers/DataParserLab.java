@@ -27,6 +27,7 @@ public class DataParserLab extends DataParser
 
     }
 
+    @Override
     protected int getRGB(int data[][][], int x, int y,
             ImageContents imageContents)
     {
@@ -42,11 +43,13 @@ public class DataParserLab extends DataParser
         return rgb;
     }
 
+    @Override
     public int getBasicChannelsCount()
     {
         return 3;
     }
 
+    @Override
     public void dump()
     {
         //        for(int i=0;i<3;i++)

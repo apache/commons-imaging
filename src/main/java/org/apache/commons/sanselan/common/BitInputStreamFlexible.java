@@ -33,6 +33,7 @@ public class BitInputStreamFlexible extends InputStream
         //            super(is);
     }
 
+    @Override
     public int read() throws IOException
     {
         if (cacheBitsRemaining > 0)

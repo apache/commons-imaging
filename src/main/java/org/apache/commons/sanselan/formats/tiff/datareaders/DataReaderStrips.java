@@ -86,6 +86,7 @@ public final class DataReaderStrips extends DataReader
 
     private int x = 0, y = 0;
 
+    @Override
     public void readImageData(ImageBuilder imageBuilder) throws ImageReadException,
             IOException
     {

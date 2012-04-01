@@ -160,6 +160,7 @@ public class DhtSegment extends Segment
         }
     }
 
+    @Override
     public String getDescription()
     {
         return "DHT (" + getSegmentType() + ")";

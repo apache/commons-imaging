@@ -96,6 +96,7 @@ public final class DataReaderTiled extends DataReader
         }
     }
 
+    @Override
     public void readImageData(ImageBuilder imageBuilder) throws ImageReadException,
             IOException
     {

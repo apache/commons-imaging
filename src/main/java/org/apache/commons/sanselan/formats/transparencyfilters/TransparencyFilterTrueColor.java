@@ -47,6 +47,7 @@ public class TransparencyFilterTrueColor extends TransparencyFilter
 
     }
 
+    @Override
     public int filter(int rgb, int sample) throws ImageReadException,
             IOException
     {

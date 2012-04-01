@@ -127,6 +127,7 @@ public class TiffImageMetadata extends ImageMetadata
             return directory.getJpegImageData();
         }
 
+        @Override
         public String toString(String prefix)
         {
             return (prefix != null ? prefix : "") + directory.description()
@@ -205,6 +206,7 @@ public class TiffImageMetadata extends ImageMetadata
         return super.getItems();
     }
 
+    @Override
     public List<? extends IImageMetadataItem> getItems()
     {
         List<IImageMetadataItem> result = new ArrayList<IImageMetadataItem>();
@@ -574,6 +576,7 @@ public class TiffImageMetadata extends ImageMetadata
             this.longitudeSeconds = longitudeSeconds;
         }
 
+        @Override
         public String toString()
         {
             // This will format the gps info like so:

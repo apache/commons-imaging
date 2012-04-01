@@ -29,6 +29,7 @@ public class FieldTypeFloat extends FieldType
 
     //    = new FieldType(11, 4, "Float")
 
+    @Override
     public Object getSimpleValue(TiffField entry)
     {
         if (entry.length == 1)
@@ -40,6 +41,7 @@ public class FieldTypeFloat extends FieldType
                 + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
     }
 
+    @Override
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
     {
         if (o instanceof Float)

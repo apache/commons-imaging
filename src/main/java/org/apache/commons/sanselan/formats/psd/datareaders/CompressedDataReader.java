@@ -38,6 +38,7 @@ public class CompressedDataReader extends DataReader
         super(fDataParser);
     }
 
+    @Override
     public void readData(InputStream is, BufferedImage bi,
             ImageContents imageContents, BinaryFileParser bfp)
             throws ImageReadException, IOException

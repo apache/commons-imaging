@@ -133,6 +133,7 @@ public enum IptcTypes implements IptcType {
         return type;
     }
 
+    @Override
     public String toString()
     {
         return name + " (" + type + ")";
@@ -148,6 +149,7 @@ public enum IptcTypes implements IptcType {
                 return type;
             }
             
+            @Override
             public String toString() {
                 return "Unknown (" + type + ")";
             }

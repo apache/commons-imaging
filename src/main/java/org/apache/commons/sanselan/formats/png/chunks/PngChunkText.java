@@ -52,6 +52,7 @@ public class PngChunkText extends PngTextChunk
     /**
      * @return Returns the keyword.
      */
+    @Override
     public String getKeyword()
     {
         return keyword;
@@ -60,11 +61,13 @@ public class PngChunkText extends PngTextChunk
     /**
      * @return Returns the text.
      */
+    @Override
     public String getText()
     {
         return text;
     }
 
+    @Override
     public PngText getContents()
     {
         return new PngText.tEXt(keyword, text);

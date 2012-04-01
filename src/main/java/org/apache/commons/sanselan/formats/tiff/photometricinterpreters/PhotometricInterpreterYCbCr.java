@@ -65,6 +65,7 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter
         return rgb;
     }
 
+    @Override
     public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
             throws ImageReadException, IOException
     {

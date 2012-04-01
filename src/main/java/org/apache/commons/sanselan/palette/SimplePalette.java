@@ -27,11 +27,13 @@ public class SimplePalette extends Palette
         this.palette = palette;
     }
 
+    @Override
     public int getPaletteIndex(int rgb)
     {
         return getPaletteIndex(palette, rgb);
     }
 
+    @Override
     public int getEntry(int index)
     {
         return palette[index];
@@ -56,6 +58,7 @@ public class SimplePalette extends Palette
         return -1;
     }
 
+    @Override
     public void dump()
     {
         for (int i = 0; i < palette.length; i++)
@@ -65,6 +68,7 @@ public class SimplePalette extends Palette
         }
     }
 
+    @Override
     public int length()
     {
         return palette.length;

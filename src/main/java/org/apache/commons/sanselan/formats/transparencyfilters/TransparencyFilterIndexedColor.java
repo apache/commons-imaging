@@ -30,6 +30,7 @@ public class TransparencyFilterIndexedColor extends TransparencyFilter
 
     int count = 0;
 
+    @Override
     public int filter(int rgb, int index) throws ImageReadException,
             IOException
     {

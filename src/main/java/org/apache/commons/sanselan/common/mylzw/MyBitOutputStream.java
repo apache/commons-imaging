@@ -32,6 +32,7 @@ public class MyBitOutputStream extends OutputStream implements BinaryConstants
         this.os = os;
     }
 
+    @Override
     public void write(int value) throws IOException
     {
         writeBits(value, 8);

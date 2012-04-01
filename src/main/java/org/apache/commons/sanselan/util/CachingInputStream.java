@@ -36,6 +36,7 @@ public class CachingInputStream extends InputStream
         return baos.toByteArray();
     }
 
+    @Override
     public int read() throws IOException
     {
         int result = is.read();
@@ -43,11 +44,13 @@ public class CachingInputStream extends InputStream
         return result;
     }
 
+    @Override
     public int available() throws IOException
     {
         return is.available();
     }
 
+    @Override
     public void close() throws IOException
     {
         is.close();

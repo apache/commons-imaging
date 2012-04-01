@@ -29,6 +29,7 @@ public class AppnSegment extends GenericSegment
         super(marker, marker_length, is);
     }
 
+    @Override
     public String getDescription()
     {
         return "APPN (APP" + (marker - JpegImageParser.JPEG_APP0_Marker)

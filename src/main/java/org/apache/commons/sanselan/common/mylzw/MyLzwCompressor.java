@@ -126,11 +126,13 @@ public class MyLzwCompressor
             hash = tempHash;
         }
 
+        @Override
         public final int hashCode()
         {
             return hash;
         }
 
+        @Override
         public final boolean equals(Object o)
         {
             if (o instanceof ByteArray) {

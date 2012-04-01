@@ -72,6 +72,7 @@ public class PixelParserBitFields extends PixelParserSimple
     }
     private int bytecount = 0;
 
+    @Override
     public int getNextRGB() throws ImageReadException, IOException
     {
         int data;
@@ -115,6 +116,7 @@ public class PixelParserBitFields extends PixelParserSimple
         return rgb;
     }
 
+    @Override
     public void newline() throws ImageReadException, IOException
     {
         while (((bytecount) % 4) != 0)

@@ -28,6 +28,7 @@ public final class ColorCmyk
         this.K = K;
     }
 
+    @Override
     public final String toString()
     {
         return "{C: " + C + ", M: " + M + ", Y: " + Y + ", K: " + K + "}";

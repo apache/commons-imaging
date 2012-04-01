@@ -55,11 +55,13 @@ public class PsdImageParser extends ImageParser
         // setDebug(true);
     }
 
+    @Override
     public String getName()
     {
         return "PSD-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -69,11 +71,13 @@ public class PsdImageParser extends ImageParser
 
     private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PSD, //
@@ -466,6 +470,7 @@ public class PsdImageParser extends ImageParser
 
     public final static int IMAGE_RESOURCE_ID_ICC_PROFILE = 0x040F;
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -482,6 +487,7 @@ public class PsdImageParser extends ImageParser
         return bytes;
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -498,11 +504,13 @@ public class PsdImageParser extends ImageParser
         return null;
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -535,6 +543,7 @@ public class PsdImageParser extends ImageParser
         }
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -615,6 +624,7 @@ public class PsdImageParser extends ImageParser
         return null;
     }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -666,6 +676,7 @@ public class PsdImageParser extends ImageParser
 
     private static final int COLOR_MODE_INDEXED = 2;
 
+    @Override
     public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -806,6 +817,7 @@ public class PsdImageParser extends ImageParser
      *            Map of optional parameters, defined in SanselanConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {

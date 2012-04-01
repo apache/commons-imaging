@@ -27,6 +27,7 @@ public final class ColorXyz
         Z = z;
     }
 
+    @Override
     public final String toString()
     {
         return "{X: " + X + ", Y: " + Y + ", Z: " + Z + "}";

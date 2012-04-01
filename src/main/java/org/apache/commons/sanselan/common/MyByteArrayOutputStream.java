@@ -31,6 +31,7 @@ public class MyByteArrayOutputStream extends OutputStream
 
     private int count = 0;
 
+    @Override
     public void write(int value) throws IOException
     {
         if (count >= bytes.length)

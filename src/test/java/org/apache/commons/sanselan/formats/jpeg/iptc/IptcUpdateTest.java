@@ -40,6 +40,7 @@ public class IptcUpdateTest extends IptcBaseTest
 {
     private List imagesWithIptcData;
 
+    @Override
     public void setUp() throws Exception
     {
         super.setUp();
@@ -47,6 +48,7 @@ public class IptcUpdateTest extends IptcBaseTest
         imagesWithIptcData = getImagesWithIptcData();
     }
 
+    @Override
     public void tearDown() throws Exception
     {
         super.tearDown();

@@ -47,11 +47,13 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         // setDebug(true);
     }
 
+    @Override
     public String getName()
     {
         return "Pbm-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -62,11 +64,13 @@ public class PnmImageParser extends ImageParser implements PnmConstants
     private static final String ACCEPTED_EXTENSIONS[] = { ".pbm", ".pgm",
             ".ppm", ".pnm", };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PBM, //
@@ -145,12 +149,14 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         }
     }
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
         return null;
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -167,17 +173,20 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         return null;
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
         return null;
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -219,6 +228,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         return result;
     }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -261,6 +271,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         return result;
     }
 
+    @Override
     public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -298,6 +309,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
     public static final String PARAM_VALUE_PNM_RAWBITS_YES = "YES";
     public static final String PARAM_VALUE_PNM_RAWBITS_NO = "NO";
 
+    @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {
@@ -358,6 +370,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
      *            Map of optional parameters, defined in SanselanConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {

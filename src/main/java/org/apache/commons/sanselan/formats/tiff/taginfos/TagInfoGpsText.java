@@ -35,6 +35,7 @@ public final class TagInfoGpsText extends TagInfo
         super(name, tag, dataType, length, exifDirectory);
     }
 
+    @Override
     public boolean isText()
     {
         return true;

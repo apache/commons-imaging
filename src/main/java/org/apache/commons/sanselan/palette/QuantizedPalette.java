@@ -53,6 +53,7 @@ public class QuantizedPalette extends Palette
 
     }
 
+    @Override
     public int getPaletteIndex(int rgb) throws ImageWriteException
     {
         int precisionMask = (1 << precision) - 1;
@@ -64,6 +65,7 @@ public class QuantizedPalette extends Palette
         return straight[index].index;
     }
 
+    @Override
     public void dump()
     {
         //        System.out.println("ColorSpaceSubset.compares: "
@@ -72,12 +74,14 @@ public class QuantizedPalette extends Palette
         //        System.out.println("avg. distance: " + (distance / converted));
     }
 
+    @Override
     public int getEntry(int index)
     {
         ColorSpaceSubset subset = subsets.get(index);
         return subset.rgb;
     }
 
+    @Override
     public int length()
     {
         return subsets.size();

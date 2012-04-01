@@ -73,6 +73,7 @@ public class ScanExpediterInterlaced extends ScanExpediter
             8, 4, 4, 2, 2, 1, 1
     };
 
+    @Override
     public void drive() throws ImageReadException, IOException
     {
 

@@ -43,6 +43,7 @@ public class FieldTypeShort extends FieldType
     //                + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
     //    }
 
+    @Override
     public Object getSimpleValue(TiffField entry) throws ImageReadException
     {
         if (entry.length == 1)
@@ -51,6 +52,7 @@ public class FieldTypeShort extends FieldType
         return BinaryConversions.convertToShortArray(getRawBytes(entry), entry.byteOrder);
     }
 
+    @Override
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
     {
         if (o instanceof Short)

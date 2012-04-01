@@ -27,6 +27,7 @@ public final class ColorCieLch
         this.H = H;
     }
 
+    @Override
     public String toString()
     {
         return "{L: " + L + ", C: " + C + ", H: " + H + "}";

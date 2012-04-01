@@ -27,6 +27,7 @@ public final class ColorHunterLab
         this.b = b;
     }
 
+    @Override
     public final String toString()
     {
         return "{L: " + L + ", a: " + a + ", b: " + b + "}";

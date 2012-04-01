@@ -56,11 +56,13 @@ abstract class TiffOutputItem implements AllTagConstants
             this.bytes = bytes;
         }
 
+        @Override
         public int getItemLength()
         {
             return bytes.length;
         }
 
+        @Override
         public String getItemDescription()
         {
             return name;
@@ -74,6 +76,7 @@ abstract class TiffOutputItem implements AllTagConstants
             System.arraycopy(bytes, 0, this.bytes, 0, bytes.length);
         }
 
+        @Override
         public void writeItem(BinaryOutputStream bos) throws IOException,
                 ImageWriteException
         {

@@ -89,6 +89,7 @@ public class SofnSegment extends Segment
             System.out.println("");
     }
 
+    @Override
     public String getDescription()
     {
         return "SOFN (SOF" + (marker - JpegImageParser.SOF0Marker) + ") ("

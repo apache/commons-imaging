@@ -35,6 +35,7 @@ public class TextFieldTest extends SpecificExifTagTest
     //        super(name);
     //    }
 
+    @Override
     protected void checkField(File imageFile, TiffField field)
             throws IOException, ImageReadException, ImageWriteException
     {

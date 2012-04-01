@@ -33,36 +33,43 @@ public class PgmFileInfo extends FileInfo
         this.max = max;
     }
 
+    @Override
     public int getNumComponents()
     {
         return 1;
     }
 
+    @Override
     public int getBitDepth()
     {
         return 8;
     }
 
+    @Override
     public ImageFormat getImageType()
     {
         return ImageFormat.IMAGE_FORMAT_PPM;
     }
 
+    @Override
     public String getImageTypeDescription()
     {
         return "PGM: portable pixmap file    format";
     }
 
+    @Override
     public String getMIMEType()
     {
         return "image/x-portable-pixmap";
     }
 
+    @Override
     public int getColorType()
     {
         return ImageInfo.COLOR_TYPE_RGB;
     }
 
+    @Override
     public int getRGB(InputStream is) throws IOException
     {
         int sample = is.read();
@@ -77,6 +84,7 @@ public class PgmFileInfo extends FileInfo
         return rgb;
     }
 
+    @Override
     public int getRGB(WhiteSpaceReader wsr) throws IOException
     {
         int sample = Integer.parseInt(wsr.readtoWhiteSpace());

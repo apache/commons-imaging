@@ -29,36 +29,43 @@ public class PbmFileInfo extends FileInfo
         super(width, height, RAWBITS);
     }
 
+    @Override
     public int getNumComponents()
     {
         return 1;
     }
 
+    @Override
     public int getBitDepth()
     {
         return 1;
     }
 
+    @Override
     public ImageFormat getImageType()
     {
         return ImageFormat.IMAGE_FORMAT_PBM;
     }
 
+    @Override
     public int getColorType()
     {
         return ImageInfo.COLOR_TYPE_BW;
     }
 
+    @Override
     public String getImageTypeDescription()
     {
         return "PBM: portable bitmap fileformat";
     }
 
+    @Override
     public String getMIMEType()
     {
         return "image/x-portable-bitmap";
     }
 
+    @Override
     protected void newline()
     {
         bitcache = 0;
@@ -69,6 +76,7 @@ public class PbmFileInfo extends FileInfo
     private int bitcache = 0;
     private int bits_in_cache = 0;
 
+    @Override
     public int getRGB(InputStream is) throws IOException
     {
         if (bits_in_cache < 1)
@@ -91,6 +99,7 @@ public class PbmFileInfo extends FileInfo
         throw new IOException("PBM: bad bit: " + bit);
     }
 
+    @Override
     public int getRGB(WhiteSpaceReader wsr) throws IOException
     {
         int bit = Integer.parseInt(wsr.readtoWhiteSpace());

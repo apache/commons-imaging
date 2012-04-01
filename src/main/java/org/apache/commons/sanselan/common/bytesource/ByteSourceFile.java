@@ -36,6 +36,7 @@ public class ByteSourceFile extends ByteSource
         this.file = file;
     }
 
+    @Override
     public InputStream getInputStream() throws IOException
     {
         FileInputStream is = null;
@@ -45,6 +46,7 @@ public class ByteSourceFile extends ByteSource
         return bis;
     }
 
+    @Override
     public byte[] getBlock(int start, int length) throws IOException
     {
 
@@ -79,11 +81,13 @@ public class ByteSourceFile extends ByteSource
         }
     }
 
+    @Override
     public long getLength()
     {
         return file.length();
     }
 
+    @Override
     public byte[] getAll() throws IOException
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -115,6 +119,7 @@ public class ByteSourceFile extends ByteSource
         }
     }
 
+    @Override
     public String getDescription()
     {
         return "File: '" + file.getAbsolutePath() + "'";

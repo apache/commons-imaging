@@ -103,6 +103,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
             this.segmentData = segmentData;
         }
 
+        @Override
         protected void write(OutputStream os) throws IOException
         {
             os.write(markerBytes);
@@ -134,6 +135,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
             this.imageData = imageData;
         }
 
+        @Override
         protected void write(OutputStream os) throws IOException
         {
             os.write(markerBytes);

@@ -57,6 +57,7 @@ public class FormatCompliance
         addComment(s + ": " + getValueDescription(value));
     }
 
+    @Override
     public String toString()
     {
         StringWriter sw = new StringWriter();

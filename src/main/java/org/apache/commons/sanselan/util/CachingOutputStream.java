@@ -31,6 +31,7 @@ public class CachingOutputStream extends OutputStream
         this.os = os;
     }
 
+    @Override
     public void write(int b) throws IOException
     {
         os.write(b);
@@ -42,11 +43,13 @@ public class CachingOutputStream extends OutputStream
         return baos.toByteArray();
     }
 
+    @Override
     public void close() throws IOException
     {
         os.close();
     }
 
+    @Override
     public void flush() throws IOException
     {
         os.flush();

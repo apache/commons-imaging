@@ -32,6 +32,7 @@ public class UnknownSegment extends GenericSegment
         super(marker, bytes);
     }
 
+    @Override
     public String getDescription()
     {
         return "Unknown (" + getSegmentType() + ")";

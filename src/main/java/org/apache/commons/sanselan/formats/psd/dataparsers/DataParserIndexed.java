@@ -39,6 +39,7 @@ public class DataParserIndexed extends DataParser
         }
     }
 
+    @Override
     protected int getRGB(int data[][][], int x, int y,
             ImageContents imageContents)
     {
@@ -48,6 +49,7 @@ public class DataParserIndexed extends DataParser
         return rgb;
     }
 
+    @Override
     public int getBasicChannelsCount()
     {
         return 1;

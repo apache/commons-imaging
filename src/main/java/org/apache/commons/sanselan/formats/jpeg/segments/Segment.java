@@ -39,6 +39,7 @@ public abstract class Segment extends BinaryFileParser
 
     public abstract String getDescription();
 
+    @Override
     public String toString()
     {
         return "[Segment: " + getDescription() + "]";

@@ -45,6 +45,7 @@ public class ComSegment extends Segment
             System.out.println("");
     }
 
+    @Override
     public String getDescription()
     {
         String commentString = "";

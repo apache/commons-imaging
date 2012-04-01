@@ -132,6 +132,7 @@ public class IcnsType
         return hasMask;
     }
 
+    @Override
     public String toString()
     {
         return getClass().getName() + "[" +

@@ -52,11 +52,13 @@ public class IcoImageParser extends ImageParser
         super.setByteOrder(BYTE_ORDER_LSB);
     }
 
+    @Override
     public String getName()
     {
         return "ico-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -68,11 +70,13 @@ public class IcoImageParser extends ImageParser
             ".ico", ".cur",
     };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[]{
@@ -80,23 +84,27 @@ public class IcoImageParser extends ImageParser
         };
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
         return null;
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
         return null;
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource,
             Map params)
             throws ImageReadException, IOException
@@ -104,6 +112,7 @@ public class IcoImageParser extends ImageParser
         return null;
     }
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource,
             Map params)
             throws ImageReadException, IOException
@@ -290,11 +299,13 @@ public class IcoImageParser extends ImageParser
             this.bufferedImage = bufferedImage;
         }
 
+        @Override
         public BufferedImage readBufferedImage() throws ImageReadException
         {
             return bufferedImage;
         }
 
+        @Override
         protected void dumpSubclass(PrintWriter pw)
         {
             pw.println("BitmapIconData");
@@ -313,11 +324,13 @@ public class IcoImageParser extends ImageParser
             this.bufferedImage = bufferedImage;
         }
 
+        @Override
         public BufferedImage readBufferedImage()
         {
             return bufferedImage;
         }
 
+        @Override
         protected void dumpSubclass(PrintWriter pw)
         {
             pw.println("PNGIconData");
@@ -541,6 +554,7 @@ public class IcoImageParser extends ImageParser
         }
     }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -551,6 +565,7 @@ public class IcoImageParser extends ImageParser
         return true;
     }
 
+    @Override
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException
     {
@@ -562,6 +577,7 @@ public class IcoImageParser extends ImageParser
             throw new ImageReadException("No icons in ICO file");
     }
 
+    @Override
     public List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -605,6 +621,7 @@ public class IcoImageParser extends ImageParser
     //        return true;
     //    }
 
+    @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {
@@ -805,6 +822,7 @@ public class IcoImageParser extends ImageParser
      *            Map of optional parameters, defined in SanselanConstants.
      * @return Xmp Xml as String, if present.  Otherwise, returns null.
      */
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException {
         return null;

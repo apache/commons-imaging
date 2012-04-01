@@ -50,22 +50,27 @@ public class RgbeImageParser extends ImageParser {
         setByteOrder( BinaryConstants.BYTE_ORDER_BIG_ENDIAN );
     }
 
+    @Override
     public String getName() {
         return "Radiance HDR";
     }
 
+    @Override
     public String getDefaultExtension() {
         return ".hdr";
     }
 
+    @Override
     protected String[] getAcceptedExtensions() {
         return new String[]{ ".hdr", ".pic" };
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[]{ ImageFormat.IMAGE_FORMAT_RGBE };
     }
 
+    @Override
     public IImageMetadata getMetadata( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
         RgbeInfo info = new RgbeInfo( byteSource );
 
@@ -76,6 +81,7 @@ public class RgbeImageParser extends ImageParser {
         }
     }
 
+    @Override
     public ImageInfo getImageInfo( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
         RgbeInfo info = new RgbeInfo( byteSource );
 
@@ -103,6 +109,7 @@ public class RgbeImageParser extends ImageParser {
         }
     }
 
+    @Override
     public BufferedImage getBufferedImage( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
         RgbeInfo info = new RgbeInfo( byteSource );
 
@@ -130,6 +137,7 @@ public class RgbeImageParser extends ImageParser {
         }
     }
 
+    @Override
     public Dimension getImageSize( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
         RgbeInfo info = new RgbeInfo( byteSource );
 
@@ -140,14 +148,17 @@ public class RgbeImageParser extends ImageParser {
         }
     }
 
+    @Override
     public byte[] getICCProfileBytes( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
         return null;
     }
 
+    @Override
     public boolean embedICCProfile( File src, File dst, byte[] profile ) {
         return false;
     }
 
+    @Override
     public String getXmpXml( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
         return null;
     }

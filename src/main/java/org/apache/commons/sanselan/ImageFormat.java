@@ -36,6 +36,7 @@ public class ImageFormat
         actual = true;
     }
 
+    @Override
     public boolean equals(Object o)
     {
         if (!(o instanceof ImageFormat))
@@ -47,11 +48,13 @@ public class ImageFormat
 
     }
 
+    @Override
     public String toString()
     {
         return "{" + name + ": " + extension + "}";
     }
 
+    @Override
     public int hashCode()
     {
         return name.hashCode();

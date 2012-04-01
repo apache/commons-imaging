@@ -36,11 +36,13 @@ public class ByteSourceArray extends ByteSource
         this.bytes = bytes;
     }
 
+    @Override
     public InputStream getInputStream()
     {
         return new ByteArrayInputStream(bytes);
     }
 
+    @Override
     public byte[] getBlock(int start, int length) throws IOException
     {
         // We include a separate check for int overflow.
@@ -55,16 +57,19 @@ public class ByteSourceArray extends ByteSource
         return result;
     }
 
+    @Override
     public long getLength()
     {
         return bytes.length;
     }
 
+    @Override
     public byte[] getAll() throws IOException
     {
         return bytes;
     }
 
+    @Override
     public String getDescription()
     {
         return bytes.length + " byte array";

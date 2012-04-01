@@ -54,11 +54,13 @@ public class MedianCutQuantizer
             //            super.hashCode();
         }
 
+        @Override
         public int hashCode()
         {
             return argb;
         }
 
+        @Override
         public boolean equals(Object o)
         {
             if (o instanceof ColorCount) {
@@ -170,6 +172,7 @@ public class MedianCutQuantizer
             return (alpha << 24) | (red << 16) | (green << 8) | blue;
         }
 
+        @Override
         public String toString()
         {
             return "{ColorGroup. min_red: " + Integer.toHexString(min_red)
@@ -496,6 +499,7 @@ public class MedianCutQuantizer
             this.root = root;
         }
 
+        @Override
         public int getPaletteIndex(int rgb)
         {
             ColorGroup cg = root;

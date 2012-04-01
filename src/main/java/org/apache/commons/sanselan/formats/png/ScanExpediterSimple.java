@@ -36,6 +36,7 @@ public class ScanExpediterSimple extends ScanExpediter
                 pngChunkPLTE, gammaCorrection, transparencyFilter);
     }
 
+    @Override
     public void drive() throws ImageReadException, IOException
     {
         int bitsPerScanLine = bitsPerPixel * width;

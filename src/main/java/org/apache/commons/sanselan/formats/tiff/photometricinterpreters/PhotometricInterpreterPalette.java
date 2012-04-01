@@ -34,6 +34,7 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter
         this.fColorMap = fColorMap;
     }
 
+    @Override
     public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
             throws ImageReadException, IOException
     {

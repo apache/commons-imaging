@@ -31,29 +31,34 @@ public class DebugOutputStream extends OutputStream
         this.os = os;
     }
 
+    @Override
     public void write(int b) throws IOException
     {
         os.write(b);
         count++;
     }
 
+    @Override
     public void write(byte b[]) throws IOException
     {
         os.write(b);
         count += b.length;
     }
 
+    @Override
     public void write(byte b[], int off, int len) throws IOException
     {
         os.write(b, off, len);
         count += len;
     }
 
+    @Override
     public void flush() throws IOException
     {
         os.flush();
     }
 
+    @Override
     public void close() throws IOException
     {
         os.close();

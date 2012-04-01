@@ -79,21 +79,25 @@ public class RationalNumber extends Number
         return new RationalNumber(-numerator, divisor);
     }
 
+    @Override
     public double doubleValue()
     {
         return (double) numerator / (double) divisor;
     }
 
+    @Override
     public float floatValue()
     {
         return (float) numerator / (float) divisor;
     }
 
+    @Override
     public int intValue()
     {
         return numerator / divisor;
     }
 
+    @Override
     public long longValue()
     {
         return (long) numerator / (long) divisor;
@@ -106,6 +110,7 @@ public class RationalNumber extends Number
 
     private static final NumberFormat nf = DecimalFormat.getInstance();
 
+    @Override
     public String toString()
     {
         if (divisor == 0)

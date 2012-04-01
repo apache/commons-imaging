@@ -20,6 +20,7 @@ import org.apache.commons.sanselan.formats.psd.ImageContents;
 
 public class DataParserGrayscale extends DataParser
 {
+    @Override
     protected int getRGB(int data[][][], int x, int y,
             ImageContents imageContents)
     {
@@ -32,6 +33,7 @@ public class DataParserGrayscale extends DataParser
         return rgb;
     }
 
+    @Override
     public int getBasicChannelsCount()
     {
         return 1;

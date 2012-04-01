@@ -40,6 +40,7 @@ public class ImageMetadata implements IImageMetadata
 
     protected static final String newline = System.getProperty("line.separator");
 
+    @Override
     public String toString()
     {
         return toString(null);
@@ -89,6 +90,7 @@ public class ImageMetadata implements IImageMetadata
             return text;
         }
 
+        @Override
         public String toString()
         {
             return toString(null);

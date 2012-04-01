@@ -34,6 +34,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter
         //        this.yOnly = yonly;
     }
 
+    @Override
     public void dumpstats() throws ImageReadException, IOException
     {
     }
@@ -45,6 +46,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter
 
     //        private float function_f(float value, )
 
+    @Override
     public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
             throws ImageReadException, IOException
     {

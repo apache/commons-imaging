@@ -86,6 +86,7 @@ public class TiffField implements TiffConstants
             super(offset, length);
         }
 
+        @Override
         public String getElementDescription(boolean verbose)
         {
             if (verbose)
@@ -554,6 +555,7 @@ public class TiffField implements TiffConstants
                 + "): ";
     }
 
+    @Override
     public String toString()
     {
         StringBuffer result = new StringBuffer();

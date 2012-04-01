@@ -58,11 +58,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         // setDebug(true);
     }
 
+    @Override
     public String getName()
     {
         return "Tiff-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -72,17 +74,20 @@ public class TiffImageParser extends ImageParser implements TiffConstants
 
     private static final String ACCEPTED_EXTENSIONS[] = { ".tif", ".tiff", };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_TIFF, //
         };
     }
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -94,6 +99,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         return directory.getFieldValue(AllTagConstants.EXIF_TAG_ICC_PROFILE);
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -120,11 +126,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         return null;
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -157,6 +165,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         return result;
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -313,6 +322,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         return result;
     }
 
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -337,6 +347,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         }
     }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -403,6 +414,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         }
     }
 
+    @Override
     public FormatCompliance getFormatCompliance(ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -438,6 +450,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         return result;
     }
 
+    @Override
     public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -452,6 +465,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         return result;
     }
 
+    @Override
     public List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -611,6 +625,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         }
     }
 
+    @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {

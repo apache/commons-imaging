@@ -36,6 +36,7 @@ public class PixelParserRgb extends PixelParserSimple
 
     int pixelCount = 0;
 
+    @Override
     public int getNextRGB() throws ImageReadException, IOException
     {
         pixelCount++;
@@ -115,6 +116,7 @@ public class PixelParserRgb extends PixelParserSimple
                 + bhi.bitsPerPixel);
     }
 
+    @Override
     public void newline() throws ImageReadException, IOException
     {
         cached_bit_count = 0;

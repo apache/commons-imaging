@@ -35,6 +35,7 @@ public class TransparencyFilterGrayscale extends TransparencyFilter
                 "tRNS: Missing transparent_color");
     }
 
+    @Override
     public int filter(int rgb, int index) throws ImageReadException,
             IOException
     {

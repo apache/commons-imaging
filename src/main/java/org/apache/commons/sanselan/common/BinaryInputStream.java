@@ -83,6 +83,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants
         return byteOrder;
     }
 
+    @Override
     public int read() throws IOException
     {
         return is.read();

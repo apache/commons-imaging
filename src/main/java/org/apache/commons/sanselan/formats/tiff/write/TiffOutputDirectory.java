@@ -414,6 +414,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         return TiffDirectory.description(type);
     }
 
+    @Override
     public void writeItem(BinaryOutputStream bos) throws IOException,
             ImageWriteException
     {
@@ -467,12 +468,14 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         return tiffImageData;
     }
 
+    @Override
     public int getItemLength()
     {
         return TIFF_ENTRY_LENGTH * fields.size() + TIFF_DIRECTORY_HEADER_LENGTH
                 + TIFF_DIRECTORY_FOOTER_LENGTH;
     }
 
+    @Override
     public String getItemDescription()
     {
         TiffDirectoryType dirType = TagConstantsUtils

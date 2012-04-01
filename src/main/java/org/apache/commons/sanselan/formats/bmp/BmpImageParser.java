@@ -60,11 +60,13 @@ public class BmpImageParser extends ImageParser
         super.setByteOrder(BYTE_ORDER_INTEL);
     }
 
+    @Override
     public String getName()
     {
         return "Bmp-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -74,11 +76,13 @@ public class BmpImageParser extends ImageParser
 
     private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_BMP, //
@@ -509,12 +513,14 @@ public class BmpImageParser extends ImageParser
         }
     }
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
         return null;
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -547,11 +553,13 @@ public class BmpImageParser extends ImageParser
         return null;
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -576,6 +584,7 @@ public class BmpImageParser extends ImageParser
         return "Unknown";
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -659,6 +668,7 @@ public class BmpImageParser extends ImageParser
         return result;
     }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -675,6 +685,7 @@ public class BmpImageParser extends ImageParser
         return true;
     }
 
+    @Override
     public FormatCompliance getFormatCompliance(ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -699,6 +710,7 @@ public class BmpImageParser extends ImageParser
         return result;
     }
 
+    @Override
     public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -767,6 +779,7 @@ public class BmpImageParser extends ImageParser
     private static final int BITMAP_FILE_HEADER_SIZE = 14;
     private static final int BITMAP_INFO_HEADER_SIZE = 40;
 
+    @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {
@@ -855,6 +868,7 @@ public class BmpImageParser extends ImageParser
      *            Map of optional parameters, defined in SanselanConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {

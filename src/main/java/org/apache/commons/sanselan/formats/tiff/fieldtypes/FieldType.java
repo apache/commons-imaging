@@ -106,6 +106,7 @@ public abstract class FieldType extends BinaryFileFunctions implements
     //
     // public abstract Object[] getValueArray(TiffField entry);
 
+    @Override
     public String toString()
     {
         return "[" + getClass().getName() + ". type: " + type + ", name: "

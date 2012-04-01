@@ -70,11 +70,13 @@ public class PngImageParser extends ImageParser implements PngConstants
         // setDebug(true);
     }
 
+    @Override
     public String getName()
     {
         return "Png-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -84,11 +86,13 @@ public class PngImageParser extends ImageParser implements PngConstants
 
     private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PNG, //
@@ -266,6 +270,7 @@ public class PngImageParser extends ImageParser implements PngConstants
         }
     }
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -287,6 +292,7 @@ public class PngImageParser extends ImageParser implements PngConstants
         return (bytes);
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -308,11 +314,13 @@ public class PngImageParser extends ImageParser implements PngConstants
         return null;
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -519,6 +527,7 @@ public class PngImageParser extends ImageParser implements PngConstants
         }
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -668,6 +677,7 @@ public class PngImageParser extends ImageParser implements PngConstants
         }
     }
 
+    @Override
     public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -845,6 +855,7 @@ public class PngImageParser extends ImageParser implements PngConstants
 
     }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -888,6 +899,7 @@ public class PngImageParser extends ImageParser implements PngConstants
         return true;
     }
 
+    @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {
@@ -904,6 +916,7 @@ public class PngImageParser extends ImageParser implements PngConstants
      *            Map of optional parameters, defined in SanselanConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {

@@ -292,6 +292,7 @@ public class ImageInfo
         System.out.print(toString());
     }
 
+    @Override
     public String toString()
     {
         try

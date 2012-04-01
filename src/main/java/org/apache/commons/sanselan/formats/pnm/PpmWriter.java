@@ -30,6 +30,7 @@ public class PpmWriter extends PnmWriter implements PnmConstants
         super(RAWBITS);
     }
 
+    @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {

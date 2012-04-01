@@ -31,21 +31,25 @@ public class BmpWriterRgb extends BmpWriter
     //            this.alpha = alpha;
     //        }
 
+    @Override
     public int getPaletteSize()
     {
         return 0;
     }
 
+    @Override
     public int getBitsPerPixel()
     {
         //            return alpha ? 32 : 24;
         return 24;
     }
 
+    @Override
     public void writePalette(BinaryOutputStream bos) throws IOException
     {
     }
 
+    @Override
     public byte[] getImageData(BufferedImage src)
     {
         int width = src.getWidth();

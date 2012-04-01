@@ -37,6 +37,7 @@ public class PhotometricInterpreterBiLevel extends PhotometricInterpreter
         //        this.bitsPerPixel = fBitsPerPixel;
     }
 
+    @Override
     public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
             throws ImageReadException, IOException
     {

@@ -33,6 +33,7 @@ public class TiffHeader extends TiffElement
         this.offsetToFirstIFD = offsetToFirstIFD;
     }
 
+    @Override
     public String getElementDescription(boolean verbose)
     {
         if (verbose)

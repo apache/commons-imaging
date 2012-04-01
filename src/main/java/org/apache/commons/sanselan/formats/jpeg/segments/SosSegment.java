@@ -103,6 +103,7 @@ public class SosSegment extends Segment
             System.out.println("");
     }
 
+    @Override
     public String getDescription()
     {
         return "SOS (" + getSegmentType() + ")";

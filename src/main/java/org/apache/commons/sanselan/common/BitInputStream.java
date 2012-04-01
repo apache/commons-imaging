@@ -32,6 +32,7 @@ public class BitInputStream extends InputStream implements BinaryConstants
         //            super(is);
     }
 
+    @Override
     public int read() throws IOException
     {
         if (cacheBitsRemaining > 0)

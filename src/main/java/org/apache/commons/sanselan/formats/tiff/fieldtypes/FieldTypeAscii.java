@@ -28,6 +28,7 @@ public class FieldTypeAscii extends FieldType
         super(type, 1, name);
     }
 
+    @Override
     public Object getSimpleValue(TiffField entry) {
         // According to EXIF specification "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL."
         byte bytes[] = getRawBytes(entry);
@@ -69,6 +70,7 @@ public class FieldTypeAscii extends FieldType
         }
     }
 
+    @Override
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
     {
         if (o instanceof byte[]) {

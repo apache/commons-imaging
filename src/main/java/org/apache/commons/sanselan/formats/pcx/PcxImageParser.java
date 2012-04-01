@@ -64,11 +64,13 @@ public class PcxImageParser extends ImageParser implements PcxConstants
         super.setByteOrder(BYTE_ORDER_LSB);
     }
 
+    @Override
     public String getName()
     {
         return "Pcx-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -79,11 +81,13 @@ public class PcxImageParser extends ImageParser implements PcxConstants
         ".pcx", ".pcc",
     };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[]
@@ -92,17 +96,20 @@ public class PcxImageParser extends ImageParser implements PcxConstants
         };
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
         return null;
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -121,6 +128,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants
                     ImageInfo.COMPRESSION_ALGORITHM_RLE : ImageInfo.COMPRESSION_ALGORITHM_NONE);
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource,
             Map params)
             throws ImageReadException, IOException
@@ -135,6 +143,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants
         return new Dimension(xSize, ySize);
     }
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource,
             Map params)
             throws ImageReadException, IOException
@@ -300,6 +309,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants
                 nPlanes, bytesPerLine, paletteInfo, hScreenSize, vScreenSize);
     }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -534,6 +544,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants
         }
     }
 
+    @Override
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException
     {
@@ -563,6 +574,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants
         }
     }
 
+    @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {
@@ -579,6 +591,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants
      *            Map of optional parameters, defined in SanselanConstants.
      * @return Xmp Xml as String, if present.  Otherwise, returns null.
      */
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {

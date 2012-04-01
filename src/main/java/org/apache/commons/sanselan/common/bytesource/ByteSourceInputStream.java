@@ -96,6 +96,7 @@ public class ByteSourceInputStream extends ByteSource
         private boolean readFirst = false;
         private int blockIndex = 0;
 
+        @Override
         public int read() throws IOException
         {
             if (null == block)
@@ -121,6 +122,7 @@ public class ByteSourceInputStream extends ByteSource
             return 0xff & block.bytes[blockIndex++];
         }
 
+        @Override
         public int read(byte b[], int off, int len) throws IOException
         {
             // first section copied verbatim from InputStream
@@ -162,11 +164,13 @@ public class ByteSourceInputStream extends ByteSource
 
     }
 
+    @Override
     public InputStream getInputStream() throws IOException
     {
         return new CacheReadingInputStream();
     }
 
+    @Override
     public byte[] getBlock(int blockStart, int blockLength) throws IOException
     {
         // We include a separate check for int overflow.
@@ -197,6 +201,7 @@ public class ByteSourceInputStream extends ByteSource
 
     private Long streamLength = null;
 
+    @Override
     public long getLength() throws IOException
     {
         if (streamLength != null)
@@ -211,6 +216,7 @@ public class ByteSourceInputStream extends ByteSource
         return result;
     }
 
+    @Override
     public byte[] getAll() throws IOException
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -224,6 +230,7 @@ public class ByteSourceInputStream extends ByteSource
         return baos.toByteArray();
     }
 
+    @Override
     public String getDescription()
     {
         return "Inputstream: '" + filename + "'";

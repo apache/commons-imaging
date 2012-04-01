@@ -34,6 +34,7 @@ public abstract class PixelParserSimple extends PixelParser
 
     public abstract void newline() throws ImageReadException, IOException;
 
+    @Override
     public void processImage(ImageBuilder imageBuilder) throws ImageReadException,
             IOException
     {

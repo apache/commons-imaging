@@ -27,6 +27,7 @@ public final class ColorHsl
         L = v;
     }
 
+    @Override
     public final String toString()
     {
         return "{H: " + H + ", S: " + S + ", L: " + L + "}";

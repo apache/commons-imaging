@@ -35,6 +35,7 @@ public class JfifSegment extends Segment implements JpegConstants
     public final int yThumbnail;
     public final int thumbnailSize;
 
+    @Override
     public String getDescription()
     {
         return "JFIF (" + getSegmentType() + ")";

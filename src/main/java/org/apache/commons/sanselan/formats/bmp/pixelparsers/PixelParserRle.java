@@ -99,6 +99,7 @@ public class PixelParserRle extends PixelParser
         return pixels_written;
     }
 
+    @Override
     public void processImage(ImageBuilder imageBuilder) throws ImageReadException,
             IOException
     {

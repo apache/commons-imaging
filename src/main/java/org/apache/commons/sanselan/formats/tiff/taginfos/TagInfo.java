@@ -98,6 +98,7 @@ public abstract class TagInfo implements TiffDirectoryConstants, TiffFieldTypeCo
         return tag + " (0x" + Integer.toHexString(tag) + ": " + name + "): ";
     }
 
+    @Override
     public String toString()
     {
         return "[TagInfo. tag: " + tag + " (0x" + Integer.toHexString(tag)

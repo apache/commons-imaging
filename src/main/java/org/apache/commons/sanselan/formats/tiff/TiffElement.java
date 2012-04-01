@@ -64,6 +64,7 @@ public abstract class TiffElement
             super(offset, length);
         }
 
+        @Override
         public String getElementDescription(boolean verbose)
         {
             return "Element, offset: " + offset + ", length: " + length

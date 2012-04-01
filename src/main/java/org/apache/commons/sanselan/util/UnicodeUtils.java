@@ -230,6 +230,7 @@ public abstract class UnicodeUtils implements BinaryConstants
 
     private static class UnicodeMetricsASCII extends UnicodeUtils
     {
+        @Override
         public int findEnd(byte bytes[], int index, boolean includeTerminator)
                 throws UnicodeException
         {
@@ -261,6 +262,7 @@ public abstract class UnicodeUtils implements BinaryConstants
     private static class UnicodeMetricsUTF8 extends UnicodeUtils
     {
 
+        @Override
         public int findEnd(byte bytes[], int index, boolean includeTerminator)
                 throws UnicodeException
         {
@@ -384,6 +386,7 @@ public abstract class UnicodeUtils implements BinaryConstants
             }
         }
 
+        @Override
         public int findEnd(byte bytes[], int index, boolean includeTerminator)
                 throws UnicodeException
         {
@@ -437,6 +440,7 @@ public abstract class UnicodeUtils implements BinaryConstants
             super(BYTE_ORDER_BIG_ENDIAN);
         }
 
+        @Override
         public int findEnd(byte bytes[], int index, boolean includeTerminator)
                 throws UnicodeException
         {

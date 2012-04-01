@@ -27,6 +27,7 @@ public final class ColorCieLuv
         this.v = v;
     }
 
+    @Override
     public String toString()
     {
         return "{L: " + L + ", u: " + u + ", v: " + v + "}";

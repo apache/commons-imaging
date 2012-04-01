@@ -40,16 +40,19 @@ public class BmpWriterPalette extends BmpWriter
             bitsPerSample = 8;
     }
 
+    @Override
     public int getPaletteSize()
     {
         return palette.length();
     }
 
+    @Override
     public int getBitsPerPixel()
     {
         return bitsPerSample;
     }
 
+    @Override
     public void writePalette(BinaryOutputStream bos) throws IOException
     {
         for (int i = 0; i < palette.length(); i++)
@@ -67,6 +70,7 @@ public class BmpWriterPalette extends BmpWriter
         }
     }
 
+    @Override
     public byte[] getImageData(BufferedImage src)
     {
         int width = src.getWidth();

@@ -45,11 +45,13 @@ public class WbmpImageParser extends ImageParser
     {
     }
 
+    @Override
     public String getName()
     {
         return "Wbmp-Custom";
     }
 
+    @Override
     public String getDefaultExtension()
     {
         return DEFAULT_EXTENSION;
@@ -60,11 +62,13 @@ public class WbmpImageParser extends ImageParser
         ".wbmp",
     };
 
+    @Override
     protected String[] getAcceptedExtensions()
     {
         return ACCEPTED_EXTENSIONS;
     }
 
+    @Override
     protected ImageFormat[] getAcceptedTypes()
     {
         return new ImageFormat[]
@@ -73,17 +77,20 @@ public class WbmpImageParser extends ImageParser
         };
     }
 
+    @Override
     public boolean embedICCProfile(File src, File dst, byte profile[])
     {
         return false;
     }
 
+    @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
         return null;
     }
 
+    @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {
@@ -98,6 +105,7 @@ public class WbmpImageParser extends ImageParser
                 ImageInfo.COMPRESSION_ALGORITHM_NONE);
     }
 
+    @Override
     public Dimension getImageSize(ByteSource byteSource,
             Map params)
             throws ImageReadException, IOException
@@ -106,6 +114,7 @@ public class WbmpImageParser extends ImageParser
         return new Dimension(wbmpHeader.width, wbmpHeader.height);
     }
 
+    @Override
     public byte[] getICCProfileBytes(ByteSource byteSource,
             Map params)
             throws ImageReadException, IOException
@@ -213,6 +222,7 @@ public class WbmpImageParser extends ImageParser
         return new WbmpHeader(typeField, fixHeaderField, width, height);
     }
 
+    @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
             throws ImageReadException, IOException
     {
@@ -236,6 +246,7 @@ public class WbmpImageParser extends ImageParser
                 colorModel.isAlphaPremultiplied(), new Properties());
     }
 
+    @Override
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException
     {
@@ -259,6 +270,7 @@ public class WbmpImageParser extends ImageParser
         }
     }
 
+    @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
             throws ImageWriteException, IOException
     {
@@ -316,6 +328,7 @@ public class WbmpImageParser extends ImageParser
      *            Map of optional parameters, defined in SanselanConstants.
      * @return Xmp Xml as String, if present.  Otherwise, returns null.
      */
+    @Override
     public String getXmpXml(ByteSource byteSource, Map params)
             throws ImageReadException, IOException
     {

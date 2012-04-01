@@ -30,6 +30,7 @@ public class BitsToByteInputStream extends InputStream
         this.desiredDepth = desiredDepth;
     }
 
+    @Override
     public int read() throws IOException
     {
         return readBits(8);

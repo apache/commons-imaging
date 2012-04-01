@@ -33,6 +33,7 @@ public class MyBitInputStream extends InputStream implements BinaryConstants
         this.is = is;
     }
 
+    @Override
     public int read() throws IOException
     {
         return readBits(8);

@@ -29,6 +29,7 @@ public class ScanlineFilterUp extends ScanlineFilter
         this.BytesPerPixel = BytesPerPixel;
     }
 
+    @Override
     public void unfilter(byte src[], byte dst[], byte up[])
             throws ImageReadException, IOException
     {

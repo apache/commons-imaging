@@ -222,6 +222,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
         }
     }
 
+    @Override
     public void write(OutputStream os, TiffOutputSet outputSet)
             throws IOException, ImageWriteException
     {
@@ -390,6 +391,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
             this.index = index;
         }
 
+        @Override
         public void write(int b) throws IOException
         {
             if (index >= buffer.length)
@@ -398,6 +400,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
             buffer[index++] = (byte) b;
         }
 
+        @Override
         public void write(byte b[], int off, int len) throws IOException
         {
             if (index + len > buffer.length)

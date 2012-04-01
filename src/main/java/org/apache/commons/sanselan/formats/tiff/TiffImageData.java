@@ -42,16 +42,19 @@ public abstract class TiffImageData
             this.tileLength = tileLength;
         }
 
+        @Override
         public TiffElement.DataElement[] getImageData()
         {
             return tiles;
         }
 
+        @Override
         public boolean stripsNotTiles()
         {
             return false;
         }
 
+        @Override
         public DataReader getDataReader(TiffDirectory directory,
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
@@ -82,16 +85,19 @@ public abstract class TiffImageData
             this.rowsPerStrip = rowsPerStrip;
         }
 
+        @Override
         public TiffElement.DataElement[] getImageData()
         {
             return strips;
         }
 
+        @Override
         public boolean stripsNotTiles()
         {
             return true;
         }
 
+        @Override
         public DataReader getDataReader(TiffDirectory directory,
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
@@ -128,6 +134,7 @@ public abstract class TiffImageData
             super(offset, length, data);
         }
 
+        @Override
         public String getElementDescription(boolean verbose)
         {
             return "Tiff image data: " + data.length + " bytes";

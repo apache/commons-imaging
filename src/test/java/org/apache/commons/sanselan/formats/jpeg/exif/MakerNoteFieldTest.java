@@ -33,6 +33,7 @@ public class MakerNoteFieldTest extends SpecificExifTagTest
     //        super(name);
     //    }
 
+    @Override
     protected void checkField(File imageFile, TiffField field)
             throws IOException, ImageReadException, ImageWriteException
     {

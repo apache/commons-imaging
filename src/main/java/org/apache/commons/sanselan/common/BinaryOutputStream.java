@@ -76,6 +76,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants
         return byteOrder;
     }
 
+    @Override
     public void write(int i) throws IOException
     {
         os.write(i);

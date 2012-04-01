@@ -27,6 +27,7 @@ public class FieldTypeLong extends FieldType
         super(type, 4, name);
     }
 
+    @Override
     public Object getSimpleValue(TiffField entry)
     {
         if (entry.length == 1)
@@ -38,6 +39,7 @@ public class FieldTypeLong extends FieldType
                 + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
     }
 
+    @Override
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
     {
         if (o instanceof Integer)
