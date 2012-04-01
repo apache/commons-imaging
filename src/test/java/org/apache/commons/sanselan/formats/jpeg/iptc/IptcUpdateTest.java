@@ -30,7 +30,6 @@ import org.apache.commons.sanselan.common.bytesource.ByteSource;
 import org.apache.commons.sanselan.common.bytesource.ByteSourceFile;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageParser;
 import org.apache.commons.sanselan.formats.jpeg.JpegPhotoshopMetadata;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IptcConstants;
 import org.apache.commons.sanselan.formats.jpeg.iptc.IptcRecord;
 import org.apache.commons.sanselan.formats.jpeg.iptc.JpegIptcRewriter;
 import org.apache.commons.sanselan.formats.jpeg.iptc.PhotoshopApp13Data;

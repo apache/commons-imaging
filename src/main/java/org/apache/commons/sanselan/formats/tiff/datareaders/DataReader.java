@@ -29,7 +29,6 @@ import org.apache.commons.sanselan.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.sanselan.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.sanselan.formats.tiff.TiffDirectory;
 import org.apache.commons.sanselan.formats.tiff.TiffField;
-import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.photometricinterpreters.PhotometricInterpreter;

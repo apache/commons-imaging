@@ -29,7 +29,6 @@ import org.apache.commons.sanselan.formats.tiff.TiffField;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.GpsTagConstants;
-import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.sanselan.formats.tiff.taginfos.TagInfo;
 

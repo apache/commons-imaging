@@ -18,7 +18,6 @@ package org.apache.commons.sanselan.common.itu_t4;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.apache.commons.sanselan.ImageReadException;
 import org.apache.commons.sanselan.ImageWriteException;

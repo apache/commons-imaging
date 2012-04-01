@@ -25,7 +25,6 @@ import java.util.Map;
 import org.apache.commons.sanselan.Sanselan;
 import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.sanselan.formats.jpeg.JpegPhotoshopMetadata;
-import org.apache.commons.sanselan.formats.jpeg.iptc.IptcConstants;
 import org.apache.commons.sanselan.formats.jpeg.iptc.IptcRecord;
 import org.apache.commons.sanselan.util.Debug;
 

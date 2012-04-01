@@ -31,9 +31,7 @@ import org.apache.commons.sanselan.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.sanselan.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.commons.sanselan.formats.tiff.constants.ExifTagConstants;
-import org.apache.commons.sanselan.formats.tiff.constants.TiffConstants;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputDirectory;
-import org.apache.commons.sanselan.formats.tiff.write.TiffOutputField;
 import org.apache.commons.sanselan.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.sanselan.util.IoUtils;
 

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.sanselan.formats.pnm;
 
-import java.awt.image.DataBuffer;
 import java.io.IOException;
 import java.io.InputStream;
 
