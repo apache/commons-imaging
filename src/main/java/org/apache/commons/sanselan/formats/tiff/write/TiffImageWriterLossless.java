@@ -188,7 +188,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
                 int index = -1;
                 for (int i = 0; i < elements.size(); i++)
                 {
-                    TiffElement element = (TiffElement) elements.get(i);
+                    TiffElement element = elements.get(i);
                     int lastElementByte = element.offset + element.length;
                     if (start == null)
                     {
@@ -232,7 +232,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
             throw new ImageWriteException("Couldn't analyze old tiff data.");
         else if (analysis.size() == 1)
         {
-            TiffElement onlyElement = (TiffElement) analysis.get(0);
+            TiffElement onlyElement = analysis.get(0);
             //            Debug.debug("onlyElement", onlyElement.getElementDescription());
             if (onlyElement.offset == TIFF_HEADER_SIZE
                     && onlyElement.offset + onlyElement.length
@@ -292,7 +292,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
         // any items that represent a gap at the end of the exif segment, can be discarded.
         while (unusedElements.size() > 0)
         {
-            TiffElement element = (TiffElement) unusedElements.get(0);
+            TiffElement element = unusedElements.get(0);
             int elementEnd = element.offset + element.length;
             if (elementEnd == overflowIndex)
             {
@@ -318,8 +318,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
         while (unplacedItems.size() > 0)
         {
             // pop off largest unplaced item.
-            TiffOutputItem outputItem = (TiffOutputItem) unplacedItems
-                    .remove(0);
+            TiffOutputItem outputItem = unplacedItems.remove(0);
             int outputItemLength = outputItem.getItemLength();
             //            Debug.debug("largest unplaced item: "
             //                    + outputItem.getItemDescription() + " (" + outputItemLength
@@ -329,7 +328,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
             TiffElement bestFit = null;
             for (int i = 0; i < unusedElements.size(); i++)
             {
-                TiffElement element = (TiffElement) unusedElements.get(i);
+                TiffElement element = unusedElements.get(i);
                 if (element.length >= outputItemLength)
                     bestFit = element;
                 else
@@ -434,7 +433,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
         // zero out the parsed pieces of old exif segment, in case we don't overwrite them.
         for (int i = 0; i < analysis.size(); i++)
         {
-            TiffElement element = (TiffElement) analysis.get(i);
+            TiffElement element = analysis.get(i);
             for (int j = 0; j < element.length; j++)
             {
                 int index = element.offset + j;
@@ -446,7 +445,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase
         // write in the new items
         for (int i = 0; i < outputItems.size(); i++)
         {
-            TiffOutputItem outputItem = (TiffOutputItem) outputItems.get(i);
+            TiffOutputItem outputItem = outputItems.get(i);
 
             BufferOutputStream tos = new BufferOutputStream(output, outputItem
                     .getOffset());

@@ -36,7 +36,7 @@ public class DctTest extends TestCase
             assertEquals("Reference transforms broken, at x=" + i, originalData[i], reversed[i], 0.001);
         }
 
-        float[] data = (float[]) originalData.clone();
+        float[] data = originalData.clone();
         Dct.forwardDCT8(data);
         Dct.scaleQuantizationVector(data);
         for (int i = 0; i < 8; i++)
@@ -76,7 +76,7 @@ public class DctTest extends TestCase
             }
         }
 
-        float[] data = (float[]) originalData.clone();
+        float[] data = originalData.clone();
         Dct.forwardDCT8x8(data);
         Dct.scaleQuantizationMatrix(data);
         for (int y = 0; y < 8; y++)

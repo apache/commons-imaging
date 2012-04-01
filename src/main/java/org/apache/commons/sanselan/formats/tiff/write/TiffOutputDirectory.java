@@ -373,7 +373,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         List<TiffOutputField> matches = new ArrayList<TiffOutputField>();
         for (int i = 0; i < fields.size(); i++)
         {
-            TiffOutputField field = (TiffOutputField) fields.get(i);
+            TiffOutputField field = fields.get(i);
             if (field.tag == tag)
                 matches.add(field);
         }
@@ -389,7 +389,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
     {
         for (int i = 0; i < fields.size(); i++)
         {
-            TiffOutputField field = (TiffOutputField) fields.get(i);
+            TiffOutputField field = fields.get(i);
             if (field.tag == tag)
                 return field;
         }
@@ -424,7 +424,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         // Write Fields
         for (int i = 0; i < fields.size(); i++)
         {
-            TiffOutputField field = (TiffOutputField) fields.get(i);
+            TiffOutputField field = fields.get(i);
             field.writeField(bos);
 
 //             Debug.debug("\t" + "writing field (" + field.tag + ", 0x" +

@@ -440,8 +440,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             List<ImageDataElement> dataElements = directory.getTiffRawImageDataElements();
             for (int j = 0; j < dataElements.size(); j++)
             {
-                TiffDirectory.ImageDataElement element = (TiffDirectory.ImageDataElement) dataElements
-                        .get(j);
+                TiffDirectory.ImageDataElement element = dataElements.get(j);
                 byte bytes[] = byteSource.getBlock(element.offset,
                         element.length);
                 result.add(bytes);

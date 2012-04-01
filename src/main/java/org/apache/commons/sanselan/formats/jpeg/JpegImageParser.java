@@ -230,7 +230,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
         int total = 0;
         for (int i = 0; i < v.size(); i++)
         {
-            App2Segment segment = (App2Segment) v.get(i);
+            App2Segment segment = v.get(i);
 
             if ((i + offset) != segment.cur_marker)
             {
@@ -258,7 +258,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
 
         for (int i = 0; i < v.size(); i++)
         {
-            App2Segment segment = (App2Segment) v.get(i);
+            App2Segment segment = v.get(i);
 
             System.arraycopy(segment.icc_bytes, 0, result, progress,
                     segment.icc_bytes.length);
@@ -1041,7 +1041,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
             for (int d = 0; d < segments.size(); d++)
             {
 
-                Segment segment = (Segment) segments.get(d);
+                Segment segment = segments.get(d);
 
                 NumberFormat nf = NumberFormat.getIntegerInstance();
                 // this.debugNumber("found, marker: ", marker, 4);

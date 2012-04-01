@@ -297,7 +297,7 @@ public class PngWriter implements PngConstants
         bytes[5] = (byte) (0xff & (yPPU >> 16));
         bytes[6] = (byte) (0xff & (yPPU >> 8));
         bytes[7] = (byte) (0xff & (yPPU >> 0));
-        bytes[8] = (byte) units;
+        bytes[8] = units;
         writeChunk(os, IPHYS_CHUNK_TYPE.toByteArray(), bytes);
     }
 
@@ -521,7 +521,7 @@ public class PngWriter implements PngConstants
             List<PngText> outputTexts = (List<PngText>) params.get(PARAM_KEY_PNG_TEXT_CHUNKS);
             for (int i = 0; i < outputTexts.size(); i++)
             {
-                PngText text = (PngText) outputTexts.get(i);
+                PngText text = outputTexts.get(i);
                 if (text instanceof PngText.tEXt)
                     writeChunktEXt(os, (PngText.tEXt) text);
                 else if (text instanceof PngText.zTXt)

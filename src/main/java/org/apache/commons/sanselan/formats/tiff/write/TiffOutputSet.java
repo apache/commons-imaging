@@ -299,7 +299,7 @@ public final class TiffOutputSet implements TiffConstants
             List<TiffOutputField> fields = directory.getFields();
             for (int j = 0; j < fields.size(); j++)
             {
-                TiffOutputField field = (TiffOutputField) fields.get(j);
+                TiffOutputField field = fields.get(j);
                 result.append(prefix);
                 result.append("\t\t" + "field " + i + ": " + field.tagInfo);
                 result.append(newline);

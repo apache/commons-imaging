@@ -290,7 +290,7 @@ public class TiffField implements TiffConstants
         // Debug.debug("fillInValue valueLength", valueLength);
 
         if (valueOffset < 0 ||
-            ((long)valueOffset) + valueLengthLong > byteSource.getLength()) {
+            valueOffset + valueLengthLong > byteSource.getLength()) {
             throw new TiffValueOutsideFileBoundsException(
                 "Attempt to read byte range starting from " + valueOffset + " " +
                 "of length " + valueLength + " " +
