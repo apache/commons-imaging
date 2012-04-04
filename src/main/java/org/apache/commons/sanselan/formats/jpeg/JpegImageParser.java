@@ -792,7 +792,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants
 
         if (units_per_inch > 0)
         {
-            PhysicalWidthDpi = (int) Math.round(x_density / units_per_inch);
+            PhysicalWidthDpi = (int) Math.round(x_density * units_per_inch);
             PhysicalWidthInch = (float) (Width / (x_density * units_per_inch));
             PhysicalHeightDpi = (int) Math.round(y_density     * units_per_inch);
             PhysicalHeightInch = (float) (Height / (y_density * units_per_inch));
