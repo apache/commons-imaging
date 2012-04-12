@@ -201,8 +201,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
         case 2: // Inch
             unitsPerInch = 1.0;
             break;
-        case 3: // Meter
-            unitsPerInch = 0.0254;
+        case 3: // Centimeter
+            unitsPerInch = 2.54;
             break;
         default:
             break;
@@ -223,7 +223,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             {
                 double XResolutionPixelsPerUnit = xResolutionField
                         .getDoubleValue();
-                physicalWidthDpi = (int) (XResolutionPixelsPerUnit / unitsPerInch);
+                physicalWidthDpi = (int) Math.round((XResolutionPixelsPerUnit * unitsPerInch));
                 physicalWidthInch = (float) (width / (XResolutionPixelsPerUnit * unitsPerInch));
             }
             if ((yResolutionField != null)
@@ -231,7 +231,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants
             {
                 double YResolutionPixelsPerUnit = yResolutionField
                         .getDoubleValue();
-                physicalHeightDpi = (int) (YResolutionPixelsPerUnit / unitsPerInch);
+                physicalHeightDpi = (int) Math.round((YResolutionPixelsPerUnit * unitsPerInch));
                 physicalHeightInch = (float) (height / (YResolutionPixelsPerUnit * unitsPerInch));
             }
         }
