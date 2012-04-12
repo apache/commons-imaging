@@ -57,6 +57,9 @@ public interface ExifTagConstants
     public static final TagInfoAscii EXIF_TAG_PROCESSING_SOFTWARE = new TagInfoAscii(
             "Processing Software", 0x000b, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
+    public static final TagInfoAscii EXIF_TAG_SOFTWARE = new TagInfoAscii("Software",
+			0x0131, 1,
+            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoLong EXIF_TAG_PREVIEW_IMAGE_START_IFD0 = new TagInfoLong(
             "Preview Image Start", 0x0111, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0, true);
@@ -517,6 +520,7 @@ public interface ExifTagConstants
             Collections.unmodifiableList(Arrays.asList(
                     EXIF_TAG_INTEROP_INDEX, EXIF_TAG_INTEROP_VERSION,
                     EXIF_TAG_PROCESSING_SOFTWARE,
+                    EXIF_TAG_SOFTWARE,
                     EXIF_TAG_PREVIEW_IMAGE_START_IFD0,
                     EXIF_TAG_PREVIEW_IMAGE_START_SUB_IFD1,
                     EXIF_TAG_JPG_FROM_RAW_START_SUB_IFD2,

@@ -455,8 +455,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants
     {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
         TiffReader reader = new TiffReader(isStrict(params));
-        int byteOrder = reader.getByteOrder();
         TiffContents contents = reader.readFirstDirectory(byteSource, params, true, formatCompliance);
+        int byteOrder = reader.getByteOrder();
         TiffDirectory directory = contents.directories.get(0);
         BufferedImage result = directory.getTiffImage(byteOrder, params);
         if (null == result)
