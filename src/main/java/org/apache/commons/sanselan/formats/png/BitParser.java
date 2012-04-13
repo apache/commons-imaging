@@ -63,7 +63,7 @@ public class BitParser
 
         int rot = 8 - bitDepth;
         if (rot > 0)
-            sample <<= rot;
+            sample = sample * 255 / ((1 << bitDepth) - 1);
         else if (rot < 0)
             sample >>= -rot;
 
