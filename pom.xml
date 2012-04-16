@@ -32,8 +32,8 @@
   </parent>
 
   <groupId>org.apache.commons</groupId>
-  <artifactId>commons-sanselan</artifactId>
-  <name>Commons Sanselan</name>
+  <artifactId>commons-imaging</artifactId>
+  <name>Commons Imaging</name>
 
   <version>1.0-SNAPSHOT</version>
 
@@ -41,13 +41,13 @@
     Keep the description on a single line. Otherwise Maven might generate
     a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
    -->
-  <description>Commons Sanselan is a pure-Java image library.</description>
+  <description>Commons Imaging is a pure-Java image library.</description>
   <url>http://commons.apache.org/sanselan/</url>
 
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/sanselan/trunk</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk</developerConnection>
-    <url>http://svn.apache.org/viewvc/commons/proper/sanselan/trunk</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/imaging/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/imaging/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/commons/proper/imaging/trunk</url>
   </scm>
 
   <issueManagement>
@@ -63,11 +63,11 @@
   <properties>
     <maven.compile.source>1.5</maven.compile.source>
     <maven.compile.target>1.5</maven.compile.target>
-    <commons.componentid>sanselan</commons.componentid>
+    <commons.componentid>imaging</commons.componentid>
     <commons.release.version>1.0</commons.release.version>
     <commons.jira.id>SANSELAN</commons.jira.id>
     <commons.jira.pid>12310720</commons.jira.pid>
-    <commons.osgi.export>org.apache.commons.sanselan.*;version=${project.version};-noimport:=true</commons.osgi.export>
+    <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
     <commons.binary.suffix />
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
