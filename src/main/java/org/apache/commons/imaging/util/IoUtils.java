@@ -28,9 +28,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.ImagingConstants;
 
-public class IoUtils implements SanselanConstants
+public class IoUtils implements ImagingConstants
 {
     /**
      * This class should never be instantiated.

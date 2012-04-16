@@ -24,9 +24,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.ImagingTest;
 
-public abstract class ByteSourceTest extends SanselanTest
+public abstract class ByteSourceTest extends ImagingTest
 {
     protected File createTempFile(byte src[]) throws IOException
     {

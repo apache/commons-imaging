@@ -27,7 +27,7 @@ limitations under the License.
 <p>
   <ul>
       <li>Add a structured way to write IPTC image metadata to JPEG files.</li>
-      <li>Refactor interface. Rename Sanselan methods and public class names. Formats should subclass imagemetadata class to include format-specific info ie. GIF's transparency index.</li>
+      <li>Refactor interface. Rename Imaging methods and public class names. Formats should subclass imagemetadata class to include format-specific info ie. GIF's transparency index.</li>
       <li>More control over writing.</li>
       <li>Share test image suite with comments.</li>
       <li>Improve Javadoc and write more FAQs / examples.</li>

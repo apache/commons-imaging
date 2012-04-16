@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.formats.icns.IcnsImageParser;
 import org.apache.commons.imaging.formats.icns.IcnsType;
@@ -445,7 +445,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         File tempFile = createTempFile("temp", ".icns");
         IoUtils.writeToFile(rawData, tempFile);
 
-        BufferedImage dstImage = Sanselan.getBufferedImage(tempFile);
+        BufferedImage dstImage = Imaging.getBufferedImage(tempFile);
 
         assertNotNull(dstImage);
         assertTrue(dstImage.getWidth() == image[0].length);

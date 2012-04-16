@@ -31,7 +31,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
@@ -85,7 +85,7 @@ public class ByteSourceImageTest extends ByteSourceTest
 
             checkGetImageSize(imageFile, imageFileBytes);
 
-            ImageFormat imageFormat = Sanselan.guessFormat(imageFile);
+            ImageFormat imageFormat = Imaging.guessFormat(imageFile);
             if (ImageFormat.IMAGE_FORMAT_JPEG != imageFormat
              && ImageFormat.IMAGE_FORMAT_UNKNOWN != imageFormat)
             {
@@ -96,7 +96,7 @@ public class ByteSourceImageTest extends ByteSourceTest
 
     public void checkGetBufferedImage(File file, byte[] bytes) throws Exception
     {
-        BufferedImage imageFile = Sanselan.getBufferedImage(file);
+        BufferedImage imageFile = Imaging.getBufferedImage(file);
         assertNotNull(imageFile);
         assertTrue(imageFile.getWidth() > 0);
         assertTrue(imageFile.getHeight() > 0);
@@ -104,7 +104,7 @@ public class ByteSourceImageTest extends ByteSourceTest
         int imageFileHeight = imageFile.getHeight();
         imageFile = null;
 
-        BufferedImage imageBytes = Sanselan.getBufferedImage(bytes);
+        BufferedImage imageBytes = Imaging.getBufferedImage(bytes);
         assertNotNull(imageBytes);
         assertTrue(imageFileWidth == imageBytes.getWidth());
         assertTrue(imageFileHeight == imageBytes.getHeight());
@@ -112,12 +112,12 @@ public class ByteSourceImageTest extends ByteSourceTest
 
     public void checkGetImageSize(File imageFile, byte[] imageFileBytes) throws Exception
     {
-        Dimension imageSizeFile = Sanselan.getImageSize(imageFile);
+        Dimension imageSizeFile = Imaging.getImageSize(imageFile);
         assertNotNull(imageSizeFile);
         assertTrue(imageSizeFile.width > 0);
         assertTrue(imageSizeFile.height > 0);
 
-        Dimension imageSizeBytes = Sanselan.getImageSize(imageFileBytes);
+        Dimension imageSizeBytes = Imaging.getImageSize(imageFileBytes);
         assertNotNull(imageSizeBytes);
         assertTrue(imageSizeFile.width == imageSizeBytes.width);
         assertTrue(imageSizeFile.height == imageSizeBytes.height);
@@ -126,12 +126,12 @@ public class ByteSourceImageTest extends ByteSourceTest
     public void checkGuessFormat(File imageFile, byte[] imageFileBytes) throws Exception
     {
         // check guessFormat()
-        ImageFormat imageFormatFile = Sanselan.guessFormat(imageFile);
+        ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
         assertNotNull(imageFormatFile);
         assertTrue(imageFormatFile != ImageFormat.IMAGE_FORMAT_UNKNOWN);
         // Debug.debug("imageFormatFile", imageFormatFile);
 
-        ImageFormat imageFormatBytes = Sanselan.guessFormat(imageFileBytes);
+        ImageFormat imageFormatBytes = Imaging.guessFormat(imageFileBytes);
         assertNotNull(imageFormatBytes);
         assertTrue(imageFormatBytes != ImageFormat.IMAGE_FORMAT_UNKNOWN);
         // Debug.debug("imageFormatBytes", imageFormatBytes);
@@ -142,9 +142,9 @@ public class ByteSourceImageTest extends ByteSourceTest
     public void checkGetICCProfileBytes(File imageFile, byte[] imageFileBytes)  throws Exception
     {
         // check guessFormat()
-        byte iccBytesFile[] = Sanselan.getICCProfileBytes(imageFile);
+        byte iccBytesFile[] = Imaging.getICCProfileBytes(imageFile);
 
-        byte iccBytesBytes[] = Sanselan.getICCProfileBytes(imageFileBytes);
+        byte iccBytesBytes[] = Imaging.getICCProfileBytes(imageFileBytes);
 
         assertTrue((iccBytesFile != null) == (iccBytesBytes != null));
 
@@ -160,16 +160,16 @@ public class ByteSourceImageTest extends ByteSourceTest
     {
         Map params = new HashMap();
         boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        ImageFormat imageFormat = Sanselan.guessFormat(imageFile);
+        ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF)
                 || imageFormat.equals(ImageFormat.IMAGE_FORMAT_JPEG))
             params
                     .put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
                             !ignoreImageData));
 
-        ImageInfo imageInfoFile = Sanselan.getImageInfo(imageFile, params);
+        ImageInfo imageInfoFile = Imaging.getImageInfo(imageFile, params);
 
-        ImageInfo imageInfoBytes = Sanselan
+        ImageInfo imageInfoBytes = Imaging
                 .getImageInfo(imageFileBytes, params);
 
         assertNotNull(imageInfoFile);

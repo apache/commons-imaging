@@ -52,7 +52,7 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
 import org.apache.commons.imaging.util.Debug;
 
 public abstract class ImageParser extends BinaryFileParser implements
-        SanselanConstants
+        ImagingConstants
 {
 
     public static final ImageParser[] getAllImageParsers()
@@ -424,7 +424,7 @@ public abstract class ImageParser extends BinaryFileParser implements
             return new SimpleBufferedImageFactory();
 
         IBufferedImageFactory result = (IBufferedImageFactory) params
-                .get(SanselanConstants.BUFFERED_IMAGE_FACTORY);
+                .get(ImagingConstants.BUFFERED_IMAGE_FACTORY);
 
         if (null != result)
             return result;

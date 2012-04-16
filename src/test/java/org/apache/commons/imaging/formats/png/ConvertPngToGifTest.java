@@ -23,7 +23,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 
 public class ConvertPngToGifTest extends PngBaseTest {
@@ -47,13 +47,13 @@ public class ConvertPngToGifTest extends PngBaseTest {
             Hashtable params = new Hashtable();
 //            params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-            BufferedImage image = Sanselan.getBufferedImage(imageFile, params);
+            BufferedImage image = Imaging.getBufferedImage(imageFile, params);
             assertNotNull(image);
 
             File outFile = createTempFile(imageFile.getName()+".", ".gif");
 //            Debug.debug("outFile", outFile);
 
-            Sanselan.writeImage(image, outFile, ImageFormat.IMAGE_FORMAT_GIF,
+            Imaging.writeImage(image, outFile, ImageFormat.IMAGE_FORMAT_GIF,
                     params);
         }
         Debug.debug("complete.");

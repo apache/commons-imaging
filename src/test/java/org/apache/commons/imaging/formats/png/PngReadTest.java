@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
@@ -47,7 +47,7 @@ public class PngReadTest extends PngBaseTest
             {
                 try
                 {
-                    Sanselan.getMetadata(imageFile);
+                    Imaging.getMetadata(imageFile);
                     fail("Image read should have failed.");
                 } catch (Exception e)
                 {
@@ -55,7 +55,7 @@ public class PngReadTest extends PngBaseTest
 
                 try
                 {
-                    Sanselan.getImageInfo(imageFile);
+                    Imaging.getImageInfo(imageFile);
                     fail("Image read should have failed.");
                 } catch (Exception e)
                 {
@@ -63,20 +63,20 @@ public class PngReadTest extends PngBaseTest
 
                 try
                 {
-                    Sanselan.getBufferedImage(imageFile);
+                    Imaging.getBufferedImage(imageFile);
                     fail("Image read should have failed.");
                 } catch (Exception e)
                 {
                 }
             } else
             {
-                IImageMetadata metadata = Sanselan.getMetadata(imageFile);
+                IImageMetadata metadata = Imaging.getMetadata(imageFile);
                 // assertNotNull(metadata);
 
-                ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
+                ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
                 assertNotNull(imageInfo);
 
-                BufferedImage image = Sanselan.getBufferedImage(imageFile);
+                BufferedImage image = Imaging.getBufferedImage(imageFile);
                 assertNotNull(image);
             }
         }

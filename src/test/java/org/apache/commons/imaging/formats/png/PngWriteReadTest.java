@@ -27,11 +27,11 @@ import java.util.Random;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class PngWriteReadTest extends SanselanTest
+public class PngWriteReadTest extends ImagingTest
 {
     //    public PngWriteReadTest(String name)
     //    {
@@ -101,10 +101,10 @@ public class PngWriteReadTest extends SanselanTest
     {
         // Test for https://issues.apache.org/jira/browse/SANSELAN-52
         int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        byte[] pngBytes = Sanselan.writeImageToBytes(
+        byte[] pngBytes = Imaging.writeImageToBytes(
                 imageDataToBufferedImage(smallAscendingPixels),
                 ImageFormat.IMAGE_FORMAT_PNG, null);
-        assertTrue(Sanselan.getImageInfo(pngBytes).isTransparent());
+        assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
     private BufferedImage imageDataToBufferedImage(int[][] rawData)
@@ -145,7 +145,7 @@ public class PngWriteReadTest extends SanselanTest
         //        writeParams.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
         //                Boolean.TRUE);
 
-        byte bytes[] = Sanselan.writeImageToBytes(srcImage,
+        byte bytes[] = Imaging.writeImageToBytes(srcImage,
                 ImageFormat.IMAGE_FORMAT_PNG, writeParams);
 
         //        Debug.debug("bytes", bytes);
@@ -153,7 +153,7 @@ public class PngWriteReadTest extends SanselanTest
         File tempFile = createTempFile("temp", ".png");
         IoUtils.writeToFile(bytes, tempFile);
 
-        BufferedImage dstImage = Sanselan.getBufferedImage(bytes);
+        BufferedImage dstImage = Imaging.getBufferedImage(bytes);
 
         assertNotNull(dstImage);
         assertTrue(srcImage.getWidth() == dstImage.getWidth());

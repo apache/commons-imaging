@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.util.Debug;
 
@@ -49,7 +49,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 // params.put(SanselanConstants.PARAM_KEY_VERBOSE,
                 // Boolean.TRUE);
 
-                BufferedImage image = Sanselan.getBufferedImage(imageFile,
+                BufferedImage image = Imaging.getBufferedImage(imageFile,
                         new HashMap());
                 assertNotNull(image);
 
@@ -59,10 +59,10 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 Map params = new HashMap();
                 params.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
                         Boolean.TRUE);
-                Sanselan.writeImage(image, outFile,
+                Imaging.writeImage(image, outFile,
                         ImageFormat.IMAGE_FORMAT_PNG, params);
 
-                BufferedImage image2 = Sanselan.getBufferedImage(outFile,
+                BufferedImage image2 = Imaging.getBufferedImage(outFile,
                         new HashMap());
             } catch (Exception e) {
                 Debug.debug("imageFile", imageFile);

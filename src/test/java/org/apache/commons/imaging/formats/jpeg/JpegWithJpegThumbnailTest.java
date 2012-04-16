@@ -22,19 +22,19 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 
-public class JpegWithJpegThumbnailTest extends SanselanTest {
+public class JpegWithJpegThumbnailTest extends ImagingTest {
 
     public void testSingleImage() throws Exception
     {
         File imageFile = getTestImageByName("img_F028c_small.jpg");
 
         Map params = new HashMap();
-        IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+        IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
         JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
         BufferedImage image = jpegMetadata.getEXIFThumbnail();

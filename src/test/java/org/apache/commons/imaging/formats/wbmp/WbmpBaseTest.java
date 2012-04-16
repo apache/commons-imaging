@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.ImagingTest;
 
-public abstract class WbmpBaseTest extends SanselanTest
+public abstract class WbmpBaseTest extends ImagingTest
 {
     private static boolean isWbmp(File file)
     {

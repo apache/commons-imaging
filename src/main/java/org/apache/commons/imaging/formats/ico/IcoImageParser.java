@@ -35,7 +35,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -486,10 +486,10 @@ public class IcoImageParser extends ImageParser
     private IconData readIconData(byte[] iconData, IconInfo fIconInfo)
             throws ImageReadException, IOException
     {
-        ImageFormat imageFormat = Sanselan.guessFormat(iconData);
+        ImageFormat imageFormat = Imaging.guessFormat(iconData);
         if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_PNG))
         {
-            BufferedImage bufferedImage = Sanselan.getBufferedImage(iconData);
+            BufferedImage bufferedImage = Imaging.getBufferedImage(iconData);
             PNGIconData pngIconData = new PNGIconData(fIconInfo, bufferedImage);
             return pngIconData;
         }

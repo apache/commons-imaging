@@ -24,8 +24,8 @@ import java.util.HashMap;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.util.Debug;
@@ -159,9 +159,9 @@ public class TiffCcittTest extends TiffBaseTest {
             
             try {
                 HashMap params = new HashMap();
-                params.put(SanselanConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_1D);
-                byte[] compressed = Sanselan.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Sanselan.getBufferedImage(compressed);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_1D);
+                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
                 Debug.debug(ex);
@@ -176,10 +176,10 @@ public class TiffCcittTest extends TiffBaseTest {
             
             try {
                 HashMap params = new HashMap();
-                params.put(SanselanConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 0);
-                byte[] compressed = Sanselan.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Sanselan.getBufferedImage(compressed);
+                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
                 Debug.debug(ex);
@@ -194,10 +194,10 @@ public class TiffCcittTest extends TiffBaseTest {
             
             try {
                 HashMap params = new HashMap();
-                params.put(SanselanConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 4);
-                byte[] compressed = Sanselan.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Sanselan.getBufferedImage(compressed);
+                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
                 Debug.debug(ex);
@@ -212,10 +212,10 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 HashMap params = new HashMap();
-                params.put(SanselanConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 1);
-                byte[] compressed = Sanselan.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Sanselan.getBufferedImage(compressed);
+                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
                 Debug.debug(ex);
@@ -230,10 +230,10 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 HashMap params = new HashMap();
-                params.put(SanselanConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 5);
-                byte[] compressed = Sanselan.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Sanselan.getBufferedImage(compressed);
+                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
                 Debug.debug(ex);
@@ -248,9 +248,9 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 HashMap params = new HashMap();
-                params.put(SanselanConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
-                byte[] compressed = Sanselan.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Sanselan.getBufferedImage(compressed);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
+                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
                 Debug.debug(ex);

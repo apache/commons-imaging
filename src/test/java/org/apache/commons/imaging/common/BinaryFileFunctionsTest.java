@@ -15,10 +15,10 @@
 
 package org.apache.commons.imaging.common;
 
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.BinaryFileFunctions;
 
-public class BinaryFileFunctionsTest extends SanselanTest {
+public class BinaryFileFunctionsTest extends ImagingTest {
     // Work around that pesky "protected"...
     private static class Extender extends BinaryFileFunctions {
         public void testFloatToByteConversion() {

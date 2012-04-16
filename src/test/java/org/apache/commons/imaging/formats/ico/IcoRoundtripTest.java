@@ -27,7 +27,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
@@ -553,7 +553,7 @@ public class IcoRoundtripTest extends IcoBaseTest
         File tempFile = createTempFile("temp", ".ico");
         IoUtils.writeToFile(rawData, tempFile);
 
-        BufferedImage dstImage = Sanselan.getBufferedImage(tempFile);
+        BufferedImage dstImage = Imaging.getBufferedImage(tempFile);
 
         assertNotNull(dstImage);
         assertTrue(dstImage.getWidth() == image[0].length);

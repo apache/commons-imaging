@@ -20,9 +20,9 @@ package org.apache.commons.imaging;
 import java.io.File;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 
-public class SanselanGuessFormatTest extends SanselanTest {
+public class ImagingGuessFormatTest extends ImagingTest {
 
     public static final String BMP_IMAGE_FILE = "bmp\\1\\Oregon Scientific DS6639 - DSC_0307 - small.bmp";
     public static final String PNG_IMAGE_FILE = "png\\1\\Oregon Scientific DS6639 - DSC_0307 - small.png";
@@ -71,7 +71,7 @@ public class SanselanGuessFormatTest extends SanselanTest {
 
         assertTrue(imageFile.exists());
         assertTrue(imageFile.isFile());
-        ImageFormat guessedFormat = Sanselan.guessFormat(imageFile);
+        ImageFormat guessedFormat = Imaging.guessFormat(imageFile);
         assertNotNull(guessedFormat);
         assertEquals(guessedFormat, expectedFormat);
     }

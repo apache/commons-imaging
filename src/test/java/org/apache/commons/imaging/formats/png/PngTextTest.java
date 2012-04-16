@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngImageInfo;
 import org.apache.commons.imaging.formats.png.PngText;
@@ -67,13 +67,13 @@ public class PngTextTest extends PngBaseTest
 
         writeParams.put(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS, writeTexts);
 
-        byte bytes[] = Sanselan.writeImageToBytes(srcImage,
+        byte bytes[] = Imaging.writeImageToBytes(srcImage,
                 ImageFormat.IMAGE_FORMAT_PNG, writeParams);
 
         File tempFile = createTempFile("temp", ".png");
         IoUtils.writeToFile(bytes, tempFile);
 
-        PngImageInfo imageInfo = (PngImageInfo) Sanselan.getImageInfo(bytes);
+        PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);
         assertNotNull(imageInfo);
 
         List readTexts = imageInfo.getTextChunks();

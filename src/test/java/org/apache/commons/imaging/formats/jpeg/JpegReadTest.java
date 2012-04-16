@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
@@ -50,11 +50,11 @@ public class JpegReadTest extends JpegBaseTest
                     .put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
                             !ignoreImageData));
 
-            IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+            IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
             //            assertNotNull(metadata);
             Debug.debug("metadata", metadata);
 
-            ImageInfo imageInfo = Sanselan.getImageInfo(imageFile, params);
+            ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
         }
     }

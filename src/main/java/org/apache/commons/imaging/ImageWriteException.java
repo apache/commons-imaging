@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging;
 
-public class ImageWriteException extends SanselanException
+public class ImageWriteException extends ImagingException
 {
     static final long serialVersionUID = -1L;
 

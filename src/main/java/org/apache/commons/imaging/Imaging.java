@@ -40,19 +40,19 @@ import org.apache.commons.imaging.icc.IccProfileParser;
 import org.apache.commons.imaging.util.Debug;
 
 /**
- * The primary interface to the sanselan library.
+ * The primary interface to the Imaging library.
  * <p>
- * Almost all of the Sanselan library's core functionality can be accessed
+ * Almost all of the Imaging library's core functionality can be accessed
  * through it's methods.
  * <p>
- * All of Sanselan's methods are static.
+ * All of Imaging's methods are static.
  * <p>
  * See the source of the SampleUsage class and other classes in the
  * org.apache.commons.sanselan.examples package for examples.
  *
  * @see org.apache.commons.sanselan.examples.SampleUsage
  */
-public abstract class Sanselan implements SanselanConstants {
+public abstract class Imaging implements ImagingConstants {
 
     /**
      * Tries to guess whether a file contains an image based on its file
@@ -1160,7 +1160,7 @@ public abstract class Sanselan implements SanselanConstants {
      * @param is
      *            InputStream to read image data from.
      * @return A BufferedImage.
-     * @see SanselanConstants
+     * @see ImagingConstants
      */
     public static BufferedImage getBufferedImage(InputStream is)
             throws ImageReadException, IOException {
@@ -1184,7 +1184,7 @@ public abstract class Sanselan implements SanselanConstants {
      * @param params
      *            Map of optional parameters, defined in SanselanConstants.
      * @return A BufferedImage.
-     * @see SanselanConstants
+     * @see ImagingConstants
      */
     public static BufferedImage getBufferedImage(InputStream is, Map params)
             throws ImageReadException, IOException {
@@ -1209,7 +1209,7 @@ public abstract class Sanselan implements SanselanConstants {
      * @param bytes
      *            Byte array containing an image file.
      * @return A BufferedImage.
-     * @see SanselanConstants
+     * @see ImagingConstants
      */
     public static BufferedImage getBufferedImage(byte bytes[])
             throws ImageReadException, IOException {
@@ -1233,7 +1233,7 @@ public abstract class Sanselan implements SanselanConstants {
      * @param params
      *            Map of optional parameters, defined in SanselanConstants.
      * @return A BufferedImage.
-     * @see SanselanConstants
+     * @see ImagingConstants
      */
     public static BufferedImage getBufferedImage(byte bytes[], Map params)
             throws ImageReadException, IOException {
@@ -1255,7 +1255,7 @@ public abstract class Sanselan implements SanselanConstants {
      * @param file
      *            File containing image data.
      * @return A BufferedImage.
-     * @see SanselanConstants
+     * @see ImagingConstants
      */
     public static BufferedImage getBufferedImage(File file)
             throws ImageReadException, IOException {
@@ -1279,7 +1279,7 @@ public abstract class Sanselan implements SanselanConstants {
      * @param params
      *            Map of optional parameters, defined in SanselanConstants.
      * @return A BufferedImage.
-     * @see SanselanConstants
+     * @see ImagingConstants
      */
     public static BufferedImage getBufferedImage(File file, Map params)
             throws ImageReadException, IOException {
@@ -1315,7 +1315,7 @@ public abstract class Sanselan implements SanselanConstants {
      *            The ImageFormat to use.
      * @param params
      *            Map of optional parameters, defined in SanselanConstants.
-     * @see SanselanConstants
+     * @see ImagingConstants
      */
     public static void writeImage(BufferedImage src, File file,
             ImageFormat format, Map params) throws ImageWriteException,
@@ -1356,7 +1356,7 @@ public abstract class Sanselan implements SanselanConstants {
      * @param params
      *            Map of optional parameters, defined in SanselanConstants.
      * @return A byte array containing the image file.
-     * @see SanselanConstants
+     * @see ImagingConstants
      */
     public static byte[] writeImageToBytes(BufferedImage src,
             ImageFormat format, Map params) throws ImageWriteException,
@@ -1388,7 +1388,7 @@ public abstract class Sanselan implements SanselanConstants {
      *            The ImageFormat to use.
      * @param params
      *            Map of optional parameters, defined in SanselanConstants.
-     * @see SanselanConstants
+     * @see ImagingConstants
      */
     public static void writeImage(BufferedImage src, OutputStream os,
             ImageFormat format, Map params) throws ImageWriteException,

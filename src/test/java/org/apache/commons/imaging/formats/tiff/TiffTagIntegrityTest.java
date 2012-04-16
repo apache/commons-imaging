@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.tiff;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.formats.tiff.constants.AdobePageMaker6TagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.AdobePhotoshopTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.AliasSketchbookProTagConstants;
@@ -40,7 +40,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.WangTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
-public class TiffTagIntegrityTest extends SanselanTest {
+public class TiffTagIntegrityTest extends ImagingTest {
     public void testTagIntegrity() {
         verifyFields(AdobePageMaker6TagConstants.class, AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
         verifyFields(AdobePhotoshopTagConstants.class, AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);

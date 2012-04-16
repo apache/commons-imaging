@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
@@ -44,14 +44,14 @@ public class DcxReadTest extends DcxBaseTest
             File imageFile = (File) images.get(i);
             Debug.debug("imageFile", imageFile);
 
-            IImageMetadata metadata = Sanselan.getMetadata(imageFile);
+            IImageMetadata metadata = Imaging.getMetadata(imageFile);
             // assertNotNull(metadata);
 
             Map params = new HashMap();
-            ImageInfo imageInfo = Sanselan.getImageInfo(imageFile, params);
+            ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             //assertNotNull(imageInfo);
 
-            BufferedImage image = Sanselan.getBufferedImage(imageFile);
+            BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
         }
     }

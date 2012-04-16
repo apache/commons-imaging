@@ -25,7 +25,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -77,7 +77,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest
         params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
         // note that metadata might be null if no metadata is found.
-        IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+        IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         if (null == metadata)
             return;
         JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;

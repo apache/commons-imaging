@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
@@ -39,7 +39,7 @@ public class MetadataExample
     {
         //        get all metadata stored in EXIF format (ie. from JPEG or TIFF).
         //            org.w3c.dom.Node node = Sanselan.getMetadataObsolete(imageBytes);
-        IImageMetadata metadata = Sanselan.getMetadata(file);
+        IImageMetadata metadata = Imaging.getMetadata(file);
 
         //System.out.println(metadata);
 

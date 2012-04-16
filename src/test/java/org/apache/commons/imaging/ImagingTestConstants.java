@@ -20,7 +20,7 @@ package org.apache.commons.imaging;
 import java.io.File;
 import org.apache.commons.io.FilenameUtils;
 
-public interface SanselanTestConstants {
+public interface ImagingTestConstants {
 
     static final File PHIL_HARVEY_TEST_IMAGE_FOLDER = new File(
             FilenameUtils.separatorsToSystem("src\\test\\data\\images\\exif\\philHarvey\\"));

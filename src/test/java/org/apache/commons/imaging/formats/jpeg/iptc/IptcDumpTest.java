@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcRecord;
@@ -54,7 +54,7 @@ public class IptcDumpTest extends IptcBaseTest
                             !ignoreImageData));
             // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-            JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
+            JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                     .getMetadata(imageFile, params);
             assertNotNull(metadata);
             assertNotNull(metadata.getPhotoshop());

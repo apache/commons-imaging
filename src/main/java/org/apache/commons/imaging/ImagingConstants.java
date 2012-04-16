@@ -20,7 +20,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
-public interface SanselanConstants
+public interface ImagingConstants
 {
     /**
      * Parameter key. Applies to read and write operations.

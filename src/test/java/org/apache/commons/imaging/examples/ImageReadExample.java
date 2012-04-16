@@ -27,8 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.IBufferedImageFactory;
 
 public class ImageReadExample
@@ -39,13 +39,13 @@ public class ImageReadExample
         Map params = new HashMap();
 
         // set optional parameters if you like
-        params.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
+        params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
                 new ManagedImageBufferedImageFactory());
 
         //        params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
         // read image
-        BufferedImage image = Sanselan.getBufferedImage(file, params);
+        BufferedImage image = Imaging.getBufferedImage(file, params);
 
         return image;
     }

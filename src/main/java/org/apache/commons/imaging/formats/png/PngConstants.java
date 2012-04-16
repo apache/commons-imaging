@@ -16,11 +16,11 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryConstant;
 import org.apache.commons.imaging.common.BinaryFileFunctions;
 
-public interface PngConstants extends SanselanConstants
+public interface PngConstants extends ImagingConstants
 {
 
     public static final int COMPRESSION_DEFLATE_INFLATE = 0;

@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldTypeAscii;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldTypeByte;
@@ -31,7 +31,7 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldTypeRational;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldTypeShort;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldTypeUnknown;
 
-public interface TiffFieldTypeConstants extends SanselanConstants
+public interface TiffFieldTypeConstants extends ImagingConstants
 {
 
     public static final FieldTypeByte FIELD_TYPE_BYTE = new FieldTypeByte(1,

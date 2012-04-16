@@ -26,14 +26,14 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanConstants;
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class RoundtripTest extends SanselanTest
+public class RoundtripTest extends ImagingTest
 {
     private static final int COLOR_FULL_RGB = 0;
     private static final int COLOR_LIMITED_INDEX = 1;
@@ -424,12 +424,12 @@ public class RoundtripTest extends SanselanTest
         // Debug.debug("tempFile: " + tempFile.getName());
 
         Map params = new HashMap();
-        Sanselan.writeImage(testImage, temp1, formatInfo.format, params);
+        Imaging.writeImage(testImage, temp1, formatInfo.format, params);
 
         Map readParams = new HashMap();
-        readParams.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
+        readParams.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
                 new RgbBufferedImageFactory());
-        BufferedImage image2 = Sanselan.getBufferedImage(temp1, readParams);
+        BufferedImage image2 = Imaging.getBufferedImage(temp1, readParams);
         assertNotNull(image2);
 
         if (imageExact)
@@ -444,7 +444,7 @@ public class RoundtripTest extends SanselanTest
             File temp2 = createTempFile(tempPrefix + ".", "."
                     + formatInfo.format.extension);
             // Debug.debug("tempFile: " + tempFile.getName());
-            Sanselan.writeImage(image2, temp2, formatInfo.format, params);
+            Imaging.writeImage(image2, temp2, formatInfo.format, params);
 
             compareFilesExact(temp1, temp2);
         }

@@ -24,7 +24,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
@@ -44,13 +44,13 @@ public class RgbeReadTest extends RgbeBaseTest {
             File imageFile = (File) images.get( i );
             Debug.debug( "imageFile", imageFile );
 
-            IImageMetadata metadata = Sanselan.getMetadata( imageFile );
+            IImageMetadata metadata = Imaging.getMetadata( imageFile );
             assertNotNull(metadata);
 
-            ImageInfo imageInfo = Sanselan.getImageInfo( imageFile );
+            ImageInfo imageInfo = Imaging.getImageInfo( imageFile );
             assertNotNull( imageInfo );
 
-            BufferedImage image = Sanselan.getBufferedImage( imageFile );
+            BufferedImage image = Imaging.getBufferedImage( imageFile );
             assertNotNull( image );
         }
     }

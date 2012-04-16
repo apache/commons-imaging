@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -40,7 +40,7 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 
         Map params = new HashMap();
 
-        IImageMetadata metadata = Sanselan.getMetadata(imageFile, params);
+        IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
         JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 

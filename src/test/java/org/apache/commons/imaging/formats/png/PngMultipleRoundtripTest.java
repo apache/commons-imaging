@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 
 public class PngMultipleRoundtripTest extends PngBaseTest
@@ -54,7 +54,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest
                 Map readParams = new HashMap();
                 // readParams.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
                 // new RgbBufferedImageFactory());
-                BufferedImage image = Sanselan.getBufferedImage(lastFile,
+                BufferedImage image = Imaging.getBufferedImage(lastFile,
                         readParams);
                 assertNotNull(image);
 
@@ -63,7 +63,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest
                 Debug.debug("tempFile", tempFile);
 
                 Map writeParams = new HashMap();
-                Sanselan.writeImage(image, tempFile,
+                Imaging.writeImage(image, tempFile,
                         ImageFormat.IMAGE_FORMAT_PNG, writeParams);
 
                 lastFile = tempFile;

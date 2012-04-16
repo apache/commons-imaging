@@ -24,11 +24,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
 
-public class XmpUpdateTest extends SanselanTest
+public class XmpUpdateTest extends ImagingTest
 {
 
     public void test() throws Exception
@@ -48,9 +48,9 @@ public class XmpUpdateTest extends SanselanTest
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
-            ImageFormat imageFormat = Sanselan.guessFormat(imageFile);
+            ImageFormat imageFormat = Imaging.guessFormat(imageFile);
 
-            String xmpXml = Sanselan.getXmpXml(imageFile);
+            String xmpXml = Imaging.getXmpXml(imageFile);
             if (null == xmpXml
                     && imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF))
                 xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
@@ -70,15 +70,15 @@ public class XmpUpdateTest extends SanselanTest
 
             File tempFile = this.createTempFile(imageFile.getName() + ".", "."
                     + imageFormat.extension);
-            BufferedImage image = Sanselan.getBufferedImage(imageFile);
+            BufferedImage image = Imaging.getBufferedImage(imageFile);
 
             // ----
 
             Map params = new HashMap();
             params.put(PARAM_KEY_XMP_XML, xmpXml);
-            Sanselan.writeImage(image, tempFile, imageFormat, params);
+            Imaging.writeImage(image, tempFile, imageFormat, params);
 
-            String xmpXmlOut = Sanselan.getXmpXml(tempFile);
+            String xmpXmlOut = Imaging.getXmpXml(tempFile);
 
             assertNotNull(xmpXmlOut);
 

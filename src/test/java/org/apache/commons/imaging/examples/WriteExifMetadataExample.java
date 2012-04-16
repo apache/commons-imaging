@@ -24,7 +24,7 @@ import java.io.OutputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
@@ -80,7 +80,7 @@ public class WriteExifMetadataExample
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
-            IImageMetadata metadata = Sanselan.getMetadata(jpegImageFile);
+            IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
             if (null != jpegMetadata)
             {
@@ -191,7 +191,7 @@ public class WriteExifMetadataExample
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
-            IImageMetadata metadata = Sanselan.getMetadata(jpegImageFile);
+            IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
             if (null != jpegMetadata)
             {
@@ -286,7 +286,7 @@ public class WriteExifMetadataExample
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
-            IImageMetadata metadata = Sanselan.getMetadata(jpegImageFile);
+            IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
             if (null != jpegMetadata)
             {

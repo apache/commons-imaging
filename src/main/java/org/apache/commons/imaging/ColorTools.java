@@ -37,7 +37,7 @@ public class ColorTools {
 
     public BufferedImage correctImage(BufferedImage src, File file)
             throws ImageReadException, IOException {
-        ICC_Profile icc = Sanselan.getICCProfile(file);
+        ICC_Profile icc = Imaging.getICCProfile(file);
         if (icc == null)
             return src;
 

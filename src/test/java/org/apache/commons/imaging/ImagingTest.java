@@ -25,13 +25,13 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.test.util.FileSystemTraversal;
 import org.apache.commons.imaging.util.Debug;
 
-public abstract class SanselanTest extends TestCase implements
-        SanselanTestConstants, SanselanConstants {
+public abstract class ImagingTest extends TestCase implements
+        ImagingTestConstants, ImagingConstants {
 
     protected File createTempFile(String prefix, String suffix)
             throws IOException {
@@ -121,7 +121,7 @@ public abstract class SanselanTest extends TestCase implements
         FileSystemTraversal.Visitor visitor = new FileSystemTraversal.Visitor() {
 
             public boolean visit(File file, double progressEstimate) {
-                if (!Sanselan.hasImageFileExtension(file))
+                if (!Imaging.hasImageFileExtension(file))
                     return true;
                 ALL_IMAGES.add(file);
                 return true;
@@ -138,7 +138,7 @@ public abstract class SanselanTest extends TestCase implements
         for (int i = 0; i < ALL_IMAGES.size(); i++) {
             File file = (File) ALL_IMAGES.get(i);
 
-            if (!Sanselan.hasImageFileExtension(file))
+            if (!Imaging.hasImageFileExtension(file))
                 continue;
 
             if (counter++ % 10 == 0)

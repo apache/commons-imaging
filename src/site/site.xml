@@ -15,15 +15,15 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<project name="Commons Sanselan">
+<project name="Commons Imaging">
   <bannerRight>
-    <name>Commons Sanselan</name>
+    <name>Commons Imaging</name>
     <href>/index.html</href>
   </bannerRight>
 
   <body>
 
-    <menu name="Sanselan">
+    <menu name="Imaging">
       <item name="Overview"                href="/index.html"/>
       <item name="Mailing Lists"           href="/mail-lists.html"/>
       <item name="Issue Tracking"          href="/issue-tracking.html"/>
@@ -34,7 +34,7 @@
     </menu>
 
     <menu name="Documentation">
-      <item name="Why Use Sanselan"        href="/whysanselan.html"/>
+      <item name="Why Use Imaging"         href="/whysanselan.html"/>
       <item name="Getting Started"         href="/gettingstarted.html"/>
       <item name="Sample Usage"            href="/sampleusage.html"/>
       <item name="Format Support"          href="/formatsupport.html"/>

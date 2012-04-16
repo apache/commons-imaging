@@ -22,13 +22,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
-public class GpsTest extends ExifBaseTest implements SanselanConstants
+public class GpsTest extends ExifBaseTest implements ImagingConstants
 {
 
     public void test() throws Exception
@@ -56,7 +56,7 @@ public class GpsTest extends ExifBaseTest implements SanselanConstants
                 params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
                         !ignoreImageData));
 
-                JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
+                JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile, params);
                 if (null == metadata)
                     continue;

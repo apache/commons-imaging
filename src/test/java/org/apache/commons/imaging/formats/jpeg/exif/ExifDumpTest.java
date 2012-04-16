@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
@@ -58,7 +58,7 @@ public class ExifDumpTest extends ExifBaseTest
                     .put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
                             !ignoreImageData));
 
-            JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
+            JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                     .getMetadata(imageFile, params);
             if (null == metadata)
                 continue;

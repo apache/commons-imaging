@@ -25,6 +25,10 @@ limitations under the License.
 <section name="Project Status and History">
 
 <p>
+  Apache Commons Sanselan was renamed to Apache Commons Imaging on 16 April 2012.
+</p>
+
+<p>
   Version 0.90 released January 31st, 2008.
   <ul>
     <li>Added some convenience functions for reading and writing GPS data.</li>

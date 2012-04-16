@@ -27,7 +27,7 @@ import java.util.Random;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
@@ -148,7 +148,7 @@ public class BmpRoundtripTest extends BmpBaseTest
         // writeParams.put(PngConstants.PARAM_KEY_BMP_FORCE_TRUE_COLOR,
         // Boolean.TRUE);
 
-        byte bytes[] = Sanselan.writeImageToBytes(srcImage,
+        byte bytes[] = Imaging.writeImageToBytes(srcImage,
                 ImageFormat.IMAGE_FORMAT_BMP, writeParams);
 
         // Debug.debug("bytes", bytes);
@@ -156,7 +156,7 @@ public class BmpRoundtripTest extends BmpBaseTest
         File tempFile = createTempFile("temp", ".bmp");
         IoUtils.writeToFile(bytes, tempFile);
 
-        BufferedImage dstImage = Sanselan.getBufferedImage(bytes);
+        BufferedImage dstImage = Imaging.getBufferedImage(bytes);
 
         assertNotNull(dstImage);
         assertTrue(srcImage.getWidth() == dstImage.getWidth());

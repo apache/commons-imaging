@@ -26,7 +26,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -80,7 +80,7 @@ public class JpegImageMetadata implements IImageMetadata {
         byte[] data = getEXIFThumbnailData();
 
         if( data != null ){
-            return Sanselan.getImageSize(data);
+            return Imaging.getImageSize(data);
         }
         return null;
     }

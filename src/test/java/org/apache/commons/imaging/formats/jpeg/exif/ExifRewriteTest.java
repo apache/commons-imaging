@@ -30,7 +30,7 @@ import java.util.Set;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -72,7 +72,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             new JpegUtils().dumpJFIF(byteSource);
 
             {
-                JpegImageMetadata metadata = (JpegImageMetadata) Sanselan
+                JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile);
                 //                assertNotNull(metadata.getExif());
             }
@@ -112,7 +112,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             Debug.debug("Source Segments:");
             new JpegUtils().dumpJFIF(byteSource);
 
-            JpegImageMetadata originalMetadata = (JpegImageMetadata) Sanselan
+            JpegImageMetadata originalMetadata = (JpegImageMetadata) Imaging
                     .getMetadata(imageFile);
             assertNotNull(originalMetadata);
 
@@ -154,7 +154,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 
                 //                assertTrue(!hasExifData(tempFile));
 
-                JpegImageMetadata newMetadata = (JpegImageMetadata) Sanselan
+                JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
                         .getMetadata(tempFile);
                 assertNotNull(newMetadata);
                 TiffImageMetadata newExifMetadata = newMetadata.getExif();
@@ -198,7 +198,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 Debug.debug("Source Segments:");
                 new JpegUtils().dumpJFIF(byteSource);
 
-                JpegImageMetadata oldMetadata = (JpegImageMetadata) Sanselan
+                JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile);
                 if (null == oldMetadata)
                     continue;
@@ -228,7 +228,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 
                 //                assertTrue(!hasExifData(tempFile));
 
-                JpegImageMetadata newMetadata = (JpegImageMetadata) Sanselan
+                JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
                         .getMetadata(tempFile);
                 assertNotNull(newMetadata);
                 TiffImageMetadata newExifMetadata = newMetadata.getExif();

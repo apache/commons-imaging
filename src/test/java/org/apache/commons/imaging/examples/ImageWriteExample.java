@@ -25,8 +25,8 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
 public class ImageWriteExample
@@ -35,16 +35,16 @@ public class ImageWriteExample
             throws ImageReadException, ImageWriteException, IOException
     {
         // read image
-        BufferedImage image = Sanselan.getBufferedImage(file);
+        BufferedImage image = Imaging.getBufferedImage(file);
 
         ImageFormat format = ImageFormat.IMAGE_FORMAT_TIFF;
         Map params = new HashMap();
 
         // set optional parameters if you like
-        params.put(SanselanConstants.PARAM_KEY_COMPRESSION, new Integer(
+        params.put(ImagingConstants.PARAM_KEY_COMPRESSION, new Integer(
                 TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED));
 
-        byte bytes[] = Sanselan.writeImageToBytes(image, format, params);
+        byte bytes[] = Imaging.writeImageToBytes(image, format, params);
 
         return bytes;
     }

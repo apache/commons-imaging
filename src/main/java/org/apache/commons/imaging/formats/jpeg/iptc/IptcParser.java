@@ -27,7 +27,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.BinaryOutputStream;
@@ -99,9 +99,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants
             throws ImageReadException, IOException
     {
         boolean strict = ParamMap.getParamBoolean(params,
-                SanselanConstants.PARAM_KEY_STRICT, false);
+                ImagingConstants.PARAM_KEY_STRICT, false);
         boolean verbose = ParamMap.getParamBoolean(params,
-                SanselanConstants.PARAM_KEY_VERBOSE, false);
+                ImagingConstants.PARAM_KEY_VERBOSE, false);
 
         return parsePhotoshopSegment(bytes, verbose, strict);
     }

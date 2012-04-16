@@ -22,9 +22,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.ImagingTest;
 
-public abstract class PcxBaseTest extends SanselanTest
+public abstract class PcxBaseTest extends ImagingTest
 {
 
     private static boolean isPcx(File file)

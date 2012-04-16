@@ -22,12 +22,12 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
-public abstract class ExifBaseTest extends SanselanTest
+public abstract class ExifBaseTest extends ImagingTest
 {
     //    public ExifBaseTest(String name)
     //    {

@@ -22,26 +22,26 @@ limitations under the License.
  </properties>
 <body>
 <!-- ================================================== -->
-<section name="Why use Sanselan?">
+<section name="Why use Imaging?">
 
 <p>
   <ul>
       <li>This library is Free Software/Open Source. It is available under the <a href="license.html">Apache Software License</a>.</li>
-      <li>Sanselan is pure-Java. It will run on any jvm, on any platform without modification. It has no dependencies. Sanselan only requires Java 1.4 or later.</li>
-      <li>Sanselan is easy to use. It has a simple, clean interface. Most operations are a single Sanselan method call. See our Sample Code for examples.</li>
+      <li>Imaging is pure-Java. It will run on any jvm, on any platform without modification. It has no dependencies. Imaging only requires Java 1.4 or later.</li>
+      <li>Imaging is easy to use. It has a simple, clean interface. Most operations are a single Imaging method call. See our Sample Code for examples.</li>
       <li>The core functionality is reading and writing a variety of image formats. See the list of Supported Formats.</li>
-      <li>Sanselan supports a number of format variations and uncommon features not supported by other image libraries.</li>
-      <li>Sanselan does more than read and write images. Reading image info (image size, colorspace, bit depth, etc.) and metadata is easy and does not require reading the entire image.</li>
-      <li>Sanselan supports reading and writing a variety of metadata in a structured way, including EXIF metadata.</li>
-      <li>Sanselan provides a consistent api across a variety of image formats.</li>
-      <li>Sanselan is network-aware. Sanselan will only read the data it needs. Reading most image info and metadata only requires reading a header.</li>
-      <li>Sanselan was written with an eye to correctness and code clarity rather than efficiency.</li>
-      <li>Sanselan can extract and (simply) parse embedded ICC Profiles. Moreover, Sanselan applies the icc profile by default, coverting read images to sRGB.
+      <li>Imaging supports a number of format variations and uncommon features not supported by other image libraries.</li>
+      <li>Imaging does more than read and write images. Reading image info (image size, colorspace, bit depth, etc.) and metadata is easy and does not require reading the entire image.</li>
+      <li>Imaging supports reading and writing a variety of metadata in a structured way, including EXIF metadata.</li>
+      <li>Imaging provides a consistent api across a variety of image formats.</li>
+      <li>Imaging is network-aware. Imaging will only read the data it needs. Reading most image info and metadata only requires reading a header.</li>
+      <li>Imaging was written with an eye to correctness and code clarity rather than efficiency.</li>
+      <li>Imaging can extract and (simply) parse embedded ICC Profiles. Moreover, Imaging applies the icc profile by default, coverting read images to sRGB.
           This means images are color-corrected by default. see: 
           <a href="http://en.wikipedia.org/wiki/International_Color_Consortium">http://en.wikipedia.org/wiki/International_Color_Consortium</a>, 
           <a href="http://en.wikipedia.org/wiki/SRGB">http://en.wikipedia.org/wiki/SRGB</a>
       </li>
-      <li>Sanselan is actively maintained.</li>
+      <li>Imaging is actively maintained.</li>
   </ul>
 </p>
 

@@ -23,16 +23,16 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTest;
 
-public abstract class TiffBaseTest extends SanselanTest
+public abstract class TiffBaseTest extends ImagingTest
 {
 
     private static boolean isTiff(File file) throws IOException,
             ImageReadException
     {
-        ImageFormat format = Sanselan.guessFormat(file);
+        ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_TIFF;
     }
 

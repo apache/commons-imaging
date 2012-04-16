@@ -25,7 +25,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
-import org.apache.commons.imaging.Sanselan;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
@@ -41,22 +41,22 @@ public class TiffRoundtripTest extends TiffBaseTest {
             File imageFile = (File) images.get(i);
             Debug.debug("imageFile", imageFile);
 
-            IImageMetadata metadata = Sanselan.getMetadata(imageFile);
+            IImageMetadata metadata = Imaging.getMetadata(imageFile);
             assertNotNull(metadata);
 
-            ImageInfo imageInfo = Sanselan.getImageInfo(imageFile);
+            ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
 
-            BufferedImage image = Sanselan.getBufferedImage(imageFile);
+            BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
 
             File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
             Map params = new HashMap();
-            Sanselan.writeImage(image, tempFile, ImageFormat.IMAGE_FORMAT_TIFF,
+            Imaging.writeImage(image, tempFile, ImageFormat.IMAGE_FORMAT_TIFF,
                     params);
             image = null;
 
-            BufferedImage image2 = Sanselan.getBufferedImage(tempFile);
+            BufferedImage image2 = Imaging.getBufferedImage(tempFile);
             assertNotNull(image2);
         }
     }

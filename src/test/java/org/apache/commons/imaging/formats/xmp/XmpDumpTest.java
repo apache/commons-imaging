@@ -20,11 +20,11 @@ package org.apache.commons.imaging.formats.xmp;
 import java.io.File;
 import java.util.List;
 
-import org.apache.commons.imaging.Sanselan;
-import org.apache.commons.imaging.SanselanTest;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
 
-public class XmpDumpTest extends SanselanTest
+public class XmpDumpTest extends ImagingTest
 {
 
     public void test() throws Exception
@@ -44,7 +44,7 @@ public class XmpDumpTest extends SanselanTest
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
-            String xmpXml = Sanselan.getXmpXml(imageFile);
+            String xmpXml = Imaging.getXmpXml(imageFile);
             if (null == xmpXml)
                 continue;
 

@@ -16,12 +16,12 @@
  */
 package org.apache.commons.imaging.formats.tiff.constants;
 
-import org.apache.commons.imaging.SanselanConstants;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryConstants;
 
 public interface TiffConstants
         extends
-            SanselanConstants,
+            ImagingConstants,
             TiffFieldTypeConstants,
             TiffDirectoryConstants,
             AllTagConstants,
