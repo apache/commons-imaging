@@ -26,9 +26,9 @@ limitations under the License.
 
 <p>
   <ul>
-      <li>Sanselan requires Java 1.4 or higher. It could easily be converted to require only 1.2.</li>
-      <li>The question of porting to J2ME has been raised, but not yet pursued.</li>
-      <li>Sanselan has no dependencies.</li>
+      <li>Commons Imaging requires Java 1.5 or higher.</li>
+      <li>The questions of porting to J2ME and Android have been raised, but not yet pursued.</li>
+      <li>Commons Imaging has no dependencies.</li>
       <li>It does not use ImageIO/AWT.</li>
   </ul>
 </p>
@@ -39,10 +39,10 @@ limitations under the License.
 
 <p>
   <ul>
-      <li>Download the latest release from the <a href="http://commons.apache.org/sanselan/download_sanselan.cgi">download page</a>.</li>
+      <li>Download the latest release from the <a href="http://commons.apache.org/imaging/download_imaging.cgi">download page</a>.</li>
       <li>Add the jar to your project's classpath.</li>
       <li>See our <a href="sampleusage.html">Sample Code</a> for examples.</li>
-      <li>Refer to the project's <a href="api-release/index.html">javadoc</a></li>
+      <li>Refer to the project's <a href="apidocs/index.html">javadoc</a></li>
       <li>Have questions? Subscribe to the commons user <a href="mail-lists.html">mailing list</a>.</li>
   </ul>
 </p>
@@ -51,18 +51,18 @@ limitations under the License.
 
 <section name="Building from the latest Source">
 <p>
-  There are two steps to building Commons Sanselan from the latest source:
+  There are two steps to building Commons Imaging from the latest source:
   <ul>
       <li>Check out the latest source from <a href="source-repository.html">Subversion</a></li>
           <ul>
-              <li>1. mkdir sanselan-snapshot</li>
-              <li>2. cd sanselan-snapshot</li>
-              <li>3. svn checkout <a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/">https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/</a></li>
+              <li>1. mkdir imaging-snapshot</li>
+              <li>2. cd imaging-snapshot</li>
+              <li>3. svn checkout <a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/">https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/</a></li>
           </ul>
       <li>Build using <a href="http://maven.apache.org">Maven 2</a></li>
           <ul>
               <li>1. Install the latest version of Maven</li>
-              <li>2. cd sanselan-snapshot (if you are not already in the project directory)</li>
+              <li>2. cd imaging-snapshot (if you are not already in the project directory)</li>
               <li>3. mvn -Prc package</li>
               <li>4. The build will be in the "target" folder.</li>
           </ul>

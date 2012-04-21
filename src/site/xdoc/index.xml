@@ -25,16 +25,17 @@
 
  <body>
 
-<section name="Sanselan: a Pure-Java Image Library">
+<section name="Commons Imaging: a Pure-Java Image Library">
 
 <subsection name="Introduction">
 
 <p>
-  This Pure-Java library reads and writes a variety of image formats, including fast parsing
-  of image info (size, color space, icc profile, etc.) and metadata.
+  Apache Commons Imaging, previously known as Apache Commons Sanselan, is a library that
+  reads and writes a variety of image formats, including fast parsing
+  of image info (size, color space, ICC profile, etc.) and metadata.
 </p>
 <p>
-  This library is pure Java. It's slow, consequently, but perfectly portable.
+  This library is pure Java. It's slower, consequently, but perfectly portable.
   It's easier to use than ImageIO/JAI/Toolkit (Sun/Java's image support), supports
   more formats (and supports them more correctly). It also provides easy access to metadata.
 </p>
@@ -47,7 +48,7 @@
 </p>
 <p>
   <ul>
-    <li><a href="whysanselan.html">Why Use Sanselan?</a></li>
+    <li><a href="whyimaging.html">Why Use Commons Imaging?</a></li>
     <li><a href="gettingstarted.html">Getting Started</a></li>
   </ul>
 </p>
@@ -58,16 +59,16 @@
 <p>
   Current release: 0.97, February 14th, 2009
   <ul>
-    <li><a href="http://commons.apache.org/sanselan/download_sanselan.cgi">Download latest release</a></li>
+    <li><a href="http://commons.apache.org/imaging/download_imaging.cgi">Download latest release</a></li>
   </ul>
 </p>
 
 <p>
   API reference:
   <ul>
-    <li><a href="api-release/index.html">Javadocs</a></li>
+    <li><a href="apidocs/index.html">Javadocs</a></li>
     <ul>
-      <li>Start with the <a href="api-release/index.html?org/apache/commons/sanselan/Sanselan.html">Sanselan class</a></li>
+      <li>Start with the <a href="apidocs/index.html?org/apache/commons/imaging/Imaging.html">Imaging class</a></li>
     </ul>
   </ul>
 </p>
