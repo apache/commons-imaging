@@ -67,7 +67,11 @@ public class JpegImageMetadata implements IImageMetadata {
 
     public TiffField findEXIFValueWithExactMatch(TagInfo tagInfo) {
         try {
-            return exif.findField(tagInfo, true);
+            if (exif != null) {
+                return exif.findField(tagInfo, true);
+            } else {
+                return null;
+            }
         } catch (ImageReadException cannotHappen) {
             return null;
         }
@@ -97,6 +101,9 @@ public class JpegImageMetadata implements IImageMetadata {
      * @throws IOException
      */
     public byte[] getEXIFThumbnailData() throws ImageReadException, IOException {
+        if (exif == null) {
+            return null;
+        }
         List<? extends IImageMetadataItem> dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
             TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
@@ -155,6 +162,9 @@ public class JpegImageMetadata implements IImageMetadata {
     }
 
     public TiffImageData getRawImageData() {
+        if (exif == null) {
+            return null;
+        }
         List<? extends IImageMetadataItem> dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
             TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
