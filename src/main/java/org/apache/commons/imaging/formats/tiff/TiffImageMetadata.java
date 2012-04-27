@@ -164,7 +164,6 @@ public class TiffImageMetadata extends ImageMetadata
 
                     TagInfo tagInfo = srcField.tagInfo;
                     FieldType fieldType = srcField.fieldType;
-                    int count = srcField.length;
                     //            byte bytes[] = srcField.fieldType.getRawBytes(srcField);
 
                     //                    Debug.debug("tagInfo", tagInfo);
@@ -182,6 +181,7 @@ public class TiffImageMetadata extends ImageMetadata
                     //                                        + Integer.toHexString(srcField.tag)
                     //                                        + ") bytes", bytes);
 
+                    int count = bytes.length / fieldType.length;
                     TiffOutputField dstField = new TiffOutputField(
                             srcField.tag, tagInfo, fieldType, count, bytes);
                     dstField.setSortHint(srcField.getSortHint());

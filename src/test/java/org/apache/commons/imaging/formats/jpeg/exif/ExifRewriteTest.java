@@ -419,16 +419,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 assertEquals(oldField.tag, newField.tag);
                 assertEquals(dirType.intValue(), newField.directoryType);
                 assertEquals(oldField.directoryType, newField.directoryType);
-                assertEquals(oldField.length, newField.length);
-                assertEquals(oldField.isLocalValue(), newField.isLocalValue());
-
-                if (oldField.tag == 0x202)
-                {
-                    // ignore "jpg from raw length" value. may have off-by-one bug in certain cameras.
-                    // i.e. Sony DCR-PC110
-                    continue;
-                }
-
+                
                 if (oldField.fieldType == TiffFieldTypeConstants.FIELD_TYPE_ASCII)
                 {
                     // Sanselan currently doesn't correctly rewrite
@@ -446,6 +437,16 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                     }
                     if (hasInvalidByte)
                         continue;
+                }
+
+                assertEquals(oldField.length, newField.length);
+                assertEquals(oldField.isLocalValue(), newField.isLocalValue());
+
+                if (oldField.tag == 0x202)
+                {
+                    // ignore "jpg from raw length" value. may have off-by-one bug in certain cameras.
+                    // i.e. Sony DCR-PC110
+                    continue;
                 }
 
                 if (!oldField.tagInfo.isOffset())
