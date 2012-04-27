@@ -24,6 +24,13 @@ import org.apache.commons.imaging.common.ImageBuilder;
 public class PhotometricInterpreterPalette extends PhotometricInterpreter
 {
     private final int[] fColorMap;
+    
+    /** 
+     * The color map of integer ARGB values tied to the 
+     * pixel index of the palette
+     */
+    private final int[] indexColorMap;
+
 
     public PhotometricInterpreterPalette(int fSamplesPerPixel,
             int fBitsPerSample[], int Predictor, int width, int height,
@@ -32,24 +39,26 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
         this.fColorMap = fColorMap;
+
+        int fBitsPerPixel = bitsPerSample[0];
+        int colormap_scale = (1 << fBitsPerPixel);
+        indexColorMap = new int[colormap_scale];
+        for (int index = 0; index < colormap_scale; index++)
+        {
+            int red   = (fColorMap[index]>>8)&0xff;
+            int green = (fColorMap[index + (colormap_scale)]>>8)&0xff;
+            int blue  = (fColorMap[index + (2 * colormap_scale)]>>8)&0xff;
+            indexColorMap[index] =
+                    0xff000000 | (red << 16) | (green << 8) | blue;
+        }
+
+
     }
 
     @Override
     public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
             throws ImageReadException, IOException
     {
-        int fBitsPerPixel = bitsPerSample[0];
-        int colormap_scale = (1 << fBitsPerPixel);
-        //            int expected_colormap_size = 3 * (1 << fBitsPerPixel);
-
-        int index = samples[0];
-        int red = fColorMap[index] >> 8;
-        int green = fColorMap[index + (colormap_scale)] >> 8;
-        int blue = fColorMap[index + (2 * colormap_scale)] >> 8;
-
-        int alpha = 0xff;
-        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-        imageBuilder.setRGB(x, y, rgb);
-
+        imageBuilder.setRGB(x, y, indexColorMap[samples[0]]);
     }
 }
