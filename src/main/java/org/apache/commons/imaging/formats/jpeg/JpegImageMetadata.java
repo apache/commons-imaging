@@ -55,7 +55,11 @@ public class JpegImageMetadata implements IImageMetadata {
 
     public TiffField findEXIFValue(TagInfo tagInfo) {
         try {
-            return exif.findField(tagInfo);
+            if (exif != null) {
+               return exif.findField(tagInfo);
+            } else {
+               return null;
+            }
         } catch (ImageReadException cannotHappen) {
             return null;
         }
