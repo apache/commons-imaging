@@ -61,13 +61,14 @@ public final class DataReaderStrips extends DataReader
             return;
         }
         int[] samples = new int[bitsPerSample.length];
+        resetPredictor();
         for (int i = 0; i < pixels_per_strip; i++)
         {
             getSamplesAsBytes(bis, samples);
 
             if (x < width)
             {
-                samples = applyPredictor(samples, x);
+                samples = applyPredictor(samples);
 
                 photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
             }
@@ -76,6 +77,7 @@ public final class DataReaderStrips extends DataReader
             if (x >= width)
             {
                 x = 0;
+                resetPredictor();
                 y++;
                 bis.flushCache();
                 if (y >= height)

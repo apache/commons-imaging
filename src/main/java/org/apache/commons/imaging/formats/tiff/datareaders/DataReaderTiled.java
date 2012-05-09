@@ -68,6 +68,7 @@ public final class DataReaderTiled extends DataReader
         int tileX = 0, tileY = 0;
 
         int[] samples = new int[bitsPerSample.length];
+        resetPredictor();
         for (int i = 0; i < pixelsPerTile; i++)
         {
 
@@ -78,7 +79,7 @@ public final class DataReaderTiled extends DataReader
 
             if ((x < width) && (y < height))
             {
-                samples = applyPredictor(samples, x);
+                samples = applyPredictor(samples);
                 photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
             }
 
@@ -87,6 +88,7 @@ public final class DataReaderTiled extends DataReader
             if (tileX >= tileWidth)
             {
                 tileX = 0;
+                resetPredictor();
                 tileY++;
                 bis.flushCache();
                 if (tileY >= tileLength)

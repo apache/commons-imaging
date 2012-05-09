@@ -91,16 +91,19 @@ public abstract class DataReader implements TiffConstants, BinaryConstants
         }
     }
 
-    protected int[] applyPredictor(int samples[], int x)
+    protected void resetPredictor() {
+        for (int i = 0; i < last.length; i++) {
+            last[i] = 0;
+        }
+    }
+    
+    protected int[] applyPredictor(int samples[])
     {
         if (predictor == 2) // Horizontal differencing.
         {
             for (int i = 0; i < samples.length; i++)
             {
-                if (x > 0)
-                {
-                    samples[i] = 0xff & (samples[i] + last[i]);
-                }
+                samples[i] = 0xff & (samples[i] + last[i]);
                 last[i] = samples[i];
             }
         }
