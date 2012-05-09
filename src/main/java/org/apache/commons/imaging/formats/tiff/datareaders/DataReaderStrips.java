@@ -99,7 +99,7 @@ public final class DataReaderStrips extends DataReader
             long bytesPerStrip = rowsInThisStrip * bytesPerRow;
             long pixelsPerStrip = rowsInThisStrip * width;
 
-            byte compressed[] = imageData.strips[strip].data;
+            byte compressed[] = imageData.strips[strip].getData();
 
             byte decompressed[] = decompress(compressed, compression,
                     (int)bytesPerStrip, width, (int)rowsInThisStrip);

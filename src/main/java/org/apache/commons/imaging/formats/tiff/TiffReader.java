@@ -26,6 +26,7 @@ import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
@@ -468,14 +469,25 @@ public class TiffReader extends BinaryFileParser implements TiffConstants
             TiffDirectory directory) throws ImageReadException, IOException
     {
 
+     
         List<ImageDataElement> elements = directory.getTiffRawImageDataElements();
         TiffImageData.Data data[] = new TiffImageData.Data[elements.size()];
-        for (int i = 0; i < elements.size(); i++)
-        {
-            TiffDirectory.ImageDataElement element = elements.get(i);
-            byte bytes[] = byteSource.getBlock(element.offset, element.length);
-            data[i] = new TiffImageData.Data(element.offset, element.length,
-                    bytes);
+        
+        if (byteSource instanceof ByteSourceFile) {
+            ByteSourceFile bsf = (ByteSourceFile) byteSource;
+            for (int i = 0; i < elements.size(); i++) {
+                TiffDirectory.ImageDataElement element = elements.get(i);          
+                data[i] = new TiffImageData.ByteSourceData(
+                        element.offset, element.length,
+                        bsf);
+            }
+        } else {
+            for (int i = 0; i < elements.size(); i++) {
+                TiffDirectory.ImageDataElement element = elements.get(i);
+                byte bytes[] = byteSource.getBlock(element.offset, element.length);
+                data[i] = new TiffImageData.Data(element.offset, element.length,
+                        bytes);
+            }
         }
 
         if (directory.imageDataInStrips())

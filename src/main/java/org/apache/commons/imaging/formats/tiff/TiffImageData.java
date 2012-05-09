@@ -20,6 +20,7 @@ package org.apache.commons.imaging.formats.tiff;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReader;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderTiled;
@@ -140,5 +141,31 @@ public abstract class TiffImageData
             return "Tiff image data: " + data.length + " bytes";
         }
 
+    }
+    
+        public static class ByteSourceData extends  Data 
+    {
+        ByteSourceFile byteSourceFile ;
+        public ByteSourceData(int offset, int length, ByteSourceFile byteSource)
+        {
+            super(offset, length, new byte[0]);
+            byteSourceFile = byteSource;
+        }
+
+        @Override
+        public String getElementDescription(boolean verbose)
+        {
+            return "Tiff image data: " + data.length + " bytes";
+        }
+
+        
+        public byte[] getData()
+        {
+            try {
+                return byteSourceFile.getBlock(offset, length);
+            } catch (IOException ioex) {
+            }
+            return new byte[0];
+        }
     }
 }
