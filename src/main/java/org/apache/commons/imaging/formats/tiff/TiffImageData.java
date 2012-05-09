@@ -143,7 +143,7 @@ public abstract class TiffImageData
 
     }
     
-        public static class ByteSourceData extends  Data 
+    public static class ByteSourceData extends Data
     {
         ByteSourceFile byteSourceFile ;
         public ByteSourceData(int offset, int length, ByteSourceFile byteSource)

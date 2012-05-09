@@ -55,7 +55,7 @@ public abstract class TiffElement
             this.data = data;
         }
         
-        public byte []getData(){
+        public byte[] getData() {
             return data;
         }
 
