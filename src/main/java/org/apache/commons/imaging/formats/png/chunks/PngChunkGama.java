@@ -19,21 +19,18 @@ package org.apache.commons.imaging.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class PngChunkGama extends PngChunk
-{
+public class PngChunkGama extends PngChunk {
     public final int Gamma;
 
     public PngChunkGama(int Length, int ChunkType, int CRC, byte bytes[])
-            throws IOException
-    {
+            throws IOException {
         super(Length, ChunkType, CRC, bytes);
 
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);
         Gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt");
     }
 
-    public double getGamma()
-    {
+    public double getGamma() {
         return 1.0 / (Gamma / 100000.0);
     }
 

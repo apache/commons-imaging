@@ -20,22 +20,22 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
-public class FieldTypeUnknown extends FieldType
-{
-    public FieldTypeUnknown()
-    {
+public class FieldTypeUnknown extends FieldType {
+    public FieldTypeUnknown() {
         super(-1, 1, "Unknown");
     }
 
     @Override
-    public Object getSimpleValue(TiffField entry)
-    {
-        //        Debug.debug("unknown field type. entry", entry.tagInfo.name);
-        //        Debug.debug("unknown field type. entry.type", entry.type);
-        //        Debug.debug("unknown field type. entry.length", entry.length);
-        //        Debug.debug("unknown field type. entry.oversizeValue", entry.oversizeValue);
-        //        Debug.debug("unknown field type. entry.isLocalValue()", entry.isLocalValue());
-        //        Debug.debug("unknown field type. entry.oversizeValue", entry.oversizeValue);
+    public Object getSimpleValue(TiffField entry) {
+        // Debug.debug("unknown field type. entry", entry.tagInfo.name);
+        // Debug.debug("unknown field type. entry.type", entry.type);
+        // Debug.debug("unknown field type. entry.length", entry.length);
+        // Debug.debug("unknown field type. entry.oversizeValue",
+        // entry.oversizeValue);
+        // Debug.debug("unknown field type. entry.isLocalValue()",
+        // entry.isLocalValue());
+        // Debug.debug("unknown field type. entry.oversizeValue",
+        // entry.oversizeValue);
 
         if (entry.length == 1)
             return entry.valueOffsetBytes[0];
@@ -44,12 +44,9 @@ public class FieldTypeUnknown extends FieldType
     }
 
     @Override
-    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
-    {
+    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
         if (o instanceof Byte)
-            return new byte[]{
-                ((Byte) o).byteValue(),
-            };
+            return new byte[] { ((Byte) o).byteValue(), };
         else if (o instanceof byte[])
             return (byte[]) o;
         else

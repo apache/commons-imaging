@@ -18,38 +18,32 @@ package org.apache.commons.imaging.palette;
 
 import org.apache.commons.imaging.util.Debug;
 
-public class SimplePalette extends Palette
-{
+public class SimplePalette extends Palette {
     private final int palette[];
 
-    public SimplePalette(int palette[])
-    {
+    public SimplePalette(int palette[]) {
         this.palette = palette;
     }
 
     @Override
-    public int getPaletteIndex(int rgb)
-    {
+    public int getPaletteIndex(int rgb) {
         return getPaletteIndex(palette, rgb);
     }
 
     @Override
-    public int getEntry(int index)
-    {
+    public int getEntry(int index) {
         return palette[index];
-        //            return getPaletteIndex(palette, rgb);
+        // return getPaletteIndex(palette, rgb);
     }
 
-    private int getPaletteIndex(int palette[], int argb)
-    {
+    private int getPaletteIndex(int palette[], int argb) {
 
-        //        Debug.debug("getPaletteIndex argb", argb + " ("
-        //                + Integer.toHexString(argb) + ")");
+        // Debug.debug("getPaletteIndex argb", argb + " ("
+        // + Integer.toHexString(argb) + ")");
 
-        for (int i = 0; i < palette.length; i++)
-        {
-            //            Debug.debug("\t" + "palette[" + i + "]", palette[i] + " ("
-            //                    + Integer.toHexString(palette[i]) + ")");
+        for (int i = 0; i < palette.length; i++) {
+            // Debug.debug("\t" + "palette[" + i + "]", palette[i] + " ("
+            // + Integer.toHexString(palette[i]) + ")");
 
             if (palette[i] == argb)
                 return i;
@@ -59,18 +53,15 @@ public class SimplePalette extends Palette
     }
 
     @Override
-    public void dump()
-    {
-        for (int i = 0; i < palette.length; i++)
-        {
+    public void dump() {
+        for (int i = 0; i < palette.length; i++) {
             Debug.debug("\t" + "palette[" + i + "]", palette[i] + " (0x"
                     + Integer.toHexString(palette[i]) + ")");
         }
     }
 
     @Override
-    public int length()
-    {
+    public int length() {
         return palette.length;
     }
 }

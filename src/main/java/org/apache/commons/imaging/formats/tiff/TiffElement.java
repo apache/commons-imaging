@@ -18,59 +18,49 @@ package org.apache.commons.imaging.formats.tiff;
 
 import java.util.Comparator;
 
-public abstract class TiffElement
-{
+public abstract class TiffElement {
     public final int offset;
     public final int length;
 
-    public TiffElement(int offset, int length)
-    {
+    public TiffElement(int offset, int length) {
         this.offset = offset;
         this.length = length;
     }
 
-    public String getElementDescription()
-    {
+    public String getElementDescription() {
         return getElementDescription(false);
     }
 
     public abstract String getElementDescription(boolean verbose);
 
-    public static final Comparator<TiffElement> COMPARATOR = new Comparator<TiffElement>()
-    {
-        public int compare(TiffElement e1, TiffElement e2)
-        {
+    public static final Comparator<TiffElement> COMPARATOR = new Comparator<TiffElement>() {
+        public int compare(TiffElement e1, TiffElement e2) {
             return e1.offset - e2.offset;
         }
     };
 
-    public static abstract class DataElement extends TiffElement
-    {
+    public static abstract class DataElement extends TiffElement {
         public final byte data[];
 
-        public DataElement(int offset, int length, final byte data[])
-        {
+        public DataElement(int offset, int length, final byte data[]) {
             super(offset, length);
 
             this.data = data;
         }
-        
+
         public byte[] getData() {
             return data;
         }
 
     }
 
-    public static final class Stub extends TiffElement
-    {
-        public Stub(int offset, int length)
-        {
+    public static final class Stub extends TiffElement {
+        public Stub(int offset, int length) {
             super(offset, length);
         }
 
         @Override
-        public String getElementDescription(boolean verbose)
-        {
+        public String getElementDescription(boolean verbose) {
             return "Element, offset: " + offset + ", length: " + length
                     + ", last: " + (offset + length) + "";
         }

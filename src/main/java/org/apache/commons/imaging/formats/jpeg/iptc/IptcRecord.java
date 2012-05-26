@@ -22,21 +22,18 @@ import java.util.Comparator;
 /*
  * Represents an IPTC record, a single key-value pair of Photoshop IPTC data.
  */
-public class IptcRecord
-{
+public class IptcRecord {
     public final IptcType iptcType;
     private final byte[] bytes;
     public final String value;
 
-    public IptcRecord(IptcType iptcType, byte[] bytes, String value)
-    {
+    public IptcRecord(IptcType iptcType, byte[] bytes, String value) {
         this.iptcType = iptcType;
         this.bytes = bytes;
         this.value = value;
     }
-    
-    public IptcRecord(IptcType iptcType, String value)
-    {
+
+    public IptcRecord(IptcType iptcType, String value) {
         this.iptcType = iptcType;
         byte[] bytes;
         try {
@@ -47,24 +44,21 @@ public class IptcRecord
         this.bytes = bytes;
         this.value = value;
     }
-    
+
     public byte[] getRawBytes() {
         return bytes.clone();
     }
 
-    public String getValue()
-    {
+    public String getValue() {
         return value;
     }
 
-    public String getIptcTypeName()
-    {
+    public String getIptcTypeName() {
         return iptcType.getName();
     }
 
     public static final Comparator<IptcRecord> COMPARATOR = new Comparator<IptcRecord>() {
-        public int compare(IptcRecord e1, IptcRecord e2)
-        {
+        public int compare(IptcRecord e1, IptcRecord e2) {
             return e1.iptcType.getType() - e2.iptcType.getType();
         }
     };

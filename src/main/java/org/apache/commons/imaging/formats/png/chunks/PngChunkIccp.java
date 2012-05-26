@@ -21,21 +21,19 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ZLibUtils;
 
-public class PngChunkIccp extends PngChunk
-{
-    //    private final PngImageParser parser;
+public class PngChunkIccp extends PngChunk {
+    // private final PngImageParser parser;
     public final String ProfileName;
     public final int CompressionMethod;
     public final byte CompressedProfile[];
     public final byte UncompressedProfile[];
 
     public PngChunkIccp(
-    //            PngImageParser parser,
+    // PngImageParser parser,
             int Length, int ChunkType, int CRC, byte bytes[])
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         super(Length, ChunkType, CRC, bytes);
-        //        this.parser = parser;
+        // this.parser = parser;
 
         {
             int index = findNull(bytes);
@@ -52,8 +50,7 @@ public class PngChunkIccp extends PngChunk
             System.arraycopy(bytes, index + 1 + 1, CompressedProfile, 0,
                     CompressedProfileLength);
 
-            if (getDebug())
-            {
+            if (getDebug()) {
                 System.out.println("ProfileName: " + ProfileName);
                 System.out.println("ProfileName.length(): "
                         + ProfileName.length());
@@ -63,11 +60,9 @@ public class PngChunkIccp extends PngChunk
                 System.out.println("bytes.length: " + bytes.length);
             }
 
-            UncompressedProfile = new ZLibUtils()
-                    .inflate(CompressedProfile);
+            UncompressedProfile = new ZLibUtils().inflate(CompressedProfile);
 
-            if (getDebug())
-            {
+            if (getDebug()) {
                 System.out.println("UncompressedProfile: "
                         + ((UncompressedProfile == null) ? "null" : ""
                                 + bytes.length));

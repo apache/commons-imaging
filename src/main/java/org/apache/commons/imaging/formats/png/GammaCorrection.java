@@ -16,40 +16,33 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-public class GammaCorrection
-{
+public class GammaCorrection {
     private static final boolean DEBUG = false;
 
     private final int lookupTable[];
 
-    public GammaCorrection(double src_gamma, double dst_gamma)
-    {
+    public GammaCorrection(double src_gamma, double dst_gamma) {
 
-        if (DEBUG)
-        {
+        if (DEBUG) {
             System.out.println("src_gamma: " + src_gamma);
             System.out.println("dst_gamma: " + dst_gamma);
         }
 
         lookupTable = new int[256];
-        for (int i = 0; i < 256; i++)
-        {
+        for (int i = 0; i < 256; i++) {
             lookupTable[i] = correctSample(i, src_gamma, dst_gamma);
-            if (DEBUG)
-            {
+            if (DEBUG) {
                 System.out
                         .println("lookup_table[" + i + "]: " + lookupTable[i]);
             }
         }
     }
 
-    public int correctSample(int sample)
-    {
+    public int correctSample(int sample) {
         return lookupTable[sample];
     }
 
-    public int correctARGB(int pixel)
-    {
+    public int correctARGB(int pixel) {
         int alpha = (0xff000000) & pixel;
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
@@ -65,8 +58,7 @@ public class GammaCorrection
         return rgb;
     }
 
-    private int correctSample(int sample, double src_gamma, double dst_gamma)
-    {
+    private int correctSample(int sample, double src_gamma, double dst_gamma) {
         // if (kUseAdobeGammaMethod && val <= 32)
         // {
         // double slope = Math.round(255.0d * Math.pow((32.0 / 255.0d),

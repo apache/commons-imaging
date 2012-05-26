@@ -24,26 +24,21 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class IcoBaseTest extends ImagingTest
-{
+public abstract class IcoBaseTest extends ImagingTest {
 
-    private static boolean isIco(File file)
-    {
-        return file.getName().toLowerCase().endsWith(".ico") ||
-            file.getName().toLowerCase().endsWith(".cur");
+    private static boolean isIco(File file) {
+        return file.getName().toLowerCase().endsWith(".ico")
+                || file.getName().toLowerCase().endsWith(".cur");
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return isIco(file);
         }
     };
 
-    protected List getIcoImages() throws IOException, ImageReadException
-    {
+    protected List getIcoImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
-
 
 }

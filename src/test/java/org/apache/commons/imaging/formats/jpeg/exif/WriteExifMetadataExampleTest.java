@@ -25,20 +25,16 @@ import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.util.Debug;
 
-public class WriteExifMetadataExampleTest extends ExifBaseTest
-        implements
-            AllTagConstants
-{
-    //    public WriteExifMetadataExampleTest(String name)
-    //    {
-    //        super(name);
-    //    }
+public class WriteExifMetadataExampleTest extends ExifBaseTest implements
+        AllTagConstants {
+    // public WriteExifMetadataExampleTest(String name)
+    // {
+    // super(name);
+    // }
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         List images = getJpegImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
@@ -48,27 +44,22 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
             File tempFile = createTempFile("test", ".jpg");
             Debug.debug("tempFile", tempFile.getAbsoluteFile());
 
-            try
-            {
+            try {
                 boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
                 if (ignoreImageData)
                     continue;
                 new WriteExifMetadataExample().changeExifMetadata(imageFile,
                         tempFile);
-            }
-            catch (ExifRewriter.ExifOverflowException e)
-            {
+            } catch (ExifRewriter.ExifOverflowException e) {
                 Debug.debug("Error image", imageFile.getAbsoluteFile());
                 Debug.debug(e, 4);
             }
         }
     }
 
-    public void testInsert() throws Exception
-    {
+    public void testInsert() throws Exception {
         List images = getJpegImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
@@ -78,19 +69,17 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest
             File tempFile = createTempFile("test", ".jpg");
             Debug.debug("tempFile", tempFile.getAbsoluteFile());
 
-            try
-            {
+            try {
                 boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
                 if (ignoreImageData)
                     continue;
                 new WriteExifMetadataExample().changeExifMetadata(imageFile,
                         tempFile);
-            }
-            catch (ExifRewriter.ExifOverflowException e)
-            {
-                Debug.debug("Ignoring unavoidable ExifOverflowException", e.getMessage());
+            } catch (ExifRewriter.ExifOverflowException e) {
+                Debug.debug("Ignoring unavoidable ExifOverflowException",
+                        e.getMessage());
                 Debug.debug("Error image", imageFile.getAbsoluteFile());
-//                Debug.debug(e, 4);
+                // Debug.debug(e, 4);
             }
         }
     }

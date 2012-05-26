@@ -20,47 +20,40 @@ package org.apache.commons.imaging.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class DebugInputStream extends InputStream
-{
+public class DebugInputStream extends InputStream {
     private final InputStream is;
 
-    public DebugInputStream(InputStream is)
-    {
+    public DebugInputStream(InputStream is) {
         this.is = is;
     }
 
     private long bytes_read = 0;
 
     @Override
-    public int read() throws IOException
-    {
+    public int read() throws IOException {
         int result = is.read();
         bytes_read++;
         return result;
     }
 
     @Override
-    public long skip(long n) throws IOException
-    {
+    public long skip(long n) throws IOException {
         long result = is.skip(n);
         bytes_read += n;
         return result;
     }
 
     @Override
-    public int available() throws IOException
-    {
+    public int available() throws IOException {
         return is.available();
     }
 
     @Override
-    public void close() throws IOException
-    {
+    public void close() throws IOException {
         is.close();
     }
 
-    public long getBytesRead()
-    {
+    public long getBytesRead() {
         return bytes_read;
     }
 }

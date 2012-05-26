@@ -30,41 +30,37 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
-public class CompressedDataReader extends DataReader
-{
+public class CompressedDataReader extends DataReader {
 
-    public CompressedDataReader(DataParser fDataParser)
-    {
+    public CompressedDataReader(DataParser fDataParser) {
         super(fDataParser);
     }
 
     @Override
     public void readData(InputStream is, BufferedImage bi,
             ImageContents imageContents, BinaryFileParser bfp)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         PsdHeaderInfo header = imageContents.header;
         int width = header.Columns;
         int height = header.Rows;
 
-        //                this.setDebug(true);
+        // this.setDebug(true);
         int scanline_count = height * header.Channels;
         int scanline_bytecounts[] = new int[scanline_count];
         for (int i = 0; i < scanline_count; i++)
             scanline_bytecounts[i] = bfp.read2Bytes("scanline_bytecount[" + i
                     + "]", is, "PSD: bad Image Data");
         bfp.setDebug(false);
-        //        System.out.println("fImageContents.Compression: "
-        //                + imageContents.Compression);
+        // System.out.println("fImageContents.Compression: "
+        // + imageContents.Compression);
 
         int depth = header.Depth;
 
         int channel_count = dataParser.getBasicChannelsCount();
         int data[][][] = new int[channel_count][height][];
-        //            channels[0] =
+        // channels[0] =
         for (int channel = 0; channel < channel_count; channel++)
-            for (int y = 0; y < height; y++)
-            {
+            for (int y = 0; y < height; y++) {
                 int index = channel * height + y;
                 byte packed[] = bfp.readByteArray("scanline",
                         scanline_bytecounts[index], is,
@@ -74,7 +70,13 @@ public class CompressedDataReader extends DataReader
                 InputStream bais = new ByteArrayInputStream(unpacked);
                 MyBitInputStream mbis = new MyBitInputStream(bais,
                         BYTE_ORDER_MSB);
-                BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we want all samples to be bytes
+                BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we
+                                                                                 // want
+                                                                                 // all
+                                                                                 // samples
+                                                                                 // to
+                                                                                 // be
+                                                                                 // bytes
                 int scanline[] = bbis.readBitsArray(depth, width);
                 data[channel][y] = scanline;
 

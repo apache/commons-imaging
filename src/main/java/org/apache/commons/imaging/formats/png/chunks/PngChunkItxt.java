@@ -23,8 +23,7 @@ import org.apache.commons.imaging.common.ZLibUtils;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
 
-public class PngChunkItxt extends PngTextChunk
-{
+public class PngChunkItxt extends PngTextChunk {
     public final String keyword, text;
 
     /*
@@ -41,8 +40,7 @@ public class PngChunkItxt extends PngTextChunk
     public final String translatedKeyword;
 
     public PngChunkItxt(int length, int chunkType, int crc, byte bytes[])
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
         {
             int terminator = findNull(bytes);
@@ -90,8 +88,7 @@ public class PngChunkItxt extends PngTextChunk
                     "utf-8");
             index = terminator + 1;
 
-            if (compressed)
-            {
+            if (compressed) {
                 int compressedTextLength = bytes.length - index;
 
                 byte compressedText[] = new byte[compressedTextLength];
@@ -110,8 +107,7 @@ public class PngChunkItxt extends PngTextChunk
      * @return Returns the keyword.
      */
     @Override
-    public String getKeyword()
-    {
+    public String getKeyword() {
         return keyword;
     }
 
@@ -119,14 +115,12 @@ public class PngChunkItxt extends PngTextChunk
      * @return Returns the text.
      */
     @Override
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
     @Override
-    public PngText getContents()
-    {
+    public PngText getContents() {
         return new PngText.iTXt(keyword, text, languageTag, translatedKeyword);
     }
 }

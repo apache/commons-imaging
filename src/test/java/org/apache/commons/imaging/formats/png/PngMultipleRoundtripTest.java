@@ -27,30 +27,27 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 
-public class PngMultipleRoundtripTest extends PngBaseTest
-{
+public class PngMultipleRoundtripTest extends PngBaseTest {
 
-    public void test() throws Exception
-    {
-        String imagesFolderPath = FilenameUtils.separatorsToSystem("src\\test\\data\\images\\png\\3");
+    public void test() throws Exception {
+        String imagesFolderPath = FilenameUtils
+                .separatorsToSystem("src\\test\\data\\images\\png\\3");
         File imagesFolder = new File(imagesFolderPath);
         assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());
 
         File files[] = imagesFolder.listFiles();
-        for (int i = 0; i < files.length; i++)
-        {
+        for (int i = 0; i < files.length; i++) {
             File imageFile = files[i];
-            if(!imageFile.isFile() )
+            if (!imageFile.isFile())
                 continue;
-            if(!imageFile.getName().toLowerCase().endsWith(".png"))
+            if (!imageFile.getName().toLowerCase().endsWith(".png"))
                 continue;
 
             Debug.debug();
             Debug.debug("imageFile", imageFile);
 
             File lastFile = imageFile;
-            for (int j = 0; j < 10; j++)
-            {
+            for (int j = 0; j < 10; j++) {
                 Map readParams = new HashMap();
                 // readParams.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
                 // new RgbBufferedImageFactory());

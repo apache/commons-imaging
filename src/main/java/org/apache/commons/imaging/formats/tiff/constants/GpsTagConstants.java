@@ -28,9 +28,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoGpsText;
 
 public interface GpsTagConstants
-        extends
-            TiffFieldTypeConstants
-{
+        extends TiffFieldTypeConstants {
     public static final TagInfoByte GPS_TAG_GPS_VERSION_ID = new TagInfoByte(
             "GPS Version ID", 0x0000, 4,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);

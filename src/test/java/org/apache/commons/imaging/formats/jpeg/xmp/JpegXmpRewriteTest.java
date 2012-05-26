@@ -31,14 +31,11 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegXmpRewriter;
 import org.apache.commons.imaging.util.Debug;
 
-public class JpegXmpRewriteTest extends JpegXmpBaseTest
-{
+public class JpegXmpRewriteTest extends JpegXmpBaseTest {
 
-    public void testRemoveInsertUpdate() throws Exception
-    {
+    public void testRemoveInsertUpdate() throws Exception {
         List images = getImagesWithXmpData();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
@@ -65,13 +62,11 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest
                 // test remove
 
                 OutputStream os = null;
-                try
-                {
+                try {
                     os = new FileOutputStream(noXmpFile);
                     os = new BufferedOutputStream(os);
                     new JpegXmpRewriter().removeXmpXml(byteSource, os);
-                } finally
-                {
+                } finally {
                     if (os != null) {
                         os.close();
                     }
@@ -92,14 +87,12 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest
                 String newXmpXml = "test";
                 File updated = createTempFile(imageFile.getName() + ".", ".jpg");
                 OutputStream os = null;
-                try
-                {
+                try {
                     os = new FileOutputStream(updated);
                     os = new BufferedOutputStream(os);
                     new JpegXmpRewriter().updateXmpXml(byteSource, os,
                             newXmpXml);
-                } finally
-                {
+                } finally {
                     if (os != null) {
                         os.close();
                     }
@@ -121,14 +114,12 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest
                 String newXmpXml = "test";
                 File updated = createTempFile(imageFile.getName() + ".", ".jpg");
                 OutputStream os = null;
-                try
-                {
+                try {
                     os = new FileOutputStream(updated);
                     os = new BufferedOutputStream(os);
-                    new JpegXmpRewriter().updateXmpXml(new ByteSourceFile(noXmpFile), os,
-                            newXmpXml);
-                } finally
-                {
+                    new JpegXmpRewriter().updateXmpXml(new ByteSourceFile(
+                            noXmpFile), os, newXmpXml);
+                } finally {
                     if (os != null) {
                         os.close();
                     }

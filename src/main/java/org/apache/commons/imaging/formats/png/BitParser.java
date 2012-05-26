@@ -18,38 +18,33 @@ package org.apache.commons.imaging.formats.png;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class BitParser
-{
+public class BitParser {
     private final byte bytes[];
     private final int bitsPerPixel;
     private final int bitDepth;
 
-    public BitParser(byte bytes[], int bitsPerPixel, int bitDepth)
-    {
+    public BitParser(byte bytes[], int bitsPerPixel, int bitDepth) {
         this.bytes = bytes;
         this.bitsPerPixel = bitsPerPixel;
         this.bitDepth = bitDepth;
     }
 
     public int getSample(int pixelIndexInScanline, int sampleIndex)
-            throws ImageReadException
-    {
+            throws ImageReadException {
         int pixelIndexBits = bitsPerPixel * pixelIndexInScanline;
         int sampleIndexBits = pixelIndexBits + (sampleIndex * bitDepth);
         int sampleIndexBytes = sampleIndexBits >> 3;
 
         if (bitDepth == 8)
             return 0xff & bytes[sampleIndexBytes];
-        else if (bitDepth < 8)
-        {
+        else if (bitDepth < 8) {
             int b = 0xff & bytes[sampleIndexBytes];
             int bitsToShift = 8 - ((pixelIndexBits & 7) + bitDepth);
             b >>= bitsToShift;
 
             int bitmask = (1 << bitDepth) - 1;
             return b & bitmask;
-        } else if (bitDepth == 16)
-        {
+        } else if (bitDepth == 16) {
             return (((0xff & bytes[sampleIndexBytes]) << 8) | (0xff & bytes[sampleIndexBytes + 1]));
         }
 
@@ -57,8 +52,7 @@ public class BitParser
     }
 
     public int getSampleAsByte(int pixelIndexInScanline, int sampleIndex)
-            throws ImageReadException
-    {
+            throws ImageReadException {
         int sample = getSample(pixelIndexInScanline, sampleIndex);
 
         int rot = 8 - bitDepth;

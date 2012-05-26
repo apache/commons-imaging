@@ -19,8 +19,7 @@ package org.apache.commons.imaging.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class PngChunkIhdr extends PngChunk
-{
+public class PngChunkIhdr extends PngChunk {
     public final int width;
     public final int height;
     public final int bitDepth;
@@ -30,8 +29,7 @@ public class PngChunkIhdr extends PngChunk
     public final int interlaceMethod;
 
     public PngChunkIhdr(int Length, int ChunkType, int CRC, byte bytes[])
-            throws IOException
-    {
+            throws IOException {
         super(Length, ChunkType, CRC, bytes);
 
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);

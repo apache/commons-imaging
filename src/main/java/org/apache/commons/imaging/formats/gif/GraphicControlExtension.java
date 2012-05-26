@@ -16,8 +16,7 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-class GraphicControlExtension extends GifBlock
-{
+class GraphicControlExtension extends GifBlock {
 
     public final int packed;
     public final int dispose;
@@ -26,8 +25,7 @@ class GraphicControlExtension extends GifBlock
     public final int transparentColorIndex;
 
     public GraphicControlExtension(int blockCode, int packed, int dispose,
-            boolean transparency, int delay, int transparentColorIndex)
-    {
+            boolean transparency, int delay, int transparentColorIndex) {
         super(blockCode);
 
         this.packed = packed;

@@ -26,25 +26,21 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class GifBaseTest extends ImagingTest
-{
+public abstract class GifBaseTest extends ImagingTest {
 
     private static boolean isGif(File file) throws IOException,
-            ImageReadException
-    {
+            ImageReadException {
         ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_GIF;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return isGif(file);
         }
     };
 
-    protected List getGifImages() throws IOException, ImageReadException
-    {
+    protected List getGifImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 

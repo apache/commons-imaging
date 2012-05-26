@@ -23,19 +23,16 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class DqtSegment extends Segment
-{
+public class DqtSegment extends Segment {
     public final List<QuantizationTable> quantizationTables = new ArrayList<QuantizationTable>();
 
-    public static class QuantizationTable
-    {
+    public static class QuantizationTable {
         public final int precision;
         public final int destinationIdentifier;
         public final int[] elements;
 
         public QuantizationTable(int precision, int destinationIdentifier,
-                int[] elements)
-        {
+                int[] elements) {
             this.precision = precision;
             this.destinationIdentifier = destinationIdentifier;
             this.elements = elements;
@@ -43,18 +40,15 @@ public class DqtSegment extends Segment
     }
 
     public DqtSegment(int marker, byte[] segmentData)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public DqtSegment(int marker, int length, InputStream is)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         super(marker, length);
 
-        while (length > 0)
-        {
+        while (length > 0) {
             int precisionAndDestination = readByte(
                     "QuantizationTablePrecisionAndDestination", is,
                     "Not a Valid JPEG File");
@@ -63,35 +57,29 @@ public class DqtSegment extends Segment
             int destinationIdentifier = precisionAndDestination & 0xf;
 
             int[] elements = new int[64];
-            for (int i = 0; i < 64; i++)
-            {
-                if (precision == 0)
-                {
+            for (int i = 0; i < 64; i++) {
+                if (precision == 0) {
                     elements[i] = 0xff & readByte("QuantizationTableElement",
                             is, "Not a Valid JPEG File");
                     length--;
-                }
-                else if (precision == 1)
-                {
-                    elements[i] = read2Bytes("QuantizationTableElement",
-                            is, "Not a Valid JPEG File");
+                } else if (precision == 1) {
+                    elements[i] = read2Bytes("QuantizationTableElement", is,
+                            "Not a Valid JPEG File");
                     length -= 2;
-                }
-                else
-                {
-                    throw new ImageReadException("Quantization table precision '" +
-                            precision + "' is invalid");
+                } else {
+                    throw new ImageReadException(
+                            "Quantization table precision '" + precision
+                                    + "' is invalid");
                 }
             }
 
-            quantizationTables.add(new QuantizationTable(
-                    precision, destinationIdentifier, elements));
+            quantizationTables.add(new QuantizationTable(precision,
+                    destinationIdentifier, elements));
         }
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "DQT (" + getSegmentType() + ")";
     }
 }

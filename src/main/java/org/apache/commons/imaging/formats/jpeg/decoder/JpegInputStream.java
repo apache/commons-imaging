@@ -21,39 +21,32 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public class JpegInputStream
-{
+public class JpegInputStream {
     // Figure F.18, F.2.2.5, page 111 of ITU-T T.81
     private final InputStream is;
     private int cnt = 0;
     private int b;
 
-    public JpegInputStream(InputStream is)
-    {
+    public JpegInputStream(InputStream is) {
         this.is = is;
     }
 
-    public int nextBit()
-            throws IOException, ImageReadException
-    {
-        if (cnt == 0)
-        {
+    public int nextBit() throws IOException, ImageReadException {
+        if (cnt == 0) {
             b = is.read();
             if (b < 0)
                 throw new ImageReadException("Premature End of File");
             cnt = 8;
-            if (b == 0xff)
-            {
+            if (b == 0xff) {
                 int b2 = is.read();
                 if (b2 < 0)
                     throw new ImageReadException("Premature End of File");
-                if (b2 != 0)
-                {
+                if (b2 != 0) {
                     if (b2 == (0xff & JpegConstants.DNLMarker))
                         throw new ImageReadException("DNL not yet supported");
                     else
-                        throw new ImageReadException("Invalid marker found " +
-                                "in entropy data");
+                        throw new ImageReadException("Invalid marker found "
+                                + "in entropy data");
                 }
             }
         }

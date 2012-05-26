@@ -22,48 +22,42 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-public class BmpWriterRgb extends BmpWriter
-{
-    //        private final boolean alpha;
+public class BmpWriterRgb extends BmpWriter {
+    // private final boolean alpha;
     //
-    //        public BmpWriterRgb(boolean alpha)
-    //        {
-    //            this.alpha = alpha;
-    //        }
+    // public BmpWriterRgb(boolean alpha)
+    // {
+    // this.alpha = alpha;
+    // }
 
     @Override
-    public int getPaletteSize()
-    {
+    public int getPaletteSize() {
         return 0;
     }
 
     @Override
-    public int getBitsPerPixel()
-    {
-        //            return alpha ? 32 : 24;
+    public int getBitsPerPixel() {
+        // return alpha ? 32 : 24;
         return 24;
     }
 
     @Override
-    public void writePalette(BinaryOutputStream bos) throws IOException
-    {
+    public void writePalette(BinaryOutputStream bos) throws IOException {
     }
 
     @Override
-    public byte[] getImageData(BufferedImage src)
-    {
+    public byte[] getImageData(BufferedImage src) {
         int width = src.getWidth();
         int height = src.getHeight();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        //            BinaryOutputStream bos = new BinaryOutputStream(baos, BYTE_ORDER_Network);
+        // BinaryOutputStream bos = new BinaryOutputStream(baos,
+        // BYTE_ORDER_Network);
 
         int bytecount = 0;
-        for (int y = height - 1; y >= 0; y--)
-        {
-            //            for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+        for (int y = height - 1; y >= 0; y--) {
+            // for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int rgb = 0xffffff & argb;
 
@@ -76,8 +70,7 @@ public class BmpWriterRgb extends BmpWriter
                 baos.write(red);
                 bytecount += 3;
             }
-            while ((bytecount % 4) != 0)
-            {
+            while ((bytecount % 4) != 0) {
                 baos.write(0);
                 bytecount++;
             }

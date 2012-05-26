@@ -27,78 +27,63 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
-public abstract class IptcBaseTest extends ImagingTest
-{
-    protected static boolean hasIptcData(File file)
-    {
-        //        Debug.debug("hasIptcData file", file.getAbsoluteFile());
+public abstract class IptcBaseTest extends ImagingTest {
+    protected static boolean hasIptcData(File file) {
+        // Debug.debug("hasIptcData file", file.getAbsoluteFile());
 
         if (!file.getName().toLowerCase().endsWith(".jpg"))
             return false;
-        //ImageFormat format = Sanselan.guessFormat(file);
-        //if (format != ImageFormat.IMAGE_FORMAT_JPEG)
-        //    return false;
+        // ImageFormat format = Sanselan.guessFormat(file);
+        // if (format != ImageFormat.IMAGE_FORMAT_JPEG)
+        // return false;
 
-        try
-        {
+        try {
             ByteSource byteSource = new ByteSourceFile(file);
             return new JpegImageParser().hasIptcSegment(byteSource);
-        }
-        catch (Exception e)
-        {
-            //            Debug.debug("Error file", file.getAbsoluteFile());
-            //            Debug.debug(e, 4);
+        } catch (Exception e) {
+            // Debug.debug("Error file", file.getAbsoluteFile());
+            // Debug.debug(e, 4);
             return false;
         }
     }
 
-    private static final ImageFilter HAS_IPTC_IMAGE_FILTER = new ImageFilter()
-    {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+    private static final ImageFilter HAS_IPTC_IMAGE_FILTER = new ImageFilter() {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return hasIptcData(file);
         }
     };
 
-    private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter()
-    {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+    private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter() {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return file.getName().toLowerCase().endsWith(".jpg");
         }
     };
 
     protected File getImageWithIptcData() throws IOException,
-            ImageReadException
-    {
+            ImageReadException {
         return getTestImage(HAS_IPTC_IMAGE_FILTER);
     }
 
     protected List getImagesWithIptcData() throws IOException,
-            ImageReadException
-    {
+            ImageReadException {
         return getTestImages(HAS_IPTC_IMAGE_FILTER);
     }
 
     protected List getImagesWithIptcData(int max) throws IOException,
-            ImageReadException
-    {
+            ImageReadException {
         return getTestImages(HAS_IPTC_IMAGE_FILTER, max);
     }
 
-    protected File getJpegImage() throws IOException, ImageReadException
-    {
+    protected File getJpegImage() throws IOException, ImageReadException {
         return getTestImage(JPEG_IMAGE_FILTER);
     }
 
-    protected List getJpegImages() throws IOException, ImageReadException
-    {
+    protected List getJpegImages() throws IOException, ImageReadException {
         return getTestImages(JPEG_IMAGE_FILTER);
     }
 
     protected List getJpegImages(int max) throws IOException,
-            ImageReadException
-    {
+            ImageReadException {
         return getTestImages(JPEG_IMAGE_FILTER, max);
     }
 

@@ -21,26 +21,23 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterBiLevel extends PhotometricInterpreter
-{
+public class PhotometricInterpreterBiLevel extends PhotometricInterpreter {
     private final boolean invert;
 
-    //    private final int bitsPerPixel;
+    // private final int bitsPerPixel;
 
     public PhotometricInterpreterBiLevel(int fBitsPerPixel,
             int fSamplesPerPixel, int fBitsPerSample[], int Predictor,
-            int width, int height, boolean invert)
-    {
+            int width, int height, boolean invert) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
         this.invert = invert;
-        //        this.bitsPerPixel = fBitsPerPixel;
+        // this.bitsPerPixel = fBitsPerPixel;
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
-            throws ImageReadException, IOException
-    {
+    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
+            int y) throws ImageReadException, IOException {
         int sample = samples[0];
 
         if (invert)

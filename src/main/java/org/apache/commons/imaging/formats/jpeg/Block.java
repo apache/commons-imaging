@@ -15,15 +15,13 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
-public final class Block
-{
+public final class Block {
     public final int[] samples;
     public final int width;
     public final int height;
 
-    public Block(int width, int height)
-    {
-        samples = new int[width*height];
+    public Block(int width, int height) {
+        samples = new int[width * height];
         this.width = width;
         this.height = height;
     }

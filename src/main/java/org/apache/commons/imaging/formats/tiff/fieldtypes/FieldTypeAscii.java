@@ -21,16 +21,15 @@ import java.io.UnsupportedEncodingException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
-public class FieldTypeAscii extends FieldType
-{
-    public FieldTypeAscii(int type, String name)
-    {
+public class FieldTypeAscii extends FieldType {
+    public FieldTypeAscii(int type, String name) {
         super(type, 1, name);
     }
 
     @Override
     public Object getSimpleValue(TiffField entry) {
-        // According to EXIF specification "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL."
+        // According to EXIF specification
+        // "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL."
         byte bytes[] = getRawBytes(entry);
         int nullCount = 1;
         for (int i = 0; i < bytes.length - 1; i++) {
@@ -48,7 +47,8 @@ public class FieldTypeAscii extends FieldType
         for (int i = 0; i < bytes.length; i++) {
             if (bytes[i] == 0) {
                 try {
-                    String string = new String(bytes, nextStringPos, i - nextStringPos, "UTF-8");
+                    String string = new String(bytes, nextStringPos, i
+                            - nextStringPos, "UTF-8");
                     strings[stringsAdded++] = string;
                 } catch (UnsupportedEncodingException unsupportedEncoding) {
                 }
@@ -58,7 +58,8 @@ public class FieldTypeAscii extends FieldType
         if (nextStringPos < bytes.length) {
             // Buggy file, string wasn't null terminated
             try {
-                String string = new String(bytes, nextStringPos, bytes.length - nextStringPos, "UTF-8");
+                String string = new String(bytes, nextStringPos, bytes.length
+                        - nextStringPos, "UTF-8");
                 strings[stringsAdded++] = string;
             } catch (UnsupportedEncodingException unsupportedEncoding) {
             }
@@ -71,8 +72,7 @@ public class FieldTypeAscii extends FieldType
     }
 
     @Override
-    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
-    {
+    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
         if (o instanceof byte[]) {
             byte bytes[] = (byte[]) o;
             byte result[] = new byte[bytes.length + 1];
@@ -90,7 +90,7 @@ public class FieldTypeAscii extends FieldType
             result[result.length - 1] = 0;
             return result;
         } else if (o instanceof String[]) {
-            String[] strings = (String[])o;
+            String[] strings = (String[]) o;
             int totalLength = 0;
             for (int i = 0; i < strings.length; i++) {
                 byte[] bytes = null;
@@ -112,8 +112,7 @@ public class FieldTypeAscii extends FieldType
                 position += (bytes.length + 1);
             }
             return result;
-        }
-        else
+        } else
             throw new ImageWriteException("Unknown data type: " + o);
     }
 

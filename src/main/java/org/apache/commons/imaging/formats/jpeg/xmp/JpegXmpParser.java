@@ -23,36 +23,29 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public class JpegXmpParser extends BinaryFileParser implements JpegConstants
-{
+public class JpegXmpParser extends BinaryFileParser implements JpegConstants {
 
-    public JpegXmpParser()
-    {
+    public JpegXmpParser() {
         setByteOrder(BYTE_ORDER_NETWORK);
     }
 
-
-    public boolean isXmpJpegSegment(byte segmentData[])
-    {
+    public boolean isXmpJpegSegment(byte segmentData[]) {
         return BinaryFileParser.byteArrayHasPrefix(segmentData, XMP_IDENTIFIER);
     }
 
     public String parseXmpJpegSegment(byte segmentData[])
-            throws ImageReadException
-    {
+            throws ImageReadException {
         if (!isXmpJpegSegment(segmentData)) {
             throw new ImageReadException("Invalid JPEG XMP Segment.");
         }
         int index = XMP_IDENTIFIER.size();
-        
-        try
-        {
+
+        try {
             // segment data is UTF-8 encoded xml.
             String xml = new String(segmentData, index, segmentData.length
                     - index, "utf-8");
             return xml;
-        } catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             throw new ImageReadException("Invalid JPEG XMP Segment.");
         }
     }

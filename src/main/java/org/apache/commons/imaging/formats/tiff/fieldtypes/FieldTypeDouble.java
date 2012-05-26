@@ -20,39 +20,31 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
-public class FieldTypeDouble extends FieldType
-{
-    public FieldTypeDouble()
-    {
+public class FieldTypeDouble extends FieldType {
+    public FieldTypeDouble() {
         super(12, 8, "Double");
     }
 
     @Override
-    public Object getSimpleValue(TiffField entry)
-    {
+    public Object getSimpleValue(TiffField entry) {
         return "?";
     }
 
     @Override
-    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
-    {
+    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
         if (o instanceof Double)
             return convertDoubleToByteArray(((Double) o).doubleValue(),
                     byteOrder);
-        else if (o instanceof double[])
-        {
+        else if (o instanceof double[]) {
             double numbers[] = (double[]) o;
             return convertDoubleArrayToByteArray(numbers, byteOrder);
-        }
-        else if (o instanceof Double[])
-        {
+        } else if (o instanceof Double[]) {
             Double numbers[] = (Double[]) o;
             double values[] = new double[numbers.length];
             for (int i = 0; i < values.length; i++)
                 values[i] = numbers[i].doubleValue();
             return convertDoubleArrayToByteArray(values, byteOrder);
-        }
-        else
+        } else
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");
     }

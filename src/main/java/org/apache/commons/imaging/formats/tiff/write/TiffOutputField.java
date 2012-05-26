@@ -24,8 +24,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
-public class TiffOutputField implements TiffConstants
-{
+public class TiffOutputField implements TiffConstants {
     public final int tag;
     public final TagInfo tagInfo;
     public final FieldType fieldType;
@@ -36,14 +35,12 @@ public class TiffOutputField implements TiffConstants
     private final TiffOutputItem.Value separateValueItem;
 
     public TiffOutputField(TagInfo tagInfo, FieldType tagtype, int count,
-            byte bytes[])
-    {
+            byte bytes[]) {
         this(tagInfo.tag, tagInfo, tagtype, count, bytes);
     }
 
     public TiffOutputField(final int tag, TagInfo tagInfo, FieldType fieldType,
-            int count, byte bytes[])
-    {
+            int count, byte bytes[]) {
         this.tag = tag;
         this.tagInfo = tagInfo;
         this.fieldType = fieldType;
@@ -52,8 +49,7 @@ public class TiffOutputField implements TiffConstants
 
         if (isLocalValue())
             separateValueItem = null;
-        else
-        {
+        else {
             String name = "Field Seperate value (" + tagInfo.getDescription()
                     + ")";
             separateValueItem = new TiffOutputItem.Value(name, bytes);
@@ -63,21 +59,18 @@ public class TiffOutputField implements TiffConstants
     private int sortHint = -1;
 
     protected static final TiffOutputField createOffsetField(TagInfo tagInfo,
-            int byteOrder) throws ImageWriteException
-    {
-        return new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1, FIELD_TYPE_LONG
-                .writeData(new int[] { 0, }, byteOrder));
+            int byteOrder) throws ImageWriteException {
+        return new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1,
+                FIELD_TYPE_LONG.writeData(new int[] { 0, }, byteOrder));
     }
 
     protected void writeField(BinaryOutputStream bos) throws IOException,
-            ImageWriteException
-    {
+            ImageWriteException {
         bos.write2Bytes(tag);
         bos.write2Bytes(fieldType.type);
         bos.write4Bytes(count);
 
-        if (isLocalValue())
-        {
+        if (isLocalValue()) {
             if (separateValueItem != null)
                 throw new ImageWriteException("Unexpected separate value item.");
             if (bytes.length > 4)
@@ -88,8 +81,7 @@ public class TiffOutputField implements TiffConstants
             int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
             for (int i = 0; i < remainder; i++)
                 bos.write(0);
-        } else
-        {
+        } else {
             if (separateValueItem == null)
                 throw new ImageWriteException("Missing separate value item.");
 
@@ -97,18 +89,15 @@ public class TiffOutputField implements TiffConstants
         }
     }
 
-    protected TiffOutputItem getSeperateValue()
-    {
+    protected TiffOutputItem getSeperateValue() {
         return separateValueItem;
     }
 
-    protected boolean isLocalValue()
-    {
+    protected boolean isLocalValue() {
         return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
 
-    protected void setData(byte bytes[]) throws ImageWriteException
-    {
+    protected void setData(byte bytes[]) throws ImageWriteException {
         // if(tagInfo.isUnknown())
         // Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
         // + ") setData", bytes);
@@ -128,13 +117,11 @@ public class TiffOutputField implements TiffConstants
     private static final String newline = System.getProperty("line.separator");
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return toString(null);
     }
 
-    public String toString(String prefix)
-    {
+    public String toString(String prefix) {
         if (prefix == null)
             prefix = "";
         StringBuffer result = new StringBuffer();
@@ -154,13 +141,11 @@ public class TiffOutputField implements TiffConstants
         return result.toString();
     }
 
-    public int getSortHint()
-    {
+    public int getSortHint() {
         return sortHint;
     }
 
-    public void setSortHint(int sortHint)
-    {
+    public void setSortHint(int sortHint) {
         this.sortHint = sortHint;
     }
 }

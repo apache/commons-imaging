@@ -16,9 +16,7 @@
  */
 package org.apache.commons.imaging.icc;
 
-
-public interface IccConstants
-{
+public interface IccConstants {
     public final static int IEC = (((0xff & 'I') << 24) | ((0xff & 'E') << 16)
             | ((0xff & 'C') << 8) | ((0xff & ' ') << 0));
     public final static int sRGB = (((0xff & 's') << 24) | ((0xff & 'R') << 16)

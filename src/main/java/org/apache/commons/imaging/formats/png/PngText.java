@@ -16,34 +16,27 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-public abstract class PngText
-{
-    public PngText(String keyword, String text)
-    {
+public abstract class PngText {
+    public PngText(String keyword, String text) {
         this.keyword = keyword;
         this.text = text;
     }
 
     public final String keyword, text;
 
-    public static class tEXt extends PngText
-    {
-        public tEXt(String keyword, String text)
-        {
+    public static class tEXt extends PngText {
+        public tEXt(String keyword, String text) {
             super(keyword, text);
         }
     }
 
-    public static class zTXt extends PngText
-    {
-        public zTXt(String keyword, String text)
-        {
+    public static class zTXt extends PngText {
+        public zTXt(String keyword, String text) {
             super(keyword, text);
         }
     }
 
-    public static class iTXt extends PngText
-    {
+    public static class iTXt extends PngText {
 
         /*
          * The language tag defined in [RFC-3066] indicates the human language
@@ -60,8 +53,7 @@ public abstract class PngText
         public final String translatedKeyword;
 
         public iTXt(String keyword, String text, String languageTag,
-                String translatedKeyword)
-        {
+                String translatedKeyword) {
             super(keyword, text);
             this.languageTag = languageTag;
             this.translatedKeyword = translatedKeyword;

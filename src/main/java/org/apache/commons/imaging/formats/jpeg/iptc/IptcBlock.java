@@ -19,21 +19,18 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
 /*
  * Represents an IPTC block, a set of key-value pairs of Photoshop IPTC data.
  */
-public class IptcBlock
-{
+public class IptcBlock {
     public final int blockType;
     public final byte[] blockNameBytes;
     public final byte[] blockData;
 
-    public IptcBlock(int blockType, byte[] blockNameBytes, byte[] blockData)
-    {
+    public IptcBlock(int blockType, byte[] blockNameBytes, byte[] blockData) {
         this.blockData = blockData;
         this.blockNameBytes = blockNameBytes;
         this.blockType = blockType;
     }
 
-    public boolean isIPTCBlock()
-    {
+    public boolean isIPTCBlock() {
         return blockType == IptcParser.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
     }
 }

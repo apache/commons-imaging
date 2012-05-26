@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 /****************************************************************
  * Explanation of Use and Rationale For Procedures
  * 
@@ -166,62 +165,62 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 
 /**
- * A "test stand" for evaluating the speed an memory use
- * of different Apache Imaging operations
+ * A "test stand" for evaluating the speed an memory use of different Apache
+ * Imaging operations
  */
-public class ApacheImagingSpeedAndMemoryTest
-{
+public class ApacheImagingSpeedAndMemoryTest {
 
     /**
-     * Create an instance of the speed and memory test class
-     * and execute a test loop for the specified file.
-     * @param args the path to the file to be processed
+     * Create an instance of the speed and memory test class and execute a test
+     * loop for the specified file.
+     * 
+     * @param args
+     *            the path to the file to be processed
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         String name = args[0];
-        
-        ApacheImagingSpeedAndMemoryTest testStand =
-                new ApacheImagingSpeedAndMemoryTest();
+
+        ApacheImagingSpeedAndMemoryTest testStand = new ApacheImagingSpeedAndMemoryTest();
 
         testStand.performTest(name);
     }
 
     /**
-     * Loads the input file multiple times, measuring the
-     * time and memory use for each iteration.
-     * @param name the path for the input image file to be tested 
+     * Loads the input file multiple times, measuring the time and memory use
+     * for each iteration.
+     * 
+     * @param name
+     *            the path for the input image file to be tested
      */
-    private void performTest(String name)
-    {
+    private void performTest(String name) {
         File target = new File(name);
         Formatter fmt = new Formatter(System.out);
-        
+
         double sumTime = 0;
         int n = 1;
         for (int i = 0; i < 10; i++) {
             try {
                 ByteSourceFile byteSource = new ByteSourceFile(target);
-                //    This test code allows you to test cases where the
-                //    input is processed using Apache Imaging's
-                //    ByteSourceInputStream rather than the ByteSourceFile.
-                //    You might also want to experiment with ByteSourceArray.
-                //    FileInputStream fins = new FileInputStream(target);
-                //    BufferedInputStream bins = new BufferedInputStream(fins);
-                //    ByteSourceInputStream byteSource = 
-                //        new ByteSourceInputStream(bins, target.getName());
-                
+                // This test code allows you to test cases where the
+                // input is processed using Apache Imaging's
+                // ByteSourceInputStream rather than the ByteSourceFile.
+                // You might also want to experiment with ByteSourceArray.
+                // FileInputStream fins = new FileInputStream(target);
+                // BufferedInputStream bins = new BufferedInputStream(fins);
+                // ByteSourceInputStream byteSource =
+                // new ByteSourceInputStream(bins, target.getName());
+
                 // ready the parser (you may modify this code block
                 // to use your parser of choice)
                 HashMap params = new HashMap();
                 TiffImageParser tiffImageParser = new TiffImageParser();
-                
+
                 // load the file and record time needed to do so
                 long time0 = System.nanoTime();
-                BufferedImage bImage =
-                        tiffImageParser.getBufferedImage(byteSource, params);
+                BufferedImage bImage = tiffImageParser.getBufferedImage(
+                        byteSource, params);
                 long time1 = System.nanoTime();
-                
+
                 // tabulate results
                 double testTime = (time1 - time0) / 1000000.0;
                 if (i > 1) {
@@ -230,12 +229,12 @@ public class ApacheImagingSpeedAndMemoryTest
                 }
                 double avgTime = sumTime / n;
 
-                // tabulate the memory results.  Note that the
+                // tabulate the memory results. Note that the
                 // buffered image, the byte source, and the parser
-                // are all still in scope.  This approach is taken 
+                // are all still in scope. This approach is taken
                 // to get some sense of peak memory use, but Java
                 // may have already started collecting garbage,
-                // so there are limits to the reliability of these 
+                // so there are limits to the reliability of these
                 // statistics
                 Runtime r = Runtime.getRuntime();
                 long freeMemory = r.freeMemory();
@@ -246,19 +245,14 @@ public class ApacheImagingSpeedAndMemoryTest
                     // print header info
                     fmt.format("\n");
                     fmt.format("Processing file: %s\n", target.getName());
-                    fmt.format(" image size: %d by %d\n\n", 
-                           bImage.getWidth(), 
-                           bImage.getHeight());
-                    fmt.format(
-                           " time to load image    --         memory\n");
-                    fmt.format(
-                           " time ms      avg ms   --    used mb   total mb\n");
+                    fmt.format(" image size: %d by %d\n\n", bImage.getWidth(),
+                            bImage.getHeight());
+                    fmt.format(" time to load image    --         memory\n");
+                    fmt.format(" time ms      avg ms   --    used mb   total mb\n");
                 }
-                fmt.format("%9.3f %9.3f    --  %9.3f %9.3f \n",
-                        testTime,
-                        avgTime,
-                        usedMemory / (1024.0 * 1024.0),
-                        totalMemory / (1024.0 * 1024.0));
+                fmt.format("%9.3f %9.3f    --  %9.3f %9.3f \n", testTime,
+                        avgTime, usedMemory / (1024.0 * 1024.0), totalMemory
+                                / (1024.0 * 1024.0));
                 bImage = null;
                 byteSource = null;
                 params = null;
@@ -273,9 +267,9 @@ public class ApacheImagingSpeedAndMemoryTest
 
             try {
                 // sleep between loop iterations allows time
-                // for the JVM to clean up memory.  The Netbeans IDE
+                // for the JVM to clean up memory. The Netbeans IDE
                 // doesn't "get" the fact that we're doing this operation
-                // deliberately and is apt offer hints 
+                // deliberately and is apt offer hints
                 // suggesting that the code should be modified
                 Runtime.getRuntime().gc();
                 Thread.sleep(1000);
@@ -287,4 +281,3 @@ public class ApacheImagingSpeedAndMemoryTest
         }
     }
 }
-

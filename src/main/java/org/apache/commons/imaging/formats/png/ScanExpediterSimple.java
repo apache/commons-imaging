@@ -24,8 +24,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.transparencyfilters.TransparencyFilter;
 
-public class ScanExpediterSimple extends ScanExpediter
-{
+public class ScanExpediterSimple extends ScanExpediter {
     public ScanExpediterSimple(int width, int height, InputStream is,
             BufferedImage bi, int color_type, int BitDepth, int bitsPerPixel,
             PngChunkPlte pngChunkPLTE, GammaCorrection gammaCorrection,
@@ -37,14 +36,12 @@ public class ScanExpediterSimple extends ScanExpediter
     }
 
     @Override
-    public void drive() throws ImageReadException, IOException
-    {
+    public void drive() throws ImageReadException, IOException {
         int bitsPerScanLine = bitsPerPixel * width;
         int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
         byte prev[] = null;
 
-        for (int y = 0; y < height; y++)
-        {
+        for (int y = 0; y < height; y++) {
             byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
                     prev, bytesPerPixel);
 
@@ -53,8 +50,7 @@ public class ScanExpediterSimple extends ScanExpediter
             BitParser bitParser = new BitParser(unfiltered, bitsPerPixel,
                     bitDepth);
 
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int rgb = getRGB(bitParser, x);
 
                 bi.setRGB(x, y, rgb);

@@ -22,23 +22,19 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class XbmBaseTest extends ImagingTest
-{
+public abstract class XbmBaseTest extends ImagingTest {
 
-    private static boolean isXbm(File file)
-    {
+    private static boolean isXbm(File file) {
         return file.getName().toLowerCase().endsWith(".xbm");
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return isXbm(file);
         }
     };
 
-    protected List getXbmImages() throws IOException, ImageReadException
-    {
+    protected List getXbmImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

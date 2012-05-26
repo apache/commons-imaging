@@ -28,16 +28,13 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
-public class DcxReadTest extends DcxBaseTest
-{
+public class DcxReadTest extends DcxBaseTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         Debug.debug("start");
 
         List images = getDcxImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
@@ -49,7 +46,7 @@ public class DcxReadTest extends DcxBaseTest
 
             Map params = new HashMap();
             ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
-            //assertNotNull(imageInfo);
+            // assertNotNull(imageInfo);
 
             BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);

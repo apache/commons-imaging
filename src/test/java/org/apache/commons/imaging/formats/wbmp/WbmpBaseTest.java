@@ -22,22 +22,18 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class WbmpBaseTest extends ImagingTest
-{
-    private static boolean isWbmp(File file)
-    {
+public abstract class WbmpBaseTest extends ImagingTest {
+    private static boolean isWbmp(File file) {
         return file.getName().toLowerCase().endsWith(".wbmp");
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return isWbmp(file);
         }
     };
 
-    protected List getWbmpImages() throws IOException, ImageReadException
-    {
+    protected List getWbmpImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

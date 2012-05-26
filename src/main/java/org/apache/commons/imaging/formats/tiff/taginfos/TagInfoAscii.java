@@ -22,10 +22,11 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoAscii extends TagInfo {
-    public TagInfoAscii(String name, int tag, int length, TiffDirectoryType directoryType) {
+    public TagInfoAscii(String name, int tag, int length,
+            TiffDirectoryType directoryType) {
         super(name, tag, FIELD_TYPE_ASCII, length, directoryType);
     }
-    
+
     public String[] getValue(int byteOrder, byte[] bytes) {
         int nullCount = 1;
         for (int i = 0; i < bytes.length - 1; i++) {
@@ -43,7 +44,8 @@ public class TagInfoAscii extends TagInfo {
         for (int i = 0; i < bytes.length; i++) {
             if (bytes[i] == 0) {
                 try {
-                    String string = new String(bytes, nextStringPos, i - nextStringPos, "UTF-8");
+                    String string = new String(bytes, nextStringPos, i
+                            - nextStringPos, "UTF-8");
                     strings[stringsAdded++] = string;
                 } catch (UnsupportedEncodingException unsupportedEncoding) {
                 }
@@ -53,7 +55,8 @@ public class TagInfoAscii extends TagInfo {
         if (nextStringPos < bytes.length) {
             // Buggy file, string wasn't null terminated
             try {
-                String string = new String(bytes, nextStringPos, bytes.length - nextStringPos, "UTF-8");
+                String string = new String(bytes, nextStringPos, bytes.length
+                        - nextStringPos, "UTF-8");
                 strings[stringsAdded++] = string;
             } catch (UnsupportedEncodingException unsupportedEncoding) {
             }
@@ -61,7 +64,8 @@ public class TagInfoAscii extends TagInfo {
         return strings;
     }
 
-    public byte[] encodeValue(int byteOrder, String... values) throws ImageWriteException {
+    public byte[] encodeValue(int byteOrder, String... values)
+            throws ImageWriteException {
         return FIELD_TYPE_ASCII.writeData(values, byteOrder);
     }
 }

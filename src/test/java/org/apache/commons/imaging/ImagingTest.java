@@ -81,7 +81,8 @@ public abstract class ImagingTest extends TestCase implements
     protected File getTestImageByName(final String filename)
             throws IOException, ImageReadException {
         return getTestImage(new ImageFilter() {
-            public boolean accept(File file) throws IOException, ImageReadException {
+            public boolean accept(File file) throws IOException,
+                    ImageReadException {
                 return file.getName().equals(filename);
             }
         });

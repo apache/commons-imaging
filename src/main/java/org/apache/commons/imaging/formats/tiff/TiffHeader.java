@@ -18,14 +18,12 @@ package org.apache.commons.imaging.formats.tiff;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
-public class TiffHeader extends TiffElement
-{
+public class TiffHeader extends TiffElement {
     public final int byteOrder;
     public final int tiffVersion;
     public final int offsetToFirstIFD;
 
-    public TiffHeader(final int byteOrder, int tiffVersion, int offsetToFirstIFD)
-    {
+    public TiffHeader(final int byteOrder, int tiffVersion, int offsetToFirstIFD) {
         super(0, TiffConstants.TIFF_HEADER_SIZE);
 
         this.byteOrder = byteOrder;
@@ -34,8 +32,7 @@ public class TiffHeader extends TiffElement
     }
 
     @Override
-    public String getElementDescription(boolean verbose)
-    {
+    public String getElementDescription(boolean verbose) {
         if (verbose)
             return null;
 

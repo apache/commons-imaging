@@ -26,10 +26,8 @@ import java.io.OutputStream;
 
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class ByteSourceTest extends ImagingTest
-{
-    protected File createTempFile(byte src[]) throws IOException
-    {
+public abstract class ByteSourceTest extends ImagingTest {
+    protected File createTempFile(byte src[]) throws IOException {
         File file = createTempFile("raw_", ".bin");
 
         // write test bytes to file.
@@ -44,8 +42,7 @@ public abstract class ByteSourceTest extends ImagingTest
         return file;
     }
 
-    protected byte[][] getTestByteArrays()
-    {
+    protected byte[][] getTestByteArrays() {
         byte emptyArray[] = (new byte[0]);
 
         byte single[] = new byte[1];
@@ -61,8 +58,7 @@ public abstract class ByteSourceTest extends ImagingTest
             zeroes[i] = 0;
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (int i = 0; i < 256 * 256; i++)
-        {
+        for (int i = 0; i < 256 * 256; i++) {
             baos.write(0xff & i);
             baos.write(0xff & (i >> 8));
         }

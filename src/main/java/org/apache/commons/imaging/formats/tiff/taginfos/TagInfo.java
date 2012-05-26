@@ -17,7 +17,6 @@
 
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,30 +30,29 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.constants.TiffFieldTypeConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
-public abstract class TagInfo implements TiffDirectoryConstants, TiffFieldTypeConstants
-{
+public abstract class TagInfo implements TiffDirectoryConstants,
+        TiffFieldTypeConstants {
     public static final int LENGTH_UNKNOWN = -1;
 
     public TagInfo(String name, int tag, FieldType dataType, int length,
-            TiffDirectoryType exifDirectory)
-    {
+            TiffDirectoryType exifDirectory) {
         this(name, tag, Arrays.asList(dataType), length, exifDirectory);
     }
 
     public TagInfo(String name, int tag, FieldType dataType, int length,
-            TiffDirectoryType exifDirectory, boolean isOffset)
-    {
-        this(name, tag, Arrays.asList(dataType), length, exifDirectory, isOffset);
+            TiffDirectoryType exifDirectory, boolean isOffset) {
+        this(name, tag, Arrays.asList(dataType), length, exifDirectory,
+                isOffset);
     }
 
-    public TagInfo(String name, int tag, FieldType dataType, int length)
-    {
-        this(name, tag, Arrays.asList(dataType), length, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public TagInfo(String name, int tag, FieldType dataType, int length) {
+        this(name, tag, Arrays.asList(dataType), length,
+                TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
-    public TagInfo(String name, int tag, FieldType dataType)
-    {
-        this(name, tag, dataType, LENGTH_UNKNOWN, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public TagInfo(String name, int tag, FieldType dataType) {
+        this(name, tag, dataType, LENGTH_UNKNOWN,
+                TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
     public final String name;
@@ -65,53 +63,46 @@ public abstract class TagInfo implements TiffDirectoryConstants, TiffFieldTypeCo
     private final boolean isOffset;
 
     public TagInfo(String name, int tag, List<FieldType> dataTypes, int length,
-            TiffDirectoryType exifDirectory)
-    {
+            TiffDirectoryType exifDirectory) {
         this(name, tag, dataTypes, length, exifDirectory, false);
     }
 
     public TagInfo(String name, int tag, List<FieldType> dataTypes, int length,
-            TiffDirectoryType exifDirectory, boolean isOffset)
-    {
+            TiffDirectoryType exifDirectory, boolean isOffset) {
         this.name = name;
         this.tag = tag;
-        this.dataTypes = Collections.unmodifiableList(new ArrayList<FieldType>(dataTypes));
+        this.dataTypes = Collections.unmodifiableList(new ArrayList<FieldType>(
+                dataTypes));
         this.length = length;
         this.directoryType = exifDirectory;
         this.isOffset = isOffset;
     }
-    
-    public Object getValue(TiffField entry) throws ImageReadException
-    {
+
+    public Object getValue(TiffField entry) throws ImageReadException {
         Object o = entry.fieldType.getSimpleValue(entry);
         return o;
     }
 
     public byte[] encodeValue(FieldType fieldType, Object value, int byteOrder)
-            throws ImageWriteException
-    {
+            throws ImageWriteException {
         return fieldType.writeData(value, byteOrder);
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return tag + " (0x" + Integer.toHexString(tag) + ": " + name + "): ";
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "[TagInfo. tag: " + tag + " (0x" + Integer.toHexString(tag)
                 + ", name: " + name + "]";
     }
 
-    public boolean isOffset()
-    {
+    public boolean isOffset() {
         return isOffset;
     }
 
-    public boolean isText()
-    {
+    public boolean isText() {
         return false;
     }
 }

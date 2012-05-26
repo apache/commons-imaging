@@ -21,33 +21,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-public class ComSegment extends Segment
-{
+public class ComSegment extends Segment {
     public final byte[] comment;
 
-    public ComSegment(int marker, byte segmentData[])
-            throws IOException
-    {
+    public ComSegment(int marker, byte segmentData[]) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public ComSegment(int marker, int marker_length, InputStream is)
-            throws IOException
-    {
+            throws IOException {
         super(marker, marker_length);
 
         if (getDebug())
             System.out.println("ComSegment marker_length: " + marker_length);
 
-        comment = readByteArray("Comment", marker_length, is, "Error reading JPEG comment");
+        comment = readByteArray("Comment", marker_length, is,
+                "Error reading JPEG comment");
 
         if (getDebug())
             System.out.println("");
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         String commentString = "";
         try {
             commentString = new String(comment, "UTF-8");

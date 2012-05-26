@@ -18,8 +18,7 @@ package org.apache.commons.imaging.formats.psd;
 
 import java.io.PrintWriter;
 
-public class PsdHeaderInfo
-{
+public class PsdHeaderInfo {
     public final int Version;
     public final byte Reserved[];
     public final int Channels;
@@ -29,8 +28,7 @@ public class PsdHeaderInfo
     public final int Mode;
 
     public PsdHeaderInfo(int Version, byte Reserved[], int Channels, int Rows,
-            int Columns, int Depth, int Mode)
-    {
+            int Columns, int Depth, int Mode) {
         this.Version = Version;
         this.Reserved = Reserved;
         this.Channels = Channels;
@@ -41,15 +39,13 @@ public class PsdHeaderInfo
 
     }
 
-    public void dump()
-    {
+    public void dump() {
         PrintWriter pw = new PrintWriter(System.out);
         dump(pw);
         pw.flush();
     }
 
-    public void dump(PrintWriter pw)
-    {
+    public void dump(PrintWriter pw) {
         pw.println("");
         pw.println("Header");
         pw.println("Version: " + Version + " (" + Integer.toHexString(Version)

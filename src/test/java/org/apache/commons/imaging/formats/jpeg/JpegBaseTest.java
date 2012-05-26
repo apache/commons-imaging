@@ -26,28 +26,21 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class JpegBaseTest extends ImagingTest
-{
+public abstract class JpegBaseTest extends ImagingTest {
 
     protected static boolean isJpeg(File file) throws IOException,
-            ImageReadException
-    {
+            ImageReadException {
         ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_JPEG;
     }
 
-    public static final ImageFilter imageFilter = new ImageFilter()
-    {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+    public static final ImageFilter imageFilter = new ImageFilter() {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return isJpeg(file);
         }
     };
 
-
-
-    protected List getJpegImages() throws IOException, ImageReadException
-    {
+    protected List getJpegImages() throws IOException, ImageReadException {
         return getTestImages(imageFilter);
     }
 

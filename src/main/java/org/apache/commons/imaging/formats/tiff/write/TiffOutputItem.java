@@ -22,19 +22,16 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 
-abstract class TiffOutputItem implements AllTagConstants
-{
+abstract class TiffOutputItem implements AllTagConstants {
     public static final int UNDEFINED_VALUE = -1;
 
     private int offset = UNDEFINED_VALUE;
 
-    protected int getOffset()
-    {
+    protected int getOffset() {
         return offset;
     }
 
-    protected void setOffset(int offset)
-    {
+    protected void setOffset(int offset) {
         this.offset = offset;
     }
 
@@ -45,31 +42,26 @@ abstract class TiffOutputItem implements AllTagConstants
     public abstract void writeItem(BinaryOutputStream bos) throws IOException,
             ImageWriteException;
 
-    public static class Value extends TiffOutputItem
-    {
+    public static class Value extends TiffOutputItem {
         private final byte bytes[];
         private final String name;
 
-        public Value(final String name, final byte[] bytes)
-        {
+        public Value(final String name, final byte[] bytes) {
             this.name = name;
             this.bytes = bytes;
         }
 
         @Override
-        public int getItemLength()
-        {
+        public int getItemLength() {
             return bytes.length;
         }
 
         @Override
-        public String getItemDescription()
-        {
+        public String getItemDescription() {
             return name;
         }
 
-        public void updateValue(byte bytes[]) throws ImageWriteException
-        {
+        public void updateValue(byte bytes[]) throws ImageWriteException {
             if (this.bytes.length != bytes.length)
                 throw new ImageWriteException("Updated data size mismatch: "
                         + this.bytes.length + " vs. " + bytes.length);
@@ -78,8 +70,7 @@ abstract class TiffOutputItem implements AllTagConstants
 
         @Override
         public void writeItem(BinaryOutputStream bos) throws IOException,
-                ImageWriteException
-        {
+                ImageWriteException {
             bos.write(bytes);
         }
     }

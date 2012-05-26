@@ -23,20 +23,17 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
 public abstract class FieldType extends BinaryFileFunctions implements
-        TiffConstants
-{
+        TiffConstants {
     public final int type, length;
     public final String name;
 
-    public FieldType(int type, int length, String name)
-    {
+    public FieldType(int type, int length, String name) {
         this.type = type;
         this.length = length;
         this.name = name;
     }
 
-    public boolean isLocalValue(TiffField entry)
-    {
+    public boolean isLocalValue(TiffField entry) {
         // FIXME: we should use unsigned ints for offsets and lengths
         // when parsing TIFF files. But since we don't,
         // at least make this method treat length as unsigned,
@@ -45,8 +42,7 @@ public abstract class FieldType extends BinaryFileFunctions implements
         return ((length > 0) && ((length * entryLength) <= TIFF_ENTRY_MAX_VALUE_LENGTH));
     }
 
-    public int getBytesLength(TiffField entry) throws ImageReadException
-    {
+    public int getBytesLength(TiffField entry) throws ImageReadException {
         if (length < 1)
             throw new ImageReadException("Unknown field type");
 
@@ -56,34 +52,29 @@ public abstract class FieldType extends BinaryFileFunctions implements
     // public static final byte[] STUB_LOCAL_VALUE = new
     // byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
 
-    public static final byte[] getStubLocalValue()
-    {
+    public static final byte[] getStubLocalValue() {
         return new byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
     }
 
-    public final byte[] getStubValue(int count)
-    {
+    public final byte[] getStubValue(int count) {
         return new byte[count * length];
     }
 
-    public String getDisplayValue(TiffField entry) throws ImageReadException
-    {
+    public String getDisplayValue(TiffField entry) throws ImageReadException {
         Object o = getSimpleValue(entry);
         if (o == null)
             return "NULL";
         return o.toString();
     }
 
-    public final byte[] getRawBytes(TiffField entry)
-    {
-        if (isLocalValue(entry))
-        {
+    public final byte[] getRawBytes(TiffField entry) {
+        if (isLocalValue(entry)) {
             int rawLength = length * entry.length;
             byte result[] = new byte[rawLength];
             System.arraycopy(entry.valueOffsetBytes, 0, result, 0, rawLength);
             return result;
-//            return readBytearray(name, entry.valueOffsetBytes, 0, length
-//                    * entry.length);
+            // return readBytearray(name, entry.valueOffsetBytes, 0, length
+            // * entry.length);
             // return getBytearrayHead(name + " (" + entry.tagInfo.name + ")",
             // entry.valueOffsetBytes, length * entry.length);
         }
@@ -107,8 +98,7 @@ public abstract class FieldType extends BinaryFileFunctions implements
     // public abstract Object[] getValueArray(TiffField entry);
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "[" + getClass().getName() + ". type: " + type + ", name: "
                 + name + ", length: " + length + "]";
     }

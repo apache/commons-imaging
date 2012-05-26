@@ -22,25 +22,34 @@ public class BinaryFileFunctionsTest extends ImagingTest {
     // Work around that pesky "protected"...
     private static class Extender extends BinaryFileFunctions {
         public void testFloatToByteConversion() {
-            byte[] bytesLE = convertFloatToByteArray(1.0f, BYTE_ORDER_LITTLE_ENDIAN);
-            assertEquals(convertByteArrayToFloat("bytes", bytesLE, BYTE_ORDER_LITTLE_ENDIAN),
-                    1.0f, 0f);
+            byte[] bytesLE = convertFloatToByteArray(1.0f,
+                    BYTE_ORDER_LITTLE_ENDIAN);
+            assertEquals(
+                    convertByteArrayToFloat("bytes", bytesLE,
+                            BYTE_ORDER_LITTLE_ENDIAN), 1.0f, 0f);
 
-            byte[] bytesBE = convertFloatToByteArray(1.0f, BYTE_ORDER_BIG_ENDIAN);
-            assertEquals(convertByteArrayToFloat("bytes", bytesBE, BYTE_ORDER_BIG_ENDIAN),
-                    1.0f, 0f);
+            byte[] bytesBE = convertFloatToByteArray(1.0f,
+                    BYTE_ORDER_BIG_ENDIAN);
+            assertEquals(
+                    convertByteArrayToFloat("bytes", bytesBE,
+                            BYTE_ORDER_BIG_ENDIAN), 1.0f, 0f);
         }
 
         public void testDoubleToByteConversion() {
-            byte[] bytesLE = convertDoubleToByteArray(1.0, BYTE_ORDER_LITTLE_ENDIAN);
-            assertEquals(convertByteArrayToDouble("bytes", bytesLE, BYTE_ORDER_LITTLE_ENDIAN),
-                    1.0, 0);
+            byte[] bytesLE = convertDoubleToByteArray(1.0,
+                    BYTE_ORDER_LITTLE_ENDIAN);
+            assertEquals(
+                    convertByteArrayToDouble("bytes", bytesLE,
+                            BYTE_ORDER_LITTLE_ENDIAN), 1.0, 0);
 
-            byte[] bytesBE = convertDoubleToByteArray(1.0, BYTE_ORDER_BIG_ENDIAN);
-            assertEquals(convertByteArrayToDouble("bytes", bytesBE, BYTE_ORDER_BIG_ENDIAN),
-                    1.0, 0);
+            byte[] bytesBE = convertDoubleToByteArray(1.0,
+                    BYTE_ORDER_BIG_ENDIAN);
+            assertEquals(
+                    convertByteArrayToDouble("bytes", bytesBE,
+                            BYTE_ORDER_BIG_ENDIAN), 1.0, 0);
         }
     }
+
     private Extender extender = new Extender();
 
     public void testFloatToByteConversion() {

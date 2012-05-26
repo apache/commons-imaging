@@ -22,14 +22,14 @@ import java.io.InputStream;
 class InfoHeaderReader {
     private final InputStream is;
 
-    public InfoHeaderReader( InputStream is ) {
+    public InfoHeaderReader(InputStream is) {
         this.is = is;
     }
 
     private char read() throws IOException {
         int result = is.read();
-        if ( result < 0 ) {
-            throw new IOException( "HDR: Unexpected EOF" );
+        if (result < 0) {
+            throw new IOException("HDR: Unexpected EOF");
         }
         return (char) result;
     }
@@ -38,8 +38,8 @@ class InfoHeaderReader {
         StringBuffer buffer = new StringBuffer();
         char c;
 
-        while ( ( c = read() ) != '\n' ) {
-            buffer.append( c );
+        while ((c = read()) != '\n') {
+            buffer.append(c);
         }
 
         return buffer.toString();

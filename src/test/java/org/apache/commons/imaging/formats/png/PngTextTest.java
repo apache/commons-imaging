@@ -32,11 +32,9 @@ import org.apache.commons.imaging.formats.png.PngImageInfo;
 import org.apache.commons.imaging.formats.png.PngText;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class PngTextTest extends PngBaseTest
-{
+public class PngTextTest extends PngBaseTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         int width = 1;
         int height = 1;
         BufferedImage srcImage = new BufferedImage(width, height,
@@ -78,8 +76,7 @@ public class PngTextTest extends PngBaseTest
 
         List readTexts = imageInfo.getTextChunks();
         assertEquals(readTexts.size(), 3);
-        for (int i = 0; i < readTexts.size(); i++)
-        {
+        for (int i = 0; i < readTexts.size(); i++) {
             PngText text = (PngText) readTexts.get(i);
             if (text.keyword.equals("a"))
                 assertEquals(text.text, "b");

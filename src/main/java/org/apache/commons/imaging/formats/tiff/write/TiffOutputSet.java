@@ -26,31 +26,25 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.util.Debug;
 
-public final class TiffOutputSet implements TiffConstants
-{
+public final class TiffOutputSet implements TiffConstants {
     public final int byteOrder;
     private final List<TiffOutputDirectory> directories = new ArrayList<TiffOutputDirectory>();
 
-    public TiffOutputSet()
-    {
+    public TiffOutputSet() {
         this(TiffConstants.DEFAULT_TIFF_BYTE_ORDER);
     }
 
-    public TiffOutputSet(final int byteOrder)
-    {
+    public TiffOutputSet(final int byteOrder) {
         super();
         this.byteOrder = byteOrder;
     }
 
-    protected List<TiffOutputItem> getOutputItems(TiffOutputSummary outputSummary)
-            throws ImageWriteException
-    {
+    protected List<TiffOutputItem> getOutputItems(
+            TiffOutputSummary outputSummary) throws ImageWriteException {
         List<TiffOutputItem> result = new ArrayList<TiffOutputItem>();
 
-        for (int i = 0; i < directories.size(); i++)
-        {
-            TiffOutputDirectory directory = directories
-                    .get(i);
+        for (int i = 0; i < directories.size(); i++) {
+            TiffOutputDirectory directory = directories.get(i);
 
             result.addAll(directory.getOutputItems(outputSummary));
         }
@@ -59,32 +53,27 @@ public final class TiffOutputSet implements TiffConstants
     }
 
     public void addDirectory(TiffOutputDirectory directory)
-            throws ImageWriteException
-    {
+            throws ImageWriteException {
         if (null != findDirectory(directory.type))
             throw new ImageWriteException(
                     "Output set already contains a directory of that type.");
         directories.add(directory);
     }
 
-    public List<TiffOutputDirectory> getDirectories()
-    {
+    public List<TiffOutputDirectory> getDirectories() {
         return new ArrayList<TiffOutputDirectory>(directories);
     }
 
-    public TiffOutputDirectory getRootDirectory()
-    {
+    public TiffOutputDirectory getRootDirectory() {
         return findDirectory(DIRECTORY_TYPE_ROOT);
     }
 
-    public TiffOutputDirectory getExifDirectory()
-    {
+    public TiffOutputDirectory getExifDirectory() {
         return findDirectory(DIRECTORY_TYPE_EXIF);
     }
 
     public TiffOutputDirectory getOrCreateRootDirectory()
-            throws ImageWriteException
-    {
+            throws ImageWriteException {
         TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_ROOT);
         if (null != result)
             return result;
@@ -92,8 +81,7 @@ public final class TiffOutputSet implements TiffConstants
     }
 
     public TiffOutputDirectory getOrCreateExifDirectory()
-            throws ImageWriteException
-    {
+            throws ImageWriteException {
         // EXIF directory requires root directory.
         getOrCreateRootDirectory();
 
@@ -104,8 +92,7 @@ public final class TiffOutputSet implements TiffConstants
     }
 
     public TiffOutputDirectory getOrCreateGPSDirectory()
-            throws ImageWriteException
-    {
+            throws ImageWriteException {
         // GPS directory requires EXIF directory
         getOrCreateExifDirectory();
 
@@ -115,22 +102,17 @@ public final class TiffOutputSet implements TiffConstants
         return addGPSDirectory();
     }
 
-    public TiffOutputDirectory getGPSDirectory()
-    {
+    public TiffOutputDirectory getGPSDirectory() {
         return findDirectory(DIRECTORY_TYPE_GPS);
     }
 
-    public TiffOutputDirectory getInteroperabilityDirectory()
-    {
+    public TiffOutputDirectory getInteroperabilityDirectory() {
         return findDirectory(DIRECTORY_TYPE_INTEROPERABILITY);
     }
 
-    public TiffOutputDirectory findDirectory(int directoryType)
-    {
-        for (int i = 0; i < directories.size(); i++)
-        {
-            TiffOutputDirectory directory = directories
-                    .get(i);
+    public TiffOutputDirectory findDirectory(int directoryType) {
+        for (int i = 0; i < directories.size(); i++) {
+            TiffOutputDirectory directory = directories.get(i);
             if (directory.type == directoryType)
                 return directory;
         }
@@ -139,14 +121,15 @@ public final class TiffOutputSet implements TiffConstants
 
     /**
      * A convenience method to update GPS values in EXIF metadata.
-     *
-     * @param longitude Longitude in degrees E, negative values are W.
-     * @param latitude latitude in degrees N, negative values are S.
+     * 
+     * @param longitude
+     *            Longitude in degrees E, negative values are W.
+     * @param latitude
+     *            latitude in degrees N, negative values are S.
      * @throws ImageWriteException
      */
     public void setGPSInDegrees(double longitude, double latitude)
-            throws ImageWriteException
-    {
+            throws ImageWriteException {
         TiffOutputDirectory gpsDirectory = getOrCreateGPSDirectory();
 
         String longitudeRef = longitude < 0 ? "W" : "E";
@@ -155,11 +138,12 @@ public final class TiffOutputSet implements TiffConstants
         latitude = Math.abs(latitude);
 
         gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
-        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LONGITUDE_REF, longitudeRef);
+        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LONGITUDE_REF,
+                longitudeRef);
 
         gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
-        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LATITUDE_REF, latitudeRef);
-
+        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LATITUDE_REF,
+                latitudeRef);
 
         {
             double value = longitude;
@@ -172,10 +156,14 @@ public final class TiffOutputSet implements TiffConstants
             double longitudeSeconds = value;
 
             gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
-            gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LONGITUDE,
-                    RationalNumberUtilities.getRationalNumber(longitudeDegrees),
-                    RationalNumberUtilities.getRationalNumber(longitudeMinutes),
-                    RationalNumberUtilities.getRationalNumber(longitudeSeconds));
+            gpsDirectory
+                    .add(GpsTagConstants.GPS_TAG_GPS_DEST_LONGITUDE,
+                            RationalNumberUtilities
+                                    .getRationalNumber(longitudeDegrees),
+                            RationalNumberUtilities
+                                    .getRationalNumber(longitudeMinutes),
+                            RationalNumberUtilities
+                                    .getRationalNumber(longitudeSeconds));
         }
 
         {
@@ -197,32 +185,24 @@ public final class TiffOutputSet implements TiffConstants
 
     }
 
-    public void removeField(TagInfo tagInfo)
-    {
+    public void removeField(TagInfo tagInfo) {
         removeField(tagInfo.tag);
     }
 
-    public void removeField(int tag)
-    {
-        for (int i = 0; i < directories.size(); i++)
-        {
-            TiffOutputDirectory directory = directories
-                    .get(i);
+    public void removeField(int tag) {
+        for (int i = 0; i < directories.size(); i++) {
+            TiffOutputDirectory directory = directories.get(i);
             directory.removeField(tag);
         }
     }
 
-    public TiffOutputField findField(TagInfo tagInfo)
-    {
+    public TiffOutputField findField(TagInfo tagInfo) {
         return findField(tagInfo.tag);
     }
 
-    public TiffOutputField findField(int tag)
-    {
-        for (int i = 0; i < directories.size(); i++)
-        {
-            TiffOutputDirectory directory = directories
-                    .get(i);
+    public TiffOutputField findField(int tag) {
+        for (int i = 0; i < directories.size(); i++) {
+            TiffOutputDirectory directory = directories.get(i);
             TiffOutputField field = directory.findField(tag);
             if (null != field)
                 return field;
@@ -230,32 +210,29 @@ public final class TiffOutputSet implements TiffConstants
         return null;
     }
 
-    public TiffOutputDirectory addRootDirectory() throws ImageWriteException
-    {
+    public TiffOutputDirectory addRootDirectory() throws ImageWriteException {
         TiffOutputDirectory result = new TiffOutputDirectory(
                 DIRECTORY_TYPE_ROOT, byteOrder);
         addDirectory(result);
         return result;
     }
 
-    public TiffOutputDirectory addExifDirectory() throws ImageWriteException
-    {
+    public TiffOutputDirectory addExifDirectory() throws ImageWriteException {
         TiffOutputDirectory result = new TiffOutputDirectory(
                 DIRECTORY_TYPE_EXIF, byteOrder);
         addDirectory(result);
         return result;
     }
 
-    public TiffOutputDirectory addGPSDirectory() throws ImageWriteException
-    {
-        TiffOutputDirectory result = new TiffOutputDirectory(DIRECTORY_TYPE_GPS, byteOrder);
+    public TiffOutputDirectory addGPSDirectory() throws ImageWriteException {
+        TiffOutputDirectory result = new TiffOutputDirectory(
+                DIRECTORY_TYPE_GPS, byteOrder);
         addDirectory(result);
         return result;
     }
 
     public TiffOutputDirectory addInteroperabilityDirectory()
-            throws ImageWriteException
-    {
+            throws ImageWriteException {
         getOrCreateExifDirectory();
 
         TiffOutputDirectory result = new TiffOutputDirectory(
@@ -267,13 +244,11 @@ public final class TiffOutputSet implements TiffConstants
     private static final String newline = System.getProperty("line.separator");
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return toString(null);
     }
 
-    public String toString(String prefix)
-    {
+    public String toString(String prefix) {
         if (prefix == null)
             prefix = "";
 
@@ -287,18 +262,15 @@ public final class TiffOutputSet implements TiffConstants
         result.append("byteOrder: " + byteOrder);
         result.append(newline);
 
-        for (int i = 0; i < directories.size(); i++)
-        {
-            TiffOutputDirectory directory = directories
-                    .get(i);
+        for (int i = 0; i < directories.size(); i++) {
+            TiffOutputDirectory directory = directories.get(i);
             result.append(prefix);
             result.append("\t" + "directory " + i + ": "
                     + directory.description() + " (" + directory.type + ")");
             result.append(newline);
 
             List<TiffOutputField> fields = directory.getFields();
-            for (int j = 0; j < fields.size(); j++)
-            {
+            for (int j = 0; j < fields.size(); j++) {
                 TiffOutputField field = fields.get(j);
                 result.append(prefix);
                 result.append("\t\t" + "field " + i + ": " + field.tagInfo);
@@ -313,8 +285,7 @@ public final class TiffOutputSet implements TiffConstants
         return result.toString();
     }
 
-    public void dump()
-    {
+    public void dump() {
         Debug.debug(this.toString());
     }
 

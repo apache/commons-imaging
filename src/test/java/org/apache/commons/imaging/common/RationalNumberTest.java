@@ -25,15 +25,13 @@ import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.RationalNumberUtilities;
 import org.apache.commons.imaging.util.Debug;
 
-public class RationalNumberTest extends ImagingTest
-{
+public class RationalNumberTest extends ImagingTest {
     //    public RationalNumberTest()
     //    {
     //        super("Rational Number Test");
     //    }
 
-    public void test()
-    {
+    public void test() {
         double testValues[] = {
                 0, //
                 0.1, //
@@ -107,8 +105,7 @@ public class RationalNumberTest extends ImagingTest
                 -(Long.MAX_VALUE - 0.1), //
         };
 
-        for (int i = 0; i < testValues.length; i++)
-        {
+        for (int i = 0; i < testValues.length; i++) {
             double value = testValues[i];
             RationalNumber rational = RationalNumberUtilities
                     .getRationalNumber(value);

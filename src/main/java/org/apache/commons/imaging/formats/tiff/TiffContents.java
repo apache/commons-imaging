@@ -24,32 +24,27 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.util.Debug;
 
-public class TiffContents
-{
+public class TiffContents {
     public final TiffHeader header;
     public final List<TiffDirectory> directories;
 
-    public TiffContents(TiffHeader tiffHeader, List<TiffDirectory> directories)
-    {
+    public TiffContents(TiffHeader tiffHeader, List<TiffDirectory> directories) {
         this.header = tiffHeader;
         this.directories = directories;
     }
 
-    public List<TiffElement> getElements() throws ImageReadException
-    {
+    public List<TiffElement> getElements() throws ImageReadException {
         List<TiffElement> result = new ArrayList<TiffElement>();
 
         result.add(header);
 
-        for (int i = 0; i < directories.size(); i++)
-        {
+        for (int i = 0; i < directories.size(); i++) {
             TiffDirectory directory = directories.get(i);
 
             result.add(directory);
 
             List<TiffField> fields = directory.entries;
-            for (int j = 0; j < fields.size(); j++)
-            {
+            for (int j = 0; j < fields.size(); j++) {
                 TiffField field = fields.get(j);
                 TiffElement oversizeValue = field.getOversizeValueElement();
                 if (null != oversizeValue)
@@ -65,10 +60,8 @@ public class TiffContents
         return result;
     }
 
-    public TiffField findField(TagInfo tag) throws ImageReadException
-    {
-        for (int i = 0; i < directories.size(); i++)
-        {
+    public TiffField findField(TagInfo tag) throws ImageReadException {
+        for (int i = 0; i < directories.size(); i++) {
             TiffDirectory directory = directories.get(i);
 
             TiffField field = directory.findField(tag);
@@ -79,15 +72,13 @@ public class TiffContents
         return null;
     }
 
-    public void dissect(boolean verbose) throws ImageReadException
-    {
+    public void dissect(boolean verbose) throws ImageReadException {
         List<TiffElement> elements = getElements();
 
         Collections.sort(elements, TiffElement.COMPARATOR);
 
         int lastEnd = 0;
-        for (int i = 0; i < elements.size(); i++)
-        {
+        for (int i = 0; i < elements.size(); i++) {
             TiffElement element = elements.get(i);
 
             if (element.offset > lastEnd)
@@ -99,8 +90,7 @@ public class TiffContents
                     + element.length + ", end: "
                     + (element.offset + element.length) + ": "
                     + element.getElementDescription(false));
-            if (verbose)
-            {
+            if (verbose) {
                 String verbosity = element.getElementDescription(true);
                 if (null != verbosity)
                     Debug.debug(verbosity);

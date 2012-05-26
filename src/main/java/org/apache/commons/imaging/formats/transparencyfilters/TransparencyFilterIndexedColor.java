@@ -20,11 +20,9 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class TransparencyFilterIndexedColor extends TransparencyFilter
-{
+public class TransparencyFilterIndexedColor extends TransparencyFilter {
 
-    public TransparencyFilterIndexedColor(byte bytes[])
-    {
+    public TransparencyFilterIndexedColor(byte bytes[]) {
         super(bytes);
     }
 
@@ -32,8 +30,7 @@ public class TransparencyFilterIndexedColor extends TransparencyFilter
 
     @Override
     public int filter(int rgb, int index) throws ImageReadException,
-            IOException
-    {
+            IOException {
         if (index >= bytes.length)
             return rgb;
 
@@ -45,8 +42,7 @@ public class TransparencyFilterIndexedColor extends TransparencyFilter
         int alpha = bytes[index];
         int result = ((0xff & alpha) << 24) | (0x00ffffff & rgb);
 
-        if ((count < 100) && (index > 0))
-        {
+        if ((count < 100) && (index > 0)) {
             count++;
         }
         return result;

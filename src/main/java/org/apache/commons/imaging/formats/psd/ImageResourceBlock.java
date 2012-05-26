@@ -20,21 +20,18 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.imaging.util.Debug;
 
-class ImageResourceBlock
-{
+class ImageResourceBlock {
     protected final int id;
     protected final byte nameData[];
     protected final byte data[];
 
-    public ImageResourceBlock(int ID, byte NameData[], byte Data[])
-    {
+    public ImageResourceBlock(int ID, byte NameData[], byte Data[]) {
         this.id = ID;
         this.nameData = NameData;
         this.data = Data;
     }
 
-    public String getName() throws UnsupportedEncodingException
-    {
+    public String getName() throws UnsupportedEncodingException {
         Debug.debug("getName", nameData.length);
         return new String(nameData, "ISO-8859-1");
     }

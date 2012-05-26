@@ -18,16 +18,14 @@ package org.apache.commons.imaging.formats.bmp;
 
 import org.apache.commons.imaging.formats.bmp.pixelparsers.PixelParser;
 
-class ImageContents
-{
+class ImageContents {
     public final BmpHeaderInfo bhi;
     public final byte colorTable[];
     public final byte imageData[];
     public final PixelParser pixelParser;
 
     public ImageContents(BmpHeaderInfo bhi, byte ColorTable[],
-            byte ImageData[], PixelParser fPixelParser)
-    {
+            byte ImageData[], PixelParser fPixelParser) {
         this.bhi = bhi;
         this.colorTable = ColorTable;
         this.imageData = ImageData;

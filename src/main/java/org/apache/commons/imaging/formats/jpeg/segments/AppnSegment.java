@@ -21,17 +21,14 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
-public class AppnSegment extends GenericSegment
-{
+public class AppnSegment extends GenericSegment {
     public AppnSegment(int marker, int marker_length, InputStream is)
-            throws IOException
-    {
+            throws IOException {
         super(marker, marker_length, is);
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "APPN (APP" + (marker - JpegImageParser.JPEG_APP0_Marker)
                 + ") (" + getSegmentType() + ")";
     }

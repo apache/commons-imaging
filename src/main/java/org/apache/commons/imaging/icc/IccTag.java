@@ -26,16 +26,14 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryConstants;
 import org.apache.commons.imaging.common.BinaryInputStream;
 
-public class IccTag implements BinaryConstants, IccConstants
-{
+public class IccTag implements BinaryConstants, IccConstants {
     public final int signature;
     public final int offset, length;
     public final IccTagType fIccTagType;
 
-    //        public final byte data[];
+    // public final byte data[];
 
-    public IccTag(int signature, int offset, int length, IccTagType fIccTagType)
-    {
+    public IccTag(int signature, int offset, int length, IccTagType fIccTagType) {
         this.signature = signature;
         this.offset = offset;
         this.length = length;
@@ -46,8 +44,7 @@ public class IccTag implements BinaryConstants, IccConstants
     private IccTagDataType itdt = null;
     private int data_type_signature;
 
-    public void setData(byte bytes[]) throws IOException
-    {
+    public void setData(byte bytes[]) throws IOException {
         data = bytes;
 
         BinaryInputStream bis = new BinaryInputStream(new ByteArrayInputStream(
@@ -56,15 +53,14 @@ public class IccTag implements BinaryConstants, IccConstants
                 "ICC: corrupt tag data");
 
         itdt = getIccTagDataType(data_type_signature);
-        //        if (itdt != null)
-        //        {
-        //            System.out.println("\t\t\t" + "itdt: " + itdt.name);
-        //        }
+        // if (itdt != null)
+        // {
+        // System.out.println("\t\t\t" + "itdt: " + itdt.name);
+        // }
 
     }
 
-    private IccTagDataType getIccTagDataType(int quad)
-    {
+    private IccTagDataType getIccTagDataType(int quad) {
         for (IccTagDataType iccTagDataType : IccTagDataTypes.values()) {
             if (iccTagDataType.getSignature() == quad) {
                 return iccTagDataType;
@@ -74,8 +70,7 @@ public class IccTag implements BinaryConstants, IccConstants
         return null;
     }
 
-    public void dump(String prefix) throws ImageReadException, IOException
-    {
+    public void dump(String prefix) throws ImageReadException, IOException {
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
 
         dump(pw, prefix);
@@ -84,40 +79,35 @@ public class IccTag implements BinaryConstants, IccConstants
     }
 
     public void dump(PrintWriter pw, String prefix) throws ImageReadException,
-            IOException
-    {
+            IOException {
         pw.println(prefix
                 + "tag signature: "
                 + Integer.toHexString(signature)
                 + " ("
-                + new String(new byte[]{
-                        (byte) (0xff & (signature >> 24)),
+                + new String(new byte[] { (byte) (0xff & (signature >> 24)),
                         (byte) (0xff & (signature >> 16)),
                         (byte) (0xff & (signature >> 8)),
-                        (byte) (0xff & (signature >> 0)),
-                }) + ")");
+                        (byte) (0xff & (signature >> 0)), }) + ")");
 
         if (data == null)
             pw.println(prefix + "data: " + Arrays.toString(data));
-        else
-        {
+        else {
             pw.println(prefix + "data: " + data.length);
 
             pw.println(prefix
                     + "data type signature: "
                     + Integer.toHexString(data_type_signature)
                     + " ("
-                    + new String(new byte[]{
+                    + new String(new byte[] {
                             (byte) (0xff & (data_type_signature >> 24)),
                             (byte) (0xff & (data_type_signature >> 16)),
                             (byte) (0xff & (data_type_signature >> 8)),
-                            (byte) (0xff & (data_type_signature >> 0)),
-                    }) + ")");
+                            (byte) (0xff & (data_type_signature >> 0)), })
+                    + ")");
 
             if (itdt == null)
                 pw.println(prefix + "IccTagType : " + "unknown");
-            else
-            {
+            else {
                 pw.println(prefix + "IccTagType : " + itdt.getName());
                 itdt.dump(prefix, data);
             }

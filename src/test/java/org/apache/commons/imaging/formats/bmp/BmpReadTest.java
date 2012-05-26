@@ -28,16 +28,13 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
-public class BmpReadTest extends BmpBaseTest
-{
+public class BmpReadTest extends BmpBaseTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         Debug.debug("start");
 
         List images = getBmpImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
@@ -48,7 +45,7 @@ public class BmpReadTest extends BmpBaseTest
             // assertNotNull(metadata);
 
             Map params = new HashMap();
-//            params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
+            // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
             ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
 

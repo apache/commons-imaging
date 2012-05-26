@@ -27,18 +27,19 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.util.Debug;
 
 /**
- * Windows XP onwards store some tags using UTF-16LE, but the field type is byte -
- * here we deal with this.
+ * Windows XP onwards store some tags using UTF-16LE, but the field type is byte
+ * - here we deal with this.
  */
 public class TagInfoXpString extends TagInfo {
-    public TagInfoXpString(String name, int tag, int length, TiffDirectoryType directoryType) {
-        super(name, tag, Arrays.asList(FIELD_TYPE_UNDEFINED), length, directoryType);
+    public TagInfoXpString(String name, int tag, int length,
+            TiffDirectoryType directoryType) {
+        super(name, tag, Arrays.asList(FIELD_TYPE_UNDEFINED), length,
+                directoryType);
     }
-    
+
     @Override
-    public byte[] encodeValue(FieldType fieldType, Object value,
-            int byteOrder) throws ImageWriteException
-    {
+    public byte[] encodeValue(FieldType fieldType, Object value, int byteOrder)
+            throws ImageWriteException {
         if (!(value instanceof String))
             throw new ImageWriteException("Text value not String: " + value
                     + " (" + Debug.getType(value) + ")");
@@ -49,7 +50,7 @@ public class TagInfoXpString extends TagInfo {
             return null;
         }
     }
-    
+
     @Override
     public String getValue(TiffField entry) throws ImageReadException {
         if (entry.type != FIELD_TYPE_BYTE.type) {

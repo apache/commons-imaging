@@ -36,8 +36,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
-public class TiffField implements TiffConstants
-{
+public class TiffField implements TiffConstants {
     public final TagInfo tagInfo;
     public final FieldType fieldType;
 
@@ -52,8 +51,7 @@ public class TiffField implements TiffConstants
     public final int byteOrder;
 
     public TiffField(int tag, int directoryType, int type, int Length,
-            int ValueOffset, byte ValueOffsetBytes[], int byteOrder)
-    {
+            int ValueOffset, byte ValueOffsetBytes[], int byteOrder) {
 
         this.tag = tag;
         this.directoryType = directoryType;
@@ -69,26 +67,21 @@ public class TiffField implements TiffConstants
 
     private int sortHint = -1;
 
-    public boolean isLocalValue()
-    {
+    public boolean isLocalValue() {
         return fieldType.isLocalValue(this);
     }
 
-    public int getBytesLength() throws ImageReadException
-    {
+    public int getBytesLength() throws ImageReadException {
         return fieldType.getBytesLength(this);
     }
 
-    public final class OversizeValueElement extends TiffElement
-    {
-        public OversizeValueElement(int offset, int length)
-        {
+    public final class OversizeValueElement extends TiffElement {
+        public OversizeValueElement(int offset, int length) {
             super(offset, length);
         }
 
         @Override
-        public String getElementDescription(boolean verbose)
-        {
+        public String getElementDescription(boolean verbose) {
             if (verbose)
                 return null;
 
@@ -97,23 +90,19 @@ public class TiffField implements TiffConstants
         }
     }
 
-    public TiffElement getOversizeValueElement()
-    {
+    public TiffElement getOversizeValueElement() {
         if (fieldType.isLocalValue(this))
             return null;
 
         return new OversizeValueElement(valueOffset, oversizeValue.length);
     }
 
-    public void setOversizeValue(byte bytes[])
-    {
+    public void setOversizeValue(byte bytes[]) {
         this.oversizeValue = bytes;
     }
 
-    private static FieldType getFieldType(int value)
-    {
-        for (int i = 0; i < FIELD_TYPES.size(); i++)
-        {
+    private static FieldType getFieldType(int value) {
+        for (int i = 0; i < FIELD_TYPES.size(); i++) {
             FieldType fieldType = FIELD_TYPES.get(i);
             if (fieldType.type == value)
                 return fieldType;
@@ -123,8 +112,7 @@ public class TiffField implements TiffConstants
     }
 
     private static TagInfo getTag(int directoryType, int tag,
-            List<TagInfo> possibleMatches)
-    {
+            List<TagInfo> possibleMatches) {
         // Please keep this method in sync with TiffImageMetadata's findField()
 
         if (possibleMatches.size() < 1)
@@ -136,8 +124,7 @@ public class TiffField implements TiffConstants
         // }
 
         // first search for exact match.
-        for (int i = 0; i < possibleMatches.size(); i++)
-        {
+        for (int i = 0; i < possibleMatches.size(); i++) {
             TagInfo tagInfo = possibleMatches.get(i);
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN)
                 // pass
@@ -147,8 +134,7 @@ public class TiffField implements TiffConstants
         }
 
         // accept an inexact match.
-        for (int i = 0; i < possibleMatches.size(); i++)
-        {
+        for (int i = 0; i < possibleMatches.size(); i++) {
             TagInfo tagInfo = possibleMatches.get(i);
 
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN)
@@ -163,8 +149,7 @@ public class TiffField implements TiffConstants
         }
 
         // accept a wildcard match.
-        for (int i = 0; i < possibleMatches.size(); i++)
-        {
+        for (int i = 0; i < possibleMatches.size(); i++) {
             TagInfo tagInfo = possibleMatches.get(i);
 
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN)
@@ -252,12 +237,10 @@ public class TiffField implements TiffConstants
         // return TIFF_TAG_UNKNOWN;
     }
 
-    private static TagInfo getTag(int directoryType, int tag)
-    {
+    private static TagInfo getTag(int directoryType, int tag) {
         List<TagInfo> possibleMatches = ALL_TAG_MAP.get(tag);
 
-        if (null == possibleMatches)
-        {
+        if (null == possibleMatches) {
             return TiffTagConstants.TIFF_TAG_UNKNOWN;
         }
 
@@ -265,8 +248,7 @@ public class TiffField implements TiffConstants
         return result;
     }
 
-    private int getValueLengthInBytes()
-    {
+    private int getValueLengthInBytes() {
         int unit_length = fieldType.length;
         int valueLength = unit_length * length;
 
@@ -276,8 +258,8 @@ public class TiffField implements TiffConstants
         return valueLength;
     }
 
-    public void fillInValue(ByteSource byteSource) throws IOException, TiffValueOutsideFileBoundsException
-    {
+    public void fillInValue(ByteSource byteSource) throws IOException,
+            TiffValueOutsideFileBoundsException {
         if (fieldType.isLocalValue(this))
             return;
 
@@ -289,54 +271,45 @@ public class TiffField implements TiffConstants
         // Debug.debug("fillInValue valueOffset", valueOffset);
         // Debug.debug("fillInValue valueLength", valueLength);
 
-        if (valueOffset < 0 ||
-            valueOffset + valueLengthLong > byteSource.getLength()) {
+        if (valueOffset < 0
+                || valueOffset + valueLengthLong > byteSource.getLength()) {
             throw new TiffValueOutsideFileBoundsException(
-                "Attempt to read byte range starting from " + valueOffset + " " +
-                "of length " + valueLength + " " +
-                "which is outside the file's size of " + byteSource.getLength());
+                    "Attempt to read byte range starting from " + valueOffset
+                            + " " + "of length " + valueLength + " "
+                            + "which is outside the file's size of "
+                            + byteSource.getLength());
         }
         byte bytes[] = byteSource.getBlock(valueOffset, valueLength);
         setOversizeValue(bytes);
     }
 
-    public String getValueDescription()
-    {
-        try
-        {
+    public String getValueDescription() {
+        try {
             return getValueDescription(getValue());
-        } catch (ImageReadException e)
-        {
+        } catch (ImageReadException e) {
             return "Invalid value: " + e.getMessage();
         }
     }
 
-    private String getValueDescription(Object o)
-    {
+    private String getValueDescription(Object o) {
         if (o == null)
             return null;
 
-        if (o instanceof Number)
-        {
+        if (o instanceof Number) {
             return o.toString();
-        } else if (o instanceof String)
-        {
+        } else if (o instanceof String) {
             return "'" + o.toString().trim() + "'";
-        } else if (o instanceof Date)
-        {
+        } else if (o instanceof Date) {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
             return df.format((Date) o);
-        } else if (o instanceof Object[])
-        {
+        } else if (o instanceof Object[]) {
             Object objects[] = (Object[]) o;
             StringBuffer result = new StringBuffer();
 
-            for (int i = 0; i < objects.length; i++)
-            {
+            for (int i = 0; i < objects.length; i++) {
                 Object object = objects[i];
 
-                if (i > 50)
-                {
+                if (i > 50) {
                     result.append("... (" + objects.length + ")");
                     break;
                 }
@@ -361,17 +334,14 @@ public class TiffField implements TiffConstants
         // }
         // return result.toString();
         // }
-        else if (o instanceof short[])
-        {
+        else if (o instanceof short[]) {
             short values[] = (short[]) o;
             StringBuffer result = new StringBuffer();
 
-            for (int i = 0; i < values.length; i++)
-            {
+            for (int i = 0; i < values.length; i++) {
                 short value = values[i];
 
-                if (i > 50)
-                {
+                if (i > 50) {
                     result.append("... (" + values.length + ")");
                     break;
                 }
@@ -380,18 +350,14 @@ public class TiffField implements TiffConstants
                 result.append("" + value);
             }
             return result.toString();
-        }
-        else if (o instanceof int[])
-        {
+        } else if (o instanceof int[]) {
             int values[] = (int[]) o;
             StringBuffer result = new StringBuffer();
 
-            for (int i = 0; i < values.length; i++)
-            {
+            for (int i = 0; i < values.length; i++) {
                 int value = values[i];
 
-                if (i > 50)
-                {
+                if (i > 50) {
                     result.append("... (" + values.length + ")");
                     break;
                 }
@@ -400,17 +366,14 @@ public class TiffField implements TiffConstants
                 result.append("" + value);
             }
             return result.toString();
-        } else if (o instanceof long[])
-        {
+        } else if (o instanceof long[]) {
             long values[] = (long[]) o;
             StringBuffer result = new StringBuffer();
 
-            for (int i = 0; i < values.length; i++)
-            {
+            for (int i = 0; i < values.length; i++) {
                 long value = values[i];
 
-                if (i > 50)
-                {
+                if (i > 50) {
                     result.append("... (" + values.length + ")");
                     break;
                 }
@@ -419,17 +382,14 @@ public class TiffField implements TiffConstants
                 result.append("" + value);
             }
             return result.toString();
-        } else if (o instanceof double[])
-        {
+        } else if (o instanceof double[]) {
             double values[] = (double[]) o;
             StringBuffer result = new StringBuffer();
 
-            for (int i = 0; i < values.length; i++)
-            {
+            for (int i = 0; i < values.length; i++) {
                 double value = values[i];
 
-                if (i > 50)
-                {
+                if (i > 50) {
                     result.append("... (" + values.length + ")");
                     break;
                 }
@@ -438,17 +398,14 @@ public class TiffField implements TiffConstants
                 result.append("" + value);
             }
             return result.toString();
-        } else if (o instanceof byte[])
-        {
+        } else if (o instanceof byte[]) {
             byte values[] = (byte[]) o;
             StringBuffer result = new StringBuffer();
 
-            for (int i = 0; i < values.length; i++)
-            {
+            for (int i = 0; i < values.length; i++) {
                 byte value = values[i];
 
-                if (i > 50)
-                {
+                if (i > 50) {
                     result.append("... (" + values.length + ")");
                     break;
                 }
@@ -457,17 +414,14 @@ public class TiffField implements TiffConstants
                 result.append("" + value);
             }
             return result.toString();
-        } else if (o instanceof char[])
-        {
+        } else if (o instanceof char[]) {
             char values[] = (char[]) o;
             StringBuffer result = new StringBuffer();
 
-            for (int i = 0; i < values.length; i++)
-            {
+            for (int i = 0; i < values.length; i++) {
                 char value = values[i];
 
-                if (i > 50)
-                {
+                if (i > 50) {
                     result.append("... (" + values.length + ")");
                     break;
                 }
@@ -476,17 +430,14 @@ public class TiffField implements TiffConstants
                 result.append("" + value);
             }
             return result.toString();
-        } else if (o instanceof float[])
-        {
+        } else if (o instanceof float[]) {
             float values[] = (float[]) o;
             StringBuffer result = new StringBuffer();
 
-            for (int i = 0; i < values.length; i++)
-            {
+            for (int i = 0; i < values.length; i++) {
                 float value = values[i];
 
-                if (i > 50)
-                {
+                if (i > 50) {
                     result.append("... (" + values.length + ")");
                     break;
                 }
@@ -515,20 +466,17 @@ public class TiffField implements TiffConstants
         return "Unknown: " + o.getClass().getName();
     }
 
-    public void dump()
-    {
+    public void dump() {
         PrintWriter pw = new PrintWriter(System.out);
         dump(pw);
         pw.flush();
     }
 
-    public void dump(PrintWriter pw)
-    {
+    public void dump(PrintWriter pw) {
         dump(pw, null);
     }
 
-    public void dump(PrintWriter pw, String prefix)
-    {
+    public void dump(PrintWriter pw, String prefix) {
         if (prefix != null)
             pw.print(prefix + ": ");
 
@@ -549,15 +497,13 @@ public class TiffField implements TiffConstants
     // Debug.debug("byteOrder", byteOrder);
     // }
 
-    public String getDescriptionWithoutValue()
-    {
+    public String getDescriptionWithoutValue() {
         return tag + " (0x" + Integer.toHexString(tag) + ": " + tagInfo.name
                 + "): ";
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuffer result = new StringBuffer();
 
         result.append(tag + " (0x" + Integer.toHexString(tag) + ": "
@@ -568,28 +514,24 @@ public class TiffField implements TiffConstants
         return result.toString();
     }
 
-    public String getTagName()
-    {
+    public String getTagName() {
         if (tagInfo == TiffTagConstants.TIFF_TAG_UNKNOWN)
             return tagInfo.name + " (0x" + Integer.toHexString(tag) + ")";
         return tagInfo.name;
     }
 
-    public String getFieldTypeName()
-    {
+    public String getFieldTypeName() {
         return fieldType.name;
     }
 
     public static final String Attribute_Tag = "Tag";
 
-    public Object getValue() throws ImageReadException
-    {
+    public Object getValue() throws ImageReadException {
         // System.out.print("getValue");
         return tagInfo.getValue(this);
     }
 
-    public String getStringValue() throws ImageReadException
-    {
+    public String getStringValue() throws ImageReadException {
         Object o = getValue();
         if (o == null)
             return null;
@@ -599,19 +541,16 @@ public class TiffField implements TiffConstants
         return (String) o;
     }
 
-    private static final Map<Object, List<TagInfo>> makeTagMap(List<TagInfo> tags,
-                                                               boolean ignoreDuplicates, String name)
-    {
+    private static final Map<Object, List<TagInfo>> makeTagMap(
+            List<TagInfo> tags, boolean ignoreDuplicates, String name) {
         // make sure to use the thread-safe version; this is shared state.
         Map<Object, List<TagInfo>> map = new Hashtable<Object, List<TagInfo>>();
 
-        for (int i = 0; i < tags.size(); i++)
-        {
+        for (int i = 0; i < tags.size(); i++) {
             TagInfo tag = tags.get(i);
 
             List<TagInfo> tagList = map.get(tag.tag);
-            if (tagList == null)
-            {
+            if (tagList == null) {
                 tagList = new ArrayList<TagInfo>();
                 map.put(tag.tag, tagList);
             }
@@ -632,13 +571,14 @@ public class TiffField implements TiffConstants
         return map;
     }
 
-    private static final Map<Object, List<TagInfo>> GPS_TAG_MAP = makeTagMap(GpsTagConstants.ALL_GPS_TAGS, false,
-            "GPS");
-    private static final Map<Object, List<TagInfo>> TIFF_TAG_MAP = makeTagMap(TiffTagConstants.ALL_TIFF_TAGS, false,
-            "TIFF");
-    private static final Map<Object, List<TagInfo>> EXIF_TAG_MAP = makeTagMap(ExifTagConstants.ALL_EXIF_TAGS, true,
-            "EXIF");
-    private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(ALL_TAGS, true, "All");
+    private static final Map<Object, List<TagInfo>> GPS_TAG_MAP = makeTagMap(
+            GpsTagConstants.ALL_GPS_TAGS, false, "GPS");
+    private static final Map<Object, List<TagInfo>> TIFF_TAG_MAP = makeTagMap(
+            TiffTagConstants.ALL_TIFF_TAGS, false, "TIFF");
+    private static final Map<Object, List<TagInfo>> EXIF_TAG_MAP = makeTagMap(
+            ExifTagConstants.ALL_EXIF_TAGS, true, "EXIF");
+    private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(
+            ALL_TAGS, true, "All");
 
     // static
     // {
@@ -667,16 +607,14 @@ public class TiffField implements TiffConstants
     //
     //
 
-    public int[] getIntArrayValue() throws ImageReadException
-    {
+    public int[] getIntArrayValue() throws ImageReadException {
         Object o = getValue();
         // if (o == null)
         // return null;
 
         if (o instanceof Number)
             return new int[] { ((Number) o).intValue() };
-        else if (o instanceof Number[])
-        {
+        else if (o instanceof Number[]) {
             Number numbers[] = (Number[]) o;
             int result[] = new int[numbers.length];
             for (int i = 0; i < numbers.length; i++)
@@ -688,8 +626,7 @@ public class TiffField implements TiffConstants
             for (int i = 0; i < numbers.length; i++)
                 result[i] = 0xffff & numbers[i];
             return result;
-        } else if (o instanceof int[])
-        {
+        } else if (o instanceof int[]) {
             int numbers[] = (int[]) o;
             int result[] = new int[numbers.length];
             for (int i = 0; i < numbers.length; i++)
@@ -702,17 +639,14 @@ public class TiffField implements TiffConstants
         // return null;
     }
 
-    public double[] getDoubleArrayValue() throws ImageReadException
-    {
+    public double[] getDoubleArrayValue() throws ImageReadException {
         Object o = getValue();
         // if (o == null)
         // return null;
 
-        if (o instanceof Number)
-        {
+        if (o instanceof Number) {
             return new double[] { ((Number) o).doubleValue() };
-        } else if (o instanceof Number[])
-        {
+        } else if (o instanceof Number[]) {
             Number numbers[] = (Number[]) o;
             double result[] = new double[numbers.length];
             for (int i = 0; i < numbers.length; i++)
@@ -724,22 +658,19 @@ public class TiffField implements TiffConstants
             for (int i = 0; i < numbers.length; i++)
                 result[i] = numbers[i];
             return result;
-        } else if (o instanceof int[])
-        {
+        } else if (o instanceof int[]) {
             int numbers[] = (int[]) o;
             double result[] = new double[numbers.length];
             for (int i = 0; i < numbers.length; i++)
                 result[i] = numbers[i];
             return result;
-        } else if (o instanceof float[])
-        {
+        } else if (o instanceof float[]) {
             float numbers[] = (float[]) o;
             double result[] = new double[numbers.length];
             for (int i = 0; i < numbers.length; i++)
                 result[i] = numbers[i];
             return result;
-        } else if (o instanceof double[])
-        {
+        } else if (o instanceof double[]) {
             double numbers[] = (double[]) o;
             double result[] = new double[numbers.length];
             for (int i = 0; i < numbers.length; i++)
@@ -752,8 +683,7 @@ public class TiffField implements TiffConstants
         // return null;
     }
 
-    public int getIntValueOrArraySum() throws ImageReadException
-    {
+    public int getIntValueOrArraySum() throws ImageReadException {
         Object o = getValue();
         // if (o == null)
         // return -1;
@@ -785,8 +715,7 @@ public class TiffField implements TiffConstants
         // return -1;
     }
 
-    public int getIntValue() throws ImageReadException
-    {
+    public int getIntValue() throws ImageReadException {
         Object o = getValue();
         if (o == null)
             throw new ImageReadException("Missing value: "
@@ -795,8 +724,7 @@ public class TiffField implements TiffConstants
         return ((Number) o).intValue();
     }
 
-    public double getDoubleValue() throws ImageReadException
-    {
+    public double getDoubleValue() throws ImageReadException {
         Object o = getValue();
         if (o == null)
             throw new ImageReadException("Missing value: "
@@ -805,18 +733,15 @@ public class TiffField implements TiffConstants
         return ((Number) o).doubleValue();
     }
 
-    public byte[] getByteArrayValue()
-    {
+    public byte[] getByteArrayValue() {
         return fieldType.getRawBytes(this);
     }
 
-    public int getSortHint()
-    {
+    public int getSortHint() {
         return sortHint;
     }
 
-    public void setSortHint(int sortHint)
-    {
+    public void setSortHint(int sortHint) {
         this.sortHint = sortHint;
     }
 }

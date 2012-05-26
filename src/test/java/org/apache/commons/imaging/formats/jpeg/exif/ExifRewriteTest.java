@@ -45,20 +45,17 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
-{
-    //    public ExifRewriteTest(String name)
-    //    {
-    //        super(name);
-    //    }
+public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
+    // public ExifRewriteTest(String name)
+    // {
+    // super(name);
+    // }
 
-    public void testRemove() throws Exception
-    {
+    public void testRemove() throws Exception {
         List images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++)
-        {
-            if(i%10==0)
-            Debug.purgeMemory();
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
             File imageFile = (File) images.get(i);
             Debug.debug("imageFile", imageFile);
@@ -74,7 +71,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             {
                 JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile);
-                //                assertNotNull(metadata.getExif());
+                // assertNotNull(metadata.getExif());
             }
 
             {
@@ -93,13 +90,11 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         }
     }
 
-    public void testInsert() throws Exception
-    {
+    public void testInsert() throws Exception {
         List images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++)
-        {
-            if(i%10==0)
-            Debug.purgeMemory();
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
             File imageFile = (File) images.get(i);
             Debug.debug("imageFile", imageFile);
@@ -137,7 +132,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 
             {
                 TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
-                //            outputSet.dump();
+                // outputSet.dump();
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -152,14 +147,14 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 Debug.debug("Output Segments:");
                 new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
 
-                //                assertTrue(!hasExifData(tempFile));
+                // assertTrue(!hasExifData(tempFile));
 
                 JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
                         .getMetadata(tempFile);
                 assertNotNull(newMetadata);
                 TiffImageMetadata newExifMetadata = newMetadata.getExif();
                 assertNotNull(newExifMetadata);
-                //                newMetadata.dump();
+                // newMetadata.dump();
 
                 compare(imageFile, oldExifMetadata, newExifMetadata);
             }
@@ -167,26 +162,22 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         }
     }
 
-    private interface Rewriter
-    {
+    private interface Rewriter {
         public void rewrite(ByteSource byteSource, OutputStream os,
                 TiffOutputSet outputSet) throws ImageReadException,
                 IOException, ImageWriteException;
     }
 
     private void rewrite(Rewriter rewriter, String name) throws IOException,
-            ImageReadException, ImageWriteException
-    {
+            ImageReadException, ImageWriteException {
         List images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++)
-        {
-            if(i%10==0)
-            Debug.purgeMemory();
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
             File imageFile = (File) images.get(i);
 
-            try
-            {
+            try {
 
                 Debug.debug("imageFile", imageFile);
 
@@ -210,11 +201,11 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 assertNotNull(oldExifMetadata);
                 oldMetadata.dump();
 
-                //            TiffImageMetadata tiffImageMetadata = metadata.getExif();
-                //            Photoshop photoshop = metadata.getPhotoshop();
+                // TiffImageMetadata tiffImageMetadata = metadata.getExif();
+                // Photoshop photoshop = metadata.getPhotoshop();
 
                 TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
-                //            outputSet.dump();
+                // outputSet.dump();
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 rewriter.rewrite(byteSource, baos, outputSet);
@@ -226,36 +217,32 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 Debug.debug("Output Segments:");
                 new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
 
-                //                assertTrue(!hasExifData(tempFile));
+                // assertTrue(!hasExifData(tempFile));
 
                 JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
                         .getMetadata(tempFile);
                 assertNotNull(newMetadata);
                 TiffImageMetadata newExifMetadata = newMetadata.getExif();
                 assertNotNull(newExifMetadata);
-                //                newMetadata.dump();
+                // newMetadata.dump();
 
                 compare(imageFile, oldExifMetadata, newExifMetadata);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);
                 throw e;
-            }
-            catch (ImageReadException e)
-            {
+            } catch (ImageReadException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);
                 throw e;
-            }
-            catch (ImageWriteException e)
-            {
+            } catch (ImageWriteException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);
-                // FIXME: this image has 28kB of Maker Notes, causing the APP1 segment
+                // FIXME: this image has 28kB of Maker Notes, causing the APP1
+                // segment
                 // to go beyond 64kB, so ignore the exception this throws.
-                if (!imageFile.getName().equalsIgnoreCase("Nikon D50 - 2007.12.19.n.DSC_3656.JPG")) {
+                if (!imageFile.getName().equalsIgnoreCase(
+                        "Nikon D50 - 2007.12.19.n.DSC_3656.JPG")) {
                     throw e;
                 }
             }
@@ -263,14 +250,11 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         }
     }
 
-    public void testRewriteLossy() throws Exception
-    {
-        Rewriter rewriter = new Rewriter()
-        {
+    public void testRewriteLossy() throws Exception {
+        Rewriter rewriter = new Rewriter() {
             public void rewrite(ByteSource byteSource, OutputStream os,
                     TiffOutputSet outputSet) throws ImageReadException,
-                    IOException, ImageWriteException
-            {
+                    IOException, ImageWriteException {
                 new ExifRewriter().updateExifMetadataLossy(byteSource, os,
                         outputSet);
             }
@@ -279,14 +263,11 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         rewrite(rewriter, "lossy");
     }
 
-    public void testRewriteLossless() throws Exception
-    {
-        Rewriter rewriter = new Rewriter()
-        {
+    public void testRewriteLossless() throws Exception {
+        Rewriter rewriter = new Rewriter() {
             public void rewrite(ByteSource byteSource, OutputStream os,
                     TiffOutputSet outputSet) throws ImageReadException,
-                    IOException, ImageWriteException
-            {
+                    IOException, ImageWriteException {
                 new ExifRewriter().updateExifMetadataLossless(byteSource, os,
                         outputSet);
             }
@@ -295,11 +276,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         rewrite(rewriter, "lossless");
     }
 
-    private Hashtable makeDirectoryMap(List directories)
-    {
+    private Hashtable makeDirectoryMap(List directories) {
         Hashtable directoryMap = new Hashtable();
-        for (int i = 0; i < directories.size(); i++)
-        {
+        for (int i = 0; i < directories.size(); i++) {
             TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories
                     .get(i);
             directoryMap.put(new Integer(directory.type), directory);
@@ -307,11 +286,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         return directoryMap;
     }
 
-    private Hashtable makeFieldMap(List items)
-    {
+    private Hashtable makeFieldMap(List items) {
         Hashtable fieldMap = new Hashtable();
-        for (int i = 0; i < items.size(); i++)
-        {
+        for (int i = 0; i < items.size(); i++) {
             TiffImageMetadata.Item item = (TiffImageMetadata.Item) items.get(i);
             TiffField field = item.getTiffField();
             Object key = new Integer(field.tag);
@@ -322,8 +299,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
     }
 
     private void compare(File imageFile, TiffImageMetadata oldExifMetadata,
-            TiffImageMetadata newExifMetadata) throws ImageReadException
-    {
+            TiffImageMetadata newExifMetadata) throws ImageReadException {
         assertNotNull(oldExifMetadata);
         assertNotNull(newExifMetadata);
 
@@ -342,11 +318,10 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         Collections.sort(newDirectoryTypes);
         assertEquals(oldDirectoryTypes, newDirectoryTypes);
 
-        for (int i = 0; i < oldDirectoryTypes.size(); i++)
-        {
+        for (int i = 0; i < oldDirectoryTypes.size(); i++) {
             Integer dirType = (Integer) oldDirectoryTypes.get(i);
 
-            //            Debug.debug("dirType", dirType);
+            // Debug.debug("dirType", dirType);
 
             TiffImageMetadata.Directory oldDirectory = (TiffImageMetadata.Directory) oldDirectoryMap
                     .get(dirType);
@@ -358,18 +333,18 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             List oldItems = oldDirectory.getItems();
             List newItems = newDirectory.getItems();
 
-            //            Debug.debug("oldItems.size()", oldItems.size());
-            //            Debug.debug("newItems.size()", newItems.size());
-            //            dump("oldItems", oldItems);
-            //            dump("newItems", newItems);
+            // Debug.debug("oldItems.size()", oldItems.size());
+            // Debug.debug("newItems.size()", newItems.size());
+            // dump("oldItems", oldItems);
+            // dump("newItems", newItems);
 
-            //            if (oldItems.size() != newItems.size())
-            //                ;
-            //            {
-            //            dump("oldItems", oldItems);
-            //            dump("newItems", newItems);
-            //            }
-            //            assertTrue(oldItems.size() == newItems.size());
+            // if (oldItems.size() != newItems.size())
+            // ;
+            // {
+            // dump("oldItems", oldItems);
+            // dump("newItems", newItems);
+            // }
+            // assertTrue(oldItems.size() == newItems.size());
 
             Hashtable oldFieldMap = makeFieldMap(oldItems);
             Hashtable newFieldMap = makeFieldMap(newItems);
@@ -380,20 +355,21 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             Set missingInOld = new HashSet(newFieldMap.keySet());
             missingInOld.removeAll(oldFieldMap.keySet());
 
-            //            dump("missingInNew", missingInNew);
-            //            dump("missingInOld", missingInOld);
-            //            dump("newFieldMap.keySet()", newFieldMap.keySet());
-            //            dump("oldFieldMap.keySet()", oldFieldMap.keySet());
+            // dump("missingInNew", missingInNew);
+            // dump("missingInOld", missingInOld);
+            // dump("newFieldMap.keySet()", newFieldMap.keySet());
+            // dump("oldFieldMap.keySet()", oldFieldMap.keySet());
 
             assertTrue(missingInNew.size() == 0);
             assertTrue(missingInOld.size() == 0);
 
-            //            Debug.debug("oldItems.size()", oldItems.size());
-            //            Debug.debug("oldFieldMap.keySet().size()", oldFieldMap.keySet().size());
+            // Debug.debug("oldItems.size()", oldItems.size());
+            // Debug.debug("oldFieldMap.keySet().size()",
+            // oldFieldMap.keySet().size());
 
-            //            assertEquals(oldItems.size(), oldFieldMap.keySet().size());
-            //            assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
-            //            assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
+            // assertEquals(oldItems.size(), oldFieldMap.keySet().size());
+            // assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
+            // assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
 
             List oldFieldTags = new ArrayList(oldFieldMap.keySet());
             Collections.sort(oldFieldTags);
@@ -401,36 +377,32 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
             Collections.sort(newFieldTags);
             assertEquals(oldFieldTags, newFieldTags);
 
-            for (int j = 0; j < oldFieldTags.size(); j++)
-            {
+            for (int j = 0; j < oldFieldTags.size(); j++) {
                 Integer fieldTag = (Integer) oldFieldTags.get(j);
 
                 TiffField oldField = (TiffField) oldFieldMap.get(fieldTag);
                 TiffField newField = (TiffField) newFieldMap.get(fieldTag);
 
-                //                Debug.debug("fieldTag", fieldTag);
-                //                Debug.debug("oldField", oldField);
-                //                Debug.debug("newField", newField);
+                // Debug.debug("fieldTag", fieldTag);
+                // Debug.debug("oldField", oldField);
+                // Debug.debug("newField", newField);
 
-                //                fieldTag.
+                // fieldTag.
                 assertNotNull(oldField);
                 assertNotNull(newField);
 
                 assertEquals(oldField.tag, newField.tag);
                 assertEquals(dirType.intValue(), newField.directoryType);
                 assertEquals(oldField.directoryType, newField.directoryType);
-                
-                if (oldField.fieldType == TiffFieldTypeConstants.FIELD_TYPE_ASCII)
-                {
+
+                if (oldField.fieldType == TiffFieldTypeConstants.FIELD_TYPE_ASCII) {
                     // Sanselan currently doesn't correctly rewrite
                     // strings if any byte had the highest bit set,
                     // so if the source had that, all bets are off.
                     byte[] rawBytes = oldField.fieldType.getRawBytes(oldField);
                     boolean hasInvalidByte = false;
-                    for (int k = 0; k < rawBytes.length; k++)
-                    {
-                        if ((rawBytes[k] & 0x80) != 0)
-                        {
+                    for (int k = 0; k < rawBytes.length; k++) {
+                        if ((rawBytes[k] & 0x80) != 0) {
                             hasInvalidByte = true;
                             break;
                         }
@@ -442,59 +414,60 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
                 assertEquals(oldField.length, newField.length);
                 assertEquals(oldField.isLocalValue(), newField.isLocalValue());
 
-                if (oldField.tag == 0x202)
-                {
-                    // ignore "jpg from raw length" value. may have off-by-one bug in certain cameras.
+                if (oldField.tag == 0x202) {
+                    // ignore "jpg from raw length" value. may have off-by-one
+                    // bug in certain cameras.
                     // i.e. Sony DCR-PC110
                     continue;
                 }
 
-                if (!oldField.tagInfo.isOffset())
-                {
-                    if (oldField.tagInfo.isText())
-                    { /* do nothing */ }
-                    else if (oldField.isLocalValue())
-                    {
-                        //                        Debug.debug("oldField.tag", oldField.tag);
-                        //                        Debug.debug("newField.tag", newField.tag);
-                        //                        Debug.debug("oldField.tagInfo", oldField.tagInfo);
-                        //                        Debug.debug("newField.tagInfo", newField.tagInfo);
-                        //                        Debug.debug("oldField.fieldType", oldField.fieldType);
-                        //                        Debug.debug("newField.fieldType", newField.fieldType);
-                        //                        Debug.debug("oldField.getBytesLength", oldField
-                        //                                .getBytesLength());
-                        //                        Debug.debug("newField.getBytesLength", newField
-                        //                                .getBytesLength());
+                if (!oldField.tagInfo.isOffset()) {
+                    if (oldField.tagInfo.isText()) { /* do nothing */
+                    } else if (oldField.isLocalValue()) {
+                        // Debug.debug("oldField.tag", oldField.tag);
+                        // Debug.debug("newField.tag", newField.tag);
+                        // Debug.debug("oldField.tagInfo", oldField.tagInfo);
+                        // Debug.debug("newField.tagInfo", newField.tagInfo);
+                        // Debug.debug("oldField.fieldType",
+                        // oldField.fieldType);
+                        // Debug.debug("newField.fieldType",
+                        // newField.fieldType);
+                        // Debug.debug("oldField.getBytesLength", oldField
+                        // .getBytesLength());
+                        // Debug.debug("newField.getBytesLength", newField
+                        // .getBytesLength());
                         //
-                        //                        Debug.debug("oldField.valueOffsetBytes",
-                        //                                oldField.valueOffsetBytes);
-                        //                        Debug.debug("newField.valueOffsetBytes",
-                        //                                newField.valueOffsetBytes);
+                        // Debug.debug("oldField.valueOffsetBytes",
+                        // oldField.valueOffsetBytes);
+                        // Debug.debug("newField.valueOffsetBytes",
+                        // newField.valueOffsetBytes);
 
-                        String label = imageFile.getName() + 
-                                       ", dirType[" + i + "]=" + dirType +
-                                       ", fieldTag[" + j + "]=" + fieldTag;
+                        String label = imageFile.getName() + ", dirType[" + i
+                                + "]=" + dirType + ", fieldTag[" + j + "]="
+                                + fieldTag;
                         if (oldField.tag == 0x116 || oldField.tag == 0x117)
                             compare(label, oldField, newField);
                         else {
                             compare(label, oldField.valueOffsetBytes,
-                                           newField.valueOffsetBytes,
-                                           oldField.getBytesLength(),
-                                           newField.getBytesLength());
+                                    newField.valueOffsetBytes,
+                                    oldField.getBytesLength(),
+                                    newField.getBytesLength());
                         }
-                    }
-                    else
-                    {
-                        //                        Debug.debug("oldField.tagInfo", oldField.tagInfo);
-                        //                        Debug.debug("oldField.fieldType", oldField.fieldType);
-                        //                        Debug.debug("newField.fieldType", newField.fieldType);
-                        //                        Debug.debug("oldField.getBytesLength", oldField
-                        //                                .getBytesLength());
-                        //                        Debug.debug("newField.getBytesLength", newField
-                        //                                .getBytesLength());
+                    } else {
+                        // Debug.debug("oldField.tagInfo", oldField.tagInfo);
+                        // Debug.debug("oldField.fieldType",
+                        // oldField.fieldType);
+                        // Debug.debug("newField.fieldType",
+                        // newField.fieldType);
+                        // Debug.debug("oldField.getBytesLength", oldField
+                        // .getBytesLength());
+                        // Debug.debug("newField.getBytesLength", newField
+                        // .getBytesLength());
 
-                        //                        Debug.debug("oldField.oversizeValue", oldField.oversizeValue);
-                        //                        Debug.debug("newField.oversizeValue", newField.oversizeValue);
+                        // Debug.debug("oldField.oversizeValue",
+                        // oldField.oversizeValue);
+                        // Debug.debug("newField.oversizeValue",
+                        // newField.oversizeValue);
 
                         compare(oldField.oversizeValue, newField.oversizeValue);
                     }
@@ -502,14 +475,14 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
 
             }
 
-            //            Debug.debug();
+            // Debug.debug();
         }
     }
 
-    private void compare(String label, byte a[], byte b[], int aLength, int bLength)
-    {
-        //        Debug.debug("c0 a", a);
-        //        Debug.debug("c0 b", b);
+    private void compare(String label, byte a[], byte b[], int aLength,
+            int bLength) {
+        // Debug.debug("c0 a", a);
+        // Debug.debug("c0 b", b);
         assertEquals(aLength, bLength);
         assertTrue(a.length >= aLength);
         assertTrue(b.length >= bLength);
@@ -517,39 +490,37 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants
         assertNotNull(b);
         assertEquals(a.length, b.length);
         int length = aLength;
-        for (int i = 0; i < length; i++)
-        {
-            //            byte ba = a[i];
-            //            byte bb = b[i];
-            //            boolean eq = ba == bb;
-            //            Debug.debug("i: " + i + ", a[i]: " + ba + ", b[i]: " + bb + " = "
-            //                    + (ba == bb) + " " + eq);
-            //            if(ba != bb)
-            //                assertFalse(true);
+        for (int i = 0; i < length; i++) {
+            // byte ba = a[i];
+            // byte bb = b[i];
+            // boolean eq = ba == bb;
+            // Debug.debug("i: " + i + ", a[i]: " + ba + ", b[i]: " + bb + " = "
+            // + (ba == bb) + " " + eq);
+            // if(ba != bb)
+            // assertFalse(true);
             //
-            //            Debug.debug("i: " + i + ", a[i]: " + ba + ", b[i]: " + bb + " = "
-            //                    + (ba == bb) + " " + eq);
-            //            assertTrue(eq == true);
+            // Debug.debug("i: " + i + ", a[i]: " + ba + ", b[i]: " + bb + " = "
+            // + (ba == bb) + " " + eq);
+            // assertTrue(eq == true);
             assertEquals(label + ", byte[" + i + "]", a[i], b[i]);
-            //            Debug.debug("c");
-            //            assertTrue((0xff & a[i]) == (0xff & b[i]));
+            // Debug.debug("c");
+            // assertTrue((0xff & a[i]) == (0xff & b[i]));
         }
     }
 
-    private void compare(String label, TiffField a, TiffField b) throws ImageReadException
-    {
+    private void compare(String label, TiffField a, TiffField b)
+            throws ImageReadException {
         Object v1 = a.getValue();
         Object v2 = b.getValue();
 
-        //        Debug.debug("v1", v1 + " (" + Debug.getType(v1) + ")");
-        //        Debug.debug("v2", v2 + " (" + Debug.getType(v2) + ")");
+        // Debug.debug("v1", v1 + " (" + Debug.getType(v1) + ")");
+        // Debug.debug("v2", v2 + " (" + Debug.getType(v2) + ")");
         assertEquals(label, v1, v2);
     }
 
-    private void compare(byte a[], byte b[])
-    {
-        //        Debug.debug("c1 a", a);
-        //        Debug.debug("c1 b", b);
+    private void compare(byte a[], byte b[]) {
+        // Debug.debug("c1 a", a);
+        // Debug.debug("c1 b", b);
         assertNotNull(a);
         assertNotNull(b);
         assertEquals(a.length, b.length);

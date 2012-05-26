@@ -16,26 +16,23 @@
  */
 package org.apache.commons.imaging.palette;
 
-class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
-{
+class ColorSpaceSubset implements Comparable<ColorSpaceSubset> {
     public final int mins[], maxs[];
     public final int precision;
     public final int precision_mask;
     public final int total;
     public int rgb; // median
 
-    public ColorSpaceSubset(int total, int precision)
-    {
+    public ColorSpaceSubset(int total, int precision) {
         this.total = total;
         this.precision = precision;
         precision_mask = (1 << precision) - 1;
 
         mins = new int[PaletteFactory.components];
         maxs = new int[PaletteFactory.components];
-        for (int i = 0; i < PaletteFactory.components; i++)
-        {
+        for (int i = 0; i < PaletteFactory.components; i++) {
             mins[i] = 0;
-            //            maxs[i] = 255;
+            // maxs[i] = 255;
             maxs[i] = precision_mask;
         }
 
@@ -43,8 +40,7 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
     }
 
     public ColorSpaceSubset(int total, int precision, int mins[], int maxs[],
-            int table[])
-    {
+            int table[]) {
         this.total = total;
         this.precision = precision;
         this.mins = mins;
@@ -56,8 +52,7 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
 
     public static long compares = 0;
 
-    public final boolean contains(int red, int green, int blue)
-    {
+    public final boolean contains(int red, int green, int blue) {
         compares++;
 
         red >>= (8 - precision);
@@ -81,8 +76,7 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
         return true;
     }
 
-    public void dump(String prefix)
-    {
+    public void dump(String prefix) {
         int rdiff = maxs[0] - mins[0] + 1;
         int gdiff = maxs[1] - mins[1] + 1;
         int bdiff = maxs[2] - mins[2] + 1;
@@ -90,9 +84,9 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
 
         System.out.println(prefix + ": [" + Integer.toHexString(rgb)
                 + "] total : " + total
-        //                        + " ("
-                //                        + (100.0 * (double) total / (double) total_area)
-                //                        + " %)"
+        // + " ("
+        // + (100.0 * (double) total / (double) total_area)
+        // + " %)"
                 );
         System.out.println("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
                 + "red: " + Integer.toHexString(mins[0] << (8 - precision))
@@ -110,8 +104,7 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
                         + color_area);
     }
 
-    public void dumpJustRGB(String prefix)
-    {
+    public void dumpJustRGB(String prefix) {
         System.out.println("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
                 + "red: " + Integer.toHexString(mins[0] << (8 - precision))
                 + ", " + Integer.toHexString(maxs[0] << (8 - precision)) + ", "
@@ -121,8 +114,7 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
                 + ", " + Integer.toHexString(maxs[2] << (8 - precision)));
     }
 
-    public int getArea()
-    {
+    public int getArea() {
         int rdiff = maxs[0] - mins[0] + 1;
         int gdiff = maxs[1] - mins[1] + 1;
         int bdiff = maxs[2] - mins[2] + 1;
@@ -132,8 +124,7 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
 
     }
 
-    public void setAverageRGB(int table[])
-    {
+    public void setAverageRGB(int table[]) {
 
         {
             long redsum = 0, greensum = 0, bluesum = 0;
@@ -141,11 +132,12 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
             for (int red = mins[0]; red <= maxs[0]; red++)
                 for (int green = mins[1]; green <= maxs[1]; green++)
                     for (int blue = mins[2]; blue <= maxs[2]; blue++)
-                    //                    for (int red = 0; red <= precision_mask; red++)
-                    //                        for (int green = 0; green <= precision_mask; green++)
-                    //                            for (int blue = 0; blue <= precision_mask; blue++)
+                    // for (int red = 0; red <= precision_mask; red++)
+                    // for (int green = 0; green <= precision_mask; green++)
+                    // for (int blue = 0; blue <= precision_mask; blue++)
                     {
-                        int index = (blue << (2 * precision)) // note: order reversed
+                        int index = (blue << (2 * precision)) // note: order
+                                                              // reversed
                                 | (green << (1 * precision))
                                 | (red << (0 * precision));
                         int count = table[index];
@@ -162,16 +154,14 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset>
         }
     }
 
-    public int compareTo(ColorSpaceSubset other)
-    {
+    public int compareTo(ColorSpaceSubset other) {
         return rgb - other.rgb;
     }
 
     public int index;
 
-    public final void setIndex(int i)
-    {
+    public final void setIndex(int i) {
         index = i;
     }
-    
+
 }

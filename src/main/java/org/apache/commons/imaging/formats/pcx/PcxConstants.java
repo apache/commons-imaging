@@ -16,8 +16,7 @@ package org.apache.commons.imaging.formats.pcx;
 
 import org.apache.commons.imaging.ImagingConstants;
 
-public interface PcxConstants extends ImagingConstants
-{
+public interface PcxConstants extends ImagingConstants {
     public static final String PARAM_KEY_PCX_COMPRESSION = "PCX_COMPRESSION";
     public static final int PCX_COMPRESSION_UNCOMPRESSED = 0;
     public static final int PCX_COMPRESSION_RLE = 1;

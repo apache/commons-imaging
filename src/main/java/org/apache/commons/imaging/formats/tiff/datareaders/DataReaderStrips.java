@@ -26,8 +26,7 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
-public final class DataReaderStrips extends DataReader
-{
+public final class DataReaderStrips extends DataReader {
 
     private final int bitsPerPixel;
     private final int compression;
@@ -37,12 +36,12 @@ public final class DataReaderStrips extends DataReader
     private final TiffImageData.Strips imageData;
 
     public DataReaderStrips(TiffDirectory directory,
-            PhotometricInterpreter photometricInterpreter,
-            int bitsPerPixel, int bitsPerSample[], int predictor,
-            int samplesPerPixel, int width, int height, int compression,
-            int byteOrder, int rowsPerStrip, TiffImageData.Strips imageData)
-    {
-        super(directory, photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
+            PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
+            int bitsPerSample[], int predictor, int samplesPerPixel, int width,
+            int height, int compression, int byteOrder, int rowsPerStrip,
+            TiffImageData.Strips imageData) {
+        super(directory, photometricInterpreter, bitsPerSample, predictor,
+                samplesPerPixel, width, height);
 
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;
@@ -52,8 +51,7 @@ public final class DataReaderStrips extends DataReader
     }
 
     private void interpretStrip(ImageBuilder imageBuilder, byte bytes[],
-            int pixels_per_strip) throws ImageReadException, IOException
-    {
+            int pixels_per_strip) throws ImageReadException, IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         BitInputStream bis = new BitInputStream(bais, byteOrder);
 
@@ -62,20 +60,18 @@ public final class DataReaderStrips extends DataReader
         }
         int[] samples = new int[bitsPerSample.length];
         resetPredictor();
-        for (int i = 0; i < pixels_per_strip; i++)
-        {
+        for (int i = 0; i < pixels_per_strip; i++) {
             getSamplesAsBytes(bis, samples);
 
-            if (x < width)
-            {
+            if (x < width) {
                 samples = applyPredictor(samples);
 
-                photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
+                photometricInterpreter.interpretPixel(imageBuilder, samples, x,
+                        y);
             }
 
             x++;
-            if (x >= width)
-            {
+            if (x >= width) {
                 x = 0;
                 resetPredictor();
                 y++;
@@ -89,11 +85,9 @@ public final class DataReaderStrips extends DataReader
     private int x = 0, y = 0;
 
     @Override
-    public void readImageData(ImageBuilder imageBuilder) throws ImageReadException,
-            IOException
-    {
-        for (int strip = 0; strip < imageData.strips.length; strip++)
-        {
+    public void readImageData(ImageBuilder imageBuilder)
+            throws ImageReadException, IOException {
+        for (int strip = 0; strip < imageData.strips.length; strip++) {
             long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
             long rowsRemaining = height - (strip * rowsPerStripLong);
             long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
@@ -104,9 +98,9 @@ public final class DataReaderStrips extends DataReader
             byte compressed[] = imageData.strips[strip].getData();
 
             byte decompressed[] = decompress(compressed, compression,
-                    (int)bytesPerStrip, width, (int)rowsInThisStrip);
+                    (int) bytesPerStrip, width, (int) rowsInThisStrip);
 
-            interpretStrip(imageBuilder, decompressed, (int)pixelsPerStrip);
+            interpretStrip(imageBuilder, decompressed, (int) pixelsPerStrip);
 
         }
     }

@@ -20,8 +20,7 @@ import java.io.ByteArrayInputStream;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
 
-public class PngChunk extends BinaryFileParser
-{
+public class PngChunk extends BinaryFileParser {
     public final int length;
     public final int chunkType;
     public final int crc;
@@ -30,8 +29,7 @@ public class PngChunk extends BinaryFileParser
     public final boolean propertyBits[];
     public final boolean ancillary, isPrivate, reserved, safeToCopy;
 
-    public PngChunk(int Length, int ChunkType, int CRC, byte bytes[])
-    {
+    public PngChunk(int Length, int ChunkType, int CRC, byte bytes[]) {
         this.length = Length;
         this.chunkType = ChunkType;
         this.crc = CRC;
@@ -39,8 +37,7 @@ public class PngChunk extends BinaryFileParser
 
         propertyBits = new boolean[4];
         int shift = 24;
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             int theByte = 0xff & (ChunkType >> shift);
             shift -= 8;
             int theMask = 1 << 5;
@@ -53,8 +50,7 @@ public class PngChunk extends BinaryFileParser
         safeToCopy = propertyBits[3];
     }
 
-    protected ByteArrayInputStream getDataStream()
-    {
+    protected ByteArrayInputStream getDataStream() {
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);
         return is;
     }

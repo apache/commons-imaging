@@ -37,8 +37,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
     public static final String PPM_IMAGE_FILE = "pbm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ppm";
     public static final String TGA_IMAGE_FILE = "tga\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tga";
 
-    public void testGuess_all() throws Exception
-    {
+    public void testGuess_all() throws Exception {
         testGuess(ImageFormat.IMAGE_FORMAT_PNG, PNG_IMAGE_FILE);
         testGuess(ImageFormat.IMAGE_FORMAT_GIF, GIF_IMAGE_FILE);
         testGuess(ImageFormat.IMAGE_FORMAT_ICNS, ICNS_IMAGE_FILE);
@@ -64,8 +63,8 @@ public class ImagingGuessFormatTest extends ImagingTest {
         testGuess(ImageFormat.IMAGE_FORMAT_UNKNOWN, UNKNOWN_IMAGE_FILE);
     }
 
-    public void testGuess(ImageFormat expectedFormat, String imagePath) throws Exception
-    {
+    public void testGuess(ImageFormat expectedFormat, String imagePath)
+            throws Exception {
         imagePath = FilenameUtils.separatorsToSystem(imagePath);
         File imageFile = new File(TEST_IMAGE_FOLDER, imagePath);
 

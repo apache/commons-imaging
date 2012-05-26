@@ -18,12 +18,10 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.ImageContents;
 
-public class DataParserRgb extends DataParser
-{
+public class DataParserRgb extends DataParser {
     @Override
     protected int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents)
-    {
+            ImageContents imageContents) {
         int red = 0xff & data[0][y][x];
         int green = 0xff & data[1][y][x];
         int blue = 0xff & data[2][y][x];
@@ -36,8 +34,7 @@ public class DataParserRgb extends DataParser
     }
 
     @Override
-    public int getBasicChannelsCount()
-    {
+    public int getBasicChannelsCount() {
         return 3;
     }
 

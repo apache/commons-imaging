@@ -22,18 +22,15 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterCmyk extends PhotometricInterpreter
-{
+public class PhotometricInterpreterCmyk extends PhotometricInterpreter {
     public PhotometricInterpreterCmyk(int fSamplesPerPixel,
-            int fBitsPerSample[], int Predictor, int width, int height)
-    {
+            int fBitsPerSample[], int Predictor, int width, int height) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
-            throws ImageReadException, IOException
-    {
+    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
+            int y) throws ImageReadException, IOException {
 
         int sc = samples[0];
         int sm = samples[1];

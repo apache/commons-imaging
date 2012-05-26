@@ -19,15 +19,13 @@ package org.apache.commons.imaging.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class PngChunkPhys extends PngChunk
-{
+public class PngChunkPhys extends PngChunk {
     public final int PixelsPerUnitXAxis;
     public final int PixelsPerUnitYAxis;
     public final int UnitSpecifier;
 
     public PngChunkPhys(int Length, int ChunkType, int CRC, byte bytes[])
-            throws IOException
-    {
+            throws IOException {
         super(Length, ChunkType, CRC, bytes);
 
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);

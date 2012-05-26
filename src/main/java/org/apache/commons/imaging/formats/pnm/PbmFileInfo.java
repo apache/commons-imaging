@@ -22,65 +22,53 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 
-public class PbmFileInfo extends FileInfo
-{
-    public PbmFileInfo(int width, int height, boolean RAWBITS)
-    {
+public class PbmFileInfo extends FileInfo {
+    public PbmFileInfo(int width, int height, boolean RAWBITS) {
         super(width, height, RAWBITS);
     }
 
     @Override
-    public int getNumComponents()
-    {
+    public int getNumComponents() {
         return 1;
     }
 
     @Override
-    public int getBitDepth()
-    {
+    public int getBitDepth() {
         return 1;
     }
 
     @Override
-    public ImageFormat getImageType()
-    {
+    public ImageFormat getImageType() {
         return ImageFormat.IMAGE_FORMAT_PBM;
     }
 
     @Override
-    public int getColorType()
-    {
+    public int getColorType() {
         return ImageInfo.COLOR_TYPE_BW;
     }
 
     @Override
-    public String getImageTypeDescription()
-    {
+    public String getImageTypeDescription() {
         return "PBM: portable bitmap fileformat";
     }
 
     @Override
-    public String getMIMEType()
-    {
+    public String getMIMEType() {
         return "image/x-portable-bitmap";
     }
 
     @Override
-    protected void newline()
-    {
+    protected void newline() {
         bitcache = 0;
         bits_in_cache = 0;
     }
-
 
     private int bitcache = 0;
     private int bits_in_cache = 0;
 
     @Override
-    public int getRGB(InputStream is) throws IOException
-    {
-        if (bits_in_cache < 1)
-        {
+    public int getRGB(InputStream is) throws IOException {
+        if (bits_in_cache < 1) {
             int bits = is.read();
             if (bits < 0)
                 throw new IOException("PBM: Unexpected EOF");
@@ -100,8 +88,7 @@ public class PbmFileInfo extends FileInfo
     }
 
     @Override
-    public int getRGB(WhiteSpaceReader wsr) throws IOException
-    {
+    public int getRGB(WhiteSpaceReader wsr) throws IOException {
         int bit = Integer.parseInt(wsr.readtoWhiteSpace());
         if (bit == 0)
             return 0xff000000;

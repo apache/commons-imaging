@@ -26,32 +26,27 @@ import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderTiled;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
-public abstract class TiffImageData
-{
-    public static class Tiles extends TiffImageData
-    {
+public abstract class TiffImageData {
+    public static class Tiles extends TiffImageData {
         public final TiffElement.DataElement tiles[];
 
-        //        public final byte tiles[][];
+        // public final byte tiles[][];
         private final int tileWidth, tileLength;
 
         public Tiles(final TiffElement.DataElement tiles[],
-                final int tileWidth, final int tileLength)
-        {
+                final int tileWidth, final int tileLength) {
             this.tiles = tiles;
             this.tileWidth = tileWidth;
             this.tileLength = tileLength;
         }
 
         @Override
-        public TiffElement.DataElement[] getImageData()
-        {
+        public TiffElement.DataElement[] getImageData() {
             return tiles;
         }
 
         @Override
-        public boolean stripsNotTiles()
-        {
+        public boolean stripsNotTiles() {
             return false;
         }
 
@@ -59,42 +54,38 @@ public abstract class TiffImageData
         public DataReader getDataReader(TiffDirectory directory,
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
-                int samplesPerPixel, int width, int height, int compression, int byteOrder)
-                throws IOException, ImageReadException
-        {
+                int samplesPerPixel, int width, int height, int compression,
+                int byteOrder) throws IOException, ImageReadException {
             return new DataReaderTiled(directory, photometricInterpreter,
                     tileWidth, tileLength, bitsPerPixel, bitsPerSample,
-                    predictor, samplesPerPixel, width, height, compression, byteOrder, this);
+                    predictor, samplesPerPixel, width, height, compression,
+                    byteOrder, this);
         }
 
-        //        public TiffElement[] getElements()
-        //        {
-        //            return tiles;
-        //        }
+        // public TiffElement[] getElements()
+        // {
+        // return tiles;
+        // }
     }
 
-    public static class Strips extends TiffImageData
-    {
+    public static class Strips extends TiffImageData {
         public final TiffElement.DataElement strips[];
-        //        public final byte strips[][];
+        // public final byte strips[][];
         public final int rowsPerStrip;
 
         public Strips(final TiffElement.DataElement strips[],
-                final int rowsPerStrip)
-        {
+                final int rowsPerStrip) {
             this.strips = strips;
             this.rowsPerStrip = rowsPerStrip;
         }
 
         @Override
-        public TiffElement.DataElement[] getImageData()
-        {
+        public TiffElement.DataElement[] getImageData() {
             return strips;
         }
 
         @Override
-        public boolean stripsNotTiles()
-        {
+        public boolean stripsNotTiles() {
             return true;
         }
 
@@ -102,22 +93,21 @@ public abstract class TiffImageData
         public DataReader getDataReader(TiffDirectory directory,
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
-                int samplesPerPixel, int width, int height, int compression, int byteorder)
-                throws IOException, ImageReadException
-        {
+                int samplesPerPixel, int width, int height, int compression,
+                int byteorder) throws IOException, ImageReadException {
             return new DataReaderStrips(directory, photometricInterpreter,
                     bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
-                    width, height, compression,byteorder, rowsPerStrip, this);
+                    width, height, compression, byteorder, rowsPerStrip, this);
         }
 
-        //        public TiffElement[] getElements()
-        //        {
-        //            return strips;
-        //        }
+        // public TiffElement[] getElements()
+        // {
+        // return strips;
+        // }
 
     }
 
-    //    public abstract TiffElement[] getElements();
+    // public abstract TiffElement[] getElements();
 
     public abstract TiffElement.DataElement[] getImageData();
 
@@ -126,41 +116,35 @@ public abstract class TiffImageData
     public abstract DataReader getDataReader(TiffDirectory directory,
             PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
             int bitsPerSample[], int predictor, int samplesPerPixel, int width,
-            int height, int compression, int byteOrder) throws IOException, ImageReadException;
+            int height, int compression, int byteOrder) throws IOException,
+            ImageReadException;
 
-    public static class Data extends TiffElement.DataElement
-    {
-        public Data(int offset, int length, final byte data[])
-        {
+    public static class Data extends TiffElement.DataElement {
+        public Data(int offset, int length, final byte data[]) {
             super(offset, length, data);
         }
 
         @Override
-        public String getElementDescription(boolean verbose)
-        {
+        public String getElementDescription(boolean verbose) {
             return "Tiff image data: " + data.length + " bytes";
         }
 
     }
-    
-    public static class ByteSourceData extends Data
-    {
-        ByteSourceFile byteSourceFile ;
-        public ByteSourceData(int offset, int length, ByteSourceFile byteSource)
-        {
+
+    public static class ByteSourceData extends Data {
+        ByteSourceFile byteSourceFile;
+
+        public ByteSourceData(int offset, int length, ByteSourceFile byteSource) {
             super(offset, length, new byte[0]);
             byteSourceFile = byteSource;
         }
 
         @Override
-        public String getElementDescription(boolean verbose)
-        {
+        public String getElementDescription(boolean verbose) {
             return "Tiff image data: " + data.length + " bytes";
         }
 
-        
-        public byte[] getData()
-        {
+        public byte[] getData() {
             try {
                 return byteSourceFile.getBlock(offset, length);
             } catch (IOException ioex) {

@@ -28,29 +28,25 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
-public class GpsTest extends ExifBaseTest implements ImagingConstants
-{
+public class GpsTest extends ExifBaseTest implements ImagingConstants {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
 
         List images = getImagesWithExifData(300);
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
             File imageFile = (File) images.get(i);
 
-//            Debug.debug();
-//            Debug.debug("imageFile", imageFile);
+            // Debug.debug();
+            // Debug.debug("imageFile", imageFile);
 
-            if (imageFile.getParentFile().getName().toLowerCase().equals(
-                    "@broken"))
+            if (imageFile.getParentFile().getName().toLowerCase()
+                    .equals("@broken"))
                 continue;
 
-            try
-            {
+            try {
                 Map params = new HashMap();
                 boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
                 params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
@@ -71,24 +67,23 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants
 
                 Debug.debug("imageFile", imageFile);
                 Debug.debug("gpsInfo", gpsInfo);
-                Debug.debug("gpsInfo longitude as degrees east", gpsInfo
-                        .getLongitudeAsDegreesEast());
-                Debug.debug("gpsInfo latitude as degrees north", gpsInfo
-                        .getLatitudeAsDegreesNorth());
+                Debug.debug("gpsInfo longitude as degrees east",
+                        gpsInfo.getLongitudeAsDegreesEast());
+                Debug.debug("gpsInfo latitude as degrees north",
+                        gpsInfo.getLatitudeAsDegreesNorth());
 
                 Debug.debug();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug("imageFile", imageFile.length());
                 Debug.debug(e, 13);
 
-                //                File brokenFolder = new File(imageFile.getParentFile(), "@Broken");
-                //                if(!brokenFolder.exists())
-                //                    brokenFolder.mkdirs();
-                //                File movedFile = new File(brokenFolder, imageFile.getName());
-                //                imageFile.renameTo(movedFile);
+                // File brokenFolder = new File(imageFile.getParentFile(),
+                // "@Broken");
+                // if(!brokenFolder.exists())
+                // brokenFolder.mkdirs();
+                // File movedFile = new File(brokenFolder, imageFile.getName());
+                // imageFile.renameTo(movedFile);
 
                 throw e;
             }

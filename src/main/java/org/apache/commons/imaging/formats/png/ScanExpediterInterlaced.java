@@ -24,8 +24,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.transparencyfilters.TransparencyFilter;
 
-public class ScanExpediterInterlaced extends ScanExpediter
-{
+public class ScanExpediterInterlaced extends ScanExpediter {
     public ScanExpediterInterlaced(int width, int height, InputStream is,
             BufferedImage bi, int color_type, int BitDepth, int bits_per_pixel,
             PngChunkPlte fPNGChunkPLTE, GammaCorrection fGammaCorrection,
@@ -39,60 +38,43 @@ public class ScanExpediterInterlaced extends ScanExpediter
     private void visit(int x, int y, BufferedImage bi, BitParser fBitParser,
             int color_type, int pixel_index_in_scanline,
             PngChunkPlte fPNGChunkPLTE, GammaCorrection fGammaCorrection)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         int rgb = getRGB(fBitParser,
-        //                    color_type,
+        // color_type,
                 pixel_index_in_scanline
-        //                    ,
-        //                    fPNGChunkPLTE, fGammaCorrection
+        // ,
+        // fPNGChunkPLTE, fGammaCorrection
         );
 
         bi.setRGB(x, y, rgb);
 
-        //                buffer.setElem(y * width +x , rgb);
+        // buffer.setElem(y * width +x , rgb);
 
     }
 
-    private static final int Starting_Row[] = {
-            0, 0, 4, 0, 2, 0, 1
-    };
-    private static final int Starting_Col[] = {
-            0, 4, 0, 2, 0, 1, 0
-    };
-    private static final int Row_Increment[] = {
-            8, 8, 8, 4, 4, 2, 2
-    };
-    private static final int Col_Increment[] = {
-            8, 8, 4, 4, 2, 2, 1
-    };
-    private static final int Block_Height[] = {
-            8, 8, 4, 4, 2, 2, 1
-    };
-    private static final int Block_Width[] = {
-            8, 4, 4, 2, 2, 1, 1
-    };
+    private static final int Starting_Row[] = { 0, 0, 4, 0, 2, 0, 1 };
+    private static final int Starting_Col[] = { 0, 4, 0, 2, 0, 1, 0 };
+    private static final int Row_Increment[] = { 8, 8, 8, 4, 4, 2, 2 };
+    private static final int Col_Increment[] = { 8, 8, 4, 4, 2, 2, 1 };
+    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
+    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
 
     @Override
-    public void drive() throws ImageReadException, IOException
-    {
+    public void drive() throws ImageReadException, IOException {
 
         int pass = 1;
-        while (pass <= 7)
-        {
+        while (pass <= 7) {
             byte prev[] = null;
 
             int y = Starting_Row[pass - 1];
-            //                int y_stride = Row_Increment[pass - 1];
+            // int y_stride = Row_Increment[pass - 1];
             boolean rows_in_pass = (y < height);
-            while (y < height)
-            {
+            while (y < height) {
                 int x = Starting_Col[pass - 1];
                 int pixel_index_in_scanline = 0;
 
-                if (x < width)
-                {
-                    //                         only get data if there are pixels in this scanline/pass
+                if (x < width) {
+                    // only get data if there are pixels in this scanline/pass
                     int ColumnsInRow = 1 + ((width - Starting_Col[pass - 1] - 1) / Col_Increment[pass - 1]);
                     int bitsPerScanLine = bitsPerPixel * ColumnsInRow;
                     int pixel_bytes_per_scan_line = getBitsToBytesRoundingUp(bitsPerScanLine);
@@ -105,8 +87,7 @@ public class ScanExpediterInterlaced extends ScanExpediter
                     BitParser fBitParser = new BitParser(unfiltered,
                             bitsPerPixel, bitDepth);
 
-                    while (x < width)
-                    {
+                    while (x < width) {
                         visit(x, y, bi, fBitParser, colorType,
                                 pixel_index_in_scanline, pngChunkPLTE,
                                 gammaCorrection);

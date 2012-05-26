@@ -26,50 +26,37 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
-public class PngReadTest extends PngBaseTest
-{
+public class PngReadTest extends PngBaseTest {
 
-
-
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         Debug.debug("start");
 
         List images = getPngImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
             File imageFile = (File) images.get(i);
             Debug.debug("imageFile", imageFile);
-            if (isInvalidPNGTestFile(imageFile))
-            {
-                try
-                {
+            if (isInvalidPNGTestFile(imageFile)) {
+                try {
                     Imaging.getMetadata(imageFile);
                     fail("Image read should have failed.");
-                } catch (Exception e)
-                {
+                } catch (Exception e) {
                 }
 
-                try
-                {
+                try {
                     Imaging.getImageInfo(imageFile);
                     fail("Image read should have failed.");
-                } catch (Exception e)
-                {
+                } catch (Exception e) {
                 }
 
-                try
-                {
+                try {
                     Imaging.getBufferedImage(imageFile);
                     fail("Image read should have failed.");
-                } catch (Exception e)
-                {
+                } catch (Exception e) {
                 }
-            } else
-            {
+            } else {
                 IImageMetadata metadata = Imaging.getMetadata(imageFile);
                 // assertNotNull(metadata);
 

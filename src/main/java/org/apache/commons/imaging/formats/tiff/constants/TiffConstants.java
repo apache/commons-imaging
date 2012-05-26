@@ -25,8 +25,7 @@ public interface TiffConstants
             TiffFieldTypeConstants,
             TiffDirectoryConstants,
             AllTagConstants,
-            BinaryConstants
-{
+            BinaryConstants {
     public static final int DEFAULT_TIFF_BYTE_ORDER = BYTE_ORDER_INTEL;
 
     public static final int TIFF_HEADER_SIZE = 8;

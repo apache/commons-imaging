@@ -24,24 +24,21 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
-public class App2Segment extends AppnSegment implements Comparable<App2Segment>
-{
+public class App2Segment extends AppnSegment implements Comparable<App2Segment> {
     public final byte icc_bytes[];
     public final int cur_marker, num_markers;
 
     public App2Segment(int marker, byte segmentData[])
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public App2Segment(int marker, int marker_length, InputStream is2)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         super(marker, marker_length, is2);
 
-        if (BinaryFileParser.byteArrayHasPrefix(bytes, JpegImageParser.icc_profile_label))
-        {
+        if (BinaryFileParser.byteArrayHasPrefix(bytes,
+                JpegImageParser.icc_profile_label)) {
             InputStream is = new ByteArrayInputStream(bytes);
 
             readAndVerifyBytes(is, JpegImageParser.icc_profile_label,
@@ -55,39 +52,36 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment>
 
             icc_bytes = readByteArray("App2 Data", marker_length, is,
                     "Invalid App2 Segment: insufficient data");
-        }
-        else
-        {
-            //            debugByteArray("Unknown APP2 Segment Type", bytes);
+        } else {
+            // debugByteArray("Unknown APP2 Segment Type", bytes);
             cur_marker = -1;
             num_markers = -1;
             icc_bytes = null;
         }
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof App2Segment) {
-            App2Segment other = (App2Segment)obj;
+            App2Segment other = (App2Segment) obj;
             return cur_marker == other.cur_marker;
         }
         return false;
     }
-    
+
     @Override
     public int hashCode() {
         return cur_marker;
     }
 
-    public int compareTo(App2Segment other)
-    {
+    public int compareTo(App2Segment other) {
         return cur_marker - other.cur_marker;
     }
 
-    //    public String getDescription()
-    //    {
-    //        return "APPN (APP"
-    //                + (marker - JpegImageParser.JPEG_APP0)
-    //                + ") (" + getDescription() + ")";
-    //    }
+    // public String getDescription()
+    // {
+    // return "APPN (APP"
+    // + (marker - JpegImageParser.JPEG_APP0)
+    // + ") (" + getDescription() + ")";
+    // }
 }

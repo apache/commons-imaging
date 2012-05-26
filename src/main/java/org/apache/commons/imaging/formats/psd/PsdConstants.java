@@ -18,27 +18,22 @@ package org.apache.commons.imaging.formats.psd;
 
 import org.apache.commons.imaging.util.Debug;
 
-public class PsdConstants
-{
+public class PsdConstants {
     static final ImageResourceType fImageResourceTypes[];
 
-    public String getDescription(int id)
-    {
-        for (int i = 0; i < fImageResourceTypes.length; i++)
-        {
+    public String getDescription(int id) {
+        for (int i = 0; i < fImageResourceTypes.length; i++) {
             if (fImageResourceTypes[i].ID == id)
                 return fImageResourceTypes[i].Description;
         }
         return "Unknown";
     }
 
-    static
-    {
+    static {
         ImageResourceType temp[] = null;
 
-        try
-        {
-            temp = new ImageResourceType[]{
+        try {
+            temp = new ImageResourceType[] {
                     new ImageResourceType(
                             0x03E8,
                             1000,
@@ -192,11 +187,8 @@ public class PsdConstants
                     new ImageResourceType(
                             0x2710,
                             10000,
-                            "Print flags information. 2 bytes version (=1), 1 byte center crop marks, 1 byte (=0), 4 bytes bleed width value, 2 bytes bleed width scale."),
-            };
-        }
-        catch (Exception e)
-        {
+                            "Print flags information. 2 bytes version (=1), 1 byte center crop marks, 1 byte (=0), 4 bytes bleed width value, 2 bytes bleed width scale."), };
+        } catch (Exception e) {
             Debug.debug(PsdConstants.class, e);
         }
         fImageResourceTypes = temp;

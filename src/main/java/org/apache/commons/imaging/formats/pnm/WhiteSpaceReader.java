@@ -19,41 +19,34 @@ package org.apache.commons.imaging.formats.pnm;
 import java.io.IOException;
 import java.io.InputStream;
 
-class WhiteSpaceReader
-{
+class WhiteSpaceReader {
     private final InputStream is;
 
-    public WhiteSpaceReader(InputStream is)
-    {
+    public WhiteSpaceReader(InputStream is) {
         this.is = is;
     }
 
     int count = 0;
 
-    private char read() throws IOException
-    {
+    private char read() throws IOException {
         int result = is.read();
         if (result < 0)
             throw new IOException("PNM: Unexpected EOF");
         return (char) result;
     }
 
-    public char nextChar() throws IOException
-    {
+    public char nextChar() throws IOException {
         char c = read();
 
-        if (c == '#')
-        {
-            while ((c != '\n') && (c != '\r'))
-            {
+        if (c == '#') {
+            while ((c != '\n') && (c != '\r')) {
                 c = read();
             }
         }
         return c;
     }
 
-    public String readtoWhiteSpace() throws IOException
-    {
+    public String readtoWhiteSpace() throws IOException {
         char c = nextChar();
 
         while (Character.isWhitespace(c))
@@ -61,8 +54,7 @@ class WhiteSpaceReader
 
         StringBuffer buffer = new StringBuffer();
 
-        while (!Character.isWhitespace(c))
-        {
+        while (!Character.isWhitespace(c)) {
             buffer.append(c);
             c = nextChar();
         }

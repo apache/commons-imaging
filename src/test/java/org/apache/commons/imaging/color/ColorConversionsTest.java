@@ -20,25 +20,13 @@ import org.apache.commons.imaging.util.Debug;
 
 import junit.framework.TestCase;
 
-public class ColorConversionsTest extends TestCase
-{
-    private static final int SAMPLE_RGBS[] = {
-            0xffffffff,
-            0xff000000,
-            0xffff0000,
-            0xff00ff00,
-            0xff0000ff,
-            0xffff00ff,
-            0xfff0ff00,
-            0xff00ffff,
-            0x00000000,
-            0xff7f7f7f,
-    };
+public class ColorConversionsTest extends TestCase {
+    private static final int SAMPLE_RGBS[] = { 0xffffffff, 0xff000000,
+            0xffff0000, 0xff00ff00, 0xff0000ff, 0xffff00ff, 0xfff0ff00,
+            0xff00ffff, 0x00000000, 0xff7f7f7f, };
 
-    public void testRGBtoCMYK() throws Exception
-    {
-        for (int i = 0; i < SAMPLE_RGBS.length; i++)
-        {
+    public void testRGBtoCMYK() throws Exception {
+        for (int i = 0; i < SAMPLE_RGBS.length; i++) {
             int rgb = SAMPLE_RGBS[i];
 
             ColorCmy cmy = ColorConversions.convertRGBtoCMY(rgb);
@@ -49,48 +37,46 @@ public class ColorConversionsTest extends TestCase
             Debug.debug("cmy", cmy);
             Debug.debug("cmyk", cmyk);
             Debug.debug("cmyk_cmy", cmyk_cmy);
-            Debug.debug("cmyk_cmy_rgb", cmyk_cmy_rgb + " (" + Integer.toHexString(cmyk_cmy_rgb) + ")");
-            
+            Debug.debug("cmyk_cmy_rgb",
+                    cmyk_cmy_rgb + " (" + Integer.toHexString(cmyk_cmy_rgb)
+                            + ")");
+
             assertEquals((0xffffff & cmyk_cmy_rgb), (0xffffff & rgb));
         }
     }
 
-    public void testRGBtoHSL() throws Exception
-    {
-        for (int i = 0; i < SAMPLE_RGBS.length; i++)
-        {
+    public void testRGBtoHSL() throws Exception {
+        for (int i = 0; i < SAMPLE_RGBS.length; i++) {
             int rgb = SAMPLE_RGBS[i];
 
             ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
             int hsl_rgb = ColorConversions.convertHSLtoRGB(hsl);
 
             Debug.debug("hsl", hsl);
-            Debug.debug("hsl_rgb", hsl_rgb + " (" + Integer.toHexString(hsl_rgb) + ")");
-            
+            Debug.debug("hsl_rgb",
+                    hsl_rgb + " (" + Integer.toHexString(hsl_rgb) + ")");
+
             assertEquals((0xffffff & hsl_rgb), (0xffffff & rgb));
         }
     }
 
-    public void testRGBtoHSV() throws Exception
-    {
-        for (int i = 0; i < SAMPLE_RGBS.length; i++)
-        {
+    public void testRGBtoHSV() throws Exception {
+        for (int i = 0; i < SAMPLE_RGBS.length; i++) {
             int rgb = SAMPLE_RGBS[i];
 
             ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
             int hsv_rgb = ColorConversions.convertHSVtoRGB(hsv);
 
             Debug.debug("hsv", hsv);
-            Debug.debug("hsv_rgb", hsv_rgb + " (" + Integer.toHexString(hsv_rgb) + ")");
-            
+            Debug.debug("hsv_rgb",
+                    hsv_rgb + " (" + Integer.toHexString(hsv_rgb) + ")");
+
             assertEquals((0xffffff & hsv_rgb), (0xffffff & rgb));
         }
     }
 
-    public void testXYZ() throws Exception
-    {
-        for (int i = 0; i < SAMPLE_RGBS.length; i++)
-        {
+    public void testXYZ() throws Exception {
+        for (int i = 0; i < SAMPLE_RGBS.length; i++) {
             int rgb = SAMPLE_RGBS[i];
 
             ColorXyz xyz = ColorConversions.convertRGBtoXYZ(rgb);
@@ -99,35 +85,42 @@ public class ColorConversionsTest extends TestCase
             Debug.debug();
             Debug.debug("rgb", rgb + " (" + Integer.toHexString(rgb) + ")");
             Debug.debug("xyz", xyz);
-            Debug.debug("xyz_rgb", xyz_rgb + " (" + Integer.toHexString(xyz_rgb) + ")");
-            
+            Debug.debug("xyz_rgb",
+                    xyz_rgb + " (" + Integer.toHexString(xyz_rgb) + ")");
+
             assertEquals((0xffffff & xyz_rgb), (0xffffff & rgb));
 
-            
             ColorCieLab cielab = ColorConversions.convertXYZtoCIELab(xyz);
             ColorXyz cielab_xyz = ColorConversions.convertCIELabtoXYZ(cielab);
             int cielab_xyz_rgb = ColorConversions.convertXYZtoRGB(cielab_xyz);
 
             Debug.debug("cielab", cielab);
             Debug.debug("cielab_xyz", cielab_xyz);
-            Debug.debug("cielab_xyz_rgb", cielab_xyz_rgb + " (" + Integer.toHexString(cielab_xyz_rgb) + ")");
-            
+            Debug.debug("cielab_xyz_rgb",
+                    cielab_xyz_rgb + " (" + Integer.toHexString(cielab_xyz_rgb)
+                            + ")");
+
             assertEquals((0xffffff & cielab_xyz_rgb), (0xffffff & rgb));
 
-
-            ColorHunterLab hunterlab = ColorConversions.convertXYZtoHunterLab(xyz);
-            ColorXyz hunterlab_xyz = ColorConversions.convertHunterLabtoXYZ(hunterlab);
-            int hunterlab_xyz_rgb = ColorConversions.convertXYZtoRGB(hunterlab_xyz);
+            ColorHunterLab hunterlab = ColorConversions
+                    .convertXYZtoHunterLab(xyz);
+            ColorXyz hunterlab_xyz = ColorConversions
+                    .convertHunterLabtoXYZ(hunterlab);
+            int hunterlab_xyz_rgb = ColorConversions
+                    .convertXYZtoRGB(hunterlab_xyz);
 
             Debug.debug("hunterlab", hunterlab);
             Debug.debug("hunterlab_xyz", hunterlab_xyz);
-            Debug.debug("hunterlab_xyz_rgb", hunterlab_xyz_rgb + " (" + Integer.toHexString(hunterlab_xyz_rgb) + ")");
-            
+            Debug.debug(
+                    "hunterlab_xyz_rgb",
+                    hunterlab_xyz_rgb + " ("
+                            + Integer.toHexString(hunterlab_xyz_rgb) + ")");
+
             assertEquals((0xffffff & hunterlab_xyz_rgb), (0xffffff & rgb));
 
-            
             ColorCieLch cielch = ColorConversions.convertCIELabtoCIELCH(cielab);
-            ColorCieLab cielch_cielab = ColorConversions.convertCIELCHtoCIELab(cielch);
+            ColorCieLab cielch_cielab = ColorConversions
+                    .convertCIELCHtoCIELab(cielch);
 
             Debug.debug("cielch", cielch);
             Debug.debug("cielch_cielab", cielch_cielab);

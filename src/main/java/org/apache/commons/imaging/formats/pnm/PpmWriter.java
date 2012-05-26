@@ -23,18 +23,15 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class PpmWriter extends PnmWriter implements PnmConstants
-{
-    public PpmWriter(boolean RAWBITS)
-    {
+public class PpmWriter extends PnmWriter implements PnmConstants {
+    public PpmWriter(boolean RAWBITS) {
         super(RAWBITS);
     }
 
     @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
-            throws ImageWriteException, IOException
-    {
-        //            System.out.println
+            throws ImageWriteException, IOException {
+        // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);
         os.write(RAWBITS ? 0x36 : 0x33);
@@ -53,26 +50,26 @@ public class PpmWriter extends PnmWriter implements PnmConstants
         os.write(PNM_NEWLINE);
 
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int red = 0xff & (argb >> 16);
                 int green = 0xff & (argb >> 8);
                 int blue = 0xff & (argb >> 0);
 
-                if (RAWBITS)
-                {
+                if (RAWBITS) {
                     os.write((byte) red);
                     os.write((byte) green);
                     os.write((byte) blue);
-                }
-                else
-                {
-                    os.write(("" + red).getBytes("US-ASCII")); // max component value
+                } else {
+                    os.write(("" + red).getBytes("US-ASCII")); // max component
+                                                               // value
                     os.write(PNM_SEPARATOR);
-                    os.write(("" + green).getBytes("US-ASCII")); // max component value
+                    os.write(("" + green).getBytes("US-ASCII")); // max
+                                                                 // component
+                                                                 // value
                     os.write(PNM_SEPARATOR);
-                    os.write(("" + blue).getBytes("US-ASCII")); // max component value
+                    os.write(("" + blue).getBytes("US-ASCII")); // max component
+                                                                // value
                     os.write(PNM_SEPARATOR);
                 }
             }

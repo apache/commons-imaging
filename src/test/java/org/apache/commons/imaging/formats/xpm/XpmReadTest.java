@@ -26,16 +26,13 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
-public class XpmReadTest extends XpmBaseTest
-{
+public class XpmReadTest extends XpmBaseTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         Debug.debug("start");
 
         List images = getXpmImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 

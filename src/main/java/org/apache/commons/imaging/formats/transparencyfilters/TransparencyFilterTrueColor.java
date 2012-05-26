@@ -21,16 +21,14 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class TransparencyFilterTrueColor extends TransparencyFilter
-{
+public class TransparencyFilterTrueColor extends TransparencyFilter {
     private final int transparent_red;
     private final int transparent_green;
     private final int transparent_blue;
     private final int transparent_color;
 
     public TransparencyFilterTrueColor(byte bytes[]) throws ImageReadException,
-            IOException
-    {
+            IOException {
         super(bytes);
 
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);
@@ -49,8 +47,7 @@ public class TransparencyFilterTrueColor extends TransparencyFilter
 
     @Override
     public int filter(int rgb, int sample) throws ImageReadException,
-            IOException
-    {
+            IOException {
         if ((0x00ffffff & rgb) == transparent_color)
             return 0x00;
 

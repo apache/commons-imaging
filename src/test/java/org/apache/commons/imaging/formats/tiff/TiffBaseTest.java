@@ -26,25 +26,21 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class TiffBaseTest extends ImagingTest
-{
+public abstract class TiffBaseTest extends ImagingTest {
 
     private static boolean isTiff(File file) throws IOException,
-            ImageReadException
-    {
+            ImageReadException {
         ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_TIFF;
     }
 
     private static final ImageFilter imageFilter = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return isTiff(file);
         }
     };
 
-    protected List getTiffImages() throws IOException, ImageReadException
-    {
+    protected List getTiffImages() throws IOException, ImageReadException {
         return getTestImages(imageFilter);
     }
 

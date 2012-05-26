@@ -31,8 +31,7 @@ import org.apache.commons.imaging.util.Debug;
 
 public class TiffRoundtripTest extends TiffBaseTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         List images = getTiffImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)

@@ -45,40 +45,12 @@ public class TiffCcittTest extends TiffBaseTest {
                     uncompressed[1] |= (0x80 >>> x);
                 }
             }
-            
+
             try {
-                byte[] compressed = T4AndT6Compression.compressModifiedHuffman(uncompressed, 5, 2);
-                byte[] result = T4AndT6Compression.decompressModifiedHuffman(compressed, 5, 2);
-                assertEquals(uncompressed.length, result.length);
-                for (int i = 0; i < uncompressed.length; i++) {
-                    assertEquals(uncompressed[i], result[i]);
-                }
-            } catch (ImageWriteException ex) {
-                Debug.debug(ex);
-                assertFalse(true);
-            } catch (ImageReadException ex) {
-                Debug.debug(ex);
-                assertFalse(true);
-            }
-            
-            try {
-                byte[] compressed = T4AndT6Compression.compressT4_1D(uncompressed, 5, 2, true);
-                byte[] result = T4AndT6Compression.decompressT4_1D(compressed, 5, 2, true);
-                assertEquals(uncompressed.length, result.length);
-                for (int i = 0; i < uncompressed.length; i++) {
-                    assertEquals(uncompressed[i], result[i]);
-                }
-            } catch (ImageWriteException ex) {
-                Debug.debug(ex);
-                assertFalse(true);
-            } catch (ImageReadException ex) {
-                Debug.debug(ex);
-                assertFalse(true);
-            }
-            
-            try {
-                byte[] compressed = T4AndT6Compression.compressT4_1D(uncompressed, 5, 2, false);
-                byte[] result = T4AndT6Compression.decompressT4_1D(compressed, 5, 2, false);
+                byte[] compressed = T4AndT6Compression.compressModifiedHuffman(
+                        uncompressed, 5, 2);
+                byte[] result = T4AndT6Compression.decompressModifiedHuffman(
+                        compressed, 5, 2);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -92,8 +64,10 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                byte[] compressed = T4AndT6Compression.compressT4_2D(uncompressed, 5, 2, true, 2);
-                byte[] result = T4AndT6Compression.decompressT4_2D(compressed, 5, 2, true);
+                byte[] compressed = T4AndT6Compression.compressT4_1D(
+                        uncompressed, 5, 2, true);
+                byte[] result = T4AndT6Compression.decompressT4_1D(compressed,
+                        5, 2, true);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -107,8 +81,10 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                byte[] compressed = T4AndT6Compression.compressT4_2D(uncompressed, 5, 2, false, 2);
-                byte[] result = T4AndT6Compression.decompressT4_2D(compressed, 5, 2, false);
+                byte[] compressed = T4AndT6Compression.compressT4_1D(
+                        uncompressed, 5, 2, false);
+                byte[] result = T4AndT6Compression.decompressT4_1D(compressed,
+                        5, 2, false);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -122,8 +98,44 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                byte[] compressed = T4AndT6Compression.compressT6(uncompressed, 5, 2);
-                byte[] result = T4AndT6Compression.decompressT6(compressed, 5, 2);
+                byte[] compressed = T4AndT6Compression.compressT4_2D(
+                        uncompressed, 5, 2, true, 2);
+                byte[] result = T4AndT6Compression.decompressT4_2D(compressed,
+                        5, 2, true);
+                assertEquals(uncompressed.length, result.length);
+                for (int i = 0; i < uncompressed.length; i++) {
+                    assertEquals(uncompressed[i], result[i]);
+                }
+            } catch (ImageWriteException ex) {
+                Debug.debug(ex);
+                assertFalse(true);
+            } catch (ImageReadException ex) {
+                Debug.debug(ex);
+                assertFalse(true);
+            }
+
+            try {
+                byte[] compressed = T4AndT6Compression.compressT4_2D(
+                        uncompressed, 5, 2, false, 2);
+                byte[] result = T4AndT6Compression.decompressT4_2D(compressed,
+                        5, 2, false);
+                assertEquals(uncompressed.length, result.length);
+                for (int i = 0; i < uncompressed.length; i++) {
+                    assertEquals(uncompressed[i], result[i]);
+                }
+            } catch (ImageWriteException ex) {
+                Debug.debug(ex);
+                assertFalse(true);
+            } catch (ImageReadException ex) {
+                Debug.debug(ex);
+                assertFalse(true);
+            }
+
+            try {
+                byte[] compressed = T4AndT6Compression.compressT6(uncompressed,
+                        5, 2);
+                byte[] result = T4AndT6Compression.decompressT6(compressed, 5,
+                        2);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
@@ -140,7 +152,8 @@ public class TiffCcittTest extends TiffBaseTest {
 
     public void testAll5x2Images() {
         int[] combinations = new int[10];
-        BufferedImage image = new BufferedImage(5, 2, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(5, 2,
+                BufferedImage.TYPE_INT_RGB);
         do {
             for (int x = 0; x < 5; x++) {
                 if (combinations[x] == 0) {
@@ -153,14 +166,16 @@ public class TiffCcittTest extends TiffBaseTest {
                 if (combinations[5 + x] == 0) {
                     image.setRGB(x, 1, 0xFFFFFF);
                 } else {
-                    image.setRGB(x, 1, 0);   
+                    image.setRGB(x, 1, 0);
                 }
             }
-            
+
             try {
                 HashMap params = new HashMap();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_1D);
-                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
+                        TiffConstants.TIFF_COMPRESSION_CCITT_1D);
+                byte[] compressed = Imaging.writeImageToBytes(image,
+                        ImageFormat.IMAGE_FORMAT_TIFF, params);
                 BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
@@ -173,12 +188,14 @@ public class TiffCcittTest extends TiffBaseTest {
                 Debug.debug(ex);
                 assertFalse(true);
             }
-            
+
             try {
                 HashMap params = new HashMap();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
+                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 0);
-                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                byte[] compressed = Imaging.writeImageToBytes(image,
+                        ImageFormat.IMAGE_FORMAT_TIFF, params);
                 BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
@@ -191,12 +208,14 @@ public class TiffCcittTest extends TiffBaseTest {
                 Debug.debug(ex);
                 assertFalse(true);
             }
-            
+
             try {
                 HashMap params = new HashMap();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
+                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 4);
-                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                byte[] compressed = Imaging.writeImageToBytes(image,
+                        ImageFormat.IMAGE_FORMAT_TIFF, params);
                 BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
@@ -212,9 +231,11 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 HashMap params = new HashMap();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
+                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 1);
-                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                byte[] compressed = Imaging.writeImageToBytes(image,
+                        ImageFormat.IMAGE_FORMAT_TIFF, params);
                 BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
@@ -230,9 +251,11 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 HashMap params = new HashMap();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
+                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 5);
-                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                byte[] compressed = Imaging.writeImageToBytes(image,
+                        ImageFormat.IMAGE_FORMAT_TIFF, params);
                 BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
@@ -248,8 +271,10 @@ public class TiffCcittTest extends TiffBaseTest {
 
             try {
                 HashMap params = new HashMap();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION, TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
-                byte[] compressed = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
+                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
+                byte[] compressed = Imaging.writeImageToBytes(image,
+                        ImageFormat.IMAGE_FORMAT_TIFF, params);
                 BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (ImageWriteException ex) {
@@ -264,15 +289,18 @@ public class TiffCcittTest extends TiffBaseTest {
             }
         } while (nextCombination(combinations, 1));
     }
-    
+
     /**
-     * Generates the next combination of elements in the sequence array,
-     * with each element having a maximum value of max.
-     * Initially, the sequence should be set to minimum values
-     * of each element.
-     * @param sequence the array of elements to update
-     * @param max the maximum value of each element in the sequence
-     * @return false if there is no more combinations (ie. nothing was done), true otherwise
+     * Generates the next combination of elements in the sequence array, with
+     * each element having a maximum value of max. Initially, the sequence
+     * should be set to minimum values of each element.
+     * 
+     * @param sequence
+     *            the array of elements to update
+     * @param max
+     *            the maximum value of each element in the sequence
+     * @return false if there is no more combinations (ie. nothing was done),
+     *         true otherwise
      */
     private static boolean nextCombination(int[] sequence, int max) {
         int i;
@@ -286,27 +314,24 @@ public class TiffCcittTest extends TiffBaseTest {
         }
         return i < sequence.length;
     }
-    
-    private void compareImages(BufferedImage a, BufferedImage b)
-    {
+
+    private void compareImages(BufferedImage a, BufferedImage b) {
         assertEquals(a.getWidth(), b.getWidth());
         assertEquals(a.getHeight(), b.getHeight());
 
         for (int x = 0; x < a.getWidth(); x++)
-            for (int y = 0; y < a.getHeight(); y++)
-            {
+            for (int y = 0; y < a.getHeight(); y++) {
                 int a_argb = a.getRGB(x, y);
                 int b_argb = b.getRGB(x, y);
-                if (a_argb != b_argb)
-                {
+                if (a_argb != b_argb) {
                     Debug.debug("width", a.getWidth());
                     Debug.debug("height", a.getHeight());
                     Debug.debug("x", x);
                     Debug.debug("y", y);
-                    Debug.debug("a_argb", a_argb + " (0x"
-                            + Integer.toHexString(a_argb) + ")");
-                    Debug.debug("b_argb", b_argb + " (0x"
-                            + Integer.toHexString(b_argb) + ")");
+                    Debug.debug("a_argb",
+                            a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
+                    Debug.debug("b_argb",
+                            b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
                 }
                 assertEquals(a_argb, b_argb);
             }

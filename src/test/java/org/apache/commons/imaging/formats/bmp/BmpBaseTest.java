@@ -26,27 +26,22 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class BmpBaseTest extends ImagingTest
-{
+public abstract class BmpBaseTest extends ImagingTest {
 
     private static boolean isBmp(File file) throws IOException,
-            ImageReadException
-    {
+            ImageReadException {
         ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_BMP;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return isBmp(file);
         }
     };
 
-    protected List getBmpImages() throws IOException, ImageReadException
-    {
+    protected List getBmpImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
-
 
 }

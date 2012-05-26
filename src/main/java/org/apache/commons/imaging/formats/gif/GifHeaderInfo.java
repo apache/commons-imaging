@@ -16,8 +16,7 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-class GifHeaderInfo
-{
+class GifHeaderInfo {
     public final byte identifier1;
     public final byte identifier2;
     public final byte identifier3;
@@ -40,8 +39,7 @@ class GifHeaderInfo
             int LogicalScreenWidth, int LogicalScreenHeight, byte PackedFields,
             byte BackgroundColorIndex, byte PixelAspectRatio,
             boolean GlobalColorTableFlag, byte ColorResolution,
-            boolean SortFlag, byte SizeofGlobalColorTable)
-    {
+            boolean SortFlag, byte SizeofGlobalColorTable) {
         this.identifier1 = Identifier1;
         this.identifier2 = Identifier2;
         this.identifier3 = Identifier3;

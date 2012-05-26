@@ -28,10 +28,7 @@ import org.apache.commons.imaging.util.Debug;
 
 public class ConvertPngToGifTest extends PngBaseTest {
 
-
-
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
 
         List images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
@@ -45,13 +42,13 @@ public class ConvertPngToGifTest extends PngBaseTest {
             // Debug.debug();
 
             Hashtable params = new Hashtable();
-//            params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
+            // params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
             BufferedImage image = Imaging.getBufferedImage(imageFile, params);
             assertNotNull(image);
 
-            File outFile = createTempFile(imageFile.getName()+".", ".gif");
-//            Debug.debug("outFile", outFile);
+            File outFile = createTempFile(imageFile.getName() + ".", ".gif");
+            // Debug.debug("outFile", outFile);
 
             Imaging.writeImage(image, outFile, ImageFormat.IMAGE_FORMAT_GIF,
                     params);

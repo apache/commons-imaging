@@ -42,25 +42,22 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 
 public class TiffDirectory extends TiffElement implements TiffConstants
-//extends BinaryFileFunctions
+// extends BinaryFileFunctions
 {
 
-    public String description()
-    {
+    public String description() {
         return TiffDirectory.description(type);
     }
 
     @Override
-    public String getElementDescription(boolean verbose)
-    {
+    public String getElementDescription(boolean verbose) {
         if (!verbose)
             return "TIFF Directory (" + description() + ")";
 
         int entryOffset = offset + TIFF_DIRECTORY_HEADER_LENGTH;
 
         StringBuffer result = new StringBuffer();
-        for (int i = 0; i < entries.size(); i++)
-        {
+        for (int i = 0; i < entries.size(); i++) {
             TiffField entry = entries.get(i);
 
             result.append("\t");
@@ -75,42 +72,39 @@ public class TiffDirectory extends TiffElement implements TiffConstants
             result.append("\n");
 
             entryOffset += TIFF_ENTRY_LENGTH;
-            //            entry.fillInValue(byteSource);
+            // entry.fillInValue(byteSource);
         }
         return result.toString();
     }
 
-    public static final String description(int type)
-    {
-        switch (type)
-        {
-            case DIRECTORY_TYPE_UNKNOWN :
-                return "Unknown";
-            case DIRECTORY_TYPE_ROOT :
-                return "Root";
-            case DIRECTORY_TYPE_SUB :
-                return "Sub";
-            case DIRECTORY_TYPE_THUMBNAIL :
-                return "Thumbnail";
-            case DIRECTORY_TYPE_EXIF :
-                return "Exif";
-            case DIRECTORY_TYPE_GPS :
-                return "Gps";
-            case DIRECTORY_TYPE_INTEROPERABILITY :
-                return "Interoperability";
-            default :
-                return "Bad Type";
+    public static final String description(int type) {
+        switch (type) {
+        case DIRECTORY_TYPE_UNKNOWN:
+            return "Unknown";
+        case DIRECTORY_TYPE_ROOT:
+            return "Root";
+        case DIRECTORY_TYPE_SUB:
+            return "Sub";
+        case DIRECTORY_TYPE_THUMBNAIL:
+            return "Thumbnail";
+        case DIRECTORY_TYPE_EXIF:
+            return "Exif";
+        case DIRECTORY_TYPE_GPS:
+            return "Gps";
+        case DIRECTORY_TYPE_INTEROPERABILITY:
+            return "Interoperability";
+        default:
+            return "Bad Type";
         }
     }
 
     public final int type;
     public final List<TiffField> entries;
-    //    public final int offset;
+    // public final int offset;
     public final int nextDirectoryOffset;
 
     public TiffDirectory(int type, List<TiffField> entries, final int offset,
-            int nextDirectoryOffset)
-    {
+            int nextDirectoryOffset) {
         super(offset, TIFF_DIRECTORY_HEADER_LENGTH + entries.size()
                 * TIFF_ENTRY_LENGTH + TIFF_DIRECTORY_FOOTER_LENGTH);
 
@@ -119,31 +113,26 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         this.nextDirectoryOffset = nextDirectoryOffset;
     }
 
-    public List<TiffField> getDirectoryEntrys()
-    {
+    public List<TiffField> getDirectoryEntrys() {
         return new ArrayList<TiffField>(entries);
     }
 
-    public void dump()
-    {
-        for (int i = 0; i < entries.size(); i++)
-        {
+    public void dump() {
+        for (int i = 0; i < entries.size(); i++) {
             TiffField entry = entries.get(i);
             entry.dump();
         }
 
     }
 
-    public boolean hasJpegImageData() throws ImageReadException
-    {
+    public boolean hasJpegImageData() throws ImageReadException {
         if (null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT))
             return true;
 
         return false;
     }
 
-    public boolean hasTiffImageData() throws ImageReadException
-    {
+    public boolean hasTiffImageData() throws ImageReadException {
         if (null != findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS))
             return true;
 
@@ -153,35 +142,31 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         return false;
     }
 
-    public BufferedImage getTiffImage(int byteOrder) throws ImageReadException, IOException
-    {
+    public BufferedImage getTiffImage(int byteOrder) throws ImageReadException,
+            IOException {
         Map params = null;
         return getTiffImage(byteOrder, params);
     }
 
-    public BufferedImage getTiffImage(int byteOrder, Map params) throws ImageReadException,
-            IOException
-    {
+    public BufferedImage getTiffImage(int byteOrder, Map params)
+            throws ImageReadException, IOException {
         if (null == tiffImageData)
             return null;
 
         return new TiffImageParser().getBufferedImage(this, byteOrder, params);
     }
 
-    public TiffField findField(TagInfo tag) throws ImageReadException
-    {
+    public TiffField findField(TagInfo tag) throws ImageReadException {
         boolean failIfMissing = false;
         return findField(tag, failIfMissing);
     }
 
     public TiffField findField(TagInfo tag, boolean failIfMissing)
-            throws ImageReadException
-    {
+            throws ImageReadException {
         if (entries == null)
             return null;
 
-        for (int i = 0; i < entries.size(); i++)
-        {
+        for (int i = 0; i < entries.size(); i++) {
             TiffField field = entries.get(i);
             if (field.tag == tag.tag)
                 return field;
@@ -193,7 +178,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
         return null;
     }
-    
+
     public Object getFieldValue(TagInfo tag) throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
@@ -201,126 +186,150 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         }
         return field.getValue();
     }
-    
+
     public byte getSingleFieldValue(TagInfoByte tag) throws ImageReadException {
         byte[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
-    public String getSingleFieldValue(TagInfoAscii tag) throws ImageReadException {
+
+    public String getSingleFieldValue(TagInfoAscii tag)
+            throws ImageReadException {
         String[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
-    public short getSingleFieldValue(TagInfoShort tag) throws ImageReadException {
+
+    public short getSingleFieldValue(TagInfoShort tag)
+            throws ImageReadException {
         short[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
+
     public int getSingleFieldValue(TagInfoLong tag) throws ImageReadException {
         int[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
-    public RationalNumber getSingleFieldValue(TagInfoRational tag) throws ImageReadException {
+
+    public RationalNumber getSingleFieldValue(TagInfoRational tag)
+            throws ImageReadException {
         RationalNumber[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
+
     public byte getSingleFieldValue(TagInfoSByte tag) throws ImageReadException {
         byte[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
-    public short getSingleFieldValue(TagInfoSShort tag) throws ImageReadException {
+
+    public short getSingleFieldValue(TagInfoSShort tag)
+            throws ImageReadException {
         short[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
+
     public int getSingleFieldValue(TagInfoSLong tag) throws ImageReadException {
         int[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
-    public RationalNumber getSingleFieldValue(TagInfoSRational tag) throws ImageReadException {
+
+    public RationalNumber getSingleFieldValue(TagInfoSRational tag)
+            throws ImageReadException {
         RationalNumber[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
-    public float getSingleFieldValue(TagInfoFloat tag) throws ImageReadException {
+
+    public float getSingleFieldValue(TagInfoFloat tag)
+            throws ImageReadException {
         float[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
-    public double getSingleFieldValue(TagInfoDouble tag) throws ImageReadException {
+
+    public double getSingleFieldValue(TagInfoDouble tag)
+            throws ImageReadException {
         double[] result = getFieldValue(tag, true);
         if (result.length != 1) {
-            throw new ImageReadException("Field \"" + tag.name + "\" has incorrect length " + result.length);
+            throw new ImageReadException("Field \"" + tag.name
+                    + "\" has incorrect length " + result.length);
         }
         return result[0];
     }
-    
-    public byte[] getFieldValue(TagInfoByte tag, boolean mustExist) throws ImageReadException {
+
+    public byte[] getFieldValue(TagInfoByte tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
         }
         return field.fieldType.getRawBytes(field);
     }
-    
-    public String[] getFieldValue(TagInfoAscii tag, boolean mustExist) throws ImageReadException {
+
+    public String[] getFieldValue(TagInfoAscii tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
@@ -328,19 +337,22 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
     }
-    
-    public short[] getFieldValue(TagInfoShort tag, boolean mustExist) throws ImageReadException {
+
+    public short[] getFieldValue(TagInfoShort tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
@@ -348,19 +360,22 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
     }
-    
-    public int[] getFieldValue(TagInfoLong tag, boolean mustExist) throws ImageReadException {
+
+    public int[] getFieldValue(TagInfoLong tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
@@ -368,19 +383,22 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
     }
-    
-    public RationalNumber[] getFieldValue(TagInfoRational tag, boolean mustExist) throws ImageReadException {
+
+    public RationalNumber[] getFieldValue(TagInfoRational tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
@@ -388,38 +406,44 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
     }
-    
-    public byte[] getFieldValue(TagInfoSByte tag, boolean mustExist) throws ImageReadException {
+
+    public byte[] getFieldValue(TagInfoSByte tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
         }
         return field.fieldType.getRawBytes(field);
     }
-    
-    public short[] getFieldValue(TagInfoSShort tag, boolean mustExist) throws ImageReadException {
+
+    public short[] getFieldValue(TagInfoSShort tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
@@ -427,19 +451,22 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
     }
-    
-    public int[] getFieldValue(TagInfoSLong tag, boolean mustExist) throws ImageReadException {
+
+    public int[] getFieldValue(TagInfoSLong tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
@@ -447,19 +474,22 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
     }
-    
-    public RationalNumber[] getFieldValue(TagInfoSRational tag, boolean mustExist) throws ImageReadException {
+
+    public RationalNumber[] getFieldValue(TagInfoSRational tag,
+            boolean mustExist) throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
@@ -467,19 +497,22 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
     }
-    
-    public float[] getFieldValue(TagInfoFloat tag, boolean mustExist) throws ImageReadException {
+
+    public float[] getFieldValue(TagInfoFloat tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
@@ -487,19 +520,22 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
     }
-    
-    public double[] getFieldValue(TagInfoDouble tag, boolean mustExist) throws ImageReadException {
+
+    public double[] getFieldValue(TagInfoDouble tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         if (!tag.dataTypes.contains(field.fieldType)) {
-            if (mustExist){
-                throw new ImageReadException("Required field \"" + tag.name + "\" has incorrect type " + field.fieldType.name);
+            if (mustExist) {
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" has incorrect type " + field.fieldType.name);
             } else {
                 return null;
             }
@@ -507,50 +543,51 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         byte[] bytes = field.fieldType.getRawBytes(field);
         return tag.getValue(field.byteOrder, bytes);
     }
-    
-    public String getFieldValue(TagInfoGpsText tag, boolean mustExist) throws ImageReadException {
+
+    public String getFieldValue(TagInfoGpsText tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         return tag.getValue(field);
     }
-    
-    public String getFieldValue(TagInfoXpString tag, boolean mustExist) throws ImageReadException {
+
+    public String getFieldValue(TagInfoXpString tag, boolean mustExist)
+            throws ImageReadException {
         TiffField field = findField(tag);
         if (field == null) {
             if (mustExist) {
-                throw new ImageReadException("Required field \"" + tag.name + "\" is missing");
+                throw new ImageReadException("Required field \"" + tag.name
+                        + "\" is missing");
             } else {
                 return null;
             }
         }
         return tag.getValue(field);
     }
-    
-    public static final class ImageDataElement extends TiffElement
-    {
-        public ImageDataElement(int offset, int length)
-        {
+
+    public static final class ImageDataElement extends TiffElement {
+        public ImageDataElement(int offset, int length) {
             super(offset, length);
         }
 
         @Override
-        public String getElementDescription(boolean verbose)
-        {
+        public String getElementDescription(boolean verbose) {
             if (verbose)
                 return null;
             return "ImageDataElement";
         }
     }
 
-    private List<ImageDataElement> getRawImageDataElements(TiffField offsetsField,
-            TiffField byteCountsField) throws ImageReadException
-    {
+    private List<ImageDataElement> getRawImageDataElements(
+            TiffField offsetsField, TiffField byteCountsField)
+            throws ImageReadException {
         int offsets[] = offsetsField.getIntArrayValue();
         int byteCounts[] = byteCountsField.getIntArrayValue();
 
@@ -559,34 +596,28 @@ public class TiffDirectory extends TiffElement implements TiffConstants
                     + ") != byteCounts.length(" + byteCounts.length + ")");
 
         List<ImageDataElement> result = new ArrayList<ImageDataElement>();
-        for (int i = 0; i < offsets.length; i++)
-        {
+        for (int i = 0; i < offsets.length; i++) {
             result.add(new ImageDataElement(offsets[i], byteCounts[i]));
         }
         return result;
     }
 
-    public List<ImageDataElement> getTiffRawImageDataElements() throws ImageReadException
-    {
+    public List<ImageDataElement> getTiffRawImageDataElements()
+            throws ImageReadException {
         TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
         TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
         TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
         TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
 
-        if ((tileOffsets != null) && (tileByteCounts != null))
-        {
+        if ((tileOffsets != null) && (tileByteCounts != null)) {
             return getRawImageDataElements(tileOffsets, tileByteCounts);
-        }
-        else if ((stripOffsets != null) && (stripByteCounts != null))
-        {
+        } else if ((stripOffsets != null) && (stripByteCounts != null)) {
             return getRawImageDataElements(stripOffsets, stripByteCounts);
-        }
-        else
+        } else
             throw new ImageReadException("Couldn't find image data.");
     }
 
-    public boolean imageDataInStrips() throws ImageReadException
-    {
+    public boolean imageDataInStrips() throws ImageReadException {
         TiffField tileOffsets = findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS);
         TiffField tileByteCounts = findField(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS);
         TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
@@ -603,44 +634,37 @@ public class TiffDirectory extends TiffElement implements TiffConstants
     }
 
     public ImageDataElement getJpegRawImageDataElement()
-            throws ImageReadException
-    {
+            throws ImageReadException {
         TiffField jpegInterchangeFormat = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
         TiffField jpegInterchangeFormatLength = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
 
         if ((jpegInterchangeFormat != null)
-                && (jpegInterchangeFormatLength != null))
-        {
+                && (jpegInterchangeFormatLength != null)) {
             int offset = jpegInterchangeFormat.getIntArrayValue()[0];
             int byteCount = jpegInterchangeFormatLength.getIntArrayValue()[0];
 
             return new ImageDataElement(offset, byteCount);
-        }
-        else
+        } else
             throw new ImageReadException("Couldn't find image data.");
     }
 
     private TiffImageData tiffImageData = null;
 
-    public void setTiffImageData(TiffImageData rawImageData)
-    {
+    public void setTiffImageData(TiffImageData rawImageData) {
         this.tiffImageData = rawImageData;
     }
 
-    public TiffImageData getTiffImageData()
-    {
+    public TiffImageData getTiffImageData() {
         return tiffImageData;
     }
 
     private JpegImageData jpegImageData = null;
 
-    public void setJpegImageData(JpegImageData value)
-    {
+    public void setJpegImageData(JpegImageData value) {
         this.jpegImageData = value;
     }
 
-    public JpegImageData getJpegImageData()
-    {
+    public JpegImageData getJpegImageData() {
         return jpegImageData;
     }
 

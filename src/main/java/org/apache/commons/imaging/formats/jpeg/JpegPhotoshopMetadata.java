@@ -27,27 +27,23 @@ import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.commons.imaging.util.Debug;
 
 public class JpegPhotoshopMetadata extends ImageMetadata implements
-        IptcConstants
-{
+        IptcConstants {
 
     public final PhotoshopApp13Data photoshopApp13Data;
 
-    public JpegPhotoshopMetadata(final PhotoshopApp13Data photoshopApp13Data)
-    {
+    public JpegPhotoshopMetadata(final PhotoshopApp13Data photoshopApp13Data) {
         this.photoshopApp13Data = photoshopApp13Data;
 
         List<IptcRecord> records = photoshopApp13Data.getRecords();
         Collections.sort(records, IptcRecord.COMPARATOR);
-        for (int j = 0; j < records.size(); j++)
-        {
+        for (int j = 0; j < records.size(); j++) {
             IptcRecord element = records.get(j);
             if (element.iptcType != IptcTypes.RECORD_VERSION)
                 add(element.getIptcTypeName(), element.getValue());
         }
     }
 
-    public void dump()
-    {
+    public void dump() {
         Debug.debug(this.toString());
     }
 

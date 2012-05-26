@@ -40,14 +40,14 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 /**
-* Parser for Radiance HDR images
-*
-* @author <a href="mailto:peter@electrotank.com">peter royal</a>
-*/
+ * Parser for Radiance HDR images
+ * 
+ * @author <a href="mailto:peter@electrotank.com">peter royal</a>
+ */
 public class RgbeImageParser extends ImageParser {
 
     public RgbeImageParser() {
-        setByteOrder( BinaryConstants.BYTE_ORDER_BIG_ENDIAN );
+        setByteOrder(BinaryConstants.BYTE_ORDER_BIG_ENDIAN);
     }
 
     @Override
@@ -62,17 +62,18 @@ public class RgbeImageParser extends ImageParser {
 
     @Override
     protected String[] getAcceptedExtensions() {
-        return new String[]{ ".hdr", ".pic" };
+        return new String[] { ".hdr", ".pic" };
     }
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[]{ ImageFormat.IMAGE_FORMAT_RGBE };
+        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_RGBE };
     }
 
     @Override
-    public IImageMetadata getMetadata( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
-        RgbeInfo info = new RgbeInfo( byteSource );
+    public IImageMetadata getMetadata(ByteSource byteSource, Map params)
+            throws ImageReadException, IOException {
+        RgbeInfo info = new RgbeInfo(byteSource);
 
         try {
             return info.getMetadata();
@@ -82,84 +83,73 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
-        RgbeInfo info = new RgbeInfo( byteSource );
+    public ImageInfo getImageInfo(ByteSource byteSource, Map params)
+            throws ImageReadException, IOException {
+        RgbeInfo info = new RgbeInfo(byteSource);
 
         try {
-            return new ImageInfo( getName(),
-                                  32, // todo may be 64 if double?
-                                  new ArrayList(),
-                                  ImageFormat.IMAGE_FORMAT_RGBE,
-                                  getName(),
-                                  info.getHeight(),
-                                  "image/vnd.radiance",
-                                  1,
-                                  -1,
-                                  -1,
-                                  -1,
-                                  -1,
-                                  info.getWidth(),
-                                  false,
-                                  false,
-                                  false,
-                                  ImageInfo.COLOR_TYPE_RGB,
-                                  "Adaptive RLE" );
+            return new ImageInfo(
+                    getName(),
+                    32, // todo may be 64 if double?
+                    new ArrayList(), ImageFormat.IMAGE_FORMAT_RGBE, getName(),
+                    info.getHeight(), "image/vnd.radiance", 1, -1, -1, -1, -1,
+                    info.getWidth(), false, false, false,
+                    ImageInfo.COLOR_TYPE_RGB, "Adaptive RLE");
         } finally {
             info.close();
         }
     }
 
     @Override
-    public BufferedImage getBufferedImage( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
-        RgbeInfo info = new RgbeInfo( byteSource );
+    public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
+            throws ImageReadException, IOException {
+        RgbeInfo info = new RgbeInfo(byteSource);
 
         try {
             // It is necessary to create our own BufferedImage here as the
-            // org.apache.sanselan.common.IBufferedImageFactory interface does not expose this complexity
-            DataBuffer buffer = new DataBufferFloat( info.getPixelData(), info.getWidth() * info.getHeight() );
+            // org.apache.sanselan.common.IBufferedImageFactory interface does
+            // not expose this complexity
+            DataBuffer buffer = new DataBufferFloat(info.getPixelData(),
+                    info.getWidth() * info.getHeight());
 
-            return new BufferedImage(
-                new ComponentColorModel( ColorSpace.getInstance( ColorSpace.CS_sRGB ),
-                                         false,
-                                         false,
-                                         Transparency.OPAQUE,
-                                         buffer.getDataType() ),
-                Raster.createWritableRaster( new BandedSampleModel( buffer.getDataType(),
-                                                                    info.getWidth(),
-                                                                    info.getHeight(),
-                                                                    3 ),
-                                             buffer,
-                                             new Point() ),
-                false,
-                null );
+            return new BufferedImage(new ComponentColorModel(
+                    ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
+                    Transparency.OPAQUE, buffer.getDataType()),
+                    Raster.createWritableRaster(
+                            new BandedSampleModel(buffer.getDataType(), info
+                                    .getWidth(), info.getHeight(), 3), buffer,
+                            new Point()), false, null);
         } finally {
             info.close();
         }
     }
 
     @Override
-    public Dimension getImageSize( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
-        RgbeInfo info = new RgbeInfo( byteSource );
+    public Dimension getImageSize(ByteSource byteSource, Map params)
+            throws ImageReadException, IOException {
+        RgbeInfo info = new RgbeInfo(byteSource);
 
         try {
-            return new Dimension( info.getWidth(), info.getHeight() );
+            return new Dimension(info.getWidth(), info.getHeight());
         } finally {
             info.close();
         }
     }
 
     @Override
-    public byte[] getICCProfileBytes( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
+    public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
+            throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile( File src, File dst, byte[] profile ) {
+    public boolean embedICCProfile(File src, File dst, byte[] profile) {
         return false;
     }
 
     @Override
-    public String getXmpXml( ByteSource byteSource, Map params ) throws ImageReadException, IOException {
+    public String getXmpXml(ByteSource byteSource, Map params)
+            throws ImageReadException, IOException {
         return null;
     }
 }

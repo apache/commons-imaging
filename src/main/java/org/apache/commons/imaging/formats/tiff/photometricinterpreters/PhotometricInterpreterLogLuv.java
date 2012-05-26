@@ -21,35 +21,30 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterLogLuv extends PhotometricInterpreter
-{
-    //    private final boolean yOnly;
+public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
+    // private final boolean yOnly;
 
     public PhotometricInterpreterLogLuv(int fSamplesPerPixel,
             int fBitsPerSample[], int Predictor, int width, int height,
-            boolean yonly)
-    {
+            boolean yonly) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
-        //        this.yOnly = yonly;
+        // this.yOnly = yonly;
     }
 
     @Override
-    public void dumpstats() throws ImageReadException, IOException
-    {
+    public void dumpstats() throws ImageReadException, IOException {
     }
 
-    private float cube(float f)
-    {
+    private float cube(float f) {
         return f * f * f;
     }
 
-    //        private float function_f(float value, )
+    // private float function_f(float value, )
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
-            throws ImageReadException, IOException
-    {
+    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
+            int y) throws ImageReadException, IOException {
         float X, Y, Z;
 
         int cieL = samples[0];
@@ -85,21 +80,21 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter
             float ref_Y = 100.000f;
             float ref_Z = 108.883f;
 
-            X = ref_X * var_X; //ref_X =  95.047  Observer= 2°, Illuminant= D65
-            Y = ref_Y * var_Y; //ref_Y = 100.000
-            Z = ref_Z * var_Z; //ref_Z = 108.883
+            X = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant= D65
+            Y = ref_Y * var_Y; // ref_Y = 100.000
+            Z = ref_Z * var_Z; // ref_Z = 108.883
 
         }
 
-        //            ref_X =  95.047        //Observer = 2°, Illuminant = D65
-        //            ref_Y = 100.000
-        //            ref_Z = 108.883
+        // ref_X = 95.047 //Observer = 2°, Illuminant = D65
+        // ref_Y = 100.000
+        // ref_Z = 108.883
 
         int R, G, B;
         {
-            float var_X = X / 100f; //X = From 0 to ref_X
-            float var_Y = Y / 100f; //Y = From 0 to ref_Y
-            float var_Z = Z / 100f; //Z = From 0 to ref_Y
+            float var_X = X / 100f; // X = From 0 to ref_X
+            float var_Y = Y / 100f; // Y = From 0 to ref_Y
+            float var_Z = Z / 100f; // Z = From 0 to ref_Y
 
             float var_R = var_X * 3.2406f + var_Y * -1.5372f + var_Z * -0.4986f;
             float var_G = var_X * -0.9689f + var_Y * 1.8758f + var_Z * 0.0415f;
@@ -119,27 +114,27 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter
             else
                 var_B = 12.92f * var_B;
 
-            //                var_R = (((var_R-)))
-            //                updateMaxMin(new float[]{
-            //                        var_R, var_G, var_B,
-            //                }, maxVarRGB, minVarRGB);
+            // var_R = (((var_R-)))
+            // updateMaxMin(new float[]{
+            // var_R, var_G, var_B,
+            // }, maxVarRGB, minVarRGB);
 
-            //                var_R = ((var_R + 0.16561039f) / (3.0152583f + 0.16561039f));
-            //                var_G = ((var_G + 0.06561642f) / (3.0239854f + 0.06561642f));
-            //                var_B = ((var_B + 0.19393992f) / (3.1043448f + 0.19393992f));
+            // var_R = ((var_R + 0.16561039f) / (3.0152583f + 0.16561039f));
+            // var_G = ((var_G + 0.06561642f) / (3.0239854f + 0.06561642f));
+            // var_B = ((var_B + 0.19393992f) / (3.1043448f + 0.19393992f));
 
             R = (int) (var_R * 255f);
             G = (int) (var_G * 255f);
             B = (int) (var_B * 255f);
         }
 
-        //            float R = 1.910f * X - 0.532f * Y - 0.288f * Z;
-        //            float G = -0.985f * X + 1.999f * Y - 0.028f * Z;
-        //            float B = 0.058f * X - 0.118f * Y + 0.898f * Z;
+        // float R = 1.910f * X - 0.532f * Y - 0.288f * Z;
+        // float G = -0.985f * X + 1.999f * Y - 0.028f * Z;
+        // float B = 0.058f * X - 0.118f * Y + 0.898f * Z;
 
-        //            updateMaxMin(new float[]{
-        //                    R, G, B,
-        //            }, maxRGB, minRGB);
+        // updateMaxMin(new float[]{
+        // R, G, B,
+        // }, maxRGB, minRGB);
 
         int red = R;
         int green = G;

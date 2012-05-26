@@ -23,12 +23,10 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public abstract class PnmWriter
-{
+public abstract class PnmWriter {
     protected final boolean RAWBITS;
 
-    public PnmWriter(boolean RAWBITS)
-    {
+    public PnmWriter(boolean RAWBITS) {
         this.RAWBITS = RAWBITS;
     }
 

@@ -22,13 +22,11 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public abstract class FileInfo
-{
+public abstract class FileInfo {
     protected final int width, height;
     protected final boolean RAWBITS;
 
-    public FileInfo(int width, int height, boolean RAWBITS)
-    {
+    public FileInfo(int width, int height, boolean RAWBITS) {
         this.width = width;
         this.height = height;
         this.RAWBITS = RAWBITS;
@@ -50,27 +48,23 @@ public abstract class FileInfo
 
     public abstract int getRGB(InputStream is) throws IOException;
 
-    protected void newline()
-    {
+    protected void newline() {
         // do nothing by default.
     }
 
-    public void readImage(ImageBuilder imageBuilder, InputStream is) throws IOException
-    {
+    public void readImage(ImageBuilder imageBuilder, InputStream is)
+            throws IOException {
         // is = new BufferedInputStream(is);
         // int count = 0;
         //
         // try
         // {
-        
-        if (!RAWBITS)
-        {
+
+        if (!RAWBITS) {
             WhiteSpaceReader wsr = new WhiteSpaceReader(is);
 
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
                     int rgb = getRGB(wsr);
 
                     imageBuilder.setRGB(x, y, rgb);
@@ -78,13 +72,10 @@ public abstract class FileInfo
                 }
                 newline();
             }
-        } else
-        {
-            for (int y = 0; y < height; y++)
-            {
+        } else {
+            for (int y = 0; y < height; y++) {
                 // System.out.println("y: " + y);
-                for (int x = 0; x < width; x++)
-                {
+                for (int x = 0; x < width; x++) {
                     int rgb = getRGB(is);
                     imageBuilder.setRGB(x, y, rgb);
                     // count++;
@@ -100,8 +91,7 @@ public abstract class FileInfo
         // }
     }
 
-    public void dump()
-    {
+    public void dump() {
 
     }
 }

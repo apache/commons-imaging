@@ -26,12 +26,10 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
-public abstract class DataReader implements BinaryConstants
-{
+public abstract class DataReader implements BinaryConstants {
     protected final DataParser dataParser;
 
-    public DataReader(DataParser fDataParser)
-    {
+    public DataReader(DataParser fDataParser) {
         this.dataParser = fDataParser;
     }
 
@@ -39,8 +37,7 @@ public abstract class DataReader implements BinaryConstants
             ImageContents imageContents, BinaryFileParser bfp)
             throws ImageReadException, IOException;
 
-    public void dump()
-    {
+    public void dump() {
         dataParser.dump();
     }
 }

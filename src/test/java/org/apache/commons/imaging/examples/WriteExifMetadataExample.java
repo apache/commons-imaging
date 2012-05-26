@@ -35,26 +35,20 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class WriteExifMetadataExample
-{
+public class WriteExifMetadataExample {
     public void removeExifMetadata(File jpegImageFile, File dst)
-            throws IOException, ImageReadException, ImageWriteException
-    {
+            throws IOException, ImageReadException, ImageWriteException {
         OutputStream os = null;
-        try
-        {
+        try {
             os = new FileOutputStream(dst);
             os = new BufferedOutputStream(os);
 
             new ExifRewriter().removeExifMetadata(jpegImageFile, os);
-        } finally
-        {
+        } finally {
             if (os != null)
-                try
-                {
+                try {
                     os.close();
-                } catch (IOException e)
-                {
+                } catch (IOException e) {
 
                 }
         }
@@ -62,7 +56,7 @@ public class WriteExifMetadataExample
 
     /**
      * This example illustrates how to add/update EXIF metadata in a JPEG file.
-     *
+     * 
      * @param jpegImageFile
      *            A source image file.
      * @param dst
@@ -72,23 +66,19 @@ public class WriteExifMetadataExample
      * @throws ImageWriteException
      */
     public void changeExifMetadata(File jpegImageFile, File dst)
-            throws IOException, ImageReadException, ImageWriteException
-    {
+            throws IOException, ImageReadException, ImageWriteException {
         OutputStream os = null;
-        try
-        {
+        try {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
             IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-            if (null != jpegMetadata)
-            {
+            if (null != jpegMetadata) {
                 // note that exif might be null if no Exif metadata is found.
                 TiffImageMetadata exif = jpegMetadata.getExif();
 
-                if (null != exif)
-                {
+                if (null != exif) {
                     // TiffImageMetadata class is immutable (read-only).
                     // TiffOutputSet class represents the Exif data to write.
                     //
@@ -130,7 +120,8 @@ public class WriteExifMetadataExample
                 // not fail if the tag does not exist).
                 exifDirectory
                         .removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
-                exifDirectory.add(ExifTagConstants.EXIF_TAG_APERTURE_VALUE, RationalNumber.factoryMethod(3, 10));
+                exifDirectory.add(ExifTagConstants.EXIF_TAG_APERTURE_VALUE,
+                        RationalNumber.factoryMethod(3, 10));
             }
 
             {
@@ -154,14 +145,11 @@ public class WriteExifMetadataExample
 
             os.close();
             os = null;
-        } finally
-        {
+        } finally {
             if (os != null)
-                try
-                {
+                try {
                     os.close();
-                } catch (IOException e)
-                {
+                } catch (IOException e) {
 
                 }
         }
@@ -170,10 +158,10 @@ public class WriteExifMetadataExample
     /**
      * This example illustrates how to remove a tag (if present) from EXIF
      * metadata in a JPEG file.
-     *
+     * 
      * In this case, we remove the "aperture" tag from the EXIF metadata if
      * present.
-     *
+     * 
      * @param jpegImageFile
      *            A source image file.
      * @param dst
@@ -183,23 +171,19 @@ public class WriteExifMetadataExample
      * @throws ImageWriteException
      */
     public void removeExifTag(File jpegImageFile, File dst) throws IOException,
-            ImageReadException, ImageWriteException
-    {
+            ImageReadException, ImageWriteException {
         OutputStream os = null;
-        try
-        {
+        try {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
             IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-            if (null != jpegMetadata)
-            {
+            if (null != jpegMetadata) {
                 // note that exif might be null if no Exif metadata is found.
                 TiffImageMetadata exif = jpegMetadata.getExif();
 
-                if (null != exif)
-                {
+                if (null != exif) {
                     // TiffImageMetadata class is immutable (read-only).
                     // TiffOutputSet class represents the Exif data to write.
                     //
@@ -212,8 +196,7 @@ public class WriteExifMetadataExample
                 }
             }
 
-            if (null == outputSet)
-            {
+            if (null == outputSet) {
                 // file does not contain any exif metadata. We don't need to
                 // update the file; just copy it.
                 IoUtils.copyFileNio(jpegImageFile, dst);
@@ -253,14 +236,11 @@ public class WriteExifMetadataExample
 
             os.close();
             os = null;
-        } finally
-        {
+        } finally {
             if (os != null)
-                try
-                {
+                try {
                     os.close();
-                } catch (IOException e)
-                {
+                } catch (IOException e) {
 
                 }
         }
@@ -268,7 +248,7 @@ public class WriteExifMetadataExample
 
     /**
      * This example illustrates how to set the GPS values in JPEG EXIF metadata.
-     *
+     * 
      * @param jpegImageFile
      *            A source image file.
      * @param dst
@@ -278,23 +258,19 @@ public class WriteExifMetadataExample
      * @throws ImageWriteException
      */
     public void setExifGPSTag(File jpegImageFile, File dst) throws IOException,
-            ImageReadException, ImageWriteException
-    {
+            ImageReadException, ImageWriteException {
         OutputStream os = null;
-        try
-        {
+        try {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
             IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-            if (null != jpegMetadata)
-            {
+            if (null != jpegMetadata) {
                 // note that exif might be null if no Exif metadata is found.
                 TiffImageMetadata exif = jpegMetadata.getExif();
 
-                if (null != exif)
-                {
+                if (null != exif) {
                     // TiffImageMetadata class is immutable (read-only).
                     // TiffOutputSet class represents the Exif data to write.
                     //
@@ -332,14 +308,11 @@ public class WriteExifMetadataExample
 
             os.close();
             os = null;
-        } finally
-        {
+        } finally {
             if (os != null)
-                try
-                {
+                try {
                     os.close();
-                } catch (IOException e)
-                {
+                } catch (IOException e) {
 
                 }
         }

@@ -23,17 +23,14 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class PbmWriter extends PnmWriter implements PnmConstants
-{
-    public PbmWriter(boolean RAWBITS)
-    {
+public class PbmWriter extends PnmWriter implements PnmConstants {
+    public PbmWriter(boolean RAWBITS) {
         super(RAWBITS);
     }
 
     @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
-            throws ImageWriteException, IOException
-    {
+            throws ImageWriteException, IOException {
         os.write(PNM_PREFIX_BYTE);
         os.write(RAWBITS ? PBM_RAW_CODE : PBM_TEXT_CODE);
         os.write(PNM_SEPARATOR);
@@ -50,10 +47,8 @@ public class PbmWriter extends PnmWriter implements PnmConstants
         int bitcache = 0;
         int bits_in_cache = 0;
 
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int red = 0xff & (argb >> 16);
                 int green = 0xff & (argb >> 8);
@@ -64,27 +59,25 @@ public class PbmWriter extends PnmWriter implements PnmConstants
                 else
                     sample = 1;
 
-                if (RAWBITS)
-                {
+                if (RAWBITS) {
                     bitcache = (bitcache << 1) | (0x1 & sample);
                     bits_in_cache++;
 
-                    if (bits_in_cache >= 8)
-                    {
+                    if (bits_in_cache >= 8) {
                         os.write((byte) bitcache);
                         bitcache = 0;
                         bits_in_cache = 0;
                     }
-                } else
-                {
-                    os.write(("" + sample).getBytes("US-ASCII")); // max component value
+                } else {
+                    os.write(("" + sample).getBytes("US-ASCII")); // max
+                                                                  // component
+                                                                  // value
                     os.write(PNM_SEPARATOR);
                 }
             }
 
-            if ((RAWBITS) && (bits_in_cache > 0))
-            {
-                bitcache = bitcache << (8-bits_in_cache);
+            if ((RAWBITS) && (bits_in_cache > 0)) {
+                bitcache = bitcache << (8 - bits_in_cache);
                 os.write((byte) bitcache);
                 bitcache = 0;
                 bits_in_cache = 0;

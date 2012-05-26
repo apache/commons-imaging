@@ -23,8 +23,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public class JfifSegment extends Segment implements JpegConstants
-{
+public class JfifSegment extends Segment implements JpegConstants {
     public final int jfifMajorVersion;
     public final int jfifMinorVersion;
     public final int densityUnits;
@@ -36,20 +35,17 @@ public class JfifSegment extends Segment implements JpegConstants
     public final int thumbnailSize;
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "JFIF (" + getSegmentType() + ")";
     }
 
     public JfifSegment(int marker, byte segmentData[])
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public JfifSegment(int marker, int marker_length, InputStream is)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         super(marker, marker_length);
 
         byte signature[] = readBytes(is, JFIF0_SIGNATURE.size());
@@ -69,8 +65,7 @@ public class JfifSegment extends Segment implements JpegConstants
         xThumbnail = readByte("x_thumbnail", is, "Not a Valid JPEG File");
         yThumbnail = readByte("y_thumbnail", is, "Not a Valid JPEG File");
         thumbnailSize = xThumbnail * yThumbnail;
-        if (thumbnailSize > 0)
-        {
+        if (thumbnailSize > 0) {
             skipBytes(is, thumbnailSize,
                     "Not a Valid JPEG File: missing thumbnail");
 

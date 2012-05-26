@@ -22,23 +22,19 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterCieLab extends PhotometricInterpreter
-{
+public class PhotometricInterpreterCieLab extends PhotometricInterpreter {
     public PhotometricInterpreterCieLab(int fSamplesPerPixel,
-            int fBitsPerSample[], int Predictor, int width, int height)
-    {
+            int fBitsPerSample[], int Predictor, int width, int height) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
     }
 
     @Override
-    public void dumpstats() throws ImageReadException, IOException
-    {
+    public void dumpstats() throws ImageReadException, IOException {
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
-            throws ImageReadException, IOException
-    {
+    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
+            int y) throws ImageReadException, IOException {
         int cieL = samples[0];
         int cieA = (byte) samples[1];
         int cieB = (byte) samples[2];

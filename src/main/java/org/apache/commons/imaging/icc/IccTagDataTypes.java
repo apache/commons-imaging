@@ -117,8 +117,7 @@ public enum IccTagDataTypes implements IccTagDataType {
     public final String name;
     public final int signature;
 
-    IccTagDataTypes(String name, int signature)
-    {
+    IccTagDataTypes(String name, int signature) {
         this.name = name;
         this.signature = signature;
     }

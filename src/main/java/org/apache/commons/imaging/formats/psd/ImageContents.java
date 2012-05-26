@@ -18,8 +18,7 @@ package org.apache.commons.imaging.formats.psd;
 
 import java.io.PrintWriter;
 
-public class ImageContents
-{
+public class ImageContents {
     public final PsdHeaderInfo header;
 
     public final int ColorModeDataLength;
@@ -30,8 +29,7 @@ public class ImageContents
     public ImageContents(PsdHeaderInfo header,
 
     int ColorModeDataLength, int ImageResourcesLength,
-            int LayerAndMaskDataLength, int Compression)
-    {
+            int LayerAndMaskDataLength, int Compression) {
         this.header = header;
         this.ColorModeDataLength = ColorModeDataLength;
         this.ImageResourcesLength = ImageResourcesLength;
@@ -39,15 +37,13 @@ public class ImageContents
         this.Compression = Compression;
     }
 
-    public void dump()
-    {
+    public void dump() {
         PrintWriter pw = new PrintWriter(System.out);
         dump(pw);
         pw.flush();
     }
 
-    public void dump(PrintWriter pw)
-    {
+    public void dump(PrintWriter pw) {
         pw.println("");
         pw.println("ImageContents");
         pw.println("Compression: " + Compression + " ("
@@ -58,11 +54,11 @@ public class ImageContents
                 + Integer.toHexString(ImageResourcesLength) + ")");
         pw.println("LayerAndMaskDataLength: " + LayerAndMaskDataLength + " ("
                 + Integer.toHexString(LayerAndMaskDataLength) + ")");
-        //        System.out.println("Depth: " + Depth + " ("
-        //                + Integer.toHexString(Depth) + ")");
-        //        System.out.println("Mode: " + Mode + " (" + Integer.toHexString(Mode)
-        //                + ")");
-        //        System.out.println("Reserved: " + Reserved.length);
+        // System.out.println("Depth: " + Depth + " ("
+        // + Integer.toHexString(Depth) + ")");
+        // System.out.println("Mode: " + Mode + " (" + Integer.toHexString(Mode)
+        // + ")");
+        // System.out.println("Reserved: " + Reserved.length);
         pw.println("");
         pw.flush();
 

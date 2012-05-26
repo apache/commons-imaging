@@ -18,8 +18,7 @@ package org.apache.commons.imaging.palette;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public abstract class Palette
-{
+public abstract class Palette {
 
     public abstract int getPaletteIndex(int rgb) throws ImageWriteException;
 
@@ -27,8 +26,7 @@ public abstract class Palette
 
     public abstract int length();
 
-    public void dump()
-    {
+    public void dump() {
     }
 
 }

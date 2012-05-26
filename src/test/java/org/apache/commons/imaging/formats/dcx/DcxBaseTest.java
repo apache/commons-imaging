@@ -26,24 +26,21 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class DcxBaseTest extends ImagingTest
-{
+public abstract class DcxBaseTest extends ImagingTest {
 
-    private static boolean isDcx(File file) throws IOException, ImageReadException
-    {
+    private static boolean isDcx(File file) throws IOException,
+            ImageReadException {
         ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_DCX;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return isDcx(file);
         }
     };
 
-    protected List getDcxImages() throws IOException, ImageReadException
-    {
+    protected List getDcxImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

@@ -21,19 +21,15 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.imaging.common.BinaryConstants;
 
-public abstract class UnicodeUtils implements BinaryConstants
-{
+public abstract class UnicodeUtils implements BinaryConstants {
     /**
      * This class should never be instantiated.
      */
-    private UnicodeUtils()
-    {
+    private UnicodeUtils() {
     }
 
-    public static class UnicodeException extends Exception
-    {
-        public UnicodeException(String message)
-        {
+    public static class UnicodeException extends Exception {
+        public UnicodeException(String message) {
             super(message);
         }
     }
@@ -159,15 +155,12 @@ public abstract class UnicodeUtils implements BinaryConstants
     //
     // }
 
-    public static final boolean isValidISO_8859_1(String s)
-    {
-        try
-        {
+    public static final boolean isValidISO_8859_1(String s) {
+        try {
             String roundtrip = new String(s.getBytes("ISO-8859-1"),
                     "ISO-8859-1");
             return s.equals(roundtrip);
-        } catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             // should never be thrown.
             throw new RuntimeException("Error parsing string.", e);
         }
@@ -177,10 +170,8 @@ public abstract class UnicodeUtils implements BinaryConstants
      * Return the index of the first utf-16 terminator (ie. two even-aligned
      * nulls). If not found, return -1.
      */
-    private static int findFirstDoubleByteTerminator(byte bytes[], int index)
-    {
-        for (int i = index; i < bytes.length - 1; i += 2)
-        {
+    private static int findFirstDoubleByteTerminator(byte bytes[], int index) {
+        for (int i = index; i < bytes.length - 1; i += 2) {
             int c1 = 0xff & bytes[index];
             int c2 = 0xff & bytes[index + 1];
             if (c1 == 0 && c2 == 0)
@@ -190,14 +181,12 @@ public abstract class UnicodeUtils implements BinaryConstants
     }
 
     public final int findEndWithTerminator(byte bytes[], int index)
-            throws UnicodeException
-    {
+            throws UnicodeException {
         return findEnd(bytes, index, true);
     }
 
     public final int findEndWithoutTerminator(byte bytes[], int index)
-            throws UnicodeException
-    {
+            throws UnicodeException {
         return findEnd(bytes, index, false);
     }
 
@@ -205,10 +194,8 @@ public abstract class UnicodeUtils implements BinaryConstants
             boolean includeTerminator) throws UnicodeException;
 
     public static UnicodeUtils getInstance(int charEncodingCode)
-            throws UnicodeException
-    {
-        switch (charEncodingCode)
-        {
+            throws UnicodeException {
+        switch (charEncodingCode) {
         case CHAR_ENCODING_CODE_ISO_8859_1:
             return new UnicodeMetricsASCII();
         case CHAR_ENCODING_CODE_UTF_8:
@@ -228,14 +215,11 @@ public abstract class UnicodeUtils implements BinaryConstants
         }
     }
 
-    private static class UnicodeMetricsASCII extends UnicodeUtils
-    {
+    private static class UnicodeMetricsASCII extends UnicodeUtils {
         @Override
         public int findEnd(byte bytes[], int index, boolean includeTerminator)
-                throws UnicodeException
-        {
-            for (int i = index; i < bytes.length; i++)
-            {
+                throws UnicodeException {
+            for (int i = index; i < bytes.length; i++) {
                 if (bytes[i] == 0)
                     return includeTerminator ? i + 1 : i;
             }
@@ -259,17 +243,14 @@ public abstract class UnicodeUtils implements BinaryConstants
     // }
     // }
 
-    private static class UnicodeMetricsUTF8 extends UnicodeUtils
-    {
+    private static class UnicodeMetricsUTF8 extends UnicodeUtils {
 
         @Override
         public int findEnd(byte bytes[], int index, boolean includeTerminator)
-                throws UnicodeException
-        {
+                throws UnicodeException {
             // http://en.wikipedia.org/wiki/UTF-8
 
-            while (true)
-            {
+            while (true) {
                 if (index == bytes.length)
                     return bytes.length;
                 if (index > bytes.length)
@@ -280,16 +261,14 @@ public abstract class UnicodeUtils implements BinaryConstants
                     return includeTerminator ? index : index - 1;
                 else if (c1 <= 0x7f)
                     continue;
-                else if (c1 <= 0xDF)
-                {
+                else if (c1 <= 0xDF) {
                     if (index >= bytes.length)
                         throw new UnicodeException("Invalid unicode.");
 
                     int c2 = 0xff & bytes[index++];
                     if (c2 < 0x80 || c2 > 0xBF)
                         throw new UnicodeException("Invalid code point.");
-                } else if (c1 <= 0xEF)
-                {
+                } else if (c1 <= 0xEF) {
                     if (index >= bytes.length - 1)
                         throw new UnicodeException("Invalid unicode.");
 
@@ -299,8 +278,7 @@ public abstract class UnicodeUtils implements BinaryConstants
                     int c3 = 0xff & bytes[index++];
                     if (c3 < 0x80 || c3 > 0xBF)
                         throw new UnicodeException("Invalid code point.");
-                } else if (c1 <= 0xF4)
-                {
+                } else if (c1 <= 0xF4) {
                     if (index >= bytes.length - 2)
                         throw new UnicodeException("Invalid unicode.");
 
@@ -319,30 +297,24 @@ public abstract class UnicodeUtils implements BinaryConstants
         }
     }
 
-    private abstract static class UnicodeMetricsUTF16 extends UnicodeUtils
-    {
+    private abstract static class UnicodeMetricsUTF16 extends UnicodeUtils {
         protected int byteOrder = BYTE_ORDER_BIG_ENDIAN;
 
-        public UnicodeMetricsUTF16(int byteOrder)
-        {
+        public UnicodeMetricsUTF16(int byteOrder) {
             this.byteOrder = byteOrder;
         }
 
         public boolean isValid(byte bytes[], int index,
-                boolean mayHaveTerminator, boolean mustHaveTerminator)
-        {
+                boolean mayHaveTerminator, boolean mustHaveTerminator) {
             // http://en.wikipedia.org/wiki/UTF-16/UCS-2
 
-            while (true)
-            {
-                if (index == bytes.length)
-                {
+            while (true) {
+                if (index == bytes.length) {
                     // end of buffer, no terminator found.
                     return !mustHaveTerminator;
                 }
 
-                if (index >= bytes.length - 1)
-                {
+                if (index >= bytes.length - 1) {
                     // end of odd-length buffer, no terminator found.
                     return false;
                 }
@@ -351,24 +323,20 @@ public abstract class UnicodeUtils implements BinaryConstants
                 int c2 = 0xff & bytes[index++];
                 int msb1 = byteOrder == BYTE_ORDER_BIG_ENDIAN ? c1 : c2;
 
-                if (c1 == 0 && c2 == 0)
-                {
+                if (c1 == 0 && c2 == 0) {
                     // terminator found.
                     return mayHaveTerminator;
                 }
 
-                if (msb1 >= 0xD8)
-                {
+                if (msb1 >= 0xD8) {
                     // Surrogate pair found.
 
-                    if (msb1 >= 0xDC)
-                    {
+                    if (msb1 >= 0xDC) {
                         // invalid first surrogate.
                         return false;
                     }
 
-                    if (index >= bytes.length - 1)
-                    {
+                    if (index >= bytes.length - 1) {
                         // missing second surrogate.
                         return false;
                     }
@@ -377,8 +345,7 @@ public abstract class UnicodeUtils implements BinaryConstants
                     int c3 = 0xff & bytes[index++];
                     int c4 = 0xff & bytes[index++];
                     int msb2 = byteOrder == BYTE_ORDER_BIG_ENDIAN ? c3 : c4;
-                    if (msb2 < 0xDC)
-                    {
+                    if (msb2 < 0xDC) {
                         // invalid second surrogate.
                         return false;
                     }
@@ -388,12 +355,10 @@ public abstract class UnicodeUtils implements BinaryConstants
 
         @Override
         public int findEnd(byte bytes[], int index, boolean includeTerminator)
-                throws UnicodeException
-        {
+                throws UnicodeException {
             // http://en.wikipedia.org/wiki/UTF-16/UCS-2
 
-            while (true)
-            {
+            while (true) {
                 if (index == bytes.length)
                     return bytes.length;
                 if (index > bytes.length - 1)
@@ -403,11 +368,9 @@ public abstract class UnicodeUtils implements BinaryConstants
                 int c2 = 0xff & bytes[index++];
                 int msb1 = byteOrder == BYTE_ORDER_BIG_ENDIAN ? c1 : c2;
 
-                if (c1 == 0 && c2 == 0)
-                {
+                if (c1 == 0 && c2 == 0) {
                     return includeTerminator ? index : index - 2;
-                } else if (msb1 >= 0xD8)
-                {
+                } else if (msb1 >= 0xD8) {
                     if (index > bytes.length - 1)
                         throw new UnicodeException("Terminator not found.");
 
@@ -422,28 +385,23 @@ public abstract class UnicodeUtils implements BinaryConstants
         }
     }
 
-    private static class UnicodeMetricsUTF16NoBOM extends UnicodeMetricsUTF16
-    {
+    private static class UnicodeMetricsUTF16NoBOM extends UnicodeMetricsUTF16 {
 
-        public UnicodeMetricsUTF16NoBOM(final int byteOrder)
-        {
+        public UnicodeMetricsUTF16NoBOM(final int byteOrder) {
             super(byteOrder);
         }
 
     }
 
-    private static class UnicodeMetricsUTF16WithBOM extends UnicodeMetricsUTF16
-    {
+    private static class UnicodeMetricsUTF16WithBOM extends UnicodeMetricsUTF16 {
 
-        public UnicodeMetricsUTF16WithBOM()
-        {
+        public UnicodeMetricsUTF16WithBOM() {
             super(BYTE_ORDER_BIG_ENDIAN);
         }
 
         @Override
         public int findEnd(byte bytes[], int index, boolean includeTerminator)
-                throws UnicodeException
-        {
+                throws UnicodeException {
             // http://en.wikipedia.org/wiki/UTF-16/UCS-2
 
             if (index >= bytes.length - 1)

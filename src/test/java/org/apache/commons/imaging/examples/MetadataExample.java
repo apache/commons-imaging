@@ -32,19 +32,16 @@ import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
-public class MetadataExample
-{
+public class MetadataExample {
     public static void metadataExample(File file) throws ImageReadException,
-            IOException
-    {
-        //        get all metadata stored in EXIF format (ie. from JPEG or TIFF).
-        //            org.w3c.dom.Node node = Sanselan.getMetadataObsolete(imageBytes);
+            IOException {
+        // get all metadata stored in EXIF format (ie. from JPEG or TIFF).
+        // org.w3c.dom.Node node = Sanselan.getMetadataObsolete(imageBytes);
         IImageMetadata metadata = Imaging.getMetadata(file);
 
-        //System.out.println(metadata);
+        // System.out.println(metadata);
 
-        if (metadata instanceof JpegImageMetadata)
-        {
+        if (metadata instanceof JpegImageMetadata) {
             JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 
             // Jpeg EXIF metadata is stored in a TIFF-based directory structure
@@ -65,29 +62,34 @@ public class MetadataExample
             printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_ISO);
             printTagValue(jpegMetadata,
                     ExifTagConstants.EXIF_TAG_SHUTTER_SPEED_VALUE);
-            printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
-            printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_BRIGHTNESS_VALUE);
-            printTagValue(jpegMetadata, GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
+            printTagValue(jpegMetadata,
+                    ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
+            printTagValue(jpegMetadata,
+                    ExifTagConstants.EXIF_TAG_BRIGHTNESS_VALUE);
+            printTagValue(jpegMetadata,
+                    GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
             printTagValue(jpegMetadata, GpsTagConstants.GPS_TAG_GPS_LATITUDE);
-            printTagValue(jpegMetadata, GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
+            printTagValue(jpegMetadata,
+                    GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
             printTagValue(jpegMetadata, GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
 
             System.out.println();
 
             // simple interface to GPS data
             TiffImageMetadata exifMetadata = jpegMetadata.getExif();
-            if (null != exifMetadata)
-            {
+            if (null != exifMetadata) {
                 TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
-                if (null != gpsInfo)
-                {
+                if (null != gpsInfo) {
                     String gpsDescription = gpsInfo.toString();
                     double longitude = gpsInfo.getLongitudeAsDegreesEast();
                     double latitude = gpsInfo.getLatitudeAsDegreesNorth();
 
-                    System.out.println("    " + "GPS Description: " + gpsDescription);
-                    System.out.println("    " + "GPS Longitude (Degrees East): " + longitude);
-                    System.out.println("    " + "GPS Latitude (Degrees North): " + latitude);
+                    System.out.println("    " + "GPS Description: "
+                            + gpsDescription);
+                    System.out.println("    "
+                            + "GPS Longitude (Degrees East): " + longitude);
+                    System.out.println("    "
+                            + "GPS Latitude (Degrees North): " + latitude);
                 }
             }
 
@@ -102,8 +104,7 @@ public class MetadataExample
                     .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
             if (gpsLatitudeRefField != null && gpsLatitudeField != null
                     && gpsLongitudeRefField != null
-                    && gpsLongitudeField != null)
-            {
+                    && gpsLongitudeField != null) {
                 // all of these values are strings.
                 String gpsLatitudeRef = (String) gpsLatitudeRefField.getValue();
                 RationalNumber gpsLatitude[] = (RationalNumber[]) (gpsLatitudeField
@@ -142,8 +143,7 @@ public class MetadataExample
             System.out.println();
 
             List items = jpegMetadata.getItems();
-            for (int i = 0; i < items.size(); i++)
-            {
+            for (int i = 0; i < items.size(); i++) {
                 Object item = items.get(i);
                 System.out.println("    " + "item: " + item);
             }
@@ -153,8 +153,7 @@ public class MetadataExample
     }
 
     private static void printTagValue(JpegImageMetadata jpegMetadata,
-            TagInfo tagInfo)
-    {
+            TagInfo tagInfo) {
         TiffField field = jpegMetadata.findEXIFValueWithExactMatch(tagInfo);
         if (field == null)
             System.out.println(tagInfo.name + ": " + "Not Found.");

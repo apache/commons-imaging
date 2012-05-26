@@ -18,18 +18,15 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.ImageContents;
 
-public class DataParserStub extends DataParser
-{
+public class DataParserStub extends DataParser {
     @Override
     protected int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents)
-    {
+            ImageContents imageContents) {
         return 0;
     }
 
     @Override
-    public int getBasicChannelsCount()
-    {
+    public int getBasicChannelsCount() {
         return 1;
     }
 

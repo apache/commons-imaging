@@ -23,13 +23,11 @@ import java.io.IOException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-public class BmpWriterPalette extends BmpWriter
-{
+public class BmpWriterPalette extends BmpWriter {
     private final SimplePalette palette;
     private final int bitsPerSample;
 
-    public BmpWriterPalette(SimplePalette palette)
-    {
+    public BmpWriterPalette(SimplePalette palette) {
         this.palette = palette;
 
         if (palette.length() <= 2)
@@ -41,22 +39,18 @@ public class BmpWriterPalette extends BmpWriter
     }
 
     @Override
-    public int getPaletteSize()
-    {
+    public int getPaletteSize() {
         return palette.length();
     }
 
     @Override
-    public int getBitsPerPixel()
-    {
+    public int getBitsPerPixel() {
         return bitsPerSample;
     }
 
     @Override
-    public void writePalette(BinaryOutputStream bos) throws IOException
-    {
-        for (int i = 0; i < palette.length(); i++)
-        {
+    public void writePalette(BinaryOutputStream bos) throws IOException {
+        for (int i = 0; i < palette.length(); i++) {
             int rgb = palette.getEntry(i);
 
             int red = 0xff & (rgb >> 16);
@@ -71,8 +65,7 @@ public class BmpWriterPalette extends BmpWriter
     }
 
     @Override
-    public byte[] getImageData(BufferedImage src)
-    {
+    public byte[] getImageData(BufferedImage src) {
         int width = src.getWidth();
         int height = src.getHeight();
 
@@ -82,17 +75,14 @@ public class BmpWriterPalette extends BmpWriter
         int bits_in_cache = 0;
 
         int bytecount = 0;
-        for (int y = height - 1; y >= 0; y--)
-        {
-            for (int x = 0; x < width; x++)
-            {
+        for (int y = height - 1; y >= 0; y--) {
+            for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int rgb = 0xffffff & argb;
 
                 int index = palette.getPaletteIndex(rgb);
 
-                if (bitsPerSample == 8)
-                {
+                if (bitsPerSample == 8) {
                     baos.write(0xff & index);
                     bytecount++;
                 } else
@@ -100,8 +90,7 @@ public class BmpWriterPalette extends BmpWriter
                 {
                     bit_cache = (bit_cache << bitsPerSample) | index;
                     bits_in_cache += bitsPerSample;
-                    if (bits_in_cache >= 8)
-                    {
+                    if (bits_in_cache >= 8) {
                         baos.write(0xff & bit_cache);
                         bytecount++;
                         bit_cache = 0;
@@ -110,8 +99,7 @@ public class BmpWriterPalette extends BmpWriter
                 }
             }
 
-            if (bits_in_cache > 0)
-            {
+            if (bits_in_cache > 0) {
                 bit_cache = (bit_cache << (8 - bits_in_cache));
 
                 baos.write(0xff & bit_cache);
@@ -120,8 +108,7 @@ public class BmpWriterPalette extends BmpWriter
                 bits_in_cache = 0;
             }
 
-            while ((bytecount % 4) != 0)
-            {
+            while ((bytecount % 4) != 0) {
                 baos.write(0);
                 bytecount++;
             }

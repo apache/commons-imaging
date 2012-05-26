@@ -20,18 +20,15 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
-public class FieldTypeFloat extends FieldType
-{
-    public FieldTypeFloat()
-    {
+public class FieldTypeFloat extends FieldType {
+    public FieldTypeFloat() {
         super(11, 4, "Float");
     }
 
-    //    = new FieldType(11, 4, "Float")
+    // = new FieldType(11, 4, "Float")
 
     @Override
-    public Object getSimpleValue(TiffField entry)
-    {
+    public Object getSimpleValue(TiffField entry) {
         if (entry.length == 1)
             return new Float(convertByteArrayToFloat(name + " ("
                     + entry.tagInfo.name + ")", entry.valueOffsetBytes,
@@ -42,24 +39,19 @@ public class FieldTypeFloat extends FieldType
     }
 
     @Override
-    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
-    {
+    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
         if (o instanceof Float)
             return convertFloatToByteArray(((Float) o).floatValue(), byteOrder);
-        else if (o instanceof float[])
-        {
+        else if (o instanceof float[]) {
             float numbers[] = (float[]) o;
             return convertFloatArrayToByteArray(numbers, byteOrder);
-        }
-        else if (o instanceof Float[])
-        {
+        } else if (o instanceof Float[]) {
             Float numbers[] = (Float[]) o;
             float values[] = new float[numbers.length];
             for (int i = 0; i < values.length; i++)
                 values[i] = numbers[i].floatValue();
             return convertFloatArrayToByteArray(values, byteOrder);
-        }
-        else
+        } else
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");
     }

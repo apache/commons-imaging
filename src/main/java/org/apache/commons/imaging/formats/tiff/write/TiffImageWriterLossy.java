@@ -23,25 +23,22 @@ import java.util.List;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-public class TiffImageWriterLossy extends TiffImageWriterBase
-{
+public class TiffImageWriterLossy extends TiffImageWriterBase {
 
-    public TiffImageWriterLossy()
-    {
+    public TiffImageWriterLossy() {
     }
 
-    public TiffImageWriterLossy(int byteOrder)
-    {
+    public TiffImageWriterLossy(int byteOrder) {
         super(byteOrder);
     }
 
     @Override
     public void write(OutputStream os, TiffOutputSet outputSet)
-            throws IOException, ImageWriteException
-    {
+            throws IOException, ImageWriteException {
         TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
-        List<TiffOutputItem> outputItems = outputSet.getOutputItems(outputSummary);
+        List<TiffOutputItem> outputItems = outputSet
+                .getOutputItems(outputSummary);
 
         updateOffsetsStep(outputItems);
 
@@ -52,12 +49,10 @@ public class TiffImageWriterLossy extends TiffImageWriterBase
         writeStep(bos, outputItems);
     }
 
-    private void updateOffsetsStep(List<TiffOutputItem> outputItems)
-    {
+    private void updateOffsetsStep(List<TiffOutputItem> outputItems) {
         int offset = TIFF_HEADER_SIZE;
 
-        for (int i = 0; i < outputItems.size(); i++)
-        {
+        for (int i = 0; i < outputItems.size(); i++) {
             TiffOutputItem outputItem = outputItems.get(i);
 
             outputItem.setOffset(offset);
@@ -69,13 +64,12 @@ public class TiffImageWriterLossy extends TiffImageWriterBase
         }
     }
 
-    private void writeStep(BinaryOutputStream bos, List<TiffOutputItem> outputItems)
-            throws IOException, ImageWriteException
-    {
+    private void writeStep(BinaryOutputStream bos,
+            List<TiffOutputItem> outputItems) throws IOException,
+            ImageWriteException {
         writeImageFileHeader(bos);
 
-        for (int i = 0; i < outputItems.size(); i++)
-        {
+        for (int i = 0; i < outputItems.size(); i++) {
             TiffOutputItem outputItem = outputItems.get(i);
 
             outputItem.writeItem(bos);

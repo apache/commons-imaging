@@ -20,52 +20,44 @@ package org.apache.commons.imaging.util;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class DebugOutputStream extends OutputStream
-{
+public class DebugOutputStream extends OutputStream {
     private final OutputStream os;
     private long count = 0;
 
-    public DebugOutputStream(final OutputStream os)
-    {
+    public DebugOutputStream(final OutputStream os) {
         super();
         this.os = os;
     }
 
     @Override
-    public void write(int b) throws IOException
-    {
+    public void write(int b) throws IOException {
         os.write(b);
         count++;
     }
 
     @Override
-    public void write(byte b[]) throws IOException
-    {
+    public void write(byte b[]) throws IOException {
         os.write(b);
         count += b.length;
     }
 
     @Override
-    public void write(byte b[], int off, int len) throws IOException
-    {
+    public void write(byte b[], int off, int len) throws IOException {
         os.write(b, off, len);
         count += len;
     }
 
     @Override
-    public void flush() throws IOException
-    {
+    public void flush() throws IOException {
         os.flush();
     }
 
     @Override
-    public void close() throws IOException
-    {
+    public void close() throws IOException {
         os.close();
     }
 
-    public long count()
-    {
+    public long count() {
         return count;
     }
 }

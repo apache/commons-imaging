@@ -30,8 +30,7 @@ import org.apache.commons.imaging.formats.icns.IcnsType;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class IcnsRoundTripTest extends IcnsBaseTest
-{
+public class IcnsRoundTripTest extends IcnsBaseTest {
     // 16x16 test image
     private static final int[][] image = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -52,36 +51,31 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
-    public void test1BPPIconMaskVersus8BPPMask() throws Exception
-    {
+    public void test1BPPIconMaskVersus8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff000000;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
                 BinaryOutputStream.BYTE_ORDER_BIG_ENDIAN);
         bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
-        bos.write4Bytes(4 + 4 + 4 + 4 + 2*16*16/8 + 4 + 4 + 16*16);
+        bos.write4Bytes(4 + 4 + 4 + 4 + 2 * 16 * 16 / 8 + 4 + 4 + 16 * 16);
         bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
-        bos.write4Bytes(4 + 4 + 2*16*16/8);
+        bos.write4Bytes(4 + 4 + 2 * 16 * 16 / 8);
         // 1 BPP image - all black
-        for (int y = 0; y < 16; y++)
-        {
+        for (int y = 0; y < 16; y++) {
             bos.write(0xff);
             bos.write(0xff);
         }
         // 1 BPP mask - all opaque
-        for (int y = 0; y < 16; y++)
-        {
+        for (int y = 0; y < 16; y++) {
             bos.write(0xff);
             bos.write(0xff);
         }
         // 8 BPP alpha mask - partially transparent
         bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_MASK.getType());
-        bos.write4Bytes(4 + 4 + 16*16);
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        bos.write4Bytes(4 + 4 + 16 * 16);
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 if (image[y][x] != 0)
                     bos.write(0xff);
                 else
@@ -93,22 +87,19 @@ public class IcnsRoundTripTest extends IcnsBaseTest
                 baos.toByteArray(), foreground, background);
     }
 
-    public void test8BPPIcon8BPPMask() throws Exception
-    {
+    public void test8BPPIcon8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
                 BinaryOutputStream.BYTE_ORDER_BIG_ENDIAN);
         bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
-        bos.write4Bytes(4 + 4 + 4 + 4 + 16*16 + 4 + 4 + 16*16);
+        bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16 + 4 + 4 + 16 * 16);
         bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
-        bos.write4Bytes(4 + 4 + 16*16);
+        bos.write4Bytes(4 + 4 + 16 * 16);
         // 8 BPP image
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 if (image[y][x] != 0)
                     bos.write(0xff);
                 else
@@ -117,11 +108,9 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         }
         // 8 BPP alpha mask
         bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_MASK.getType());
-        bos.write4Bytes(4 + 4 + 16*16);
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        bos.write4Bytes(4 + 4 + 16 * 16);
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 if (image[y][x] != 0)
                     bos.write(0xff);
                 else
@@ -129,25 +118,24 @@ public class IcnsRoundTripTest extends IcnsBaseTest
             }
         }
         bos.flush();
-        writeAndReadImageData("8bpp-image-8bpp-mask", baos.toByteArray(), foreground, background);
+        writeAndReadImageData("8bpp-image-8bpp-mask", baos.toByteArray(),
+                foreground, background);
     }
 
-    public void test8BPPIcon8BPPMaskVersus1BPPMask() throws Exception
-    {
+    public void test8BPPIcon8BPPMaskVersus1BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
                 BinaryOutputStream.BYTE_ORDER_BIG_ENDIAN);
         bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
-        bos.write4Bytes(4 + 4 + 4 + 4 + 16*16 + 4 + 4 + 16*16 + 4 + 4 + 2*16*16/8);
+        bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16 + 4 + 4 + 16 * 16 + 4 + 4 + 2
+                * 16 * 16 / 8);
         bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
-        bos.write4Bytes(4 + 4 + 16*16);
+        bos.write4Bytes(4 + 4 + 16 * 16);
         // 8 BPP image
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 if (image[y][x] != 0)
                     bos.write(0xff);
                 else
@@ -156,11 +144,9 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         }
         // 8 BPP alpha mask, some transparent
         bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_MASK.getType());
-        bos.write4Bytes(4 + 4 + 16*16);
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        bos.write4Bytes(4 + 4 + 16 * 16);
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 if (image[y][x] != 0)
                     bos.write(0xff);
                 else
@@ -169,24 +155,20 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         }
         // 1 BPP mask
         bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
-        bos.write4Bytes(4 + 4 + 2*16*16/8);
+        bos.write4Bytes(4 + 4 + 2 * 16 * 16 / 8);
         // 1 bit image
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x += 8)
-            {
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
-                for (int pos = 0; pos < 8; pos++)
-                {
-                    if (image[y][x+pos] != 0)
+                for (int pos = 0; pos < 8; pos++) {
+                    if (image[y][x + pos] != 0)
                         eightBits |= (1 << (7 - pos));
                 }
                 bos.write(eightBits);
             }
         }
         // 1 bit mask, all opaque
-        for (int y = 0; y < 16; y++)
-        {
+        for (int y = 0; y < 16; y++) {
             bos.write(0xff);
             bos.write(0xff);
         }
@@ -195,22 +177,20 @@ public class IcnsRoundTripTest extends IcnsBaseTest
                 baos.toByteArray(), foreground, background);
     }
 
-    public void test8BPPIcon1BPPMaskVersus8BPPMask() throws Exception
-    {
+    public void test8BPPIcon1BPPMaskVersus8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
                 BinaryOutputStream.BYTE_ORDER_BIG_ENDIAN);
         bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
-        bos.write4Bytes(4 + 4 + 4 + 4 + 16*16 + 4 + 4 + 16*16 + 4 + 4 + 2*16*16/8);
+        bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16 + 4 + 4 + 16 * 16 + 4 + 4 + 2
+                * 16 * 16 / 8);
         bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
-        bos.write4Bytes(4 + 4 + 16*16);
+        bos.write4Bytes(4 + 4 + 16 * 16);
         // 8 BPP image
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 if (image[y][x] != 0)
                     bos.write(0xff);
                 else
@@ -219,34 +199,28 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         }
         // 1 BPP mask
         bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
-        bos.write4Bytes(4 + 4 + 2*16*16/8);
+        bos.write4Bytes(4 + 4 + 2 * 16 * 16 / 8);
         // 1 bit image
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x += 8)
-            {
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
-                for (int pos = 0; pos < 8; pos++)
-                {
-                    if (image[y][x+pos] != 0)
+                for (int pos = 0; pos < 8; pos++) {
+                    if (image[y][x + pos] != 0)
                         eightBits |= (1 << (7 - pos));
                 }
                 bos.write(eightBits);
             }
         }
         // 1 bit mask, all opaque
-        for (int y = 0; y < 16; y++)
-        {
+        for (int y = 0; y < 16; y++) {
             bos.write(0xff);
             bos.write(0xff);
         }
         // 8 BPP alpha mask, some transparent
         bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_MASK.getType());
-        bos.write4Bytes(4 + 4 + 16*16);
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        bos.write4Bytes(4 + 4 + 16 * 16);
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 if (image[y][x] != 0)
                     bos.write(0xff);
                 else
@@ -258,22 +232,19 @@ public class IcnsRoundTripTest extends IcnsBaseTest
                 baos.toByteArray(), foreground, background);
     }
 
-    public void test8BPPIconNoMask() throws Exception
-    {
+    public void test8BPPIconNoMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xffcccccc;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
                 BinaryOutputStream.BYTE_ORDER_BIG_ENDIAN);
         bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
-        bos.write4Bytes(4 + 4 + 4 + 4 + 16*16);
+        bos.write4Bytes(4 + 4 + 4 + 4 + 16 * 16);
         bos.write4Bytes(IcnsType.ICNS_16x16_8BIT_IMAGE.getType());
-        bos.write4Bytes(4 + 4 + 16*16);
+        bos.write4Bytes(4 + 4 + 16 * 16);
         // 8 BPP image
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 if (image[y][x] != 0)
                     bos.write(0xff);
                 else
@@ -281,24 +252,22 @@ public class IcnsRoundTripTest extends IcnsBaseTest
             }
         }
         bos.flush();
-        writeAndReadImageData("8bpp-image-no-mask", baos.toByteArray(), foreground, background);
+        writeAndReadImageData("8bpp-image-no-mask", baos.toByteArray(),
+                foreground, background);
     }
 
-    public void test32BPPMaskedIcon() throws Exception
-    {
+    public void test32BPPMaskedIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x000000ff;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
                 BinaryOutputStream.BYTE_ORDER_BIG_ENDIAN);
         bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
-        bos.write4Bytes(4 + 4 + 4 + 4 + 4*16*16 + 4 + 4 + 2*16*16/8);
+        bos.write4Bytes(4 + 4 + 4 + 4 + 4 * 16 * 16 + 4 + 4 + 2 * 16 * 16 / 8);
         bos.write4Bytes(IcnsType.ICNS_16x16_32BIT_IMAGE.getType());
-        bos.write4Bytes(4 + 4 + 4*16*16);
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        bos.write4Bytes(4 + 4 + 4 * 16 * 16);
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 // argb, a ignored
                 bos.write(0);
                 final int pixel;
@@ -312,54 +281,46 @@ public class IcnsRoundTripTest extends IcnsBaseTest
             }
         }
         bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
-        bos.write4Bytes(4 + 4 + 2*16*16/8);
+        bos.write4Bytes(4 + 4 + 2 * 16 * 16 / 8);
         // 1 bit image
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x += 8)
-            {
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
-                for (int pos = 0; pos < 8; pos++)
-                {
-                    if (image[y][x+pos] != 0)
+                for (int pos = 0; pos < 8; pos++) {
+                    if (image[y][x + pos] != 0)
                         eightBits |= (1 << (7 - pos));
                 }
                 bos.write(eightBits);
             }
         }
         // 1 bit mask
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x += 8)
-            {
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
-                for (int pos = 0; pos < 8; pos++)
-                {
-                    if (image[y][x+pos] != 0)
+                for (int pos = 0; pos < 8; pos++) {
+                    if (image[y][x + pos] != 0)
                         eightBits |= (1 << (7 - pos));
                 }
                 bos.write(eightBits);
             }
         }
         bos.flush();
-        writeAndReadImageData("32bpp-image-1bpp-mask", baos.toByteArray(), foreground, background);
+        writeAndReadImageData("32bpp-image-1bpp-mask", baos.toByteArray(),
+                foreground, background);
     }
 
-    public void test32BPPHalfMaskedIcon() throws Exception
-    {
+    public void test32BPPHalfMaskedIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
                 BinaryOutputStream.BYTE_ORDER_BIG_ENDIAN);
         bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
-        bos.write4Bytes(4 + 4 + 4 + 4 + 4*16*16 + 4 + 4 + 16*16/8);
+        bos.write4Bytes(4 + 4 + 4 + 4 + 4 * 16 * 16 + 4 + 4 + 16 * 16 / 8);
         bos.write4Bytes(IcnsType.ICNS_16x16_32BIT_IMAGE.getType());
-        bos.write4Bytes(4 + 4 + 4*16*16);
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        bos.write4Bytes(4 + 4 + 4 * 16 * 16);
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 // argb, a ignored
                 bos.write(0);
                 final int pixel;
@@ -373,16 +334,13 @@ public class IcnsRoundTripTest extends IcnsBaseTest
             }
         }
         bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
-        bos.write4Bytes(4 + 4 + 16*16/8);
+        bos.write4Bytes(4 + 4 + 16 * 16 / 8);
         // 1 bit image
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x += 8)
-            {
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
-                for (int pos = 0; pos < 8; pos++)
-                {
-                    if (image[y][x+pos] != 0)
+                for (int pos = 0; pos < 8; pos++) {
+                    if (image[y][x + pos] != 0)
                         eightBits |= (1 << (7 - pos));
                 }
                 bos.write(eightBits);
@@ -392,32 +350,27 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         bos.flush();
 
         boolean threw = false;
-        try
-        {
-            writeAndReadImageData("32bpp-half-masked-CORRUPT", baos.toByteArray(), foreground, background);
-        }
-        catch (ImageReadException imageReadException)
-        {
+        try {
+            writeAndReadImageData("32bpp-half-masked-CORRUPT",
+                    baos.toByteArray(), foreground, background);
+        } catch (ImageReadException imageReadException) {
             threw = true;
         }
         assertTrue("ICNS file with corrupt mask didn't fail to parse", threw);
     }
 
-    public void test32BPPMaskMissingIcon() throws Exception
-    {
+    public void test32BPPMaskMissingIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = new BinaryOutputStream(baos,
                 BinaryOutputStream.BYTE_ORDER_BIG_ENDIAN);
         bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
-        bos.write4Bytes(4 + 4 + 4 + 4 + 4*16*16);
+        bos.write4Bytes(4 + 4 + 4 + 4 + 4 * 16 * 16);
         bos.write4Bytes(IcnsType.ICNS_16x16_32BIT_IMAGE.getType());
-        bos.write4Bytes(4 + 4 + 4*16*16);
-        for (int y = 0; y < 16; y++)
-        {
-            for (int x = 0; x < 16; x++)
-            {
+        bos.write4Bytes(4 + 4 + 4 * 16 * 16);
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
                 // argb, a ignored
                 bos.write(0);
                 final int pixel;
@@ -431,13 +384,13 @@ public class IcnsRoundTripTest extends IcnsBaseTest
             }
         }
         bos.flush();
-        writeAndReadImageData("32bpp-mask-missing", baos.toByteArray(), foreground, background);
+        writeAndReadImageData("32bpp-mask-missing", baos.toByteArray(),
+                foreground, background);
     }
 
     private void writeAndReadImageData(String description, byte[] rawData,
             int foreground, int background) throws IOException,
-            ImageReadException
-    {
+            ImageReadException {
         // Uncomment to generate ICNS files that can be tested with MacOS:
         File exportFile = new File("/tmp/" + description + ".icns");
         IoUtils.writeToFile(rawData, exportFile);
@@ -454,25 +407,22 @@ public class IcnsRoundTripTest extends IcnsBaseTest
         verify(dstImage, foreground, background);
     }
 
-    private void verify(BufferedImage data, int foreground, int background)
-    {
+    private void verify(BufferedImage data, int foreground, int background) {
         assertNotNull(data);
         assertTrue(data.getHeight() == image.length);
 
-        for (int y = 0; y < data.getHeight(); y++)
-        {
+        for (int y = 0; y < data.getHeight(); y++) {
             assertTrue(data.getWidth() == image[y].length);
-            for (int x = 0; x < data.getWidth(); x++)
-            {
+            for (int x = 0; x < data.getWidth(); x++) {
                 int imageARGB = (image[y][x] == 1) ? foreground : background;
                 int dataARGB = data.getRGB(x, y);
 
-                if (imageARGB != dataARGB)
-                {
-                    Debug.debug("x: " + x + ", y: " + y + ", image: " + imageARGB
-                            + " (0x" + Integer.toHexString(imageARGB) + ")"
-                            + ", data: " + dataARGB + " (0x"
-                            + Integer.toHexString(dataARGB) + ")");
+                if (imageARGB != dataARGB) {
+                    Debug.debug("x: " + x + ", y: " + y + ", image: "
+                            + imageARGB + " (0x"
+                            + Integer.toHexString(imageARGB) + ")" + ", data: "
+                            + dataARGB + " (0x" + Integer.toHexString(dataARGB)
+                            + ")");
                 }
                 assertTrue(imageARGB == dataARGB);
             }

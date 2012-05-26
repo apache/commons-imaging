@@ -29,20 +29,17 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.util.Debug;
 
-public class ExifDumpTest extends ExifBaseTest
-{
-    //    public ExifDumpTest(String name)
-    //    {
-    //        super(name);
-    //    }
+public class ExifDumpTest extends ExifBaseTest {
+    // public ExifDumpTest(String name)
+    // {
+    // super(name);
+    // }
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         List images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++)
-        {
-            if(i%10==0)
-            Debug.purgeMemory();
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
             File imageFile = (File) images.get(i);
             Debug.debug("imageFile", imageFile);
@@ -54,15 +51,13 @@ public class ExifDumpTest extends ExifBaseTest
 
             Map params = new HashMap();
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            params
-                    .put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
-                            !ignoreImageData));
+            params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
             JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                     .getMetadata(imageFile, params);
             if (null == metadata)
                 continue;
-            //            assertNotNull(metadata.getExif());
+            // assertNotNull(metadata.getExif());
 
             metadata.dump();
         }

@@ -22,8 +22,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 
-public class PngImageInfo extends ImageInfo
-{
+public class PngImageInfo extends ImageInfo {
     private final List<PngText> textChunks;
 
     public PngImageInfo(String formatDetails, int bitsPerPixel,
@@ -32,8 +31,8 @@ public class PngImageInfo extends ImageInfo
             int physicalHeightDpi, float physicalHeightInch,
             int physicalWidthDpi, float physicalWidthInch, int width,
             boolean isProgressive, boolean isTransparent, boolean usesPalette,
-            int colorType, String compressionAlgorithm, final List<PngText> textChunks)
-    {
+            int colorType, String compressionAlgorithm,
+            final List<PngText> textChunks) {
         super(formatDetails, bitsPerPixel, comments, format, formatName,
                 height, mimeType, numberOfImages, physicalHeightDpi,
                 physicalHeightInch, physicalWidthDpi, physicalWidthInch, width,
@@ -43,8 +42,7 @@ public class PngImageInfo extends ImageInfo
         this.textChunks = textChunks;
     }
 
-    public List<PngText> getTextChunks()
-    {
+    public List<PngText> getTextChunks() {
         return new ArrayList<PngText>(textChunks);
     }
 

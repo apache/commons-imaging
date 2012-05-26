@@ -24,15 +24,12 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
 
-public class JpegUtils extends BinaryFileParser implements JpegConstants
-{
-    public JpegUtils()
-    {
+public class JpegUtils extends BinaryFileParser implements JpegConstants {
+    public JpegUtils() {
         setByteOrder(BYTE_ORDER_NETWORK);
     }
 
-    public static interface Visitor
-    {
+    public static interface Visitor {
         // return false to exit before reading image data.
         public boolean beginSOS();
 
@@ -49,12 +46,10 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
     public void traverseJFIF(ByteSource byteSource, Visitor visitor)
             throws ImageReadException,
             // ImageWriteException,
-            IOException
-    {
+            IOException {
         InputStream is = null;
 
-        try
-        {
+        try {
             is = byteSource.getInputStream();
 
             readAndVerifyBytes(is, SOI,
@@ -62,20 +57,22 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
 
             int byteOrder = getByteOrder();
 
-            for (int markerCount = 0; true; markerCount++)
-            {
+            for (int markerCount = 0; true; markerCount++) {
                 byte[] markerBytes = new byte[2];
                 do {
                     markerBytes[0] = markerBytes[1];
-                    markerBytes[1] = readByte("marker", is, "Could not read marker");
-                } while ((0xff & markerBytes[0]) != 0xff || (0xff & markerBytes[1]) == 0xff);
-                int marker = ((0xff & markerBytes[0]) << 8) | (0xff & markerBytes[1]);
+                    markerBytes[1] = readByte("marker", is,
+                            "Could not read marker");
+                } while ((0xff & markerBytes[0]) != 0xff
+                        || (0xff & markerBytes[1]) == 0xff);
+                int marker = ((0xff & markerBytes[0]) << 8)
+                        | (0xff & markerBytes[1]);
 
-//                Debug.debug("marker", marker + " (0x" + Integer.toHexString(marker) + ")");
-//                Debug.debug("markerBytes", markerBytes);
+                // Debug.debug("marker", marker + " (0x" +
+                // Integer.toHexString(marker) + ")");
+                // Debug.debug("markerBytes", markerBytes);
 
-                if (marker == EOIMarker || marker == SOS_Marker)
-                {
+                if (marker == EOIMarker || marker == SOS_Marker) {
                     if (!visitor.beginSOS())
                         return;
 
@@ -89,8 +86,9 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
                 int segmentLength = convertByteArrayToShort("segmentLength",
                         segmentLengthBytes, byteOrder);
 
-//                Debug.debug("segmentLength", segmentLength + " (0x" + Integer.toHexString(segmentLength) + ")");
-//                Debug.debug("segmentLengthBytes", segmentLengthBytes);
+                // Debug.debug("segmentLength", segmentLength + " (0x" +
+                // Integer.toHexString(segmentLength) + ")");
+                // Debug.debug("segmentLengthBytes", segmentLengthBytes);
 
                 byte segmentData[] = readByteArray("Segment Data",
                         segmentLength - 2, is,
@@ -103,24 +101,19 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
                     return;
             }
 
-        } finally
-        {
-            try
-            {
+        } finally {
+            try {
                 if (is != null) {
                     is.close();
                 }
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 Debug.debug(e);
             }
         }
     }
 
-    public static String getMarkerName(int marker)
-    {
-        switch (marker)
-        {
+    public static String getMarkerName(int marker) {
+        switch (marker) {
         case SOS_Marker:
             return "SOS_Marker";
             // case JPEG_APP0 :
@@ -179,18 +172,15 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
     }
 
     public void dumpJFIF(ByteSource byteSource) throws ImageReadException,
-            IOException
-    {
+            IOException {
         Visitor visitor = new Visitor() {
             // return false to exit before reading image data.
-            public boolean beginSOS()
-            {
+            public boolean beginSOS() {
                 return true;
             }
 
             public void visitSOS(int marker, byte markerBytes[],
-                    byte imageData[])
-            {
+                    byte imageData[]) {
                 Debug.debug("SOS marker.  " + imageData.length
                         + " bytes of image data.");
                 Debug.debug("");
@@ -199,8 +189,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants
             // return false to exit traversal.
             public boolean visitSegment(int marker, byte markerBytes[],
                     int segmentLength, byte segmentLengthBytes[],
-                    byte segmentData[])
-            {
+                    byte segmentData[]) {
                 Debug.debug("Segment marker: " + Integer.toHexString(marker)
                         + " (" + getMarkerName(marker) + "), "
                         + segmentData.length + " bytes of segment data.");

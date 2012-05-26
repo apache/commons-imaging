@@ -31,8 +31,7 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldTypeRational;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldTypeShort;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldTypeUnknown;
 
-public interface TiffFieldTypeConstants extends ImagingConstants
-{
+public interface TiffFieldTypeConstants extends ImagingConstants {
 
     public static final FieldTypeByte FIELD_TYPE_BYTE = new FieldTypeByte(1,
             "Byte");

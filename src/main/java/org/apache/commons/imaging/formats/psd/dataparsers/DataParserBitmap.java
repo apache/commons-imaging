@@ -18,19 +18,17 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.ImageContents;
 
-public class DataParserBitmap extends DataParser
-{
+public class DataParserBitmap extends DataParser {
 
     @Override
     protected int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents)
-    {
+            ImageContents imageContents) {
         int sample = 0xff & data[0][y][x];
         if (sample == 0)
             sample = 255;
         else
             sample = 0;
-        //                    sample = 255- sample;
+        // sample = 255- sample;
         int alpha = 0xff;
 
         int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
@@ -40,8 +38,7 @@ public class DataParserBitmap extends DataParser
     }
 
     @Override
-    public int getBasicChannelsCount()
-    {
+    public int getBasicChannelsCount() {
         return 1;
     }
 

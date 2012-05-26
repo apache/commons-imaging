@@ -19,18 +19,15 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.formats.psd.ImageContents;
 
-public class DataParserLab extends DataParser
-{
+public class DataParserLab extends DataParser {
 
-    public DataParserLab()
-    {
+    public DataParserLab() {
 
     }
 
     @Override
     protected int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents)
-    {
+            ImageContents imageContents) {
         int cieL = 0xff & data[0][y][x];
         int cieA = 0xff & data[1][y][x];
         int cieB = 0xff & data[2][y][x];
@@ -44,17 +41,16 @@ public class DataParserLab extends DataParser
     }
 
     @Override
-    public int getBasicChannelsCount()
-    {
+    public int getBasicChannelsCount() {
         return 3;
     }
 
     @Override
-    public void dump()
-    {
-        //        for(int i=0;i<3;i++)
-        //        {
-        //            System.out.println("CIE: " + i + ": min: " + mins[i] + ", max: " + maxs[i]);
-        //        }
+    public void dump() {
+        // for(int i=0;i<3;i++)
+        // {
+        // System.out.println("CIE: " + i + ": min: " + mins[i] + ", max: " +
+        // maxs[i]);
+        // }
     }
 }

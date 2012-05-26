@@ -21,8 +21,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-public abstract class BmpWriter
-{
+public abstract class BmpWriter {
     public abstract int getPaletteSize();
 
     public abstract int getBitsPerPixel();

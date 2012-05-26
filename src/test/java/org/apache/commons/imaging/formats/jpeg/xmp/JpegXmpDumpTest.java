@@ -27,14 +27,11 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.util.Debug;
 
-public class JpegXmpDumpTest extends JpegXmpBaseTest
-{
+public class JpegXmpDumpTest extends JpegXmpBaseTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         List images = getImagesWithXmpData();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
@@ -44,7 +41,7 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest
 
             ByteSource byteSource = new ByteSourceFile(imageFile);
             Map params = new HashMap();
-            String xmpXml = new JpegImageParser().getXmpXml(byteSource, params );
+            String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
             assertNotNull(xmpXml);
 
             Debug.debug("xmpXml", xmpXml);

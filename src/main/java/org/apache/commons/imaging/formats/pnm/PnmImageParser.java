@@ -38,24 +38,20 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
 
-public class PnmImageParser extends ImageParser implements PnmConstants
-{
+public class PnmImageParser extends ImageParser implements PnmConstants {
 
-    public PnmImageParser()
-    {
+    public PnmImageParser() {
         super.setByteOrder(BYTE_ORDER_LSB);
         // setDebug(true);
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "Pbm-Custom";
     }
 
     @Override
-    public String getDefaultExtension()
-    {
+    public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
 
@@ -65,14 +61,12 @@ public class PnmImageParser extends ImageParser implements PnmConstants
             ".ppm", ".pnm", };
 
     @Override
-    protected String[] getAcceptedExtensions()
-    {
+    protected String[] getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
     }
 
     @Override
-    protected ImageFormat[] getAcceptedTypes()
-    {
+    protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PBM, //
                 ImageFormat.IMAGE_FORMAT_PGM, //
                 ImageFormat.IMAGE_FORMAT_PPM, //
@@ -80,8 +74,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
     }
 
     private FileInfo readHeader(InputStream is) throws ImageReadException,
-            IOException
-    {
+            IOException {
         byte identifier1 = readByte("Identifier1", is, "Not a Valid PNM File");
         byte identifier2 = readByte("Identifier2", is, "Not a Valid PNM File");
 
@@ -104,20 +97,16 @@ public class PnmImageParser extends ImageParser implements PnmConstants
             return new PbmFileInfo(width, height, false);
         else if (identifier2 == PBM_RAW_CODE)
             return new PbmFileInfo(width, height, true);
-        else if (identifier2 == PGM_TEXT_CODE)
-        {
+        else if (identifier2 == PGM_TEXT_CODE) {
             int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
             return new PgmFileInfo(width, height, false, maxgray);
-        } else if (identifier2 == PGM_RAW_CODE)
-        {
+        } else if (identifier2 == PGM_RAW_CODE) {
             int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
             return new PgmFileInfo(width, height, true, maxgray);
-        } else if (identifier2 == PPM_TEXT_CODE)
-        {
+        } else if (identifier2 == PPM_TEXT_CODE) {
             int max = Integer.parseInt(wsr.readtoWhiteSpace());
             return new PpmFileInfo(width, height, false, max);
-        } else if (identifier2 == PPM_RAW_CODE)
-        {
+        } else if (identifier2 == PPM_RAW_CODE) {
             int max = Integer.parseInt(wsr.readtoWhiteSpace());
             // System.out.println("max: " + max);
             return new PpmFileInfo(width, height, true, max);
@@ -126,24 +115,19 @@ public class PnmImageParser extends ImageParser implements PnmConstants
     }
 
     private FileInfo readHeader(ByteSource byteSource)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         InputStream is = null;
 
-        try
-        {
+        try {
             is = byteSource.getInputStream();
 
             return readHeader(is);
-        } finally
-        {
-            try
-            {
+        } finally {
+            try {
                 if (is != null) {
                     is.close();
                 }
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 Debug.debug(e);
             }
         }
@@ -151,15 +135,13 @@ public class PnmImageParser extends ImageParser implements PnmConstants
 
     @Override
     public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         return null;
     }
 
     @Override
     public Dimension getImageSize(ByteSource byteSource, Map params)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         FileInfo info = readHeader(byteSource);
 
         if (info == null)
@@ -168,28 +150,24 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         return new Dimension(info.width, info.height);
     }
 
-    public byte[] embedICCProfile(byte image[], byte profile[])
-    {
+    public byte[] embedICCProfile(byte image[], byte profile[]) {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile(File src, File dst, byte profile[])
-    {
+    public boolean embedICCProfile(File src, File dst, byte profile[]) {
         return false;
     }
 
     @Override
     public IImageMetadata getMetadata(ByteSource byteSource, Map params)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         return null;
     }
 
     @Override
     public ImageInfo getImageInfo(ByteSource byteSource, Map params)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         FileInfo info = readHeader(byteSource);
 
         if (info == null)
@@ -230,8 +208,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
 
     @Override
     public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         pw.println("pnm.dumpImageFile");
 
         {
@@ -247,8 +224,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         return true;
     }
 
-    private int[] getColorTable(byte bytes[]) throws ImageReadException
-    {
+    private int[] getColorTable(byte bytes[]) throws ImageReadException {
         if ((bytes.length % 3) != 0)
             throw new ImageReadException("Bad Color Table Length: "
                     + bytes.length);
@@ -256,8 +232,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
 
         int result[] = new int[length];
 
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             int red = 0xff & bytes[(i * 3) + 0];
             int green = 0xff & bytes[(i * 3) + 1];
             int blue = 0xff & bytes[(i * 3) + 2];
@@ -273,12 +248,10 @@ public class PnmImageParser extends ImageParser implements PnmConstants
 
     @Override
     public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         InputStream is = null;
 
-        try
-        {
+        try {
             is = byteSource.getInputStream();
 
             FileInfo info = readHeader(is);
@@ -287,19 +260,17 @@ public class PnmImageParser extends ImageParser implements PnmConstants
             int height = info.height;
 
             boolean hasAlpha = false;
-            ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
+            ImageBuilder imageBuilder = new ImageBuilder(width, height,
+                    hasAlpha);
             info.readImage(imageBuilder, is);
 
             return imageBuilder.getBufferedImage();
-        } finally
-        {
-            try
-            {
+        } finally {
+            try {
                 if (is != null) {
                     is.close();
                 }
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 Debug.debug(e);
             }
         }
@@ -311,23 +282,19 @@ public class PnmImageParser extends ImageParser implements PnmConstants
 
     @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
-            throws ImageWriteException, IOException
-    {
+            throws ImageWriteException, IOException {
         PnmWriter writer = null;
         boolean useRawbits = true;
 
-        if (params != null)
-        {
+        if (params != null) {
             Object useRawbitsParam = params.get(PARAM_KEY_PNM_RAWBITS);
-            if (useRawbitsParam != null)
-            {
+            if (useRawbitsParam != null) {
                 if (useRawbitsParam.equals(PARAM_VALUE_PNM_RAWBITS_NO))
                     useRawbits = false;
             }
 
             Object subtype = params.get(PARAM_KEY_FORMAT);
-            if (subtype != null)
-            {
+            if (subtype != null) {
                 if (subtype.equals(ImageFormat.IMAGE_FORMAT_PBM))
                     writer = new PbmWriter(useRawbits);
                 else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PGM))
@@ -351,8 +318,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
         if (params.containsKey(PARAM_KEY_FORMAT))
             params.remove(PARAM_KEY_FORMAT);
 
-        if (params.size() > 0)
-        {
+        if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
@@ -363,7 +329,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     *
+     * 
      * @param byteSource
      *            File containing image data.
      * @param params
@@ -372,8 +338,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants
      */
     @Override
     public String getXmpXml(ByteSource byteSource, Map params)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         return null;
     }
 }

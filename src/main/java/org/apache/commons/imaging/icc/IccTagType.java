@@ -16,9 +16,10 @@
  */
 package org.apache.commons.imaging.icc;
 
-interface IccTagType
-{
+interface IccTagType {
     String getName();
+
     String getTypeDescription();
+
     int getSignature();
 }

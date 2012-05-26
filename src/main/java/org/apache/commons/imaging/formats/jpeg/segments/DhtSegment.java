@@ -21,12 +21,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DhtSegment extends Segment
-{
+public class DhtSegment extends Segment {
     public final List<HuffmanTable> huffmanTables = new ArrayList<HuffmanTable>();
 
-    public static class HuffmanTable
-    {
+    public static class HuffmanTable {
         // some arrays are better off one-based
         // to avoid subtractions by one later when indexing them
         public final int tableClass;
@@ -42,46 +40,41 @@ public class DhtSegment extends Segment
         public final int[] valPtr = new int[1 + 16]; // 1-based
 
         public HuffmanTable(int tableClass, int destinationIdentifier,
-                int[] bits, int[] huffVal)
-        {
+                int[] bits, int[] huffVal) {
             this.tableClass = tableClass;
             this.destinationIdentifier = destinationIdentifier;
             this.bits = bits;
             this.huffVal = huffVal;
 
-            // "generate_size_table", section C.2, figure C.1, page 51 of ITU-T T.81:
+            // "generate_size_table", section C.2, figure C.1, page 51 of ITU-T
+            // T.81:
             int k = 0;
             int i = 1;
             int j = 1;
             int lastK = -1;
-            while (true)
-            {
-                if (j > bits[i])
-                {
+            while (true) {
+                if (j > bits[i]) {
                     i++;
                     j = 1;
-                    if (i > 16)
-                    {
+                    if (i > 16) {
                         huffSize[k] = 0;
                         lastK = k;
                         break;
                     }
-                }
-                else
-                {
+                } else {
                     huffSize[k] = i;
                     k++;
                     j++;
                 }
             }
 
-            // "generate_code_table", section C.2, figure C.2, page 52 of ITU-T T.81:
+            // "generate_code_table", section C.2, figure C.2, page 52 of ITU-T
+            // T.81:
             k = 0;
             int code = 0;
             int si = huffSize[0];
             huffCode = new int[lastK];
-            while (true)
-            {
+            while (true) {
                 huffCode[k] = code;
                 code++;
                 k++;
@@ -90,8 +83,7 @@ public class DhtSegment extends Segment
                     continue;
                 if (huffSize[k] == 0)
                     break;
-                do
-                {
+                do {
                     code <<= 1;
                     si++;
                 } while (huffSize[k] != si);
@@ -100,15 +92,13 @@ public class DhtSegment extends Segment
             // "Decoder_tables", section F.2.2.3, figure F.15, page 108 of T.81:
             i = 0;
             j = 0;
-            while (true)
-            {
+            while (true) {
                 i++;
                 if (i > 16)
                     break;
                 if (bits[i] == 0)
                     maxCode[i] = -1;
-                else
-                {
+                else {
                     valPtr[i] = j;
                     minCode[i] = huffCode[j];
                     j += bits[i] - 1;
@@ -120,37 +110,29 @@ public class DhtSegment extends Segment
         }
     }
 
-
-    public DhtSegment(int marker, byte[] segmentData)
-            throws IOException
-    {
+    public DhtSegment(int marker, byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public DhtSegment(int marker, int length, InputStream is)
-            throws IOException
-    {
+            throws IOException {
         super(marker, length);
 
-        while (length > 0)
-        {
-            int tableClassAndDestinationId =
-                    0xff & readByte("TableClassAndDestinationId",
-                    is, "Not a Valid JPEG File");
+        while (length > 0) {
+            int tableClassAndDestinationId = 0xff & readByte(
+                    "TableClassAndDestinationId", is, "Not a Valid JPEG File");
             length--;
             int tableClass = (tableClassAndDestinationId >> 4) & 0xf;
             int destinationIdentifier = tableClassAndDestinationId & 0xf;
             int[] bits = new int[1 + 16];
             int bitsSum = 0;
-            for (int i = 1; i < bits.length; i++)
-            {
+            for (int i = 1; i < bits.length; i++) {
                 bits[i] = 0xff & readByte("Li", is, "Not a Valid JPEG File");
                 length--;
                 bitsSum += bits[i];
             }
             int[] huffVal = new int[bitsSum];
-            for (int i = 0; i < bitsSum; i++)
-            {
+            for (int i = 0; i < bitsSum; i++) {
                 huffVal[i] = 0xff & readByte("Vij", is, "Not a Valid JPEG File");
                 length--;
             }
@@ -161,8 +143,7 @@ public class DhtSegment extends Segment
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "DHT (" + getSegmentType() + ")";
     }
 }

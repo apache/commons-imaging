@@ -31,29 +31,30 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 
-public class SampleUsage
-{
+public class SampleUsage {
 
-    public SampleUsage()
-    {
+    public SampleUsage() {
 
-        try
-        {
-            // <b>Code won't work unless these variables are properly initialized.
-            //         Sanselan works equally well with File, byte array or InputStream inputs.</b>
+        try {
+            // <b>Code won't work unless these variables are properly
+            // initialized.
+            // Sanselan works equally well with File, byte array or InputStream
+            // inputs.</b>
             BufferedImage someImage = null;
             byte someBytes[] = null;
             File someFile = null;
             InputStream someInputStream = null;
             OutputStream someOutputStream = null;
 
-            // <b>The Sanselan class provides a simple interface to the library. </b>
+            // <b>The Sanselan class provides a simple interface to the library.
+            // </b>
 
             // <b>how to read an image: </b>
             byte imageBytes[] = someBytes;
             BufferedImage image_1 = Imaging.getBufferedImage(imageBytes);
 
-            // <b>methods of Sanselan usually accept files, byte arrays, or inputstreams as arguments. </b>
+            // <b>methods of Sanselan usually accept files, byte arrays, or
+            // inputstreams as arguments. </b>
             BufferedImage image_2 = Imaging.getBufferedImage(imageBytes);
             File file = someFile;
             BufferedImage image_3 = Imaging.getBufferedImage(file);
@@ -78,7 +79,8 @@ public class SampleUsage
             // <b>get the image's width and height. </b>
             Dimension d = Imaging.getImageSize(imageBytes);
 
-            // <b>get all of the image's info (ie. bits per pixel, size, transparency, etc.) </b>
+            // <b>get all of the image's info (ie. bits per pixel, size,
+            // transparency, etc.) </b>
             ImageInfo imageInfo = Imaging.getImageInfo(imageBytes);
 
             if (imageInfo.getColorType() == ImageInfo.COLOR_TYPE_GRAYSCALE)
@@ -90,8 +92,10 @@ public class SampleUsage
             ImageFormat image_format = Imaging.guessFormat(imageBytes);
             image_format.equals(ImageFormat.IMAGE_FORMAT_PNG);
 
-            // <b>get all metadata stored in EXIF format (ie. from JPEG or TIFF). </b>
-            // <b>org.w3c.dom.Node node = Sanselan.getMetadataObsolete(imageBytes); </b>
+            // <b>get all metadata stored in EXIF format (ie. from JPEG or
+            // TIFF). </b>
+            // <b>org.w3c.dom.Node node =
+            // Sanselan.getMetadataObsolete(imageBytes); </b>
             IImageMetadata metdata = Imaging.getMetadata(imageBytes);
 
             // <b>print a dump of information about an image to stdout. </b>
@@ -101,9 +105,7 @@ public class SampleUsage
             FormatCompliance formatCompliance = Imaging
                     .getFormatCompliance(imageBytes);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
     }

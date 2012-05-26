@@ -26,14 +26,11 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
-public class TiffReadTest extends TiffBaseTest
-{
+public class TiffReadTest extends TiffBaseTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         List images = getTiffImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 

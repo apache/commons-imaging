@@ -21,13 +21,11 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.PngText;
 
-public class PngChunkText extends PngTextChunk
-{
+public class PngChunkText extends PngTextChunk {
     public final String keyword, text;
 
     public PngChunkText(int length, int chunkType, int crc, byte bytes[])
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
         {
             int index = findNull(bytes);
@@ -40,8 +38,7 @@ public class PngChunkText extends PngTextChunk
             int textLength = bytes.length - (index + 1);
             text = new String(bytes, index + 1, textLength, "ISO-8859-1");
 
-            if (getDebug())
-            {
+            if (getDebug()) {
                 System.out.println("Keyword: " + keyword);
                 System.out.println("Text: " + text);
             }
@@ -53,8 +50,7 @@ public class PngChunkText extends PngTextChunk
      * @return Returns the keyword.
      */
     @Override
-    public String getKeyword()
-    {
+    public String getKeyword() {
         return keyword;
     }
 
@@ -62,14 +58,12 @@ public class PngChunkText extends PngTextChunk
      * @return Returns the text.
      */
     @Override
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
     @Override
-    public PngText getContents()
-    {
+    public PngText getContents() {
         return new PngText.tEXt(keyword, text);
     }
 

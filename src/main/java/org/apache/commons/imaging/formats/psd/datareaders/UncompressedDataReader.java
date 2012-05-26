@@ -28,18 +28,15 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
-public class UncompressedDataReader extends DataReader
-{
-    public UncompressedDataReader(DataParser fDataParser)
-    {
+public class UncompressedDataReader extends DataReader {
+    public UncompressedDataReader(DataParser fDataParser) {
         super(fDataParser);
     }
 
     @Override
     public void readData(InputStream is, BufferedImage bi,
             ImageContents imageContents, BinaryFileParser bfp)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         PsdHeaderInfo header = imageContents.header;
         int width = header.Columns;
         int height = header.Rows;
@@ -49,13 +46,18 @@ public class UncompressedDataReader extends DataReader
         int channel_count = dataParser.getBasicChannelsCount();
         int depth = header.Depth;
         MyBitInputStream mbis = new MyBitInputStream(is, BYTE_ORDER_MSB);
-        BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we want all samples to be bytes
+        BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we
+                                                                         // want
+                                                                         // all
+                                                                         // samples
+                                                                         // to
+                                                                         // be
+                                                                         // bytes
 
         int data[][][] = new int[channel_count][height][width];
         for (int channel = 0; channel < channel_count; channel++)
             for (int y = 0; y < height; y++)
-                for (int x = 0; x < width; x++)
-                {
+                for (int x = 0; x < width; x++) {
                     int b = bbis.readBits(depth);
 
                     data[channel][y][x] = (byte) b;

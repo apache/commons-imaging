@@ -22,56 +22,47 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 
-public class PpmFileInfo extends FileInfo
-{
+public class PpmFileInfo extends FileInfo {
     private final int max; // TODO: handle max
 
-    public PpmFileInfo(int width, int height, boolean RAWBITS, int max)
-    {
+    public PpmFileInfo(int width, int height, boolean RAWBITS, int max) {
         super(width, height, RAWBITS);
 
         this.max = max;
     }
 
     @Override
-    public int getNumComponents()
-    {
+    public int getNumComponents() {
         return 3;
     }
 
     @Override
-    public int getBitDepth()
-    {
+    public int getBitDepth() {
         return 8;
     }
 
     @Override
-    public ImageFormat getImageType()
-    {
+    public ImageFormat getImageType() {
         return ImageFormat.IMAGE_FORMAT_PGM;
     }
 
     @Override
-    public String getImageTypeDescription()
-    {
+    public String getImageTypeDescription() {
         return "PGM: portable graymap file    format";
     }
 
     @Override
-    public String getMIMEType()
-    {
+    public String getMIMEType() {
         return "image/x-portable-graymap";
     }
 
     @Override
-    public int getColorType()
-    {
+    public int getColorType() {
         return ImageInfo.COLOR_TYPE_GRAYSCALE;
     }
 
     @Override
-    public int getRGB(InputStream is) throws IOException
-    {
+    public int getRGB(InputStream is) throws IOException {
         int red = is.read();
         int green = is.read();
         int blue = is.read();
@@ -88,8 +79,7 @@ public class PpmFileInfo extends FileInfo
     }
 
     @Override
-    public int getRGB(WhiteSpaceReader wsr) throws IOException
-    {
+    public int getRGB(WhiteSpaceReader wsr) throws IOException {
         int red = Integer.parseInt(wsr.readtoWhiteSpace());
         int green = Integer.parseInt(wsr.readtoWhiteSpace());
         int blue = Integer.parseInt(wsr.readtoWhiteSpace());
@@ -103,8 +93,7 @@ public class PpmFileInfo extends FileInfo
     }
 
     @Override
-    public void dump()
-    {
-        //            System.out.println("count: " + count);
+    public void dump() {
+        // System.out.println("count: " + count);
     }
 }

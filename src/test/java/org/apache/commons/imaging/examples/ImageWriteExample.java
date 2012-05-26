@@ -29,11 +29,9 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
-public class ImageWriteExample
-{
+public class ImageWriteExample {
     public static byte[] imageWriteExample(File file)
-            throws ImageReadException, ImageWriteException, IOException
-    {
+            throws ImageReadException, ImageWriteException, IOException {
         // read image
         BufferedImage image = Imaging.getBufferedImage(file);
 

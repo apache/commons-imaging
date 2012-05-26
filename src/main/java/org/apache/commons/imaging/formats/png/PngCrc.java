@@ -17,8 +17,7 @@
 package org.apache.commons.imaging.formats.png;
 
 // should just use ints, not longs
-public class PngCrc
-{
+public class PngCrc {
     /* Table of CRCs of all 8-bit messages. */
     private final long crc_table[] = new long[256];
 
@@ -26,16 +25,13 @@ public class PngCrc
     private boolean crc_table_computed = false;
 
     /* Make the table for a fast CRC. */
-    private void make_crc_table()
-    {
+    private void make_crc_table() {
         long c;
         int n, k;
 
-        for (n = 0; n < 256; n++)
-        {
+        for (n = 0; n < 256; n++) {
             c = n;
-            for (k = 0; k < 8; k++)
-            {
+            for (k = 0; k < 8; k++) {
                 if ((c & 1) != 0)
 
                     c = 0xedb88320L ^ (c >> 1);
@@ -47,21 +43,21 @@ public class PngCrc
         crc_table_computed = true;
     }
 
-    /* Update a running CRC with the bytes buf[0..len-1]--the CRC
-     should be initialized to all 1's, and the transmitted value
-     is the 1's complement of the final running CRC (see the
-     crc() routine below)). */
+    /*
+     * Update a running CRC with the bytes buf[0..len-1]--the CRC should be
+     * initialized to all 1's, and the transmitted value is the 1's complement
+     * of the final running CRC (see the crc() routine below)).
+     */
 
-    private final long update_crc(long crc, byte buf[])
-    {
+    private final long update_crc(long crc, byte buf[]) {
         long c = crc;
         int n;
 
         if (!crc_table_computed)
             make_crc_table();
-        for (n = 0; n < buf.length; n++)
-        {
-            //            Debug.debug("crc[" + n + "]", c + " (" + Long.toHexString(c) + ")");
+        for (n = 0; n < buf.length; n++) {
+            // Debug.debug("crc[" + n + "]", c + " (" + Long.toHexString(c) +
+            // ")");
 
             c = crc_table[(int) ((c ^ buf[n]) & 0xff)] ^ (c >> 8);
         }
@@ -69,23 +65,19 @@ public class PngCrc
     }
 
     /* Return the CRC of the bytes buf[0..len-1]. */
-    public final int crc(byte buf[], int len)
-    {
+    public final int crc(byte buf[], int len) {
         return (int) (update_crc(0xffffffffL, buf) ^ 0xffffffffL);
     }
 
-    public final long start_partial_crc(byte buf[], int len)
-    {
+    public final long start_partial_crc(byte buf[], int len) {
         return update_crc(0xffffffffL, buf);
     }
 
-    public final long continue_partial_crc(long old_crc, byte buf[], int len)
-    {
+    public final long continue_partial_crc(long old_crc, byte buf[], int len) {
         return update_crc(old_crc, buf);
     }
 
-    public final long finish_partial_crc(long old_crc)
-    {
+    public final long finish_partial_crc(long old_crc) {
         return (old_crc ^ 0xffffffffL);
     }
 }

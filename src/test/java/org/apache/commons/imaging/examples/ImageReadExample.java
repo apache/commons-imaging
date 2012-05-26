@@ -31,18 +31,16 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.IBufferedImageFactory;
 
-public class ImageReadExample
-{
+public class ImageReadExample {
     public static BufferedImage imageReadExample(File file)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         Map params = new HashMap();
 
         // set optional parameters if you like
         params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
                 new ManagedImageBufferedImageFactory());
 
-        //        params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
+        // params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
         // read image
         BufferedImage image = Imaging.getBufferedImage(file, params);
@@ -50,14 +48,11 @@ public class ImageReadExample
         return image;
     }
 
-    public static class ManagedImageBufferedImageFactory
-            implements
-                IBufferedImageFactory
-    {
+    public static class ManagedImageBufferedImageFactory implements
+            IBufferedImageFactory {
 
         public BufferedImage getColorBufferedImage(int width, int height,
-                boolean hasAlpha)
-        {
+                boolean hasAlpha) {
             GraphicsEnvironment ge = GraphicsEnvironment
                     .getLocalGraphicsEnvironment();
             GraphicsDevice gd = ge.getDefaultScreenDevice();
@@ -67,8 +62,7 @@ public class ImageReadExample
         }
 
         public BufferedImage getGrayscaleBufferedImage(int width, int height,
-                boolean hasAlpha)
-        {
+                boolean hasAlpha) {
             return getColorBufferedImage(width, height, hasAlpha);
         }
     }

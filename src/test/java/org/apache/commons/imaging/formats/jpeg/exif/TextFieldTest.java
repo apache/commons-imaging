@@ -28,45 +28,46 @@ import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.util.Debug;
 
-public class TextFieldTest extends SpecificExifTagTest
-{
-    //    public TextFieldTest(String name)
-    //    {
-    //        super(name);
-    //    }
+public class TextFieldTest extends SpecificExifTagTest {
+    // public TextFieldTest(String name)
+    // {
+    // super(name);
+    // }
 
     @Override
     protected void checkField(File imageFile, TiffField field)
-            throws IOException, ImageReadException, ImageWriteException
-    {
-        if (field.tag == ExifTagConstants.EXIF_TAG_USER_COMMENT.tag)
-        { /* do nothing */ }
-        else if (field.tag == GpsTagConstants.GPS_TAG_GPS_PROCESSING_METHOD.tag
-                && field.directoryType == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType)
-        { /* do nothing */ }
-        else if (field.tag == GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION.tag
-                && field.directoryType == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType)
-        { /* do nothing */ }
-        else
+            throws IOException, ImageReadException, ImageWriteException {
+        if (field.tag == ExifTagConstants.EXIF_TAG_USER_COMMENT.tag) { /*
+                                                                        * do
+                                                                        * nothing
+                                                                        */
+        } else if (field.tag == GpsTagConstants.GPS_TAG_GPS_PROCESSING_METHOD.tag
+                && field.directoryType == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType) { /*
+                                                                                                 * do
+                                                                                                 * nothing
+                                                                                                 */
+        } else if (field.tag == GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION.tag
+                && field.directoryType == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType) { /*
+                                                                                                 * do
+                                                                                                 * nothing
+                                                                                                 */
+        } else
             return;
 
-        //        Debug.debug("field", field);
-        //        Debug.debug("field", Debug.getType(field));
+        // Debug.debug("field", field);
+        // Debug.debug("field", Debug.getType(field));
         //
-        //        Debug.debug("field", field.tag);
-        //        Debug.debug("field", field.tagInfo);
-        //        Debug.debug("field", Debug.getType(field));
+        // Debug.debug("field", field.tag);
+        // Debug.debug("field", field.tagInfo);
+        // Debug.debug("field", Debug.getType(field));
 
-        try
-        {
+        try {
             Object textFieldValue = field.getValue();
-            //            Debug.debug("imageFile", imageFile.getAbsoluteFile());
-            //            Debug.debug("Text field value(" + field.tagInfo.name + ")",
-            //                    textFieldValue);
-            //        Debug.debug("userCommentValue", Debug.getType(userCommentValue));
-        }
-        catch (ImageReadException e)
-        {
+            // Debug.debug("imageFile", imageFile.getAbsoluteFile());
+            // Debug.debug("Text field value(" + field.tagInfo.name + ")",
+            // textFieldValue);
+            // Debug.debug("userCommentValue", Debug.getType(userCommentValue));
+        } catch (ImageReadException e) {
             Debug.debug("imageFile", imageFile.getAbsoluteFile());
             Debug.debug(e);
             throw e;

@@ -21,8 +21,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public abstract class PhotometricInterpreter
-{
+public abstract class PhotometricInterpreter {
     protected final int samplesPerPixel;
     protected final int bitsPerSample[];
     protected final int predictor;
@@ -30,8 +29,7 @@ public abstract class PhotometricInterpreter
     protected final int height;
 
     public PhotometricInterpreter(int fSamplesPerPixel, int fBitsPerSample[],
-            int Predictor, int width, int height)
-    {
+            int Predictor, int width, int height) {
         this.samplesPerPixel = fSamplesPerPixel;
         this.bitsPerSample = fBitsPerSample;
         this.predictor = Predictor;
@@ -39,15 +37,16 @@ public abstract class PhotometricInterpreter
         this.height = height;
     }
 
-    public abstract void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
-            int y) throws ImageReadException, IOException;
+    public abstract void interpretPixel(ImageBuilder imageBuilder,
+            int samples[], int x, int y) throws ImageReadException, IOException;
 
     /**
-     * @throws ImageReadException may be thrown by sub-classes
-     * @throws IOException may be thrown by sub-classes
+     * @throws ImageReadException
+     *             may be thrown by sub-classes
+     * @throws IOException
+     *             may be thrown by sub-classes
      */
-    public void dumpstats() throws ImageReadException, IOException
-    {
+    public void dumpstats() throws ImageReadException, IOException {
 
     }
 

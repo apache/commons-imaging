@@ -23,14 +23,12 @@ import org.apache.commons.imaging.common.ZLibUtils;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
 
-public class PngChunkZtxt extends PngTextChunk
-{
+public class PngChunkZtxt extends PngTextChunk {
 
     public final String keyword, text;
 
     public PngChunkZtxt(int length, int chunkType, int crc, byte bytes[])
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
 
         {
@@ -62,8 +60,7 @@ public class PngChunkZtxt extends PngTextChunk
      * @return Returns the keyword.
      */
     @Override
-    public String getKeyword()
-    {
+    public String getKeyword() {
         return keyword;
     }
 
@@ -71,14 +68,12 @@ public class PngChunkZtxt extends PngTextChunk
      * @return Returns the text.
      */
     @Override
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
     @Override
-    public PngText getContents()
-    {
+    public PngText getContents() {
         return new PngText.zTXt(keyword, text);
     }
 

@@ -28,21 +28,17 @@ import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.util.Debug;
 
-public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
-{
+public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
 
-    public void testTrivial() throws Exception
-    {
+    public void testTrivial() throws Exception {
         byte bytes[] = { 0, };
         compressRoundtripAndValidate(bytes);
     }
 
-    public void testMedium() throws Exception
-    {
+    public void testMedium() throws Exception {
         int LENGTH = 1024 * 32;
         byte bytes[] = new byte[LENGTH];
-        for (int modulator = 1; modulator < 255; modulator += 3)
-        {
+        for (int modulator = 1; modulator < 255; modulator += 3) {
             for (int i = 0; i < LENGTH; i++)
                 bytes[i] = (byte) (0xff & (i % modulator));
 
@@ -50,37 +46,35 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
         }
     }
 
-//    public void testTiffImageData() throws IOException, ImageReadException,
-//            ImageWriteException
-//    {
-//        List images = getTiffImages();
-//        for (int i = 0; i < images.size(); i++)
-//        {
-//            if (i % 10 == 0)
-//                Debug.purgeMemory();
-//
-//            File imageFile = (File) images.get(i);
-//            Debug.debug("imageFile", imageFile);
-//
-//            ByteSource byteSource = new ByteSourceFile(imageFile);
-//            Map params = new HashMap();
-//            List data = new TiffImageParser().collectRawImageData(byteSource,
-//                    params);
-//
-//            for (int j = 0; j < data.size(); j++)
-//            {
-//                byte bytes[] = (byte[]) data.get(j);
-//                decompressRoundtripAndValidate(bytes);
-//            }
-//        }
-//    }
+    // public void testTiffImageData() throws IOException, ImageReadException,
+    // ImageWriteException
+    // {
+    // List images = getTiffImages();
+    // for (int i = 0; i < images.size(); i++)
+    // {
+    // if (i % 10 == 0)
+    // Debug.purgeMemory();
+    //
+    // File imageFile = (File) images.get(i);
+    // Debug.debug("imageFile", imageFile);
+    //
+    // ByteSource byteSource = new ByteSourceFile(imageFile);
+    // Map params = new HashMap();
+    // List data = new TiffImageParser().collectRawImageData(byteSource,
+    // params);
+    //
+    // for (int j = 0; j < data.size(); j++)
+    // {
+    // byte bytes[] = (byte[]) data.get(j);
+    // decompressRoundtripAndValidate(bytes);
+    // }
+    // }
+    // }
 
-    private void compressRoundtripAndValidate(byte src[]) throws IOException
-    {
+    private void compressRoundtripAndValidate(byte src[]) throws IOException {
         final boolean DEBUG = false;
 
-        if (DEBUG)
-        {
+        if (DEBUG) {
             Debug.debug();
             Debug.debug("roundtripAndValidate: " + src.length);
             Debug.debug();
@@ -89,23 +83,19 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
         int LZW_MINIMUM_CODE_SIZE = 8;
         final List codes = new ArrayList();
         MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
-            public void dataCode(int code)
-            {
+            public void dataCode(int code) {
                 codes.add(new Integer(code));
             }
 
-            public void eoiCode(int code)
-            {
+            public void eoiCode(int code) {
                 codes.add(new Integer(code));
             }
 
-            public void clearCode(int code)
-            {
+            public void clearCode(int code) {
                 codes.add(new Integer(code));
             }
 
-            public void init(int clearCode, int eoiCode)
-            {
+            public void init(int clearCode, int eoiCode) {
             }
         };
 
@@ -118,24 +108,19 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
             int index = 0;
             int clearCode, eoiCode;
 
-            public void code(int code)
-            {
-                if (DEBUG)
-                {
-                    if (code == clearCode)
-                    {
+            public void code(int code) {
+                if (DEBUG) {
+                    if (code == clearCode) {
                         Debug.debug("clearCode: " + index + "/" + codes.size());
                         Debug.debug();
                     }
-                    if (code == eoiCode)
-                    {
+                    if (code == eoiCode) {
                         Debug.debug("eoiCode: " + index + "/" + codes.size());
                         Debug.debug();
                     }
                 }
                 Integer expectedCode = (Integer) codes.get(index++);
-                if (code != expectedCode.intValue())
-                {
+                if (code != expectedCode.intValue()) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
                     Debug.debug("code: " + code + " (0x"
                             + Integer.toHexString(code) + ") "
@@ -154,8 +139,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
                 }
             }
 
-            public void init(int clearCode, int eoiCode)
-            {
+            public void init(int clearCode, int eoiCode) {
                 this.clearCode = clearCode;
                 this.eoiCode = eoiCode;
             }
@@ -173,8 +157,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
             assertEquals(src[i], decompressed[i]);
     }
 
-    private void decompressRoundtripAndValidate(byte src[]) throws IOException
-    {
+    private void decompressRoundtripAndValidate(byte src[]) throws IOException {
         Debug.debug();
         Debug.debug("roundtripAndValidate: " + src.length);
         Debug.debug();
@@ -184,8 +167,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
 
         MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
 
-            public void code(int code)
-            {
+            public void code(int code) {
                 Debug.debug("listener code: " + code + " (0x"
                         + Integer.toHexString(code) + ") "
                         + Integer.toBinaryString(code) + ", index: "
@@ -193,8 +175,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
                 codes.add(new Integer(code));
             }
 
-            public void init(int clearCode, int eoiCode)
-            {
+            public void init(int clearCode, int eoiCode) {
             }
 
         };
@@ -209,30 +190,25 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
 
             int clearCode, eoiCode;
 
-            public void init(int clearCode, int eoiCode)
-            {
+            public void init(int clearCode, int eoiCode) {
                 this.clearCode = clearCode;
                 this.eoiCode = eoiCode;
             }
 
             int index = 0;
 
-            private void code(int code)
-            {
+            private void code(int code) {
 
-                if (code == clearCode)
-                {
+                if (code == clearCode) {
                     Debug.debug("clearCode: " + index + "/" + codes.size());
                     Debug.debug();
                 }
-                if (code == eoiCode)
-                {
+                if (code == eoiCode) {
                     Debug.debug("eoiCode: " + index + "/" + codes.size());
                     Debug.debug();
                 }
                 Integer expectedCode = (Integer) codes.get(index++);
-                if (code != expectedCode.intValue())
-                {
+                if (code != expectedCode.intValue()) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
                     Debug.debug("code: " + code + " (0x"
                             + Integer.toHexString(code) + ") "
@@ -251,18 +227,15 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants
                 }
             }
 
-            public void dataCode(int code)
-            {
+            public void dataCode(int code) {
                 code(code);
             }
 
-            public void eoiCode(int code)
-            {
+            public void eoiCode(int code) {
                 code(code);
             }
 
-            public void clearCode(int code)
-            {
+            public void clearCode(int code) {
                 code(code);
             }
 

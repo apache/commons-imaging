@@ -16,9 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.constants;
 
-public interface TiffDirectoryConstants
-{
-    
+public interface TiffDirectoryConstants {
+
     public static final int DIRECTORY_TYPE_UNKNOWN = -1;
     public static final int DIRECTORY_TYPE_ROOT = 0;
     public static final int DIRECTORY_TYPE_SUB = 1;

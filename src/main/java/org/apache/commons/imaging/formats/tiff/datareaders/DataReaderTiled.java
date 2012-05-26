@@ -26,8 +26,7 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
-public final class DataReaderTiled extends DataReader
-{
+public final class DataReaderTiled extends DataReader {
 
     private final int tileWidth;
     private final int tileLength;
@@ -40,12 +39,12 @@ public final class DataReaderTiled extends DataReader
     private final TiffImageData.Tiles imageData;
 
     public DataReaderTiled(TiffDirectory directory,
-            PhotometricInterpreter photometricInterpreter,
-            int tileWidth, int tileLength, int bitsPerPixel,
-            int bitsPerSample[], int predictor, int samplesPerPixel, int width,
-            int height, int compression, int byteOrder, TiffImageData.Tiles imageData)
-    {
-        super(directory, photometricInterpreter, bitsPerSample, predictor, samplesPerPixel, width, height);
+            PhotometricInterpreter photometricInterpreter, int tileWidth,
+            int tileLength, int bitsPerPixel, int bitsPerSample[],
+            int predictor, int samplesPerPixel, int width, int height,
+            int compression, int byteOrder, TiffImageData.Tiles imageData) {
+        super(directory, photometricInterpreter, bitsPerSample, predictor,
+                samplesPerPixel, width, height);
 
         this.tileWidth = tileWidth;
         this.tileLength = tileLength;
@@ -57,9 +56,8 @@ public final class DataReaderTiled extends DataReader
         this.byteOrder = byteOrder;
     }
 
-    private void interpretTile(ImageBuilder imageBuilder, byte bytes[], int startX,
-            int startY) throws ImageReadException, IOException
-    {
+    private void interpretTile(ImageBuilder imageBuilder, byte bytes[],
+            int startX, int startY) throws ImageReadException, IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         BitInputStream bis = new BitInputStream(bais, byteOrder);
 
@@ -69,24 +67,22 @@ public final class DataReaderTiled extends DataReader
 
         int[] samples = new int[bitsPerSample.length];
         resetPredictor();
-        for (int i = 0; i < pixelsPerTile; i++)
-        {
+        for (int i = 0; i < pixelsPerTile; i++) {
 
             int x = tileX + startX;
             int y = tileY + startY;
 
             getSamplesAsBytes(bis, samples);
 
-            if ((x < width) && (y < height))
-            {
+            if ((x < width) && (y < height)) {
                 samples = applyPredictor(samples);
-                photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
+                photometricInterpreter.interpretPixel(imageBuilder, samples, x,
+                        y);
             }
 
             tileX++;
 
-            if (tileX >= tileWidth)
-            {
+            if (tileX >= tileWidth) {
                 tileX = 0;
                 resetPredictor();
                 tileY++;
@@ -99,16 +95,14 @@ public final class DataReaderTiled extends DataReader
     }
 
     @Override
-    public void readImageData(ImageBuilder imageBuilder) throws ImageReadException,
-            IOException
-    {
+    public void readImageData(ImageBuilder imageBuilder)
+            throws ImageReadException, IOException {
         int bitsPerRow = tileWidth * bitsPerPixel;
         int bytesPerRow = (bitsPerRow + 7) / 8;
         int bytesPerTile = bytesPerRow * tileLength;
         int x = 0, y = 0;
 
-        for (int tile = 0; tile < imageData.tiles.length; tile++)
-        {
+        for (int tile = 0; tile < imageData.tiles.length; tile++) {
             byte compressed[] = imageData.tiles[tile].getData();
 
             byte decompressed[] = decompress(compressed, compression,
@@ -117,8 +111,7 @@ public final class DataReaderTiled extends DataReader
             interpretTile(imageBuilder, decompressed, x, y);
 
             x += tileWidth;
-            if (x >= width)
-            {
+            if (x >= width) {
                 x = 0;
                 y += tileLength;
                 if (y >= height)

@@ -23,41 +23,34 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
-public class SofnSegment extends Segment
-{
+public class SofnSegment extends Segment {
     public final int width, height;
     public final int numberOfComponents;
     public final int precision;
     public final Component[] components;
 
-    public static class Component
-    {
+    public static class Component {
         public final int componentIdentifier;
         public final int horizontalSamplingFactor;
         public final int verticalSamplingFactor;
         public final int quantTabDestSelector;
 
-        public Component(int componentIdentifier,
-                int horizontalSamplingFactor,
-                int veritcalSamplingFactor,
-                int quantTabDestSelector)
-        {
+        public Component(int componentIdentifier, int horizontalSamplingFactor,
+                int veritcalSamplingFactor, int quantTabDestSelector) {
             this.componentIdentifier = componentIdentifier;
             this.horizontalSamplingFactor = horizontalSamplingFactor;
             this.verticalSamplingFactor = veritcalSamplingFactor;
             this.quantTabDestSelector = quantTabDestSelector;
         }
     }
-    
+
     public SofnSegment(int marker, byte segmentData[])
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
     public SofnSegment(int marker, int marker_length, InputStream is)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         super(marker, marker_length);
 
         if (getDebug())
@@ -69,8 +62,7 @@ public class SofnSegment extends Segment
         numberOfComponents = readByte("Number_of_components", is,
                 "Not a Valid JPEG File");
         components = new Component[numberOfComponents];
-        for (int i = 0; i < numberOfComponents; i++)
-        {
+        for (int i = 0; i < numberOfComponents; i++) {
             int componentIdentifier = readByte("ComponentIdentifier", is,
                     "Not a Valid JPEG File");
 
@@ -81,8 +73,8 @@ public class SofnSegment extends Segment
             int quantTabDestSelector = readByte("QuantTabDestSel", is,
                     "Not a Valid JPEG File");
             components[i] = new Component(componentIdentifier,
-                        horizontalSamplingFactor, verticalSamplingFactor,
-                        quantTabDestSelector);
+                    horizontalSamplingFactor, verticalSamplingFactor,
+                    quantTabDestSelector);
         }
 
         if (getDebug())
@@ -90,8 +82,7 @@ public class SofnSegment extends Segment
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "SOFN (SOF" + (marker - JpegImageParser.SOF0Marker) + ") ("
                 + getSegmentType() + ")";
     }

@@ -24,14 +24,11 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
 
-public class XmpDumpTest extends ImagingTest
-{
+public class XmpDumpTest extends ImagingTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         List images = getTestImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 

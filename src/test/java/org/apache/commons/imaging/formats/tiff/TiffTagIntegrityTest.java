@@ -42,26 +42,38 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 public class TiffTagIntegrityTest extends ImagingTest {
     public void testTagIntegrity() {
-        verifyFields(AdobePageMaker6TagConstants.class, AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
-        verifyFields(AdobePhotoshopTagConstants.class, AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);
-        verifyFields(AliasSketchbookProTagConstants.class, AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS);
+        verifyFields(AdobePageMaker6TagConstants.class,
+                AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
+        verifyFields(AdobePhotoshopTagConstants.class,
+                AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);
+        verifyFields(AliasSketchbookProTagConstants.class,
+                AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS);
         verifyFields(DcfTagConstants.class, DcfTagConstants.ALL_DCF_TAGS);
         verifyFields(DngTagConstants.class, DngTagConstants.ALL_DNG_TAGS);
         verifyFields(ExifTagConstants.class, ExifTagConstants.ALL_EXIF_TAGS);
-        verifyFields(GeoTiffTagConstants.class, GeoTiffTagConstants.ALL_GEO_TIFF_TAGS);
-        verifyFields(GdalLibraryTagConstants.class, GdalLibraryTagConstants.ALL_GDAL_LIBRARY_TAGS);
+        verifyFields(GeoTiffTagConstants.class,
+                GeoTiffTagConstants.ALL_GEO_TIFF_TAGS);
+        verifyFields(GdalLibraryTagConstants.class,
+                GdalLibraryTagConstants.ALL_GDAL_LIBRARY_TAGS);
         verifyFields(GpsTagConstants.class, GpsTagConstants.ALL_GPS_TAGS);
-        verifyFields(MolecularDynamicsGelTagConstants.class, MolecularDynamicsGelTagConstants.ALL_MOLECULAR_DYNAMICS_GEL_TAGS);
-        verifyFields(MicrosoftTagConstants.class, MicrosoftTagConstants.ALL_MICROSOFT_TAGS);
-        verifyFields(MicrosoftHdPhotoTagConstants.class, MicrosoftHdPhotoTagConstants.ALL_MICROSOFT_HD_PHOTO_TAGS);
-        verifyFields(OceScanjobTagConstants.class, OceScanjobTagConstants.ALL_OCE_SCANJOB_TAGS);
-        verifyFields(Rfc2301TagConstants.class, Rfc2301TagConstants.ALL_RFC_2301_TAGS);
+        verifyFields(
+                MolecularDynamicsGelTagConstants.class,
+                MolecularDynamicsGelTagConstants.ALL_MOLECULAR_DYNAMICS_GEL_TAGS);
+        verifyFields(MicrosoftTagConstants.class,
+                MicrosoftTagConstants.ALL_MICROSOFT_TAGS);
+        verifyFields(MicrosoftHdPhotoTagConstants.class,
+                MicrosoftHdPhotoTagConstants.ALL_MICROSOFT_HD_PHOTO_TAGS);
+        verifyFields(OceScanjobTagConstants.class,
+                OceScanjobTagConstants.ALL_OCE_SCANJOB_TAGS);
+        verifyFields(Rfc2301TagConstants.class,
+                Rfc2301TagConstants.ALL_RFC_2301_TAGS);
         verifyFields(Tiff4TagConstants.class, Tiff4TagConstants.ALL_TIFF_4_TAGS);
-        verifyFields(TiffEpTagConstants.class, TiffEpTagConstants.ALL_TIFF_EP_TAGS);
+        verifyFields(TiffEpTagConstants.class,
+                TiffEpTagConstants.ALL_TIFF_EP_TAGS);
         verifyFields(TiffTagConstants.class, TiffTagConstants.ALL_TIFF_TAGS);
         verifyFields(WangTagConstants.class, WangTagConstants.ALL_WANG_TAGS);
     }
-    
+
     private void verifyFields(Class<?> cls, List<TagInfo> tags) {
         Field[] fields = cls.getFields();
         int tagCount = 0;

@@ -20,31 +20,26 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-class GenericGifBlock extends GifBlock
-{
+class GenericGifBlock extends GifBlock {
     public final List<byte[]> subblocks;
 
-    public GenericGifBlock(int blockCode, List<byte[]> subblocks)
-    {
+    public GenericGifBlock(int blockCode, List<byte[]> subblocks) {
         super(blockCode);
 
         this.subblocks = subblocks;
 
     }
 
-    public byte[] appendSubBlocks() throws IOException
-    {
+    public byte[] appendSubBlocks() throws IOException {
         return appendSubBlocks(false);
     }
 
-    public byte[] appendSubBlocks(boolean includeLengths) throws IOException
-    {
+    public byte[] appendSubBlocks(boolean includeLengths) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        for (int i = 0; i < subblocks.size(); i++)
-        {
+        for (int i = 0; i < subblocks.size(); i++) {
             byte subblock[] = subblocks.get(i);
-            if(includeLengths && i>0)
+            if (includeLengths && i > 0)
                 out.write(subblock.length);
             out.write(subblock);
         }

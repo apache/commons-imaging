@@ -21,38 +21,32 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class CachingInputStream extends InputStream
-{
+public class CachingInputStream extends InputStream {
     private final InputStream is;
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-    public CachingInputStream(InputStream is)
-    {
+    public CachingInputStream(InputStream is) {
         this.is = is;
     }
 
-    public byte[] getCache()
-    {
+    public byte[] getCache() {
         return baos.toByteArray();
     }
 
     @Override
-    public int read() throws IOException
-    {
+    public int read() throws IOException {
         int result = is.read();
         baos.write(result);
         return result;
     }
 
     @Override
-    public int available() throws IOException
-    {
+    public int available() throws IOException {
         return is.available();
     }
 
     @Override
-    public void close() throws IOException
-    {
+    public void close() throws IOException {
         is.close();
     }
 

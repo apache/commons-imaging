@@ -31,15 +31,13 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class PngWriteReadTest extends ImagingTest
-{
-    //    public PngWriteReadTest(String name)
-    //    {
-    //        super(name);
-    //    }
+public class PngWriteReadTest extends ImagingTest {
+    // public PngWriteReadTest(String name)
+    // {
+    // super(name);
+    // }
 
-    private int[][] getSimpleRawData(int width, int height, int value)
-    {
+    private int[][] getSimpleRawData(int width, int height, int value) {
         int[][] result = new int[height][width];
         for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++)
@@ -47,12 +45,10 @@ public class PngWriteReadTest extends ImagingTest
         return result;
     }
 
-    private int[][] getAscendingRawData(int width, int height)
-    {
+    private int[][] getAscendingRawData(int width, int height) {
         int[][] result = new int[height][width];
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int alpha = (x + y) % 256;
                 int value = (x + y) % 256;
                 int argb = (0xff & alpha) << 24 | (0xff & value) << 16
@@ -63,21 +59,18 @@ public class PngWriteReadTest extends ImagingTest
         return result;
     }
 
-    private int[][] randomRawData(int width, int height)
-    {
+    private int[][] randomRawData(int width, int height) {
         Random random = new Random();
         int[][] result = new int[height][width];
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int argb = random.nextInt();
                 result[y][x] = argb;
             }
         return result;
     }
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
         int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
         int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
@@ -85,20 +78,17 @@ public class PngWriteReadTest extends ImagingTest
         int[][] smallAscendingPixels = getAscendingRawData(256, 256);
         int[][] smallRandomPixels = randomRawData(256, 256);
 
-        int[][][] testData = {
-                smallBlackPixels, singleBlackPixel, smallRedPixels,
-                singleRedPixel, smallAscendingPixels, smallRandomPixels,
-        };
+        int[][][] testData = { smallBlackPixels, singleBlackPixel,
+                smallRedPixels, singleRedPixel, smallAscendingPixels,
+                smallRandomPixels, };
 
-        for (int i = 0; i < testData.length; i++)
-        {
+        for (int i = 0; i < testData.length; i++) {
             int rawData[][] = testData[i];
             writeAndReadImageData(rawData);
         }
     }
 
-    public void testTransparency() throws Exception
-    {
+    public void testTransparency() throws Exception {
         // Test for https://issues.apache.org/jira/browse/SANSELAN-52
         int[][] smallAscendingPixels = getAscendingRawData(256, 256);
         byte[] pngBytes = Imaging.writeImageToBytes(
@@ -107,48 +97,44 @@ public class PngWriteReadTest extends ImagingTest
         assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
-    private BufferedImage imageDataToBufferedImage(int[][] rawData)
-    {
+    private BufferedImage imageDataToBufferedImage(int[][] rawData) {
         int width = rawData[0].length;
         int height = rawData.length;
         BufferedImage image = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 image.setRGB(x, y, rawData[y][x]);
             }
         return image;
     }
 
-    private int[][] bufferedImageToImageData(BufferedImage image)
-    {
+    private int[][] bufferedImageToImageData(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
         int[][] result = new int[height][width];
 
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 result[y][x] = image.getRGB(x, y);
             }
         return result;
     }
 
     private void writeAndReadImageData(int[][] rawData) throws IOException,
-            ImageReadException, ImageWriteException
-    {
+            ImageReadException, ImageWriteException {
         BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
         Map writeParams = new HashMap();
-        //        writeParams.put(SanselanConstants.PARAM_KEY_FORMAT, ImageFormat.IMAGE_FORMAT_PNG);
-        //        writeParams.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
-        //                Boolean.TRUE);
+        // writeParams.put(SanselanConstants.PARAM_KEY_FORMAT,
+        // ImageFormat.IMAGE_FORMAT_PNG);
+        // writeParams.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
+        // Boolean.TRUE);
 
         byte bytes[] = Imaging.writeImageToBytes(srcImage,
                 ImageFormat.IMAGE_FORMAT_PNG, writeParams);
 
-        //        Debug.debug("bytes", bytes);
+        // Debug.debug("bytes", bytes);
 
         File tempFile = createTempFile("temp", ".png");
         IoUtils.writeToFile(bytes, tempFile);
@@ -163,19 +149,16 @@ public class PngWriteReadTest extends ImagingTest
         compare(rawData, dstData);
     }
 
-    private void compare(int[][] a, int[][] b)
-    {
+    private void compare(int[][] a, int[][] b) {
         assertNotNull(a);
         assertNotNull(b);
         assertTrue(a.length == b.length);
 
-        for (int y = 0; y < a.length; y++)
-        {
+        for (int y = 0; y < a.length; y++) {
             assertTrue(a[y].length == b[y].length);
             // make sure row lengths consistent.
             assertTrue(a[0].length == b[y].length);
-            for (int x = 0; x < a[y].length; x++)
-            {
+            for (int x = 0; x < a[y].length; x++) {
                 assertTrue(a[y][x] == b[y][x]);
             }
         }

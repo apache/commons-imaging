@@ -22,13 +22,11 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.GammaCorrection;
 
-public class PngChunkPlte extends PngChunk
-{
+public class PngChunkPlte extends PngChunk {
     public final int rgb[];
 
     public PngChunkPlte(int length, int ChunkType, int CRC, byte bytes[])
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         super(length, ChunkType, CRC, bytes);
 
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);
@@ -40,8 +38,7 @@ public class PngChunkPlte extends PngChunk
 
         rgb = new int[count];
 
-        for (int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             int red = readByte("red[" + i + "]", is,
                     "Not a Valid Png File: PLTE Corrupt");
             int green = readByte("green[" + i + "]", is,
@@ -53,8 +50,7 @@ public class PngChunkPlte extends PngChunk
         }
     }
 
-    public int getRGB(int index) throws ImageReadException
-    {
+    public int getRGB(int index) throws ImageReadException {
         if ((index < 0) || (index >= rgb.length))
             throw new ImageReadException("PNG: unknown Palette reference: "
                     + index);
@@ -72,8 +68,7 @@ public class PngChunkPlte extends PngChunk
     // Debug.debug();
     // }
 
-    public void correct(GammaCorrection gammaCorrection)
-    {
+    public void correct(GammaCorrection gammaCorrection) {
         for (int i = 0; i < rgb.length; i++)
             rgb[i] = gammaCorrection.correctARGB(rgb[i]);
     }

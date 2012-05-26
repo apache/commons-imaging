@@ -19,7 +19,8 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoAny extends TagInfo {
-    public TagInfoAny(String name, int tag, int length, TiffDirectoryType directoryType) {
+    public TagInfoAny(String name, int tag, int length,
+            TiffDirectoryType directoryType) {
         super(name, tag, FIELD_TYPE_ANY, length, directoryType);
     }
 }

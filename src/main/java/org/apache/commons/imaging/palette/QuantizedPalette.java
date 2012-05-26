@@ -20,29 +20,25 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class QuantizedPalette extends Palette
-{
+public class QuantizedPalette extends Palette {
     private final int precision;
     private final List<ColorSpaceSubset> subsets;
     private final ColorSpaceSubset straight[];
 
-    public QuantizedPalette(List<ColorSpaceSubset> subsets, int precision)
-    {
+    public QuantizedPalette(List<ColorSpaceSubset> subsets, int precision) {
         this.subsets = subsets;
         this.precision = precision;
 
         {
             straight = new ColorSpaceSubset[1 << (precision * 3)];
 
-            for (int i = 0; i < subsets.size(); i++)
-            {
+            for (int i = 0; i < subsets.size(); i++) {
                 ColorSpaceSubset subset = subsets.get(i);
                 subset.setIndex(i);
 
                 for (int u = subset.mins[0]; u <= subset.maxs[0]; u++)
                     for (int j = subset.mins[1]; j <= subset.maxs[1]; j++)
-                        for (int k = subset.mins[2]; k <= subset.maxs[2]; k++)
-                        {
+                        for (int k = subset.mins[2]; k <= subset.maxs[2]; k++) {
                             int index = (u << (precision * 2))
                                     | (j << (precision * 1))
                                     | (k << (precision * 0));
@@ -54,8 +50,7 @@ public class QuantizedPalette extends Palette
     }
 
     @Override
-    public int getPaletteIndex(int rgb) throws ImageWriteException
-    {
+    public int getPaletteIndex(int rgb) throws ImageWriteException {
         int precisionMask = (1 << precision) - 1;
 
         int index = ((rgb >> (24 - 3 * precision)) & (precisionMask << (precision << 1)))
@@ -66,24 +61,21 @@ public class QuantizedPalette extends Palette
     }
 
     @Override
-    public void dump()
-    {
-        //        System.out.println("ColorSpaceSubset.compares: "
-        //                + ColorSpaceSubset.compares);
-        //        System.out.println("converted: " + converted);
-        //        System.out.println("avg. distance: " + (distance / converted));
+    public void dump() {
+        // System.out.println("ColorSpaceSubset.compares: "
+        // + ColorSpaceSubset.compares);
+        // System.out.println("converted: " + converted);
+        // System.out.println("avg. distance: " + (distance / converted));
     }
 
     @Override
-    public int getEntry(int index)
-    {
+    public int getEntry(int index) {
         ColorSpaceSubset subset = subsets.get(index);
         return subset.rgb;
     }
 
     @Override
-    public int length()
-    {
+    public int length() {
         return subsets.size();
 
     }

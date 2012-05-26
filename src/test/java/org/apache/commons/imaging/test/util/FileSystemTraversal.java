@@ -21,73 +21,58 @@ import java.io.File;
 
 import org.apache.commons.imaging.util.Debug;
 
-public class FileSystemTraversal
-{
+public class FileSystemTraversal {
 
     public static final int MODE_FILES = 1;
     public static final int MODE_FOLDERS = 2;
     public static final int MODE_FILES_AND_FOLDERS = 3;
     public static final int MODE_ALL = 4;
 
-    public interface Visitor
-    {
+    public interface Visitor {
         public boolean visit(File file, double progressEstimate);
     }
 
-    public boolean traverseFiles(File file, Visitor visitor)
-    {
+    public boolean traverseFiles(File file, Visitor visitor) {
 
         return traverse(file, MODE_FILES, visitor);
     }
 
-    public boolean traverseFolders(File file, Visitor visitor)
-    {
+    public boolean traverseFolders(File file, Visitor visitor) {
 
         return traverse(file, MODE_FOLDERS, visitor);
     }
 
-    public boolean traverseAll(File file, Visitor visitor)
-    {
+    public boolean traverseAll(File file, Visitor visitor) {
 
         return traverse(file, MODE_FILES_AND_FOLDERS, visitor);
     }
 
-    public boolean traverse(File file, int mode, Visitor visitor)
-    {
+    public boolean traverse(File file, int mode, Visitor visitor) {
         return traverse(file, mode, visitor, 0, 1);
     }
 
     private boolean traverse(File file, int mode, Visitor visitor,
-            double estimate, double estimateIncrement)
-    {
+            double estimate, double estimateIncrement) {
 
-        if (file.isFile())
-        {
+        if (file.isFile()) {
             if ((mode == MODE_FILES) || (mode == MODE_FILES_AND_FOLDERS)
-                    || (mode == MODE_ALL))
-            {
+                    || (mode == MODE_ALL)) {
                 if (!visitor.visit(file, estimate))
                     return false;
             }
-        }
-        else if (file.isDirectory())
-        {
+        } else if (file.isDirectory()) {
             File files[] = file.listFiles();
-            if (files != null)
-            {
-                for (int i = 0; i < files.length; i++)
-                {
+            if (files != null) {
+                for (int i = 0; i < files.length; i++) {
                     File child = files[i];
-                    if (ON_MAC_OS_X && child.isDirectory())
-                    {
+                    if (ON_MAC_OS_X && child.isDirectory()) {
                         String name = child.getName();
                         if (name.equalsIgnoreCase("automount")
                                 || name.equalsIgnoreCase("private")
                                 || name.equalsIgnoreCase("Network")
-                                || name.equalsIgnoreCase("Volumes"))
-                        {
+                                || name.equalsIgnoreCase("Volumes")) {
                             continue;
-                            //                            return true;
+                            // return true;
                         }
                     }
 
@@ -99,16 +84,12 @@ public class FileSystemTraversal
             }
 
             if ((mode == MODE_FOLDERS) || (mode == MODE_FILES_AND_FOLDERS)
-                    || (mode == MODE_ALL))
-            {
+                    || (mode == MODE_ALL)) {
                 if (!visitor.visit(file, estimate))
                     return false;
             }
-        }
-        else
-        {
-            if (mode == MODE_ALL)
-            {
+        } else {
+            if (mode == MODE_ALL) {
                 if (!visitor.visit(file, estimate))
                     return false;
             }
@@ -117,39 +98,31 @@ public class FileSystemTraversal
         return true;
     }
 
-    public boolean traverseFiles(Visitor visitor)
-    {
+    public boolean traverseFiles(Visitor visitor) {
 
         return traverse(MODE_FILES, visitor);
     }
 
-    public boolean traverseFolders(Visitor visitor)
-    {
+    public boolean traverseFolders(Visitor visitor) {
 
         return traverse(MODE_FOLDERS, visitor);
     }
 
-    public boolean traverseAll(Visitor visitor)
-    {
+    public boolean traverseAll(Visitor visitor) {
 
         return traverse(MODE_FILES_AND_FOLDERS, visitor);
     }
 
-    public boolean traverse(int mode, Visitor visitor)
-    {
+    public boolean traverse(int mode, Visitor visitor) {
         return traverse(mode, visitor, 0, 1);
     }
 
     private static boolean ON_MAC_OS_X;
 
-    static
-    {
-        try
-        {
+    static {
+        try {
             ON_MAC_OS_X = (System.getProperty("mrj.version") != null);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Debug.debug(e);
 
             ON_MAC_OS_X = false;
@@ -157,23 +130,19 @@ public class FileSystemTraversal
     }
 
     private boolean traverse(int mode, Visitor visitor, double estimate,
-            double estimateIncrement)
-    {
+            double estimateIncrement) {
         File roots[] = File.listRoots();
 
-        if (ON_MAC_OS_X)
-        {
+        if (ON_MAC_OS_X) {
             File Volumes = new File("/Volumes/");
             roots = Volumes.listFiles();
-        }
-        else
+        } else
             roots = File.listRoots();
 
         if (roots == null)
             return false;
 
-        for (int i = 0; i < roots.length; i++)
-        {
+        for (int i = 0; i < roots.length; i++) {
             File root = roots[i];
 
             if (root == null || !root.exists())

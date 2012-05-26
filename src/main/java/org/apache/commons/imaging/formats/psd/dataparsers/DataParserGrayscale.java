@@ -18,12 +18,10 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.formats.psd.ImageContents;
 
-public class DataParserGrayscale extends DataParser
-{
+public class DataParserGrayscale extends DataParser {
     @Override
     protected int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents)
-    {
+            ImageContents imageContents) {
         int sample = 0xff & data[0][y][x];
         int alpha = 0xff;
 
@@ -34,8 +32,7 @@ public class DataParserGrayscale extends DataParser
     }
 
     @Override
-    public int getBasicChannelsCount()
-    {
+    public int getBasicChannelsCount() {
         return 1;
     }
 

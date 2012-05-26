@@ -22,16 +22,13 @@ import org.apache.commons.imaging.common.RationalNumberUtilities;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
-public class FieldTypeRational extends FieldType
-{
-    public FieldTypeRational(int type, String name)
-    {
+public class FieldTypeRational extends FieldType {
+    public FieldTypeRational(int type, String name) {
         super(type, 8, name);
     }
 
     @Override
-    public Object getSimpleValue(TiffField entry)
-    {
+    public Object getSimpleValue(TiffField entry) {
         if (entry.length == 1)
             return convertByteArrayToRational(name + " (" + entry.tagInfo.name
                     + ")", entry.oversizeValue, entry.byteOrder);
@@ -41,64 +38,48 @@ public class FieldTypeRational extends FieldType
     }
 
     @Override
-    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException
-    {
+    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
         if (o instanceof RationalNumber)
             return convertRationalToByteArray((RationalNumber) o, byteOrder);
-        else if (o instanceof RationalNumber[])
-        {
+        else if (o instanceof RationalNumber[]) {
             return convertRationalArrayToByteArray((RationalNumber[]) o,
                     byteOrder);
-        }
-        else if (o instanceof Number)
-        {
+        } else if (o instanceof Number) {
             Number number = (Number) o;
             RationalNumber rationalNumber = RationalNumberUtilities
                     .getRationalNumber(number.doubleValue());
             return convertRationalToByteArray(rationalNumber, byteOrder);
-        }
-        else if (o instanceof Number[])
-        {
+        } else if (o instanceof Number[]) {
             Number numbers[] = (Number[]) o;
             RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
-            for (int i = 0; i < numbers.length; i++)
-            {
+            for (int i = 0; i < numbers.length; i++) {
                 Number number = numbers[i];
                 rationalNumbers[i] = RationalNumberUtilities
                         .getRationalNumber(number.doubleValue());
             }
             return convertRationalArrayToByteArray(rationalNumbers, byteOrder);
-        }
-        else if (o instanceof double[])
-        {
+        } else if (o instanceof double[]) {
             double numbers[] = (double[]) o;
             RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
-            for (int i = 0; i < numbers.length; i++)
-            {
+            for (int i = 0; i < numbers.length; i++) {
                 double number = numbers[i];
                 rationalNumbers[i] = RationalNumberUtilities
                         .getRationalNumber(number);
             }
             return convertRationalArrayToByteArray(rationalNumbers, byteOrder);
-        }
-        else
+        } else
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");
     }
 
     public byte[] writeData(int numerator, int denominator, int byteOrder)
-            throws ImageWriteException
-    {
-        return writeData(new int[]{
-            numerator
-        }, new int[]{
-            denominator
-        }, byteOrder);
+            throws ImageWriteException {
+        return writeData(new int[] { numerator }, new int[] { denominator },
+                byteOrder);
     }
 
     public byte[] writeData(int numerators[], int denominators[], int byteOrder)
-            throws ImageWriteException
-    {
+            throws ImageWriteException {
         return convertIntArrayToRationalArray(numerators, denominators,
                 byteOrder);
     }

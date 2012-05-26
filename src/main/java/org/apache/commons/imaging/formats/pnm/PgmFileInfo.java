@@ -22,56 +22,47 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 
-public class PgmFileInfo extends FileInfo
-{
+public class PgmFileInfo extends FileInfo {
     private final int max; // TODO: handle max
 
-    public PgmFileInfo(int width, int height, boolean RAWBITS, int max)
-    {
+    public PgmFileInfo(int width, int height, boolean RAWBITS, int max) {
         super(width, height, RAWBITS);
 
         this.max = max;
     }
 
     @Override
-    public int getNumComponents()
-    {
+    public int getNumComponents() {
         return 1;
     }
 
     @Override
-    public int getBitDepth()
-    {
+    public int getBitDepth() {
         return 8;
     }
 
     @Override
-    public ImageFormat getImageType()
-    {
+    public ImageFormat getImageType() {
         return ImageFormat.IMAGE_FORMAT_PPM;
     }
 
     @Override
-    public String getImageTypeDescription()
-    {
+    public String getImageTypeDescription() {
         return "PGM: portable pixmap file    format";
     }
 
     @Override
-    public String getMIMEType()
-    {
+    public String getMIMEType() {
         return "image/x-portable-pixmap";
     }
 
     @Override
-    public int getColorType()
-    {
+    public int getColorType() {
         return ImageInfo.COLOR_TYPE_RGB;
     }
 
     @Override
-    public int getRGB(InputStream is) throws IOException
-    {
+    public int getRGB(InputStream is) throws IOException {
         int sample = is.read();
         if (sample < 0)
             throw new IOException("PGM: Unexpected EOF");
@@ -85,8 +76,7 @@ public class PgmFileInfo extends FileInfo
     }
 
     @Override
-    public int getRGB(WhiteSpaceReader wsr) throws IOException
-    {
+    public int getRGB(WhiteSpaceReader wsr) throws IOException {
         int sample = Integer.parseInt(wsr.readtoWhiteSpace());
 
         int alpha = 0xff;

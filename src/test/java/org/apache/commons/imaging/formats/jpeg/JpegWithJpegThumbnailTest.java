@@ -29,8 +29,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 
 public class JpegWithJpegThumbnailTest extends ImagingTest {
 
-    public void testSingleImage() throws Exception
-    {
+    public void testSingleImage() throws Exception {
         File imageFile = getTestImageByName("img_F028c_small.jpg");
 
         Map params = new HashMap();
@@ -41,4 +40,3 @@ public class JpegWithJpegThumbnailTest extends ImagingTest {
         assertNotNull(image);
     }
 }
-

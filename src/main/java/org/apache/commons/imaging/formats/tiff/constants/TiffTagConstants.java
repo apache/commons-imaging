@@ -37,9 +37,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknown;
  * http://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf
  */
 public interface TiffTagConstants
-        extends
-            TiffFieldTypeConstants
-{
+        extends TiffFieldTypeConstants {
     public static final TagInfoLong TIFF_TAG_NEW_SUBFILE_TYPE = new TagInfoLong(
             "New Subfile Type", 0xFE, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);

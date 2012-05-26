@@ -31,11 +31,9 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class BmpRoundtripTest extends BmpBaseTest
-{
+public class BmpRoundtripTest extends BmpBaseTest {
 
-    private int[][] getSimpleRawData(int width, int height, int value)
-    {
+    private int[][] getSimpleRawData(int width, int height, int value) {
         int[][] result = new int[height][width];
         for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++)
@@ -43,12 +41,10 @@ public class BmpRoundtripTest extends BmpBaseTest
         return result;
     }
 
-    private int[][] getAscendingRawData(int width, int height)
-    {
+    private int[][] getAscendingRawData(int width, int height) {
         int[][] result = new int[height][width];
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int alpha = (x + y) % 256;
                 int value = (x + y) % 256;
                 int argb = (0xff & alpha) << 24 | (0xff & value) << 16
@@ -59,87 +55,73 @@ public class BmpRoundtripTest extends BmpBaseTest
         return result;
     }
 
-    private int[][] randomRawData(int width, int height)
-    {
+    private int[][] randomRawData(int width, int height) {
         Random random = new Random();
         int[][] result = new int[height][width];
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int argb = random.nextInt();
                 result[y][x] = argb;
             }
         return result;
     }
 
-     public void testSmallBlackPixels() throws Exception
-     {
-     int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
-     writeAndReadImageData(smallBlackPixels);
-     }
+    public void testSmallBlackPixels() throws Exception {
+        int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
+        writeAndReadImageData(smallBlackPixels);
+    }
 
-    public void testSingleBlackPixel() throws Exception
-    {
+    public void testSingleBlackPixel() throws Exception {
         int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
         writeAndReadImageData(singleBlackPixel);
     }
 
+    public void testSmallRedPixels() throws Exception {
+        int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
+        writeAndReadImageData(smallRedPixels);
+    }
 
-     public void testSmallRedPixels() throws Exception
-     {
-     int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
-     writeAndReadImageData(smallRedPixels);
-     }
+    public void testSingleRedPixel() throws Exception {
+        int[][] singleRedPixel = getSimpleRawData(1, 1, 0xffff0000);
+        writeAndReadImageData(singleRedPixel);
+    }
 
-     public void testSingleRedPixel() throws Exception
-     {
-     int[][] singleRedPixel = getSimpleRawData(1, 1, 0xffff0000);
-     writeAndReadImageData(singleRedPixel);
-     }
+    public void testSmallAscendingPixels() throws Exception {
+        int[][] smallAscendingPixels = getAscendingRawData(256, 256);
+        writeAndReadImageData(smallAscendingPixels);
+    }
 
-     public void testSmallAscendingPixels() throws Exception
-     {
-     int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-     writeAndReadImageData(smallAscendingPixels);
-     }
+    public void testSmallRandomPixels() throws Exception {
+        int[][] smallRandomPixels = randomRawData(256, 256);
+        writeAndReadImageData(smallRandomPixels);
+    }
 
-     public void testSmallRandomPixels() throws Exception
-     {
-     int[][] smallRandomPixels = randomRawData(256, 256);
-     writeAndReadImageData(smallRandomPixels);
-     }
-
-    private BufferedImage imageDataToBufferedImage(int[][] rawData)
-    {
+    private BufferedImage imageDataToBufferedImage(int[][] rawData) {
         int width = rawData[0].length;
         int height = rawData.length;
         BufferedImage image = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 image.setRGB(x, y, rawData[y][x]);
             }
         return image;
     }
 
-    private int[][] bufferedImageToImageData(BufferedImage image)
-    {
+    private int[][] bufferedImageToImageData(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
         int[][] result = new int[height][width];
 
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 result[y][x] = image.getRGB(x, y);
             }
         return result;
     }
 
     private void writeAndReadImageData(int[][] rawData) throws IOException,
-            ImageReadException, ImageWriteException
-    {
+            ImageReadException, ImageWriteException {
         BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
         Map writeParams = new HashMap();
@@ -166,25 +148,21 @@ public class BmpRoundtripTest extends BmpBaseTest
         compare(rawData, dstData);
     }
 
-    private void compare(int[][] a, int[][] b)
-    {
+    private void compare(int[][] a, int[][] b) {
         assertNotNull(a);
         assertNotNull(b);
         assertTrue(a.length == b.length);
 
-        for (int y = 0; y < a.length; y++)
-        {
+        for (int y = 0; y < a.length; y++) {
             assertTrue(a[y].length == b[y].length);
             // make sure row lengths consistent.
             assertTrue(a[0].length == b[y].length);
-            for (int x = 0; x < a[y].length; x++)
-            {
+            for (int x = 0; x < a[y].length; x++) {
                 // ignore alpha channel - BMP has no transparency.
                 int rgbA = 0xffffff & a[y][x];
                 int rgbB = 0xffffff & b[y][x];
 
-                if (rgbA != rgbB)
-                {
+                if (rgbA != rgbB) {
                     Debug.debug("x: " + x + ", y: " + y + ", rgbA: " + rgbA
                             + " (0x" + Integer.toHexString(rgbA) + ")"
                             + ", rgbB: " + rgbB + " (0x"

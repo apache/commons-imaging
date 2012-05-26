@@ -19,22 +19,18 @@ package org.apache.commons.imaging.formats.jpeg.segments;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class UnknownSegment extends GenericSegment
-{
+public class UnknownSegment extends GenericSegment {
     public UnknownSegment(int marker, int marker_length, InputStream is)
-            throws IOException
-    {
+            throws IOException {
         super(marker, marker_length, is);
     }
 
-    public UnknownSegment(int marker, byte bytes[])
-    {
+    public UnknownSegment(int marker, byte bytes[]) {
         super(marker, bytes);
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "Unknown (" + getSegmentType() + ")";
     }
 }

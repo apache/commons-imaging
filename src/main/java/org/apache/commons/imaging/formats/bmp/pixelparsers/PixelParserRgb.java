@@ -21,11 +21,9 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
-public class PixelParserRgb extends PixelParserSimple
-{
+public class PixelParserRgb extends PixelParserSimple {
     public PixelParserRgb(BmpHeaderInfo bhi, byte ColorTable[],
-            byte ImageData[])
-    {
+            byte ImageData[]) {
         super(bhi, ColorTable, ImageData);
 
     }
@@ -37,22 +35,19 @@ public class PixelParserRgb extends PixelParserSimple
     int pixelCount = 0;
 
     @Override
-    public int getNextRGB() throws ImageReadException, IOException
-    {
+    public int getNextRGB() throws ImageReadException, IOException {
         pixelCount++;
 
         if ((bhi.bitsPerPixel == 1) // always grayscale?
                 || (bhi.bitsPerPixel == 4)) // always grayscale?
         {
-            if (cached_bit_count < bhi.bitsPerPixel)
-            {
+            if (cached_bit_count < bhi.bitsPerPixel) {
                 if (cached_bit_count != 0)
                     throw new ImageReadException("Unexpected leftover bits: "
                             + cached_bit_count + "/" + bhi.bitsPerPixel);
 
                 cached_bit_count += 8;
-                cached_byte =
-                (0xff & imageData[bytecount]);
+                cached_byte = (0xff & imageData[bytecount]);
                 bytecount++;
             }
             int cache_mask = (1 << bhi.bitsPerPixel) - 1;
@@ -72,8 +67,7 @@ public class PixelParserRgb extends PixelParserSimple
             bytecount += 1;
 
             return rgb;
-        } else if (bhi.bitsPerPixel == 16)
-        {
+        } else if (bhi.bitsPerPixel == 16) {
             int data = bfp.read2Bytes("Pixel", is, "BMP Image Data");
 
             int blue = (0x1f & (data >> 0)) << 3;
@@ -86,8 +80,7 @@ public class PixelParserRgb extends PixelParserSimple
             bytecount += 2;
 
             return rgb;
-        } else if (bhi.bitsPerPixel == 24)
-        {
+        } else if (bhi.bitsPerPixel == 24) {
             int blue = 0xff & imageData[bytecount + 0];
             int green = 0xff & imageData[bytecount + 1];
             int red = 0xff & imageData[bytecount + 2];
@@ -98,8 +91,7 @@ public class PixelParserRgb extends PixelParserSimple
             bytecount += 3;
 
             return rgb;
-        } else if (bhi.bitsPerPixel == 32)
-        {
+        } else if (bhi.bitsPerPixel == 32) {
             int blue = 0xff & imageData[bytecount + 0];
             int green = 0xff & imageData[bytecount + 1];
             int red = 0xff & imageData[bytecount + 2];
@@ -117,12 +109,10 @@ public class PixelParserRgb extends PixelParserSimple
     }
 
     @Override
-    public void newline() throws ImageReadException, IOException
-    {
+    public void newline() throws ImageReadException, IOException {
         cached_bit_count = 0;
 
-        while (((bytecount) % 4) != 0)
-        {
+        while (((bytecount) % 4) != 0) {
             bfp.readByte("Pixel", is, "BMP Image Data");
             bytecount++;
         }

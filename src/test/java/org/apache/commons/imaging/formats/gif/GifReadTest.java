@@ -26,16 +26,13 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
-public class GifReadTest extends GifBaseTest
-{
+public class GifReadTest extends GifBaseTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         Debug.debug("start");
 
         List images = getGifImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
@@ -43,7 +40,7 @@ public class GifReadTest extends GifBaseTest
             Debug.debug("imageFile", imageFile);
 
             IImageMetadata metadata = Imaging.getMetadata(imageFile);
-//            assertNotNull(metadata);
+            // assertNotNull(metadata);
 
             ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);

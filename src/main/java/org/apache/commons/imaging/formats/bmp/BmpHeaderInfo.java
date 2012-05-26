@@ -16,14 +16,13 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
-public class BmpHeaderInfo
-{
-    //        ‘BM’ - Windows 3.1x, 95, NT, …
-    //        ‘BA’ - OS/2 Bitmap Array
-    //        ‘CI’ - OS/2 Color Icon‘
-    //        CP’ - OS/2 Color Pointer
-    //        ‘IC’ - OS/2 Icon
-    //        ‘PT’ - OS/2 Pointer
+public class BmpHeaderInfo {
+    // ‘BM’ - Windows 3.1x, 95, NT, …
+    // ‘BA’ - OS/2 Bitmap Array
+    // ‘CI’ - OS/2 Color Icon‘
+    // CP’ - OS/2 Color Pointer
+    // ‘IC’ - OS/2 Icon
+    // ‘PT’ - OS/2 Pointer
     public final byte identifier1;
     public final byte identifier2;
 
@@ -58,29 +57,24 @@ public class BmpHeaderInfo
     public final int profileSize;
     public final int reservedV5;
 
-    public static class ColorSpaceCoordinate
-    {
+    public static class ColorSpaceCoordinate {
         public int x, y, z;
     }
 
-    public static class ColorSpace
-    {
+    public static class ColorSpace {
         public ColorSpaceCoordinate red;
         public ColorSpaceCoordinate green;
         public ColorSpaceCoordinate blue;
     }
 
     public BmpHeaderInfo(byte identifier1, byte identifier2, int fileSize,
-            int reserved, int bitmapDataOffset,
-            int bitmapHeaderSize, int width, int height, int planes,
-            int bitsPerPixel, int compression, int bitmapDataSize,
-            int hResolution, int vResolution, int colorsUsed,
-            int colorsImportant, int redMask, int greenMask,
-            int blueMask, int alphaMask, int colorSpaceType,
-            ColorSpace colorSpace, int gammaRed, int gammaGreen,
-            int gammaBlue, int intent, int profileData,
-            int profileSize, int reservedV5)
-    {
+            int reserved, int bitmapDataOffset, int bitmapHeaderSize,
+            int width, int height, int planes, int bitsPerPixel,
+            int compression, int bitmapDataSize, int hResolution,
+            int vResolution, int colorsUsed, int colorsImportant, int redMask,
+            int greenMask, int blueMask, int alphaMask, int colorSpaceType,
+            ColorSpace colorSpace, int gammaRed, int gammaGreen, int gammaBlue,
+            int intent, int profileData, int profileSize, int reservedV5) {
         this.identifier1 = identifier1;
         this.identifier2 = identifier2;
         this.fileSize = fileSize;

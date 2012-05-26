@@ -21,39 +21,39 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public class PhotometricInterpreterYCbCr extends PhotometricInterpreter
-{
+public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
 
     public PhotometricInterpreterYCbCr(double[] fYCbCrCoefficients,
             int[] fYCbCrPositioning, int[] fYCbCrSubSampling,
             double[] fReferenceBlackWhite, int fSamplesPerPixel,
-            int fBitsPerSample[], int Predictor, int width, int height)
-    {
+            int fBitsPerSample[], int Predictor, int width, int height) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
     }
 
-    public int limit(int value, int min, int max)
-    {
+    public int limit(int value, int min, int max) {
         return Math.min(max, Math.max(min, value));
     }
 
     /**
      * This method converts a YUV (aka YCbCr) colorspace to a RGB colorspace.
-     * This is handy when trying to reconstruct an image in Java from YCbCr transmitted
-     * data. This routine expects the data to fall in the standard PC 0..255 range
-     * per pixel, with the array dimensions corresponding to the imageWidth and imageHeight.
-     * These variables are either set manually in the case of a null constructor,
-     * or they are automatically calculated from the image parameter constructor.
-     * @param Y The Y component set.
-     * @param Cb The Cb component set.
-     * @param Cr The Cr component set.
+     * This is handy when trying to reconstruct an image in Java from YCbCr
+     * transmitted data. This routine expects the data to fall in the standard
+     * PC 0..255 range per pixel, with the array dimensions corresponding to the
+     * imageWidth and imageHeight. These variables are either set manually in
+     * the case of a null constructor, or they are automatically calculated from
+     * the image parameter constructor.
+     * 
+     * @param Y
+     *            The Y component set.
+     * @param Cb
+     *            The Cb component set.
+     * @param Cr
+     *            The Cr component set.
      * @return R The R component.
      */
-    public int convertYCbCrtoRGB(int Y, int Cb, int Cr)
-    {
+    public int convertYCbCrtoRGB(int Y, int Cb, int Cr) {
         double r1 = (((1.164 * (Y - 16.0))) + (1.596 * (Cr - 128.0)));
-        double g1 = (((1.164 * (Y - 16.0)))
-                - (0.813 * (Cr - 128.0)) - (0.392 * (Cb - 128.0)));
+        double g1 = (((1.164 * (Y - 16.0))) - (0.813 * (Cr - 128.0)) - (0.392 * (Cb - 128.0)));
         double b1 = (((1.164 * (Y - 16.0))) + (2.017 * (Cb - 128.0)));
 
         int r = limit((int) r1, 0, 255);
@@ -66,9 +66,8 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x, int y)
-            throws ImageReadException, IOException
-    {
+    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
+            int y) throws ImageReadException, IOException {
         int Y = samples[0];
         int Cb = samples[1];
         int Cr = samples[2];

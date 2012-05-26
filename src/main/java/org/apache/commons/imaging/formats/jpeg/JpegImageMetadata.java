@@ -56,9 +56,9 @@ public class JpegImageMetadata implements IImageMetadata {
     public TiffField findEXIFValue(TagInfo tagInfo) {
         try {
             if (exif != null) {
-               return exif.findField(tagInfo);
+                return exif.findField(tagInfo);
             } else {
-               return null;
+                return null;
             }
         } catch (ImageReadException cannotHappen) {
             return null;
@@ -79,15 +79,16 @@ public class JpegImageMetadata implements IImageMetadata {
 
     /**
      * Returns the size of the first JPEG thumbnail found in the EXIF metadata.
-     *
+     * 
      * @return Thumbnail width and height or null if no thumbnail.
      * @throws ImageReadException
      * @throws IOException
      */
-    public Dimension getEXIFThumbnailSize() throws ImageReadException, IOException {
+    public Dimension getEXIFThumbnailSize() throws ImageReadException,
+            IOException {
         byte[] data = getEXIFThumbnailData();
 
-        if( data != null ){
+        if (data != null) {
             return Imaging.getImageSize(data);
         }
         return null;
@@ -95,7 +96,7 @@ public class JpegImageMetadata implements IImageMetadata {
 
     /**
      * Returns the data of the first JPEG thumbnail found in the EXIF metadata.
-     *
+     * 
      * @return JPEG data or null if no thumbnail.
      * @throws ImageReadException
      * @throws IOException
@@ -110,12 +111,12 @@ public class JpegImageMetadata implements IImageMetadata {
                     .get(i);
 
             byte[] data = null;
-            if( dir.getJpegImageData() != null ){
+            if (dir.getJpegImageData() != null) {
                 data = dir.getJpegImageData().data;
             }
             // Support other image formats here.
 
-            if( data != null ){
+            if (data != null) {
                 return data;
             }
         }
@@ -125,8 +126,8 @@ public class JpegImageMetadata implements IImageMetadata {
     /**
      * Get the thumbnail image if available.
      * 
-     * @return the thumbnail image. 
-     *         May be <code>null</code> if no image could be found.
+     * @return the thumbnail image. May be <code>null</code> if no image could
+     *         be found.
      * @throws ImageReadException
      * @throws IOException
      */
@@ -149,9 +150,10 @@ public class JpegImageMetadata implements IImageMetadata {
 
             JpegImageData jpegImageData = dir.getJpegImageData();
             if (jpegImageData != null) {
-                ByteArrayInputStream input = new ByteArrayInputStream(jpegImageData.data);
+                ByteArrayInputStream input = new ByteArrayInputStream(
+                        jpegImageData.data);
                 // JPEG thumbnail as JPEG or other format; try to parse.
-                   image = ImageIO.read(input);
+                image = ImageIO.read(input);
                 if (image != null) {
                     return image;
                 }

@@ -26,13 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PaletteFactory
-{
+public class PaletteFactory {
     private static final boolean debug = false;
 
-    public void makePaletteFancy(BufferedImage src)
-    {
-        //         map what rgb values have been used
+    public void makePaletteFancy(BufferedImage src) {
+        // map what rgb values have been used
 
         byte rgbmap[] = new byte[256 * 256 * 32];
         for (int i = 0; i < rgbmap.length; i++)
@@ -42,8 +40,7 @@ public class PaletteFactory
         int height = src.getHeight();
 
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int rggbb = 0x1fffff & argb;
                 int highred = 0x7 & (argb >> 21);
@@ -52,14 +49,11 @@ public class PaletteFactory
             }
 
         int count = 0;
-        for (int i = 0; i < rgbmap.length; i++)
-        {
+        for (int i = 0; i < rgbmap.length; i++) {
             int eight = 0xff & rgbmap[i];
-            if ((i < 3) || ((i - rgbmap.length) > -3))
-            {
+            if ((i < 3) || ((i - rgbmap.length) > -3)) {
             }
-            for (int j = 0; j < 8; j++)
-            {
+            for (int j = 0; j < 8; j++) {
                 int mask = 1 << (7 - j);
                 int bit = eight & mask;
                 if (bit > 0)
@@ -73,17 +67,14 @@ public class PaletteFactory
 
         int colormap[] = new int[count];
         int mapsize = 0;
-        for (int i = 0; i < rgbmap.length; i++)
-        {
+        for (int i = 0; i < rgbmap.length; i++) {
             int eight = 0xff & rgbmap[i];
 
-            for (int j = 0; j < 8; j++)
-            {
+            for (int j = 0; j < 8; j++) {
                 int mask = 1 << (7 - j);
                 int bit = eight & mask;
 
-                if (bit > 0)
-                {
+                if (bit > 0) {
                     int rgb = i | ((7 - j) << 21);
 
                     if (mapsize < colormap.length)
@@ -96,20 +87,18 @@ public class PaletteFactory
         if (debug)
             System.out.println("mapsize: " + mapsize);
 
-        //        for (int i = 0; i < colormap.length; i++)
-        //        {
-        //            int rgb = colormap[i];
-        //        }
+        // for (int i = 0; i < colormap.length; i++)
+        // {
+        // int rgb = colormap[i];
+        // }
 
     }
 
-    private int pixelToQuantizationTableIndex(int argb, int precision)
-    {
+    private int pixelToQuantizationTableIndex(int argb, int precision) {
         int result = 0;
         int precision_mask = (1 << precision) - 1;
 
-        for (int i = 0; i < components; i++)
-        {
+        for (int i = 0; i < components; i++) {
             int sample = argb & 0xff;
             argb >>= 8;
 
@@ -121,19 +110,15 @@ public class PaletteFactory
     }
 
     private int getFrequencyTotal(int table[], int mins[], int maxs[],
-            int precision)
-    {
+            int precision) {
         int sum = 0;
 
-        for (int blue = mins[2]; blue <= maxs[2]; blue++)
-        {
+        for (int blue = mins[2]; blue <= maxs[2]; blue++) {
             int b = (blue << (2 * precision));
-            for (int green = mins[1]; green <= maxs[1]; green++)
-            {
+            for (int green = mins[1]; green <= maxs[1]; green++) {
                 int g = (green << (1 * precision));
 
-                for (int red = mins[0]; red <= maxs[0]; red++)
-                {
+                for (int red = mins[0]; red <= maxs[0]; red++) {
                     int index = b | g | red;
 
                     sum += table[index];
@@ -146,31 +131,27 @@ public class PaletteFactory
 
     private DivisionCandidate finishDivision(int table[],
             ColorSpaceSubset subset, int component, int precision, int sum,
-            int slice)
-    {
+            int slice) {
         if (debug)
             subset.dump("trying (" + component + "): ");
 
         int total = subset.total;
 
         if ((slice < subset.mins[component])
-                || (slice >= subset.maxs[component]))
-        {
+                || (slice >= subset.maxs[component])) {
             return null;
         }
 
-        if ((sum < 1) || (sum >= total))
-        {
+        if ((sum < 1) || (sum >= total)) {
             return null;
         }
 
         int remainder = total - sum;
-        if ((remainder < 1) || (remainder >= total))
-        {
+        if ((remainder < 1) || (remainder >= total)) {
             return null;
         }
 
-        //        List result = new ArrayList();
+        // List result = new ArrayList();
 
         int slice_mins[] = new int[subset.mins.length];
         System.arraycopy(subset.mins, 0, slice_mins, 0, subset.mins.length);
@@ -180,13 +161,12 @@ public class PaletteFactory
         slice_maxs[component] = slice;
         slice_mins[component] = slice + 1;
 
-        if (debug)
-        {
+        if (debug) {
             System.out.println("total: " + total);
             System.out.println("first total: " + sum);
             System.out.println("second total: " + (total - sum));
-            //            System.out.println("start: " + start);
-            //            System.out.println("end: " + end);
+            // System.out.println("start: " + start);
+            // System.out.println("end: " + end);
             System.out.println("slice: " + slice);
 
         }
@@ -200,9 +180,8 @@ public class PaletteFactory
 
     }
 
-    private List<DivisionCandidate> divideSubset2(int table[], ColorSpaceSubset subset,
-                                                  int component, int precision)
-    {
+    private List<DivisionCandidate> divideSubset2(int table[],
+            ColorSpaceSubset subset, int component, int precision) {
         if (debug)
             subset.dump("trying (" + component + "): ");
 
@@ -218,8 +197,7 @@ public class PaletteFactory
         int last = 0;
 
         {
-            for (slice1 = subset.mins[component]; slice1 != subset.maxs[component] + 1; slice1++)
-            {
+            for (slice1 = subset.mins[component]; slice1 != subset.maxs[component] + 1; slice1++) {
 
                 slice_mins[component] = slice1;
                 slice_maxs[component] = slice1;
@@ -254,8 +232,7 @@ public class PaletteFactory
     }
 
     private DivisionCandidate divideSubset2(int table[],
-            ColorSpaceSubset subset, int precision)
-    {
+            ColorSpaceSubset subset, int precision) {
         List<DivisionCandidate> dcs = new ArrayList<DivisionCandidate>();
 
         dcs.addAll(divideSubset2(table, subset, 0, precision));
@@ -263,11 +240,10 @@ public class PaletteFactory
         dcs.addAll(divideSubset2(table, subset, 2, precision));
 
         DivisionCandidate best_v = null;
-        //        int best_split
+        // int best_split
         double best_score = Double.MAX_VALUE;
 
-        for (int i = 0; i < dcs.size(); i++)
-        {
+        for (int i = 0; i < dcs.size(); i++) {
             DivisionCandidate dc = dcs.get(i);
 
             ColorSpaceSubset first = dc.dst_a;
@@ -280,13 +256,10 @@ public class PaletteFactory
 
             double score = split;
 
-            if (best_v == null)
-            {
+            if (best_v == null) {
                 best_v = dc;
                 best_score = score;
-            }
-            else if (score < best_score)
-            {
+            } else if (score < best_score) {
                 best_v = dc;
                 best_score = score;
             }
@@ -298,28 +271,24 @@ public class PaletteFactory
 
     public static final int components = 3; // in bits
 
-    private static class DivisionCandidate
-    {
-        //        private final ColorSpaceSubset src;
+    private static class DivisionCandidate {
+        // private final ColorSpaceSubset src;
         private final ColorSpaceSubset dst_a, dst_b;
 
         public DivisionCandidate(ColorSpaceSubset src, ColorSpaceSubset dst_a,
-                ColorSpaceSubset dst_b)
-        {
-            //            this.src = src;
+                ColorSpaceSubset dst_b) {
+            // this.src = src;
             this.dst_a = dst_a;
             this.dst_b = dst_b;
         }
     }
 
-    private List<ColorSpaceSubset> divide(List<ColorSpaceSubset> v, int desired_count, int table[],
-                                          int precision)
-    {
+    private List<ColorSpaceSubset> divide(List<ColorSpaceSubset> v,
+            int desired_count, int table[], int precision) {
         List<ColorSpaceSubset> ignore = new ArrayList<ColorSpaceSubset>();
 
         int count = 0;
-        while (true)
-        {
+        while (true) {
             count++;
 
             if (debug)
@@ -329,27 +298,22 @@ public class PaletteFactory
             int max_area = -1;
             ColorSpaceSubset max_subset = null;
 
-            for (int i = 0; i < v.size(); i++)
-            {
+            for (int i = 0; i < v.size(); i++) {
                 ColorSpaceSubset subset = v.get(i);
                 if (ignore.contains(subset))
                     continue;
                 int area = subset.total;
 
-                if (max_subset == null)
-                {
+                if (max_subset == null) {
                     max_subset = subset;
                     max_area = area;
-                }
-                else if (area > max_area)
-                {
+                } else if (area > max_area) {
                     max_subset = subset;
                     max_area = area;
                 }
             }
 
-            if (max_subset == null)
-            {
+            if (max_subset == null) {
                 return v;
             }
             if (debug)
@@ -359,13 +323,11 @@ public class PaletteFactory
 
                 DivisionCandidate dc = divideSubset2(table, max_subset,
                         precision);
-                if (dc != null)
-                {
+                if (dc != null) {
                     v.remove(max_subset);
                     v.add(dc.dst_a);
                     v.add(dc.dst_b);
-                }
-                else
+                } else
                     ignore.add(max_subset);
             }
 
@@ -373,11 +335,10 @@ public class PaletteFactory
                 return v;
         }
 
-        //        return result;
+        // return result;
     }
 
-    public Palette makePaletteQuantized(BufferedImage src, int max)
-    {
+    public Palette makePaletteQuantized(BufferedImage src, int max) {
         int precision = 6; // in bits
 
         int table_scale = precision * components;
@@ -398,8 +359,7 @@ public class PaletteFactory
         { // step 1: count frequency of colors
 
             for (int y = 0; y < height; y++)
-                for (int x = 0; x < width; x++)
-                {
+                for (int x = 0; x < width; x++) {
                     int argb = src.getRGB(x, y);
 
                     int index = pixelToQuantizationTableIndex(argb, precision);
@@ -409,8 +369,7 @@ public class PaletteFactory
         }
 
         int all_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
-        if (debug)
-        {
+        if (debug) {
             System.out.println("all total: " + all_total);
 
             System.out.println("width * height: " + (width * height));
@@ -418,14 +377,12 @@ public class PaletteFactory
 
         subsets = divide(subsets, 256, table, precision);
 
-        if (debug)
-        {
+        if (debug) {
             System.out.println("subsets: " + subsets.size());
             System.out.println("width*height: " + width * height);
         }
 
-        for (int i = 0; i < subsets.size(); i++)
-        {
+        for (int i = 0; i < subsets.size(); i++) {
             ColorSpaceSubset subset = subsets.get(i);
 
             subset.setAverageRGB(table);
@@ -450,14 +407,12 @@ public class PaletteFactory
         int height = src.getHeight();
 
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int rgb = 0xffffff & argb;
 
                 String key = "" + rgb;
-                if (null == map.get(key))
-                {
+                if (null == map.get(key)) {
                     if (rgb_count == max)
                         return null;
 
@@ -471,12 +426,11 @@ public class PaletteFactory
         System.arraycopy(rgbs, 0, result, 0, rgb_count);
         Arrays.sort(result);
 
-        //        return result;
+        // return result;
         return new SimplePalette(result);
     }
 
-    public boolean isGrayscale(BufferedImage src)
-    {
+    public boolean isGrayscale(BufferedImage src) {
         int width = src.getWidth();
         int height = src.getHeight();
 
@@ -485,8 +439,7 @@ public class PaletteFactory
             return true;
 
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
 
                 int red = 0xff & (argb >> 16);
@@ -500,13 +453,11 @@ public class PaletteFactory
         return true;
     }
 
-    public boolean hasTransparency(BufferedImage src)
-    {
+    public boolean hasTransparency(BufferedImage src) {
         return hasTransparency(src, 255);
     }
 
-    public boolean hasTransparency(BufferedImage src, int threshold)
-    {
+    public boolean hasTransparency(BufferedImage src, int threshold) {
         int width = src.getWidth();
         int height = src.getHeight();
 
@@ -514,8 +465,7 @@ public class PaletteFactory
             return false;
 
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int alpha = 0xff & (argb >> 24);
                 if (alpha < threshold)
@@ -525,21 +475,16 @@ public class PaletteFactory
         return false;
     }
 
-    public int countTrasparentColors(int rgbs[])
-    {
+    public int countTrasparentColors(int rgbs[]) {
         int first = -1;
 
-        for (int i = 0; i < rgbs.length; i++)
-        {
+        for (int i = 0; i < rgbs.length; i++) {
             int rgb = rgbs[i];
             int alpha = 0xff & (rgb >> 24);
-            if (alpha < 0xff)
-            {
-                if (first < 0)
-                {
+            if (alpha < 0xff) {
+                if (first < 0) {
                     first = rgb;
-                }
-                else if (rgb != first)
+                } else if (rgb != first)
                     return 2; // more than one transparent color;
             }
         }
@@ -549,8 +494,7 @@ public class PaletteFactory
         return 1;
     }
 
-    public int countTransparentColors(BufferedImage src)
-    {
+    public int countTransparentColors(BufferedImage src) {
         ColorModel cm = src.getColorModel();
         if (!cm.hasAlpha())
             return 0;
@@ -561,17 +505,13 @@ public class PaletteFactory
         int first = -1;
 
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int rgb = src.getRGB(x, y);
                 int alpha = 0xff & (rgb >> 24);
-                if (alpha < 0xff)
-                {
-                    if (first < 0)
-                    {
+                if (alpha < 0xff) {
+                    if (first < 0) {
                         first = rgb;
-                    }
-                    else if (rgb != first)
+                    } else if (rgb != first)
                         return 2; // more than one transparent color;
                 }
             }

@@ -16,8 +16,7 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-public class ImageDescriptor extends GifBlock
-{
+public class ImageDescriptor extends GifBlock {
 
     public final int imageLeftPosition;
     public final int imageTopPosition;
@@ -37,8 +36,7 @@ public class ImageDescriptor extends GifBlock
             byte PackedFields, boolean LocalColorTableFlag,
             boolean InterlaceFlag, boolean SortFlag,
             byte SizeofLocalColorTable, byte LocalColorTable[],
-            byte ImageData[])
-    {
+            byte ImageData[]) {
         super(blockCode);
 
         this.imageLeftPosition = ImageLeftPosition;

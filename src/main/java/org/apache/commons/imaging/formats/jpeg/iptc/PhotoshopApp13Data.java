@@ -20,32 +20,27 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoshopApp13Data implements IptcConstants
-{
+public class PhotoshopApp13Data implements IptcConstants {
     private final List<IptcRecord> records;
     private final List<IptcBlock> rawBlocks;
 
-    public PhotoshopApp13Data(List<IptcRecord> records, List<IptcBlock> rawBlocks)
-    {
+    public PhotoshopApp13Data(List<IptcRecord> records,
+            List<IptcBlock> rawBlocks) {
         this.rawBlocks = rawBlocks;
         this.records = records;
     }
 
-    public List<IptcRecord> getRecords()
-    {
+    public List<IptcRecord> getRecords() {
         return new ArrayList<IptcRecord>(records);
     }
 
-    public List<IptcBlock> getRawBlocks()
-    {
+    public List<IptcBlock> getRawBlocks() {
         return new ArrayList<IptcBlock>(rawBlocks);
     }
 
-    public List<IptcBlock> getNonIptcBlocks()
-    {
+    public List<IptcBlock> getNonIptcBlocks() {
         List<IptcBlock> result = new ArrayList<IptcBlock>();
-        for (int i = 0; i < rawBlocks.size(); i++)
-        {
+        for (int i = 0; i < rawBlocks.size(); i++) {
             IptcBlock block = rawBlocks.get(i);
             if (!block.isIPTCBlock())
                 result.add(block);

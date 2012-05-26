@@ -33,32 +33,27 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.util.Debug;
 
-public abstract class SpecificExifTagTest extends ExifBaseTest
-        implements
-            AllTagConstants
-{
-    //    public SpecificExifTagTest(String name)
-    //    {
-    //        super(name);
-    //    }
+public abstract class SpecificExifTagTest extends ExifBaseTest implements
+        AllTagConstants {
+    // public SpecificExifTagTest(String name)
+    // {
+    // super(name);
+    // }
 
-    public void testSingleImage() throws Exception
-    {
+    public void testSingleImage() throws Exception {
         File imageFile = getImageWithExifData();
         checkImage(imageFile);
     }
 
-    public void testAllImages() throws Exception
-    {
+    public void testAllImages() throws Exception {
         List images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++)
-        {
-            if(i%10==0)
-            Debug.purgeMemory();
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
             File imageFile = (File) images.get(i);
-            if (imageFile.getParentFile().getName().toLowerCase().equals(
-                    "@broken"))
+            if (imageFile.getParentFile().getName().toLowerCase()
+                    .equals("@broken"))
                 continue;
             checkImage(imageFile);
         }
@@ -68,9 +63,8 @@ public abstract class SpecificExifTagTest extends ExifBaseTest
             throws IOException, ImageReadException, ImageWriteException;
 
     private void checkImage(File imageFile) throws IOException,
-            ImageReadException, ImageWriteException
-    {
-        //        Debug.debug("imageFile", imageFile.getAbsoluteFile());
+            ImageReadException, ImageWriteException {
+        // Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
         Map params = new HashMap();
         boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
@@ -88,8 +82,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest
             return;
 
         List fields = exif.getAllFields();
-        for (int i = 0; i < fields.size(); i++)
-        {
+        for (int i = 0; i < fields.size(); i++) {
             TiffField field = (TiffField) fields.get(i);
             checkField(imageFile, field);
         }

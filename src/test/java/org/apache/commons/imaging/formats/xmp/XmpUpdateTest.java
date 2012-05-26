@@ -28,14 +28,11 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
 
-public class XmpUpdateTest extends ImagingTest
-{
+public class XmpUpdateTest extends ImagingTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         List images = getTestImages();
-        for (int i = 0; i < images.size(); i++)
-        {
+        for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
@@ -59,13 +56,19 @@ public class XmpUpdateTest extends ImagingTest
 
             assertNotNull(xmpXml);
 
-            if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_PNG))
-            { /* do nothing */ }
-            else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF))
-            { /* do nothing */ }
-            else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF))
-            { /* do nothing */ }
-            else
+            if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_PNG)) { /*
+                                                                     * do
+                                                                     * nothing
+                                                                     */
+            } else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF)) { /*
+                                                                             * do
+                                                                             * nothing
+                                                                             */
+            } else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF)) { /*
+                                                                            * do
+                                                                            * nothing
+                                                                            */
+            } else
                 continue;
 
             File tempFile = this.createTempFile(imageFile.getName() + ".", "."
@@ -84,7 +87,7 @@ public class XmpUpdateTest extends ImagingTest
 
             assertEquals(xmpXmlOut, xmpXml);
 
-//            Debug.debug("xmpXmlOut", xmpXmlOut.length());
+            // Debug.debug("xmpXmlOut", xmpXmlOut.length());
             // Debug.debug("xmpXml", xmpXml);
             // Debug.debug();
         }

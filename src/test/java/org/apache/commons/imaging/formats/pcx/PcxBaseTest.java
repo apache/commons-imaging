@@ -24,23 +24,19 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingTest;
 
-public abstract class PcxBaseTest extends ImagingTest
-{
+public abstract class PcxBaseTest extends ImagingTest {
 
-    private static boolean isPcx(File file)
-    {
+    private static boolean isPcx(File file) {
         return file.getName().toLowerCase().endsWith(".pcx");
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException
-        {
+        public boolean accept(File file) throws IOException, ImageReadException {
             return isPcx(file);
         }
     };
 
-    protected List getPcxImages() throws IOException, ImageReadException
-    {
+    protected List getPcxImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

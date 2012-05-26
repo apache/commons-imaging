@@ -135,8 +135,7 @@ public enum IptcTypes implements IptcType {
     public final int type;
     public final String name;
     
-    IptcTypes(int type, String name)
-    {
+    IptcTypes(int type, String name) {
         this.type = type;
         this.name = name;
     }
@@ -150,8 +149,7 @@ public enum IptcTypes implements IptcType {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return name + " (" + type + ")";
     }
     

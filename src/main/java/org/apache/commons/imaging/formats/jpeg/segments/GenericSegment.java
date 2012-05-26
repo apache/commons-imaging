@@ -20,42 +20,36 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
-public abstract class GenericSegment extends Segment
-{
+public abstract class GenericSegment extends Segment {
     public final byte bytes[];
 
     public GenericSegment(int marker, int marker_length, InputStream is)
-            throws IOException
-    {
+            throws IOException {
         super(marker, marker_length);
 
         bytes = readByteArray("Segment Data", marker_length, is,
                 "Invalid Segment: insufficient data");
     }
 
-    public GenericSegment(int marker, byte bytes[])
-    {
+    public GenericSegment(int marker, byte bytes[]) {
         super(marker, bytes.length);
 
         this.bytes = bytes;
     }
 
     @Override
-    public void dump(PrintWriter pw)
-    {
+    public void dump(PrintWriter pw) {
         dump(pw, 0);
     }
 
-    public void dump(PrintWriter pw, int start)
-    {
-        for (int i = 0; (i < 50) && ((i + start) < bytes.length); i++)
-        {
+    public void dump(PrintWriter pw, int start) {
+        for (int i = 0; (i < 50) && ((i + start) < bytes.length); i++) {
             debugNumber(pw, "\t" + (i + start), bytes[i + start]);
         }
     }
 
-    //    public String getDescription()
-    //    {
-    //        return "Unknown";
-    //    }
+    // public String getDescription()
+    // {
+    // return "Unknown";
+    // }
 }

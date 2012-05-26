@@ -30,28 +30,27 @@ import org.apache.commons.imaging.util.Debug;
 
 public class RgbeReadTest extends RgbeBaseTest {
     public void test() throws IOException, ImageReadException,
-                              ImageWriteException
-    {
-        Debug.debug( "start" );
+            ImageWriteException {
+        Debug.debug("start");
 
         List images = getRgbeImages();
 
-        for ( int i = 0; i < images.size(); i++ ) {
-            if ( i % 10 == 0 ) {
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = (File) images.get( i );
-            Debug.debug( "imageFile", imageFile );
+            File imageFile = (File) images.get(i);
+            Debug.debug("imageFile", imageFile);
 
-            IImageMetadata metadata = Imaging.getMetadata( imageFile );
+            IImageMetadata metadata = Imaging.getMetadata(imageFile);
             assertNotNull(metadata);
 
-            ImageInfo imageInfo = Imaging.getImageInfo( imageFile );
-            assertNotNull( imageInfo );
+            ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
+            assertNotNull(imageInfo);
 
-            BufferedImage image = Imaging.getBufferedImage( imageFile );
-            assertNotNull( image );
+            BufferedImage image = Imaging.getBufferedImage(imageFile);
+            assertNotNull(image);
         }
     }
 }

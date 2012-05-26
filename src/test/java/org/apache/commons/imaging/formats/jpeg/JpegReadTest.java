@@ -27,31 +27,26 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
-public class JpegReadTest extends JpegBaseTest
-{
+public class JpegReadTest extends JpegBaseTest {
 
-    public void test() throws Exception
-    {
+    public void test() throws Exception {
         List images = getJpegImages();
-        for (int i = 0; i < images.size(); i++)
-        {
-            if(i%10==0)
-            Debug.purgeMemory();
+        for (int i = 0; i < images.size(); i++) {
+            if (i % 10 == 0)
+                Debug.purgeMemory();
 
             File imageFile = (File) images.get(i);
             Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-            //            ByteSource byteSource = new ByteSourceFile(imageFile);
-            //            new JpegUtils().dumpJFIF(byteSource);
+            // ByteSource byteSource = new ByteSourceFile(imageFile);
+            // new JpegUtils().dumpJFIF(byteSource);
 
             Map params = new HashMap();
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            params
-                    .put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
-                            !ignoreImageData));
+            params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
             IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
-            //            assertNotNull(metadata);
+            // assertNotNull(metadata);
             Debug.debug("metadata", metadata);
 
             ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);

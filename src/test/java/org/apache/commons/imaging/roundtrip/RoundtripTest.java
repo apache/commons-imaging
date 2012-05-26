@@ -33,15 +33,13 @@ import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class RoundtripTest extends ImagingTest
-{
+public class RoundtripTest extends ImagingTest {
     private static final int COLOR_FULL_RGB = 0;
     private static final int COLOR_LIMITED_INDEX = 1;
     private static final int COLOR_GRAYSCALE = 2;
     private static final int COLOR_BITMAP = 3;
 
-    private static class FormatInfo
-    {
+    private static class FormatInfo {
 
         public final ImageFormat format;
         public final boolean canRead;
@@ -51,8 +49,7 @@ public class RoundtripTest extends ImagingTest
 
         public FormatInfo(ImageFormat format, boolean canRead,
                 boolean canWrite, int colorSupport,
-                final boolean identicalSecondWrite)
-        {
+                final boolean identicalSecondWrite) {
             this.canRead = canRead;
             this.canWrite = canWrite;
             this.colorSupport = colorSupport;
@@ -98,13 +95,11 @@ public class RoundtripTest extends ImagingTest
                     COLOR_FULL_RGB, false), //
     };
 
-    private BufferedImage createArgbBitmapImage(int width, int height)
-    {
+    private BufferedImage createArgbBitmapImage(int width, int height) {
         BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-            {
+            for (int y = 0; y < height; y++) {
                 // alternating black and white.
                 int modulator = y + 2; // make sure lines vary.
                 int argb = (x + y) % modulator == 0 ? 0xff000000 : 0xffffffff;
@@ -113,13 +108,11 @@ public class RoundtripTest extends ImagingTest
         return result;
     }
 
-    private BufferedImage createBitmapBitmapImage(int width, int height)
-    {
+    private BufferedImage createBitmapBitmapImage(int width, int height) {
         BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_BYTE_BINARY);
         for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-            {
+            for (int y = 0; y < height; y++) {
                 // alternating black and white.
                 int modulator = y + 2; // make sure lines vary.
                 int argb = (x + y) % modulator == 0 ? 0xff000000 : 0xffffffff;
@@ -128,13 +121,11 @@ public class RoundtripTest extends ImagingTest
         return result;
     }
 
-    private BufferedImage createArgbGrayscaleImage(int width, int height)
-    {
+    private BufferedImage createArgbGrayscaleImage(int width, int height) {
         BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-            {
+            for (int y = 0; y < height; y++) {
                 int value = (256 * (x + y)) / (width + height);
                 int argb = (0xff << 24) | (value << 16) | (value << 8)
                         | (value << 0);
@@ -144,13 +135,11 @@ public class RoundtripTest extends ImagingTest
         return result;
     }
 
-    private BufferedImage createGrayscaleGrayscaleImage(int width, int height)
-    {
+    private BufferedImage createGrayscaleGrayscaleImage(int width, int height) {
         BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_BYTE_GRAY);
         for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-            {
+            for (int y = 0; y < height; y++) {
                 int value = (256 * (x + y)) / (width + height);
                 int argb = (0xff << 24) | (value << 16) | (value << 8)
                         | (value << 0);
@@ -160,29 +149,25 @@ public class RoundtripTest extends ImagingTest
         return result;
     }
 
-    private BufferedImage createLimitedColorImage(int width, int height)
-    {
+    private BufferedImage createLimitedColorImage(int width, int height) {
         int colors[] = { 0xffffffff, 0xff000000, 0xfff00000, 0xff0000ff,
                 0xff123456, 0xfffefeff, 0xff7f817f, };
 
         BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-            {
+            for (int y = 0; y < height; y++) {
                 int argb = colors[(x + y) % colors.length];
                 result.setRGB(x, y, argb);
             }
         return result;
     }
 
-    private BufferedImage createFullColorImage(int width, int height)
-    {
+    private BufferedImage createFullColorImage(int width, int height) {
         BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-            {
+            for (int y = 0; y < height; y++) {
                 int red = (x * 255) / width;
                 int green = (y * 255) / height;
                 int blue = ((x + y) * 255) / (width + height);
@@ -193,8 +178,7 @@ public class RoundtripTest extends ImagingTest
         return result;
     }
 
-    private void compareImagesExact(BufferedImage a, BufferedImage b)
-    {
+    private void compareImagesExact(BufferedImage a, BufferedImage b) {
         compareImages(a, b, 0);
     }
 
@@ -203,40 +187,35 @@ public class RoundtripTest extends ImagingTest
     // compareImages(a, b, 3); // one bit of rounding error for each channel
     // }
 
-    private void compareImages(BufferedImage a, BufferedImage b, int tolerance)
-    {
+    private void compareImages(BufferedImage a, BufferedImage b, int tolerance) {
         assertEquals(a.getWidth(), b.getWidth());
         assertEquals(a.getHeight(), b.getHeight());
 
         for (int x = 0; x < a.getWidth(); x++)
-            for (int y = 0; y < a.getHeight(); y++)
-            {
+            for (int y = 0; y < a.getHeight(); y++) {
                 int a_argb = a.getRGB(x, y);
                 int b_argb = b.getRGB(x, y);
-                if (a_argb != b_argb)
-                {
+                if (a_argb != b_argb) {
                     if (calculateARGBDistance(a_argb, b_argb) <= tolerance)
                         continue; // ignore.
                 }
-                if (a_argb != b_argb)
-                {
+                if (a_argb != b_argb) {
                     Debug.debug("width", a.getWidth());
                     Debug.debug("height", a.getHeight());
-                    Debug.debug("distance", calculateARGBDistance(a_argb,
-                            b_argb));
+                    Debug.debug("distance",
+                            calculateARGBDistance(a_argb, b_argb));
                     Debug.debug("x", x);
                     Debug.debug("y", y);
-                    Debug.debug("a_argb", a_argb + " (0x"
-                            + Integer.toHexString(a_argb) + ")");
-                    Debug.debug("b_argb", b_argb + " (0x"
-                            + Integer.toHexString(b_argb) + ")");
+                    Debug.debug("a_argb",
+                            a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
+                    Debug.debug("b_argb",
+                            b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
                 }
                 assertEquals(a_argb, b_argb);
             }
     }
 
-    private int calculateARGBDistance(int a, int b)
-    {
+    private int calculateARGBDistance(int a, int b) {
         int aAlpha = 0xff & (a >> 24);
         int aRed = 0xff & (a >> 16);
         int aGreen = 0xff & (a >> 8);
@@ -251,8 +230,7 @@ public class RoundtripTest extends ImagingTest
 
     }
 
-    private void compareFilesExact(File a, File b) throws IOException
-    {
+    private void compareFilesExact(File a, File b) throws IOException {
         assertTrue(a.exists() && a.isFile());
         assertTrue(b.exists() && b.isFile());
         assertEquals(a.length(), b.length());
@@ -260,27 +238,24 @@ public class RoundtripTest extends ImagingTest
         byte aData[] = IoUtils.getFileBytes(a);
         byte bData[] = IoUtils.getFileBytes(b);
 
-        for (int i = 0; i < a.length(); i++)
-        {
+        for (int i = 0; i < a.length(); i++) {
             int aByte = 0xff & aData[i];
             int bByte = 0xff & bData[i];
 
-            if (aByte != bByte)
-            {
+            if (aByte != bByte) {
                 Debug.debug("a", a);
                 Debug.debug("b", b);
                 Debug.debug("i", i);
-                Debug.debug("aByte", aByte + " (0x"
-                        + Integer.toHexString(aByte) + ")");
-                Debug.debug("bByte", bByte + " (0x"
-                        + Integer.toHexString(bByte) + ")");
+                Debug.debug("aByte",
+                        aByte + " (0x" + Integer.toHexString(aByte) + ")");
+                Debug.debug("bByte",
+                        bByte + " (0x" + Integer.toHexString(bByte) + ")");
             }
             assertEquals(aByte, bByte);
         }
     }
 
-    public void testBitmapRoundtrip() throws Exception
-    {
+    public void testBitmapRoundtrip() throws Exception {
         BufferedImage testImages[] = { //
 
         createArgbBitmapImage(1, 1), // minimal
@@ -294,12 +269,10 @@ public class RoundtripTest extends ImagingTest
                 createBitmapBitmapImage(300, 300), // larger than 256
         };
 
-        for (int j = 0; j < testImages.length; j++)
-        {
+        for (int j = 0; j < testImages.length; j++) {
             BufferedImage testImage = testImages[j];
 
-            for (int i = 0; i < FORMAT_INFOS.length; i++)
-            {
+            for (int i = 0; i < FORMAT_INFOS.length; i++) {
                 FormatInfo formatInfo = FORMAT_INFOS[i];
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
@@ -311,8 +284,7 @@ public class RoundtripTest extends ImagingTest
         }
     }
 
-    public void testGrayscaleRoundtrip() throws Exception
-    {
+    public void testGrayscaleRoundtrip() throws Exception {
         BufferedImage testImages[] = { //
 
         createArgbBitmapImage(1, 1), // minimal
@@ -326,12 +298,10 @@ public class RoundtripTest extends ImagingTest
                 createGrayscaleGrayscaleImage(300, 300), // larger than 256
         };
 
-        for (int j = 0; j < testImages.length; j++)
-        {
+        for (int j = 0; j < testImages.length; j++) {
             BufferedImage testImage = testImages[j];
 
-            for (int i = 0; i < FORMAT_INFOS.length; i++)
-            {
+            for (int i = 0; i < FORMAT_INFOS.length; i++) {
                 FormatInfo formatInfo = FORMAT_INFOS[i];
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
@@ -347,8 +317,7 @@ public class RoundtripTest extends ImagingTest
         }
     }
 
-    public void testLimitedColorRoundtrip() throws Exception
-    {
+    public void testLimitedColorRoundtrip() throws Exception {
         BufferedImage testImages[] = { //
 
         createLimitedColorImage(1, 1), // minimal
@@ -357,12 +326,10 @@ public class RoundtripTest extends ImagingTest
                 createLimitedColorImage(300, 300), // larger than 256
         };
 
-        for (int j = 0; j < testImages.length; j++)
-        {
+        for (int j = 0; j < testImages.length; j++) {
             BufferedImage testImage = testImages[j];
 
-            for (int i = 0; i < FORMAT_INFOS.length; i++)
-            {
+            for (int i = 0; i < FORMAT_INFOS.length; i++) {
                 FormatInfo formatInfo = FORMAT_INFOS[i];
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
@@ -380,8 +347,7 @@ public class RoundtripTest extends ImagingTest
         }
     }
 
-    public void testFullColorRoundtrip() throws Exception
-    {
+    public void testFullColorRoundtrip() throws Exception {
         BufferedImage testImages[] = { //
 
         createFullColorImage(1, 1), // minimal
@@ -390,12 +356,10 @@ public class RoundtripTest extends ImagingTest
                 createFullColorImage(300, 300), // larger than 256
         };
 
-        for (int j = 0; j < testImages.length; j++)
-        {
+        for (int j = 0; j < testImages.length; j++) {
             BufferedImage testImage = testImages[j];
 
-            for (int i = 0; i < FORMAT_INFOS.length; i++)
-            {
+            for (int i = 0; i < FORMAT_INFOS.length; i++) {
                 FormatInfo formatInfo = FORMAT_INFOS[i];
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
@@ -417,8 +381,7 @@ public class RoundtripTest extends ImagingTest
 
     private void roundtrip(FormatInfo formatInfo, BufferedImage testImage,
             String tempPrefix, boolean imageExact) throws IOException,
-            ImageReadException, ImageWriteException
-    {
+            ImageReadException, ImageWriteException {
         File temp1 = createTempFile(tempPrefix + ".", "."
                 + formatInfo.format.extension);
         // Debug.debug("tempFile: " + tempFile.getName());
@@ -432,15 +395,13 @@ public class RoundtripTest extends ImagingTest
         BufferedImage image2 = Imaging.getBufferedImage(temp1, readParams);
         assertNotNull(image2);
 
-        if (imageExact)
-        {
+        if (imageExact) {
             // note tolerance when comparing grayscale images
             // BufferedImages of
             compareImagesExact(testImage, image2);
         }
 
-        if (formatInfo.identicalSecondWrite)
-        {
+        if (formatInfo.identicalSecondWrite) {
             File temp2 = createTempFile(tempPrefix + ".", "."
                     + formatInfo.format.extension);
             // Debug.debug("tempFile: " + tempFile.getName());

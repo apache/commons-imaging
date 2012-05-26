@@ -23,18 +23,15 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class PgmWriter extends PnmWriter implements PnmConstants
-{
-    public PgmWriter(boolean RAWBITS)
-    {
+public class PgmWriter extends PnmWriter implements PnmConstants {
+    public PgmWriter(boolean RAWBITS) {
         super(RAWBITS);
     }
 
     @Override
     public void writeImage(BufferedImage src, OutputStream os, Map params)
-            throws ImageWriteException, IOException
-    {
-        //            System.out.println
+            throws ImageWriteException, IOException {
+        // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);
         os.write(RAWBITS ? 0x35 : 0x32);
@@ -53,21 +50,19 @@ public class PgmWriter extends PnmWriter implements PnmConstants
         os.write(PNM_NEWLINE);
 
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
+            for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int red = 0xff & (argb >> 16);
                 int green = 0xff & (argb >> 8);
                 int blue = 0xff & (argb >> 0);
                 int sample = (red + green + blue) / 3;
 
-                if (RAWBITS)
-                {
+                if (RAWBITS) {
                     os.write((byte) sample);
-                }
-                else
-                {
-                    os.write(("" + sample).getBytes("US-ASCII")); // max component value
+                } else {
+                    os.write(("" + sample).getBytes("US-ASCII")); // max
+                                                                  // component
+                                                                  // value
                     os.write(PNM_SEPARATOR);
                 }
             }

@@ -16,12 +16,10 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
-class GifBlock
-{
+class GifBlock {
     public final int blockCode;
 
-    public GifBlock(int blockCode)
-    {
+    public GifBlock(int blockCode) {
         this.blockCode = blockCode;
     }
 }

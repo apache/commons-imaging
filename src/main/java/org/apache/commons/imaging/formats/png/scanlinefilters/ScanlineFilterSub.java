@@ -20,32 +20,29 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class ScanlineFilterSub extends ScanlineFilter
-{
+public class ScanlineFilterSub extends ScanlineFilter {
     private final int BytesPerPixel;
 
-    public ScanlineFilterSub(int BytesPerPixel)
-    {
+    public ScanlineFilterSub(int BytesPerPixel) {
         this.BytesPerPixel = BytesPerPixel;
     }
 
     @Override
     public void unfilter(byte src[], byte dst[], byte up[])
-            throws ImageReadException, IOException
-    {
-        for (int i = 0; i < src.length; i++)
-        {
+            throws ImageReadException, IOException {
+        for (int i = 0; i < src.length; i++) {
             int prev_index = i - BytesPerPixel;
             if (prev_index >= 0)
                 dst[i] = (byte) ((src[i] + dst[prev_index]) % 256);
-            //                dst[i] = 0xff &  (src[i] + src[prev_index]);
+            // dst[i] = 0xff & (src[i] + src[prev_index]);
             else
                 dst[i] = src[i];
 
-            //                if(i<10)
-            //                    System.out.println("\t" + i + ": " + dst[i] + " (" + src[i] + ", " + prev_index + ")");
+            // if(i<10)
+            // System.out.println("\t" + i + ": " + dst[i] + " (" + src[i] +
+            // ", " + prev_index + ")");
 
-            //                dst[i] = src[i];
+            // dst[i] = src[i];
         }
     }
 }
