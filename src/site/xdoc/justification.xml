@@ -26,11 +26,10 @@ limitations under the License.
 
 <p>
     Why another image library? There are so many already.
-    see: <a href="http://fightingquaker.com/sanselan/#references">http://fightingquaker.com/sanselan/#references</a>
 </p>
 
 <p>
-    This library is Pure Java. Consequently it's slow, but perfectly portable.
+    Apache Commons Imaging is Pure Java. Consequently it's slow, but perfectly portable.
 </p>
 
 <p>
@@ -43,15 +42,15 @@ limitations under the License.
 
 <p>
     Most other libraries offer little or incomplete support for ICC Profiles.
-    Sanselan can extract and (simply) parse embedded ICC Profiles.
-    Moreover, sanselan applies the icc profile by default, coverting read images to sRGB.
+    Commons Imaging can extract and (simply) parse embedded ICC Profiles.
+    Moreover, it applies the ICC profile by default, coverting read images to sRGB.
     This means images are color-corrected by default.
     see: <a href="http://en.wikipedia.org/wiki/International_Color_Consortium">http://en.wikipedia.org/wiki/International_Color_Consortium</a>,
     <a href="http://en.wikipedia.org/wiki/SRGB">http://en.wikipedia.org/wiki/SRGB</a>
 </p>
 
 <p>
-    Sanselan also lets you read in image info (ie. width, height or colorspace) and metadata without
+    Commons Imaging also lets you read in image info (ie. width, height or colorspace) and metadata without
     "reading" the entire image. It presents image info and metadata in a format-neutral manner.
     It also gives easy, structured access to format-specific info.
 </p>
@@ -69,7 +68,7 @@ limitations under the License.
 
 <p>
     Ultimately, other libraries didn't quite fill my requirements, though there are many good ones out there.
-    What's really called for is a free, portable, feature complete library that ISN'T pure Java
+    What could be interesting is to get a free, portable, feature complete library that ISN'T pure Java
     - ie. one that uses JNI, at least for JPEG, anyhow. The obvious solution would be a JNI wrapper
     around libtiff, libjpeg, libpng, libgif/libungif, etc. imageloader uses this approach, but
     is unfinished.
@@ -80,15 +79,15 @@ limitations under the License.
 </p>
 
 <p>
-    Sanselan also includes a number of useful functions such as guess an image's format by examining its "magic numbers" (header info).
+    Commons Imaging also includes a number of useful functions such as guess an image's format by examining its "magic numbers" (header info).
 </p>
 
 <p>
-    Sanselan aims to be transparent. There are no hidden buffers to dispose, no blocking calls, no native memory to free.
+    Commons Imaging aims to be transparent. There are no hidden buffers to dispose, no blocking calls, no native memory to free.
 </p>
 
 <p>
-    The ColorConversions class offers methods to convert between the following color spaces: CIE-L*CH°, CIE-L*ab, CIE-L*uv,
+    The ColorConversions class offers methods to convert between the following color spaces: CIE-L*CHï¿½, CIE-L*ab, CIE-L*uv,
     CMY, CMYK, HSL, HSV, Hunter-Lab, RGB, XYZ and Yxy (algorithms courtesy of EasyRGB's).
     see: <a href="http://www.easyrgb.com/">http://www.easyrgb.com/</a>
 </p>

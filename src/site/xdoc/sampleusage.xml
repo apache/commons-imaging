@@ -26,100 +26,18 @@ limitations under the License.
 
 <subsection name="Example Code">
 <p>
-  Can be found in the source distribution in org.apache.commons.sanselan.examples package
+  Can be found in the source distribution in org.apache.commons.imaging.examples package
   <ul>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/SampleUsage.java">SampleUsage.java</a>(includes the above code)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/MetadataExample.java">MetadataExample.java</a>(illustrates how to find JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/ImageWriteExample.java">ImageWriteExample.java</a>(illustrates how to write an image)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/src/test/java/org/apache/commons/sanselan/sampleUsage/ImageReadExample.java">ImageReadExample.java</a>(illustrates how to read an image)</li>
+      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/ImageWriteExample.java">ImageWriteExample.java</a>(illustrates how to write an image)</li>
+      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/ImageReadExample.java">ImageReadExample.java</a>(illustrates how to read an image)</li>
+      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">SampleUsage.java</a>(various examples)</li>
+      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/MetadataExample.java">MetadataExample.java</a>(illustrates how to read JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>
+      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/WriteExifMetadataExample.java">WriteExifMetadataExample.java</a>(illustrates how to write JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>
   </ul>
 </p>
 </subsection>
 
-<subsection name="Sample Usage">
-<p>
-
-<source>
-import java.awt.Dimension;
-import java.awt.color.ICC_Profile;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Hashtable;
-import java.util.Map;
-
-import org.apache.commons.sanselan.*;
-
-// Code won't work unless these variables are properly initialized. 
-// Sanselan works equally well with File, byte array or InputStream inputs.
-BufferedImage someImage = null;
-byte someBytes[] = null;
-File someFile = null;
-InputStream someInputStream = null;
-OutputStream someOutputStream = null;
-
-// The Sanselan class provides a simple interface to the library.
-
-// how to read an image: 
-byte imageBytes[] = someBytes;
-BufferedImage image_1 = Sanselan.getBufferedImage(imageBytes);
-
-// methods of Sanselan usually accept files, byte arrays, or inputstreams as arguments. 
-BufferedImage image_2 = Sanselan.getBufferedImage(imageBytes);
-File file = someFile;
-BufferedImage image_3 = Sanselan.getBufferedImage(file);
-InputStream is = someInputStream;
-BufferedImage image_4 = Sanselan.getBufferedImage(is);
-
-// Write an image. 
-BufferedImage image = someImage;
-File dst = someFile;
-ImageFormat format = ImageFormat.IMAGE_FORMAT_PNG;
-Map optional_params = new Hashtable();
-Sanselan.writeImage(image, dst, format, optional_params);
-
-OutputStream os = someOutputStream;
-Sanselan.writeImage(image, os, format, optional_params);
-
-// get the image's embedded ICC Profile, if it has one. 
-byte icc_profile_bytes[] = Sanselan.getICCProfileBytes(imageBytes);
-
-ICC_Profile icc_profile = Sanselan.getICCProfile(imageBytes);
-
-// get the image's width and height. 
-Dimension d = Sanselan.getImageSize(imageBytes);
-
-// get all of the image's info (ie. bits per pixel, size, transparency, etc.) 
-ImageInfo image_info = Sanselan.getImageInfo(imageBytes);
-
-if (image_info.getColorType() == ImageInfo.COLOR_TYPE_GRAYSCALE)
-System.out.println("Grayscale image.");
-if (image_info.getHeight() > 1000)
-System.out.println("Large image.");
-
-// try to guess the image's format. 
-ImageFormat image_format = Sanselan.guessFormat(imageBytes);
-image_format.equals(ImageFormat.IMAGE_FORMAT_PNG);
-
-// get all metadata stored in EXIF format (ie. from JPEG or TIFF). 
-// org.w3c.dom.Node node = Sanselan.getMetadataObsolete(imageBytes); 
-IImageMetadata metdata = Sanselan.getMetadata(imageBytes);
-
-// print a dump of information about an image to stdout. 
-Sanselan.dumpImageFile(imageBytes);
-
-// get a summary of format errors. 
-FormatCompliance format_compliance = Sanselan
-.getFormatCompliance(imageBytes);
-</source>
-
-</p>
-
-</subsection>
-
 </section>
-
 
 </body>
 </document>

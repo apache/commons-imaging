@@ -28,7 +28,6 @@
       <item name="Mailing Lists"           href="/mail-lists.html"/>
       <item name="Issue Tracking"          href="/issue-tracking.html"/>
       <item name="Source Repository"       href="/source-repository.html"/>
-      <item name="Documentation"           href="http://cwiki.apache.org/SANSELAN/"/>
       <item name="Javadoc"                 href="/apidocs/index.html"/>
       <item name="Download"                href="/download_imaging.cgi"/>
     </menu>
