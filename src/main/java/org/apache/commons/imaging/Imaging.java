@@ -48,9 +48,9 @@ import org.apache.commons.imaging.util.Debug;
  * All of Imaging's methods are static.
  * <p>
  * See the source of the SampleUsage class and other classes in the
- * org.apache.commons.sanselan.examples package for examples.
+ * org.apache.commons.imaging.examples package for examples.
  *
- * @see org.apache.commons.sanselan.examples.SampleUsage
+ * @see <a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">org.apache.commons.imaging.examples.SampleUsage</a>
  */
 public abstract class Imaging implements ImagingConstants {
 

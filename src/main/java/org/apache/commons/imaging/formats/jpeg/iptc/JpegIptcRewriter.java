@@ -36,11 +36,6 @@ import org.apache.commons.imaging.formats.jpeg.xmp.JpegRewriter;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
- * <p>
- * <p>
- * See the source of the IPTCUpdateExample class for example usage.
- *
- * @see org.apache.commons.sanselan.examples.WriteIPTCExample
  */
 public class JpegIptcRewriter extends JpegRewriter implements IptcConstants
 {

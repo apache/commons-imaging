@@ -33,11 +33,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
- * <p>
- * <p>
- * See the source of the XmpXmlUpdateExample class for example usage.
- *
- * @see org.apache.commons.sanselan.examples.WriteXmpXmlExample
  */
 public class JpegXmpRewriter extends JpegRewriter
 {

@@ -45,7 +45,7 @@ import org.apache.commons.imaging.util.Debug;
  * <p>
  * See the source of the ExifMetadataUpdateExample class for example usage.
  *
- * @see org.apache.commons.sanselan.examples.WriteExifMetadataExample
+ * @see <a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/WriteExifMetadataExample.java">org.apache.commons.imaging.examples.WriteExifMetadataExample</a>
  */
 public class ExifRewriter extends BinaryFileParser implements JpegConstants
 {
@@ -62,7 +62,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants
      * <p>
      * @param  byteOrder  byte order of EXIF segment.  Optional.  See BinaryConstants class.
      *
-     * @see org.apache.commons.sanselan.common.BinaryConstants
+     * @see org.apache.commons.imaging.common.BinaryConstants
      */
     public ExifRewriter(int byteOrder)
     {
