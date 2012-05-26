@@ -21,21 +21,18 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.common.BinaryConstants;
 
-public class MyBitInputStream extends InputStream implements BinaryConstants
-{
+public class MyBitInputStream extends InputStream implements BinaryConstants {
     private final InputStream is;
     private final int byteOrder;
     private boolean tiffLZWMode = false;
 
-    public MyBitInputStream(InputStream is, int byteOrder)
-    {
+    public MyBitInputStream(InputStream is, int byteOrder) {
         this.byteOrder = byteOrder;
         this.is = is;
     }
 
     @Override
-    public int read() throws IOException
-    {
+    public int read() throws IOException {
         return readBits(8);
     }
 
@@ -43,21 +40,16 @@ public class MyBitInputStream extends InputStream implements BinaryConstants
     private int bitsInCache = 0;
     private int bitCache = 0;
 
-    public void setTiffLZWMode()
-    {
+    public void setTiffLZWMode() {
         tiffLZWMode = true;
     }
 
-    public int readBits(int SampleBits) throws IOException
-    {
-        while (bitsInCache < SampleBits)
-        {
+    public int readBits(int SampleBits) throws IOException {
+        while (bitsInCache < SampleBits) {
             int next = is.read();
 
-            if (next < 0)
-            {
-                if (tiffLZWMode)
-                {
+            if (next < 0) {
+                if (tiffLZWMode) {
                     // pernicious special case!
                     return 257;
                 }
@@ -83,13 +75,11 @@ public class MyBitInputStream extends InputStream implements BinaryConstants
         if (byteOrder == BYTE_ORDER_NETWORK) // MSB, so read from left
         {
             sample = sampleMask & (bitCache >> (bitsInCache - SampleBits));
-        }
-        else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so read from right
+        } else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so read from right
         {
             sample = sampleMask & bitCache;
             bitCache >>= SampleBits;
-        }
-        else
+        } else
             throw new IOException("Unknown byte order: " + byteOrder);
 
         int result = sample;
@@ -101,14 +91,12 @@ public class MyBitInputStream extends InputStream implements BinaryConstants
         return result;
     }
 
-    public void flushCache()
-    {
+    public void flushCache() {
         bitsInCache = 0;
         bitCache = 0;
     }
 
-    public long getBytesRead()
-    {
+    public long getBytesRead() {
         return bytesRead;
     }
 

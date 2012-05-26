@@ -19,85 +19,72 @@ package org.apache.commons.imaging.common;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageMetadata implements IImageMetadata
-{
+public class ImageMetadata implements IImageMetadata {
     private final List<IImageMetadataItem> items = new ArrayList<IImageMetadataItem>();
 
-    public void add(String keyword, String text)
-    {
+    public void add(String keyword, String text) {
         add(new Item(keyword, text));
     }
 
-    public void add(IImageMetadataItem item)
-    {
+    public void add(IImageMetadataItem item) {
         items.add(item);
     }
 
-    public List<? extends IImageMetadataItem> getItems()
-    {
+    public List<? extends IImageMetadataItem> getItems() {
         return new ArrayList<IImageMetadataItem>(items);
     }
 
-    protected static final String newline = System.getProperty("line.separator");
+    protected static final String newline = System
+            .getProperty("line.separator");
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return toString(null);
     }
 
-    public String toString(String prefix)
-    {
+    public String toString(String prefix) {
         if (null == prefix)
             prefix = "";
 
         StringBuffer result = new StringBuffer();
-        for (int i = 0; i < items.size(); i++)
-        {
+        for (int i = 0; i < items.size(); i++) {
             if (i > 0)
                 result.append(newline);
-            //            if (null != prefix)
-            //                result.append(prefix);
+            // if (null != prefix)
+            // result.append(prefix);
 
-            ImageMetadata.IImageMetadataItem item = items
-                    .get(i);
+            ImageMetadata.IImageMetadataItem item = items.get(i);
             result.append(item.toString(prefix + "\t"));
 
-            //            Debug.debug("prefix", prefix);
-            //            Debug.debug("item", items.get(i));
-            //            Debug.debug();
+            // Debug.debug("prefix", prefix);
+            // Debug.debug("item", items.get(i));
+            // Debug.debug();
         }
         return result.toString();
     }
 
-    public static class Item implements IImageMetadataItem
-    {
+    public static class Item implements IImageMetadataItem {
         private final String keyword, text;
 
-        public Item(String keyword, String text)
-        {
+        public Item(String keyword, String text) {
             this.keyword = keyword;
             this.text = text;
         }
 
-        public String getKeyword()
-        {
+        public String getKeyword() {
             return keyword;
         }
 
-        public String getText()
-        {
+        public String getText() {
             return text;
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return toString(null);
         }
 
-        public String toString(String prefix)
-        {
+        public String toString(String prefix) {
             String result = keyword + ": " + text;
             if (null != prefix)
                 result = prefix + result;

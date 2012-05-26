@@ -20,8 +20,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
-public interface ImagingConstants
-{
+public interface ImagingConstants {
     /**
      * Parameter key. Applies to read and write operations.
      * <p>
@@ -38,7 +37,7 @@ public interface ImagingConstants
      * <p>
      * Valid values: filename as string
      * <p>
-     *
+     * 
      * @see InputStream
      */
     public static final String PARAM_KEY_FILENAME = "FILENAME";
@@ -49,7 +48,7 @@ public interface ImagingConstants
      * Valid values: Any format defined in ImageFormat, such as
      * ImageFormat.IMAGE_FORMAT_PNG.
      * <p>
-     *
+     * 
      * @see ImageFormat
      */
     public static final String PARAM_KEY_FORMAT = "FORMAT";
@@ -65,7 +64,7 @@ public interface ImagingConstants
      * TiffConstants.TIFF_COMPRESSION_LZW,
      * TiffConstants.TIFF_COMPRESSION_PACKBITS.
      * <p>
-     *
+     * 
      * @see TiffConstants
      */
     public static final String PARAM_KEY_COMPRESSION = "COMPRESSION";
@@ -79,7 +78,7 @@ public interface ImagingConstants
      * <p>
      * Valid values: Boolean.TRUE and Boolean.FALSE.
      * <p>
-     *
+     * 
      * @see TiffConstants
      */
     public static final String PARAM_KEY_READ_THUMBNAILS = "READ_THUMBNAILS";
@@ -91,14 +90,14 @@ public interface ImagingConstants
      * Valid values: Boolean.TRUE and Boolean.FALSE. Default value:
      * Boolean.FALSE.
      * <p>
-     *
+     * 
      * @see TiffConstants
      */
     public static final String PARAM_KEY_STRICT = "STRICT";
 
     /**
      * Parameter key.
-     *
+     * 
      * Only used when writing images.
      * <p>
      * Valid values: TiffOutputSet to write into the image's EXIF metadata.
@@ -108,17 +107,17 @@ public interface ImagingConstants
 
     /**
      * Parameter key.
-     *
+     * 
      * Only used when writing images.
      * <p>
      * Valid values: String of XMP XML.
      * <p>
      */
     public static final String PARAM_KEY_XMP_XML = "XMP_XML";
-    
+
     /**
-     * Parameter key. Used in write operations to indicate the desired
-     * pixel density (DPI), and/or aspect ratio.
+     * Parameter key. Used in write operations to indicate the desired pixel
+     * density (DPI), and/or aspect ratio.
      * <p>
      * Valid values: PixelDensity
      */

@@ -16,20 +16,17 @@
  */
 package org.apache.commons.imaging.color;
 
-public final class ColorCmy
-{
+public final class ColorCmy {
     public final double C, M, Y;
 
-    public ColorCmy(double C, double M, double Y)
-    {
+    public ColorCmy(double C, double M, double Y) {
         this.C = C;
         this.M = M;
         this.Y = Y;
     }
 
     @Override
-    public final String toString()
-    {
+    public final String toString() {
         return "{C: " + C + ", M: " + M + ", Y: " + Y + "}";
     }
 }

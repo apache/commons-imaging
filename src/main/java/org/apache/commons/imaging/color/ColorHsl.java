@@ -16,20 +16,17 @@
  */
 package org.apache.commons.imaging.color;
 
-public final class ColorHsl
-{
+public final class ColorHsl {
     public final double H, S, L;
 
-    public ColorHsl(double h, double s, double v)
-    {
+    public ColorHsl(double h, double s, double v) {
         H = h;
         S = s;
         L = v;
     }
 
     @Override
-    public final String toString()
-    {
+    public final String toString() {
         return "{H: " + H + ", S: " + S + ", L: " + L + "}";
     }
 }

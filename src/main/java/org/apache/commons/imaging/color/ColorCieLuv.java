@@ -16,20 +16,17 @@
  */
 package org.apache.commons.imaging.color;
 
-public final class ColorCieLuv
-{
+public final class ColorCieLuv {
     public final double L, u, v;
 
-    public ColorCieLuv(double l, double u, double v)
-    {
+    public ColorCieLuv(double l, double u, double v) {
         L = l;
         this.u = u;
         this.v = v;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "{L: " + L + ", u: " + u + ", v: " + v + "}";
     }
 }

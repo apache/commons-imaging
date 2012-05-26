@@ -18,10 +18,8 @@ package org.apache.commons.imaging.color;
 
 import org.apache.commons.imaging.util.Debug;
 
-public abstract class ColorConversions
-{
-    public static final ColorCieLab convertXYZtoCIELab(ColorXyz xyz)
-    {
+public abstract class ColorConversions {
+    public static final ColorCieLab convertXYZtoCIELab(ColorXyz xyz) {
         return convertXYZtoCIELab(xyz.X, xyz.Y, xyz.Z);
     }
 
@@ -29,12 +27,13 @@ public abstract class ColorConversions
     private static final double ref_Y = 100.000;
     private static final double ref_Z = 108.883;
 
-    public static final ColorCieLab convertXYZtoCIELab(double X, double Y, double Z)
-    {
+    public static final ColorCieLab convertXYZtoCIELab(double X, double Y,
+            double Z) {
 
-        double var_X = X / ref_X; //ref_X =  95.047  Observer= 2°, Illuminant= D65
-        double var_Y = Y / ref_Y; //ref_Y = 100.000
-        double var_Z = Z / ref_Z; //ref_Z = 108.883
+        double var_X = X / ref_X; // ref_X = 95.047 Observer= 2°, Illuminant=
+                                  // D65
+        double var_Y = Y / ref_Y; // ref_Y = 100.000
+        double var_Z = Z / ref_Z; // ref_Z = 108.883
 
         if (var_X > 0.008856)
             var_X = Math.pow(var_X, (1 / 3.0));
@@ -55,13 +54,11 @@ public abstract class ColorConversions
         return new ColorCieLab(L, a, b);
     }
 
-    public static final ColorXyz convertCIELabtoXYZ(ColorCieLab cielab)
-    {
+    public static final ColorXyz convertCIELabtoXYZ(ColorCieLab cielab) {
         return convertCIELabtoXYZ(cielab.L, cielab.a, cielab.b);
     }
 
-    public static final ColorXyz convertCIELabtoXYZ(double L, double a, double b)
-    {
+    public static final ColorXyz convertCIELabtoXYZ(double L, double a, double b) {
         double var_Y = (L + 16) / 116.0;
         double var_X = a / 500 + var_Y;
         double var_Z = var_Y - b / 200.0;
@@ -79,21 +76,20 @@ public abstract class ColorConversions
         else
             var_Z = (var_Z - 16 / 116.0) / 7.787;
 
-        double X = ref_X * var_X; //ref_X =  95.047  Observer= 2°, Illuminant= D65
-        double Y = ref_Y * var_Y; //ref_Y = 100.000
-        double Z = ref_Z * var_Z; //ref_Z = 108.883
+        double X = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant=
+                                  // D65
+        double Y = ref_Y * var_Y; // ref_Y = 100.000
+        double Z = ref_Z * var_Z; // ref_Z = 108.883
 
         return new ColorXyz(X, Y, Z);
     }
 
-    public static final ColorHunterLab convertXYZtoHunterLab(ColorXyz xyz)
-    {
+    public static final ColorHunterLab convertXYZtoHunterLab(ColorXyz xyz) {
         return convertXYZtoHunterLab(xyz.X, xyz.Y, xyz.Z);
     }
 
     public static final ColorHunterLab convertXYZtoHunterLab(double X,
-            double Y, double Z)
-    {
+            double Y, double Z) {
         double L = 10 * Math.sqrt(Y);
         double a = 17.5 * (((1.02 * X) - Y) / Math.sqrt(Y));
         double b = 7 * ((Y - (0.847 * Z)) / Math.sqrt(Y));
@@ -101,14 +97,12 @@ public abstract class ColorConversions
         return new ColorHunterLab(L, a, b);
     }
 
-    public static final ColorXyz convertHunterLabtoXYZ(ColorHunterLab cielab)
-    {
+    public static final ColorXyz convertHunterLabtoXYZ(ColorHunterLab cielab) {
         return convertHunterLabtoXYZ(cielab.L, cielab.a, cielab.b);
     }
 
     public static final ColorXyz convertHunterLabtoXYZ(double L, double a,
-            double b)
-    {
+            double b) {
         double var_Y = L / 10;
         double var_X = a / 17.5 * L / 10;
         double var_Z = b / 7 * L / 10;
@@ -120,17 +114,15 @@ public abstract class ColorConversions
         return new ColorXyz(X, Y, Z);
     }
 
-    public static final int convertXYZtoRGB(ColorXyz xyz)
-    {
+    public static final int convertXYZtoRGB(ColorXyz xyz) {
         return convertXYZtoRGB(xyz.X, xyz.Y, xyz.Z);
     }
 
-    public static final int convertXYZtoRGB(double X, double Y, double Z)
-    {
-        //Observer = 2°, Illuminant = D65
-        double var_X = X / 100.0; //Where X = 0 ÷  95.047
-        double var_Y = Y / 100.0; //Where Y = 0 ÷ 100.000
-        double var_Z = Z / 100.0; //Where Z = 0 ÷ 108.883
+    public static final int convertXYZtoRGB(double X, double Y, double Z) {
+        // Observer = 2°, Illuminant = D65
+        double var_X = X / 100.0; // Where X = 0 ÷ 95.047
+        double var_Y = Y / 100.0; // Where Y = 0 ÷ 100.000
+        double var_Z = Z / 100.0; // Where Z = 0 ÷ 108.883
 
         double var_R = var_X * 3.2406 + var_Y * -1.5372 + var_Z * -0.4986;
         double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
@@ -156,15 +148,14 @@ public abstract class ColorConversions
         return convertRGBtoRGB(R, G, B);
     }
 
-    public static final ColorXyz convertRGBtoXYZ(int rgb)
-    {
+    public static final ColorXyz convertRGBtoXYZ(int rgb) {
         int r = 0xff & (rgb >> 16);
         int g = 0xff & (rgb >> 8);
         int b = 0xff & (rgb >> 0);
 
-        double var_R = r / 255.0; //Where R = 0 ÷ 255
-        double var_G = g / 255.0; //Where G = 0 ÷ 255
-        double var_B = b / 255.0; //Where B = 0 ÷ 255
+        double var_R = r / 255.0; // Where R = 0 ÷ 255
+        double var_G = g / 255.0; // Where G = 0 ÷ 255
+        double var_B = b / 255.0; // Where B = 0 ÷ 255
 
         if (var_R > 0.04045)
             var_R = Math.pow((var_R + 0.055) / 1.055, 2.4);
@@ -183,7 +174,7 @@ public abstract class ColorConversions
         var_G = var_G * 100;
         var_B = var_B * 100;
 
-        //        Observer. = 2°, Illuminant = D65
+        // Observer. = 2°, Illuminant = D65
         double X = var_R * 0.4124 + var_G * 0.3576 + var_B * 0.1805;
         double Y = var_R * 0.2126 + var_G * 0.7152 + var_B * 0.0722;
         double Z = var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505;
@@ -191,14 +182,13 @@ public abstract class ColorConversions
         return new ColorXyz(X, Y, Z);
     }
 
-    public static final ColorCmy convertRGBtoCMY(int rgb)
-    {
+    public static final ColorCmy convertRGBtoCMY(int rgb) {
         int R = 0xff & (rgb >> 16);
         int G = 0xff & (rgb >> 8);
         int B = 0xff & (rgb >> 0);
 
-        //        RGB values = 0 ÷ 255
-        //        CMY values = 0 ÷ 1
+        // RGB values = 0 ÷ 255
+        // CMY values = 0 ÷ 1
 
         double C = 1 - (R / 255.0);
         double M = 1 - (G / 255.0);
@@ -207,16 +197,15 @@ public abstract class ColorConversions
         return new ColorCmy(C, M, Y);
     }
 
-    public static final int convertCMYtoRGB(ColorCmy cmy)
-    {
-        // From Ghostscript's gdevcdj.c: 
-        // *   Ghostscript:    R = (1.0 - C) * (1.0 - K)
-        // *   Adobe:          R = 1.0 - min(1.0, C + K)
+    public static final int convertCMYtoRGB(ColorCmy cmy) {
+        // From Ghostscript's gdevcdj.c:
+        // * Ghostscript: R = (1.0 - C) * (1.0 - K)
+        // * Adobe: R = 1.0 - min(1.0, C + K)
         // and similarly for G and B.
         // This is Ghostscript's formula with K = 0.
-        
-        //        CMY values = 0 ÷ 1
-        //        RGB values = 0 ÷ 255
+
+        // CMY values = 0 ÷ 1
+        // RGB values = 0 ÷ 255
 
         double R = (1 - cmy.C) * 255.0;
         double G = (1 - cmy.M) * 255.0;
@@ -225,9 +214,8 @@ public abstract class ColorConversions
         return convertRGBtoRGB(R, G, B);
     }
 
-    public static final ColorCmyk convertCMYtoCMYK(ColorCmy cmy)
-    {
-        //        Where CMYK and CMY values = 0 ÷ 1
+    public static final ColorCmyk convertCMYtoCMYK(ColorCmy cmy) {
+        // Where CMYK and CMY values = 0 ÷ 1
 
         double C = cmy.C;
         double M = cmy.M;
@@ -241,14 +229,11 @@ public abstract class ColorConversions
             var_K = M;
         if (Y < var_K)
             var_K = Y;
-        if (var_K == 1)
-        { //Black
+        if (var_K == 1) { // Black
             C = 0;
             M = 0;
             Y = 0;
-        }
-        else
-        {
+        } else {
             C = (C - var_K) / (1 - var_K);
             M = (M - var_K) / (1 - var_K);
             Y = (Y - var_K) / (1 - var_K);
@@ -256,15 +241,13 @@ public abstract class ColorConversions
         return new ColorCmyk(C, M, Y, var_K);
     }
 
-    public static final ColorCmy convertCMYKtoCMY(ColorCmyk cmyk)
-    {
+    public static final ColorCmy convertCMYKtoCMY(ColorCmyk cmyk) {
         return convertCMYKtoCMY(cmyk.C, cmyk.M, cmyk.Y, cmyk.K);
     }
 
     public static final ColorCmy convertCMYKtoCMY(double C, double M, double Y,
-            double K)
-    {
-        //    Where CMYK and CMY values = 0 ÷ 1
+            double K) {
+        // Where CMYK and CMY values = 0 ÷ 1
 
         C = (C * (1 - K) + K);
         M = (M * (1 - K) + K);
@@ -274,7 +257,7 @@ public abstract class ColorConversions
     }
 
     public static final int convertCMYKtoRGB(int c, int m, int y, int k)
-    //    throws ImageReadException, IOException
+    // throws ImageReadException, IOException
     {
         double C = c / 255.0;
         double M = m / 255.0;
@@ -284,41 +267,41 @@ public abstract class ColorConversions
         return convertCMYtoRGB(convertCMYKtoCMY(C, M, Y, K));
     }
 
-    public static final ColorHsl convertRGBtoHSL(int rgb)
-    {
+    public static final ColorHsl convertRGBtoHSL(int rgb) {
 
         int R = 0xff & (rgb >> 16);
         int G = 0xff & (rgb >> 8);
         int B = 0xff & (rgb >> 0);
 
-        double var_R = (R / 255.0); //Where RGB values = 0 ÷ 255
+        double var_R = (R / 255.0); // Where RGB values = 0 ÷ 255
         double var_G = (G / 255.0);
         double var_B = (B / 255.0);
 
-        double var_Min = Math.min(var_R, Math.min(var_G, var_B)); //Min. value of RGB
-        double var_Max = Math.max(var_R, Math.max(var_G, var_B)); //Max. value of RGB
-        double del_Max = var_Max - var_Min; //Delta RGB value
+        double var_Min = Math.min(var_R, Math.min(var_G, var_B)); // Min. value
+                                                                  // of RGB
+        double var_Max = Math.max(var_R, Math.max(var_G, var_B)); // Max. value
+                                                                  // of RGB
+        double del_Max = var_Max - var_Min; // Delta RGB value
 
         double L = (var_Max + var_Min) / 2.0;
 
         double H, S;
-        //        Debug.debug("del_Max", del_Max);
-        if (del_Max == 0) //This is a gray, no chroma...
+        // Debug.debug("del_Max", del_Max);
+        if (del_Max == 0) // This is a gray, no chroma...
         {
-            H = 0; //HSL results = 0 ÷ 1
+            H = 0; // HSL results = 0 ÷ 1
             S = 0;
-        }
-        else
-        //Chromatic data...
+        } else
+        // Chromatic data...
         {
-            //            Debug.debug("L", L);
+            // Debug.debug("L", L);
 
             if (L < 0.5)
                 S = del_Max / (var_Max + var_Min);
             else
                 S = del_Max / (2 - var_Max - var_Min);
 
-            //            Debug.debug("S", S);
+            // Debug.debug("S", S);
 
             double del_R = (((var_Max - var_R) / 6) + (del_Max / 2)) / del_Max;
             double del_G = (((var_Max - var_G) / 6) + (del_Max / 2)) / del_Max;
@@ -330,42 +313,37 @@ public abstract class ColorConversions
                 H = (1 / 3.0) + del_R - del_B;
             else if (var_B == var_Max)
                 H = (2 / 3.0) + del_G - del_R;
-            else
-            {
+            else {
                 Debug.debug("uh oh");
                 H = 0; // cmc
             }
 
-            //            Debug.debug("H1", H);
+            // Debug.debug("H1", H);
 
             if (H < 0)
                 H += 1;
             if (H > 1)
                 H -= 1;
 
-            //            Debug.debug("H2", H);
+            // Debug.debug("H2", H);
         }
 
         return new ColorHsl(H, S, L);
     }
 
-    public static int convertHSLtoRGB(ColorHsl hsl)
-    {
+    public static int convertHSLtoRGB(ColorHsl hsl) {
         return convertHSLtoRGB(hsl.H, hsl.S, hsl.L);
     }
 
-    public static int convertHSLtoRGB(double H, double S, double L)
-    {
+    public static int convertHSLtoRGB(double H, double S, double L) {
         double R, G, B;
 
-        if (S == 0) //HSL values = 0 ÷ 1
+        if (S == 0) // HSL values = 0 ÷ 1
         {
-            R = L * 255; //RGB results = 0 ÷ 255
+            R = L * 255; // RGB results = 0 ÷ 255
             G = L * 255;
             B = L * 255;
-        }
-        else
-        {
+        } else {
             double var_2;
 
             if (L < 0.5)
@@ -383,7 +361,8 @@ public abstract class ColorConversions
         return convertRGBtoRGB(R, G, B);
     }
 
-    private static double convertHuetoRGB(double v1, double v2, double vH) //Function Hue_2_RGB
+    private static double convertHuetoRGB(double v1, double v2, double vH) // Function
+                                                                           // Hue_2_RGB
     {
         if (vH < 0)
             vH += 1;
@@ -398,30 +377,30 @@ public abstract class ColorConversions
         return (v1);
     }
 
-    public static final ColorHsv convertRGBtoHSV(int rgb)
-    {
+    public static final ColorHsv convertRGBtoHSV(int rgb) {
         int R = 0xff & (rgb >> 16);
         int G = 0xff & (rgb >> 8);
         int B = 0xff & (rgb >> 0);
 
-        double var_R = (R / 255.0); //RGB values = 0 ÷ 255
+        double var_R = (R / 255.0); // RGB values = 0 ÷ 255
         double var_G = (G / 255.0);
         double var_B = (B / 255.0);
 
-        double var_Min = Math.min(var_R, Math.min(var_G, var_B)); //Min. value of RGB
-        double var_Max = Math.max(var_R, Math.max(var_G, var_B)); //Max. value of RGB
-        double del_Max = var_Max - var_Min; //Delta RGB value
+        double var_Min = Math.min(var_R, Math.min(var_G, var_B)); // Min. value
+                                                                  // of RGB
+        double var_Max = Math.max(var_R, Math.max(var_G, var_B)); // Max. value
+                                                                  // of RGB
+        double del_Max = var_Max - var_Min; // Delta RGB value
 
         double V = var_Max;
 
         double H, S;
-        if (del_Max == 0) //This is a gray, no chroma...
+        if (del_Max == 0) // This is a gray, no chroma...
         {
-            H = 0; //HSV results = 0 ÷ 1
+            H = 0; // HSV results = 0 ÷ 1
             S = 0;
-        }
-        else
-        //Chromatic data...
+        } else
+        // Chromatic data...
         {
             S = del_Max / var_Max;
 
@@ -435,8 +414,7 @@ public abstract class ColorConversions
                 H = (1 / 3.0) + del_R - del_B;
             else if (var_B == var_Max)
                 H = (2 / 3.0) + del_G - del_R;
-            else
-            {
+            else {
                 Debug.debug("uh oh");
                 H = 0; // cmc;
             }
@@ -450,71 +428,56 @@ public abstract class ColorConversions
         return new ColorHsv(H, S, V);
     }
 
-    public static int convertHSVtoRGB(ColorHsv HSV)
-    {
+    public static int convertHSVtoRGB(ColorHsv HSV) {
         return convertHSVtoRGB(HSV.H, HSV.S, HSV.V);
     }
 
-    public static int convertHSVtoRGB(double H, double S, double V)
-    {
+    public static int convertHSVtoRGB(double H, double S, double V) {
         double R, G, B;
 
-        if (S == 0) //HSV values = 0 ÷ 1
+        if (S == 0) // HSV values = 0 ÷ 1
         {
             R = V * 255;
             G = V * 255;
             B = V * 255;
-        }
-        else
-        {
+        } else {
             double var_h = H * 6;
             if (var_h == 6)
-                var_h = 0; //H must be < 1
-            double var_i = Math.floor(var_h); //Or ... var_i = floor( var_h )
+                var_h = 0; // H must be < 1
+            double var_i = Math.floor(var_h); // Or ... var_i = floor( var_h )
             double var_1 = V * (1 - S);
             double var_2 = V * (1 - S * (var_h - var_i));
             double var_3 = V * (1 - S * (1 - (var_h - var_i)));
 
             double var_r, var_g, var_b;
 
-            if (var_i == 0)
-            {
+            if (var_i == 0) {
                 var_r = V;
                 var_g = var_3;
                 var_b = var_1;
-            }
-            else if (var_i == 1)
-            {
+            } else if (var_i == 1) {
                 var_r = var_2;
                 var_g = V;
                 var_b = var_1;
-            }
-            else if (var_i == 2)
-            {
+            } else if (var_i == 2) {
                 var_r = var_1;
                 var_g = V;
                 var_b = var_3;
-            }
-            else if (var_i == 3)
-            {
+            } else if (var_i == 3) {
                 var_r = var_1;
                 var_g = var_2;
                 var_b = V;
-            }
-            else if (var_i == 4)
-            {
+            } else if (var_i == 4) {
                 var_r = var_3;
                 var_g = var_1;
                 var_b = V;
-            }
-            else
-            {
+            } else {
                 var_r = V;
                 var_g = var_1;
                 var_b = var_2;
             }
 
-            R = var_r * 255; //RGB results = 0 ÷ 255
+            R = var_r * 255; // RGB results = 0 ÷ 255
             G = var_g * 255;
             B = var_b * 255;
         }
@@ -522,8 +485,9 @@ public abstract class ColorConversions
         return convertRGBtoRGB(R, G, B);
     }
 
-    public static final int convertCMYKtoRGB_Adobe(int sc, int sm, int sy, int sk)
-    //    throws ImageReadException, IOException
+    public static final int convertCMYKtoRGB_Adobe(int sc, int sm, int sy,
+            int sk)
+    // throws ImageReadException, IOException
     {
         int red = 255 - (sc + sk);
         int green = 255 - (sm + sk);
@@ -532,18 +496,15 @@ public abstract class ColorConversions
         return convertRGBtoRGB(red, green, blue);
     }
 
-    private static double cube(double f)
-    {
+    private static double cube(double f) {
         return f * f * f;
     }
 
-    private static double square(double f)
-    {
+    private static double square(double f) {
         return f * f;
     }
 
-    public static final int convertCIELabtoARGBTest(int cieL, int cieA, int cieB)
-    {
+    public static final int convertCIELabtoARGBTest(int cieL, int cieA, int cieB) {
         double X, Y, Z;
 
         {
@@ -571,21 +532,21 @@ public abstract class ColorConversions
             else
                 var_Z = (var_Z - 16 / 116.0) / 7.787;
 
-            //            double ref_X = 95.047;
-            //            double ref_Y = 100.000;
-            //            double ref_Z = 108.883;
+            // double ref_X = 95.047;
+            // double ref_Y = 100.000;
+            // double ref_Z = 108.883;
 
-            X = ref_X * var_X; //ref_X =  95.047  Observer= 2°, Illuminant= D65
-            Y = ref_Y * var_Y; //ref_Y = 100.000
-            Z = ref_Z * var_Z; //ref_Z = 108.883
+            X = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant= D65
+            Y = ref_Y * var_Y; // ref_Y = 100.000
+            Z = ref_Z * var_Z; // ref_Z = 108.883
 
         }
 
         double R, G, B;
         {
-            double var_X = X / 100; //X = From 0 to ref_X
-            double var_Y = Y / 100; //Y = From 0 to ref_Y
-            double var_Z = Z / 100; //Z = From 0 to ref_Y
+            double var_X = X / 100; // X = From 0 to ref_X
+            double var_Y = Y / 100; // Y = From 0 to ref_Y
+            double var_Z = Z / 100; // Z = From 0 to ref_Y
 
             double var_R = var_X * 3.2406 + var_Y * -1.5372 + var_Z * -0.4986;
             double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
@@ -613,8 +574,7 @@ public abstract class ColorConversions
         return convertRGBtoRGB(R, G, B);
     }
 
-    private static final int convertRGBtoRGB(double R, double G, double B)
-    {
+    private static final int convertRGBtoRGB(double R, double G, double B) {
         int red = (int) Math.round(R);
         int green = (int) Math.round(G);
         int blue = (int) Math.round(B);
@@ -629,8 +589,7 @@ public abstract class ColorConversions
         return rgb;
     }
 
-    private static final int convertRGBtoRGB(int red, int green, int blue)
-    {
+    private static final int convertRGBtoRGB(int red, int green, int blue) {
         red = Math.min(255, Math.max(0, red));
         green = Math.min(255, Math.max(0, green));
         blue = Math.min(255, Math.max(0, blue));
@@ -641,87 +600,79 @@ public abstract class ColorConversions
         return rgb;
     }
 
-    public static ColorCieLch convertCIELabtoCIELCH(ColorCieLab cielab)
-    {
+    public static ColorCieLch convertCIELabtoCIELCH(ColorCieLab cielab) {
         return convertCIELabtoCIELCH(cielab.L, cielab.a, cielab.b);
     }
 
-    public static ColorCieLch convertCIELabtoCIELCH(double L, double a, double b)
-    {
-        double var_H = Math.atan2(b, a); //Quadrant by signs
+    public static ColorCieLch convertCIELabtoCIELCH(double L, double a, double b) {
+        double var_H = Math.atan2(b, a); // Quadrant by signs
 
         if (var_H > 0)
             var_H = (var_H / Math.PI) * 180.0;
         else
             var_H = 360 - radian_2_degree(Math.abs(var_H));
 
-        //        L = L;
+        // L = L;
         double C = Math.sqrt(square(a) + square(b));
         double H = var_H;
 
         return new ColorCieLch(L, C, H);
     }
 
-    public static ColorCieLab convertCIELCHtoCIELab(ColorCieLch cielch)
-    {
+    public static ColorCieLab convertCIELCHtoCIELab(ColorCieLch cielch) {
         return convertCIELCHtoCIELab(cielch.L, cielch.C, cielch.H);
     }
 
-    public static ColorCieLab convertCIELCHtoCIELab(double L, double C, double H)
-    {
-        //        Where CIE-H° = 0 ÷ 360°
+    public static ColorCieLab convertCIELCHtoCIELab(double L, double C, double H) {
+        // Where CIE-H° = 0 ÷ 360°
 
-        //        CIE-L* = CIE-L;
+        // CIE-L* = CIE-L;
         double a = Math.cos(degree_2_radian(H)) * C;
         double b = Math.sin(degree_2_radian(H)) * C;
 
         return new ColorCieLab(L, a, b);
     }
 
-    public static double degree_2_radian(double degree)
-    {
+    public static double degree_2_radian(double degree) {
         return degree * Math.PI / 180.0;
     }
 
-    public static double radian_2_degree(double radian)
-    {
+    public static double radian_2_degree(double radian) {
         return radian * 180.0 / Math.PI;
     }
 
-    public static ColorCieLuv convertXYZtoCIELuv(ColorXyz xyz)
-    {
+    public static ColorCieLuv convertXYZtoCIELuv(ColorXyz xyz) {
         return convertXYZtoCIELuv(xyz.X, xyz.Y, xyz.Z);
     }
 
-    public static ColorCieLuv convertXYZtoCIELuv(double X, double Y, double Z)
-    {
+    public static ColorCieLuv convertXYZtoCIELuv(double X, double Y, double Z) {
         // problems here with div by zero
 
         double var_U = (4 * X) / (X + (15 * Y) + (3 * Z));
         double var_V = (9 * Y) / (X + (15 * Y) + (3 * Z));
 
-        //        Debug.debug("var_U", var_U);
-        //        Debug.debug("var_V", var_V);
+        // Debug.debug("var_U", var_U);
+        // Debug.debug("var_V", var_V);
 
         double var_Y = Y / 100.0;
-        //        Debug.debug("var_Y", var_Y);
+        // Debug.debug("var_Y", var_Y);
 
         if (var_Y > 0.008856)
             var_Y = Math.pow(var_Y, (1 / 3.0));
         else
             var_Y = (7.787 * var_Y) + (16 / 116.0);
 
-        double ref_X = 95.047; //Observer= 2°, Illuminant= D65
+        double ref_X = 95.047; // Observer= 2°, Illuminant= D65
         double ref_Y = 100.000;
         double ref_Z = 108.883;
 
-        //        Debug.debug("var_Y", var_Y);
+        // Debug.debug("var_Y", var_Y);
 
         double ref_U = (4 * ref_X) / (ref_X + (15 * ref_Y) + (3 * ref_Z));
         double ref_V = (9 * ref_Y) / (ref_X + (15 * ref_Y) + (3 * ref_Z));
 
-        //        Debug.debug("ref_U", ref_U);
-        //        Debug.debug("ref_V", ref_V);
+        // Debug.debug("ref_U", ref_U);
+        // Debug.debug("ref_V", ref_V);
 
         double L = (116 * var_Y) - 16;
         double u = 13 * L * (var_U - ref_U);
@@ -730,13 +681,11 @@ public abstract class ColorConversions
         return new ColorCieLuv(L, u, v);
     }
 
-    public static ColorXyz convertCIELuvtoXYZ(ColorCieLuv cielch)
-    {
+    public static ColorXyz convertCIELuvtoXYZ(ColorCieLuv cielch) {
         return convertCIELuvtoXYZ(cielch.L, cielch.u, cielch.v);
     }
 
-    public static ColorXyz convertCIELuvtoXYZ(double L, double u, double v)
-    {
+    public static ColorXyz convertCIELuvtoXYZ(double L, double u, double v) {
         // problems here with div by zero
 
         double var_Y = (L + 16) / 116;
@@ -745,7 +694,7 @@ public abstract class ColorConversions
         else
             var_Y = (var_Y - 16 / 116) / 7.787;
 
-        double ref_X = 95.047; //Observer= 2°, Illuminant= D65
+        double ref_X = 95.047; // Observer= 2°, Illuminant= D65
         double ref_Y = 100.000;
         double ref_Z = 108.883;
 

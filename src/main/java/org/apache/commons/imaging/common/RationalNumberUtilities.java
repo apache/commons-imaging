@@ -16,31 +16,25 @@
  */
 package org.apache.commons.imaging.common;
 
-public abstract class RationalNumberUtilities extends Number
-{
+public abstract class RationalNumberUtilities extends Number {
 
-    private static class Option
-    {
+    private static class Option {
         public final RationalNumber rationalNumber;
         public final double error;
 
-        private Option(final RationalNumber rationalNumber, final double error)
-        {
+        private Option(final RationalNumber rationalNumber, final double error) {
             this.rationalNumber = rationalNumber;
             this.error = error;
         }
 
         public static final Option factory(final RationalNumber rationalNumber,
-                final double value)
-        {
+                final double value) {
             return new Option(rationalNumber, Math.abs(rationalNumber
-                    .doubleValue()
-                    - value));
+                    .doubleValue() - value));
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return rationalNumber.toString();
         }
     }
@@ -51,16 +45,14 @@ public abstract class RationalNumberUtilities extends Number
     //
     // calculate rational number using successive approximations.
     //
-    public static final RationalNumber getRationalNumber(double value)
-    {
+    public static final RationalNumber getRationalNumber(double value) {
         if (value >= Integer.MAX_VALUE)
             return new RationalNumber(Integer.MAX_VALUE, 1);
         else if (value <= -Integer.MAX_VALUE)
             return new RationalNumber(-Integer.MAX_VALUE, 1);
 
         boolean negative = false;
-        if (value < 0)
-        {
+        if (value < 0) {
             negative = true;
             value = Math.abs(value);
         }
@@ -72,30 +64,21 @@ public abstract class RationalNumberUtilities extends Number
 
             if (value == 0)
                 return new RationalNumber(0, 1);
-            else if (value >= 1)
-            {
+            else if (value >= 1) {
                 int approx = (int) value;
-                if (approx < value)
-                {
+                if (approx < value) {
                     l = new RationalNumber(approx, 1);
                     h = new RationalNumber(approx + 1, 1);
-                }
-                else
-                {
+                } else {
                     l = new RationalNumber(approx - 1, 1);
                     h = new RationalNumber(approx, 1);
                 }
-            }
-            else
-            {
+            } else {
                 int approx = (int) (1.0 / value);
-                if ((1.0 / approx) < value)
-                {
+                if ((1.0 / approx) < value) {
                     l = new RationalNumber(1, approx);
                     h = new RationalNumber(1, approx - 1);
-                }
-                else
-                {
+                } else {
                     l = new RationalNumber(1, approx + 1);
                     h = new RationalNumber(1, approx);
                 }
@@ -106,13 +89,13 @@ public abstract class RationalNumberUtilities extends Number
 
         Option bestOption = (low.error < high.error) ? low : high;
 
-        final int MAX_ITERATIONS = 100; // value is quite high, actually.  shouldn't matter.
+        final int MAX_ITERATIONS = 100; // value is quite high, actually.
+                                        // shouldn't matter.
         for (int count = 0; bestOption.error > TOLERANCE
-                && count < MAX_ITERATIONS; count++)
-        {
-            //            Debug.debug("bestOption: " + bestOption + ", left: " + low
-            //                    + ", right: " + high + ", value: " + value + ", error: "
-            //                    + bestOption.error);
+                && count < MAX_ITERATIONS; count++) {
+            // Debug.debug("bestOption: " + bestOption + ", left: " + low
+            // + ", right: " + high + ", value: " + value + ", error: "
+            // + bestOption.error);
 
             RationalNumber mediant = RationalNumber.factoryMethod(
                     (long) low.rationalNumber.numerator
@@ -121,15 +104,12 @@ public abstract class RationalNumberUtilities extends Number
                             + (long) high.rationalNumber.divisor);
             Option mediantOption = Option.factory(mediant, value);
 
-            if (value < mediant.doubleValue())
-            {
+            if (value < mediant.doubleValue()) {
                 if (high.error <= mediantOption.error)
                     break;
 
                 high = mediantOption;
-            }
-            else
-            {
+            } else {
                 if (low.error <= mediantOption.error)
                     break;
 
@@ -140,8 +120,7 @@ public abstract class RationalNumberUtilities extends Number
                 bestOption = mediantOption;
         }
 
-        return negative
-                ? bestOption.rationalNumber.negate()
+        return negative ? bestOption.rationalNumber.negate()
                 : bestOption.rationalNumber;
     }
 

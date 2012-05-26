@@ -25,8 +25,7 @@ import java.util.List;
  * ImageInfo represents a collection of basic properties of an image, such as
  * width, height, format, bit depth, etc.
  */
-public class ImageInfo
-{
+public class ImageInfo {
     private final String formatDetails; // ie version
 
     private final int bitsPerPixel;
@@ -77,8 +76,7 @@ public class ImageInfo
             int physicalHeightDpi, float physicalHeightInch,
             int physicalWidthDpi, float physicalWidthInch, int width,
             boolean isProgressive, boolean isTransparent, boolean usesPalette,
-            int colorType, String compressionAlgorithm)
-    {
+            int colorType, String compressionAlgorithm) {
         this.formatDetails = formatDetails;
 
         this.bitsPerPixel = bitsPerPixel;
@@ -107,59 +105,55 @@ public class ImageInfo
     /**
      * Returns the bits per pixel of the image data.
      */
-    public int getBitsPerPixel()
-    {
+    public int getBitsPerPixel() {
         return bitsPerPixel;
     }
 
     /**
-     * Returns a list of comments from the image file. <p/> This is mostly
-     * obsolete.
+     * Returns a list of comments from the image file.
+     * <p/>
+     * This is mostly obsolete.
      */
-    public List<String> getComments()
-    {
+    public List<String> getComments() {
         return new ArrayList<String>(comments);
     }
 
     /**
-     * Returns the image file format, ie. ImageFormat.IMAGE_FORMAT_PNG. <p/>
+     * Returns the image file format, ie. ImageFormat.IMAGE_FORMAT_PNG.
+     * <p/>
      * Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if format is unknown.
-     *
+     * 
      * @return A constant defined in ImageFormat.
      * @see ImageFormat
      */
-    public ImageFormat getFormat()
-    {
+    public ImageFormat getFormat() {
         return format;
     }
 
     /**
      * Returns a string with the name of the image file format.
-     *
+     * 
      * @see #getFormat()
      */
-    public String getFormatName()
-    {
+    public String getFormatName() {
         return formatName;
     }
 
     /**
      * Returns the height of the image in pixels.
-     *
+     * 
      * @see #getWidth()
      */
-    public int getHeight()
-    {
+    public int getHeight() {
         return height;
     }
 
     /**
      * Returns the MIME type of the image.
-     *
+     * 
      * @see #getFormat()
      */
-    public String getMimeType()
-    {
+    public String getMimeType() {
         return mimeType;
     }
 
@@ -169,8 +163,7 @@ public class ImageInfo
      * Applies mostly to GIF and TIFF; reading PSD/Photoshop layers is not
      * supported, and Jpeg/JFIF EXIF thumbnails are not included in this count.
      */
-    public int getNumberOfImages()
-    {
+    public int getNumberOfImages() {
         return numberOfImages;
     }
 
@@ -180,11 +173,10 @@ public class ImageInfo
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
      * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
      * 72).
-     *
+     * 
      * @return returns -1 if not present.
      */
-    public int getPhysicalHeightDpi()
-    {
+    public int getPhysicalHeightDpi() {
         return physicalHeightDpi;
     }
 
@@ -194,11 +186,10 @@ public class ImageInfo
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
      * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
      * 72).
-     *
+     * 
      * @return returns -1 if not present.
      */
-    public float getPhysicalHeightInch()
-    {
+    public float getPhysicalHeightInch() {
         return physicalHeightInch;
     }
 
@@ -208,11 +199,10 @@ public class ImageInfo
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
      * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
      * 72).
-     *
+     * 
      * @return returns -1 if not present.
      */
-    public int getPhysicalWidthDpi()
-    {
+    public int getPhysicalWidthDpi() {
         return physicalWidthDpi;
     }
 
@@ -222,52 +212,46 @@ public class ImageInfo
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
      * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
      * 72).
-     *
+     * 
      * @return returns -1 if not present.
      */
-    public float getPhysicalWidthInch()
-    {
+    public float getPhysicalWidthInch() {
         return physicalWidthInch;
     }
 
     /**
      * Returns the width of the image in pixels.
-     *
+     * 
      * @see #getHeight()
      */
-    public int getWidth()
-    {
+    public int getWidth() {
         return width;
     }
 
     /**
      * Returns true if the image is progressive or interlaced.
      */
-    public boolean isProgressive()
-    {
+    public boolean isProgressive() {
         return isProgressive;
     }
 
     /**
      * Returns the color type of the image, as a constant (ie.
      * ImageFormat.COLOR_TYPE_CMYK).
-     *
+     * 
      * @see #getColorTypeDescription()
      */
-    public int getColorType()
-    {
+    public int getColorType() {
         return colorType;
     }
 
     /**
      * Returns a description of the color type of the image.
-     *
+     * 
      * @see #getColorType()
      */
-    public String getColorTypeDescription()
-    {
-        switch (colorType)
-        {
+    public String getColorTypeDescription() {
+        switch (colorType) {
         case COLOR_TYPE_BW:
             return "Black and White";
         case COLOR_TYPE_GRAYSCALE:
@@ -287,16 +271,13 @@ public class ImageInfo
 
     }
 
-    public void dump()
-    {
+    public void dump() {
         System.out.print(toString());
     }
 
     @Override
-    public String toString()
-    {
-        try
-        {
+    public String toString() {
+        try {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
 
@@ -304,20 +285,17 @@ public class ImageInfo
             pw.flush();
 
             return sw.toString();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             return "Image Data: Error";
         }
     }
 
-    public void toString(PrintWriter pw, String prefix)
-    {
+    public void toString(PrintWriter pw, String prefix) {
         pw.println("Format Details: " + formatDetails);
 
         pw.println("Bits Per Pixel: " + bitsPerPixel);
         pw.println("Comments: " + comments.size());
-        for (int i = 0; i < comments.size(); i++)
-        {
+        for (int i = 0; i < comments.size(); i++) {
             String s = comments.get(i);
             pw.println("\t" + i + ": '" + s + "'");
 

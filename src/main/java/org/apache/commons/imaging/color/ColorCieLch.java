@@ -16,20 +16,17 @@
  */
 package org.apache.commons.imaging.color;
 
-public final class ColorCieLch
-{
+public final class ColorCieLch {
     public final double L, C, H;
 
-    public ColorCieLch(double l, double C, double H)
-    {
+    public ColorCieLch(double l, double C, double H) {
         L = l;
         this.C = C;
         this.H = H;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "{L: " + L + ", C: " + C + ", H: " + H + "}";
     }
 }

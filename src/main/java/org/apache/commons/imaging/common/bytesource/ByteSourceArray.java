@@ -20,33 +20,29 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ByteSourceArray extends ByteSource
-{
+public class ByteSourceArray extends ByteSource {
     private final byte bytes[];
 
-    public ByteSourceArray(String filename, byte bytes[])
-    {
+    public ByteSourceArray(String filename, byte bytes[]) {
         super(filename);
         this.bytes = bytes;
     }
 
-    public ByteSourceArray(byte bytes[])
-    {
+    public ByteSourceArray(byte bytes[]) {
         super(null);
         this.bytes = bytes;
     }
 
     @Override
-    public InputStream getInputStream()
-    {
+    public InputStream getInputStream() {
         return new ByteArrayInputStream(bytes);
     }
 
     @Override
-    public byte[] getBlock(int start, int length) throws IOException
-    {
+    public byte[] getBlock(int start, int length) throws IOException {
         // We include a separate check for int overflow.
-        if ((start < 0) || (length < 0) || (start + length < 0) || (start + length > bytes.length)) {
+        if ((start < 0) || (length < 0) || (start + length < 0)
+                || (start + length > bytes.length)) {
             throw new IOException("Could not read block (block start: " + start
                     + ", block length: " + length + ", data length: "
                     + bytes.length + ").");
@@ -58,20 +54,17 @@ public class ByteSourceArray extends ByteSource
     }
 
     @Override
-    public long getLength()
-    {
+    public long getLength() {
         return bytes.length;
     }
 
     @Override
-    public byte[] getAll() throws IOException
-    {
+    public byte[] getAll() throws IOException {
         return bytes;
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return bytes.length + " byte array";
     }
 

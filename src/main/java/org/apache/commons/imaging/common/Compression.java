@@ -24,12 +24,10 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 
-public class Compression
-{
+public class Compression {
 
     public byte[] decompressLZW(byte compressed[], int LZWMinimumCodeSize,
-            int expectedSize, int byteOrder) throws IOException
-    {
+            int expectedSize, int byteOrder) throws IOException {
         InputStream is = new ByteArrayInputStream(compressed);
 
         MyLzwDecompressor decompressor = new MyLzwDecompressor(
@@ -40,8 +38,7 @@ public class Compression
     }
 
     public byte[] decompressPackBits(byte compressed[], int expectedSize,
-            int byteOrder) throws ImageReadException
-    {
+            int byteOrder) throws ImageReadException {
         byte unpacked[] = new PackBits().decompress(compressed, expectedSize);
         return unpacked;
     }

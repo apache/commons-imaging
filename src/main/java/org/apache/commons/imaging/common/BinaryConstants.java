@@ -16,8 +16,7 @@
  */
 package org.apache.commons.imaging.common;
 
-public interface BinaryConstants
-{
+public interface BinaryConstants {
     public static final int BYTE_ORDER_INTEL = 'I';
     public static final int BYTE_ORDER_LEAST_SIGNIFICANT_BYTE = BYTE_ORDER_INTEL;
     public static final int BYTE_ORDER_LSB = BYTE_ORDER_INTEL;

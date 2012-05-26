@@ -19,22 +19,19 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class BitInputStream extends InputStream implements BinaryConstants
-{
-    
+public class BitInputStream extends InputStream implements BinaryConstants {
+
     private final InputStream is;
     private final int byteOrder;
 
-    public BitInputStream(InputStream is, int byteOrder)
-    {
+    public BitInputStream(InputStream is, int byteOrder) {
         this.is = is;
         this.byteOrder = byteOrder;
-        //            super(is);
+        // super(is);
     }
 
     @Override
-    public int read() throws IOException
-    {
+    public int read() throws IOException {
         if (cacheBitsRemaining > 0)
             throw new IOException("BitInputStream: incomplete bit read");
         return is.read();
@@ -44,12 +41,9 @@ public class BitInputStream extends InputStream implements BinaryConstants
     private int cacheBitsRemaining = 0;
     private long bytes_read = 0;
 
-    public final int readBits(int count) throws IOException
-    {
-        if (count < 8)
-        {
-            if (cacheBitsRemaining == 0)
-            {
+    public final int readBits(int count) throws IOException {
+        if (count < 8) {
+            if (cacheBitsRemaining == 0) {
                 // fill cache
                 cache = is.read();
                 cacheBitsRemaining = 8;
@@ -59,95 +53,83 @@ public class BitInputStream extends InputStream implements BinaryConstants
                 throw new IOException(
                         "BitInputStream: can't read bit fields across bytes");
 
-            //                int bits_to_shift = cache_bits_remaining - count;
+            // int bits_to_shift = cache_bits_remaining - count;
             cacheBitsRemaining -= count;
             int bits = cache >> cacheBitsRemaining;
 
-            switch (count)
-            {
-                case 1 :
-                    return bits & 1;
-                case 2 :
-                    return bits & 3;
-                case 3 :
-                    return bits & 7;
-                case 4 :
-                    return bits & 15;
-                case 5 :
-                    return bits & 31;
-                case 6 :
-                    return bits & 63;
-                case 7 :
-                    return bits & 127;
+            switch (count) {
+            case 1:
+                return bits & 1;
+            case 2:
+                return bits & 3;
+            case 3:
+                return bits & 7;
+            case 4:
+                return bits & 15;
+            case 5:
+                return bits & 31;
+            case 6:
+                return bits & 63;
+            case 7:
+                return bits & 127;
             }
 
         }
         if (cacheBitsRemaining > 0)
             throw new IOException("BitInputStream: incomplete bit read");
 
-        if (count == 8)
-        {
+        if (count == 8) {
             bytes_read++;
             return is.read();
         }
-        
+
         /**
-         * Taking default order of the Tiff to be 
-         * Little Endian and reversing the bytes in the end
-         * if its Big Endian.This is done because majority (may be all)
-         * of the files will be of Little Endian.
+         * Taking default order of the Tiff to be Little Endian and reversing
+         * the bytes in the end if its Big Endian.This is done because majority
+         * (may be all) of the files will be of Little Endian.
          */
-        if(byteOrder == BYTE_ORDER_BIG_ENDIAN) {
-            if (count == 16)
-            {
+        if (byteOrder == BYTE_ORDER_BIG_ENDIAN) {
+            if (count == 16) {
                 bytes_read += 2;
                 return (is.read() << 8) | (is.read() << 0);
             }
 
-            if (count == 24)
-            {
+            if (count == 24) {
                 bytes_read += 3;
                 return (is.read() << 16) | (is.read() << 8) | (is.read() << 0);
             }
 
-            if (count == 32)
-            {
+            if (count == 32) {
                 bytes_read += 4;
                 return (is.read() << 24) | (is.read() << 16) | (is.read() << 8)
                         | (is.read() << 0);
             }
-        } 
-        else 
-        {
-            if(count == 16) 
-            {
-                bytes_read +=2;
+        } else {
+            if (count == 16) {
+                bytes_read += 2;
                 return ((is.read() << 0) | (is.read() << 8));
             }
-            
-            if(count == 24)
-            {
+
+            if (count == 24) {
                 bytes_read += 3;
                 return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16));
             }
-            
-            if(count == 32) 
-            {
+
+            if (count == 32) {
                 bytes_read += 4;
-                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16) | (is.read() << 24));
+                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16) | (is
+                        .read() << 24));
             }
-         }
+        }
 
         throw new IOException("BitInputStream: unknown error");
     }
 
-    public void flushCache()
-    {
+    public void flushCache() {
         cacheBitsRemaining = 0;
     }
 
-    public long getBytesRead()
-    {
+    public long getBytesRead() {
         return bytes_read;
     }
 }

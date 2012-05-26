@@ -103,9 +103,9 @@ public class ColorTools {
                 return new ComponentColorModel(cs, false, false,
                         ComponentColorModel.OPAQUE, ccm.getTransferType());
             else
-                return new ComponentColorModel(cs, ccm.hasAlpha(), ccm
-                        .isAlphaPremultiplied(), ccm.getTransparency(), ccm
-                        .getTransferType());
+                return new ComponentColorModel(cs, ccm.hasAlpha(),
+                        ccm.isAlphaPremultiplied(), ccm.getTransparency(),
+                        ccm.getTransferType());
         } else if (old_cm instanceof DirectColorModel) {
             DirectColorModel dcm = (DirectColorModel) old_cm;
 
@@ -114,9 +114,9 @@ public class ColorTools {
 
             int old_bits = count_bits_in_mask(old_mask);
 
-            return new DirectColorModel(cs, old_bits, dcm.getRedMask(), dcm
-                    .getGreenMask(), dcm.getBlueMask(), dcm.getAlphaMask(), dcm
-                    .isAlphaPremultiplied(), dcm.getTransferType());
+            return new DirectColorModel(cs, old_bits, dcm.getRedMask(),
+                    dcm.getGreenMask(), dcm.getBlueMask(), dcm.getAlphaMask(),
+                    dcm.isAlphaPremultiplied(), dcm.getTransferType());
         }
         // else if (old_cm instanceof PackedColorModel)
         // {

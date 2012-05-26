@@ -49,8 +49,9 @@ import org.apache.commons.imaging.util.Debug;
  * <p>
  * See the source of the SampleUsage class and other classes in the
  * org.apache.commons.imaging.examples package for examples.
- *
- * @see <a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">org.apache.commons.imaging.examples.SampleUsage</a>
+ * 
+ * @see <a
+ *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">org.apache.commons.imaging.examples.SampleUsage</a>
  */
 public abstract class Imaging implements ImagingConstants {
 
@@ -61,7 +62,7 @@ public abstract class Imaging implements ImagingConstants {
      * Returns true if the file has a file extension associated with a file
      * format, such as .jpg or .gif.
      * <p>
-     *
+     * 
      * @param file
      *            File which may contain an image.
      * @return true if the file has an image format file extension.
@@ -79,7 +80,7 @@ public abstract class Imaging implements ImagingConstants {
      * Returns true if the filename has a file extension associated with a file
      * format, such as .jpg or .gif.
      * <p>
-     *
+     * 
      * @param filename
      *            String representing name of file which may contain an image.
      * @return true if the filename has an image format file extension.
@@ -106,7 +107,7 @@ public abstract class Imaging implements ImagingConstants {
      * Tries to guess what the image type (if any) of data based on the file's
      * "magic numbers," the first bytes of the data.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns
@@ -122,7 +123,7 @@ public abstract class Imaging implements ImagingConstants {
      * Tries to guess what the image type (if any) of a file based on the file's
      * "magic numbers," the first bytes of the file.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns
@@ -247,7 +248,7 @@ public abstract class Imaging implements ImagingConstants {
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of ICC_Profile or null if the image contains no ICC
@@ -262,7 +263,7 @@ public abstract class Imaging implements ImagingConstants {
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @param params
@@ -279,7 +280,7 @@ public abstract class Imaging implements ImagingConstants {
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -296,7 +297,7 @@ public abstract class Imaging implements ImagingConstants {
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -315,7 +316,7 @@ public abstract class Imaging implements ImagingConstants {
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return An instance of ICC_Profile or null if the image contains no ICC
@@ -330,7 +331,7 @@ public abstract class Imaging implements ImagingConstants {
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @param params
@@ -367,7 +368,7 @@ public abstract class Imaging implements ImagingConstants {
      * To parse the result use IccProfileParser or
      * ICC_Profile.getInstance(bytes).
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return A byte array.
@@ -386,7 +387,7 @@ public abstract class Imaging implements ImagingConstants {
      * To parse the result use IccProfileParser or
      * ICC_Profile.getInstance(bytes).
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @param params
@@ -407,7 +408,7 @@ public abstract class Imaging implements ImagingConstants {
      * To parse the result use IccProfileParser or
      * ICC_Profile.getInstance(bytes).
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return A byte array.
@@ -426,7 +427,7 @@ public abstract class Imaging implements ImagingConstants {
      * To parse the result use IccProfileParser or
      * ICC_Profile.getInstance(bytes).
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @param params
@@ -455,7 +456,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image metadata."
      * <p>
-     *
+     * 
      * @param filename
      *            String.
      * @param bytes
@@ -478,7 +479,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image metadata."
      * <p>
-     *
+     * 
      * @param filename
      *            String.
      * @param bytes
@@ -499,7 +500,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image metadata."
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -520,7 +521,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image metadata."
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -543,7 +544,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image metadata."
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of ImageInfo.
@@ -562,7 +563,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image metadata."
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @param params
@@ -583,7 +584,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image metadata."
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @param params
@@ -604,7 +605,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image metadata."
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return An instance of ImageInfo.
@@ -657,7 +658,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image.
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -672,7 +673,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image.
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -689,7 +690,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return The width and height of the image.
@@ -702,7 +703,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @param params
@@ -717,7 +718,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image file.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return The width and height of the image.
@@ -730,7 +731,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image file.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @param params
@@ -752,7 +753,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image.
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -767,7 +768,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image.
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -784,7 +785,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
@@ -797,7 +798,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Determines the width and height of an image.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @param params
@@ -812,7 +813,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
@@ -825,7 +826,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @param params
@@ -840,7 +841,7 @@ public abstract class Imaging implements ImagingConstants {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     *
+     * 
      * @param byteSource
      *            File containing image data.
      * @param params
@@ -866,7 +867,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image info."
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of IImageMetadata.
@@ -889,7 +890,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image info."
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @param params
@@ -914,7 +915,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image info."
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -939,7 +940,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image info."
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
@@ -966,7 +967,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image info."
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return An instance of IImageMetadata.
@@ -989,7 +990,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Not to be confused with "image info."
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @param params
@@ -1014,7 +1015,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Useful for exploring format-specific details of image files.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return A description of the image file's structure.
@@ -1029,7 +1030,7 @@ public abstract class Imaging implements ImagingConstants {
      * <p>
      * Useful for exploring format-specific details of image files.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return A description of the image file's structure.
@@ -1069,15 +1070,15 @@ public abstract class Imaging implements ImagingConstants {
      * Useful for image formats such as GIF and ICO in which a single file may
      * contain multiple images.
      * <p>
-     *
+     * 
      * @param is
      *            InputStream from which to read image data.
      * @param filename
      *            Filename associated with image data (optional).
      * @return A vector of BufferedImages.
      */
-    public static List<BufferedImage> getAllBufferedImages(InputStream is, String filename)
-            throws ImageReadException, IOException {
+    public static List<BufferedImage> getAllBufferedImages(InputStream is,
+            String filename) throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceInputStream(is, filename));
     }
 
@@ -1087,7 +1088,7 @@ public abstract class Imaging implements ImagingConstants {
      * Useful for image formats such as GIF and ICO in which a single file may
      * contain multiple images.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return A vector of BufferedImages.
@@ -1103,7 +1104,7 @@ public abstract class Imaging implements ImagingConstants {
      * Useful for image formats such as GIF and ICO in which a single file may
      * contain multiple images.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return A vector of BufferedImages.
@@ -1113,8 +1114,8 @@ public abstract class Imaging implements ImagingConstants {
         return getAllBufferedImages(new ByteSourceFile(file));
     }
 
-    private static List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
-            throws ImageReadException, IOException {
+    private static List<BufferedImage> getAllBufferedImages(
+            ByteSource byteSource) throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
 
         return imageParser.getAllBufferedImages(byteSource);
@@ -1156,7 +1157,7 @@ public abstract class Imaging implements ImagingConstants {
      * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
      * fully supported.
      * <p>
-     *
+     * 
      * @param is
      *            InputStream to read image data from.
      * @return A BufferedImage.
@@ -1178,7 +1179,7 @@ public abstract class Imaging implements ImagingConstants {
      * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
      * fully supported.
      * <p>
-     *
+     * 
      * @param is
      *            InputStream to read image data from.
      * @param params
@@ -1205,7 +1206,7 @@ public abstract class Imaging implements ImagingConstants {
      * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
      * fully supported.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @return A BufferedImage.
@@ -1227,7 +1228,7 @@ public abstract class Imaging implements ImagingConstants {
      * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
      * fully supported.
      * <p>
-     *
+     * 
      * @param bytes
      *            Byte array containing an image file.
      * @param params
@@ -1251,7 +1252,7 @@ public abstract class Imaging implements ImagingConstants {
      * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
      * fully supported.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @return A BufferedImage.
@@ -1273,7 +1274,7 @@ public abstract class Imaging implements ImagingConstants {
      * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
      * fully supported.
      * <p>
-     *
+     * 
      * @param file
      *            File containing image data.
      * @param params
@@ -1306,7 +1307,7 @@ public abstract class Imaging implements ImagingConstants {
      * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
      * fully supported.
      * <p>
-     *
+     * 
      * @param src
      *            The BufferedImage to be written.
      * @param file
@@ -1348,7 +1349,7 @@ public abstract class Imaging implements ImagingConstants {
      * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
      * fully supported.
      * <p>
-     *
+     * 
      * @param src
      *            The BufferedImage to be written.
      * @param format
@@ -1379,7 +1380,7 @@ public abstract class Imaging implements ImagingConstants {
      * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
      * fully supported.
      * <p>
-     *
+     * 
      * @param src
      *            The BufferedImage to be written.
      * @param os

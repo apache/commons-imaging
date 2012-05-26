@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public final class MyLzwDecompressor
-{
+public final class MyLzwDecompressor {
     private static final int MAX_TABLE_SIZE = 1 << 12;
 
     private final byte[][] table;
@@ -34,21 +33,18 @@ public final class MyLzwDecompressor
 
     private final Listener listener;
 
-    public static interface Listener
-    {
+    public static interface Listener {
         public void code(int code);
 
         public void init(int clearCode, int eoiCode);
     }
 
-    public MyLzwDecompressor(int initialCodeSize, int byteOrder)
-    {
+    public MyLzwDecompressor(int initialCodeSize, int byteOrder) {
         this(initialCodeSize, byteOrder, null);
     }
 
     public MyLzwDecompressor(int initialCodeSize, int byteOrder,
-            Listener listener)
-    {
+            Listener listener) {
         this.listener = listener;
         this.byteOrder = byteOrder;
 
@@ -64,8 +60,7 @@ public final class MyLzwDecompressor
         InitializeTable();
     }
 
-    private final void InitializeTable()
-    {
+    private final void InitializeTable() {
         codeSize = initialCodeSize;
 
         int intial_entries_count = 1 << codeSize + 2;
@@ -74,8 +69,7 @@ public final class MyLzwDecompressor
             table[i] = new byte[] { (byte) i, };
     }
 
-    private final void clearTable()
-    {
+    private final void clearTable() {
         codes = (1 << initialCodeSize) + 2;
         codeSize = initialCodeSize;
         incrementCodeSize();
@@ -84,8 +78,7 @@ public final class MyLzwDecompressor
     private final int clearCode;
     private final int eoiCode;
 
-    private final int getNextCode(MyBitInputStream is) throws IOException
-    {
+    private final int getNextCode(MyBitInputStream is) throws IOException {
         int code = is.readBits(codeSize);
 
         if (null != listener)
@@ -93,8 +86,7 @@ public final class MyLzwDecompressor
         return code;
     }
 
-    private final byte[] stringFromCode(int code) throws IOException
-    {
+    private final byte[] stringFromCode(int code) throws IOException {
         if ((code >= codes) || (code < 0))
             throw new IOException("Bad Code: " + code + " codes: " + codes
                     + " code_size: " + codeSize + ", table: " + table.length);
@@ -102,20 +94,16 @@ public final class MyLzwDecompressor
         return table[code];
     }
 
-    private final boolean isInTable(int Code)
-    {
+    private final boolean isInTable(int Code) {
         return Code < codes;
     }
 
-    private final byte firstChar(byte bytes[])
-    {
+    private final byte firstChar(byte bytes[]) {
         return bytes[0];
     }
 
-    private final void addStringToTable(byte bytes[]) throws IOException
-    {
-        if (codes < (1 << codeSize))
-        {
+    private final void addStringToTable(byte bytes[]) throws IOException {
+        if (codes < (1 << codeSize)) {
             table[codes] = bytes;
             codes++;
         } else
@@ -125,8 +113,7 @@ public final class MyLzwDecompressor
         checkCodeSize();
     }
 
-    private final byte[] appendBytes(byte bytes[], byte b)
-    {
+    private final byte[] appendBytes(byte bytes[], byte b) {
         byte result[] = new byte[bytes.length + 1];
 
         System.arraycopy(bytes, 0, result, 0, bytes.length);
@@ -137,22 +124,19 @@ public final class MyLzwDecompressor
     private int written = 0;
 
     private final void writeToResult(OutputStream os, byte bytes[])
-            throws IOException
-    {
+            throws IOException {
         os.write(bytes);
         written += bytes.length;
     }
 
     private boolean tiffLZWMode = false;
 
-    public void setTiffLZWMode()
-    {
+    public void setTiffLZWMode() {
         tiffLZWMode = true;
     }
 
     public byte[] decompress(InputStream is, int expectedLength)
-            throws IOException
-    {
+            throws IOException {
         int code, oldCode = -1;
         MyBitInputStream mbis = new MyBitInputStream(is, byteOrder);
         if (tiffLZWMode)
@@ -162,35 +146,29 @@ public final class MyLzwDecompressor
 
         clearTable();
 
-        while ((code = getNextCode(mbis)) != eoiCode)
-        {
-            if (code == clearCode)
-            {
+        while ((code = getNextCode(mbis)) != eoiCode) {
+            if (code == clearCode) {
                 clearTable();
 
                 if (written >= expectedLength)
                     break;
                 code = getNextCode(mbis);
 
-                if (code == eoiCode)
-                {
+                if (code == eoiCode) {
                     break;
                 }
                 writeToResult(baos, stringFromCode(code));
 
                 oldCode = code;
             } // end of ClearCode case
-            else
-            {
-                if (isInTable(code))
-                {
+            else {
+                if (isInTable(code)) {
                     writeToResult(baos, stringFromCode(code));
 
                     addStringToTable(appendBytes(stringFromCode(oldCode),
                             firstChar(stringFromCode(code))));
                     oldCode = code;
-                } else
-                {
+                } else {
                     byte OutString[] = appendBytes(stringFromCode(oldCode),
                             firstChar(stringFromCode(oldCode)));
                     writeToResult(baos, OutString);

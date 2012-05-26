@@ -21,15 +21,12 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class BinaryFileParser extends BinaryFileFunctions
-{
-    public BinaryFileParser(int byteOrder)
-    {
+public class BinaryFileParser extends BinaryFileFunctions {
+    public BinaryFileParser(int byteOrder) {
         this.byteOrder = byteOrder;
     }
 
-    public BinaryFileParser()
-    {
+    public BinaryFileParser() {
 
     }
 
@@ -38,8 +35,7 @@ public class BinaryFileParser extends BinaryFileFunctions
 
     // protected boolean BYTE_ORDER_reversed = true;
 
-    protected void setByteOrder(int a, int b) throws ImageReadException
-    {
+    protected void setByteOrder(int a, int b) throws ImageReadException {
         if (a != b)
             throw new ImageReadException("Byte Order bytes don't match (" + a
                     + ", " + b + ").");
@@ -52,54 +48,45 @@ public class BinaryFileParser extends BinaryFileFunctions
             throw new ImageReadException("Unknown Byte Order hint: " + a);
     }
 
-    protected void setByteOrder(int byteOrder)
-    {
+    protected void setByteOrder(int byteOrder) {
         this.byteOrder = byteOrder;
     }
 
-    public int getByteOrder()
-    {
+    public int getByteOrder() {
         return byteOrder;
     }
 
     protected final int convertByteArrayToInt(String name, int start,
-            byte bytes[])
-    {
+            byte bytes[]) {
         return convertByteArrayToInt(name, bytes, start, byteOrder);
     }
 
-    protected final int convertByteArrayToInt(String name, byte bytes[])
-    {
+    protected final int convertByteArrayToInt(String name, byte bytes[]) {
         return convertByteArrayToInt(name, bytes, byteOrder);
     }
 
     public final int convertByteArrayToShort(String name, byte bytes[])
-            throws ImageReadException
-    {
+            throws ImageReadException {
         return convertByteArrayToShort(name, bytes, byteOrder);
     }
 
     public final int convertByteArrayToShort(String name, int start,
-            byte bytes[]) throws ImageReadException
-    {
+            byte bytes[]) throws ImageReadException {
         return convertByteArrayToShort(name, start, bytes, byteOrder);
     }
 
     public final int read4Bytes(String name, InputStream is, String exception)
-            throws IOException
-    {
+            throws IOException {
         return read4Bytes(name, is, exception, byteOrder);
     }
 
     public final int read3Bytes(String name, InputStream is, String exception)
-            throws IOException
-    {
+            throws IOException {
         return read3Bytes(name, is, exception, byteOrder);
     }
 
     public final int read2Bytes(String name, InputStream is, String exception)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         return read2Bytes(name, is, exception, byteOrder);
     }
 
@@ -113,9 +100,8 @@ public class BinaryFileParser extends BinaryFileFunctions
 
         return true;
     }
-    
-    public static boolean byteArrayHasPrefix(byte bytes[], byte prefix[])
-    {
+
+    public static boolean byteArrayHasPrefix(byte bytes[], byte prefix[]) {
         if ((bytes == null) || (bytes.length < prefix.length))
             return false;
 
@@ -126,8 +112,7 @@ public class BinaryFileParser extends BinaryFileFunctions
         return true;
     }
 
-    protected final byte[] int2ToByteArray(int value)
-    {
+    protected final byte[] int2ToByteArray(int value) {
         return int2ToByteArray(value, byteOrder);
     }
 

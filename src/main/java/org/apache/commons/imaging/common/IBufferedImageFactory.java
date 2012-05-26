@@ -19,8 +19,7 @@ package org.apache.commons.imaging.common;
 
 import java.awt.image.BufferedImage;
 
-public interface IBufferedImageFactory
-{
+public interface IBufferedImageFactory {
     public BufferedImage getColorBufferedImage(int width, int height,
             boolean hasAlpha);
 

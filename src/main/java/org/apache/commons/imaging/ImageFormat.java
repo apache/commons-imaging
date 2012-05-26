@@ -16,29 +16,25 @@
  */
 package org.apache.commons.imaging;
 
-public class ImageFormat
-{
+public class ImageFormat {
     public final String name;
     public final String extension;
     public final boolean actual;
 
-    private ImageFormat(String name, boolean actual)
-    {
+    private ImageFormat(String name, boolean actual) {
         this.name = name;
         this.extension = name;
         this.actual = actual;
     }
 
-    private ImageFormat(String name)
-    {
+    private ImageFormat(String name) {
         this.name = name;
         this.extension = name;
         actual = true;
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (!(o instanceof ImageFormat))
             return false;
 
@@ -49,14 +45,12 @@ public class ImageFormat
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "{" + name + ": " + extension + "}";
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return name.hashCode();
     }
 
@@ -74,7 +68,8 @@ public class ImageFormat
     public static final ImageFormat IMAGE_FORMAT_PPM = new ImageFormat("PPM");
     public static final ImageFormat IMAGE_FORMAT_PNM = new ImageFormat("PNM");
     public static final ImageFormat IMAGE_FORMAT_TGA = new ImageFormat("TGA");
-    public static final ImageFormat IMAGE_FORMAT_JBIG2 = new ImageFormat("JBig2");
+    public static final ImageFormat IMAGE_FORMAT_JBIG2 = new ImageFormat(
+            "JBig2");
     public static final ImageFormat IMAGE_FORMAT_ICNS = new ImageFormat("ICNS");
     public static final ImageFormat IMAGE_FORMAT_WBMP = new ImageFormat("WBMP");
     public static final ImageFormat IMAGE_FORMAT_PCX = new ImageFormat("PCX");
@@ -83,18 +78,14 @@ public class ImageFormat
     public static final ImageFormat IMAGE_FORMAT_XPM = new ImageFormat("XPM");
     public static final ImageFormat IMAGE_FORMAT_RGBE = new ImageFormat("RGBE");
 
-
-    public static final ImageFormat[] getAllFormats()
-    {
-        ImageFormat result[] = {
-                IMAGE_FORMAT_UNKNOWN, IMAGE_FORMAT_PNG, IMAGE_FORMAT_GIF,
-                IMAGE_FORMAT_TIFF, IMAGE_FORMAT_JPEG, IMAGE_FORMAT_BMP,
-                IMAGE_FORMAT_PSD, IMAGE_FORMAT_PBM, IMAGE_FORMAT_PGM,
-                IMAGE_FORMAT_PPM, IMAGE_FORMAT_PNM, IMAGE_FORMAT_TGA,
-                IMAGE_FORMAT_JBIG2, IMAGE_FORMAT_ICNS, IMAGE_FORMAT_WBMP,
-                IMAGE_FORMAT_PCX, IMAGE_FORMAT_DCX, IMAGE_FORMAT_XBM,
-                IMAGE_FORMAT_XPM, IMAGE_FORMAT_RGBE
-        };
+    public static final ImageFormat[] getAllFormats() {
+        ImageFormat result[] = { IMAGE_FORMAT_UNKNOWN, IMAGE_FORMAT_PNG,
+                IMAGE_FORMAT_GIF, IMAGE_FORMAT_TIFF, IMAGE_FORMAT_JPEG,
+                IMAGE_FORMAT_BMP, IMAGE_FORMAT_PSD, IMAGE_FORMAT_PBM,
+                IMAGE_FORMAT_PGM, IMAGE_FORMAT_PPM, IMAGE_FORMAT_PNM,
+                IMAGE_FORMAT_TGA, IMAGE_FORMAT_JBIG2, IMAGE_FORMAT_ICNS,
+                IMAGE_FORMAT_WBMP, IMAGE_FORMAT_PCX, IMAGE_FORMAT_DCX,
+                IMAGE_FORMAT_XBM, IMAGE_FORMAT_XPM, IMAGE_FORMAT_RGBE };
 
         return result;
     }

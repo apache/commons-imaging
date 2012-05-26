@@ -30,15 +30,17 @@ class HuffmanTree {
         boolean isEmpty = true;
         Object value = null;
     }
+
     private List<Node> nodes = new ArrayList<Node>();
 
-    public final void insert(String pattern, Object value) throws HuffmanTreeException {
+    public final void insert(String pattern, Object value)
+            throws HuffmanTreeException {
         int position = 0;
         Node node = growAndGetNode(position);
         if (node.value != null) {
             throw new HuffmanTreeException("Can't add child to a leaf");
         }
-        for(int patternPosition = 0; patternPosition < pattern.length(); patternPosition++) {
+        for (int patternPosition = 0; patternPosition < pattern.length(); patternPosition++) {
             char nextChar = pattern.charAt(patternPosition);
             if (nextChar == '0') {
                 position = (position << 1) + 1;
@@ -52,7 +54,7 @@ class HuffmanTree {
         }
         node.value = value;
     }
-    
+
     private Node growAndGetNode(int position) {
         while (position >= nodes.size()) {
             nodes.add(new Node());
@@ -61,8 +63,9 @@ class HuffmanTree {
         node.isEmpty = false;
         return node;
     }
-    
-    public final Object decode(BitInputStreamFlexible bitStream) throws HuffmanTreeException {
+
+    public final Object decode(BitInputStreamFlexible bitStream)
+            throws HuffmanTreeException {
         int position = 0;
         Node node = nodes.get(0);
         while (node.value == null) {
@@ -70,7 +73,8 @@ class HuffmanTree {
             try {
                 nextBit = bitStream.readBits(1);
             } catch (IOException ioEx) {
-                throw new HuffmanTreeException("Error reading stream for huffman tree", ioEx);
+                throw new HuffmanTreeException(
+                        "Error reading stream for huffman tree", ioEx);
             }
             if (nextBit == 0) {
                 position = (position << 1) + 1;

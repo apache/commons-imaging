@@ -21,31 +21,26 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ByteSourceInputStream extends ByteSource
-{
+public class ByteSourceInputStream extends ByteSource {
     private final InputStream is;
     private CacheBlock cacheHead = null;
     private static final int BLOCK_SIZE = 1024;
 
-    public ByteSourceInputStream(InputStream is, String filename)
-    {
+    public ByteSourceInputStream(InputStream is, String filename) {
         super(filename);
         this.is = new BufferedInputStream(is);
     }
 
-    private class CacheBlock
-    {
+    private class CacheBlock {
         public final byte bytes[];
         private CacheBlock next = null;
         private boolean triedNext = false;
 
-        public CacheBlock(final byte[] bytes)
-        {
+        public CacheBlock(final byte[] bytes) {
             this.bytes = bytes;
         }
 
-        public CacheBlock getNext() throws IOException
-        {
+        public CacheBlock getNext() throws IOException {
             if (null != next)
                 return next;
             if (triedNext)
@@ -59,23 +54,19 @@ public class ByteSourceInputStream extends ByteSource
 
     private byte readBuffer[] = null;
 
-    private CacheBlock readBlock() throws IOException
-    {
+    private CacheBlock readBlock() throws IOException {
         if (null == readBuffer)
             readBuffer = new byte[BLOCK_SIZE];
 
         int read = is.read(readBuffer);
         if (read < 1)
             return null;
-        else if (read < BLOCK_SIZE)
-        {
+        else if (read < BLOCK_SIZE) {
             // return a copy.
             byte result[] = new byte[read];
             System.arraycopy(readBuffer, 0, result, 0, read);
             return new CacheBlock(result);
-        }
-        else
-        {
+        } else {
             // return current buffer.
             byte result[] = readBuffer;
             readBuffer = null;
@@ -83,32 +74,27 @@ public class ByteSourceInputStream extends ByteSource
         }
     }
 
-    private CacheBlock getFirstBlock() throws IOException
-    {
+    private CacheBlock getFirstBlock() throws IOException {
         if (null == cacheHead)
             cacheHead = readBlock();
         return cacheHead;
     }
 
-    private class CacheReadingInputStream extends InputStream
-    {
+    private class CacheReadingInputStream extends InputStream {
         private CacheBlock block = null;
         private boolean readFirst = false;
         private int blockIndex = 0;
 
         @Override
-        public int read() throws IOException
-        {
-            if (null == block)
-            {
+        public int read() throws IOException {
+            if (null == block) {
                 if (readFirst)
                     return -1;
                 block = getFirstBlock();
                 readFirst = true;
             }
 
-            if (block != null && blockIndex >= block.bytes.length)
-            {
+            if (block != null && blockIndex >= block.bytes.length) {
                 block = block.getNext();
                 blockIndex = 0;
             }
@@ -123,8 +109,7 @@ public class ByteSourceInputStream extends ByteSource
         }
 
         @Override
-        public int read(byte b[], int off, int len) throws IOException
-        {
+        public int read(byte b[], int off, int len) throws IOException {
             // first section copied verbatim from InputStream
             if (b == null)
                 throw new NullPointerException();
@@ -136,16 +121,14 @@ public class ByteSourceInputStream extends ByteSource
 
             // optimized block read
 
-            if (null == block)
-            {
+            if (null == block) {
                 if (readFirst)
                     return -1;
                 block = getFirstBlock();
                 readFirst = true;
             }
 
-            if (block != null && blockIndex >= block.bytes.length)
-            {
+            if (block != null && blockIndex >= block.bytes.length) {
                 block = block.getNext();
                 blockIndex = 0;
             }
@@ -165,22 +148,19 @@ public class ByteSourceInputStream extends ByteSource
     }
 
     @Override
-    public InputStream getInputStream() throws IOException
-    {
+    public InputStream getInputStream() throws IOException {
         return new CacheReadingInputStream();
     }
 
     @Override
-    public byte[] getBlock(int blockStart, int blockLength) throws IOException
-    {
+    public byte[] getBlock(int blockStart, int blockLength) throws IOException {
         // We include a separate check for int overflow.
-        if ((blockStart < 0)
-                || (blockLength < 0)
+        if ((blockStart < 0) || (blockLength < 0)
                 || (blockStart + blockLength < 0)
                 || (blockStart + blockLength > streamLength.longValue())) {
-            throw new IOException("Could not read block (block start: " + blockStart
-                    + ", block length: " + blockLength + ", data length: "
-                    + streamLength + ").");
+            throw new IOException("Could not read block (block start: "
+                    + blockStart + ", block length: " + blockLength
+                    + ", data length: " + streamLength + ").");
         }
 
         InputStream is = getInputStream();
@@ -188,8 +168,7 @@ public class ByteSourceInputStream extends ByteSource
 
         byte bytes[] = new byte[blockLength];
         int total = 0;
-        while (true)
-        {
+        while (true) {
             int read = is.read(bytes, total, bytes.length - total);
             if (read < 1)
                 throw new IOException("Could not read block.");
@@ -202,8 +181,7 @@ public class ByteSourceInputStream extends ByteSource
     private Long streamLength = null;
 
     @Override
-    public long getLength() throws IOException
-    {
+    public long getLength() throws IOException {
         if (streamLength != null)
             return streamLength.longValue();
 
@@ -217,13 +195,11 @@ public class ByteSourceInputStream extends ByteSource
     }
 
     @Override
-    public byte[] getAll() throws IOException
-    {
+    public byte[] getAll() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         CacheBlock block = getFirstBlock();
-        while (block != null)
-        {
+        while (block != null) {
             baos.write(block.bytes);
             block = block.getNext();
         }
@@ -231,8 +207,7 @@ public class ByteSourceInputStream extends ByteSource
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "Inputstream: '" + filename + "'";
     }
 

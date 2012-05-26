@@ -24,41 +24,36 @@ import java.awt.image.BufferedImage;
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
-public class ImageDump
-{
-    private String colorSpaceTypeToName(ColorSpace cs)
-    {
-        //        System.out.println(prefix + ": " + "type: "
-        //                + cs.getType() );
-        switch (cs.getType())
-        {
-            case ColorSpace.TYPE_CMYK :
-                return "TYPE_CMYK";
-            case ColorSpace.TYPE_RGB :
-                return "TYPE_RGB";
+public class ImageDump {
+    private String colorSpaceTypeToName(ColorSpace cs) {
+        // System.out.println(prefix + ": " + "type: "
+        // + cs.getType() );
+        switch (cs.getType()) {
+        case ColorSpace.TYPE_CMYK:
+            return "TYPE_CMYK";
+        case ColorSpace.TYPE_RGB:
+            return "TYPE_RGB";
 
-            case ColorSpace.CS_sRGB :
-                return "CS_sRGB";
-            case ColorSpace.CS_GRAY :
-                return "CS_GRAY";
-            case ColorSpace.CS_CIEXYZ :
-                return "CS_CIEXYZ";
-            case ColorSpace.CS_LINEAR_RGB :
-                return "CS_LINEAR_RGB";
-            case ColorSpace.CS_PYCC :
-                return "CS_PYCC";
+        case ColorSpace.CS_sRGB:
+            return "CS_sRGB";
+        case ColorSpace.CS_GRAY:
+            return "CS_GRAY";
+        case ColorSpace.CS_CIEXYZ:
+            return "CS_CIEXYZ";
+        case ColorSpace.CS_LINEAR_RGB:
+            return "CS_LINEAR_RGB";
+        case ColorSpace.CS_PYCC:
+            return "CS_PYCC";
         }
 
         return "unknown";
     }
 
-    public void dumpColorSpace(String prefix, ColorSpace cs)
-    {
+    public void dumpColorSpace(String prefix, ColorSpace cs) {
         System.out.println(prefix + ": " + "type: " + cs.getType() + " ("
                 + colorSpaceTypeToName(cs) + ")");
 
-        if (!(cs instanceof ICC_ColorSpace))
-        {
+        if (!(cs instanceof ICC_ColorSpace)) {
             System.out.println(prefix + ": " + "Unknown ColorSpace: "
                     + cs.getClass().getName());
             return;
@@ -75,28 +70,23 @@ public class ImageDump
         info.dump(prefix);
     }
 
-    public void dump(BufferedImage src)
-    {
+    public void dump(BufferedImage src) {
         dump("", src);
     }
 
-    public void dump(String prefix, BufferedImage src)
-    {
+    public void dump(String prefix, BufferedImage src) {
         System.out.println(prefix + ": " + "dump");
         dumpColorSpace(prefix, src.getColorModel().getColorSpace());
         dumpBIProps(prefix, src);
     }
 
-    public void dumpBIProps(String prefix, BufferedImage src)
-    {
+    public void dumpBIProps(String prefix, BufferedImage src) {
         String keys[] = src.getPropertyNames();
-        if (keys == null)
-        {
+        if (keys == null) {
             System.out.println(prefix + ": no props");
             return;
         }
-        for (int i = 0; i < keys.length; i++)
-        {
+        for (int i = 0; i < keys.length; i++) {
             String key = keys[i];
             System.out.println(prefix + ": " + key + ": "
                     + src.getProperty(key));

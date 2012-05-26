@@ -16,17 +16,14 @@
  */
 package org.apache.commons.imaging;
 
-public class ImageReadException extends ImagingException
-{
+public class ImageReadException extends ImagingException {
     private static final long serialVersionUID = -1L;
 
-    public ImageReadException(String s)
-    {
+    public ImageReadException(String s) {
         super(s);
     }
 
-    public ImageReadException(String s, Exception e)
-    {
+    public ImageReadException(String s, Exception e) {
         super(s, e);
     }
 }

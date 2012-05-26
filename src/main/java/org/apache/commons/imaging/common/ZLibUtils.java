@@ -22,8 +22,7 @@ import java.io.IOException;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
-public class ZLibUtils extends BinaryFileFunctions
-{
+public class ZLibUtils extends BinaryFileFunctions {
     public final byte[] inflate(byte bytes[]) throws IOException
     // slow, probably.
     {
@@ -32,8 +31,7 @@ public class ZLibUtils extends BinaryFileFunctions
         return getStreamBytes(zIn);
     }
 
-    public final byte[] deflate(byte bytes[]) throws IOException
-    {
+    public final byte[] deflate(byte bytes[]) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DeflaterOutputStream dos = new DeflaterOutputStream(baos);
         dos.write(bytes);

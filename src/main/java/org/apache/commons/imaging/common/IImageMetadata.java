@@ -18,14 +18,12 @@ package org.apache.commons.imaging.common;
 
 import java.util.List;
 
-public interface IImageMetadata
-{
+public interface IImageMetadata {
     public String toString(String prefix);
 
     public List<? extends IImageMetadataItem> getItems();
 
-    public interface IImageMetadataItem
-    {
+    public interface IImageMetadataItem {
         public String toString(String prefix);
 
         public String toString();

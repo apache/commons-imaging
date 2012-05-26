@@ -20,12 +20,14 @@ public class BinaryConversions implements BinaryConstants {
     public static byte[] convertToByteArray(short[] values, int byteOrder) {
         return convertToByteArray(values, 0, values.length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(short[] values, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(short[] values, int length,
+            int byteOrder) {
         return convertToByteArray(values, 0, length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(short[] values, int offset, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(short[] values, int offset,
+            int length, int byteOrder) {
         byte[] result = new byte[length * 2];
         for (int i = 0; i < length; i++) {
             short value = values[offset + i];
@@ -40,16 +42,18 @@ public class BinaryConversions implements BinaryConstants {
         }
         return result;
     }
-    
+
     public static byte[] convertToByteArray(int[] values, int byteOrder) {
         return convertToByteArray(values, 0, values.length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(int[] values, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(int[] values, int length,
+            int byteOrder) {
         return convertToByteArray(values, 0, length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(int[] values, int offset, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(int[] values, int offset,
+            int length, int byteOrder) {
         byte[] result = new byte[length * 4];
         for (int i = 0; i < length; i++) {
             int value = values[offset + i];
@@ -72,12 +76,14 @@ public class BinaryConversions implements BinaryConstants {
     public static byte[] convertToByteArray(float[] values, int byteOrder) {
         return convertToByteArray(values, 0, values.length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(float[] values, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(float[] values, int length,
+            int byteOrder) {
         return convertToByteArray(values, 0, length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(float[] values, int offset, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(float[] values, int offset,
+            int length, int byteOrder) {
         byte[] result = new byte[values.length * 4];
         for (int i = 0; i < values.length; i++) {
             float value = values[i];
@@ -97,16 +103,18 @@ public class BinaryConversions implements BinaryConstants {
         }
         return result;
     }
-    
+
     public static byte[] convertToByteArray(double[] values, int byteOrder) {
         return convertToByteArray(values, 0, values.length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(double[] values, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(double[] values, int length,
+            int byteOrder) {
         return convertToByteArray(values, 0, length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(double[] values, int offset, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(double[] values, int offset,
+            int length, int byteOrder) {
         byte[] result = new byte[length * 8];
         for (int i = 0; i < length; i++) {
             double value = values[offset + i];
@@ -134,16 +142,19 @@ public class BinaryConversions implements BinaryConstants {
         }
         return result;
     }
-    
-    public static byte[] convertToByteArray(RationalNumber[] values, int byteOrder) {
+
+    public static byte[] convertToByteArray(RationalNumber[] values,
+            int byteOrder) {
         return convertToByteArray(values, 0, values.length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(RationalNumber[] values, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(RationalNumber[] values,
+            int length, int byteOrder) {
         return convertToByteArray(values, 0, length, byteOrder);
     }
-    
-    public static byte[] convertToByteArray(RationalNumber[] values, int offset, int length, int byteOrder) {
+
+    public static byte[] convertToByteArray(RationalNumber[] values,
+            int offset, int length, int byteOrder) {
         byte[] result = new byte[length * 8];
         for (int i = 0; i < length; i++) {
             RationalNumber value = values[offset + i];
@@ -174,7 +185,7 @@ public class BinaryConversions implements BinaryConstants {
     public static short convertToShort(byte[] bytes, int byteOrder) {
         return convertToShort(bytes, 0, byteOrder);
     }
-    
+
     public static short convertToShort(byte[] bytes, int offset, int byteOrder) {
         int byte0 = 0xff & bytes[offset + 0];
         int byte1 = 0xff & bytes[offset + 1];
@@ -184,19 +195,21 @@ public class BinaryConversions implements BinaryConstants {
             return (short) ((byte1 << 8) | byte0);
         }
     }
-    
+
     public static short[] convertToShortArray(byte[] bytes, int byteOrder) {
         return convertToShortArray(bytes, 0, bytes.length, byteOrder);
     }
-    
-    public static short[] convertToShortArray(byte[] bytes, int length, int byteOrder) {
+
+    public static short[] convertToShortArray(byte[] bytes, int length,
+            int byteOrder) {
         return convertToShortArray(bytes, 0, length, byteOrder);
     }
-    
-    public static short[] convertToShortArray(byte[] bytes, int offset, int length, int byteOrder) {
+
+    public static short[] convertToShortArray(byte[] bytes, int offset,
+            int length, int byteOrder) {
         short[] result = new short[length / 2];
         for (int i = 0; i < result.length; i++) {
-            result[i] = convertToShort(bytes, offset + 2*i, byteOrder);
+            result[i] = convertToShort(bytes, offset + 2 * i, byteOrder);
         }
         return result;
     }
@@ -204,41 +217,41 @@ public class BinaryConversions implements BinaryConstants {
     public static int convertToInt(byte[] bytes, int byteOrder) {
         return convertToInt(bytes, 0, byteOrder);
     }
-    
+
     public static int convertToInt(byte[] bytes, int offset, int byteOrder) {
         int byte0 = 0xff & bytes[offset + 0];
         int byte1 = 0xff & bytes[offset + 1];
         int byte2 = 0xff & bytes[offset + 2];
         int byte3 = 0xff & bytes[offset + 3];
         if (byteOrder == BYTE_ORDER_MOTOROLA) {
-            return (byte0 << 24) | (byte1 << 16) |
-                    (byte2 << 8) | byte3;
+            return (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3;
         } else {
-            return (byte3 << 24) | (byte2 << 16) |
-                    (byte1 << 8) | byte0;
+            return (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
         }
     }
-    
+
     public static int[] convertToIntArray(byte[] bytes, int byteOrder) {
         return convertToIntArray(bytes, 0, bytes.length, byteOrder);
     }
-    
-    public static int[] convertToIntArray(byte[] bytes, int length, int byteOrder) {
+
+    public static int[] convertToIntArray(byte[] bytes, int length,
+            int byteOrder) {
         return convertToIntArray(bytes, 0, length, byteOrder);
     }
-    
-    public static int[] convertToIntArray(byte[] bytes, int offset, int length, int byteOrder) {
+
+    public static int[] convertToIntArray(byte[] bytes, int offset, int length,
+            int byteOrder) {
         int[] result = new int[length / 4];
         for (int i = 0; i < result.length; i++) {
-            result[i] = convertToInt(bytes, offset + 4*i, byteOrder);
+            result[i] = convertToInt(bytes, offset + 4 * i, byteOrder);
         }
         return result;
     }
-    
+
     public static float convertToFloat(byte[] bytes, int byteOrder) {
         return convertToFloat(bytes, 0, byteOrder);
     }
-    
+
     public static float convertToFloat(byte[] bytes, int offset, int byteOrder) {
         int byte0 = 0xff & bytes[offset + 0];
         int byte1 = 0xff & bytes[offset + 1];
@@ -246,35 +259,35 @@ public class BinaryConversions implements BinaryConstants {
         int byte3 = 0xff & bytes[offset + 3];
         int bits;
         if (byteOrder == BYTE_ORDER_MOTOROLA) {
-            bits = (byte0 << 24) | (byte1 << 16) |
-                    (byte2 << 8) | (byte3 << 0);
+            bits = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | (byte3 << 0);
         } else {
-            bits = (byte3 << 24) | (byte2 << 16) |
-                    (byte1 << 8) | (byte0 << 0);
+            bits = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | (byte0 << 0);
         }
         return Float.intBitsToFloat(bits);
     }
-    
+
     public static float[] convertToFloatArray(byte[] bytes, int byteOrder) {
         return convertToFloatArray(bytes, 0, bytes.length, byteOrder);
     }
-    
-    public static float[] convertToFloatArray(byte[] bytes, int length, int byteOrder) {
+
+    public static float[] convertToFloatArray(byte[] bytes, int length,
+            int byteOrder) {
         return convertToFloatArray(bytes, 0, length, byteOrder);
     }
 
-    public static float[] convertToFloatArray(byte[] bytes, int offset, int length, int byteOrder) {
+    public static float[] convertToFloatArray(byte[] bytes, int offset,
+            int length, int byteOrder) {
         float[] result = new float[length / 4];
         for (int i = 0; i < result.length; i++) {
-            result[i] = convertToFloat(bytes, offset + 4*i, byteOrder);
+            result[i] = convertToFloat(bytes, offset + 4 * i, byteOrder);
         }
         return result;
     }
-    
+
     public static double convertToDouble(byte[] bytes, int byteOrder) {
         return convertToDouble(bytes, 0, byteOrder);
     }
-    
+
     public static double convertToDouble(byte[] bytes, int offset, int byteOrder) {
         long byte0 = 0xffL & bytes[offset + 0];
         long byte1 = 0xffL & bytes[offset + 1];
@@ -286,40 +299,41 @@ public class BinaryConversions implements BinaryConstants {
         long byte7 = 0xffL & bytes[offset + 7];
         long bits;
         if (byteOrder == BYTE_ORDER_MOTOROLA) {
-            bits = (byte0 << 56) | (byte1 << 48) |
-                    (byte2 << 40) | (byte3 << 32) |
-                    (byte4 << 24) | (byte5 << 16) |
-                    (byte6 << 8) | (byte7 << 0);
+            bits = (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
+                    | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
+                    | (byte6 << 8) | (byte7 << 0);
         } else {
-            bits = (byte7 << 56) | (byte6 << 48) |
-                    (byte5 << 40) | (byte4 << 32) |
-                    (byte3 << 24) | (byte2 << 16) |
-                    (byte1 << 8) | (byte0 << 0);
+            bits = (byte7 << 56) | (byte6 << 48) | (byte5 << 40)
+                    | (byte4 << 32) | (byte3 << 24) | (byte2 << 16)
+                    | (byte1 << 8) | (byte0 << 0);
         }
         return Double.longBitsToDouble(bits);
     }
-    
+
     public static double[] convertToDoubleArray(byte[] bytes, int byteOrder) {
         return convertToDoubleArray(bytes, 0, bytes.length, byteOrder);
     }
-    
-    public static double[] convertToDoubleArray(byte[] bytes, int length, int byteOrder) {
+
+    public static double[] convertToDoubleArray(byte[] bytes, int length,
+            int byteOrder) {
         return convertToDoubleArray(bytes, 0, length, byteOrder);
     }
-    
-    public static double[] convertToDoubleArray(byte[] bytes, int offset, int length, int byteOrder) {
+
+    public static double[] convertToDoubleArray(byte[] bytes, int offset,
+            int length, int byteOrder) {
         double[] result = new double[length / 8];
         for (int i = 0; i < result.length; i++) {
-            result[i] = convertToDouble(bytes, offset + 8*i, byteOrder);
+            result[i] = convertToDouble(bytes, offset + 8 * i, byteOrder);
         }
         return result;
     }
-    
+
     public static RationalNumber convertToRational(byte[] bytes, int byteOrder) {
         return convertToRational(bytes, 0, byteOrder);
     }
-    
-    public static RationalNumber convertToRational(byte[] bytes, int offset, int byteOrder) {
+
+    public static RationalNumber convertToRational(byte[] bytes, int offset,
+            int byteOrder) {
         int byte0 = 0xff & bytes[offset + 0];
         int byte1 = 0xff & bytes[offset + 1];
         int byte2 = 0xff & bytes[offset + 2];
@@ -331,31 +345,30 @@ public class BinaryConversions implements BinaryConstants {
         int numerator;
         int divisor;
         if (byteOrder == BYTE_ORDER_MOTOROLA) {
-            numerator = (byte0 << 24) | (byte1 << 16) |
-                    (byte2 << 8) | byte3;
-            divisor = (byte4 << 24) | (byte5 << 16) |
-                    (byte6 << 8) | byte7;
+            numerator = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3;
+            divisor = (byte4 << 24) | (byte5 << 16) | (byte6 << 8) | byte7;
         } else {
-            numerator = (byte3 << 24) | (byte2 << 16) |
-                    (byte1 << 8) | byte0;
-            divisor = (byte7 << 24) | (byte6 << 16) |
-                    (byte5 << 8) | byte4;
+            numerator = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
+            divisor = (byte7 << 24) | (byte6 << 16) | (byte5 << 8) | byte4;
         }
         return new RationalNumber(numerator, divisor);
     }
-    
-    public static RationalNumber[] convertToRationalArray(byte[] bytes, int byteOrder) {
+
+    public static RationalNumber[] convertToRationalArray(byte[] bytes,
+            int byteOrder) {
         return convertToRationalArray(bytes, 0, bytes.length, byteOrder);
     }
-    
-    public static RationalNumber[] convertToRationalArray(byte[] bytes, int length, int byteOrder) {
+
+    public static RationalNumber[] convertToRationalArray(byte[] bytes,
+            int length, int byteOrder) {
         return convertToRationalArray(bytes, 0, length, byteOrder);
     }
-    
-    public static RationalNumber[] convertToRationalArray(byte[] bytes, int offset, int length, int byteOrder) {
+
+    public static RationalNumber[] convertToRationalArray(byte[] bytes,
+            int offset, int length, int byteOrder) {
         RationalNumber[] result = new RationalNumber[length / 8];
         for (int i = 0; i < result.length; i++) {
-            result[i] = convertToRational(bytes, offset + 8*i, byteOrder);
+            result[i] = convertToRational(bytes, offset + 8 * i, byteOrder);
         }
         return result;
     }

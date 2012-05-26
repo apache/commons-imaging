@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyLzwCompressor
-{
+public class MyLzwCompressor {
 
     // private static final int MAX_TABLE_SIZE = 1 << 12;
 
@@ -37,14 +36,12 @@ public class MyLzwCompressor
     private final Listener listener;
 
     public MyLzwCompressor(int initialCodeSize, int byteOrder,
-            boolean earlyLimit)
-    {
+            boolean earlyLimit) {
         this(initialCodeSize, byteOrder, earlyLimit, null);
     }
 
     public MyLzwCompressor(int initialCodeSize, int byteOrder,
-            boolean earlyLimit, Listener listener)
-    {
+            boolean earlyLimit, Listener listener) {
         this.listener = listener;
         this.byteOrder = byteOrder;
         this.earlyLimit = earlyLimit;
@@ -62,17 +59,14 @@ public class MyLzwCompressor
 
     private final Map<Object, Integer> map = new HashMap<Object, Integer>();
 
-    private final void InitializeStringTable()
-    {
+    private final void InitializeStringTable() {
         codeSize = initialCodeSize;
 
         int intial_entries_count = (1 << codeSize) + 2;
 
         map.clear();
-        for (codes = 0; codes < intial_entries_count; codes++)
-        {
-            if ((codes != clearCode) && (codes != eoiCode))
-            {
+        for (codes = 0; codes < intial_entries_count; codes++) {
+            if ((codes != clearCode) && (codes != eoiCode)) {
                 Object key = arrayToKey((byte) codes);
 
                 map.put(key, codes);
@@ -80,45 +74,38 @@ public class MyLzwCompressor
         }
     }
 
-    private final void clearTable()
-    {
+    private final void clearTable() {
         InitializeStringTable();
         incrementCodeSize();
     }
 
-    private final void incrementCodeSize()
-    {
+    private final void incrementCodeSize() {
         if (codeSize != 12)
             codeSize++;
     }
 
-    private final Object arrayToKey(byte b)
-    {
+    private final Object arrayToKey(byte b) {
         return arrayToKey(new byte[] { b, }, 0, 1);
     }
 
-    private final static class ByteArray
-    {
+    private final static class ByteArray {
         private final byte bytes[];
         private final int start;
         private final int length;
         private final int hash;
 
-        public ByteArray(byte bytes[])
-        {
+        public ByteArray(byte bytes[]) {
             this(bytes, 0, bytes.length);
         }
 
-        public ByteArray(byte bytes[], int start, int length)
-        {
+        public ByteArray(byte bytes[], int start, int length) {
             this.bytes = bytes;
             this.start = start;
             this.length = length;
 
             int tempHash = length;
 
-            for (int i = 0; i < length; i++)
-            {
+            for (int i = 0; i < length; i++) {
                 int b = 0xff & bytes[i + start];
                 tempHash = tempHash + (tempHash << 8) ^ b ^ i;
             }
@@ -127,14 +114,12 @@ public class MyLzwCompressor
         }
 
         @Override
-        public final int hashCode()
-        {
+        public final int hashCode() {
             return hash;
         }
 
         @Override
-        public final boolean equals(Object o)
-        {
+        public final boolean equals(Object o) {
             if (o instanceof ByteArray) {
                 ByteArray other = (ByteArray) o;
                 if (other.hash != hash)
@@ -142,8 +127,7 @@ public class MyLzwCompressor
                 if (other.length != length)
                     return false;
 
-                for (int i = 0; i < length; i++)
-                {
+                for (int i = 0; i < length; i++) {
                     if (other.bytes[i + other.start] != bytes[i + start])
                         return false;
                 }
@@ -154,50 +138,42 @@ public class MyLzwCompressor
         }
     }
 
-    private final Object arrayToKey(byte bytes[], int start, int length)
-    {
+    private final Object arrayToKey(byte bytes[], int start, int length) {
         return new ByteArray(bytes, start, length);
     }
 
     private final void writeDataCode(MyBitOutputStream bos, int code)
-            throws IOException
-    {
+            throws IOException {
         if (null != listener)
             listener.dataCode(code);
         writeCode(bos, code);
     }
 
-
-    private final void writeClearCode(MyBitOutputStream bos) throws IOException
-    {
+    private final void writeClearCode(MyBitOutputStream bos) throws IOException {
         if (null != listener)
             listener.dataCode(clearCode);
         writeCode(bos, clearCode);
     }
 
-    private final void writeEoiCode(MyBitOutputStream bos) throws IOException
-    {
+    private final void writeEoiCode(MyBitOutputStream bos) throws IOException {
         if (null != listener)
             listener.eoiCode(eoiCode);
         writeCode(bos, eoiCode);
     }
 
     private final void writeCode(MyBitOutputStream bos, int code)
-            throws IOException
-    {
+            throws IOException {
         bos.writeBits(code, codeSize);
     }
 
-    private final boolean isInTable(byte bytes[], int start, int length)
-    {
+    private final boolean isInTable(byte bytes[], int start, int length) {
         Object key = arrayToKey(bytes, start, length);
 
         return map.containsKey(key);
     }
 
     private final int codeFromString(byte bytes[], int start, int length)
-            throws IOException
-    {
+            throws IOException {
         Object key = arrayToKey(bytes, start, length);
         Object o = map.get(key);
         if (o == null)
@@ -206,15 +182,13 @@ public class MyLzwCompressor
     }
 
     private final boolean addTableEntry(MyBitOutputStream bos, byte bytes[],
-            int start, int length) throws IOException
-    {
+            int start, int length) throws IOException {
         Object key = arrayToKey(bytes, start, length);
         return addTableEntry(bos, key);
     }
 
     private final boolean addTableEntry(MyBitOutputStream bos, Object key)
-            throws IOException
-    {
+            throws IOException {
         boolean cleared = false;
 
         {
@@ -222,12 +196,10 @@ public class MyLzwCompressor
             if (earlyLimit)
                 limit--;
 
-            if (codes == limit)
-            {
+            if (codes == limit) {
                 if (codeSize < 12)
                     incrementCodeSize();
-                else
-                {
+                else {
                     writeClearCode(bos);
                     clearTable();
                     cleared = true;
@@ -235,8 +207,7 @@ public class MyLzwCompressor
             }
         }
 
-        if (!cleared)
-        {
+        if (!cleared) {
             map.put(key, codes);
             codes++;
         }
@@ -244,8 +215,7 @@ public class MyLzwCompressor
         return cleared;
     }
 
-    public static interface Listener
-    {
+    public static interface Listener {
         public void dataCode(int code);
 
         public void eoiCode(int code);
@@ -255,8 +225,7 @@ public class MyLzwCompressor
         public void init(int clearCode, int eoiCode);
     }
 
-    public byte[] compress(byte bytes[]) throws IOException
-    {
+    public byte[] compress(byte bytes[]) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream(bytes.length);
         MyBitOutputStream bos = new MyBitOutputStream(baos, byteOrder);
 
@@ -268,15 +237,12 @@ public class MyLzwCompressor
         int w_start = 0;
         int w_length = 0;
 
-        for (int i = 0; i < bytes.length; i++)
-        {
-            if (isInTable(bytes, w_start, w_length + 1))
-            {
+        for (int i = 0; i < bytes.length; i++) {
+            if (isInTable(bytes, w_start, w_length + 1)) {
                 w_length++;
 
                 cleared = false;
-            } else
-            {
+            } else {
                 int code = codeFromString(bytes, w_start, w_length);
                 writeDataCode(bos, code);
                 cleared = addTableEntry(bos, bytes, w_start, w_length + 1);

@@ -16,20 +16,17 @@
  */
 package org.apache.commons.imaging.color;
 
-public final class ColorHunterLab
-{
+public final class ColorHunterLab {
     public final double L, a, b;
 
-    public ColorHunterLab(double l, double a, double b)
-    {
+    public ColorHunterLab(double l, double a, double b) {
         L = l;
         this.a = a;
         this.b = b;
     }
 
     @Override
-    public final String toString()
-    {
+    public final String toString() {
         return "{L: " + L + ", a: " + a + ", b: " + b + "}";
     }
 }

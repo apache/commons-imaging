@@ -21,20 +21,17 @@ import java.io.OutputStream;
 
 import org.apache.commons.imaging.common.BinaryConstants;
 
-public class MyBitOutputStream extends OutputStream implements BinaryConstants
-{
+public class MyBitOutputStream extends OutputStream implements BinaryConstants {
     private final OutputStream os;
     private final int byteOrder;
 
-    public MyBitOutputStream(OutputStream os, int byteOrder)
-    {
+    public MyBitOutputStream(OutputStream os, int byteOrder) {
         this.byteOrder = byteOrder;
         this.os = os;
     }
 
     @Override
-    public void write(int value) throws IOException
-    {
+    public void write(int value) throws IOException {
         writeBits(value, 8);
     }
 
@@ -42,34 +39,30 @@ public class MyBitOutputStream extends OutputStream implements BinaryConstants
     private int bitCache = 0;
 
     // TODO: in and out streams CANNOT accurately read/write 32bits at a time,
-    // as int will overflow.  should have used a long
-    public void writeBits(int value, int SampleBits) throws IOException
-    {
+    // as int will overflow. should have used a long
+    public void writeBits(int value, int SampleBits) throws IOException {
         int sampleMask = (1 << SampleBits) - 1;
         value &= sampleMask;
 
         if (byteOrder == BYTE_ORDER_NETWORK) // MSB, so add to right
         {
             bitCache = (bitCache << SampleBits) | value;
-        }
-        else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so add to left
+        } else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so add to left
         {
             bitCache = bitCache | (value << bitsInCache);
-        }
-        else
+        } else
             throw new IOException("Unknown byte order: " + byteOrder);
         bitsInCache += SampleBits;
 
-        while (bitsInCache >= 8)
-        {
+        while (bitsInCache >= 8) {
             if (byteOrder == BYTE_ORDER_NETWORK) // MSB, so write from left
             {
                 int b = 0xff & (bitCache >> (bitsInCache - 8));
                 actualWrite(b);
 
                 bitsInCache -= 8;
-            }
-            else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so write from right
+            } else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so write from
+                                                      // right
             {
                 int b = 0xff & bitCache;
                 actualWrite(b);
@@ -85,16 +78,13 @@ public class MyBitOutputStream extends OutputStream implements BinaryConstants
 
     private int bytesWritten = 0;
 
-    private void actualWrite(int value) throws IOException
-    {
+    private void actualWrite(int value) throws IOException {
         os.write(value);
         bytesWritten++;
     }
 
-    public void flushCache() throws IOException
-    {
-        if (bitsInCache > 0)
-        {
+    public void flushCache() throws IOException {
+        if (bitsInCache > 0) {
             int bitMask = (1 << bitsInCache) - 1;
             int b = bitMask & bitCache;
 
@@ -102,8 +92,8 @@ public class MyBitOutputStream extends OutputStream implements BinaryConstants
             {
                 b <<= 8 - bitsInCache; // left align fragment.
                 os.write(b);
-            }
-            else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so write from right
+            } else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so write from
+                                                      // right
             {
                 os.write(b);
             }
@@ -113,8 +103,7 @@ public class MyBitOutputStream extends OutputStream implements BinaryConstants
         bitCache = 0;
     }
 
-    public int getBytesWritten()
-    {
+    public int getBytesWritten() {
         return bytesWritten + ((bitsInCache > 0) ? 1 : 0);
     }
 

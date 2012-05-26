@@ -78,13 +78,13 @@ public class BitArrayOutputStream {
         }
         return count;
     }
-    
+
     private void writeByte(int b) {
         if (bytesWritten >= buffer.length) {
             byte[] bigger = new byte[buffer.length * 2];
             System.arraycopy(buffer, 0, bigger, 0, bytesWritten);
             buffer = bigger;
         }
-        buffer[bytesWritten++] = (byte)b;
+        buffer[bytesWritten++] = (byte) b;
     }
 }

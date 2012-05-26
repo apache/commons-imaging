@@ -19,31 +19,26 @@ package org.apache.commons.imaging.common;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class RationalNumber extends Number
-{
+public class RationalNumber extends Number {
     private static final long serialVersionUID = -1;
 
     public final int numerator;
     public final int divisor;
 
-    public RationalNumber(int numerator, int divisor)
-    {
+    public RationalNumber(int numerator, int divisor) {
         this.numerator = numerator;
         this.divisor = divisor;
     }
 
-    public static final RationalNumber factoryMethod(long n, long d)
-    {
+    public static final RationalNumber factoryMethod(long n, long d) {
         // safer than constructor - handles values outside min/max range.
         // also does some simple finding of common denominators.
 
         if (n > Integer.MAX_VALUE || n < Integer.MIN_VALUE
-                || d > Integer.MAX_VALUE || d < Integer.MIN_VALUE)
-        {
+                || d > Integer.MAX_VALUE || d < Integer.MIN_VALUE) {
             while ((n > Integer.MAX_VALUE || n < Integer.MIN_VALUE
                     || d > Integer.MAX_VALUE || d < Integer.MIN_VALUE)
-                    && (Math.abs(n) > 1) && (Math.abs(d) > 1))
-            {
+                    && (Math.abs(n) > 1) && (Math.abs(d) > 1)) {
                 // brutal, inprecise truncation =(
                 // use the sign-preserving right shift operator.
                 n >>= 1;
@@ -65,8 +60,7 @@ public class RationalNumber extends Number
     /**
      * Return the greatest common divisor
      */
-    private static long gcd(long a, long b)
-    {
+    private static long gcd(long a, long b) {
 
         if (b == 0)
             return a;
@@ -74,45 +68,38 @@ public class RationalNumber extends Number
             return gcd(b, a % b);
     }
 
-    public RationalNumber negate()
-    {
+    public RationalNumber negate() {
         return new RationalNumber(-numerator, divisor);
     }
 
     @Override
-    public double doubleValue()
-    {
+    public double doubleValue() {
         return (double) numerator / (double) divisor;
     }
 
     @Override
-    public float floatValue()
-    {
+    public float floatValue() {
         return (float) numerator / (float) divisor;
     }
 
     @Override
-    public int intValue()
-    {
+    public int intValue() {
         return numerator / divisor;
     }
 
     @Override
-    public long longValue()
-    {
+    public long longValue() {
         return (long) numerator / (long) divisor;
     }
 
-    public boolean isValid()
-    {
+    public boolean isValid() {
         return divisor != 0;
     }
 
     private static final NumberFormat nf = DecimalFormat.getInstance();
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         if (divisor == 0)
             return "Invalid rational (" + numerator + "/" + divisor + ")";
         if ((numerator % divisor) == 0)
@@ -121,8 +108,7 @@ public class RationalNumber extends Number
                 + nf.format((double) numerator / divisor) + ")";
     }
 
-    public String toDisplayString()
-    {
+    public String toDisplayString() {
         if ((numerator % divisor) == 0)
             return "" + (numerator / divisor);
         NumberFormat nf = DecimalFormat.getInstance();

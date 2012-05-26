@@ -22,16 +22,16 @@ import java.util.Arrays;
 
 public class BinaryConstant implements Cloneable {
     private final byte[] value;
-    
+
     public BinaryConstant(byte[] value) {
         this.value = value.clone();
     }
-    
+
     @Override
     public BinaryConstant clone() throws CloneNotSupportedException {
         return (BinaryConstant) super.clone();
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -40,14 +40,14 @@ public class BinaryConstant implements Cloneable {
         if (!(obj instanceof BinaryConstant)) {
             return false;
         }
-        BinaryConstant other = (BinaryConstant)obj;
+        BinaryConstant other = (BinaryConstant) obj;
         return equals(other.value);
     }
-    
+
     public boolean equals(byte[] bytes) {
         return Arrays.equals(value, bytes);
     }
-    
+
     public boolean equals(byte[] bytes, int offset, int length) {
         if (value.length != length) {
             return false;
@@ -59,24 +59,24 @@ public class BinaryConstant implements Cloneable {
         }
         return true;
     }
-    
+
     @Override
     public int hashCode() {
         return Arrays.hashCode(value);
     }
-    
+
     public byte get(int i) {
         return value[i];
     }
-    
+
     public int size() {
         return value.length;
     }
-    
+
     public byte[] toByteArray() {
         return value.clone();
     }
-    
+
     public void writeTo(OutputStream os) throws IOException {
         for (int i = 0; i < value.length; i++) {
             os.write(value[i]);

@@ -16,20 +16,17 @@
  */
 package org.apache.commons.imaging.color;
 
-public final class ColorXyz
-{
+public final class ColorXyz {
     public final double X, Y, Z;
 
-    public ColorXyz(double x, double y, double z)
-    {
+    public ColorXyz(double x, double y, double z) {
         X = x;
         Y = y;
         Z = z;
     }
 
     @Override
-    public final String toString()
-    {
+    public final String toString() {
         return "{X: " + X + ", Y: " + Y + ", Z: " + Z + "}";
     }
 }

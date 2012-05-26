@@ -16,17 +16,14 @@
  */
 package org.apache.commons.imaging;
 
-public class ImageWriteException extends ImagingException
-{
+public class ImageWriteException extends ImagingException {
     static final long serialVersionUID = -1L;
 
-    public ImageWriteException(String s)
-    {
+    public ImageWriteException(String s) {
         super(s);
     }
 
-    public ImageWriteException(String s, Exception e)
-    {
+    public ImageWriteException(String s, Exception e) {
         super(s, e);
     }
 }

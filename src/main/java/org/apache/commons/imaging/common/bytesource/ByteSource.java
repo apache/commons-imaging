@@ -21,17 +21,14 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.common.BinaryFileFunctions;
 
-public abstract class ByteSource extends BinaryFileFunctions
-{
+public abstract class ByteSource extends BinaryFileFunctions {
     protected final String filename;
 
-    public ByteSource(final String filename)
-    {
+    public ByteSource(final String filename) {
         this.filename = filename;
     }
 
-    public final InputStream getInputStream(int start) throws IOException
-    {
+    public final InputStream getInputStream(int start) throws IOException {
         InputStream is = null;
         boolean succeeded = false;
         try {
@@ -55,22 +52,20 @@ public abstract class ByteSource extends BinaryFileFunctions
     public abstract byte[] getAll() throws IOException;
 
     /*
-     * This operation can be VERY expensive; for inputstream
-     * byte sources, the entire stream must be drained to
-     * determine its length.
+     * This operation can be VERY expensive; for inputstream byte sources, the
+     * entire stream must be drained to determine its length.
      */
     public abstract long getLength() throws IOException;
 
     //
-    //    public byte[] getAll() throws IOException
-    //    {
-    //        return getBlock(0, (int) getLength());
-    //    }
+    // public byte[] getAll() throws IOException
+    // {
+    // return getBlock(0, (int) getLength());
+    // }
 
     public abstract String getDescription();
 
-    public final String getFilename()
-    {
+    public final String getFilename() {
         return filename;
     }
 }
