@@ -57,8 +57,8 @@ public interface ExifTagConstants
     public static final TagInfoAscii EXIF_TAG_PROCESSING_SOFTWARE = new TagInfoAscii(
             "Processing Software", 0x000b, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    public static final TagInfoAscii EXIF_TAG_SOFTWARE = new TagInfoAscii("Software",
-			0x0131, 1,
+    public static final TagInfoAscii EXIF_TAG_SOFTWARE = new TagInfoAscii(
+            "Software", 0x0131, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoLong EXIF_TAG_PREVIEW_IMAGE_START_IFD0 = new TagInfoLong(
             "Preview Image Start", 0x0111, 1,

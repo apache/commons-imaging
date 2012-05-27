@@ -16,10 +16,6 @@
  */
 package org.apache.commons.imaging;
 
-import java.io.InputStream;
-
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
-
 public interface ImagingConstants {
     /**
      * Parameter key. Applies to read and write operations.
@@ -38,7 +34,7 @@ public interface ImagingConstants {
      * Valid values: filename as string
      * <p>
      * 
-     * @see InputStream
+     * @see java.io.InputStream
      */
     public static final String PARAM_KEY_FILENAME = "FILENAME";
 
@@ -49,7 +45,7 @@ public interface ImagingConstants {
      * ImageFormat.IMAGE_FORMAT_PNG.
      * <p>
      * 
-     * @see ImageFormat
+     * @see org.apache.commons.imaging.ImageFormat
      */
     public static final String PARAM_KEY_FORMAT = "FORMAT";
 
@@ -65,7 +61,7 @@ public interface ImagingConstants {
      * TiffConstants.TIFF_COMPRESSION_PACKBITS.
      * <p>
      * 
-     * @see TiffConstants
+     * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
     public static final String PARAM_KEY_COMPRESSION = "COMPRESSION";
 
@@ -79,7 +75,7 @@ public interface ImagingConstants {
      * Valid values: Boolean.TRUE and Boolean.FALSE.
      * <p>
      * 
-     * @see TiffConstants
+     * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
     public static final String PARAM_KEY_READ_THUMBNAILS = "READ_THUMBNAILS";
 
@@ -91,7 +87,7 @@ public interface ImagingConstants {
      * Boolean.FALSE.
      * <p>
      * 
-     * @see TiffConstants
+     * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
     public static final String PARAM_KEY_STRICT = "STRICT";
 
@@ -102,6 +98,8 @@ public interface ImagingConstants {
      * <p>
      * Valid values: TiffOutputSet to write into the image's EXIF metadata.
      * <p>
+     * 
+     * @see org.apache.commons.imaging.formats.tiff.write.TiffOutputSet
      */
     public static final String PARAM_KEY_EXIF = "EXIF";
 
@@ -120,6 +118,9 @@ public interface ImagingConstants {
      * density (DPI), and/or aspect ratio.
      * <p>
      * Valid values: PixelDensity
+     * <p>
+     * 
+     * @see org.apache.commons.imaging.PixelDensity
      */
     public static final String PARAM_KEY_PIXEL_DENSITY = "PIXEL_DENSITY";
 }
