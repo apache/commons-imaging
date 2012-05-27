@@ -225,6 +225,15 @@ public class BmpImageParser extends ImageParser {
             }
             if (bitmapHeaderSize >= 108) {
                 this.debugNumber("colorSpaceType", colorSpaceType, 4);
+                this.debugNumber("colorSpace.red.x", colorSpace.red.x);
+                this.debugNumber("colorSpace.red.y", colorSpace.red.y);
+                this.debugNumber("colorSpace.red.z", colorSpace.red.z);
+                this.debugNumber("colorSpace.green.x", colorSpace.green.x);
+                this.debugNumber("colorSpace.green.y", colorSpace.green.y);
+                this.debugNumber("colorSpace.green.z", colorSpace.green.z);
+                this.debugNumber("colorSpace.blue.x", colorSpace.blue.x);
+                this.debugNumber("colorSpace.blue.y", colorSpace.blue.y);
+                this.debugNumber("colorSpace.blue.z", colorSpace.blue.z);
                 this.debugNumber("gammaRed", gammaRed, 4);
                 this.debugNumber("gammaGreen", gammaGreen, 4);
                 this.debugNumber("gammaBlue", gammaBlue, 4);

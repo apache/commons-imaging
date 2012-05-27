@@ -19,6 +19,7 @@ package org.apache.commons.imaging;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class FormatCompliance {
     }
 
     public void dump() {
-        dump(new PrintWriter(new OutputStreamWriter(System.out)));
+        dump(new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset())));
     }
 
     public void dump(PrintWriter pw) {

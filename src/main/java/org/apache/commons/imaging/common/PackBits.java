@@ -110,53 +110,59 @@ public class PackBits {
     }
 
     public byte[] compress(byte bytes[]) throws IOException {
-        MyByteArrayOutputStream baos = new MyByteArrayOutputStream(
-                bytes.length * 2); // max length 1 extra byte for every 128
+        MyByteArrayOutputStream baos = null;
+        try {
+            baos = new MyByteArrayOutputStream(
+                    bytes.length * 2); // max length 1 extra byte for every 128
 
-        int ptr = 0;
-        int count = 0;
-        while (ptr < bytes.length) {
-            count++;
-            int dup = findNextDuplicate(bytes, ptr);
-
-            if (dup == ptr) // write run length
-            {
-                int len = findRunLength(bytes, dup);
-                int actual_len = Math.min(len, 128);
-                baos.write(-(actual_len - 1));
-                baos.write(bytes[ptr]);
-                ptr += actual_len;
-            } else { // write literals
-                int len = dup - ptr;
-
-                if (dup > 0) {
-                    int runlen = findRunLength(bytes, dup);
-                    if (runlen < 3) // may want to discard next run.
-                    {
-                        int nextptr = ptr + len + runlen;
-                        int nextdup = findNextDuplicate(bytes, nextptr);
-                        if (nextdup != nextptr) // discard 2-byte run
+            int ptr = 0;
+            int count = 0;
+            while (ptr < bytes.length) {
+                count++;
+                int dup = findNextDuplicate(bytes, ptr);
+    
+                if (dup == ptr) // write run length
+                {
+                    int len = findRunLength(bytes, dup);
+                    int actual_len = Math.min(len, 128);
+                    baos.write(-(actual_len - 1));
+                    baos.write(bytes[ptr]);
+                    ptr += actual_len;
+                } else { // write literals
+                    int len = dup - ptr;
+    
+                    if (dup > 0) {
+                        int runlen = findRunLength(bytes, dup);
+                        if (runlen < 3) // may want to discard next run.
                         {
-                            dup = nextdup;
-                            len = dup - ptr;
+                            int nextptr = ptr + len + runlen;
+                            int nextdup = findNextDuplicate(bytes, nextptr);
+                            if (nextdup != nextptr) // discard 2-byte run
+                            {
+                                dup = nextdup;
+                                len = dup - ptr;
+                            }
                         }
                     }
-                }
-
-                if (dup < 0)
-                    len = bytes.length - ptr;
-                int actual_len = Math.min(len, 128);
-
-                baos.write(actual_len - 1);
-                for (int i = 0; i < actual_len; i++) {
-                    baos.write(bytes[ptr]);
-                    ptr++;
+    
+                    if (dup < 0)
+                        len = bytes.length - ptr;
+                    int actual_len = Math.min(len, 128);
+    
+                    baos.write(actual_len - 1);
+                    for (int i = 0; i < actual_len; i++) {
+                        baos.write(bytes[ptr]);
+                        ptr++;
+                    }
                 }
             }
+            byte result[] = baos.toByteArray();
+    
+            return result;
+        } finally {
+            if (baos != null) {
+                baos.close();
+            }
         }
-        byte result[] = baos.toByteArray();
-
-        return result;
-
     }
 }

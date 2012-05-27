@@ -317,6 +317,7 @@ public class PngWriter implements PngConstants {
                 result = (byte) value;
                 break;
             default:
+                result = 8;
             }
             switch (colorType) {
             case COLOR_TYPE_GREYSCALE:
@@ -330,6 +331,7 @@ public class PngWriter implements PngConstants {
                 result = (byte) Math.max(8, result);
                 break;
             default:
+                result = 8;
             }
         }
 

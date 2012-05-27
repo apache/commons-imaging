@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -71,7 +72,7 @@ public class IccTag implements BinaryConstants, IccConstants {
     }
 
     public void dump(String prefix) throws ImageReadException, IOException {
-        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
 
         dump(pw, prefix);
 
@@ -84,10 +85,12 @@ public class IccTag implements BinaryConstants, IccConstants {
                 + "tag signature: "
                 + Integer.toHexString(signature)
                 + " ("
-                + new String(new byte[] { (byte) (0xff & (signature >> 24)),
+                + new String(new byte[] {
+                        (byte) (0xff & (signature >> 24)),
                         (byte) (0xff & (signature >> 16)),
                         (byte) (0xff & (signature >> 8)),
-                        (byte) (0xff & (signature >> 0)), }) + ")");
+                        (byte) (0xff & (signature >> 0)), }, "US-ASCII")
+                + ")");
 
         if (data == null)
             pw.println(prefix + "data: " + Arrays.toString(data));
@@ -102,7 +105,7 @@ public class IccTag implements BinaryConstants, IccConstants {
                             (byte) (0xff & (data_type_signature >> 24)),
                             (byte) (0xff & (data_type_signature >> 16)),
                             (byte) (0xff & (data_type_signature >> 8)),
-                            (byte) (0xff & (data_type_signature >> 0)), })
+                            (byte) (0xff & (data_type_signature >> 0)), }, "US-ASCII")
                     + ")");
 
             if (itdt == null)

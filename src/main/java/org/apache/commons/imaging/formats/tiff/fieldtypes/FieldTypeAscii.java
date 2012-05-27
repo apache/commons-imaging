@@ -84,6 +84,7 @@ public class FieldTypeAscii extends FieldType {
             try {
                 bytes = ((String) o).getBytes("UTF-8");
             } catch (UnsupportedEncodingException cannotHappen) {
+                throw new IllegalArgumentException("Your Java doesn't support UTF-8");
             }
             byte result[] = new byte[bytes.length + 1];
             System.arraycopy(bytes, 0, result, 0, bytes.length);
@@ -97,6 +98,7 @@ public class FieldTypeAscii extends FieldType {
                 try {
                     bytes = strings[i].getBytes("UTF-8");
                 } catch (UnsupportedEncodingException cannotHappen) {
+                    throw new IllegalArgumentException("Your Java doesn't support UTF-8");
                 }
                 totalLength += (bytes.length + 1);
             }
@@ -107,6 +109,7 @@ public class FieldTypeAscii extends FieldType {
                 try {
                     bytes = strings[i].getBytes("UTF-8");
                 } catch (UnsupportedEncodingException cannotHappen) {
+                    throw new IllegalArgumentException("Your Java doesn't support UTF-8");
                 }
                 System.arraycopy(bytes, 0, result, position, bytes.length);
                 position += (bytes.length + 1);

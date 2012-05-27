@@ -176,6 +176,7 @@ public class IcnsType {
         try {
             bytes = type.getBytes("US-ASCII");
         } catch (UnsupportedEncodingException cannotHappen) {
+            throw new IllegalArgumentException("Your Java doesn't support US-ASCII");
         }
         if (bytes.length != 4)
             throw new IllegalArgumentException("Invalid ICNS type");

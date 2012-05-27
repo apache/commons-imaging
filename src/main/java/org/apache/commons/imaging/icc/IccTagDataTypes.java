@@ -40,7 +40,7 @@ public enum IccTagDataTypes implements IccTagDataType {
                     "ICC: corrupt tag data");
 
             //            bis.readByteArray("ignore", bytes.length -12, "none");
-            String s = new String(bytes, 12, string_length - 1);
+            String s = new String(bytes, 12, string_length - 1, "US-ASCII");
             System.out.println(prefix + "s: '" + s + "'");
         }
 
@@ -92,8 +92,8 @@ public enum IccTagDataTypes implements IccTagDataType {
                             (byte) (0xff & (thesignature >> 24)),
                             (byte) (0xff & (thesignature >> 16)),
                             (byte) (0xff & (thesignature >> 8)),
-                            (byte) (0xff & (thesignature >> 0)),
-                    }) + ")");
+                            (byte) (0xff & (thesignature >> 0)), }, "US-ASCII")
+                    + ")");
         }
 
     },
@@ -108,7 +108,7 @@ public enum IccTagDataTypes implements IccTagDataType {
                     BinaryConstants.BYTE_ORDER_NETWORK);
             bis.read4Bytes("type_signature", "ICC: corrupt tag data");
             bis.read4Bytes("ignore", "ICC: corrupt tag data");
-            String s = new String(bytes, 8, bytes.length - 8);
+            String s = new String(bytes, 8, bytes.length - 8, "US-ASCII");
             System.out.println(prefix + "s: '" + s + "'");
         }
 

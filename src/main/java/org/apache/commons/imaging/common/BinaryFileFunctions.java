@@ -20,8 +20,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
+import java.nio.charset.Charset;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -49,7 +51,7 @@ public class BinaryFileFunctions implements BinaryConstants {
     }
 
     public final void debugNumber(String msg, int data, int bytes) {
-        PrintWriter pw = new PrintWriter(System.out);
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
         debugNumber(pw, msg, data, bytes);
         pw.flush();
     }

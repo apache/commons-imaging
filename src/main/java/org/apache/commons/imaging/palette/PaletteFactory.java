@@ -391,7 +391,7 @@ public class PaletteFactory {
                 subset.dump(i + ": ");
         }
 
-        Collections.sort(subsets);
+        Collections.sort(subsets, ColorSpaceSubset.rgbComparator);
 
         return new QuantizedPalette(subsets, precision);
     }

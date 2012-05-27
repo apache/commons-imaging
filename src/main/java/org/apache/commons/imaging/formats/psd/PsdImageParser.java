@@ -609,7 +609,7 @@ public class PsdImageParser extends ImageParser {
                 ImageResourceBlock block = blocks.get(i);
                 pw.println("\t" + i + " (" + Integer.toHexString(block.id)
                         + ", " + "'"
-                        + new String(block.nameData)
+                        + new String(block.nameData, "ISO-8859-1")
                         + "' ("
                         + block.nameData.length
                         + "), "

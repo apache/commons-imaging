@@ -16,7 +16,9 @@
  */
 package org.apache.commons.imaging.formats.psd;
 
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 
 public class ImageContents {
     public final PsdHeaderInfo header;
@@ -38,7 +40,7 @@ public class ImageContents {
     }
 
     public void dump() {
-        PrintWriter pw = new PrintWriter(System.out);
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
         dump(pw);
         pw.flush();
     }

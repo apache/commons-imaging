@@ -16,7 +16,10 @@
  */
 package org.apache.commons.imaging.palette;
 
-class ColorSpaceSubset implements Comparable<ColorSpaceSubset> {
+import java.io.Serializable;
+import java.util.Comparator;
+
+class ColorSpaceSubset {
     public final int mins[], maxs[];
     public final int precision;
     public final int precision_mask;
@@ -154,14 +157,17 @@ class ColorSpaceSubset implements Comparable<ColorSpaceSubset> {
         }
     }
 
-    public int compareTo(ColorSpaceSubset other) {
-        return rgb - other.rgb;
-    }
-
     public int index;
 
     public final void setIndex(int i) {
         index = i;
     }
 
+    public static class RgbComparator implements Comparator<ColorSpaceSubset>, Serializable {
+        public int compare(ColorSpaceSubset c1, ColorSpaceSubset c2) {
+            return c1.rgb - c2.rgb;
+        }
+    }
+    
+    public static final RgbComparator rgbComparator = new RgbComparator();
 }
