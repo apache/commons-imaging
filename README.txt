@@ -1,11 +1,11 @@
 =========================================================================
-Welcome to Apache Commons Sanselan  <http://commons.apache.org/sanselan/>
+Welcome to Apache Commons Imaging  <http://commons.apache.org/imaging/>
 =========================================================================
 
 License (see also LICENSE)
 ==============================
 
-Collective work: Copyright 2007-2009 The Apache Software Foundation.
+Collective work: Copyright 2007-2012 The Apache Software Foundation.
 
 Licensed to the Apache Software Foundation (ASF) under one or more
 contributor license agreements.  See the NOTICE file distributed with
@@ -29,7 +29,7 @@ Getting Started
 Mailing Lists
 -------------
 
-To get involved with the Apache Commons Sanselan project, start by
+To get involved with the Apache Commons Imaging project, start by
 having a look at our website (link at top of page) and join our mailing
 lists by sending an empty message to the Apache Commons mailing lists
 
@@ -41,33 +41,33 @@ and the dev mailing list archives can be found at
 
    http://mail-archives.apache.org/mod_mbox/commons-dev/
 
-Please prefix the subject line of any messages with [sanselan].
+Please prefix the subject line of any messages with [imaging].
 
 Downloading
 -----------
 
-The Commons Sanselan source code is available via Subversion at
+The Commons Imaging source code is available via Subversion at
 
-   https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk
+   https://svn.apache.org/repos/asf/commons/proper/imaging/trunk
 
 and anonymous access is available at
 
-   http://svn.apache.org/repos/asf/commons/proper/sanselan/trunk
+   http://svn.apache.org/repos/asf/commons/proper/imaging/trunk
 
 or with ViewVC at
 
-   http://svn.apache.org/viewvc/commons/proper/sanselan/trunk/
+   http://svn.apache.org/viewvc/commons/proper/imaging/trunk/
 
-To checkout the main Sanselan source tree, run
+To checkout the main Imaging source tree, run
 
-   svn checkout http://svn.apache.org/repos/asf/commons/proper/sanselan/trunk/sanselan
+   svn checkout http://svn.apache.org/repos/asf/commons/proper/imaging/trunk/imaging
 
 Once you have a copy of the source code tree, you can use Apache Maven
 
    http://maven.apache.org/
 
-to build the project. You should use Maven 2 to build Sanselan.
-The minimal command to build, test, and package all the main Sanselan
+to build the project. You should use Maven 2 to build Imaging.
+The minimal command to build, test, and package all the main Imaging
 components is:
 
    mvn install
@@ -79,5 +79,5 @@ For more instructions, please see the documentation at:
 Credits
 =======
 
-See http://commons.apache.org/sanselan/team-list.html for the list of 
-Sanselan committers and main contributors.
+See http://commons.apache.org/imaging/team-list.html for the list of 
+Imaging committers and main contributors.

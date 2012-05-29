@@ -20,18 +20,17 @@
 <assembly>
   <id>bin</id>
   <formats>
+    <format>tar.bz2</format>
     <format>tar.gz</format>
     <format>zip</format>
-    <format>tar.bz2</format>
   </formats>
   <fileSets>
     <fileSet>
       <includes>
-        <include>README*</include>
         <include>LICENSE*</include>
-        <include>KEYS*</include>
         <include>NOTICE*</include>
         <include>RELEASE_NOTES*</include>
+        <include>README*</include>
       </includes>
     </fileSet>
     <fileSet>
@@ -40,6 +39,10 @@
       <includes>
         <include>*.jar</include>
       </includes>
+    </fileSet>
+    <fileSet>
+      <directory>target/site/apidocs</directory>
+      <outputDirectory>apidocs</outputDirectory>
     </fileSet>
   </fileSets>
 </assembly>
