@@ -25,6 +25,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 
 public final class DataReaderTiled extends DataReader {
 
@@ -58,6 +59,65 @@ public final class DataReaderTiled extends DataReader {
 
     private void interpretTile(ImageBuilder imageBuilder, byte bytes[],
             int startX, int startY) throws ImageReadException, IOException {
+        // changes introduced May 2012
+        // The following block of code implements changes that
+        // reduce image loading time by using special-case processing
+        // instead of the general-purpose logic from the original
+        // implementation. For a detailed discussion, see the comments for
+        // a similar treatment in the DataReaderStrip class
+        //
+
+        // verify that all samples are one byte in size
+        boolean allSamplesAreOneByte = true;
+        for (int i = 0; i < bitsPerSample.length; i++) {
+            if (bitsPerSample[i] != 8) {
+                allSamplesAreOneByte = false;
+                break;
+            }
+        }
+
+        if (predictor != 2 && bitsPerPixel == 24 && allSamplesAreOneByte) {
+            int k = 0;
+            int i0 = startY;
+            int i1 = startY + tileLength;
+            if (i1 > height) {
+                // the tile is padded past bottom of image
+                i1 = height - startY;
+            }
+            int j0 = startX;
+            int j1 = startX + tileWidth;
+            if (j1 > width) {
+                // the tile is padded to beyond the tile width
+                j1 = width - startX;
+            }
+            if (photometricInterpreter instanceof PhotometricInterpreterRgb) {
+                for (int i = i0; i < i1; i++) {
+                    k = (i - i0) * tileWidth * 3;
+                    for (int j = j0; j < j1; j++, k += 3) {
+                        int rgb = 0xff000000
+                                | (((bytes[k] << 8) | (bytes[k + 1] & 0xff)) << 8)
+                                | (bytes[k + 2] & 0xff);
+                        imageBuilder.setRGB(j, i, rgb);
+                    }
+                }
+            } else {
+                int samples[] = new int[3];
+                for (int i = i0; i < i1; i++) {
+                    k = (i - i0) * tileWidth * 3;
+                    for (int j = j0; j < j1; j++) {
+                        samples[0] = bytes[k++] & 0xff;
+                        samples[1] = bytes[k++] & 0xff;
+                        samples[2] = bytes[k++] & 0xff;
+                        photometricInterpreter.interpretPixel(imageBuilder,
+                                samples, j, i);
+                    }
+                }
+            }
+            return;
+        }
+
+        // End of May 2012 changes
+
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         BitInputStream bis = new BitInputStream(bais, byteOrder);
 
