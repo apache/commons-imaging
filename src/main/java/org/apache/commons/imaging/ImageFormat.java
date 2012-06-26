@@ -16,6 +16,9 @@
  */
 package org.apache.commons.imaging;
 
+/**
+ * Provides a definition for an image format.
+ */
 public class ImageFormat {
     public final String name;
     public final String extension;
@@ -78,7 +81,12 @@ public class ImageFormat {
     public static final ImageFormat IMAGE_FORMAT_XPM = new ImageFormat("XPM");
     public static final ImageFormat IMAGE_FORMAT_RGBE = new ImageFormat("RGBE");
 
-    public static final ImageFormat[] getAllFormats() {
+    /**
+     * Gets an array of ImageFormat objects for all supported image
+     * formats.
+     * @return A valid array of ImageFormat objects.
+     */
+    public static ImageFormat[] getAllFormats() {
         ImageFormat result[] = { IMAGE_FORMAT_UNKNOWN, IMAGE_FORMAT_PNG,
                 IMAGE_FORMAT_GIF, IMAGE_FORMAT_TIFF, IMAGE_FORMAT_JPEG,
                 IMAGE_FORMAT_BMP, IMAGE_FORMAT_PSD, IMAGE_FORMAT_PBM,

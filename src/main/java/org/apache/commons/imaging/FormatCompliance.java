@@ -23,6 +23,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides information about the compliance of a specified data 
+ * source (byte array, file, etc&#46;) to an image format.
+ */
 public class FormatCompliance {
     private final boolean failOnError;
     private final String description;

@@ -40,52 +40,80 @@ import org.apache.commons.imaging.icc.IccProfileParser;
 import org.apache.commons.imaging.util.Debug;
 
 /**
- * The primary interface to the Imaging library.
+ * The primary application programming interface (API) to the Imaging library.
  * <p>
- * Almost all of the Imaging library's core functionality can be accessed
- * through it's methods.
- * <p>
- * All of Imaging's methods are static.
- * <p>
+
+ * <h3>Application Notes</h3>
+ * <h4>Using this class</h4>
+ * Almost all of the Apache Commons Imaging library's core functionality can 
+ * be accessed through the methods provided by this class.
+ * The use of the Imaging class is similar to the Java API's ImageIO class,
+ * though Imaging supports formats and options not included in the standard 
+ * Java API. 
+ * <p>All of methods provided by the Imaging class are declared static.
+ * <p>The Apache Commons Imaging package is a pure Java implementation.
+ * <h4>Format support</h4>
+ * While the Apache Commons Imaging package handles a number of different 
+ * graphics formats, support for some formats is not yet complete.
+ * For the most recent information on support for specific formats, refer to
+ * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+ * at the main project development web site.
+ * <h4>Optional parameters for image reading and writing</h4>
+ * Some of the methods provided by this class accept an optional 
+ * <strong>params</strong> argument that permits the application to specify
+ * elements for special handling.  If these specifications are not required by
+ * the application, the params argument may be omitted (as appropriate) or
+ * a null argument may be provided. In image-writing operations, the option 
+ * parameters may include options such as data-compression type (if any), 
+ * color model, or other format-specific data representations.   The parameters 
+ * map may also be used to provide EXIF Tags and other metadata to those
+ * formats that support them. In image-reading operations,
+ * the parameters may include information about special handling in reading
+ * the image data.
+ * <p>Optional parameters are specified using a Map object (typically, 
+ * a Java HashMap) to specify a set of keys and values for input.  
+ * The specification for support keys is provided by the ImagingConstants 
+ * interface as well as by format-specific interfaces such as 
+ * JpegContants or TiffConstants.
+ * <h4>Example code</h4>
  * See the source of the SampleUsage class and other classes in the
  * org.apache.commons.imaging.examples package for examples.
  * 
  * @see <a
  *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">org.apache.commons.imaging.examples.SampleUsage</a>
+ * @see <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  */
 public abstract class Imaging implements ImagingConstants {
 
     /**
-     * Tries to guess whether a file contains an image based on its file
-     * extension.
-     * <p>
-     * Returns true if the file has a file extension associated with a file
-     * format, such as .jpg or .gif.
-     * <p>
+     * Attempts to determine if a file contains an image recorded in 
+     * a supported graphics format based on its file-name extension 
+     * (for example "&#46jpg", "&#46;gif", "&#46;png", etc&#46;). 
      * 
-     * @param file
-     *            File which may contain an image.
-     * @return true if the file has an image format file extension.
+     * @param file A valid File object providing a reference to 
+     * a file that may contain an image.
+     * @return true if the file-name includes a supported image 
+     * format file extension; otherwise, false.
      */
     public static boolean hasImageFileExtension(File file) {
-        if (!file.isFile())
+        if (file==null || !file.isFile())
             return false;
         return hasImageFileExtension(file.getName());
     }
 
     /**
-     * Tries to guess whether a filename represents an image based on its file
-     * extension.
-     * <p>
-     * Returns true if the filename has a file extension associated with a file
-     * format, such as .jpg or .gif.
-     * <p>
+     * Attempts to determine if a file contains an image recorded in 
+     * a supported graphics format based on its file-name extension 
+     * (for example "&#46jpg", "&#46;gif", "&#46;png", etc&#46;). 
      * 
-     * @param filename
-     *            String representing name of file which may contain an image.
+     * @param filename  A valid string representing name of file 
+     * which may contain an image.
      * @return true if the filename has an image format file extension.
      */
     public static boolean hasImageFileExtension(String filename) {
+        if(filename==null)
+            return false;
+        
         filename = filename.toLowerCase();
 
         ImageParser imageParsers[] = ImageParser.getAllImageParsers();
@@ -104,15 +132,19 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Tries to guess what the image type (if any) of data based on the file's
-     * "magic numbers," the first bytes of the data.
-     * <p>
+     * Attempts to determine the image format of a file based on its
+     * "magic numbers," the first bytes of the data.  
+     * <p>Many graphics format specify identifying byte 
+     * values that appear at the beginning of the data file.  This method
+     * checks for such identifying elements and returns a ImageFormat 
+     * enumeration indicating what it detects. Note that this 
+     * method can return "false positives" in cases where non-image files
+     * begin with the specified byte values.
      * 
-     * @param bytes
-     *            Byte array containing an image file.
+     * @param bytes  Byte array containing an image file.
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
-     *         guessed.
+     *         determined.
      */
     public static ImageFormat guessFormat(byte bytes[])
             throws ImageReadException, IOException {
@@ -120,15 +152,19 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Tries to guess what the image type (if any) of a file based on the file's
-     * "magic numbers," the first bytes of the file.
-     * <p>
+     * Attempts to determine the image format of a file based on its
+     * "magic numbers," the first bytes of the data.  
+     * <p>Many graphics formats specify identifying byte 
+     * values that appear at the beginning of the data file.  This method
+     * checks for such identifying elements and returns a ImageFormat 
+     * enumeration indicating what it detects. Note that this 
+     * method can return "false positives" in cases where non-image files
+     * begin with the specified byte values.
      * 
-     * @param file
-     *            File containing image data.
+     * @param file  File containing image data.
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
-     *         guessed.
+     *         determined.
      */
     public static ImageFormat guessFormat(File file) throws ImageReadException,
             IOException {
@@ -161,8 +197,32 @@ public abstract class Imaging implements ImagingConstants {
         return (a[0] == b[0]) && (a[1] == b[1]);
     }
 
+    
+    /**
+     * Attempts to determine the image format of a file based on its
+     * "magic numbers," the first bytes of the data.  
+     * <p>Many graphics formats specify identifying byte 
+     * values that appear at the beginning of the data file.  This method
+     * checks for such identifying elements and returns a ImageFormat 
+     * enumeration indicating what it detects. Note that this 
+     * method can return "false positives" in cases where non-image files
+     * begin with the specified byte values.
+     * 
+     * @param byteSource a valid ByteSource object potentially supplying 
+     * data for an image.
+     * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns
+     *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
+     *         determined.
+     * @throws ImageReadException in the event of an unsuccessful 
+     * attempt to read the image data
+     * @throws IOException in the event of an unrecoverable I/O condition.
+     */
     public static ImageFormat guessFormat(ByteSource byteSource)
             throws ImageReadException, IOException {
+        
+        if(byteSource==null)
+            return ImageFormat.IMAGE_FORMAT_UNKNOWN;
+        
         InputStream is = null;
 
         try {
@@ -252,7 +312,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of ICC_Profile or null if the image contains no ICC
-     *         profile..
+     *         profile.
      */
     public static ICC_Profile getICCProfile(byte bytes[])
             throws ImageReadException, IOException {
@@ -267,7 +327,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param bytes
      *            Byte array containing an image file.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
      */
@@ -303,7 +363,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param filename
      *            Filename associated with image data (optional).
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
      */
@@ -335,7 +395,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param file
      *            File containing image data.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
      */
@@ -391,7 +451,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param bytes
      *            Byte array containing an image file.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return A byte array.
      * @see IccProfileParser
      * @see ICC_Profile
@@ -431,7 +491,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param file
      *            File containing image data.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return A byte array.
      * @see IccProfileParser
      * @see ICC_Profile
@@ -462,7 +522,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param bytes
      *            Byte array containing an image file.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
@@ -527,7 +587,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param filename
      *            Filename associated with image data (optional).
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
@@ -567,7 +627,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param bytes
      *            Byte array containing an image file.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
@@ -588,7 +648,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param file
      *            File containing image data.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
@@ -625,7 +685,7 @@ public abstract class Imaging implements ImagingConstants {
         return imageInfo;
     }
 
-    private static final ImageParser getImageParser(ByteSource byteSource)
+    private static ImageParser getImageParser(ByteSource byteSource)
             throws ImageReadException, IOException {
         ImageFormat format = guessFormat(byteSource);
         if (!format.equals(ImageFormat.IMAGE_FORMAT_UNKNOWN)) {
@@ -679,7 +739,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param filename
      *            Filename associated with image data (optional).
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return The width and height of the image.
      */
     public static Dimension getImageSize(InputStream is, String filename,
@@ -707,7 +767,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param bytes
      *            Byte array containing an image file.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return The width and height of the image.
      */
     public static Dimension getImageSize(byte bytes[], Map params)
@@ -735,7 +795,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param file
      *            File containing image data.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return The width and height of the image.
      */
     public static Dimension getImageSize(File file, Map params)
@@ -774,7 +834,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param filename
      *            Filename associated with image data (optional).
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     public static String getXmpXml(InputStream is, String filename, Map params)
@@ -802,7 +862,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param bytes
      *            Byte array containing an image file.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     public static String getXmpXml(byte bytes[], Map params)
@@ -830,7 +890,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param file
      *            File containing image data.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     public static String getXmpXml(File file, Map params)
@@ -845,7 +905,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param byteSource
      *            File containing image data.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     public static String getXmpXml(ByteSource byteSource, Map params)
@@ -894,7 +954,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param bytes
      *            Byte array containing an image file.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of IImageMetadata.
      * @see IImageMetadata
      */
@@ -946,7 +1006,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param filename
      *            Filename associated with image data (optional).
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of IImageMetadata.
      * @see IImageMetadata
      */
@@ -994,7 +1054,7 @@ public abstract class Imaging implements ImagingConstants {
      * @param file
      *            File containing image data.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of IImageMetadata.
      * @see IImageMetadata
      */
@@ -1011,14 +1071,15 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Returns a description of the image's structure.
-     * <p>
-     * Useful for exploring format-specific details of image files.
-     * <p>
-     * 
-     * @param bytes
-     *            Byte array containing an image file.
-     * @return A description of the image file's structure.
+     * Write the ImageInfo and format-specific information for the image
+     * content of the specified byte array to a string.
+     * @param bytes A valid array of bytes.
+     * @return A valid string.
+     * @throws ImageReadException In the event that the the specified 
+     * content does not conform to the format of the specific parser
+     * implementation.
+     * @throws IOException In the event of unsuccessful read or
+     * access operation.
      */
     public static String dumpImageFile(byte bytes[]) throws ImageReadException,
             IOException {
@@ -1026,14 +1087,15 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Returns a description of the image file's structure.
-     * <p>
-     * Useful for exploring format-specific details of image files.
-     * <p>
-     * 
-     * @param file
-     *            File containing image data.
-     * @return A description of the image file's structure.
+     * Write the ImageInfo and format-specific information for the image
+     * content of the specified file to a string.
+     * @param file A valid file reference.
+     * @return A valid string.
+     * @throws ImageReadException In the event that the the specified 
+     * content does not conform to the format of the specific parser
+     * implementation.
+     * @throws IOException In the event of unsuccessful read or
+     * access operation.
      */
     public static String dumpImageFile(File file) throws ImageReadException,
             IOException {
@@ -1047,11 +1109,31 @@ public abstract class Imaging implements ImagingConstants {
         return imageParser.dumpImageFile(byteSource);
     }
 
+    /**
+     * Attempts to determine the image format of the specified data and 
+     * evaluates its format compliance.   This method
+     * returns a FormatCompliance object which includes information
+     * about the data's compliance to a specific format.
+     * @param bytes a valid array of bytes containing image data.
+     * @return if successful, a valid FormatCompliance object.
+     * @throws ImageReadException in the event of unreadable data.
+     * @throws IOException in the event of an unrecoverable I/O condition.
+     */
     public static FormatCompliance getFormatCompliance(byte bytes[])
             throws ImageReadException, IOException {
         return getFormatCompliance(new ByteSourceArray(bytes));
     }
 
+    /**
+     * Attempts to determine the image format of the specified data and 
+     * evaluates its format compliance.   This method
+     * returns a FormatCompliance object which includes information
+     * about the data's compliance to a specific format.
+     * @param file valid file containing image data
+     * @return if successful, a valid FormatCompliance object.
+     * @throws ImageReadException in the event of unreadable data.
+     * @throws IOException in the event of an unrecoverable I/O condition.
+     */
     public static FormatCompliance getFormatCompliance(File file)
             throws ImageReadException, IOException {
         return getFormatCompliance(new ByteSourceFile(file));
@@ -1065,17 +1147,15 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Returns all images contained in an image.
-     * <p>
-     * Useful for image formats such as GIF and ICO in which a single file may
-     * contain multiple images.
-     * <p>
-     * 
-     * @param is
-     *            InputStream from which to read image data.
-     * @param filename
-     *            Filename associated with image data (optional).
-     * @return A vector of BufferedImages.
+     * Gets all images specified by the InputStream  (some 
+     * formats may include multiple images within a single data source).
+     * @param is A valid InputStream
+     * @return A valid (potentially empty) list of BufferedImage objects.
+     * @throws ImageReadException In the event that the the specified 
+     * content does not conform to the format of the specific parser
+     * implementation.
+     * @throws IOException In the event of unsuccessful read or
+     * access operation.
      */
     public static List<BufferedImage> getAllBufferedImages(InputStream is,
             String filename) throws ImageReadException, IOException {
@@ -1083,37 +1163,38 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Returns all images contained in an image.
-     * <p>
-     * Useful for image formats such as GIF and ICO in which a single file may
-     * contain multiple images.
-     * <p>
-     * 
-     * @param bytes
-     *            Byte array containing an image file.
-     * @return A vector of BufferedImages.
+     * Gets all images specified by the byte array (some 
+     * formats may include multiple images within a single data source).
+     * @param bytes a valid array of bytes
+     * @return A valid (potentially empty) list of BufferedImage objects.
+     * @throws ImageReadException In the event that the the specified 
+     * content does not conform to the format of the specific parser
+     * implementation.
+     * @throws IOException In the event of unsuccessful read or
+     * access operation.
      */
     public static List<BufferedImage> getAllBufferedImages(byte bytes[])
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceArray(bytes));
     }
 
-    /**
-     * Returns all images contained in an image file.
-     * <p>
-     * Useful for image formats such as GIF and ICO in which a single file may
-     * contain multiple images.
-     * <p>
-     * 
-     * @param file
-     *            File containing image data.
-     * @return A vector of BufferedImages.
+   /**
+     * Gets all images specified by the file (some 
+     * formats may include multiple images within a single data source).
+     * @param file A reference to a valid data file.
+     * @return A valid (potentially empty) list of BufferedImage objects.
+     * @throws ImageReadException In the event that the the specified 
+     * content does not conform to the format of the specific parser
+     * implementation.
+     * @throws IOException In the event of unsuccessful read or
+     * access operation.
      */
     public static List<BufferedImage> getAllBufferedImages(File file)
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceFile(file));
     }
 
+    
     private static List<BufferedImage> getAllBufferedImages(
             ByteSource byteSource) throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
@@ -1121,71 +1202,49 @@ public abstract class Imaging implements ImagingConstants {
         return imageParser.getAllBufferedImages(byteSource);
     }
 
-    // public static boolean extractImages(byte bytes[], File dstDir,
-    // String dstRoot, ImageParser encoder) throws ImageReadException,
-    // IOException, ImageWriteException
-    // {
-    // return extractImages(new ByteSourceArray(bytes), dstDir, dstRoot,
-    // encoder);
-    // }
-    //
-    // public static boolean extractImages(File file, File dstDir, String
-    // dstRoot,
-    // ImageParser encoder) throws ImageReadException, IOException,
-    // ImageWriteException
-    // {
-    // return extractImages(new ByteSourceFile(file), dstDir, dstRoot, encoder);
-    // }
-    //
-    // public static boolean extractImages(ByteSource byteSource, File dstDir,
-    // String dstRoot, ImageParser encoder) throws ImageReadException,
-    // IOException, ImageWriteException
-    // {
-    // ImageParser imageParser = getImageParser(byteSource);
-    //
-    // return imageParser.extractImages(byteSource, dstDir, dstRoot, encoder);
-    // }
 
     /**
-     * Reads the first image from an InputStream as a BufferedImage.
+     * Reads the first image from an InputStream. 
      * <p>
-     * (TODO: elaborate here.)
-     * <p>
-     * Sanselan can only read image info, metadata and ICC profiles from all
-     * image formats. However, note that the library cannot currently read or
-     * write JPEG image data. PSD (Photoshop) files can only be partially read
-     * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
-     * fully supported.
-     * <p>
-     * 
-     * @param is
-     *            InputStream to read image data from.
-     * @return A BufferedImage.
-     * @see ImagingConstants
+     * For the most recent information on support for specific formats, refer to
+     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * at the main project development web site.   While the Apache Commons
+     * Imaging package does not fully support all formats, it  can read 
+     * image info, metadata and ICC profiles from all image formats that 
+     * provide this data.
+     * @param is a valid ImageStream from which to read data.
+     * @return if successful, a valid buffered image
+     * @throws ImageReadException in the event of a processing error
+     * while reading an image (i.e. a format violation, etc.).
+     * @throws IOException  in the event of an unrecoverable I/O exception.
      */
+
     public static BufferedImage getBufferedImage(InputStream is)
             throws ImageReadException, IOException {
         return getBufferedImage(is, null);
     }
 
+    
+    
     /**
-     * Reads the first image from an InputStream as a BufferedImage.
+     * Reads the first image from an InputStream 
+     * using data-processing options specified through a parameters
+     * map.  Options may be configured using the ImagingContants 
+     * interface or the various format-specific implementations provided
+     * by this package.
      * <p>
-     * (TODO: elaborate here.)
-     * <p>
-     * Sanselan can only read image info, metadata and ICC profiles from all
-     * image formats. However, note that the library cannot currently read or
-     * write JPEG image data. PSD (Photoshop) files can only be partially read
-     * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
-     * fully supported.
-     * <p>
-     * 
-     * @param is
-     *            InputStream to read image data from.
-     * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
-     * @return A BufferedImage.
-     * @see ImagingConstants
+     * For the most recent information on support for specific formats, refer to
+     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * at the main project development web site.   While the Apache Commons
+     * Imaging package does not fully support all formats, it  can read 
+     * image info, metadata and ICC profiles from all image formats that 
+     * provide this data.
+     * @param is a valid ImageStream from which to read data.
+     * @param params an optional parameters map specifying options
+     * @return if successful, a valid buffered image
+     * @throws ImageReadException in the event of a processing error
+     * while reading an image (i.e. a format violation, etc.).
+     * @throws IOException  in the event of an unrecoverable I/O exception.
      */
     public static BufferedImage getBufferedImage(InputStream is, Map params)
             throws ImageReadException, IOException {
@@ -1196,97 +1255,103 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Reads the first image from an image file as a BufferedImage.
+     * Reads the first image from a byte array. 
      * <p>
-     * (TODO: elaborate here.)
-     * <p>
-     * Sanselan can only read image info, metadata and ICC profiles from all
-     * image formats. However, note that the library cannot currently read or
-     * write JPEG image data. PSD (Photoshop) files can only be partially read
-     * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
-     * fully supported.
-     * <p>
-     * 
-     * @param bytes
-     *            Byte array containing an image file.
-     * @return A BufferedImage.
-     * @see ImagingConstants
+     * For the most recent information on support for specific formats, refer to
+     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * at the main project development web site.   While the Apache Commons
+     * Imaging package does not fully support all formats, it  can read 
+     * image info, metadata and ICC profiles from all image formats that 
+     * provide this data.
+     * @param bytes a valid array of bytes from which to read data.
+     * @return if successful, a valid buffered image
+     * @throws ImageReadException in the event of a processing error
+     * while reading an image (i.e. a format violation, etc.).
+     * @throws IOException  in the event of an unrecoverable I/O exception.
      */
     public static BufferedImage getBufferedImage(byte bytes[])
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceArray(bytes), null);
     }
 
+   
     /**
-     * Reads the first image from an image file as a BufferedImage.
+     * Reads the first image from a byte array
+     * using data-processing options specified through a parameters
+     * map.  Options may be configured using the ImagingContants 
+     * interface or the various format-specific implementations provided
+     * by this package.
      * <p>
-     * (TODO: elaborate here.)
-     * <p>
-     * Sanselan can only read image info, metadata and ICC profiles from all
-     * image formats. However, note that the library cannot currently read or
-     * write JPEG image data. PSD (Photoshop) files can only be partially read
-     * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
-     * fully supported.
-     * <p>
-     * 
-     * @param bytes
-     *            Byte array containing an image file.
-     * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
-     * @return A BufferedImage.
-     * @see ImagingConstants
-     */
+     * For the most recent information on support for specific formats, refer to
+     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * at the main project development web site.   While the Apache Commons
+     * Imaging package does not fully support all formats, it  can read 
+     * image info, metadata and ICC profiles from all image formats that 
+     * provide this data.
+     * @param bytes a valid array of bytes from which to read data.
+     * @param params an optional parameters map specifying options.
+     * @return if successful, a valid buffered image
+     * @throws ImageReadException in the event of a processing error
+     * while reading an image (i.e. a format violation, etc.).
+     * @throws IOException  in the event of an unrecoverable I/O exception.
+     */ 
+    
+
     public static BufferedImage getBufferedImage(byte bytes[], Map params)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceArray(bytes), params);
     }
 
+
+    
+    
     /**
-     * Reads the first image from an image file as a BufferedImage.
+     * Reads the first image from a file. 
      * <p>
-     * (TODO: elaborate here.)
-     * <p>
-     * Sanselan can only read image info, metadata and ICC profiles from all
-     * image formats. However, note that the library cannot currently read or
-     * write JPEG image data. PSD (Photoshop) files can only be partially read
-     * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
-     * fully supported.
-     * <p>
-     * 
-     * @param file
-     *            File containing image data.
-     * @return A BufferedImage.
-     * @see ImagingConstants
+     * For the most recent information on support for specific formats, refer to
+     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * at the main project development web site.   While the Apache Commons
+     * Imaging package does not fully support all formats, it  can read 
+     * image info, metadata and ICC profiles from all image formats that 
+     * provide this data.
+     * @param file a valid reference to a file containing image data.
+     * @return if successful, a valid buffered image
+     * @throws ImageReadException in the event of a processing error
+     * while reading an image (i.e. a format violation, etc.).
+     * @throws IOException  in the event of an unrecoverable I/O exception.
      */
     public static BufferedImage getBufferedImage(File file)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceFile(file), null);
     }
 
+    
     /**
-     * Reads the first image from an image file as a BufferedImage.
+     * Reads the first image from a file
+     * using data-processing options specified through a parameters
+     * map.  Options may be configured using the ImagingContants 
+     * interface or the various format-specific implementations provided
+     * by this package.
      * <p>
-     * (TODO: elaborate here.)
-     * <p>
-     * Sanselan can only read image info, metadata and ICC profiles from all
-     * image formats. However, note that the library cannot currently read or
-     * write JPEG image data. PSD (Photoshop) files can only be partially read
-     * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
-     * fully supported.
-     * <p>
-     * 
-     * @param file
-     *            File containing image data.
-     * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
-     * @return A BufferedImage.
-     * @see ImagingConstants
+     * For the most recent information on support for specific formats, refer to
+     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * at the main project development web site.   While the Apache Commons
+     * Imaging package does not fully support all formats, it  can read 
+     * image info, metadata and ICC profiles from all image formats that 
+     * provide this data.
+     * @param file a valid reference to a file containing image data.
+     * @return if successful, a valid buffered image
+     * @throws ImageReadException in the event of a processing error
+     * while reading an image (i.e. a format violation, etc.).
+     * @throws IOException  in the event of an unrecoverable I/O exception.
      */
     public static BufferedImage getBufferedImage(File file, Map params)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceFile(file), params);
     }
 
+    
+    
     private static BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
@@ -1315,9 +1380,35 @@ public abstract class Imaging implements ImagingConstants {
      * @param format
      *            The ImageFormat to use.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @see ImagingConstants
      */
+    
+    
+
+     /**
+     * Writes the content of a BufferedImage to a file using the specified 
+     * image format.  Specifications for storing the file (such as data compression,
+     * color models, metadata tags, etc.) may be specified using an optional
+     * parameters map. These specifications are defined in the ImagingConstants
+     * interface or in various format-specific implementations.
+     * <p>
+     * Image writing is not supported for all graphics formats.
+     * For the most recent information on support for specific formats, refer to
+     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * at the main project development web site.   While the Apache Commons
+     * Imaging package does not fully support all formats, it  can read 
+     * image info, metadata and ICC profiles from all image formats that 
+     * provide this data.
+     * @param src a valid BufferedImage object
+     * @param file the file to which the output image is to be written
+     * @param format the format in which the output image is to be written
+     * @param params an optional parameters map (nulls permitted)
+     * @throws ImageWriteException in the event of a format violation,
+     * unsupported image format, etc.
+     * @throws IOException in the event of an unrecoverable I/O exception.
+     * @see ImagingConstants
+     */    
     public static void writeImage(BufferedImage src, File file,
             ImageFormat format, Map params) throws ImageWriteException,
             IOException {
@@ -1338,27 +1429,30 @@ public abstract class Imaging implements ImagingConstants {
         }
     }
 
+    
     /**
-     * Writes a BufferedImage to a byte array.
+     * Writes the content of a BufferedImage to a byte array using the specified 
+     * image format.  Specifications for storing the file (such as data compression,
+     * color models, metadata tags, etc.) may be specified using an optional
+     * parameters map. These specifications are defined in the ImagingConstants
+     * interface or in various format-specific implementations.
      * <p>
-     * (TODO: elaborate here.)
-     * <p>
-     * Sanselan can only read image info, metadata and ICC profiles from all
-     * image formats. However, note that the library cannot currently read or
-     * write JPEG image data. PSD (Photoshop) files can only be partially read
-     * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
-     * fully supported.
-     * <p>
-     * 
-     * @param src
-     *            The BufferedImage to be written.
-     * @param format
-     *            The ImageFormat to use.
-     * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
-     * @return A byte array containing the image file.
+     * Image writing is not supported for all graphics formats.
+     * For the most recent information on support for specific formats, refer to
+     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * at the main project development web site.   While the Apache Commons
+     * Imaging package does not fully support all formats, it  can read 
+     * image info, metadata and ICC profiles from all image formats that 
+     * provide this data.
+     * @param src a valid BufferedImage object
+     * @param format the format in which the output image is to be written
+     * @param params an optional parameters map (nulls permitted)
+     * @return if successful, a valid array of bytes.
+     * @throws ImageWriteException in the event of a format violation,
+     * unsupported image format, etc.
+     * @throws IOException in the event of an unrecoverable I/O exception.
      * @see ImagingConstants
-     */
+     */   
     public static byte[] writeImageToBytes(BufferedImage src,
             ImageFormat format, Map params) throws ImageWriteException,
             IOException {
@@ -1369,28 +1463,30 @@ public abstract class Imaging implements ImagingConstants {
         return os.toByteArray();
     }
 
-    /**
-     * Writes a BufferedImage to an OutputStream.
+
+     /**
+     * Writes the content of a BufferedImage to an OutputStream using the specified 
+     * image format.  Specifications for storing the file (such as data compression,
+     * color models, metadata tags, etc.) may be specified using an optional
+     * parameters map. These specifications are defined in the ImagingConstants
+     * interface or in various format-specific implementations.
      * <p>
-     * (TODO: elaborate here.)
-     * <p>
-     * Sanselan can only read image info, metadata and ICC profiles from all
-     * image formats. However, note that the library cannot currently read or
-     * write JPEG image data. PSD (Photoshop) files can only be partially read
-     * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
-     * fully supported.
-     * <p>
-     * 
-     * @param src
-     *            The BufferedImage to be written.
-     * @param os
-     *            The OutputStream to write to.
-     * @param format
-     *            The ImageFormat to use.
-     * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     * Image writing is not supported for all graphics formats.
+     * For the most recent information on support for specific formats, refer to
+     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * at the main project development web site.   While the Apache Commons
+     * Imaging package does not fully support all formats, it  can read 
+     * image info, metadata and ICC profiles from all image formats that 
+     * provide this data.
+     * @param src a valid BufferedImage object
+     * @param os the OutputStream to which the output image is to be written
+     * @param format the format in which the output image is to be written
+     * @param params an optional parameters map (nulls permitted)
+     * @throws ImageWriteException in the event of a format violation,
+     * unsupported image format, etc.
+     * @throws IOException in the event of an unrecoverable I/O exception.
      * @see ImagingConstants
-     */
+     */    
     public static void writeImage(BufferedImage src, OutputStream os,
             ImageFormat format, Map params) throws ImageWriteException,
             IOException {

@@ -24,6 +24,10 @@ import java.awt.image.BufferedImage;
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
+/**
+ * Used to store metadata and descriptive information extracted from
+ * image files.
+ */
 public class ImageDump {
     private String colorSpaceTypeToName(ColorSpace cs) {
         // System.out.println(prefix + ": " + "type: "

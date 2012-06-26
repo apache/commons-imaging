@@ -31,7 +31,12 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * This class is a mess and needs to be cleaned up.
+ * A selection of tools for evaluating and manipulating color
+ * spaces, color values, etc.
+ * <p>The Javadoc provided in the original code gave the 
+ * following notation:<br><br>
+ *
+ * &nbsp;&nbsp;&nbsp; "This class is a mess and needs to be cleaned up."
  */
 public class ColorTools {
 

@@ -16,6 +16,10 @@
  */
 package org.apache.commons.imaging;
 
+/**
+ * Used to specify pixel density and physical dimensions when reading or
+ * storing image information.
+ */
 public class PixelDensity {
     private double horizontalDensity;
     private double verticalDensity;
