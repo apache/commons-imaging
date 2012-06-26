@@ -811,7 +811,7 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Determines the width and height of an image.
+     * Extracts the embedded XML metadata as an XML string.
      * <p>
      * 
      * @param is
@@ -826,7 +826,7 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Determines the width and height of an image.
+     * Extracts the embedded XML metadata as an XML string.
      * <p>
      * 
      * @param is
@@ -843,7 +843,7 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Determines the width and height of an image.
+     * Extracts the embedded XML metadata as an XML string.
      * <p>
      * 
      * @param bytes
@@ -856,7 +856,7 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Determines the width and height of an image.
+     * Extracts the embedded XML metadata as an XML string.
      * <p>
      * 
      * @param bytes
@@ -871,7 +871,7 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Extracts embedded XML metadata as XML string.
+     * Extracts the embedded XML metadata as an XML string.
      * <p>
      * 
      * @param file
@@ -884,7 +884,7 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Extracts embedded XML metadata as XML string.
+     * Extracts the embedded XML metadata as an XML string.
      * <p>
      * 
      * @param file
@@ -899,7 +899,7 @@ public abstract class Imaging implements ImagingConstants {
     }
 
     /**
-     * Extracts embedded XML metadata as XML string.
+     * Extracts the embedded XML metadata as an XML string.
      * <p>
      * 
      * @param byteSource
@@ -1295,8 +1295,6 @@ public abstract class Imaging implements ImagingConstants {
      * while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */ 
-    
-
     public static BufferedImage getBufferedImage(byte bytes[], Map params)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceArray(bytes), params);
@@ -1360,31 +1358,6 @@ public abstract class Imaging implements ImagingConstants {
 
         return imageParser.getBufferedImage(byteSource, params);
     }
-
-    /**
-     * Writes a BufferedImage to a file.
-     * <p>
-     * (TODO: elaborate here.)
-     * <p>
-     * Sanselan can only read image info, metadata and ICC profiles from all
-     * image formats. However, note that the library cannot currently read or
-     * write JPEG image data. PSD (Photoshop) files can only be partially read
-     * and cannot be written. All other formats (PNG, GIF, TIFF, BMP, etc.) are
-     * fully supported.
-     * <p>
-     * 
-     * @param src
-     *            The BufferedImage to be written.
-     * @param file
-     *            File to write to.
-     * @param format
-     *            The ImageFormat to use.
-     * @param params
-     *            Map of optional parameters, defined in ImagingConstants.
-     * @see ImagingConstants
-     */
-    
-    
 
      /**
      * Writes the content of a BufferedImage to a file using the specified 
