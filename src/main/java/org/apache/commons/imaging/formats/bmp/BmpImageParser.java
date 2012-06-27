@@ -622,10 +622,10 @@ public class BmpImageParser extends ImageParser {
         // boolean isProgressive = (fPNGChunkIHDR.InterlaceMethod != 0);
         //
         // pixels per meter
-        int physicalWidthDpi = (int) (bhi.hResolution * 1000.0 / 2.54);
+        int physicalWidthDpi = (int) (bhi.hResolution * .0254);
         float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
         // int physicalHeightDpi = 72;
-        int physicalHeightDpi = (int) (bhi.vResolution * 1000.0 / 2.54);
+        int physicalHeightDpi = (int) (bhi.vResolution * .0254);
         float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
 
         String formatDetails = "Bmp (" + (char) bhi.identifier1
