@@ -24,11 +24,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
@@ -46,53 +48,56 @@ public class RoundtripTest extends ImagingTest {
         public final boolean canWrite;
         public final int colorSupport;
         public final boolean identicalSecondWrite;
+        public final boolean preservesResolution;
 
         public FormatInfo(ImageFormat format, boolean canRead,
                 boolean canWrite, int colorSupport,
-                final boolean identicalSecondWrite) {
+                final boolean identicalSecondWrite,
+                final boolean preservesResolution) {
             this.canRead = canRead;
             this.canWrite = canWrite;
             this.colorSupport = colorSupport;
             this.format = format;
             this.identicalSecondWrite = identicalSecondWrite;
+            this.preservesResolution = preservesResolution;
         }
     }
 
     private static final FormatInfo FORMAT_INFOS[] = { //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_PNG, true, true,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_GIF, true, true,
-                    COLOR_LIMITED_INDEX, true), //
+                    COLOR_LIMITED_INDEX, true, false), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_ICO, true, true,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_TIFF, true, true,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_JPEG, true, false,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_BMP, true, true,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, false), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_PSD, true, false,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_PBM, true, true,
-                    COLOR_BITMAP, true), //
+                    COLOR_BITMAP, true, false), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_PGM, true, true,
-                    COLOR_GRAYSCALE, true), //
+                    COLOR_GRAYSCALE, true, false), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_PPM, true, true,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, false), //
             // new FormatInfo(ImageFormat.IMAGE_FORMAT_PNM, true, true,
             // COLOR_FULL_RGB, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_TGA, false, false,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_WBMP, true, true,
-                    COLOR_BITMAP, true), //
+                    COLOR_BITMAP, true, false), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_PCX, true, true,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_DCX, true, true,
-                    COLOR_FULL_RGB, true), //
+                    COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_XBM, true, true,
-                    COLOR_BITMAP, false), //
+                    COLOR_BITMAP, false, false), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_XPM, true, true,
-                    COLOR_FULL_RGB, false), //
+                    COLOR_FULL_RGB, false, false), //
     };
 
     private BufferedImage createArgbBitmapImage(int width, int height) {
@@ -376,6 +381,40 @@ public class RoundtripTest extends ImagingTest {
 
                 roundtrip(formatInfo, testImage, "fullColor", imageExact);
             }
+        }
+    }
+    
+    public void testPixelDensityRoundtrip() throws IOException,
+            ImageReadException, ImageWriteException {
+        BufferedImage testImage = createFullColorImage(2, 2);
+        for (FormatInfo formatInfo : FORMAT_INFOS) {
+            if (!formatInfo.canRead || !formatInfo.canWrite || !formatInfo.preservesResolution)
+                continue;
+            
+            Debug.debug("pixel density test: " + formatInfo.format.name);
+
+            File temp1 = createTempFile("pixeldensity.", "."
+                    + formatInfo.format.extension);
+            
+            Map params = new HashMap();
+            PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
+            params.put(ImagingConstants.PARAM_KEY_PIXEL_DENSITY, pixelDensity);
+            Imaging.writeImage(testImage, temp1, formatInfo.format, params);
+            
+            ImageInfo imageInfo = Imaging.getImageInfo(temp1);
+            if (imageInfo == null)
+                continue;
+            int xReadDPI = imageInfo.getPhysicalWidthDpi();
+            int yReadDPI = imageInfo.getPhysicalHeightDpi();
+            // allow a 5% margin of error in storage and conversion
+            assertTrue("horizontal pixel density stored wrongly for " + formatInfo.format +
+                    " in=" + pixelDensity.horizontalDensityInches() + ", out=" + xReadDPI,
+                    Math.abs((xReadDPI - pixelDensity.horizontalDensityInches()) /
+                    pixelDensity.horizontalDensityInches()) <= 0.05);
+            assertTrue("vertical pixel density stored wrongly for " + formatInfo.format +
+                    " in=" + pixelDensity.verticalDensityInches() + ", out=" + yReadDPI,
+                    Math.abs((yReadDPI - pixelDensity.verticalDensityInches()) /
+                    pixelDensity.verticalDensityInches()) <= 0.05);
         }
     }
 

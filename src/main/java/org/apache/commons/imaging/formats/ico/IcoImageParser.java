@@ -36,6 +36,7 @@ import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -719,6 +720,8 @@ public class IcoImageParser extends ImageParser {
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT))
             params.remove(PARAM_KEY_FORMAT);
+        
+        PixelDensity pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -785,8 +788,8 @@ public class IcoImageParser extends ImageParser {
         bos.write2Bytes(bitCount);
         bos.write4Bytes(0); // compression
         bos.write4Bytes(0); // image size
-        bos.write4Bytes(0); // x pixels per meter
-        bos.write4Bytes(0); // y pixels per meter
+        bos.write4Bytes(pixelDensity == null ? 0 : (int)Math.round(pixelDensity.horizontalDensityMetres())); // x pixels per meter
+        bos.write4Bytes(pixelDensity == null ? 0 : (int)Math.round(pixelDensity.horizontalDensityMetres())); // y pixels per meter
         bos.write4Bytes(0); // colors used, 0 = (1 << bitCount) (ignored)
         bos.write4Bytes(0); // colors important
 

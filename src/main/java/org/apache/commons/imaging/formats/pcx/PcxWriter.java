@@ -72,8 +72,7 @@ public class PcxWriter implements PcxConstants {
                 if (!(value instanceof PixelDensity))
                     throw new ImageWriteException(
                             "Invalid pixel density parameter");
-                pixelDensity = (PixelDensity) params
-                        .remove(PARAM_KEY_PIXEL_DENSITY);
+                pixelDensity = (PixelDensity) value;
             }
         }
         if (pixelDensity == null) {

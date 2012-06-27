@@ -33,6 +33,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -217,6 +218,17 @@ public class DcxImageParser extends ImageParser {
                     .remove(PcxConstants.PARAM_KEY_PCX_COMPRESSION);
             pcxParams.put(PcxConstants.PARAM_KEY_PCX_COMPRESSION, value);
         }
+        
+        if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
+            Object value = params.remove(PARAM_KEY_PIXEL_DENSITY);
+            if (value != null) {
+                if (!(value instanceof PixelDensity))
+                    throw new ImageWriteException(
+                            "Invalid pixel density parameter");
+                pcxParams.put(PARAM_KEY_PIXEL_DENSITY, (PixelDensity) value);
+            }
+        }
+
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
