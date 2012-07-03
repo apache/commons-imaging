@@ -217,6 +217,8 @@
         <version>${commons.changes.version}</version>
         <configuration>
           <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+          <template>release-notes.vm</template>
+          <templateDirectory>src/changes</templateDirectory>
         </configuration>
         <reportSets>
           <reportSet>

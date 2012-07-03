@@ -1,0 +1,229 @@
+## Licensed to the Apache Software Foundation (ASF) under one
+## or more contributor license agreements.  See the NOTICE file
+## distributed with this work for additional information
+## regarding copyright ownership.  The ASF licenses this file
+## to you under the Apache License, Version 2.0 (the
+## "License"); you may not use this file except in compliance
+## with the License.  You may obtain a copy of the License at
+##
+##  http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing,
+## software distributed under the License is distributed on an
+## "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+## KIND, either express or implied.  See the License for the
+## specific language governing permissions and limitations
+## under the License.
+
+Apache Commons Imaging
+Version ${version}
+Release Notes
+
+INTRODUCTION
+
+Apache Commons Imaging is a pure-Java image library for reading and writing
+a variety of image formats.
+
+For complete information on Commons Imaging, including sample code,
+instructions on how to submit bug reports, patches, or suggestions for
+improvement, see the Apache Commons Net website:
+
+http://commons.apache.org/imaging/
+
+
+VERSION HISTORY
+
+Release ${version}
+------------
+##
+## N.B. the available variables are described here:
+## http://maven.apache.org/plugins/maven-changes-plugin/examples/using-a-custom-announcement-template.html
+##
+## Hack to improve layout: replace all pairs of spaces with a single new-line
+$release.description.replaceAll("  ", "
+")
+
+##
+#if ($release.getActions().size() == 0)
+No changes defined in this version.
+#else
+Changes in this version include:
+
+## indent to be used if there is no issue attribute.
+## should be the same as the indent in the changes.xml file
+## less 2 spaces for the 'o' and trailing space
+#set($indent='          ')
+#if ($release.getActions('add').size() !=0)
+New features:
+#foreach($actionItem in $release.getActions('add'))
+## Use replaceAll to fix up LF-only line ends on Windows.
+#set($action=$actionItem.getAction().replaceAll("\n","
+"))
+#if ($actionItem.getIssue())
+#set($issue=$actionItem.getIssue())
+#else
+#set($issue="")
+#end
+#if ($actionItem.getDueTo())
+#set($dueto=$actionItem.getDueTo())
+#else
+#set($dueto="")
+#end
+o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
+
+#set($issue="")
+#set($dueto="")
+#end 
+#end
+
+#if ($release.getActions('fix').size() !=0)
+Fixed Bugs:
+#foreach($actionItem in $release.getActions('fix'))
+## Use replaceAll to fix up LF-only line ends on Windows.
+#set($action=$actionItem.getAction().replaceAll("\n","
+"))
+#if ($actionItem.getIssue())
+#set($issue=$actionItem.getIssue())
+#else
+#set($issue="")
+#end
+#if ($actionItem.getDueTo())
+#set($dueto=$actionItem.getDueTo())
+#else
+#set($dueto="")
+#end
+o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
+
+#set($issue="")
+#set($dueto="")
+#end
+#end
+
+#if ($release.getActions('update').size() !=0)
+Changes:
+#foreach($actionItem in $release.getActions('update'))
+## Use replaceAll to fix up LF-only line ends on Windows.
+#set($action=$actionItem.getAction().replaceAll("\n","
+"))
+#if ($actionItem.getIssue())
+#set($issue=$actionItem.getIssue())
+#else
+#set($issue="")
+#end
+#if ($actionItem.getDueTo())
+#set($dueto=$actionItem.getDueTo())
+#else
+#set($dueto="")
+#end
+o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
+
+#set($issue="")
+#set($dueto="")
+#end
+#end
+
+#if ($release.getActions('remove').size() !=0)
+Removed:
+#foreach($actionItem in $release.getActions('remove'))
+## Use replaceAll to fix up LF-only line ends on Windows.
+#set($action=$actionItem.getAction().replaceAll("\n","
+"))
+#if ($actionItem.getIssue())
+#set($issue=$actionItem.getIssue())
+#else
+#set($issue="")
+#end
+#if ($actionItem.getDueTo())
+#set($dueto=$actionItem.getDueTo())
+#else
+#set($dueto="")
+#end
+o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
+##
+#set($issue="")
+#set($dueto="")
+#end
+#end
+## End of main loop
+#end
+##
+
+Compatibility with 0.97:
+Binary compatible: No.
+Source compatible: No.
+Semantic compatible: Yes.
+
+
+Release 0.97
+------------
+	
+ * Rewrote the info.txt files for many images in the sample image library to clarify contribution to project.
+ * Removed the images from the www.wpclipart.com Public Domain library.
+ * Improved the examples illustrating how to change EXIF metadata.
+ * Applied a patch from Niall Pemberton around jdk1.5 compatibility:
+	"""
+	Sanselan claims JDK 1.4 compatibility, but a JDK 1.5 method (Class's getSimpleName() [1]) has been used in JpegRewriter
+	"""
+ * Applied a "Build Improvements" patch from Niall Pemberton:
+	"""
+	I took a look at the propsed 0.96 relelase and have some suggestions to improve the build:
+	 * Add standard manifest entries to jar
+	 * Lock down version numbers for maven compiler, surefire and javadoc plugins
+	 * generate sources jar for the release
+	 * include the RELEASE-NOTES in the binary distribution
+	 * include NOTICE/LICENSE files in the javadoc jar
+	"""
+
+Release 0.96
+------------
+
+ * Updated KEYS file.
+ * Added more unit tests around BMP.
+ * Added more images to the test image suite.
+ * Fixed a bug where errors were being wrongly logged to System.out.
+ * Moved the example code into the test source directory, to comply with Maven's standard project layout.
+ * Added a couple of images to the sample image library that demonstrate a couple variations on Photoshop/IPTC data.  
+ * Fixed a small bug in the IPTC constants introduced while cleaning up the constants.
+ * Started shift towards moving field-level parsing into BinaryInputStream and BinaryOutputStream.
+ * Fixed a png unit test that used a piece of Java 1.6 syntax.
+ * Added unit tests around the new IPTC functionality.
+ * Added IPTC remove/update/insert functionality.
+ * Rewrote the IPTC parsing support.  
+ * Added improved support for reading and writing iTXt, tEXt, zTXt Png chunks.
+ 	Added a unit test that demonstrates the feature.
+ * Found a new regression wherein DeflaterOutputStream needs to be closed.
+ * Added the .tar.bz2 distributions back into the maven assembly descriptors.
+ * Moved the example/sample code to a new top-level source folder, "example."
+ * Replaced dependency on java.util.zip.DeflaterOutputStream, which is only available in Java 1.6.
+ * Added a unit test around reading and writing images in every format.
+ * We now sort some (but not all) GIF color tables.
+ * Applied the BMP "buffer flushing" bug to the PBM reading and writing code.
+ * Fixed a regression around flushing the bit buffer when writing BMPs with very small palettes.
+ * Removed assumption about DataBuffer type when reading BMPs.
+ * When writing a GIF, we now always include a Graphic Control Extension block, even if its not necessary.
+ * We are more defensive about missing GCEs.
+ * Lastly, we now set a minimum bound on initial code sizes for LZW-compressed Gif image data.
+ * Found a regression in writing TIFFs around strip offsets being properly updated.  Not a LZW issue after all.
+	Added a few unit tests around this issue.	
+	see: https://issues.apache.org/jira/browse/SANSELAN-6
+ * Added ability to remove and update XMP XML in existing JPEG files.
+ * Added ability to embed XMP XML when writing the following formats: GIF, PNG, TIFF.
+ * Improved handling of tEXt and zTXt PNG text blocks.
+ * Added XMP XML extraction for the following formats: GIF (untested), JPEG, TIFF, PNG, PSD.
+ * Added RELEASE_NOTES file (this file).
+ * Added Apache license header to bin.xml and src.xml Maven assembly descriptors.
+ * Added Javadocs to the binary distribution
+ 
+
+Release 0.94
+------------
+
+First Apache release of Sanselan
+
+Fixed bugs:
+-----------
+ * Can't convert PNG image to GIF image
+    The PNG reader wasn't handling the 16-bit mode 4 PNGs properly. 
+    The PNG reader wasn't gamma-correcting non-palette values properly in PNGs.
+	see: https://issues.apache.org/jira/browse/SANSELAN-5
+
