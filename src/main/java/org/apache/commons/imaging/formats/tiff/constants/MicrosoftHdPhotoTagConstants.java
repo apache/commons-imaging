@@ -37,7 +37,7 @@ public interface MicrosoftHdPhotoTagConstants extends TiffFieldTypeConstants {
      * Data4 (char[8]) is endian-independent.
      */
     public static final TagInfoByte EXIF_TAG_PIXEL_FORMAT = new TagInfoByte(
-            "Pixel Format", 0xbc01, 16,
+            "PixelFormat", 0xbc01, 16,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final BinaryConstant PIXEL_FORMAT_VALUE_BLACK_AND_WHITE =
             TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x05);
@@ -168,45 +168,46 @@ public interface MicrosoftHdPhotoTagConstants extends TiffFieldTypeConstants {
     public static final int UNCOMPRESSED_VALUE_NO = 0;
     public static final int UNCOMPRESSED_VALUE_YES = 1;
 
-    public static final TagInfoLong EXIF_TAG_IMAGE_TYPE = new TagInfoLong("Image Type",
-            0xbc04, 1, TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoLong EXIF_TAG_IMAGE_TYPE = new TagInfoLong(
+            "ImageType", 0xbc04, 1,
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoLong EXIF_TAG_IMAGE_WIDTH = new TagInfoLong(
-            "Image Width", 0xbc80, 1,
+            "ImageWidth", 0xbc80, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoLong EXIF_TAG_IMAGE_HEIGHT = new TagInfoLong(
-            "Image Height", 0xbc81, 1,
+            "ImageHeight", 0xbc81, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoFloat EXIF_TAG_WIDTH_RESOLUTION = new TagInfoFloat(
-            "Width Resolution", 0xbc82, 1,
+            "WidthResolution", 0xbc82, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoFloat EXIF_TAG_HEIGHT_RESOLUTION = new TagInfoFloat(
-            "Height Resolution", 0xbc83, 1,
+            "HeightResolution", 0xbc83, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     // FIXME: might be an offset?
     public static final TagInfoLong EXIF_TAG_IMAGE_OFFSET = new TagInfoLong(
-            "Image Offset", 0xbcc0, 1,
+            "ImageOffset", 0xbcc0, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoLong EXIF_TAG_IMAGE_BYTE_COUNT = new TagInfoLong(
-            "Image Byte Count", 0xbcc1, 1,
+            "ImageByteCount", 0xbcc1, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     // FIXME: might be an offset?
     public static final TagInfoLong EXIF_TAG_ALPHA_OFFSET = new TagInfoLong(
-            "Alpha Offset", 0xbcc2, 1,
+            "AlphaOffset", 0xbcc2, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoLong EXIF_TAG_ALPHA_BYTE_COUNT = new TagInfoLong(
-            "Alpha Byte Count", 0xbcc3, 1,
+            "AlphaByteCount", 0xbcc3, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoByte EXIF_TAG_IMAGE_DATA_DISCARD = new TagInfoByte(
-            "Image Data Discard", 0xbcc4, 1,
+            "ImageDataDiscard", 0xbcc4, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int IMAGE_DATA_DISCARD_VALUE_FULL_RESOLUTION = 0;
     public static final int IMAGE_DATA_DISCARD_VALUE_FLEXBITS_DISCARDED = 1;
@@ -214,7 +215,7 @@ public interface MicrosoftHdPhotoTagConstants extends TiffFieldTypeConstants {
     public static final int IMAGE_DATA_DISCARD_VALUE_HIGHPASS_AND_LOW_PASS_FREQUENCY_DATA_DISCARDED = 3;
 
     public static final TagInfoByte EXIF_TAG_ALPHA_DATA_DISCARD = new TagInfoByte(
-            "Alpha Data Discard", 0xbcc5, 1,
+            "AlphaDataDiscard", 0xbcc5, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int ALPHA_DATA_DISCARD_VALUE_FULL_RESOLUTION = 0;
     public static final int ALPHA_DATA_DISCARD_VALUE_FLEXBITS_DISCARDED = 1;

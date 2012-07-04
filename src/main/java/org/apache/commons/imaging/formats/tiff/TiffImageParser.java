@@ -89,7 +89,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                 .readFirstDirectory(byteSource, params, false, formatCompliance);
         TiffDirectory directory = contents.directories.get(0);
 
-        return directory.getFieldValue(AllTagConstants.EXIF_TAG_ICC_PROFILE,
+        return directory.getFieldValue(AllTagConstants.EXIF_TAG_INTER_COLOR_PROFILE,
                 false);
     }
 

@@ -36,7 +36,7 @@ public interface AdobePhotoshopTagConstants {
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoUndefined EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefined(
-            "Image Source Data", 0x935c, 1,
+            "ImageSourceData", 0x935c, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
     public static final List<TagInfo> ALL_ADOBE_PHOTOSHOP_TAGS =
