@@ -47,16 +47,16 @@ public interface ExifTagConstants
             TiffFieldTypeConstants
 {
     public static final TagInfoAscii EXIF_TAG_INTEROPERABILITY_INDEX = new TagInfoAscii(
-            "InteroperabilityIndex", 0x0001, 1,
+            "InteroperabilityIndex", 0x0001, -1,
             TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
     public static final TagInfoUndefined EXIF_TAG_INTEROPERABILITY_VERSION = new TagInfoUndefined(
             "InteroperabilityVersion", 0x0002, 1,
             TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
     public static final TagInfoAscii EXIF_TAG_PROCESSING_SOFTWARE = new TagInfoAscii(
-            "ProcessingSoftware", 0x000b, 1,
+            "ProcessingSoftware", 0x000b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoAscii EXIF_TAG_SOFTWARE = new TagInfoAscii(
-            "Software", 0x0131, 1,
+            "Software", 0x0131, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
     public static final TagInfoLong EXIF_TAG_PREVIEW_IMAGE_START_IFD0 = new TagInfoLong(
             "PreviewImageStart", 0x0111, 1,
@@ -331,13 +331,13 @@ public interface ExifTagConstants
             "UserComment", 0x9286, FIELD_TYPE_UNDEFINED, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SUB_SEC_TIME = new TagInfoAscii(
-            "SubSecTime", 0x9290, 1,
+            "SubSecTime", 0x9290, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SUB_SEC_TIME_ORIGINAL = new TagInfoAscii(
-            "SubSecTimeOriginal", 0x9291, 1,
+            "SubSecTimeOriginal", 0x9291, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SUB_SEC_TIME_DIGITIZED = new TagInfoAscii(
-            "SubSecTimeDigitized", 0x9292, 1,
+            "SubSecTimeDigitized", 0x9292, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoUndefined EXIF_TAG_FLASHPIX_VERSION = new TagInfoUndefined(
             "FlashpixVersion", 0xa000, 1,
@@ -349,7 +349,7 @@ public interface ExifTagConstants
             "ExifImageLength", 0xa003, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_RELATED_SOUND_FILE = new TagInfoAscii(
-            "RelatedSoundFile", 0xa004, 1,
+            "RelatedSoundFile", 0xa004, 13,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoLong EXIF_TAG_INTEROP_OFFSET = new TagInfoLong(
             "InteropOffset", 0xa005, 1,
@@ -482,7 +482,7 @@ public interface ExifTagConstants
     public static final int SUBJECT_DISTANCE_RANGE_VALUE_CLOSE = 2;
     public static final int SUBJECT_DISTANCE_RANGE_VALUE_DISTANT = 3;
     public static final TagInfoAscii EXIF_TAG_IMAGE_UNIQUE_ID = new TagInfoAscii(
-            "ImageUniqueID", 0xa420, 1,
+            "ImageUniqueID", 0xa420, 33,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoRational EXIF_TAG_GAMMA = new TagInfoRational(
             "Gamma", 0xa500, 1,
@@ -497,46 +497,46 @@ public interface ExifTagConstants
             "OffsetSchema", 0xea1d, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_OWNER_NAME = new TagInfoAscii(
-            "OwnerName", 0xfde8, 1,
+            "OwnerName", 0xfde8, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SERIAL_NUMBER = new TagInfoAscii(
-            "SerialNumber", 0xfde9, 1,
+            "SerialNumber", 0xfde9, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_LENS = new TagInfoAscii(
-            "Lens", 0xfdea, 1,
+            "Lens", 0xfdea, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_RAW_FILE = new TagInfoAscii(
-            "RawFile", 0xfe4c, 1,
+            "RawFile", 0xfe4c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_CONVERTER = new TagInfoAscii(
-            "Converter", 0xfe4d, 1,
+            "Converter", 0xfe4d, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_WHITE_BALANCE_2 = new TagInfoAscii(
-            "WhiteBalance", 0xfe4e, 1,
+            "WhiteBalance", 0xfe4e, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_EXPOSURE = new TagInfoAscii(
-            "Exposure", 0xfe51, 1,
+            "Exposure", 0xfe51, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SHADOWS = new TagInfoAscii(
-            "Shadows", 0xfe52, 1,
+            "Shadows", 0xfe52, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_BRIGHTNESS = new TagInfoAscii(
-            "Brightness", 0xfe53, 1,
+            "Brightness", 0xfe53, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_CONTRAST_2 = new TagInfoAscii(
-            "Contrast", 0xfe54, 1,
+            "Contrast", 0xfe54, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SATURATION_2 = new TagInfoAscii(
-            "Saturation", 0xfe55, 1,
+            "Saturation", 0xfe55, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SHARPNESS_2 = new TagInfoAscii(
-            "Sharpness", 0xfe56, 1,
+            "Sharpness", 0xfe56, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SMOOTHNESS = new TagInfoAscii(
-            "Smoothness", 0xfe57, 1,
+            "Smoothness", 0xfe57, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_MOIRE_FILTER = new TagInfoAscii(
-            "MoireFilter", 0xfe58, 1,
+            "MoireFilter", 0xfe58, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
 
     public static final List<TagInfo> ALL_EXIF_TAGS =
