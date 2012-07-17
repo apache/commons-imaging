@@ -224,10 +224,10 @@ public interface ExifTagConstants
             "ExifVersion", 0x9000, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_DATE_TIME_ORIGINAL = new TagInfoAscii(
-            "DateTimeOriginal", 0x9003, 1,
+            "DateTimeOriginal", 0x9003, 20,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoAscii EXIF_TAG_CREATE_DATE = new TagInfoAscii(
-            "CreateDate", 0x9004, 1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoAscii EXIF_TAG_DATE_TIME_DIGITIZED = new TagInfoAscii(
+            "DateTimeDigitized", 0x9004, 20, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoUndefined EXIF_TAG_COMPONENTS_CONFIGURATION = new TagInfoUndefined(
             "ComponentsConfiguration", 0x9101, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -579,7 +579,7 @@ public interface ExifTagConstants
                     EXIF_TAG_OPTO_ELECTRIC_CONV_FACTOR,
                     EXIF_TAG_LEAF_SUB_IFD,
                     EXIF_TAG_EXIF_VERSION, EXIF_TAG_DATE_TIME_ORIGINAL,
-                    EXIF_TAG_CREATE_DATE, EXIF_TAG_COMPONENTS_CONFIGURATION,
+                    EXIF_TAG_DATE_TIME_DIGITIZED, EXIF_TAG_COMPONENTS_CONFIGURATION,
                     EXIF_TAG_COMPRESSED_BITS_PER_PIXEL, EXIF_TAG_SHUTTER_SPEED_VALUE,
                     EXIF_TAG_APERTURE_VALUE, EXIF_TAG_BRIGHTNESS_VALUE,
                     EXIF_TAG_EXPOSURE_COMPENSATION, EXIF_TAG_MAX_APERTURE_VALUE,

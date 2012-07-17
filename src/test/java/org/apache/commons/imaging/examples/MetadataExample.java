@@ -58,7 +58,7 @@ public class MetadataExample {
             printTagValue(jpegMetadata, TiffTagConstants.TIFF_TAG_DATE_TIME);
             printTagValue(jpegMetadata,
                     ExifTagConstants.EXIF_TAG_DATE_TIME_ORIGINAL);
-            printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_CREATE_DATE);
+            printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_DATE_TIME_DIGITIZED);
             printTagValue(jpegMetadata, ExifTagConstants.EXIF_TAG_ISO);
             printTagValue(jpegMetadata,
                     ExifTagConstants.EXIF_TAG_SHUTTER_SPEED_VALUE);
