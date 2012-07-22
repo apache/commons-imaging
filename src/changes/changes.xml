@@ -221,6 +221,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-82" dev="damjan" type="fix" due-to="pkapoor">
         Fix BMP width and height DPI.
       </action>
+      <action issue="IMAGING-86" dev="damjan" type="fix">
+        Fix the lengths for DateTimeOriginal and DateTimeDigitized TIFF/EXIF tags.
+      </action>
     </release>
     
   </body>
