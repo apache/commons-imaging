@@ -57,7 +57,7 @@ The <action> type attribute can be add,update,fix,remove.
       </action>
       <action issue="IMAGING-74" dev="cmchen" type="fix">
         Fixed a couple of platform-dependent paths in the tests.
-        Constant-ized the magic numbers used when guessing formats.  
+        Constantized the magic numbers used when guessing formats.  
         Added a test for the format guessing.
       </action>
       <action issue="IMAGING-2" dev="cmchen" type="fix">
