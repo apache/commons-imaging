@@ -720,7 +720,7 @@ public class T4AndT6Compression {
         int first = 0;
         int last = entries.length - 1;
         do {
-            int middle = (first + last) >>> 2;
+            int middle = (first + last) >>> 1;
             if (entries[middle].value.intValue() <= value
                     && ((middle + 1) >= entries.length || value < entries[middle + 1].value
                             .intValue())) {
