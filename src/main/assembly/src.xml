@@ -36,7 +36,7 @@ http://maven.apache.org/plugins/maven-assembly-plugin/descriptor-refs.html
       <includes>
         <include>LICENSE*</include>
         <include>NOTICE*</include>
-        <include>RELEASE_NOTES*</include>
+        <include>RELEASE-NOTES*</include>
         <include>README*</include>
         <include>checkstyle*.xml</include>
         <include>pom.xml</include>
