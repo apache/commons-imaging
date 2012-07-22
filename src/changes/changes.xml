@@ -224,6 +224,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-86" dev="damjan" type="fix">
         Fix the lengths for DateTimeOriginal and DateTimeDigitized TIFF/EXIF tags.
       </action>
+      <action issue="IMAGING-88" dev="damjan" type="fix" due-to="craigkelly">
+        Method lowerBound in org.apache.commons.imaging.common.itu_t4.T4AndT6Compression has a division error.
+      </action>
     </release>
     
   </body>
