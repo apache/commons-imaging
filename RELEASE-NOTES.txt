@@ -1,50 +1,102 @@
 
-Apache Commons Imaging Release Notes 
--------------------------------------
+Apache Commons Imaging
+Version 1.0
+Release Notes
 
-Apache Commons Imaging is a pure-Java image library for reading and writing a variety of image formats.
+INTRODUCTION
 
-See the project site for details and sample code.
+Apache Commons Imaging is a pure-Java image library for reading and writing
+a variety of image formats.
 
-http://commons.apache.org/sanselan/
+For complete information on Commons Imaging, including sample code,
+instructions on how to submit bug reports, patches, or suggestions for
+improvement, see the Apache Commons Net website:
+
+http://commons.apache.org/imaging/
 
 
-Version History:
-----------------
+VERSION HISTORY
 
-Release 0.98
+Release 1.0
 ------------
- * SANSELAN-44 - JpegImageMetadata getEXIFThumbnail may raise a null pointer exception
- * Fixed a problem in the metadata example code not using exact matching for GPS values.
- * Fixed a possible NPE in Sanselan.getICCProfile pointed out by Jon Weygandt.
- * Fixed a bug in which gifs have incorrect size information in the the Logical Screen Descriptor.
-   This appears to be a bug in how Microsoft Office writes gifs.
-   The Image Descriptor has the correct value.
- * Added accessor methods for a number of ImageInfo properties.
- * Applied patch contributed by Nicolas Richeton, adding getEXIFThumbnailSize() and getEXIFThumbnailData() 
- 	methods to JpegImageMetadata.
- * Fixed a couple of platform-dependent paths in the tests.
- * Constant-ized the magic numbers used when guessing formats.  
- * Added a test for the format guessing.
- * Improvements to ICO parsing and support for PNG images in ICO files.
- * Added support for the ICNS icon format.
- * Added support for the PCX and DCX image formats.
- * Improvements to BMP parsing.
- * Added support for the WBMP format.
- * Added support for reading simple baseline YCbCr JPEG images.
- * Added support for XBM and XPM images.
- * SANSELAN-54 - TIFF float and double values are written in the wrong byteorder.
- * SANSELAN-52 - fixed PNG transparency in getImageInfo().
- * SANSELAN-13, SANSELAN-47, SANSELAN-55, others - made TIFF tag parsing a lot
-   more rigorous, allowing EXIF to be read even from very corrupt files.
- * Added the ability to read comments from a JPEG file using getImageInfo().
- * Added support for compression=2 TIFF images.
- * SANSELAN-46 - allowed all Sanselan tests to pass.
- * SANSELAN-59 - deleted confusing redefinition of some constants.
- * Altered TIFF tag searching to do an exact directory match when possible.
- * SANSELAN-48 - added support for reading and writing CCITT Modified Huffman, Group 3 and Group 4 images.
- * SANSELAN-31 - added a high level type-safe API for reading and writing EXIF fields.
- * SANSELAN-25 - added support for the RGBE (Radiance HDR) image format.
+TBA
+
+Changes in this version include:
+
+New features:
+o IMAGING-75:  Added accessor methods for a number of ImageInfo properties. 
+o IMAGING-71:  Applied patch contributed by Nicolas Richeton, adding getEXIFThumbnailSize() and getEXIFThumbnailData() methods to JpegImageMetadata. Thanks to Nicolas Richeton. 
+o IMAGING-56:  Add support for the ICNS icon format. Thanks to damjan. 
+o IMAGING-58:  Add support for PCX, DCX, WBMP, XBM and XPM images. 
+o IMAGING-64:  Add support for TIFF files with compression=2, (CCITT Group 3 1-Dimensional Modified Huffman run length encoding). 
+o IMAGING-77:  Add a type-safe high-level API for writing TIFF fields. 
+o IMAGING-51:  Add TagInfoXpText for fields like XPTITLE, and encode/decode it using UTF-16LE like Windows does. 
+o IMAGING-60:  Added support for reading the RGBE / Radiance HDR image format. Thanks to proyal. 
+o IMAGING-68:  Add a field to IptcRecord that contains its raw bytes, and a getter for this value. 
+o IMAGING-73:  Provide a way to write EXIF data into files using Sanselan.writeImage(). 
+o IMAGING-47:  Run a Findbugs analysis on "mvn site". Also audit and fix resource leaks. Thanks to adrian2k7. 
+o IMAGING-65:  Provide a way to write the pixel density (DPI) into an image. 
+o IMAGING-61:  Include a test utility for timing and memory in project example classes. Thanks to gwlucas. 
+o IMAGING-81:  Add more Javadoc to main package. Thanks to gwlucas. 
+
+Fixed Bugs:
+o IMAGING-23:  JpegXMPWriter throws NullPointerException. 
+o IMAGING-74:  Fixed a couple of platform-dependent paths in the tests.
+        Constantized the magic numbers used when guessing formats.  
+        Added a test for the format guessing. 
+o IMAGING-2:  SanselanGuessFormatTest and SanselanTestConstants use Java 1.5 method String.replace(CharSequence, CharSequence). 
+o IMAGING-80:  Sanselan tests fail on Windows. 
+o IMAGING-18:  Fix for "JpegImageMetadata getEXIFThumbnail only works on Jpeg thumbnails stored as Tiff images" issue.
+        Jpeg thumbnails are read using ImageIO. Thanks to James E-J. 
+o IMAGING-48:  JpegImageMetadata getEXIFThumbnail may raise a null pointer exception. 
+o IMAGING-52:  Implement dumpImageFile for ICO files and fix a typo. Thanks to damjan. 
+o IMAGING-12:  Tiff (exif) tags of type double written in wrong byte order. Thanks to gwlucas. 
+o IMAGING-30:  The isTransparent flag is not set on transparent PNGs. Thanks to clement.escoffier. 
+o IMAGING-11:  Ignore TIFF entries that have invalid offsets and/or lengths when we are not in strict mode. 
+o IMAGING-78:  readDirectory method in TiffReader doesn't gracefully handle exceptions that can be thrown from ByteSource implementations. 
+o IMAGING-24:  Search all tags instead of just EXIF tags when parsing TIFF metadata tags, and try to match on directory type as well. 
+o IMAGING-21:  Don't allow very large TIFF lengths to be interpreted as negative because they have the highest order bit set. 
+o IMAGING-50:  Make JPEG parsing highly resilient: skip all bytes after the end of a segment until the next segment (0xFF followed by non-0xFF). 
+o IMAGING-16:  Fix reading ASCII tags in TIFF files. 
+o IMAGING-3:  Ignore string differences in our tests when 7 bit unclean TIFF string are copied. 
+o IMAGING-41:  Don't redefine BYTE_ORDER_BIG_ENDIAN and BYTE_ORDER_LITTLE_ENDIAN in UnicodeMetricsUTF16. 
+o IMAGING-35:  Fixed issue "FieldTypeASCII does not conform to the EXIF specification," identified by Libor Nenadál. 
+o IMAGING-31:  Fixed a bug in which gifs have incorrect size information in the the Logical Screen Descriptor.
+        This appears to be a bug in how Microsoft Office writes gifs. The Image Descriptor has the correct value. 
+o IMAGING-13:  Added checks in ByteSource's getBlock() methods for invalid params. 
+o IMAGING-46:  Fixed a possible NPE in Sanselan.getICCProfile pointed out by Jon Weygandt. 
+o IMAGING-76:  Improve ICO file support. Thanks to damjan. 
+o IMAGING-49:  Preserve the byte range occupied by the Maker Notes, so rewriting it doesn't corrupt it. 
+o IMAGING-29:  Read in the full IPTC block before trying to ignore it, so we don't lose our position in the stream. Thanks to alexvigdor. 
+o IMAGING-45:  Fix the GIF BitsPerPixel formula in GifImageParser's getImageInfo(). Thanks to pkapoor. 
+o IMAGING-39:  Fix various problems with reading and writing EXIF tags. 
+o IMAGING-22:  Eliminate or hide public mutable final arrays in the API. 
+o IMAGING-43:  If the TIFF rows per strip is not present, assume it is the image length. Thanks to pkapoor. 
+o IMAGING-17:  Make BitInputStream sensitive to byte order. Allows 48 BPP TIFF files to load. Thanks to pkapoor. 
+o IMAGING-38:  Fix the PhysicalWidthDpi calculation for JPEG images. Thanks to tjoris. 
+o IMAGING-19:  Fix reading DPI for TIFF files. Thanks to vvd. 
+o IMAGING-44:  Fix reading DPI for PNG files. Thanks to vvd. 
+o IMAGING-40:  Add the Software TIFF tag, and get the byte order after reading the first TIFF directory. Thanks to pkapoor. 
+o IMAGING-6:  Correct the expected size of the decompressed TIFF image data, and improve sample depth scaling for PNG images. 
+o IMAGING-15:  Stop JpegImageMetadata from throwing NPE if the exif field is null. Thanks to pkapoor. 
+o IMAGING-67:  Speed up reading paletted TIFF files. Thanks to gwlucas. 
+o IMAGING-8:  Allow TIFF fields to change size during encoding. Fix a broken test that assumes they never do. 
+o IMAGING-36:  Fix sample usage links on the website. 
+o IMAGING-70:  Reduce memory usage when reading TIFF files. Thanks to gwlucas. 
+o IMAGING-33:  Fixed the differencing predictor for tiled TIFF images. 
+o IMAGING-5:  Update website, fix some broken links and remove old code. 
+o IMAGING-69:  Add a streamlined TIFF reader that reduces load time by a factor of 5. Thanks to gwlucas. 
+o IMAGING-82:  Fix BMP width and height DPI. Thanks to pkapoor. 
+o IMAGING-86:  Fix the lengths for DateTimeOriginal and DateTimeDigitized TIFF/EXIF tags. 
+o IMAGING-88:  Method lowerBound in org.apache.commons.imaging.common.itu_t4.T4AndT6Compression has a division error. Thanks to craigkelly. 
+
+
+Minimum Java version: 1.5
+Compatibility with 0.97:
+  Binary compatible: No.
+  Source compatible: No.
+  Semantic compatible: No.
+
 
 Release 0.97
 ------------
@@ -118,3 +170,4 @@ Fixed bugs:
     The PNG reader wasn't handling the 16-bit mode 4 PNGs properly. 
     The PNG reader wasn't gamma-correcting non-palette values properly in PNGs.
 	see: https://issues.apache.org/jira/browse/SANSELAN-5
+
