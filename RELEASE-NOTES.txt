@@ -14,6 +14,34 @@ improvement, see the Apache Commons Net website:
 
 http://commons.apache.org/imaging/
 
+Please note that the project was previously known as Apache Sanselan,
+and has been renamed to Apache Commons Imaging. As part of this rename:
+
+ * the package changed to
+     org.apache.commons.imaging
+   from
+     org.apache.sanselan
+
+ * the main class is now
+     org.apache.commons.imaging.Imaging
+   and not
+     org.apache.sanselan.Sanselan
+
+ * the Maven coordinates are now:
+     <groupId>org.apache.commons</groupId>
+     <artifactId>commons-imaging</artifactId>
+     <name>Commons Imaging</name>
+   instead of the old:
+     <groupId>org.apache.sanselan</groupId>
+     <artifactId>sanselan</artifactId>
+     <name>Apache Sanselan</name>
+
+ * the website is
+     http://commons.apache.org/imaging
+   and not
+     http://commons.apache.org/sanselan
+
+ * etc.
 
 VERSION HISTORY
 
