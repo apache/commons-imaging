@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageReadException;
 
 public class BasicCParser {
-    private PushbackInputStream is;
+    private final PushbackInputStream is;
 
     public BasicCParser(ByteArrayInputStream is) {
         this.is = new PushbackInputStream(is);
