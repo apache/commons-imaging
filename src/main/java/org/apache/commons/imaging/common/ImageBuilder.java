@@ -24,10 +24,10 @@ import java.awt.image.WritableRaster;
 import java.util.Properties;
 
 public class ImageBuilder {
-    private int[] data;
-    private int width;
-    private int height;
-    private boolean hasAlpha;
+    private final int[] data;
+    private final int width;
+    private final int height;
+    private final boolean hasAlpha;
 
     public ImageBuilder(int width, int height, boolean hasAlpha) {
         data = new int[width * height];
