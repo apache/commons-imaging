@@ -144,6 +144,7 @@ public abstract class TiffImageData {
             return "Tiff image data: " + data.length + " bytes";
         }
 
+        @Override
         public byte[] getData() {
             try {
                 return byteSourceFile.getBlock(offset, length);
