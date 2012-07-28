@@ -155,17 +155,17 @@ public final class Debug {
         return result.toString();
     }
 
-    public static void debug(String message, Map map) {
+    public static void debug(String message, Map<?, ?> map) {
         debug(getDebug(message, map));
     }
 
-    public static String getDebug(String message, Map map) {
+    public static String getDebug(String message, Map<?,?> map) {
         StringBuffer result = new StringBuffer();
 
         if (map == null)
             return getDebug(message + " map: " + null);
 
-        List keys = new ArrayList(map.keySet());
+        List<Object> keys = new ArrayList<Object>(map.keySet());
         result.append(getDebug(message + " map: " + keys.size()) + newline);
         for (int i = 0; i < keys.size(); i++) {
             Object key = keys.get(i);
@@ -180,7 +180,7 @@ public final class Debug {
         return result.toString();
     }
 
-    public static boolean compare(String prefix, Map a, Map b) {
+    public static boolean compare(String prefix, Map<?, ?> a, Map<?, ?> b) {
         return compare(prefix, a, b, null, null);
     }
 
@@ -193,7 +193,7 @@ public final class Debug {
             buffer.append(s + newline);
     }
 
-    public static boolean compare(String prefix, Map a, Map b, List ignore,
+    public static boolean compare(String prefix, Map<?, ?> a, Map<?, ?> b, List<?> ignore,
             StringBuffer buffer) {
         if ((a == null) && (b == null)) {
             log(buffer, prefix + " both maps null");
@@ -208,8 +208,8 @@ public final class Debug {
             return false;
         }
 
-        List keys_a = new ArrayList(a.keySet());
-        List keys_b = new ArrayList(b.keySet());
+        List<?> keys_a = new ArrayList<Object>(a.keySet());
+        List<?> keys_b = new ArrayList<Object>(b.keySet());
 
         if (ignore != null) {
             keys_a.removeAll(ignore);
@@ -324,9 +324,9 @@ public final class Debug {
         else if (value instanceof String)
             debug(message, (String) value);
         else if (value instanceof java.util.List)
-            debug(message, (java.util.List) value);
+            debug(message, (java.util.List<?>) value);
         else if (value instanceof Map)
-            debug(message, (Map) value);
+            debug(message, (Map<?, ?>) value);
         // else if (value instanceof Object)
         // debug(message, (Object) value);
         else if (value instanceof ICC_Profile)
@@ -369,9 +369,9 @@ public final class Debug {
         else if (value instanceof ICC_Profile)
             return getDebug(message, (ICC_Profile) value);
         else if (value instanceof Map)
-            return getDebug(message, (Map) value);
+            return getDebug(message, (Map<?,?>) value);
         else if (value instanceof Map)
-            return getDebug(message, (Map) value); //
+            return getDebug(message, (Map<?,?>) value); //
         // else if (value instanceof Object) // getDebug(message, (Object)
         // value);
         else if (value instanceof String)
@@ -383,7 +383,7 @@ public final class Debug {
         else if (value instanceof int[])
             return getDebug(message, (int[]) value);
         else if (value instanceof java.util.List)
-            return getDebug(message, (java.util.List) value);
+            return getDebug(message, (java.util.List<?>) value);
         else
             return getDebug(message, value.toString());
     }
@@ -458,11 +458,11 @@ public final class Debug {
         return result.toString();
     }
 
-    public static String getDebug(Class fClass, Throwable e) {
+    public static String getDebug(Class<?> fClass, Throwable e) {
         return getDebug(fClass == null ? "[Unknown]" : fClass.getName(), e);
     }
 
-    public static void debug(Class fClass, Throwable e) {
+    public static void debug(Class<?> fClass, Throwable e) {
         debug(fClass.getName(), e);
     }
 
@@ -526,7 +526,7 @@ public final class Debug {
         debug(getDebug(message, v, max));
     }
 
-    public static void debug(String message, java.util.List v) {
+    public static void debug(String message, java.util.List<?> v) {
         String suffix = " [" + counter++ + "]";
 
         debug(message + " (" + v.size() + ")" + suffix);
@@ -766,7 +766,7 @@ public final class Debug {
             for (int i = 0; i < array.length; i++)
                 debug(prefix + "\t" + i + ": ", array[i]);
         } else if (value instanceof java.util.List) {
-            java.util.List list = (java.util.List) value;
+            java.util.List<?> list = (java.util.List<?>) value;
             debug(prefix, "list");
             for (int i = 0; i < list.size(); i++)
                 dump(prefix + "\t" + "list: " + i + ": ", list.get(i));
