@@ -118,7 +118,7 @@ public class T4AndT6Compression {
      * @param width
      * @param height
      * @return the compressed data
-     * @throws ImageReadException
+     * @throws ImageWriteException
      */
     public static byte[] compressModifiedHuffman(byte[] uncompressed,
             int width, int height) throws ImageWriteException {
