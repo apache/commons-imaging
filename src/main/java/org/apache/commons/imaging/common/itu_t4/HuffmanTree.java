@@ -31,7 +31,7 @@ class HuffmanTree {
         Object value = null;
     }
 
-    private List<Node> nodes = new ArrayList<Node>();
+    private final List<Node> nodes = new ArrayList<Node>();
 
     public final void insert(String pattern, Object value)
             throws HuffmanTreeException {
