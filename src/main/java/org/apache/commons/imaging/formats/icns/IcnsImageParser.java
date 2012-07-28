@@ -87,8 +87,7 @@ public class IcnsImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap() : new HashMap(params);
 
-        boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
-                false);
+        ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE, false);
 
         if (params.containsKey(PARAM_KEY_VERBOSE))
             params.remove(PARAM_KEY_VERBOSE);
@@ -118,8 +117,7 @@ public class IcnsImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap() : new HashMap(params);
 
-        boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
-                false);
+        ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE, false);
 
         if (params.containsKey(PARAM_KEY_VERBOSE))
             params.remove(PARAM_KEY_VERBOSE);

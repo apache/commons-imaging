@@ -20,8 +20,8 @@ package org.apache.commons.imaging;
  * Provides a definition for an image format.
  */
 public class ImageFormat {
-    public final String name;
-    public final String extension;
+    private final String name;
+    private final String extension;
     public final boolean actual;
 
     private ImageFormat(String name, boolean actual) {
@@ -43,18 +43,26 @@ public class ImageFormat {
 
         ImageFormat other = (ImageFormat) o;
 
-        return other.name.equals(name);
+        return other.getName().equals(getName());
 
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public String getExtension() {
+        return extension;
     }
 
     @Override
     public String toString() {
-        return "{" + name + ": " + extension + "}";
+        return "{" + getName() + ": " + getExtension() + "}";
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return getName().hashCode();
     }
 
     public static final ImageFormat IMAGE_FORMAT_UNKNOWN = new ImageFormat(
@@ -97,5 +105,4 @@ public class ImageFormat {
 
         return result;
     }
-
 }

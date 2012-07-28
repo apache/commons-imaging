@@ -854,7 +854,6 @@ public class GifImageParser extends ImageParser {
                                             : (palette_size > 2) ? 1 : 0;
 
             int colorTableSizeInFormat = 1 << (colorTableScaleLessOne + 1);
-            int actual_size = 3 * simple_pow(2, colorTableScaleLessOne + 1);
             {
                 byte colorResolution = (byte) colorTableScaleLessOne; // TODO:
 

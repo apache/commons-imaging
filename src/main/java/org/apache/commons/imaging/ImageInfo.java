@@ -300,7 +300,7 @@ public class ImageInfo {
             pw.println("\t" + i + ": '" + s + "'");
 
         }
-        pw.println("Format: " + format.name);
+        pw.println("Format: " + format.getName());
         pw.println("Format Name: " + formatName);
         pw.println("Compression Algorithm: " + compressionAlgorithm);
         pw.println("Height: " + height);

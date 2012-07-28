@@ -504,14 +504,12 @@ public class PngImageParser extends ImageParser implements PngConstants {
             throw new ImageReadException("PNG contains more than one Header");
 
         PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) IHDRs.get(0);
-        PngChunk pngChunktRNS = null;
 
         boolean isTransparent = false;
 
         List<PngChunk> tRNSs = filterChunks(chunks, tRNS);
         if (tRNSs.size() > 0) {
             isTransparent = true;
-            pngChunktRNS = IHDRs.get(0);
         } else {
             // CE - Fix Alpha.
             isTransparent = hasAlphaChannel(pngChunkIHDR.colorType);
@@ -632,8 +630,7 @@ public class PngImageParser extends ImageParser implements PngConstants {
     @Override
     public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
             throws ImageReadException, IOException {
-        boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
-                false);
+        ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE, false);
 
         if (params.containsKey(PARAM_KEY_VERBOSE))
             params.remove(PARAM_KEY_VERBOSE);

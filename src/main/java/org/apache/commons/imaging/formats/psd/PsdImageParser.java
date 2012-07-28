@@ -319,8 +319,7 @@ public class PsdImageParser extends ImageParser {
             // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
-            int Compression = read2Bytes("Compression", is,
-                    "Not a Valid PSD File");
+            read2Bytes("Compression", is, "Not a Valid PSD File");
 
             // byte ImageData[] = readByteArray("ImageData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
@@ -386,8 +385,7 @@ public class PsdImageParser extends ImageParser {
             // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
-            int Compression = read2Bytes("Compression", is,
-                    "Not a Valid PSD File");
+            read2Bytes("Compression", is, "Not a Valid PSD File");
 
             // byte ImageData[] = readByteArray("ImageData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
@@ -651,7 +649,7 @@ public class PsdImageParser extends ImageParser {
         // GraphicControlExtension gce = (GraphicControlExtension) findBlock(
         // fImageContents.blocks, kGraphicControlExtension);
 
-        List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
+        readImageResourceBlocks(byteSource,
         // fImageContents.ImageResources,
                 null, -1);
 

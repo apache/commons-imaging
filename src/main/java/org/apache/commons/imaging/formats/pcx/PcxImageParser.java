@@ -102,8 +102,6 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             throws ImageReadException, IOException {
         PcxHeader pcxHeader = readPcxHeader(byteSource);
         Dimension size = getImageSize(byteSource, params);
-        int metricHDpi = (int) (pcxHeader.hDpi * 1000.0 / 2.54);
-        int metricVDpi = (int) (pcxHeader.vDpi * 1000.0 / 2.54);
         return new ImageInfo(
                 "PCX",
                 pcxHeader.nPlanes * pcxHeader.bitsPerPixel,

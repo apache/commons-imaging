@@ -282,7 +282,7 @@ public class RoundtripTest extends ImagingTest {
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
 
-                Debug.debug("bitmap test: " + formatInfo.format.name);
+                Debug.debug("bitmap test: " + formatInfo.format.getName());
 
                 roundtrip(formatInfo, testImage, "bitmap", true);
             }
@@ -311,7 +311,7 @@ public class RoundtripTest extends ImagingTest {
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
 
-                Debug.debug("grayscale test: " + formatInfo.format.name);
+                Debug.debug("grayscale test: " + formatInfo.format.getName());
 
                 boolean imageExact = true;
                 if (formatInfo.colorSupport == COLOR_BITMAP)
@@ -339,7 +339,7 @@ public class RoundtripTest extends ImagingTest {
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
 
-                Debug.debug("indexable test: " + formatInfo.format.name);
+                Debug.debug("indexable test: " + formatInfo.format.getName());
 
                 boolean imageExact = true;
                 if (formatInfo.colorSupport == COLOR_BITMAP)
@@ -369,7 +369,7 @@ public class RoundtripTest extends ImagingTest {
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
 
-                Debug.debug("fullColor test: " + formatInfo.format.name);
+                Debug.debug("fullColor test: " + formatInfo.format.getName());
 
                 boolean imageExact = true;
                 if (formatInfo.colorSupport == COLOR_BITMAP)
@@ -391,10 +391,10 @@ public class RoundtripTest extends ImagingTest {
             if (!formatInfo.canRead || !formatInfo.canWrite || !formatInfo.preservesResolution)
                 continue;
             
-            Debug.debug("pixel density test: " + formatInfo.format.name);
+            Debug.debug("pixel density test: " + formatInfo.format.getName());
 
             File temp1 = createTempFile("pixeldensity.", "."
-                    + formatInfo.format.extension);
+                    + formatInfo.format.getExtension());
             
             Map params = new HashMap();
             PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
@@ -422,7 +422,7 @@ public class RoundtripTest extends ImagingTest {
             String tempPrefix, boolean imageExact) throws IOException,
             ImageReadException, ImageWriteException {
         File temp1 = createTempFile(tempPrefix + ".", "."
-                + formatInfo.format.extension);
+                + formatInfo.format.getExtension());
         // Debug.debug("tempFile: " + tempFile.getName());
 
         Map params = new HashMap();
@@ -442,7 +442,7 @@ public class RoundtripTest extends ImagingTest {
 
         if (formatInfo.identicalSecondWrite) {
             File temp2 = createTempFile(tempPrefix + ".", "."
-                    + formatInfo.format.extension);
+                    + formatInfo.format.getExtension());
             // Debug.debug("tempFile: " + tempFile.getName());
             Imaging.writeImage(image2, temp2, formatInfo.format, params);
 

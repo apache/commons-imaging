@@ -323,8 +323,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
             try {
                 is = byteSource.getInputStream();
 
-                int ProfileSize = read4Bytes("ProfileSize", is,
-                        "Not a Valid ICC Profile");
+                read4Bytes("ProfileSize", is, "Not a Valid ICC Profile");
 
                 // if (length != ProfileSize)
                 // return null;
