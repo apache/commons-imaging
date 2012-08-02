@@ -301,4 +301,31 @@
       <id>damjan</id>
     </developer>
   </developers>
+
+  <contributors>
+    <contributor>
+      <name>Adrian Moerchen</name>
+    </contributor>
+    <contributor>
+      <name>Alex Vigdor</name>
+    </contributor>
+    <contributor>
+      <name>Craig Kelly</name>
+    </contributor>
+    <contributor>
+      <name>Gary Lucas</name>
+    </contributor>
+    <contributor>
+      <name>Peter Royal</name>
+    </contributor>
+    <contributor>
+      <name>Piyush Kapoor</name>
+    </contributor>
+    <contributor>
+      <name>Tars Joris</name>
+    </contributor>
+    <contributor>
+      <name>VVD</name>
+    </contributor>
+  </contributors>
 </project>
