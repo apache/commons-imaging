@@ -69,7 +69,7 @@ public class App13Segment extends AppnSegment {
          * metadata. However, we should not treat App13 signatures without
          * Photoshop's signature as Photoshop/IPTC segments.
          */
-        if (!new IptcParser().isPhotoshopJpegSegment(bytes))
+        if (!isPhotoshopJpegSegment())
             return null;
 
         return new IptcParser().parsePhotoshopSegment(bytes, params);

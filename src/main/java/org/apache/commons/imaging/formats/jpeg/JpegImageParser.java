@@ -40,6 +40,7 @@ import org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoder;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.commons.imaging.formats.jpeg.segments.App13Segment;
+import org.apache.commons.imaging.formats.jpeg.segments.App14Segment;
 import org.apache.commons.imaging.formats.jpeg.segments.App2Segment;
 import org.apache.commons.imaging.formats.jpeg.segments.ComSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.DqtSegment;
@@ -147,6 +148,8 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                 if (marker == JPEG_APP13_Marker) {
                     // Debug.debug("app 13 segment data", segmentData.length);
                     result.add(new App13Segment(parser, marker, segmentData));
+                } else if (marker == JPEG_APP14_Marker) {
+                    result.add(new App14Segment(marker, segmentData));
                 } else if (marker == JPEG_APP2_Marker) {
                     result.add(new App2Segment(marker, segmentData));
                 } else if (marker == JFIFMarker) {
@@ -632,6 +635,11 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         if ((jfifSegments != null) && (jfifSegments.size() > 0))
             jfifSegment = (JfifSegment) jfifSegments.get(0);
 
+        List<Segment> app14Segments = readSegments(byteSource, new int[] { JPEG_APP14_Marker }, true);
+        App14Segment app14Segment = null;
+        if (app14Segments != null && !app14Segments.isEmpty())
+            app14Segment = (App14Segment) app14Segments.get(0);
+        
         // JfifSegment fTheJFIFSegment = (JfifSegment) findSegment(segments,
         // kJFIFMarker);
 
@@ -746,17 +754,128 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         // not accurate ... only reflects first
         boolean isProgressive = fSOFNSegment.marker == SOF2Marker;
 
-        boolean isTransparent = false; // TODO: inaccurate.
+        boolean isTransparent = false;
         boolean usesPalette = false; // TODO: inaccurate.
-        int ColorType;
-        if (Number_of_components == 1)
-            ColorType = ImageInfo.COLOR_TYPE_BW;
-        else if (Number_of_components == 3)
-            ColorType = ImageInfo.COLOR_TYPE_RGB;
-        else if (Number_of_components == 4)
-            ColorType = ImageInfo.COLOR_TYPE_CMYK;
-        else
-            ColorType = ImageInfo.COLOR_TYPE_UNKNOWN;
+        
+        // See http://docs.oracle.com/javase/6/docs/api/javax/imageio/metadata/doc-files/jpeg_metadata.html#color
+        int colorType = ImageInfo.COLOR_TYPE_UNKNOWN;
+        // Some images have both JFIF/APP0 and APP14.
+        // JFIF is meant to win but in them APP14 is clearly right, so make it win.
+        if (app14Segment != null && app14Segment.isAdobeJpegSegment()) {
+            int colorTransform = app14Segment.getAdobeColorTransform();
+            if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_UNKNOWN) { 
+                if (Number_of_components == 3) {
+                    colorType = ImageInfo.COLOR_TYPE_RGB;
+                } else if (Number_of_components == 4) {
+                    colorType = ImageInfo.COLOR_TYPE_CMYK;
+                }
+            } else if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_YCbCr) {
+                colorType = ImageInfo.COLOR_TYPE_YCbCr;
+            } else if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_YCCK) {
+                colorType = ImageInfo.COLOR_TYPE_YCCK;
+            }
+        } else if (jfifSegment != null) {
+            if (Number_of_components == 1)
+                colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+            else if (Number_of_components == 3)
+                colorType = ImageInfo.COLOR_TYPE_YCbCr;
+        } else {
+            if (Number_of_components == 1) {
+                colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+            } else if (Number_of_components == 2) {
+                colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+                isTransparent = true;
+            } else if (Number_of_components == 3 || Number_of_components == 4) {
+                boolean have1 = false;
+                boolean have2 = false;
+                boolean have3 = false;
+                boolean have4 = false;
+                boolean haveOther = false;
+                for (SofnSegment.Component component : fSOFNSegment.components) {
+                    final int id = component.componentIdentifier;
+                    if (id == 1)
+                        have1 = true;
+                    else if (id == 2)
+                        have2 = true;
+                    else if (id == 3)
+                        have3 = true;
+                    else if (id == 4)
+                        have4 = true;
+                    else
+                        haveOther = true;
+                }
+                if (Number_of_components == 3 && have1 && have2 && have3 && !have4 && !haveOther) {
+                    colorType = ImageInfo.COLOR_TYPE_YCbCr;
+                } else if (Number_of_components == 4 && have1 && have2 && have3 && have4 && !haveOther) {
+                    colorType = ImageInfo.COLOR_TYPE_YCbCr;
+                    isTransparent = true;
+                } else {
+                    boolean haveR = false;
+                    boolean haveG = false;
+                    boolean haveB = false;
+                    boolean haveA = false;
+                    boolean haveC = false;
+                    boolean havec = false;
+                    boolean haveY = false;
+                    for (SofnSegment.Component component : fSOFNSegment.components) {
+                        final int id = component.componentIdentifier;
+                        if (id == 'R')
+                            haveR = true;
+                        else if (id == 'G')
+                            haveG = true;
+                        else if (id == 'B')
+                            haveB = true;
+                        else if (id == 'A')
+                            haveA = true;
+                        else if (id == 'C')
+                            haveC = true;
+                        else if (id == 'c')
+                            havec = true;
+                        else if (id == 'Y')
+                            haveY = true;
+                    }
+                    if (haveR && haveG && haveB && !haveA && !haveC && !havec && !haveY) {
+                        colorType = ImageInfo.COLOR_TYPE_RGB;
+                    } else if (haveR && haveG && haveB && haveA && !haveC && !havec && !haveY) {
+                        colorType = ImageInfo.COLOR_TYPE_RGB;
+                        isTransparent = true;
+                    } else if (haveY && haveC && havec && !haveR && !haveG && !haveB && !haveA) {
+                        colorType = ImageInfo.COLOR_TYPE_YCC;
+                    } else if (haveY && haveC && havec && haveA && !haveR && !haveG && !haveB) {
+                        colorType = ImageInfo.COLOR_TYPE_YCC;
+                        isTransparent = true;
+                    } else {
+                        int minHorizontalSamplingFactor = Integer.MAX_VALUE;
+                        int maxHorizontalSmaplingFactor = Integer.MIN_VALUE;
+                        int minVerticalSamplingFactor = Integer.MAX_VALUE;
+                        int maxVerticalSamplingFactor = Integer.MIN_VALUE;
+                        for (SofnSegment.Component component : fSOFNSegment.components) {
+                            if (minHorizontalSamplingFactor > component.horizontalSamplingFactor)
+                                minHorizontalSamplingFactor = component.horizontalSamplingFactor;
+                            if (maxHorizontalSmaplingFactor < component.horizontalSamplingFactor)
+                                maxHorizontalSmaplingFactor = component.horizontalSamplingFactor;
+                            if (minVerticalSamplingFactor > component.verticalSamplingFactor)
+                                minVerticalSamplingFactor = component.verticalSamplingFactor;
+                            if (maxVerticalSamplingFactor < component.verticalSamplingFactor)
+                                maxVerticalSamplingFactor = component.verticalSamplingFactor;
+                        }
+                        boolean isSubsampled = (minHorizontalSamplingFactor != maxHorizontalSmaplingFactor) ||
+                                (minVerticalSamplingFactor != maxVerticalSamplingFactor);
+                        if (Number_of_components == 3) {
+                            if (isSubsampled)
+                                colorType = ImageInfo.COLOR_TYPE_YCbCr;
+                            else
+                                colorType = ImageInfo.COLOR_TYPE_RGB;
+                        } else if (Number_of_components == 4) {
+                            if (isSubsampled)
+                                colorType = ImageInfo.COLOR_TYPE_YCCK;
+                            else
+                                colorType = ImageInfo.COLOR_TYPE_CMYK;
+                        }
+                    }
+                }
+            }
+        }
 
         String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_JPEG;
 
@@ -764,7 +883,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                 Format, FormatName, Height, MimeType, NumberOfImages,
                 PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
                 PhysicalWidthInch, Width, isProgressive, isTransparent,
-                usesPalette, ColorType, compressionAlgorithm);
+                usesPalette, colorType, compressionAlgorithm);
 
         return result;
     }

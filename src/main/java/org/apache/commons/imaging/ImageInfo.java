@@ -51,6 +51,9 @@ public class ImageInfo {
     public static final int COLOR_TYPE_GRAYSCALE = 1;
     public static final int COLOR_TYPE_RGB = 2;
     public static final int COLOR_TYPE_CMYK = 3;
+    public static final int COLOR_TYPE_YCbCr = 4;
+    public static final int COLOR_TYPE_YCCK = 5;
+    public static final int COLOR_TYPE_YCC = 6;
     public static final int COLOR_TYPE_OTHER = -1;
     public static final int COLOR_TYPE_UNKNOWN = -2;
 
@@ -260,6 +263,12 @@ public class ImageInfo {
             return "RGB";
         case COLOR_TYPE_CMYK:
             return "CMYK";
+        case COLOR_TYPE_YCbCr:
+            return "YCbCr";
+        case COLOR_TYPE_YCCK:
+            return "YCCK";
+        case COLOR_TYPE_YCC:
+            return "YCC";
         case COLOR_TYPE_OTHER:
             return "Other";
         case COLOR_TYPE_UNKNOWN:
