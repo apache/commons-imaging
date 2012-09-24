@@ -352,9 +352,10 @@ public class PaletteFactory {
         ColorSpaceSubset all = new ColorSpaceSubset(width * height, precision);
         subsets.add(all);
 
-        int pre_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
-        if (debug)
+        if (debug) {
+            int pre_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
             System.out.println("pre total: " + pre_total);
+        }
 
         { // step 1: count frequency of colors
 
@@ -368,10 +369,9 @@ public class PaletteFactory {
                 }
         }
 
-        int all_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
         if (debug) {
+            int all_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
             System.out.println("all total: " + all_total);
-
             System.out.println("width * height: " + (width * height));
         }
 

@@ -28,7 +28,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>25</version>
+    <version>26</version>
   </parent>
 
   <groupId>org.apache.commons</groupId>
@@ -129,11 +129,6 @@
 
     <pluginManagement>
       <plugins>
-        <!-- Temporary workaround for MASSEMBLY-553 until commons-parent 26 is released-->
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.2-beta-5</version>
-        </plugin>
         <!-- This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
