@@ -1,6 +1,6 @@
 
 Apache Commons Imaging
-Version 1.0
+Version 1.0-SNAPSHOT
 Release Notes
 
 INTRODUCTION
@@ -45,7 +45,7 @@ and has been renamed to Apache Commons Imaging. As part of this rename:
 
 VERSION HISTORY
 
-Release 1.0
+Release 1.0-SNAPSHOT
 ------------
 TBA
 
@@ -66,6 +66,7 @@ o IMAGING-47:  Run a Findbugs analysis on "mvn site". Also audit and fix resourc
 o IMAGING-65:  Provide a way to write the pixel density (DPI) into an image. 
 o IMAGING-61:  Include a test utility for timing and memory in project example classes. Thanks to gwlucas. 
 o IMAGING-81:  Add more Javadoc to main package. Thanks to gwlucas. 
+o IMAGING-89:  Detect the YCCK color space/type in JPEG files' APP14 segment. 
 
 Fixed Bugs:
 o IMAGING-23:  JpegXMPWriter throws NullPointerException. 
