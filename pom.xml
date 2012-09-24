@@ -35,7 +35,7 @@
   <artifactId>commons-imaging</artifactId>
   <name>Commons Imaging</name>
 
-  <version>1.1-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
 
   <!--
     Keep the description on a single line. Otherwise Maven might generate
@@ -44,11 +44,33 @@
   <description>Commons Imaging (previously Sanselan) is a pure-Java image library.</description>
   <url>http://commons.apache.org/imaging/</url>
 
+  <properties>
+    <maven.compile.source>1.5</maven.compile.source>
+    <maven.compile.target>1.5</maven.compile.target>
+    <commons.componentid>imaging</commons.componentid>
+    <commons.release.version>1.0</commons.release.version>
+    <commons.rc.version>RC4</commons.rc.version>
+    <commons.jira.id>IMAGING</commons.jira.id>
+    <commons.jira.pid>12313421</commons.jira.pid>
+    <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
+    <commons.binary.suffix />
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
   <scm>
     <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/imaging/trunk</connection>
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/imaging/trunk</developerConnection>
     <url>http://svn.apache.org/viewvc/commons/proper/imaging/trunk</url>
   </scm>
+
+  <distributionManagement>
+    <site>
+      <id>apache.website</id>
+      <name>Apache Commons Site</name>
+      <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/${commons.componentid}</url>
+    </site>
+  </distributionManagement>
 
   <issueManagement>
     <system>Jira</system>
@@ -60,23 +82,8 @@
     <maven>2.0.7</maven>
   </prerequisites>
 
-  <properties>
-    <maven.compile.source>1.5</maven.compile.source>
-    <maven.compile.target>1.5</maven.compile.target>
-    <commons.componentid>imaging</commons.componentid>
-    <commons.release.version>1.0</commons.release.version>
-    <commons.rc.version>RC3</commons.rc.version>
-    <commons.jira.id>IMAGING</commons.jira.id>
-    <commons.jira.pid>12313421</commons.jira.pid>
-    <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
-    <commons.binary.suffix />
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
-
   <build>
     <plugins>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -108,7 +115,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <version>1.7</version>
+        <version>1.8</version>
         <configuration>
           <signature>
             <groupId>org.codehaus.mojo.signature</groupId>
@@ -196,7 +203,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-        <version>2.4.0</version>
+        <version>2.5.2</version>
         <configuration>
           <threshold>Normal</threshold>
           <effort>Default</effort>
