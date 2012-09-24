@@ -35,7 +35,7 @@
   <artifactId>commons-imaging</artifactId>
   <name>Commons Imaging</name>
 
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
 
   <!--
     Keep the description on a single line. Otherwise Maven might generate
@@ -59,9 +59,9 @@
   </properties>
 
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/imaging/tags/IMAGING_1_0_RC4</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/imaging/tags/IMAGING_1_0_RC4</developerConnection>
-    <url>http://svn.apache.org/viewvc/commons/proper/imaging/tags/IMAGING_1_0_RC4</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/imaging/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/imaging/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/commons/proper/imaging/trunk</url>
   </scm>
 
   <distributionManagement>
