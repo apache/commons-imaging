@@ -545,7 +545,7 @@ public class TiffImageMetadata extends ImageMetadata implements
             // latitude: 8 degrees, 40 minutes, 42.2 seconds S
             // longitude: 115 degrees, 26 minutes, 21.8 seconds E
 
-            StringBuffer result = new StringBuffer();
+            StringBuilder result = new StringBuilder();
             result.append("[GPS. ");
             result.append("Latitude: " + latitudeDegrees.toDisplayString()
                     + " degrees, " + latitudeMinutes.toDisplayString()

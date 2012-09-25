@@ -203,7 +203,7 @@ public class JpegImageMetadata implements IImageMetadata {
         if (prefix == null)
             prefix = "";
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         result.append(prefix);
         if (null == exif)

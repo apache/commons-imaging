@@ -306,7 +306,7 @@ public class TiffField implements TiffConstants {
             return df.format((Date) o);
         } else if (o instanceof Object[]) {
             Object objects[] = (Object[]) o;
-            StringBuffer result = new StringBuffer();
+            StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < objects.length; i++) {
                 Object object = objects[i];
@@ -506,7 +506,7 @@ public class TiffField implements TiffConstants {
 
     @Override
     public String toString() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         result.append(tag + " (0x" + Integer.toHexString(tag) + ": "
                 + tagInfo.name + "): ");

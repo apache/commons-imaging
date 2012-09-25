@@ -52,7 +52,7 @@ class WhiteSpaceReader {
         while (Character.isWhitespace(c))
             c = nextChar();
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         while (!Character.isWhitespace(c)) {
             buffer.append(c);

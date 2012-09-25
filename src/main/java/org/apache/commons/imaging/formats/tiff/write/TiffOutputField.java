@@ -124,7 +124,7 @@ public class TiffOutputField implements TiffConstants {
     public String toString(String prefix) {
         if (prefix == null)
             prefix = "";
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         result.append(prefix);
         result.append(tagInfo);

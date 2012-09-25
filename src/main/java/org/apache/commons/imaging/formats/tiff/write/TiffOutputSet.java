@@ -252,7 +252,7 @@ public final class TiffOutputSet implements TiffConstants {
         if (prefix == null)
             prefix = "";
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         result.append(prefix);
         result.append("TiffOutputSet {");

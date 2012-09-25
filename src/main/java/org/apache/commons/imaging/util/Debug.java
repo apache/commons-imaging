@@ -77,7 +77,7 @@ public final class Debug {
     }
 
     public static String getDebug(String message, int v[]) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         if (v == null)
             result.append(message + " (" + null + ")" + newline);
@@ -97,7 +97,7 @@ public final class Debug {
 
     public static String getDebug(String message, byte v[], int max) {
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         if (v == null)
             result.append(message + " (" + null + ")" + newline);
@@ -124,7 +124,7 @@ public final class Debug {
     }
 
     public static String getDebug(String message, char v[]) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         if (v == null)
             result.append(getDebug(message + " (" + null + ")") + newline);
@@ -141,7 +141,7 @@ public final class Debug {
     private static long counter = 0;
 
     public static String getDebug(String message, java.util.List<?> v) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         String suffix = " [" + counter++ + "]";
 
@@ -160,7 +160,7 @@ public final class Debug {
     }
 
     public static String getDebug(String message, Map<?,?> map) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         if (map == null)
             return getDebug(message + " map: " + null);
@@ -187,14 +187,14 @@ public final class Debug {
     // public static String newline = System.getProperty("line.separator");
     public static final String newline = "\r\n";
 
-    private static void log(StringBuffer buffer, String s) {
+    private static void log(StringBuilder buffer, String s) {
         Debug.debug(s);
         if (buffer != null)
             buffer.append(s + newline);
     }
 
     public static boolean compare(String prefix, Map<?, ?> a, Map<?, ?> b, List<?> ignore,
-            StringBuffer buffer) {
+            StringBuilder buffer) {
         if ((a == null) && (b == null)) {
             log(buffer, prefix + " both maps null");
             return true;
@@ -258,7 +258,7 @@ public final class Debug {
         char c3 = (char) b3;
         char c4 = (char) b4;
         // return new String(new char[] { c1, c2, c3, c4 });
-        StringBuffer fStringBuffer = new StringBuffer();
+        StringBuilder fStringBuffer = new StringBuilder();
         fStringBuffer.append(new String(new char[] { c1, c2, c3, c4 }));
         fStringBuffer.append(" bytequad: " + bytequad);
         fStringBuffer.append(" b1: " + b1);
@@ -271,7 +271,7 @@ public final class Debug {
 
     public static String getDebug(String message, ICC_Profile value) {
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         result.append(getDebug("ICC_Profile " + message + ": "
                 + ((value == null) ? "null" : value.toString()))
@@ -439,7 +439,7 @@ public final class Debug {
     }
 
     public static String getDebug(String message, Object value[]) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         if (value == null) {
             result.append(getDebug(message, "null") + newline);
@@ -581,7 +581,7 @@ public final class Debug {
     }
 
     public static String getDebug(Throwable e, int max) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         final SimpleDateFormat timestamp = new SimpleDateFormat(
                 "yyyy-MM-dd kk:mm:ss:SSS");
@@ -613,7 +613,7 @@ public final class Debug {
     }
 
     public static String getStackTrace(Throwable e, int limit, int skip) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         if (e != null) {
             StackTraceElement stes[] = e.getStackTrace();

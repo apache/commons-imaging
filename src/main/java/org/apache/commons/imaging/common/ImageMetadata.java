@@ -46,7 +46,7 @@ public class ImageMetadata implements IImageMetadata {
         if (null == prefix)
             prefix = "";
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
             if (i > 0)
                 result.append(newline);

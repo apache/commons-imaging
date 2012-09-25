@@ -56,7 +56,7 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
         int entryOffset = offset + TIFF_DIRECTORY_HEADER_LENGTH;
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < entries.size(); i++) {
             TiffField entry = entries.get(i);
 
