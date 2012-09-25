@@ -33,18 +33,10 @@ public class SimplePalette extends Palette {
     @Override
     public int getEntry(int index) {
         return palette[index];
-        // return getPaletteIndex(palette, rgb);
     }
 
     private int getPaletteIndex(int palette[], int argb) {
-
-        // Debug.debug("getPaletteIndex argb", argb + " ("
-        // + Integer.toHexString(argb) + ")");
-
         for (int i = 0; i < palette.length; i++) {
-            // Debug.debug("\t" + "palette[" + i + "]", palette[i] + " ("
-            // + Integer.toHexString(palette[i]) + ")");
-
             if (palette[i] == argb)
                 return i;
         }

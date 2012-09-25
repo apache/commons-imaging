@@ -22,9 +22,9 @@ import java.awt.image.ColorModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 public class PaletteFactory {
     private static final boolean debug = false;
@@ -33,8 +33,6 @@ public class PaletteFactory {
         // map what rgb values have been used
 
         byte rgbmap[] = new byte[256 * 256 * 32];
-        for (int i = 0; i < rgbmap.length; i++)
-            rgbmap[i] = 0;
 
         int width = src.getWidth();
         int height = src.getHeight();
@@ -338,6 +336,12 @@ public class PaletteFactory {
         // return result;
     }
 
+    /**
+     * Builds an inexact palette of at most {@code max} colors in {@code src}.
+     * @param src the image whose palette to build
+     * @param max the maximum number of colors the palette can contain
+     * @return the palette of at most {@code max} colors
+     */
     public Palette makePaletteQuantized(BufferedImage src, int max) {
         int precision = 6; // in bits
 
@@ -357,17 +361,15 @@ public class PaletteFactory {
             System.out.println("pre total: " + pre_total);
         }
 
-        { // step 1: count frequency of colors
+        // step 1: count frequency of colors
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++) {
+                int argb = src.getRGB(x, y);
 
-            for (int y = 0; y < height; y++)
-                for (int x = 0; x < width; x++) {
-                    int argb = src.getRGB(x, y);
+                int index = pixelToQuantizationTableIndex(argb, precision);
 
-                    int index = pixelToQuantizationTableIndex(argb, precision);
-
-                    table[index]++;
-                }
-        }
+                table[index]++;
+            }
 
         if (debug) {
             int all_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
@@ -396,37 +398,40 @@ public class PaletteFactory {
         return new QuantizedPalette(subsets, precision);
     }
 
-    public SimplePalette makePaletteSimple(BufferedImage src, int max)
-    // This is not efficient for large values of max, say, max > 256;
-    {
-        Map<String, String> map = new HashMap<String, String>();
-        int rgbs[] = new int[max];
-        int rgb_count = 0;
+    /**
+     * Builds an exact and complete palette containing all the colors in {@code src},
+     * and fails by returning {@code null} if there are more than {@code max} colors necessary to do this.
+     * @param src the image whose palette to build
+     * @param max the maximum number of colors the palette can contain
+     * @return the complete palette of {@code max} or less colors, or {@code null} if more than {@code max} colors are necessary
+     */
+    public SimplePalette makePaletteSimple(BufferedImage src, int max) {
+        // This is not efficient for large values of max, say, max > 256;
+        Set<Integer> rgbs = new HashSet<Integer>();
 
         int width = src.getWidth();
         int height = src.getHeight();
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int rgb = 0xffffff & argb;
 
-                String key = "" + rgb;
-                if (null == map.get(key)) {
-                    if (rgb_count == max)
+                if (rgbs.add(rgb)) {
+                    if (rgbs.size() > max) {
                         return null;
-
-                    rgbs[rgb_count] = rgb;
-                    map.put(key, key);
-                    rgb_count++;
+                    }
                 }
             }
-
-        int result[] = new int[rgb_count];
-        System.arraycopy(rgbs, 0, result, 0, rgb_count);
+        }
+        
+        int result[] = new int[rgbs.size()];
+        int next = 0;
+        for (int rgb : rgbs) {
+            result[next++] = rgb;
+        }
         Arrays.sort(result);
 
-        // return result;
         return new SimplePalette(result);
     }
 
