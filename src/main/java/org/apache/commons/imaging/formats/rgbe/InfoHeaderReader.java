@@ -34,7 +34,7 @@ class InfoHeaderReader {
         return (char) result;
     }
 
-    public String readLine() throws IOException {
+    public String readNextLine() throws IOException {
         StringBuilder buffer = new StringBuilder();
         char c;
 

@@ -81,7 +81,7 @@ class RgbeInfo extends BinaryFileFunctions {
         getMetadata(); // Ensure we've read past this
 
         InfoHeaderReader reader = new InfoHeaderReader(in);
-        String resolution = reader.readLine();
+        String resolution = reader.readNextLine();
         Matcher matcher = RESOLUTION_STRING.matcher(resolution);
 
         if (!matcher.matches()) {
@@ -100,13 +100,13 @@ class RgbeInfo extends BinaryFileFunctions {
 
         InfoHeaderReader reader = new InfoHeaderReader(in);
 
-        if (reader.readLine().length() != 0) {
+        if (reader.readNextLine().length() != 0) {
             throw new ImageReadException("Not a valid HDR: Incorrect Header");
         }
 
         metadata = new ImageMetadata();
 
-        String info = reader.readLine();
+        String info = reader.readNextLine();
 
         while (info.length() != 0) {
             int equals = info.indexOf("=");
@@ -128,7 +128,7 @@ class RgbeInfo extends BinaryFileFunctions {
                 metadata.add("<command>", info);
             }
 
-            info = reader.readLine();
+            info = reader.readNextLine();
         }
     }
 
