@@ -283,8 +283,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         byte bytes[] = assembleSegments(filtered);
 
         if (debug)
-            System.out.println("bytes" + ": "
-                    + ((bytes == null) ? null : "" + bytes.length));
+            System.out.println("bytes" + ": " + bytes.length);
 
         if (debug)
             System.out.println("");

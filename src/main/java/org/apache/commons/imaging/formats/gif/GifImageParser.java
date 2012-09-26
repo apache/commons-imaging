@@ -606,27 +606,20 @@ public class GifImageParser extends ImageParser {
             throws ImageReadException, IOException {
         pw.println("gif.dumpImageFile");
 
-        {
-            ImageInfo imageData = getImageInfo(byteSource);
-            if (imageData == null)
-                return false;
+        ImageInfo imageData = getImageInfo(byteSource);
+        if (imageData == null)
+            return false;
 
-            imageData.toString(pw, "");
-        }
-        {
-            ImageContents blocks = readFile(byteSource, false);
+        imageData.toString(pw, "");
+        
+        ImageContents blocks = readFile(byteSource, false);
 
-            if (blocks == null)
-                return false;
-
-            pw.println("gif.blocks: " + blocks.blocks.size());
-            for (int i = 0; i < blocks.blocks.size(); i++) {
-                GifBlock gifBlock = blocks.blocks.get(i);
-                this.debugNumber(pw, "\t" + i + " ("
-                        + gifBlock.getClass().getName() + ")",
-                        gifBlock.blockCode, 4);
-            }
-
+        pw.println("gif.blocks: " + blocks.blocks.size());
+        for (int i = 0; i < blocks.blocks.size(); i++) {
+            GifBlock gifBlock = blocks.blocks.get(i);
+            this.debugNumber(pw, "\t" + i + " ("
+                    + gifBlock.getClass().getName() + ")",
+                    gifBlock.blockCode, 4);
         }
 
         pw.println("");

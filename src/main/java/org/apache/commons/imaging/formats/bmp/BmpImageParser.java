@@ -653,8 +653,6 @@ public class BmpImageParser extends ImageParser {
         pw.println("bmp.dumpImageFile");
 
         ImageInfo imageData = getImageInfo(byteSource, null);
-        if (imageData == null)
-            return false;
 
         imageData.toString(pw, "");
 

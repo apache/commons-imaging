@@ -279,8 +279,18 @@ public abstract class ColorConversions {
 
         double var_Min = Math.min(var_R, Math.min(var_G, var_B)); // Min. value
                                                                   // of RGB
-        double var_Max = Math.max(var_R, Math.max(var_G, var_B)); // Max. value
-                                                                  // of RGB
+        double var_Max;
+        boolean maxIsR = false;
+        boolean maxIsG = false;
+        if (var_R >= var_G && var_R >= var_B) {
+            var_Max = var_R;
+            maxIsR = true;
+        } else if (var_G > var_B) {
+            var_Max = var_G;
+            maxIsG = true;
+        } else {
+            var_Max = var_B;
+        }
         double del_Max = var_Max - var_Min; // Delta RGB value
 
         double L = (var_Max + var_Min) / 2.0;
@@ -307,16 +317,12 @@ public abstract class ColorConversions {
             double del_G = (((var_Max - var_G) / 6) + (del_Max / 2)) / del_Max;
             double del_B = (((var_Max - var_B) / 6) + (del_Max / 2)) / del_Max;
 
-            if (var_R == var_Max)
+            if (maxIsR)
                 H = del_B - del_G;
-            else if (var_G == var_Max)
+            else if (maxIsG)
                 H = (1 / 3.0) + del_R - del_B;
-            else if (var_B == var_Max)
+            else
                 H = (2 / 3.0) + del_G - del_R;
-            else {
-                Debug.debug("uh oh");
-                H = 0; // cmc
-            }
 
             // Debug.debug("H1", H);
 
@@ -388,8 +394,18 @@ public abstract class ColorConversions {
 
         double var_Min = Math.min(var_R, Math.min(var_G, var_B)); // Min. value
                                                                   // of RGB
-        double var_Max = Math.max(var_R, Math.max(var_G, var_B)); // Max. value
-                                                                  // of RGB
+        boolean maxIsR = false;
+        boolean maxIsG = false;
+        double var_Max;
+        if (var_R >= var_G && var_R >= var_B) {
+            var_Max = var_R;
+            maxIsR = true;
+        } else if (var_G > var_B) {
+            var_Max = var_G;
+            maxIsG = true;
+        } else {
+            var_Max = var_B;
+        }
         double del_Max = var_Max - var_Min; // Delta RGB value
 
         double V = var_Max;
@@ -408,16 +424,12 @@ public abstract class ColorConversions {
             double del_G = (((var_Max - var_G) / 6) + (del_Max / 2)) / del_Max;
             double del_B = (((var_Max - var_B) / 6) + (del_Max / 2)) / del_Max;
 
-            if (var_R == var_Max)
+            if (maxIsR)
                 H = del_B - del_G;
-            else if (var_G == var_Max)
+            else if (maxIsG)
                 H = (1 / 3.0) + del_R - del_B;
-            else if (var_B == var_Max)
+            else
                 H = (2 / 3.0) + del_G - del_R;
-            else {
-                Debug.debug("uh oh");
-                H = 0; // cmc;
-            }
 
             if (H < 0)
                 H += 1;
