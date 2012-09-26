@@ -381,11 +381,11 @@ public class XpmImageParser extends ImageParser {
             for (int j = 0; j < tokens.length; j++) {
                 String token = tokens[j];
                 boolean isKey = false;
-                if (previousKeyIndex < (j - 1)) {
-                    if (token.equals("m") || token.equals("g4")
-                            || token.equals("g") || token.equals("c")
-                            || token.equals("s"))
-                        isKey = true;
+                if (previousKeyIndex < (j - 1) && 
+                    token.equals("m") || token.equals("g4") ||
+                    token.equals("g") || token.equals("c") ||
+                    token.equals("s")) {
+                    isKey = true;
                 }
                 if (isKey) {
                     if (previousKeyIndex >= 0) {

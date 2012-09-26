@@ -418,10 +418,8 @@ public class PaletteFactory {
                 int argb = src.getRGB(x, y);
                 int rgb = 0xffffff & argb;
 
-                if (rgbs.add(rgb)) {
-                    if (rgbs.size() > max) {
-                        return null;
-                    }
+                if (rgbs.add(rgb) && rgbs.size() > max) {
+                    return null;
                 }
             }
         }

@@ -115,12 +115,10 @@ class RgbeInfo extends BinaryFileFunctions {
                 String variable = info.substring(0, equals);
                 String value = info.substring(equals + 1);
 
-                if ("FORMAT".equals(value)) {
-                    if (!"32-bit_rle_rgbe".equals(value)) {
-                        throw new ImageReadException(
-                                "Only 32-bit_rle_rgbe images are supported, trying to read "
-                                        + value);
-                    }
+                if ("FORMAT".equals(value) && !"32-bit_rle_rgbe".equals(value)) {
+                    throw new ImageReadException(
+                            "Only 32-bit_rle_rgbe images are supported, trying to read " +
+                                    value);
                 }
 
                 metadata.add(variable, value);
