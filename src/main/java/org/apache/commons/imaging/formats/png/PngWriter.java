@@ -140,7 +140,7 @@ public class PngWriter implements PngConstants {
         writeChunk(os, IHDR_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    private void writeChunkiTXt(OutputStream os, PngText.iTXt text)
+    private void writeChunkiTXt(OutputStream os, PngText.Itxt text)
             throws IOException, ImageWriteException {
         if (!UnicodeUtils.isValidISO_8859_1(text.keyword))
             throw new ImageWriteException(
@@ -172,7 +172,7 @@ public class PngWriter implements PngConstants {
         writeChunk(os, iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    private void writeChunkzTXt(OutputStream os, PngText.zTXt text)
+    private void writeChunkzTXt(OutputStream os, PngText.Ztxt text)
             throws IOException, ImageWriteException {
         if (!UnicodeUtils.isValidISO_8859_1(text.keyword))
             throw new ImageWriteException(
@@ -196,7 +196,7 @@ public class PngWriter implements PngConstants {
         writeChunk(os, zTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    private void writeChunktEXt(OutputStream os, PngText.tEXt text)
+    private void writeChunktEXt(OutputStream os, PngText.Text text)
             throws IOException, ImageWriteException {
         if (!UnicodeUtils.isValidISO_8859_1(text.keyword))
             throw new ImageWriteException(
@@ -495,12 +495,12 @@ public class PngWriter implements PngConstants {
                     .get(PARAM_KEY_PNG_TEXT_CHUNKS);
             for (int i = 0; i < outputTexts.size(); i++) {
                 PngText text = outputTexts.get(i);
-                if (text instanceof PngText.tEXt)
-                    writeChunktEXt(os, (PngText.tEXt) text);
-                else if (text instanceof PngText.zTXt)
-                    writeChunkzTXt(os, (PngText.zTXt) text);
-                else if (text instanceof PngText.iTXt)
-                    writeChunkiTXt(os, (PngText.iTXt) text);
+                if (text instanceof PngText.Text)
+                    writeChunktEXt(os, (PngText.Text) text);
+                else if (text instanceof PngText.Ztxt)
+                    writeChunkzTXt(os, (PngText.Ztxt) text);
+                else if (text instanceof PngText.Itxt)
+                    writeChunkiTXt(os, (PngText.Itxt) text);
                 else
                     throw new ImageWriteException(
                             "Unknown text to embed in PNG: " + text);

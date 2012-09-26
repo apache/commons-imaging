@@ -74,7 +74,7 @@ public class PngChunkZtxt extends PngTextChunk {
 
     @Override
     public PngText getContents() {
-        return new PngText.zTXt(keyword, text);
+        return new PngText.Ztxt(keyword, text);
     }
 
 }

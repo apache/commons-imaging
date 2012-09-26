@@ -47,19 +47,19 @@ public class PngTextTest extends PngBaseTest {
         {
             String keyword = "a";
             String text = "b";
-            writeTexts.add(new PngText.tEXt(keyword, text));
+            writeTexts.add(new PngText.Text(keyword, text));
         }
         {
             String keyword = "c";
             String text = "d";
-            writeTexts.add(new PngText.zTXt(keyword, text));
+            writeTexts.add(new PngText.Ztxt(keyword, text));
         }
         {
             String keyword = "e";
             String text = "f";
             String languageTag = "g";
             String translatedKeyword = "h";
-            writeTexts.add(new PngText.iTXt(keyword, text, languageTag,
+            writeTexts.add(new PngText.Itxt(keyword, text, languageTag,
                     translatedKeyword));
         }
 

@@ -24,19 +24,19 @@ public abstract class PngText {
 
     public final String keyword, text;
 
-    public static class tEXt extends PngText {
-        public tEXt(String keyword, String text) {
+    public static class Text extends PngText {
+        public Text(String keyword, String text) {
             super(keyword, text);
         }
     }
 
-    public static class zTXt extends PngText {
-        public zTXt(String keyword, String text) {
+    public static class Ztxt extends PngText {
+        public Ztxt(String keyword, String text) {
             super(keyword, text);
         }
     }
 
-    public static class iTXt extends PngText {
+    public static class Itxt extends PngText {
 
         /*
          * The language tag defined in [RFC-3066] indicates the human language
@@ -52,7 +52,7 @@ public abstract class PngText {
 
         public final String translatedKeyword;
 
-        public iTXt(String keyword, String text, String languageTag,
+        public Itxt(String keyword, String text, String languageTag,
                 String translatedKeyword) {
             super(keyword, text);
             this.languageTag = languageTag;

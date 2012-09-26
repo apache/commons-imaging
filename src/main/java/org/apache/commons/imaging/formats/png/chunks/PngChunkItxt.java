@@ -121,6 +121,6 @@ public class PngChunkItxt extends PngTextChunk {
 
     @Override
     public PngText getContents() {
-        return new PngText.iTXt(keyword, text, languageTag, translatedKeyword);
+        return new PngText.Itxt(keyword, text, languageTag, translatedKeyword);
     }
 }

@@ -64,7 +64,7 @@ public class PngChunkText extends PngTextChunk {
 
     @Override
     public PngText getContents() {
-        return new PngText.tEXt(keyword, text);
+        return new PngText.Text(keyword, text);
     }
 
 }
