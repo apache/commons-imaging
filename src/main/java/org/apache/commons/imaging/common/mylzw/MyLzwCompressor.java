@@ -114,12 +114,12 @@ public class MyLzwCompressor {
         }
 
         @Override
-        public final int hashCode() {
+        public int hashCode() {
             return hash;
         }
 
         @Override
-        public final boolean equals(Object o) {
+        public boolean equals(Object o) {
             if (o instanceof ByteArray) {
                 ByteArray other = (ByteArray) o;
                 if (other.hash != hash)

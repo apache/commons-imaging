@@ -116,9 +116,7 @@ public class PackBits {
                     bytes.length * 2); // max length 1 extra byte for every 128
 
             int ptr = 0;
-            int count = 0;
             while (ptr < bytes.length) {
-                count++;
                 int dup = findNextDuplicate(bytes, ptr);
     
                 if (dup == ptr) // write run length

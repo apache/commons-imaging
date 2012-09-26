@@ -26,7 +26,7 @@ public final class ColorCieLab {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "{L: " + L + ", a: " + a + ", b: " + b + "}";
     }
 }

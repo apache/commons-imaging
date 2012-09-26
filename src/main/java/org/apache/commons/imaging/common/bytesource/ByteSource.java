@@ -36,10 +36,8 @@ public abstract class ByteSource extends BinaryFileFunctions {
             skipBytes(is, start);
             succeeded = true;
         } finally {
-            if (!succeeded) {
-                if (is != null) {
-                    is.close();
-                }
+            if (!succeeded && is != null) {
+                is.close();
             }
         }
         return is;

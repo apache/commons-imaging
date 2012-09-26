@@ -26,7 +26,7 @@ public final class ColorHunterLab {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "{L: " + L + ", a: " + a + ", b: " + b + "}";
     }
 }

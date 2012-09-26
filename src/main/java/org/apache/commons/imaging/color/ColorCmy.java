@@ -26,7 +26,7 @@ public final class ColorCmy {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "{C: " + C + ", M: " + M + ", Y: " + Y + "}";
     }
 }

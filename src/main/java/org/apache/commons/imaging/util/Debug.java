@@ -247,7 +247,7 @@ public final class Debug {
         return result;
     }
 
-    private static final String byteQuadToString(int bytequad) {
+    private static String byteQuadToString(int bytequad) {
         byte b1 = (byte) ((bytequad >> 24) & 0xff);
         byte b2 = (byte) ((bytequad >> 16) & 0xff);
         byte b3 = (byte) ((bytequad >> 8) & 0xff);
@@ -788,7 +788,7 @@ public final class Debug {
         }
     }
 
-    public static final void purgeMemory() {
+    public static void purgeMemory() {
         // try
         // {
         // // Thread.sleep(50);

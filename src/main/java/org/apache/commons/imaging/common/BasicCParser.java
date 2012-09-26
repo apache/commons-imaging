@@ -74,10 +74,8 @@ public class BasicCParser {
                         || c == '*' || c == ';' || c == '=' || c == ',') {
                     token.append((char) c);
                     return token.toString();
-                } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') { /*
-                                                                               * do
-                                                                               * nothing
-                                                                               */
+                } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
+                    // ignore
                 } else
                     throw new ImageReadException(
                             "Unhandled/invalid character '" + ((char) c)

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.color;
 
-import org.apache.commons.imaging.util.Debug;
 
 public abstract class ColorConversions {
     public static final ColorCieLab convertXYZtoCIELab(ColorXyz xyz) {

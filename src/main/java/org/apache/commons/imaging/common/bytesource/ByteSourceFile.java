@@ -96,7 +96,7 @@ public class ByteSourceFile extends ByteSource {
                 if (null != is)
                     is.close();
             } catch (IOException e) {
-                // Debug.d
+                Debug.debug(e);
             }
         }
     }

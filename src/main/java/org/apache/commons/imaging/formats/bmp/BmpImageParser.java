@@ -592,6 +592,7 @@ public class BmpImageParser extends ImageParser {
                 try {
                     is.close();
                 } catch (IOException ignore) {
+                    Debug.debug(ignore);
                 }
             }
         }
@@ -678,6 +679,7 @@ public class BmpImageParser extends ImageParser {
                 try {
                     is.close();
                 } catch (IOException ignore) {
+                    Debug.debug(ignore);
                 }
             }
         }
@@ -697,6 +699,7 @@ public class BmpImageParser extends ImageParser {
                 try {
                     is.close();
                 } catch (IOException ignore) {
+                    Debug.debug(ignore);
                 }
             }
         }

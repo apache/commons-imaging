@@ -26,8 +26,6 @@ class WhiteSpaceReader {
         this.is = is;
     }
 
-    int count = 0;
-
     private char read() throws IOException {
         int result = is.read();
         if (result < 0)

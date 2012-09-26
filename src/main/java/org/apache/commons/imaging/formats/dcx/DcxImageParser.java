@@ -40,6 +40,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.pcx.PcxConstants;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
+import org.apache.commons.imaging.util.Debug;
 
 public class DcxImageParser extends ImageParser {
     // See http://www.fileformat.info/format/pcx/egff.htm for documentation
@@ -154,6 +155,7 @@ public class DcxImageParser extends ImageParser {
                     is.close();
                 }
             } catch (IOException ignored) {
+                Debug.debug(ignored);
             }
         }
     }
@@ -194,6 +196,7 @@ public class DcxImageParser extends ImageParser {
                     if (stream != null)
                         stream.close();
                 } catch (IOException ignored) {
+                    Debug.debug(ignored);
                 }
             }
         }

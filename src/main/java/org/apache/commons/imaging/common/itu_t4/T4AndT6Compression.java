@@ -23,14 +23,15 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BitArrayOutputStream;
 import org.apache.commons.imaging.common.BitInputStreamFlexible;
+import org.apache.commons.imaging.util.Debug;
 
 public class T4AndT6Compression {
     private static final HuffmanTree whiteRunLengths = new HuffmanTree();
     private static final HuffmanTree blackRunLengths = new HuffmanTree();
     private static final HuffmanTree controlCodes = new HuffmanTree();
 
-    private static final int WHITE = 0;
-    private static final int BLACK = 1;
+    public static final int WHITE = 0;
+    public static final int BLACK = 1;
 
     static {
         try {
@@ -80,6 +81,7 @@ public class T4AndT6Compression {
             controlCodes.insert(T4_T6_Tables.VR2.bitString, T4_T6_Tables.VR2);
             controlCodes.insert(T4_T6_Tables.VR3.bitString, T4_T6_Tables.VR3);
         } catch (HuffmanTreeException cannotHappen) {
+            Debug.debug(cannotHappen);
         }
     }
 
