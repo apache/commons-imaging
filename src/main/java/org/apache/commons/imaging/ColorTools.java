@@ -43,8 +43,9 @@ public class ColorTools {
     public BufferedImage correctImage(BufferedImage src, File file)
             throws ImageReadException, IOException {
         ICC_Profile icc = Imaging.getICCProfile(file);
-        if (icc == null)
+        if (icc == null) {
             return src;
+        }
 
         ICC_ColorSpace cs = new ICC_ColorSpace(icc);
 
@@ -104,13 +105,14 @@ public class ColorTools {
         if (old_cm instanceof ComponentColorModel) {
             ComponentColorModel ccm = (ComponentColorModel) old_cm;
             // ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
-            if (force_no_alpha)
+            if (force_no_alpha) {
                 return new ComponentColorModel(cs, false, false,
                         ComponentColorModel.OPAQUE, ccm.getTransferType());
-            else
+            } else {
                 return new ComponentColorModel(cs, ccm.hasAlpha(),
                         ccm.isAlphaPremultiplied(), ccm.getTransparency(),
                         ccm.getTransferType());
+            }
         } else if (old_cm instanceof DirectColorModel) {
             DirectColorModel dcm = (DirectColorModel) old_cm;
 

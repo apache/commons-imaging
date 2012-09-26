@@ -34,18 +34,21 @@ public abstract class ColorConversions {
         double var_Y = Y / ref_Y; // ref_Y = 100.000
         double var_Z = Z / ref_Z; // ref_Z = 108.883
 
-        if (var_X > 0.008856)
+        if (var_X > 0.008856) {
             var_X = Math.pow(var_X, (1 / 3.0));
-        else
+        } else {
             var_X = (7.787 * var_X) + (16 / 116.0);
-        if (var_Y > 0.008856)
+        }
+        if (var_Y > 0.008856) {
             var_Y = Math.pow(var_Y, 1 / 3.0);
-        else
+        } else {
             var_Y = (7.787 * var_Y) + (16 / 116.0);
-        if (var_Z > 0.008856)
+        }
+        if (var_Z > 0.008856) {
             var_Z = Math.pow(var_Z, 1 / 3.0);
-        else
+        } else {
             var_Z = (7.787 * var_Z) + (16 / 116.0);
+        }
 
         double L = (116 * var_Y) - 16;
         double a = 500 * (var_X - var_Y);
@@ -62,18 +65,21 @@ public abstract class ColorConversions {
         double var_X = a / 500 + var_Y;
         double var_Z = var_Y - b / 200.0;
 
-        if (Math.pow(var_Y, 3) > 0.008856)
+        if (Math.pow(var_Y, 3) > 0.008856) {
             var_Y = Math.pow(var_Y, 3);
-        else
+        } else {
             var_Y = (var_Y - 16 / 116.0) / 7.787;
-        if (Math.pow(var_X, 3) > 0.008856)
+        }
+        if (Math.pow(var_X, 3) > 0.008856) {
             var_X = Math.pow(var_X, 3);
-        else
+        } else {
             var_X = (var_X - 16 / 116.0) / 7.787;
-        if (Math.pow(var_Z, 3) > 0.008856)
+        }
+        if (Math.pow(var_Z, 3) > 0.008856) {
             var_Z = Math.pow(var_Z, 3);
-        else
+        } else {
             var_Z = (var_Z - 16 / 116.0) / 7.787;
+        }
 
         double X = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant=
                                   // D65
@@ -127,18 +133,21 @@ public abstract class ColorConversions {
         double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
         double var_B = var_X * 0.0557 + var_Y * -0.2040 + var_Z * 1.0570;
 
-        if (var_R > 0.0031308)
+        if (var_R > 0.0031308) {
             var_R = 1.055 * Math.pow(var_R, (1 / 2.4)) - 0.055;
-        else
+        } else {
             var_R = 12.92 * var_R;
-        if (var_G > 0.0031308)
+        }
+        if (var_G > 0.0031308) {
             var_G = 1.055 * Math.pow(var_G, (1 / 2.4)) - 0.055;
-        else
+        } else {
             var_G = 12.92 * var_G;
-        if (var_B > 0.0031308)
+        }
+        if (var_B > 0.0031308) {
             var_B = 1.055 * Math.pow(var_B, (1 / 2.4)) - 0.055;
-        else
+        } else {
             var_B = 12.92 * var_B;
+        }
 
         double R = (var_R * 255);
         double G = (var_G * 255);
@@ -156,18 +165,21 @@ public abstract class ColorConversions {
         double var_G = g / 255.0; // Where G = 0 ÷ 255
         double var_B = b / 255.0; // Where B = 0 ÷ 255
 
-        if (var_R > 0.04045)
+        if (var_R > 0.04045) {
             var_R = Math.pow((var_R + 0.055) / 1.055, 2.4);
-        else
+        } else {
             var_R = var_R / 12.92;
-        if (var_G > 0.04045)
+        }
+        if (var_G > 0.04045) {
             var_G = Math.pow((var_G + 0.055) / 1.055, 2.4);
-        else
+        } else {
             var_G = var_G / 12.92;
-        if (var_B > 0.04045)
+        }
+        if (var_B > 0.04045) {
             var_B = Math.pow((var_B + 0.055) / 1.055, 2.4);
-        else
+        } else {
             var_B = var_B / 12.92;
+        }
 
         var_R = var_R * 100;
         var_G = var_G * 100;
@@ -222,12 +234,15 @@ public abstract class ColorConversions {
 
         double var_K = 1.0;
 
-        if (C < var_K)
+        if (C < var_K) {
             var_K = C;
-        if (M < var_K)
+        }
+        if (M < var_K) {
             var_K = M;
-        if (Y < var_K)
+        }
+        if (Y < var_K) {
             var_K = Y;
+        }
         if (var_K == 1) { // Black
             C = 0;
             M = 0;
@@ -296,19 +311,21 @@ public abstract class ColorConversions {
 
         double H, S;
         // Debug.debug("del_Max", del_Max);
-        if (del_Max == 0) // This is a gray, no chroma...
-        {
+        if (del_Max == 0) {
+            // This is a gray, no chroma...
+        
             H = 0; // HSL results = 0 ÷ 1
             S = 0;
-        } else
+        } else {
         // Chromatic data...
-        {
+
             // Debug.debug("L", L);
 
-            if (L < 0.5)
+            if (L < 0.5) {
                 S = del_Max / (var_Max + var_Min);
-            else
+            } else {
                 S = del_Max / (2 - var_Max - var_Min);
+            }
 
             // Debug.debug("S", S);
 
@@ -316,19 +333,22 @@ public abstract class ColorConversions {
             double del_G = (((var_Max - var_G) / 6) + (del_Max / 2)) / del_Max;
             double del_B = (((var_Max - var_B) / 6) + (del_Max / 2)) / del_Max;
 
-            if (maxIsR)
+            if (maxIsR) {
                 H = del_B - del_G;
-            else if (maxIsG)
+            } else if (maxIsG) {
                 H = (1 / 3.0) + del_R - del_B;
-            else
+            } else {
                 H = (2 / 3.0) + del_G - del_R;
+            }
 
             // Debug.debug("H1", H);
 
-            if (H < 0)
+            if (H < 0) {
                 H += 1;
-            if (H > 1)
+            }
+            if (H > 1) {
                 H -= 1;
+            }
 
             // Debug.debug("H2", H);
         }
@@ -343,18 +363,19 @@ public abstract class ColorConversions {
     public static int convertHSLtoRGB(double H, double S, double L) {
         double R, G, B;
 
-        if (S == 0) // HSL values = 0 ÷ 1
-        {
+        if (S == 0) {
+            // HSL values = 0 ÷ 1
             R = L * 255; // RGB results = 0 ÷ 255
             G = L * 255;
             B = L * 255;
         } else {
             double var_2;
 
-            if (L < 0.5)
+            if (L < 0.5) {
                 var_2 = L * (1 + S);
-            else
+            } else {
                 var_2 = (L + S) - (S * L);
+            }
 
             double var_1 = 2 * L - var_2;
 
@@ -366,19 +387,22 @@ public abstract class ColorConversions {
         return convertRGBtoRGB(R, G, B);
     }
 
-    private static double convertHuetoRGB(double v1, double v2, double vH) // Function
-                                                                           // Hue_2_RGB
-    {
-        if (vH < 0)
+    private static double convertHuetoRGB(double v1, double v2, double vH) {
+        if (vH < 0) {
             vH += 1;
-        if (vH > 1)
+        }
+        if (vH > 1) {
             vH -= 1;
-        if ((6 * vH) < 1)
+        }
+        if ((6 * vH) < 1) {
             return (v1 + (v2 - v1) * 6 * vH);
-        if ((2 * vH) < 1)
+        }
+        if ((2 * vH) < 1) {
             return (v2);
-        if ((3 * vH) < 2)
+        }
+        if ((3 * vH) < 2) {
             return (v1 + (v2 - v1) * ((2 / 3.0) - vH) * 6);
+        }
         return (v1);
     }
 
@@ -410,30 +434,32 @@ public abstract class ColorConversions {
         double V = var_Max;
 
         double H, S;
-        if (del_Max == 0) // This is a gray, no chroma...
-        {
+        if (del_Max == 0) {
+            // This is a gray, no chroma...
             H = 0; // HSV results = 0 ÷ 1
             S = 0;
-        } else
+        } else {
         // Chromatic data...
-        {
             S = del_Max / var_Max;
 
             double del_R = (((var_Max - var_R) / 6) + (del_Max / 2)) / del_Max;
             double del_G = (((var_Max - var_G) / 6) + (del_Max / 2)) / del_Max;
             double del_B = (((var_Max - var_B) / 6) + (del_Max / 2)) / del_Max;
 
-            if (maxIsR)
+            if (maxIsR) {
                 H = del_B - del_G;
-            else if (maxIsG)
+            } else if (maxIsG) {
                 H = (1 / 3.0) + del_R - del_B;
-            else
+            } else {
                 H = (2 / 3.0) + del_G - del_R;
+            }
 
-            if (H < 0)
+            if (H < 0) {
                 H += 1;
-            if (H > 1)
+            }
+            if (H > 1) {
                 H -= 1;
+            }
         }
 
         return new ColorHsv(H, S, V);
@@ -446,15 +472,16 @@ public abstract class ColorConversions {
     public static int convertHSVtoRGB(double H, double S, double V) {
         double R, G, B;
 
-        if (S == 0) // HSV values = 0 ÷ 1
-        {
+        if (S == 0) {
+            // HSV values = 0 ÷ 1
             R = V * 255;
             G = V * 255;
             B = V * 255;
         } else {
             double var_h = H * 6;
-            if (var_h == 6)
+            if (var_h == 6) {
                 var_h = 0; // H must be < 1
+            }
             double var_i = Math.floor(var_h); // Or ... var_i = floor( var_h )
             double var_1 = V * (1 - S);
             double var_2 = V * (1 - S * (var_h - var_i));
@@ -497,9 +524,7 @@ public abstract class ColorConversions {
     }
 
     public static final int convertCMYKtoRGB_Adobe(int sc, int sm, int sy,
-            int sk)
-    // throws ImageReadException, IOException
-    {
+            int sk) {
         int red = 255 - (sc + sk);
         int green = 255 - (sm + sk);
         int blue = 255 - (sy + sk);
@@ -528,20 +553,23 @@ public abstract class ColorConversions {
             double var_y_cube = cube(var_Y);
             double var_z_cube = cube(var_Z);
 
-            if (var_y_cube > 0.008856)
+            if (var_y_cube > 0.008856) {
                 var_Y = var_y_cube;
-            else
+            } else {
                 var_Y = (var_Y - 16 / 116.0) / 7.787;
+            }
 
-            if (var_x_cube > 0.008856)
+            if (var_x_cube > 0.008856) {
                 var_X = var_x_cube;
-            else
+            } else {
                 var_X = (var_X - 16 / 116.0) / 7.787;
+            }
 
-            if (var_z_cube > 0.008856)
+            if (var_z_cube > 0.008856) {
                 var_Z = var_z_cube;
-            else
+            } else {
                 var_Z = (var_Z - 16 / 116.0) / 7.787;
+            }
 
             // double ref_X = 95.047;
             // double ref_Y = 100.000;
@@ -563,19 +591,22 @@ public abstract class ColorConversions {
             double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
             double var_B = var_X * 0.0557 + var_Y * -0.2040 + var_Z * 1.0570;
 
-            if (var_R > 0.0031308)
+            if (var_R > 0.0031308) {
                 var_R = 1.055 * Math.pow(var_R, (1 / 2.4)) - 0.055;
-            else
+            } else {
                 var_R = 12.92 * var_R;
-            if (var_G > 0.0031308)
+            }
+            if (var_G > 0.0031308) {
                 var_G = 1.055 * Math.pow(var_G, (1 / 2.4)) - 0.055;
-            else
+            } else {
                 var_G = 12.92 * var_G;
+            }
 
-            if (var_B > 0.0031308)
+            if (var_B > 0.0031308) {
                 var_B = 1.055 * Math.pow(var_B, (1 / 2.4)) - 0.055;
-            else
+            } else {
                 var_B = 12.92 * var_B;
+            }
 
             R = (var_R * 255);
             G = (var_G * 255);
@@ -618,10 +649,11 @@ public abstract class ColorConversions {
     public static ColorCieLch convertCIELabtoCIELCH(double L, double a, double b) {
         double var_H = Math.atan2(b, a); // Quadrant by signs
 
-        if (var_H > 0)
+        if (var_H > 0) {
             var_H = (var_H / Math.PI) * 180.0;
-        else
+        } else {
             var_H = 360 - radian_2_degree(Math.abs(var_H));
+        }
 
         // L = L;
         double C = Math.sqrt(square(a) + square(b));
@@ -668,10 +700,11 @@ public abstract class ColorConversions {
         double var_Y = Y / 100.0;
         // Debug.debug("var_Y", var_Y);
 
-        if (var_Y > 0.008856)
+        if (var_Y > 0.008856) {
             var_Y = Math.pow(var_Y, (1 / 3.0));
-        else
+        } else {
             var_Y = (7.787 * var_Y) + (16 / 116.0);
+        }
 
         double ref_X = 95.047; // Observer= 2°, Illuminant= D65
         double ref_Y = 100.000;
@@ -700,10 +733,11 @@ public abstract class ColorConversions {
         // problems here with div by zero
 
         double var_Y = (L + 16) / 116;
-        if (Math.pow(var_Y, 3) > 0.008856)
+        if (Math.pow(var_Y, 3) > 0.008856) {
             var_Y = Math.pow(var_Y, 3);
-        else
+        } else {
             var_Y = (var_Y - 16 / 116) / 7.787;
+        }
 
         double ref_X = 95.047; // Observer= 2°, Illuminant= D65
         double ref_Y = 100.000;

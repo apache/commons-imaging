@@ -48,8 +48,9 @@ public class FormatCompliance {
 
     public void addComment(String s) throws ImageReadException {
         comments.add(s);
-        if (failOnError)
+        if (failOnError) {
             throw new ImageReadException(s);
+        }
     }
 
     public void addComment(String s, int value) throws ImageReadException {
@@ -73,11 +74,12 @@ public class FormatCompliance {
     public void dump(PrintWriter pw) {
         pw.println("Format Compliance: " + description);
 
-        if (comments.size() == 0)
+        if (comments.size() == 0) {
             pw.println("\t" + "No comments.");
-        else {
-            for (int i = 0; i < comments.size(); i++)
+        } else {
+            for (int i = 0; i < comments.size(); i++) {
                 pw.println("\t" + (i + 1) + ": " + comments.get(i));
+            }
         }
         pw.println("");
         pw.flush();
@@ -128,21 +130,26 @@ public class FormatCompliance {
 
     public boolean compare(String name, int valid[], int actual)
             throws ImageReadException {
-        for (int i = 0; i < valid.length; i++)
-            if (actual == valid[i])
+        for (int i = 0; i < valid.length; i++) {
+            if (actual == valid[i]) {
                 return true;
+            }
+        }
 
         StringBuilder result = new StringBuilder();
         result.append(name + ": " + "Unexpected value: (valid: ");
-        if (valid.length > 1)
+        if (valid.length > 1) {
             result.append("{");
+        }
         for (int i = 0; i < valid.length; i++) {
-            if (i > 0)
+            if (i > 0) {
                 result.append(", ");
+            }
             result.append(getValueDescription(valid[i]));
         }
-        if (valid.length > 1)
+        if (valid.length > 1) {
             result.append("}");
+        }
         result.append(", actual: " + getValueDescription(actual) + ")");
         addComment(result.toString());
         return false;

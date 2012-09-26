@@ -46,20 +46,21 @@ public class BasicCParser {
                     hadBackSlash = !hadBackSlash;
                 } else if (c == '"') {
                     token.append('"');
-                    if (!hadBackSlash)
+                    if (!hadBackSlash) {
                         return token.toString();
+                    }
                     hadBackSlash = false;
-                } else if (c == '\r' || c == '\n')
+                } else if (c == '\r' || c == '\n') {
                     throw new ImageReadException(
                             "Unterminated string in XPM file");
-                else {
+                } else {
                     token.append((char) c);
                     hadBackSlash = false;
                 }
             } else if (inIdentifier) {
-                if (Character.isLetterOrDigit(c) || c == '_')
+                if (Character.isLetterOrDigit(c) || c == '_') {
                     token.append((char) c);
-                else {
+                } else {
                     is.unread(c);
                     return token.toString();
                 }
@@ -76,17 +77,20 @@ public class BasicCParser {
                     return token.toString();
                 } else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
                     // ignore
-                } else
+                } else {
                     throw new ImageReadException(
                             "Unhandled/invalid character '" + ((char) c)
                                     + "' found in XPM file");
+                }
             }
         }
 
-        if (inIdentifier)
+        if (inIdentifier) {
             return token.toString();
-        if (inString)
+        }
+        if (inString) {
             throw new ImageReadException("Unterminated string ends XMP file");
+        }
         return null;
     }
 
@@ -105,38 +109,44 @@ public class BasicCParser {
         for (int c = is.read(); c != -1; c = is.read()) {
             if (inComment) {
                 if (c == '*') {
-                    if (hadStar && !seenFirstComment)
+                    if (hadStar && !seenFirstComment) {
                         firstComment.append('*');
+                    }
                     hadStar = true;
                 } else if (c == '/') {
                     if (hadStar) {
                         hadStar = false;
                         inComment = false;
                         seenFirstComment = true;
-                    } else
+                    } else {
                         out.write(c);
+                    }
                 } else {
-                    if (hadStar && !seenFirstComment)
+                    if (hadStar && !seenFirstComment) {
                         firstComment.append('*');
+                    }
                     hadStar = false;
-                    if (!seenFirstComment)
+                    if (!seenFirstComment) {
                         firstComment.append((char) c);
+                    }
                 }
             } else if (inString) {
                 if (c == '\\') {
-                    if (hadBackSlash)
+                    if (hadBackSlash) {
                         out.write('\\');
+                    }
                     hadBackSlash = true;
                 } else if (c == '"') {
                     if (hadBackSlash) {
                         out.write('\\');
                         hadBackSlash = false;
-                    } else
+                    } else {
                         inString = false;
+                    }
                     out.write('"');
-                } else if (c == '\r' || c == '\n')
+                } else if (c == '\r' || c == '\n') {
                     throw new ImageReadException("Unterminated string in file");
-                else {
+                } else {
                     if (hadBackSlash) {
                         out.write('\\');
                         hadBackSlash = false;
@@ -147,60 +157,73 @@ public class BasicCParser {
                 if (c == '\r' || c == '\n') {
                     inDirective = false;
                     String[] tokens = tokenizeRow(directiveBuffer.toString());
-                    if (tokens.length < 2 || tokens.length > 3)
+                    if (tokens.length < 2 || tokens.length > 3) {
                         throw new ImageReadException(
                                 "Bad preprocessor directive");
-                    if (!tokens[0].equals("define"))
+                    }
+                    if (!tokens[0].equals("define")) {
                         throw new ImageReadException("Invalid/unsupported "
                                 + "preprocessor directive '" + tokens[0] + "'");
+                    }
                     defines.put(tokens[1], (tokens.length == 3) ? tokens[2]
                             : null);
                     directiveBuffer.setLength(0);
-                } else
+                } else {
                     directiveBuffer.append((char) c);
+                }
             } else {
                 if (c == '/') {
-                    if (hadSlash)
+                    if (hadSlash) {
                         out.write('/');
+                    }
                     hadSlash = true;
                 } else if (c == '*') {
                     if (hadSlash) {
                         inComment = true;
                         hadSlash = false;
-                    } else
+                    } else {
                         out.write(c);
+                    }
                 } else if (c == '"') {
-                    if (hadSlash)
+                    if (hadSlash) {
                         out.write('/');
+                    }
                     hadSlash = false;
                     out.write(c);
                     inString = true;
                 } else if (c == '#') {
-                    if (defines == null)
+                    if (defines == null) {
                         throw new ImageReadException(
                                 "Unexpected preprocessor directive");
+                    }
                     inDirective = true;
                 } else {
-                    if (hadSlash)
+                    if (hadSlash) {
                         out.write('/');
+                    }
                     hadSlash = false;
                     out.write(c);
                     // Only whitespace allowed before first comment:
-                    if (c != ' ' && c != '\t' && c != '\r' && c != '\n')
+                    if (c != ' ' && c != '\t' && c != '\r' && c != '\n') {
                         seenFirstComment = true;
+                    }
                 }
             }
         }
-        if (hadSlash)
+        if (hadSlash) {
             out.write('/');
-        if (hadStar)
+        }
+        if (hadStar) {
             out.write('*');
-        if (inString)
+        }
+        if (inString) {
             throw new ImageReadException(
                     "Unterminated string at the end of file");
-        if (inComment)
+        }
+        if (inComment) {
             throw new ImageReadException(
                     "Unterminated comment at the end of file");
+        }
         return out;
     }
 
@@ -208,42 +231,47 @@ public class BasicCParser {
         String[] tokens = row.split("[ \t]");
         int numLiveTokens = 0;
         for (int i = 0; i < tokens.length; i++) {
-            if (tokens[i] != null && tokens[i].length() > 0)
+            if (tokens[i] != null && tokens[i].length() > 0) {
                 ++numLiveTokens;
+            }
         }
         String[] liveTokens = new String[numLiveTokens];
         int next = 0;
         for (int i = 0; i < tokens.length; i++) {
-            if (tokens[i] != null && tokens[i].length() > 0)
+            if (tokens[i] != null && tokens[i].length() > 0) {
                 liveTokens[next++] = tokens[i];
+            }
         }
         return liveTokens;
     }
 
     public static void unescapeString(StringBuilder stringBuilder, String string)
             throws ImageReadException {
-        if (string.length() < 2)
+        if (string.length() < 2) {
             throw new ImageReadException("Parsing XPM file failed, "
                     + "string is too short");
+        }
         if (string.charAt(0) != '"'
-                || string.charAt(string.length() - 1) != '"')
+                || string.charAt(string.length() - 1) != '"') {
             throw new ImageReadException("Parsing XPM file failed, "
                     + "string not surrounded by '\"'");
+        }
         boolean hadBackSlash = false;
         for (int i = 1; i < (string.length() - 1); i++) {
             char c = string.charAt(i);
             if (hadBackSlash) {
-                if (c == '\\')
+                if (c == '\\') {
                     stringBuilder.append('\\');
-                else if (c == '"')
+                } else if (c == '"') {
                     stringBuilder.append('"');
-                else if (c == '\'')
+                } else if (c == '\'') {
                     stringBuilder.append('\'');
-                else if (c == 'x') {
-                    if (i + 2 >= string.length())
+                } else if (c == 'x') {
+                    if (i + 2 >= string.length()) {
                         throw new ImageReadException(
                                 "Parsing XPM file failed, "
                                         + "hex constant in string too short");
+                    }
                     char hex1 = string.charAt(i + 1);
                     char hex2 = string.charAt(i + 2);
                     i += 2;
@@ -260,11 +288,13 @@ public class BasicCParser {
                         || c == '4' || c == '5' || c == '6' || c == '7') {
                     int length = 1;
                     if (i + 1 < string.length() && '0' <= string.charAt(i + 1)
-                            && string.charAt(i + 1) <= '7')
+                            && string.charAt(i + 1) <= '7') {
                         ++length;
+                    }
                     if (i + 2 < string.length() && '0' <= string.charAt(i + 2)
-                            && string.charAt(i + 2) <= '7')
+                            && string.charAt(i + 2) <= '7') {
                         ++length;
+                    }
                     int constant = 0;
                     for (int j = 0; j < length; j++) {
                         constant *= 8;
@@ -272,36 +302,39 @@ public class BasicCParser {
                     }
                     i += length - 1;
                     stringBuilder.append((char) constant);
-                } else if (c == 'a')
+                } else if (c == 'a') {
                     stringBuilder.append((char) 0x07);
-                else if (c == 'b')
+                } else if (c == 'b') {
                     stringBuilder.append((char) 0x08);
-                else if (c == 'f')
+                } else if (c == 'f') {
                     stringBuilder.append((char) 0x0c);
-                else if (c == 'n')
+                } else if (c == 'n') {
                     stringBuilder.append((char) 0x0a);
-                else if (c == 'r')
+                } else if (c == 'r') {
                     stringBuilder.append((char) 0x0d);
-                else if (c == 't')
+                } else if (c == 't') {
                     stringBuilder.append((char) 0x09);
-                else if (c == 'v')
+                } else if (c == 'v') {
                     stringBuilder.append((char) 0x0b);
-                else
+                } else {
                     throw new ImageReadException("Parsing XPM file failed, "
                             + "invalid escape sequence");
+                }
                 hadBackSlash = false;
             } else {
-                if (c == '\\')
+                if (c == '\\') {
                     hadBackSlash = true;
-                else if (c == '"')
+                } else if (c == '"') {
                     throw new ImageReadException("Parsing XPM file failed, "
                             + "extra '\"' found in string");
-                else
+                } else {
                     stringBuilder.append(c);
+                }
             }
         }
-        if (hadBackSlash)
+        if (hadBackSlash) {
             throw new ImageReadException("Parsing XPM file failed, "
                     + "unterminated escape sequence found in string");
+        }
     }
 }

@@ -38,8 +38,9 @@ public class ImageFormat {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof ImageFormat))
+        if (!(o instanceof ImageFormat)) {
             return false;
+        }
 
         ImageFormat other = (ImageFormat) o;
 

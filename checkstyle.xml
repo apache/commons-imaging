@@ -35,6 +35,7 @@ limitations under the License.
     <module name="AvoidStarImport"/>
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
+    <module name="NeedBraces"/>
   </module>
 </module>
 

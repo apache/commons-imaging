@@ -96,8 +96,9 @@ public abstract class Imaging implements ImagingConstants {
      * format file extension; otherwise, false.
      */
     public static boolean hasImageFileExtension(File file) {
-        if (file==null || !file.isFile())
+        if (file==null || !file.isFile()) {
             return false;
+        }
         return hasImageFileExtension(file.getName());
     }
 
@@ -111,8 +112,9 @@ public abstract class Imaging implements ImagingConstants {
      * @return true if the filename has an image format file extension.
      */
     public static boolean hasImageFileExtension(String filename) {
-        if(filename==null)
+        if(filename==null) {
             return false;
+        }
         
         filename = filename.toLowerCase();
 
@@ -123,8 +125,9 @@ public abstract class Imaging implements ImagingConstants {
 
             for (int j = 0; j < exts.length; j++) {
                 String ext = exts[j];
-                if (filename.endsWith(ext.toLowerCase()))
+                if (filename.endsWith(ext.toLowerCase())) {
                     return true;
+                }
             }
         }
 
@@ -220,8 +223,9 @@ public abstract class Imaging implements ImagingConstants {
     public static ImageFormat guessFormat(ByteSource byteSource)
             throws ImageReadException, IOException {
         
-        if(byteSource==null)
+        if (byteSource==null) {
             return ImageFormat.IMAGE_FORMAT_UNKNOWN;
+        }
         
         InputStream is = null;
 
@@ -230,9 +234,10 @@ public abstract class Imaging implements ImagingConstants {
 
             int i1 = is.read();
             int i2 = is.read();
-            if ((i1 < 0) || (i2 < 0))
+            if ((i1 < 0) || (i2 < 0)) {
                 throw new ImageReadException(
                         "Couldn't read magic numbers to guess format.");
+            }
 
             int b1 = i1 & 0xff;
             int b2 = i2 & 0xff;
@@ -272,9 +277,10 @@ public abstract class Imaging implements ImagingConstants {
             } else if (compareBytePair(MAGIC_NUMBERS_JBIG2_1, bytePair)) {
                 int i3 = is.read();
                 int i4 = is.read();
-                if ((i3 < 0) || (i4 < 0))
+                if ((i3 < 0) || (i4 < 0)) {
                     throw new ImageReadException(
                             "Couldn't read magic numbers to guess format.");
+                }
 
                 int b3 = i3 & 0xff;
                 int b4 = i4 & 0xff;
@@ -407,15 +413,18 @@ public abstract class Imaging implements ImagingConstants {
     protected static ICC_Profile getICCProfile(ByteSource byteSource, Map params)
             throws ImageReadException, IOException {
         byte bytes[] = getICCProfileBytes(byteSource, params);
-        if (bytes == null)
+        if (bytes == null) {
             return null;
+        }
 
         IccProfileParser parser = new IccProfileParser();
         IccProfileInfo info = parser.getICCProfileInfo(bytes);
-        if (info == null)
+        if (info == null) {
             return null;
-        if (info.issRGB())
+        }
+        if (info.issRGB()) {
             return null;
+        }
 
         ICC_Profile icc = ICC_Profile.getInstance(bytes);
         return icc;
@@ -695,8 +704,9 @@ public abstract class Imaging implements ImagingConstants {
             for (int i = 0; i < imageParsers.length; i++) {
                 ImageParser imageParser = imageParsers[i];
 
-                if (imageParser.canAcceptType(format))
+                if (imageParser.canAcceptType(format)) {
                     return imageParser;
+                }
             }
         }
 
@@ -707,8 +717,9 @@ public abstract class Imaging implements ImagingConstants {
             for (int i = 0; i < imageParsers.length; i++) {
                 ImageParser imageParser = imageParsers[i];
 
-                if (imageParser.canAcceptExtension(filename))
+                if (imageParser.canAcceptExtension(filename)) {
                     return imageParser;
+                }
             }
         }
 
@@ -1249,8 +1260,9 @@ public abstract class Imaging implements ImagingConstants {
     public static BufferedImage getBufferedImage(InputStream is, Map params)
             throws ImageReadException, IOException {
         String filename = null;
-        if (params != null && params.containsKey(PARAM_KEY_FILENAME))
+        if (params != null && params.containsKey(PARAM_KEY_FILENAME)) {
             filename = (String) params.get(PARAM_KEY_FILENAME);
+        }
         return getBufferedImage(new ByteSourceInputStream(is, filename), params);
     }
 
@@ -1353,8 +1365,9 @@ public abstract class Imaging implements ImagingConstants {
     private static BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
-        if (null == params)
+        if (null == params) {
             params = new HashMap();
+        }
 
         return imageParser.getBufferedImage(byteSource, params);
     }
@@ -1394,8 +1407,9 @@ public abstract class Imaging implements ImagingConstants {
             writeImage(src, os, format, params);
         } finally {
             try {
-                if (os != null)
+                if (os != null) {
                     os.close();
+                }
             } catch (Exception e) {
                 Debug.debug(e);
             }
@@ -1466,16 +1480,18 @@ public abstract class Imaging implements ImagingConstants {
         ImageParser imageParsers[] = ImageParser.getAllImageParsers();
 
         // make sure params are non-null
-        if (params == null)
+        if (params == null) {
             params = new HashMap();
+        }
 
         params.put(PARAM_KEY_FORMAT, format);
 
         for (int i = 0; i < imageParsers.length; i++) {
             ImageParser imageParser = imageParsers[i];
 
-            if (!imageParser.canAcceptType(format))
+            if (!imageParser.canAcceptType(format)) {
                 continue;
+            }
 
             imageParser.writeImage(src, os, params);
             return;
