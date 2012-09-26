@@ -812,13 +812,13 @@ public class GifImageParser extends ImageParser {
 
         int max_colors = hasAlpha ? 255 : 256;
 
-        Palette palette2 = new PaletteFactory().makePaletteSimple(src,
+        Palette palette2 = new PaletteFactory().makeSimpleRgbPalette(src,
                 max_colors);
         // int palette[] = new PaletteFactory().makePaletteSimple(src, 256);
         // Map palette_map = paletteToMap(palette);
 
         if (palette2 == null) {
-            palette2 = new PaletteFactory().makePaletteQuantized(src,
+            palette2 = new PaletteFactory().makeQuantizedRgbPalette(src,
                     max_colors);
             if (verbose)
                 System.out.println("quantizing");

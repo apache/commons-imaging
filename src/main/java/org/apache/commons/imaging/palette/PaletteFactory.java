@@ -26,10 +26,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.imaging.ImageWriteException;
+
 public class PaletteFactory {
     private static final boolean debug = false;
 
-    public void makePaletteFancy(BufferedImage src) {
+    /**
+     * Builds an exact complete opaque palette containing all the colors in {@code src},
+     * using an algorithm that is faster than {@linkplain #makePaletteSimple} for large images
+     * but uses 2 mebibytes of working memory. Treats all the colors as opaque.
+     * @param src the image whose palette to build
+     * @return the palette
+     */
+    public Palette makeExactRgbPaletteFancy(BufferedImage src) {
         // map what rgb values have been used
 
         byte rgbmap[] = new byte[256 * 256 * 32];
@@ -37,7 +46,7 @@ public class PaletteFactory {
         int width = src.getWidth();
         int height = src.getHeight();
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int rggbb = 0x1fffff & argb;
@@ -45,19 +54,12 @@ public class PaletteFactory {
                 int mask = 1 << highred;
                 rgbmap[rggbb] |= mask;
             }
+        }
 
         int count = 0;
         for (int i = 0; i < rgbmap.length; i++) {
             int eight = 0xff & rgbmap[i];
-            if ((i < 3) || ((i - rgbmap.length) > -3)) {
-            }
-            for (int j = 0; j < 8; j++) {
-                int mask = 1 << (7 - j);
-                int bit = eight & mask;
-                if (bit > 0)
-                    count++;
-
-            }
+            count += Integer.bitCount(eight);
         }
 
         if (debug)
@@ -67,29 +69,21 @@ public class PaletteFactory {
         int mapsize = 0;
         for (int i = 0; i < rgbmap.length; i++) {
             int eight = 0xff & rgbmap[i];
-
+            int mask = 0x80;
             for (int j = 0; j < 8; j++) {
-                int mask = 1 << (7 - j);
                 int bit = eight & mask;
+                mask >>>= 1;
 
                 if (bit > 0) {
                     int rgb = i | ((7 - j) << 21);
 
-                    if (mapsize < colormap.length)
-                        colormap[mapsize] = rgb;
-                    mapsize++;
+                    colormap[mapsize++] = rgb;
                 }
             }
         }
 
-        if (debug)
-            System.out.println("mapsize: " + mapsize);
-
-        // for (int i = 0; i < colormap.length; i++)
-        // {
-        // int rgb = colormap[i];
-        // }
-
+        Arrays.sort(colormap);
+        return new SimplePalette(colormap);
     }
 
     private int pixelToQuantizationTableIndex(int argb, int precision) {
@@ -323,13 +317,13 @@ public class PaletteFactory {
     }
 
     /**
-     * Builds an inexact palette of at most {@code max} colors in {@code src}
+     * Builds an inexact opaque palette of at most {@code max} colors in {@code src}
      * using the Median Cut algorithm.
      * @param src the image whose palette to build
      * @param max the maximum number of colors the palette can contain
      * @return the palette of at most {@code max} colors
      */
-    public Palette makePaletteQuantized(BufferedImage src, int max) {
+    public Palette makeQuantizedRgbPalette(BufferedImage src, int max) {
         int precision = 6; // in bits
 
         int table_scale = precision * components;
@@ -385,15 +379,27 @@ public class PaletteFactory {
 
         return new QuantizedPalette(subsets, precision);
     }
+    
+    /**
+     * Builds an inexact possibly translucent palette of at most {@code max} colors in {@code src}
+     * using the Median Cut algorithm.
+     * @param src the image whose palette to build
+     * @param transparent whether to consider the alpha values
+     * @param max the maximum number of colors the palette can contain
+     * @return the palette of at most {@code max} colors
+     */
+    public Palette makeQuantizedRgbaPalette(BufferedImage src, boolean transparent, int max) throws ImageWriteException {
+        return new MedianCutQuantizer(!transparent).process(src, max, false);
+    }
 
     /**
-     * Builds an exact and complete palette containing all the colors in {@code src},
+     * Builds an exact complete opaque palette containing all the colors in {@code src},
      * and fails by returning {@code null} if there are more than {@code max} colors necessary to do this.
      * @param src the image whose palette to build
      * @param max the maximum number of colors the palette can contain
      * @return the complete palette of {@code max} or less colors, or {@code null} if more than {@code max} colors are necessary
      */
-    public SimplePalette makePaletteSimple(BufferedImage src, int max) {
+    public SimplePalette makeSimpleRgbPalette(BufferedImage src, int max) {
         // This is not efficient for large values of max, say, max > 256;
         Set<Integer> rgbs = new HashSet<Integer>();
 

@@ -256,69 +256,65 @@ public class MedianCutQuantizer {
         List<ColorGroup> color_groups = new ArrayList<ColorGroup>();
         ColorGroup root = new ColorGroup(new ArrayList<ColorCount>(
                 color_map.values()));
-        {
-            color_groups.add(root);
+        color_groups.add(root);
 
-            final Comparator<ColorGroup> comparator = new Comparator<ColorGroup>() {
-                public int compare(ColorGroup cg1, ColorGroup cg2) {
-                    if (cg1.max_diff == cg2.max_diff)
-                        return cg2.diff_total - cg1.diff_total;
-                    return cg2.max_diff - cg1.max_diff;
-                }
-            };
+        final Comparator<ColorGroup> comparator = new Comparator<ColorGroup>() {
+            public int compare(ColorGroup cg1, ColorGroup cg2) {
+                if (cg1.max_diff == cg2.max_diff)
+                    return cg2.diff_total - cg1.diff_total;
+                return cg2.max_diff - cg1.max_diff;
+            }
+        };
 
-            while (color_groups.size() < max_colors) {
-                Collections.sort(color_groups, comparator);
+        while (color_groups.size() < max_colors) {
+            Collections.sort(color_groups, comparator);
 
-                ColorGroup color_group = color_groups.get(0);
+            ColorGroup color_group = color_groups.get(0);
 
-                if (color_group.max_diff == 0)
-                    break;
-                if (!ignoreAlpha
-                        && color_group.alpha_diff > color_group.red_diff
-                        && color_group.alpha_diff > color_group.green_diff
-                        && color_group.alpha_diff > color_group.blue_diff) {
-                    doCut(color_group, ALPHA, color_groups);
-                } else if (color_group.red_diff > color_group.green_diff
-                        && color_group.red_diff > color_group.blue_diff) {
-                    doCut(color_group, RED, color_groups);
-                } else if (color_group.green_diff > color_group.blue_diff) {
-                    doCut(color_group, GREEN, color_groups);
-                } else {
-                    doCut(color_group, BLUE, color_groups);
-                }
+            if (color_group.max_diff == 0)
+                break;
+            if (!ignoreAlpha
+                    && color_group.alpha_diff > color_group.red_diff
+                    && color_group.alpha_diff > color_group.green_diff
+                    && color_group.alpha_diff > color_group.blue_diff) {
+                doCut(color_group, ALPHA, color_groups);
+            } else if (color_group.red_diff > color_group.green_diff
+                    && color_group.red_diff > color_group.blue_diff) {
+                doCut(color_group, RED, color_groups);
+            } else if (color_group.green_diff > color_group.blue_diff) {
+                doCut(color_group, GREEN, color_groups);
+            } else {
+                doCut(color_group, BLUE, color_groups);
             }
         }
 
-        {
-            int palette_size = color_groups.size();
-            if (verbose)
-                Debug.debug("palette size: " + palette_size);
+        int palette_size = color_groups.size();
+        if (verbose)
+            Debug.debug("palette size: " + palette_size);
 
-            int palette[] = new int[palette_size];
+        int palette[] = new int[palette_size];
 
-            for (int i = 0; i < color_groups.size(); i++) {
-                ColorGroup color_group = color_groups.get(i);
+        for (int i = 0; i < color_groups.size(); i++) {
+            ColorGroup color_group = color_groups.get(i);
 
-                palette[i] = color_group.getMedianValue();
+            palette[i] = color_group.getMedianValue();
 
-                color_group.palette_index = i;
+            color_group.palette_index = i;
 
-                if (color_group.color_counts.size() < 1)
-                    throw new ImageWriteException("empty color_group: "
-                            + color_group);
+            if (color_group.color_counts.size() < 1)
+                throw new ImageWriteException("empty color_group: "
+                        + color_group);
 
-                // if(color_group.)
-                // Debug.debug("color_group", color_group);
-                // Debug.debug("palette[" + i + "]", palette[i] + " ("
-                // + Integer.toHexString(palette[i]) + ")");
-            }
-
-            if (palette_size > discrete_colors)
-                throw new ImageWriteException("palette_size>discrete_colors");
-
-            return new MedianCutPalette(root, palette);
+            // if(color_group.)
+            // Debug.debug("color_group", color_group);
+            // Debug.debug("palette[" + i + "]", palette[i] + " ("
+            // + Integer.toHexString(palette[i]) + ")");
         }
+
+        if (palette_size > discrete_colors)
+            throw new ImageWriteException("palette_size>discrete_colors");
+
+        return new MedianCutPalette(root, palette);
     }
 
     private static final int ALPHA = 0;
@@ -377,45 +373,42 @@ public class MedianCutQuantizer {
         }
 
         color_groups.remove(color_group);
+        List<ColorCount> color_counts1 = new ArrayList<ColorCount>(
+                color_group.color_counts.subList(0, median_index + 1));
+        List<ColorCount> color_counts2 = new ArrayList<ColorCount>(
+                color_group.color_counts.subList(median_index + 1,
+                        color_group.color_counts.size()));
+
+        ColorGroup less, more;
         {
-            List<ColorCount> color_counts1 = new ArrayList<ColorCount>(
-                    color_group.color_counts.subList(0, median_index + 1));
-            List<ColorCount> color_counts2 = new ArrayList<ColorCount>(
-                    color_group.color_counts.subList(median_index + 1,
-                            color_group.color_counts.size()));
-
-            ColorGroup less, more;
-            {
-                less = new ColorGroup(new ArrayList<ColorCount>(color_counts1));
-                color_groups.add(less);
-            }
-            {
-                more = new ColorGroup(new ArrayList<ColorCount>(color_counts2));
-                color_groups.add(more);
-            }
-
-            ColorCount median_value = color_group.color_counts
-                    .get(median_index);
-            int limit;
-            switch (mode) {
-            case ALPHA:
-                limit = median_value.alpha;
-                break;
-            case RED:
-                limit = median_value.red;
-                break;
-            case GREEN:
-                limit = median_value.green;
-                break;
-            case BLUE:
-                limit = median_value.blue;
-                break;
-            default:
-                throw new Error("Bad mode.");
-            }
-            color_group.cut = new ColorGroupCut(less, more, mode, limit);
-
+            less = new ColorGroup(new ArrayList<ColorCount>(color_counts1));
+            color_groups.add(less);
         }
+        {
+            more = new ColorGroup(new ArrayList<ColorCount>(color_counts2));
+            color_groups.add(more);
+        }
+
+        ColorCount median_value = color_group.color_counts
+                .get(median_index);
+        int limit;
+        switch (mode) {
+        case ALPHA:
+            limit = median_value.alpha;
+            break;
+        case RED:
+            limit = median_value.red;
+            break;
+        case GREEN:
+            limit = median_value.green;
+            break;
+        case BLUE:
+            limit = median_value.blue;
+            break;
+        default:
+            throw new Error("Bad mode.");
+        }
+        color_group.cut = new ColorGroupCut(less, more, mode, limit);
     }
 
     private static class ColorGroupCut {

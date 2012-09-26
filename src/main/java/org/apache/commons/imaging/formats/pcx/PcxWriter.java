@@ -130,7 +130,7 @@ public class PcxWriter implements PcxConstants {
             throws ImageWriteException, IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory
-                .makePaletteSimple(src, 256);
+                .makeSimpleRgbPalette(src, 256);
         BinaryOutputStream bos = new BinaryOutputStream(os,
                 BinaryOutputStream.BYTE_ORDER_INTEL);
         if (palette == null || bitDepth == 24 || bitDepth == 32) {
