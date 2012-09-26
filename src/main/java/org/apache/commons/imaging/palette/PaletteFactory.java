@@ -365,7 +365,7 @@ public class PaletteFactory {
             System.out.println("width * height: " + (width * height));
         }
 
-        subsets = divide(subsets, 256, table, precision);
+        subsets = divide(subsets, max, table, precision);
 
         if (debug) {
             System.out.println("subsets: " + subsets.size());
