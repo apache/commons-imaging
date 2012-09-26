@@ -57,7 +57,7 @@ public class QuantizedPalette extends Palette {
                 | ((rgb >> (16 - 2 * precision)) & (precisionMask << precision))
                 | ((rgb >> (8 - precision)) & (precisionMask));
 
-        return straight[index].index;
+        return straight[index].getIndex();
     }
 
     @Override

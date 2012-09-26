@@ -772,7 +772,7 @@ public class BmpImageParser extends ImageParser {
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
 
-        final SimplePalette palette = new PaletteFactory().makeSimpleRgbPalette(
+        final SimplePalette palette = new PaletteFactory().makeExactRgbPaletteSimple(
                 src, 256);
 
         BmpWriter writer = null;

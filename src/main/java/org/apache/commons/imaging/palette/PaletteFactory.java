@@ -28,12 +28,15 @@ import java.util.Set;
 
 import org.apache.commons.imaging.ImageWriteException;
 
+/**
+ * Factory for creating palettes.
+ */
 public class PaletteFactory {
     private static final boolean debug = false;
 
     /**
      * Builds an exact complete opaque palette containing all the colors in {@code src},
-     * using an algorithm that is faster than {@linkplain #makePaletteSimple} for large images
+     * using an algorithm that is faster than {@linkplain #makeExactRgbPaletteSimple} for large images
      * but uses 2 mebibytes of working memory. Treats all the colors as opaque.
      * @param src the image whose palette to build
      * @return the palette
@@ -318,7 +321,9 @@ public class PaletteFactory {
 
     /**
      * Builds an inexact opaque palette of at most {@code max} colors in {@code src}
-     * using the Median Cut algorithm.
+     * using a variation of the Median Cut algorithm. Accurate to 6 bits per component,
+     * and works by splitting the color bounding box most heavily populated by colors
+     * along the component which splits the colors most evenly.
      * @param src the image whose palette to build
      * @param max the maximum number of colors the palette can contain
      * @return the palette of at most {@code max} colors
@@ -382,7 +387,9 @@ public class PaletteFactory {
     
     /**
      * Builds an inexact possibly translucent palette of at most {@code max} colors in {@code src}
-     * using the Median Cut algorithm.
+     * using the traditional Median Cut algorithm. Color bounding boxes are split along the
+     * longest axis, with each step splitting the box. All bits in each component are used.
+     * The Algorithm is slower and seems exact than {@linkplain #makeQuantizedRgbPalette(BufferedImage, int)}.
      * @param src the image whose palette to build
      * @param transparent whether to consider the alpha values
      * @param max the maximum number of colors the palette can contain
@@ -399,7 +406,7 @@ public class PaletteFactory {
      * @param max the maximum number of colors the palette can contain
      * @return the complete palette of {@code max} or less colors, or {@code null} if more than {@code max} colors are necessary
      */
-    public SimplePalette makeSimpleRgbPalette(BufferedImage src, int max) {
+    public SimplePalette makeExactRgbPaletteSimple(BufferedImage src, int max) {
         // This is not efficient for large values of max, say, max > 256;
         Set<Integer> rgbs = new HashSet<Integer>();
 

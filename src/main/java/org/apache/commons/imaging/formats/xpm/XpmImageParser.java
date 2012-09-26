@@ -661,7 +661,7 @@ public class XpmImageParser extends ImageParser {
         int maxColors = writePalette.length;
         int charsPerPixel = 1;
         for (; palette == null;) {
-            palette = paletteFactory.makeSimpleRgbPalette(src,
+            palette = paletteFactory.makeExactRgbPaletteSimple(src,
                     hasTransparency ? maxColors - 1 : maxColors);
             if (palette == null) {
                 maxColors *= writePalette.length;

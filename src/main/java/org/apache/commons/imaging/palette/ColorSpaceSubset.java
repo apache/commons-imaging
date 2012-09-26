@@ -146,7 +146,12 @@ class ColorSpaceSubset {
         rgb = (int) (((redsum & 0xff) << 16) | ((greensum & 0xff) << 8) | ((bluesum & 0xff) << 0));
     }
 
-    public int index;
+    // the index in the palette.
+    private int index;
+    
+    public final int getIndex() {
+        return index;
+    }
 
     public final void setIndex(int i) {
         index = i;

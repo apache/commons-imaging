@@ -812,7 +812,7 @@ public class GifImageParser extends ImageParser {
 
         int max_colors = hasAlpha ? 255 : 256;
 
-        Palette palette2 = new PaletteFactory().makeSimpleRgbPalette(src,
+        Palette palette2 = new PaletteFactory().makeExactRgbPaletteSimple(src,
                 max_colors);
         // int palette[] = new PaletteFactory().makePaletteSimple(src, 256);
         // Map palette_map = paletteToMap(palette);

@@ -304,11 +304,6 @@ public class MedianCutQuantizer {
             if (color_group.color_counts.size() < 1)
                 throw new ImageWriteException("empty color_group: "
                         + color_group);
-
-            // if(color_group.)
-            // Debug.debug("color_group", color_group);
-            // Debug.debug("palette[" + i + "]", palette[i] + " ("
-            // + Integer.toHexString(palette[i]) + ")");
         }
 
         if (palette_size > discrete_colors)
@@ -380,14 +375,10 @@ public class MedianCutQuantizer {
                         color_group.color_counts.size()));
 
         ColorGroup less, more;
-        {
-            less = new ColorGroup(new ArrayList<ColorCount>(color_counts1));
-            color_groups.add(less);
-        }
-        {
-            more = new ColorGroup(new ArrayList<ColorCount>(color_counts2));
-            color_groups.add(more);
-        }
+        less = new ColorGroup(new ArrayList<ColorCount>(color_counts1));
+        color_groups.add(less);
+        more = new ColorGroup(new ArrayList<ColorCount>(color_counts2));
+        color_groups.add(more);
 
         ColorCount median_value = color_group.color_counts
                 .get(median_index);
