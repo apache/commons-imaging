@@ -35,7 +35,6 @@ class ColorSpaceSubset {
         maxs = new int[PaletteFactory.components];
         for (int i = 0; i < PaletteFactory.components; i++) {
             mins[i] = 0;
-            // maxs[i] = 255;
             maxs[i] = precision_mask;
         }
 
@@ -53,11 +52,7 @@ class ColorSpaceSubset {
         rgb = -1;
     }
 
-    public static long compares = 0;
-
     public final boolean contains(int red, int green, int blue) {
-        compares++;
-
         red >>= (8 - precision);
         if (mins[0] > red)
             return false;
@@ -128,33 +123,27 @@ class ColorSpaceSubset {
     }
 
     public void setAverageRGB(int table[]) {
+        long redsum = 0, greensum = 0, bluesum = 0;
 
-        {
-            long redsum = 0, greensum = 0, bluesum = 0;
-
-            for (int red = mins[0]; red <= maxs[0]; red++)
-                for (int green = mins[1]; green <= maxs[1]; green++)
-                    for (int blue = mins[2]; blue <= maxs[2]; blue++)
-                    // for (int red = 0; red <= precision_mask; red++)
-                    // for (int green = 0; green <= precision_mask; green++)
-                    // for (int blue = 0; blue <= precision_mask; blue++)
-                    {
-                        int index = (blue << (2 * precision)) // note: order
-                                                              // reversed
-                                | (green << (1 * precision))
-                                | (red << (0 * precision));
-                        int count = table[index];
-                        redsum += count * (red << (8 - precision));
-                        greensum += count * (green << (8 - precision));
-                        bluesum += count * (blue << (8 - precision));
-
-                    }
-
-            redsum /= total;
-            greensum /= total;
-            bluesum /= total;
-            rgb = (int) (((redsum & 0xff) << 16) | ((greensum & 0xff) << 8) | ((bluesum & 0xff) << 0));
+        for (int red = mins[0]; red <= maxs[0]; red++) {
+            for (int green = mins[1]; green <= maxs[1]; green++) {
+                for (int blue = mins[2]; blue <= maxs[2]; blue++) {
+                    // note: order reversed
+                    int index = (blue << (2 * precision)) 
+                            | (green << (1 * precision))
+                            | (red << (0 * precision));
+                    int count = table[index];
+                    redsum += count * (red << (8 - precision));
+                    greensum += count * (green << (8 - precision));
+                    bluesum += count * (blue << (8 - precision));
+                }
+            }
         }
+
+        redsum /= total;
+        greensum /= total;
+        bluesum /= total;
+        rgb = (int) (((redsum & 0xff) << 16) | ((greensum & 0xff) << 8) | ((bluesum & 0xff) << 0));
     }
 
     public int index;

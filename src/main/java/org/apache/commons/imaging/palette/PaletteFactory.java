@@ -115,7 +115,6 @@ public class PaletteFactory {
             int b = (blue << (2 * precision));
             for (int green = mins[1]; green <= maxs[1]; green++) {
                 int g = (green << (1 * precision));
-
                 for (int red = mins[0]; red <= maxs[0]; red++) {
                     int index = b | g | red;
 
@@ -148,8 +147,6 @@ public class PaletteFactory {
         if ((remainder < 1) || (remainder >= total)) {
             return null;
         }
-
-        // List result = new ArrayList();
 
         int slice_mins[] = new int[subset.mins.length];
         System.arraycopy(subset.mins, 0, slice_mins, 0, subset.mins.length);
@@ -194,25 +191,22 @@ public class PaletteFactory {
         int slice1, slice2;
         int last = 0;
 
-        {
-            for (slice1 = subset.mins[component]; slice1 != subset.maxs[component] + 1; slice1++) {
+        for (slice1 = subset.mins[component]; slice1 != subset.maxs[component] + 1; slice1++) {
 
-                slice_mins[component] = slice1;
-                slice_maxs[component] = slice1;
+            slice_mins[component] = slice1;
+            slice_maxs[component] = slice1;
 
-                last = getFrequencyTotal(table, slice_mins, slice_maxs,
-                        precision);
+            last = getFrequencyTotal(table, slice_mins, slice_maxs,
+                    precision);
 
-                sum1 += last;
+            sum1 += last;
 
-                if (sum1 >= (total / 2))
-                    break;
-            }
-
-            sum2 = sum1 - last;
-            slice2 = slice1 - 1;
-
+            if (sum1 >= (total / 2))
+                break;
         }
+
+        sum2 = sum1 - last;
+        slice2 = slice1 - 1;
 
         DivisionCandidate dc1 = finishDivision(table, subset, component,
                 precision, sum1, slice1);
@@ -238,7 +232,6 @@ public class PaletteFactory {
         dcs.addAll(divideSubset2(table, subset, 2, precision));
 
         DivisionCandidate best_v = null;
-        // int best_split
         double best_score = Double.MAX_VALUE;
 
         for (int i = 0; i < dcs.size(); i++) {
@@ -250,9 +243,7 @@ public class PaletteFactory {
             int area2 = second.total;
 
             int diff = Math.abs(area1 - area2);
-            double split = ((double) diff) / ((double) Math.max(area1, area2));
-
-            double score = split;
+            double score = ((double) diff) / ((double) Math.max(area1, area2));
 
             if (best_v == null) {
                 best_v = dc;
@@ -317,27 +308,23 @@ public class PaletteFactory {
             if (debug)
                 System.out.println("\t" + "area: " + max_area);
 
-            {
-
-                DivisionCandidate dc = divideSubset2(table, max_subset,
-                        precision);
-                if (dc != null) {
-                    v.remove(max_subset);
-                    v.add(dc.dst_a);
-                    v.add(dc.dst_b);
-                } else
-                    ignore.add(max_subset);
-            }
+            DivisionCandidate dc = divideSubset2(table, max_subset,
+                    precision);
+            if (dc != null) {
+                v.remove(max_subset);
+                v.add(dc.dst_a);
+                v.add(dc.dst_b);
+            } else
+                ignore.add(max_subset);
 
             if (v.size() == desired_count)
                 return v;
         }
-
-        // return result;
     }
 
     /**
-     * Builds an inexact palette of at most {@code max} colors in {@code src}.
+     * Builds an inexact palette of at most {@code max} colors in {@code src}
+     * using the Median Cut algorithm.
      * @param src the image whose palette to build
      * @param max the maximum number of colors the palette can contain
      * @return the palette of at most {@code max} colors
@@ -362,7 +349,7 @@ public class PaletteFactory {
         }
 
         // step 1: count frequency of colors
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
 
@@ -370,6 +357,7 @@ public class PaletteFactory {
 
                 table[index]++;
             }
+        }
 
         if (debug) {
             int all_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
