@@ -36,7 +36,7 @@ public class XmpUpdateTest extends ImagingTest {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
 
             if (imageFile.getName().toLowerCase().endsWith(".png")
                     && isInvalidPNGTestFile(imageFile))

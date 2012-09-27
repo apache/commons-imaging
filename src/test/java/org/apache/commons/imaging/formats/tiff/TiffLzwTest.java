@@ -119,7 +119,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
                         Debug.debug();
                     }
                 }
-                Integer expectedCode = (Integer) codes.get(index++);
+                Integer expectedCode = codes.get(index++);
                 if (code != expectedCode.intValue()) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
                     Debug.debug("code: " + code + " (0x"
@@ -207,7 +207,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
                     Debug.debug("eoiCode: " + index + "/" + codes.size());
                     Debug.debug();
                 }
-                Integer expectedCode = (Integer) codes.get(index++);
+                Integer expectedCode = codes.get(index++);
                 if (code != expectedCode.intValue()) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
                     Debug.debug("code: " + code + " (0x"
