@@ -1484,7 +1484,7 @@ public abstract class Imaging implements ImagingConstants {
             params = new HashMap<String,Object>();
         }
 
-        params.put(PARAM_KEY_FORMAT, (Object)format);
+        params.put(PARAM_KEY_FORMAT, format);
 
         for (int i = 0; i < imageParsers.length; i++) {
             ImageParser imageParser = imageParsers[i];
