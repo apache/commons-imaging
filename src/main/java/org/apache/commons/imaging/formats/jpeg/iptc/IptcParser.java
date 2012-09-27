@@ -96,7 +96,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
      * Some IPTC blocks are missing this first "record version" record, so we
      * don't require it.
      */
-    public PhotoshopApp13Data parsePhotoshopSegment(byte bytes[], Map params)
+    public PhotoshopApp13Data parsePhotoshopSegment(byte bytes[], Map<String,Object> params)
             throws ImageReadException, IOException {
         boolean strict = ParamMap.getParamBoolean(params,
                 ImagingConstants.PARAM_KEY_STRICT, false);
@@ -411,60 +411,58 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
     public byte[] writeIPTCBlock(List<IptcRecord> elements)
             throws ImageWriteException, IOException {
         byte blockData[];
-        {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(baos,
-                    getByteOrder());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        BinaryOutputStream bos = new BinaryOutputStream(baos,
+                getByteOrder());
 
-            // first, right record version record
-            bos.write(IPTC_RECORD_TAG_MARKER);
-            bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
-            bos.write(IptcTypes.RECORD_VERSION.type); // record version record
-                                                      // type.
-            bos.write2Bytes(2); // record version record size
-            bos.write2Bytes(2); // record version value
+        // first, right record version record
+        bos.write(IPTC_RECORD_TAG_MARKER);
+        bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
+        bos.write(IptcTypes.RECORD_VERSION.type); // record version record
+                                                  // type.
+        bos.write2Bytes(2); // record version record size
+        bos.write2Bytes(2); // record version value
 
-            // make a copy of the list.
-            elements = new ArrayList<IptcRecord>(elements);
+        // make a copy of the list.
+        elements = new ArrayList<IptcRecord>(elements);
 
-            // sort the list. Records must be in numerical order.
-            Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {
-                public int compare(IptcRecord e1, IptcRecord e2) {
-                    return e2.iptcType.getType() - e1.iptcType.getType();
-                }
-            };
-            Collections.sort(elements, comparator);
-            // TODO: make sure order right
+        // sort the list. Records must be in numerical order.
+        Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {
+            public int compare(IptcRecord e1, IptcRecord e2) {
+                return e2.iptcType.getType() - e1.iptcType.getType();
+            }
+        };
+        Collections.sort(elements, comparator);
+        // TODO: make sure order right
 
-            // write the list.
-            for (int i = 0; i < elements.size(); i++) {
-                IptcRecord element = elements.get(i);
+        // write the list.
+        for (int i = 0; i < elements.size(); i++) {
+            IptcRecord element = elements.get(i);
 
-                if (element.iptcType == IptcTypes.RECORD_VERSION) {
-                    continue; // ignore
-                }
-
-                bos.write(IPTC_RECORD_TAG_MARKER);
-                bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
-                if (element.iptcType.getType() < 0
-                        || element.iptcType.getType() > 0xff) {
-                    throw new ImageWriteException("Invalid record type: "
-                            + element.iptcType.getType());
-                }
-                bos.write(element.iptcType.getType());
-
-                byte recordData[] = element.value.getBytes("ISO-8859-1");
-                if (!new String(recordData, "ISO-8859-1").equals(element.value)) {
-                    throw new ImageWriteException(
-                            "Invalid record value, not ISO-8859-1");
-                }
-
-                bos.write2Bytes(recordData.length);
-                bos.write(recordData);
+            if (element.iptcType == IptcTypes.RECORD_VERSION) {
+                continue; // ignore
             }
 
-            blockData = baos.toByteArray();
+            bos.write(IPTC_RECORD_TAG_MARKER);
+            bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
+            if (element.iptcType.getType() < 0
+                    || element.iptcType.getType() > 0xff) {
+                throw new ImageWriteException("Invalid record type: "
+                        + element.iptcType.getType());
+            }
+            bos.write(element.iptcType.getType());
+
+            byte recordData[] = element.value.getBytes("ISO-8859-1");
+            if (!new String(recordData, "ISO-8859-1").equals(element.value)) {
+                throw new ImageWriteException(
+                        "Invalid record value, not ISO-8859-1");
+            }
+
+            bos.write2Bytes(recordData.length);
+            bos.write(recordData);
         }
+
+        blockData = baos.toByteArray();
 
         return blockData;
     }

@@ -115,7 +115,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             IOException {
         try {
             ByteSource byteSource = new ByteSourceArray(exifBytes);
-            Map params = null;
+            Map<String,Object> params = null;
             FormatCompliance formatCompliance = FormatCompliance.getDefault();
             TiffContents contents = new TiffReader(false).readContents(
                     byteSource, params, formatCompliance);

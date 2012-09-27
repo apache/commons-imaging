@@ -40,7 +40,7 @@ public abstract class IcnsBaseTest extends ImagingTest {
         }
     };
 
-    protected List getIcnsImages() throws IOException, ImageReadException {
+    protected List<File> getIcnsImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

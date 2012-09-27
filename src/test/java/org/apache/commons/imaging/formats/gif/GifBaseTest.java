@@ -40,7 +40,7 @@ public abstract class GifBaseTest extends ImagingTest {
         }
     };
 
-    protected List getGifImages() throws IOException, ImageReadException {
+    protected List<File> getGifImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 

@@ -96,10 +96,6 @@ public class MyLzwCompressor {
         private final int length;
         private final int hash;
 
-        public ByteArray(byte bytes[]) {
-            this(bytes, 0, bytes.length);
-        }
-
         public ByteArray(byte bytes[], int start, int length) {
             this.bytes = bytes;
             this.start = start;

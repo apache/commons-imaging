@@ -42,7 +42,7 @@ public class PngWriter implements PngConstants {
         this.verbose = verbose;
     }
 
-    public PngWriter(Map params) {
+    public PngWriter(Map<String,Object> params) {
         this.verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
                 false);
     }
@@ -311,7 +311,7 @@ public class PngWriter implements PngConstants {
         return result;
     }
 
-    private byte getBitDepth(final byte colorType, Map params) {
+    private byte getBitDepth(final byte colorType, Map<String,Object> params) {
         byte result = 8;
 
         Object o = params.get(PARAM_KEY_PNG_BIT_DEPTH);
@@ -363,10 +363,10 @@ public class PngWriter implements PngConstants {
      * iTXt Yes None tEXt Yes None zTXt Yes None
      */
 
-    public void writeImage(BufferedImage src, OutputStream os, Map params)
+    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap(params);
+        params = new HashMap<String,Object>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {
@@ -377,7 +377,7 @@ public class PngWriter implements PngConstants {
             params.remove(PARAM_KEY_VERBOSE);
         }
 
-        Map rawParams = new HashMap(params);
+        Map<String,Object> rawParams = new HashMap<String,Object>(params);
         if (params.containsKey(PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
             params.remove(PARAM_KEY_PNG_FORCE_TRUE_COLOR);
         }
@@ -514,10 +514,9 @@ public class PngWriter implements PngConstants {
         }
 
         if (params.containsKey(PARAM_KEY_PNG_TEXT_CHUNKS)) {
-            List<PngText> outputTexts = (List<PngText>) params
-                    .get(PARAM_KEY_PNG_TEXT_CHUNKS);
+            List<?> outputTexts = (List<?>) params.get(PARAM_KEY_PNG_TEXT_CHUNKS);
             for (int i = 0; i < outputTexts.size(); i++) {
-                PngText text = outputTexts.get(i);
+                PngText text = (PngText) outputTexts.get(i);
                 if (text instanceof PngText.Text) {
                     writeChunktEXt(os, (PngText.Text) text);
                 } else if (text instanceof PngText.Ztxt) {

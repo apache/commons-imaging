@@ -498,13 +498,13 @@ public class GifImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
+    public byte[] getICCProfileBytes(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public Dimension getImageSize(ByteSource byteSource, Map params)
+    public Dimension getImageSize(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         ImageContents blocks = readFile(byteSource, false);
 
@@ -539,7 +539,7 @@ public class GifImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(ByteSource byteSource, Map params)
+    public IImageMetadata getMetadata(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -560,7 +560,7 @@ public class GifImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(ByteSource byteSource, Map params)
+    public ImageInfo getImageInfo(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         ImageContents blocks = readFile(byteSource, false);
 
@@ -690,7 +690,7 @@ public class GifImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
+    public BufferedImage getBufferedImage(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         ImageContents imageContents = readFile(byteSource, false);
 
@@ -809,10 +809,10 @@ public class GifImageParser extends ImageParser {
     private static final int SORT_FLAG_MASK = 1 << 5;
 
     @Override
-    public void writeImage(BufferedImage src, OutputStream os, Map params)
+    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap(params);
+        params = new HashMap<String,Object>(params);
 
         boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
                 false);
@@ -1075,7 +1075,7 @@ public class GifImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(ByteSource byteSource, Map params)
+    public String getXmpXml(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
 
         InputStream is = null;

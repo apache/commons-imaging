@@ -53,15 +53,15 @@ public class IcoRoundtripTest extends IcoBaseTest {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
-    private Map generatorMap = new HashMap();
+    private Map<Integer,BitmapGenerator> generatorMap = new HashMap<Integer,BitmapGenerator>();
 
     public IcoRoundtripTest() {
-        generatorMap.put(new Integer(1), new GeneratorFor1BitBitmaps());
-        generatorMap.put(new Integer(4), new GeneratorFor4BitBitmaps());
-        generatorMap.put(new Integer(8), new GeneratorFor8BitBitmaps());
-        generatorMap.put(new Integer(16), new GeneratorFor16BitBitmaps());
-        generatorMap.put(new Integer(24), new GeneratorFor24BitBitmaps());
-        generatorMap.put(new Integer(32), new GeneratorFor32BitBitmaps());
+        generatorMap.put(1, new GeneratorFor1BitBitmaps());
+        generatorMap.put(4, new GeneratorFor4BitBitmaps());
+        generatorMap.put(8, new GeneratorFor8BitBitmaps());
+        generatorMap.put(16, new GeneratorFor16BitBitmaps());
+        generatorMap.put(24, new GeneratorFor24BitBitmaps());
+        generatorMap.put(32, new GeneratorFor32BitBitmaps());
     }
 
     private static interface BitmapGenerator {
@@ -321,11 +321,9 @@ public class IcoRoundtripTest extends IcoBaseTest {
     public void testNormalIcons() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
-        for (Iterator it = generatorMap.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            int bitDepth = ((Integer) entry.getKey()).intValue();
-            BitmapGenerator bitmapGenerator = (BitmapGenerator) entry
-                    .getValue();
+        for (Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
+            int bitDepth = entry.getKey();
+            BitmapGenerator bitmapGenerator = entry.getValue();
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             BinaryOutputStream bos = new BinaryOutputStream(baos,
@@ -347,11 +345,9 @@ public class IcoRoundtripTest extends IcoBaseTest {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
         // Windows ignores the ICONDIRENTRY values when parsing the ICO file.
-        for (Iterator it = generatorMap.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            int bitDepth = ((Integer) entry.getKey()).intValue();
-            BitmapGenerator bitmapGenerator = (BitmapGenerator) entry
-                    .getValue();
+        for (Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
+            int bitDepth = entry.getKey();
+            BitmapGenerator bitmapGenerator = entry.getValue();
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             BinaryOutputStream bos = new BinaryOutputStream(baos,
@@ -391,11 +387,9 @@ public class IcoRoundtripTest extends IcoBaseTest {
     public void testColorsUsed() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
-        for (Iterator it = generatorMap.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            int bitDepth = ((Integer) entry.getKey()).intValue();
-            BitmapGenerator bitmapGenerator = (BitmapGenerator) entry
-                    .getValue();
+        for (Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
+            int bitDepth = entry.getKey();
+            BitmapGenerator bitmapGenerator = entry.getValue();
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             BinaryOutputStream bos = new BinaryOutputStream(baos,
@@ -415,11 +409,9 @@ public class IcoRoundtripTest extends IcoBaseTest {
     public void testZeroColorPlanes() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
-        for (Iterator it = generatorMap.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            int bitDepth = ((Integer) entry.getKey()).intValue();
-            BitmapGenerator bitmapGenerator = (BitmapGenerator) entry
-                    .getValue();
+        for (Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
+            int bitDepth = entry.getKey();
+            BitmapGenerator bitmapGenerator = entry.getValue();
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             BinaryOutputStream bos = new BinaryOutputStream(baos,

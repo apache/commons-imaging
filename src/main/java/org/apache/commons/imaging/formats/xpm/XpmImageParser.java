@@ -132,13 +132,13 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(ByteSource byteSource, Map params)
+    public IImageMetadata getMetadata(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(ByteSource byteSource, Map params)
+    public ImageInfo getImageInfo(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         XpmHeader xpmHeader = readXpmHeader(byteSource);
         boolean isTransparent = false;
@@ -165,14 +165,14 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(ByteSource byteSource, Map params)
+    public Dimension getImageSize(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         XpmHeader xpmHeader = readXpmHeader(byteSource);
         return new Dimension(xpmHeader.width, xpmHeader.height);
     }
 
     @Override
-    public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
+    public byte[] getICCProfileBytes(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -626,7 +626,7 @@ public class XpmImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(ByteSource byteSource,
-            Map params) throws ImageReadException, IOException {
+            Map<String,Object> params) throws ImageReadException, IOException {
         XpmParseResult result = parseXpmHeader(byteSource);
         return readXpmImage(result.xpmHeader, result.cParser);
     }
@@ -673,10 +673,10 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(BufferedImage src, OutputStream os, Map params)
+    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap() : new HashMap(params);
+        params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {
@@ -774,7 +774,7 @@ public class XpmImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(ByteSource byteSource, Map params)
+    public String getXmpXml(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }

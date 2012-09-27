@@ -18,6 +18,8 @@ package org.apache.commons.imaging.common;
 
 public abstract class RationalNumberUtilities extends Number {
 
+    private static final long serialVersionUID = 4636553158238799602L;
+
     private static class Option {
         public final RationalNumber rationalNumber;
         public final double error;

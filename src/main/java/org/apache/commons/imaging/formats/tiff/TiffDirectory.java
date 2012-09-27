@@ -148,11 +148,11 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
     public BufferedImage getTiffImage(int byteOrder) throws ImageReadException,
             IOException {
-        Map params = null;
+        Map<String,Object> params = null;
         return getTiffImage(byteOrder, params);
     }
 
-    public BufferedImage getTiffImage(int byteOrder, Map params)
+    public BufferedImage getTiffImage(int byteOrder, Map<String,Object> params)
             throws ImageReadException, IOException {
         if (null == tiffImageData) {
             return null;

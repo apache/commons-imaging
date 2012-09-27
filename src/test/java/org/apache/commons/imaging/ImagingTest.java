@@ -90,23 +90,23 @@ public abstract class ImagingTest extends TestCase implements
 
     protected File getTestImage(ImageFilter filter) throws IOException,
             ImageReadException {
-        List images = getTestImages(filter, 1);
+        List<File> images = getTestImages(filter, 1);
 
         assertTrue(images.size() > 0);
 
         return (File) images.get(0);
     }
 
-    protected List getTestImages() throws IOException, ImageReadException {
+    protected List<File> getTestImages() throws IOException, ImageReadException {
         return getTestImages(null, -1);
     }
 
-    protected List getTestImages(ImageFilter filter) throws IOException,
+    protected List<File> getTestImages(ImageFilter filter) throws IOException,
             ImageReadException {
         return getTestImages(filter, -1);
     }
 
-    private static final List ALL_IMAGES = new ArrayList();
+    private static final List<File> ALL_IMAGES = new ArrayList<File>();
 
     static {
         File imagesFolder = TEST_IMAGE_FOLDER;
@@ -131,9 +131,9 @@ public abstract class ImagingTest extends TestCase implements
         new FileSystemTraversal().traverseFiles(imagesFolder, visitor);
     }
 
-    protected List getTestImages(final ImageFilter filter, final int max)
+    protected List<File> getTestImages(final ImageFilter filter, final int max)
             throws IOException, ImageReadException {
-        final List images = new ArrayList();
+        final List<File> images = new ArrayList<File>();
         int counter = 0;
 
         for (int i = 0; i < ALL_IMAGES.size(); i++) {

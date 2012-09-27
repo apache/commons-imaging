@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.IImageMetadata.IImageMetadataItem;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -142,9 +143,9 @@ public class MetadataExample {
 
             System.out.println();
 
-            List items = jpegMetadata.getItems();
+            List<IImageMetadataItem> items = jpegMetadata.getItems();
             for (int i = 0; i < items.size(); i++) {
-                Object item = items.get(i);
+                IImageMetadataItem item = items.get(i);
                 System.out.println("    " + "item: " + item);
             }
 

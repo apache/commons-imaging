@@ -40,7 +40,7 @@ public abstract class BmpBaseTest extends ImagingTest {
         }
     };
 
-    protected List getBmpImages() throws IOException, ImageReadException {
+    protected List<File> getBmpImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 

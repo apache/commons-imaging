@@ -136,13 +136,13 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     }
 
     @Override
-    public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
+    public byte[] getICCProfileBytes(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public Dimension getImageSize(ByteSource byteSource, Map params)
+    public Dimension getImageSize(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         FileInfo info = readHeader(byteSource);
 
@@ -163,13 +163,13 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     }
 
     @Override
-    public IImageMetadata getMetadata(ByteSource byteSource, Map params)
+    public IImageMetadata getMetadata(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(ByteSource byteSource, Map params)
+    public ImageInfo getImageInfo(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         FileInfo info = readHeader(byteSource);
 
@@ -251,7 +251,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     }
 
     @Override
-    public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
+    public BufferedImage getBufferedImage(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         InputStream is = null;
 
@@ -285,7 +285,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     public static final String PARAM_VALUE_PNM_RAWBITS_NO = "NO";
 
     @Override
-    public void writeImage(BufferedImage src, OutputStream os, Map params)
+    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         PnmWriter writer = null;
         boolean useRawbits = true;
@@ -316,9 +316,9 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
 
         // make copy of params; we'll clear keys as we consume them.
         if (params != null) {
-            params = new HashMap(params);
+            params = new HashMap<String,Object>(params);
         } else {
-            params = new HashMap();
+            params = new HashMap<String,Object>();
         }
 
         // clear format key.
@@ -345,7 +345,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(ByteSource byteSource, Map params)
+    public String getXmpXml(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }

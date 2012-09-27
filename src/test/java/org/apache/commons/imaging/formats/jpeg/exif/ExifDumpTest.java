@@ -36,7 +36,7 @@ public class ExifDumpTest extends ExifBaseTest {
     // }
 
     public void test() throws Exception {
-        List images = getImagesWithExifData();
+        List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -49,7 +49,7 @@ public class ExifDumpTest extends ExifBaseTest {
             Debug.debug("Segments:");
             new JpegUtils().dumpJFIF(byteSource);
 
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 

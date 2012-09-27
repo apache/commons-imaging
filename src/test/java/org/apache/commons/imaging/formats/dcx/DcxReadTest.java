@@ -33,7 +33,7 @@ public class DcxReadTest extends DcxBaseTest {
     public void test() throws Exception {
         Debug.debug("start");
 
-        List images = getDcxImages();
+        List<File> images = getDcxImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -44,7 +44,7 @@ public class DcxReadTest extends DcxBaseTest {
             IImageMetadata metadata = Imaging.getMetadata(imageFile);
             // assertNotNull(metadata);
 
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             // assertNotNull(imageInfo);
 

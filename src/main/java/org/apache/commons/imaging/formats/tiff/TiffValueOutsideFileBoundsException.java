@@ -17,6 +17,8 @@
 package org.apache.commons.imaging.formats.tiff;
 
 public class TiffValueOutsideFileBoundsException extends Exception {
+    private static final long serialVersionUID = 5674955248527127823L;
+
     public TiffValueOutsideFileBoundsException(String message) {
         super(message);
     }

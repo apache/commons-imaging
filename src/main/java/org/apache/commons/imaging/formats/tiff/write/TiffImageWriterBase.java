@@ -124,9 +124,9 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             }
 
             HashSet<Integer> fieldTags = new HashSet<Integer>();
-            List fields = directory.getFields();
+            List<TiffOutputField> fields = directory.getFields();
             for (int j = 0; j < fields.size(); j++) {
-                TiffOutputField field = (TiffOutputField) fields.get(j);
+                TiffOutputField field = fields.get(j);
 
                 if (fieldTags.contains(field.tag)) {
                     throw new ImageWriteException("Tag ("
@@ -244,10 +244,10 @@ public abstract class TiffImageWriterBase implements TiffConstants,
         // Debug.debug();
     }
 
-    public void writeImage(BufferedImage src, OutputStream os, Map params)
+    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap(params);
+        params = new HashMap<String,Object>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {
@@ -286,7 +286,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
             }
             params.remove(PARAM_KEY_COMPRESSION);
         }
-        HashMap rawParams = new HashMap(params);
+        HashMap<String,Object> rawParams = new HashMap<String,Object>(params);
         params.remove(PARAM_KEY_T4_OPTIONS);
         params.remove(PARAM_KEY_T6_OPTIONS);
         if (params.size() > 0) {

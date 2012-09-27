@@ -79,13 +79,13 @@ public class XbmImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(ByteSource byteSource, Map params)
+    public IImageMetadata getMetadata(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(ByteSource byteSource, Map params)
+    public ImageInfo getImageInfo(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         XbmHeader xbmHeader = readXbmHeader(byteSource);
         return new ImageInfo("XBM", 1, new ArrayList<String>(),
@@ -96,14 +96,14 @@ public class XbmImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(ByteSource byteSource, Map params)
+    public Dimension getImageSize(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         XbmHeader xbmHeader = readXbmHeader(byteSource);
         return new Dimension(xbmHeader.width, xbmHeader.height);
     }
 
     @Override
-    public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
+    public byte[] getICCProfileBytes(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -305,7 +305,7 @@ public class XbmImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(ByteSource byteSource,
-            Map params) throws ImageReadException, IOException {
+            Map<String,Object> params) throws ImageReadException, IOException {
         XbmParseResult result = parseXbmHeader(byteSource);
         return readXbmImage(result.xbmHeader, result.cParser);
     }
@@ -336,10 +336,10 @@ public class XbmImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(BufferedImage src, OutputStream os, Map params)
+    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap() : new HashMap(params);
+        params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {
@@ -419,7 +419,7 @@ public class XbmImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(ByteSource byteSource, Map params)
+    public String getXmpXml(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }

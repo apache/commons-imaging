@@ -57,7 +57,8 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
 
             int byteOrder = getByteOrder();
 
-            for (int markerCount = 0; true; markerCount++) {
+            int markerCount;
+            for (markerCount = 0; true; markerCount++) {
                 byte[] markerBytes = new byte[2];
                 do {
                     markerBytes[0] = markerBytes[1];
@@ -102,6 +103,8 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                     return;
                 }
             }
+            
+            Debug.debug("" + markerCount + " markers");
 
         } finally {
             try {

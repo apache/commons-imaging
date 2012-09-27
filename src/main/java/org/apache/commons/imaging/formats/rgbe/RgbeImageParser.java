@@ -71,7 +71,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(ByteSource byteSource, Map params)
+    public IImageMetadata getMetadata(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         RgbeInfo info = new RgbeInfo(byteSource);
 
@@ -83,7 +83,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(ByteSource byteSource, Map params)
+    public ImageInfo getImageInfo(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         RgbeInfo info = new RgbeInfo(byteSource);
 
@@ -91,7 +91,7 @@ public class RgbeImageParser extends ImageParser {
             return new ImageInfo(
                     getName(),
                     32, // todo may be 64 if double?
-                    new ArrayList(), ImageFormat.IMAGE_FORMAT_RGBE, getName(),
+                    new ArrayList<String>(), ImageFormat.IMAGE_FORMAT_RGBE, getName(),
                     info.getHeight(), "image/vnd.radiance", 1, -1, -1, -1, -1,
                     info.getWidth(), false, false, false,
                     ImageInfo.COLOR_TYPE_RGB, "Adaptive RLE");
@@ -101,7 +101,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
+    public BufferedImage getBufferedImage(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         RgbeInfo info = new RgbeInfo(byteSource);
 
@@ -125,7 +125,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(ByteSource byteSource, Map params)
+    public Dimension getImageSize(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         RgbeInfo info = new RgbeInfo(byteSource);
 
@@ -137,7 +137,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
+    public byte[] getICCProfileBytes(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -148,7 +148,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public String getXmpXml(ByteSource byteSource, Map params)
+    public String getXmpXml(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }

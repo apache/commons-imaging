@@ -29,7 +29,7 @@ public class PgmWriter extends PnmWriter implements PnmConstants {
     }
 
     @Override
-    public void writeImage(BufferedImage src, OutputStream os, Map params)
+    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)

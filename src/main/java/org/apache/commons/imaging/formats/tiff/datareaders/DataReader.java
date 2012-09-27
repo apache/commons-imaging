@@ -107,8 +107,6 @@ public abstract class DataReader implements TiffConstants, BinaryConstants {
         return samples;
     }
 
-    private int count = 0;
-
     protected byte[] decompress(byte compressed[], int compression,
             int expected_size, int tileWidth, int tileHeight)
             throws ImageReadException, IOException {
@@ -193,7 +191,6 @@ public abstract class DataReader implements TiffConstants, BinaryConstants {
         {
             byte unpacked[] = new PackBits().decompress(compressed,
                     expected_size);
-            count++;
 
             return unpacked;
         }

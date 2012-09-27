@@ -31,7 +31,7 @@ public class GifReadTest extends GifBaseTest {
     public void test() throws Exception {
         Debug.debug("start");
 
-        List images = getGifImages();
+        List<File> images = getGifImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();

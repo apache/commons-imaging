@@ -30,7 +30,7 @@ import org.apache.commons.imaging.util.Debug;
 public class JpegReadTest extends JpegBaseTest {
 
     public void test() throws Exception {
-        List images = getJpegImages();
+        List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -41,7 +41,7 @@ public class JpegReadTest extends JpegBaseTest {
             // ByteSource byteSource = new ByteSourceFile(imageFile);
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 

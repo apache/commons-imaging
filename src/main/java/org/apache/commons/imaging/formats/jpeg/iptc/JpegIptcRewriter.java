@@ -118,7 +118,7 @@ public class JpegIptcRewriter extends JpegRewriter implements IptcConstants {
         if (photoshopApp13Segments.size() == 1) {
             JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments
                     .get(0);
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             PhotoshopApp13Data oldData = new IptcParser()
                     .parsePhotoshopSegment(oldSegment.segmentData, params);
             List<IptcBlock> newBlocks = oldData.getNonIptcBlocks();

@@ -82,7 +82,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public byte[] getICCProfileBytes(ByteSource byteSource, Map params)
+    public byte[] getICCProfileBytes(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
         TiffContents contents = new TiffReader(isStrict(params))
@@ -94,7 +94,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public Dimension getImageSize(ByteSource byteSource, Map params)
+    public Dimension getImageSize(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
         TiffContents contents = new TiffReader(isStrict(params))
@@ -126,7 +126,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public IImageMetadata getMetadata(ByteSource byteSource, Map params)
+    public IImageMetadata getMetadata(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
         TiffReader tiffReader = new TiffReader(isStrict(params));
@@ -157,7 +157,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public ImageInfo getImageInfo(ByteSource byteSource, Map params)
+    public ImageInfo getImageInfo(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
         TiffContents contents = new TiffReader(isStrict(params))
@@ -317,7 +317,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public String getXmpXml(ByteSource byteSource, Map params)
+    public String getXmpXml(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
         TiffContents contents = new TiffReader(isStrict(params))
@@ -360,7 +360,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             {
                 FormatCompliance formatCompliance = FormatCompliance
                         .getDefault();
-                Map params = null;
+                Map<String,Object> params = null;
                 TiffContents contents = new TiffReader(true).readContents(
                         byteSource, params, formatCompliance);
 
@@ -407,13 +407,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     public FormatCompliance getFormatCompliance(ByteSource byteSource)
             throws ImageReadException, IOException {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        Map params = null;
+        Map<String,Object> params = null;
         new TiffReader(isStrict(params)).readContents(byteSource, params,
                 formatCompliance);
         return formatCompliance;
     }
 
-    public List<byte[]> collectRawImageData(ByteSource byteSource, Map params)
+    public List<byte[]> collectRawImageData(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
         TiffContents contents = new TiffReader(isStrict(params))
@@ -435,7 +435,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public BufferedImage getBufferedImage(ByteSource byteSource, Map params)
+    public BufferedImage getBufferedImage(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         FormatCompliance formatCompliance = FormatCompliance.getDefault();
         TiffReader reader = new TiffReader(isStrict(params));
@@ -470,7 +470,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     protected BufferedImage getBufferedImage(TiffDirectory directory,
-            int byteOrder, Map params) throws ImageReadException, IOException {
+            int byteOrder, Map<String,Object> params) throws ImageReadException, IOException {
         List<TiffField> entries = directory.entries;
 
         if (entries == null) {
@@ -620,7 +620,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public void writeImage(BufferedImage src, OutputStream os, Map params)
+    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         new TiffImageWriterLossy().writeImage(src, os, params);
     }

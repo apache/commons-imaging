@@ -38,7 +38,7 @@ import org.apache.commons.imaging.util.IoUtils;
 public class ByteSourceImageTest extends ByteSourceTest {
 
     public void test() throws Exception {
-        List imageFiles = getTestImages();
+        List<File> imageFiles = getTestImages();
         for (int i = 0; i < imageFiles.size(); i++) {
             if (i % 1 == 0)
                 Debug.purgeMemory();
@@ -151,7 +151,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
     public void checkGetImageInfo(File imageFile, byte[] imageFileBytes)
             throws IOException, ImageReadException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException {
-        Map params = new HashMap();
+        Map<String,Object> params = new HashMap<String,Object>();
         boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF)
@@ -178,8 +178,8 @@ public class ByteSourceImageTest extends ByteSourceTest {
             // if (method.getGenericParameterTypes().length > 0)
             // continue;
 
-            Object valueFile = method.invoke(imageInfoFile, null);
-            Object valueBytes = method.invoke(imageInfoBytes, null);
+            Object valueFile = method.invoke(imageInfoFile, (Object[])null);
+            Object valueBytes = method.invoke(imageInfoBytes, (Object[])null);
 
             assertTrue(valueFile.equals(valueBytes));
         }

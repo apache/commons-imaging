@@ -348,6 +348,8 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
 
     public static class JpegSegmentOverflowException extends
             ImageWriteException {
+        private static final long serialVersionUID = -1062145751550646846L;
+
         public JpegSegmentOverflowException(String s) {
             super(s);
         }

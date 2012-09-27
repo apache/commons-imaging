@@ -37,7 +37,7 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
     public void testSingleImage() throws Exception {
         File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 
-        Map params = new HashMap();
+        Map<String,Object> params = new HashMap<String,Object>();
 
         IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
@@ -48,32 +48,32 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
         if (null == exif)
             return;
 
-        List fields = exif.getAllFields();
-        Map fieldMap = new Hashtable();
+        List<TiffField> fields = exif.getAllFields();
+        Map<Integer,TiffField> fieldMap = new Hashtable<Integer,TiffField>();
         // Build a simplified field tag -> field map, ignoring directory
         // structures.
         // Good enough for our purposes, since the image in question is known.
         for (int i = 0; i < fields.size(); i++) {
-            TiffField field = (TiffField) fields.get(i);
-            fieldMap.put(new Integer(field.tag), field);
+            TiffField field = fields.get(i);
+            fieldMap.put(field.tag, field);
         }
 
-        Map expectedFieldValues = new Hashtable();
+        Map<Integer,Object> expectedFieldValues = new Hashtable<Integer,Object>();
         expectedFieldValues.put(
-                new Integer(TiffTagConstants.TIFF_TAG_MAKE.tag), "Canon");
+                TiffTagConstants.TIFF_TAG_MAKE.tag, "Canon");
         expectedFieldValues.put(
-                new Integer(TiffTagConstants.TIFF_TAG_MODEL.tag),
+                TiffTagConstants.TIFF_TAG_MODEL.tag,
                 "Canon PowerShot SD750");
-        expectedFieldValues
-                .put(new Integer(TiffTagConstants.TIFF_TAG_DATE_TIME.tag),
-                        "2007:12:25 13:34:39");
-        Iterator expectedTags = expectedFieldValues.keySet().iterator();
+        expectedFieldValues.put(
+                TiffTagConstants.TIFF_TAG_DATE_TIME.tag,
+                "2007:12:25 13:34:39");
+        Iterator<Integer> expectedTags = expectedFieldValues.keySet().iterator();
         while (expectedTags.hasNext()) {
-            Integer tag = (Integer) expectedTags.next();
+            Integer tag = expectedTags.next();
             Object expectedValue = expectedFieldValues.get(tag);
 
             assertTrue(fieldMap.containsKey(tag));
-            TiffField field = (TiffField) fieldMap.get(tag);
+            TiffField field = fieldMap.get(tag);
             assertNotNull(field);
             Object value = field.getValue();
             assertNotNull(value);

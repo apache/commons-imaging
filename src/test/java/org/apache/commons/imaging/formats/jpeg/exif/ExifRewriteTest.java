@@ -52,7 +52,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     // }
 
     public void testRemove() throws Exception {
-        List images = getImagesWithExifData();
+        List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -91,7 +91,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     }
 
     public void testInsert() throws Exception {
-        List images = getImagesWithExifData();
+        List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -170,7 +170,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
 
     private void rewrite(Rewriter rewriter, String name) throws IOException,
             ImageReadException, ImageWriteException {
-        List images = getImagesWithExifData();
+        List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();

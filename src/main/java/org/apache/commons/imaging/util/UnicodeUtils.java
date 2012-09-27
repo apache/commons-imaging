@@ -29,6 +29,8 @@ public abstract class UnicodeUtils implements BinaryConstants {
     }
 
     public static class UnicodeException extends Exception {
+        private static final long serialVersionUID = 5451109579672755601L;
+
         public UnicodeException(String message) {
             super(message);
         }

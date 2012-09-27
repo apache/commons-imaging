@@ -33,9 +33,9 @@ public class PcxWriter implements PcxConstants {
     private int bitDepth = -1;
     private PixelDensity pixelDensity = null;
 
-    public PcxWriter(Map params) throws ImageWriteException {
+    public PcxWriter(Map<String,Object> params) throws ImageWriteException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap() : new HashMap(params);
+        params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {

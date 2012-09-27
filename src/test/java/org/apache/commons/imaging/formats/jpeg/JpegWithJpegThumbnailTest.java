@@ -32,7 +32,7 @@ public class JpegWithJpegThumbnailTest extends ImagingTest {
     public void testSingleImage() throws Exception {
         File imageFile = getTestImageByName("img_F028c_small.jpg");
 
-        Map params = new HashMap();
+        Map<String,Object> params = new HashMap<String,Object>();
         IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
         JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;

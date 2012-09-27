@@ -65,7 +65,7 @@ public class SampleUsage {
             BufferedImage image = someImage;
             File dst = someFile;
             ImageFormat format = ImageFormat.IMAGE_FORMAT_PNG;
-            Map optional_params = new HashMap();
+            Map<String,Object> optional_params = new HashMap<String,Object>();
             Imaging.writeImage(image, dst, format, optional_params);
 
             OutputStream os = someOutputStream;
@@ -96,7 +96,7 @@ public class SampleUsage {
             // TIFF). </b>
             // <b>org.w3c.dom.Node node =
             // Sanselan.getMetadataObsolete(imageBytes); </b>
-            IImageMetadata metdata = Imaging.getMetadata(imageBytes);
+            IImageMetadata metadata = Imaging.getMetadata(imageBytes);
 
             // <b>print a dump of information about an image to stdout. </b>
             Imaging.dumpImageFile(imageBytes);

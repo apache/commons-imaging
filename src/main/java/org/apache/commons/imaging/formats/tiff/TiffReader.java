@@ -315,7 +315,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
             this(null);
         }
 
-        public Collector(Map params) {
+        public Collector(Map<String,Object> params) {
             boolean readThumbnails = true;
             if (params != null && params.containsKey(PARAM_KEY_READ_THUMBNAILS)) {
                 readThumbnails = Boolean.TRUE.equals(params
@@ -390,7 +390,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         }
     }
 
-    public TiffContents readFirstDirectory(ByteSource byteSource, Map params,
+    public TiffContents readFirstDirectory(ByteSource byteSource, Map<String,Object> params,
             boolean readImageData, FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
         Collector collector = new FirstDirectoryCollector(readImageData);
@@ -416,7 +416,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         return contents;
     }
 
-    public TiffContents readContents(ByteSource byteSource, Map params,
+    public TiffContents readContents(ByteSource byteSource, Map<String,Object> params,
             FormatCompliance formatCompliance) throws ImageReadException,
             IOException {
 
@@ -426,7 +426,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         return contents;
     }
 
-    public void read(ByteSource byteSource, Map params,
+    public void read(ByteSource byteSource, Map<String,Object> params,
             FormatCompliance formatCompliance, Listener listener)
             throws ImageReadException, IOException {
         // TiffContents contents =

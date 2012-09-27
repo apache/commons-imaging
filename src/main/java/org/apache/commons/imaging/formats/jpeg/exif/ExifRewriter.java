@@ -575,6 +575,8 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
     }
 
     public static class ExifOverflowException extends ImageWriteException {
+        private static final long serialVersionUID = 1401484357224931218L;
+
         public ExifOverflowException(String s) {
             super(s);
         }

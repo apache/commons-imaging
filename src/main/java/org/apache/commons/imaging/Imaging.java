@@ -337,7 +337,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
      */
-    public static ICC_Profile getICCProfile(byte bytes[], Map params)
+    public static ICC_Profile getICCProfile(byte bytes[], Map<String,Object> params)
             throws ImageReadException, IOException {
         return getICCProfile(new ByteSourceArray(bytes), params);
     }
@@ -374,7 +374,7 @@ public abstract class Imaging implements ImagingConstants {
      *         profile..
      */
     public static ICC_Profile getICCProfile(InputStream is, String filename,
-            Map params) throws ImageReadException, IOException {
+            Map<String,Object> params) throws ImageReadException, IOException {
         return getICCProfile(new ByteSourceInputStream(is, filename), params);
     }
 
@@ -405,12 +405,12 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
      */
-    public static ICC_Profile getICCProfile(File file, Map params)
+    public static ICC_Profile getICCProfile(File file, Map<String,Object> params)
             throws ImageReadException, IOException {
         return getICCProfile(new ByteSourceFile(file), params);
     }
 
-    protected static ICC_Profile getICCProfile(ByteSource byteSource, Map params)
+    protected static ICC_Profile getICCProfile(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         byte bytes[] = getICCProfileBytes(byteSource, params);
         if (bytes == null) {
@@ -465,7 +465,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see IccProfileParser
      * @see ICC_Profile
      */
-    public static byte[] getICCProfileBytes(byte bytes[], Map params)
+    public static byte[] getICCProfileBytes(byte bytes[], Map<String,Object> params)
             throws ImageReadException, IOException {
         return getICCProfileBytes(new ByteSourceArray(bytes), params);
     }
@@ -505,12 +505,12 @@ public abstract class Imaging implements ImagingConstants {
      * @see IccProfileParser
      * @see ICC_Profile
      */
-    public static byte[] getICCProfileBytes(File file, Map params)
+    public static byte[] getICCProfileBytes(File file, Map<String,Object> params)
             throws ImageReadException, IOException {
         return getICCProfileBytes(new ByteSourceFile(file), params);
     }
 
-    private static byte[] getICCProfileBytes(ByteSource byteSource, Map params)
+    private static byte[] getICCProfileBytes(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
 
@@ -536,7 +536,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(String filename, byte bytes[],
-            Map params) throws ImageReadException, IOException {
+            Map<String,Object> params) throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceArray(filename, bytes), params);
     }
 
@@ -601,7 +601,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(InputStream is, String filename,
-            Map params) throws ImageReadException, IOException {
+            Map<String,Object> params) throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceInputStream(is, filename), params);
     }
 
@@ -640,7 +640,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
-    public static ImageInfo getImageInfo(byte bytes[], Map params)
+    public static ImageInfo getImageInfo(byte bytes[], Map<String,Object> params)
             throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceArray(bytes), params);
     }
@@ -661,7 +661,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
-    public static ImageInfo getImageInfo(File file, Map params)
+    public static ImageInfo getImageInfo(File file, Map<String,Object> params)
             throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceFile(file), params);
     }
@@ -685,7 +685,7 @@ public abstract class Imaging implements ImagingConstants {
         return getImageInfo(file, null);
     }
 
-    private static ImageInfo getImageInfo(ByteSource byteSource, Map params)
+    private static ImageInfo getImageInfo(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
 
@@ -754,7 +754,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return The width and height of the image.
      */
     public static Dimension getImageSize(InputStream is, String filename,
-            Map params) throws ImageReadException, IOException {
+            Map<String,Object> params) throws ImageReadException, IOException {
         return getImageSize(new ByteSourceInputStream(is, filename), params);
     }
 
@@ -781,7 +781,7 @@ public abstract class Imaging implements ImagingConstants {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return The width and height of the image.
      */
-    public static Dimension getImageSize(byte bytes[], Map params)
+    public static Dimension getImageSize(byte bytes[], Map<String,Object> params)
             throws ImageReadException, IOException {
         return getImageSize(new ByteSourceArray(bytes), params);
     }
@@ -809,12 +809,12 @@ public abstract class Imaging implements ImagingConstants {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return The width and height of the image.
      */
-    public static Dimension getImageSize(File file, Map params)
+    public static Dimension getImageSize(File file, Map<String,Object> params)
             throws ImageReadException, IOException {
         return getImageSize(new ByteSourceFile(file), params);
     }
 
-    public static Dimension getImageSize(ByteSource byteSource, Map params)
+    public static Dimension getImageSize(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
 
@@ -848,7 +848,7 @@ public abstract class Imaging implements ImagingConstants {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
-    public static String getXmpXml(InputStream is, String filename, Map params)
+    public static String getXmpXml(InputStream is, String filename, Map<String,Object> params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceInputStream(is, filename), params);
     }
@@ -876,7 +876,7 @@ public abstract class Imaging implements ImagingConstants {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
-    public static String getXmpXml(byte bytes[], Map params)
+    public static String getXmpXml(byte bytes[], Map<String,Object> params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceArray(bytes), params);
     }
@@ -904,7 +904,7 @@ public abstract class Imaging implements ImagingConstants {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
-    public static String getXmpXml(File file, Map params)
+    public static String getXmpXml(File file, Map<String,Object> params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceFile(file), params);
     }
@@ -919,7 +919,7 @@ public abstract class Imaging implements ImagingConstants {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
-    public static String getXmpXml(ByteSource byteSource, Map params)
+    public static String getXmpXml(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
 
@@ -969,7 +969,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of IImageMetadata.
      * @see IImageMetadata
      */
-    public static IImageMetadata getMetadata(byte bytes[], Map params)
+    public static IImageMetadata getMetadata(byte bytes[], Map<String,Object> params)
             throws ImageReadException, IOException {
         return getMetadata(new ByteSourceArray(bytes), params);
     }
@@ -1022,7 +1022,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see IImageMetadata
      */
     public static IImageMetadata getMetadata(InputStream is, String filename,
-            Map params) throws ImageReadException, IOException {
+            Map<String,Object> params) throws ImageReadException, IOException {
         return getMetadata(new ByteSourceInputStream(is, filename), params);
     }
 
@@ -1069,12 +1069,12 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of IImageMetadata.
      * @see IImageMetadata
      */
-    public static IImageMetadata getMetadata(File file, Map params)
+    public static IImageMetadata getMetadata(File file, Map<String,Object> params)
             throws ImageReadException, IOException {
         return getMetadata(new ByteSourceFile(file), params);
     }
 
-    private static IImageMetadata getMetadata(ByteSource byteSource, Map params)
+    private static IImageMetadata getMetadata(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
 
@@ -1257,7 +1257,7 @@ public abstract class Imaging implements ImagingConstants {
      * while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */
-    public static BufferedImage getBufferedImage(InputStream is, Map params)
+    public static BufferedImage getBufferedImage(InputStream is, Map<String,Object> params)
             throws ImageReadException, IOException {
         String filename = null;
         if (params != null && params.containsKey(PARAM_KEY_FILENAME)) {
@@ -1307,7 +1307,7 @@ public abstract class Imaging implements ImagingConstants {
      * while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */ 
-    public static BufferedImage getBufferedImage(byte bytes[], Map params)
+    public static BufferedImage getBufferedImage(byte bytes[], Map<String,Object> params)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceArray(bytes), params);
     }
@@ -1355,7 +1355,7 @@ public abstract class Imaging implements ImagingConstants {
      * while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */
-    public static BufferedImage getBufferedImage(File file, Map params)
+    public static BufferedImage getBufferedImage(File file, Map<String,Object> params)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceFile(file), params);
     }
@@ -1363,10 +1363,10 @@ public abstract class Imaging implements ImagingConstants {
     
     
     private static BufferedImage getBufferedImage(ByteSource byteSource,
-            Map params) throws ImageReadException, IOException {
+            Map<String,Object> params) throws ImageReadException, IOException {
         ImageParser imageParser = getImageParser(byteSource);
         if (null == params) {
-            params = new HashMap();
+            params = new HashMap<String,Object>();
         }
 
         return imageParser.getBufferedImage(byteSource, params);
@@ -1396,7 +1396,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImagingConstants
      */    
     public static void writeImage(BufferedImage src, File file,
-            ImageFormat format, Map params) throws ImageWriteException,
+            ImageFormat format, Map<String,Object> params) throws ImageWriteException,
             IOException {
         OutputStream os = null;
 
@@ -1441,7 +1441,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImagingConstants
      */   
     public static byte[] writeImageToBytes(BufferedImage src,
-            ImageFormat format, Map params) throws ImageWriteException,
+            ImageFormat format, Map<String,Object> params) throws ImageWriteException,
             IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
@@ -1475,16 +1475,16 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImagingConstants
      */    
     public static void writeImage(BufferedImage src, OutputStream os,
-            ImageFormat format, Map params) throws ImageWriteException,
+            ImageFormat format, Map<String,Object> params) throws ImageWriteException,
             IOException {
         ImageParser imageParsers[] = ImageParser.getAllImageParsers();
 
         // make sure params are non-null
         if (params == null) {
-            params = new HashMap();
+            params = new HashMap<String,Object>();
         }
 
-        params.put(PARAM_KEY_FORMAT, format);
+        params.put(PARAM_KEY_FORMAT, (Object)format);
 
         for (int i = 0; i < imageParsers.length; i++) {
             ImageParser imageParser = imageParsers[i];

@@ -71,12 +71,12 @@ public abstract class ExifBaseTest extends ImagingTest {
         return getTestImage(HAS_EXIF_IMAGE_FILTER);
     }
 
-    protected List getImagesWithExifData() throws IOException,
+    protected List<File> getImagesWithExifData() throws IOException,
             ImageReadException {
         return getTestImages(HAS_EXIF_IMAGE_FILTER);
     }
 
-    protected List getImagesWithExifData(int max) throws IOException,
+    protected List<File> getImagesWithExifData(int max) throws IOException,
             ImageReadException {
         return getTestImages(HAS_EXIF_IMAGE_FILTER, max);
     }
@@ -85,11 +85,11 @@ public abstract class ExifBaseTest extends ImagingTest {
         return getTestImage(JPEG_IMAGE_FILTER);
     }
 
-    protected List getJpegImages() throws IOException, ImageReadException {
+    protected List<File> getJpegImages() throws IOException, ImageReadException {
         return getTestImages(JPEG_IMAGE_FILTER);
     }
 
-    protected List getJpegImages(int max) throws IOException,
+    protected List<File> getJpegImages(int max) throws IOException,
             ImageReadException {
         return getTestImages(JPEG_IMAGE_FILTER, max);
     }

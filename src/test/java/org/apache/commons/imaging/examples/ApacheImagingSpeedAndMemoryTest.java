@@ -212,7 +212,7 @@ public class ApacheImagingSpeedAndMemoryTest {
 
                 // ready the parser (you may modify this code block
                 // to use your parser of choice)
-                HashMap params = new HashMap();
+                HashMap<String,Object> params = new HashMap<String,Object>();
                 TiffImageParser tiffImageParser = new TiffImageParser();
 
                 // load the file and record time needed to do so

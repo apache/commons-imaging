@@ -25,7 +25,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -798,13 +797,10 @@ public final class Debug {
                 dump(prefix + "\t" + "list: " + i + ": ", list.get(i));
             }
         } else if (value instanceof Map) {
-            java.util.Map map = (java.util.Map) value;
+            java.util.Map<?,?> map = (java.util.Map<?,?>) value;
             debug(prefix, "map");
-            List keys = new ArrayList(map.keySet());
-            Collections.sort(keys);
-            for (int i = 0; i < keys.size(); i++) {
-                Object key = keys.get(i);
-                dump(prefix + "\t" + "map: " + key + " -> ", map.get(key));
+            for (Map.Entry<?,?> entry : map.entrySet()) {
+                dump(prefix + "\t" + "map: " + entry.getKey() + " -> ", entry.getValue());
             }
         // } else if (value instanceof String) {
         //     debug(prefix, value);

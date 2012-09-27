@@ -40,7 +40,7 @@ public abstract class DcxBaseTest extends ImagingTest {
         }
     };
 
-    protected List getDcxImages() throws IOException, ImageReadException {
+    protected List<File> getDcxImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

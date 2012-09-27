@@ -89,7 +89,6 @@ public class PixelParserRle extends PixelParser {
     @Override
     public void processImage(ImageBuilder imageBuilder)
             throws ImageReadException, IOException {
-        int count = 0;
         int width = bhi.width;
         int height = bhi.height;
         int x = 0, y = height - 1;
@@ -98,7 +97,6 @@ public class PixelParserRle extends PixelParser {
 
         boolean done = false;
         while (!done) {
-            count++;
             // if (count > 100)
             // return;
 
