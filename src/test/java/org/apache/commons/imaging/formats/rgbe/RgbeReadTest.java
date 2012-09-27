@@ -23,14 +23,12 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
 public class RgbeReadTest extends RgbeBaseTest {
-    public void test() throws IOException, ImageReadException,
-            ImageWriteException {
+    public void test() throws IOException, ImageReadException {
         Debug.debug("start");
 
         List<File> images = getRgbeImages();
@@ -40,7 +38,7 @@ public class RgbeReadTest extends RgbeBaseTest {
                 Debug.purgeMemory();
             }
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             IImageMetadata metadata = Imaging.getMetadata(imageFile);
