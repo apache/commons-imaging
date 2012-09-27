@@ -595,11 +595,11 @@ public class PngImageParser extends ImageParser implements PngConstants {
             PhysicalWidthDpi = (int) Math
                     .round(pngChunkpHYs.PixelsPerUnitXAxis
                             * meters_per_inch);
-            PhysicalWidthInch = (float) ((double) Width / ((double) pngChunkpHYs.PixelsPerUnitXAxis * meters_per_inch));
+            PhysicalWidthInch = (float) (Width / (pngChunkpHYs.PixelsPerUnitXAxis * meters_per_inch));
             PhysicalHeightDpi = (int) Math
                     .round(pngChunkpHYs.PixelsPerUnitYAxis
                             * meters_per_inch);
-            PhysicalHeightInch = (float) ((double) Height / ((double) pngChunkpHYs.PixelsPerUnitYAxis * meters_per_inch));
+            PhysicalHeightInch = (float) (Height / (pngChunkpHYs.PixelsPerUnitYAxis * meters_per_inch));
         }
 
         String FormatDetails = "Png";
