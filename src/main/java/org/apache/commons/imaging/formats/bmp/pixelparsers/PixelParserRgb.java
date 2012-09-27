@@ -38,13 +38,13 @@ public class PixelParserRgb extends PixelParserSimple {
     public int getNextRGB() throws ImageReadException, IOException {
         pixelCount++;
 
-        if ((bhi.bitsPerPixel == 1) // always grayscale?
-                || (bhi.bitsPerPixel == 4)) // always grayscale?
-        {
+        if ((bhi.bitsPerPixel == 1) 
+                || (bhi.bitsPerPixel == 4)) { // always grayscale?
             if (cached_bit_count < bhi.bitsPerPixel) {
-                if (cached_bit_count != 0)
+                if (cached_bit_count != 0) {
                     throw new ImageReadException("Unexpected leftover bits: "
                             + cached_bit_count + "/" + bhi.bitsPerPixel);
+                }
 
                 cached_bit_count += 8;
                 cached_byte = (0xff & imageData[bytecount]);
@@ -58,8 +58,7 @@ public class PixelParserRgb extends PixelParserSimple {
             int rgb = getColorTableRGB(sample);
 
             return rgb;
-        } else if (bhi.bitsPerPixel == 8) // always grayscale?
-        {
+        } else if (bhi.bitsPerPixel == 8) { // always grayscale?
             int sample = 0xff & imageData[bytecount + 0];
 
             int rgb = getColorTableRGB(sample);

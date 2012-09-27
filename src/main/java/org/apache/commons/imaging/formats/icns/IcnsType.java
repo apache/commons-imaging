@@ -131,20 +131,23 @@ public class IcnsType {
 
     public static IcnsType findAnyType(int type) {
         for (int i = 0; i < allImageTypes.length; i++) {
-            if (allImageTypes[i].getType() == type)
+            if (allImageTypes[i].getType() == type) {
                 return allImageTypes[i];
+            }
         }
         for (int i = 0; i < allMaskTypes.length; i++) {
-            if (allMaskTypes[i].getType() == type)
+            if (allMaskTypes[i].getType() == type) {
                 return allMaskTypes[i];
+            }
         }
         return null;
     }
 
     public static IcnsType findImageType(int type) {
         for (int i = 0; i < allImageTypes.length; i++) {
-            if (allImageTypes[i].getType() == type)
+            if (allImageTypes[i].getType() == type) {
                 return allImageTypes[i];
+            }
         }
         return null;
     }
@@ -178,8 +181,9 @@ public class IcnsType {
         } catch (UnsupportedEncodingException cannotHappen) {
             throw new IllegalArgumentException("Your Java doesn't support US-ASCII");
         }
-        if (bytes.length != 4)
+        if (bytes.length != 4) {
             throw new IllegalArgumentException("Invalid ICNS type");
+        }
         return ((0xff & bytes[0]) << 24) | ((0xff & bytes[1]) << 16)
                 | ((0xff & bytes[2]) << 8) | (0xff & bytes[3]);
     }

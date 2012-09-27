@@ -42,8 +42,9 @@ public class PhotoshopApp13Data implements IptcConstants {
         List<IptcBlock> result = new ArrayList<IptcBlock>();
         for (int i = 0; i < rawBlocks.size(); i++) {
             IptcBlock block = rawBlocks.get(i);
-            if (!block.isIPTCBlock())
+            if (!block.isIPTCBlock()) {
                 result.add(block);
+            }
         }
         return result;
     }

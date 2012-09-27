@@ -79,10 +79,12 @@ public class DhtSegment extends Segment {
                 code++;
                 k++;
 
-                if (huffSize[k] == si)
+                if (huffSize[k] == si) {
                     continue;
-                if (huffSize[k] == 0)
+                }
+                if (huffSize[k] == 0) {
                     break;
+                }
                 do {
                     code <<= 1;
                     si++;
@@ -94,11 +96,12 @@ public class DhtSegment extends Segment {
             j = 0;
             while (true) {
                 i++;
-                if (i > 16)
+                if (i > 16) {
                     break;
-                if (bits[i] == 0)
+                }
+                if (bits[i] == 0) {
                     maxCode[i] = -1;
-                else {
+                } else {
                     valPtr[i] = j;
                     minCode[i] = huffCode[j];
                     j += bits[i] - 1;

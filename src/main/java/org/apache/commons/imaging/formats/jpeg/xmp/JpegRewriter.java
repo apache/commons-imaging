@@ -106,26 +106,32 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
         }
 
         public boolean isExifSegment() {
-            if (marker != JPEG_APP1_Marker)
+            if (marker != JPEG_APP1_Marker) {
                 return false;
-            if (!byteArrayHasPrefix(segmentData, EXIF_IDENTIFIER_CODE))
+            }
+            if (!byteArrayHasPrefix(segmentData, EXIF_IDENTIFIER_CODE)) {
                 return false;
+            }
             return true;
         }
 
         public boolean isPhotoshopApp13Segment() {
-            if (marker != JPEG_APP13_Marker)
+            if (marker != JPEG_APP13_Marker) {
                 return false;
-            if (!new IptcParser().isPhotoshopJpegSegment(segmentData))
+            }
+            if (!new IptcParser().isPhotoshopJpegSegment(segmentData)) {
                 return false;
+            }
             return true;
         }
 
         public boolean isXmpSegment() {
-            if (marker != JPEG_APP1_Marker)
+            if (marker != JPEG_APP1_Marker) {
                 return false;
-            if (!byteArrayHasPrefix(segmentData, XMP_IDENTIFIER))
+            }
+            if (!byteArrayHasPrefix(segmentData, XMP_IDENTIFIER)) {
                 return false;
+            }
             return true;
         }
 
@@ -237,10 +243,12 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
         for (int i = 0; i < segments.size(); i++) {
             T piece = segments.get(i);
             if (piece instanceof JFIFPieceSegment) {
-                if (filter.filter((JFIFPieceSegment) piece) ^ !reverse)
+                if (filter.filter((JFIFPieceSegment) piece) ^ !reverse) {
                     result.add(piece);
-            } else if (!reverse)
+                }
+            } else if (!reverse) {
                 result.add(piece);
+            }
         }
 
         return result;
@@ -251,19 +259,22 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
         int firstAppIndex = -1;
         for (int i = 0; i < segments.size(); i++) {
             JFIFPiece piece = segments.get(i);
-            if (!(piece instanceof JFIFPieceSegment))
+            if (!(piece instanceof JFIFPieceSegment)) {
                 continue;
+            }
 
             JFIFPieceSegment segment = (JFIFPieceSegment) piece;
             if (segment.isAppSegment()) {
-                if (firstAppIndex == -1)
+                if (firstAppIndex == -1) {
                     firstAppIndex = i;
+                }
             }
         }
 
         List<JFIFPiece> result = new ArrayList<JFIFPiece>(segments);
-        if (firstAppIndex == -1)
+        if (firstAppIndex == -1) {
             throw new ImageWriteException("JPEG file has no APP segments.");
+        }
         result.addAll(firstAppIndex, newSegments);
         return result;
     }
@@ -273,21 +284,25 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
         int lastAppIndex = -1;
         for (int i = 0; i < segments.size(); i++) {
             JFIFPiece piece = segments.get(i);
-            if (!(piece instanceof JFIFPieceSegment))
+            if (!(piece instanceof JFIFPieceSegment)) {
                 continue;
+            }
 
             JFIFPieceSegment segment = (JFIFPieceSegment) piece;
-            if (segment.isAppSegment())
+            if (segment.isAppSegment()) {
                 lastAppIndex = i;
+            }
         }
 
         List<JFIFPiece> result = new ArrayList<JFIFPiece>(segments);
         if (lastAppIndex == -1) {
-            if (segments.size() < 1)
+            if (segments.size() < 1) {
                 throw new ImageWriteException("JPEG file has no APP segments.");
+            }
             result.addAll(1, newSegments);
-        } else
+        } else {
             result.addAll(lastAppIndex + 1, newSegments);
+        }
 
         return result;
     }
@@ -305,8 +320,9 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
             os = null;
         } finally {
             try {
-                if (os != null)
+                if (os != null) {
                     os.close();
+                }
             } catch (Exception e) {
                 // swallow exception; already in the context of an exception.
             }

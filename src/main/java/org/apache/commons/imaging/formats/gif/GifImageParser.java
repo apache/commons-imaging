@@ -100,12 +100,12 @@ public class GifImageParser extends ImageParser {
             formatCompliance.compare("version", 97, version3);
         }
 
-        if (debug)
+        if (debug) {
             printCharQuad("identifier: ", ((identifier1 << 16)
                     | (identifier2 << 8) | (identifier3 << 0)));
-        if (debug)
             printCharQuad("version: ",
                     ((version1 << 16) | (version2 << 8) | (version3 << 0)));
+        }
 
         int logicalScreenWidth = read2Bytes("Logical Screen Width", is,
                 "Not a Valid GIF File");
@@ -126,28 +126,34 @@ public class GifImageParser extends ImageParser {
         byte pixelAspectRatio = readByte("Pixel Aspect Ratio", is,
                 "Not a Valid GIF File");
 
-        if (debug)
+        if (debug) {
             printByteBits("PackedFields bits", packedFields);
+        }
 
         boolean globalColorTableFlag = ((packedFields & 128) > 0);
-        if (debug)
+        if (debug) {
             System.out.println("GlobalColorTableFlag: " + globalColorTableFlag);
+        }
         byte colorResolution = (byte) ((packedFields >> 4) & 7);
-        if (debug)
+        if (debug) {
             System.out.println("ColorResolution: " + colorResolution);
+        }
         boolean sortFlag = ((packedFields & 8) > 0);
-        if (debug)
+        if (debug) {
             System.out.println("SortFlag: " + sortFlag);
+        }
         byte sizeofGlobalColorTable = (byte) (packedFields & 7);
-        if (debug)
+        if (debug) {
             System.out.println("SizeofGlobalColorTable: "
                     + sizeofGlobalColorTable);
+        }
 
         if (formatCompliance != null) {
-            if (globalColorTableFlag && backgroundColorIndex != -1)
+            if (globalColorTableFlag && backgroundColorIndex != -1) {
                 formatCompliance.checkBounds("Background Color Index", 0,
                         convertColorTableSize(sizeofGlobalColorTable),
                         backgroundColorIndex);
+            }
         }
 
         return new GifHeaderInfo(identifier1, identifier2, identifier3,
@@ -194,13 +200,15 @@ public class GifImageParser extends ImageParser {
             byte first[]) throws IOException {
         List<byte[]> subblocks = new ArrayList<byte[]>();
 
-        if (first != null)
+        if (first != null) {
             subblocks.add(first);
+        }
 
         while (true) {
             byte bytes[] = readSubBlock(is);
-            if (bytes.length < 1)
+            if (bytes.length < 1) {
                 break;
+            }
             subblocks.add(bytes);
         }
 
@@ -265,11 +273,12 @@ public class GifImageParser extends ImageParser {
                 {
                     byte label[] = readSubBlock(is);
 
-                    if (formatCompliance != null)
+                    if (formatCompliance != null) {
                         formatCompliance.addComment(
                                 "Unknown Application Extension ("
                                         + new String(label, "US-ASCII") + ")",
                                 completeCode);
+                    }
 
                     // if (label == new String("ICCRGBG1"))
                     {
@@ -286,9 +295,10 @@ public class GifImageParser extends ImageParser {
 
                 default: {
 
-                    if (formatCompliance != null)
+                    if (formatCompliance != null) {
                         formatCompliance.addComment("Unknown block",
                                 completeCode);
+                    }
 
                     GenericGifBlock block = readGenericGIFBlock(is,
                             completeCode);
@@ -335,28 +345,34 @@ public class GifImageParser extends ImageParser {
                     ghi.logicalScreenHeight - imageHeight, ImageTopPosition);
         }
 
-        if (debug)
+        if (debug) {
             printByteBits("PackedFields bits", PackedFields);
+        }
 
         boolean LocalColorTableFlag = (((PackedFields >> 7) & 1) > 0);
-        if (debug)
+        if (debug) {
             System.out.println("LocalColorTableFlag: " + LocalColorTableFlag);
+        }
         boolean InterlaceFlag = (((PackedFields >> 6) & 1) > 0);
-        if (debug)
+        if (debug) {
             System.out.println("Interlace Flag: " + InterlaceFlag);
+        }
         boolean SortFlag = (((PackedFields >> 5) & 1) > 0);
-        if (debug)
+        if (debug) {
             System.out.println("Sort  Flag: " + SortFlag);
+        }
 
         byte SizeofLocalColorTable = (byte) (PackedFields & 7);
-        if (debug)
+        if (debug) {
             System.out.println("SizeofLocalColorTable: "
                     + SizeofLocalColorTable);
+        }
 
         byte LocalColorTable[] = null;
-        if (LocalColorTableFlag)
+        if (LocalColorTableFlag) {
             LocalColorTable = readColorTable(is, SizeofLocalColorTable,
                     formatCompliance);
+        }
 
         byte imageData[] = null;
         if (!stopBeforeImageData) {
@@ -372,8 +388,9 @@ public class GifImageParser extends ImageParser {
             imageData = myLzwDecompressor.decompress(bais, size);
         } else {
             int LZWMinimumCodeSize = is.read();
-            if (debug)
+            if (debug) {
                 System.out.println("LZWMinimumCodeSize: " + LZWMinimumCodeSize);
+            }
 
             readGenericGIFBlock(is, -1);
         }
@@ -389,8 +406,9 @@ public class GifImageParser extends ImageParser {
     private int simple_pow(int base, int power) {
         int result = 1;
 
-        for (int i = 0; i < power; i++)
+        for (int i = 0; i < power; i++) {
             result *= base;
+        }
 
         return result;
     }
@@ -432,8 +450,9 @@ public class GifImageParser extends ImageParser {
     private GifBlock findBlock(List<GifBlock> v, int code) {
         for (int i = 0; i < v.size(); i++) {
             GifBlock gifBlock = v.get(i);
-            if (gifBlock.blockCode == code)
+            if (gifBlock.blockCode == code) {
                 return gifBlock;
+            }
         }
         return null;
     }
@@ -454,9 +473,10 @@ public class GifImageParser extends ImageParser {
             GifHeaderInfo ghi = readHeader(is, formatCompliance);
 
             byte globalColorTable[] = null;
-            if (ghi.globalColorTableFlag)
+            if (ghi.globalColorTableFlag) {
                 globalColorTable = readColorTable(is,
                         ghi.sizeOfGlobalColorTable, formatCompliance);
+            }
 
             List<GifBlock> blocks = readBlocks(ghi, is, stopBeforeImageData,
                     formatCompliance);
@@ -488,17 +508,20 @@ public class GifImageParser extends ImageParser {
             throws ImageReadException, IOException {
         ImageContents blocks = readFile(byteSource, false);
 
-        if (blocks == null)
+        if (blocks == null) {
             throw new ImageReadException("GIF: Couldn't read blocks");
+        }
 
         GifHeaderInfo bhi = blocks.gifHeaderInfo;
-        if (bhi == null)
+        if (bhi == null) {
             throw new ImageReadException("GIF: Couldn't read Header");
+        }
 
         ImageDescriptor id = (ImageDescriptor) findBlock(blocks.blocks,
                 IMAGE_SEPARATOR);
-        if (id == null)
+        if (id == null) {
             throw new ImageReadException("GIF: Couldn't read ImageDescriptor");
+        }
 
         // Prefer the size information in the ImageDescriptor; it is more
         // reliable
@@ -541,17 +564,20 @@ public class GifImageParser extends ImageParser {
             throws ImageReadException, IOException {
         ImageContents blocks = readFile(byteSource, false);
 
-        if (blocks == null)
+        if (blocks == null) {
             throw new ImageReadException("GIF: Couldn't read blocks");
+        }
 
         GifHeaderInfo bhi = blocks.gifHeaderInfo;
-        if (bhi == null)
+        if (bhi == null) {
             throw new ImageReadException("GIF: Couldn't read Header");
+        }
 
         ImageDescriptor id = (ImageDescriptor) findBlock(blocks.blocks,
                 IMAGE_SEPARATOR);
-        if (id == null)
+        if (id == null) {
             throw new ImageReadException("GIF: Couldn't read ImageDescriptor");
+        }
 
         GraphicControlExtension gce = (GraphicControlExtension) findBlock(
                 blocks.blocks, GRAPHIC_CONTROL_EXTENSION);
@@ -585,8 +611,9 @@ public class GifImageParser extends ImageParser {
                 + ((char) blocks.gifHeaderInfo.version3);
 
         boolean isTransparent = false;
-        if (gce != null && gce.transparency)
+        if (gce != null && gce.transparency) {
             isTransparent = true;
+        }
 
         boolean usesPalette = true;
         int colorType = ImageInfo.COLOR_TYPE_RGB;
@@ -607,8 +634,9 @@ public class GifImageParser extends ImageParser {
         pw.println("gif.dumpImageFile");
 
         ImageInfo imageData = getImageInfo(byteSource);
-        if (imageData == null)
+        if (imageData == null) {
             return false;
+        }
 
         imageData.toString(pw, "");
         
@@ -628,9 +656,10 @@ public class GifImageParser extends ImageParser {
     }
 
     private int[] getColorTable(byte bytes[]) throws ImageReadException {
-        if ((bytes.length % 3) != 0)
+        if ((bytes.length % 3) != 0) {
             throw new ImageReadException("Bad Color Table Length: "
                     + bytes.length);
+        }
         int length = bytes.length / 3;
 
         int result[] = new int[length];
@@ -665,17 +694,20 @@ public class GifImageParser extends ImageParser {
             throws ImageReadException, IOException {
         ImageContents imageContents = readFile(byteSource, false);
 
-        if (imageContents == null)
+        if (imageContents == null) {
             throw new ImageReadException("GIF: Couldn't read blocks");
+        }
 
         GifHeaderInfo ghi = imageContents.gifHeaderInfo;
-        if (ghi == null)
+        if (ghi == null) {
             throw new ImageReadException("GIF: Couldn't read Header");
+        }
 
         ImageDescriptor id = (ImageDescriptor) findBlock(imageContents.blocks,
                 IMAGE_SEPARATOR);
-        if (id == null)
+        if (id == null) {
             throw new ImageReadException("GIF: Couldn't read Image Descriptor");
+        }
         GraphicControlExtension gce = (GraphicControlExtension) findBlock(
                 imageContents.blocks, GRAPHIC_CONTROL_EXTENSION);
 
@@ -686,69 +718,73 @@ public class GifImageParser extends ImageParser {
         int height = id.imageHeight;
 
         boolean hasAlpha = false;
-        if (gce != null && gce.transparency)
+        if (gce != null && gce.transparency) {
             hasAlpha = true;
+        }
 
         ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
 
-        {
-            int colorTable[];
-            if (id.localColorTable != null)
-                colorTable = getColorTable(id.localColorTable);
-            else if (imageContents.globalColorTable != null)
-                colorTable = getColorTable(imageContents.globalColorTable);
-            else
-                throw new ImageReadException("Gif: No Color Table");
+        int colorTable[];
+        if (id.localColorTable != null) {
+            colorTable = getColorTable(id.localColorTable);
+        } else if (imageContents.globalColorTable != null) {
+            colorTable = getColorTable(imageContents.globalColorTable);
+        } else {
+            throw new ImageReadException("Gif: No Color Table");
+        }
 
-            int transparentIndex = -1;
-            if (hasAlpha)
-                transparentIndex = gce.transparentColorIndex;
+        int transparentIndex = -1;
+        if (hasAlpha) {
+            transparentIndex = gce.transparentColorIndex;
+        }
 
-            int counter = 0;
+        int counter = 0;
 
-            int rowsInPass1 = (height + 7) / 8;
-            int rowsInPass2 = (height + 3) / 8;
-            int rowsInPass3 = (height + 1) / 4;
-            int rowsInPass4 = (height) / 2;
+        int rowsInPass1 = (height + 7) / 8;
+        int rowsInPass2 = (height + 3) / 8;
+        int rowsInPass3 = (height + 1) / 4;
+        int rowsInPass4 = (height) / 2;
 
-            for (int row = 0; row < height; row++) {
-                int y;
-                if (id.interlaceFlag) {
-                    int the_row = row;
-                    if (the_row < rowsInPass1)
-                        y = the_row * 8;
-                    else {
-                        the_row -= rowsInPass1;
-                        if (the_row < (rowsInPass2))
-                            y = 4 + (the_row * 8);
-                        else {
-                            the_row -= rowsInPass2;
-                            if (the_row < (rowsInPass3))
-                                y = 2 + (the_row * 4);
-                            else {
-                                the_row -= rowsInPass3;
-                                if (the_row < (rowsInPass4))
-                                    y = 1 + (the_row * 2);
-                                else
-                                    throw new ImageReadException(
-                                            "Gif: Strange Row");
+        for (int row = 0; row < height; row++) {
+            int y;
+            if (id.interlaceFlag) {
+                int the_row = row;
+                if (the_row < rowsInPass1) {
+                    y = the_row * 8;
+                } else {
+                    the_row -= rowsInPass1;
+                    if (the_row < (rowsInPass2)) {
+                        y = 4 + (the_row * 8);
+                    } else {
+                        the_row -= rowsInPass2;
+                        if (the_row < (rowsInPass3)) {
+                            y = 2 + (the_row * 4);
+                        } else {
+                            the_row -= rowsInPass3;
+                            if (the_row < (rowsInPass4)) {
+                                y = 1 + (the_row * 2);
+                            } else {
+                                throw new ImageReadException(
+                                        "Gif: Strange Row");
                             }
                         }
                     }
-                } else
-                    y = row;
+                }
+            } else {
+                y = row;
+            }
 
-                for (int x = 0; x < width; x++) {
-                    int index = 0xff & id.imageData[counter++];
-                    int rgb = colorTable[index];
+            for (int x = 0; x < width; x++) {
+                int index = 0xff & id.imageData[counter++];
+                int rgb = colorTable[index];
 
-                    if (transparentIndex == index)
-                        rgb = 0x00;
-
-                    imageBuilder.setRGB(x, y, rgb);
+                if (transparentIndex == index) {
+                    rgb = 0x00;
                 }
 
+                imageBuilder.setRGB(x, y, rgb);
             }
+
         }
 
         return imageBuilder.getBufferedImage();
@@ -782,10 +818,12 @@ public class GifImageParser extends ImageParser {
                 false);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT))
+        if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
-        if (params.containsKey(PARAM_KEY_VERBOSE))
+        }
+        if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
+        }
 
         String xmpXml = null;
         if (params.containsKey(PARAM_KEY_XMP_XML)) {
@@ -813,197 +851,201 @@ public class GifImageParser extends ImageParser {
         if (palette2 == null) {
             palette2 = new PaletteFactory().makeQuantizedRgbPalette(src,
                     max_colors);
-            if (verbose)
+            if (verbose) {
                 System.out.println("quantizing");
-        } else if (verbose)
+            }
+        } else if (verbose) {
             System.out.println("exact palette");
+        }
 
-        if (palette2 == null)
+        if (palette2 == null) {
             throw new ImageWriteException(
                     "Gif: can't write images with more than 256 colors");
+        }
         int palette_size = palette2.length() + (hasAlpha ? 1 : 0);
 
         BinaryOutputStream bos = new BinaryOutputStream(os, BYTE_ORDER_LSB);
 
+        // write Header
+        os.write(0x47); // G magic numbers
+        os.write(0x49); // I
+        os.write(0x46); // F
+
+        os.write(0x38); // 8 version magic numbers
+        os.write(0x39); // 9
+        os.write(0x61); // a
+
+        // Logical Screen Descriptor.
+
+        bos.write2Bytes(width);
+        bos.write2Bytes(height);
+
+        int colorTableScaleLessOne = (palette_size > 128) ? 7
+                : (palette_size > 64) ? 6 : (palette_size > 32) ? 5
+                        : (palette_size > 16) ? 4 : (palette_size > 8) ? 3
+                                : (palette_size > 4) ? 2
+                                        : (palette_size > 2) ? 1 : 0;
+
+        int colorTableSizeInFormat = 1 << (colorTableScaleLessOne + 1);
         {
-            // write Header
-            os.write(0x47); // G magic numbers
-            os.write(0x49); // I
-            os.write(0x46); // F
+            byte colorResolution = (byte) colorTableScaleLessOne; // TODO:
 
-            os.write(0x38); // 8 version magic numbers
-            os.write(0x39); // 9
-            os.write(0x61); // a
+            boolean globalColorTableFlag = false;
+            boolean sortFlag = false;
+            int globalColorTableFlagMask = 1 << 7;
+            int sortFlagMask = 8;
+            int sizeOfGlobalColorTable = 0;
 
-            // Logical Screen Descriptor.
+            int packedFields = ((globalColorTableFlag ? globalColorTableFlagMask
+                    : 0)
+                    | (sortFlag ? sortFlagMask : 0)
+                    | ((7 & colorResolution) << 4) | (7 & sizeOfGlobalColorTable));
+            bos.write(packedFields); // one byte
+        }
+        {
+            byte BackgroundColorIndex = 0;
+            bos.write(BackgroundColorIndex);
+        }
+        {
+            byte PixelAspectRatio = 0;
+            bos.write(PixelAspectRatio);
+        }
 
-            bos.write2Bytes(width);
-            bos.write2Bytes(height);
+        { // write Global Color Table.
 
-            int colorTableScaleLessOne = (palette_size > 128) ? 7
-                    : (palette_size > 64) ? 6 : (palette_size > 32) ? 5
-                            : (palette_size > 16) ? 4 : (palette_size > 8) ? 3
-                                    : (palette_size > 4) ? 2
-                                            : (palette_size > 2) ? 1 : 0;
+        }
 
-            int colorTableSizeInFormat = 1 << (colorTableScaleLessOne + 1);
+        { // ALWAYS write GraphicControlExtension
+            bos.write(EXTENSION_CODE);
+            bos.write((byte) 0xf9);
+            // bos.write(0xff & (kGraphicControlExtension >> 8));
+            // bos.write(0xff & (kGraphicControlExtension >> 0));
+
+            bos.write((byte) 4); // block size;
+            int packedFields = hasAlpha ? 1 : 0; // transparency flag
+            bos.write((byte) packedFields);
+            bos.write((byte) 0); // Delay Time
+            bos.write((byte) 0); // Delay Time
+            bos.write((byte) (hasAlpha ? palette2.length() : 0)); // Transparent
+            // Color
+            // Index
+            bos.write((byte) 0); // terminator
+        }
+
+        if (null != xmpXml) {
+            bos.write(EXTENSION_CODE);
+            bos.write(APPLICATION_EXTENSION_LABEL);
+
+            bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE.length); // 0x0B
+            bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE);
+
+            byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
+            bos.write(xmpXmlBytes);
+
+            // write "magic trailer"
+            for (int magic = 0; magic <= 0xff; magic++) {
+                bos.write(0xff - magic);
+            }
+
+            bos.write((byte) 0); // terminator
+
+        }
+
+        { // Image Descriptor.
+            bos.write(IMAGE_SEPARATOR);
+            bos.write2Bytes(0); // Image Left Position
+            bos.write2Bytes(0); // Image Top Position
+            bos.write2Bytes(width); // Image Width
+            bos.write2Bytes(height); // Image Height
+
             {
-                byte colorResolution = (byte) colorTableScaleLessOne; // TODO:
+                boolean LocalColorTableFlag = true;
+                // boolean LocalColorTableFlag = false;
+                boolean InterlaceFlag = false;
+                boolean SortFlag = false;
+                int SizeOfLocalColorTable = colorTableScaleLessOne;
 
-                boolean globalColorTableFlag = false;
-                boolean sortFlag = false;
-                int globalColorTableFlagMask = 1 << 7;
-                int sortFlagMask = 8;
-                int sizeOfGlobalColorTable = 0;
+                // int SizeOfLocalColorTable = 0;
 
-                int packedFields = ((globalColorTableFlag ? globalColorTableFlagMask
+                int PackedFields = ((LocalColorTableFlag ? LOCAL_COLOR_TABLE_FLAG_MASK
                         : 0)
-                        | (sortFlag ? sortFlagMask : 0)
-                        | ((7 & colorResolution) << 4) | (7 & sizeOfGlobalColorTable));
-                bos.write(packedFields); // one byte
+                        | (InterlaceFlag ? INTERLACE_FLAG_MASK : 0)
+                        | (SortFlag ? SORT_FLAG_MASK : 0) | (7 & SizeOfLocalColorTable));
+                bos.write(PackedFields); // one byte
             }
-            {
-                byte BackgroundColorIndex = 0;
-                bos.write(BackgroundColorIndex);
-            }
-            {
-                byte PixelAspectRatio = 0;
-                bos.write(PixelAspectRatio);
-            }
+        }
 
-            { // write Global Color Table.
+        { // write Local Color Table.
+            for (int i = 0; i < colorTableSizeInFormat; i++) {
+                if (i < palette2.length()) {
+                    int rgb = palette2.getEntry(i);
 
-            }
+                    int red = 0xff & (rgb >> 16);
+                    int green = 0xff & (rgb >> 8);
+                    int blue = 0xff & (rgb >> 0);
 
-            { // ALWAYS write GraphicControlExtension
-                bos.write(EXTENSION_CODE);
-                bos.write((byte) 0xf9);
-                // bos.write(0xff & (kGraphicControlExtension >> 8));
-                // bos.write(0xff & (kGraphicControlExtension >> 0));
-
-                bos.write((byte) 4); // block size;
-                int packedFields = hasAlpha ? 1 : 0; // transparency flag
-                bos.write((byte) packedFields);
-                bos.write((byte) 0); // Delay Time
-                bos.write((byte) 0); // Delay Time
-                bos.write((byte) (hasAlpha ? palette2.length() : 0)); // Transparent
-                // Color
-                // Index
-                bos.write((byte) 0); // terminator
-            }
-
-            if (null != xmpXml) {
-                bos.write(EXTENSION_CODE);
-                bos.write(APPLICATION_EXTENSION_LABEL);
-
-                bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE.length); // 0x0B
-                bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE);
-
-                byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
-                bos.write(xmpXmlBytes);
-
-                // write "magic trailer"
-                for (int magic = 0; magic <= 0xff; magic++)
-                    bos.write(0xff - magic);
-
-                bos.write((byte) 0); // terminator
-
-            }
-
-            { // Image Descriptor.
-                bos.write(IMAGE_SEPARATOR);
-                bos.write2Bytes(0); // Image Left Position
-                bos.write2Bytes(0); // Image Top Position
-                bos.write2Bytes(width); // Image Width
-                bos.write2Bytes(height); // Image Height
-
-                {
-                    boolean LocalColorTableFlag = true;
-                    // boolean LocalColorTableFlag = false;
-                    boolean InterlaceFlag = false;
-                    boolean SortFlag = false;
-                    int SizeOfLocalColorTable = colorTableScaleLessOne;
-
-                    // int SizeOfLocalColorTable = 0;
-
-                    int PackedFields = ((LocalColorTableFlag ? LOCAL_COLOR_TABLE_FLAG_MASK
-                            : 0)
-                            | (InterlaceFlag ? INTERLACE_FLAG_MASK : 0)
-                            | (SortFlag ? SORT_FLAG_MASK : 0) | (7 & SizeOfLocalColorTable));
-                    bos.write(PackedFields); // one byte
+                    bos.write(red);
+                    bos.write(green);
+                    bos.write(blue);
+                } else {
+                    bos.write(0);
+                    bos.write(0);
+                    bos.write(0);
                 }
             }
+        }
 
-            { // write Local Color Table.
-                for (int i = 0; i < colorTableSizeInFormat; i++) {
-                    if (i < palette2.length()) {
-                        int rgb = palette2.getEntry(i);
+        { // get Image Data.
+            int image_data_total = 0;
 
-                        int red = 0xff & (rgb >> 16);
-                        int green = 0xff & (rgb >> 8);
-                        int blue = 0xff & (rgb >> 0);
-
-                        bos.write(red);
-                        bos.write(green);
-                        bos.write(blue);
-                    } else {
-                        bos.write(0);
-                        bos.write(0);
-                        bos.write(0);
-                    }
-                }
+            int LZWMinimumCodeSize = colorTableScaleLessOne + 1;
+            // LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
+            if (LZWMinimumCodeSize < 2) {
+                LZWMinimumCodeSize = 2;
             }
 
-            { // get Image Data.
-                int image_data_total = 0;
+            // TODO:
+            // make
+            // better
+            // choice
+            // here.
+            bos.write(LZWMinimumCodeSize);
 
-                int LZWMinimumCodeSize = colorTableScaleLessOne + 1;
-                // LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
-                if (LZWMinimumCodeSize < 2)
-                    LZWMinimumCodeSize = 2;
+            MyLzwCompressor compressor = new MyLzwCompressor(
+                    LZWMinimumCodeSize, BYTE_ORDER_LSB, false); // GIF
+            // Mode);
 
-                // TODO:
-                // make
-                // better
-                // choice
-                // here.
-                bos.write(LZWMinimumCodeSize);
+            byte imagedata[] = new byte[width * height];
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int argb = src.getRGB(x, y);
+                    int rgb = 0xffffff & argb;
+                    int index;
 
-                MyLzwCompressor compressor = new MyLzwCompressor(
-                        LZWMinimumCodeSize, BYTE_ORDER_LSB, false); // GIF
-                // Mode);
-
-                byte imagedata[] = new byte[width * height];
-                for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width; x++) {
-                        int argb = src.getRGB(x, y);
-                        int rgb = 0xffffff & argb;
-                        int index;
-
-                        if (hasAlpha) {
-                            int alpha = 0xff & (argb >> 24);
-                            final int alphaThreshold = 255;
-                            if (alpha < alphaThreshold)
-                                index = palette2.length(); // is transparent
-                            else
-                                index = palette2.getPaletteIndex(rgb);
+                    if (hasAlpha) {
+                        int alpha = 0xff & (argb >> 24);
+                        final int alphaThreshold = 255;
+                        if (alpha < alphaThreshold) {
+                            index = palette2.length(); // is transparent
                         } else {
                             index = palette2.getPaletteIndex(rgb);
                         }
-
-                        imagedata[y * width + x] = (byte) index;
+                    } else {
+                        index = palette2.getPaletteIndex(rgb);
                     }
-                }
 
-                byte compressed[] = compressor.compress(imagedata);
-                writeAsSubBlocks(bos, compressed);
-                image_data_total += compressed.length;
+                    imagedata[y * width + x] = (byte) index;
+                }
             }
 
-            // palette2.dump();
-
-            bos.write(TERMINATOR_BYTE);
+            byte compressed[] = compressor.compress(imagedata);
+            writeAsSubBlocks(bos, compressed);
+            image_data_total += compressed.length;
         }
+
+        // palette2.dump();
+
+        bos.write(TERMINATOR_BYTE);
 
         bos.close();
         os.close();
@@ -1043,40 +1085,47 @@ public class GifImageParser extends ImageParser {
             FormatCompliance formatCompliance = null;
             GifHeaderInfo ghi = readHeader(is, formatCompliance);
 
-            if (ghi.globalColorTableFlag)
+            if (ghi.globalColorTableFlag) {
                 readColorTable(is, ghi.sizeOfGlobalColorTable, formatCompliance);
+            }
 
             List<GifBlock> blocks = readBlocks(ghi, is, true, formatCompliance);
 
             List<String> result = new ArrayList<String>();
             for (int i = 0; i < blocks.size(); i++) {
                 GifBlock block = blocks.get(i);
-                if (block.blockCode != XMP_COMPLETE_CODE)
+                if (block.blockCode != XMP_COMPLETE_CODE) {
                     continue;
+                }
 
                 GenericGifBlock genericBlock = (GenericGifBlock) block;
 
                 byte blockBytes[] = genericBlock.appendSubBlocks(true);
-                if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length)
+                if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length) {
                     continue;
+                }
 
                 if (!compareByteArrays(blockBytes, 0,
                         XMP_APPLICATION_ID_AND_AUTH_CODE, 0,
-                        XMP_APPLICATION_ID_AND_AUTH_CODE.length))
+                        XMP_APPLICATION_ID_AND_AUTH_CODE.length)) {
                     continue;
+                }
 
                 byte GIF_MAGIC_TRAILER[] = new byte[256];
-                for (int magic = 0; magic <= 0xff; magic++)
+                for (int magic = 0; magic <= 0xff; magic++) {
                     GIF_MAGIC_TRAILER[magic] = (byte) (0xff - magic);
+                }
 
                 if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length
-                        + GIF_MAGIC_TRAILER.length)
+                        + GIF_MAGIC_TRAILER.length) {
                     continue;
+                }
                 if (!compareByteArrays(blockBytes, blockBytes.length
                         - GIF_MAGIC_TRAILER.length, GIF_MAGIC_TRAILER, 0,
-                        GIF_MAGIC_TRAILER.length))
+                        GIF_MAGIC_TRAILER.length)) {
                     throw new ImageReadException(
                             "XMP block in GIF missing magic trailer.");
+                }
 
                 try {
                     // XMP is UTF-8 encoded xml.
@@ -1092,10 +1141,12 @@ public class GifImageParser extends ImageParser {
                 }
             }
 
-            if (result.size() < 1)
+            if (result.size() < 1) {
                 return null;
-            if (result.size() > 1)
+            }
+            if (result.size() > 1) {
                 throw new ImageReadException("More than one XMP Block in GIF.");
+            }
             return result.get(0);
 
         } finally {

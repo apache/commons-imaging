@@ -31,13 +31,14 @@ public class PixelParserRle extends PixelParser {
     }
 
     private int getSamplesPerByte() throws ImageReadException {
-        if (bhi.bitsPerPixel == 8)
+        if (bhi.bitsPerPixel == 8) {
             return 1;
-        else if (bhi.bitsPerPixel == 4)
+        } else if (bhi.bitsPerPixel == 4) {
             return 2;
-        else
+        } else {
             throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
                     + bhi.bitsPerPixel);
+        }
     }
 
     private int[] convertDataToSamples(int data) throws ImageReadException {
@@ -53,9 +54,10 @@ public class PixelParserRle extends PixelParser {
             rgbs[0] = getColorTableRGB(sample1);
             rgbs[1] = getColorTableRGB(sample2);
             // pixels_written = 2;
-        } else
+        } else {
             throw new ImageReadException("BMP RLE: bad BitsPerPixel: "
                     + bhi.bitsPerPixel);
+        }
 
         return rgbs;
     }
@@ -109,21 +111,20 @@ public class PixelParserRle extends PixelParser {
 
             if (a == 0) {
                 switch (b) {
-                case 0: // EOL
-                {
+                case 0: {
+                    // EOL
                     // System.out.println("EOL");
                     y--;
                     x = 0;
                 }
                     break;
-                case 1: // EOF
-                    // System.out
-                    // .println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                case 1:
+                    // EOF
+                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                     done = true;
                     break;
                 case 2: {
-                    // System.out
-                    // .println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                     int c = 0xff & bfp.readByte("RLE c", is, "BMP: Bad RLE");
                     // baos.write(c);
                     int d = 0xff & bfp.readByte("RLE d", is, "BMP: Bad RLE");
@@ -132,15 +133,16 @@ public class PixelParserRle extends PixelParser {
                 }
                     break;
                 default: {
-                    // System.out
-                    // .println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
                     int SamplesPerByte = getSamplesPerByte();
                     int size = b / SamplesPerByte;
-                    if ((b % SamplesPerByte) > 0)
+                    if ((b % SamplesPerByte) > 0) {
                         size++;
-                    if ((size % 2) != 0)
+                    }
+                    if ((size % 2) != 0) {
                         size++;
+                    }
 
                     // System.out.println("b: " + b);
                     // System.out.println("size: " + size);
@@ -152,9 +154,8 @@ public class PixelParserRle extends PixelParser {
                     int remaining = b;
 
                     // while(true)
-                    for (int i = 0; remaining > 0; i++)
+                    for (int i = 0; remaining > 0; i++) {
                     // for (int i = 0; i < bytes.length; i++)
-                    {
                         int samples[] = convertDataToSamples(0xff & bytes[i]);
                         int towrite = Math.min(remaining, SamplesPerByte);
                         // System.out.println("remaining: " + remaining);

@@ -89,8 +89,9 @@ public class IcnsImageParser extends ImageParser {
 
         ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE, false);
 
-        if (params.containsKey(PARAM_KEY_VERBOSE))
+        if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -100,8 +101,9 @@ public class IcnsImageParser extends ImageParser {
         IcnsContents contents = readImage(byteSource);
         List<BufferedImage> images = IcnsDecoder
                 .decodeAllImages(contents.icnsElements);
-        if (images.isEmpty())
+        if (images.isEmpty()) {
             throw new ImageReadException("No icons in ICNS file");
+        }
         BufferedImage image0 = images.get(0);
         return new ImageInfo("Icns", 32, new ArrayList<String>(),
                 ImageFormat.IMAGE_FORMAT_ICNS, "ICNS Apple Icon Image",
@@ -119,8 +121,9 @@ public class IcnsImageParser extends ImageParser {
 
         ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE, false);
 
-        if (params.containsKey(PARAM_KEY_VERBOSE))
+        if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -130,8 +133,9 @@ public class IcnsImageParser extends ImageParser {
         IcnsContents contents = readImage(byteSource);
         List<BufferedImage> images = IcnsDecoder
                 .decodeAllImages(contents.icnsElements);
-        if (images.isEmpty())
+        if (images.isEmpty()) {
             throw new ImageReadException("No icons in ICNS file");
+        }
         BufferedImage image0 = images.get(0);
         return new Dimension(image0.getWidth(), image0.getHeight());
     }
@@ -165,9 +169,10 @@ public class IcnsImageParser extends ImageParser {
         int Magic = read4Bytes("Magic", is, "Not a Valid ICNS File");
         int FileSize = read4Bytes("FileSize", is, "Not a Valid ICNS File");
 
-        if (Magic != ICNS_MAGIC)
+        if (Magic != ICNS_MAGIC) {
             throw new ImageReadException("Not a Valid ICNS File: "
                     + "magic is 0x" + Integer.toHexString(Magic));
+        }
 
         return new IcnsHeader(Magic, FileSize);
     }
@@ -187,10 +192,11 @@ public class IcnsImageParser extends ImageParser {
             pw.println("IcnsElement");
             IcnsType icnsType = IcnsType.findAnyType(type);
             String typeDescription;
-            if (icnsType == null)
+            if (icnsType == null) {
                 typeDescription = "";
-            else
+            } else {
                 typeDescription = " " + icnsType.toString();
+            }
             pw.println("Type: 0x" + Integer.toHexString(type) + " ("
                     + IcnsType.describeType(type) + ")" + typeDescription);
             pw.println("ElementSize: " + elementSize);
@@ -244,8 +250,9 @@ public class IcnsImageParser extends ImageParser {
             }
 
             IcnsElement[] icnsElements = new IcnsElement[icnsElementList.size()];
-            for (int i = 0; i < icnsElements.length; i++)
+            for (int i = 0; i < icnsElements.length; i++) {
                 icnsElements[i] = icnsElementList.get(i);
+            }
 
             return new IcnsContents(icnsHeader, icnsElements);
         } finally {
@@ -262,8 +269,9 @@ public class IcnsImageParser extends ImageParser {
             throws ImageReadException, IOException {
         IcnsContents icnsContents = readImage(byteSource);
         icnsContents.icnsHeader.dump(pw);
-        for (int i = 0; i < icnsContents.icnsElements.length; i++)
+        for (int i = 0; i < icnsContents.icnsElements.length; i++) {
             icnsContents.icnsElements[i].dump(pw);
+        }
         return true;
     }
 
@@ -273,10 +281,11 @@ public class IcnsImageParser extends ImageParser {
         IcnsContents icnsContents = readImage(byteSource);
         List<BufferedImage> result = IcnsDecoder
                 .decodeAllImages(icnsContents.icnsElements);
-        if (result.size() > 0)
+        if (result.size() > 0) {
             return result.get(0);
-        else
+        } else {
             throw new ImageReadException("No icons in ICNS file");
+        }
     }
 
     @Override
@@ -293,8 +302,9 @@ public class IcnsImageParser extends ImageParser {
         params = (params == null) ? new HashMap() : new HashMap(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT))
+        if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -302,17 +312,18 @@ public class IcnsImageParser extends ImageParser {
         }
 
         IcnsType imageType;
-        if (src.getWidth() == 16 && src.getHeight() == 16)
+        if (src.getWidth() == 16 && src.getHeight() == 16) {
             imageType = IcnsType.ICNS_16x16_32BIT_IMAGE;
-        else if (src.getWidth() == 32 && src.getHeight() == 32)
+        } else if (src.getWidth() == 32 && src.getHeight() == 32) {
             imageType = IcnsType.ICNS_32x32_32BIT_IMAGE;
-        else if (src.getWidth() == 48 && src.getHeight() == 48)
+        } else if (src.getWidth() == 48 && src.getHeight() == 48) {
             imageType = IcnsType.ICNS_48x48_32BIT_IMAGE;
-        else if (src.getWidth() == 128 && src.getHeight() == 128)
+        } else if (src.getWidth() == 128 && src.getHeight() == 128) {
             imageType = IcnsType.ICNS_128x128_32BIT_IMAGE;
-        else
+        } else {
             throw new ImageWriteException("Invalid/unsupported source width "
                     + src.getWidth() + " and height " + src.getHeight());
+        }
 
         BinaryOutputStream bos = new BinaryOutputStream(os,
                 BYTE_ORDER_BIG_ENDIAN);

@@ -69,7 +69,8 @@ public class DcxImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_DCX, //
+        return new ImageFormat[] {
+                ImageFormat.IMAGE_FORMAT_DCX, //
         };
     }
 
@@ -131,22 +132,26 @@ public class DcxImageParser extends ImageParser {
             for (int i = 0; i < 1024; i++) {
                 int pageOffset = read4Bytes("PageTable", is,
                         "Not a Valid DCX File");
-                if (pageOffset == 0)
+                if (pageOffset == 0) {
                     break;
+                }
                 pageTable.add(pageOffset);
             }
 
-            if (id != DcxHeader.DCX_ID)
+            if (id != DcxHeader.DCX_ID) {
                 throw new ImageReadException(
                         "Not a Valid DCX File: file id incorrect");
-            if (pageTable.size() == 1024)
+            }
+            if (pageTable.size() == 1024) {
                 throw new ImageReadException(
                         "DCX page table not terminated by zero entry");
+            }
 
             Object[] objects = pageTable.toArray();
             int[] pages = new int[objects.length];
-            for (int i = 0; i < objects.length; i++)
+            for (int i = 0; i < objects.length; i++) {
                 pages[i] = ((Integer) objects[i]).intValue();
+            }
 
             return new DcxHeader(id, pages);
         } finally {
@@ -171,8 +176,9 @@ public class DcxImageParser extends ImageParser {
     public final BufferedImage getBufferedImage(ByteSource byteSource,
             Map params) throws ImageReadException, IOException {
         List<BufferedImage> list = getAllBufferedImages(byteSource);
-        if (list.isEmpty())
+        if (list.isEmpty()) {
             return null;
+        }
         return list.get(0);
     }
 
@@ -193,8 +199,9 @@ public class DcxImageParser extends ImageParser {
                 images.add(image);
             } finally {
                 try {
-                    if (stream != null)
+                    if (stream != null) {
                         stream.close();
+                    }
                 } catch (IOException ignored) {
                     Debug.debug(ignored);
                 }
@@ -225,9 +232,10 @@ public class DcxImageParser extends ImageParser {
         if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
             Object value = params.remove(PARAM_KEY_PIXEL_DENSITY);
             if (value != null) {
-                if (!(value instanceof PixelDensity))
+                if (!(value instanceof PixelDensity)) {
                     throw new ImageWriteException(
                             "Invalid pixel density parameter");
+                }
                 pcxParams.put(PARAM_KEY_PIXEL_DENSITY, (PixelDensity) value);
             }
         }
@@ -245,8 +253,9 @@ public class DcxImageParser extends ImageParser {
         bos.write4Bytes(DcxHeader.DCX_ID);
         // Some apps may need a full 1024 entry table
         bos.write4Bytes(headerSize);
-        for (int i = 0; i < 1023; i++)
+        for (int i = 0; i < 1023; i++) {
             bos.write4Bytes(0);
+        }
         PcxImageParser pcxImageParser = new PcxImageParser();
         pcxImageParser.writeImage(src, bos, pcxParams);
     }

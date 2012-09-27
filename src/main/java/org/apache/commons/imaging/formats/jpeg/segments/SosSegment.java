@@ -49,8 +49,9 @@ public class SosSegment extends Segment {
             throws IOException {
         super(marker, marker_length);
 
-        if (getDebug())
+        if (getDebug()) {
             System.out.println("SosSegment marker_length: " + marker_length);
+        }
 
         // Debug.debug("SOS", marker_length);
 
@@ -91,8 +92,9 @@ public class SosSegment extends Segment {
         successiveApproximationBitHigh = (successive_approximation_bit_position >> 4) & 0xf;
         successiveApproximationBitLow = successive_approximation_bit_position & 0xf;
 
-        if (getDebug())
+        if (getDebug()) {
             System.out.println("");
+        }
     }
 
     @Override

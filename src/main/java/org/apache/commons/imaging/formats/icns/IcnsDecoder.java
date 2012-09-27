@@ -94,10 +94,11 @@ public class IcnsDecoder {
                     bitsLeft = 8;
                 }
                 int argb;
-                if ((value & 0x80) != 0)
+                if ((value & 0x80) != 0) {
                     argb = 0xff000000;
-                else
+                } else {
                     argb = 0xffffffff;
+                }
                 value <<= 1;
                 bitsLeft--;
                 image.setRGB(x, y, argb);
@@ -112,10 +113,11 @@ public class IcnsDecoder {
         for (int y = 0; y < imageType.getHeight(); y++) {
             for (int x = 0; x < imageType.getWidth(); x++) {
                 int index;
-                if (!visited)
+                if (!visited) {
                     index = 0xf & (imageData[i] >> 4);
-                else
+                } else {
                     index = 0xf & imageData[i++];
+                }
                 visited = !visited;
                 image.setRGB(x, y, palette_4bpp[index]);
             }
@@ -154,11 +156,12 @@ public class IcnsDecoder {
         // 1 bit icon types have image data followed by mask data in the same
         // entry
         int totalBytes = (image.getWidth() * image.getHeight() + 7) / 8;
-        if (maskData.length >= 2 * totalBytes)
+        if (maskData.length >= 2 * totalBytes) {
             position = totalBytes;
-        else
+        } else {
             throw new ImageReadException(
                     "1 BPP mask underrun parsing ICNS file");
+        }
 
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
@@ -167,10 +170,11 @@ public class IcnsDecoder {
                     bitsLeft = 8;
                 }
                 int alpha;
-                if ((value & 0x80) != 0)
+                if ((value & 0x80) != 0) {
                     alpha = 0xff;
-                else
+                } else {
                     alpha = 0x00;
+                }
                 value <<= 1;
                 bitsLeft--;
                 image.setRGB(x, y,
@@ -196,8 +200,9 @@ public class IcnsDecoder {
         for (int i = 0; i < icnsElements.length; i++) {
             IcnsImageParser.IcnsElement imageElement = icnsElements[i];
             IcnsType imageType = IcnsType.findImageType(imageElement.type);
-            if (imageType == null)
+            if (imageType == null) {
                 continue;
+            }
 
             IcnsType maskType = null;
             IcnsImageParser.IcnsElement maskElement = null;
@@ -229,8 +234,9 @@ public class IcnsDecoder {
 
             // FIXME: don't skip these when JPEG 2000 support is added:
             if (imageType == IcnsType.ICNS_256x256_32BIT_ARGB_IMAGE
-                    || imageType == IcnsType.ICNS_512x512_32BIT_ARGB_IMAGE)
+                    || imageType == IcnsType.ICNS_512x512_32BIT_ARGB_IMAGE) {
                 continue;
+            }
 
             int expectedSize = (imageType.getWidth() * imageType.getHeight()
                     * imageType.getBitsPerPixel() + 7) / 8;
@@ -240,11 +246,13 @@ public class IcnsDecoder {
                     imageData = Rle24Compression.decompress(
                             imageType.getWidth(), imageType.getHeight(),
                             imageElement.data);
-                } else
+                } else {
                     throw new ImageReadException(
                             "Short image data but not a 32 bit compressed type");
-            } else
+                }
+            } else {
                 imageData = imageElement.data;
+            }
 
             ImageBuilder imageBuilder = new ImageBuilder(imageType.getWidth(),
                     imageType.getHeight(), true);
@@ -267,13 +275,14 @@ public class IcnsDecoder {
             }
 
             if (maskElement != null) {
-                if (maskType.getBitsPerPixel() == 1)
+                if (maskType.getBitsPerPixel() == 1) {
                     apply1BPPMask(maskElement.data, imageBuilder);
-                else if (maskType.getBitsPerPixel() == 8)
+                } else if (maskType.getBitsPerPixel() == 8) {
                     apply8BPPMask(maskElement.data, imageBuilder);
-                else
+                } else {
                     throw new ImageReadException("Unsupport mask bit depth "
                             + maskType.getBitsPerPixel());
+                }
             }
 
             result.add(imageBuilder.getBufferedImage());

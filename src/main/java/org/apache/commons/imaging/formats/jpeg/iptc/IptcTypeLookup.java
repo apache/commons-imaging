@@ -29,8 +29,9 @@ public abstract class IptcTypeLookup implements IptcConstants {
     }
 
     public static final IptcType getIptcType(int type) {
-        if (!IPTC_TYPE_MAP.containsKey(type))
+        if (!IPTC_TYPE_MAP.containsKey(type)) {
             return IptcTypes.getUnknown(type);
+        }
         return IPTC_TYPE_MAP.get(type);
     }
 }

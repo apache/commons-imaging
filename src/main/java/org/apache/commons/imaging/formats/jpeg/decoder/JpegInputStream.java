@@ -34,19 +34,22 @@ public class JpegInputStream {
     public int nextBit() throws IOException, ImageReadException {
         if (cnt == 0) {
             b = is.read();
-            if (b < 0)
+            if (b < 0) {
                 throw new ImageReadException("Premature End of File");
+            }
             cnt = 8;
             if (b == 0xff) {
                 int b2 = is.read();
-                if (b2 < 0)
+                if (b2 < 0) {
                     throw new ImageReadException("Premature End of File");
+                }
                 if (b2 != 0) {
-                    if (b2 == (0xff & JpegConstants.DNLMarker))
+                    if (b2 == (0xff & JpegConstants.DNLMarker)) {
                         throw new ImageReadException("DNL not yet supported");
-                    else
+                    } else {
                         throw new ImageReadException("Invalid marker found "
                                 + "in entropy data");
+                    }
                 }
             }
         }

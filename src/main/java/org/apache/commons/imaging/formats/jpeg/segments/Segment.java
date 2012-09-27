@@ -128,12 +128,15 @@ public abstract class Segment extends BinaryFileParser {
         default:
         }
 
-        if ((marker >= 0xff02) && (marker <= 0xffbf))
+        if ((marker >= 0xff02) && (marker <= 0xffbf)) {
             return "Reserved";
-        if ((marker >= 0xffe0) && (marker <= 0xffef))
+        }
+        if ((marker >= 0xffe0) && (marker <= 0xffef)) {
             return "APP" + (marker - 0xffe0);
-        if ((marker >= 0xfff0) && (marker <= 0xfffd))
+        }
+        if ((marker >= 0xfff0) && (marker <= 0xfffd)) {
             return "JPG" + (marker - 0xffe0);
+        }
 
         return "Unknown";
 

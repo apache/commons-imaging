@@ -50,9 +50,10 @@ public class JfifSegment extends Segment implements JpegConstants {
 
         byte signature[] = readBytes(is, JFIF0_SIGNATURE.size());
         if (!JFIF0_SIGNATURE.equals(signature)
-                && !JFIF0_SIGNATURE_ALTERNATIVE.equals(signature))
+                && !JFIF0_SIGNATURE_ALTERNATIVE.equals(signature)) {
             throw new ImageReadException(
                     "Not a Valid JPEG File: missing JFIF string");
+        }
 
         jfifMajorVersion = readByte("JFIF_major_version", is,
                 "Not a Valid JPEG File");
@@ -71,8 +72,9 @@ public class JfifSegment extends Segment implements JpegConstants {
 
         }
 
-        if (getDebug())
+        if (getDebug()) {
             System.out.println("");
+        }
     }
 
 }

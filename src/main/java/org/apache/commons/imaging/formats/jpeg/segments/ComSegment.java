@@ -32,14 +32,16 @@ public class ComSegment extends Segment {
             throws IOException {
         super(marker, marker_length);
 
-        if (getDebug())
+        if (getDebug()) {
             System.out.println("ComSegment marker_length: " + marker_length);
+        }
 
         comment = readByteArray("Comment", marker_length, is,
                 "Error reading JPEG comment");
 
-        if (getDebug())
+        if (getDebug()) {
             System.out.println("");
+        }
     }
 
     @Override

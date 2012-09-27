@@ -30,12 +30,13 @@ public class BmpWriterPalette extends BmpWriter {
     public BmpWriterPalette(SimplePalette palette) {
         this.palette = palette;
 
-        if (palette.length() <= 2)
+        if (palette.length() <= 2) {
             bitsPerSample = 1;
-        else if (palette.length() <= 16)
+        } else if (palette.length() <= 16) {
             bitsPerSample = 4;
-        else
+        } else {
             bitsPerSample = 8;
+        }
     }
 
     @Override
@@ -85,9 +86,8 @@ public class BmpWriterPalette extends BmpWriter {
                 if (bitsPerSample == 8) {
                     baos.write(0xff & index);
                     bytecount++;
-                } else
-                // 4 or 1
-                {
+                } else {
+                    // 4 or 1
                     bit_cache = (bit_cache << bitsPerSample) | index;
                     bits_in_cache += bitsPerSample;
                     if (bits_in_cache >= 8) {

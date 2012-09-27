@@ -173,8 +173,9 @@ public class JpegImageMetadata implements IImageMetadata {
                     .get(i);
             // Debug.debug("dir", dir);
             TiffImageData rawImageData = dir.getTiffImageData();
-            if (null != rawImageData)
+            if (null != rawImageData) {
                 return rawImageData;
+            }
         }
 
         return null;
@@ -183,11 +184,13 @@ public class JpegImageMetadata implements IImageMetadata {
     public List<IImageMetadataItem> getItems() {
         List<IImageMetadataItem> result = new ArrayList<IImageMetadataItem>();
 
-        if (null != exif)
+        if (null != exif) {
             result.addAll(exif.getItems());
+        }
 
-        if (null != photoshop)
+        if (null != photoshop) {
             result.addAll(photoshop.getItems());
+        }
 
         return result;
     }
@@ -200,15 +203,16 @@ public class JpegImageMetadata implements IImageMetadata {
     }
 
     public String toString(String prefix) {
-        if (prefix == null)
+        if (prefix == null) {
             prefix = "";
+        }
 
         StringBuilder result = new StringBuilder();
 
         result.append(prefix);
-        if (null == exif)
+        if (null == exif) {
             result.append("No Exif metadata.");
-        else {
+        } else {
             result.append("Exif metadata:");
             result.append(newline);
             result.append(exif.toString("\t"));
@@ -218,9 +222,9 @@ public class JpegImageMetadata implements IImageMetadata {
         result.append(newline);
 
         result.append(prefix);
-        if (null == photoshop)
+        if (null == photoshop) {
             result.append("No Photoshop (IPTC) metadata.");
-        else {
+        } else {
             result.append("Photoshop (IPTC) metadata:");
             result.append(newline);
             result.append(photoshop.toString("\t"));

@@ -43,15 +43,18 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
 
     public boolean isPhotoshopJpegSegment(byte segmentData[]) {
         if (!BinaryFileParser.byteArrayHasPrefix(segmentData,
-                PHOTOSHOP_IDENTIFICATION_STRING))
+                PHOTOSHOP_IDENTIFICATION_STRING)) {
             return false;
+        }
 
         int index = PHOTOSHOP_IDENTIFICATION_STRING.size();
-        if (index + CONST_8BIM.size() > segmentData.length)
+        if (index + CONST_8BIM.size() > segmentData.length) {
             return false;
+        }
 
-        if (!CONST_8BIM.equals(segmentData, index, CONST_8BIM.size()))
+        if (!CONST_8BIM.equals(segmentData, index, CONST_8BIM.size())) {
             return false;
+        }
 
         return true;
     }
@@ -114,8 +117,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             IptcBlock block = allBlocks.get(i);
 
             // Ignore everything but IPTC data.
-            if (!block.isIPTCBlock())
+            if (!block.isIPTCBlock()) {
                 continue;
+            }
 
             records.addAll(parseIPTCBlock(block.blockData, verbose));
         }
@@ -131,24 +135,26 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
         // Integer recordVersion = null;
         while (index + 1 < bytes.length) {
             int tagMarker = 0xff & bytes[index++];
-            if (verbose)
+            if (verbose) {
                 Debug.debug("tagMarker",
                         tagMarker + " (0x" + Integer.toHexString(tagMarker)
                                 + ")");
+            }
 
             if (tagMarker != IPTC_RECORD_TAG_MARKER) {
-                if (verbose)
-                    System.out
-                            .println("Unexpected record tag marker in IPTC data.");
+                if (verbose) {
+                    System.out.println("Unexpected record tag marker in IPTC data.");
+                }
                 return elements;
             }
 
             int recordNumber = 0xff & bytes[index++];
-            if (verbose)
+            if (verbose) {
                 Debug.debug(
                         "recordNumber",
                         recordNumber + " (0x"
                                 + Integer.toHexString(recordNumber) + ")");
+            }
 
             // int recordPrefix = convertByteArrayToShort("recordPrefix", index,
             // bytes);
@@ -169,10 +175,11 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // "Unexpected record prefix in IPTC data.");
 
             int recordType = 0xff & bytes[index];
-            if (verbose)
+            if (verbose) {
                 Debug.debug("recordType",
                         recordType + " (0x" + Integer.toHexString(recordType)
                                 + ")");
+            }
             index++;
 
             int recordSize = convertByteArrayToShort("recordSize", index, bytes);
@@ -180,12 +187,14 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
 
             boolean extendedDataset = recordSize > IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE;
             int dataFieldCountLength = recordSize & 0x7fff;
-            if (extendedDataset && verbose)
+            if (extendedDataset && verbose) {
                 Debug.debug("extendedDataset. dataFieldCountLength: "
                         + dataFieldCountLength);
-            if (extendedDataset) // ignore extended dataset and everything
-                // after.
+            }
+            if (extendedDataset) {
+                // ignore extended dataset and everything after.
                 return elements;
+            }
 
             byte recordData[] = readBytearray("recordData", bytes, index,
                     recordSize);
@@ -194,13 +203,15 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // Debug.debug("recordSize", recordSize + " (0x"
             // + Integer.toHexString(recordSize) + ")");
 
-            if (recordNumber != IPTC_APPLICATION_2_RECORD_NUMBER)
+            if (recordNumber != IPTC_APPLICATION_2_RECORD_NUMBER) {
                 continue;
+            }
 
             if (recordType == 0) {
-                if (verbose)
+                if (verbose) {
                     System.out.println("ignore record version record! "
                             + elements.size());
+                }
                 // ignore "record version" record;
                 continue;
             }
@@ -264,8 +275,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             byte[] idString = bis.readByteArray(
                     PHOTOSHOP_IDENTIFICATION_STRING.size(),
                     "App13 Segment missing identification string");
-            if (!PHOTOSHOP_IDENTIFICATION_STRING.equals(idString))
+            if (!PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
                 throw new ImageReadException("Not a Photoshop App13 Segment");
+            }
     
             // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
     
@@ -274,24 +286,28 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                         .readByteArray(CONST_8BIM.size(),
                                 "App13 Segment missing identification string",
                                 false, false);
-                if (null == imageResourceBlockSignature)
+                if (null == imageResourceBlockSignature) {
                     break;
-                if (!CONST_8BIM.equals(imageResourceBlockSignature))
+                }
+                if (!CONST_8BIM.equals(imageResourceBlockSignature)) {
                     throw new ImageReadException(
                             "Invalid Image Resource Block Signature");
+                }
     
                 int blockType = bis
                         .read2ByteInteger("Image Resource Block missing type");
-                if (verbose)
+                if (verbose) {
                     Debug.debug("blockType",
                             blockType + " (0x" + Integer.toHexString(blockType)
                                     + ")");
+                }
     
                 int blockNameLength = bis
                         .read1ByteInteger("Image Resource Block missing name length");
-                if (verbose && blockNameLength > 0)
+                if (verbose && blockNameLength > 0) {
                     Debug.debug("blockNameLength", blockNameLength + " (0x"
                             + Integer.toHexString(blockNameLength) + ")");
+                }
                 byte[] blockNameBytes;
                 if (blockNameLength == 0) {
                     bis.read1ByteInteger("Image Resource Block has invalid name");
@@ -299,19 +315,22 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 } else {
                     blockNameBytes = bis.readByteArray(blockNameLength,
                             "Invalid Image Resource Block name", verbose, strict);
-                    if (null == blockNameBytes)
+                    if (null == blockNameBytes) {
                         break;
+                    }
     
-                    if (blockNameLength % 2 == 0)
+                    if (blockNameLength % 2 == 0) {
                         bis.read1ByteInteger("Image Resource Block missing padding byte");
+                    }
                 }
     
                 int blockSize = bis
                         .read4ByteInteger("Image Resource Block missing size");
-                if (verbose)
+                if (verbose) {
                     Debug.debug("blockSize",
                             blockSize + " (0x" + Integer.toHexString(blockSize)
                                     + ")");
+                }
     
                 /*
                  * doesn't catch cases where blocksize is invalid but is still less
@@ -324,13 +343,15 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
     
                 byte[] blockData = bis.readByteArray(blockSize,
                         "Invalid Image Resource Block data", verbose, strict);
-                if (null == blockData)
+                if (null == blockData) {
                     break;
+                }
     
                 blocks.add(new IptcBlock(blockType, blockNameBytes, blockData));
     
-                if ((blockSize % 2) != 0)
+                if ((blockSize % 2) != 0) {
                     bis.read1ByteInteger("Image Resource Block missing padding byte");
+                }
             }
     
             return blocks;
@@ -356,25 +377,30 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
 
             CONST_8BIM.writeTo(bos);
 
-            if (block.blockType < 0 || block.blockType > 0xffff)
+            if (block.blockType < 0 || block.blockType > 0xffff) {
                 throw new ImageWriteException("Invalid IPTC block type.");
+            }
             bos.write2ByteInteger(block.blockType);
 
-            if (block.blockNameBytes.length > 255)
+            if (block.blockNameBytes.length > 255) {
                 throw new ImageWriteException("IPTC block name is too long: "
                         + block.blockNameBytes.length);
+            }
             bos.write(block.blockNameBytes.length);
             bos.write(block.blockNameBytes);
-            if (block.blockNameBytes.length % 2 == 0)
+            if (block.blockNameBytes.length % 2 == 0) {
                 bos.write(0); // pad to even size, including length byte.
+            }
 
-            if (block.blockData.length > IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE)
+            if (block.blockData.length > IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
                 throw new ImageWriteException("IPTC block data is too long: "
                         + block.blockData.length);
+            }
             bos.write4ByteInteger(block.blockData.length);
             bos.write(block.blockData);
-            if (block.blockData.length % 2 == 1)
+            if (block.blockData.length % 2 == 1) {
                 bos.write(0); // pad to even size
+            }
 
         }
 
@@ -414,21 +440,24 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             for (int i = 0; i < elements.size(); i++) {
                 IptcRecord element = elements.get(i);
 
-                if (element.iptcType == IptcTypes.RECORD_VERSION)
+                if (element.iptcType == IptcTypes.RECORD_VERSION) {
                     continue; // ignore
+                }
 
                 bos.write(IPTC_RECORD_TAG_MARKER);
                 bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
                 if (element.iptcType.getType() < 0
-                        || element.iptcType.getType() > 0xff)
+                        || element.iptcType.getType() > 0xff) {
                     throw new ImageWriteException("Invalid record type: "
                             + element.iptcType.getType());
+                }
                 bos.write(element.iptcType.getType());
 
                 byte recordData[] = element.value.getBytes("ISO-8859-1");
-                if (!new String(recordData, "ISO-8859-1").equals(element.value))
+                if (!new String(recordData, "ISO-8859-1").equals(element.value)) {
                     throw new ImageWriteException(
                             "Invalid record value, not ISO-8859-1");
+                }
 
                 bos.write2Bytes(recordData.length);
                 bos.write(recordData);

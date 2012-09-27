@@ -73,8 +73,9 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                 // Debug.debug("markerBytes", markerBytes);
 
                 if (marker == EOIMarker || marker == SOS_Marker) {
-                    if (!visitor.beginSOS())
+                    if (!visitor.beginSOS()) {
                         return;
+                    }
 
                     byte imageData[] = getStreamBytes(is);
                     visitor.visitSOS(marker, markerBytes, imageData);
@@ -97,8 +98,9 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                 // Debug.debug("segmentLength", segmentLength);
 
                 if (!visitor.visitSegment(marker, markerBytes, segmentLength,
-                        segmentLengthBytes, segmentData))
+                        segmentLengthBytes, segmentData)) {
                     return;
+                }
             }
 
         } finally {

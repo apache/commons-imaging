@@ -110,9 +110,10 @@ public class JpegIptcRewriter extends JpegRewriter implements IptcConstants {
         List<JFIFPiece> oldPieces = jfifPieces.pieces;
         List<JFIFPiece> photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
 
-        if (photoshopApp13Segments.size() > 1)
+        if (photoshopApp13Segments.size() > 1) {
             throw new ImageReadException(
                     "Image contains more than one Photoshop App13 segment.");
+        }
         List<JFIFPiece> newPieces = removePhotoshopApp13Segments(oldPieces);
         if (photoshopApp13Segments.size() == 1) {
             JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments
@@ -208,9 +209,10 @@ public class JpegIptcRewriter extends JpegRewriter implements IptcConstants {
         List<JFIFPiece> oldPieces = jfifPieces.pieces;
         List<JFIFPiece> photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
 
-        if (photoshopApp13Segments.size() > 1)
+        if (photoshopApp13Segments.size() > 1) {
             throw new ImageReadException(
                     "Image contains more than one Photoshop App13 segment.");
+        }
         List<JFIFPiece> newPieces = removePhotoshopApp13Segments(oldPieces);
 
         {

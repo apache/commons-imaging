@@ -95,12 +95,14 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
     }
 
     private boolean keepMarker(int marker, int markers[]) {
-        if (markers == null)
+        if (markers == null) {
             return true;
+        }
 
         for (int i = 0; i < markers.length; i++) {
-            if (markers[i] == marker)
+            if (markers[i] == marker) {
                 return true;
+            }
         }
 
         return false;
@@ -133,8 +135,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             public boolean visitSegment(int marker, byte markerBytes[],
                     int markerLength, byte markerLengthBytes[],
                     byte segmentData[]) throws ImageReadException, IOException {
-                if (marker == EOIMarker)
+                if (marker == EOIMarker) {
                     return false;
+                }
 
                 // Debug.debug("visitSegment marker", marker);
                 // // Debug.debug("visitSegment keepMarker(marker, markers)",
@@ -142,8 +145,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                 // Debug.debug("visitSegment keepMarker(marker, markers)",
                 // keepMarker(marker, markers));
 
-                if (!keepMarker(marker, markers))
+                if (!keepMarker(marker, markers)) {
                     return true;
+                }
 
                 if (marker == JPEG_APP13_Marker) {
                     // Debug.debug("app 13 segment data", segmentData.length);
@@ -165,8 +169,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                     result.add(new ComSegment(marker, segmentData));
                 }
 
-                if (returnAfterFirst)
+                if (returnAfterFirst) {
                     return false;
+                }
 
                 return true;
             }
@@ -190,17 +195,19 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
 
     private byte[] assembleSegments(List<App2Segment> v, boolean start_with_zero)
             throws ImageReadException {
-        if (v.size() < 1)
+        if (v.size() < 1) {
             throw new ImageReadException("No App2 Segments Found.");
+        }
 
         int markerCount = v.get(0).num_markers;
 
         // if (permissive && (markerCount == 0))
         // markerCount = v.size();
 
-        if (v.size() != markerCount)
+        if (v.size() != markerCount) {
             throw new ImageReadException("App2 Segments Missing.  Found: "
                     + v.size() + ", Expected: " + markerCount + ".");
+        }
 
         Collections.sort(v);
 
@@ -272,21 +279,25 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             // throw away non-icc profile app2 segments.
             for (int i = 0; i < segments.size(); i++) {
                 App2Segment segment = (App2Segment) segments.get(i);
-                if (segment.icc_bytes != null)
+                if (segment.icc_bytes != null) {
                     filtered.add(segment);
+                }
             }
         }
 
-        if ((filtered == null) || (filtered.size() < 1))
+        if ((filtered == null) || (filtered.size() < 1)) {
             return null;
+        }
 
         byte bytes[] = assembleSegments(filtered);
 
-        if (debug)
+        if (debug) {
             System.out.println("bytes" + ": " + bytes.length);
+        }
 
-        if (debug)
+        if (debug) {
             System.out.println("");
+        }
 
         return (bytes);
     }
@@ -299,8 +310,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         JpegPhotoshopMetadata photoshop = getPhotoshopMetadata(byteSource,
                 params);
 
-        if (null == exif && null == photoshop)
+        if (null == exif && null == photoshop) {
             return null;
+        }
 
         JpegImageMetadata result = new JpegImageMetadata(photoshop, exif);
 
@@ -316,8 +328,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
 
         for (int i = 0; i < v.size(); i++) {
             GenericSegment segment = (GenericSegment) v.get(i);
-            if (isExifAPP1Segment(segment))
+            if (isExifAPP1Segment(segment)) {
                 result.add(segment);
+            }
         }
 
         return result;
@@ -326,13 +339,16 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
     public TiffImageMetadata getExifMetadata(ByteSource byteSource, Map params)
             throws ImageReadException, IOException {
         byte bytes[] = getExifRawData(byteSource);
-        if (null == bytes)
+        if (null == bytes) {
             return null;
+        }
 
-        if (params == null)
+        if (params == null) {
             params = new HashMap();
-        if (!params.containsKey(PARAM_KEY_READ_THUMBNAILS))
+        }
+        if (!params.containsKey(PARAM_KEY_READ_THUMBNAILS)) {
             params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.TRUE);
+        }
 
         return (TiffImageMetadata) new TiffImageParser().getMetadata(bytes,
                 params);
@@ -343,24 +359,28 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         List<Segment> segments = readSegments(byteSource,
                 new int[] { JPEG_APP1_Marker, }, false);
 
-        if ((segments == null) || (segments.size() < 1))
+        if ((segments == null) || (segments.size() < 1)) {
             return null;
+        }
 
         List<Segment> exifSegments = filterAPP1Segments(segments);
-        if (debug)
+        if (debug) {
             System.out.println("exif_segments.size" + ": "
                     + exifSegments.size());
+        }
 
         // Debug.debug("segments", segments);
         // Debug.debug("exifSegments", exifSegments);
 
         // TODO: concatenate if multiple segments, need example.
-        if (exifSegments.size() < 1)
+        if (exifSegments.size() < 1) {
             return null;
-        if (exifSegments.size() > 1)
+        }
+        if (exifSegments.size() > 1) {
             throw new ImageReadException(
                     "Sanselan currently can't parse EXIF metadata split across multiple APP1 segments.  "
                             + "Please send this image to the Sanselan project.");
+        }
 
         GenericSegment segment = (GenericSegment) exifSegments.get(0);
         byte bytes[] = segment.bytes;
@@ -390,8 +410,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             public boolean visitSegment(int marker, byte markerBytes[],
                     int markerLength, byte markerLengthBytes[],
                     byte segmentData[]) throws ImageReadException, IOException {
-                if (marker == 0xffd9)
+                if (marker == 0xffd9) {
                     return false;
+                }
 
                 if (marker == JPEG_APP1_Marker) {
                     if (byteArrayHasPrefix(segmentData, EXIF_IDENTIFIER_CODE)) {
@@ -427,8 +448,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             public boolean visitSegment(int marker, byte markerBytes[],
                     int markerLength, byte markerLengthBytes[],
                     byte segmentData[]) throws ImageReadException, IOException {
-                if (marker == 0xffd9)
+                if (marker == 0xffd9) {
                     return false;
+                }
 
                 if (marker == JPEG_APP13_Marker) {
                     if (new IptcParser().isPhotoshopJpegSegment(segmentData)) {
@@ -464,8 +486,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             public boolean visitSegment(int marker, byte markerBytes[],
                     int markerLength, byte markerLengthBytes[],
                     byte segmentData[]) throws ImageReadException, IOException {
-                if (marker == 0xffd9)
+                if (marker == 0xffd9) {
                     return false;
+                }
 
                 if (marker == JPEG_APP1_Marker) {
                     if (new JpegXmpParser().isXmpJpegSegment(segmentData)) {
@@ -512,8 +535,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             public boolean visitSegment(int marker, byte markerBytes[],
                     int markerLength, byte markerLengthBytes[],
                     byte segmentData[]) throws ImageReadException, IOException {
-                if (marker == 0xffd9)
+                if (marker == 0xffd9) {
                     return false;
+                }
 
                 if (marker == JPEG_APP1_Marker) {
                     if (new JpegXmpParser().isXmpJpegSegment(segmentData)) {
@@ -528,11 +552,13 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         };
         new JpegUtils().traverseJFIF(byteSource, visitor);
 
-        if (result.size() < 1)
+        if (result.size() < 1) {
             return null;
-        if (result.size() > 1)
+        }
+        if (result.size() > 1) {
             throw new ImageReadException(
                     "Jpeg file contains more than one XMP segment.");
+        }
         return result.get(0);
     }
 
@@ -541,8 +567,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         List<Segment> segments = readSegments(byteSource,
                 new int[] { JPEG_APP13_Marker, }, false);
 
-        if ((segments == null) || (segments.size() < 1))
+        if ((segments == null) || (segments.size() < 1)) {
             return null;
+        }
 
         PhotoshopApp13Data photoshopApp13Data = null;
 
@@ -550,15 +577,17 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             App13Segment segment = (App13Segment) segments.get(i);
 
             PhotoshopApp13Data data = segment.parsePhotoshopSegment(params);
-            if (data != null && photoshopApp13Data != null)
+            if (data != null && photoshopApp13Data != null) {
                 throw new ImageReadException(
                         "Jpeg contains more than one Photoshop App13 segment.");
+            }
 
             photoshopApp13Data = data;
         }
 
-        if (null == photoshopApp13Data)
+        if (null == photoshopApp13Data) {
             return null;
+        }
         return new JpegPhotoshopMetadata(photoshopApp13Data);
     }
 
@@ -575,11 +604,13 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
 
         }, true);
 
-        if ((segments == null) || (segments.size() < 1))
+        if ((segments == null) || (segments.size() < 1)) {
             throw new ImageReadException("No JFIF Data Found.");
+        }
 
-        if (segments.size() > 1)
+        if (segments.size() > 1) {
             throw new ImageReadException("Redundant JFIF Data Found.");
+        }
 
         SofnSegment fSOFNSegment = (SofnSegment) segments.get(0);
 
@@ -609,8 +640,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
 
         }, false);
 
-        if (SOF_segments == null)
+        if (SOF_segments == null) {
             throw new ImageReadException("No SOFN Data Found.");
+        }
 
         // if (SOF_segments.size() != 1)
         // System.out.println("Incoherent SOFN Data Found: "
@@ -623,21 +655,24 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         // SofnSegment fSOFNSegment = (SofnSegment) findSegment(segments,
         // SOFNmarkers);
 
-        if (fSOFNSegment == null)
+        if (fSOFNSegment == null) {
             throw new ImageReadException("No SOFN Data Found.");
+        }
 
         int Width = fSOFNSegment.width;
         int Height = fSOFNSegment.height;
 
         JfifSegment jfifSegment = null;
 
-        if ((jfifSegments != null) && (jfifSegments.size() > 0))
+        if ((jfifSegments != null) && (jfifSegments.size() > 0)) {
             jfifSegment = (JfifSegment) jfifSegments.get(0);
+        }
 
         List<Segment> app14Segments = readSegments(byteSource, new int[] { JPEG_APP14_Marker }, true);
         App14Segment app14Segment = null;
-        if (app14Segments != null && !app14Segments.isEmpty())
+        if (app14Segments != null && !app14Segments.isEmpty()) {
             app14Segment = (App14Segment) app14Segments.get(0);
+        }
         
         // JfifSegment fTheJFIFSegment = (JfifSegment) findSegment(segments,
         // kJFIFMarker);
@@ -679,14 +714,16 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                 {
                     TiffField field = metadata
                             .findEXIFValue(TiffTagConstants.TIFF_TAG_XRESOLUTION);
-                    if (field != null)
+                    if (field != null) {
                         x_density = ((Number) field.getValue()).doubleValue();
+                    }
                 }
                 {
                     TiffField field = metadata
                             .findEXIFValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
-                    if (field != null)
+                    if (field != null) {
                         y_density = ((Number) field.getValue()).doubleValue();
+                    }
                 }
                 {
                     TiffField field = metadata
@@ -774,10 +811,11 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                 colorType = ImageInfo.COLOR_TYPE_YCCK;
             }
         } else if (jfifSegment != null) {
-            if (Number_of_components == 1)
+            if (Number_of_components == 1) {
                 colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
-            else if (Number_of_components == 3)
+            } else if (Number_of_components == 3) {
                 colorType = ImageInfo.COLOR_TYPE_YCbCr;
+            }
         } else {
             if (Number_of_components == 1) {
                 colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
@@ -792,16 +830,17 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                 boolean haveOther = false;
                 for (SofnSegment.Component component : fSOFNSegment.components) {
                     final int id = component.componentIdentifier;
-                    if (id == 1)
+                    if (id == 1) {
                         have1 = true;
-                    else if (id == 2)
+                    } else if (id == 2) {
                         have2 = true;
-                    else if (id == 3)
+                    } else if (id == 3) {
                         have3 = true;
-                    else if (id == 4)
+                    } else if (id == 4) {
                         have4 = true;
-                    else
+                    } else {
                         haveOther = true;
+                    }
                 }
                 if (Number_of_components == 3 && have1 && have2 && have3 && !have4 && !haveOther) {
                     colorType = ImageInfo.COLOR_TYPE_YCbCr;
@@ -818,20 +857,21 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                     boolean haveY = false;
                     for (SofnSegment.Component component : fSOFNSegment.components) {
                         final int id = component.componentIdentifier;
-                        if (id == 'R')
+                        if (id == 'R') {
                             haveR = true;
-                        else if (id == 'G')
+                        } else if (id == 'G') {
                             haveG = true;
-                        else if (id == 'B')
+                        } else if (id == 'B') {
                             haveB = true;
-                        else if (id == 'A')
+                        } else if (id == 'A') {
                             haveA = true;
-                        else if (id == 'C')
+                        } else if (id == 'C') {
                             haveC = true;
-                        else if (id == 'c')
+                        } else if (id == 'c') {
                             havec = true;
-                        else if (id == 'Y')
+                        } else if (id == 'Y') {
                             haveY = true;
+                        }
                     }
                     if (haveR && haveG && haveB && !haveA && !haveC && !havec && !haveY) {
                         colorType = ImageInfo.COLOR_TYPE_RGB;
@@ -849,27 +889,33 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                         int minVerticalSamplingFactor = Integer.MAX_VALUE;
                         int maxVerticalSamplingFactor = Integer.MIN_VALUE;
                         for (SofnSegment.Component component : fSOFNSegment.components) {
-                            if (minHorizontalSamplingFactor > component.horizontalSamplingFactor)
+                            if (minHorizontalSamplingFactor > component.horizontalSamplingFactor) {
                                 minHorizontalSamplingFactor = component.horizontalSamplingFactor;
-                            if (maxHorizontalSmaplingFactor < component.horizontalSamplingFactor)
+                            }
+                            if (maxHorizontalSmaplingFactor < component.horizontalSamplingFactor) {
                                 maxHorizontalSmaplingFactor = component.horizontalSamplingFactor;
-                            if (minVerticalSamplingFactor > component.verticalSamplingFactor)
+                            }
+                            if (minVerticalSamplingFactor > component.verticalSamplingFactor) {
                                 minVerticalSamplingFactor = component.verticalSamplingFactor;
-                            if (maxVerticalSamplingFactor < component.verticalSamplingFactor)
+                            }
+                            if (maxVerticalSamplingFactor < component.verticalSamplingFactor) {
                                 maxVerticalSamplingFactor = component.verticalSamplingFactor;
+                            }
                         }
                         boolean isSubsampled = (minHorizontalSamplingFactor != maxHorizontalSmaplingFactor) ||
                                 (minVerticalSamplingFactor != maxVerticalSamplingFactor);
                         if (Number_of_components == 3) {
-                            if (isSubsampled)
+                            if (isSubsampled) {
                                 colorType = ImageInfo.COLOR_TYPE_YCbCr;
-                            else
+                            } else {
                                 colorType = ImageInfo.COLOR_TYPE_RGB;
+                            }
                         } else if (Number_of_components == 4) {
-                            if (isSubsampled)
+                            if (isSubsampled) {
                                 colorType = ImageInfo.COLOR_TYPE_YCCK;
-                            else
+                            } else {
                                 colorType = ImageInfo.COLOR_TYPE_CMYK;
+                            }
                         }
                     }
                 }
@@ -1063,8 +1109,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
 
         {
             ImageInfo imageInfo = getImageInfo(byteSource);
-            if (imageInfo == null)
+            if (imageInfo == null) {
                 return false;
+            }
 
             imageInfo.toString(pw, "");
         }
@@ -1074,8 +1121,9 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         {
             List<Segment> segments = readSegments(byteSource, null, false);
 
-            if (segments == null)
+            if (segments == null) {
                 throw new ImageReadException("No Segments Found.");
+            }
 
             for (int d = 0; d < segments.size(); d++) {
 

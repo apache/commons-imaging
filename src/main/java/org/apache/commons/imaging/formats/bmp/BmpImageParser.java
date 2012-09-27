@@ -295,10 +295,12 @@ public class BmpImageParser extends ImageParser {
                     break;
                 default: {
                     int size = b / RLESamplesPerByte;
-                    if ((b % RLESamplesPerByte) > 0)
+                    if ((b % RLESamplesPerByte) > 0) {
                         size++;
-                    if ((size % 2) != 0)
+                    }
+                    if ((size % 2) != 0) {
                         size++;
+                    }
 
                     // System.out.println("b: " + b);
                     // System.out.println("size: " + size);
@@ -324,8 +326,9 @@ public class BmpImageParser extends ImageParser {
         BmpHeaderInfo bhi = readBmpHeaderInfo(is, formatCompliance, verbose);
 
         int colorTableSize = bhi.colorsUsed;
-        if (colorTableSize == 0)
+        if (colorTableSize == 0) {
             colorTableSize = (1 << bhi.bitsPerPixel);
+        }
 
         if (verbose) {
             this.debugNumber("ColorsUsed", bhi.colorsUsed, 4);
@@ -344,12 +347,14 @@ public class BmpImageParser extends ImageParser {
 
         switch (bhi.compression) {
         case BI_RGB:
-            if (verbose)
+            if (verbose) {
                 System.out.println("Compression: BI_RGB");
-            if (bhi.bitsPerPixel <= 8)
+            }
+            if (bhi.bitsPerPixel <= 8) {
                 paletteLength = 4 * colorTableSize;
-            else
+            } else {
                 paletteLength = 0;
+            }
             // BytesPerPaletteEntry = 0;
             // System.out.println("Compression: BI_RGBx2: " + bhi.BitsPerPixel);
             // System.out.println("Compression: BI_RGBx2: " + (bhi.BitsPerPixel
@@ -357,8 +362,9 @@ public class BmpImageParser extends ImageParser {
             break;
 
         case BI_RLE4:
-            if (verbose)
+            if (verbose) {
                 System.out.println("Compression: BI_RLE4");
+            }
             paletteLength = 4 * colorTableSize;
             rleSamplesPerByte = 2;
             // ExtraBitsPerPixel = 4;
@@ -368,8 +374,9 @@ public class BmpImageParser extends ImageParser {
             break;
         //
         case BI_RLE8:
-            if (verbose)
+            if (verbose) {
                 System.out.println("Compression: BI_RLE8");
+            }
             paletteLength = 4 * colorTableSize;
             rleSamplesPerByte = 1;
             // ExtraBitsPerPixel = 8;
@@ -379,12 +386,14 @@ public class BmpImageParser extends ImageParser {
             break;
         //
         case BI_BITFIELDS:
-            if (verbose)
+            if (verbose) {
                 System.out.println("Compression: BI_BITFIELDS");
-            if (bhi.bitsPerPixel <= 8)
+            }
+            if (bhi.bitsPerPixel <= 8) {
                 paletteLength = 4 * colorTableSize;
-            else
+            } else {
                 paletteLength = 0;
+            }
             // BytesPerPixel = 2;
             // BytesPerPaletteEntry = 4;
             break;
@@ -395,9 +404,10 @@ public class BmpImageParser extends ImageParser {
         }
 
         byte colorTable[] = null;
-        if (paletteLength > 0)
+        if (paletteLength > 0) {
             colorTable = this.readByteArray("ColorTable", paletteLength, is,
                     "Not a Valid BMP File");
+        }
 
         if (verbose) {
             this.debugNumber("paletteLength", paletteLength, 4);
@@ -422,8 +432,9 @@ public class BmpImageParser extends ImageParser {
             this.debugNumber("PixelCount", pixelCount, 4);
         }
         // int ImageLineLength = BytesPerPixel * bhi.Width;
-        while ((imageLineLength % 4) != 0)
+        while ((imageLineLength % 4) != 0) {
             imageLineLength++;
+        }
 
         final int headerSize = BITMAP_FILE_HEADER_SIZE
                 + bhi.bitmapHeaderSize
@@ -436,29 +447,33 @@ public class BmpImageParser extends ImageParser {
             this.debugNumber("expectedDataOffset", expectedDataOffset, 4);
         }
         int extraBytes = bhi.bitmapDataOffset - expectedDataOffset;
-        if (extraBytes < 0)
+        if (extraBytes < 0) {
             throw new ImageReadException("BMP has invalid image data offset: "
                     + bhi.bitmapDataOffset + " (expected: "
                     + expectedDataOffset + ", paletteLength: " + paletteLength
                     + ", headerSize: " + headerSize + ")");
-        else if (extraBytes > 0)
+        } else if (extraBytes > 0) {
             this.readByteArray("BitmapDataOffset", extraBytes, is,
                     "Not a Valid BMP File");
+        }
 
         int imageDataSize = bhi.height * imageLineLength;
 
-        if (verbose)
+        if (verbose) {
             this.debugNumber("imageDataSize", imageDataSize, 4);
+        }
 
         byte imageData[];
-        if (rle)
+        if (rle) {
             imageData = getRLEBytes(is, rleSamplesPerByte);
-        else
+        } else {
             imageData = this.readByteArray("ImageData", imageDataSize, is,
                     "Not a Valid BMP File");
+        }
 
-        if (verbose)
+        if (verbose) {
             this.debugNumber("ImageData.length", imageData.length, 4);
+        }
 
         PixelParser pixelParser;
 
@@ -516,8 +531,9 @@ public class BmpImageParser extends ImageParser {
         boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
                 false);
 
-        if (params.containsKey(PARAM_KEY_VERBOSE))
+        if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -526,8 +542,9 @@ public class BmpImageParser extends ImageParser {
 
         BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource, verbose);
 
-        if (bhi == null)
+        if (bhi == null) {
             throw new ImageReadException("BMP: couldn't read header");
+        }
 
         return new Dimension(bhi.width, bhi.height);
 
@@ -549,18 +566,24 @@ public class BmpImageParser extends ImageParser {
     }
 
     private String getBmpTypeDescription(int Identifier1, int Identifier2) {
-        if ((Identifier1 == 'B') && (Identifier2 == 'M'))
+        if ((Identifier1 == 'B') && (Identifier2 == 'M')) {
             return "Windows 3.1x, 95, NT,";
-        if ((Identifier1 == 'B') && (Identifier2 == 'A'))
+        }
+        if ((Identifier1 == 'B') && (Identifier2 == 'A')) {
             return "OS/2 Bitmap Array";
-        if ((Identifier1 == 'C') && (Identifier2 == 'I'))
+        }
+        if ((Identifier1 == 'C') && (Identifier2 == 'I')) {
             return "OS/2 Color Icon";
-        if ((Identifier1 == 'C') && (Identifier2 == 'P'))
+        }
+        if ((Identifier1 == 'C') && (Identifier2 == 'P')) {
             return "OS/2 Color Pointer";
-        if ((Identifier1 == 'I') && (Identifier2 == 'C'))
+        }
+        if ((Identifier1 == 'I') && (Identifier2 == 'C')) {
             return "OS/2 Icon";
-        if ((Identifier1 == 'P') && (Identifier2 == 'T'))
+        }
+        if ((Identifier1 == 'P') && (Identifier2 == 'T')) {
             return "OS/2 Pointer";
+        }
 
         return "Unknown";
     }
@@ -574,8 +597,9 @@ public class BmpImageParser extends ImageParser {
         boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
                 false);
 
-        if (params.containsKey(PARAM_KEY_VERBOSE))
+        if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -597,14 +621,16 @@ public class BmpImageParser extends ImageParser {
             }
         }
 
-        if (ic == null)
+        if (ic == null) {
             throw new ImageReadException("Couldn't read BMP Data");
+        }
 
         BmpHeaderInfo bhi = ic.bhi;
         byte colorTable[] = ic.colorTable;
 
-        if (bhi == null)
+        if (bhi == null) {
             throw new ImageReadException("BMP: couldn't read header");
+        }
 
         int height = bhi.height;
         int width = bhi.width;
@@ -713,10 +739,12 @@ public class BmpImageParser extends ImageParser {
         boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
                 false);
 
-        if (params.containsKey(PARAM_KEY_VERBOSE))
+        if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
-        if (params.containsKey(BUFFERED_IMAGE_FACTORY))
+        }
+        if (params.containsKey(BUFFERED_IMAGE_FACTORY)) {
             params.remove(BUFFERED_IMAGE_FACTORY);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -725,8 +753,9 @@ public class BmpImageParser extends ImageParser {
 
         ImageContents ic = readImageContents(inputStream,
                 FormatCompliance.getDefault(), verbose);
-        if (ic == null)
+        if (ic == null) {
             throw new ImageReadException("Couldn't read BMP Data");
+        }
 
         BmpHeaderInfo bhi = ic.bhi;
         // byte colorTable[] = ic.colorTable;
@@ -762,12 +791,13 @@ public class BmpImageParser extends ImageParser {
         PixelDensity pixelDensity = null;
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT))
+        if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
-        if (params.containsKey(PARAM_KEY_PIXEL_DENSITY))
+        }
+        if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
             pixelDensity = (PixelDensity) params
                     .remove(PARAM_KEY_PIXEL_DENSITY);
-
+        }
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
@@ -777,60 +807,57 @@ public class BmpImageParser extends ImageParser {
                 src, 256);
 
         BmpWriter writer = null;
-        if (palette == null)
+        if (palette == null) {
             writer = new BmpWriterRgb();
-        else
+        } else {
             writer = new BmpWriterPalette(palette);
+        }
 
         byte imagedata[] = writer.getImageData(src);
         BinaryOutputStream bos = new BinaryOutputStream(os, BYTE_ORDER_INTEL);
 
-        {
-            // write BitmapFileHeader
-            os.write(0x42); // B, Windows 3.1x, 95, NT, Bitmap
-            os.write(0x4d); // M
+        // write BitmapFileHeader
+        os.write(0x42); // B, Windows 3.1x, 95, NT, Bitmap
+        os.write(0x4d); // M
 
-            int filesize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + // header
-                    // size
-                    4 * writer.getPaletteSize() + // palette size in bytes
-                    imagedata.length;
-            bos.write4Bytes(filesize);
+        int filesize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + // header
+                // size
+                4 * writer.getPaletteSize() + // palette size in bytes
+                imagedata.length;
+        bos.write4Bytes(filesize);
 
-            bos.write4Bytes(0); // reserved
-            bos.write4Bytes(BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE
-                    + 4 * writer.getPaletteSize()); // Bitmap Data Offset
-        }
+        bos.write4Bytes(0); // reserved
+        bos.write4Bytes(BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE
+                + 4 * writer.getPaletteSize()); // Bitmap Data Offset
 
         int width = src.getWidth();
         int height = src.getHeight();
 
-        { // write BitmapInfoHeader
-            bos.write4Bytes(BITMAP_INFO_HEADER_SIZE); // Bitmap Info Header Size
-            bos.write4Bytes(width); // width
-            bos.write4Bytes(height); // height
-            bos.write2Bytes(1); // Number of Planes
-            bos.write2Bytes(writer.getBitsPerPixel()); // Bits Per Pixel
+        // write BitmapInfoHeader
+        bos.write4Bytes(BITMAP_INFO_HEADER_SIZE); // Bitmap Info Header Size
+        bos.write4Bytes(width); // width
+        bos.write4Bytes(height); // height
+        bos.write2Bytes(1); // Number of Planes
+        bos.write2Bytes(writer.getBitsPerPixel()); // Bits Per Pixel
 
-            bos.write4Bytes(BI_RGB); // Compression
-            bos.write4Bytes(imagedata.length); // Bitmap Data Size
-            bos.write4Bytes(pixelDensity != null ? (int) Math
-                    .round(pixelDensity.horizontalDensityMetres()) : 0); // HResolution
-            bos.write4Bytes(pixelDensity != null ? (int) Math
-                    .round(pixelDensity.verticalDensityMetres()) : 0); // VResolution
-            if (palette == null)
-                bos.write4Bytes(0); // Colors
-            else
-                bos.write4Bytes(palette.length()); // Colors
-            bos.write4Bytes(0); // Important Colors
-            // bos.write_4_bytes(0); // Compression
+        bos.write4Bytes(BI_RGB); // Compression
+        bos.write4Bytes(imagedata.length); // Bitmap Data Size
+        bos.write4Bytes(pixelDensity != null ? (int) Math
+                .round(pixelDensity.horizontalDensityMetres()) : 0); // HResolution
+        bos.write4Bytes(pixelDensity != null ? (int) Math
+                .round(pixelDensity.verticalDensityMetres()) : 0); // VResolution
+        if (palette == null) {
+            bos.write4Bytes(0); // Colors
+        } else {
+            bos.write4Bytes(palette.length()); // Colors
         }
+        bos.write4Bytes(0); // Important Colors
+        // bos.write_4_bytes(0); // Compression
 
-        { // write Palette
-            writer.writePalette(bos);
-        }
-        { // write Image Data
-            bos.writeByteArray(imagedata);
-        }
+        // write Palette
+        writer.writePalette(bos);
+        // write Image Data
+        bos.writeByteArray(imagedata);
     }
 
     /**

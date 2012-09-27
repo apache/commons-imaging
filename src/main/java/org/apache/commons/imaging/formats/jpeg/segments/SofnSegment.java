@@ -53,8 +53,9 @@ public class SofnSegment extends Segment {
             throws ImageReadException, IOException {
         super(marker, marker_length);
 
-        if (getDebug())
+        if (getDebug()) {
             System.out.println("SOF0Segment marker_length: " + marker_length);
+        }
 
         precision = readByte("Data_precision", is, "Not a Valid JPEG File");
         height = read2Bytes("Image_height", is, "Not a Valid JPEG File");
@@ -77,8 +78,9 @@ public class SofnSegment extends Segment {
                     quantTabDestSelector);
         }
 
-        if (getDebug())
+        if (getDebug()) {
             System.out.println("");
+        }
     }
 
     @Override

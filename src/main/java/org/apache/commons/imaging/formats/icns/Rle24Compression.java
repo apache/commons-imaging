@@ -33,8 +33,9 @@ class Rle24Compression {
         // because they could encode valid pixels on smaller images.
         // So always skip on 128x128, and never skip on anything else.
         int dataPos = 0;
-        if (width >= 128 && height >= 128)
+        if (width >= 128 && height >= 128) {
             dataPos = 4;
+        }
 
         // argb, band by band in 3 passes, with no alpha
         for (int band = 1; band <= 3; band++) {
@@ -43,15 +44,17 @@ class Rle24Compression {
             while (remaining > 0) {
                 if ((data[dataPos] & 0x80) != 0) {
                     int count = (0xff & data[dataPos]) - 125;
-                    for (int i = 0; i < count; i++)
+                    for (int i = 0; i < count; i++) {
                         result[band + 4 * (resultPos++)] = data[dataPos + 1];
+                    }
                     dataPos += 2;
                     remaining -= count;
                 } else {
                     int count = (0xff & data[dataPos]) + 1;
                     dataPos++;
-                    for (int i = 0; i < count; i++)
+                    for (int i = 0; i < count; i++) {
                         result[band + 4 * (resultPos++)] = data[dataPos++];
+                    }
                     remaining -= count;
                 }
             }

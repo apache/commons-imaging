@@ -87,8 +87,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             int yMCUs = (sofnSegment.height + vSize - 1) / vSize;
             Block[] mcu = allocateMCUMemory();
             Block[] scaledMCU = new Block[mcu.length];
-            for (int i = 0; i < scaledMCU.length; i++)
+            for (int i = 0; i < scaledMCU.length; i++) {
                 scaledMCU[i] = new Block(hSize, vSize);
+            }
             int[] preds = new int[sofnSegment.numberOfComponents];
             ColorModel colorModel;
             WritableRaster raster;
@@ -110,9 +111,10 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                 // Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
                 // raster = colorModel.createCompatibleWritableRaster(
                 // sofnSegment.width, sofnSegment.height);
-            } else
+            } else {
                 throw new ImageReadException(sofnSegment.numberOfComponents
                         + " components are invalid or unsupported");
+            }
             DataBuffer dataBuffer = raster.getDataBuffer();
 
             for (int y1 = 0; y1 < vSize * yMCUs; y1 += vSize) {
@@ -135,10 +137,11 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                                 int Y = scaledMCU[0].samples[srcRowOffset + x2];
                                 dataBuffer.setElem(dstRowOffset + x2, (Y << 16)
                                         | (Y << 8) | Y);
-                            } else
+                            } else {
                                 throw new ImageReadException(
                                         "Unsupported JPEG with " + mcu.length
                                                 + " components");
+                            }
                         }
                         srcRowOffset += hSize;
                         dstRowOffset += sofnSegment.width;
@@ -173,9 +176,10 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                 SOF15Marker, };
 
         if (Arrays.binarySearch(sofnSegments, marker) >= 0) {
-            if (marker != SOF0Marker)
+            if (marker != SOF0Marker) {
                 throw new ImageReadException("Only sequential, baseline JPEGs "
                         + "are supported at the moment");
+            }
             sofnSegment = new SofnSegment(marker, segmentData);
         } else if (marker == DQTMarker) {
             DqtSegment dqtSegment = new DqtSegment(marker, segmentData);
@@ -183,16 +187,18 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                 DqtSegment.QuantizationTable table = dqtSegment.quantizationTables
                         .get(i);
                 if (0 > table.destinationIdentifier
-                        || table.destinationIdentifier >= quantizationTables.length)
+                        || table.destinationIdentifier >= quantizationTables.length) {
                     throw new ImageReadException(
                             "Invalid quantization table identifier "
                                     + table.destinationIdentifier);
+                }
                 quantizationTables[table.destinationIdentifier] = table;
                 int[] quantizationMatrixInt = new int[64];
                 ZigZag.zigZagToBlock(table.elements, quantizationMatrixInt);
                 float[] quantizationMatrixFloat = new float[64];
-                for (int j = 0; j < 64; j++)
+                for (int j = 0; j < 64; j++) {
                     quantizationMatrixFloat[j] = quantizationMatrixInt[j];
+                }
                 Dct.scaleDequantizationMatrix(quantizationMatrixFloat);
                 scaledQuantizationTables[table.destinationIdentifier] = quantizationMatrixFloat;
             }
@@ -201,18 +207,20 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             for (int i = 0; i < dhtSegment.huffmanTables.size(); i++) {
                 DhtSegment.HuffmanTable table = dhtSegment.huffmanTables.get(i);
                 DhtSegment.HuffmanTable[] tables;
-                if (table.tableClass == 0)
+                if (table.tableClass == 0) {
                     tables = huffmanDCTables;
-                else if (table.tableClass == 1)
+                } else if (table.tableClass == 1) {
                     tables = huffmanACTables;
-                else
+                } else {
                     throw new ImageReadException("Invalid huffman table class "
                             + table.tableClass);
+                }
                 if (0 > table.destinationIdentifier
-                        || table.destinationIdentifier >= tables.length)
+                        || table.destinationIdentifier >= tables.length) {
                     throw new ImageReadException(
                             "Invalid huffman table identifier "
                                     + table.destinationIdentifier);
+                }
                 tables[table.destinationIdentifier] = table;
             }
         }
@@ -222,10 +230,10 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
     private void rescaleMCU(Block[] dataUnits, int hSize, int vSize, Block[] ret) {
         for (int i = 0; i < dataUnits.length; i++) {
             Block block = dataUnits[i];
-            if (block.width == hSize && block.height == vSize)
+            if (block.width == hSize && block.height == vSize) {
                 System.arraycopy(block.samples, 0, ret[i].samples, 0, hSize
                         * vSize);
-            else {
+            } else {
                 int hScale = hSize / block.width;
                 int vScale = vSize / block.height;
                 if (hScale == 2 && vScale == 2) {
@@ -266,8 +274,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                     break;
                 }
             }
-            if (frameComponent == null)
+            if (frameComponent == null) {
                 throw new ImageReadException("Invalid component");
+            }
             Block fullBlock = new Block(
                     8 * frameComponent.horizontalSamplingFactor,
                     8 * frameComponent.verticalSamplingFactor);
@@ -291,8 +300,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                     break;
                 }
             }
-            if (frameComponent == null)
+            if (frameComponent == null) {
                 throw new ImageReadException("Invalid component");
+            }
             Block fullBlock = mcu[i];
             for (int y = 0; y < frameComponent.verticalSamplingFactor; y++) {
                 for (int x = 0; x < frameComponent.horizontalSamplingFactor; x++) {
@@ -317,10 +327,11 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                         int r = rrrr;
 
                         if (ssss == 0) {
-                            if (r == 15)
+                            if (r == 15) {
                                 k += 16;
-                            else
+                            } else {
                                 break;
+                            }
                         } else {
                             k += r;
 
@@ -328,10 +339,11 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                             zz[k] = receive(ssss, is);
                             zz[k] = extend(zz[k], ssss);
 
-                            if (k == 63)
+                            if (k == 63) {
                                 break;
-                            else
+                            } else {
                                 k++;
+                            }
                         }
                     }
 
@@ -340,8 +352,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
 
                     float[] scaledQuantizationTable = scaledQuantizationTables[frameComponent.quantTabDestSelector];
                     ZigZag.zigZagToBlock(zz, blockInt);
-                    for (int j = 0; j < 64; j++)
+                    for (int j = 0; j < 64; j++) {
                         block[j] = blockInt[j] * scaledQuantizationTable[j];
+                    }
                     Dct.inverseDCT8x8(block);
 
                     int dstRowOffset = 8 * y * 8
@@ -352,12 +365,13 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                             float sample = block[srcNext++];
                             sample += shift;
                             int result;
-                            if (sample < 0)
+                            if (sample < 0) {
                                 result = 0;
-                            else if (sample > max)
+                            } else if (sample > max) {
                                 result = max;
-                            else
+                            } else {
                                 result = fastRound(sample);
+                            }
                             fullBlock.samples[dstRowOffset + xx] = result;
                         }
                         dstRowOffset += 8 * frameComponent.horizontalSamplingFactor;
@@ -412,10 +426,12 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             ImageReadException {
         JpegUtils jpegUtils = new JpegUtils();
         jpegUtils.traverseJFIF(byteSource, this);
-        if (imageReadException != null)
+        if (imageReadException != null) {
             throw imageReadException;
-        if (ioException != null)
+        }
+        if (ioException != null) {
             throw ioException;
+        }
         return image;
     }
 }

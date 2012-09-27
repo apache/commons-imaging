@@ -31,20 +31,24 @@ public class YCbCrConverter {
         for (int Y = 0; Y < 256; Y++) {
             for (int Cr = 0; Cr < 256; Cr++) {
                 int r = Y + fastRound(1.402f * (Cr - 128));
-                if (r < 0)
+                if (r < 0) {
                     r = 0;
-                if (r > 255)
+                }
+                if (r > 255) {
                     r = 255;
+                }
                 reds[(Cr << 8) | Y] = r << 16;
             }
         }
         for (int Y = 0; Y < 256; Y++) {
             for (int Cb = 0; Cb < 256; Cb++) {
                 int b = Y + fastRound(1.772f * (Cb - 128));
-                if (b < 0)
+                if (b < 0) {
                     b = 0;
-                if (b > 255)
+                }
+                if (b > 255) {
                     b = 255;
+                }
                 blues[(Cb << 8) | Y] = b;
             }
         }
@@ -85,10 +89,11 @@ public class YCbCrConverter {
         for (int Y = 0; Y < 256; Y++) {
             for (int value = 0; value < 270; value++) {
                 int green = Y - (value - 135);
-                if (green < 0)
+                if (green < 0) {
                     green = 0;
-                else if (green > 255)
+                } else if (green > 255) {
                     green = 255;
+                }
                 greens2[(value << 8) | Y] = green << 8;
             }
         }
