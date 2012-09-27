@@ -61,20 +61,23 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
             float var_y_cube = cube(var_Y);
             float var_z_cube = cube(var_Z);
 
-            if (var_y_cube > 0.008856f)
+            if (var_y_cube > 0.008856f) {
                 var_Y = var_y_cube;
-            else
+            } else {
                 var_Y = (var_Y - 16 / 116.0f) / 7.787f;
+            }
 
-            if (var_x_cube > 0.008856f)
+            if (var_x_cube > 0.008856f) {
                 var_X = var_x_cube;
-            else
+            } else {
                 var_X = (var_X - 16 / 116.0f) / 7.787f;
+            }
 
-            if (var_z_cube > 0.008856f)
+            if (var_z_cube > 0.008856f) {
                 var_Z = var_z_cube;
-            else
+            } else {
                 var_Z = (var_Z - 16 / 116.0f) / 7.787f;
+            }
 
             float ref_X = 95.047f;
             float ref_Y = 100.000f;
@@ -100,19 +103,22 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
             float var_G = var_X * -0.9689f + var_Y * 1.8758f + var_Z * 0.0415f;
             float var_B = var_X * 0.0557f + var_Y * -0.2040f + var_Z * 1.0570f;
 
-            if (var_R > 0.0031308)
+            if (var_R > 0.0031308) {
                 var_R = 1.055f * (float) Math.pow(var_R, (1 / 2.4)) - 0.055f;
-            else
+            } else {
                 var_R = 12.92f * var_R;
-            if (var_G > 0.0031308)
+            }
+            if (var_G > 0.0031308) {
                 var_G = 1.055f * (float) Math.pow(var_G, (1 / 2.4)) - 0.055f;
-            else
+            } else {
                 var_G = 12.92f * var_G;
+            }
 
-            if (var_B > 0.0031308)
+            if (var_B > 0.0031308) {
                 var_B = 1.055f * (float) Math.pow(var_B, (1 / 2.4)) - 0.055f;
-            else
+            } else {
                 var_B = 12.92f * var_B;
+            }
 
             // var_R = (((var_R-)))
             // updateMaxMin(new float[]{

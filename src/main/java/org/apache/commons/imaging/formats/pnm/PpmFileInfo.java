@@ -67,8 +67,9 @@ public class PpmFileInfo extends FileInfo {
         int green = is.read();
         int blue = is.read();
 
-        if ((red < 0) || (green < 0) || (blue < 0))
+        if ((red < 0) || (green < 0) || (blue < 0)) {
             throw new IOException("PPM: Unexpected EOF");
+        }
 
         int alpha = 0xff;
 

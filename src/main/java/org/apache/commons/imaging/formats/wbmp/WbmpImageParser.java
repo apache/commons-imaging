@@ -137,9 +137,10 @@ public class WbmpImageParser extends ImageParser {
             value <<= 7;
             value |= nextByte & 0x7f;
             totalBits += 7;
-            if (totalBits > 31)
+            if (totalBits > 31) {
                 throw new ImageReadException(
                         "Overflow reading WBMP multi-byte field");
+            }
         } while ((nextByte & 0x80) != 0);
         return value;
     }
@@ -165,8 +166,9 @@ public class WbmpImageParser extends ImageParser {
             return readWbmpHeader(is);
         } finally {
             try {
-                if (is != null)
+                if (is != null) {
                     is.close();
+                }
             } catch (IOException ignored) {
             }
         }
@@ -175,16 +177,18 @@ public class WbmpImageParser extends ImageParser {
     private WbmpHeader readWbmpHeader(InputStream is)
             throws ImageReadException, IOException {
         int typeField = readMultiByteInteger(is);
-        if (typeField != 0)
+        if (typeField != 0) {
             throw new ImageReadException("Invalid/unsupported WBMP type "
                     + typeField);
+        }
 
         byte fixHeaderField = readByte("FixHeaderField", is,
                 "Invalid WBMP File");
-        if ((fixHeaderField & 0x9f) != 0)
+        if ((fixHeaderField & 0x9f) != 0) {
             throw new ImageReadException(
                     "Invalid/unsupported WBMP FixHeaderField 0x"
                             + Integer.toHexString(0xff & fixHeaderField));
+        }
 
         int width = readMultiByteInteger(is);
 
@@ -225,8 +229,9 @@ public class WbmpImageParser extends ImageParser {
             return readImage(wbmpHeader, is);
         } finally {
             try {
-                if (is != null)
+                if (is != null) {
                     is.close();
+                }
             } catch (IOException ignored) {
             }
         }
@@ -239,8 +244,9 @@ public class WbmpImageParser extends ImageParser {
         params = (params == null) ? new HashMap() : new HashMap(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT))
+        if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -261,8 +267,9 @@ public class WbmpImageParser extends ImageParser {
                 int green = 0xff & (argb >> 8);
                 int blue = 0xff & (argb >> 0);
                 int sample = (red + green + blue) / 3;
-                if (sample > 127)
+                if (sample > 127) {
                     pixel |= nextBit;
+                }
                 nextBit >>>= 1;
                 if (nextBit == 0) {
                     os.write(pixel);
@@ -270,8 +277,9 @@ public class WbmpImageParser extends ImageParser {
                     nextBit = 0x80;
                 }
             }
-            if (nextBit != 0x80)
+            if (nextBit != 0x80) {
                 os.write(pixel);
+            }
         }
     }
 

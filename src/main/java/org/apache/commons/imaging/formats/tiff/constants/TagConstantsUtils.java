@@ -45,9 +45,11 @@ public class TagConstantsUtils implements TiffDirectoryConstants {
 
     public static TiffDirectoryType getExifDirectoryType(int type) {
 
-        for (int i = 0; i < tiffDirectoryTypes.length; i++)
-            if (tiffDirectoryTypes[i].directoryType == type)
+        for (int i = 0; i < tiffDirectoryTypes.length; i++) {
+            if (tiffDirectoryTypes[i].directoryType == type) {
                 return tiffDirectoryTypes[i];
+            }
+        }
         return TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN;
     }
 

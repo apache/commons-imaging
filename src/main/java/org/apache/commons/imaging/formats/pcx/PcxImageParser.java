@@ -129,11 +129,13 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             throws ImageReadException, IOException {
         PcxHeader pcxHeader = readPcxHeader(byteSource);
         int xSize = pcxHeader.xMax - pcxHeader.xMin + 1;
-        if (xSize < 0)
+        if (xSize < 0) {
             throw new ImageReadException("Image width is negative");
+        }
         int ySize = pcxHeader.yMax - pcxHeader.yMin + 1;
-        if (ySize < 0)
+        if (ySize < 0) {
             throw new ImageReadException("Image height is negative");
+        }
         return new Dimension(xSize, ySize);
     }
 
@@ -216,8 +218,9 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             pw.println("vDpi: " + vDpi);
             pw.print("ColorMap: ");
             for (int i = 0; i < colormap.length; i++) {
-                if (i > 0)
+                if (i > 0) {
                     pw.print(",");
+                }
                 pw.print("(" + (0xff & (colormap[i] >> 16)) + ","
                         + (0xff & (colormap[i] >> 8)) + ","
                         + (0xff & colormap[i]) + ")");
@@ -241,8 +244,9 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             return readPcxHeader(is, false);
         } finally {
             try {
-                if (is != null)
+                if (is != null) {
                     is.close();
+                }
             } catch (IOException ignored) {
             }
         }
@@ -286,15 +290,17 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
         int vScreenSize = convertByteArrayToShort("vScreenSize", 72,
                 pcxHeaderBytes, BYTE_ORDER_LSB);
 
-        if (manufacturer != 10)
+        if (manufacturer != 10) {
             throw new ImageReadException(
                     "Not a Valid PCX File: manufacturer is " + manufacturer);
+        }
         if (isStrict) {
             // Note that reserved is sometimes set to a non-zero value
             // by Paintbrush itself, so it shouldn't be enforced.
-            if (bytesPerLine % 2 != 0)
+            if (bytesPerLine % 2 != 0) {
                 throw new ImageReadException(
                         "Not a Valid PCX File: bytesPerLine is odd");
+            }
         }
 
         return new PcxHeader(manufacturer, version, encoding, bitsPerPixel,
@@ -315,9 +321,10 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             int r;
             for (int bytesRead = 0; bytesRead < samples.length; bytesRead += r) {
                 r = is.read(samples, bytesRead, samples.length - bytesRead);
-                if (r < 0)
+                if (r < 0) {
                     throw new ImageReadException(
                             "Premature end of file reading image data");
+                }
             }
         } else {
             if (pcxHeader.encoding == PcxHeader.ENCODING_RLE) {
@@ -333,21 +340,24 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
                         count = 1;
                         sample = b;
                     }
-                    for (int i = 0; i < count && bytesRead + i < samples.length; i++)
+                    for (int i = 0; i < count && bytesRead + i < samples.length; i++) {
                         samples[bytesRead + i] = sample;
+                    }
                     bytesRead += count;
                 }
-            } else
+            } else {
                 throw new ImageReadException("Invalid PCX encoding "
                         + pcxHeader.encoding);
+            }
         }
     }
 
     private int[] read256ColorPalette(InputStream stream) throws IOException {
         byte[] paletteBytes = readByteArray("Palette", 769, stream,
                 "Error reading palette");
-        if (paletteBytes[0] != 12)
+        if (paletteBytes[0] != 12) {
             return null;
+        }
         int[] palette = new int[256];
         for (int i = 0; i < palette.length; i++) {
             palette[i] = ((0xff & paletteBytes[1 + 3 * i]) << 16)
@@ -367,8 +377,9 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             return read256ColorPalette(stream);
         } finally {
             try {
-                if (stream != null)
+                if (stream != null) {
                     stream.close();
+                }
             } catch (IOException closeException) {
             }
         }
@@ -377,11 +388,13 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
     private BufferedImage readImage(PcxHeader pcxHeader, InputStream is,
             ByteSource byteSource) throws ImageReadException, IOException {
         int xSize = pcxHeader.xMax - pcxHeader.xMin + 1;
-        if (xSize < 0)
+        if (xSize < 0) {
             throw new ImageReadException("Image width is negative");
+        }
         int ySize = pcxHeader.yMax - pcxHeader.yMin + 1;
-        if (ySize < 0)
+        if (ySize < 0) {
             throw new ImageReadException("Image height is negative");
+        }
 
         int scanlineLength = pcxHeader.bytesPerLine * pcxHeader.nPlanes;
         byte[] scanline = new byte[scanlineLength];
@@ -397,9 +410,9 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             }
             DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
             int[] palette;
-            if (pcxHeader.bitsPerPixel == 1)
+            if (pcxHeader.bitsPerPixel == 1) {
                 palette = new int[] { 0x000000, 0xffffff };
-            else if (pcxHeader.bitsPerPixel == 8) {
+            } else if (pcxHeader.bitsPerPixel == 8) {
                 // Normally the palette is read 769 bytes from the end of the
                 // file.
                 // However DCX files have multiple PCX images in one file, so
@@ -407,13 +420,16 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
                 // palette
                 // immediately after the image data first.
                 palette = read256ColorPalette(is);
-                if (palette == null)
+                if (palette == null) {
                     palette = read256ColorPaletteFromEndOfFile(byteSource);
-                if (palette == null)
+                }
+                if (palette == null) {
                     throw new ImageReadException(
                             "No 256 color palette found in image that needs it");
-            } else
+                }
+            } else {
                 palette = pcxHeader.colormap;
+            }
             WritableRaster raster;
             if (pcxHeader.bitsPerPixel == 8) {
                 raster = WritableRaster.createInterleavedRaster(dataBuffer,
@@ -443,8 +459,9 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
                 for (int plane = 0; plane < pcxHeader.nPlanes; plane++) {
                     for (int i = 0; i < pcxHeader.bytesPerLine; i++) {
                         int b = 0xff & scanline[nextByte++];
-                        for (int j = 0; j < 8 && 8 * i + j < unpacked.length; j++)
+                        for (int j = 0; j < 8 && 8 * i + j < unpacked.length; j++) {
                             unpacked[8 * i + j] |= (byte) (((b >> (7 - j)) & 0x1) << plane);
+                        }
                     }
                 }
                 image.getRaster().setDataElements(0, y, xSize, 1, unpacked);
@@ -479,10 +496,10 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             byte[] image = new byte[rowLength * ySize];
             for (int y = 0; y < ySize; y++) {
                 readScanLine(pcxHeader, is, scanline);
-                if (pcxHeader.bitsPerPixel == 24)
+                if (pcxHeader.bitsPerPixel == 24) {
                     System.arraycopy(scanline, 0, image, y * rowLength,
                             rowLength);
-                else {
+                } else {
                     for (int x = 0; x < xSize; x++) {
                         image[y * rowLength + 3 * x] = scanline[4 * x];
                         image[y * rowLength + 3 * x + 1] = scanline[4 * x + 1];
@@ -513,8 +530,9 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
         params = (params == null) ? new HashMap() : new HashMap(params);
         boolean isStrict = false;
         Object strictness = params.get(PARAM_KEY_STRICT);
-        if (strictness != null)
+        if (strictness != null) {
             isStrict = ((Boolean) strictness).booleanValue();
+        }
 
         InputStream is = null;
         try {
@@ -523,8 +541,9 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             return readImage(pcxHeader, is, byteSource);
         } finally {
             try {
-                if (is != null)
+                if (is != null) {
                     is.close();
+                }
             } catch (IOException ignored) {
             }
         }

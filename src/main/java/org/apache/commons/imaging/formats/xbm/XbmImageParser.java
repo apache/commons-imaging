@@ -159,19 +159,22 @@ public class XbmImageParser extends ImageParser {
                     .iterator(); it.hasNext();) {
                 Map.Entry<String, String> entry = it.next();
                 String name = entry.getKey();
-                if (name.endsWith("_width"))
+                if (name.endsWith("_width")) {
                     width = Integer.parseInt(entry.getValue());
-                else if (name.endsWith("_height"))
+                } else if (name.endsWith("_height")) {
                     height = Integer.parseInt(entry.getValue());
-                else if (name.endsWith("_x_hot"))
+                } else if (name.endsWith("_x_hot")) {
                     xHot = Integer.parseInt(entry.getValue());
-                else if (name.endsWith("_y_hot"))
+                } else if (name.endsWith("_y_hot")) {
                     yHot = Integer.parseInt(entry.getValue());
+                }
             }
-            if (width == -1)
+            if (width == -1) {
                 throw new ImageReadException("width not found");
-            if (height == -1)
+            }
+            if (height == -1) {
                 throw new ImageReadException("height not found");
+            }
 
             XbmParseResult xbmParseResult = new XbmParseResult();
             xbmParseResult.cParser = new BasicCParser(new ByteArrayInputStream(
@@ -180,8 +183,9 @@ public class XbmImageParser extends ImageParser {
             return xbmParseResult;
         } finally {
             try {
-                if (is != null)
+                if (is != null) {
                     is.close();
+                }
             } catch (IOException ignored) {
             }
         }
@@ -191,77 +195,93 @@ public class XbmImageParser extends ImageParser {
             throws ImageReadException, IOException {
         String token;
         token = cParser.nextToken();
-        if (token == null || !token.equals("static"))
+        if (token == null || !token.equals("static")) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no 'static' token");
+        }
         token = cParser.nextToken();
-        if (token == null)
+        if (token == null) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no 'unsigned' "
                             + "or 'char' token");
-        if (token.equals("unsigned"))
+        }
+        if (token.equals("unsigned")) {
             token = cParser.nextToken();
-        if (token == null || !token.equals("char"))
+        }
+        if (token == null || !token.equals("char")) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no 'char' token");
+        }
         String name = cParser.nextToken();
-        if (name == null)
+        if (name == null) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no variable name");
-        if (name.charAt(0) != '_' && !Character.isLetter(name.charAt(0)))
+        }
+        if (name.charAt(0) != '_' && !Character.isLetter(name.charAt(0))) {
             throw new ImageReadException(
                     "Parsing XBM file failed, variable name "
                             + "doesn't start with letter or underscore");
+        }
         for (int i = 0; i < name.length(); i++) {
             char c = name.charAt(i);
-            if (!Character.isLetterOrDigit(c) && c != '_')
+            if (!Character.isLetterOrDigit(c) && c != '_') {
                 throw new ImageReadException(
                         "Parsing XBM file failed, variable name "
                                 + "contains non-letter non-digit non-underscore");
+            }
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("["))
+        if (token == null || !token.equals("[")) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no '[' token");
+        }
         token = cParser.nextToken();
-        if (token == null || !token.equals("]"))
+        if (token == null || !token.equals("]")) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no ']' token");
+        }
         token = cParser.nextToken();
-        if (token == null || !token.equals("="))
+        if (token == null || !token.equals("=")) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no '=' token");
+        }
         token = cParser.nextToken();
-        if (token == null || !token.equals("{"))
+        if (token == null || !token.equals("{")) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no '{' token");
+        }
 
         int rowLength = (xbmHeader.width + 7) / 8;
         byte[] imageData = new byte[rowLength * xbmHeader.height];
         for (int i = 0; i < imageData.length; i++) {
             token = cParser.nextToken();
-            if (token == null || !token.startsWith("0x"))
+            if (token == null || !token.startsWith("0x")) {
                 throw new ImageReadException("Parsing XBM file failed, "
                         + "hex value missing");
-            if (token.length() > 4)
+            }
+            if (token.length() > 4) {
                 throw new ImageReadException("Parsing XBM file failed, "
                         + "hex value too long");
+            }
             int value = Integer.parseInt(token.substring(2), 16);
             int flipped = 0;
             for (int j = 0; j < 8; j++) {
-                if ((value & (1 << j)) != 0)
+                if ((value & (1 << j)) != 0) {
                     flipped |= (0x80 >>> j);
+                }
             }
             imageData[i] = (byte) flipped;
 
             token = cParser.nextToken();
-            if (token == null)
+            if (token == null) {
                 throw new ImageReadException("Parsing XBM file failed, "
                         + "premature end of file");
+            }
             if (!token.equals(",")
-                    && (i < (imageData.length - 1) || !token.equals("}")))
+                    && (i < (imageData.length - 1) || !token.equals("}"))) {
                 throw new ImageReadException("Parsing XBM file failed, "
                         + "punctuation error");
+            }
         }
 
         int[] palette = { 0xffffff, 0x000000 };
@@ -295,20 +315,23 @@ public class XbmImageParser extends ImageParser {
         StringBuilder stringBuilder = new StringBuilder("a");
         long bits = uuid.getMostSignificantBits();
         // Long.toHexString() breaks for very big numbers
-        for (int i = 64 - 8; i >= 0; i -= 8)
+        for (int i = 64 - 8; i >= 0; i -= 8) {
             stringBuilder.append(Integer
                     .toHexString((int) ((bits >> i) & 0xff)));
+        }
         bits = uuid.getLeastSignificantBits();
-        for (int i = 64 - 8; i >= 0; i -= 8)
+        for (int i = 64 - 8; i >= 0; i -= 8) {
             stringBuilder.append(Integer
                     .toHexString((int) ((bits >> i) & 0xff)));
+        }
         return stringBuilder.toString();
     }
 
     private String toPrettyHex(int value) {
         String s = Integer.toHexString(0xff & value);
-        if (s.length() == 2)
+        if (s.length() == 2) {
             return "0x" + s;
+        }
         return "0x0" + s;
     }
 
@@ -319,8 +342,9 @@ public class XbmImageParser extends ImageParser {
         params = (params == null) ? new HashMap() : new HashMap(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT))
+        if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -347,10 +371,11 @@ public class XbmImageParser extends ImageParser {
                 int green = 0xff & (argb >> 8);
                 int blue = 0xff & (argb >> 0);
                 int sample = (red + green + blue) / 3;
-                if (sample > 127)
+                if (sample > 127) {
                     sample = 0;
-                else
+                } else {
                     sample = 1;
+                }
                 bitcache |= (sample << bits_in_cache);
                 ++bits_in_cache;
                 if (bits_in_cache == 8) {

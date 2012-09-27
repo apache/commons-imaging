@@ -33,12 +33,14 @@ public class ScanlineFilterAverage extends ScanlineFilter {
         for (int i = 0; i < src.length; i++) {
             int Raw = 0;
             int prev_index = i - BytesPerPixel;
-            if (prev_index >= 0)
+            if (prev_index >= 0) {
                 Raw = dst[prev_index];
+            }
 
             int Prior = 0;
-            if (up != null)
+            if (up != null) {
                 Prior = up[i];
+            }
 
             int Average = ((0xff & Raw) + (0xff & Prior)) / 2;
 

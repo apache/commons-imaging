@@ -37,8 +37,9 @@ public class SimplePalette extends Palette {
 
     private int getPaletteIndex(int palette[], int argb) {
         for (int i = 0; i < palette.length; i++) {
-            if (palette[i] == argb)
+            if (palette[i] == argb) {
                 return i;
+            }
         }
 
         return -1;

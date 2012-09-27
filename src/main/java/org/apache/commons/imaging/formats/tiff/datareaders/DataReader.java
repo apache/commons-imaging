@@ -79,8 +79,9 @@ public abstract class DataReader implements TiffConstants, BinaryConstants {
             if (bits < 8) {
                 int sign = sample & 1;
                 sample = sample << (8 - bits); // scale to byte.
-                if (sign > 0)
+                if (sign > 0) {
                     sample = sample | ((1 << (8 - bits)) - 1); // extend to byte
+                }
             } else if (bits > 8) {
                 sample = sample >> (bits - 8); // extend to byte.
             }
@@ -95,8 +96,8 @@ public abstract class DataReader implements TiffConstants, BinaryConstants {
     }
 
     protected int[] applyPredictor(int samples[]) {
-        if (predictor == 2) // Horizontal differencing.
-        {
+        if (predictor == 2) {
+            // Horizontal differencing.
             for (int i = 0; i < samples.length; i++) {
                 samples[i] = 0xff & (samples[i] + last[i]);
                 last[i] = samples[i];

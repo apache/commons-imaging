@@ -76,8 +76,9 @@ public class PngWriter implements PngConstants {
         int dataLength = data == null ? 0 : data.length;
         writeInt(os, dataLength);
         os.write(chunkType);
-        if (data != null)
+        if (data != null) {
             os.write(data);
+        }
 
         // Debug.debug("writeChunk chunkType", chunkType);
         // Debug.debug("writeChunk data", data);
@@ -142,13 +143,15 @@ public class PngWriter implements PngConstants {
 
     private void writeChunkiTXt(OutputStream os, PngText.Itxt text)
             throws IOException, ImageWriteException {
-        if (!UnicodeUtils.isValidISO_8859_1(text.keyword))
+        if (!UnicodeUtils.isValidISO_8859_1(text.keyword)) {
             throw new ImageWriteException(
                     "Png tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
-        if (!UnicodeUtils.isValidISO_8859_1(text.languageTag))
+        }
+        if (!UnicodeUtils.isValidISO_8859_1(text.languageTag)) {
             throw new ImageWriteException(
                     "Png tEXt chunk language tag is not ISO-8859-1: "
                             + text.languageTag);
+        }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -174,12 +177,14 @@ public class PngWriter implements PngConstants {
 
     private void writeChunkzTXt(OutputStream os, PngText.Ztxt text)
             throws IOException, ImageWriteException {
-        if (!UnicodeUtils.isValidISO_8859_1(text.keyword))
+        if (!UnicodeUtils.isValidISO_8859_1(text.keyword)) {
             throw new ImageWriteException(
                     "Png zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
-        if (!UnicodeUtils.isValidISO_8859_1(text.text))
+        }
+        if (!UnicodeUtils.isValidISO_8859_1(text.text)) {
             throw new ImageWriteException(
                     "Png zTXt chunk text is not ISO-8859-1: " + text.text);
+        }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -198,12 +203,14 @@ public class PngWriter implements PngConstants {
 
     private void writeChunktEXt(OutputStream os, PngText.Text text)
             throws IOException, ImageWriteException {
-        if (!UnicodeUtils.isValidISO_8859_1(text.keyword))
+        if (!UnicodeUtils.isValidISO_8859_1(text.keyword)) {
             throw new ImageWriteException(
                     "Png tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
-        if (!UnicodeUtils.isValidISO_8859_1(text.text))
+        }
+        if (!UnicodeUtils.isValidISO_8859_1(text.text)) {
             throw new ImageWriteException(
                     "Png tEXt chunk text is not ISO-8859-1: " + text.text);
+        }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -287,17 +294,19 @@ public class PngWriter implements PngConstants {
 
         boolean index = false; // charles
 
-        if (index)
+        if (index) {
             result = COLOR_TYPE_INDEXED_COLOR;
-        else if (isGrayscale) {
-            if (hasAlpha)
+        } else if (isGrayscale) {
+            if (hasAlpha) {
                 result = COLOR_TYPE_GREYSCALE_WITH_ALPHA;
-            else
+            } else {
                 result = COLOR_TYPE_GREYSCALE;
-        } else if (hasAlpha)
+            }
+        } else if (hasAlpha) {
             result = COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
-        else
+        } else {
             result = COLOR_TYPE_TRUE_COLOR;
+        }
 
         return result;
     }
@@ -360,23 +369,30 @@ public class PngWriter implements PngConstants {
         params = new HashMap(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT))
+        if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
+        }
         // clear verbose key.
-        if (params.containsKey(PARAM_KEY_VERBOSE))
+        if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
+        }
 
         Map rawParams = new HashMap(params);
-        if (params.containsKey(PARAM_KEY_PNG_FORCE_TRUE_COLOR))
+        if (params.containsKey(PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
             params.remove(PARAM_KEY_PNG_FORCE_TRUE_COLOR);
-        if (params.containsKey(PARAM_KEY_PNG_FORCE_INDEXED_COLOR))
+        }
+        if (params.containsKey(PARAM_KEY_PNG_FORCE_INDEXED_COLOR)) {
             params.remove(PARAM_KEY_PNG_FORCE_INDEXED_COLOR);
-        if (params.containsKey(PARAM_KEY_PNG_BIT_DEPTH))
+        }
+        if (params.containsKey(PARAM_KEY_PNG_BIT_DEPTH)) {
             params.remove(PARAM_KEY_PNG_BIT_DEPTH);
-        if (params.containsKey(PARAM_KEY_XMP_XML))
+        }
+        if (params.containsKey(PARAM_KEY_XMP_XML)) {
             params.remove(PARAM_KEY_XMP_XML);
-        if (params.containsKey(PARAM_KEY_PNG_TEXT_CHUNKS))
+        }
+        if (params.containsKey(PARAM_KEY_PNG_TEXT_CHUNKS)) {
             params.remove(PARAM_KEY_PNG_TEXT_CHUNKS);
+        }
         params.remove(PARAM_KEY_PIXEL_DENSITY);
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -388,13 +404,15 @@ public class PngWriter implements PngConstants {
         int height = src.getHeight();
 
         boolean hasAlpha = new PaletteFactory().hasTransparency(src);
-        if (verbose)
+        if (verbose) {
             Debug.debug("hasAlpha", hasAlpha);
+        }
         // int transparency = new PaletteFactory().getTransparency(src);
 
         boolean isGrayscale = new PaletteFactory().isGrayscale(src);
-        if (verbose)
+        if (verbose) {
             Debug.debug("isGrayscale", isGrayscale);
+        }
 
         byte colorType;
         {
@@ -403,32 +421,37 @@ public class PngWriter implements PngConstants {
             boolean forceTrueColor = ParamMap.getParamBoolean(params,
                     PARAM_KEY_PNG_FORCE_TRUE_COLOR, false);
 
-            if (forceIndexedColor && forceTrueColor)
+            if (forceIndexedColor && forceTrueColor) {
                 throw new ImageWriteException(
                         "Params: Cannot force both indexed and true color modes");
-            else if (forceIndexedColor) {
+            } else if (forceIndexedColor) {
                 colorType = COLOR_TYPE_INDEXED_COLOR;
             } else if (forceTrueColor) {
                 colorType = (byte) (hasAlpha ? COLOR_TYPE_TRUE_COLOR_WITH_ALPHA
                         : COLOR_TYPE_TRUE_COLOR);
                 isGrayscale = false;
-            } else
+            } else {
                 colorType = getColourType(hasAlpha, isGrayscale);
-            if (verbose)
+            }
+            if (verbose) {
                 Debug.debug("colorType", colorType);
+            }
         }
 
         byte bitDepth = getBitDepth(colorType, params);
-        if (verbose)
+        if (verbose) {
             Debug.debug("bit_depth", bitDepth);
+        }
 
         int sampleDepth;
-        if (colorType == COLOR_TYPE_INDEXED_COLOR)
+        if (colorType == COLOR_TYPE_INDEXED_COLOR) {
             sampleDepth = 8;
-        else
+        } else {
             sampleDepth = bitDepth;
-        if (verbose)
+        }
+        if (verbose) {
             Debug.debug("sample_depth", sampleDepth);
+        }
 
         {
             PNG_Signature.writeTo(os);
@@ -495,15 +518,16 @@ public class PngWriter implements PngConstants {
                     .get(PARAM_KEY_PNG_TEXT_CHUNKS);
             for (int i = 0; i < outputTexts.size(); i++) {
                 PngText text = outputTexts.get(i);
-                if (text instanceof PngText.Text)
+                if (text instanceof PngText.Text) {
                     writeChunktEXt(os, (PngText.Text) text);
-                else if (text instanceof PngText.Ztxt)
+                } else if (text instanceof PngText.Ztxt) {
                     writeChunkzTXt(os, (PngText.Ztxt) text);
-                else if (text instanceof PngText.Itxt)
+                } else if (text instanceof PngText.Itxt) {
                     writeChunkiTXt(os, (PngText.Itxt) text);
-                else
+                } else {
                     throw new ImageWriteException(
                             "Unknown text to embed in PNG: " + text);
+                }
             }
         }
 
@@ -558,8 +582,9 @@ public class PngWriter implements PngConstants {
                                 baos.write(green);
                                 baos.write(blue);
                             }
-                            if (useAlpha)
+                            if (useAlpha) {
                                 baos.write(alpha);
+                            }
                         }
                     }
                 }

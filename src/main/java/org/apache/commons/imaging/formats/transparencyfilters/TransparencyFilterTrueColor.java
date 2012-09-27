@@ -48,8 +48,9 @@ public class TransparencyFilterTrueColor extends TransparencyFilter {
     @Override
     public int filter(int rgb, int sample) throws ImageReadException,
             IOException {
-        if ((0x00ffffff & rgb) == transparent_color)
+        if ((0x00ffffff & rgb) == transparent_color) {
             return 0x00;
+        }
 
         return rgb;
     }

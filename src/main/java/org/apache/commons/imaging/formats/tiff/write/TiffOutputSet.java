@@ -54,9 +54,10 @@ public final class TiffOutputSet implements TiffConstants {
 
     public void addDirectory(TiffOutputDirectory directory)
             throws ImageWriteException {
-        if (null != findDirectory(directory.type))
+        if (null != findDirectory(directory.type)) {
             throw new ImageWriteException(
                     "Output set already contains a directory of that type.");
+        }
         directories.add(directory);
     }
 
@@ -75,8 +76,9 @@ public final class TiffOutputSet implements TiffConstants {
     public TiffOutputDirectory getOrCreateRootDirectory()
             throws ImageWriteException {
         TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_ROOT);
-        if (null != result)
+        if (null != result) {
             return result;
+        }
         return addRootDirectory();
     }
 
@@ -86,8 +88,9 @@ public final class TiffOutputSet implements TiffConstants {
         getOrCreateRootDirectory();
 
         TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_EXIF);
-        if (null != result)
+        if (null != result) {
             return result;
+        }
         return addExifDirectory();
     }
 
@@ -97,8 +100,9 @@ public final class TiffOutputSet implements TiffConstants {
         getOrCreateExifDirectory();
 
         TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_GPS);
-        if (null != result)
+        if (null != result) {
             return result;
+        }
         return addGPSDirectory();
     }
 
@@ -113,8 +117,9 @@ public final class TiffOutputSet implements TiffConstants {
     public TiffOutputDirectory findDirectory(int directoryType) {
         for (int i = 0; i < directories.size(); i++) {
             TiffOutputDirectory directory = directories.get(i);
-            if (directory.type == directoryType)
+            if (directory.type == directoryType) {
                 return directory;
+            }
         }
         return null;
     }
@@ -204,8 +209,9 @@ public final class TiffOutputSet implements TiffConstants {
         for (int i = 0; i < directories.size(); i++) {
             TiffOutputDirectory directory = directories.get(i);
             TiffOutputField field = directory.findField(tag);
-            if (null != field)
+            if (null != field) {
                 return field;
+            }
         }
         return null;
     }
@@ -249,8 +255,9 @@ public final class TiffOutputSet implements TiffConstants {
     }
 
     public String toString(String prefix) {
-        if (prefix == null)
+        if (prefix == null) {
             prefix = "";
+        }
 
         StringBuilder result = new StringBuilder();
 

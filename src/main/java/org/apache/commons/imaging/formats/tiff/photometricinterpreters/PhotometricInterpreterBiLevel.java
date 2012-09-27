@@ -40,8 +40,9 @@ public class PhotometricInterpreterBiLevel extends PhotometricInterpreter {
             int y) throws ImageReadException, IOException {
         int sample = samples[0];
 
-        if (invert)
+        if (invert) {
             sample = 255 - sample;
+        }
 
         int red = sample;
         int green = sample;

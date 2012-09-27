@@ -40,9 +40,10 @@ public class TagInfoXpString extends TagInfo {
     @Override
     public byte[] encodeValue(FieldType fieldType, Object value, int byteOrder)
             throws ImageWriteException {
-        if (!(value instanceof String))
+        if (!(value instanceof String)) {
             throw new ImageWriteException("Text value not String: " + value
                     + " (" + Debug.getType(value) + ")");
+        }
         String s = (String) value;
         try {
             return s.getBytes("UTF-16LE");

@@ -24,10 +24,11 @@ public class DataParserBitmap extends DataParser {
     protected int getRGB(int data[][][], int x, int y,
             ImageContents imageContents) {
         int sample = 0xff & data[0][y][x];
-        if (sample == 0)
+        if (sample == 0) {
             sample = 255;
-        else
+        } else {
             sample = 0;
+        }
         // sample = 255- sample;
         int alpha = 0xff;
 

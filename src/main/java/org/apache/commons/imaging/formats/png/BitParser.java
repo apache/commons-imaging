@@ -35,9 +35,9 @@ public class BitParser {
         int sampleIndexBits = pixelIndexBits + (sampleIndex * bitDepth);
         int sampleIndexBytes = sampleIndexBits >> 3;
 
-        if (bitDepth == 8)
+        if (bitDepth == 8) {
             return 0xff & bytes[sampleIndexBytes];
-        else if (bitDepth < 8) {
+        } else if (bitDepth < 8) {
             int b = 0xff & bytes[sampleIndexBytes];
             int bitsToShift = 8 - ((pixelIndexBits & 7) + bitDepth);
             b >>= bitsToShift;
@@ -56,10 +56,11 @@ public class BitParser {
         int sample = getSample(pixelIndexInScanline, sampleIndex);
 
         int rot = 8 - bitDepth;
-        if (rot > 0)
+        if (rot > 0) {
             sample = sample * 255 / ((1 << bitDepth) - 1);
-        else if (rot < 0)
+        } else if (rot < 0) {
             sample >>= -rot;
+        }
 
         return 0xff & sample;
     }

@@ -92,9 +92,9 @@ public class IccTag implements BinaryConstants, IccConstants {
                         (byte) (0xff & (signature >> 0)), }, "US-ASCII")
                 + ")");
 
-        if (data == null)
+        if (data == null) {
             pw.println(prefix + "data: " + Arrays.toString(data));
-        else {
+        } else {
             pw.println(prefix + "data: " + data.length);
 
             pw.println(prefix
@@ -108,9 +108,9 @@ public class IccTag implements BinaryConstants, IccConstants {
                             (byte) (0xff & (data_type_signature >> 0)), }, "US-ASCII")
                     + ")");
 
-            if (itdt == null)
+            if (itdt == null) {
                 pw.println(prefix + "IccTagType : " + "unknown");
-            else {
+            } else {
                 pw.println(prefix + "IccTagType : " + itdt.getName());
                 itdt.dump(prefix, data);
             }

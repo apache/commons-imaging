@@ -58,8 +58,9 @@ public class XpmImageParser extends ImageParser {
     }
 
     private synchronized static boolean loadColorNames() {
-        if (colorNames != null)
+        if (colorNames != null) {
             return true;
+        }
 
         BufferedReader reader = null;
         try {
@@ -73,8 +74,9 @@ public class XpmImageParser extends ImageParser {
             Map<String, Integer> colors = new HashMap<String, Integer>();
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("!"))
+                if (line.startsWith("!")) {
                     continue;
+                }
                 try {
                     int red = Integer.parseInt(line.substring(0, 3).trim());
                     int green = Integer.parseInt(line.substring(4, 7).trim());
@@ -92,8 +94,9 @@ public class XpmImageParser extends ImageParser {
             return false;
         } finally {
             try {
-                if (reader != null)
+                if (reader != null) {
                     reader.close();
+                }
             } catch (IOException ignored) {
             }
         }
@@ -144,13 +147,15 @@ public class XpmImageParser extends ImageParser {
                 .entrySet().iterator(); it.hasNext();) {
             Map.Entry<Object, PaletteEntry> entry = it.next();
             PaletteEntry paletteEntry = entry.getValue();
-            if ((paletteEntry.getBestARGB() & 0xff000000) != 0xff000000)
+            if ((paletteEntry.getBestARGB() & 0xff000000) != 0xff000000) {
                 isTransparent = true;
-            if (paletteEntry.haveColor)
+            }
+            if (paletteEntry.haveColor) {
                 colorType = ImageInfo.COLOR_TYPE_RGB;
-            else if (colorType != ImageInfo.COLOR_TYPE_RGB
-                    && (paletteEntry.haveGray || paletteEntry.haveGray4Level))
+            } else if (colorType != ImageInfo.COLOR_TYPE_RGB
+                    && (paletteEntry.haveGray || paletteEntry.haveGray4Level)) {
                 colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+            }
         }
         return new ImageInfo("XPM version 3", xpmHeader.numCharsPerPixel * 8,
                 new ArrayList<String>(), ImageFormat.IMAGE_FORMAT_XPM,
@@ -221,16 +226,17 @@ public class XpmImageParser extends ImageParser {
         String symbolicName = null;
 
         int getBestARGB() {
-            if (haveColor)
+            if (haveColor) {
                 return colorArgb;
-            else if (haveGray)
+            } else if (haveGray) {
                 return grayArgb;
-            else if (haveGray4Level)
+            } else if (haveGray4Level) {
                 return gray4LevelArgb;
-            else if (haveMono)
+            } else if (haveMono) {
                 return monoArgb;
-            else
+            } else {
                 return 0x00000000;
+            }
         }
     }
 
@@ -253,9 +259,10 @@ public class XpmImageParser extends ImageParser {
             StringBuilder firstComment = new StringBuilder();
             ByteArrayOutputStream preprocessedFile = BasicCParser.preprocess(
                     is, firstComment, null);
-            if (!firstComment.toString().trim().equals("XPM"))
+            if (!firstComment.toString().trim().equals("XPM")) {
                 throw new ImageReadException("Parsing XPM file failed, "
                         + "signature isn't '/* XPM */'");
+            }
 
             XpmParseResult xpmParseResult = new XpmParseResult();
             xpmParseResult.cParser = new BasicCParser(new ByteArrayInputStream(
@@ -264,8 +271,9 @@ public class XpmImageParser extends ImageParser {
             return xpmParseResult;
         } finally {
             try {
-                if (is != null)
+                if (is != null) {
                     is.close();
+                }
             } catch (IOException ignored) {
             }
         }
@@ -275,29 +283,32 @@ public class XpmImageParser extends ImageParser {
             StringBuilder stringBuilder) throws IOException, ImageReadException {
         stringBuilder.setLength(0);
         String token = cParser.nextToken();
-        if (token.charAt(0) != '"')
+        if (token.charAt(0) != '"') {
             throw new ImageReadException("Parsing XPM file failed, "
                     + "no string found where expected");
+        }
         BasicCParser.unescapeString(stringBuilder, token);
         for (token = cParser.nextToken(); token.charAt(0) == '"'; token = cParser
                 .nextToken()) {
             BasicCParser.unescapeString(stringBuilder, token);
         }
-        if (token.equals(","))
+        if (token.equals(",")) {
             return true;
-        else if (token.equals("}"))
+        } else if (token.equals("}")) {
             return false;
-        else
+        } else {
             throw new ImageReadException("Parsing XPM file failed, "
                     + "no ',' or '}' found where expected");
+        }
     }
 
     private XpmHeader parseXpmValuesSection(String row)
             throws ImageReadException {
         String[] tokens = BasicCParser.tokenizeRow(row);
-        if (tokens.length < 4 && tokens.length > 7)
+        if (tokens.length < 4 && tokens.length > 7) {
             throw new ImageReadException("Parsing XPM file failed, "
                     + "<Values> section has incorrect tokens");
+        }
         try {
             int width = Integer.parseInt(tokens[0]);
             int height = Integer.parseInt(tokens[1]);
@@ -311,11 +322,12 @@ public class XpmImageParser extends ImageParser {
                 yHotSpot = Integer.parseInt(tokens[5]);
             }
             if (tokens.length == 5 || tokens.length == 7) {
-                if (tokens[tokens.length - 1].equals("XPMEXT"))
+                if (tokens[tokens.length - 1].equals("XPMEXT")) {
                     xpmExt = true;
-                else
+                } else {
                     throw new ImageReadException("Parsing XPM file failed, "
                             + "can't parse <Values> section XPMEXT");
+                }
             }
             return new XpmHeader(width, height, numColors, numCharsPerPixel,
                     xHotSpot, yHotSpot, xpmExt);
@@ -333,9 +345,9 @@ public class XpmImageParser extends ImageParser {
                 int green = Integer.parseInt(color.substring(1, 2), 16);
                 int blue = Integer.parseInt(color.substring(2, 3), 16);
                 return 0xff000000 | (red << 20) | (green << 12) | (blue << 4);
-            } else if (color.length() == 6)
+            } else if (color.length() == 6) {
                 return 0xff000000 | Integer.parseInt(color, 16);
-            else if (color.length() == 9) {
+            } else if (color.length() == 9) {
                 int red = Integer.parseInt(color.substring(0, 1), 16);
                 int green = Integer.parseInt(color.substring(3, 4), 16);
                 int blue = Integer.parseInt(color.substring(6, 7), 16);
@@ -345,20 +357,23 @@ public class XpmImageParser extends ImageParser {
                 int green = Integer.parseInt(color.substring(4, 5), 16);
                 int blue = Integer.parseInt(color.substring(8, 9), 16);
                 return 0xff000000 | (red << 16) | (green << 8) | blue;
-            } else
+            } else {
                 return 0x00000000;
+            }
         } else if (color.charAt(0) == '%') {
             throw new ImageReadException("HSV colors are not implemented "
                     + "even in the XPM specification!");
-        } else if (color.equals("None"))
+        } else if (color.equals("None")) {
             return 0x00000000;
-        else {
-            if (!loadColorNames())
+        } else {
+            if (!loadColorNames()) {
                 return 0x00000000;
-            if (colorNames.containsKey(color))
+            }
+            if (colorNames.containsKey(color)) {
                 return (colorNames.get(color)).intValue();
-            else
+            } else {
                 return 0x00000000;
+            }
         }
     }
 
@@ -368,9 +383,10 @@ public class XpmImageParser extends ImageParser {
         for (int i = 0; i < xpmHeader.numColors; i++) {
             row.setLength(0);
             boolean hasMore = parseNextString(cParser, row);
-            if (!hasMore)
+            if (!hasMore) {
                 throw new ImageReadException("Parsing XPM file failed, "
                         + "file ended while reading palette");
+            }
             String name = row.substring(0, xpmHeader.numCharsPerPixel);
             String[] tokens = BasicCParser.tokenizeRow(row
                     .substring(xpmHeader.numCharsPerPixel));
@@ -412,10 +428,12 @@ public class XpmImageParser extends ImageParser {
                     }
                     previousKeyIndex = j;
                 } else {
-                    if (previousKeyIndex < 0)
+                    if (previousKeyIndex < 0) {
                         break;
-                    if (colorBuffer.length() > 0)
+                    }
+                    if (colorBuffer.length() > 0) {
                         colorBuffer.append(' ');
+                    }
                     colorBuffer.append(token);
                 }
             }
@@ -450,54 +468,65 @@ public class XpmImageParser extends ImageParser {
         String name;
         String token;
         token = cParser.nextToken();
-        if (token == null || !token.equals("static"))
+        if (token == null || !token.equals("static")) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no 'static' token");
+        }
         token = cParser.nextToken();
-        if (token == null || !token.equals("char"))
+        if (token == null || !token.equals("char")) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no 'char' token");
+        }
         token = cParser.nextToken();
-        if (token == null || !token.equals("*"))
+        if (token == null || !token.equals("*")) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no '*' token");
+        }
         name = cParser.nextToken();
-        if (name == null)
+        if (name == null) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no variable name");
-        if (name.charAt(0) != '_' && !Character.isLetter(name.charAt(0)))
+        }
+        if (name.charAt(0) != '_' && !Character.isLetter(name.charAt(0))) {
             throw new ImageReadException(
                     "Parsing XPM file failed, variable name "
                             + "doesn't start with letter or underscore");
+        }
         for (int i = 0; i < name.length(); i++) {
             char c = name.charAt(i);
-            if (!Character.isLetterOrDigit(c) && c != '_')
+            if (!Character.isLetterOrDigit(c) && c != '_') {
                 throw new ImageReadException(
                         "Parsing XPM file failed, variable name "
                                 + "contains non-letter non-digit non-underscore");
+            }
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("["))
+        if (token == null || !token.equals("[")) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no '[' token");
+        }
         token = cParser.nextToken();
-        if (token == null || !token.equals("]"))
+        if (token == null || !token.equals("]")) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no ']' token");
+        }
         token = cParser.nextToken();
-        if (token == null || !token.equals("="))
+        if (token == null || !token.equals("=")) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no '=' token");
+        }
         token = cParser.nextToken();
-        if (token == null || !token.equals("{"))
+        if (token == null || !token.equals("{")) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no '{' token");
+        }
 
         StringBuilder row = new StringBuilder();
         boolean hasMore = parseNextString(cParser, row);
-        if (!hasMore)
+        if (!hasMore) {
             throw new ImageReadException("Parsing XPM file failed, "
                     + "file too short");
+        }
         XpmHeader xpmHeader = parseXpmValuesSection(row.toString());
         parsePaletteEntries(xpmHeader, cParser);
         return xpmHeader;
@@ -553,9 +582,10 @@ public class XpmImageParser extends ImageParser {
         for (int y = 0; y < xpmHeader.height; y++) {
             row.setLength(0);
             hasMore = parseNextString(cParser, row);
-            if (y < (xpmHeader.height - 1) && !hasMore)
+            if (y < (xpmHeader.height - 1) && !hasMore) {
                 throw new ImageReadException("Parsing XPM file failed, "
                         + "insufficient image rows in file");
+            }
             int rowOffset = y * xpmHeader.width;
             for (int x = 0; x < xpmHeader.width; x++) {
                 String index = row.substring(x * xpmHeader.numCharsPerPixel,
@@ -565,11 +595,12 @@ public class XpmImageParser extends ImageParser {
                     throw new ImageReadException(
                             "No palette entry was defined " + "for " + index);
                 }
-                if (bpp <= 16)
+                if (bpp <= 16) {
                     dataBuffer.setElem(rowOffset + x, paletteEntry.index);
-                else
+                } else {
                     dataBuffer.setElem(rowOffset + x,
                             paletteEntry.getBestARGB());
+                }
             }
         }
 
@@ -579,8 +610,9 @@ public class XpmImageParser extends ImageParser {
         }
 
         String token = cParser.nextToken();
-        if (!token.equals(";"))
+        if (!token.equals(";")) {
             throw new ImageReadException("Last token wasn't ';'");
+        }
 
         return image;
     }
@@ -604,21 +636,22 @@ public class XpmImageParser extends ImageParser {
         StringBuilder stringBuilder = new StringBuilder("a");
         long bits = uuid.getMostSignificantBits();
         // Long.toHexString() breaks for very big numbers
-        for (int i = 64 - 8; i >= 0; i -= 8)
-            stringBuilder.append(Integer
-                    .toHexString((int) ((bits >> i) & 0xff)));
+        for (int i = 64 - 8; i >= 0; i -= 8) {
+            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
+        }
         bits = uuid.getLeastSignificantBits();
-        for (int i = 64 - 8; i >= 0; i -= 8)
-            stringBuilder.append(Integer
-                    .toHexString((int) ((bits >> i) & 0xff)));
+        for (int i = 64 - 8; i >= 0; i -= 8) {
+            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
+        }
         return stringBuilder.toString();
     }
 
     private String pixelsForIndex(int index, int charsPerPixel) {
         StringBuilder stringBuilder = new StringBuilder();
         int highestPower = 1;
-        for (int i = 1; i < charsPerPixel; i++)
+        for (int i = 1; i < charsPerPixel; i++) {
             highestPower *= writePalette.length;
+        }
         for (int i = 0; i < charsPerPixel; i++) {
             int multiple = index / highestPower;
             index -= (multiple * highestPower);
@@ -634,8 +667,9 @@ public class XpmImageParser extends ImageParser {
             char zeroes[] = new char[6 - hex.length()];
             Arrays.fill(zeroes, '0');
             return "#" + new String(zeroes) + hex;
-        } else
+        } else {
             return "#" + hex;
+        }
     }
 
     @Override
@@ -645,8 +679,9 @@ public class XpmImageParser extends ImageParser {
         params = (params == null) ? new HashMap() : new HashMap(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT))
+        if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
@@ -655,8 +690,9 @@ public class XpmImageParser extends ImageParser {
 
         PaletteFactory paletteFactory = new PaletteFactory();
         boolean hasTransparency = false;
-        if (paletteFactory.hasTransparency(src, 1))
+        if (paletteFactory.hasTransparency(src, 1)) {
             hasTransparency = true;
+        }
         SimplePalette palette = null;
         int maxColors = writePalette.length;
         int charsPerPixel = 1;
@@ -669,8 +705,9 @@ public class XpmImageParser extends ImageParser {
             }
         }
         int colors = palette.length();
-        if (hasTransparency)
+        if (hasTransparency) {
             ++colors;
+        }
 
         String line = "/* XPM */\n";
         os.write(line.getBytes("US-ASCII"));
@@ -682,10 +719,11 @@ public class XpmImageParser extends ImageParser {
 
         for (int i = 0; i < colors; i++) {
             String color;
-            if (i < palette.length())
+            if (i < palette.length()) {
                 color = toColor(palette.getEntry(i));
-            else
+            } else {
                 color = "None";
+            }
             line = "\"" + pixelsForIndex(i, charsPerPixel) + " c " + color
                     + "\",\n";
             os.write(line.getBytes("US-ASCII"));
@@ -699,12 +737,13 @@ public class XpmImageParser extends ImageParser {
             os.write(line.getBytes("US-ASCII"));
             for (int x = 0; x < src.getWidth(); x++) {
                 int argb = src.getRGB(x, y);
-                if ((argb & 0xff000000) == 0)
+                if ((argb & 0xff000000) == 0) {
                     line = pixelsForIndex(palette.length(), charsPerPixel);
-                else
+                } else {
                     line = pixelsForIndex(
                             palette.getPaletteIndex(0xffffff & argb),
                             charsPerPixel);
+                }
                 os.write(line.getBytes("US-ASCII"));
             }
             line = "\"";

@@ -35,12 +35,13 @@ public class ScanlineFilterPaeth extends ScanlineFilter {
         int pc = Math.abs(p - c);
         // ; return nearest of a,b,c,
         // ; breaking ties in order a,b,c.
-        if ((pa <= pb) && (pa <= pc))
+        if ((pa <= pb) && (pa <= pc)) {
             return a;
-        else if (pb <= pc)
+        } else if (pb <= pc) {
             return b;
-        else
+        } else {
             return c;
+        }
     }
 
     @Override
@@ -49,17 +50,20 @@ public class ScanlineFilterPaeth extends ScanlineFilter {
         for (int i = 0; i < src.length; i++) {
             int left = 0;
             int prev_index = i - BytesPerPixel;
-            if (prev_index >= 0)
+            if (prev_index >= 0) {
                 left = dst[prev_index];
+            }
 
             int above = 0;
-            if (up != null)
+            if (up != null) {
                 above = up[i];
+            }
             // above = 255;
 
             int upperleft = 0;
-            if ((prev_index >= 0) && (up != null))
+            if ((prev_index >= 0) && (up != null)) {
                 upperleft = up[prev_index];
+            }
             // upperleft = 255;
 
             int PaethPredictor = PaethPredictor(0xff & left, 0xff & above,

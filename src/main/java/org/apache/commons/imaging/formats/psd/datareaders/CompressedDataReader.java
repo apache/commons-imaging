@@ -47,9 +47,10 @@ public class CompressedDataReader extends DataReader {
         // this.setDebug(true);
         int scanline_count = height * header.Channels;
         int scanline_bytecounts[] = new int[scanline_count];
-        for (int i = 0; i < scanline_count; i++)
+        for (int i = 0; i < scanline_count; i++) {
             scanline_bytecounts[i] = bfp.read2Bytes("scanline_bytecount[" + i
                     + "]", is, "PSD: bad Image Data");
+        }
         bfp.setDebug(false);
         // System.out.println("fImageContents.Compression: "
         // + imageContents.Compression);
@@ -59,7 +60,7 @@ public class CompressedDataReader extends DataReader {
         int channel_count = dataParser.getBasicChannelsCount();
         int data[][][] = new int[channel_count][height][];
         // channels[0] =
-        for (int channel = 0; channel < channel_count; channel++)
+        for (int channel = 0; channel < channel_count; channel++) {
             for (int y = 0; y < height; y++) {
                 int index = channel * height + y;
                 byte packed[] = bfp.readByteArray("scanline",
@@ -81,6 +82,7 @@ public class CompressedDataReader extends DataReader {
                 data[channel][y] = scanline;
 
             }
+        }
 
         dataParser.parseData(data, bi, imageContents);
 

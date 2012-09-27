@@ -47,9 +47,9 @@ public class TiffOutputField implements TiffConstants {
         this.count = count;
         this.bytes = bytes;
 
-        if (isLocalValue())
+        if (isLocalValue()) {
             separateValueItem = null;
-        else {
+        } else {
             String name = "Field Seperate value (" + tagInfo.getDescription()
                     + ")";
             separateValueItem = new TiffOutputItem.Value(name, bytes);
@@ -71,19 +71,23 @@ public class TiffOutputField implements TiffConstants {
         bos.write4Bytes(count);
 
         if (isLocalValue()) {
-            if (separateValueItem != null)
+            if (separateValueItem != null) {
                 throw new ImageWriteException("Unexpected separate value item.");
-            if (bytes.length > 4)
+            }
+            if (bytes.length > 4) {
                 throw new ImageWriteException(
                         "Local value has invalid length: " + bytes.length);
+            }
 
             bos.writeByteArray(bytes);
             int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
-            for (int i = 0; i < remainder; i++)
+            for (int i = 0; i < remainder; i++) {
                 bos.write(0);
+            }
         } else {
-            if (separateValueItem == null)
+            if (separateValueItem == null) {
                 throw new ImageWriteException("Missing separate value item.");
+            }
 
             bos.write4Bytes(separateValueItem.getOffset());
         }
@@ -102,13 +106,15 @@ public class TiffOutputField implements TiffConstants {
         // Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
         // + ") setData", bytes);
 
-        if (this.bytes.length != bytes.length)
+        if (this.bytes.length != bytes.length) {
             throw new ImageWriteException("Cannot change size of value.");
+        }
 
         // boolean wasLocalValue = isLocalValue();
         this.bytes = bytes;
-        if (separateValueItem != null)
+        if (separateValueItem != null) {
             separateValueItem.updateValue(bytes);
+        }
         // if (isLocalValue() != wasLocalValue)
         // throw new Error("Bug. Locality disrupted! "
         // + tagInfo.getDescription());
@@ -122,8 +128,9 @@ public class TiffOutputField implements TiffConstants {
     }
 
     public String toString(String prefix) {
-        if (prefix == null)
+        if (prefix == null) {
             prefix = "";
+        }
         StringBuilder result = new StringBuilder();
 
         result.append(prefix);

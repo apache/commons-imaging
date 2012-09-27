@@ -27,21 +27,23 @@ public class FieldTypeByte extends FieldType {
 
     @Override
     public Object getSimpleValue(TiffField entry) {
-        if (entry.length == 1)
+        if (entry.length == 1) {
             return entry.valueOffsetBytes[0];
+        }
 
         return getRawBytes(entry);
     }
 
     @Override
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
-        if (o instanceof Byte)
+        if (o instanceof Byte) {
             return new byte[] { ((Byte) o).byteValue(), };
-        else if (o instanceof byte[])
+        } else if (o instanceof byte[]) {
             return (byte[]) o;
-        else
+        } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");
+        }
     }
 
 }

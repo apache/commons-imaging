@@ -42,64 +42,69 @@ public class PngChunkItxt extends PngTextChunk {
     public PngChunkItxt(int length, int chunkType, int crc, byte bytes[])
             throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
-        {
-            int terminator = findNull(bytes);
-            if (terminator < 0)
+        int terminator = findNull(bytes);
+        if (terminator < 0) {
+            throw new ImageReadException(
+                    "PNG iTXt chunk keyword is not terminated.");
+        }
+
+        keyword = new String(bytes, 0, terminator, "ISO-8859-1");
+        int index = terminator + 1;
+
+        int compressionFlag = bytes[index++];
+        if (compressionFlag != 0 && compressionFlag != 1) {
+            throw new ImageReadException(
+                    "PNG iTXt chunk has invalid compression flag: "
+                            + compressionFlag);
+        }
+
+        boolean compressed = compressionFlag == 1;
+
+        int compressionMethod = bytes[index++];
+        if (compressed) {
+            if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE) {
                 throw new ImageReadException(
-                        "PNG iTXt chunk keyword is not terminated.");
-
-            keyword = new String(bytes, 0, terminator, "ISO-8859-1");
-            int index = terminator + 1;
-
-            int compressionFlag = bytes[index++];
-            if (compressionFlag != 0 && compressionFlag != 1)
+                        "PNG iTXt chunk has unexpected compression method: "
+                                + compressionMethod);
+            } else if (compressionMethod != 0) {
                 throw new ImageReadException(
-                        "PNG iTXt chunk has invalid compression flag: "
-                                + compressionFlag);
+                        "PNG iTXt chunk has unexpected compression method: "
+                                + compressionMethod);
+            }
+        }
 
-            boolean compressed = compressionFlag == 1;
+        terminator = findNull(bytes, index);
+        if (terminator < 0) {
+            throw new ImageReadException(
+                    "PNG iTXt chunk language tag is not terminated.");
+        }
 
-            int compressionMethod = bytes[index++];
-            if (compressed)
-                if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE)
-                    throw new ImageReadException(
-                            "PNG iTXt chunk has unexpected compression method: "
-                                    + compressionMethod);
-                else if (compressionMethod != 0)
-                    throw new ImageReadException(
-                            "PNG iTXt chunk has unexpected compression method: "
-                                    + compressionMethod);
+        languageTag = new String(bytes, index, terminator - index,
+                "ISO-8859-1");
+        index = terminator + 1;
 
-            terminator = findNull(bytes, index);
-            if (terminator < 0)
-                throw new ImageReadException(
-                        "PNG iTXt chunk language tag is not terminated.");
+        terminator = findNull(bytes, index);
+        if (terminator < 0) {
+            throw new ImageReadException(
+                    "PNG iTXt chunk translated keyword is not terminated.");
+        }
 
-            languageTag = new String(bytes, index, terminator - index,
-                    "ISO-8859-1");
-            index = terminator + 1;
+        translatedKeyword = new String(bytes, index, terminator - index,
+                "utf-8");
+        index = terminator + 1;
 
-            terminator = findNull(bytes, index);
-            if (terminator < 0)
-                throw new ImageReadException(
-                        "PNG iTXt chunk translated keyword is not terminated.");
+        if (compressed) {
+            int compressedTextLength = bytes.length - index;
 
-            translatedKeyword = new String(bytes, index, terminator - index,
+            byte compressedText[] = new byte[compressedTextLength];
+            System.arraycopy(bytes, index, compressedText, 0,
+                    compressedTextLength);
+
+            text = new String(new ZLibUtils().inflate(compressedText),
                     "utf-8");
-            index = terminator + 1;
 
-            if (compressed) {
-                int compressedTextLength = bytes.length - index;
-
-                byte compressedText[] = new byte[compressedTextLength];
-                System.arraycopy(bytes, index, compressedText, 0,
-                        compressedTextLength);
-
-                text = new String(new ZLibUtils().inflate(compressedText),
-                        "utf-8");
-
-            } else
-                text = new String(bytes, index, bytes.length - index, "utf-8");
+        } else {
+            text = new String(bytes, index, bytes.length - index, "utf-8");
         }
     }
 

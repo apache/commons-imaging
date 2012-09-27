@@ -31,12 +31,12 @@ public abstract class DataParser {
         int width = header.Columns;
         int height = header.Rows;
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int rgb = getRGB(data, x, y, imageContents);
                 buffer.setElem(y * width + x, rgb);
             }
-
+        }
     }
 
     protected abstract int getRGB(int data[][][], int x, int y,

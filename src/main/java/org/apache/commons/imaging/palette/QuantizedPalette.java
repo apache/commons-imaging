@@ -29,24 +29,23 @@ public class QuantizedPalette extends Palette {
         this.subsets = subsets;
         this.precision = precision;
 
-        {
-            straight = new ColorSpaceSubset[1 << (precision * 3)];
+        straight = new ColorSpaceSubset[1 << (precision * 3)];
 
-            for (int i = 0; i < subsets.size(); i++) {
-                ColorSpaceSubset subset = subsets.get(i);
-                subset.setIndex(i);
+        for (int i = 0; i < subsets.size(); i++) {
+            ColorSpaceSubset subset = subsets.get(i);
+            subset.setIndex(i);
 
-                for (int u = subset.mins[0]; u <= subset.maxs[0]; u++)
-                    for (int j = subset.mins[1]; j <= subset.maxs[1]; j++)
-                        for (int k = subset.mins[2]; k <= subset.maxs[2]; k++) {
-                            int index = (u << (precision * 2))
-                                    | (j << (precision * 1))
-                                    | (k << (precision * 0));
-                            straight[index] = subset;
-                        }
+            for (int u = subset.mins[0]; u <= subset.maxs[0]; u++) {
+                for (int j = subset.mins[1]; j <= subset.maxs[1]; j++) {
+                    for (int k = subset.mins[2]; k <= subset.maxs[2]; k++) {
+                        int index = (u << (precision * 2))
+                                | (j << (precision * 1))
+                                | (k << (precision * 0));
+                        straight[index] = subset;
+                    }
+                }
             }
         }
-
     }
 
     @Override

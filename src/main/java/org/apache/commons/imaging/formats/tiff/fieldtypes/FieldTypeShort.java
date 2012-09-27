@@ -43,9 +43,10 @@ public class FieldTypeShort extends FieldType {
 
     @Override
     public Object getSimpleValue(TiffField entry) throws ImageReadException {
-        if (entry.length == 1)
+        if (entry.length == 1) {
             return BinaryConversions.convertToShort(entry.valueOffsetBytes,
                     entry.byteOrder);
+        }
 
         return BinaryConversions.convertToShortArray(getRawBytes(entry),
                 entry.byteOrder);
@@ -53,21 +54,23 @@ public class FieldTypeShort extends FieldType {
 
     @Override
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
-        if (o instanceof Short)
+        if (o instanceof Short) {
             return BinaryConversions.convertToByteArray(
                     new short[] { ((Short) o).shortValue(), }, byteOrder);
-        else if (o instanceof short[]) {
+        } else if (o instanceof short[]) {
             short numbers[] = (short[]) o;
             return BinaryConversions.convertToByteArray(numbers, byteOrder);
         } else if (o instanceof Short[]) {
             Short numbers[] = (Short[]) o;
             short values[] = new short[numbers.length];
-            for (int i = 0; i < values.length; i++)
+            for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].shortValue();
+            }
             return BinaryConversions.convertToByteArray(values, byteOrder);
-        } else
+        } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");
+        }
     }
 
 }

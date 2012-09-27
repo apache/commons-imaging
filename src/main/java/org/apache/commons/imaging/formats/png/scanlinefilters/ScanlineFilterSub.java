@@ -32,11 +32,12 @@ public class ScanlineFilterSub extends ScanlineFilter {
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
             int prev_index = i - BytesPerPixel;
-            if (prev_index >= 0)
+            if (prev_index >= 0) {
                 dst[i] = (byte) ((src[i] + dst[prev_index]) % 256);
             // dst[i] = 0xff & (src[i] + src[prev_index]);
-            else
+            } else {
                 dst[i] = src[i];
+            }
 
             // if(i<10)
             // System.out.println("\t" + i + ": " + dst[i] + " (" + src[i] +

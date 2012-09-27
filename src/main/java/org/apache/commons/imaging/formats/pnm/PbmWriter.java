@@ -54,10 +54,11 @@ public class PbmWriter extends PnmWriter implements PnmConstants {
                 int green = 0xff & (argb >> 8);
                 int blue = 0xff & (argb >> 0);
                 int sample = (red + green + blue) / 3;
-                if (sample > 127)
+                if (sample > 127) {
                     sample = 0;
-                else
+                } else {
                     sample = 1;
+                }
 
                 if (RAWBITS) {
                     bitcache = (bitcache << 1) | (0x1 & sample);

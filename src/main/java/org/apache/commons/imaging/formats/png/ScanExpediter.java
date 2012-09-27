@@ -65,8 +65,9 @@ public abstract class ScanExpediter extends BinaryFileParser {
 
     protected int getBitsToBytesRoundingUp(int bits) {
         int bytes = bits / 8;
-        if ((bits % 8 > 0))
+        if ((bits % 8 > 0)) {
             bytes++;
+        }
         return bytes;
     }
 
@@ -87,8 +88,8 @@ public abstract class ScanExpediter extends BinaryFileParser {
             throws ImageReadException, IOException {
 
         switch (colorType) {
-        case 0: // 1,2,4,8,16 Each pixel is a grayscale sample.
-        {
+        case 0: {
+            // 1,2,4,8,16 Each pixel is a grayscale sample.
             int sample = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
 
             if (gammaCorrection != null) {
@@ -97,22 +98,24 @@ public abstract class ScanExpediter extends BinaryFileParser {
 
             int rgb = getPixelRGB(sample, sample, sample);
 
-            if (transparencyFilter != null)
+            if (transparencyFilter != null) {
                 rgb = transparencyFilter.filter(rgb, sample);
+            }
 
             return rgb;
 
         }
-        case 2: // 8,16 Each pixel is an R,G,B triple.
-        {
+        case 2: {
+            // 8,16 Each pixel is an R,G,B triple.
             int red = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
             int green = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
             int blue = bitParser.getSampleAsByte(pixelIndexInScanline, 2);
 
             int rgb = getPixelRGB(red, green, blue);
 
-            if (transparencyFilter != null)
+            if (transparencyFilter != null) {
                 rgb = transparencyFilter.filter(rgb, -1);
+            }
 
             if (gammaCorrection != null) {
                 int alpha = (0xff000000 & rgb) >> 24; // make sure to preserve
@@ -126,33 +129,35 @@ public abstract class ScanExpediter extends BinaryFileParser {
             return rgb;
         }
         //
-        case 3: // 1,2,4,8 Each pixel is a palette index;
+        case 3: {
+            // 1,2,4,8 Each pixel is a palette index;
             // a PLTE chunk must appear.
-        {
             int index = bitParser.getSample(pixelIndexInScanline, 0);
 
             int rgb = pngChunkPLTE.getRGB(index);
 
-            if (transparencyFilter != null)
+            if (transparencyFilter != null) {
                 rgb = transparencyFilter.filter(rgb, index);
+            }
 
             return rgb;
         }
-        case 4: // 8,16 Each pixel is a grayscale sample,
+        case 4: {
+            // 8,16 Each pixel is a grayscale sample,
             // followed by an alpha sample.
-        {
             int sample = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
             int alpha = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
 
-            if (gammaCorrection != null)
+            if (gammaCorrection != null) {
                 sample = gammaCorrection.correctSample(sample);
+            }
 
             int rgb = getPixelARGB(alpha, sample, sample, sample);
             return rgb;
 
         }
-        case 6: // 8,16 Each pixel is an R,G,B triple,
-        {
+        case 6: {
+            // 8,16 Each pixel is an R,G,B triple,
             int red = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
             int green = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
             int blue = bitParser.getSampleAsByte(pixelIndexInScanline, 2);
@@ -219,8 +224,9 @@ public abstract class ScanExpediter extends BinaryFileParser {
     protected byte[] getNextScanline(InputStream is, int length, byte prev[],
             int BytesPerPixel) throws ImageReadException, IOException {
         int filterType = is.read();
-        if (filterType < 0)
+        if (filterType < 0) {
             throw new ImageReadException("PNG: missing filter type");
+        }
 
         byte scanline[] = this.readByteArray("scanline", length, is,
                 "PNG: missing image data");

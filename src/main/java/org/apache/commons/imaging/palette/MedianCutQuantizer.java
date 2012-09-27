@@ -94,8 +94,9 @@ public class MedianCutQuantizer {
                 throws ImageWriteException {
             this.color_counts = color_counts;
 
-            if (color_counts.size() < 1)
+            if (color_counts.size() < 1) {
                 throw new ImageWriteException("empty color_group");
+            }
 
             for (int i = 0; i < color_counts.size(); i++) {
                 ColorCount color = color_counts.get(i);
@@ -128,14 +129,18 @@ public class MedianCutQuantizer {
             int green = 0xff & (argb >> 8);
             int blue = 0xff & (argb >> 0);
 
-            if (!ignoreAlpha && (alpha < min_alpha || alpha > max_alpha))
+            if (!ignoreAlpha && (alpha < min_alpha || alpha > max_alpha)) {
                 return false;
-            if (red < min_red || red > max_red)
+            }
+            if (red < min_red || red > max_red) {
                 return false;
-            if (green < min_green || green > max_green)
+            }
+            if (green < min_green || green > max_green) {
                 return false;
-            if (blue < min_blue || blue > max_blue)
+            }
+            if (blue < min_blue || blue > max_blue) {
                 return false;
+            }
             return true;
         }
 
@@ -191,16 +196,18 @@ public class MedianCutQuantizer {
             for (int x = 0; x < width; x++) {
                 int argb = row[x];
 
-                if (ignoreAlpha)
+                if (ignoreAlpha) {
                     argb &= 0xffffff;
+                }
                 argb &= mask;
 
                 ColorCount color = color_map.get(argb);
                 if (color == null) {
                     color = new ColorCount(argb);
                     color_map.put(argb, color);
-                    if (color_map.keySet().size() > max)
+                    if (color_map.keySet().size() > max) {
                         return null;
+                    }
                 }
                 color.count++;
             }
@@ -221,8 +228,9 @@ public class MedianCutQuantizer {
                     mask + " (" + Integer.toHexString(mask) + ")");
 
             Map<Integer, ColorCount> result = groupColors1(image, max, mask);
-            if (result != null)
+            if (result != null) {
                 return result;
+            }
         }
         throw new Error("");
     }
@@ -233,8 +241,9 @@ public class MedianCutQuantizer {
 
         int discrete_colors = color_map.keySet().size();
         if (discrete_colors <= max_colors) {
-            if (verbose)
+            if (verbose) {
                 Debug.debug("lossless palette: " + discrete_colors);
+            }
 
             int palette[] = new int[discrete_colors];
             List<ColorCount> color_counts = new ArrayList<ColorCount>(
@@ -243,15 +252,17 @@ public class MedianCutQuantizer {
             for (int i = 0; i < color_counts.size(); i++) {
                 ColorCount color_count = color_counts.get(i);
                 palette[i] = color_count.argb;
-                if (ignoreAlpha)
+                if (ignoreAlpha) {
                     palette[i] |= 0xff000000;
+                }
             }
 
             return new SimplePalette(palette);
         }
 
-        if (verbose)
+        if (verbose) {
             Debug.debug("discrete colors: " + discrete_colors);
+        }
 
         List<ColorGroup> color_groups = new ArrayList<ColorGroup>();
         ColorGroup root = new ColorGroup(new ArrayList<ColorCount>(
@@ -260,8 +271,9 @@ public class MedianCutQuantizer {
 
         final Comparator<ColorGroup> comparator = new Comparator<ColorGroup>() {
             public int compare(ColorGroup cg1, ColorGroup cg2) {
-                if (cg1.max_diff == cg2.max_diff)
+                if (cg1.max_diff == cg2.max_diff) {
                     return cg2.diff_total - cg1.diff_total;
+                }
                 return cg2.max_diff - cg1.max_diff;
             }
         };
@@ -271,8 +283,9 @@ public class MedianCutQuantizer {
 
             ColorGroup color_group = color_groups.get(0);
 
-            if (color_group.max_diff == 0)
+            if (color_group.max_diff == 0) {
                 break;
+            }
             if (!ignoreAlpha
                     && color_group.alpha_diff > color_group.red_diff
                     && color_group.alpha_diff > color_group.green_diff
@@ -289,8 +302,9 @@ public class MedianCutQuantizer {
         }
 
         int palette_size = color_groups.size();
-        if (verbose)
+        if (verbose) {
             Debug.debug("palette size: " + palette_size);
+        }
 
         int palette[] = new int[palette_size];
 
@@ -301,13 +315,15 @@ public class MedianCutQuantizer {
 
             color_group.palette_index = i;
 
-            if (color_group.color_counts.size() < 1)
+            if (color_group.color_counts.size() < 1) {
                 throw new ImageWriteException("empty color_group: "
                         + color_group);
+            }
         }
 
-        if (palette_size > discrete_colors)
+        if (palette_size > discrete_colors) {
             throw new ImageWriteException("palette_size>discrete_colors");
+        }
 
         return new MedianCutPalette(root, palette);
     }
@@ -358,13 +374,14 @@ public class MedianCutQuantizer {
             break;
         }
 
-        if (median_index == color_group.color_counts.size() - 1)
+        if (median_index == color_group.color_counts.size() - 1) {
             median_index--;
-        else if (median_index > 0) {
+        } else if (median_index > 0) {
             int new_diff = Math.abs(new_count - count_half);
             int old_diff = Math.abs(count_half - old_count);
-            if (old_diff < new_diff)
+            if (old_diff < new_diff) {
                 median_index--;
+            }
         }
 
         color_groups.remove(color_group);
@@ -432,8 +449,9 @@ public class MedianCutQuantizer {
             default:
                 throw new Error("bad mode.");
             }
-            if (value <= limit)
+            if (value <= limit) {
                 return less;
+            }
             return more;
         }
 

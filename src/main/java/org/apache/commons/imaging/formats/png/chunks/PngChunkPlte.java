@@ -31,8 +31,9 @@ public class PngChunkPlte extends PngChunk {
 
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 
-        if ((length % 3) != 0)
+        if ((length % 3) != 0) {
             throw new ImageReadException("PLTE: wrong length: " + length);
+        }
 
         int count = length / 3;
 
@@ -51,9 +52,10 @@ public class PngChunkPlte extends PngChunk {
     }
 
     public int getRGB(int index) throws ImageReadException {
-        if ((index < 0) || (index >= rgb.length))
+        if ((index < 0) || (index >= rgb.length)) {
             throw new ImageReadException("PNG: unknown Palette reference: "
                     + index);
+        }
         return rgb[index];
     }
 
@@ -69,8 +71,9 @@ public class PngChunkPlte extends PngChunk {
     // }
 
     public void correct(GammaCorrection gammaCorrection) {
-        for (int i = 0; i < rgb.length; i++)
+        for (int i = 0; i < rgb.length; i++) {
             rgb[i] = gammaCorrection.correctARGB(rgb[i]);
+        }
     }
 
 }

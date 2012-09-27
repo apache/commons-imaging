@@ -35,39 +35,37 @@ public class PngChunkIccp extends PngChunk {
         super(Length, ChunkType, CRC, bytes);
         // this.parser = parser;
 
-        {
-            int index = findNull(bytes);
-            if (index < 0)
-                throw new ImageReadException("PngChunkIccp: No Profile Name");
-            byte name_bytes[] = new byte[index];
-            System.arraycopy(bytes, 0, name_bytes, 0, index);
-            ProfileName = new String(name_bytes, "ISO-8859-1");
+        int index = findNull(bytes);
+        if (index < 0) {
+            throw new ImageReadException("PngChunkIccp: No Profile Name");
+        }
+        byte name_bytes[] = new byte[index];
+        System.arraycopy(bytes, 0, name_bytes, 0, index);
+        ProfileName = new String(name_bytes, "ISO-8859-1");
 
-            CompressionMethod = bytes[index + 1];
+        CompressionMethod = bytes[index + 1];
 
-            int CompressedProfileLength = bytes.length - (index + 1 + 1);
-            CompressedProfile = new byte[CompressedProfileLength];
-            System.arraycopy(bytes, index + 1 + 1, CompressedProfile, 0,
-                    CompressedProfileLength);
+        int CompressedProfileLength = bytes.length - (index + 1 + 1);
+        CompressedProfile = new byte[CompressedProfileLength];
+        System.arraycopy(bytes, index + 1 + 1, CompressedProfile, 0,
+                CompressedProfileLength);
 
-            if (getDebug()) {
-                System.out.println("ProfileName: " + ProfileName);
-                System.out.println("ProfileName.length(): "
-                        + ProfileName.length());
-                System.out.println("CompressionMethod: " + CompressionMethod);
-                System.out.println("CompressedProfileLength: "
-                        + CompressedProfileLength);
-                System.out.println("bytes.length: " + bytes.length);
-            }
+        if (getDebug()) {
+            System.out.println("ProfileName: " + ProfileName);
+            System.out.println("ProfileName.length(): "
+                    + ProfileName.length());
+            System.out.println("CompressionMethod: " + CompressionMethod);
+            System.out.println("CompressedProfileLength: "
+                    + CompressedProfileLength);
+            System.out.println("bytes.length: " + bytes.length);
+        }
 
-            UncompressedProfile = new ZLibUtils().inflate(CompressedProfile);
+        UncompressedProfile = new ZLibUtils().inflate(CompressedProfile);
 
-            if (getDebug()) {
-                System.out.println("UncompressedProfile: "
-                        + ((UncompressedProfile == null) ? "null" : ""
-                                + bytes.length));
-            }
-
+        if (getDebug()) {
+            System.out.println("UncompressedProfile: "
+                    + ((UncompressedProfile == null) ? "null" : ""
+                            + bytes.length));
         }
     }
 

@@ -174,8 +174,9 @@ public abstract class UnicodeUtils implements BinaryConstants {
         for (int i = index; i < bytes.length - 1; i += 2) {
             int c1 = 0xff & bytes[index];
             int c2 = 0xff & bytes[index + 1];
-            if (c1 == 0 && c2 == 0)
+            if (c1 == 0 && c2 == 0) {
                 return i;
+            }
         }
         return -1;
     }
@@ -220,8 +221,9 @@ public abstract class UnicodeUtils implements BinaryConstants {
         public int findEnd(byte bytes[], int index, boolean includeTerminator)
                 throws UnicodeException {
             for (int i = index; i < bytes.length; i++) {
-                if (bytes[i] == 0)
+                if (bytes[i] == 0) {
                     return includeTerminator ? i + 1 : i;
+                }
             }
             return bytes.length;
             // throw new UnicodeException("Terminator not found.");
@@ -251,48 +253,57 @@ public abstract class UnicodeUtils implements BinaryConstants {
             // http://en.wikipedia.org/wiki/UTF-8
 
             while (true) {
-                if (index == bytes.length)
+                if (index == bytes.length) {
                     return bytes.length;
-                if (index > bytes.length)
+                }
+                if (index > bytes.length) {
                     throw new UnicodeException("Terminator not found.");
+                }
 
                 int c1 = 0xff & bytes[index++];
-                if (c1 == 0)
+                if (c1 == 0) {
                     return includeTerminator ? index : index - 1;
-                else if (c1 <= 0x7f)
+                } else if (c1 <= 0x7f) {
                     continue;
-                else if (c1 <= 0xDF) {
-                    if (index >= bytes.length)
+                } else if (c1 <= 0xDF) {
+                    if (index >= bytes.length) {
                         throw new UnicodeException("Invalid unicode.");
-
+                    }
                     int c2 = 0xff & bytes[index++];
-                    if (c2 < 0x80 || c2 > 0xBF)
+                    if (c2 < 0x80 || c2 > 0xBF) {
                         throw new UnicodeException("Invalid code point.");
+                    }
                 } else if (c1 <= 0xEF) {
-                    if (index >= bytes.length - 1)
+                    if (index >= bytes.length - 1) {
                         throw new UnicodeException("Invalid unicode.");
-
+                    }
                     int c2 = 0xff & bytes[index++];
-                    if (c2 < 0x80 || c2 > 0xBF)
+                    if (c2 < 0x80 || c2 > 0xBF) {
                         throw new UnicodeException("Invalid code point.");
+                    }
                     int c3 = 0xff & bytes[index++];
-                    if (c3 < 0x80 || c3 > 0xBF)
+                    if (c3 < 0x80 || c3 > 0xBF) {
                         throw new UnicodeException("Invalid code point.");
+                    }
                 } else if (c1 <= 0xF4) {
-                    if (index >= bytes.length - 2)
+                    if (index >= bytes.length - 2) {
                         throw new UnicodeException("Invalid unicode.");
-
+                    }
                     int c2 = 0xff & bytes[index++];
-                    if (c2 < 0x80 || c2 > 0xBF)
+                    if (c2 < 0x80 || c2 > 0xBF) {
                         throw new UnicodeException("Invalid code point.");
+                    }
                     int c3 = 0xff & bytes[index++];
-                    if (c3 < 0x80 || c3 > 0xBF)
+                    if (c3 < 0x80 || c3 > 0xBF) {
                         throw new UnicodeException("Invalid code point.");
+                    }
                     int c4 = 0xff & bytes[index++];
-                    if (c4 < 0x80 || c4 > 0xBF)
+                    if (c4 < 0x80 || c4 > 0xBF) {
                         throw new UnicodeException("Invalid code point.");
-                } else
+                    }
+                } else {
                     throw new UnicodeException("Invalid code point.");
+                }
             }
         }
     }
@@ -359,10 +370,12 @@ public abstract class UnicodeUtils implements BinaryConstants {
             // http://en.wikipedia.org/wiki/UTF-16/UCS-2
 
             while (true) {
-                if (index == bytes.length)
+                if (index == bytes.length) {
                     return bytes.length;
-                if (index > bytes.length - 1)
+                }
+                if (index > bytes.length - 1) {
                     throw new UnicodeException("Terminator not found.");
+                }
 
                 int c1 = 0xff & bytes[index++];
                 int c2 = 0xff & bytes[index++];
@@ -371,15 +384,16 @@ public abstract class UnicodeUtils implements BinaryConstants {
                 if (c1 == 0 && c2 == 0) {
                     return includeTerminator ? index : index - 2;
                 } else if (msb1 >= 0xD8) {
-                    if (index > bytes.length - 1)
+                    if (index > bytes.length - 1) {
                         throw new UnicodeException("Terminator not found.");
-
+                    }
                     // second word.
                     int c3 = 0xff & bytes[index++];
                     int c4 = 0xff & bytes[index++];
                     int msb2 = byteOrder == BYTE_ORDER_BIG_ENDIAN ? c3 : c4;
-                    if (msb2 < 0xDC)
+                    if (msb2 < 0xDC) {
                         throw new UnicodeException("Invalid code point.");
+                    }
                 }
             }
         }
@@ -404,17 +418,19 @@ public abstract class UnicodeUtils implements BinaryConstants {
                 throws UnicodeException {
             // http://en.wikipedia.org/wiki/UTF-16/UCS-2
 
-            if (index >= bytes.length - 1)
+            if (index >= bytes.length - 1) {
                 throw new UnicodeException("Missing BOM.");
+            }
 
             int c1 = 0xff & bytes[index++];
             int c2 = 0xff & bytes[index++];
-            if (c1 == 0xFF && c2 == 0xFE)
+            if (c1 == 0xFF && c2 == 0xFE) {
                 byteOrder = BYTE_ORDER_LITTLE_ENDIAN;
-            else if (c1 == 0xFE && c2 == 0xFF)
+            } else if (c1 == 0xFE && c2 == 0xFF) {
                 byteOrder = BYTE_ORDER_BIG_ENDIAN;
-            else
+            } else {
                 throw new UnicodeException("Invalid byte order mark.");
+            }
 
             return super.findEnd(bytes, index, includeTerminator);
         }

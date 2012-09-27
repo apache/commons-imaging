@@ -32,11 +32,11 @@ public class PngCrc {
         for (n = 0; n < 256; n++) {
             c = n;
             for (k = 0; k < 8; k++) {
-                if ((c & 1) != 0)
-
+                if ((c & 1) != 0) {
                     c = 0xedb88320L ^ (c >> 1);
-                else
+                } else {
                     c = c >> 1;
+                }
             }
             crc_table[n] = c;
         }
@@ -53,8 +53,9 @@ public class PngCrc {
         long c = crc;
         int n;
 
-        if (!crc_table_computed)
+        if (!crc_table_computed) {
             make_crc_table();
+        }
         for (n = 0; n < buf.length; n++) {
             // Debug.debug("crc[" + n + "]", c + " (" + Long.toHexString(c) +
             // ")");

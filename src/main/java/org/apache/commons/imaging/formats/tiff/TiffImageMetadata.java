@@ -66,10 +66,11 @@ public class TiffImageMetadata extends ImageMetadata implements
             TagInfo tag = tags.get(i);
 
             Integer count = map.get(tag.tag);
-            if (count == null)
+            if (count == null) {
                 map.put(tag.tag, 1);
-            else
+            } else {
                 map.put(tag.tag, count + 1);
+            }
         }
 
         return map;
@@ -451,8 +452,9 @@ public class TiffImageMetadata extends ImageMetadata implements
         List<? extends IImageMetadataItem> directories = getDirectories();
         for (int i = 0; i < directories.size(); i++) {
             Directory directory = (Directory) directories.get(i);
-            if (directory.type == directoryType)
+            if (directory.type == directoryType) {
                 return directory.directory;
+            }
         }
         return null;
     }
@@ -469,8 +471,9 @@ public class TiffImageMetadata extends ImageMetadata implements
 
     public GPSInfo getGPS() throws ImageReadException {
         TiffDirectory gpsDirectory = findDirectory(DIRECTORY_TYPE_GPS);
-        if (null == gpsDirectory)
+        if (null == gpsDirectory) {
             return null;
+        }
 
         // more specific example of how to access GPS values.
         TiffField latitudeRefField = gpsDirectory
@@ -483,8 +486,9 @@ public class TiffImageMetadata extends ImageMetadata implements
                 .findField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
 
         if (latitudeRefField == null || latitudeField == null
-                || longitudeRefField == null || longitudeField == null)
+                || longitudeRefField == null || longitudeField == null) {
             return null;
+        }
 
         // all of these values are strings.
         String latitudeRef = latitudeRefField.getStringValue();
@@ -493,9 +497,10 @@ public class TiffImageMetadata extends ImageMetadata implements
         RationalNumber longitude[] = (RationalNumber[]) longitudeField
                 .getValue();
 
-        if (latitude.length != 3 || longitude.length != 3)
+        if (latitude.length != 3 || longitude.length != 3) {
             throw new ImageReadException(
                     "Expected three values for latitude and longitude.");
+        }
 
         RationalNumber latitudeDegrees = latitude[0];
         RationalNumber latitudeMinutes = latitude[1];
@@ -565,13 +570,14 @@ public class TiffImageMetadata extends ImageMetadata implements
                     + (longitudeMinutes.doubleValue() / 60.0)
                     + (longitudeSeconds.doubleValue() / 3600.0);
 
-            if (longitudeRef.trim().equalsIgnoreCase("e"))
+            if (longitudeRef.trim().equalsIgnoreCase("e")) {
                 return result;
-            else if (longitudeRef.trim().equalsIgnoreCase("w"))
+            } else if (longitudeRef.trim().equalsIgnoreCase("w")) {
                 return -result;
-            else
+            } else {
                 throw new ImageReadException("Unknown longitude ref: \""
                         + longitudeRef + "\"");
+            }
         }
 
         public double getLatitudeAsDegreesNorth() throws ImageReadException {
@@ -579,13 +585,14 @@ public class TiffImageMetadata extends ImageMetadata implements
                     + (latitudeMinutes.doubleValue() / 60.0)
                     + (latitudeSeconds.doubleValue() / 3600.0);
 
-            if (latitudeRef.trim().equalsIgnoreCase("n"))
+            if (latitudeRef.trim().equalsIgnoreCase("n")) {
                 return result;
-            else if (latitudeRef.trim().equalsIgnoreCase("s"))
+            } else if (latitudeRef.trim().equalsIgnoreCase("s")) {
                 return -result;
-            else
+            } else {
                 throw new ImageReadException("Unknown latitude ref: \""
                         + latitudeRef + "\"");
+            }
         }
 
     }

@@ -27,10 +27,11 @@ public class FieldTypeLong extends FieldType {
 
     @Override
     public Object getSimpleValue(TiffField entry) {
-        if (entry.length == 1)
+        if (entry.length == 1) {
             return convertByteArrayToInt(
                     name + " (" + entry.tagInfo.name + ")",
                     entry.valueOffsetBytes, entry.byteOrder);
+        }
 
         return convertByteArrayToIntArray(name + " (" + entry.tagInfo.name
                 + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
@@ -38,21 +39,23 @@ public class FieldTypeLong extends FieldType {
 
     @Override
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
-        if (o instanceof Integer)
+        if (o instanceof Integer) {
             return convertIntArrayToByteArray(
                     new int[] { ((Integer) o).intValue(), }, byteOrder);
-        else if (o instanceof int[]) {
+        } else if (o instanceof int[]) {
             int numbers[] = (int[]) o;
             return convertIntArrayToByteArray(numbers, byteOrder);
         } else if (o instanceof Integer[]) {
             Integer numbers[] = (Integer[]) o;
             int values[] = new int[numbers.length];
-            for (int i = 0; i < values.length; i++)
+            for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].intValue();
+            }
             return convertIntArrayToByteArray(values, byteOrder);
-        } else
+        } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");
+        }
     }
 
 }

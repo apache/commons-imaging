@@ -147,8 +147,9 @@ public final class DataReaderTiled extends DataReader {
                 resetPredictor();
                 tileY++;
                 bis.flushCache();
-                if (tileY >= tileLength)
+                if (tileY >= tileLength) {
                     break;
+                }
             }
 
         }
@@ -174,8 +175,9 @@ public final class DataReaderTiled extends DataReader {
             if (x >= width) {
                 x = 0;
                 y += tileLength;
-                if (y >= height)
+                if (y >= height) {
                     break;
+                }
             }
 
         }

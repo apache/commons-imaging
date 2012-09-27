@@ -187,8 +187,9 @@ public final class DataReaderStrips extends DataReader {
                 resetPredictor();
                 y++;
                 bis.flushCache();
-                if (y >= height)
+                if (y >= height) {
                     break;
+                }
             }
         }
     }

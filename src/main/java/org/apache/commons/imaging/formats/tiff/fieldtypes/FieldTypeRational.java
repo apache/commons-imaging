@@ -29,9 +29,10 @@ public class FieldTypeRational extends FieldType {
 
     @Override
     public Object getSimpleValue(TiffField entry) {
-        if (entry.length == 1)
+        if (entry.length == 1) {
             return convertByteArrayToRational(name + " (" + entry.tagInfo.name
                     + ")", entry.oversizeValue, entry.byteOrder);
+        }
 
         return convertByteArrayToRationalArray(name + " (" + entry.tagInfo.name
                 + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
@@ -39,9 +40,9 @@ public class FieldTypeRational extends FieldType {
 
     @Override
     public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
-        if (o instanceof RationalNumber)
+        if (o instanceof RationalNumber) {
             return convertRationalToByteArray((RationalNumber) o, byteOrder);
-        else if (o instanceof RationalNumber[]) {
+        } else if (o instanceof RationalNumber[]) {
             return convertRationalArrayToByteArray((RationalNumber[]) o,
                     byteOrder);
         } else if (o instanceof Number) {
@@ -67,9 +68,10 @@ public class FieldTypeRational extends FieldType {
                         .getRationalNumber(number);
             }
             return convertRationalArrayToByteArray(rationalNumbers, byteOrder);
-        } else
+        } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");
+        }
     }
 
     public byte[] writeData(int numerator, int denominator, int byteOrder)

@@ -47,14 +47,17 @@ public class TiffContents {
             for (int j = 0; j < fields.size(); j++) {
                 TiffField field = fields.get(j);
                 TiffElement oversizeValue = field.getOversizeValueElement();
-                if (null != oversizeValue)
+                if (null != oversizeValue) {
                     result.add(oversizeValue);
+                }
             }
 
-            if (directory.hasTiffImageData())
+            if (directory.hasTiffImageData()) {
                 result.addAll(directory.getTiffRawImageDataElements());
-            if (directory.hasJpegImageData())
+            }
+            if (directory.hasJpegImageData()) {
                 result.add(directory.getJpegRawImageDataElement());
+            }
         }
 
         return result;
@@ -65,8 +68,9 @@ public class TiffContents {
             TiffDirectory directory = directories.get(i);
 
             TiffField field = directory.findField(tag);
-            if (null != field)
+            if (null != field) {
                 return field;
+            }
         }
 
         return null;
@@ -81,10 +85,12 @@ public class TiffContents {
         for (int i = 0; i < elements.size(); i++) {
             TiffElement element = elements.get(i);
 
-            if (element.offset > lastEnd)
+            if (element.offset > lastEnd) {
                 Debug.debug("\t" + "gap: " + (element.offset - lastEnd));
-            if (element.offset < lastEnd)
+            }
+            if (element.offset < lastEnd) {
                 Debug.debug("\t" + "overlap");
+            }
 
             Debug.debug("element, start: " + element.offset + ", length: "
                     + element.length + ", end: "
@@ -92,8 +98,9 @@ public class TiffContents {
                     + element.getElementDescription(false));
             if (verbose) {
                 String verbosity = element.getElementDescription(true);
-                if (null != verbosity)
+                if (null != verbosity) {
                     Debug.debug(verbosity);
+                }
             }
 
             lastEnd = element.offset + element.length;

@@ -79,12 +79,13 @@ public final class Debug {
     public static String getDebug(String message, int v[]) {
         StringBuilder result = new StringBuilder();
 
-        if (v == null)
+        if (v == null) {
             result.append(message + " (" + null + ")" + newline);
-        else {
+        } else {
             result.append(message + " (" + v.length + ")" + newline);
-            for (int i = 0; i < v.length; i++)
+            for (int i = 0; i < v.length; i++) {
                 result.append("\t" + v[i] + newline);
+            }
             result.append(newline);
         }
         return result.toString();
@@ -99,24 +100,26 @@ public final class Debug {
 
         StringBuilder result = new StringBuilder();
 
-        if (v == null)
+        if (v == null) {
             result.append(message + " (" + null + ")" + newline);
-        else {
+        } else {
             result.append(message + " (" + v.length + ")" + newline);
             for (int i = 0; i < max && i < v.length; i++) {
                 int b = 0xff & v[i];
 
                 char c;
-                if (b == 0 || b == 10 || b == 11 || b == 13)
+                if (b == 0 || b == 10 || b == 11 || b == 13) {
                     c = ' ';
-                else
+                } else {
                     c = (char) b;
+                }
 
                 result.append("\t" + i + ": " + b + " (" + c + ", 0x"
                         + Integer.toHexString(b) + ")" + newline);
             }
-            if (v.length > max)
+            if (v.length > max) {
                 result.append("\t" + "..." + newline);
+            }
 
             result.append(newline);
         }
@@ -126,13 +129,14 @@ public final class Debug {
     public static String getDebug(String message, char v[]) {
         StringBuilder result = new StringBuilder();
 
-        if (v == null)
+        if (v == null) {
             result.append(getDebug(message + " (" + null + ")") + newline);
-        else {
+        } else {
             result.append(getDebug(message + " (" + v.length + ")") + newline);
-            for (int i = 0; i < v.length; i++)
+            for (int i = 0; i < v.length; i++) {
                 result.append(getDebug("\t" + v[i] + " (" + (0xff & v[i]))
                         + ")" + newline);
+            }
             result.append(newline);
         }
         return result.toString();
@@ -147,9 +151,10 @@ public final class Debug {
 
         result.append(getDebug(message + " (" + v.size() + ")" + suffix)
                 + newline);
-        for (int i = 0; i < v.size(); i++)
+        for (int i = 0; i < v.size(); i++) {
             result.append(getDebug("\t" + v.get(i).toString() + suffix)
                     + newline);
+        }
         result.append(newline);
 
         return result.toString();
@@ -162,8 +167,9 @@ public final class Debug {
     public static String getDebug(String message, Map<?,?> map) {
         StringBuilder result = new StringBuilder();
 
-        if (map == null)
+        if (map == null) {
             return getDebug(message + " map: " + null);
+        }
 
         List<Object> keys = new ArrayList<Object>(map.keySet());
         result.append(getDebug(message + " map: " + keys.size()) + newline);
@@ -189,8 +195,9 @@ public final class Debug {
 
     private static void log(StringBuilder buffer, String s) {
         Debug.debug(s);
-        if (buffer != null)
+        if (buffer != null) {
             buffer.append(s + newline);
+        }
     }
 
     public static boolean compare(String prefix, Map<?, ?> a, Map<?, ?> b, List<?> ignore,
@@ -241,8 +248,9 @@ public final class Debug {
             result = false;
         }
 
-        if (result)
+        if (result) {
             log(buffer, prefix + "a is the same as  b");
+        }
 
         return result;
     }
@@ -313,32 +321,33 @@ public final class Debug {
     }
 
     public static void debug(String message, Object value) {
-        if (value == null)
+        if (value == null) {
             debug(message, "null");
-        else if (value instanceof char[])
+        } else if (value instanceof char[]) {
             debug(message, (char[]) value);
-        else if (value instanceof byte[])
+        } else if (value instanceof byte[]) {
             debug(message, (byte[]) value);
-        else if (value instanceof int[])
+        } else if (value instanceof int[]) {
             debug(message, (int[]) value);
-        else if (value instanceof String)
+        } else if (value instanceof String) {
             debug(message, (String) value);
-        else if (value instanceof java.util.List)
+        } else if (value instanceof java.util.List) {
             debug(message, (java.util.List<?>) value);
-        else if (value instanceof Map)
+        } else if (value instanceof Map) {
             debug(message, (Map<?, ?>) value);
-        // else if (value instanceof Object)
-        // debug(message, (Object) value);
-        else if (value instanceof ICC_Profile)
+        // } else if (value instanceof Object) {
+        //   debug(message, (Object) value);
+        } else if (value instanceof ICC_Profile) {
             debug(message, (ICC_Profile) value);
-        else if (value instanceof File)
+        } else if (value instanceof File) {
             debug(message, (File) value);
-        else if (value instanceof Date)
+        } else if (value instanceof Date) {
             debug(message, (Date) value);
-        else if (value instanceof Calendar)
+        } else if (value instanceof Calendar) {
             debug(message, (Calendar) value);
-        else
+        } else {
             debug(message, value.toString());
+        }
     }
 
     public static void debug(String message, Object value[]) {
@@ -358,84 +367,87 @@ public final class Debug {
     }
 
     public static String getDebug(String message, Object value) {
-        if (value == null)
+        if (value == null) {
             return getDebug(message, "null");
-        else if (value instanceof Calendar)
+        } else if (value instanceof Calendar) {
             return getDebug(message, (Calendar) value);
-        else if (value instanceof Date)
+        } else if (value instanceof Date) {
             return getDebug(message, (Date) value);
-        else if (value instanceof File)
+        } else if (value instanceof File) {
             return getDebug(message, (File) value);
-        else if (value instanceof ICC_Profile)
+        } else if (value instanceof ICC_Profile) {
             return getDebug(message, (ICC_Profile) value);
-        else if (value instanceof Map)
+        } else if (value instanceof Map) {
             return getDebug(message, (Map<?,?>) value);
-        else if (value instanceof Map)
+        } else if (value instanceof Map) {
             return getDebug(message, (Map<?,?>) value); //
         // else if (value instanceof Object) // getDebug(message, (Object)
         // value);
-        else if (value instanceof String)
+        } else if (value instanceof String) {
             return getDebug(message, (String) value);
-        else if (value instanceof byte[])
+        } else if (value instanceof byte[]) {
             return getDebug(message, (byte[]) value);
-        else if (value instanceof char[])
+        } else if (value instanceof char[]) {
             return getDebug(message, (char[]) value);
-        else if (value instanceof int[])
+        } else if (value instanceof int[]) {
             return getDebug(message, (int[]) value);
-        else if (value instanceof java.util.List)
+        } else if (value instanceof java.util.List) {
             return getDebug(message, (java.util.List<?>) value);
-        else
+        } else {
             return getDebug(message, value.toString());
+        }
     }
 
     public static String getType(Object value) {
-        if (value == null)
+        if (value == null) {
             return "null";
-        else if (value instanceof Object[])
+        } else if (value instanceof Object[]) {
             return "[Object[]: " + ((Object[]) value).length + "]";
-        else if (value instanceof char[])
+        } else if (value instanceof char[]) {
             return "[char[]: " + ((char[]) value).length + "]";
-        else if (value instanceof byte[])
+        } else if (value instanceof byte[]) {
             return "[byte[]: " + ((byte[]) value).length + "]";
-        else if (value instanceof short[])
+        } else if (value instanceof short[]) {
             return "[short[]: " + ((short[]) value).length + "]";
-        else if (value instanceof int[])
+        } else if (value instanceof int[]) {
             return "[int[]: " + ((int[]) value).length + "]";
-        else if (value instanceof long[])
+        } else if (value instanceof long[]) {
             return "[long[]: " + ((long[]) value).length + "]";
-        else if (value instanceof float[])
+        } else if (value instanceof float[]) {
             return "[float[]: " + ((float[]) value).length + "]";
-        else if (value instanceof double[])
+        } else if (value instanceof double[]) {
             return "[double[]: " + ((double[]) value).length + "]";
-        else if (value instanceof boolean[])
+        } else if (value instanceof boolean[]) {
             return "[boolean[]: " + ((boolean[]) value).length + "]";
-        else
+        } else {
             return value.getClass().getName();
+        }
     }
 
     public static boolean isArray(Object value) {
-        if (value == null)
+        if (value == null) {
             return false;
-        else if (value instanceof Object[])
+        } else if (value instanceof Object[]) {
             return true;
-        else if (value instanceof char[])
+        } else if (value instanceof char[]) {
             return true;
-        else if (value instanceof byte[])
+        } else if (value instanceof byte[]) {
             return true;
-        else if (value instanceof short[])
+        } else if (value instanceof short[]) {
             return true;
-        else if (value instanceof int[])
+        } else if (value instanceof int[]) {
             return true;
-        else if (value instanceof long[])
+        } else if (value instanceof long[]) {
             return true;
-        else if (value instanceof float[])
+        } else if (value instanceof float[]) {
             return true;
-        else if (value instanceof double[])
+        } else if (value instanceof double[]) {
             return true;
-        else if (value instanceof boolean[])
+        } else if (value instanceof boolean[]) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     public static String getDebug(String message, Object value[]) {
@@ -530,8 +542,9 @@ public final class Debug {
         String suffix = " [" + counter++ + "]";
 
         debug(message + " (" + v.size() + ")" + suffix);
-        for (int i = 0; i < v.size(); i++)
+        for (int i = 0; i < v.size(); i++) {
             debug("\t" + v.get(i).toString() + suffix);
+        }
         debug();
     }
 
@@ -625,8 +638,9 @@ public final class Debug {
                             + ste.getMethodName() + "(" + ste.getFileName()
                             + ":" + ste.getLineNumber() + ")" + newline);
                 }
-                if (limit >= 0 && stes.length > limit)
+                if (limit >= 0 && stes.length > limit) {
                     result.append("\t..." + newline);
+                }
             }
 
             // e.printStackTrace(System.out);
@@ -658,12 +672,13 @@ public final class Debug {
 
     public static void debugIPQuad(String message, byte bytes[]) {
         System.out.print(message + ": ");
-        if (bytes == null)
+        if (bytes == null) {
             System.out.print("null");
-        else {
+        } else {
             for (int i = 0; i < bytes.length; i++) {
-                if (i > 0)
+                if (i > 0) {
                     System.out.print(".");
+                }
                 System.out.print(0xff & bytes[i]);
             }
         }
@@ -681,10 +696,12 @@ public final class Debug {
             s_ar1 = "" + aspect_ratio;
             s_ar2 = "" + aspect_ratio2;
 
-            if (s_ar1.length() > 7)
+            if (s_ar1.length() > 7) {
                 s_ar1 = s_ar1.substring(0, 7);
-            if (s_ar2.length() > 7)
+            }
+            if (s_ar2.length() > 7) {
                 s_ar2 = s_ar2.substring(0, 7);
+            }
         }
 
         return (prefix + ": "
@@ -707,10 +724,12 @@ public final class Debug {
             s_ar1 = "" + aspect_ratio;
             s_ar2 = "" + aspect_ratio2;
 
-            if (s_ar1.length() > 7)
+            if (s_ar1.length() > 7) {
                 s_ar1 = s_ar1.substring(0, 7);
-            if (s_ar2.length() > 7)
+            }
+            if (s_ar2.length() > 7) {
                 s_ar2 = s_ar2.substring(0, 7);
+            }
         }
 
         return (prefix
@@ -725,51 +744,59 @@ public final class Debug {
     }
 
     public static void dump(String prefix, Object value) {
-        if (value == null)
+        if (value == null) {
             debug(prefix, "null");
-        else if (value instanceof Object[]) {
+        } else if (value instanceof Object[]) {
             Object[] array = (Object[]) value;
             debug(prefix, array);
-            for (int i = 0; i < array.length; i++)
+            for (int i = 0; i < array.length; i++) {
                 dump(prefix + "\t" + i + ": ", array[i]);
+            }
         } else if (value instanceof int[]) {
             int[] array = (int[]) value;
             debug(prefix, array);
-            for (int i = 0; i < array.length; i++)
+            for (int i = 0; i < array.length; i++) {
                 debug(prefix + "\t" + i + ": ", array[i]);
+            }
         } else if (value instanceof char[]) {
             char[] array = (char[]) value;
             debug(prefix, "[" + new String(array) + "]");
         } else if (value instanceof long[]) {
             long[] array = (long[]) value;
             debug(prefix, array);
-            for (int i = 0; i < array.length; i++)
+            for (int i = 0; i < array.length; i++) {
                 debug(prefix + "\t" + i + ": ", array[i]);
+            }
         } else if (value instanceof boolean[]) {
             boolean[] array = (boolean[]) value;
             debug(prefix, array);
-            for (int i = 0; i < array.length; i++)
+            for (int i = 0; i < array.length; i++) {
                 debug(prefix + "\t" + i + ": ", array[i]);
+            }
         } else if (value instanceof byte[]) {
             byte[] array = (byte[]) value;
             debug(prefix, array);
-            for (int i = 0; i < array.length; i++)
+            for (int i = 0; i < array.length; i++) {
                 debug(prefix + "\t" + i + ": ", array[i]);
+            }
         } else if (value instanceof float[]) {
             float[] array = (float[]) value;
             debug(prefix, array);
-            for (int i = 0; i < array.length; i++)
+            for (int i = 0; i < array.length; i++) {
                 debug(prefix + "\t" + i + ": ", array[i]);
+            }
         } else if (value instanceof double[]) {
             double[] array = (double[]) value;
             debug(prefix, array);
-            for (int i = 0; i < array.length; i++)
+            for (int i = 0; i < array.length; i++) {
                 debug(prefix + "\t" + i + ": ", array[i]);
+            }
         } else if (value instanceof java.util.List) {
             java.util.List<?> list = (java.util.List<?>) value;
             debug(prefix, "list");
-            for (int i = 0; i < list.size(); i++)
+            for (int i = 0; i < list.size(); i++) {
                 dump(prefix + "\t" + "list: " + i + ": ", list.get(i));
+            }
         } else if (value instanceof Map) {
             java.util.Map map = (java.util.Map) value;
             debug(prefix, "map");
@@ -779,10 +806,9 @@ public final class Debug {
                 Object key = keys.get(i);
                 dump(prefix + "\t" + "map: " + key + " -> ", map.get(key));
             }
-        }
-        // else if (value instanceof String)
-        // debug(prefix, value);
-        else {
+        // } else if (value instanceof String) {
+        //     debug(prefix, value);
+        } else {
             debug(prefix, value.toString());
             debug(prefix + "\t", value.getClass().getName());
         }

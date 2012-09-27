@@ -51,8 +51,9 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
     @Override
     public String getElementDescription(boolean verbose) {
-        if (!verbose)
+        if (!verbose) {
             return "TIFF Directory (" + description() + ")";
+        }
 
         int entryOffset = offset + TIFF_DIRECTORY_HEADER_LENGTH;
 
@@ -126,18 +127,21 @@ public class TiffDirectory extends TiffElement implements TiffConstants
     }
 
     public boolean hasJpegImageData() throws ImageReadException {
-        if (null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT))
+        if (null != findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT)) {
             return true;
+        }
 
         return false;
     }
 
     public boolean hasTiffImageData() throws ImageReadException {
-        if (null != findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS))
+        if (null != findField(TiffTagConstants.TIFF_TAG_TILE_OFFSETS)) {
             return true;
+        }
 
-        if (null != findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS))
+        if (null != findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS)) {
             return true;
+        }
 
         return false;
     }
@@ -150,8 +154,9 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
     public BufferedImage getTiffImage(int byteOrder, Map params)
             throws ImageReadException, IOException {
-        if (null == tiffImageData)
+        if (null == tiffImageData) {
             return null;
+        }
 
         return new TiffImageParser().getBufferedImage(this, byteOrder, params);
     }
@@ -163,18 +168,21 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
     public TiffField findField(TagInfo tag, boolean failIfMissing)
             throws ImageReadException {
-        if (entries == null)
+        if (entries == null) {
             return null;
+        }
 
         for (int i = 0; i < entries.size(); i++) {
             TiffField field = entries.get(i);
-            if (field.tag == tag.tag)
+            if (field.tag == tag.tag) {
                 return field;
+            }
         }
 
-        if (failIfMissing)
+        if (failIfMissing) {
             throw new ImageReadException("Missing expected field: "
                     + tag.getDescription());
+        }
 
         return null;
     }
@@ -579,8 +587,9 @@ public class TiffDirectory extends TiffElement implements TiffConstants
 
         @Override
         public String getElementDescription(boolean verbose) {
-            if (verbose)
+            if (verbose) {
                 return null;
+            }
             return "ImageDataElement";
         }
     }
@@ -591,9 +600,10 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         int offsets[] = offsetsField.getIntArrayValue();
         int byteCounts[] = byteCountsField.getIntArrayValue();
 
-        if (offsets.length != byteCounts.length)
+        if (offsets.length != byteCounts.length) {
             throw new ImageReadException("offsets.length(" + offsets.length
                     + ") != byteCounts.length(" + byteCounts.length + ")");
+        }
 
         List<ImageDataElement> result = new ArrayList<ImageDataElement>();
         for (int i = 0; i < offsets.length; i++) {
@@ -613,8 +623,9 @@ public class TiffDirectory extends TiffElement implements TiffConstants
             return getRawImageDataElements(tileOffsets, tileByteCounts);
         } else if ((stripOffsets != null) && (stripByteCounts != null)) {
             return getRawImageDataElements(stripOffsets, stripByteCounts);
-        } else
+        } else {
             throw new ImageReadException("Couldn't find image data.");
+        }
     }
 
     public boolean imageDataInStrips() throws ImageReadException {
@@ -623,14 +634,15 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         TiffField stripOffsets = findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS);
         TiffField stripByteCounts = findField(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS);
 
-        if ((tileOffsets != null) && (tileByteCounts != null))
+        if ((tileOffsets != null) && (tileByteCounts != null)) {
             return false;
-        else if ((stripOffsets != null) && (stripByteCounts != null))
+        } else if ((stripOffsets != null) && (stripByteCounts != null)) {
             return true;
-        else if ((stripOffsets != null) && (stripByteCounts != null))
+        } else if ((stripOffsets != null) && (stripByteCounts != null)) {
             return true;
-        else
+        } else {
             throw new ImageReadException("Couldn't find image data.");
+        }
     }
 
     public ImageDataElement getJpegRawImageDataElement()
@@ -644,8 +656,9 @@ public class TiffDirectory extends TiffElement implements TiffConstants
             int byteCount = jpegInterchangeFormatLength.getIntArrayValue()[0];
 
             return new ImageDataElement(offset, byteCount);
-        } else
+        } else {
             throw new ImageReadException("Couldn't find image data.");
+        }
     }
 
     private TiffImageData tiffImageData = null;

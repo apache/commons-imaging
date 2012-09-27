@@ -64,8 +64,9 @@ public class PgmFileInfo extends FileInfo {
     @Override
     public int getRGB(InputStream is) throws IOException {
         int sample = is.read();
-        if (sample < 0)
+        if (sample < 0) {
             throw new IOException("PGM: Unexpected EOF");
+        }
 
         int alpha = 0xff;
 

@@ -93,8 +93,9 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                             BinaryFileFunctions.head(bytes, SLICE_SIZE));
                     Debug.debug("\t" + "tail",
                             BinaryFileFunctions.tail(bytes, SLICE_SIZE));
-                } else
+                } else {
                     Debug.debug("\t" + "bytes", bytes);
+                }
             }
 
             Debug.debug("element[" + i + "]:" + element.getElementDescription()
@@ -144,21 +145,23 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                         continue;
                     }
                     TiffElement oversizeValue = field.getOversizeValueElement();
-                    if (oversizeValue != null)
+                    if (oversizeValue != null) {
                         elements.add(oversizeValue);
-
+                    }
                 }
 
                 JpegImageData jpegImageData = directory.getJpegImageData();
-                if (jpegImageData != null)
+                if (jpegImageData != null) {
                     elements.add(jpegImageData);
+                }
 
                 TiffImageData tiffImageData = directory.getTiffImageData();
                 if (tiffImageData != null) {
                     TiffElement.DataElement data[] = tiffImageData
                             .getImageData();
-                    for (int i = 0; i < data.length; i++)
+                    for (int i = 0; i < data.length; i++) {
                         elements.add(data[i]);
+                    }
                 }
             }
 
@@ -187,9 +190,10 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                         index = lastElementByte;
                     }
                 }
-                if (null != start)
+                if (null != start) {
                     result.add(new TiffElement.Stub(start.offset, index
                             - start.offset));
+                }
             }
 
             // dumpElements(byteSource, result);
@@ -205,9 +209,9 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             throws IOException, ImageWriteException {
         List<TiffElement> analysis = analyzeOldTiff();
         int oldLength = exifBytes.length;
-        if (analysis.size() < 1)
+        if (analysis.size() < 1) {
             throw new ImageWriteException("Couldn't analyze old tiff data.");
-        else if (analysis.size() == 1) {
+        } else if (analysis.size() == 1) {
             TiffElement onlyElement = analysis.get(0);
             // Debug.debug("onlyElement", onlyElement.getElementDescription());
             if (onlyElement.offset == TIFF_HEADER_SIZE
@@ -270,8 +274,9 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                 // discarding a tail element. should only happen once.
                 overflowIndex -= element.length;
                 unusedElements.remove(0);
-            } else
+            } else {
                 break;
+            }
         }
 
         Collections.sort(unusedElements, ELEMENT_SIZE_COMPARATOR);
@@ -299,10 +304,11 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             TiffElement bestFit = null;
             for (int i = 0; i < unusedElements.size(); i++) {
                 TiffElement element = unusedElements.get(i);
-                if (element.length >= outputItemLength)
+                if (element.length >= outputItemLength) {
                     bestFit = element;
-                else
+                } else {
                     break;
+                }
             }
             if (null == bestFit) {
                 // we couldn't place this item. overflow.
@@ -357,16 +363,18 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
         @Override
         public void write(int b) throws IOException {
-            if (index >= buffer.length)
+            if (index >= buffer.length) {
                 throw new IOException("Buffer overflow.");
+            }
 
             buffer[index++] = (byte) b;
         }
 
         @Override
         public void write(byte b[], int off, int len) throws IOException {
-            if (index + len > buffer.length)
+            if (index + len > buffer.length) {
                 throw new IOException("Buffer overflow.");
+            }
             System.arraycopy(b, off, buffer, index, len);
             index += len;
         }
@@ -398,8 +406,9 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             TiffElement element = analysis.get(i);
             for (int j = 0; j < element.length; j++) {
                 int index = element.offset + j;
-                if (index < output.length)
+                if (index < output.length) {
                     output[index] = 0;
+                }
             }
         }
 

@@ -34,22 +34,25 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
     }
 
     public IccProfileInfo getICCProfileInfo(ICC_Profile icc_profile) {
-        if (icc_profile == null)
+        if (icc_profile == null) {
             return null;
+        }
 
         return getICCProfileInfo(new ByteSourceArray(icc_profile.getData()));
     }
 
     public IccProfileInfo getICCProfileInfo(byte bytes[]) {
-        if (bytes == null)
+        if (bytes == null) {
             return null;
+        }
 
         return getICCProfileInfo(new ByteSourceArray(bytes));
     }
 
     public IccProfileInfo getICCProfileInfo(File file) {
-        if (file == null)
+        if (file == null) {
             return null;
+        }
 
         return getICCProfileInfo(new ByteSourceFile(file));
     }
@@ -61,14 +64,13 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
         try {
 
             IccProfileInfo result;
-            {
-                is = byteSource.getInputStream();
+            is = byteSource.getInputStream();
 
-                result = readICCProfileInfo(is);
-            }
+            result = readICCProfileInfo(is);
 
-            if (result == null)
+            if (result == null) {
                 return null;
+            }
 
             is.close();
             is = null;
@@ -88,16 +90,18 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
             Debug.debug(e);
         } finally {
             try {
-                if (is != null)
+                if (is != null) {
                     is.close();
+                }
             } catch (Exception e) {
                 Debug.debug(e);
             }
 
         }
 
-        if (debug)
+        if (debug) {
             Debug.debug();
+        }
 
         return null;
     }
@@ -106,8 +110,9 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
         CachingInputStream cis = new CachingInputStream(is);
         is = cis;
 
-        if (debug)
+        if (debug) {
             Debug.debug();
+        }
 
         // setDebug(true);
 
@@ -131,8 +136,9 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
             int CMMTypeSignature = read4Bytes("Signature", is,
                     "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("CMMTypeSignature", CMMTypeSignature);
+            }
 
             int ProfileVersion = read4Bytes("ProfileVersion", is,
                     "Not a Valid ICC Profile");
@@ -140,62 +146,72 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
             int ProfileDeviceClassSignature = read4Bytes(
                     "ProfileDeviceClassSignature", is,
                     "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("ProfileDeviceClassSignature",
                         ProfileDeviceClassSignature);
+            }
 
             int ColorSpace = read4Bytes("ColorSpace", is,
                     "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("ColorSpace", ColorSpace);
+            }
 
             int ProfileConnectionSpace = read4Bytes("ProfileConnectionSpace",
                     is, "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("ProfileConnectionSpace", ProfileConnectionSpace);
+            }
 
             skipBytes(is, 12, "Not a Valid ICC Profile");
 
             int ProfileFileSignature = read4Bytes("ProfileFileSignature", is,
                     "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("ProfileFileSignature", ProfileFileSignature);
+            }
 
             int PrimaryPlatformSignature = read4Bytes(
                     "PrimaryPlatformSignature", is, "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("PrimaryPlatformSignature",
                         PrimaryPlatformSignature);
+            }
 
             int VariousFlags = read4Bytes("ProfileFileSignature", is,
                     "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("ProfileFileSignature", ProfileFileSignature);
+            }
 
             int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
                     "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("DeviceManufacturer", DeviceManufacturer);
+            }
 
             int DeviceModel = read4Bytes("DeviceModel", is,
                     "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("DeviceModel", DeviceModel);
+            }
 
             skipBytes(is, 8, "Not a Valid ICC Profile");
 
             int RenderingIntent = read4Bytes("RenderingIntent", is,
                     "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("RenderingIntent", RenderingIntent);
+            }
 
             skipBytes(is, 12, "Not a Valid ICC Profile");
 
             int ProfileCreatorSignature = read4Bytes("ProfileCreatorSignature",
                     is, "Not a Valid ICC Profile");
-            if (debug)
+            if (debug) {
                 printCharQuad("ProfileCreatorSignature",
                         ProfileCreatorSignature);
+            }
 
             byte ProfileID[] = null;
             skipBytes(is, 16, "Not a Valid ICC Profile");
@@ -254,8 +270,9 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
             byte data[] = cis.getCache();
 
-            if (data.length < ProfileSize)
+            if (data.length < ProfileSize) {
                 throw new IOException("Couldn't read ICC Profile.");
+            }
 
             IccProfileInfo result = new IccProfileInfo(data, ProfileSize,
                     CMMTypeSignature, ProfileVersion,
@@ -265,8 +282,9 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
                     DeviceModel, RenderingIntent, ProfileCreatorSignature,
                     ProfileID, tags);
 
-            if (debug)
+            if (debug) {
                 Debug.debug("issRGB: " + result.issRGB());
+            }
 
             return result;
         } catch (Exception e) {
@@ -287,30 +305,34 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
     }
 
     public Boolean issRGB(ICC_Profile icc_profile) {
-        if (icc_profile == null)
+        if (icc_profile == null) {
             return null;
+        }
 
         return issRGB(new ByteSourceArray(icc_profile.getData()));
     }
 
     public Boolean issRGB(byte bytes[]) {
-        if (bytes == null)
+        if (bytes == null) {
             return null;
+        }
 
         return issRGB(new ByteSourceArray(bytes));
     }
 
     public Boolean issRGB(File file) {
-        if (file == null)
+        if (file == null) {
             return null;
+        }
 
         return issRGB(new ByteSourceFile(file));
     }
 
     public Boolean issRGB(ByteSource byteSource) {
         try {
-            if (debug)
+            if (debug) {
                 Debug.debug();
+            }
 
             // setDebug(true);
 
@@ -336,13 +358,15 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
                 int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
                         "Not a Valid ICC Profile");
-                if (debug)
+                if (debug) {
                     printCharQuad("DeviceManufacturer", DeviceManufacturer);
+                }
 
                 int DeviceModel = read4Bytes("DeviceModel", is,
                         "Not a Valid ICC Profile");
-                if (debug)
+                if (debug) {
                     printCharQuad("DeviceModel", DeviceModel);
+                }
 
                 boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
 

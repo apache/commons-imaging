@@ -106,8 +106,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         TiffField heightField = directory.findField(
                 TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true);
 
-        if ((widthField == null) || (heightField == null))
+        if ((widthField == null) || (heightField == null)) {
             throw new ImageReadException("TIFF image missing size info.");
+        }
 
         int height = heightField.getIntValue();
         int width = widthField.getIntValue();
@@ -168,8 +169,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         TiffField heightField = directory.findField(
                 TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true);
 
-        if ((widthField == null) || (heightField == null))
+        if ((widthField == null) || (heightField == null)) {
             throw new ImageReadException("TIFF image missing size info.");
+        }
 
         int height = heightField.getIntValue();
         int width = widthField.getIntValue();
@@ -180,8 +182,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                 .findField(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT);
         int resolutionUnit = 2; // Inch
         if ((resolutionUnitField != null)
-                && (resolutionUnitField.getValue() != null))
+                && (resolutionUnitField.getValue() != null)) {
             resolutionUnit = resolutionUnitField.getIntValue();
+        }
 
         double unitsPerInch = -1;
         switch (resolutionUnit) {
@@ -233,8 +236,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
         int bitsPerSample = 1;
         if ((bitsPerSampleField != null)
-                && (bitsPerSampleField.getValue() != null))
+                && (bitsPerSampleField.getValue() != null)) {
             bitsPerSample = bitsPerSampleField.getIntValueOrArraySum();
+        }
 
         int bitsPerPixel = bitsPerSample; // assume grayscale;
         // dunno if this handles colormapped images correctly.
@@ -263,8 +267,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         boolean usesPalette = false;
         TiffField colorMapField = directory
                 .findField(TiffTagConstants.TIFF_TAG_COLOR_MAP);
-        if (colorMapField != null)
+        if (colorMapField != null) {
             usesPalette = true;
+        }
 
         int colorType = ImageInfo.COLOR_TYPE_RGB;
 
@@ -342,8 +347,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
             {
                 ImageInfo imageData = getImageInfo(byteSource);
-                if (imageData == null)
+                if (imageData == null) {
                     return false;
+                }
 
                 imageData.toString(pw, "");
             }
@@ -360,16 +366,18 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
                 List<TiffDirectory> directories = contents.directories;
 
-                if (directories == null)
+                if (directories == null) {
                     return false;
+                }
 
                 for (int d = 0; d < directories.size(); d++) {
                     TiffDirectory directory = directories.get(d);
 
                     List<TiffField> entries = directory.entries;
 
-                    if (entries == null)
+                    if (entries == null) {
                         return false;
+                    }
 
                     // Debug.debug("directory offset", directory.offset);
 
@@ -436,8 +444,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         int byteOrder = reader.getByteOrder();
         TiffDirectory directory = contents.directories.get(0);
         BufferedImage result = directory.getTiffImage(byteOrder, params);
-        if (null == result)
+        if (null == result) {
             throw new ImageReadException("TIFF does not contain an image.");
+        }
         return result;
     }
 
@@ -464,8 +473,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             int byteOrder, Map params) throws ImageReadException, IOException {
         List<TiffField> entries = directory.entries;
 
-        if (entries == null)
+        if (entries == null) {
             throw new ImageReadException("TIFF missing entries");
+        }
 
         int photometricInterpretation = 0xffff & directory
                 .getSingleFieldValue(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
@@ -478,8 +488,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         int samplesPerPixel = 1;
         TiffField samplesPerPixelField = directory
                 .findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
-        if (samplesPerPixelField != null)
+        if (samplesPerPixelField != null) {
             samplesPerPixel = samplesPerPixelField.getIntValue();
+        }
         int bitsPerSample[] = { 1 };
         int bitsPerPixel = samplesPerPixel;
         TiffField bitsPerSampleField = directory
@@ -501,14 +512,16 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
             TiffField predictorField = directory
                     .findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
-            if (null != predictorField)
+            if (null != predictorField) {
                 predictor = predictorField.getIntValueOrArraySum();
+            }
         }
 
-        if (samplesPerPixel != bitsPerSample.length)
+        if (samplesPerPixel != bitsPerSample.length) {
             throw new ImageReadException("Tiff: samplesPerPixel ("
                     + samplesPerPixel + ")!=fBitsPerSample.length ("
                     + bitsPerSample.length + ")");
+        }
 
         boolean hasAlpha = false;
         ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
@@ -551,10 +564,11 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
             int expected_colormap_size = 3 * (1 << bitsPerPixel);
 
-            if (colorMap.length != expected_colormap_size)
+            if (colorMap.length != expected_colormap_size) {
                 throw new ImageReadException("Tiff: fColorMap.length ("
                         + colorMap.length + ")!=expected_colormap_size ("
                         + expected_colormap_size + ")");
+            }
 
             return new PhotometricInterpreterPalette(samplesPerPixel,
                     bitsPerSample, predictor, width, height, colorMap);

@@ -43,8 +43,9 @@ public abstract class FieldType extends BinaryFileFunctions implements
     }
 
     public int getBytesLength(TiffField entry) throws ImageReadException {
-        if (length < 1)
+        if (length < 1) {
             throw new ImageReadException("Unknown field type");
+        }
 
         return length * entry.length;
     }
@@ -62,8 +63,9 @@ public abstract class FieldType extends BinaryFileFunctions implements
 
     public String getDisplayValue(TiffField entry) throws ImageReadException {
         Object o = getSimpleValue(entry);
-        if (o == null)
+        if (o == null) {
             return "NULL";
+        }
         return o.toString();
     }
 

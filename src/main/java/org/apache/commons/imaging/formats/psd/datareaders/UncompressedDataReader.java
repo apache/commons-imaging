@@ -46,22 +46,19 @@ public class UncompressedDataReader extends DataReader {
         int channel_count = dataParser.getBasicChannelsCount();
         int depth = header.Depth;
         MyBitInputStream mbis = new MyBitInputStream(is, BYTE_ORDER_MSB);
-        BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we
-                                                                         // want
-                                                                         // all
-                                                                         // samples
-                                                                         // to
-                                                                         // be
-                                                                         // bytes
+        // we want all samples to be bytes
+        BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8);
 
         int data[][][] = new int[channel_count][height][width];
-        for (int channel = 0; channel < channel_count; channel++)
-            for (int y = 0; y < height; y++)
+        for (int channel = 0; channel < channel_count; channel++) {
+            for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     int b = bbis.readBits(depth);
 
                     data[channel][y][x] = (byte) b;
                 }
+            }
+        }
 
         dataParser.parseData(data, bi, imageContents);
 

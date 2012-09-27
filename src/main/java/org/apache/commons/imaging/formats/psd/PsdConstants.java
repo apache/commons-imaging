@@ -23,8 +23,9 @@ public class PsdConstants {
 
     public String getDescription(int id) {
         for (int i = 0; i < fImageResourceTypes.length; i++) {
-            if (fImageResourceTypes[i].ID == id)
+            if (fImageResourceTypes[i].ID == id) {
                 return fImageResourceTypes[i].Description;
+            }
         }
         return "Unknown";
     }

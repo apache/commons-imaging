@@ -65,8 +65,9 @@ public class PaletteFactory {
             count += Integer.bitCount(eight);
         }
 
-        if (debug)
+        if (debug) {
             System.out.println("Used colors: " + count);
+        }
 
         int colormap[] = new int[count];
         int mapsize = 0;
@@ -126,8 +127,9 @@ public class PaletteFactory {
     private DivisionCandidate finishDivision(int table[],
             ColorSpaceSubset subset, int component, int precision, int sum,
             int slice) {
-        if (debug)
+        if (debug) {
             subset.dump("trying (" + component + "): ");
+        }
 
         int total = subset.total;
 
@@ -174,8 +176,9 @@ public class PaletteFactory {
 
     private List<DivisionCandidate> divideSubset2(int table[],
             ColorSpaceSubset subset, int component, int precision) {
-        if (debug)
+        if (debug) {
             subset.dump("trying (" + component + "): ");
+        }
 
         int total = subset.total;
 
@@ -198,8 +201,9 @@ public class PaletteFactory {
 
             sum1 += last;
 
-            if (sum1 >= (total / 2))
+            if (sum1 >= (total / 2)) {
                 break;
+            }
         }
 
         sum2 = sum1 - last;
@@ -212,10 +216,12 @@ public class PaletteFactory {
 
         List<DivisionCandidate> result = new ArrayList<DivisionCandidate>();
 
-        if (dc1 != null)
+        if (dc1 != null) {
             result.add(dc1);
-        if (dc2 != null)
+        }
+        if (dc2 != null) {
             result.add(dc2);
+        }
 
         return result;
     }
@@ -277,17 +283,19 @@ public class PaletteFactory {
         while (true) {
             count++;
 
-            if (debug)
+            if (debug) {
                 System.out.println("cycle(" + count + "): " + v.size()
                         + " done");
+            }
 
             int max_area = -1;
             ColorSpaceSubset max_subset = null;
 
             for (int i = 0; i < v.size(); i++) {
                 ColorSpaceSubset subset = v.get(i);
-                if (ignore.contains(subset))
+                if (ignore.contains(subset)) {
                     continue;
+                }
                 int area = subset.total;
 
                 if (max_subset == null) {
@@ -302,8 +310,9 @@ public class PaletteFactory {
             if (max_subset == null) {
                 return v;
             }
-            if (debug)
+            if (debug) {
                 System.out.println("\t" + "area: " + max_area);
+            }
 
             DivisionCandidate dc = divideSubset2(table, max_subset,
                     precision);
@@ -311,11 +320,13 @@ public class PaletteFactory {
                 v.remove(max_subset);
                 v.add(dc.dst_a);
                 v.add(dc.dst_b);
-            } else
+            } else {
                 ignore.add(max_subset);
+            }
 
-            if (v.size() == desired_count)
+            if (v.size() == desired_count) {
                 return v;
+            }
         }
     }
 
@@ -376,8 +387,9 @@ public class PaletteFactory {
 
             subset.setAverageRGB(table);
 
-            if (debug)
+            if (debug) {
                 subset.dump(i + ": ");
+            }
         }
 
         Collections.sort(subsets, ColorSpaceSubset.rgbComparator);
@@ -439,10 +451,11 @@ public class PaletteFactory {
         int height = src.getHeight();
 
         if (ColorSpace.TYPE_GRAY == src.getColorModel().getColorSpace()
-                .getType())
+                .getType()) {
             return true;
+        }
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
 
@@ -450,10 +463,11 @@ public class PaletteFactory {
                 int green = 0xff & (argb >> 8);
                 int blue = 0xff & (argb >> 0);
 
-                if (red != green || red != blue)
+                if (red != green || red != blue) {
                     return false;
+                }
             }
-
+        }
         return true;
     }
 
@@ -465,17 +479,19 @@ public class PaletteFactory {
         int width = src.getWidth();
         int height = src.getHeight();
 
-        if (!src.getColorModel().hasAlpha())
+        if (!src.getColorModel().hasAlpha()) {
             return false;
+        }
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int alpha = 0xff & (argb >> 24);
-                if (alpha < threshold)
+                if (alpha < threshold) {
                     return true;
+                }
             }
-
+        }
         return false;
     }
 
@@ -488,40 +504,46 @@ public class PaletteFactory {
             if (alpha < 0xff) {
                 if (first < 0) {
                     first = rgb;
-                } else if (rgb != first)
+                } else if (rgb != first) {
                     return 2; // more than one transparent color;
+                }
             }
         }
 
-        if (first < 0)
+        if (first < 0) {
             return 0;
+        }
         return 1;
     }
 
     public int countTransparentColors(BufferedImage src) {
         ColorModel cm = src.getColorModel();
-        if (!cm.hasAlpha())
+        if (!cm.hasAlpha()) {
             return 0;
+        }
 
         int width = src.getWidth();
         int height = src.getHeight();
 
         int first = -1;
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int rgb = src.getRGB(x, y);
                 int alpha = 0xff & (rgb >> 24);
                 if (alpha < 0xff) {
                     if (first < 0) {
                         first = rgb;
-                    } else if (rgb != first)
+                    } else if (rgb != first) {
                         return 2; // more than one transparent color;
+                    }
                 }
             }
+        }
 
-        if (first < 0)
+        if (first < 0) {
             return 0;
+        }
         return 1;
     }
 

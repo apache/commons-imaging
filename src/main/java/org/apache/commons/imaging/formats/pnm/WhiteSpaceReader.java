@@ -28,8 +28,9 @@ class WhiteSpaceReader {
 
     private char read() throws IOException {
         int result = is.read();
-        if (result < 0)
+        if (result < 0) {
             throw new IOException("PNM: Unexpected EOF");
+        }
         return (char) result;
     }
 
@@ -47,8 +48,9 @@ class WhiteSpaceReader {
     public String readtoWhiteSpace() throws IOException {
         char c = nextChar();
 
-        while (Character.isWhitespace(c))
+        while (Character.isWhitespace(c)) {
             c = nextChar();
+        }
 
         StringBuilder buffer = new StringBuilder();
 

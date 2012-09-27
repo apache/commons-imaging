@@ -70,8 +70,9 @@ public class PbmFileInfo extends FileInfo {
     public int getRGB(InputStream is) throws IOException {
         if (bits_in_cache < 1) {
             int bits = is.read();
-            if (bits < 0)
+            if (bits < 0) {
                 throw new IOException("PBM: Unexpected EOF");
+            }
             bitcache = 0xff & bits;
             bits_in_cache += 8;
         }
@@ -80,20 +81,24 @@ public class PbmFileInfo extends FileInfo {
         bitcache <<= 1;
         bits_in_cache--;
 
-        if (bit == 0)
+        if (bit == 0) {
             return 0xffffffff;
-        if (bit == 1)
+        }
+        if (bit == 1) {
             return 0xff000000;
+        }
         throw new IOException("PBM: bad bit: " + bit);
     }
 
     @Override
     public int getRGB(WhiteSpaceReader wsr) throws IOException {
         int bit = Integer.parseInt(wsr.readtoWhiteSpace());
-        if (bit == 0)
+        if (bit == 0) {
             return 0xff000000;
-        if (bit == 1)
+        }
+        if (bit == 1) {
             return 0xffffffff;
+        }
         throw new IOException("PBM: bad bit: " + bit);
     }
 

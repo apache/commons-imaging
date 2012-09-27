@@ -54,22 +54,28 @@ class ColorSpaceSubset {
 
     public final boolean contains(int red, int green, int blue) {
         red >>= (8 - precision);
-        if (mins[0] > red)
+        if (mins[0] > red) {
             return false;
-        if (maxs[0] < red)
+        }
+        if (maxs[0] < red) {
             return false;
+        }
 
         green >>= (8 - precision);
-        if (mins[1] > green)
+        if (mins[1] > green) {
             return false;
-        if (maxs[1] < green)
+        }
+        if (maxs[1] < green) {
             return false;
+        }
 
         blue >>= (8 - precision);
-        if (mins[2] > blue)
+        if (mins[2] > blue) {
             return false;
-        if (maxs[2] < blue)
+        }
+        if (maxs[2] < blue) {
             return false;
+        }
 
         return true;
     }

@@ -90,14 +90,15 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
         // System.out.println("((width*height+7)/8): "
         // + ((width * height + 7) / 8));
 
-        if (identifier1 != PNM_PREFIX_BYTE)
+        if (identifier1 != PNM_PREFIX_BYTE) {
             throw new ImageReadException("PNM file has invalid header.");
+        }
 
-        if (identifier2 == PBM_TEXT_CODE)
+        if (identifier2 == PBM_TEXT_CODE) {
             return new PbmFileInfo(width, height, false);
-        else if (identifier2 == PBM_RAW_CODE)
+        } else if (identifier2 == PBM_RAW_CODE) {
             return new PbmFileInfo(width, height, true);
-        else if (identifier2 == PGM_TEXT_CODE) {
+        } else if (identifier2 == PGM_TEXT_CODE) {
             int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
             return new PgmFileInfo(width, height, false, maxgray);
         } else if (identifier2 == PGM_RAW_CODE) {
@@ -110,8 +111,9 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
             int max = Integer.parseInt(wsr.readtoWhiteSpace());
             // System.out.println("max: " + max);
             return new PpmFileInfo(width, height, true, max);
-        } else
+        } else {
             throw new ImageReadException("PNM file has invalid header.");
+        }
     }
 
     private FileInfo readHeader(ByteSource byteSource)
@@ -144,8 +146,9 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
             throws ImageReadException, IOException {
         FileInfo info = readHeader(byteSource);
 
-        if (info == null)
+        if (info == null) {
             throw new ImageReadException("PNM: Couldn't read Header");
+        }
 
         return new Dimension(info.width, info.height);
     }
@@ -170,8 +173,9 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
             throws ImageReadException, IOException {
         FileInfo info = readHeader(byteSource);
 
-        if (info == null)
+        if (info == null) {
             throw new ImageReadException("PNM: Couldn't read Header");
+        }
 
         List<String> Comments = new ArrayList<String>();
 
@@ -211,13 +215,12 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
             throws ImageReadException, IOException {
         pw.println("pnm.dumpImageFile");
 
-        {
-            ImageInfo imageData = getImageInfo(byteSource);
-            if (imageData == null)
-                return false;
-
-            imageData.toString(pw, "");
+        ImageInfo imageData = getImageInfo(byteSource);
+        if (imageData == null) {
+            return false;
         }
+
+        imageData.toString(pw, "");
 
         pw.println("");
 
@@ -225,9 +228,10 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     }
 
     private int[] getColorTable(byte bytes[]) throws ImageReadException {
-        if ((bytes.length % 3) != 0)
+        if ((bytes.length % 3) != 0) {
             throw new ImageReadException("Bad Color Table Length: "
                     + bytes.length);
+        }
         int length = bytes.length / 3;
 
         int result[] = new int[length];
@@ -289,23 +293,26 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
         if (params != null) {
             Object useRawbitsParam = params.get(PARAM_KEY_PNM_RAWBITS);
             if (useRawbitsParam != null) {
-                if (useRawbitsParam.equals(PARAM_VALUE_PNM_RAWBITS_NO))
+                if (useRawbitsParam.equals(PARAM_VALUE_PNM_RAWBITS_NO)) {
                     useRawbits = false;
+                }
             }
 
             Object subtype = params.get(PARAM_KEY_FORMAT);
             if (subtype != null) {
-                if (subtype.equals(ImageFormat.IMAGE_FORMAT_PBM))
+                if (subtype.equals(ImageFormat.IMAGE_FORMAT_PBM)) {
                     writer = new PbmWriter(useRawbits);
-                else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PGM))
+                } else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PGM)) {
                     writer = new PgmWriter(useRawbits);
-                else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PPM))
+                } else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PPM)) {
                     writer = new PpmWriter(useRawbits);
+                }
             }
         }
 
-        if (writer == null)
+        if (writer == null) {
             writer = new PpmWriter(useRawbits);
+        }
 
         // make copy of params; we'll clear keys as we consume them.
         if (params != null) {
@@ -315,8 +322,9 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
         }
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT))
+        if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
+        }
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();

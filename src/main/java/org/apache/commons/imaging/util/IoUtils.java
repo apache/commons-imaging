@@ -65,8 +65,9 @@ public class IoUtils implements ImagingConstants {
             return os.toByteArray();
         } finally {
             try {
-                if (os != null)
+                if (os != null) {
                     os.close();
+                }
             } catch (IOException e) {
                 Debug.debug(e);
             }
@@ -91,8 +92,9 @@ public class IoUtils implements ImagingConstants {
             return getInputStreamBytes(is);
         } finally {
             try {
-                if (is != null)
+                if (is != null) {
                     is.close();
+                }
             } catch (IOException e) {
                 Debug.debug(e);
             }
@@ -108,8 +110,9 @@ public class IoUtils implements ImagingConstants {
             putInputStreamToFile(stream, file);
         } finally {
             try {
-                if (stream != null)
+                if (stream != null) {
                     stream.close();
+                }
             } catch (Exception e) {
                 Debug.debug(e);
 
@@ -132,8 +135,9 @@ public class IoUtils implements ImagingConstants {
             copyStreamToStream(src, stream);
         } finally {
             try {
-                if (stream != null)
+                if (stream != null) {
                     stream.close();
+                }
             } catch (Exception e) {
                 Debug.debug(e);
             }
@@ -156,21 +160,23 @@ public class IoUtils implements ImagingConstants {
 
             int count;
             byte[] buffer = new byte[4096];
-            while ((count = bis.read(buffer, 0, buffer.length)) > 0)
+            while ((count = bis.read(buffer, 0, buffer.length)) > 0) {
                 dst.write(buffer, 0, count);
-
+            }
             bos.flush();
         } finally {
             if (close_streams) {
                 try {
-                    if (bis != null)
+                    if (bis != null) {
                         bis.close();
+                    }
                 } catch (IOException e) {
                     Debug.debug(e);
                 }
                 try {
-                    if (bos != null)
+                    if (bos != null) {
                         bos.close();
+                    }
                 } catch (IOException e) {
                     Debug.debug(e);
                 }
@@ -212,18 +218,19 @@ public class IoUtils implements ImagingConstants {
             return true;
         } finally {
             try {
-                if (srcChannel != null)
+                if (srcChannel != null) {
                     srcChannel.close();
+                }
             } catch (IOException e) {
                 Debug.debug(e);
 
             }
             try {
-                if (dstChannel != null)
+                if (dstChannel != null) {
                     dstChannel.close();
+                }
             } catch (IOException e) {
                 Debug.debug(e);
-
             }
         }
     }

@@ -49,7 +49,7 @@ public class PpmWriter extends PnmWriter implements PnmConstants {
         os.write(("" + 255).getBytes("US-ASCII")); // max component value
         os.write(PNM_NEWLINE);
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int argb = src.getRGB(x, y);
                 int red = 0xff & (argb >> 16);
@@ -73,5 +73,6 @@ public class PpmWriter extends PnmWriter implements PnmConstants {
                     os.write(PNM_SEPARATOR);
                 }
             }
+        }
     }
 }

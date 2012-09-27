@@ -420,8 +420,9 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         List<TiffOutputField> matches = new ArrayList<TiffOutputField>();
         for (int i = 0; i < fields.size(); i++) {
             TiffOutputField field = fields.get(i);
-            if (field.tag == tag)
+            if (field.tag == tag) {
                 matches.add(field);
+            }
         }
         fields.removeAll(matches);
     }
@@ -433,8 +434,9 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
     public TiffOutputField findField(int tag) {
         for (int i = 0; i < fields.size(); i++) {
             TiffOutputField field = fields.get(i);
-            if (field.tag == tag)
+            if (field.tag == tag) {
                 return field;
+            }
         }
         return null;
     }
@@ -442,8 +444,9 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
     public void sortFields() {
         Comparator<TiffOutputField> comparator = new Comparator<TiffOutputField>() {
             public int compare(TiffOutputField e1, TiffOutputField e2) {
-                if (e1.tag != e2.tag)
+                if (e1.tag != e2.tag) {
                     return e1.tag - e2.tag;
+                }
                 return e1.getSortHint() - e2.getSortHint();
             }
         };
@@ -472,14 +475,16 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
 
         int nextDirectoryOffset = 0;
-        if (nextDirectory != null)
+        if (nextDirectory != null) {
             nextDirectoryOffset = nextDirectory.getOffset();
+        }
 
         // Write nextDirectoryOffset
-        if (nextDirectoryOffset == UNDEFINED_VALUE)
+        if (nextDirectoryOffset == UNDEFINED_VALUE) {
             bos.write4Bytes(0);
-        else
+        } else {
             bos.write4Bytes(nextDirectoryOffset);
+        }
     }
 
     private JpegImageData jpegImageData = null;
@@ -517,8 +522,9 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
     private void removeFieldIfPresent(TagInfo tagInfo) {
         TiffOutputField field = findField(tagInfo);
-        if (null != field)
+        if (null != field) {
             fields.remove(field);
+        }
     }
 
     protected List<TiffOutputItem> getOutputItems(
@@ -614,8 +620,9 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
         for (int i = 0; i < fields.size(); i++) {
             TiffOutputField field = fields.get(i);
-            if (field.isLocalValue())
+            if (field.isLocalValue()) {
                 continue;
+            }
 
             TiffOutputItem item = field.getSeperateValue();
             result.add(item);
@@ -623,8 +630,9 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
 
         if (null != imageDataInfo) {
-            for (int i = 0; i < imageDataInfo.outputItems.length; i++)
+            for (int i = 0; i < imageDataInfo.outputItems.length; i++) {
                 result.add(imageDataInfo.outputItems[i]);
+            }
 
             outputSummary.addTiffImageData(imageDataInfo);
         }

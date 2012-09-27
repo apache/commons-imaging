@@ -36,8 +36,9 @@ public class TransparencyFilterGrayscale extends TransparencyFilter {
     @Override
     public int filter(int rgb, int index) throws ImageReadException,
             IOException {
-        if (index != transparent_color)
+        if (index != transparent_color) {
             return rgb;
+        }
         return 0x00;
     }
 }

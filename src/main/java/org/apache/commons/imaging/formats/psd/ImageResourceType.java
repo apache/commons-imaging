@@ -30,8 +30,9 @@ public class ImageResourceType {
     public ImageResourceType(int ID, int ID2, String Description)
             throws ImageReadException {
         this(ID, Description);
-        if (ID != ID2)
+        if (ID != ID2) {
             throw new ImageReadException("Mismatch ID: " + ID + " ID2: " + ID2);
+        }
 
     }
 }

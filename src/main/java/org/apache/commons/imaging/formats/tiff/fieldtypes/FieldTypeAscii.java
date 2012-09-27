@@ -115,8 +115,9 @@ public class FieldTypeAscii extends FieldType {
                 position += (bytes.length + 1);
             }
             return result;
-        } else
+        } else {
             throw new ImageWriteException("Unknown data type: " + o);
+        }
     }
 
 }

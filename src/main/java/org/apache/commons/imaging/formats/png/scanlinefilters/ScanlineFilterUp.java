@@ -33,10 +33,11 @@ public class ScanlineFilterUp extends ScanlineFilter {
         for (int i = 0; i < src.length; i++) {
             // byte b;
 
-            if (up != null)
+            if (up != null) {
                 dst[i] = (byte) ((src[i] + up[i]) % 256);
-            else
+            } else {
                 dst[i] = src[i];
+            }
 
             // if(i<10)
             // System.out.println("\t" + i + ": " + dst[i]);

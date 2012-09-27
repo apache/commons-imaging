@@ -77,8 +77,9 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
             int length = outputItem.getItemLength();
 
             int remainder = imageDataPaddingLength(length);
-            for (int j = 0; j < remainder; j++)
+            for (int j = 0; j < remainder; j++) {
                 bos.write(0);
+            }
         }
 
     }
