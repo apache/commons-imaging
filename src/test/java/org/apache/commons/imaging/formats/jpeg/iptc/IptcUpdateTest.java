@@ -61,7 +61,7 @@ public class IptcUpdateTest extends IptcBaseTest {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
             // Debug.debug("imageFile", imageFile);
             // Debug.debug();
 
@@ -109,7 +109,7 @@ public class IptcUpdateTest extends IptcBaseTest {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
@@ -161,7 +161,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                 List<IptcRecord> oldRecords = metadata.photoshopApp13Data.getRecords();
                 List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
                 for (int j = 0; j < oldRecords.size(); j++) {
-                    IptcRecord record = (IptcRecord) oldRecords.get(j);
+                    IptcRecord record = oldRecords.get(j);
                     if (record.iptcType != IptcTypes.CITY
                             && record.iptcType != IptcTypes.CREDIT)
                         newRecords.add(record);
@@ -304,7 +304,7 @@ public class IptcUpdateTest extends IptcBaseTest {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
             // Debug.debug("imageFile", imageFile);
             // Debug.debug();
 
@@ -336,7 +336,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
                         newRecords = new ArrayList<IptcRecord>();
                         for (int j = 0; j < oldRecords.size(); j++) {
-                            IptcRecord record = (IptcRecord) oldRecords.get(j);
+                            IptcRecord record = oldRecords.get(j);
                             if (record.iptcType != IptcTypes.CITY
                                     && record.iptcType != IptcTypes.CREDIT)
                                 newRecords.add(record);

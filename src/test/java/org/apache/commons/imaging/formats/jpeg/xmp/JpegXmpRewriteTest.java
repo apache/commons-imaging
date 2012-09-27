@@ -39,7 +39,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             // boolean ignoreImageData = isPhilHarveyTestImage(imageFile);

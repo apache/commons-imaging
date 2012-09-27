@@ -37,7 +37,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
             try {
                 if (isInvalidPNGTestFile(imageFile))
                     continue;

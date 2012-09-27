@@ -77,7 +77,7 @@ public class PngTextTest extends PngBaseTest {
         List<PngText> readTexts = imageInfo.getTextChunks();
         assertEquals(readTexts.size(), 3);
         for (int i = 0; i < readTexts.size(); i++) {
-            PngText text = (PngText) readTexts.get(i);
+            PngText text = readTexts.get(i);
             if (text.keyword.equals("a"))
                 assertEquals(text.text, "b");
             else if (text.keyword.equals("c"))

@@ -58,7 +58,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
@@ -97,7 +97,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
@@ -176,7 +176,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
 
             try {
 
@@ -319,13 +319,13 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         assertEquals(oldDirectoryTypes, newDirectoryTypes);
 
         for (int i = 0; i < oldDirectoryTypes.size(); i++) {
-            Integer dirType = (Integer) oldDirectoryTypes.get(i);
+            Integer dirType = oldDirectoryTypes.get(i);
 
             // Debug.debug("dirType", dirType);
 
-            TiffImageMetadata.Directory oldDirectory = (TiffImageMetadata.Directory) oldDirectoryMap
+            TiffImageMetadata.Directory oldDirectory = oldDirectoryMap
                     .get(dirType);
-            TiffImageMetadata.Directory newDirectory = (TiffImageMetadata.Directory) newDirectoryMap
+            TiffImageMetadata.Directory newDirectory = newDirectoryMap
                     .get(dirType);
             assertNotNull(oldDirectory);
             assertNotNull(newDirectory);
@@ -378,10 +378,10 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             assertEquals(oldFieldTags, newFieldTags);
 
             for (int j = 0; j < oldFieldTags.size(); j++) {
-                Integer fieldTag = (Integer) oldFieldTags.get(j);
+                Integer fieldTag = oldFieldTags.get(j);
 
-                TiffField oldField = (TiffField) oldFieldMap.get(fieldTag);
-                TiffField newField = (TiffField) newFieldMap.get(fieldTag);
+                TiffField oldField = oldFieldMap.get(fieldTag);
+                TiffField newField = newFieldMap.get(fieldTag);
 
                 // Debug.debug("fieldTag", fieldTag);
                 // Debug.debug("oldField", oldField);

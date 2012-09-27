@@ -43,7 +43,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
             if (i % 1 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) imageFiles.get(i);
+            File imageFile = imageFiles.get(i);
             Debug.debug("imageFile", imageFile);
             assertNotNull(imageFile);
 

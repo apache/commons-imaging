@@ -38,7 +38,7 @@ public class DcxReadTest extends DcxBaseTest {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             IImageMetadata metadata = Imaging.getMetadata(imageFile);

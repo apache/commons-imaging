@@ -37,7 +37,7 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
             if (i % 10 == 0)
                 Debug.purgeMemory();
 
-            File imageFile = (File) images.get(i);
+            File imageFile = images.get(i);
 
             // Debug.debug();
             // Debug.debug("imageFile", imageFile);

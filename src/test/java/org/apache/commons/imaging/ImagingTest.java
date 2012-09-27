@@ -94,7 +94,7 @@ public abstract class ImagingTest extends TestCase implements
 
         assertTrue(images.size() > 0);
 
-        return (File) images.get(0);
+        return images.get(0);
     }
 
     protected List<File> getTestImages() throws IOException, ImageReadException {
@@ -137,7 +137,7 @@ public abstract class ImagingTest extends TestCase implements
         int counter = 0;
 
         for (int i = 0; i < ALL_IMAGES.size(); i++) {
-            File file = (File) ALL_IMAGES.get(i);
+            File file = ALL_IMAGES.get(i);
 
             if (!Imaging.hasImageFileExtension(file))
                 continue;
