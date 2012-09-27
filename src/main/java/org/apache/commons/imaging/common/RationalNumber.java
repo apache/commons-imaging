@@ -45,9 +45,10 @@ public class RationalNumber extends Number {
                 d >>= 1;
             }
 
-            if (d == 0)
+            if (d == 0) {
                 throw new NumberFormatException("Invalid value, numerator: "
                         + n + ", divisor: " + d);
+            }
         }
 
         long gcd = gcd(n, d);
@@ -62,10 +63,11 @@ public class RationalNumber extends Number {
      */
     private static long gcd(long a, long b) {
 
-        if (b == 0)
+        if (b == 0) {
             return a;
-        else
+        } else {
             return gcd(b, a % b);
+        }
     }
 
     public RationalNumber negate() {
@@ -100,17 +102,20 @@ public class RationalNumber extends Number {
 
     @Override
     public String toString() {
-        if (divisor == 0)
+        if (divisor == 0) {
             return "Invalid rational (" + numerator + "/" + divisor + ")";
-        if ((numerator % divisor) == 0)
+        }
+        if ((numerator % divisor) == 0) {
             return nf.format(numerator / divisor);
+        }
         return numerator + "/" + divisor + " ("
                 + nf.format((double) numerator / divisor) + ")";
     }
 
     public String toDisplayString() {
-        if ((numerator % divisor) == 0)
+        if ((numerator % divisor) == 0) {
             return "" + (numerator / divisor);
+        }
         NumberFormat nf = DecimalFormat.getInstance();
         nf.setMaximumFractionDigits(3);
         return nf.format((double) numerator / (double) divisor);

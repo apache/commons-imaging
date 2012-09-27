@@ -27,13 +27,13 @@ public class BitInputStream extends InputStream implements BinaryConstants {
     public BitInputStream(InputStream is, int byteOrder) {
         this.is = is;
         this.byteOrder = byteOrder;
-        // super(is);
     }
 
     @Override
     public int read() throws IOException {
-        if (cacheBitsRemaining > 0)
+        if (cacheBitsRemaining > 0) {
             throw new IOException("BitInputStream: incomplete bit read");
+        }
         return is.read();
     }
 
@@ -49,9 +49,10 @@ public class BitInputStream extends InputStream implements BinaryConstants {
                 cacheBitsRemaining = 8;
                 bytes_read++;
             }
-            if (count > cacheBitsRemaining)
+            if (count > cacheBitsRemaining) {
                 throw new IOException(
                         "BitInputStream: can't read bit fields across bytes");
+            }
 
             // int bits_to_shift = cache_bits_remaining - count;
             cacheBitsRemaining -= count;
@@ -75,8 +76,9 @@ public class BitInputStream extends InputStream implements BinaryConstants {
             }
 
         }
-        if (cacheBitsRemaining > 0)
+        if (cacheBitsRemaining > 0) {
             throw new IOException("BitInputStream: incomplete bit read");
+        }
 
         if (count == 8) {
             bytes_read++;

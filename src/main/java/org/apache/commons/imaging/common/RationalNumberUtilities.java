@@ -46,10 +46,11 @@ public abstract class RationalNumberUtilities extends Number {
     // calculate rational number using successive approximations.
     //
     public static final RationalNumber getRationalNumber(double value) {
-        if (value >= Integer.MAX_VALUE)
+        if (value >= Integer.MAX_VALUE) {
             return new RationalNumber(Integer.MAX_VALUE, 1);
-        else if (value <= -Integer.MAX_VALUE)
+        } else if (value <= -Integer.MAX_VALUE) {
             return new RationalNumber(-Integer.MAX_VALUE, 1);
+        }
 
         boolean negative = false;
         if (value < 0) {
@@ -59,33 +60,31 @@ public abstract class RationalNumberUtilities extends Number {
 
         Option low;
         Option high;
-        {
-            RationalNumber l, h;
+        RationalNumber l, h;
 
-            if (value == 0)
-                return new RationalNumber(0, 1);
-            else if (value >= 1) {
-                int approx = (int) value;
-                if (approx < value) {
-                    l = new RationalNumber(approx, 1);
-                    h = new RationalNumber(approx + 1, 1);
-                } else {
-                    l = new RationalNumber(approx - 1, 1);
-                    h = new RationalNumber(approx, 1);
-                }
+        if (value == 0) {
+            return new RationalNumber(0, 1);
+        } else if (value >= 1) {
+            int approx = (int) value;
+            if (approx < value) {
+                l = new RationalNumber(approx, 1);
+                h = new RationalNumber(approx + 1, 1);
             } else {
-                int approx = (int) (1.0 / value);
-                if ((1.0 / approx) < value) {
-                    l = new RationalNumber(1, approx);
-                    h = new RationalNumber(1, approx - 1);
-                } else {
-                    l = new RationalNumber(1, approx + 1);
-                    h = new RationalNumber(1, approx);
-                }
+                l = new RationalNumber(approx - 1, 1);
+                h = new RationalNumber(approx, 1);
             }
-            low = Option.factory(l, value);
-            high = Option.factory(h, value);
+        } else {
+            int approx = (int) (1.0 / value);
+            if ((1.0 / approx) < value) {
+                l = new RationalNumber(1, approx);
+                h = new RationalNumber(1, approx - 1);
+            } else {
+                l = new RationalNumber(1, approx + 1);
+                h = new RationalNumber(1, approx);
+            }
         }
+        low = Option.factory(l, value);
+        high = Option.factory(h, value);
 
         Option bestOption = (low.error < high.error) ? low : high;
 
@@ -105,19 +104,22 @@ public abstract class RationalNumberUtilities extends Number {
             Option mediantOption = Option.factory(mediant, value);
 
             if (value < mediant.doubleValue()) {
-                if (high.error <= mediantOption.error)
+                if (high.error <= mediantOption.error) {
                     break;
+                }
 
                 high = mediantOption;
             } else {
-                if (low.error <= mediantOption.error)
+                if (low.error <= mediantOption.error) {
                     break;
+                }
 
                 low = mediantOption;
             }
 
-            if (mediantOption.error < bestOption.error)
+            if (mediantOption.error < bestOption.error) {
                 bestOption = mediantOption;
+            }
         }
 
         return negative ? bestOption.rationalNumber.negate()

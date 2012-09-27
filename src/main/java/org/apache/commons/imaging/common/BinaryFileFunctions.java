@@ -65,8 +65,9 @@ public class BinaryFileFunctions implements BinaryConstants {
         pw.print(msg + ": " + data + " (");
         int byteData = data;
         for (int i = 0; i < bytes; i++) {
-            if (i > 0)
+            if (i > 0) {
                 pw.print(",");
+            }
             int singleByte = 0xff & byteData;
             pw.print((char) singleByte + " [" + singleByte + "]");
             byteData >>= 8;
@@ -77,16 +78,20 @@ public class BinaryFileFunctions implements BinaryConstants {
     }
 
     public final boolean startsWith(byte haystack[], byte needle[]) {
-        if (needle == null)
+        if (needle == null) {
             return false;
-        if (haystack == null)
+        }
+        if (haystack == null) {
             return false;
-        if (needle.length > haystack.length)
+        }
+        if (needle.length > haystack.length) {
             return false;
+        }
 
         for (int i = 0; i < needle.length; i++) {
-            if (needle[i] != haystack[i])
+            if (needle[i] != haystack[i]) {
                 return false;
+            }
         }
 
         return true;
@@ -107,8 +112,9 @@ public class BinaryFileFunctions implements BinaryConstants {
             int data = is.read();
             byte b = (byte) (0xff & data);
 
-            if (data < 0)
+            if (data < 0) {
                 throw new ImageReadException("Unexpected EOF.");
+            }
 
             if (b != expected[i]) {
                 // System.out.println("i" + ": " + i);
@@ -129,11 +135,13 @@ public class BinaryFileFunctions implements BinaryConstants {
             int data = is.read();
             byte b = (byte) (0xff & data);
 
-            if (data < 0)
+            if (data < 0) {
                 throw new ImageReadException("Unexpected EOF.");
+            }
 
-            if (b != expected.get(i))
+            if (b != expected.get(i)) {
                 throw new ImageReadException(exception);
+            }
         }
     }
 
@@ -158,8 +166,9 @@ public class BinaryFileFunctions implements BinaryConstants {
         long total = 0;
         while (length != total) {
             long skipped = is.skip(length - total);
-            if (skipped < 1)
+            if (skipped < 1) {
                 throw new IOException(exception + " (" + skipped + ")");
+            }
             total += skipped;
         }
     }
@@ -167,12 +176,11 @@ public class BinaryFileFunctions implements BinaryConstants {
     protected final void scanForByte(InputStream is, byte value)
             throws IOException {
         int count = 0;
-        for (int i = 0; count < 3; i++)
-        // while(count<3)
-        {
+        for (int i = 0; count < 3; i++) {
             int b = is.read();
-            if (b < 0)
+            if (b < 0) {
                 return;
+            }
             if ((0xff & b) == value) {
                 System.out.println("\t" + i + ": match.");
                 count++;
@@ -189,8 +197,9 @@ public class BinaryFileFunctions implements BinaryConstants {
             throw new IOException(exception);
         }
 
-        if (debug)
+        if (debug) {
             debugNumber(name, result);
+        }
 
         return (byte) (0xff & result);
     }
@@ -242,18 +251,17 @@ public class BinaryFileFunctions implements BinaryConstants {
 
         int result;
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
-        {
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             result = ((0xff & byte0) << 24) | ((0xff & byte1) << 16)
                     | ((0xff & byte2) << 8) | ((0xff & byte3) << 0);
         } else {
-            // intel, little endian
             result = ((0xff & byte3) << 24) | ((0xff & byte2) << 16)
                     | ((0xff & byte1) << 8) | ((0xff & byte0) << 0);
         }
 
-        if (debug)
+        if (debug) {
             debugNumber(name, result, 4);
+        }
 
         return result;
     }
@@ -280,8 +288,7 @@ public class BinaryFileFunctions implements BinaryConstants {
 
     protected final void writeIntInToByteArray(int value, byte bytes[],
             int start, int byteOrder) {
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
-        {
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             bytes[start + 0] = (byte) (value >> 24);
             bytes[start + 1] = (byte) (value >> 16);
             bytes[start + 2] = (byte) (value >> 8);
@@ -295,10 +302,11 @@ public class BinaryFileFunctions implements BinaryConstants {
     }
 
     protected static final byte[] int2ToByteArray(int value, int byteOrder) {
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             return new byte[] { (byte) (value >> 8), (byte) (value >> 0), };
-        else
+        } else {
             return new byte[] { (byte) (value >> 0), (byte) (value >> 8), };
+        }
     }
 
     protected final byte[] convertIntArrayToByteArray(int values[],
@@ -319,8 +327,7 @@ public class BinaryFileFunctions implements BinaryConstants {
         for (int i = 0; i < values.length; i++) {
             int value = values[i];
 
-            if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
-            {
+            if (byteOrder == BYTE_ORDER_MOTOROLA) {
                 result[i * 2 + 0] = (byte) (value >> 8);
                 result[i * 2 + 1] = (byte) (value >> 0);
             } else {
@@ -335,8 +342,7 @@ public class BinaryFileFunctions implements BinaryConstants {
     protected final byte[] convertShortToByteArray(int value, int byteOrder) {
         byte result[] = new byte[2];
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
-        {
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             result[0] = (byte) (value >> 8);
             result[1] = (byte) (value >> 0);
         } else {
@@ -349,10 +355,11 @@ public class BinaryFileFunctions implements BinaryConstants {
 
     protected final byte[] convertIntArrayToRationalArray(int numerators[],
             int denominators[], int byteOrder) throws ImageWriteException {
-        if (numerators.length != denominators.length)
+        if (numerators.length != denominators.length) {
             throw new ImageWriteException("numerators.length ("
                     + numerators.length + " != denominators.length ("
                     + denominators.length + ")");
+        }
 
         byte result[] = new byte[numerators.length * 8];
 
@@ -396,23 +403,26 @@ public class BinaryFileFunctions implements BinaryConstants {
 
     protected final int convertByteArrayToShort(String name, int index,
             byte bytes[], int byteOrder) throws ImageReadException {
-        if (index + 1 >= bytes.length)
+        if (index + 1 >= bytes.length) {
             throw new ImageReadException("Index out of bounds. Array size: "
                     + bytes.length + ", index: " + index);
+        }
 
         int byte0 = 0xff & bytes[index + 0];
         int byte1 = 0xff & bytes[index + 1];
 
         int result;
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             result = (byte0 << 8) | byte1;
-        else
+        } else {
             // intel, little endian
             result = (byte1 << 8) | byte0;
+        }
 
-        if (debug)
+        if (debug) {
             debugNumber(name, result, 2);
+        }
 
         return result;
     }
@@ -454,9 +464,10 @@ public class BinaryFileFunctions implements BinaryConstants {
         while (read < length) {
             int count = is.read(result, read, length - read);
             // Debug.debug("count", count);
-            if (count < 1)
+            if (count < 1) {
                 throw new IOException(exception + " count: " + count
                         + " read: " + read + " length: " + length);
+            }
 
             read += count;
         }
@@ -496,8 +507,9 @@ public class BinaryFileFunctions implements BinaryConstants {
         byte result[] = new byte[count];
         System.arraycopy(bytes, start, result, 0, count);
 
-        if (debug)
+        if (debug) {
             debugByteArray(name, result);
+        }
 
         return result;
     }
@@ -513,8 +525,9 @@ public class BinaryFileFunctions implements BinaryConstants {
     }
 
     public static final byte[] slice(byte bytes[], int start, int count) {
-        if (bytes.length < (start + count))
+        if (bytes.length < (start + count)) {
             return null;
+        }
 
         byte result[] = new byte[count];
         System.arraycopy(bytes, start, result, 0, count);
@@ -523,20 +536,23 @@ public class BinaryFileFunctions implements BinaryConstants {
     }
 
     public static final byte[] tail(byte bytes[], int count) {
-        if (count > bytes.length)
+        if (count > bytes.length) {
             count = bytes.length;
+        }
         return slice(bytes, bytes.length - count, count);
     }
 
     public static final byte[] head(byte bytes[], int count) {
-        if (count > bytes.length)
+        if (count > bytes.length) {
             count = bytes.length;
+        }
         return slice(bytes, 0, count);
     }
 
     public final boolean compareByteArrays(byte a[], byte b[]) {
-        if (a.length != b.length)
+        if (a.length != b.length) {
             return false;
+        }
 
         return compareByteArrays(a, 0, b, 0, a.length);
     }
@@ -546,8 +562,9 @@ public class BinaryFileFunctions implements BinaryConstants {
         if (a.length < (aStart + length)) {
             return false;
         }
-        if (b.length < (bStart + length))
+        if (b.length < (bStart + length)) {
             return false;
+        }
 
         for (int i = 0; i < length; i++) {
             if (a[aStart + i] != b[bStart + i]) {
@@ -562,22 +579,26 @@ public class BinaryFileFunctions implements BinaryConstants {
     }
 
     public static final boolean compareBytes(byte a[], byte b[]) {
-        if (a.length != b.length)
+        if (a.length != b.length) {
             return false;
+        }
 
         return compareBytes(a, 0, b, 0, a.length);
     }
 
     public static final boolean compareBytes(byte a[], int aStart, byte b[],
             int bStart, int length) {
-        if (a.length < (aStart + length))
+        if (a.length < (aStart + length)) {
             return false;
-        if (b.length < (bStart + length))
+        }
+        if (b.length < (bStart + length)) {
             return false;
+        }
 
         for (int i = 0; i < length; i++) {
-            if (a[aStart + i] != b[bStart + i])
+            if (a[aStart + i] != b[bStart + i]) {
                 return false;
+            }
         }
 
         return true;
@@ -591,8 +612,9 @@ public class BinaryFileFunctions implements BinaryConstants {
         int read = 0;
         while (read < size) {
             int count = is.read(bytes, read, size - read);
-            if (count < 1)
+            if (count < 1) {
                 throw new IOException(exception);
+            }
 
             read += count;
         }
@@ -608,34 +630,19 @@ public class BinaryFileFunctions implements BinaryConstants {
 
         int result;
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             result = ((0xff & byte0) << 16) | ((0xff & byte1) << 8)
                     | ((0xff & byte2) << 0);
-        else
-            // intel, little endian
+        } else {
             result = ((0xff & byte2) << 16) | ((0xff & byte1) << 8)
                     | ((0xff & byte0) << 0);
+        }
 
-        if (debug)
+        if (debug) {
             debugNumber(name, result, 3);
+        }
 
         return result;
-        //
-        //
-        // int size = 3;
-        // byte bytes[] = new byte[size];
-        //
-        // int read = 0;
-        // while (read < size)
-        // {
-        // int count = is.read(bytes, read, size - read);
-        // if (count < 1)
-        // throw new IOException(exception);
-        //
-        // read += count;
-        // }
-        //
-        // return convertByteArrayToInt(name, bytes, 0, 3, byteOrder);
     }
 
     protected final int read2Bytes(String name, InputStream is,
@@ -647,8 +654,9 @@ public class BinaryFileFunctions implements BinaryConstants {
         int read = 0;
         while (read < size) {
             int count = is.read(bytes, read, size - read);
-            if (count < 1)
+            if (count < 1) {
                 throw new IOException(exception);
+            }
 
             read += count;
         }
@@ -684,9 +692,9 @@ public class BinaryFileFunctions implements BinaryConstants {
 
     public final int findNull(byte src[], int start) {
         for (int i = start; i < src.length; i++) {
-            if (src[i] == 0)
+            if (src[i] == 0) {
                 return i;
-
+            }
         }
         return -1;
     }
@@ -705,8 +713,9 @@ public class BinaryFileFunctions implements BinaryConstants {
         int read = 0;
         while (read < length) {
             int count = raf.read(result, read, length - read);
-            if (count < 1)
+            if (count < 1) {
                 throw new IOException(exception);
+            }
 
             read += count;
         }
@@ -731,20 +740,15 @@ public class BinaryFileFunctions implements BinaryConstants {
 
         int bits;
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
-        {
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             bits = ((0xff & byte0) << 24) | ((0xff & byte1) << 16)
                     | ((0xff & byte2) << 8) | ((0xff & byte3) << 0);
         } else {
-            // intel, little endian
             bits = ((0xff & byte3) << 24) | ((0xff & byte2) << 16)
                     | ((0xff & byte1) << 8) | ((0xff & byte0) << 0);
         }
 
         float result = Float.intBitsToFloat(bits);
-
-        // if (debug)
-        // debugNumber(name, result, 4);
 
         return result;
     }
@@ -774,8 +778,7 @@ public class BinaryFileFunctions implements BinaryConstants {
 
         int bits = Float.floatToRawIntBits(value);
 
-        if (byteOrder == BYTE_ORDER_INTEL) // intel, big endian
-        {
+        if (byteOrder == BYTE_ORDER_INTEL) {
             result[0] = (byte) (0xff & (bits >> 0));
             result[1] = (byte) (0xff & (bits >> 8));
             result[2] = (byte) (0xff & (bits >> 16));
@@ -798,8 +801,7 @@ public class BinaryFileFunctions implements BinaryConstants {
             int bits = Float.floatToRawIntBits(value);
 
             int start = i * 4;
-            if (byteOrder == BYTE_ORDER_INTEL) // intel, little endian
-            {
+            if (byteOrder == BYTE_ORDER_INTEL) {
                 result[start + 0] = (byte) (0xff & (bits >> 0));
                 result[start + 1] = (byte) (0xff & (bits >> 8));
                 result[start + 2] = (byte) (0xff & (bits >> 16));
@@ -819,8 +821,7 @@ public class BinaryFileFunctions implements BinaryConstants {
 
         long bits = Double.doubleToRawLongBits(value);
 
-        if (byteOrder == BYTE_ORDER_INTEL) // intel, little endian
-        {
+        if (byteOrder == BYTE_ORDER_INTEL) {
             result[0] = (byte) (0xff & (bits >> 0));
             result[1] = (byte) (0xff & (bits >> 8));
             result[2] = (byte) (0xff & (bits >> 16));
@@ -851,8 +852,7 @@ public class BinaryFileFunctions implements BinaryConstants {
             long bits = Double.doubleToRawLongBits(value);
 
             int start = i * 8;
-            if (byteOrder == BYTE_ORDER_INTEL) // intel, little endian
-            {
+            if (byteOrder == BYTE_ORDER_INTEL) {
                 result[start + 0] = (byte) (0xff & (bits >> 0));
                 result[start + 1] = (byte) (0xff & (bits >> 8));
                 result[start + 2] = (byte) (0xff & (bits >> 16));
@@ -893,15 +893,13 @@ public class BinaryFileFunctions implements BinaryConstants {
 
         long bits;
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
-        {
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             bits = ((0xffL & byte0) << 56) | ((0xffL & byte1) << 48)
                     | ((0xffL & byte2) << 40) | ((0xffL & byte3) << 32)
                     | ((0xffL & byte4) << 24) | ((0xffL & byte5) << 16)
                     | ((0xffL & byte6) << 8) | ((0xffL & byte7) << 0);
 
         } else {
-            // intel, little endian
             bits = ((0xffL & byte7) << 56) | ((0xffL & byte6) << 48)
                     | ((0xffL & byte5) << 40) | ((0xffL & byte4) << 32)
                     | ((0xffL & byte3) << 24) | ((0xffL & byte2) << 16)
@@ -910,49 +908,7 @@ public class BinaryFileFunctions implements BinaryConstants {
 
         double result = Double.longBitsToDouble(bits);
 
-        // if (debug)
-        // debugNumber(name, result, 4);
-
         return result;
-
-        // byte array[];
-        // if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
-        // // ?? dunno byte order very likely wrong here.
-        // array = new byte[]{
-        // bytes[start + 0], bytes[start + 1], bytes[start + 2],
-        // bytes[start + 3], bytes[start + 4], bytes[start + 5],
-        // bytes[start + 6], bytes[start + 7],
-        //
-        // };
-        // else
-        // // ?? dunno byte order very likely wrong here.
-        // array = new byte[]{
-        // bytes[start + 3], bytes[start + 2], bytes[start + 1],
-        // bytes[start + 0], bytes[start + 7], bytes[start + 6],
-        // bytes[start + 5], bytes[start + 4],
-        // };
-        //
-        // double result = Double.NaN;
-        //
-        // try
-        // {
-        // ByteArrayInputStream bais = new ByteArrayInputStream(array);
-        // if (start > 0)
-        // {
-        // skipBytes(bais, start);
-        // // bais.skip(start);
-        // }
-        // DataInputStream dis = new DataInputStream(bais);
-        // result = dis.readDouble();
-        //
-        // dis.close();
-        // }
-        // catch (Exception e)
-        // {
-        // Debug.debug(e);
-        // }
-        //
-        // return result;
     }
 
     protected final double[] convertByteArrayToDoubleArray(String name,

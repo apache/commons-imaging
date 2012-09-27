@@ -54,8 +54,9 @@ public final class MyLzwDecompressor {
         clearCode = 1 << initialCodeSize;
         eoiCode = clearCode + 1;
 
-        if (null != listener)
+        if (null != listener) {
             listener.init(clearCode, eoiCode);
+        }
 
         InitializeTable();
     }
@@ -65,8 +66,9 @@ public final class MyLzwDecompressor {
 
         int intial_entries_count = 1 << codeSize + 2;
 
-        for (int i = 0; i < intial_entries_count; i++)
+        for (int i = 0; i < intial_entries_count; i++) {
             table[i] = new byte[] { (byte) i, };
+        }
     }
 
     private void clearTable() {
@@ -81,16 +83,17 @@ public final class MyLzwDecompressor {
     private int getNextCode(MyBitInputStream is) throws IOException {
         int code = is.readBits(codeSize);
 
-        if (null != listener)
+        if (null != listener) {
             listener.code(code);
+        }
         return code;
     }
 
     private byte[] stringFromCode(int code) throws IOException {
-        if ((code >= codes) || (code < 0))
+        if ((code >= codes) || (code < 0)) {
             throw new IOException("Bad Code: " + code + " codes: " + codes
                     + " code_size: " + codeSize + ", table: " + table.length);
-
+        }
         return table[code];
     }
 
@@ -106,10 +109,10 @@ public final class MyLzwDecompressor {
         if (codes < (1 << codeSize)) {
             table[codes] = bytes;
             codes++;
-        } else
+        } else {
             throw new IOException("AddStringToTable: codes: " + codes
                     + " code_size: " + codeSize);
-
+        }
         checkCodeSize();
     }
 
@@ -139,8 +142,9 @@ public final class MyLzwDecompressor {
             throws IOException {
         int code, oldCode = -1;
         MyBitInputStream mbis = new MyBitInputStream(is, byteOrder);
-        if (tiffLZWMode)
+        if (tiffLZWMode) {
             mbis.setTiffLZWMode();
+        }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream(expectedLength);
 
@@ -150,8 +154,9 @@ public final class MyLzwDecompressor {
             if (code == clearCode) {
                 clearTable();
 
-                if (written >= expectedLength)
+                if (written >= expectedLength) {
                     break;
+                }
                 code = getNextCode(mbis);
 
                 if (code == eoiCode) {
@@ -177,8 +182,9 @@ public final class MyLzwDecompressor {
                 }
             } // end of not-ClearCode case
 
-            if (written >= expectedLength)
+            if (written >= expectedLength) {
                 break;
+            }
         } // end of while loop
 
         byte result[] = baos.toByteArray();
@@ -186,19 +192,20 @@ public final class MyLzwDecompressor {
         return result;
     }
 
-    private void checkCodeSize() // throws IOException
-    {
+    private void checkCodeSize() {
         int limit = (1 << codeSize);
-        if (tiffLZWMode)
+        if (tiffLZWMode) {
             limit--;
+        }
 
-        if (codes == limit)
+        if (codes == limit) {
             incrementCodeSize();
+        }
     }
 
-    private void incrementCodeSize() // throws IOException
-    {
-        if (codeSize != 12)
+    private void incrementCodeSize() {
+        if (codeSize != 12) {
             codeSize++;
+        }
     }
 }

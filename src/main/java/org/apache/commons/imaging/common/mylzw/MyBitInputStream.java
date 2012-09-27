@@ -58,12 +58,13 @@ public class MyBitInputStream extends InputStream implements BinaryConstants {
 
             int newByte = (0xff & next);
 
-            if (byteOrder == BYTE_ORDER_NETWORK) // MSB, so add to right
+            if (byteOrder == BYTE_ORDER_NETWORK) {
                 bitCache = (bitCache << 8) | newByte;
-            else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so add to left
+            } else if (byteOrder == BYTE_ORDER_INTEL) {
                 bitCache = (newByte << bitsInCache) | bitCache;
-            else
+            } else {
                 throw new IOException("Unknown byte order: " + byteOrder);
+            }
 
             bytesRead++;
             bitsInCache += 8;
@@ -72,15 +73,14 @@ public class MyBitInputStream extends InputStream implements BinaryConstants {
 
         int sample;
 
-        if (byteOrder == BYTE_ORDER_NETWORK) // MSB, so read from left
-        {
+        if (byteOrder == BYTE_ORDER_NETWORK) {
             sample = sampleMask & (bitCache >> (bitsInCache - SampleBits));
-        } else if (byteOrder == BYTE_ORDER_INTEL) // LSB, so read from right
-        {
+        } else if (byteOrder == BYTE_ORDER_INTEL) {
             sample = sampleMask & bitCache;
             bitCache >>= SampleBits;
-        } else
+        } else {
             throw new IOException("Unknown byte order: " + byteOrder);
+        }
 
         int result = sample;
 

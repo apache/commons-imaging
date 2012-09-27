@@ -48,16 +48,18 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants 
     private int byteOrder = BYTE_ORDER_NETWORK;
 
     protected void setByteOrder(int a, int b) throws ImageWriteException {
-        if (a != b)
+        if (a != b) {
             throw new ImageWriteException("Byte Order bytes don't match (" + a
                     + ", " + b + ").");
+        }
 
-        if (a == BYTE_ORDER_MOTOROLA)
+        if (a == BYTE_ORDER_MOTOROLA) {
             byteOrder = a;
-        else if (a == BYTE_ORDER_INTEL)
+        } else if (a == BYTE_ORDER_INTEL) {
             byteOrder = a;
-        else
+        } else {
             throw new ImageWriteException("Unknown Byte Order hint: " + a);
+        }
     }
 
     protected void setByteOrder(int byteOrder) {

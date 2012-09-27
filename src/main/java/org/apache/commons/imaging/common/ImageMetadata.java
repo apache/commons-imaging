@@ -43,13 +43,15 @@ public class ImageMetadata implements IImageMetadata {
     }
 
     public String toString(String prefix) {
-        if (null == prefix)
+        if (null == prefix) {
             prefix = "";
+        }
 
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
-            if (i > 0)
+            if (i > 0) {
                 result.append(newline);
+            }
             // if (null != prefix)
             // result.append(prefix);
 
@@ -86,8 +88,9 @@ public class ImageMetadata implements IImageMetadata {
 
         public String toString(String prefix) {
             String result = keyword + ": " + text;
-            if (null != prefix)
+            if (null != prefix) {
                 result = prefix + result;
+            }
             return result;
         }
     }

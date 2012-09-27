@@ -54,16 +54,18 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
     private int byteOrder = BYTE_ORDER_NETWORK;
 
     protected void setByteOrder(int a, int b) throws ImageReadException {
-        if (a != b)
+        if (a != b) {
             throw new ImageReadException("Byte Order bytes don't match (" + a
                     + ", " + b + ").");
+        }
 
-        if (a == BYTE_ORDER_MOTOROLA)
+        if (a == BYTE_ORDER_MOTOROLA) {
             byteOrder = a;
-        else if (a == BYTE_ORDER_INTEL)
+        } else if (a == BYTE_ORDER_INTEL) {
             byteOrder = a;
-        else
+        } else {
             throw new ImageReadException("Unknown Byte Order hint: " + a);
+        }
     }
 
     protected void setByteOrder(int byteOrder) {
@@ -122,8 +124,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         System.out.print(msg + ": " + data + " (");
         int byteData = data;
         for (int i = 0; i < bytes; i++) {
-            if (i > 0)
+            if (i > 0) {
                 System.out.print(",");
+            }
             int singleByte = 0xff & byteData;
             System.out.print((char) singleByte + " [" + singleByte + "]");
             byteData >>= 8;
@@ -170,20 +173,20 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         long total = 0;
         while (length != total) {
             long skipped = is.skip(length - total);
-            if (skipped < 1)
+            if (skipped < 1) {
                 throw new IOException(exception + " (" + skipped + ")");
+            }
             total += skipped;
         }
     }
 
     protected final void scanForByte(byte value) throws IOException {
         int count = 0;
-        for (int i = 0; count < 3; i++)
-        // while(count<3)
-        {
+        for (int i = 0; count < 3; i++) {
             int b = is.read();
-            if (b < 0)
+            if (b < 0) {
                 return;
+            }
             if ((0xff & b) == value) {
                 System.out.println("\t" + i + ": match.");
                 count++;
@@ -200,8 +203,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
             throw new IOException(exception);
         }
 
-        if (debug)
+        if (debug) {
             debugNumber(name, result);
+        }
 
         return (byte) (0xff & result);
     }
@@ -252,28 +256,23 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         byte byte1 = bytes[start + 1];
         byte byte2 = bytes[start + 2];
         byte byte3 = 0;
-        if (length == 4)
+        if (length == 4) {
             byte3 = bytes[start + 3];
-
-        // return convert4BytesToInt(name, byte0, byte1, byte2, byte3,
-        // byteOrder);
+        }
 
         int result;
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             result = ((0xff & byte0) << 24) + ((0xff & byte1) << 16)
                     + ((0xff & byte2) << 8) + ((0xff & byte3) << 0);
-        // result = (( byte0) << 24) + ((byte1) << 16)
-        // + (( byte2) << 8) + (( byte3) << 0);
-        else
-            // intel, little endian
+        } else {
             result = ((0xff & byte3) << 24) + ((0xff & byte2) << 16)
                     + ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
-        // result = (( byte3) << 24) + (( byte2) << 16)
-        // + (( byte1) << 8) + (( byte0) << 0);
+        }
 
-        if (debug)
+        if (debug) {
             debugNumber(name, result, 4);
+        }
 
         return result;
     }
@@ -308,18 +307,17 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         byte byte0 = bytes[start + 0];
         byte byte1 = bytes[start + 1];
 
-        // return convert2BytesToShort(name, byte0, byte1, byteOrder);
-
         int result;
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             result = ((0xff & byte0) << 8) + ((0xff & byte1) << 0);
-        else
-            // intel, little endian
+        } else {
             result = ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
+        }
 
-        if (debug)
+        if (debug) {
             debugNumber(name, result, 2);
+        }
 
         return result;
     }
@@ -355,8 +353,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         int read = 0;
         while (read < length) {
             int count = is.read(result, read, length - read);
-            if (count < 1)
+            if (count < 1) {
                 throw new IOException(exception);
+            }
 
             read += count;
         }
@@ -387,14 +386,16 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
 
     public final byte[] readBytearray(String name, byte bytes[], int start,
             int count) {
-        if (bytes.length < (start + count))
+        if (bytes.length < (start + count)) {
             return null;
+        }
 
         byte result[] = new byte[count];
         System.arraycopy(bytes, start, result, 0, count);
 
-        if (debug)
+        if (debug) {
             debugByteArray(name, result);
+        }
 
         return result;
     }
@@ -412,13 +413,15 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         byte bytes[] = new byte[length];
         int total = 0;
         int read;
-        while ((read = read(bytes, total, length - total)) > 0)
+        while ((read = read(bytes, total, length - total)) > 0) {
             total += read;
+        }
         if (total < length) {
-            if (strict)
+            if (strict) {
                 throw new ImageReadException(error);
-            else if (verbose)
+            } else if (verbose) {
                 System.out.println(error);
+            }
             return null;
         }
         return bytes;
@@ -434,10 +437,12 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
 
     public final boolean compareByteArrays(byte a[], int aStart, byte b[],
             int bStart, int length) {
-        if (a.length < (aStart + length))
+        if (a.length < (aStart + length)) {
             return false;
-        if (b.length < (bStart + length))
+        }
+        if (b.length < (bStart + length)) {
             return false;
+        }
 
         for (int i = 0; i < length; i++) {
             if (a[aStart + i] != b[bStart + i]) {
@@ -459,8 +464,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         int read = 0;
         while (read < size) {
             int count = is.read(bytes, read, size - read);
-            if (count < 1)
+            if (count < 1) {
                 throw new IOException(exception);
+            }
 
             read += count;
         }
@@ -476,8 +482,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         int read = 0;
         while (read < size) {
             int count = is.read(bytes, read, size - read);
-            if (count < 1)
+            if (count < 1) {
                 throw new IOException(exception);
+            }
 
             read += count;
         }
@@ -494,8 +501,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         int read = 0;
         while (read < size) {
             int count = is.read(bytes, read, size - read);
-            if (count < 1)
+            if (count < 1) {
                 throw new IOException(exception);
+            }
 
             read += count;
         }
@@ -506,8 +514,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
     public final int read1ByteInteger(String exception)
             throws ImageReadException, IOException {
         int byte0 = is.read();
-        if (byte0 < 0)
+        if (byte0 < 0) {
             throw new ImageReadException(exception);
+        }
 
         return 0xff & byte0;
     }
@@ -516,14 +525,15 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
             throws ImageReadException, IOException {
         int byte0 = is.read();
         int byte1 = is.read();
-        if (byte0 < 0 || byte1 < 0)
+        if (byte0 < 0 || byte1 < 0) {
             throw new ImageReadException(exception);
+        }
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             return ((0xff & byte0) << 8) + ((0xff & byte1) << 0);
-        else
-            // intel, little endian
+        } else {
             return ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
+        }
     }
 
     public final int read4ByteInteger(String exception)
@@ -532,23 +542,23 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         int byte1 = is.read();
         int byte2 = is.read();
         int byte3 = is.read();
-        if (byte0 < 0 || byte1 < 0 || byte2 < 0 || byte3 < 0)
+        if (byte0 < 0 || byte1 < 0 || byte2 < 0 || byte3 < 0) {
             throw new ImageReadException(exception);
+        }
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) // motorola, big endian
+        if (byteOrder == BYTE_ORDER_MOTOROLA) {
             return ((0xff & byte0) << 24) + ((0xff & byte1) << 16)
                     + ((0xff & byte2) << 8) + ((0xff & byte3) << 0);
-        else
-            // intel, little endian
+        } else {
             return ((0xff & byte3) << 24) + ((0xff & byte2) << 16)
                     + ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
+        }
     }
 
     protected final void printCharQuad(String msg, int i) {
         System.out.println(msg + ": '" + (char) (0xff & (i >> 24))
                 + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
                 + (char) (0xff & (i >> 0)) + "'");
-
     }
 
     protected final void printByteBits(String msg, byte i) {
@@ -565,9 +575,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
 
     public final int findNull(byte src[], int start) {
         for (int i = start; i < src.length; i++) {
-            if (src[i] == 0)
+            if (src[i] == 0) {
                 return i;
-
+            }
         }
         return -1;
     }
@@ -586,8 +596,9 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         int read = 0;
         while (read < length) {
             int count = raf.read(result, read, length - read);
-            if (count < 1)
+            if (count < 1) {
                 throw new IOException(exception);
+            }
 
             read += count;
         }

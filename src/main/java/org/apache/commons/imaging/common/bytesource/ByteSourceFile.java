@@ -93,8 +93,9 @@ public class ByteSourceFile extends ByteSource {
             return baos.toByteArray();
         } finally {
             try {
-                if (null != is)
+                if (null != is) {
                     is.close();
+                }
             } catch (IOException e) {
                 Debug.debug(e);
             }

@@ -35,10 +35,11 @@ public class BitsToByteInputStream extends InputStream {
 
     public int readBits(int bitCount) throws IOException {
         int i = is.readBits(bitCount);
-        if (bitCount < desiredDepth)
+        if (bitCount < desiredDepth) {
             i <<= (desiredDepth - bitCount);
-        else if (bitCount > desiredDepth)
+        } else if (bitCount > desiredDepth) {
             i >>= (bitCount - desiredDepth);
+        }
 
         return i;
     }
@@ -46,8 +47,9 @@ public class BitsToByteInputStream extends InputStream {
     public int[] readBitsArray(int sampleBits, int length) throws IOException {
         int result[] = new int[length];
 
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < length; i++) {
             result[i] = readBits(sampleBits);
+        }
 
         return result;
     }

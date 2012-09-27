@@ -51,8 +51,9 @@ public class MyLzwCompressor {
         clearCode = 1 << initialCodeSize;
         eoiCode = clearCode + 1;
 
-        if (null != listener)
+        if (null != listener) {
             listener.init(clearCode, eoiCode);
+        }
 
         InitializeStringTable();
     }
@@ -80,8 +81,9 @@ public class MyLzwCompressor {
     }
 
     private final void incrementCodeSize() {
-        if (codeSize != 12)
+        if (codeSize != 12) {
             codeSize++;
+        }
     }
 
     private final Object arrayToKey(byte b) {
@@ -122,14 +124,17 @@ public class MyLzwCompressor {
         public boolean equals(Object o) {
             if (o instanceof ByteArray) {
                 ByteArray other = (ByteArray) o;
-                if (other.hash != hash)
+                if (other.hash != hash) {
                     return false;
-                if (other.length != length)
+                }
+                if (other.length != length) {
                     return false;
+                }
 
                 for (int i = 0; i < length; i++) {
-                    if (other.bytes[i + other.start] != bytes[i + start])
+                    if (other.bytes[i + other.start] != bytes[i + start]) {
                         return false;
+                    }
                 }
 
                 return true;
@@ -144,20 +149,23 @@ public class MyLzwCompressor {
 
     private final void writeDataCode(MyBitOutputStream bos, int code)
             throws IOException {
-        if (null != listener)
+        if (null != listener) {
             listener.dataCode(code);
+        }
         writeCode(bos, code);
     }
 
     private final void writeClearCode(MyBitOutputStream bos) throws IOException {
-        if (null != listener)
+        if (null != listener) {
             listener.dataCode(clearCode);
+        }
         writeCode(bos, clearCode);
     }
 
     private final void writeEoiCode(MyBitOutputStream bos) throws IOException {
-        if (null != listener)
+        if (null != listener) {
             listener.eoiCode(eoiCode);
+        }
         writeCode(bos, eoiCode);
     }
 
@@ -176,8 +184,9 @@ public class MyLzwCompressor {
             throws IOException {
         Object key = arrayToKey(bytes, start, length);
         Object o = map.get(key);
-        if (o == null)
+        if (o == null) {
             throw new IOException("CodeFromString");
+        }
         return ((Integer) o).intValue();
     }
 
@@ -191,19 +200,18 @@ public class MyLzwCompressor {
             throws IOException {
         boolean cleared = false;
 
-        {
-            int limit = (1 << codeSize);
-            if (earlyLimit)
-                limit--;
+        int limit = (1 << codeSize);
+        if (earlyLimit) {
+            limit--;
+        }
 
-            if (codes == limit) {
-                if (codeSize < 12)
-                    incrementCodeSize();
-                else {
-                    writeClearCode(bos);
-                    clearTable();
-                    cleared = true;
-                }
+        if (codes == limit) {
+            if (codeSize < 12) {
+                incrementCodeSize();
+            } else {
+                writeClearCode(bos);
+                clearTable();
+                cleared = true;
             }
         }
 

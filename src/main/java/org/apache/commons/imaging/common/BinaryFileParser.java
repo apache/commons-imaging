@@ -36,16 +36,18 @@ public class BinaryFileParser extends BinaryFileFunctions {
     // protected boolean BYTE_ORDER_reversed = true;
 
     protected void setByteOrder(int a, int b) throws ImageReadException {
-        if (a != b)
+        if (a != b) {
             throw new ImageReadException("Byte Order bytes don't match (" + a
                     + ", " + b + ").");
+        }
 
-        if (a == BYTE_ORDER_MOTOROLA)
+        if (a == BYTE_ORDER_MOTOROLA) {
             byteOrder = a;
-        else if (a == BYTE_ORDER_INTEL)
+        } else if (a == BYTE_ORDER_INTEL) {
             byteOrder = a;
-        else
+        } else {
             throw new ImageReadException("Unknown Byte Order hint: " + a);
+        }
     }
 
     protected void setByteOrder(int byteOrder) {
@@ -91,23 +93,29 @@ public class BinaryFileParser extends BinaryFileFunctions {
     }
 
     public static boolean byteArrayHasPrefix(byte bytes[], BinaryConstant prefix) {
-        if ((bytes == null) || (bytes.length < prefix.size()))
+        if ((bytes == null) || (bytes.length < prefix.size())) {
             return false;
+        }
 
-        for (int i = 0; i < prefix.size(); i++)
-            if (bytes[i] != prefix.get(i))
+        for (int i = 0; i < prefix.size(); i++) {
+            if (bytes[i] != prefix.get(i)) {
                 return false;
+            }
+        }
 
         return true;
     }
 
     public static boolean byteArrayHasPrefix(byte bytes[], byte prefix[]) {
-        if ((bytes == null) || (bytes.length < prefix.length))
+        if ((bytes == null) || (bytes.length < prefix.length)) {
             return false;
+        }
 
-        for (int i = 0; i < prefix.length; i++)
-            if (bytes[i] != prefix[i])
+        for (int i = 0; i < prefix.length; i++) {
+            if (bytes[i] != prefix[i]) {
                 return false;
+            }
+        }
 
         return true;
     }

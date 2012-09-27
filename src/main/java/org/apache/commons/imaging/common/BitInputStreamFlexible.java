@@ -32,8 +32,9 @@ public class BitInputStreamFlexible extends InputStream implements
 
     @Override
     public int read() throws IOException {
-        if (cacheBitsRemaining > 0)
+        if (cacheBitsRemaining > 0) {
             throw new IOException("BitInputStream: incomplete bit read");
+        }
         return is.read();
     }
 
@@ -43,8 +44,8 @@ public class BitInputStreamFlexible extends InputStream implements
 
     public final int readBits(int count) throws IOException {
 
-        if (count <= 32) // catch-all
-        {
+        if (count <= 32)  {
+            // catch-all
             int result = 0;
             // int done = 0;
 
@@ -62,8 +63,9 @@ public class BitInputStreamFlexible extends InputStream implements
             }
             while (count >= 8) {
                 cache = is.read();
-                if (cache < 0)
+                if (cache < 0) {
                     throw new IOException("couldn't read bits");
+                }
                 // System.out.println("cache 1: " + cache + " ("
                 // + Integer.toHexString(cache) + ", "
                 // + Integer.toBinaryString(cache) + ")");
@@ -73,8 +75,9 @@ public class BitInputStreamFlexible extends InputStream implements
             }
             if (count > 0) {
                 cache = is.read();
-                if (cache < 0)
+                if (cache < 0) {
                     throw new IOException("couldn't read bits");
+                }
                 // System.out.println("cache 2: " + cache + " ("
                 // + Integer.toHexString(cache) + ", "
                 // + Integer.toBinaryString(cache) + ")");
