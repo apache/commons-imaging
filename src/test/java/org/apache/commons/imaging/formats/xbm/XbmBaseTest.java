@@ -34,7 +34,7 @@ public abstract class XbmBaseTest extends ImagingTest {
         }
     };
 
-    protected List getXbmImages() throws IOException, ImageReadException {
+    protected List<File> getXbmImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

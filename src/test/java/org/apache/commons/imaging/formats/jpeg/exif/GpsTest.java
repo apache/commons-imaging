@@ -32,7 +32,7 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
 
     public void test() throws Exception {
 
-        List images = getImagesWithExifData(300);
+        List<File> images = getImagesWithExifData(300);
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -47,7 +47,7 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
                 continue;
 
             try {
-                Map params = new HashMap();
+                Map<String,Object> params = new HashMap<String,Object>();
                 boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
                 params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
                         !ignoreImageData));

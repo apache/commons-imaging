@@ -30,7 +30,7 @@ public class ConvertPngToGifTest extends PngBaseTest {
 
     public void test() throws Exception {
 
-        List images = getPngImages();
+        List<File> images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -41,7 +41,7 @@ public class ConvertPngToGifTest extends PngBaseTest {
             // Debug.debug("imageFile", imageFile);
             // Debug.debug();
 
-            Hashtable params = new Hashtable();
+            Hashtable<String,Object> params = new Hashtable<String,Object>();
             // params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
             BufferedImage image = Imaging.getBufferedImage(imageFile, params);

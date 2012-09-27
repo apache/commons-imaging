@@ -41,9 +41,9 @@ public class PngTextTest extends PngBaseTest {
                 BufferedImage.TYPE_INT_ARGB);
         srcImage.setRGB(0, 0, Color.red.getRGB());
 
-        Map writeParams = new HashMap();
+        Map<String,Object> writeParams = new HashMap<String,Object>();
 
-        List writeTexts = new ArrayList();
+        List<PngText> writeTexts = new ArrayList<PngText>();
         {
             String keyword = "a";
             String text = "b";
@@ -74,7 +74,7 @@ public class PngTextTest extends PngBaseTest {
         PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);
         assertNotNull(imageInfo);
 
-        List readTexts = imageInfo.getTextChunks();
+        List<PngText> readTexts = imageInfo.getTextChunks();
         assertEquals(readTexts.size(), 3);
         for (int i = 0; i < readTexts.size(); i++) {
             PngText text = (PngText) readTexts.get(i);

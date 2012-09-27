@@ -38,7 +38,7 @@ public abstract class RgbeBaseTest extends ImagingTest {
         }
     };
 
-    protected List getRgbeImages() throws IOException, ImageReadException {
+    protected List<File> getRgbeImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

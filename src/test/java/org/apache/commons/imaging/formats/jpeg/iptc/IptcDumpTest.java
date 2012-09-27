@@ -31,7 +31,7 @@ import org.apache.commons.imaging.util.Debug;
 public class IptcDumpTest extends IptcBaseTest {
 
     public void test() throws Exception {
-        List images = getImagesWithIptcData();
+        List<File> images = getImagesWithIptcData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -44,7 +44,7 @@ public class IptcDumpTest extends IptcBaseTest {
             // Debug.debug("Segments:");
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
             // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
@@ -60,11 +60,11 @@ public class IptcDumpTest extends IptcBaseTest {
             // metadata.getPhotoshop().getItems().size());
 
             JpegPhotoshopMetadata psMetadata = metadata.getPhotoshop();
-            List oldRecords = psMetadata.photoshopApp13Data.getRecords();
+            List<IptcRecord> oldRecords = psMetadata.photoshopApp13Data.getRecords();
 
             Debug.debug();
             for (int j = 0; j < oldRecords.size(); j++) {
-                IptcRecord record = (IptcRecord) oldRecords.get(j);
+                IptcRecord record = oldRecords.get(j);
                 if (record.iptcType != IptcTypes.CITY)
                     Debug.debug("Key: " + record.iptcType.getName() + " (0x"
                             + Integer.toHexString(record.iptcType.getType())

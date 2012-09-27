@@ -31,6 +31,7 @@ import java.util.Set;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.common.IImageMetadata.IImageMetadataItem;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -276,24 +277,23 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         rewrite(rewriter, "lossless");
     }
 
-    private Hashtable makeDirectoryMap(List directories) {
-        Hashtable directoryMap = new Hashtable();
+    private Hashtable<Integer,TiffImageMetadata.Directory> makeDirectoryMap(List<? extends IImageMetadataItem> directories) {
+        Hashtable<Integer,TiffImageMetadata.Directory> directoryMap = new Hashtable<Integer,TiffImageMetadata.Directory>();
         for (int i = 0; i < directories.size(); i++) {
             TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories
                     .get(i);
-            directoryMap.put(new Integer(directory.type), directory);
+            directoryMap.put(directory.type, directory);
         }
         return directoryMap;
     }
 
-    private Hashtable makeFieldMap(List items) {
-        Hashtable fieldMap = new Hashtable();
+    private Hashtable<Integer,TiffField> makeFieldMap(List<? extends IImageMetadataItem> items) {
+        Hashtable<Integer,TiffField> fieldMap = new Hashtable<Integer,TiffField>();
         for (int i = 0; i < items.size(); i++) {
             TiffImageMetadata.Item item = (TiffImageMetadata.Item) items.get(i);
             TiffField field = item.getTiffField();
-            Object key = new Integer(field.tag);
-            if (!fieldMap.containsKey(key))
-                fieldMap.put(key, field);
+            if (!fieldMap.containsKey(field.tag))
+                fieldMap.put(field.tag, field);
         }
         return fieldMap;
     }
@@ -303,18 +303,18 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         assertNotNull(oldExifMetadata);
         assertNotNull(newExifMetadata);
 
-        List oldDirectories = oldExifMetadata.getDirectories();
-        List newDirectories = newExifMetadata.getDirectories();
+        List<? extends IImageMetadataItem> oldDirectories = oldExifMetadata.getDirectories();
+        List<? extends IImageMetadataItem> newDirectories = newExifMetadata.getDirectories();
 
         assertTrue(oldDirectories.size() == newDirectories.size());
 
-        Hashtable oldDirectoryMap = makeDirectoryMap(oldDirectories);
-        Hashtable newDirectoryMap = makeDirectoryMap(newDirectories);
+        Hashtable<Integer,TiffImageMetadata.Directory> oldDirectoryMap = makeDirectoryMap(oldDirectories);
+        Hashtable<Integer,TiffImageMetadata.Directory> newDirectoryMap = makeDirectoryMap(newDirectories);
 
         assertEquals(oldDirectories.size(), oldDirectoryMap.keySet().size());
-        List oldDirectoryTypes = new ArrayList(oldDirectoryMap.keySet());
+        List<Integer> oldDirectoryTypes = new ArrayList<Integer>(oldDirectoryMap.keySet());
         Collections.sort(oldDirectoryTypes);
-        List newDirectoryTypes = new ArrayList(newDirectoryMap.keySet());
+        List<Integer> newDirectoryTypes = new ArrayList<Integer>(newDirectoryMap.keySet());
         Collections.sort(newDirectoryTypes);
         assertEquals(oldDirectoryTypes, newDirectoryTypes);
 
@@ -330,8 +330,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             assertNotNull(oldDirectory);
             assertNotNull(newDirectory);
 
-            List oldItems = oldDirectory.getItems();
-            List newItems = newDirectory.getItems();
+            List<? extends IImageMetadataItem> oldItems = oldDirectory.getItems();
+            List<? extends IImageMetadataItem> newItems = newDirectory.getItems();
 
             // Debug.debug("oldItems.size()", oldItems.size());
             // Debug.debug("newItems.size()", newItems.size());
@@ -346,13 +346,13 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             // }
             // assertTrue(oldItems.size() == newItems.size());
 
-            Hashtable oldFieldMap = makeFieldMap(oldItems);
-            Hashtable newFieldMap = makeFieldMap(newItems);
+            Hashtable<Integer,TiffField> oldFieldMap = makeFieldMap(oldItems);
+            Hashtable<Integer,TiffField> newFieldMap = makeFieldMap(newItems);
 
-            Set missingInNew = new HashSet(oldFieldMap.keySet());
+            Set<Integer> missingInNew = new HashSet<Integer>(oldFieldMap.keySet());
             missingInNew.removeAll(newFieldMap.keySet());
 
-            Set missingInOld = new HashSet(newFieldMap.keySet());
+            Set<Integer> missingInOld = new HashSet<Integer>(newFieldMap.keySet());
             missingInOld.removeAll(oldFieldMap.keySet());
 
             // dump("missingInNew", missingInNew);
@@ -371,9 +371,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             // assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
             // assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
 
-            List oldFieldTags = new ArrayList(oldFieldMap.keySet());
+            List<Integer> oldFieldTags = new ArrayList<Integer>(oldFieldMap.keySet());
             Collections.sort(oldFieldTags);
-            List newFieldTags = new ArrayList(newFieldMap.keySet());
+            List<Integer> newFieldTags = new ArrayList<Integer>(newFieldMap.keySet());
             Collections.sort(newFieldTags);
             assertEquals(oldFieldTags, newFieldTags);
 
@@ -396,7 +396,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 assertEquals(oldField.directoryType, newField.directoryType);
 
                 if (oldField.fieldType == TiffFieldTypeConstants.FIELD_TYPE_ASCII) {
-                    // Sanselan currently doesn't correctly rewrite
+                    // Imaging currently doesn't correctly rewrite
                     // strings if any byte had the highest bit set,
                     // so if the source had that, all bets are off.
                     byte[] rawBytes = oldField.fieldType.getRawBytes(oldField);

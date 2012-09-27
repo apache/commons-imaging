@@ -33,7 +33,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
     // }
 
     public void test() throws Exception {
-        List images = getJpegImages();
+        List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -58,7 +58,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
     }
 
     public void testInsert() throws Exception {
-        List images = getJpegImages();
+        List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();

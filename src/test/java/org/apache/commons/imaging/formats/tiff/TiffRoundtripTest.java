@@ -32,7 +32,7 @@ import org.apache.commons.imaging.util.Debug;
 public class TiffRoundtripTest extends TiffBaseTest {
 
     public void test() throws Exception {
-        List images = getTiffImages();
+        List<File> images = getTiffImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -50,7 +50,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
             assertNotNull(image);
 
             File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             Imaging.writeImage(image, tempFile, ImageFormat.IMAGE_FORMAT_TIFF,
                     params);
             image = null;

@@ -34,7 +34,7 @@ public abstract class XpmBaseTest extends ImagingTest {
         }
     };
 
-    protected List getXpmImages() throws IOException, ImageReadException {
+    protected List<File> getXpmImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

@@ -27,7 +27,7 @@ import org.apache.commons.imaging.util.Debug;
 public class XmpDumpTest extends ImagingTest {
 
     public void test() throws Exception {
-        List images = getTestImages();
+        List<File> images = getTestImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();

@@ -31,7 +31,7 @@ public class PngReadTest extends PngBaseTest {
     public void test() throws Exception {
         Debug.debug("start");
 
-        List images = getPngImages();
+        List<File> images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();

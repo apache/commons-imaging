@@ -32,7 +32,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
 
     public void test() throws Exception {
 
-        List images = getPngImages();
+        List<File> images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -49,20 +49,20 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 // Boolean.TRUE);
 
                 BufferedImage image = Imaging.getBufferedImage(imageFile,
-                        new HashMap());
+                        new HashMap<String,Object>());
                 assertNotNull(image);
 
                 File outFile = createTempFile(imageFile.getName() + ".", ".gif");
                 // Debug.debug("outFile", outFile);
 
-                Map params = new HashMap();
+                Map<String,Object> params = new HashMap<String,Object>();
                 params.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
                         Boolean.TRUE);
                 Imaging.writeImage(image, outFile,
                         ImageFormat.IMAGE_FORMAT_PNG, params);
 
                 BufferedImage image2 = Imaging.getBufferedImage(outFile,
-                        new HashMap());
+                        new HashMap<String,Object>());
             } catch (Exception e) {
                 Debug.debug("imageFile", imageFile);
                 throw e;

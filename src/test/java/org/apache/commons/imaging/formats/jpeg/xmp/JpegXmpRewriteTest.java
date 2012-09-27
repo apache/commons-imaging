@@ -34,7 +34,7 @@ import org.apache.commons.imaging.util.Debug;
 public class JpegXmpRewriteTest extends JpegXmpBaseTest {
 
     public void testRemoveInsertUpdate() throws Exception {
-        List images = getImagesWithXmpData();
+        List<File> images = getImagesWithXmpData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -50,7 +50,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             // Debug.debug("Source Segments:");
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
             assertNotNull(xmpXml);
 

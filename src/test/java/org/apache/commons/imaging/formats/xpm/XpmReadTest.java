@@ -31,7 +31,7 @@ public class XpmReadTest extends XpmBaseTest {
     public void test() throws Exception {
         Debug.debug("start");
 
-        List images = getXpmImages();
+        List<File> images = getXpmImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -42,7 +42,7 @@ public class XpmReadTest extends XpmBaseTest {
             IImageMetadata metadata = Imaging.getMetadata(imageFile);
             // assertNotNull(metadata);
 
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
 

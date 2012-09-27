@@ -36,7 +36,7 @@ import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.commons.imaging.util.Debug;
 
 public class IptcUpdateTest extends IptcBaseTest {
-    private List imagesWithIptcData;
+    private List<File> imagesWithIptcData;
 
     @Override
     public void setUp() throws Exception {
@@ -56,7 +56,7 @@ public class IptcUpdateTest extends IptcBaseTest {
      * Remove all Photoshop IPTC data from a JPEG file.
      */
     public void testRemove() throws Exception {
-        List images = imagesWithIptcData;
+        List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -67,7 +67,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
             ByteSource byteSource = new ByteSourceFile(imageFile);
 
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
@@ -104,7 +104,7 @@ public class IptcUpdateTest extends IptcBaseTest {
     }
 
     public void testRemoveInsertUpdate() throws Exception {
-        List images = imagesWithIptcData;
+        List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -117,7 +117,7 @@ public class IptcUpdateTest extends IptcBaseTest {
             // Debug.debug("Segments:");
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
             // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
@@ -157,9 +157,9 @@ public class IptcUpdateTest extends IptcBaseTest {
             {
                 // test no-change update
 
-                List newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
-                List oldRecords = metadata.photoshopApp13Data.getRecords();
-                List newRecords = new ArrayList();
+                List<IptcBlock> newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
+                List<IptcRecord> oldRecords = metadata.photoshopApp13Data.getRecords();
+                List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
                 for (int j = 0; j < oldRecords.size(); j++) {
                     IptcRecord record = (IptcRecord) oldRecords.get(j);
                     if (record.iptcType != IptcTypes.CITY
@@ -207,8 +207,8 @@ public class IptcUpdateTest extends IptcBaseTest {
             {
                 // test update
 
-                List newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
-                List newRecords = new ArrayList();
+                List<IptcBlock> newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
+                List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
 
                 newRecords.add(new IptcRecord(IptcTypes.CITY, "Albany, NY"));
                 newRecords.add(new IptcRecord(IptcTypes.CREDIT,
@@ -250,8 +250,8 @@ public class IptcUpdateTest extends IptcBaseTest {
             {
                 // test insert
 
-                List newBlocks = new ArrayList();
-                List newRecords = new ArrayList();
+                List<IptcBlock> newBlocks = new ArrayList<IptcBlock>();
+                List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
 
                 newRecords.add(new IptcRecord(IptcTypes.CITY, "Albany, NY"));
                 newRecords.add(new IptcRecord(IptcTypes.CREDIT,
@@ -299,7 +299,7 @@ public class IptcUpdateTest extends IptcBaseTest {
      * IPTC data.
      */
     public void testAddIptcData() throws Exception {
-        List images = getJpegImages();
+        List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -312,7 +312,7 @@ public class IptcUpdateTest extends IptcBaseTest {
             // Debug.debug("Segments:");
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map params = new HashMap();
+            Map<String,Object> params = new HashMap<String,Object>();
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
@@ -321,8 +321,8 @@ public class IptcUpdateTest extends IptcBaseTest {
             // metadata.dump();
 
             {
-                List newBlocks = new ArrayList();
-                List newRecords = new ArrayList();
+                List<IptcBlock> newBlocks = new ArrayList<IptcBlock>();
+                List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
 
                 if (null != metadata) {
                     boolean keepOldIptcNonTextValues = true;
@@ -331,10 +331,10 @@ public class IptcUpdateTest extends IptcBaseTest {
                                 .getNonIptcBlocks());
                     boolean keepOldIptcTextValues = true;
                     if (keepOldIptcTextValues) {
-                        List oldRecords = metadata.photoshopApp13Data
+                        List<IptcRecord> oldRecords = metadata.photoshopApp13Data
                                 .getRecords();
 
-                        newRecords = new ArrayList();
+                        newRecords = new ArrayList<IptcRecord>();
                         for (int j = 0; j < oldRecords.size(); j++) {
                             IptcRecord record = (IptcRecord) oldRecords.get(j);
                             if (record.iptcType != IptcTypes.CITY

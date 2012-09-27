@@ -33,7 +33,7 @@ public class RgbeReadTest extends RgbeBaseTest {
             ImageWriteException {
         Debug.debug("start");
 
-        List images = getRgbeImages();
+        List<File> images = getRgbeImages();
 
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {

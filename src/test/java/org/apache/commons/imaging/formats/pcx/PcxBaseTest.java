@@ -36,7 +36,7 @@ public abstract class PcxBaseTest extends ImagingTest {
         }
     };
 
-    protected List getPcxImages() throws IOException, ImageReadException {
+    protected List<File> getPcxImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

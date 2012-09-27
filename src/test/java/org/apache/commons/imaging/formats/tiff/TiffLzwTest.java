@@ -81,18 +81,18 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
         }
 
         int LZW_MINIMUM_CODE_SIZE = 8;
-        final List codes = new ArrayList();
+        final List<Integer> codes = new ArrayList<Integer>();
         MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
             public void dataCode(int code) {
-                codes.add(new Integer(code));
+                codes.add(code);
             }
 
             public void eoiCode(int code) {
-                codes.add(new Integer(code));
+                codes.add(code);
             }
 
             public void clearCode(int code) {
-                codes.add(new Integer(code));
+                codes.add(code);
             }
 
             public void init(int clearCode, int eoiCode) {
@@ -163,7 +163,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
         Debug.debug();
 
         int LZW_MINIMUM_CODE_SIZE = 8;
-        final List codes = new ArrayList();
+        final List<Integer> codes = new ArrayList<Integer>();
 
         MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
 
@@ -172,7 +172,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
                         + Integer.toHexString(code) + ") "
                         + Integer.toBinaryString(code) + ", index: "
                         + codes.size());
-                codes.add(new Integer(code));
+                codes.add(code);
             }
 
             public void init(int clearCode, int eoiCode) {

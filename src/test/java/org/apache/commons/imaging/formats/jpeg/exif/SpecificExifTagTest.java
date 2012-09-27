@@ -46,7 +46,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
     }
 
     public void testAllImages() throws Exception {
-        List images = getImagesWithExifData();
+        List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0)
                 Debug.purgeMemory();
@@ -66,7 +66,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
             ImageReadException, ImageWriteException {
         // Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-        Map params = new HashMap();
+        Map<String,Object> params = new HashMap<String,Object>();
         boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
@@ -81,9 +81,9 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
         if (null == exif)
             return;
 
-        List fields = exif.getAllFields();
+        List<TiffField> fields = exif.getAllFields();
         for (int i = 0; i < fields.size(); i++) {
-            TiffField field = (TiffField) fields.get(i);
+            TiffField field = fields.get(i);
             checkField(imageFile, field);
         }
 

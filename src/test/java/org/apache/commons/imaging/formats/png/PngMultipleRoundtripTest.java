@@ -48,7 +48,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
 
             File lastFile = imageFile;
             for (int j = 0; j < 10; j++) {
-                Map readParams = new HashMap();
+                Map<String,Object> readParams = new HashMap<String,Object>();
                 // readParams.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
                 // new RgbBufferedImageFactory());
                 BufferedImage image = Imaging.getBufferedImage(lastFile,
@@ -59,7 +59,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
                         + ".", ".png");
                 Debug.debug("tempFile", tempFile);
 
-                Map writeParams = new HashMap();
+                Map<String,Object> writeParams = new HashMap<String,Object>();
                 Imaging.writeImage(image, tempFile,
                         ImageFormat.IMAGE_FORMAT_PNG, writeParams);
 

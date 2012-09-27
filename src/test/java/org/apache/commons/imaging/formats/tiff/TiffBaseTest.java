@@ -40,7 +40,7 @@ public abstract class TiffBaseTest extends ImagingTest {
         }
     };
 
-    protected List getTiffImages() throws IOException, ImageReadException {
+    protected List<File> getTiffImages() throws IOException, ImageReadException {
         return getTestImages(imageFilter);
     }
 

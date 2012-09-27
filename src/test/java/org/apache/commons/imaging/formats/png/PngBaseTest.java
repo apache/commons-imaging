@@ -40,7 +40,7 @@ public abstract class PngBaseTest extends ImagingTest {
         }
     };
 
-    protected List getPngImages() throws IOException, ImageReadException {
+    protected List<File> getPngImages() throws IOException, ImageReadException {
         return getTestImages(imageFilter);
     }
 

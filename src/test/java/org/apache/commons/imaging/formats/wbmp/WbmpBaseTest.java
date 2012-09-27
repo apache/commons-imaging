@@ -33,7 +33,7 @@ public abstract class WbmpBaseTest extends ImagingTest {
         }
     };
 
-    protected List getWbmpImages() throws IOException, ImageReadException {
+    protected List<File> getWbmpImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);
     }
 }

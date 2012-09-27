@@ -64,12 +64,12 @@ public abstract class IptcBaseTest extends ImagingTest {
         return getTestImage(HAS_IPTC_IMAGE_FILTER);
     }
 
-    protected List getImagesWithIptcData() throws IOException,
+    protected List<File> getImagesWithIptcData() throws IOException,
             ImageReadException {
         return getTestImages(HAS_IPTC_IMAGE_FILTER);
     }
 
-    protected List getImagesWithIptcData(int max) throws IOException,
+    protected List<File> getImagesWithIptcData(int max) throws IOException,
             ImageReadException {
         return getTestImages(HAS_IPTC_IMAGE_FILTER, max);
     }
@@ -78,11 +78,11 @@ public abstract class IptcBaseTest extends ImagingTest {
         return getTestImage(JPEG_IMAGE_FILTER);
     }
 
-    protected List getJpegImages() throws IOException, ImageReadException {
+    protected List<File> getJpegImages() throws IOException, ImageReadException {
         return getTestImages(JPEG_IMAGE_FILTER);
     }
 
-    protected List getJpegImages(int max) throws IOException,
+    protected List<File> getJpegImages(int max) throws IOException,
             ImageReadException {
         return getTestImages(JPEG_IMAGE_FILTER, max);
     }
