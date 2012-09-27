@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoSByte extends TagInfo {
@@ -24,7 +23,7 @@ public class TagInfoSByte extends TagInfo {
         super(name, tag, FIELD_TYPE_SBYTE, length, directoryType);
     }
 
-    public byte[] encodeValue(int byteOrder, byte... values) throws ImageWriteException {
+    public byte[] encodeValue(int byteOrder, byte... values) {
         return values;
     }
 }

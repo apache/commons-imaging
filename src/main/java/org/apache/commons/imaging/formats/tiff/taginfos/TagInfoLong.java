@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryConversions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
@@ -34,7 +33,7 @@ public class TagInfoLong extends TagInfo {
         return BinaryConversions.convertToIntArray(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(int byteOrder, int... values) throws ImageWriteException {
+    public byte[] encodeValue(int byteOrder, int... values) {
         return BinaryConversions.convertToByteArray(values, byteOrder);
     }
 }
