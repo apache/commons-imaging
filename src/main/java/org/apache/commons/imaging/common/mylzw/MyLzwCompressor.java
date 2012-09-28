@@ -22,9 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyLzwCompressor {
-
-    // private static final int MAX_TABLE_SIZE = 1 << 12;
-
     private int codeSize;
     private final int initialCodeSize;
     private int codes = -1;
@@ -236,7 +233,6 @@ public class MyLzwCompressor {
         InitializeStringTable();
         clearTable();
         writeClearCode(bos);
-        boolean cleared = false;
 
         int w_start = 0;
         int w_length = 0;
@@ -244,17 +240,15 @@ public class MyLzwCompressor {
         for (int i = 0; i < bytes.length; i++) {
             if (isInTable(bytes, w_start, w_length + 1)) {
                 w_length++;
-
-                cleared = false;
             } else {
                 int code = codeFromString(bytes, w_start, w_length);
                 writeDataCode(bos, code);
-                cleared = addTableEntry(bos, bytes, w_start, w_length + 1);
+                addTableEntry(bos, bytes, w_start, w_length + 1);
 
                 w_start = i;
                 w_length = 1;
             }
-        } /* end of for loop */
+        }
 
         int code = codeFromString(bytes, w_start, w_length);
         writeDataCode(bos, code);
