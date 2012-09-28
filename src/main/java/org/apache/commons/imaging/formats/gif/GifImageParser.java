@@ -427,26 +427,6 @@ public class GifImageParser extends ImageParser {
         return bytes;
     }
 
-    // TODO - unused
-    private GifHeaderInfo readHeader(ByteSource byteSource)
-            throws ImageReadException, IOException {
-        InputStream is = null;
-        try {
-            is = byteSource.getInputStream();
-
-            return readHeader(is, FormatCompliance.getDefault());
-        } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (Exception e) {
-                Debug.debug(e);
-            }
-
-        }
-    }
-
     private GifBlock findBlock(List<GifBlock> v, int code) {
         for (int i = 0; i < v.size(); i++) {
             GifBlock gifBlock = v.get(i);

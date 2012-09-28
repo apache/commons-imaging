@@ -223,7 +223,6 @@ public class XpmImageParser extends ImageParser {
         int gray4LevelArgb;
         boolean haveMono = false;
         int monoArgb;
-        String symbolicName = null;
 
         int getBestARGB() {
             if (haveColor) {
@@ -376,6 +375,25 @@ public class XpmImageParser extends ImageParser {
             }
         }
     }
+    
+    private void populatePaletteEntry(PaletteEntry paletteEntry, String key, String color) throws ImageReadException {
+        if (key.equals("m")) {
+            paletteEntry.monoArgb = parseColor(color);
+            paletteEntry.haveMono = true;
+        } else if (key.equals("g4")) {
+            paletteEntry.gray4LevelArgb = parseColor(color);
+            paletteEntry.haveGray4Level = true;
+        } else if (key.equals("g")) {
+            paletteEntry.grayArgb = parseColor(color);
+            paletteEntry.haveGray = true;
+        } else if (key.equals("s")) {
+            paletteEntry.colorArgb = parseColor(color);
+            paletteEntry.haveColor = true;
+        } else if (key.equals("c")) {
+            paletteEntry.colorArgb = parseColor(color);
+            paletteEntry.haveColor = true;
+        }
+    }
 
     private void parsePaletteEntries(XpmHeader xpmHeader, BasicCParser cParser)
             throws IOException, ImageReadException {
@@ -388,8 +406,8 @@ public class XpmImageParser extends ImageParser {
                         + "file ended while reading palette");
             }
             String name = row.substring(0, xpmHeader.numCharsPerPixel);
-            String[] tokens = BasicCParser.tokenizeRow(row
-                    .substring(xpmHeader.numCharsPerPixel));
+            String[] tokens = BasicCParser.tokenizeRow(
+                    row.substring(xpmHeader.numCharsPerPixel));
             PaletteEntry paletteEntry = new PaletteEntry();
             paletteEntry.index = i;
             int previousKeyIndex = Integer.MIN_VALUE;
@@ -408,23 +426,7 @@ public class XpmImageParser extends ImageParser {
                         String key = tokens[previousKeyIndex];
                         String color = colorBuffer.toString();
                         colorBuffer.setLength(0);
-                        if (key.equals("m")) {
-                            paletteEntry.monoArgb = parseColor(color);
-                            paletteEntry.haveMono = true;
-                        } else if (key.equals("g4")) {
-                            paletteEntry.gray4LevelArgb = parseColor(color);
-                            paletteEntry.haveGray4Level = true;
-                        } else if (key.equals("g")) {
-                            paletteEntry.grayArgb = parseColor(color);
-                            paletteEntry.haveGray = true;
-                        } else if (key.equals("s")) {
-                            paletteEntry.symbolicName = color;
-                            paletteEntry.colorArgb = parseColor(color);
-                            paletteEntry.haveColor = true;
-                        } else if (key.equals("c")) {
-                            paletteEntry.colorArgb = parseColor(color);
-                            paletteEntry.haveColor = true;
-                        }
+                        populatePaletteEntry(paletteEntry, key, color);
                     }
                     previousKeyIndex = j;
                 } else {
@@ -441,23 +443,7 @@ public class XpmImageParser extends ImageParser {
                 String key = tokens[previousKeyIndex];
                 String color = colorBuffer.toString();
                 colorBuffer.setLength(0);
-                if (key.equals("m")) {
-                    paletteEntry.monoArgb = parseColor(color);
-                    paletteEntry.haveMono = true;
-                } else if (key.equals("g4")) {
-                    paletteEntry.gray4LevelArgb = parseColor(color);
-                    paletteEntry.haveGray4Level = true;
-                } else if (key.equals("g")) {
-                    paletteEntry.grayArgb = parseColor(color);
-                    paletteEntry.haveGray = true;
-                } else if (key.equals("s")) {
-                    paletteEntry.symbolicName = color;
-                    paletteEntry.colorArgb = parseColor(color);
-                    paletteEntry.haveColor = true;
-                } else if (key.equals("c")) {
-                    paletteEntry.colorArgb = parseColor(color);
-                    paletteEntry.haveColor = true;
-                }
+                populatePaletteEntry(paletteEntry, key, color);
             }
             xpmHeader.palette.put(name, paletteEntry);
         }

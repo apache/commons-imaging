@@ -48,17 +48,26 @@ public class IccTag implements BinaryConstants, IccConstants {
     public void setData(byte bytes[]) throws IOException {
         data = bytes;
 
-        BinaryInputStream bis = new BinaryInputStream(new ByteArrayInputStream(
+        BinaryInputStream bis = null;
+        try {
+            bis = new BinaryInputStream(new ByteArrayInputStream(
                 bytes), BYTE_ORDER_NETWORK);
-        data_type_signature = bis.read4Bytes("data type signature",
-                "ICC: corrupt tag data");
-
-        itdt = getIccTagDataType(data_type_signature);
-        // if (itdt != null)
-        // {
-        // System.out.println("\t\t\t" + "itdt: " + itdt.name);
-        // }
-
+            data_type_signature = bis.read4Bytes("data type signature",
+                    "ICC: corrupt tag data");
+    
+            itdt = getIccTagDataType(data_type_signature);
+            // if (itdt != null)
+            // {
+            // System.out.println("\t\t\t" + "itdt: " + itdt.name);
+            // }
+        } finally {
+            try {
+                if (bis != null) {
+                    bis.close();
+                }
+            } catch (IOException cannotHappen) {
+            }
+        }
     }
 
     private IccTagDataType getIccTagDataType(int quad) {

@@ -53,31 +53,6 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         this.exifBytes = exifBytes;
     }
 
-    // private static class TiffPiece
-    // {
-    // public final int offset;
-    // public final int length;
-    //
-    // public TiffPiece(final int offset, final int length)
-    // {
-    // this.offset = offset;
-    // this.length = length;
-    // }
-    // }
-
-    private void dumpElements(List<TiffElement> elements) throws IOException {
-        // try
-        // {
-        ByteSource byteSource = new ByteSourceArray(exifBytes);
-
-        dumpElements(byteSource, elements);
-        // }
-        // catch (ImageReadException e)
-        // {
-        // throw new ImageWriteException(e.getMessage(), e);
-        // }
-    }
-
     private void dumpElements(ByteSource byteSource, List<TiffElement> elements)
             throws IOException {
         int last = TIFF_HEADER_SIZE;
