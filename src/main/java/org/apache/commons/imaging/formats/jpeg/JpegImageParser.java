@@ -285,7 +285,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             }
         }
 
-        if ((filtered == null) || (filtered.size() < 1)) {
+        if (filtered.size() < 1) {
             return null;
         }
 
