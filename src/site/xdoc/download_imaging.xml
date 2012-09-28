@@ -99,14 +99,14 @@ limitations under the License.
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0.tar.gz">commons-imaging-1.0.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0-bin.tar.gz">commons-imaging-1.0-bin.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-bin.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0.zip">commons-imaging-1.0.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0-bin.zip">commons-imaging-1.0-bin.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-bin.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>

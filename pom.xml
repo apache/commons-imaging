@@ -53,7 +53,6 @@
     <commons.jira.id>IMAGING</commons.jira.id>
     <commons.jira.pid>12313421</commons.jira.pid>
     <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
-    <commons.binary.suffix />
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
