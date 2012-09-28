@@ -93,46 +93,33 @@ public class PixelParserRle extends PixelParser {
         int height = bhi.height;
         int x = 0, y = height - 1;
 
-        // bfp.setDebug(true);
-
         boolean done = false;
         while (!done) {
-            // if (count > 100)
-            // return;
-
             int a = 0xff & bfp.readByte("RLE (" + x + "," + y + ") a", is,
                     "BMP: Bad RLE");
-            // baos.write(a);
-            int b = 0xff & bfp.readByte("RLE (" + x + "," + y + ")  b", is,
+            int b = 0xff & bfp.readByte("RLE (" + x + "," + y + ") b", is,
                     "BMP: Bad RLE");
-            // baos.write(b);
 
             if (a == 0) {
                 switch (b) {
                 case 0: {
                     // EOL
-                    // System.out.println("EOL");
                     y--;
                     x = 0;
-                }
                     break;
+                }
                 case 1:
                     // EOF
-                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                     done = true;
                     break;
                 case 2: {
-                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-                    int c = 0xff & bfp.readByte("RLE c", is, "BMP: Bad RLE");
-                    // baos.write(c);
-                    int d = 0xff & bfp.readByte("RLE d", is, "BMP: Bad RLE");
-                    // baos.write(d);
-
-                }
+                    int deltaX = 0xff & bfp.readByte("RLE deltaX", is, "BMP: Bad RLE");
+                    int deltaY = 0xff & bfp.readByte("RLE deltaY", is, "BMP: Bad RLE");
+                    x += deltaX;
+                    y -= deltaY;
                     break;
+                }
                 default: {
-                    // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
                     int SamplesPerByte = getSamplesPerByte();
                     int size = b / SamplesPerByte;
                     if ((b % SamplesPerByte) > 0) {
@@ -151,7 +138,6 @@ public class PixelParserRle extends PixelParser {
 
                     int remaining = b;
 
-                    // while(true)
                     for (int i = 0; remaining > 0; i++) {
                     // for (int i = 0; i < bytes.length; i++)
                         int samples[] = convertDataToSamples(0xff & bytes[i]);
@@ -167,19 +153,15 @@ public class PixelParserRle extends PixelParser {
                         x += written;
                         remaining -= written;
                     }
-                    // baos.write(bytes);
-                }
                     break;
+                }
                 }
             } else {
                 int rgbs[] = convertDataToSamples(b);
 
                 x += processByteOfData(rgbs, a, x, y, width, height,
                         imageBuilder);
-                // x += processByteOfData(b, a, x, y, width, height, bi);
-
             }
         }
-
     }
 }
