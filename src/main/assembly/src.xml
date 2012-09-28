@@ -26,7 +26,6 @@ http://maven.apache.org/plugins/maven-assembly-plugin/descriptor-refs.html
 <assembly>
   <id>src</id>
   <formats>
-    <format>tar.bz2</format>
     <format>tar.gz</format>
     <format>zip</format>
   </formats>
