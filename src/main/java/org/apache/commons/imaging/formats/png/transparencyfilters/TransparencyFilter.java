@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.transparencyfilters;
+package org.apache.commons.imaging.formats.png.transparencyfilters;
 
 import java.io.IOException;
 

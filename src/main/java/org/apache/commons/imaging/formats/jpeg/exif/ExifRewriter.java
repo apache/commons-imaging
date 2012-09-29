@@ -63,10 +63,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * <p>
      * 
      * @param byteOrder
-     *            byte order of EXIF segment. Optional. See BinaryConstants
-     *            class.
-     * 
-     * @see org.apache.commons.imaging.common.BinaryConstants
+     *            byte order of EXIF segment.
      */
     public ExifRewriter(ByteOrder byteOrder) {
         setByteOrder(byteOrder);

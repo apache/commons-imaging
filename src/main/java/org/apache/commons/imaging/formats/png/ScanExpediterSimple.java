@@ -22,7 +22,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
-import org.apache.commons.imaging.formats.transparencyfilters.TransparencyFilter;
+import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
 public class ScanExpediterSimple extends ScanExpediter {
     public ScanExpediterSimple(int width, int height, InputStream is,

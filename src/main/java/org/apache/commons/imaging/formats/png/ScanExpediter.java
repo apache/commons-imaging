@@ -29,7 +29,7 @@ import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterNone
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterPaeth;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterSub;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterUp;
-import org.apache.commons.imaging.formats.transparencyfilters.TransparencyFilter;
+import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
 public abstract class ScanExpediter extends BinaryFileParser {
     protected final int width;

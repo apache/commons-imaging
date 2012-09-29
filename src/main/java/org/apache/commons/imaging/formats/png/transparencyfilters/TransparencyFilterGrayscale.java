@@ -14,39 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.transparencyfilters;
+package org.apache.commons.imaging.formats.png.transparencyfilters;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class TransparencyFilterIndexedColor extends TransparencyFilter {
+public class TransparencyFilterGrayscale extends TransparencyFilter {
+    private final int transparent_color;
 
-    public TransparencyFilterIndexedColor(byte bytes[]) {
+    public TransparencyFilterGrayscale(byte bytes[]) throws ImageReadException,
+            IOException {
         super(bytes);
-    }
 
-    int count = 0;
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        transparent_color = read2Bytes("transparent_color", is,
+                "tRNS: Missing transparent_color");
+    }
 
     @Override
     public int filter(int rgb, int index) throws ImageReadException,
             IOException {
-        if (index >= bytes.length) {
+        if (index != transparent_color) {
             return rgb;
         }
-
-        if ((index < 0) || (index > bytes.length)) {
-            throw new ImageReadException(
-                    "TransparencyFilterIndexedColor index: " + index
-                            + ", bytes.length: " + bytes.length);
-        }
-
-        int alpha = bytes[index];
-        int result = ((0xff & alpha) << 24) | (0x00ffffff & rgb);
-
-        if ((count < 100) && (index > 0)) {
-            count++;
-        }
-        return result;
+        return 0x00;
     }
 }
