@@ -227,29 +227,6 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
         return true;
     }
 
-    private int[] getColorTable(byte bytes[]) throws ImageReadException {
-        if ((bytes.length % 3) != 0) {
-            throw new ImageReadException("Bad Color Table Length: "
-                    + bytes.length);
-        }
-        int length = bytes.length / 3;
-
-        int result[] = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            int red = 0xff & bytes[(i * 3) + 0];
-            int green = 0xff & bytes[(i * 3) + 1];
-            int blue = 0xff & bytes[(i * 3) + 2];
-
-            int alpha = 0xff;
-
-            int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-            result[i] = rgb;
-        }
-
-        return result;
-    }
-
     @Override
     public BufferedImage getBufferedImage(ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {

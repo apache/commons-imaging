@@ -21,13 +21,28 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImageReadException;
 
 public class PgmFileInfo extends FileInfo {
-    private final int max; // TODO: handle max
+    private final int max;
+    private final float scale;
+    private final int bytesPerSample; 
 
-    public PgmFileInfo(int width, int height, boolean RAWBITS, int max) {
+    public PgmFileInfo(int width, int height, boolean RAWBITS, int max) throws ImageReadException {
         super(width, height, RAWBITS);
-
+        if (max <= 0) {
+            throw new ImageReadException("PGM maxVal " + max
+                    + " is out of range [1;65535]");
+        } else if (max <= 255) {
+            scale = 255f;
+            bytesPerSample = 1;
+        } else if (max <= 65535) {
+            scale = 65535f;
+            bytesPerSample = 2;
+        } else {
+            throw new ImageReadException("PGM maxVal " + max
+                    + " is out of range [1;65535]");
+        }
         this.max = max;
     }
 
@@ -63,10 +78,9 @@ public class PgmFileInfo extends FileInfo {
 
     @Override
     public int getRGB(InputStream is) throws IOException {
-        int sample = is.read();
-        if (sample < 0) {
-            throw new IOException("PGM: Unexpected EOF");
-        }
+        int sample = readSample(is, bytesPerSample);
+        
+        sample = scaleSample(sample, scale, max);
 
         int alpha = 0xff;
 
@@ -80,6 +94,8 @@ public class PgmFileInfo extends FileInfo {
     public int getRGB(WhiteSpaceReader wsr) throws IOException {
         int sample = Integer.parseInt(wsr.readtoWhiteSpace());
 
+        sample = scaleSample(sample, scale, max);
+        
         int alpha = 0xff;
 
         int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)

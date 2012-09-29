@@ -21,13 +21,28 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImageReadException;
 
 public class PpmFileInfo extends FileInfo {
-    private final int max; // TODO: handle max
+    private final int max;
+    private final float scale;
+    private final int bytesPerSample; 
 
-    public PpmFileInfo(int width, int height, boolean RAWBITS, int max) {
+    public PpmFileInfo(int width, int height, boolean RAWBITS, int max) throws ImageReadException {
         super(width, height, RAWBITS);
-
+        if (max <= 0) {
+            throw new ImageReadException("PGM maxVal " + max
+                    + " is out of range [1;65535]");
+        } else if (max <= 255) {
+            scale = 255f;
+            bytesPerSample = 1;
+        } else if (max <= 65535) {
+            scale = 65535f;
+            bytesPerSample = 2;
+        } else {
+            throw new ImageReadException("PGM maxVal " + max
+                    + " is out of range [1;65535]");
+        }
         this.max = max;
     }
 
@@ -63,14 +78,13 @@ public class PpmFileInfo extends FileInfo {
 
     @Override
     public int getRGB(InputStream is) throws IOException {
-        int red = is.read();
-        int green = is.read();
-        int blue = is.read();
+        int red = readSample(is, bytesPerSample);
+        int green = readSample(is, bytesPerSample);
+        int blue = readSample(is, bytesPerSample);
 
-        if ((red < 0) || (green < 0) || (blue < 0)) {
-            throw new IOException("PPM: Unexpected EOF");
-        }
-
+        red = scaleSample(red, scale, max);
+        green = scaleSample(green, scale, max);
+        blue = scaleSample(blue, scale, max);
         int alpha = 0xff;
 
         int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
@@ -85,6 +99,9 @@ public class PpmFileInfo extends FileInfo {
         int green = Integer.parseInt(wsr.readtoWhiteSpace());
         int blue = Integer.parseInt(wsr.readtoWhiteSpace());
 
+        red = scaleSample(red, scale, max);
+        green = scaleSample(green, scale, max);
+        blue = scaleSample(blue, scale, max);
         int alpha = 0xff;
 
         int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)

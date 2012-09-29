@@ -51,6 +51,30 @@ public abstract class FileInfo {
     protected void newline() {
         // do nothing by default.
     }
+    
+    protected static int readSample(InputStream is, int bytesPerSample) throws IOException {
+        int sample = 0;
+        for (int i = 0; i < bytesPerSample; i++) {
+            int nextByte = is.read();
+            if (nextByte < 0) {
+                throw new IOException("PNM: Unexpected EOF");
+            }
+            sample <<= 8;
+            sample |= nextByte;
+        }
+        return sample;
+    }
+    
+    protected static int scaleSample(int sample, float scale, int max) throws IOException {
+        if (sample < 0) {
+            // Even netpbm tools break for files like this
+            throw new IOException("Negative pixel values are invalid in PNM files");
+        } else if (sample > max) {
+            // invalid values -> black
+            sample = 0;
+        }
+        return (int)((sample * max / scale) + 0.5f);
+    }
 
     public void readImage(ImageBuilder imageBuilder, InputStream is)
             throws IOException {
