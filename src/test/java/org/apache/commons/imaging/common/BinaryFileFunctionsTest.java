@@ -23,30 +23,30 @@ public class BinaryFileFunctionsTest extends ImagingTest {
     private static class Extender extends BinaryFileFunctions {
         public void testFloatToByteConversion() {
             byte[] bytesLE = convertFloatToByteArray(1.0f,
-                    BYTE_ORDER_LITTLE_ENDIAN);
+                    ByteOrder.LITTLE_ENDIAN);
             assertEquals(
                     convertByteArrayToFloat("bytes", bytesLE,
-                            BYTE_ORDER_LITTLE_ENDIAN), 1.0f, 0f);
+                            ByteOrder.LITTLE_ENDIAN), 1.0f, 0f);
 
             byte[] bytesBE = convertFloatToByteArray(1.0f,
-                    BYTE_ORDER_BIG_ENDIAN);
+                    ByteOrder.BIG_ENDIAN);
             assertEquals(
                     convertByteArrayToFloat("bytes", bytesBE,
-                            BYTE_ORDER_BIG_ENDIAN), 1.0f, 0f);
+                            ByteOrder.BIG_ENDIAN), 1.0f, 0f);
         }
 
         public void testDoubleToByteConversion() {
-            byte[] bytesLE = convertDoubleToByteArray(1.0,
-                    BYTE_ORDER_LITTLE_ENDIAN);
+            byte[] bytesLE = BinaryConversions.toBytes(1.0,
+                    ByteOrder.LITTLE_ENDIAN);
             assertEquals(
                     convertByteArrayToDouble("bytes", bytesLE,
-                            BYTE_ORDER_LITTLE_ENDIAN), 1.0, 0);
+                            ByteOrder.LITTLE_ENDIAN), 1.0, 0);
 
-            byte[] bytesBE = convertDoubleToByteArray(1.0,
-                    BYTE_ORDER_BIG_ENDIAN);
+            byte[] bytesBE = BinaryConversions.toBytes(1.0,
+                    ByteOrder.BIG_ENDIAN);
             assertEquals(
                     convertByteArrayToDouble("bytes", bytesBE,
-                            BYTE_ORDER_BIG_ENDIAN), 1.0, 0);
+                            ByteOrder.BIG_ENDIAN), 1.0, 0);
         }
     }
 

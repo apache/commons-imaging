@@ -22,13 +22,14 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 
 public class TiffImageWriterLossy extends TiffImageWriterBase {
 
     public TiffImageWriterLossy() {
     }
 
-    public TiffImageWriterLossy(int byteOrder) {
+    public TiffImageWriterLossy(ByteOrder byteOrder) {
         super(byteOrder);
     }
 

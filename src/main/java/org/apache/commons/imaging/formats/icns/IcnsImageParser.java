@@ -34,6 +34,7 @@ import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
@@ -43,7 +44,7 @@ public class IcnsImageParser extends ImageParser {
     public static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
 
     public IcnsImageParser() {
-        super.setByteOrder(BYTE_ORDER_MSB);
+        super.setByteOrder(ByteOrder.BIG_ENDIAN);
     }
 
     @Override
@@ -326,7 +327,7 @@ public class IcnsImageParser extends ImageParser {
         }
 
         BinaryOutputStream bos = new BinaryOutputStream(os,
-                BYTE_ORDER_BIG_ENDIAN);
+                ByteOrder.BIG_ENDIAN);
         bos.write4Bytes(ICNS_MAGIC);
         bos.write4Bytes(4 + 4 + 4 + 4 + 4 * imageType.getWidth()
                 * imageType.getHeight() + 4 + 4 + imageType.getWidth()

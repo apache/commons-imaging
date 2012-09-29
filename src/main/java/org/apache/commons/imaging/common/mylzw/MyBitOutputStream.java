@@ -19,13 +19,13 @@ package org.apache.commons.imaging.common.mylzw;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.apache.commons.imaging.common.BinaryConstants;
+import org.apache.commons.imaging.common.ByteOrder;
 
-public class MyBitOutputStream extends OutputStream implements BinaryConstants {
+public class MyBitOutputStream extends OutputStream {
     private final OutputStream os;
-    private final int byteOrder;
+    private final ByteOrder byteOrder;
 
-    public MyBitOutputStream(OutputStream os, int byteOrder) {
+    public MyBitOutputStream(OutputStream os, ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
         this.os = os;
     }
@@ -44,25 +44,23 @@ public class MyBitOutputStream extends OutputStream implements BinaryConstants {
         int sampleMask = (1 << SampleBits) - 1;
         value &= sampleMask;
 
-        if (byteOrder == BYTE_ORDER_NETWORK) {
+        if (byteOrder == ByteOrder.NETWORK) {
             // MSB, so add to right
             bitCache = (bitCache << SampleBits) | value;
-        } else if (byteOrder == BYTE_ORDER_INTEL) {
+        } else {
             // LSB, so add to left
             bitCache = bitCache | (value << bitsInCache);
-        } else {
-            throw new IOException("Unknown byte order: " + byteOrder);
         }
         bitsInCache += SampleBits;
 
         while (bitsInCache >= 8) {
-            if (byteOrder == BYTE_ORDER_NETWORK) {
+            if (byteOrder == ByteOrder.NETWORK) {
                 // MSB, so write from left
                 int b = 0xff & (bitCache >> (bitsInCache - 8));
                 actualWrite(b);
 
                 bitsInCache -= 8;
-            } else if (byteOrder == BYTE_ORDER_INTEL) {
+            } else {
                 // LSB, so write from right
                 int b = 0xff & bitCache;
                 actualWrite(b);
@@ -88,11 +86,11 @@ public class MyBitOutputStream extends OutputStream implements BinaryConstants {
             int bitMask = (1 << bitsInCache) - 1;
             int b = bitMask & bitCache;
 
-            if (byteOrder == BYTE_ORDER_NETWORK) { 
+            if (byteOrder == ByteOrder.NETWORK) { 
                 // MSB, so write from left
                 b <<= 8 - bitsInCache; // left align fragment.
                 os.write(b);
-            } else if (byteOrder == BYTE_ORDER_INTEL) {
+            } else {
                 // LSB, so write from right
                 os.write(b);
             }

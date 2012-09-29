@@ -33,6 +33,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -41,7 +42,7 @@ import org.apache.commons.imaging.util.Debug;
 public class PnmImageParser extends ImageParser implements PnmConstants {
 
     public PnmImageParser() {
-        super.setByteOrder(BYTE_ORDER_LSB);
+        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
         // setDebug(true);
     }
 

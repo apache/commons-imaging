@@ -42,6 +42,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
@@ -59,7 +60,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
     // images properly.
 
     public PcxImageParser() {
-        super.setByteOrder(BYTE_ORDER_LSB);
+        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
     }
 
     @Override
@@ -261,17 +262,17 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
         int encoding = 0xff & pcxHeaderBytes[2];
         int bitsPerPixel = 0xff & pcxHeaderBytes[3];
         int xMin = convertByteArrayToShort("xMin", 4, pcxHeaderBytes,
-                BYTE_ORDER_LSB);
+                ByteOrder.LITTLE_ENDIAN);
         int yMin = convertByteArrayToShort("yMin", 6, pcxHeaderBytes,
-                BYTE_ORDER_LSB);
+                ByteOrder.LITTLE_ENDIAN);
         int xMax = convertByteArrayToShort("xMax", 8, pcxHeaderBytes,
-                BYTE_ORDER_LSB);
+                ByteOrder.LITTLE_ENDIAN);
         int yMax = convertByteArrayToShort("yMax", 10, pcxHeaderBytes,
-                BYTE_ORDER_LSB);
+                ByteOrder.LITTLE_ENDIAN);
         int hDpi = convertByteArrayToShort("hDpi", 12, pcxHeaderBytes,
-                BYTE_ORDER_LSB);
+                ByteOrder.LITTLE_ENDIAN);
         int vDpi = convertByteArrayToShort("vDpi", 14, pcxHeaderBytes,
-                BYTE_ORDER_LSB);
+                ByteOrder.LITTLE_ENDIAN);
         int[] colormap = new int[16];
         for (int i = 0; i < 16; i++) {
             colormap[i] = 0xff000000
@@ -282,13 +283,13 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
         int reserved = 0xff & pcxHeaderBytes[64];
         int nPlanes = 0xff & pcxHeaderBytes[65];
         int bytesPerLine = convertByteArrayToShort("BytesPerLine", 66,
-                pcxHeaderBytes, BYTE_ORDER_LSB);
+                pcxHeaderBytes, ByteOrder.LITTLE_ENDIAN);
         int paletteInfo = convertByteArrayToShort("PaletteInfo", 68,
-                pcxHeaderBytes, BYTE_ORDER_LSB);
+                pcxHeaderBytes, ByteOrder.LITTLE_ENDIAN);
         int hScreenSize = convertByteArrayToShort("hScreenSize", 70,
-                pcxHeaderBytes, BYTE_ORDER_LSB);
+                pcxHeaderBytes, ByteOrder.LITTLE_ENDIAN);
         int vScreenSize = convertByteArrayToShort("vScreenSize", 72,
-                pcxHeaderBytes, BYTE_ORDER_LSB);
+                pcxHeaderBytes, ByteOrder.LITTLE_ENDIAN);
 
         if (manufacturer != 10) {
             throw new ImageReadException(

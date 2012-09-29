@@ -27,6 +27,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -54,7 +55,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * extension.
      */
     public ExifRewriter() {
-        setByteOrder(BYTE_ORDER_NETWORK);
+        setByteOrder(ByteOrder.NETWORK);
     }
 
     /**
@@ -67,7 +68,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * 
      * @see org.apache.commons.imaging.common.BinaryConstants
      */
-    public ExifRewriter(int byteOrder) {
+    public ExifRewriter(ByteOrder byteOrder) {
         setByteOrder(byteOrder);
     }
 
@@ -498,7 +499,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
     private void writeSegmentsReplacingExif(OutputStream os,
             List<JFIFPiece> segments, byte newBytes[])
             throws ImageWriteException, IOException {
-        int byteOrder = getByteOrder();
+        ByteOrder byteOrder = getByteOrder();
 
         try {
             SOI.writeTo(os);

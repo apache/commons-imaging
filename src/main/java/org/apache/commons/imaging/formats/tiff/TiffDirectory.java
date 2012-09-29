@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -146,13 +147,13 @@ public class TiffDirectory extends TiffElement implements TiffConstants
         return false;
     }
 
-    public BufferedImage getTiffImage(int byteOrder) throws ImageReadException,
+    public BufferedImage getTiffImage(ByteOrder byteOrder) throws ImageReadException,
             IOException {
         Map<String,Object> params = null;
         return getTiffImage(byteOrder, params);
     }
 
-    public BufferedImage getTiffImage(int byteOrder, Map<String,Object> params)
+    public BufferedImage getTiffImage(ByteOrder byteOrder, Map<String,Object> params)
             throws ImageReadException, IOException {
         if (null == tiffImageData) {
             return null;

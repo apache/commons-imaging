@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoByteOrShort extends TagInfo {
@@ -24,11 +25,11 @@ public class TagInfoByteOrShort extends TagInfo {
         super(name, tag, FIELD_TYPE_DESCRIPTION_BYTE_OR_SHORT, length, directoryType);
     }
     
-    public byte[] encodeValue(int byteOrder, byte... values) {
+    public byte[] encodeValue(ByteOrder byteOrder, byte... values) {
         return values;
     }
     
-    public byte[] encodeValue(int byteOrder, short... values) {
-        return BinaryConversions.convertToByteArray(values, byteOrder);
+    public byte[] encodeValue(ByteOrder byteOrder, short... values) {
+        return BinaryConversions.toBytes(values, byteOrder);
     }
 }

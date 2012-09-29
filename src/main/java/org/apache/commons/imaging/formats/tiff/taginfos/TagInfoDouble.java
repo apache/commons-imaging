@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoDouble extends TagInfo {
@@ -25,11 +26,11 @@ public class TagInfoDouble extends TagInfo {
         super(name, tag, FIELD_TYPE_DOUBLE, length, directoryType);
     }
     
-    public double[] getValue(int byteOrder, byte[] bytes) {
-        return BinaryConversions.convertToDoubleArray(bytes, byteOrder);
+    public double[] getValue(ByteOrder byteOrder, byte[] bytes) {
+        return BinaryConversions.toDoubles(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(int byteOrder, double... values) throws ImageWriteException {
-        return BinaryConversions.convertToByteArray(values, byteOrder);
+    public byte[] encodeValue(ByteOrder byteOrder, double... values) throws ImageWriteException {
+        return BinaryConversions.toBytes(values, byteOrder);
     }
 }

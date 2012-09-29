@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumberUtilities;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
@@ -27,14 +28,14 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.util.Debug;
 
 public final class TiffOutputSet implements TiffConstants {
-    public final int byteOrder;
+    public final ByteOrder byteOrder;
     private final List<TiffOutputDirectory> directories = new ArrayList<TiffOutputDirectory>();
 
     public TiffOutputSet() {
         this(TiffConstants.DEFAULT_TIFF_BYTE_ORDER);
     }
 
-    public TiffOutputSet(final int byteOrder) {
+    public TiffOutputSet(final ByteOrder byteOrder) {
         super();
         this.byteOrder = byteOrder;
     }

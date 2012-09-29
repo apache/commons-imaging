@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BitInputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
@@ -35,7 +36,7 @@ public final class DataReaderTiled extends DataReader {
     private final int bitsPerPixel;
 
     private final int compression;
-    private final int byteOrder;
+    private final ByteOrder byteOrder;
 
     private final TiffImageData.Tiles imageData;
 
@@ -43,7 +44,7 @@ public final class DataReaderTiled extends DataReader {
             PhotometricInterpreter photometricInterpreter, int tileWidth,
             int tileLength, int bitsPerPixel, int bitsPerSample[],
             int predictor, int samplesPerPixel, int width, int height,
-            int compression, int byteOrder, TiffImageData.Tiles imageData) {
+            int compression, ByteOrder byteOrder, TiffImageData.Tiles imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
                 samplesPerPixel, width, height);
 

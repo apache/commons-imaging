@@ -29,6 +29,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryFileFunctions;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
@@ -48,7 +49,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         this.exifBytes = exifBytes;
     }
 
-    public TiffImageWriterLossless(int byteOrder, byte exifBytes[]) {
+    public TiffImageWriterLossless(ByteOrder byteOrder, byte exifBytes[]) {
         super(byteOrder);
         this.exifBytes = exifBytes;
     }

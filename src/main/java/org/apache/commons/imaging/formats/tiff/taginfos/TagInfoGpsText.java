@@ -20,8 +20,8 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryConstants;
 import org.apache.commons.imaging.common.BinaryFileFunctions;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
@@ -50,8 +50,8 @@ public final class TagInfoGpsText extends TagInfo {
             this.encodingNameBE = encodingNameBE;
         }
 
-        public String getEncodingName(int byteOrder) {
-            if (byteOrder == BinaryConstants.BYTE_ORDER_BIG_ENDIAN) {
+        public String getEncodingName(ByteOrder byteOrder) {
+            if (byteOrder == ByteOrder.BIG_ENDIAN) {
                 return encodingNameBE;
             } else {
                 return encodingNameLE;
@@ -81,7 +81,7 @@ public final class TagInfoGpsText extends TagInfo {
     };
 
     @Override
-    public byte[] encodeValue(FieldType fieldType, Object value, int byteOrder)
+    public byte[] encodeValue(FieldType fieldType, Object value, ByteOrder byteOrder)
             throws ImageWriteException {
         if (!(value instanceof String)) {
             throw new ImageWriteException("GPS text value not String: " + value

@@ -21,12 +21,13 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
 
 public class JpegUtils extends BinaryFileParser implements JpegConstants {
     public JpegUtils() {
-        setByteOrder(BYTE_ORDER_NETWORK);
+        setByteOrder(ByteOrder.NETWORK);
     }
 
     public static interface Visitor {
@@ -55,7 +56,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
             readAndVerifyBytes(is, SOI,
                     "Not a Valid JPEG File: doesn't begin with 0xffd8");
 
-            int byteOrder = getByteOrder();
+            ByteOrder byteOrder = getByteOrder();
 
             int markerCount;
             for (markerCount = 0; true; markerCount++) {

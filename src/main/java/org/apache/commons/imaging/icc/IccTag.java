@@ -24,10 +24,10 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryConstants;
 import org.apache.commons.imaging.common.BinaryInputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 
-public class IccTag implements BinaryConstants, IccConstants {
+public class IccTag implements IccConstants {
     public final int signature;
     public final int offset, length;
     public final IccTagType fIccTagType;
@@ -51,7 +51,7 @@ public class IccTag implements BinaryConstants, IccConstants {
         BinaryInputStream bis = null;
         try {
             bis = new BinaryInputStream(new ByteArrayInputStream(
-                bytes), BYTE_ORDER_NETWORK);
+                bytes), ByteOrder.NETWORK);
             data_type_signature = bis.read4Bytes("data type signature",
                     "ICC: corrupt tag data");
     

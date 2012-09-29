@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -30,7 +31,7 @@ import org.apache.commons.imaging.util.Debug;
 
 public class IccProfileParser extends BinaryFileParser implements IccConstants {
     public IccProfileParser() {
-        this.setByteOrder(BYTE_ORDER_NETWORK);
+        this.setByteOrder(ByteOrder.BIG_ENDIAN);
     }
 
     public IccProfileInfo getICCProfileInfo(ICC_Profile icc_profile) {

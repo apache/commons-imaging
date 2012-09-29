@@ -21,14 +21,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
 class TiffOutputSummary implements TiffConstants {
-    public final int byteOrder;
+    public final ByteOrder byteOrder;
     public final TiffOutputDirectory rootDirectory;
     public final Map<Integer, TiffOutputDirectory> directoryTypeMap;
 
-    public TiffOutputSummary(final int byteOrder,
+    public TiffOutputSummary(final ByteOrder byteOrder,
             final TiffOutputDirectory rootDirectory,
             final Map<Integer, TiffOutputDirectory> directoryTypeMap) {
         this.byteOrder = byteOrder;
@@ -55,7 +56,7 @@ class TiffOutputSummary implements TiffConstants {
         offsetItems.add(new OffsetItem(item, itemOffsetField));
     }
 
-    public void updateOffsets(int byteOrder) throws ImageWriteException {
+    public void updateOffsets(ByteOrder byteOrder) throws ImageWriteException {
         for (int i = 0; i < offsetItems.size(); i++) {
             OffsetItem offset = offsetItems.get(i);
 

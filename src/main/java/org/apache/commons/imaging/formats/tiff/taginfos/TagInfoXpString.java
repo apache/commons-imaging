@@ -21,6 +21,7 @@ import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
@@ -38,7 +39,7 @@ public class TagInfoXpString extends TagInfo {
     }
 
     @Override
-    public byte[] encodeValue(FieldType fieldType, Object value, int byteOrder)
+    public byte[] encodeValue(FieldType fieldType, Object value, ByteOrder byteOrder)
             throws ImageWriteException {
         if (!(value instanceof String)) {
             throw new ImageWriteException("Text value not String: " + value

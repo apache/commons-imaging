@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryConstants;
 import org.apache.commons.imaging.common.BitInputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
@@ -33,7 +33,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
-public abstract class DataReader implements TiffConstants, BinaryConstants {
+public abstract class DataReader implements TiffConstants {
     protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
     protected final int bitsPerSample[];
@@ -178,7 +178,7 @@ public abstract class DataReader implements TiffConstants, BinaryConstants {
             int LZWMinimumCodeSize = 8;
 
             MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
-                    LZWMinimumCodeSize, BYTE_ORDER_NETWORK);
+                    LZWMinimumCodeSize, ByteOrder.NETWORK);
 
             myLzwDecompressor.setTiffLZWMode();
 

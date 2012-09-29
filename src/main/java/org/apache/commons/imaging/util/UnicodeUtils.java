@@ -19,9 +19,7 @@ package org.apache.commons.imaging.util;
 
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.imaging.common.BinaryConstants;
-
-public abstract class UnicodeUtils implements BinaryConstants {
+public abstract class UnicodeUtils {
     /**
      * This class should never be instantiated.
      */

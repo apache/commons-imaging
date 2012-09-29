@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
@@ -83,7 +84,7 @@ public abstract class TagInfo implements TiffDirectoryConstants,
         return o;
     }
 
-    public byte[] encodeValue(FieldType fieldType, Object value, int byteOrder)
+    public byte[] encodeValue(FieldType fieldType, Object value, ByteOrder byteOrder)
             throws ImageWriteException {
         return fieldType.writeData(value, byteOrder);
     }

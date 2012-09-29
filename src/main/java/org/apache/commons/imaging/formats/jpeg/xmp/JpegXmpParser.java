@@ -21,12 +21,13 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class JpegXmpParser extends BinaryFileParser implements JpegConstants {
 
     public JpegXmpParser() {
-        setByteOrder(BYTE_ORDER_NETWORK);
+        setByteOrder(ByteOrder.NETWORK);
     }
 
     public boolean isXmpJpegSegment(byte segmentData[]) {

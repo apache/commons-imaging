@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
@@ -60,7 +61,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         TiffConstants {
     public final int type;
     private final List<TiffOutputField> fields = new ArrayList<TiffOutputField>();
-    private final int byteOrder;
+    private final ByteOrder byteOrder;
     private TiffOutputDirectory nextDirectory = null;
     public static final Comparator<TiffOutputDirectory> COMPARATOR = new Comparator<TiffOutputDirectory>() {
         public int compare(TiffOutputDirectory o1, TiffOutputDirectory o2) {
@@ -78,7 +79,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         this.nextDirectory = nextDirectory;
     }
 
-    public TiffOutputDirectory(final int type, final int byteOrder) {
+    public TiffOutputDirectory(final int type, final ByteOrder byteOrder) {
         this.type = type;
         this.byteOrder = byteOrder;
     }

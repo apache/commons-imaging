@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import java.util.List;
 
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
@@ -31,7 +32,7 @@ public class TagInfoByte extends TagInfo {
         super(name, tag, fieldTypes, length, directoryType);
     }
 
-    public byte[] encodeValue(int byteOrder, byte... values) {
+    public byte[] encodeValue(ByteOrder byteOrder, byte... values) {
         return values;
     }
 }

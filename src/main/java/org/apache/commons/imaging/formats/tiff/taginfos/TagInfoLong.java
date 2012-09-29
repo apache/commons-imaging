@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 
@@ -29,11 +30,11 @@ public class TagInfoLong extends TagInfo {
         super(name, tag, FIELD_TYPE_LONG, length, directoryType, isOffset);
     }
     
-    public int[] getValue(int byteOrder, byte[] bytes) {
-        return BinaryConversions.convertToIntArray(bytes, byteOrder);
+    public int[] getValue(ByteOrder byteOrder, byte[] bytes) {
+        return BinaryConversions.toInts(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(int byteOrder, int... values) {
-        return BinaryConversions.convertToByteArray(values, byteOrder);
+    public byte[] encodeValue(ByteOrder byteOrder, int... values) {
+        return BinaryConversions.toBytes(values, byteOrder);
     }
 }

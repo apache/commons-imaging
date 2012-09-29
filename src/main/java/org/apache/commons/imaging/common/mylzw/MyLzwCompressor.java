@@ -21,23 +21,25 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.imaging.common.ByteOrder;
+
 public class MyLzwCompressor {
     private int codeSize;
     private final int initialCodeSize;
     private int codes = -1;
 
-    private final int byteOrder;
+    private final ByteOrder byteOrder;
     private final boolean earlyLimit;
     private final int clearCode;
     private final int eoiCode;
     private final Listener listener;
 
-    public MyLzwCompressor(int initialCodeSize, int byteOrder,
+    public MyLzwCompressor(int initialCodeSize, ByteOrder byteOrder,
             boolean earlyLimit) {
         this(initialCodeSize, byteOrder, earlyLimit, null);
     }
 
-    public MyLzwCompressor(int initialCodeSize, int byteOrder,
+    public MyLzwCompressor(int initialCodeSize, ByteOrder byteOrder,
             boolean earlyLimit, Listener listener) {
         this.listener = listener;
         this.byteOrder = byteOrder;

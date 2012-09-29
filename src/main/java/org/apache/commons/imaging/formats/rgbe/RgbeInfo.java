@@ -22,9 +22,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryConstants;
 import org.apache.commons.imaging.common.BinaryFileFunctions;
 import org.apache.commons.imaging.common.BinaryInputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -42,7 +42,7 @@ class RgbeInfo extends BinaryFileFunctions {
 
     RgbeInfo(ByteSource byteSource) throws IOException {
         this.in = new BinaryInputStream(byteSource.getInputStream(),
-                BinaryConstants.BYTE_ORDER_BIG_ENDIAN);
+                ByteOrder.BIG_ENDIAN);
     }
 
     IImageMetadata getMetadata() throws IOException, ImageReadException {
@@ -142,7 +142,7 @@ class RgbeInfo extends BinaryFileFunctions {
         }
 
         byte[] scanLineBytes = convertShortToByteArray(width,
-                BinaryConstants.BYTE_ORDER_BIG_ENDIAN);
+                ByteOrder.BIG_ENDIAN);
         byte[] rgbe = new byte[width * 4];
         float[][] out = new float[3][width * height];
 

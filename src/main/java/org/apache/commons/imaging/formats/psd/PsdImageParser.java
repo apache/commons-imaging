@@ -32,6 +32,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
@@ -49,7 +50,7 @@ import org.apache.commons.imaging.util.Debug;
 public class PsdImageParser extends ImageParser {
 
     public PsdImageParser() {
-        super.setByteOrder(BYTE_ORDER_MSB);
+        super.setByteOrder(ByteOrder.MOTOROLA);
         // setDebug(true);
     }
 

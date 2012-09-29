@@ -25,6 +25,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
@@ -138,7 +139,7 @@ public class PcxWriter implements PcxConstants {
         final SimplePalette palette = paletteFactory
                 .makeExactRgbPaletteSimple(src, 256);
         BinaryOutputStream bos = new BinaryOutputStream(os,
-                BinaryOutputStream.BYTE_ORDER_INTEL);
+                ByteOrder.INTEL);
         if (palette == null || bitDepth == 24 || bitDepth == 32) {
             if (bitDepth == 32) {
                 write32BppPCX(src, bos);

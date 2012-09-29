@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
 public class FieldTypeAscii extends FieldType {
@@ -72,7 +73,7 @@ public class FieldTypeAscii extends FieldType {
     }
 
     @Override
-    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
+    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof byte[]) {
             byte bytes[] = (byte[]) o;
             byte result[] = new byte[bytes.length + 1];

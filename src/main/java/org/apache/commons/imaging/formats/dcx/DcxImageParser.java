@@ -35,6 +35,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
@@ -46,7 +47,7 @@ public class DcxImageParser extends ImageParser {
     // See http://www.fileformat.info/format/pcx/egff.htm for documentation
 
     public DcxImageParser() {
-        super.setByteOrder(BYTE_ORDER_LSB);
+        super.setByteOrder(ByteOrder.INTEL);
     }
 
     @Override
@@ -249,7 +250,7 @@ public class DcxImageParser extends ImageParser {
         final int headerSize = 4 + 1024 * 4;
 
         BinaryOutputStream bos = new BinaryOutputStream(os,
-                BinaryOutputStream.BYTE_ORDER_LITTLE_ENDIAN);
+                ByteOrder.INTEL);
         bos.write4Bytes(DcxHeader.DCX_ID);
         // Some apps may need a full 1024 entry table
         bos.write4Bytes(headerSize);

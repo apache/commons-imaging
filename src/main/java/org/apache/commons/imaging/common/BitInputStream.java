@@ -19,12 +19,12 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class BitInputStream extends InputStream implements BinaryConstants {
+public class BitInputStream extends InputStream {
 
     private final InputStream is;
-    private final int byteOrder;
+    private final ByteOrder byteOrder;
 
-    public BitInputStream(InputStream is, int byteOrder) {
+    public BitInputStream(InputStream is, ByteOrder byteOrder) {
         this.is = is;
         this.byteOrder = byteOrder;
     }
@@ -90,7 +90,7 @@ public class BitInputStream extends InputStream implements BinaryConstants {
          * the bytes in the end if its Big Endian.This is done because majority
          * (may be all) of the files will be of Little Endian.
          */
-        if (byteOrder == BYTE_ORDER_BIG_ENDIAN) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             if (count == 16) {
                 bytes_read += 2;
                 return (is.read() << 8) | (is.read() << 0);

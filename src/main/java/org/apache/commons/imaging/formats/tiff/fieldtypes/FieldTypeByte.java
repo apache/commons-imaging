@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
@@ -35,7 +36,7 @@ public class FieldTypeByte extends FieldType {
     }
 
     @Override
-    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
+    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Byte) {
             return new byte[] { ((Byte) o).byteValue(), };
         } else if (o instanceof byte[]) {

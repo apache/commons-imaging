@@ -37,6 +37,7 @@ import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -50,7 +51,7 @@ import org.apache.commons.imaging.util.ParamMap;
 public class GifImageParser extends ImageParser {
 
     public GifImageParser() {
-        super.setByteOrder(BYTE_ORDER_LSB);
+        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
     }
 
     @Override
@@ -384,7 +385,7 @@ public class GifImageParser extends ImageParser {
 
             int size = imageWidth * imageHeight;
             MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
-                    LZWMinimumCodeSize, BYTE_ORDER_LSB);
+                    LZWMinimumCodeSize, ByteOrder.LITTLE_ENDIAN);
             imageData = myLzwDecompressor.decompress(bais, size);
         } else {
             int LZWMinimumCodeSize = is.read();
@@ -844,7 +845,7 @@ public class GifImageParser extends ImageParser {
         }
         int palette_size = palette2.length() + (hasAlpha ? 1 : 0);
 
-        BinaryOutputStream bos = new BinaryOutputStream(os, BYTE_ORDER_LSB);
+        BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.LITTLE_ENDIAN);
 
         // write Header
         os.write(0x47); // G magic numbers
@@ -992,7 +993,7 @@ public class GifImageParser extends ImageParser {
             bos.write(LZWMinimumCodeSize);
 
             MyLzwCompressor compressor = new MyLzwCompressor(
-                    LZWMinimumCodeSize, BYTE_ORDER_LSB, false); // GIF
+                    LZWMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false); // GIF
             // Mode);
 
             byte imagedata[] = new byte[width * height];

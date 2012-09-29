@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
@@ -25,11 +26,11 @@ public class TagInfoShortOrRational extends TagInfo {
         super(name, tag, FIELD_TYPE_DESCRIPTION_SHORT_OR_RATIONAL, length, directoryType, false);
     }
     
-    public byte[] encodeValue(int byteOrder, short... values) {
-        return BinaryConversions.convertToByteArray(values, byteOrder);
+    public byte[] encodeValue(ByteOrder byteOrder, short... values) {
+        return BinaryConversions.toBytes(values, byteOrder);
     }
 
-    public byte[] encodeValue(int byteOrder, RationalNumber... values) {
-        return BinaryConversions.convertToByteArray(values, byteOrder);
+    public byte[] encodeValue(ByteOrder byteOrder, RationalNumber... values) {
+        return BinaryConversions.toBytes(values, byteOrder);
     }
 }

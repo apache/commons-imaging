@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.commons.imaging.common.ByteOrder;
+
 public final class MyLzwDecompressor {
     private static final int MAX_TABLE_SIZE = 1 << 12;
 
@@ -29,7 +31,7 @@ public final class MyLzwDecompressor {
     private final int initialCodeSize;
     private int codes = -1;
 
-    private final int byteOrder;
+    private final ByteOrder byteOrder;
 
     private final Listener listener;
 
@@ -39,11 +41,11 @@ public final class MyLzwDecompressor {
         public void init(int clearCode, int eoiCode);
     }
 
-    public MyLzwDecompressor(int initialCodeSize, int byteOrder) {
+    public MyLzwDecompressor(int initialCodeSize, ByteOrder byteOrder) {
         this(initialCodeSize, byteOrder, null);
     }
 
-    public MyLzwDecompressor(int initialCodeSize, int byteOrder,
+    public MyLzwDecompressor(int initialCodeSize, ByteOrder byteOrder,
             Listener listener) {
         this.listener = listener;
         this.byteOrder = byteOrder;

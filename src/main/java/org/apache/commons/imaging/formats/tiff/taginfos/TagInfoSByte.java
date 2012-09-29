@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoSByte extends TagInfo {
@@ -23,7 +24,7 @@ public class TagInfoSByte extends TagInfo {
         super(name, tag, FIELD_TYPE_SBYTE, length, directoryType);
     }
 
-    public byte[] encodeValue(int byteOrder, byte... values) {
+    public byte[] encodeValue(ByteOrder byteOrder, byte... values) {
         return values;
     }
 }

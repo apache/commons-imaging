@@ -19,8 +19,7 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class BitInputStreamFlexible extends InputStream implements
-        BinaryConstants {
+public class BitInputStreamFlexible extends InputStream {
     // TODO should be byte order conscious, ie TIFF for reading
     // samples size<8 - shuoldn't that effect their order within byte?
     private final InputStream is;

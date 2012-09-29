@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
 import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
 import org.apache.commons.imaging.formats.psd.ImageContents;
@@ -45,7 +46,7 @@ public class UncompressedDataReader extends DataReader {
 
         int channel_count = dataParser.getBasicChannelsCount();
         int depth = header.Depth;
-        MyBitInputStream mbis = new MyBitInputStream(is, BYTE_ORDER_MSB);
+        MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.MOTOROLA);
         // we want all samples to be bytes
         BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8);
 

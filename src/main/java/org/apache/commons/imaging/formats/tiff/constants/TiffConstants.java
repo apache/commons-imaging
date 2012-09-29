@@ -17,16 +17,15 @@
 package org.apache.commons.imaging.formats.tiff.constants;
 
 import org.apache.commons.imaging.ImagingConstants;
-import org.apache.commons.imaging.common.BinaryConstants;
+import org.apache.commons.imaging.common.ByteOrder;
 
 public interface TiffConstants
         extends
             ImagingConstants,
             TiffFieldTypeConstants,
             TiffDirectoryConstants,
-            AllTagConstants,
-            BinaryConstants {
-    public static final int DEFAULT_TIFF_BYTE_ORDER = BYTE_ORDER_INTEL;
+            AllTagConstants {
+    public static final ByteOrder DEFAULT_TIFF_BYTE_ORDER = ByteOrder.INTEL;
 
     public static final int TIFF_HEADER_SIZE = 8;
     public static final int TIFF_DIRECTORY_HEADER_LENGTH = 2;

@@ -20,6 +20,7 @@ package org.apache.commons.imaging.formats.tiff;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReader;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
@@ -55,7 +56,7 @@ public abstract class TiffImageData {
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
                 int samplesPerPixel, int width, int height, int compression,
-                int byteOrder) throws IOException, ImageReadException {
+                ByteOrder byteOrder) throws IOException, ImageReadException {
             return new DataReaderTiled(directory, photometricInterpreter,
                     tileWidth, tileLength, bitsPerPixel, bitsPerSample,
                     predictor, samplesPerPixel, width, height, compression,
@@ -94,7 +95,7 @@ public abstract class TiffImageData {
                 PhotometricInterpreter photometricInterpreter,
                 int bitsPerPixel, int bitsPerSample[], int predictor,
                 int samplesPerPixel, int width, int height, int compression,
-                int byteorder) throws IOException, ImageReadException {
+                ByteOrder byteorder) throws IOException, ImageReadException {
             return new DataReaderStrips(directory, photometricInterpreter,
                     bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
                     width, height, compression, byteorder, rowsPerStrip, this);
@@ -116,7 +117,7 @@ public abstract class TiffImageData {
     public abstract DataReader getDataReader(TiffDirectory directory,
             PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
             int bitsPerSample[], int predictor, int samplesPerPixel, int width,
-            int height, int compression, int byteOrder) throws IOException,
+            int height, int compression, ByteOrder byteOrder) throws IOException,
             ImageReadException;
 
     public static class Data extends TiffElement.DataElement {

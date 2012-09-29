@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
@@ -59,7 +60,7 @@ public class TiffOutputField implements TiffConstants {
     private int sortHint = -1;
 
     protected static final TiffOutputField createOffsetField(TagInfo tagInfo,
-            int byteOrder) throws ImageWriteException {
+            ByteOrder byteOrder) throws ImageWriteException {
         return new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1,
                 FIELD_TYPE_LONG.writeData(new int[] { 0, }, byteOrder));
     }

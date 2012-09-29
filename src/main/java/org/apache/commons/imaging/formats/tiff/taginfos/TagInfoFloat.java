@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoFloat extends TagInfo {
@@ -25,11 +26,11 @@ public class TagInfoFloat extends TagInfo {
         super(name, tag, FIELD_TYPE_FLOAT, length, directoryType);
     }
     
-    public float[] getValue(int byteOrder, byte[] bytes) {
-        return BinaryConversions.convertToFloatArray(bytes, byteOrder);
+    public float[] getValue(ByteOrder byteOrder, byte[] bytes) {
+        return BinaryConversions.toFloats(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(int byteOrder, float... values) throws ImageWriteException {
-        return BinaryConversions.convertToByteArray(values, byteOrder);
+    public byte[] encodeValue(ByteOrder byteOrder, float... values) throws ImageWriteException {
+        return BinaryConversions.toBytes(values, byteOrder);
     }
 }

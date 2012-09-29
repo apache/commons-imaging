@@ -28,8 +28,8 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
-import org.apache.commons.imaging.common.BinaryConstants;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.RationalNumberUtilities;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
@@ -40,16 +40,15 @@ import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 
-public abstract class TiffImageWriterBase implements TiffConstants,
-        BinaryConstants {
+public abstract class TiffImageWriterBase implements TiffConstants {
 
-    protected final int byteOrder;
+    protected final ByteOrder byteOrder;
 
     public TiffImageWriterBase() {
         this.byteOrder = DEFAULT_TIFF_BYTE_ORDER;
     }
 
-    public TiffImageWriterBase(int byteOrder) {
+    public TiffImageWriterBase(ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
@@ -378,7 +377,7 @@ public abstract class TiffImageWriterBase implements TiffConstants,
                 int LZW_MINIMUM_CODE_SIZE = 8;
 
                 MyLzwCompressor compressor = new MyLzwCompressor(
-                        LZW_MINIMUM_CODE_SIZE, BYTE_ORDER_MSB, true);
+                        LZW_MINIMUM_CODE_SIZE, ByteOrder.MOTOROLA, true);
                 byte compressed[] = compressor.compress(uncompressed);
 
                 strips[i] = compressed;
@@ -590,8 +589,13 @@ public abstract class TiffImageWriterBase implements TiffConstants,
 
     protected void writeImageFileHeader(BinaryOutputStream bos,
             int offsetToFirstIFD) throws IOException {
-        bos.write(byteOrder);
-        bos.write(byteOrder);
+        if (byteOrder == ByteOrder.INTEL) {
+            bos.write('I');
+            bos.write('I');
+        } else {
+            bos.write('M');
+            bos.write('M');
+        }
 
         bos.write2Bytes(42); // tiffVersion
 

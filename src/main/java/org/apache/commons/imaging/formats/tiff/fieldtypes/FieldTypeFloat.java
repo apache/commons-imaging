@@ -17,6 +17,8 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
@@ -30,29 +32,29 @@ public class FieldTypeFloat extends FieldType {
     @Override
     public Object getSimpleValue(TiffField entry) {
         if (entry.length == 1) {
-            return new Float(convertByteArrayToFloat(name + " ("
-                    + entry.tagInfo.name + ")", entry.valueOffsetBytes,
+            return new Float(BinaryConversions.toFloat(
+                    entry.valueOffsetBytes,
                     entry.byteOrder));
         }
 
-        return convertByteArrayToFloatArray(name + " (" + entry.tagInfo.name
-                + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
+        return BinaryConversions.toFloats(getRawBytes(entry), 0, 4*entry.length,
+                entry.byteOrder);
     }
 
     @Override
-    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
+    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Float) {
-            return convertFloatToByteArray(((Float) o).floatValue(), byteOrder);
+            return BinaryConversions.toBytes(((Float) o).floatValue(), byteOrder);
         } else if (o instanceof float[]) {
             float numbers[] = (float[]) o;
-            return convertFloatArrayToByteArray(numbers, byteOrder);
+            return BinaryConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Float[]) {
             Float numbers[] = (Float[]) o;
             float values[] = new float[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].floatValue();
             }
-            return convertFloatArrayToByteArray(values, byteOrder);
+            return BinaryConversions.toBytes(values, byteOrder);
         } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");

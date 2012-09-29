@@ -23,7 +23,7 @@ import java.io.RandomAccessFile;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class BinaryInputStream extends InputStream implements BinaryConstants {
+public class BinaryInputStream extends InputStream {
     protected boolean debug = false;
 
     public final void setDebug(boolean b) {
@@ -36,12 +36,12 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
 
     private final InputStream is;
 
-    public BinaryInputStream(byte bytes[], int byteOrder) {
+    public BinaryInputStream(byte bytes[], ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
         this.is = new ByteArrayInputStream(bytes);
     }
 
-    public BinaryInputStream(InputStream is, int byteOrder) {
+    public BinaryInputStream(InputStream is, ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
         this.is = is;
     }
@@ -51,28 +51,13 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
     }
 
     // default byte order for Java, many file formats.
-    private int byteOrder = BYTE_ORDER_NETWORK;
+    private ByteOrder byteOrder = ByteOrder.NETWORK;
 
-    protected void setByteOrder(int a, int b) throws ImageReadException {
-        if (a != b) {
-            throw new ImageReadException("Byte Order bytes don't match (" + a
-                    + ", " + b + ").");
-        }
-
-        if (a == BYTE_ORDER_MOTOROLA) {
-            byteOrder = a;
-        } else if (a == BYTE_ORDER_INTEL) {
-            byteOrder = a;
-        } else {
-            throw new ImageReadException("Unknown Byte Order hint: " + a);
-        }
-    }
-
-    protected void setByteOrder(int byteOrder) {
+    protected void setByteOrder(ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
-    protected int getByteOrder() {
+    protected ByteOrder getByteOrder() {
         return byteOrder;
     }
 
@@ -211,7 +196,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
     }
 
     protected final RationalNumber[] convertByteArrayToRationalArray(
-            String name, byte bytes[], int start, int length, int byteOrder) {
+            String name, byte bytes[], int start, int length, ByteOrder byteOrder) {
         int expectedLength = start + length * 8;
 
         if (bytes.length < expectedLength) {
@@ -231,12 +216,12 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
     }
 
     protected final RationalNumber convertByteArrayToRational(String name,
-            byte bytes[], int byteOrder) {
+            byte bytes[], ByteOrder byteOrder) {
         return convertByteArrayToRational(name, bytes, 0, byteOrder);
     }
 
     protected final RationalNumber convertByteArrayToRational(String name,
-            byte bytes[], int start, int byteOrder) {
+            byte bytes[], int start, ByteOrder byteOrder) {
         int numerator = convertByteArrayToInt(name, bytes, start + 0, 4,
                 byteOrder);
         int divisor = convertByteArrayToInt(name, bytes, start + 4, 4,
@@ -246,12 +231,12 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
     }
 
     protected final int convertByteArrayToInt(String name, byte bytes[],
-            int byteOrder) {
+            ByteOrder byteOrder) {
         return convertByteArrayToInt(name, bytes, 0, 4, byteOrder);
     }
 
     protected final int convertByteArrayToInt(String name, byte bytes[],
-            int start, int length, int byteOrder) {
+            int start, int length, ByteOrder byteOrder) {
         byte byte0 = bytes[start + 0];
         byte byte1 = bytes[start + 1];
         byte byte2 = bytes[start + 2];
@@ -262,7 +247,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
 
         int result;
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) {
+        if (byteOrder == ByteOrder.MOTOROLA) {
             result = ((0xff & byte0) << 24) + ((0xff & byte1) << 16)
                     + ((0xff & byte2) << 8) + ((0xff & byte3) << 0);
         } else {
@@ -278,7 +263,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
     }
 
     protected final int[] convertByteArrayToIntArray(String name, byte bytes[],
-            int start, int length, int byteOrder) {
+            int start, int length, ByteOrder byteOrder) {
         int expectedLength = start + length * 4;
 
         if (bytes.length < expectedLength) {
@@ -298,18 +283,18 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
     }
 
     protected final int convertByteArrayToShort(String name, byte bytes[],
-            int byteOrder) {
+            ByteOrder byteOrder) {
         return convertByteArrayToShort(name, 0, bytes, byteOrder);
     }
 
     protected final int convertByteArrayToShort(String name, int start,
-            byte bytes[], int byteOrder) {
+            byte bytes[], ByteOrder byteOrder) {
         byte byte0 = bytes[start + 0];
         byte byte1 = bytes[start + 1];
 
         int result;
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) {
+        if (byteOrder == ByteOrder.MOTOROLA) {
             result = ((0xff & byte0) << 8) + ((0xff & byte1) << 0);
         } else {
             result = ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
@@ -323,7 +308,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
     }
 
     protected final int[] convertByteArrayToShortArray(String name,
-            byte bytes[], int start, int length, int byteOrder) {
+            byte bytes[], int start, int length, ByteOrder byteOrder) {
         int expectedLength = start + length * 2;
 
         if (bytes.length < expectedLength) {
@@ -456,7 +441,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         return true;
     }
 
-    protected final int read4Bytes(String name, String exception, int byteOrder)
+    protected final int read4Bytes(String name, String exception, ByteOrder byteOrder)
             throws IOException {
         int size = 4;
         byte bytes[] = new byte[size];
@@ -474,7 +459,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
         return convertByteArrayToInt(name, bytes, byteOrder);
     }
 
-    protected final int read3Bytes(String name, String exception, int byteOrder)
+    protected final int read3Bytes(String name, String exception, ByteOrder byteOrder)
             throws IOException {
         int size = 3;
         byte bytes[] = new byte[size];
@@ -493,7 +478,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
 
     }
 
-    protected final int read2Bytes(String name, String exception, int byteOrder)
+    protected final int read2Bytes(String name, String exception, ByteOrder byteOrder)
             throws IOException {
         int size = 2;
         byte bytes[] = new byte[size];
@@ -529,7 +514,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
             throw new ImageReadException(exception);
         }
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) {
+        if (byteOrder == ByteOrder.MOTOROLA) {
             return ((0xff & byte0) << 8) + ((0xff & byte1) << 0);
         } else {
             return ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
@@ -546,7 +531,7 @@ public class BinaryInputStream extends InputStream implements BinaryConstants {
             throw new ImageReadException(exception);
         }
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) {
+        if (byteOrder == ByteOrder.MOTOROLA) {
             return ((0xff & byte0) << 24) + ((0xff & byte1) << 16)
                     + ((0xff & byte2) << 8) + ((0xff & byte3) << 0);
         } else {

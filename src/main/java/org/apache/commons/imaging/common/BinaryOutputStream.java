@@ -19,9 +19,7 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.apache.commons.imaging.ImageWriteException;
-
-public class BinaryOutputStream extends OutputStream implements BinaryConstants {
+public class BinaryOutputStream extends OutputStream {
     protected boolean debug = false;
     private int count = 0;
 
@@ -35,7 +33,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants 
 
     private final OutputStream os;
 
-    public BinaryOutputStream(OutputStream os, int byteOrder) {
+    public BinaryOutputStream(OutputStream os, ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
         this.os = os;
     }
@@ -45,28 +43,13 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants 
     }
 
     // default byte order for Java, many file formats.
-    private int byteOrder = BYTE_ORDER_NETWORK;
+    private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
-    protected void setByteOrder(int a, int b) throws ImageWriteException {
-        if (a != b) {
-            throw new ImageWriteException("Byte Order bytes don't match (" + a
-                    + ", " + b + ").");
-        }
-
-        if (a == BYTE_ORDER_MOTOROLA) {
-            byteOrder = a;
-        } else if (a == BYTE_ORDER_INTEL) {
-            byteOrder = a;
-        } else {
-            throw new ImageWriteException("Unknown Byte Order hint: " + a);
-        }
-    }
-
-    protected void setByteOrder(int byteOrder) {
+    protected void setByteOrder(ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
-    public int getByteOrder() {
+    public ByteOrder getByteOrder() {
         return byteOrder;
     }
 
@@ -93,7 +76,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants 
     }
 
     public final void write4ByteInteger(int value) throws IOException {
-        if (byteOrder == BYTE_ORDER_MOTOROLA) {
+        if (byteOrder == ByteOrder.MOTOROLA) {
             write(0xff & (value >> 24));
             write(0xff & (value >> 16));
             write(0xff & (value >> 8));
@@ -107,7 +90,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants 
     }
 
     public final void write2ByteInteger(int value) throws IOException {
-        if (byteOrder == BYTE_ORDER_MOTOROLA) {
+        if (byteOrder == ByteOrder.MOTOROLA) {
             write(0xff & (value >> 8));
             write(0xff & value);
         } else {
@@ -124,7 +107,7 @@ public class BinaryOutputStream extends OutputStream implements BinaryConstants 
     private byte[] convertValueToByteArray(int value, int n) {
         byte result[] = new byte[n];
 
-        if (byteOrder == BYTE_ORDER_MOTOROLA) {
+        if (byteOrder == ByteOrder.MOTOROLA) {
             for (int i = 0; i < n; i++) {
                 int b = 0xff & (value >> (8 * (n - i - 1)));
                 result[i] = (byte) b;

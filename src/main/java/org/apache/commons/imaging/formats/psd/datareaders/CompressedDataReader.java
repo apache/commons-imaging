@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
 import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
@@ -70,7 +71,7 @@ public class CompressedDataReader extends DataReader {
                 byte unpacked[] = new PackBits().decompress(packed, width);
                 InputStream bais = new ByteArrayInputStream(unpacked);
                 MyBitInputStream mbis = new MyBitInputStream(bais,
-                        BYTE_ORDER_MSB);
+                        ByteOrder.MOTOROLA);
                 BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we
                                                                                  // want
                                                                                  // all

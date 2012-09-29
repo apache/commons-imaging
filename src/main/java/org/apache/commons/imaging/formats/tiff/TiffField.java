@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
@@ -50,10 +51,10 @@ public class TiffField implements TiffConstants {
     public final byte valueOffsetBytes[];
 
     public byte oversizeValue[] = null;
-    public final int byteOrder;
+    public final ByteOrder byteOrder;
 
     public TiffField(int tag, int directoryType, int type, int Length,
-            int ValueOffset, byte ValueOffsetBytes[], int byteOrder) {
+            int ValueOffset, byte ValueOffsetBytes[], ByteOrder byteOrder) {
 
         this.tag = tag;
         this.directoryType = directoryType;

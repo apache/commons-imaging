@@ -31,14 +31,15 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class IptcParser extends BinaryFileParser implements IptcConstants {
-    private static final int APP13_BYTE_ORDER = BYTE_ORDER_NETWORK;
+    private static final ByteOrder APP13_BYTE_ORDER = ByteOrder.NETWORK;
 
     public IptcParser() {
-        setByteOrder(BYTE_ORDER_NETWORK);
+        setByteOrder(ByteOrder.NETWORK);
     }
 
     public boolean isPhotoshopJpegSegment(byte segmentData[]) {

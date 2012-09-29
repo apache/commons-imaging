@@ -19,14 +19,14 @@ package org.apache.commons.imaging.common.mylzw;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.common.BinaryConstants;
+import org.apache.commons.imaging.common.ByteOrder;
 
-public class MyBitInputStream extends InputStream implements BinaryConstants {
+public class MyBitInputStream extends InputStream {
     private final InputStream is;
-    private final int byteOrder;
+    private final ByteOrder byteOrder;
     private boolean tiffLZWMode = false;
 
-    public MyBitInputStream(InputStream is, int byteOrder) {
+    public MyBitInputStream(InputStream is, ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
         this.is = is;
     }
@@ -58,12 +58,10 @@ public class MyBitInputStream extends InputStream implements BinaryConstants {
 
             int newByte = (0xff & next);
 
-            if (byteOrder == BYTE_ORDER_NETWORK) {
+            if (byteOrder == ByteOrder.NETWORK) {
                 bitCache = (bitCache << 8) | newByte;
-            } else if (byteOrder == BYTE_ORDER_INTEL) {
-                bitCache = (newByte << bitsInCache) | bitCache;
             } else {
-                throw new IOException("Unknown byte order: " + byteOrder);
+                bitCache = (newByte << bitsInCache) | bitCache;
             }
 
             bytesRead++;
@@ -73,13 +71,11 @@ public class MyBitInputStream extends InputStream implements BinaryConstants {
 
         int sample;
 
-        if (byteOrder == BYTE_ORDER_NETWORK) {
+        if (byteOrder == ByteOrder.NETWORK) {
             sample = sampleMask & (bitCache >> (bitsInCache - SampleBits));
-        } else if (byteOrder == BYTE_ORDER_INTEL) {
+        } else {
             sample = sampleMask & bitCache;
             bitCache >>= SampleBits;
-        } else {
-            throw new IOException("Unknown byte order: " + byteOrder);
         }
 
         int result = sample;

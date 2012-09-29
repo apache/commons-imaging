@@ -33,6 +33,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -441,7 +442,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         TiffReader reader = new TiffReader(isStrict(params));
         TiffContents contents = reader.readFirstDirectory(byteSource, params,
                 true, formatCompliance);
-        int byteOrder = reader.getByteOrder();
+        ByteOrder byteOrder = reader.getByteOrder();
         TiffDirectory directory = contents.directories.get(0);
         BufferedImage result = directory.getTiffImage(byteOrder, params);
         if (null == result) {
@@ -470,7 +471,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     protected BufferedImage getBufferedImage(TiffDirectory directory,
-            int byteOrder, Map<String,Object> params) throws ImageReadException, IOException {
+            ByteOrder byteOrder, Map<String,Object> params) throws ImageReadException, IOException {
         List<TiffField> entries = directory.entries;
 
         if (entries == null) {

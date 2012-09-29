@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
@@ -27,46 +28,32 @@ public class FieldTypeShort extends FieldType {
         super(type, 2, name);
     }
 
-    // public Object[] getValueArray(TiffField entry)
-    // {
-    // if(isLocalValue(entry))
-    // return convertByteArrayToShortArray(name + " (" + entry.tagInfo.name
-    // + ")", entry.valueOffsetBytes, 0, entry.length, entry.byteOrder);
-    //
-    // // return new Integer(convertByteArrayToShort(name + " ("
-    // // + entry.tagInfo.name + ")", entry.valueOffsetBytes,
-    // // entry.byteOrder));
-    //
-    // return convertByteArrayToShortArray(name + " (" + entry.tagInfo.name
-    // + ")", getRawBytes(entry), 0, entry.length, entry.byteOrder);
-    // }
-
     @Override
     public Object getSimpleValue(TiffField entry) throws ImageReadException {
         if (entry.length == 1) {
-            return BinaryConversions.convertToShort(entry.valueOffsetBytes,
+            return BinaryConversions.toShort(entry.valueOffsetBytes,
                     entry.byteOrder);
         }
 
-        return BinaryConversions.convertToShortArray(getRawBytes(entry),
+        return BinaryConversions.toShorts(getRawBytes(entry),
                 entry.byteOrder);
     }
 
     @Override
-    public byte[] writeData(Object o, int byteOrder) throws ImageWriteException {
+    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Short) {
-            return BinaryConversions.convertToByteArray(
-                    new short[] { ((Short) o).shortValue(), }, byteOrder);
+            return BinaryConversions.toBytes(
+                    ((Short)o).shortValue(), byteOrder);
         } else if (o instanceof short[]) {
             short numbers[] = (short[]) o;
-            return BinaryConversions.convertToByteArray(numbers, byteOrder);
+            return BinaryConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Short[]) {
             Short numbers[] = (Short[]) o;
             short values[] = new short[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].shortValue();
             }
-            return BinaryConversions.convertToByteArray(values, byteOrder);
+            return BinaryConversions.toBytes(values, byteOrder);
         } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");

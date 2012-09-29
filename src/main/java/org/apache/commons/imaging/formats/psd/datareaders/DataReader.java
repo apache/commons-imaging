@@ -21,12 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
-public abstract class DataReader implements BinaryConstants {
+public abstract class DataReader {
     protected final DataParser dataParser;
 
     public DataReader(DataParser fDataParser) {

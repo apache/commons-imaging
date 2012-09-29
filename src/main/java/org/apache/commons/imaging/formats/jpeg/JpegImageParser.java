@@ -34,6 +34,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoder;
@@ -58,7 +59,7 @@ import org.apache.commons.imaging.util.Debug;
 
 public class JpegImageParser extends ImageParser implements JpegConstants {
     public JpegImageParser() {
-        setByteOrder(BYTE_ORDER_NETWORK);
+        setByteOrder(ByteOrder.BIG_ENDIAN);
         // setDebug(true);
     }
 

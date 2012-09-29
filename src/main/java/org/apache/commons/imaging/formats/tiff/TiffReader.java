@@ -25,6 +25,7 @@ import java.util.Map;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
@@ -58,13 +59,28 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
             }
         }
     }
+    
+    private ByteOrder getTiffByteOrder(int byteOrderByte) throws ImageReadException {
+        if (byteOrderByte == 'I') {
+            return ByteOrder.INTEL;
+        } else if (byteOrderByte == 'M') {
+            return ByteOrder.MOTOROLA;
+        } else {
+            throw new ImageReadException("Invalid TIFF byte order " + (0xff & byteOrderByte));
+        }
+    }
 
     private TiffHeader readTiffHeader(InputStream is,
             FormatCompliance formatCompliance) throws ImageReadException,
             IOException {
         int BYTE_ORDER_1 = readByte("BYTE_ORDER_1", is, "Not a Valid TIFF File");
         int BYTE_ORDER_2 = readByte("BYTE_ORDER_2", is, "Not a Valid TIFF File");
-        setByteOrder(BYTE_ORDER_1, BYTE_ORDER_2);
+        if (BYTE_ORDER_1 != BYTE_ORDER_2) {
+            throw new ImageReadException("Byte Order bytes don't match (" + BYTE_ORDER_1
+                    + ", " + BYTE_ORDER_2 + ").");
+        }
+        ByteOrder byteOrder = getTiffByteOrder(BYTE_ORDER_1);
+        setByteOrder(byteOrder);
 
         int tiffVersion = read2Bytes("tiffVersion", is, "Not a Valid TIFF File");
         if (tiffVersion != 42) {
@@ -81,7 +97,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
             System.out.println("");
         }
 
-        return new TiffHeader(BYTE_ORDER_1, tiffVersion, offsetToFirstIFD);
+        return new TiffHeader(byteOrder, tiffVersion, offsetToFirstIFD);
     }
 
     private void readDirectories(ByteSource byteSource,

@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryFileFunctions;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
@@ -105,7 +106,7 @@ public abstract class FieldType extends BinaryFileFunctions implements
                 + name + ", length: " + length + "]";
     }
 
-    public abstract byte[] writeData(Object o, int byteOrder)
+    public abstract byte[] writeData(Object o, ByteOrder byteOrder)
             throws ImageWriteException;
 
 }

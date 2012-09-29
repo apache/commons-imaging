@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
@@ -33,7 +34,7 @@ import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
  */
 public class JpegRewriter extends BinaryFileParser implements JpegConstants {
-    private static final int JPEG_BYTE_ORDER = BYTE_ORDER_NETWORK;
+    private static final ByteOrder JPEG_BYTE_ORDER = ByteOrder.NETWORK;
 
     /**
      * Constructor. to guess whether a file contains an image based on its file

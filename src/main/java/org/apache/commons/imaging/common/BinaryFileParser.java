@@ -22,7 +22,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 
 public class BinaryFileParser extends BinaryFileFunctions {
-    public BinaryFileParser(int byteOrder) {
+    public BinaryFileParser(ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
@@ -31,30 +31,15 @@ public class BinaryFileParser extends BinaryFileFunctions {
     }
 
     // default byte order for Java, many file formats.
-    private int byteOrder = BYTE_ORDER_NETWORK;
+    private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
     // protected boolean BYTE_ORDER_reversed = true;
 
-    protected void setByteOrder(int a, int b) throws ImageReadException {
-        if (a != b) {
-            throw new ImageReadException("Byte Order bytes don't match (" + a
-                    + ", " + b + ").");
-        }
-
-        if (a == BYTE_ORDER_MOTOROLA) {
-            byteOrder = a;
-        } else if (a == BYTE_ORDER_INTEL) {
-            byteOrder = a;
-        } else {
-            throw new ImageReadException("Unknown Byte Order hint: " + a);
-        }
-    }
-
-    protected void setByteOrder(int byteOrder) {
+    protected void setByteOrder(ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
-    public int getByteOrder() {
+    public ByteOrder getByteOrder() {
         return byteOrder;
     }
 

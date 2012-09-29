@@ -35,7 +35,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryConstants;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
@@ -47,7 +47,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 public class RgbeImageParser extends ImageParser {
 
     public RgbeImageParser() {
-        setByteOrder(BinaryConstants.BYTE_ORDER_BIG_ENDIAN);
+        setByteOrder(ByteOrder.BIG_ENDIAN);
     }
 
     @Override

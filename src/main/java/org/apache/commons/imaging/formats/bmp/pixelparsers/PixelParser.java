@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
@@ -37,7 +38,7 @@ public abstract class PixelParser {
         this.colorTable = ColorTable;
         this.imageData = ImageData;
 
-        bfp = new BinaryFileParser(BinaryFileParser.BYTE_ORDER_INTEL);
+        bfp = new BinaryFileParser(ByteOrder.INTEL);
         is = new ByteArrayInputStream(ImageData);
     }
 

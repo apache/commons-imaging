@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
@@ -83,9 +84,9 @@ public class TiffImageMetadata extends ImageMetadata implements
         public final int type;
 
         private final TiffDirectory directory;
-        private final int byteOrder;
+        private final ByteOrder byteOrder;
 
-        public Directory(int byteOrder, final TiffDirectory directory) {
+        public Directory(ByteOrder byteOrder, final TiffDirectory directory) {
             this.type = directory.type;
             this.directory = directory;
             this.byteOrder = byteOrder;
@@ -125,7 +126,7 @@ public class TiffImageMetadata extends ImageMetadata implements
                     + "\n" + super.toString(prefix) + "\n";
         }
 
-        public TiffOutputDirectory getOutputDirectory(int byteOrder)
+        public TiffOutputDirectory getOutputDirectory(ByteOrder byteOrder)
                 throws ImageWriteException {
             try {
                 TiffOutputDirectory dstDir = new TiffOutputDirectory(type,
@@ -215,7 +216,7 @@ public class TiffImageMetadata extends ImageMetadata implements
     }
 
     public TiffOutputSet getOutputSet() throws ImageWriteException {
-        int byteOrder = contents.header.byteOrder;
+        ByteOrder byteOrder = contents.header.byteOrder;
         TiffOutputSet result = new TiffOutputSet(byteOrder);
 
         List<? extends IImageMetadataItem> srcDirs = getDirectories();

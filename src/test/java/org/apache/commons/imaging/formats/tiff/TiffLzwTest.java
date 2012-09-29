@@ -23,12 +23,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.common.BinaryConstants;
+import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.util.Debug;
 
-public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
+public class TiffLzwTest extends TiffBaseTest {
 
     public void testTrivial() throws Exception {
         byte bytes[] = { 0, };
@@ -100,7 +100,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
         };
 
         MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
-                BYTE_ORDER_MSB, true, compressionListener);
+                ByteOrder.MOTOROLA, true, compressionListener);
         byte compressed[] = compressor.compress(src);
 
         MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
@@ -147,7 +147,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
         };
         InputStream is = new ByteArrayInputStream(compressed);
         MyLzwDecompressor decompressor = new MyLzwDecompressor(
-                LZW_MINIMUM_CODE_SIZE, BYTE_ORDER_NETWORK,
+                LZW_MINIMUM_CODE_SIZE, ByteOrder.NETWORK,
                 decompressionListener);
         decompressor.setTiffLZWMode();
         byte decompressed[] = decompressor.decompress(is, src.length);
@@ -181,7 +181,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
         };
         InputStream is = new ByteArrayInputStream(src);
         MyLzwDecompressor decompressor = new MyLzwDecompressor(
-                LZW_MINIMUM_CODE_SIZE, BYTE_ORDER_NETWORK,
+                LZW_MINIMUM_CODE_SIZE, ByteOrder.NETWORK,
                 decompressionListener);
         decompressor.setTiffLZWMode();
         byte decompressed[] = decompressor.decompress(is, src.length);
@@ -242,7 +242,7 @@ public class TiffLzwTest extends TiffBaseTest implements BinaryConstants {
         };
 
         MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
-                BYTE_ORDER_MSB, true, compressionListener);
+                ByteOrder.MOTOROLA, true, compressionListener);
         byte compressed[] = compressor.compress(decompressed);
 
         assertEquals(src.length, compressed.length);
