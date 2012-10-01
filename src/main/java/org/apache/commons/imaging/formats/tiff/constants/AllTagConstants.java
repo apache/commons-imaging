@@ -41,25 +41,25 @@ public interface AllTagConstants extends
         TiffEpTagConstants,
         TiffTagConstants,
         WangTagConstants {
-    public static final List<TagInfo> ALL_TAGS = Collections.unmodifiableList(
-            TagConstantsUtils.mergeTagLists(
-                    AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS,
-                    AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS,
-                    AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS,
-                    DcfTagConstants.ALL_DCF_TAGS,
-                    DngTagConstants.ALL_DNG_TAGS,
-                    ExifTagConstants.ALL_EXIF_TAGS,
-                    GeoTiffTagConstants.ALL_GEO_TIFF_TAGS,
-                    GdalLibraryTagConstants.ALL_GDAL_LIBRARY_TAGS,
-                    GpsTagConstants.ALL_GPS_TAGS,
-                    HylaFaxTagConstants.ALL_HYLAFAX_TAGS,
-                    MicrosoftTagConstants.ALL_MICROSOFT_TAGS,
-                    MicrosoftHdPhotoTagConstants.ALL_MICROSOFT_HD_PHOTO_TAGS,
-                    MolecularDynamicsGelTagConstants.ALL_MOLECULAR_DYNAMICS_GEL_TAGS,
-                    OceScanjobTagConstants.ALL_OCE_SCANJOB_TAGS,
-                    Rfc2301TagConstants.ALL_RFC_2301_TAGS,
-                    Tiff4TagConstants.ALL_TIFF_4_TAGS,
-                    TiffEpTagConstants.ALL_TIFF_EP_TAGS,
-                    TiffTagConstants.ALL_TIFF_TAGS,
-                    WangTagConstants.ALL_WANG_TAGS));
+    
+    public static final List<TagInfo> ALL_TAGS = Collections.unmodifiableList(TagConstantsUtils.mergeTagLists(
+            AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS,
+            AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS,
+            AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS,
+            DcfTagConstants.ALL_DCF_TAGS,
+            DngTagConstants.ALL_DNG_TAGS,
+            ExifTagConstants.ALL_EXIF_TAGS,
+            GeoTiffTagConstants.ALL_GEO_TIFF_TAGS,
+            GdalLibraryTagConstants.ALL_GDAL_LIBRARY_TAGS,
+            GpsTagConstants.ALL_GPS_TAGS,
+            HylaFaxTagConstants.ALL_HYLAFAX_TAGS,
+            MicrosoftTagConstants.ALL_MICROSOFT_TAGS,
+            MicrosoftHdPhotoTagConstants.ALL_MICROSOFT_HD_PHOTO_TAGS,
+            MolecularDynamicsGelTagConstants.ALL_MOLECULAR_DYNAMICS_GEL_TAGS,
+            OceScanjobTagConstants.ALL_OCE_SCANJOB_TAGS,
+            Rfc2301TagConstants.ALL_RFC_2301_TAGS,
+            Tiff4TagConstants.ALL_TIFF_4_TAGS,
+            TiffEpTagConstants.ALL_TIFF_EP_TAGS,
+            TiffTagConstants.ALL_TIFF_TAGS,
+            WangTagConstants.ALL_WANG_TAGS));
 }

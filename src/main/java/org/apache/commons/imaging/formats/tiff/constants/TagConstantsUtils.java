@@ -26,7 +26,7 @@ public class TagConstantsUtils implements TiffDirectoryConstants {
     private static final TiffDirectoryType[] tiffDirectoryTypes = TiffDirectoryType
             .values();
 
-    public static List<TagInfo> mergeTagLists(List<TagInfo>... tagLists) {
+    public static List<TagInfo> mergeTagLists(List<?>... tagLists) {
         int count = 0;
         for (int i = 0; i < tagLists.length; i++) {
             count += tagLists[i].size();
@@ -36,7 +36,7 @@ public class TagConstantsUtils implements TiffDirectoryConstants {
 
         for (int i = 0; i < tagLists.length; i++) {
             for (int j = 0; j < tagLists[i].size(); j++) {
-                result.add(tagLists[i].get(j));
+                result.add((TagInfo)tagLists[i].get(j));
             }
         }
 
