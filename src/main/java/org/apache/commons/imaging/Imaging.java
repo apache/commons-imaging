@@ -180,6 +180,7 @@ public abstract class Imaging implements ImagingConstants {
     private static final int[] MAGIC_NUMBERS_BMP = { 0x42, 0x4d, };
     private static final int[] MAGIC_NUMBERS_TIFF_MOTOROLA = { 0x4D, 0x4D, };
     private static final int[] MAGIC_NUMBERS_TIFF_INTEL = { 0x49, 0x49, };
+    private static final int[] MAGIC_NUMBERS_PAM = { 0x50, 0x37, };
     private static final int[] MAGIC_NUMBERS_PSD = { 0x38, 0x42, };
     private static final int[] MAGIC_NUMBERS_PBM_A = { 0x50, 0x31, };
     private static final int[] MAGIC_NUMBERS_PBM_B = { 0x50, 0x34, };
@@ -262,6 +263,8 @@ public abstract class Imaging implements ImagingConstants {
                 return ImageFormat.IMAGE_FORMAT_TIFF;
             } else if (compareBytePair(MAGIC_NUMBERS_PSD, bytePair)) {
                 return ImageFormat.IMAGE_FORMAT_PSD;
+            } else if (compareBytePair(MAGIC_NUMBERS_PAM, bytePair)) {
+                return ImageFormat.IMAGE_FORMAT_PAM;
             } else if (compareBytePair(MAGIC_NUMBERS_PBM_A, bytePair)) {
                 return ImageFormat.IMAGE_FORMAT_PBM;
             } else if (compareBytePair(MAGIC_NUMBERS_PBM_B, bytePair)) {

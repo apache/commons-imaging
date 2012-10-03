@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
@@ -59,7 +60,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     private static final String DEFAULT_EXTENSION = ".pnm";
 
     private static final String ACCEPTED_EXTENSIONS[] = { ".pbm", ".pgm",
-            ".ppm", ".pnm", };
+            ".ppm", ".pnm", ".pam" };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -68,10 +69,13 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PBM, //
+        return new ImageFormat[] {
+                ImageFormat.IMAGE_FORMAT_PBM, //
                 ImageFormat.IMAGE_FORMAT_PGM, //
                 ImageFormat.IMAGE_FORMAT_PPM, //
-                ImageFormat.IMAGE_FORMAT_PNM, };
+                ImageFormat.IMAGE_FORMAT_PNM,
+                ImageFormat.IMAGE_FORMAT_PAM
+        };
     }
 
     private FileInfo readHeader(InputStream is) throws ImageReadException,
@@ -79,41 +83,100 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
         byte identifier1 = readByte("Identifier1", is, "Not a Valid PNM File");
         byte identifier2 = readByte("Identifier2", is, "Not a Valid PNM File");
 
-        WhiteSpaceReader wsr = new WhiteSpaceReader(is);
-
-        int width = Integer.parseInt(wsr.readtoWhiteSpace());
-        int height = Integer.parseInt(wsr.readtoWhiteSpace());
-
-        // System.out.println("width: " + width);
-        // System.out.println("height: " + height);
-        // System.out.println("width*height: " + width * height);
-        // System.out.println("3*width*height: " + 3 * width * height);
-        // System.out.println("((width*height+7)/8): "
-        // + ((width * height + 7) / 8));
-
         if (identifier1 != PNM_PREFIX_BYTE) {
-            throw new ImageReadException("PNM file has invalid header.");
+            throw new ImageReadException("PNM file has invalid prefix byte 1");
         }
-
-        if (identifier2 == PBM_TEXT_CODE) {
-            return new PbmFileInfo(width, height, false);
-        } else if (identifier2 == PBM_RAW_CODE) {
-            return new PbmFileInfo(width, height, true);
-        } else if (identifier2 == PGM_TEXT_CODE) {
-            int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
-            return new PgmFileInfo(width, height, false, maxgray);
-        } else if (identifier2 == PGM_RAW_CODE) {
-            int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
-            return new PgmFileInfo(width, height, true, maxgray);
-        } else if (identifier2 == PPM_TEXT_CODE) {
-            int max = Integer.parseInt(wsr.readtoWhiteSpace());
-            return new PpmFileInfo(width, height, false, max);
-        } else if (identifier2 == PPM_RAW_CODE) {
-            int max = Integer.parseInt(wsr.readtoWhiteSpace());
-            // System.out.println("max: " + max);
-            return new PpmFileInfo(width, height, true, max);
+        
+        WhiteSpaceReader wsr = new WhiteSpaceReader(is);
+        
+        if (identifier2 == PBM_TEXT_CODE ||
+                identifier2 == PBM_RAW_CODE ||
+                identifier2 == PGM_TEXT_CODE ||
+                identifier2 == PGM_RAW_CODE ||
+                identifier2 == PPM_TEXT_CODE ||
+                identifier2 == PPM_RAW_CODE) {
+            
+            int width = Integer.parseInt(wsr.readtoWhiteSpace());
+            int height = Integer.parseInt(wsr.readtoWhiteSpace());
+    
+            if (identifier2 == PBM_TEXT_CODE) {
+                return new PbmFileInfo(width, height, false);
+            } else if (identifier2 == PBM_RAW_CODE) {
+                return new PbmFileInfo(width, height, true);
+            } else if (identifier2 == PGM_TEXT_CODE) {
+                int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
+                return new PgmFileInfo(width, height, false, maxgray);
+            } else if (identifier2 == PGM_RAW_CODE) {
+                int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
+                return new PgmFileInfo(width, height, true, maxgray);
+            } else if (identifier2 == PPM_TEXT_CODE) {
+                int max = Integer.parseInt(wsr.readtoWhiteSpace());
+                return new PpmFileInfo(width, height, false, max);
+            } else if (identifier2 == PPM_RAW_CODE) {
+                int max = Integer.parseInt(wsr.readtoWhiteSpace());
+                return new PpmFileInfo(width, height, true, max);
+            } else {
+                throw new ImageReadException("PNM file has invalid header.");
+            }
+        } else if (identifier2 == PAM_TEXT_CODE) {
+            int width = -1;
+            boolean seenWidth = false;
+            int height = -1;
+            boolean seenHeight = false;
+            int depth = -1;
+            boolean seenDepth = false;
+            int maxVal = -1;
+            boolean seenMaxVal = false;
+            String tupleType = "";
+            boolean seenTupleType = false;
+            
+            // Advance to next line
+            wsr.readLine();
+            String line;
+            while ((line = wsr.readLine()) != null) {
+                line = line.trim();
+                if (line.startsWith("#")) {
+                    continue;
+                }
+                StringTokenizer tokenizer = new StringTokenizer(line, " ", false);
+                String type = tokenizer.nextToken();
+                if (type.equals("WIDTH")) {
+                    seenWidth = true;
+                    width = Integer.parseInt(tokenizer.nextToken());
+                } else if (type.equals("HEIGHT")) {
+                    seenHeight = true;
+                    height = Integer.parseInt(tokenizer.nextToken());
+                } else if (type.equals("DEPTH")) {
+                    seenDepth = true;
+                    depth = Integer.parseInt(tokenizer.nextToken());
+                } else if (type.equals("MAXVAL")) {
+                    seenMaxVal = true;
+                    maxVal = Integer.parseInt(tokenizer.nextToken());
+                } else if (type.equals("TUPLTYPE")) {
+                    seenTupleType = true;
+                    tupleType += tokenizer.nextToken();
+                } else if (type.equals("ENDHDR")) {
+                    break;
+                } else {
+                    throw new ImageReadException("Invalid PAM file header type " + type);
+                }
+            }
+            
+            if (!seenWidth) {
+                throw new ImageReadException("PAM header has no WIDTH");
+            } else if (!seenHeight) {
+                throw new ImageReadException("PAM header has no HEIGHT");
+            } else if (!seenDepth) {
+                throw new ImageReadException("PAM header has no DEPTH");
+            } else if (!seenMaxVal) {
+                throw new ImageReadException("PAM header has no MAXVAL");
+            } else if (!seenTupleType) {
+                throw new ImageReadException("PAM header has no TUPLTYPE");
+            }
+            
+            return new PamFileInfo(width, height, depth, maxVal, tupleType);
         } else {
-            throw new ImageReadException("PNM file has invalid header.");
+            throw new ImageReadException("PNM file has invalid prefix byte 2");
         }
     }
 

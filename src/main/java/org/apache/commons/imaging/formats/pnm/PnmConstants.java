@@ -25,6 +25,7 @@ public interface PnmConstants {
     public static final byte PGM_RAW_CODE = 0x35; // RAW GrayMap
     public static final byte PBM_RAW_CODE = 0x34; // RAW Bitmap
     public static final byte PPM_RAW_CODE = 0x36; // RAW Pixmap
+    public static final byte PAM_TEXT_CODE = 0x37; // PAM Pixmap
 
     public static final byte PNM_SEPARATOR = 0x20; // Space
     public static final byte PNM_NEWLINE = 0x0A; // "usually a newline"

@@ -84,6 +84,8 @@ public class RoundtripTest extends ImagingTest {
                     COLOR_GRAYSCALE, true, false), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_PPM, true, true,
                     COLOR_FULL_RGB, true, false), //
+            new FormatInfo(ImageFormat.IMAGE_FORMAT_PAM, true, false,
+                    COLOR_FULL_RGB, true, true),//
             // new FormatInfo(ImageFormat.IMAGE_FORMAT_PNM, true, true,
             // COLOR_FULL_RGB, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_TGA, false, false,

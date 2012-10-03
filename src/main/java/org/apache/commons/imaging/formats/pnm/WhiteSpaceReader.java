@@ -61,4 +61,12 @@ class WhiteSpaceReader {
 
         return buffer.toString();
     }
+    
+    public String readLine() throws IOException {
+        StringBuilder buffer = new StringBuilder();
+        for (char c = read(); (c != '\n') && (c != '\r'); c = read()) {
+            buffer.append(c);
+        }
+        return buffer.length() > 0 ? buffer.toString() : null;
+    }
 }
