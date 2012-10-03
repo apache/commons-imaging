@@ -95,14 +95,22 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @return A valid array of image parsers
      */
     public static final ImageParser[] getAllImageParsers() {
-        ImageParser result[] = { new JpegImageParser(), new TiffImageParser(),
-                new PngImageParser(), new BmpImageParser(),
-                new GifImageParser(), new PsdImageParser(),
-                new PnmImageParser(), new IcoImageParser(),
-                new IcnsImageParser(), new WbmpImageParser(),
-                new PcxImageParser(), new DcxImageParser(),
-                new XbmImageParser(), new XpmImageParser(),
-                new RgbeImageParser()
+        ImageParser result[] = {
+                new BmpImageParser(),
+                new DcxImageParser(),
+                new GifImageParser(),
+                new IcnsImageParser(),
+                new IcoImageParser(),
+                new JpegImageParser(),
+                new PcxImageParser(),
+                new PngImageParser(),
+                new PnmImageParser(),
+                new PsdImageParser(),
+                new RgbeImageParser(),
+                new TiffImageParser(),
+                new WbmpImageParser(),
+                new XbmImageParser(),
+                new XpmImageParser(),
         // new JBig2ImageParser(),
         // new TgaImageParser(),
         };
