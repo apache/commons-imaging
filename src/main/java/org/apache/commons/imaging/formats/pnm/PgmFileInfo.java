@@ -53,27 +53,27 @@ public class PgmFileInfo extends FileInfo {
 
     @Override
     public int getBitDepth() {
-        return 8;
+        return max;
     }
 
     @Override
     public ImageFormat getImageType() {
-        return ImageFormat.IMAGE_FORMAT_PPM;
+        return ImageFormat.IMAGE_FORMAT_PGM;
     }
 
     @Override
     public String getImageTypeDescription() {
-        return "PGM: portable pixmap file    format";
+        return "PGM: portable graymap file format";
     }
 
     @Override
     public String getMIMEType() {
-        return "image/x-portable-pixmap";
+        return "image/x-portable-graymap";
     }
 
     @Override
     public int getColorType() {
-        return ImageInfo.COLOR_TYPE_RGB;
+        return ImageInfo.COLOR_TYPE_GRAYSCALE;
     }
 
     @Override

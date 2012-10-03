@@ -31,7 +31,7 @@ public class PpmFileInfo extends FileInfo {
     public PpmFileInfo(int width, int height, boolean RAWBITS, int max) throws ImageReadException {
         super(width, height, RAWBITS);
         if (max <= 0) {
-            throw new ImageReadException("PGM maxVal " + max
+            throw new ImageReadException("PPM maxVal " + max
                     + " is out of range [1;65535]");
         } else if (max <= 255) {
             scale = 255f;
@@ -40,7 +40,7 @@ public class PpmFileInfo extends FileInfo {
             scale = 65535f;
             bytesPerSample = 2;
         } else {
-            throw new ImageReadException("PGM maxVal " + max
+            throw new ImageReadException("PPM maxVal " + max
                     + " is out of range [1;65535]");
         }
         this.max = max;
@@ -53,27 +53,27 @@ public class PpmFileInfo extends FileInfo {
 
     @Override
     public int getBitDepth() {
-        return 8;
+        return max;
     }
 
     @Override
     public ImageFormat getImageType() {
-        return ImageFormat.IMAGE_FORMAT_PGM;
+        return ImageFormat.IMAGE_FORMAT_PPM;
     }
 
     @Override
     public String getImageTypeDescription() {
-        return "PGM: portable graymap file    format";
+        return "PPM: portable pixmap file format";
     }
 
     @Override
     public String getMIMEType() {
-        return "image/x-portable-graymap";
+        return "image/x-portable-pixmap";
     }
 
     @Override
     public int getColorType() {
-        return ImageInfo.COLOR_TYPE_GRAYSCALE;
+        return ImageInfo.COLOR_TYPE_RGB;
     }
 
     @Override
