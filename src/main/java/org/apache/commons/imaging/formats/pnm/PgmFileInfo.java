@@ -45,6 +45,11 @@ public class PgmFileInfo extends FileInfo {
         }
         this.max = max;
     }
+    
+    @Override
+    public boolean hasAlpha() {
+        return false;
+    }
 
     @Override
     public int getNumComponents() {

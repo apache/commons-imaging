@@ -26,6 +26,11 @@ public class PbmFileInfo extends FileInfo {
     public PbmFileInfo(int width, int height, boolean RAWBITS) {
         super(width, height, RAWBITS);
     }
+    
+    @Override
+    public boolean hasAlpha() {
+        return false;
+    }
 
     @Override
     public int getNumComponents() {

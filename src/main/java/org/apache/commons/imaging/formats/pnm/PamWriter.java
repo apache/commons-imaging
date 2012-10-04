@@ -46,7 +46,7 @@ public class PamWriter extends PnmWriter implements PnmConstants {
         os.write(("HEIGHT " + height).getBytes("US-ASCII"));
         os.write(PNM_NEWLINE);
         
-        os.write(("DEPTH 3").getBytes("US-ASCII"));
+        os.write(("DEPTH 4").getBytes("US-ASCII"));
         os.write(PNM_NEWLINE);
         
         os.write(("MAXVAL 255").getBytes("US-ASCII"));
@@ -66,10 +66,10 @@ public class PamWriter extends PnmWriter implements PnmConstants {
                 int green = 0xff & (argb >> 8);
                 int blue = 0xff & (argb >> 0);
 
-                os.write((byte) alpha);
                 os.write((byte) red);
                 os.write((byte) green);
                 os.write((byte) blue);
+                os.write((byte) alpha);
             }
         }
     }

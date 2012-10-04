@@ -32,6 +32,8 @@ public abstract class FileInfo {
         this.RAWBITS = RAWBITS;
     }
 
+    public abstract boolean hasAlpha();
+    
     public abstract int getNumComponents();
 
     public abstract int getBitDepth();
@@ -73,7 +75,7 @@ public abstract class FileInfo {
             // invalid values -> black
             sample = 0;
         }
-        return (int)((sample * max / scale) + 0.5f);
+        return (int)((sample * scale / max) + 0.5f);
     }
 
     public void readImage(ImageBuilder imageBuilder, InputStream is)

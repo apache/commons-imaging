@@ -260,7 +260,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
 
         String FormatDetails = info.getImageTypeDescription();
 
-        boolean isTransparent = false;
+        boolean isTransparent = info.hasAlpha();
         boolean usesPalette = false;
 
         int ColorType = info.getColorType();
@@ -305,7 +305,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
             int width = info.width;
             int height = info.height;
 
-            boolean hasAlpha = false;
+            boolean hasAlpha = info.hasAlpha();
             ImageBuilder imageBuilder = new ImageBuilder(width, height,
                     hasAlpha);
             info.readImage(imageBuilder, is);
