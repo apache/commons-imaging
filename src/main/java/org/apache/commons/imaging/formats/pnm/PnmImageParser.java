@@ -375,9 +375,6 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
             params.remove(PARAM_KEY_FORMAT);
         }
         
-        // clear pixel density
-        params.remove(PARAM_KEY_PIXEL_DENSITY);
-
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
