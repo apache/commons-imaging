@@ -114,14 +114,14 @@ limitations under the License.
     </td>
   </tr>
 
-  <!-- PNM/PGM/PBM/PPM Portable Pixmap -->
+  <!-- PNM/PGM/PBM/PPM/PAM Portable Pixmap -->
   <tr>
-    <td>PNM/PGM/PBM/PPM Portable Pixmap</td><td>yes</td><td>yes</td>
+    <td>PNM/PGM/PBM/PPM/PAM Portable Pixmap</td><td>yes</td><td>mostly</td>
     <td>
-        Complete.
+        Reading complete. PAM writing only in RGB_ALPHA format.
     </td>
     <td>
-       No spec, see:
+       <a href="http://netpbm.sourceforge.net/doc/index.html">spec</a>
        <a href="http://en.wikipedia.org/wiki/Portable_pixmap">wikipedia</a>
     </td>
   </tr>

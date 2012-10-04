@@ -84,8 +84,8 @@ public class RoundtripTest extends ImagingTest {
                     COLOR_GRAYSCALE, true, false), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_PPM, true, true,
                     COLOR_FULL_RGB, true, false), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_PAM, true, false,
-                    COLOR_FULL_RGB, true, true),//
+            new FormatInfo(ImageFormat.IMAGE_FORMAT_PAM, true, true,
+                    COLOR_FULL_RGB, true, false),//
             // new FormatInfo(ImageFormat.IMAGE_FORMAT_PNM, true, true,
             // COLOR_FULL_RGB, true), //
             new FormatInfo(ImageFormat.IMAGE_FORMAT_TGA, false, false,
@@ -425,7 +425,7 @@ public class RoundtripTest extends ImagingTest {
             ImageReadException, ImageWriteException {
         File temp1 = createTempFile(tempPrefix + ".", "."
                 + formatInfo.format.getExtension());
-        // Debug.debug("tempFile: " + tempFile.getName());
+        Debug.debug("tempFile: " + temp1.getName());
 
         Map<String,Object> params = new HashMap<String,Object>();
         Imaging.writeImage(testImage, temp1, formatInfo.format, params);

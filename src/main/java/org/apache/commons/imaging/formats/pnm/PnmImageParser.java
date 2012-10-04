@@ -38,6 +38,7 @@ import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.Debug;
 
 public class PnmImageParser extends ImageParser implements PnmConstants {
@@ -118,7 +119,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
             } else {
                 throw new ImageReadException("PNM file has invalid header.");
             }
-        } else if (identifier2 == PAM_TEXT_CODE) {
+        } else if (identifier2 == PAM_RAW_CODE) {
             int width = -1;
             boolean seenWidth = false;
             int height = -1;
@@ -330,6 +331,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
             throws ImageWriteException, IOException {
         PnmWriter writer = null;
         boolean useRawbits = true;
+        boolean hasAlpha = new PaletteFactory().hasTransparency(src);
 
         if (params != null) {
             Object useRawbitsParam = params.get(PARAM_KEY_PNM_RAWBITS);
@@ -347,12 +349,18 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
                     writer = new PgmWriter(useRawbits);
                 } else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PPM)) {
                     writer = new PpmWriter(useRawbits);
+                } else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PAM)) { 
+                    writer = new PamWriter();
                 }
             }
         }
 
         if (writer == null) {
-            writer = new PpmWriter(useRawbits);
+            if (hasAlpha) {
+                writer = new PamWriter();
+            } else {   
+                writer = new PpmWriter(useRawbits);
+            }
         }
 
         // make copy of params; we'll clear keys as we consume them.
@@ -366,6 +374,9 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
         if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
         }
+        
+        // clear pixel density
+        params.remove(PARAM_KEY_PIXEL_DENSITY);
 
         if (params.size() > 0) {
             Object firstKey = params.keySet().iterator().next();
