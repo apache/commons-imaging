@@ -17,12 +17,14 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
@@ -53,6 +55,14 @@ public class JpegReadTest extends JpegBaseTest {
 
             ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
+            
+            try {
+                BufferedImage image = Imaging.getBufferedImage(imageFile, params);
+                assertNotNull(image);
+            } catch (ImageReadException imageReadException) {
+                assertEquals("Only sequential, baseline JPEGs are supported at the moment",
+                        imageReadException.getMessage());
+            }
         }
     }
 
