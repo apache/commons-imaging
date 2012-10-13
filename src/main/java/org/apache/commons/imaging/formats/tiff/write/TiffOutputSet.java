@@ -144,11 +144,11 @@ public final class TiffOutputSet implements TiffConstants {
         latitude = Math.abs(latitude);
 
         gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
-        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LONGITUDE_REF,
+        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF,
                 longitudeRef);
 
         gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
-        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_DEST_LATITUDE_REF,
+        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF,
                 latitudeRef);
 
         {
@@ -163,7 +163,7 @@ public final class TiffOutputSet implements TiffConstants {
 
             gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
             gpsDirectory
-                    .add(GpsTagConstants.GPS_TAG_GPS_DEST_LONGITUDE,
+                    .add(GpsTagConstants.GPS_TAG_GPS_LONGITUDE,
                             RationalNumberUtilities
                                     .getRationalNumber(longitudeDegrees),
                             RationalNumberUtilities

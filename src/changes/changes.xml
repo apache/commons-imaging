@@ -230,6 +230,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-89" dev="damjan" type="add">
         Detect the YCCK color space/type in JPEG files' APP14 segment.
       </action>
+      <action issue="IMAGING-92" dev="damjan" type="fix" due-to="hmarmy">
+        Issue trying to update GPS metadata info in a JPG.
+      </action>
     </release>
     
   </body>
