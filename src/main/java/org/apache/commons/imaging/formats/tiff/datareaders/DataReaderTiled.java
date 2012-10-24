@@ -83,13 +83,13 @@ public final class DataReaderTiled extends DataReader {
             int i1 = startY + tileLength;
             if (i1 > height) {
                 // the tile is padded past bottom of image
-                i1 = height - startY;
+                i1 = height;
             }
             int j0 = startX;
             int j1 = startX + tileWidth;
             if (j1 > width) {
                 // the tile is padded to beyond the tile width
-                j1 = width - startX;
+                j1 = width;
             }
             if (photometricInterpreter instanceof PhotometricInterpreterRgb) {
                 for (int i = i0; i < i1; i++) {
