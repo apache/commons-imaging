@@ -236,6 +236,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-91" dev="damjan" type="update">
          ByteSourceInputStream.streamLength could be a long.
       </action>
+      <action issue="IMAGING-95" dev="damjan" type="update" due-to="amitgupt">
+         Some tiff processing takes very long.
+      </action>
     </release>
     
   </body>

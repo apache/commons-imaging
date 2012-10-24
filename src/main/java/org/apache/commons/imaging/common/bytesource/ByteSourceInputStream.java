@@ -88,7 +88,7 @@ public class ByteSourceInputStream extends ByteSource {
         private CacheBlock block = null;
         private boolean readFirst = false;
         private int blockIndex = 0;
-
+        
         @Override
         public int read() throws IOException {
             if (null == block) {
@@ -154,6 +154,48 @@ public class ByteSourceInputStream extends ByteSource {
             System.arraycopy(block.bytes, blockIndex, b, off, readSize);
             blockIndex += readSize;
             return readSize;
+        }
+        
+        @Override
+        public long skip(long n) throws IOException {
+
+            long remaining = n;
+
+            if (n <= 0) {
+                return 0;
+            }
+
+            while (remaining > 0) {
+                // read the first block
+                if (null == block) {
+                    if (readFirst) {
+                        return -1;
+                    }
+                    block = getFirstBlock();
+                    readFirst = true;
+                }
+
+                // get next block
+                if (block != null && blockIndex >= block.bytes.length) {
+                    block = block.getNext();
+                    blockIndex = 0;
+                }
+
+                if (null == block) {
+                    break;
+                }
+
+                if (blockIndex >= block.bytes.length) {
+                    break;
+                }
+
+                int readSize = Math.min((int) Math.min(BLOCK_SIZE, remaining), block.bytes.length - blockIndex);
+
+                blockIndex += readSize;
+                remaining -= readSize;
+            }
+
+            return n - remaining;
         }
 
     }
