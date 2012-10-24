@@ -168,7 +168,7 @@ public class ByteSourceInputStream extends ByteSource {
         // We include a separate check for int overflow.
         if ((blockStart < 0) || (blockLength < 0)
                 || (blockStart + blockLength < 0)
-                || (blockStart + blockLength > streamLength.longValue())) {
+                || (blockStart + blockLength > streamLength)) {
             throw new IOException("Could not read block (block start: "
                     + blockStart + ", block length: " + blockLength
                     + ", data length: " + streamLength + ").");
@@ -191,12 +191,12 @@ public class ByteSourceInputStream extends ByteSource {
         }
     }
 
-    private Long streamLength = null;
+    private long streamLength = -1;
 
     @Override
     public long getLength() throws IOException {
-        if (streamLength != null) {
-            return streamLength.longValue();
+        if (streamLength >= 0) {
+            return streamLength;
         }
 
         InputStream is = getInputStream();

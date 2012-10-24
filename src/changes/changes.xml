@@ -233,6 +233,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-92" dev="damjan" type="fix" due-to="hmarmy">
         Issue trying to update GPS metadata info in a JPG.
       </action>
+      <action issue="IMAGING-91" dev="damjan" type="update">
+         ByteSourceInputStream.streamLength could be a long.
+      </action>
     </release>
     
   </body>
