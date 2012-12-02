@@ -242,6 +242,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-93" dev="damjan" type="fix" due-to="gwlucas">
          Tiled TIFF images do not correctly load partial tiles.
       </action>
+      <action issue="IMAGING-90" dev="damjan" type="fix">
+         Allow non-1 TIFF field lengths when parsing offset fields in non-strict mode.
+      </action>
     </release>
     
   </body>
