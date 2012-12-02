@@ -334,7 +334,7 @@ public class PaletteFactory {
      * Builds an inexact opaque palette of at most {@code max} colors in {@code src}
      * using a variation of the Median Cut algorithm. Accurate to 6 bits per component,
      * and works by splitting the color bounding box most heavily populated by colors
-     * along the component which splits the colors most evenly.
+     * along the component which splits the colors in that box most evenly.
      * @param src the image whose palette to build
      * @param max the maximum number of colors the palette can contain
      * @return the palette of at most {@code max} colors

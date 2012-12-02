@@ -32,6 +32,7 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
 import org.apache.commons.imaging.util.Debug;
 
 public class TiffReader extends BinaryFileParser implements TiffConstants {
@@ -245,48 +246,39 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
             }
 
             if (listener.readOffsetDirectories()) {
-                List<TiffField> fieldsToRemove = new ArrayList<TiffField>();
-                for (int j = 0; j < fields.size(); j++) {
-                    TiffField entry = fields.get(j);
-
-                    if (entry.tag == ExifTagConstants.EXIF_TAG_EXIF_OFFSET.tag
-                            || entry.tag == ExifTagConstants.EXIF_TAG_GPSINFO.tag
-                            || entry.tag == ExifTagConstants.EXIF_TAG_INTEROP_OFFSET.tag) { /*
-                                                                                             * do
-                                                                                             * nothing
-                                                                                             */
-                    } else {
-                        continue;
+                final TagInfoLong[] offsetFields = {
+                        EXIF_TAG_EXIF_OFFSET,
+                        EXIF_TAG_GPSINFO,
+                        EXIF_TAG_INTEROP_OFFSET
+                };
+                final int[] directoryTypes = {
+                        TiffDirectory.DIRECTORY_TYPE_EXIF,
+                        TiffDirectory.DIRECTORY_TYPE_GPS,
+                        TiffDirectory.DIRECTORY_TYPE_INTEROPERABILITY
+                };
+                for (int i = 0; i < offsetFields.length; i++) {
+                    TagInfoLong offsetField = offsetFields[i];
+                    if (directory.findField(offsetField) != null) {
+                        int subDirectoryOffset;
+                        int subDirectoryType;
+                        boolean subDirectoryRead = false;
+                        try {
+                            subDirectoryOffset = directory.getSingleFieldValue(offsetField);
+                            subDirectoryType = directoryTypes[i];
+                            subDirectoryRead = readDirectory(byteSource,
+                                    subDirectoryOffset, subDirectoryType,
+                                    formatCompliance, listener, true, visited);
+    
+                        } catch (ImageReadException imageReadException) {
+                            if (strict) {
+                                throw imageReadException;
+                            }
+                        }
+                        if (!subDirectoryRead) {
+                            fields.remove(offsetField);
+                        }
                     }
-
-                    int subDirectoryOffset = ((Number) entry.getValue())
-                            .intValue();
-                    int subDirectoryType;
-                    if (entry.tag == ExifTagConstants.EXIF_TAG_EXIF_OFFSET.tag) {
-                        subDirectoryType = TiffDirectory.DIRECTORY_TYPE_EXIF;
-                    } else if (entry.tag == ExifTagConstants.EXIF_TAG_GPSINFO.tag) {
-                        subDirectoryType = TiffDirectory.DIRECTORY_TYPE_GPS;
-                    } else if (entry.tag == ExifTagConstants.EXIF_TAG_INTEROP_OFFSET.tag) {
-                        subDirectoryType = TiffDirectory.DIRECTORY_TYPE_INTEROPERABILITY;
-                    } else {
-                        throw new ImageReadException(
-                                "Unknown subdirectory type.");
-                    }
-
-                    // Debug.debug("sub dir", subDirectoryOffset);
-                    boolean subDirectoryRead = readDirectory(byteSource,
-                            subDirectoryOffset, subDirectoryType,
-                            formatCompliance, listener, true, visited);
-
-                    if (!subDirectoryRead) {
-                        // Offset field pointed to invalid location.
-                        // This is a bug in certain cameras. Ignore offset
-                        // field.
-                        fieldsToRemove.add(entry);
-                    }
-
                 }
-                fields.removeAll(fieldsToRemove);
             }
 
             if (!ignoreNextDirectory && directory.nextDirectoryOffset > 0) {

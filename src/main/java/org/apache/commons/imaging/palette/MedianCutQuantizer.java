@@ -21,8 +21,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.util.Debug;
@@ -89,6 +91,7 @@ public class MedianCutQuantizer {
 
         public final int max_diff;
         public final int diff_total;
+        public final int totalPoints;
 
         public ColorGroup(final List<ColorCount> color_counts)
                 throws ImageWriteException {
@@ -98,8 +101,10 @@ public class MedianCutQuantizer {
                 throw new ImageWriteException("empty color_group");
             }
 
+            int totalPoints = 0;
             for (int i = 0; i < color_counts.size(); i++) {
                 ColorCount color = color_counts.get(i);
+                totalPoints += color.count;
 
                 min_alpha = Math.min(min_alpha, color.alpha);
                 max_alpha = Math.max(max_alpha, color.alpha);
@@ -110,6 +115,7 @@ public class MedianCutQuantizer {
                 min_blue = Math.min(min_blue, color.blue);
                 max_blue = Math.max(max_blue, color.blue);
             }
+            this.totalPoints = totalPoints;
 
             alpha_diff = max_alpha - min_alpha;
             red_diff = max_red - min_red;
@@ -271,21 +277,37 @@ public class MedianCutQuantizer {
 
         final Comparator<ColorGroup> comparator = new Comparator<ColorGroup>() {
             public int compare(ColorGroup cg1, ColorGroup cg2) {
-                if (cg1.max_diff == cg2.max_diff) {
-                    return cg2.diff_total - cg1.diff_total;
-                }
-                return cg2.max_diff - cg1.max_diff;
+                return cg2.totalPoints - cg1.totalPoints;
+//                if (cg1.max_diff == cg2.max_diff) {
+//                    return cg2.diff_total - cg1.diff_total;
+//                }
+//                return cg2.max_diff - cg1.max_diff;
             }
         };
 
+        Set<ColorGroup> ignore = new HashSet<ColorGroup>();
         while (color_groups.size() < max_colors) {
             Collections.sort(color_groups, comparator);
 
             ColorGroup color_group = color_groups.get(0);
-
-            if (color_group.max_diff == 0) {
-                break;
-            }
+//            if (color_group.max_diff == 0) {
+//                for (ColorGroup c : color_groups) {
+//                    System.out.println("max_diff: " + c.max_diff);
+//                }
+//                break;
+//            }
+            
+//            ColorGroup color_group = null;
+//            for (ColorGroup c : color_groups) {
+//                if (c.max_diff > 0) {
+//                    color_group = c;
+//                    break;
+//                }
+//            }
+//            if (color_group == null) {
+//                break;
+//            }
+            
             if (!ignoreAlpha
                     && color_group.alpha_diff > color_group.red_diff
                     && color_group.alpha_diff > color_group.green_diff
