@@ -251,6 +251,16 @@ public class PngWriter implements PngConstants {
         writeChunk(os, PLTE_CHUNK_TYPE.toByteArray(), bytes);
     }
 
+    private void writeChunkTRNS(OutputStream os, Palette palette) throws IOException {
+        byte[] bytes = new byte[palette.length()];
+        
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = (byte) (0xff & (palette.getEntry(i) >> 24));
+        }
+        
+        writeChunk(os, TRNS_CHUNK_TYPE.toByteArray(), bytes);
+    }
+
     private void writeChunkIEND(OutputStream os) throws IOException {
         writeChunk(os, IEND_CHUNK_TYPE.toByteArray(), null);
     }

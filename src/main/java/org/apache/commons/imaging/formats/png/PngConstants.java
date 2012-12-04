@@ -28,6 +28,8 @@ public interface PngConstants extends ImagingConstants {
             new byte[] { 73, 72, 68, 82 });
     public final static BinaryConstant PLTE_CHUNK_TYPE = new BinaryConstant(
             new byte[] { 80, 76, 84, 69 });
+    public final static BinaryConstant TRNS_CHUNK_TYPE = new BinaryConstant(
+            new byte[] { 't', 'R', 'N', 'S'});
     public final static BinaryConstant IEND_CHUNK_TYPE = new BinaryConstant(
             new byte[] { 73, 69, 78, 68 });
     public final static BinaryConstant IDAT_CHUNK_TYPE = new BinaryConstant(
