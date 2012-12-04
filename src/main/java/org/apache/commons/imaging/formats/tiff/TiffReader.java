@@ -28,6 +28,7 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
@@ -505,11 +506,16 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         ImageDataElement element = directory.getJpegRawImageDataElement();
         int offset = element.offset;
         int length = element.length;
-        // Sony DCR-PC110 has an off-by-one error.
-        if (offset + length == byteSource.getLength() + 1) {
-            length--;
+        // In case the length is not correct, adjust it and check if the last read byte actually is the end of the image
+        if (offset + length > byteSource.getLength()) {
+            length = (int) byteSource.getLength() - offset;
         }
         byte data[] = byteSource.getBlock(offset, length);
+        // check if the last read byte is actually the end of the image data
+        if (length < 2 ||
+                (((data[data.length - 2] & 0xff) << 8) | (data[data.length - 1] & 0xff)) != JpegConstants.EOIMarker) {
+            throw new ImageReadException("JPEG EOI marker could not be found at expected location");
+        }
         return new JpegImageData(offset, length, data);
     }
 

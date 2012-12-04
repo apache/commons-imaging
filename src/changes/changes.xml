@@ -245,6 +245,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-90" dev="damjan" type="fix">
          Allow non-1 TIFF field lengths when parsing offset fields in non-strict mode.
       </action>
+      <action issue="IMAGING-99" dev="damjan" type="fix" due-to="st.h">
+         java.io.IOException: Could not read block
+      </action>
     </release>
     
   </body>
