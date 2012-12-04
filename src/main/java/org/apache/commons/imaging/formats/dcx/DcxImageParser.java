@@ -237,7 +237,7 @@ public class DcxImageParser extends ImageParser {
                     throw new ImageWriteException(
                             "Invalid pixel density parameter");
                 }
-                pcxParams.put(PARAM_KEY_PIXEL_DENSITY, (PixelDensity) value);
+                pcxParams.put(PARAM_KEY_PIXEL_DENSITY, value);
             }
         }
 
