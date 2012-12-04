@@ -25,13 +25,13 @@ public class MyBitOutputStream extends OutputStream {
     private final OutputStream os;
     private final ByteOrder byteOrder;
 
-    public MyBitOutputStream(OutputStream os, ByteOrder byteOrder) {
+    public MyBitOutputStream(final OutputStream os, final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
         this.os = os;
     }
 
     @Override
-    public void write(int value) throws IOException {
+    public void write(final int value) throws IOException {
         writeBits(value, 8);
     }
 
@@ -40,8 +40,8 @@ public class MyBitOutputStream extends OutputStream {
 
     // TODO: in and out streams CANNOT accurately read/write 32bits at a time,
     // as int will overflow. should have used a long
-    public void writeBits(int value, int SampleBits) throws IOException {
-        int sampleMask = (1 << SampleBits) - 1;
+    public void writeBits(int value, final int SampleBits) throws IOException {
+        final int sampleMask = (1 << SampleBits) - 1;
         value &= sampleMask;
 
         if (byteOrder == ByteOrder.NETWORK) {
@@ -56,19 +56,19 @@ public class MyBitOutputStream extends OutputStream {
         while (bitsInCache >= 8) {
             if (byteOrder == ByteOrder.NETWORK) {
                 // MSB, so write from left
-                int b = 0xff & (bitCache >> (bitsInCache - 8));
+                final int b = 0xff & (bitCache >> (bitsInCache - 8));
                 actualWrite(b);
 
                 bitsInCache -= 8;
             } else {
                 // LSB, so write from right
-                int b = 0xff & bitCache;
+                final int b = 0xff & bitCache;
                 actualWrite(b);
 
                 bitCache >>= 8;
                 bitsInCache -= 8;
             }
-            int remainderMask = (1 << bitsInCache) - 1; // unneccesary
+            final int remainderMask = (1 << bitsInCache) - 1; // unneccesary
             bitCache &= remainderMask; // unneccesary
         }
 
@@ -76,14 +76,14 @@ public class MyBitOutputStream extends OutputStream {
 
     private int bytesWritten = 0;
 
-    private void actualWrite(int value) throws IOException {
+    private void actualWrite(final int value) throws IOException {
         os.write(value);
         bytesWritten++;
     }
 
     public void flushCache() throws IOException {
         if (bitsInCache > 0) {
-            int bitMask = (1 << bitsInCache) - 1;
+            final int bitMask = (1 << bitsInCache) - 1;
             int b = bitMask & bitCache;
 
             if (byteOrder == ByteOrder.NETWORK) { 

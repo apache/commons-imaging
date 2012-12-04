@@ -43,9 +43,9 @@ public abstract class DataReader implements TiffConstants {
     protected final int samplesPerPixel;
     protected final int width, height;
 
-    public DataReader(TiffDirectory directory,
-            PhotometricInterpreter photometricInterpreter, int bitsPerSample[],
-            int predictor, int samplesPerPixel, int width, int height) {
+    public DataReader(final TiffDirectory directory,
+            final PhotometricInterpreter photometricInterpreter, final int bitsPerSample[],
+            final int predictor, final int samplesPerPixel, final int width, final int height) {
         this.directory = directory;
         this.photometricInterpreter = photometricInterpreter;
         this.bitsPerSample = bitsPerSample;
@@ -71,13 +71,13 @@ public abstract class DataReader implements TiffConstants {
      *            bitsPerSample.length
      * @throws IOException
      */
-    protected void getSamplesAsBytes(BitInputStream bis, int[] result)
+    protected void getSamplesAsBytes(final BitInputStream bis, final int[] result)
             throws IOException {
         for (int i = 0; i < bitsPerSample.length; i++) {
-            int bits = bitsPerSample[i];
+            final int bits = bitsPerSample[i];
             int sample = bis.readBits(bits);
             if (bits < 8) {
-                int sign = sample & 1;
+                final int sign = sample & 1;
                 sample = sample << (8 - bits); // scale to byte.
                 if (sign > 0) {
                     sample = sample | ((1 << (8 - bits)) - 1); // extend to byte
@@ -95,7 +95,7 @@ public abstract class DataReader implements TiffConstants {
         }
     }
 
-    protected int[] applyPredictor(int samples[]) {
+    protected int[] applyPredictor(final int samples[]) {
         if (predictor == 2) {
             // Horizontal differencing.
             for (int i = 0; i < samples.length; i++) {
@@ -107,10 +107,10 @@ public abstract class DataReader implements TiffConstants {
         return samples;
     }
 
-    protected byte[] decompress(byte compressed[], int compression,
-            int expected_size, int tileWidth, int tileHeight)
+    protected byte[] decompress(final byte compressed[], final int compression,
+            final int expected_size, final int tileWidth, final int tileHeight)
             throws ImageReadException, IOException {
-        TiffField fillOrderField = directory
+        final TiffField fillOrderField = directory
                 .findField(TiffTagConstants.TIFF_TAG_FILL_ORDER);
         int fillOrder = TiffTagConstants.FILL_ORDER_VALUE_NORMAL;
         if (fillOrderField != null) {
@@ -136,18 +136,18 @@ public abstract class DataReader implements TiffConstants {
                     tileWidth, tileHeight);
         case TIFF_COMPRESSION_CCITT_GROUP_3: {
             int t4Options = 0;
-            TiffField field = directory
+            final TiffField field = directory
                     .findField(TiffTagConstants.TIFF_TAG_T4_OPTIONS);
             if (field != null) {
                 t4Options = field.getIntValue();
             }
-            boolean is2D = (t4Options & TIFF_FLAG_T4_OPTIONS_2D) != 0;
-            boolean usesUncompressedMode = (t4Options & TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE) != 0;
+            final boolean is2D = (t4Options & TIFF_FLAG_T4_OPTIONS_2D) != 0;
+            final boolean usesUncompressedMode = (t4Options & TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE) != 0;
             if (usesUncompressedMode) {
                 throw new ImageReadException(
                         "T.4 compression with the uncompressed mode extension is not yet supported");
             }
-            boolean hasFillBitsBeforeEOL = (t4Options & TIFF_FLAG_T4_OPTIONS_FILL) != 0;
+            final boolean hasFillBitsBeforeEOL = (t4Options & TIFF_FLAG_T4_OPTIONS_FILL) != 0;
             if (is2D) {
                 return T4AndT6Compression.decompressT4_2D(compressed,
                         tileWidth, tileHeight, hasFillBitsBeforeEOL);
@@ -158,12 +158,12 @@ public abstract class DataReader implements TiffConstants {
         }
         case TIFF_COMPRESSION_CCITT_GROUP_4: {
             int t6Options = 0;
-            TiffField field = directory
+            final TiffField field = directory
                     .findField(TiffTagConstants.TIFF_TAG_T6_OPTIONS);
             if (field != null) {
                 t6Options = field.getIntValue();
             }
-            boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
+            final boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;
             if (usesUncompressedMode) {
                 throw new ImageReadException(
                         "T.6 compression with the uncompressed mode extension is not yet supported");
@@ -173,23 +173,23 @@ public abstract class DataReader implements TiffConstants {
         }
         case TIFF_COMPRESSION_LZW: // LZW
         {
-            InputStream is = new ByteArrayInputStream(compressed);
+            final InputStream is = new ByteArrayInputStream(compressed);
 
-            int LZWMinimumCodeSize = 8;
+            final int LZWMinimumCodeSize = 8;
 
-            MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
+            final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
                     LZWMinimumCodeSize, ByteOrder.NETWORK);
 
             myLzwDecompressor.setTiffLZWMode();
 
-            byte[] result = myLzwDecompressor.decompress(is, expected_size);
+            final byte[] result = myLzwDecompressor.decompress(is, expected_size);
 
             return result;
         }
 
         case TIFF_COMPRESSION_PACKBITS: // Packbits
         {
-            byte unpacked[] = new PackBits().decompress(compressed,
+            final byte unpacked[] = new PackBits().decompress(compressed,
                     expected_size);
 
             return unpacked;

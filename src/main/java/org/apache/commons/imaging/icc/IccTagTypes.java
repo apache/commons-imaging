@@ -318,7 +318,7 @@ public enum IccTagTypes implements IccTagType {
     public final String type_description;
     public final int signature;
 
-    IccTagTypes(String name, String type_description, int signature) {
+    IccTagTypes(final String name, final String type_description, final int signature) {
         this.name = name;
         this.type_description = type_description;
         this.signature = signature;

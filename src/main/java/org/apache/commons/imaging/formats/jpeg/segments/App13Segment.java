@@ -32,14 +32,14 @@ public class App13Segment extends AppnSegment {
     // public final List elements = new ArrayList();
     // public final boolean isIPTCJpegSegment;
 
-    public App13Segment(JpegImageParser parser, int marker, byte segmentData[])
+    public App13Segment(final JpegImageParser parser, final int marker, final byte segmentData[])
             throws IOException {
         this(parser, marker, segmentData.length, new ByteArrayInputStream(
                 segmentData));
     }
 
-    public App13Segment(JpegImageParser parser, int marker, int marker_length,
-            InputStream is) throws IOException {
+    public App13Segment(final JpegImageParser parser, final int marker, final int marker_length,
+            final InputStream is) throws IOException {
         super(marker, marker_length, is);
         this.parser = parser;
 
@@ -62,7 +62,7 @@ public class App13Segment extends AppnSegment {
         return new IptcParser().isPhotoshopJpegSegment(bytes);
     }
 
-    public PhotoshopApp13Data parsePhotoshopSegment(Map<String,Object> params)
+    public PhotoshopApp13Data parsePhotoshopSegment(final Map<String,Object> params)
             throws ImageReadException, IOException {
         /*
          * In practice, App13 segments are only used for Photoshop/IPTC

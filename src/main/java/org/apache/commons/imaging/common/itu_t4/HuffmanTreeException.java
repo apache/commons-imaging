@@ -19,11 +19,11 @@ package org.apache.commons.imaging.common.itu_t4;
 class HuffmanTreeException extends Exception {
     private static final long serialVersionUID = 1L;
 
-    public HuffmanTreeException(String message) {
+    public HuffmanTreeException(final String message) {
         super(message);
     }
 
-    public HuffmanTreeException(String message, Throwable throwable) {
+    public HuffmanTreeException(final String message, final Throwable throwable) {
         super(message, throwable);
     }
 }

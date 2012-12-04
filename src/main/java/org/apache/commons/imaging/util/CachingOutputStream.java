@@ -25,12 +25,12 @@ public class CachingOutputStream extends OutputStream {
     private final OutputStream os;
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-    public CachingOutputStream(OutputStream os) {
+    public CachingOutputStream(final OutputStream os) {
         this.os = os;
     }
 
     @Override
-    public void write(int b) throws IOException {
+    public void write(final int b) throws IOException {
         os.write(b);
         baos.write(b);
     }

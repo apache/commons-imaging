@@ -23,19 +23,19 @@ import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoAscii extends TagInfo {
-    public TagInfoAscii(String name, int tag, int length,
-            TiffDirectoryType directoryType) {
+    public TagInfoAscii(final String name, final int tag, final int length,
+            final TiffDirectoryType directoryType) {
         super(name, tag, FIELD_TYPE_ASCII, length, directoryType);
     }
 
-    public String[] getValue(ByteOrder byteOrder, byte[] bytes) {
+    public String[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         int nullCount = 1;
         for (int i = 0; i < bytes.length - 1; i++) {
             if (bytes[i] == 0) {
                 nullCount++;
             }
         }
-        String[] strings = new String[nullCount + 1];
+        final String[] strings = new String[nullCount + 1];
         int stringsAdded = 0;
         strings[0] = ""; // if we have a 0 length string
         int nextStringPos = 0;
@@ -45,10 +45,10 @@ public class TagInfoAscii extends TagInfo {
         for (int i = 0; i < bytes.length; i++) {
             if (bytes[i] == 0) {
                 try {
-                    String string = new String(bytes, nextStringPos, i
+                    final String string = new String(bytes, nextStringPos, i
                             - nextStringPos, "UTF-8");
                     strings[stringsAdded++] = string;
-                } catch (UnsupportedEncodingException unsupportedEncoding) {
+                } catch (final UnsupportedEncodingException unsupportedEncoding) {
                 }
                 nextStringPos = i + 1;
             }
@@ -56,16 +56,16 @@ public class TagInfoAscii extends TagInfo {
         if (nextStringPos < bytes.length) {
             // Buggy file, string wasn't null terminated
             try {
-                String string = new String(bytes, nextStringPos, bytes.length
+                final String string = new String(bytes, nextStringPos, bytes.length
                         - nextStringPos, "UTF-8");
                 strings[stringsAdded++] = string;
-            } catch (UnsupportedEncodingException unsupportedEncoding) {
+            } catch (final UnsupportedEncodingException unsupportedEncoding) {
             }
         }
         return strings;
     }
 
-    public byte[] encodeValue(ByteOrder byteOrder, String... values)
+    public byte[] encodeValue(final ByteOrder byteOrder, final String... values)
             throws ImageWriteException {
         return FIELD_TYPE_ASCII.writeData(values, byteOrder);
     }

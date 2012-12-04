@@ -26,13 +26,13 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class IcoBaseTest extends ImagingTest {
 
-    private static boolean isIco(File file) {
+    private static boolean isIco(final File file) {
         return file.getName().toLowerCase().endsWith(".ico")
                 || file.getName().toLowerCase().endsWith(".cur");
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isIco(file);
         }
     };

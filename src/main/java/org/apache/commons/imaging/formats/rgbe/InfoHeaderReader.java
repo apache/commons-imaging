@@ -22,12 +22,12 @@ import java.io.InputStream;
 class InfoHeaderReader {
     private final InputStream is;
 
-    public InfoHeaderReader(InputStream is) {
+    public InfoHeaderReader(final InputStream is) {
         this.is = is;
     }
 
     private char read() throws IOException {
-        int result = is.read();
+        final int result = is.read();
         if (result < 0) {
             throw new IOException("HDR: Unexpected EOF");
         }
@@ -35,7 +35,7 @@ class InfoHeaderReader {
     }
 
     public String readNextLine() throws IOException {
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
         char c;
 
         while ((c = read()) != '\n') {

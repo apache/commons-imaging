@@ -30,22 +30,22 @@ public class PngChunkIccp extends PngChunk {
 
     public PngChunkIccp(
     // PngImageParser parser,
-            int Length, int ChunkType, int CRC, byte bytes[])
+            final int Length, final int ChunkType, final int CRC, final byte bytes[])
             throws ImageReadException, IOException {
         super(Length, ChunkType, CRC, bytes);
         // this.parser = parser;
 
-        int index = findNull(bytes);
+        final int index = findNull(bytes);
         if (index < 0) {
             throw new ImageReadException("PngChunkIccp: No Profile Name");
         }
-        byte name_bytes[] = new byte[index];
+        final byte name_bytes[] = new byte[index];
         System.arraycopy(bytes, 0, name_bytes, 0, index);
         ProfileName = new String(name_bytes, "ISO-8859-1");
 
         CompressionMethod = bytes[index + 1];
 
-        int CompressedProfileLength = bytes.length - (index + 1 + 1);
+        final int CompressedProfileLength = bytes.length - (index + 1 + 1);
         CompressedProfile = new byte[CompressedProfileLength];
         System.arraycopy(bytes, index + 1 + 1, CompressedProfile, 0,
                 CompressedProfileLength);

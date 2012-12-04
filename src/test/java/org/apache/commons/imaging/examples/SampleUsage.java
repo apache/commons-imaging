@@ -40,48 +40,48 @@ public class SampleUsage {
             // initialized.
             // Sanselan works equally well with File, byte array or InputStream
             // inputs.</b>
-            BufferedImage someImage = null;
-            byte someBytes[] = null;
-            File someFile = null;
-            InputStream someInputStream = null;
-            OutputStream someOutputStream = null;
+            final BufferedImage someImage = null;
+            final byte someBytes[] = null;
+            final File someFile = null;
+            final InputStream someInputStream = null;
+            final OutputStream someOutputStream = null;
 
             // <b>The Sanselan class provides a simple interface to the library.
             // </b>
 
             // <b>how to read an image: </b>
-            byte imageBytes[] = someBytes;
-            BufferedImage image_1 = Imaging.getBufferedImage(imageBytes);
+            final byte imageBytes[] = someBytes;
+            final BufferedImage image_1 = Imaging.getBufferedImage(imageBytes);
 
             // <b>methods of Sanselan usually accept files, byte arrays, or
             // inputstreams as arguments. </b>
-            BufferedImage image_2 = Imaging.getBufferedImage(imageBytes);
-            File file = someFile;
-            BufferedImage image_3 = Imaging.getBufferedImage(file);
-            InputStream is = someInputStream;
-            BufferedImage image_4 = Imaging.getBufferedImage(is);
+            final BufferedImage image_2 = Imaging.getBufferedImage(imageBytes);
+            final File file = someFile;
+            final BufferedImage image_3 = Imaging.getBufferedImage(file);
+            final InputStream is = someInputStream;
+            final BufferedImage image_4 = Imaging.getBufferedImage(is);
 
             // <b>Write an image. </b>
-            BufferedImage image = someImage;
-            File dst = someFile;
-            ImageFormat format = ImageFormat.IMAGE_FORMAT_PNG;
-            Map<String,Object> optional_params = new HashMap<String,Object>();
+            final BufferedImage image = someImage;
+            final File dst = someFile;
+            final ImageFormat format = ImageFormat.IMAGE_FORMAT_PNG;
+            final Map<String,Object> optional_params = new HashMap<String,Object>();
             Imaging.writeImage(image, dst, format, optional_params);
 
-            OutputStream os = someOutputStream;
+            final OutputStream os = someOutputStream;
             Imaging.writeImage(image, os, format, optional_params);
 
             // <b>get the image's embedded ICC Profile, if it has one. </b>
-            byte iccProfileBytes[] = Imaging.getICCProfileBytes(imageBytes);
+            final byte iccProfileBytes[] = Imaging.getICCProfileBytes(imageBytes);
 
-            ICC_Profile iccProfile = Imaging.getICCProfile(imageBytes);
+            final ICC_Profile iccProfile = Imaging.getICCProfile(imageBytes);
 
             // <b>get the image's width and height. </b>
-            Dimension d = Imaging.getImageSize(imageBytes);
+            final Dimension d = Imaging.getImageSize(imageBytes);
 
             // <b>get all of the image's info (ie. bits per pixel, size,
             // transparency, etc.) </b>
-            ImageInfo imageInfo = Imaging.getImageInfo(imageBytes);
+            final ImageInfo imageInfo = Imaging.getImageInfo(imageBytes);
 
             if (imageInfo.getColorType() == ImageInfo.COLOR_TYPE_GRAYSCALE) {
                 System.out.println("Grayscale image.");
@@ -91,23 +91,23 @@ public class SampleUsage {
             }
 
             // <b>try to guess the image's format. </b>
-            ImageFormat image_format = Imaging.guessFormat(imageBytes);
+            final ImageFormat image_format = Imaging.guessFormat(imageBytes);
             image_format.equals(ImageFormat.IMAGE_FORMAT_PNG);
 
             // <b>get all metadata stored in EXIF format (ie. from JPEG or
             // TIFF). </b>
             // <b>org.w3c.dom.Node node =
             // Sanselan.getMetadataObsolete(imageBytes); </b>
-            IImageMetadata metadata = Imaging.getMetadata(imageBytes);
+            final IImageMetadata metadata = Imaging.getMetadata(imageBytes);
 
             // <b>print a dump of information about an image to stdout. </b>
             Imaging.dumpImageFile(imageBytes);
 
             // <b>get a summary of format errors. </b>
-            FormatCompliance formatCompliance = Imaging
+            final FormatCompliance formatCompliance = Imaging
                     .getFormatCompliance(imageBytes);
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
 
         }
     }

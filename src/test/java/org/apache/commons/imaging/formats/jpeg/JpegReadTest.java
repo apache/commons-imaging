@@ -32,35 +32,35 @@ import org.apache.commons.imaging.util.Debug;
 public class JpegReadTest extends JpegBaseTest {
 
     public void test() throws Exception {
-        List<File> images = getJpegImages();
+        final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
             // ByteSource byteSource = new ByteSourceFile(imageFile);
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map<String,Object> params = new HashMap<String,Object>();
-            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            final Map<String,Object> params = new HashMap<String,Object>();
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
-            IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
+            final IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
             // assertNotNull(metadata);
             Debug.debug("metadata", metadata);
             
             Debug.debug("ICC profile", Imaging.getICCProfile(imageFile, params));
 
-            ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
+            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
             
             try {
-                BufferedImage image = Imaging.getBufferedImage(imageFile, params);
+                final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
                 assertNotNull(image);
-            } catch (ImageReadException imageReadException) {
+            } catch (final ImageReadException imageReadException) {
                 assertEquals("Only sequential, baseline JPEGs are supported at the moment",
                         imageReadException.getMessage());
             }

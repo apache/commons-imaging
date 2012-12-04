@@ -23,16 +23,16 @@ import org.apache.commons.imaging.ImageReadException;
 public class ScanlineFilterPaeth extends ScanlineFilter {
     private final int BytesPerPixel;
 
-    public ScanlineFilterPaeth(int BytesPerPixel) {
+    public ScanlineFilterPaeth(final int BytesPerPixel) {
         this.BytesPerPixel = BytesPerPixel;
     }
 
-    private int PaethPredictor(int a, int b, int c) {
+    private int PaethPredictor(final int a, final int b, final int c) {
         // ; a = left, b = above, c = upper left
-        int p = a + b - c; // ; initial estimate
-        int pa = Math.abs(p - a); // ; distances to a, b, c
-        int pb = Math.abs(p - b);
-        int pc = Math.abs(p - c);
+        final int p = a + b - c; // ; initial estimate
+        final int pa = Math.abs(p - a); // ; distances to a, b, c
+        final int pb = Math.abs(p - b);
+        final int pc = Math.abs(p - c);
         // ; return nearest of a,b,c,
         // ; breaking ties in order a,b,c.
         if ((pa <= pb) && (pa <= pc)) {
@@ -45,11 +45,11 @@ public class ScanlineFilterPaeth extends ScanlineFilter {
     }
 
     @Override
-    public void unfilter(byte src[], byte dst[], byte up[])
+    public void unfilter(final byte src[], final byte dst[], final byte up[])
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
             int left = 0;
-            int prev_index = i - BytesPerPixel;
+            final int prev_index = i - BytesPerPixel;
             if (prev_index >= 0) {
                 left = dst[prev_index];
             }
@@ -66,7 +66,7 @@ public class ScanlineFilterPaeth extends ScanlineFilter {
             }
             // upperleft = 255;
 
-            int PaethPredictor = PaethPredictor(0xff & left, 0xff & above,
+            final int PaethPredictor = PaethPredictor(0xff & left, 0xff & above,
                     0xff & upperleft);
 
             dst[i] = (byte) ((src[i] + PaethPredictor) % 256);

@@ -28,25 +28,25 @@ public class TiffContents {
     public final TiffHeader header;
     public final List<TiffDirectory> directories;
 
-    public TiffContents(TiffHeader tiffHeader, List<TiffDirectory> directories) {
+    public TiffContents(final TiffHeader tiffHeader, final List<TiffDirectory> directories) {
         this.header = tiffHeader;
         this.directories = directories;
     }
 
     public List<TiffElement> getElements() throws ImageReadException {
-        List<TiffElement> result = new ArrayList<TiffElement>();
+        final List<TiffElement> result = new ArrayList<TiffElement>();
 
         result.add(header);
 
         for (int i = 0; i < directories.size(); i++) {
-            TiffDirectory directory = directories.get(i);
+            final TiffDirectory directory = directories.get(i);
 
             result.add(directory);
 
-            List<TiffField> fields = directory.entries;
+            final List<TiffField> fields = directory.entries;
             for (int j = 0; j < fields.size(); j++) {
-                TiffField field = fields.get(j);
-                TiffElement oversizeValue = field.getOversizeValueElement();
+                final TiffField field = fields.get(j);
+                final TiffElement oversizeValue = field.getOversizeValueElement();
                 if (null != oversizeValue) {
                     result.add(oversizeValue);
                 }
@@ -63,11 +63,11 @@ public class TiffContents {
         return result;
     }
 
-    public TiffField findField(TagInfo tag) throws ImageReadException {
+    public TiffField findField(final TagInfo tag) throws ImageReadException {
         for (int i = 0; i < directories.size(); i++) {
-            TiffDirectory directory = directories.get(i);
+            final TiffDirectory directory = directories.get(i);
 
-            TiffField field = directory.findField(tag);
+            final TiffField field = directory.findField(tag);
             if (null != field) {
                 return field;
             }
@@ -76,14 +76,14 @@ public class TiffContents {
         return null;
     }
 
-    public void dissect(boolean verbose) throws ImageReadException {
-        List<TiffElement> elements = getElements();
+    public void dissect(final boolean verbose) throws ImageReadException {
+        final List<TiffElement> elements = getElements();
 
         Collections.sort(elements, TiffElement.COMPARATOR);
 
         int lastEnd = 0;
         for (int i = 0; i < elements.size(); i++) {
-            TiffElement element = elements.get(i);
+            final TiffElement element = elements.get(i);
 
             if (element.offset > lastEnd) {
                 Debug.debug("\t" + "gap: " + (element.offset - lastEnd));
@@ -97,7 +97,7 @@ public class TiffContents {
                     + (element.offset + element.length) + ": "
                     + element.getElementDescription(false));
             if (verbose) {
-                String verbosity = element.getElementDescription(true);
+                final String verbosity = element.getElementDescription(true);
                 if (null != verbosity) {
                     Debug.debug(verbosity);
                 }

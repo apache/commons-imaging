@@ -27,13 +27,13 @@ public class ZigZag {
         35, 36, 48, 49, 57, 58, 62, 63
     };
 
-    public static void zigZagToBlock(int[] zz, int[] block) {
+    public static void zigZagToBlock(final int[] zz, final int[] block) {
         for (int i = 0; i < 64; i++) {
             block[i] = zz[zigZag[i]];
         }
     }
 
-    public static void blockToZigZag(int[] block, int[] zz) {
+    public static void blockToZigZag(final int[] block, final int[] zz) {
         for (int i = 0; i < 64; i++) {
             zz[zigZag[i]] = block[i];
         }

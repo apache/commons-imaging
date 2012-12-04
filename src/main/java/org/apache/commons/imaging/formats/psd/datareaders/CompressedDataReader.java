@@ -33,21 +33,21 @@ import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
 public class CompressedDataReader extends DataReader {
 
-    public CompressedDataReader(DataParser fDataParser) {
+    public CompressedDataReader(final DataParser fDataParser) {
         super(fDataParser);
     }
 
     @Override
-    public void readData(InputStream is, BufferedImage bi,
-            ImageContents imageContents, BinaryFileParser bfp)
+    public void readData(final InputStream is, final BufferedImage bi,
+            final ImageContents imageContents, final BinaryFileParser bfp)
             throws ImageReadException, IOException {
-        PsdHeaderInfo header = imageContents.header;
-        int width = header.Columns;
-        int height = header.Rows;
+        final PsdHeaderInfo header = imageContents.header;
+        final int width = header.Columns;
+        final int height = header.Rows;
 
         // this.setDebug(true);
-        int scanline_count = height * header.Channels;
-        int scanline_bytecounts[] = new int[scanline_count];
+        final int scanline_count = height * header.Channels;
+        final int scanline_bytecounts[] = new int[scanline_count];
         for (int i = 0; i < scanline_count; i++) {
             scanline_bytecounts[i] = bfp.read2Bytes("scanline_bytecount[" + i
                     + "]", is, "PSD: bad Image Data");
@@ -56,30 +56,30 @@ public class CompressedDataReader extends DataReader {
         // System.out.println("fImageContents.Compression: "
         // + imageContents.Compression);
 
-        int depth = header.Depth;
+        final int depth = header.Depth;
 
-        int channel_count = dataParser.getBasicChannelsCount();
-        int data[][][] = new int[channel_count][height][];
+        final int channel_count = dataParser.getBasicChannelsCount();
+        final int data[][][] = new int[channel_count][height][];
         // channels[0] =
         for (int channel = 0; channel < channel_count; channel++) {
             for (int y = 0; y < height; y++) {
-                int index = channel * height + y;
-                byte packed[] = bfp.readByteArray("scanline",
+                final int index = channel * height + y;
+                final byte packed[] = bfp.readByteArray("scanline",
                         scanline_bytecounts[index], is,
                         "PSD: Missing Image Data");
 
-                byte unpacked[] = new PackBits().decompress(packed, width);
-                InputStream bais = new ByteArrayInputStream(unpacked);
-                MyBitInputStream mbis = new MyBitInputStream(bais,
+                final byte unpacked[] = new PackBits().decompress(packed, width);
+                final InputStream bais = new ByteArrayInputStream(unpacked);
+                final MyBitInputStream mbis = new MyBitInputStream(bais,
                         ByteOrder.MOTOROLA);
-                BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we
+                final BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we
                                                                                  // want
                                                                                  // all
                                                                                  // samples
                                                                                  // to
                                                                                  // be
                                                                                  // bytes
-                int scanline[] = bbis.readBitsArray(depth, width);
+                final int scanline[] = bbis.readBitsArray(depth, width);
                 data[channel][y] = scanline;
 
             }

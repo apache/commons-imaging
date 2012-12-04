@@ -26,7 +26,7 @@ public class BitArrayOutputStream {
         buffer = new byte[16];
     }
 
-    public BitArrayOutputStream(int size) {
+    public BitArrayOutputStream(final int size) {
         buffer = new byte[size];
     }
 
@@ -39,7 +39,7 @@ public class BitArrayOutputStream {
         if (bytesWritten == buffer.length) {
             return buffer;
         }
-        byte[] out = new byte[bytesWritten];
+        final byte[] out = new byte[bytesWritten];
         System.arraycopy(buffer, 0, out, 0, bytesWritten);
         return out;
     }
@@ -56,12 +56,12 @@ public class BitArrayOutputStream {
         }
     }
 
-    public void write(int b) {
+    public void write(final int b) {
         flush();
         writeByte(b);
     }
 
-    public void writeBit(int bit) {
+    public void writeBit(final int bit) {
         if (bit != 0) {
             cache |= cacheMask;
         }
@@ -79,9 +79,9 @@ public class BitArrayOutputStream {
         return count;
     }
 
-    private void writeByte(int b) {
+    private void writeByte(final int b) {
         if (bytesWritten >= buffer.length) {
-            byte[] bigger = new byte[buffer.length * 2];
+            final byte[] bigger = new byte[buffer.length * 2];
             System.arraycopy(buffer, 0, bigger, 0, bytesWritten);
             buffer = bigger;
         }

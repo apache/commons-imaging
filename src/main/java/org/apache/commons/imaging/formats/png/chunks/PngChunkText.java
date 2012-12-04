@@ -24,10 +24,10 @@ import org.apache.commons.imaging.formats.png.PngText;
 public class PngChunkText extends PngTextChunk {
     public final String keyword, text;
 
-    public PngChunkText(int length, int chunkType, int crc, byte bytes[])
+    public PngChunkText(final int length, final int chunkType, final int crc, final byte bytes[])
             throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
-        int index = findNull(bytes);
+        final int index = findNull(bytes);
         if (index < 0) {
             throw new ImageReadException(
                     "PNG tEXt chunk keyword is not terminated.");
@@ -35,7 +35,7 @@ public class PngChunkText extends PngTextChunk {
 
         keyword = new String(bytes, 0, index, "ISO-8859-1");
 
-        int textLength = bytes.length - (index + 1);
+        final int textLength = bytes.length - (index + 1);
         text = new String(bytes, index + 1, textLength, "ISO-8859-1");
 
         if (getDebug()) {

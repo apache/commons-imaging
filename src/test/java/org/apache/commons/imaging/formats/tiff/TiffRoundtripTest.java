@@ -32,31 +32,31 @@ import org.apache.commons.imaging.util.Debug;
 public class TiffRoundtripTest extends TiffBaseTest {
 
     public void test() throws Exception {
-        List<File> images = getTiffImages();
+        final List<File> images = getTiffImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
-            IImageMetadata metadata = Imaging.getMetadata(imageFile);
+            final IImageMetadata metadata = Imaging.getMetadata(imageFile);
             assertNotNull(metadata);
 
-            ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
+            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
 
             BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
 
-            File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
-            Map<String,Object> params = new HashMap<String,Object>();
+            final File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
+            final Map<String,Object> params = new HashMap<String,Object>();
             Imaging.writeImage(image, tempFile, ImageFormat.IMAGE_FORMAT_TIFF,
                     params);
             image = null;
 
-            BufferedImage image2 = Imaging.getBufferedImage(tempFile);
+            final BufferedImage image2 = Imaging.getBufferedImage(tempFile);
             assertNotNull(image2);
         }
     }

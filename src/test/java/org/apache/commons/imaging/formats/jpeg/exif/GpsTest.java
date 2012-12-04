@@ -32,13 +32,13 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
 
     public void test() throws Exception {
 
-        List<File> images = getImagesWithExifData(300);
+        final List<File> images = getImagesWithExifData(300);
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
 
             // Debug.debug();
             // Debug.debug("imageFile", imageFile);
@@ -49,23 +49,23 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
             }
 
             try {
-                Map<String,Object> params = new HashMap<String,Object>();
-                boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+                final Map<String,Object> params = new HashMap<String,Object>();
+                final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
                 params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
                         !ignoreImageData));
 
-                JpegImageMetadata metadata = (JpegImageMetadata) Imaging
+                final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile, params);
                 if (null == metadata) {
                     continue;
                 }
 
-                TiffImageMetadata exifMetadata = metadata.getExif();
+                final TiffImageMetadata exifMetadata = metadata.getExif();
                 if (null == exifMetadata) {
                     continue;
                 }
 
-                TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
+                final TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
                 if (null == gpsInfo) {
                     continue;
                 }
@@ -78,7 +78,7 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
                         gpsInfo.getLatitudeAsDegreesNorth());
 
                 Debug.debug();
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug("imageFile", imageFile.length());
                 Debug.debug(e, 13);

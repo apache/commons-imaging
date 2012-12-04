@@ -47,13 +47,13 @@ public class PcxWriter implements PcxConstants {
         // let alone supported by most image viewers
         encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
         if (params.containsKey(PARAM_KEY_PCX_COMPRESSION)) {
-            Object value = params.remove(PARAM_KEY_PCX_COMPRESSION);
+            final Object value = params.remove(PARAM_KEY_PCX_COMPRESSION);
             if (value != null) {
                 if (!(value instanceof Number)) {
                     throw new ImageWriteException(
                             "Invalid compression parameter: " + value);
                 }
-                int compression = ((Number) value).intValue();
+                final int compression = ((Number) value).intValue();
                 if (compression == PCX_COMPRESSION_UNCOMPRESSED) {
                     encoding = PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED;
                 }
@@ -61,7 +61,7 @@ public class PcxWriter implements PcxConstants {
         }
 
         if (params.containsKey(PARAM_KEY_PCX_BIT_DEPTH)) {
-            Object value = params.remove(PARAM_KEY_PCX_BIT_DEPTH);
+            final Object value = params.remove(PARAM_KEY_PCX_BIT_DEPTH);
             if (value != null) {
                 if (!(value instanceof Number)) {
                     throw new ImageWriteException(
@@ -72,7 +72,7 @@ public class PcxWriter implements PcxConstants {
         }
 
         if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
-            Object value = params.remove(PARAM_KEY_PIXEL_DENSITY);
+            final Object value = params.remove(PARAM_KEY_PIXEL_DENSITY);
             if (value != null) {
                 if (!(value instanceof PixelDensity)) {
                     throw new ImageWriteException(
@@ -87,12 +87,12 @@ public class PcxWriter implements PcxConstants {
         }
 
         if (params.size() > 0) {
-            Object firstKey = params.keySet().iterator().next();
+            final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
     }
 
-    private void writeScanLine(BinaryOutputStream bos, byte[] scanline)
+    private void writeScanLine(final BinaryOutputStream bos, final byte[] scanline)
             throws IOException, ImageWriteException {
         if (encoding == PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED) {
             bos.writeByteArray(scanline);
@@ -100,7 +100,7 @@ public class PcxWriter implements PcxConstants {
             if (encoding == PcxImageParser.PcxHeader.ENCODING_RLE) {
                 int previousByte = -1;
                 int repeatCount = 0;
-                for (byte element : scanline) {
+                for (final byte element : scanline) {
                     if ((element & 0xff) == previousByte
                             && repeatCount < 63) {
                         ++repeatCount;
@@ -133,12 +133,12 @@ public class PcxWriter implements PcxConstants {
         }
     }
 
-    public void writeImage(BufferedImage src, OutputStream os)
+    public void writeImage(final BufferedImage src, final OutputStream os)
             throws ImageWriteException, IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory
                 .makeExactRgbPaletteSimple(src, 256);
-        BinaryOutputStream bos = new BinaryOutputStream(os,
+        final BinaryOutputStream bos = new BinaryOutputStream(os,
                 ByteOrder.INTEL);
         if (palette == null || bitDepth == 24 || bitDepth == 32) {
             if (bitDepth == 32) {
@@ -153,13 +153,13 @@ public class PcxWriter implements PcxConstants {
         } else {
             boolean onlyBlackAndWhite = true;
             if (palette.length() >= 1) {
-                int rgb = palette.getEntry(0);
+                final int rgb = palette.getEntry(0);
                 if (rgb != 0 && rgb != 0xffffff) {
                     onlyBlackAndWhite = false;
                 }
             }
             if (palette.length() == 2) {
-                int rgb = palette.getEntry(1);
+                final int rgb = palette.getEntry(1);
                 if (rgb != 0 && rgb != 0xffffff) {
                     onlyBlackAndWhite = false;
                 }
@@ -172,7 +172,7 @@ public class PcxWriter implements PcxConstants {
         }
     }
 
-    private void write32BppPCX(BufferedImage src, BinaryOutputStream bos)
+    private void write32BppPCX(final BufferedImage src, final BinaryOutputStream bos)
             throws ImageWriteException, IOException {
         final int bytesPerLine = src.getWidth() % 2 == 0 ? src.getWidth() : src
                 .getWidth() + 1;
@@ -198,8 +198,8 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes(0); // vScreenSize
         bos.writeByteArray(new byte[54]);
 
-        int rgbs[] = new int[src.getWidth()];
-        byte rgbBytes[] = new byte[4 * bytesPerLine];
+        final int rgbs[] = new int[src.getWidth()];
+        final byte rgbBytes[] = new byte[4 * bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {
             src.getRGB(0, y, src.getWidth(), 1, rgbs, 0, src.getWidth());
             for (int x = 0; x < rgbs.length; x++) {
@@ -212,7 +212,7 @@ public class PcxWriter implements PcxConstants {
         }
     }
 
-    private void write24BppPCX(BufferedImage src, BinaryOutputStream bos)
+    private void write24BppPCX(final BufferedImage src, final BinaryOutputStream bos)
             throws ImageWriteException, IOException {
         final int bytesPerLine = src.getWidth() % 2 == 0 ? src.getWidth() : src
                 .getWidth() + 1;
@@ -238,8 +238,8 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes(0); // vScreenSize
         bos.writeByteArray(new byte[54]);
 
-        int rgbs[] = new int[src.getWidth()];
-        byte rgbBytes[] = new byte[3 * bytesPerLine];
+        final int rgbs[] = new int[src.getWidth()];
+        final byte rgbBytes[] = new byte[3 * bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {
             src.getRGB(0, y, src.getWidth(), 1, rgbs, 0, src.getWidth());
             for (int x = 0; x < rgbs.length; x++) {
@@ -251,8 +251,8 @@ public class PcxWriter implements PcxConstants {
         }
     }
 
-    private void writeBlackAndWhitePCX(BufferedImage src,
-            SimplePalette palette, BinaryOutputStream bos)
+    private void writeBlackAndWhitePCX(final BufferedImage src,
+            final SimplePalette palette, final BinaryOutputStream bos)
             throws ImageWriteException, IOException {
         int bytesPerLine = (src.getWidth() + 7) / 8;
         if (bytesPerLine % 2 != 0) {
@@ -281,11 +281,11 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes(0); // vScreenSize
         bos.writeByteArray(new byte[54]);
 
-        byte[] row = new byte[bytesPerLine];
+        final byte[] row = new byte[bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {
             Arrays.fill(row, (byte) 0);
             for (int x = 0; x < src.getWidth(); x++) {
-                int rgb = 0xffffff & src.getRGB(x, y);
+                final int rgb = 0xffffff & src.getRGB(x, y);
                 int bit;
                 if (rgb == 0x000000) {
                     bit = 0;
@@ -301,14 +301,14 @@ public class PcxWriter implements PcxConstants {
         }
     }
 
-    private void write16ColorPCX(BufferedImage src, SimplePalette palette,
-            BinaryOutputStream bos) throws ImageWriteException, IOException {
+    private void write16ColorPCX(final BufferedImage src, final SimplePalette palette,
+            final BinaryOutputStream bos) throws ImageWriteException, IOException {
         int bytesPerLine = (src.getWidth() + 1) / 2;
         if (bytesPerLine % 2 != 0) {
             ++bytesPerLine;
         }
 
-        byte[] palette16 = new byte[16 * 3];
+        final byte[] palette16 = new byte[16 * 3];
         for (int i = 0; i < 16; i++) {
             int rgb;
             if (i < palette.length()) {
@@ -342,20 +342,20 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes(0); // vScreenSize
         bos.writeByteArray(new byte[54]);
 
-        byte[] indeces = new byte[bytesPerLine];
+        final byte[] indeces = new byte[bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {
             Arrays.fill(indeces, (byte) 0);
             for (int x = 0; x < src.getWidth(); x++) {
-                int argb = src.getRGB(x, y);
-                int index = palette.getPaletteIndex(0xffffff & argb);
+                final int argb = src.getRGB(x, y);
+                final int index = palette.getPaletteIndex(0xffffff & argb);
                 indeces[x / 2] |= (index << 4 * (1 - (x % 2)));
             }
             writeScanLine(bos, indeces);
         }
     }
 
-    private void write256ColorPCX(BufferedImage src, SimplePalette palette,
-            BinaryOutputStream bos) throws ImageWriteException, IOException {
+    private void write256ColorPCX(final BufferedImage src, final SimplePalette palette,
+            final BinaryOutputStream bos) throws ImageWriteException, IOException {
         final int bytesPerLine = src.getWidth() % 2 == 0 ? src.getWidth() : src
                 .getWidth() + 1;
 
@@ -380,11 +380,11 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes(0); // vScreenSize
         bos.writeByteArray(new byte[54]);
 
-        byte[] indeces = new byte[bytesPerLine];
+        final byte[] indeces = new byte[bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {
             for (int x = 0; x < src.getWidth(); x++) {
-                int argb = src.getRGB(x, y);
-                int index = palette.getPaletteIndex(0xffffff & argb);
+                final int argb = src.getRGB(x, y);
+                final int index = palette.getPaletteIndex(0xffffff & argb);
                 indeces[x] = (byte) index;
             }
             writeScanLine(bos, indeces);

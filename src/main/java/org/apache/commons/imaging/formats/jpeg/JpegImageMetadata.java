@@ -53,26 +53,26 @@ public class JpegImageMetadata implements IImageMetadata {
         return photoshop;
     }
 
-    public TiffField findEXIFValue(TagInfo tagInfo) {
+    public TiffField findEXIFValue(final TagInfo tagInfo) {
         try {
             if (exif != null) {
                 return exif.findField(tagInfo);
             } else {
                 return null;
             }
-        } catch (ImageReadException cannotHappen) {
+        } catch (final ImageReadException cannotHappen) {
             return null;
         }
     }
 
-    public TiffField findEXIFValueWithExactMatch(TagInfo tagInfo) {
+    public TiffField findEXIFValueWithExactMatch(final TagInfo tagInfo) {
         try {
             if (exif != null) {
                 return exif.findField(tagInfo, true);
             } else {
                 return null;
             }
-        } catch (ImageReadException cannotHappen) {
+        } catch (final ImageReadException cannotHappen) {
             return null;
         }
     }
@@ -86,7 +86,7 @@ public class JpegImageMetadata implements IImageMetadata {
      */
     public Dimension getEXIFThumbnailSize() throws ImageReadException,
             IOException {
-        byte[] data = getEXIFThumbnailData();
+        final byte[] data = getEXIFThumbnailData();
 
         if (data != null) {
             return Imaging.getImageSize(data);
@@ -105,9 +105,9 @@ public class JpegImageMetadata implements IImageMetadata {
         if (exif == null) {
             return null;
         }
-        List<? extends IImageMetadataItem> dirs = exif.getDirectories();
+        final List<? extends IImageMetadataItem> dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
-            TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
+            final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
                     .get(i);
 
             byte[] data = null;
@@ -138,9 +138,9 @@ public class JpegImageMetadata implements IImageMetadata {
             return null;
         }
 
-        List<? extends IImageMetadataItem> dirs = exif.getDirectories();
+        final List<? extends IImageMetadataItem> dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
-            TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
+            final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
                     .get(i);
             // Debug.debug("dir", dir);
             BufferedImage image = dir.getThumbnail();
@@ -148,9 +148,9 @@ public class JpegImageMetadata implements IImageMetadata {
                 return image;
             }
 
-            JpegImageData jpegImageData = dir.getJpegImageData();
+            final JpegImageData jpegImageData = dir.getJpegImageData();
             if (jpegImageData != null) {
-                ByteArrayInputStream input = new ByteArrayInputStream(
+                final ByteArrayInputStream input = new ByteArrayInputStream(
                         jpegImageData.data);
                 // JPEG thumbnail as JPEG or other format; try to parse.
                 image = ImageIO.read(input);
@@ -167,12 +167,12 @@ public class JpegImageMetadata implements IImageMetadata {
         if (exif == null) {
             return null;
         }
-        List<? extends IImageMetadataItem> dirs = exif.getDirectories();
+        final List<? extends IImageMetadataItem> dirs = exif.getDirectories();
         for (int i = 0; i < dirs.size(); i++) {
-            TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
+            final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) dirs
                     .get(i);
             // Debug.debug("dir", dir);
-            TiffImageData rawImageData = dir.getTiffImageData();
+            final TiffImageData rawImageData = dir.getTiffImageData();
             if (null != rawImageData) {
                 return rawImageData;
             }
@@ -182,7 +182,7 @@ public class JpegImageMetadata implements IImageMetadata {
     }
 
     public List<IImageMetadataItem> getItems() {
-        List<IImageMetadataItem> result = new ArrayList<IImageMetadataItem>();
+        final List<IImageMetadataItem> result = new ArrayList<IImageMetadataItem>();
 
         if (null != exif) {
             result.addAll(exif.getItems());
@@ -207,7 +207,7 @@ public class JpegImageMetadata implements IImageMetadata {
             prefix = "";
         }
 
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
 
         result.append(prefix);
         if (null == exif) {

@@ -26,7 +26,7 @@ import org.apache.commons.imaging.ImageWriteException;
 public abstract class PnmWriter {
     protected final boolean RAWBITS;
 
-    public PnmWriter(boolean RAWBITS) {
+    public PnmWriter(final boolean RAWBITS) {
         this.RAWBITS = RAWBITS;
     }
 

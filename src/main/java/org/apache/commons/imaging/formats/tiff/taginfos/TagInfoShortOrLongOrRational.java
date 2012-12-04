@@ -22,19 +22,19 @@ import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoShortOrLongOrRational extends TagInfo {
-    public TagInfoShortOrLongOrRational(String name, int tag, int length, TiffDirectoryType directoryType) {
+    public TagInfoShortOrLongOrRational(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, length, directoryType);
     }
     
-    public byte[] encodeValue(ByteOrder byteOrder, short... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return BinaryConversions.toBytes(values, byteOrder);
     }
     
-    public byte[] encodeValue(ByteOrder byteOrder, int... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
         return BinaryConversions.toBytes(values, byteOrder);
     }
     
-    public byte[] encodeValue(ByteOrder byteOrder, RationalNumber... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber... values) {
         return BinaryConversions.toBytes(values, byteOrder);
     }
 }

@@ -19,7 +19,7 @@ package org.apache.commons.imaging.color;
 public final class ColorCieLuv {
     public final double L, u, v;
 
-    public ColorCieLuv(double l, double u, double v) {
+    public ColorCieLuv(final double l, final double u, final double v) {
         L = l;
         this.u = u;
         this.v = v;

@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.png;
 
 public abstract class PngText {
-    public PngText(String keyword, String text) {
+    public PngText(final String keyword, final String text) {
         this.keyword = keyword;
         this.text = text;
     }
@@ -25,13 +25,13 @@ public abstract class PngText {
     public final String keyword, text;
 
     public static class Text extends PngText {
-        public Text(String keyword, String text) {
+        public Text(final String keyword, final String text) {
             super(keyword, text);
         }
     }
 
     public static class Ztxt extends PngText {
-        public Ztxt(String keyword, String text) {
+        public Ztxt(final String keyword, final String text) {
             super(keyword, text);
         }
     }
@@ -52,8 +52,8 @@ public abstract class PngText {
 
         public final String translatedKeyword;
 
-        public Itxt(String keyword, String text, String languageTag,
-                String translatedKeyword) {
+        public Itxt(final String keyword, final String text, final String languageTag,
+                final String translatedKeyword) {
             super(keyword, text);
             this.languageTag = languageTag;
             this.translatedKeyword = translatedKeyword;

@@ -22,15 +22,15 @@ import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoSLong extends TagInfo {
-    public TagInfoSLong(String name, int tag, int length, TiffDirectoryType directoryType) {
+    public TagInfoSLong(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, FIELD_TYPE_SLONG, length, directoryType);
     }
     
-    public int[] getValue(ByteOrder byteOrder, byte[] bytes) {
+    public int[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return BinaryConversions.toInts(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(ByteOrder byteOrder, int... values) throws ImageWriteException {
+    public byte[] encodeValue(final ByteOrder byteOrder, final int... values) throws ImageWriteException {
         return BinaryConversions.toBytes(values, byteOrder);
     }
 }

@@ -20,11 +20,11 @@ import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoSByte extends TagInfo {
-    public TagInfoSByte(String name, int tag, int length, TiffDirectoryType directoryType) {
+    public TagInfoSByte(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, FIELD_TYPE_SBYTE, length, directoryType);
     }
 
-    public byte[] encodeValue(ByteOrder byteOrder, byte... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final byte... values) {
         return values;
     }
 }

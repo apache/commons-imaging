@@ -31,32 +31,32 @@ public class DqtSegment extends Segment {
         public final int destinationIdentifier;
         public final int[] elements;
 
-        public QuantizationTable(int precision, int destinationIdentifier,
-                int[] elements) {
+        public QuantizationTable(final int precision, final int destinationIdentifier,
+                final int[] elements) {
             this.precision = precision;
             this.destinationIdentifier = destinationIdentifier;
             this.elements = elements;
         }
     }
 
-    public DqtSegment(int marker, byte[] segmentData)
+    public DqtSegment(final int marker, final byte[] segmentData)
             throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public DqtSegment(int marker, int length, InputStream is)
+    public DqtSegment(final int marker, int length, final InputStream is)
             throws ImageReadException, IOException {
         super(marker, length);
 
         while (length > 0) {
-            int precisionAndDestination = readByte(
+            final int precisionAndDestination = readByte(
                     "QuantizationTablePrecisionAndDestination", is,
                     "Not a Valid JPEG File");
             length--;
-            int precision = (precisionAndDestination >> 4) & 0xf;
-            int destinationIdentifier = precisionAndDestination & 0xf;
+            final int precision = (precisionAndDestination >> 4) & 0xf;
+            final int destinationIdentifier = precisionAndDestination & 0xf;
 
-            int[] elements = new int[64];
+            final int[] elements = new int[64];
             for (int i = 0; i < 64; i++) {
                 if (precision == 0) {
                     elements[i] = 0xff & readByte("QuantizationTableElement",

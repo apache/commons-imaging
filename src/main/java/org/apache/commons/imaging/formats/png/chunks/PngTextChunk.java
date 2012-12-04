@@ -20,7 +20,7 @@ import org.apache.commons.imaging.formats.png.PngText;
 
 public abstract class PngTextChunk extends PngChunk {
 
-    public PngTextChunk(int Length, int ChunkType, int CRC, byte bytes[]) {
+    public PngTextChunk(final int Length, final int ChunkType, final int CRC, final byte bytes[]) {
         super(Length, ChunkType, CRC, bytes);
 
     }

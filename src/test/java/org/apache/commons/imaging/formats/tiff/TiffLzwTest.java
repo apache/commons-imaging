@@ -31,13 +31,13 @@ import org.apache.commons.imaging.util.Debug;
 public class TiffLzwTest extends TiffBaseTest {
 
     public void testTrivial() throws Exception {
-        byte bytes[] = { 0, };
+        final byte bytes[] = { 0, };
         compressRoundtripAndValidate(bytes);
     }
 
     public void testMedium() throws Exception {
-        int LENGTH = 1024 * 32;
-        byte bytes[] = new byte[LENGTH];
+        final int LENGTH = 1024 * 32;
+        final byte bytes[] = new byte[LENGTH];
         for (int modulator = 1; modulator < 255; modulator += 3) {
             for (int i = 0; i < LENGTH; i++) {
                 bytes[i] = (byte) (0xff & (i % modulator));
@@ -72,7 +72,7 @@ public class TiffLzwTest extends TiffBaseTest {
     // }
     // }
 
-    private void compressRoundtripAndValidate(byte src[]) throws IOException {
+    private void compressRoundtripAndValidate(final byte src[]) throws IOException {
         final boolean DEBUG = false;
 
         if (DEBUG) {
@@ -81,35 +81,35 @@ public class TiffLzwTest extends TiffBaseTest {
             Debug.debug();
         }
 
-        int LZW_MINIMUM_CODE_SIZE = 8;
+        final int LZW_MINIMUM_CODE_SIZE = 8;
         final List<Integer> codes = new ArrayList<Integer>();
-        MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
-            public void dataCode(int code) {
+        final MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
+            public void dataCode(final int code) {
                 codes.add(code);
             }
 
-            public void eoiCode(int code) {
+            public void eoiCode(final int code) {
                 codes.add(code);
             }
 
-            public void clearCode(int code) {
+            public void clearCode(final int code) {
                 codes.add(code);
             }
 
-            public void init(int clearCode, int eoiCode) {
+            public void init(final int clearCode, final int eoiCode) {
             }
         };
 
-        MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
+        final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
                 ByteOrder.MOTOROLA, true, compressionListener);
-        byte compressed[] = compressor.compress(src);
+        final byte compressed[] = compressor.compress(src);
 
-        MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
+        final MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
 
             int index = 0;
             int clearCode, eoiCode;
 
-            public void code(int code) {
+            public void code(final int code) {
                 if (DEBUG) {
                     if (code == clearCode) {
                         Debug.debug("clearCode: " + index + "/" + codes.size());
@@ -120,7 +120,7 @@ public class TiffLzwTest extends TiffBaseTest {
                         Debug.debug();
                     }
                 }
-                Integer expectedCode = codes.get(index++);
+                final Integer expectedCode = codes.get(index++);
                 if (code != expectedCode.intValue()) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
                     Debug.debug("code: " + code + " (0x"
@@ -140,18 +140,18 @@ public class TiffLzwTest extends TiffBaseTest {
                 }
             }
 
-            public void init(int clearCode, int eoiCode) {
+            public void init(final int clearCode, final int eoiCode) {
                 this.clearCode = clearCode;
                 this.eoiCode = eoiCode;
             }
 
         };
-        InputStream is = new ByteArrayInputStream(compressed);
-        MyLzwDecompressor decompressor = new MyLzwDecompressor(
+        final InputStream is = new ByteArrayInputStream(compressed);
+        final MyLzwDecompressor decompressor = new MyLzwDecompressor(
                 LZW_MINIMUM_CODE_SIZE, ByteOrder.NETWORK,
                 decompressionListener);
         decompressor.setTiffLZWMode();
-        byte decompressed[] = decompressor.decompress(is, src.length);
+        final byte decompressed[] = decompressor.decompress(is, src.length);
 
         assertEquals(src.length, decompressed.length);
         for (int i = 0; i < src.length; i++) {
@@ -159,17 +159,17 @@ public class TiffLzwTest extends TiffBaseTest {
         }
     }
 
-    private void decompressRoundtripAndValidate(byte src[]) throws IOException {
+    private void decompressRoundtripAndValidate(final byte src[]) throws IOException {
         Debug.debug();
         Debug.debug("roundtripAndValidate: " + src.length);
         Debug.debug();
 
-        int LZW_MINIMUM_CODE_SIZE = 8;
+        final int LZW_MINIMUM_CODE_SIZE = 8;
         final List<Integer> codes = new ArrayList<Integer>();
 
-        MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
+        final MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
 
-            public void code(int code) {
+            public void code(final int code) {
                 Debug.debug("listener code: " + code + " (0x"
                         + Integer.toHexString(code) + ") "
                         + Integer.toBinaryString(code) + ", index: "
@@ -177,29 +177,29 @@ public class TiffLzwTest extends TiffBaseTest {
                 codes.add(code);
             }
 
-            public void init(int clearCode, int eoiCode) {
+            public void init(final int clearCode, final int eoiCode) {
             }
 
         };
-        InputStream is = new ByteArrayInputStream(src);
-        MyLzwDecompressor decompressor = new MyLzwDecompressor(
+        final InputStream is = new ByteArrayInputStream(src);
+        final MyLzwDecompressor decompressor = new MyLzwDecompressor(
                 LZW_MINIMUM_CODE_SIZE, ByteOrder.NETWORK,
                 decompressionListener);
         decompressor.setTiffLZWMode();
-        byte decompressed[] = decompressor.decompress(is, src.length);
+        final byte decompressed[] = decompressor.decompress(is, src.length);
 
-        MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
+        final MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
 
             int clearCode, eoiCode;
 
-            public void init(int clearCode, int eoiCode) {
+            public void init(final int clearCode, final int eoiCode) {
                 this.clearCode = clearCode;
                 this.eoiCode = eoiCode;
             }
 
             int index = 0;
 
-            private void code(int code) {
+            private void code(final int code) {
 
                 if (code == clearCode) {
                     Debug.debug("clearCode: " + index + "/" + codes.size());
@@ -209,7 +209,7 @@ public class TiffLzwTest extends TiffBaseTest {
                     Debug.debug("eoiCode: " + index + "/" + codes.size());
                     Debug.debug();
                 }
-                Integer expectedCode = codes.get(index++);
+                final Integer expectedCode = codes.get(index++);
                 if (code != expectedCode.intValue()) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
                     Debug.debug("code: " + code + " (0x"
@@ -229,23 +229,23 @@ public class TiffLzwTest extends TiffBaseTest {
                 }
             }
 
-            public void dataCode(int code) {
+            public void dataCode(final int code) {
                 code(code);
             }
 
-            public void eoiCode(int code) {
+            public void eoiCode(final int code) {
                 code(code);
             }
 
-            public void clearCode(int code) {
+            public void clearCode(final int code) {
                 code(code);
             }
 
         };
 
-        MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
+        final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
                 ByteOrder.MOTOROLA, true, compressionListener);
-        byte compressed[] = compressor.compress(decompressed);
+        final byte compressed[] = compressor.compress(decompressed);
 
         assertEquals(src.length, compressed.length);
         for (int i = 0; i < src.length; i++) {

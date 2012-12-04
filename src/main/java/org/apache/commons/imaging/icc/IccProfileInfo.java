@@ -41,13 +41,13 @@ public class IccProfileInfo implements IccConstants {
     public final byte ProfileID[];
     public final IccTag tags[];
 
-    public IccProfileInfo(byte data[], int ProfileSize, int CMMTypeSignature,
-            int ProfileVersion, int ProfileDeviceClassSignature,
-            int ColorSpace, int ProfileConnectionSpace,
-            int ProfileFileSignature, int PrimaryPlatformSignature,
-            int VariousFlags, int DeviceManufacturer, int DeviceModel,
-            int RenderingIntent, int ProfileCreatorSignature, byte ProfileID[],
-            IccTag tags[]) {
+    public IccProfileInfo(final byte data[], final int ProfileSize, final int CMMTypeSignature,
+            final int ProfileVersion, final int ProfileDeviceClassSignature,
+            final int ColorSpace, final int ProfileConnectionSpace,
+            final int ProfileFileSignature, final int PrimaryPlatformSignature,
+            final int VariousFlags, final int DeviceManufacturer, final int DeviceModel,
+            final int RenderingIntent, final int ProfileCreatorSignature, final byte ProfileID[],
+            final IccTag tags[]) {
         this.data = data;
 
         this.ProfileSize = ProfileSize;
@@ -69,17 +69,17 @@ public class IccProfileInfo implements IccConstants {
     }
 
     public boolean issRGB() {
-        boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
+        final boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
         return result;
     }
 
-    private void printCharQuad(PrintWriter pw, String msg, int i) {
+    private void printCharQuad(final PrintWriter pw, final String msg, final int i) {
         pw.println(msg + ": '" + (char) (0xff & (i >> 24))
                 + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
                 + (char) (0xff & (i >> 0)) + "'");
     }
 
-    public void dump(String prefix) {
+    public void dump(final String prefix) {
         System.out.print(toString());
     }
 
@@ -87,15 +87,15 @@ public class IccProfileInfo implements IccConstants {
     public String toString() {
         try {
             return toString("");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return "IccProfileInfo: Error";
         }
     }
 
-    public String toString(String prefix) throws ImageReadException,
+    public String toString(final String prefix) throws ImageReadException,
             IOException {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw);
 
         // StringBuffer result = new StringBuffer();
         pw.println(prefix + ": " + "data length: " + data.length);
@@ -131,7 +131,7 @@ public class IccProfileInfo implements IccConstants {
                 ProfileCreatorSignature);
 
         for (int i = 0; i < tags.length; i++) {
-            IccTag tag = tags[i];
+            final IccTag tag = tags[i];
             tag.dump(pw, "\t" + i + ": ");
         }
 

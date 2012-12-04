@@ -31,12 +31,12 @@ public class ImageDescriptor extends GifBlock {
     public final byte localColorTable[];
     public final byte imageData[];
 
-    public ImageDescriptor(int blockCode, int ImageLeftPosition,
-            int ImageTopPosition, int ImageWidth, int ImageHeight,
-            byte PackedFields, boolean LocalColorTableFlag,
-            boolean InterlaceFlag, boolean SortFlag,
-            byte SizeofLocalColorTable, byte LocalColorTable[],
-            byte ImageData[]) {
+    public ImageDescriptor(final int blockCode, final int ImageLeftPosition,
+            final int ImageTopPosition, final int ImageWidth, final int ImageHeight,
+            final byte PackedFields, final boolean LocalColorTableFlag,
+            final boolean InterlaceFlag, final boolean SortFlag,
+            final byte SizeofLocalColorTable, final byte LocalColorTable[],
+            final byte ImageData[]) {
         super(blockCode);
 
         this.imageLeftPosition = ImageLeftPosition;

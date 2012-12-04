@@ -23,14 +23,14 @@ import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
 
-    public PhotometricInterpreterYCbCr(double[] fYCbCrCoefficients,
-            int[] fYCbCrPositioning, int[] fYCbCrSubSampling,
-            double[] fReferenceBlackWhite, int fSamplesPerPixel,
-            int fBitsPerSample[], int Predictor, int width, int height) {
+    public PhotometricInterpreterYCbCr(final double[] fYCbCrCoefficients,
+            final int[] fYCbCrPositioning, final int[] fYCbCrSubSampling,
+            final double[] fReferenceBlackWhite, final int fSamplesPerPixel,
+            final int fBitsPerSample[], final int Predictor, final int width, final int height) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
     }
 
-    public int limit(int value, int min, int max) {
+    public int limit(final int value, final int min, final int max) {
         return Math.min(max, Math.max(min, value));
     }
 
@@ -51,36 +51,36 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
      *            The Cr component set.
      * @return R The R component.
      */
-    public int convertYCbCrtoRGB(int Y, int Cb, int Cr) {
-        double r1 = (((1.164 * (Y - 16.0))) + (1.596 * (Cr - 128.0)));
-        double g1 = (((1.164 * (Y - 16.0))) - (0.813 * (Cr - 128.0)) - (0.392 * (Cb - 128.0)));
-        double b1 = (((1.164 * (Y - 16.0))) + (2.017 * (Cb - 128.0)));
+    public int convertYCbCrtoRGB(final int Y, final int Cb, final int Cr) {
+        final double r1 = (((1.164 * (Y - 16.0))) + (1.596 * (Cr - 128.0)));
+        final double g1 = (((1.164 * (Y - 16.0))) - (0.813 * (Cr - 128.0)) - (0.392 * (Cb - 128.0)));
+        final double b1 = (((1.164 * (Y - 16.0))) + (2.017 * (Cb - 128.0)));
 
-        int r = limit((int) r1, 0, 255);
-        int g = limit((int) g1, 0, 255);
-        int b = limit((int) b1, 0, 255);
+        final int r = limit((int) r1, 0, 255);
+        final int g = limit((int) g1, 0, 255);
+        final int b = limit((int) b1, 0, 255);
 
-        int alpha = 0xff;
-        int rgb = (alpha << 24) | (r << 16) | (g << 8) | (b << 0);
+        final int alpha = 0xff;
+        final int rgb = (alpha << 24) | (r << 16) | (g << 8) | (b << 0);
         return rgb;
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
-            int y) throws ImageReadException, IOException {
-        int Y = samples[0];
-        int Cb = samples[1];
-        int Cr = samples[2];
-        double R = Y + 1.402 * (Cr - 128.0);
-        double G = Y - 0.34414 * (Cb - 128.0) - 0.71414 * (Cr - 128.0);
-        double B = Y + 1.772 * (Cb - 128.0);
+    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+            final int y) throws ImageReadException, IOException {
+        final int Y = samples[0];
+        final int Cb = samples[1];
+        final int Cr = samples[2];
+        final double R = Y + 1.402 * (Cr - 128.0);
+        final double G = Y - 0.34414 * (Cb - 128.0) - 0.71414 * (Cr - 128.0);
+        final double B = Y + 1.772 * (Cb - 128.0);
 
-        int red = limit((int) R, 0, 255);
-        int green = limit((int) G, 0, 255);
-        int blue = limit((int) B, 0, 255);
+        final int red = limit((int) R, 0, 255);
+        final int green = limit((int) G, 0, 255);
+        final int blue = limit((int) B, 0, 255);
 
-        int alpha = 0xff;
-        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int alpha = 0xff;
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
         imageBuilder.setRGB(x, y, rgb);
 
     }

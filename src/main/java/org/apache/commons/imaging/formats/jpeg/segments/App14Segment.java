@@ -36,18 +36,18 @@ public class App14Segment extends AppnSegment {
         byte[] adobe = null;
         try {
             adobe = "Adobe".getBytes("US-ASCII");
-        } catch (UnsupportedEncodingException cannotHappen) {
+        } catch (final UnsupportedEncodingException cannotHappen) {
         }
         adobePrefix = adobe;
     }
 
-    public App14Segment(int marker, byte segmentData[])
+    public App14Segment(final int marker, final byte segmentData[])
             throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(
                 segmentData));
     }
     
-    public App14Segment(int marker, int marker_length, InputStream is)
+    public App14Segment(final int marker, final int marker_length, final InputStream is)
             throws IOException {
         super(marker, marker_length, is);
     }

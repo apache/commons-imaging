@@ -24,17 +24,17 @@ import org.apache.commons.imaging.ImageReadException;
 public class TransparencyFilterGrayscale extends TransparencyFilter {
     private final int transparent_color;
 
-    public TransparencyFilterGrayscale(byte bytes[]) throws ImageReadException,
+    public TransparencyFilterGrayscale(final byte bytes[]) throws ImageReadException,
             IOException {
         super(bytes);
 
-        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
         transparent_color = read2Bytes("transparent_color", is,
                 "tRNS: Missing transparent_color");
     }
 
     @Override
-    public int filter(int rgb, int index) throws ImageReadException,
+    public int filter(final int rgb, final int index) throws ImageReadException,
             IOException {
         if (index != transparent_color) {
             return rgb;

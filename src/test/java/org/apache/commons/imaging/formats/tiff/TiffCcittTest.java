@@ -32,8 +32,8 @@ import org.apache.commons.imaging.util.Debug;
 
 public class TiffCcittTest extends TiffBaseTest {
     public void testAll5x2Compressions() {
-        byte[] uncompressed = new byte[2];
-        int[] combinations = new int[10];
+        final byte[] uncompressed = new byte[2];
+        final int[] combinations = new int[10];
         do {
             for (int x = 0; x < 5; x++) {
                 if (combinations[x] != 0) {
@@ -47,103 +47,103 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                byte[] compressed = T4AndT6Compression.compressModifiedHuffman(
+                final byte[] compressed = T4AndT6Compression.compressModifiedHuffman(
                         uncompressed, 5, 2);
-                byte[] result = T4AndT6Compression.decompressModifiedHuffman(
+                final byte[] result = T4AndT6Compression.decompressModifiedHuffman(
                         compressed, 5, 2);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                byte[] compressed = T4AndT6Compression.compressT4_1D(
+                final byte[] compressed = T4AndT6Compression.compressT4_1D(
                         uncompressed, 5, 2, true);
-                byte[] result = T4AndT6Compression.decompressT4_1D(compressed,
+                final byte[] result = T4AndT6Compression.decompressT4_1D(compressed,
                         5, 2, true);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                byte[] compressed = T4AndT6Compression.compressT4_1D(
+                final byte[] compressed = T4AndT6Compression.compressT4_1D(
                         uncompressed, 5, 2, false);
-                byte[] result = T4AndT6Compression.decompressT4_1D(compressed,
+                final byte[] result = T4AndT6Compression.decompressT4_1D(compressed,
                         5, 2, false);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                byte[] compressed = T4AndT6Compression.compressT4_2D(
+                final byte[] compressed = T4AndT6Compression.compressT4_2D(
                         uncompressed, 5, 2, true, 2);
-                byte[] result = T4AndT6Compression.decompressT4_2D(compressed,
+                final byte[] result = T4AndT6Compression.decompressT4_2D(compressed,
                         5, 2, true);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                byte[] compressed = T4AndT6Compression.compressT4_2D(
+                final byte[] compressed = T4AndT6Compression.compressT4_2D(
                         uncompressed, 5, 2, false, 2);
-                byte[] result = T4AndT6Compression.decompressT4_2D(compressed,
+                final byte[] result = T4AndT6Compression.decompressT4_2D(compressed,
                         5, 2, false);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                byte[] compressed = T4AndT6Compression.compressT6(uncompressed,
+                final byte[] compressed = T4AndT6Compression.compressT6(uncompressed,
                         5, 2);
-                byte[] result = T4AndT6Compression.decompressT6(compressed, 5,
+                final byte[] result = T4AndT6Compression.decompressT6(compressed, 5,
                         2);
                 assertEquals(uncompressed.length, result.length);
                 for (int i = 0; i < uncompressed.length; i++) {
                     assertEquals(uncompressed[i], result[i]);
                 }
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
@@ -151,8 +151,8 @@ public class TiffCcittTest extends TiffBaseTest {
     }
 
     public void testAll5x2Images() {
-        int[] combinations = new int[10];
-        BufferedImage image = new BufferedImage(5, 2,
+        final int[] combinations = new int[10];
+        final BufferedImage image = new BufferedImage(5, 2,
                 BufferedImage.TYPE_INT_RGB);
         do {
             for (int x = 0; x < 5; x++) {
@@ -171,119 +171,119 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String,Object> params = new HashMap<String,Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_1D);
-                byte[] compressed = Imaging.writeImageToBytes(image,
+                final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Imaging.getBufferedImage(compressed);
+                final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String,Object> params = new HashMap<String,Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 0);
-                byte[] compressed = Imaging.writeImageToBytes(image,
+                final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Imaging.getBufferedImage(compressed);
+                final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String,Object> params = new HashMap<String,Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 4);
-                byte[] compressed = Imaging.writeImageToBytes(image,
+                final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Imaging.getBufferedImage(compressed);
+                final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String,Object> params = new HashMap<String,Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 1);
-                byte[] compressed = Imaging.writeImageToBytes(image,
+                final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Imaging.getBufferedImage(compressed);
+                final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String,Object> params = new HashMap<String,Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 5);
-                byte[] compressed = Imaging.writeImageToBytes(image,
+                final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Imaging.getBufferedImage(compressed);
+                final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
 
             try {
-                HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String,Object> params = new HashMap<String,Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
-                byte[] compressed = Imaging.writeImageToBytes(image,
+                final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormat.IMAGE_FORMAT_TIFF, params);
-                BufferedImage result = Imaging.getBufferedImage(compressed);
+                final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
-            } catch (ImageWriteException ex) {
+            } catch (final ImageWriteException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (ImageReadException ex) {
+            } catch (final ImageReadException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 Debug.debug(ex);
                 assertFalse(true);
             }
@@ -302,7 +302,7 @@ public class TiffCcittTest extends TiffBaseTest {
      * @return false if there is no more combinations (ie. nothing was done),
      *         true otherwise
      */
-    private static boolean nextCombination(int[] sequence, int max) {
+    private static boolean nextCombination(final int[] sequence, final int max) {
         int i;
         for (i = 0; i < sequence.length; i++) {
             if (sequence[i] == max) {
@@ -315,14 +315,14 @@ public class TiffCcittTest extends TiffBaseTest {
         return i < sequence.length;
     }
 
-    private void compareImages(BufferedImage a, BufferedImage b) {
+    private void compareImages(final BufferedImage a, final BufferedImage b) {
         assertEquals(a.getWidth(), b.getWidth());
         assertEquals(a.getHeight(), b.getHeight());
 
         for (int x = 0; x < a.getWidth(); x++) {
             for (int y = 0; y < a.getHeight(); y++) {
-                int a_argb = a.getRGB(x, y);
-                int b_argb = b.getRGB(x, y);
+                final int a_argb = a.getRGB(x, y);
+                final int b_argb = b.getRGB(x, y);
                 if (a_argb != b_argb) {
                     Debug.debug("width", a.getWidth());
                     Debug.debug("height", a.getHeight());

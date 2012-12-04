@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.gif;
 class GifBlock {
     public final int blockCode;
 
-    public GifBlock(int blockCode) {
+    public GifBlock(final int blockCode) {
         this.blockCode = blockCode;
     }
 }

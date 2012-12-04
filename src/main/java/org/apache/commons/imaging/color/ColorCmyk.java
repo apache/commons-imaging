@@ -19,7 +19,7 @@ package org.apache.commons.imaging.color;
 public final class ColorCmyk {
     public final double C, M, Y, K;
 
-    public ColorCmyk(double C, double M, double Y, double K) {
+    public ColorCmyk(final double C, final double M, final double Y, final double K) {
         this.C = C;
         this.M = M;
         this.Y = Y;

@@ -23,12 +23,12 @@ import org.apache.commons.imaging.ImageReadException;
 public class ScanlineFilterUp extends ScanlineFilter {
     private final int BytesPerPixel;
 
-    public ScanlineFilterUp(int BytesPerPixel) {
+    public ScanlineFilterUp(final int BytesPerPixel) {
         this.BytesPerPixel = BytesPerPixel;
     }
 
     @Override
-    public void unfilter(byte src[], byte dst[], byte up[])
+    public void unfilter(final byte src[], final byte dst[], final byte up[])
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
             // byte b;

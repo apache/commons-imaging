@@ -30,31 +30,31 @@ import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
 public class UncompressedDataReader extends DataReader {
-    public UncompressedDataReader(DataParser fDataParser) {
+    public UncompressedDataReader(final DataParser fDataParser) {
         super(fDataParser);
     }
 
     @Override
-    public void readData(InputStream is, BufferedImage bi,
-            ImageContents imageContents, BinaryFileParser bfp)
+    public void readData(final InputStream is, final BufferedImage bi,
+            final ImageContents imageContents, final BinaryFileParser bfp)
             throws ImageReadException, IOException {
-        PsdHeaderInfo header = imageContents.header;
-        int width = header.Columns;
-        int height = header.Rows;
+        final PsdHeaderInfo header = imageContents.header;
+        final int width = header.Columns;
+        final int height = header.Rows;
 
         bfp.setDebug(false);
 
-        int channel_count = dataParser.getBasicChannelsCount();
-        int depth = header.Depth;
-        MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.MOTOROLA);
+        final int channel_count = dataParser.getBasicChannelsCount();
+        final int depth = header.Depth;
+        final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.MOTOROLA);
         // we want all samples to be bytes
-        BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8);
+        final BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8);
 
-        int data[][][] = new int[channel_count][height][width];
+        final int data[][][] = new int[channel_count][height][width];
         for (int channel = 0; channel < channel_count; channel++) {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    int b = bbis.readBits(depth);
+                    final int b = bbis.readBits(depth);
 
                     data[channel][y][x] = (byte) b;
                 }

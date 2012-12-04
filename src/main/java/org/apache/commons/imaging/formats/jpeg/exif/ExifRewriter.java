@@ -65,7 +65,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param byteOrder
      *            byte order of EXIF segment.
      */
-    public ExifRewriter(ByteOrder byteOrder) {
+    public ExifRewriter(final ByteOrder byteOrder) {
         setByteOrder(byteOrder);
     }
 
@@ -100,7 +100,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
         }
 
         @Override
-        protected void write(OutputStream os) throws IOException {
+        protected void write(final OutputStream os) throws IOException {
             os.write(markerBytes);
             os.write(markerLengthBytes);
             os.write(segmentData);
@@ -127,34 +127,34 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
         }
 
         @Override
-        protected void write(OutputStream os) throws IOException {
+        protected void write(final OutputStream os) throws IOException {
             os.write(markerBytes);
             os.write(imageData);
         }
     }
 
-    private JFIFPieces analyzeJFIF(ByteSource byteSource)
+    private JFIFPieces analyzeJFIF(final ByteSource byteSource)
             throws ImageReadException, IOException
     // , ImageWriteException
     {
         final List<JFIFPiece> pieces = new ArrayList<JFIFPiece>();
         final List<JFIFPiece> exifPieces = new ArrayList<JFIFPiece>();
 
-        JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
+        final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
             public boolean beginSOS() {
                 return true;
             }
 
-            public void visitSOS(int marker, byte markerBytes[],
-                    byte imageData[]) {
+            public void visitSOS(final int marker, final byte markerBytes[],
+                    final byte imageData[]) {
                 pieces.add(new JFIFPieceImageData(markerBytes, imageData));
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(int marker, byte markerBytes[],
-                    int markerLength, byte markerLengthBytes[],
-                    byte segmentData[]) throws
+            public boolean visitSegment(final int marker, final byte markerBytes[],
+                    final int markerLength, final byte markerLengthBytes[],
+                    final byte segmentData[]) throws
             // ImageWriteException,
                     ImageReadException, IOException {
                 if (marker != JPEG_APP1_Marker) {
@@ -169,7 +169,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
                 // throw new ImageReadException(
                 // "More than one APP1 EXIF segment.");
                 } else {
-                    JFIFPiece piece = new JFIFPieceSegmentExif(marker,
+                    final JFIFPiece piece = new JFIFPieceSegmentExif(marker,
                             markerBytes, markerLengthBytes, segmentData);
                     pieces.add(piece);
                     exifPieces.add(piece);
@@ -205,9 +205,9 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @see java.io.File
      * @see java.io.OutputStream
      */
-    public void removeExifMetadata(File src, OutputStream os)
+    public void removeExifMetadata(final File src, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
-        ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = new ByteSourceFile(src);
         removeExifMetadata(byteSource, os);
     }
 
@@ -221,9 +221,9 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param os
      *            OutputStream to write the image to.
      */
-    public void removeExifMetadata(byte src[], OutputStream os)
+    public void removeExifMetadata(final byte src[], final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
-        ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = new ByteSourceArray(src);
         removeExifMetadata(byteSource, os);
     }
 
@@ -237,9 +237,9 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param os
      *            OutputStream to write the image to.
      */
-    public void removeExifMetadata(InputStream src, OutputStream os)
+    public void removeExifMetadata(final InputStream src, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
-        ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = new ByteSourceInputStream(src, null);
         removeExifMetadata(byteSource, os);
     }
 
@@ -253,10 +253,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param os
      *            OutputStream to write the image to.
      */
-    public void removeExifMetadata(ByteSource byteSource, OutputStream os)
+    public void removeExifMetadata(final ByteSource byteSource, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
-        JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List<JFIFPiece> pieces = jfifPieces.pieces;
+        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final List<JFIFPiece> pieces = jfifPieces.pieces;
 
         // Debug.debug("pieces", pieces);
 
@@ -286,10 +286,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossless(File src, OutputStream os,
-            TiffOutputSet outputSet) throws ImageReadException, IOException,
+    public void updateExifMetadataLossless(final File src, final OutputStream os,
+            final TiffOutputSet outputSet) throws ImageReadException, IOException,
             ImageWriteException {
-        ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = new ByteSourceFile(src);
         updateExifMetadataLossless(byteSource, os, outputSet);
     }
 
@@ -312,10 +312,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossless(byte src[], OutputStream os,
-            TiffOutputSet outputSet) throws ImageReadException, IOException,
+    public void updateExifMetadataLossless(final byte src[], final OutputStream os,
+            final TiffOutputSet outputSet) throws ImageReadException, IOException,
             ImageWriteException {
-        ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = new ByteSourceArray(src);
         updateExifMetadataLossless(byteSource, os, outputSet);
     }
 
@@ -338,10 +338,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossless(InputStream src, OutputStream os,
-            TiffOutputSet outputSet) throws ImageReadException, IOException,
+    public void updateExifMetadataLossless(final InputStream src, final OutputStream os,
+            final TiffOutputSet outputSet) throws ImageReadException, IOException,
             ImageWriteException {
-        ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = new ByteSourceInputStream(src, null);
         updateExifMetadataLossless(byteSource, os, outputSet);
     }
 
@@ -364,12 +364,12 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossless(ByteSource byteSource,
-            OutputStream os, TiffOutputSet outputSet)
+    public void updateExifMetadataLossless(final ByteSource byteSource,
+            final OutputStream os, final TiffOutputSet outputSet)
             throws ImageReadException, IOException, ImageWriteException {
         // List outputDirectories = outputSet.getDirectories();
-        JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List<JFIFPiece> pieces = jfifPieces.pieces;
+        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final List<JFIFPiece> pieces = jfifPieces.pieces;
 
         TiffImageWriterBase writer;
         // Just use first APP1 segment for now.
@@ -387,8 +387,8 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
             writer = new TiffImageWriterLossy(outputSet.byteOrder);
         }
 
-        boolean includeEXIFPrefix = true;
-        byte newBytes[] = writeExifSegment(writer, outputSet, includeEXIFPrefix);
+        final boolean includeEXIFPrefix = true;
+        final byte newBytes[] = writeExifSegment(writer, outputSet, includeEXIFPrefix);
 
         writeSegmentsReplacingExif(os, pieces, newBytes);
     }
@@ -409,10 +409,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossy(byte src[], OutputStream os,
-            TiffOutputSet outputSet) throws ImageReadException, IOException,
+    public void updateExifMetadataLossy(final byte src[], final OutputStream os,
+            final TiffOutputSet outputSet) throws ImageReadException, IOException,
             ImageWriteException {
-        ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = new ByteSourceArray(src);
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 
@@ -432,10 +432,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossy(InputStream src, OutputStream os,
-            TiffOutputSet outputSet) throws ImageReadException, IOException,
+    public void updateExifMetadataLossy(final InputStream src, final OutputStream os,
+            final TiffOutputSet outputSet) throws ImageReadException, IOException,
             ImageWriteException {
-        ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = new ByteSourceInputStream(src, null);
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 
@@ -455,10 +455,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossy(File src, OutputStream os,
-            TiffOutputSet outputSet) throws ImageReadException, IOException,
+    public void updateExifMetadataLossy(final File src, final OutputStream os,
+            final TiffOutputSet outputSet) throws ImageReadException, IOException,
             ImageWriteException {
-        ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = new ByteSourceFile(src);
         updateExifMetadataLossy(byteSource, os, outputSet);
     }
 
@@ -478,25 +478,25 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossy(ByteSource byteSource, OutputStream os,
-            TiffOutputSet outputSet) throws ImageReadException, IOException,
+    public void updateExifMetadataLossy(final ByteSource byteSource, final OutputStream os,
+            final TiffOutputSet outputSet) throws ImageReadException, IOException,
             ImageWriteException {
-        JFIFPieces jfifPieces = analyzeJFIF(byteSource);
-        List<JFIFPiece> pieces = jfifPieces.pieces;
+        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final List<JFIFPiece> pieces = jfifPieces.pieces;
 
-        TiffImageWriterBase writer = new TiffImageWriterLossy(
+        final TiffImageWriterBase writer = new TiffImageWriterLossy(
                 outputSet.byteOrder);
 
-        boolean includeEXIFPrefix = true;
-        byte newBytes[] = writeExifSegment(writer, outputSet, includeEXIFPrefix);
+        final boolean includeEXIFPrefix = true;
+        final byte newBytes[] = writeExifSegment(writer, outputSet, includeEXIFPrefix);
 
         writeSegmentsReplacingExif(os, pieces, newBytes);
     }
 
-    private void writeSegmentsReplacingExif(OutputStream os,
-            List<JFIFPiece> segments, byte newBytes[])
+    private void writeSegmentsReplacingExif(final OutputStream os,
+            final List<JFIFPiece> segments, final byte newBytes[])
             throws ImageWriteException, IOException {
-        ByteOrder byteOrder = getByteOrder();
+        final ByteOrder byteOrder = getByteOrder();
 
         try {
             SOI.writeTo(os);
@@ -504,25 +504,25 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
             boolean hasExif = false;
 
             for (int i = 0; i < segments.size(); i++) {
-                JFIFPiece piece = segments.get(i);
+                final JFIFPiece piece = segments.get(i);
                 if (piece instanceof JFIFPieceSegmentExif) {
                     hasExif = true;
                 }
             }
 
             if (!hasExif && newBytes != null) {
-                byte markerBytes[] = convertShortToByteArray(JPEG_APP1_Marker,
+                final byte markerBytes[] = convertShortToByteArray(JPEG_APP1_Marker,
                         byteOrder);
                 if (newBytes.length > 0xffff) {
                     throw new ExifOverflowException(
                             "APP1 Segment is too long: " + newBytes.length);
                 }
-                int markerLength = newBytes.length + 2;
-                byte markerLengthBytes[] = convertShortToByteArray(
+                final int markerLength = newBytes.length + 2;
+                final byte markerLengthBytes[] = convertShortToByteArray(
                         markerLength, byteOrder);
 
                 int index = 0;
-                JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments
+                final JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments
                         .get(index);
                 if (firstSegment.marker == JFIFMarker) {
                     index = 1;
@@ -534,7 +534,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
             boolean APP1Written = false;
 
             for (int i = 0; i < segments.size(); i++) {
-                JFIFPiece piece = segments.get(i);
+                final JFIFPiece piece = segments.get(i);
                 if (piece instanceof JFIFPieceSegmentExif) {
                     // only replace first APP1 segment; skips others.
                     if (APP1Written) {
@@ -546,14 +546,14 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
                         continue;
                     }
 
-                    byte markerBytes[] = convertShortToByteArray(
+                    final byte markerBytes[] = convertShortToByteArray(
                             JPEG_APP1_Marker, byteOrder);
                     if (newBytes.length > 0xffff) {
                         throw new ExifOverflowException(
                                 "APP1 Segment is too long: " + newBytes.length);
                     }
-                    int markerLength = newBytes.length + 2;
-                    byte markerLengthBytes[] = convertShortToByteArray(
+                    final int markerLength = newBytes.length + 2;
+                    final byte markerLengthBytes[] = convertShortToByteArray(
                             markerLength, byteOrder);
 
                     os.write(markerBytes);
@@ -566,7 +566,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
         } finally {
             try {
                 os.close();
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Debug.debug(e);
             }
         }
@@ -575,15 +575,15 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
     public static class ExifOverflowException extends ImageWriteException {
         private static final long serialVersionUID = 1401484357224931218L;
 
-        public ExifOverflowException(String s) {
+        public ExifOverflowException(final String s) {
             super(s);
         }
     }
 
-    private byte[] writeExifSegment(TiffImageWriterBase writer,
-            TiffOutputSet outputSet, boolean includeEXIFPrefix)
+    private byte[] writeExifSegment(final TiffImageWriterBase writer,
+            final TiffOutputSet outputSet, final boolean includeEXIFPrefix)
             throws IOException, ImageWriteException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         if (includeEXIFPrefix) {
             EXIF_IDENTIFIER_CODE.writeTo(os);

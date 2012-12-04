@@ -26,26 +26,26 @@ public class PixelDensity {
     // / One-tenth of a millimetre units.
     private final int unitLength;
 
-    private PixelDensity(double horizontalDensity, double verticalDensity,
-            int unitLength) {
+    private PixelDensity(final double horizontalDensity, final double verticalDensity,
+            final int unitLength) {
         this.horizontalDensity = horizontalDensity;
         this.verticalDensity = verticalDensity;
         this.unitLength = unitLength;
     }
 
-    public static PixelDensity createUnitless(double x, double y) {
+    public static PixelDensity createUnitless(final double x, final double y) {
         return new PixelDensity(x, y, 0);
     }
 
-    public static PixelDensity createFromPixelsPerInch(double x, double y) {
+    public static PixelDensity createFromPixelsPerInch(final double x, final double y) {
         return new PixelDensity(x, y, 254);
     }
 
-    public static PixelDensity createFromPixelsPerMetre(double x, double y) {
+    public static PixelDensity createFromPixelsPerMetre(final double x, final double y) {
         return new PixelDensity(x, y, 10000);
     }
 
-    public static PixelDensity createFromPixelsPerCentimetre(double x, double y) {
+    public static PixelDensity createFromPixelsPerCentimetre(final double x, final double y) {
         return new PixelDensity(x, y, 100);
     }
 

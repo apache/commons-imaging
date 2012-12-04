@@ -20,14 +20,14 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 
 public class DataParserRgb extends DataParser {
     @Override
-    protected int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents) {
-        int red = 0xff & data[0][y][x];
-        int green = 0xff & data[1][y][x];
-        int blue = 0xff & data[2][y][x];
-        int alpha = 0xff;
+    protected int getRGB(final int data[][][], final int x, final int y,
+            final ImageContents imageContents) {
+        final int red = 0xff & data[0][y][x];
+        final int green = 0xff & data[1][y][x];
+        final int blue = 0xff & data[2][y][x];
+        final int alpha = 0xff;
 
-        int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
+        final int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
                 | ((0xff & green) << 8) | ((0xff & blue) << 0);
 
         return rgb;

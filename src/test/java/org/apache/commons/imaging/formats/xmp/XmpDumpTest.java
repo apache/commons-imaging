@@ -27,13 +27,13 @@ import org.apache.commons.imaging.util.Debug;
 public class XmpDumpTest extends ImagingTest {
 
     public void test() throws Exception {
-        List<File> images = getTestImages();
+        final List<File> images = getTestImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
 
             if (imageFile.getName().toLowerCase().endsWith(".png")
                     && isInvalidPNGTestFile(imageFile)) {
@@ -43,7 +43,7 @@ public class XmpDumpTest extends ImagingTest {
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
-            String xmpXml = Imaging.getXmpXml(imageFile);
+            final String xmpXml = Imaging.getXmpXml(imageFile);
             if (null == xmpXml) {
                 continue;
             }

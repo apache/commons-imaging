@@ -36,19 +36,19 @@ public class T4AndT6Compression {
 
     static {
         try {
-            for (Entry entry : T4_T6_Tables.whiteTerminatingCodes) {
+            for (final Entry entry : T4_T6_Tables.whiteTerminatingCodes) {
                 whiteRunLengths.insert(entry.bitString, entry.value);
             }
-            for (Entry entry : T4_T6_Tables.whiteMakeUpCodes) {
+            for (final Entry entry : T4_T6_Tables.whiteMakeUpCodes) {
                 whiteRunLengths.insert(entry.bitString, entry.value);
             }
-            for (Entry entry : T4_T6_Tables.blackTerminatingCodes) {
+            for (final Entry entry : T4_T6_Tables.blackTerminatingCodes) {
                 blackRunLengths.insert(entry.bitString, entry.value);
             }
-            for (Entry entry : T4_T6_Tables.blackMakeUpCodes) {
+            for (final Entry entry : T4_T6_Tables.blackMakeUpCodes) {
                 blackRunLengths.insert(entry.bitString, entry.value);
             }
-            for (Entry entry : T4_T6_Tables.additionalMakeUpCodes) {
+            for (final Entry entry : T4_T6_Tables.additionalMakeUpCodes) {
                 whiteRunLengths.insert(entry.bitString, entry.value);
                 blackRunLengths.insert(entry.bitString, entry.value);
             }
@@ -76,19 +76,19 @@ public class T4AndT6Compression {
             controlCodes.insert(T4_T6_Tables.VR1.bitString, T4_T6_Tables.VR1);
             controlCodes.insert(T4_T6_Tables.VR2.bitString, T4_T6_Tables.VR2);
             controlCodes.insert(T4_T6_Tables.VR3.bitString, T4_T6_Tables.VR3);
-        } catch (HuffmanTreeException cannotHappen) {
+        } catch (final HuffmanTreeException cannotHappen) {
             Debug.debug(cannotHappen);
         }
     }
 
-    private static void compress1DLine(BitInputStreamFlexible inputStream,
-            BitArrayOutputStream outputStream, int[] referenceLine, int width)
+    private static void compress1DLine(final BitInputStreamFlexible inputStream,
+            final BitArrayOutputStream outputStream, final int[] referenceLine, final int width)
             throws ImageWriteException {
         int color = WHITE;
         int runLength = 0;
         for (int x = 0; x < width; x++) {
             try {
-                int nextColor = inputStream.readBits(1);
+                final int nextColor = inputStream.readBits(1);
                 if (referenceLine != null) {
                     referenceLine[x] = nextColor;
                 }
@@ -99,7 +99,7 @@ public class T4AndT6Compression {
                     color = nextColor;
                     runLength = 1;
                 }
-            } catch (IOException ioException) {
+            } catch (final IOException ioException) {
                 throw new ImageWriteException(
                         "Error reading image to compress", ioException);
             }
@@ -118,11 +118,11 @@ public class T4AndT6Compression {
      * @return the compressed data
      * @throws ImageWriteException
      */
-    public static byte[] compressModifiedHuffman(byte[] uncompressed,
-            int width, int height) throws ImageWriteException {
-        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+    public static byte[] compressModifiedHuffman(final byte[] uncompressed,
+            final int width, final int height) throws ImageWriteException {
+        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(uncompressed));
-        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
         for (int y = 0; y < height; y++) {
             compress1DLine(inputStream, outputStream, null, width);
             inputStream.flushCache();
@@ -142,16 +142,16 @@ public class T4AndT6Compression {
      * @return the decompressed data
      * @throws ImageReadException
      */
-    public static byte[] decompressModifiedHuffman(byte[] compressed,
-            int width, int height) throws ImageReadException {
-        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+    public static byte[] decompressModifiedHuffman(final byte[] compressed,
+            final int width, final int height) throws ImageReadException {
+        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(compressed));
-        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
         for (int y = 0; y < height; y++) {
             int color = WHITE;
             int rowLength;
             for (rowLength = 0; rowLength < width;) {
-                int runLength = readTotalRunLength(inputStream, color);
+                final int runLength = readTotalRunLength(inputStream, color);
                 for (int i = 0; i < runLength; i++) {
                     outputStream.writeBit(color);
                 }
@@ -170,11 +170,11 @@ public class T4AndT6Compression {
         return outputStream.toByteArray();
     }
 
-    public static byte[] compressT4_1D(byte[] uncompressed, int width,
-            int height, boolean hasFill) throws ImageWriteException {
-        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+    public static byte[] compressT4_1D(final byte[] uncompressed, final int width,
+            final int height, final boolean hasFill) throws ImageWriteException {
+        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(uncompressed));
-        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
         if (hasFill) {
             T4_T6_Tables.EOL16.writeBits(outputStream);
         } else {
@@ -209,11 +209,11 @@ public class T4AndT6Compression {
      * @return the decompressed data
      * @throws ImageReadException
      */
-    public static byte[] decompressT4_1D(byte[] compressed, int width,
-            int height, boolean hasFill) throws ImageReadException {
-        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+    public static byte[] decompressT4_1D(final byte[] compressed, final int width,
+            final int height, final boolean hasFill) throws ImageReadException {
+        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(compressed));
-        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
         for (int y = 0; y < height; y++) {
             T4_T6_Tables.Entry entry;
             int rowLength;
@@ -224,14 +224,14 @@ public class T4AndT6Compression {
                 }
                 int color = WHITE;
                 for (rowLength = 0; rowLength < width;) {
-                    int runLength = readTotalRunLength(inputStream, color);
+                    final int runLength = readTotalRunLength(inputStream, color);
                     for (int i = 0; i < runLength; i++) {
                         outputStream.writeBit(color);
                     }
                     color = 1 - color;
                     rowLength += runLength;
                 }
-            } catch (HuffmanTreeException huffmanException) {
+            } catch (final HuffmanTreeException huffmanException) {
                 throw new ImageReadException("Decompression error",
                         huffmanException);
             }
@@ -246,12 +246,12 @@ public class T4AndT6Compression {
         return outputStream.toByteArray();
     }
 
-    public static byte[] compressT4_2D(byte[] uncompressed, int width,
-            int height, boolean hasFill, int parameterK)
+    public static byte[] compressT4_2D(final byte[] uncompressed, final int width,
+            final int height, final boolean hasFill, final int parameterK)
             throws ImageWriteException {
-        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(uncompressed));
-        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
         int[] referenceLine = new int[width];
         int[] codingLine = new int[width];
         int kCounter = 0;
@@ -267,7 +267,7 @@ public class T4AndT6Compression {
                 for (int i = 0; i < width; i++) {
                     try {
                         codingLine[i] = inputStream.readBits(1);
-                    } catch (IOException ioException) {
+                    } catch (final IOException ioException) {
                         throw new ImageWriteException(
                                 "Error reading image to compress", ioException);
                     }
@@ -283,7 +283,7 @@ public class T4AndT6Compression {
                         T4_T6_Tables.P.writeBits(outputStream);
                         a0 = b2;
                     } else {
-                        int a1b1 = a1 - b1;
+                        final int a1b1 = a1 - b1;
                         if (-3 <= a1b1 && a1b1 <= 3) {
                             T4_T6_Tables.Entry entry;
                             if (a1b1 == -3) {
@@ -305,10 +305,10 @@ public class T4AndT6Compression {
                             codingA0Color = 1 - codingA0Color;
                             a0 = a1;
                         } else {
-                            int a2 = nextChangingElement(codingLine,
+                            final int a2 = nextChangingElement(codingLine,
                                     1 - codingA0Color, a1 + 1);
-                            int a0a1 = a1 - a0;
-                            int a1a2 = a2 - a1;
+                            final int a0a1 = a1 - a0;
+                            final int a1a2 = a2 - a1;
                             T4_T6_Tables.H.writeBits(outputStream);
                             writeRunLength(outputStream, a0a1, codingA0Color);
                             writeRunLength(outputStream, a1a2,
@@ -330,7 +330,7 @@ public class T4AndT6Compression {
                     b2 = nextChangingElement(referenceLine, 1 - codingA0Color,
                             b1 + 1);
                 }
-                int[] swap = referenceLine;
+                final int[] swap = referenceLine;
                 referenceLine = codingLine;
                 codingLine = swap;
             } else {
@@ -371,12 +371,12 @@ public class T4AndT6Compression {
      * @return the decompressed data
      * @throws ImageReadException
      */
-    public static byte[] decompressT4_2D(byte[] compressed, int width,
-            int height, boolean hasFill) throws ImageReadException {
-        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+    public static byte[] decompressT4_2D(final byte[] compressed, final int width,
+            final int height, final boolean hasFill) throws ImageReadException {
+        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(compressed));
-        BitArrayOutputStream outputStream = new BitArrayOutputStream();
-        int[] referenceLine = new int[width];
+        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        final int[] referenceLine = new int[width];
         for (int y = 0; y < height; y++) {
             T4_T6_Tables.Entry entry;
             int rowLength = 0;
@@ -385,7 +385,7 @@ public class T4AndT6Compression {
                 if (!isEOL(entry, hasFill)) {
                     throw new ImageReadException("Expected EOL not found");
                 }
-                int tagBit = inputStream.readBits(1);
+                final int tagBit = inputStream.readBits(1);
                 if (tagBit == 0) {
                     // 2D
                     int codingA0Color = WHITE;
@@ -403,12 +403,12 @@ public class T4AndT6Compression {
                                     codingA0Color);
                             a0 = b2;
                         } else if (entry == T4_T6_Tables.H) {
-                            int a0a1 = readTotalRunLength(inputStream,
+                            final int a0a1 = readTotalRunLength(inputStream,
                                     codingA0Color);
                             a1 = a0 + a0a1;
                             fillRange(outputStream, referenceLine, a0, a1,
                                     codingA0Color);
-                            int a1a2 = readTotalRunLength(inputStream,
+                            final int a1a2 = readTotalRunLength(inputStream,
                                     1 - codingA0Color);
                             a2 = a1 + a1a2;
                             fillRange(outputStream, referenceLine, a1, a2,
@@ -459,7 +459,7 @@ public class T4AndT6Compression {
                     // 1D
                     int color = WHITE;
                     for (rowLength = 0; rowLength < width;) {
-                        int runLength = readTotalRunLength(inputStream, color);
+                        final int runLength = readTotalRunLength(inputStream, color);
                         for (int i = 0; i < runLength; i++) {
                             outputStream.writeBit(color);
                             referenceLine[rowLength + i] = color;
@@ -468,9 +468,9 @@ public class T4AndT6Compression {
                         rowLength += runLength;
                     }
                 }
-            } catch (IOException ioException) {
+            } catch (final IOException ioException) {
                 throw new ImageReadException("Decompression error", ioException);
-            } catch (HuffmanTreeException huffmanException) {
+            } catch (final HuffmanTreeException huffmanException) {
                 throw new ImageReadException("Decompression error",
                         huffmanException);
             }
@@ -485,18 +485,18 @@ public class T4AndT6Compression {
         return outputStream.toByteArray();
     }
 
-    public static byte[] compressT6(byte[] uncompressed, int width, int height)
+    public static byte[] compressT6(final byte[] uncompressed, final int width, final int height)
             throws ImageWriteException {
-        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(uncompressed));
-        BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
         int[] referenceLine = new int[width];
         int[] codingLine = new int[width];
         for (int y = 0; y < height; y++) {
             for (int i = 0; i < width; i++) {
                 try {
                     codingLine[i] = inputStream.readBits(1);
-                } catch (IOException ioException) {
+                } catch (final IOException ioException) {
                     throw new ImageWriteException(
                             "Error reading image to compress", ioException);
                 }
@@ -512,7 +512,7 @@ public class T4AndT6Compression {
                     T4_T6_Tables.P.writeBits(outputStream);
                     a0 = b2;
                 } else {
-                    int a1b1 = a1 - b1;
+                    final int a1b1 = a1 - b1;
                     if (-3 <= a1b1 && a1b1 <= 3) {
                         T4_T6_Tables.Entry entry;
                         if (a1b1 == -3) {
@@ -534,10 +534,10 @@ public class T4AndT6Compression {
                         codingA0Color = 1 - codingA0Color;
                         a0 = a1;
                     } else {
-                        int a2 = nextChangingElement(codingLine,
+                        final int a2 = nextChangingElement(codingLine,
                                 1 - codingA0Color, a1 + 1);
-                        int a0a1 = a1 - a0;
-                        int a1a2 = a2 - a1;
+                        final int a0a1 = a1 - a0;
+                        final int a1a2 = a2 - a1;
                         T4_T6_Tables.H.writeBits(outputStream);
                         writeRunLength(outputStream, a0a1, codingA0Color);
                         writeRunLength(outputStream, a1a2, 1 - codingA0Color);
@@ -558,7 +558,7 @@ public class T4AndT6Compression {
                 b2 = nextChangingElement(referenceLine, 1 - codingA0Color,
                         b1 + 1);
             }
-            int[] swap = referenceLine;
+            final int[] swap = referenceLine;
             referenceLine = codingLine;
             codingLine = swap;
             inputStream.flushCache();
@@ -580,12 +580,12 @@ public class T4AndT6Compression {
      * @return the decompressed data
      * @throws ImageReadException
      */
-    public static byte[] decompressT6(byte[] compressed, int width, int height)
+    public static byte[] decompressT6(final byte[] compressed, final int width, final int height)
             throws ImageReadException {
-        BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
+        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(compressed));
-        BitArrayOutputStream outputStream = new BitArrayOutputStream();
-        int[] referenceLine = new int[width];
+        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
+        final int[] referenceLine = new int[width];
         for (int y = 0; y < height; y++) {
             T4_T6_Tables.Entry entry;
             int rowLength = 0;
@@ -604,12 +604,12 @@ public class T4AndT6Compression {
                                 codingA0Color);
                         a0 = b2;
                     } else if (entry == T4_T6_Tables.H) {
-                        int a0a1 = readTotalRunLength(inputStream,
+                        final int a0a1 = readTotalRunLength(inputStream,
                                 codingA0Color);
                         a1 = a0 + a0a1;
                         fillRange(outputStream, referenceLine, a0, a1,
                                 codingA0Color);
-                        int a1a2 = readTotalRunLength(inputStream,
+                        final int a1a2 = readTotalRunLength(inputStream,
                                 1 - codingA0Color);
                         a2 = a1 + a1a2;
                         fillRange(outputStream, referenceLine, a1, a2,
@@ -656,7 +656,7 @@ public class T4AndT6Compression {
                             b1 + 1);
                     rowLength = a0;
                 }
-            } catch (HuffmanTreeException huffmanException) {
+            } catch (final HuffmanTreeException huffmanException) {
                 throw new ImageReadException("Decompression error",
                         huffmanException);
             }
@@ -671,7 +671,7 @@ public class T4AndT6Compression {
         return outputStream.toByteArray();
     }
 
-    private static boolean isEOL(T4_T6_Tables.Entry entry, boolean hasFill) {
+    private static boolean isEOL(final T4_T6_Tables.Entry entry, final boolean hasFill) {
         if (entry == T4_T6_Tables.EOL) {
             return true;
         }
@@ -687,8 +687,8 @@ public class T4AndT6Compression {
         }
     }
 
-    private static void writeRunLength(BitArrayOutputStream bitStream,
-            int runLength, int color) {
+    private static void writeRunLength(final BitArrayOutputStream bitStream,
+            int runLength, final int color) {
         final T4_T6_Tables.Entry[] makeUpCodes;
         final T4_T6_Tables.Entry[] terminatingCodes;
         if (color == WHITE) {
@@ -699,26 +699,26 @@ public class T4AndT6Compression {
             terminatingCodes = T4_T6_Tables.blackTerminatingCodes;
         }
         while (runLength >= 1792) {
-            T4_T6_Tables.Entry entry = lowerBound(
+            final T4_T6_Tables.Entry entry = lowerBound(
                     T4_T6_Tables.additionalMakeUpCodes, runLength);
             entry.writeBits(bitStream);
             runLength -= entry.value.intValue();
         }
         while (runLength >= 64) {
-            T4_T6_Tables.Entry entry = lowerBound(makeUpCodes, runLength);
+            final T4_T6_Tables.Entry entry = lowerBound(makeUpCodes, runLength);
             entry.writeBits(bitStream);
             runLength -= entry.value.intValue();
         }
-        T4_T6_Tables.Entry terminatingEntry = terminatingCodes[runLength];
+        final T4_T6_Tables.Entry terminatingEntry = terminatingCodes[runLength];
         terminatingEntry.writeBits(bitStream);
     }
 
-    private static T4_T6_Tables.Entry lowerBound(T4_T6_Tables.Entry[] entries,
-            int value) {
+    private static T4_T6_Tables.Entry lowerBound(final T4_T6_Tables.Entry[] entries,
+            final int value) {
         int first = 0;
         int last = entries.length - 1;
         do {
-            int middle = (first + last) >>> 1;
+            final int middle = (first + last) >>> 1;
             if (entries[middle].value.intValue() <= value
                     && ((middle + 1) >= entries.length || value < entries[middle + 1].value
                             .intValue())) {
@@ -732,8 +732,8 @@ public class T4AndT6Compression {
         return entries[first];
     }
 
-    private static int readTotalRunLength(BitInputStreamFlexible bitStream,
-            int color) throws ImageReadException {
+    private static int readTotalRunLength(final BitInputStreamFlexible bitStream,
+            final int color) throws ImageReadException {
         try {
             int totalLength = 0;
             Integer runLength;
@@ -746,21 +746,21 @@ public class T4AndT6Compression {
                 totalLength += runLength.intValue();
             } while (runLength.intValue() > 63);
             return totalLength;
-        } catch (HuffmanTreeException huffmanException) {
+        } catch (final HuffmanTreeException huffmanException) {
             throw new ImageReadException("Decompression error",
                     huffmanException);
         }
     }
 
-    private static int changingElementAt(int[] line, int position) {
+    private static int changingElementAt(final int[] line, final int position) {
         if (position < 0 || position >= line.length) {
             return WHITE;
         }
         return line[position];
     }
 
-    private static int nextChangingElement(int[] line, int currentColour,
-            int start) {
+    private static int nextChangingElement(final int[] line, final int currentColour,
+            final int start) {
         int position;
         for (position = start; position < line.length
                 && line[position] == currentColour; position++) {
@@ -769,8 +769,8 @@ public class T4AndT6Compression {
         return position < line.length ? position : line.length;
     }
 
-    private static void fillRange(BitArrayOutputStream outputStream,
-            int[] referenceRow, int a0, int end, int color) {
+    private static void fillRange(final BitArrayOutputStream outputStream,
+            final int[] referenceRow, final int a0, final int end, final int color) {
         for (int i = a0; i < end; i++) {
             referenceRow[i] = color;
             outputStream.writeBit(color);

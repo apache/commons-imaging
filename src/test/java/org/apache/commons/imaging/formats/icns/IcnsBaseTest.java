@@ -28,14 +28,14 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class IcnsBaseTest extends ImagingTest {
 
-    private static boolean isIcns(File file) throws IOException,
+    private static boolean isIcns(final File file) throws IOException,
             ImageReadException {
-        ImageFormat format = Imaging.guessFormat(file);
+        final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_ICNS;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isIcns(file);
         }
     };

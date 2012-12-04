@@ -27,18 +27,18 @@ public class IptcRecord {
     private final byte[] bytes;
     public final String value;
 
-    public IptcRecord(IptcType iptcType, byte[] bytes, String value) {
+    public IptcRecord(final IptcType iptcType, final byte[] bytes, final String value) {
         this.iptcType = iptcType;
         this.bytes = bytes;
         this.value = value;
     }
 
-    public IptcRecord(IptcType iptcType, String value) {
+    public IptcRecord(final IptcType iptcType, final String value) {
         this.iptcType = iptcType;
         byte[] bytes;
         try {
             bytes = value.getBytes("ISO-8859-1");
-        } catch (UnsupportedEncodingException cannotHappen) {
+        } catch (final UnsupportedEncodingException cannotHappen) {
             bytes = null;
         }
         this.bytes = bytes;
@@ -58,7 +58,7 @@ public class IptcRecord {
     }
 
     public static final Comparator<IptcRecord> COMPARATOR = new Comparator<IptcRecord>() {
-        public int compare(IptcRecord e1, IptcRecord e2) {
+        public int compare(final IptcRecord e1, final IptcRecord e2) {
             return e1.iptcType.getType() - e2.iptcType.getType();
         }
     };

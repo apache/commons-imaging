@@ -34,31 +34,31 @@ import org.apache.commons.imaging.util.Debug;
 public class JpegXmpRewriteTest extends JpegXmpBaseTest {
 
     public void testRemoveInsertUpdate() throws Exception {
-        List<File> images = getImagesWithXmpData();
+        final List<File> images = getImagesWithXmpData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             // boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             // if (ignoreImageData)
             // continue;
 
-            ByteSource byteSource = new ByteSourceFile(imageFile);
+            final ByteSource byteSource = new ByteSourceFile(imageFile);
             // Debug.debug("Source Segments:");
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map<String,Object> params = new HashMap<String,Object>();
-            String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
+            final Map<String,Object> params = new HashMap<String,Object>();
+            final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
             assertNotNull(xmpXml);
 
             // Debug.debug("xmpXml", xmpXml.length());
             // Debug.debug();
 
-            File noXmpFile = createTempFile(imageFile.getName() + ".", ".jpg");
+            final File noXmpFile = createTempFile(imageFile.getName() + ".", ".jpg");
             {
                 // test remove
 
@@ -77,7 +77,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
                 // Debug.debug("Source Segments:");
                 // new JpegUtils().dumpJFIF(new ByteSourceFile(noXmpFile));
 
-                String outXmp = new JpegImageParser().getXmpXml(
+                final String outXmp = new JpegImageParser().getXmpXml(
                         new ByteSourceFile(noXmpFile), params);
                 assertNull(outXmp);
             }
@@ -85,8 +85,8 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             {
                 // test update
 
-                String newXmpXml = "test";
-                File updated = createTempFile(imageFile.getName() + ".", ".jpg");
+                final String newXmpXml = "test";
+                final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
                 OutputStream os = null;
                 try {
                     os = new FileOutputStream(updated);
@@ -103,7 +103,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
                 // Debug.debug("Source Segments:");
                 // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
-                String outXmp = new JpegImageParser().getXmpXml(
+                final String outXmp = new JpegImageParser().getXmpXml(
                         new ByteSourceFile(updated), params);
                 assertNotNull(outXmp);
                 assertEquals(outXmp, newXmpXml);
@@ -112,8 +112,8 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             {
                 // test insert
 
-                String newXmpXml = "test";
-                File updated = createTempFile(imageFile.getName() + ".", ".jpg");
+                final String newXmpXml = "test";
+                final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
                 OutputStream os = null;
                 try {
                     os = new FileOutputStream(updated);
@@ -130,7 +130,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
                 // Debug.debug("Source Segments:");
                 // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
-                String outXmp = new JpegImageParser().getXmpXml(
+                final String outXmp = new JpegImageParser().getXmpXml(
                         new ByteSourceFile(updated), params);
                 assertNotNull(outXmp);
                 assertEquals(outXmp, newXmpXml);

@@ -22,13 +22,13 @@ public class BinaryFileFunctionsTest extends ImagingTest {
     // Work around that pesky "protected"...
     private static class Extender extends BinaryFileFunctions {
         public void testFloatToByteConversion() {
-            byte[] bytesLE = convertFloatToByteArray(1.0f,
+            final byte[] bytesLE = convertFloatToByteArray(1.0f,
                     ByteOrder.LITTLE_ENDIAN);
             assertEquals(
                     convertByteArrayToFloat("bytes", bytesLE,
                             ByteOrder.LITTLE_ENDIAN), 1.0f, 0f);
 
-            byte[] bytesBE = convertFloatToByteArray(1.0f,
+            final byte[] bytesBE = convertFloatToByteArray(1.0f,
                     ByteOrder.BIG_ENDIAN);
             assertEquals(
                     convertByteArrayToFloat("bytes", bytesBE,
@@ -36,13 +36,13 @@ public class BinaryFileFunctionsTest extends ImagingTest {
         }
 
         public void testDoubleToByteConversion() {
-            byte[] bytesLE = BinaryConversions.toBytes(1.0,
+            final byte[] bytesLE = BinaryConversions.toBytes(1.0,
                     ByteOrder.LITTLE_ENDIAN);
             assertEquals(
                     convertByteArrayToDouble("bytes", bytesLE,
                             ByteOrder.LITTLE_ENDIAN), 1.0, 0);
 
-            byte[] bytesBE = BinaryConversions.toBytes(1.0,
+            final byte[] bytesBE = BinaryConversions.toBytes(1.0,
                     ByteOrder.BIG_ENDIAN);
             assertEquals(
                     convertByteArrayToDouble("bytes", bytesBE,

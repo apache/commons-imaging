@@ -27,7 +27,7 @@ public class JpegInputStream {
     private int cnt = 0;
     private int b;
 
-    public JpegInputStream(InputStream is) {
+    public JpegInputStream(final InputStream is) {
         this.is = is;
     }
 
@@ -39,7 +39,7 @@ public class JpegInputStream {
             }
             cnt = 8;
             if (b == 0xff) {
-                int b2 = is.read();
+                final int b2 = is.read();
                 if (b2 < 0) {
                     throw new ImageReadException("Premature End of File");
                 }
@@ -53,7 +53,7 @@ public class JpegInputStream {
                 }
             }
         }
-        int bit = (b >> 7) & 0x1;
+        final int bit = (b >> 7) & 0x1;
         cnt--;
         b <<= 1;
         return bit;

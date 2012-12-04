@@ -19,7 +19,7 @@ package org.apache.commons.imaging.color;
 public final class ColorXyz {
     public final double X, Y, Z;
 
-    public ColorXyz(double x, double y, double z) {
+    public ColorXyz(final double x, final double y, final double z) {
         X = x;
         Y = y;
         Z = z;

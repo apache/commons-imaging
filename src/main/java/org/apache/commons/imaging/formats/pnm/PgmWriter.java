@@ -24,12 +24,12 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageWriteException;
 
 public class PgmWriter extends PnmWriter implements PnmConstants {
-    public PgmWriter(boolean RAWBITS) {
+    public PgmWriter(final boolean RAWBITS) {
         super(RAWBITS);
     }
 
     @Override
-    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String,Object> params)
             throws ImageWriteException, IOException {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
@@ -37,8 +37,8 @@ public class PgmWriter extends PnmWriter implements PnmConstants {
         os.write(RAWBITS ? 0x35 : 0x32);
         os.write(PNM_SEPARATOR);
 
-        int width = src.getWidth();
-        int height = src.getHeight();
+        final int width = src.getWidth();
+        final int height = src.getHeight();
 
         os.write(("" + width).getBytes("US-ASCII"));
         os.write(PNM_SEPARATOR);
@@ -51,11 +51,11 @@ public class PgmWriter extends PnmWriter implements PnmConstants {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int argb = src.getRGB(x, y);
-                int red = 0xff & (argb >> 16);
-                int green = 0xff & (argb >> 8);
-                int blue = 0xff & (argb >> 0);
-                int sample = (red + green + blue) / 3;
+                final int argb = src.getRGB(x, y);
+                final int red = 0xff & (argb >> 16);
+                final int green = 0xff & (argb >> 8);
+                final int blue = 0xff & (argb >> 0);
+                final int sample = (red + green + blue) / 3;
 
                 if (RAWBITS) {
                     os.write((byte) sample);

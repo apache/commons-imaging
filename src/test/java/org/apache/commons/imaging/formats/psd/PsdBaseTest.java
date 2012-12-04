@@ -10,14 +10,14 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PsdBaseTest extends ImagingTest {
-    private static boolean isPsd(File file) throws IOException,
+    private static boolean isPsd(final File file) throws IOException,
             ImageReadException {
-        ImageFormat format = Imaging.guessFormat(file);
+        final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_PSD;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isPsd(file);
         }
     };

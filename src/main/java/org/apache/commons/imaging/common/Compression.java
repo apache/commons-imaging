@@ -26,31 +26,31 @@ import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 
 public class Compression {
 
-    public byte[] decompressLZW(byte compressed[], int LZWMinimumCodeSize,
-            int expectedSize, ByteOrder byteOrder) throws IOException {
-        InputStream is = new ByteArrayInputStream(compressed);
+    public byte[] decompressLZW(final byte compressed[], final int LZWMinimumCodeSize,
+            final int expectedSize, final ByteOrder byteOrder) throws IOException {
+        final InputStream is = new ByteArrayInputStream(compressed);
 
-        MyLzwDecompressor decompressor = new MyLzwDecompressor(
+        final MyLzwDecompressor decompressor = new MyLzwDecompressor(
                 LZWMinimumCodeSize, byteOrder);
-        byte[] result = decompressor.decompress(is, expectedSize);
+        final byte[] result = decompressor.decompress(is, expectedSize);
 
         return result;
     }
 
-    public byte[] decompressPackBits(byte compressed[], int expectedSize,
-            ByteOrder byteOrder) throws ImageReadException {
-        byte unpacked[] = new PackBits().decompress(compressed, expectedSize);
+    public byte[] decompressPackBits(final byte compressed[], final int expectedSize,
+            final ByteOrder byteOrder) throws ImageReadException {
+        final byte unpacked[] = new PackBits().decompress(compressed, expectedSize);
         return unpacked;
     }
 
-    public byte[] compressLZW(byte src[], int LZWMinimumCodeSize,
-            ByteOrder byteOrder, boolean earlyLimit) throws IOException
+    public byte[] compressLZW(final byte src[], final int LZWMinimumCodeSize,
+            final ByteOrder byteOrder, final boolean earlyLimit) throws IOException
 
     {
-        MyLzwCompressor compressor = new MyLzwCompressor(LZWMinimumCodeSize,
+        final MyLzwCompressor compressor = new MyLzwCompressor(LZWMinimumCodeSize,
                 byteOrder, earlyLimit);
 
-        byte compressed[] = compressor.compress(src);
+        final byte compressed[] = compressor.compress(src);
 
         return compressed;
     }

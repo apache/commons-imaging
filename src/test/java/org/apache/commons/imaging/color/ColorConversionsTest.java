@@ -26,11 +26,11 @@ public class ColorConversionsTest extends TestCase {
             0xff00ffff, 0x00000000, 0xff7f7f7f, };
 
     public void testRGBtoCMYK() throws Exception {
-        for (int rgb : SAMPLE_RGBS) {
-            ColorCmy cmy = ColorConversions.convertRGBtoCMY(rgb);
-            ColorCmyk cmyk = ColorConversions.convertCMYtoCMYK(cmy);
-            ColorCmy cmyk_cmy = ColorConversions.convertCMYKtoCMY(cmyk);
-            int cmyk_cmy_rgb = ColorConversions.convertCMYtoRGB(cmyk_cmy);
+        for (final int rgb : SAMPLE_RGBS) {
+            final ColorCmy cmy = ColorConversions.convertRGBtoCMY(rgb);
+            final ColorCmyk cmyk = ColorConversions.convertCMYtoCMYK(cmy);
+            final ColorCmy cmyk_cmy = ColorConversions.convertCMYKtoCMY(cmyk);
+            final int cmyk_cmy_rgb = ColorConversions.convertCMYtoRGB(cmyk_cmy);
 
             Debug.debug("cmy", cmy);
             Debug.debug("cmyk", cmyk);
@@ -44,9 +44,9 @@ public class ColorConversionsTest extends TestCase {
     }
 
     public void testRGBtoHSL() throws Exception {
-        for (int rgb : SAMPLE_RGBS) {
-            ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
-            int hsl_rgb = ColorConversions.convertHSLtoRGB(hsl);
+        for (final int rgb : SAMPLE_RGBS) {
+            final ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
+            final int hsl_rgb = ColorConversions.convertHSLtoRGB(hsl);
 
             Debug.debug("hsl", hsl);
             Debug.debug("hsl_rgb",
@@ -57,9 +57,9 @@ public class ColorConversionsTest extends TestCase {
     }
 
     public void testRGBtoHSV() throws Exception {
-        for (int rgb : SAMPLE_RGBS) {
-            ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
-            int hsv_rgb = ColorConversions.convertHSVtoRGB(hsv);
+        for (final int rgb : SAMPLE_RGBS) {
+            final ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
+            final int hsv_rgb = ColorConversions.convertHSVtoRGB(hsv);
 
             Debug.debug("hsv", hsv);
             Debug.debug("hsv_rgb",
@@ -70,9 +70,9 @@ public class ColorConversionsTest extends TestCase {
     }
 
     public void testXYZ() throws Exception {
-        for (int rgb : SAMPLE_RGBS) {
-            ColorXyz xyz = ColorConversions.convertRGBtoXYZ(rgb);
-            int xyz_rgb = ColorConversions.convertXYZtoRGB(xyz);
+        for (final int rgb : SAMPLE_RGBS) {
+            final ColorXyz xyz = ColorConversions.convertRGBtoXYZ(rgb);
+            final int xyz_rgb = ColorConversions.convertXYZtoRGB(xyz);
 
             Debug.debug();
             Debug.debug("rgb", rgb + " (" + Integer.toHexString(rgb) + ")");
@@ -82,9 +82,9 @@ public class ColorConversionsTest extends TestCase {
 
             assertEquals((0xffffff & xyz_rgb), (0xffffff & rgb));
 
-            ColorCieLab cielab = ColorConversions.convertXYZtoCIELab(xyz);
-            ColorXyz cielab_xyz = ColorConversions.convertCIELabtoXYZ(cielab);
-            int cielab_xyz_rgb = ColorConversions.convertXYZtoRGB(cielab_xyz);
+            final ColorCieLab cielab = ColorConversions.convertXYZtoCIELab(xyz);
+            final ColorXyz cielab_xyz = ColorConversions.convertCIELabtoXYZ(cielab);
+            final int cielab_xyz_rgb = ColorConversions.convertXYZtoRGB(cielab_xyz);
 
             Debug.debug("cielab", cielab);
             Debug.debug("cielab_xyz", cielab_xyz);
@@ -94,11 +94,11 @@ public class ColorConversionsTest extends TestCase {
 
             assertEquals((0xffffff & cielab_xyz_rgb), (0xffffff & rgb));
 
-            ColorHunterLab hunterlab = ColorConversions
+            final ColorHunterLab hunterlab = ColorConversions
                     .convertXYZtoHunterLab(xyz);
-            ColorXyz hunterlab_xyz = ColorConversions
+            final ColorXyz hunterlab_xyz = ColorConversions
                     .convertHunterLabtoXYZ(hunterlab);
-            int hunterlab_xyz_rgb = ColorConversions
+            final int hunterlab_xyz_rgb = ColorConversions
                     .convertXYZtoRGB(hunterlab_xyz);
 
             Debug.debug("hunterlab", hunterlab);
@@ -110,15 +110,15 @@ public class ColorConversionsTest extends TestCase {
 
             assertEquals((0xffffff & hunterlab_xyz_rgb), (0xffffff & rgb));
 
-            ColorCieLch cielch = ColorConversions.convertCIELabtoCIELCH(cielab);
-            ColorCieLab cielch_cielab = ColorConversions
+            final ColorCieLch cielch = ColorConversions.convertCIELabtoCIELCH(cielab);
+            final ColorCieLab cielch_cielab = ColorConversions
                     .convertCIELCHtoCIELab(cielch);
 
             Debug.debug("cielch", cielch);
             Debug.debug("cielch_cielab", cielch_cielab);
 
-            ColorCieLuv cieluv = ColorConversions.convertXYZtoCIELuv(xyz);
-            ColorXyz cieluv_xyz = ColorConversions.convertCIELuvtoXYZ(cieluv);
+            final ColorCieLuv cieluv = ColorConversions.convertXYZtoCIELuv(xyz);
+            final ColorXyz cieluv_xyz = ColorConversions.convertCIELuvtoXYZ(cieluv);
 
             Debug.debug("cieluv", cieluv);
             Debug.debug("cieluv_xyz", cieluv_xyz);

@@ -71,9 +71,9 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(ByteSource byteSource, Map<String,Object> params)
+    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
-        RgbeInfo info = new RgbeInfo(byteSource);
+        final RgbeInfo info = new RgbeInfo(byteSource);
 
         try {
             return info.getMetadata();
@@ -83,9 +83,9 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(ByteSource byteSource, Map<String,Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
-        RgbeInfo info = new RgbeInfo(byteSource);
+        final RgbeInfo info = new RgbeInfo(byteSource);
 
         try {
             return new ImageInfo(
@@ -101,15 +101,15 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(ByteSource byteSource, Map<String,Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
-        RgbeInfo info = new RgbeInfo(byteSource);
+        final RgbeInfo info = new RgbeInfo(byteSource);
 
         try {
             // It is necessary to create our own BufferedImage here as the
             // org.apache.sanselan.common.IBufferedImageFactory interface does
             // not expose this complexity
-            DataBuffer buffer = new DataBufferFloat(info.getPixelData(),
+            final DataBuffer buffer = new DataBufferFloat(info.getPixelData(),
                     info.getWidth() * info.getHeight());
 
             return new BufferedImage(new ComponentColorModel(
@@ -125,9 +125,9 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(ByteSource byteSource, Map<String,Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
-        RgbeInfo info = new RgbeInfo(byteSource);
+        final RgbeInfo info = new RgbeInfo(byteSource);
 
         try {
             return new Dimension(info.getWidth(), info.getHeight());
@@ -137,18 +137,18 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(ByteSource byteSource, Map<String,Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile(File src, File dst, byte[] profile) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 
     @Override
-    public String getXmpXml(ByteSource byteSource, Map<String,Object> params)
+    public String getXmpXml(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }

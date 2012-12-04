@@ -30,14 +30,14 @@ import org.apache.commons.imaging.util.Debug;
 public class PngMultipleRoundtripTest extends PngBaseTest {
 
     public void test() throws Exception {
-        String imagesFolderPath = FilenameUtils
+        final String imagesFolderPath = FilenameUtils
                 .separatorsToSystem("src\\test\\data\\images\\png\\3");
-        File imagesFolder = new File(imagesFolderPath);
+        final File imagesFolder = new File(imagesFolderPath);
         assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());
 
-        File files[] = imagesFolder.listFiles();
-        for (File file : files) {
-            File imageFile = file;
+        final File files[] = imagesFolder.listFiles();
+        for (final File file : files) {
+            final File imageFile = file;
             if (!imageFile.isFile()) {
                 continue;
             }
@@ -50,18 +50,18 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
 
             File lastFile = imageFile;
             for (int j = 0; j < 10; j++) {
-                Map<String,Object> readParams = new HashMap<String,Object>();
+                final Map<String,Object> readParams = new HashMap<String,Object>();
                 // readParams.put(SanselanConstants.BUFFERED_IMAGE_FACTORY,
                 // new RgbBufferedImageFactory());
-                BufferedImage image = Imaging.getBufferedImage(lastFile,
+                final BufferedImage image = Imaging.getBufferedImage(lastFile,
                         readParams);
                 assertNotNull(image);
 
-                File tempFile = createTempFile(imageFile.getName() + "." + j
+                final File tempFile = createTempFile(imageFile.getName() + "." + j
                         + ".", ".png");
                 Debug.debug("tempFile", tempFile);
 
-                Map<String,Object> writeParams = new HashMap<String,Object>();
+                final Map<String,Object> writeParams = new HashMap<String,Object>();
                 Imaging.writeImage(image, tempFile,
                         ImageFormat.IMAGE_FORMAT_PNG, writeParams);
 

@@ -21,19 +21,19 @@ import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoShortOrLong extends TagInfo {
-    public TagInfoShortOrLong(String name, int tag, int length, TiffDirectoryType directoryType) {
+    public TagInfoShortOrLong(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, length, directoryType, false);
     }
     
-    public TagInfoShortOrLong(String name, int tag, int length, TiffDirectoryType directoryType, boolean isOffset) {
+    public TagInfoShortOrLong(final String name, final int tag, final int length, final TiffDirectoryType directoryType, final boolean isOffset) {
         super(name, tag, FIELD_TYPE_DESCRIPTION_SHORT_OR_LONG, length, directoryType, isOffset);
     }
     
-    public byte[] encodeValue(ByteOrder byteOrder, short... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return BinaryConversions.toBytes(values, byteOrder);
     }
     
-    public byte[] encodeValue(ByteOrder byteOrder, int... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
         return BinaryConversions.toBytes(values, byteOrder);
     }
 }

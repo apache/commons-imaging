@@ -21,21 +21,21 @@ import org.apache.commons.imaging.util.Debug;
 public class SimplePalette extends Palette {
     private final int palette[];
 
-    public SimplePalette(int palette[]) {
+    public SimplePalette(final int palette[]) {
         this.palette = palette;
     }
 
     @Override
-    public int getPaletteIndex(int rgb) {
+    public int getPaletteIndex(final int rgb) {
         return getPaletteIndex(palette, rgb);
     }
 
     @Override
-    public int getEntry(int index) {
+    public int getEntry(final int index) {
         return palette[index];
     }
 
-    private int getPaletteIndex(int palette[], int argb) {
+    private int getPaletteIndex(final int palette[], final int argb) {
         for (int i = 0; i < palette.length; i++) {
             if (palette[i] == argb) {
                 return i;

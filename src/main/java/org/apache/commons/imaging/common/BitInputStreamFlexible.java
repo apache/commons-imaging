@@ -24,7 +24,7 @@ public class BitInputStreamFlexible extends InputStream {
     // samples size<8 - shuoldn't that effect their order within byte?
     private final InputStream is;
 
-    public BitInputStreamFlexible(InputStream is) {
+    public BitInputStreamFlexible(final InputStream is) {
         this.is = is;
         // super(is);
     }

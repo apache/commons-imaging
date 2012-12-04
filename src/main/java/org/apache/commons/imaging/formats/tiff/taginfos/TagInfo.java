@@ -35,23 +35,23 @@ public abstract class TagInfo implements TiffDirectoryConstants,
         TiffFieldTypeConstants {
     public static final int LENGTH_UNKNOWN = -1;
 
-    public TagInfo(String name, int tag, FieldType dataType, int length,
-            TiffDirectoryType exifDirectory) {
+    public TagInfo(final String name, final int tag, final FieldType dataType, final int length,
+            final TiffDirectoryType exifDirectory) {
         this(name, tag, Arrays.asList(dataType), length, exifDirectory);
     }
 
-    public TagInfo(String name, int tag, FieldType dataType, int length,
-            TiffDirectoryType exifDirectory, boolean isOffset) {
+    public TagInfo(final String name, final int tag, final FieldType dataType, final int length,
+            final TiffDirectoryType exifDirectory, final boolean isOffset) {
         this(name, tag, Arrays.asList(dataType), length, exifDirectory,
                 isOffset);
     }
 
-    public TagInfo(String name, int tag, FieldType dataType, int length) {
+    public TagInfo(final String name, final int tag, final FieldType dataType, final int length) {
         this(name, tag, Arrays.asList(dataType), length,
                 TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
 
-    public TagInfo(String name, int tag, FieldType dataType) {
+    public TagInfo(final String name, final int tag, final FieldType dataType) {
         this(name, tag, dataType, LENGTH_UNKNOWN,
                 TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
@@ -63,13 +63,13 @@ public abstract class TagInfo implements TiffDirectoryConstants,
     public final TiffDirectoryType directoryType;
     private final boolean isOffset;
 
-    public TagInfo(String name, int tag, List<FieldType> dataTypes, int length,
-            TiffDirectoryType exifDirectory) {
+    public TagInfo(final String name, final int tag, final List<FieldType> dataTypes, final int length,
+            final TiffDirectoryType exifDirectory) {
         this(name, tag, dataTypes, length, exifDirectory, false);
     }
 
-    public TagInfo(String name, int tag, List<FieldType> dataTypes, int length,
-            TiffDirectoryType exifDirectory, boolean isOffset) {
+    public TagInfo(final String name, final int tag, final List<FieldType> dataTypes, final int length,
+            final TiffDirectoryType exifDirectory, final boolean isOffset) {
         this.name = name;
         this.tag = tag;
         this.dataTypes = Collections.unmodifiableList(new ArrayList<FieldType>(
@@ -79,12 +79,12 @@ public abstract class TagInfo implements TiffDirectoryConstants,
         this.isOffset = isOffset;
     }
 
-    public Object getValue(TiffField entry) throws ImageReadException {
-        Object o = entry.fieldType.getSimpleValue(entry);
+    public Object getValue(final TiffField entry) throws ImageReadException {
+        final Object o = entry.fieldType.getSimpleValue(entry);
         return o;
     }
 
-    public byte[] encodeValue(FieldType fieldType, Object value, ByteOrder byteOrder)
+    public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
             throws ImageWriteException {
         return fieldType.writeData(value, byteOrder);
     }

@@ -24,12 +24,12 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class XbmBaseTest extends ImagingTest {
 
-    private static boolean isXbm(File file) {
+    private static boolean isXbm(final File file) {
         return file.getName().toLowerCase().endsWith(".xbm");
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isXbm(file);
         }
     };

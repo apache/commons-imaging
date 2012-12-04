@@ -32,9 +32,9 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.IBufferedImageFactory;
 
 public class ImageReadExample {
-    public static BufferedImage imageReadExample(File file)
+    public static BufferedImage imageReadExample(final File file)
             throws ImageReadException, IOException {
-        Map<String,Object> params = new HashMap<String,Object>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         // set optional parameters if you like
         params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
@@ -43,7 +43,7 @@ public class ImageReadExample {
         // params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
         // read image
-        BufferedImage image = Imaging.getBufferedImage(file, params);
+        final BufferedImage image = Imaging.getBufferedImage(file, params);
 
         return image;
     }
@@ -51,18 +51,18 @@ public class ImageReadExample {
     public static class ManagedImageBufferedImageFactory implements
             IBufferedImageFactory {
 
-        public BufferedImage getColorBufferedImage(int width, int height,
-                boolean hasAlpha) {
-            GraphicsEnvironment ge = GraphicsEnvironment
+        public BufferedImage getColorBufferedImage(final int width, final int height,
+                final boolean hasAlpha) {
+            final GraphicsEnvironment ge = GraphicsEnvironment
                     .getLocalGraphicsEnvironment();
-            GraphicsDevice gd = ge.getDefaultScreenDevice();
-            GraphicsConfiguration gc = gd.getDefaultConfiguration();
+            final GraphicsDevice gd = ge.getDefaultScreenDevice();
+            final GraphicsConfiguration gc = gd.getDefaultConfiguration();
             return gc.createCompatibleImage(width, height,
                     Transparency.TRANSLUCENT);
         }
 
-        public BufferedImage getGrayscaleBufferedImage(int width, int height,
-                boolean hasAlpha) {
+        public BufferedImage getGrayscaleBufferedImage(final int width, final int height,
+                final boolean hasAlpha) {
             return getColorBufferedImage(width, height, hasAlpha);
         }
     }

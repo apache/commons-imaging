@@ -30,19 +30,19 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
 public class ImageWriteExample {
-    public static byte[] imageWriteExample(File file)
+    public static byte[] imageWriteExample(final File file)
             throws ImageReadException, ImageWriteException, IOException {
         // read image
-        BufferedImage image = Imaging.getBufferedImage(file);
+        final BufferedImage image = Imaging.getBufferedImage(file);
 
-        ImageFormat format = ImageFormat.IMAGE_FORMAT_TIFF;
-        Map<String,Object> params = new HashMap<String,Object>();
+        final ImageFormat format = ImageFormat.IMAGE_FORMAT_TIFF;
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         // set optional parameters if you like
         params.put(ImagingConstants.PARAM_KEY_COMPRESSION, new Integer(
                 TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED));
 
-        byte bytes[] = Imaging.writeImageToBytes(image, format, params);
+        final byte bytes[] = Imaging.writeImageToBytes(image, format, params);
 
         return bytes;
     }

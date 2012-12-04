@@ -31,23 +31,23 @@ public class RgbeReadTest extends RgbeBaseTest {
     public void test() throws IOException, ImageReadException {
         Debug.debug("start");
 
-        List<File> images = getRgbeImages();
+        final List<File> images = getRgbeImages();
 
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
-            IImageMetadata metadata = Imaging.getMetadata(imageFile);
+            final IImageMetadata metadata = Imaging.getMetadata(imageFile);
             assertNotNull(metadata);
 
-            ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
+            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
 
-            BufferedImage image = Imaging.getBufferedImage(imageFile);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
         }
     }

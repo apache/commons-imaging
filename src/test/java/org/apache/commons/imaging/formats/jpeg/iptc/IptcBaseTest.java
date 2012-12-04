@@ -28,7 +28,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
 public abstract class IptcBaseTest extends ImagingTest {
-    protected static boolean hasIptcData(File file) {
+    protected static boolean hasIptcData(final File file) {
         // Debug.debug("hasIptcData file", file.getAbsoluteFile());
 
         if (!file.getName().toLowerCase().endsWith(".jpg"))
@@ -40,9 +40,9 @@ public abstract class IptcBaseTest extends ImagingTest {
         }
 
         try {
-            ByteSource byteSource = new ByteSourceFile(file);
+            final ByteSource byteSource = new ByteSourceFile(file);
             return new JpegImageParser().hasIptcSegment(byteSource);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // Debug.debug("Error file", file.getAbsoluteFile());
             // Debug.debug(e, 4);
             return false;
@@ -50,13 +50,13 @@ public abstract class IptcBaseTest extends ImagingTest {
     }
 
     private static final ImageFilter HAS_IPTC_IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return hasIptcData(file);
         }
     };
 
     private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return file.getName().toLowerCase().endsWith(".jpg");
         }
     };
@@ -71,7 +71,7 @@ public abstract class IptcBaseTest extends ImagingTest {
         return getTestImages(HAS_IPTC_IMAGE_FILTER);
     }
 
-    protected List<File> getImagesWithIptcData(int max) throws IOException,
+    protected List<File> getImagesWithIptcData(final int max) throws IOException,
             ImageReadException {
         return getTestImages(HAS_IPTC_IMAGE_FILTER, max);
     }
@@ -84,7 +84,7 @@ public abstract class IptcBaseTest extends ImagingTest {
         return getTestImages(JPEG_IMAGE_FILTER);
     }
 
-    protected List<File> getJpegImages(int max) throws IOException,
+    protected List<File> getJpegImages(final int max) throws IOException,
             ImageReadException {
         return getTestImages(JPEG_IMAGE_FILTER, max);
     }

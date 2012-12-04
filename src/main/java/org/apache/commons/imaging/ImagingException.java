@@ -23,11 +23,11 @@ package org.apache.commons.imaging;
 public class ImagingException extends Exception {
     private static final long serialVersionUID = -1L;
 
-    public ImagingException(String s) {
+    public ImagingException(final String s) {
         super(s);
     }
 
-    public ImagingException(String s, Exception e) {
+    public ImagingException(final String s, final Exception e) {
         super(s, e);
     }
 }

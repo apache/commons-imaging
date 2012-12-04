@@ -23,7 +23,7 @@ import java.io.InputStream;
 public class DebugInputStream extends InputStream {
     private final InputStream is;
 
-    public DebugInputStream(InputStream is) {
+    public DebugInputStream(final InputStream is) {
         this.is = is;
     }
 
@@ -31,14 +31,14 @@ public class DebugInputStream extends InputStream {
 
     @Override
     public int read() throws IOException {
-        int result = is.read();
+        final int result = is.read();
         bytes_read++;
         return result;
     }
 
     @Override
-    public long skip(long n) throws IOException {
-        long result = is.skip(n);
+    public long skip(final long n) throws IOException {
+        final long result = is.skip(n);
         bytes_read += n;
         return result;
     }

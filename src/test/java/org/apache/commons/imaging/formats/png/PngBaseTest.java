@@ -28,14 +28,14 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PngBaseTest extends ImagingTest {
 
-    private static boolean isPng(File file) throws IOException,
+    private static boolean isPng(final File file) throws IOException,
             ImageReadException {
-        ImageFormat format = Imaging.guessFormat(file);
+        final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_PNG;
     }
 
     private static final ImageFilter imageFilter = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isPng(file);
         }
     };

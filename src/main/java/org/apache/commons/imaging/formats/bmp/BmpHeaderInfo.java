@@ -67,14 +67,14 @@ public class BmpHeaderInfo {
         public ColorSpaceCoordinate blue;
     }
 
-    public BmpHeaderInfo(byte identifier1, byte identifier2, int fileSize,
-            int reserved, int bitmapDataOffset, int bitmapHeaderSize,
-            int width, int height, int planes, int bitsPerPixel,
-            int compression, int bitmapDataSize, int hResolution,
-            int vResolution, int colorsUsed, int colorsImportant, int redMask,
-            int greenMask, int blueMask, int alphaMask, int colorSpaceType,
-            ColorSpace colorSpace, int gammaRed, int gammaGreen, int gammaBlue,
-            int intent, int profileData, int profileSize, int reservedV5) {
+    public BmpHeaderInfo(final byte identifier1, final byte identifier2, final int fileSize,
+            final int reserved, final int bitmapDataOffset, final int bitmapHeaderSize,
+            final int width, final int height, final int planes, final int bitsPerPixel,
+            final int compression, final int bitmapDataSize, final int hResolution,
+            final int vResolution, final int colorsUsed, final int colorsImportant, final int redMask,
+            final int greenMask, final int blueMask, final int alphaMask, final int colorSpaceType,
+            final ColorSpace colorSpace, final int gammaRed, final int gammaGreen, final int gammaBlue,
+            final int intent, final int profileData, final int profileSize, final int reservedV5) {
         this.identifier1 = identifier1;
         this.identifier2 = identifier2;
         this.fileSize = fileSize;

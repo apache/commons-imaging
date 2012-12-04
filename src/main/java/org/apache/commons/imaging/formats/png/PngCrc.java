@@ -49,7 +49,7 @@ public class PngCrc {
      * of the final running CRC (see the crc() routine below)).
      */
 
-    private final long update_crc(long crc, byte buf[]) {
+    private final long update_crc(final long crc, final byte buf[]) {
         long c = crc;
         int n;
 
@@ -66,19 +66,19 @@ public class PngCrc {
     }
 
     /* Return the CRC of the bytes buf[0..len-1]. */
-    public final int crc(byte buf[], int len) {
+    public final int crc(final byte buf[], final int len) {
         return (int) (update_crc(0xffffffffL, buf) ^ 0xffffffffL);
     }
 
-    public final long start_partial_crc(byte buf[], int len) {
+    public final long start_partial_crc(final byte buf[], final int len) {
         return update_crc(0xffffffffL, buf);
     }
 
-    public final long continue_partial_crc(long old_crc, byte buf[], int len) {
+    public final long continue_partial_crc(final long old_crc, final byte buf[], final int len) {
         return update_crc(old_crc, buf);
     }
 
-    public final long finish_partial_crc(long old_crc) {
+    public final long finish_partial_crc(final long old_crc) {
         return (old_crc ^ 0xffffffffL);
     }
 }

@@ -177,10 +177,10 @@ public class ApacheImagingSpeedAndMemoryTest {
      * @param args
      *            the path to the file to be processed
      */
-    public static void main(String[] args) {
-        String name = args[0];
+    public static void main(final String[] args) {
+        final String name = args[0];
 
-        ApacheImagingSpeedAndMemoryTest testStand = new ApacheImagingSpeedAndMemoryTest();
+        final ApacheImagingSpeedAndMemoryTest testStand = new ApacheImagingSpeedAndMemoryTest();
 
         testStand.performTest(name);
     }
@@ -192,9 +192,9 @@ public class ApacheImagingSpeedAndMemoryTest {
      * @param name
      *            the path for the input image file to be tested
      */
-    private void performTest(String name) {
-        File target = new File(name);
-        Formatter fmt = new Formatter(System.out);
+    private void performTest(final String name) {
+        final File target = new File(name);
+        final Formatter fmt = new Formatter(System.out);
 
         double sumTime = 0;
         int n = 1;
@@ -216,18 +216,18 @@ public class ApacheImagingSpeedAndMemoryTest {
                 TiffImageParser tiffImageParser = new TiffImageParser();
 
                 // load the file and record time needed to do so
-                long time0 = System.nanoTime();
+                final long time0 = System.nanoTime();
                 BufferedImage bImage = tiffImageParser.getBufferedImage(
                         byteSource, params);
-                long time1 = System.nanoTime();
+                final long time1 = System.nanoTime();
 
                 // tabulate results
-                double testTime = (time1 - time0) / 1000000.0;
+                final double testTime = (time1 - time0) / 1000000.0;
                 if (i > 1) {
                     n = i - 1;
                     sumTime += testTime;
                 }
-                double avgTime = sumTime / n;
+                final double avgTime = sumTime / n;
 
                 // tabulate the memory results. Note that the
                 // buffered image, the byte source, and the parser
@@ -236,10 +236,10 @@ public class ApacheImagingSpeedAndMemoryTest {
                 // may have already started collecting garbage,
                 // so there are limits to the reliability of these
                 // statistics
-                Runtime r = Runtime.getRuntime();
-                long freeMemory = r.freeMemory();
-                long totalMemory = r.totalMemory();
-                long usedMemory = totalMemory - freeMemory;
+                final Runtime r = Runtime.getRuntime();
+                final long freeMemory = r.freeMemory();
+                final long totalMemory = r.totalMemory();
+                final long usedMemory = totalMemory - freeMemory;
 
                 if (i == 0) {
                     // print header info
@@ -257,10 +257,10 @@ public class ApacheImagingSpeedAndMemoryTest {
                 byteSource = null;
                 params = null;
                 tiffImageParser = null;
-            } catch (ImageReadException ire) {
+            } catch (final ImageReadException ire) {
                 ire.printStackTrace();
                 System.exit(-1);
-            } catch (IOException ioex) {
+            } catch (final IOException ioex) {
                 ioex.printStackTrace();
                 System.exit(-1);
             }
@@ -273,7 +273,7 @@ public class ApacheImagingSpeedAndMemoryTest {
                 // suggesting that the code should be modified
                 Runtime.getRuntime().gc();
                 Thread.sleep(1000);
-            } catch (InterruptedException iex) {
+            } catch (final InterruptedException iex) {
                 // this isn't fatal, but shouldn't happen
                 iex.printStackTrace();
             }

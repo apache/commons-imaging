@@ -23,22 +23,22 @@ import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
 public class FieldTypeAscii extends FieldType {
-    public FieldTypeAscii(int type, String name) {
+    public FieldTypeAscii(final int type, final String name) {
         super(type, 1, name);
     }
 
     @Override
-    public Object getSimpleValue(TiffField entry) {
+    public Object getSimpleValue(final TiffField entry) {
         // According to EXIF specification
         // "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL."
-        byte bytes[] = getRawBytes(entry);
+        final byte bytes[] = getRawBytes(entry);
         int nullCount = 1;
         for (int i = 0; i < bytes.length - 1; i++) {
             if (bytes[i] == 0) {
                 nullCount++;
             }
         }
-        String[] strings = new String[nullCount];
+        final String[] strings = new String[nullCount];
         int stringsAdded = 0;
         strings[0] = ""; // if we have a 0 length string
         int nextStringPos = 0;
@@ -48,10 +48,10 @@ public class FieldTypeAscii extends FieldType {
         for (int i = 0; i < bytes.length; i++) {
             if (bytes[i] == 0) {
                 try {
-                    String string = new String(bytes, nextStringPos, i
+                    final String string = new String(bytes, nextStringPos, i
                             - nextStringPos, "UTF-8");
                     strings[stringsAdded++] = string;
-                } catch (UnsupportedEncodingException unsupportedEncoding) {
+                } catch (final UnsupportedEncodingException unsupportedEncoding) {
                 }
                 nextStringPos = i + 1;
             }
@@ -59,10 +59,10 @@ public class FieldTypeAscii extends FieldType {
         if (nextStringPos < bytes.length) {
             // Buggy file, string wasn't null terminated
             try {
-                String string = new String(bytes, nextStringPos, bytes.length
+                final String string = new String(bytes, nextStringPos, bytes.length
                         - nextStringPos, "UTF-8");
                 strings[stringsAdded++] = string;
-            } catch (UnsupportedEncodingException unsupportedEncoding) {
+            } catch (final UnsupportedEncodingException unsupportedEncoding) {
             }
         }
         if (strings.length == 1) {
@@ -73,10 +73,10 @@ public class FieldTypeAscii extends FieldType {
     }
 
     @Override
-    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof byte[]) {
-            byte bytes[] = (byte[]) o;
-            byte result[] = new byte[bytes.length + 1];
+            final byte bytes[] = (byte[]) o;
+            final byte result[] = new byte[bytes.length + 1];
             System.arraycopy(bytes, 0, result, 0, bytes.length);
             result[result.length - 1] = 0;
             return result;
@@ -84,32 +84,32 @@ public class FieldTypeAscii extends FieldType {
             byte[] bytes = null;
             try {
                 bytes = ((String) o).getBytes("UTF-8");
-            } catch (UnsupportedEncodingException cannotHappen) {
+            } catch (final UnsupportedEncodingException cannotHappen) {
                 throw new IllegalArgumentException("Your Java doesn't support UTF-8");
             }
-            byte result[] = new byte[bytes.length + 1];
+            final byte result[] = new byte[bytes.length + 1];
             System.arraycopy(bytes, 0, result, 0, bytes.length);
             result[result.length - 1] = 0;
             return result;
         } else if (o instanceof String[]) {
-            String[] strings = (String[]) o;
+            final String[] strings = (String[]) o;
             int totalLength = 0;
-            for (String string : strings) {
+            for (final String string : strings) {
                 byte[] bytes = null;
                 try {
                     bytes = string.getBytes("UTF-8");
-                } catch (UnsupportedEncodingException cannotHappen) {
+                } catch (final UnsupportedEncodingException cannotHappen) {
                     throw new IllegalArgumentException("Your Java doesn't support UTF-8");
                 }
                 totalLength += (bytes.length + 1);
             }
-            byte[] result = new byte[totalLength];
+            final byte[] result = new byte[totalLength];
             int position = 0;
-            for (String string : strings) {
+            for (final String string : strings) {
                 byte[] bytes = null;
                 try {
                     bytes = string.getBytes("UTF-8");
-                } catch (UnsupportedEncodingException cannotHappen) {
+                } catch (final UnsupportedEncodingException cannotHappen) {
                     throw new IllegalArgumentException("Your Java doesn't support UTF-8");
                 }
                 System.arraycopy(bytes, 0, result, position, bytes.length);

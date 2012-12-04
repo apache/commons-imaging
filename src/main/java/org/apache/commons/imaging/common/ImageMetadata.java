@@ -22,11 +22,11 @@ import java.util.List;
 public class ImageMetadata implements IImageMetadata {
     private final List<IImageMetadataItem> items = new ArrayList<IImageMetadataItem>();
 
-    public void add(String keyword, String text) {
+    public void add(final String keyword, final String text) {
         add(new Item(keyword, text));
     }
 
-    public void add(IImageMetadataItem item) {
+    public void add(final IImageMetadataItem item) {
         items.add(item);
     }
 
@@ -47,7 +47,7 @@ public class ImageMetadata implements IImageMetadata {
             prefix = "";
         }
 
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
             if (i > 0) {
                 result.append(newline);
@@ -55,7 +55,7 @@ public class ImageMetadata implements IImageMetadata {
             // if (null != prefix)
             // result.append(prefix);
 
-            ImageMetadata.IImageMetadataItem item = items.get(i);
+            final ImageMetadata.IImageMetadataItem item = items.get(i);
             result.append(item.toString(prefix + "\t"));
 
             // Debug.debug("prefix", prefix);
@@ -68,7 +68,7 @@ public class ImageMetadata implements IImageMetadata {
     public static class Item implements IImageMetadataItem {
         private final String keyword, text;
 
-        public Item(String keyword, String text) {
+        public Item(final String keyword, final String text) {
             this.keyword = keyword;
             this.text = text;
         }
@@ -86,7 +86,7 @@ public class ImageMetadata implements IImageMetadata {
             return toString(null);
         }
 
-        public String toString(String prefix) {
+        public String toString(final String prefix) {
             String result = keyword + ": " + text;
             if (null != prefix) {
                 result = prefix + result;

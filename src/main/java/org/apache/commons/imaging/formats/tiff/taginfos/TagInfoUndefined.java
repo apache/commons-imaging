@@ -21,7 +21,7 @@ import java.util.Arrays;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoUndefined extends TagInfoByte {
-    public TagInfoUndefined(String name, int tag, int length, TiffDirectoryType directoryType) {
+    public TagInfoUndefined(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, Arrays.asList(FIELD_TYPE_UNDEFINED), length, directoryType);
     }
 }

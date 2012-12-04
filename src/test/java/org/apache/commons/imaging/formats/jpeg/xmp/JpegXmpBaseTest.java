@@ -29,7 +29,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
 public abstract class JpegXmpBaseTest extends ImagingTest {
 
-    protected static boolean hasJpegXmpData(File file) {
+    protected static boolean hasJpegXmpData(final File file) {
         if (!file.getName().toLowerCase().endsWith(".jpg"))
          {
             return false;
@@ -41,9 +41,9 @@ public abstract class JpegXmpBaseTest extends ImagingTest {
         // Debug.debug("possible file", file);
 
         try {
-            ByteSource byteSource = new ByteSourceFile(file);
+            final ByteSource byteSource = new ByteSourceFile(file);
             return new JpegImageParser().hasXmpSegment(byteSource);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // Debug.debug("Error file", file.getAbsoluteFile());
             // Debug.debug(e, 4);
             return false;
@@ -51,7 +51,7 @@ public abstract class JpegXmpBaseTest extends ImagingTest {
     }
 
     private static final ImageFilter HAS_JPEG_XMP_IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return hasJpegXmpData(file);
         }
     };
@@ -73,7 +73,7 @@ public abstract class JpegXmpBaseTest extends ImagingTest {
         return getTestImages(HAS_JPEG_XMP_IMAGE_FILTER);
     }
 
-    protected List<File> getImagesWithXmpData(int max) throws IOException,
+    protected List<File> getImagesWithXmpData(final int max) throws IOException,
             ImageReadException {
         return getTestImages(HAS_JPEG_XMP_IMAGE_FILTER, max);
     }

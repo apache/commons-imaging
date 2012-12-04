@@ -76,30 +76,30 @@ public class DcxImageParser extends ImageParser {
     }
 
     @Override
-    public boolean embedICCProfile(File src, File dst, byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
         return false;
     }
 
     @Override
-    public IImageMetadata getMetadata(ByteSource byteSource, Map<String,Object> params)
+    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(ByteSource byteSource, Map<String,Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public Dimension getImageSize(ByteSource byteSource, Map<String,Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public byte[] getICCProfileBytes(ByteSource byteSource, Map<String,Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -110,12 +110,12 @@ public class DcxImageParser extends ImageParser {
         public final int id;
         public final int[] pageTable;
 
-        public DcxHeader(final int id, int[] pageTable) {
+        public DcxHeader(final int id, final int[] pageTable) {
             this.id = id;
             this.pageTable = pageTable;
         }
 
-        public void dump(PrintWriter pw) {
+        public void dump(final PrintWriter pw) {
             pw.println("DcxHeader");
             pw.println("Id: 0x" + Integer.toHexString(id));
             pw.println("Pages: " + pageTable.length);
@@ -123,15 +123,15 @@ public class DcxImageParser extends ImageParser {
         }
     }
 
-    private DcxHeader readDcxHeader(ByteSource byteSource)
+    private DcxHeader readDcxHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
         try {
             is = byteSource.getInputStream();
-            int id = read4Bytes("Id", is, "Not a Valid DCX File");
-            List<Integer> pageTable = new ArrayList<Integer>(1024);
+            final int id = read4Bytes("Id", is, "Not a Valid DCX File");
+            final List<Integer> pageTable = new ArrayList<Integer>(1024);
             for (int i = 0; i < 1024; i++) {
-                int pageOffset = read4Bytes("PageTable", is,
+                final int pageOffset = read4Bytes("PageTable", is,
                         "Not a Valid DCX File");
                 if (pageOffset == 0) {
                     break;
@@ -148,8 +148,8 @@ public class DcxImageParser extends ImageParser {
                         "DCX page table not terminated by zero entry");
             }
 
-            Object[] objects = pageTable.toArray();
-            int[] pages = new int[objects.length];
+            final Object[] objects = pageTable.toArray();
+            final int[] pages = new int[objects.length];
             for (int i = 0; i < objects.length; i++) {
                 pages[i] = ((Integer) objects[i]).intValue();
             }
@@ -160,23 +160,23 @@ public class DcxImageParser extends ImageParser {
                 if (is != null) {
                     is.close();
                 }
-            } catch (IOException ignored) {
+            } catch (final IOException ignored) {
                 Debug.debug(ignored);
             }
         }
     }
 
     @Override
-    public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
             throws ImageReadException, IOException {
         readDcxHeader(byteSource).dump(pw);
         return true;
     }
 
     @Override
-    public final BufferedImage getBufferedImage(ByteSource byteSource,
-            Map<String,Object> params) throws ImageReadException, IOException {
-        List<BufferedImage> list = getAllBufferedImages(byteSource);
+    public final BufferedImage getBufferedImage(final ByteSource byteSource,
+            final Map<String,Object> params) throws ImageReadException, IOException {
+        final List<BufferedImage> list = getAllBufferedImages(byteSource);
         if (list.isEmpty()) {
             return null;
         }
@@ -184,18 +184,18 @@ public class DcxImageParser extends ImageParser {
     }
 
     @Override
-    public List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
+    public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        DcxHeader dcxHeader = readDcxHeader(byteSource);
-        List<BufferedImage> images = new ArrayList<BufferedImage>();
-        PcxImageParser pcxImageParser = new PcxImageParser();
-        for (int element : dcxHeader.pageTable) {
+        final DcxHeader dcxHeader = readDcxHeader(byteSource);
+        final List<BufferedImage> images = new ArrayList<BufferedImage>();
+        final PcxImageParser pcxImageParser = new PcxImageParser();
+        for (final int element : dcxHeader.pageTable) {
             InputStream stream = null;
             try {
                 stream = byteSource.getInputStream(element);
-                ByteSourceInputStream pcxSource = new ByteSourceInputStream(
+                final ByteSourceInputStream pcxSource = new ByteSourceInputStream(
                         stream, null);
-                BufferedImage image = pcxImageParser.getBufferedImage(
+                final BufferedImage image = pcxImageParser.getBufferedImage(
                         pcxSource, new HashMap<String,Object>());
                 images.add(image);
             } finally {
@@ -203,7 +203,7 @@ public class DcxImageParser extends ImageParser {
                     if (stream != null) {
                         stream.close();
                     }
-                } catch (IOException ignored) {
+                } catch (final IOException ignored) {
                     Debug.debug(ignored);
                 }
             }
@@ -212,12 +212,12 @@ public class DcxImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
 
-        HashMap<String,Object> pcxParams = new HashMap<String,Object>();
+        final HashMap<String,Object> pcxParams = new HashMap<String,Object>();
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {
@@ -225,13 +225,13 @@ public class DcxImageParser extends ImageParser {
         }
 
         if (params.containsKey(PcxConstants.PARAM_KEY_PCX_COMPRESSION)) {
-            Object value = params
+            final Object value = params
                     .remove(PcxConstants.PARAM_KEY_PCX_COMPRESSION);
             pcxParams.put(PcxConstants.PARAM_KEY_PCX_COMPRESSION, value);
         }
         
         if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
-            Object value = params.remove(PARAM_KEY_PIXEL_DENSITY);
+            final Object value = params.remove(PARAM_KEY_PIXEL_DENSITY);
             if (value != null) {
                 if (!(value instanceof PixelDensity)) {
                     throw new ImageWriteException(
@@ -243,13 +243,13 @@ public class DcxImageParser extends ImageParser {
 
 
         if (params.size() > 0) {
-            Object firstKey = params.keySet().iterator().next();
+            final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
 
         final int headerSize = 4 + 1024 * 4;
 
-        BinaryOutputStream bos = new BinaryOutputStream(os,
+        final BinaryOutputStream bos = new BinaryOutputStream(os,
                 ByteOrder.INTEL);
         bos.write4Bytes(DcxHeader.DCX_ID);
         // Some apps may need a full 1024 entry table
@@ -257,7 +257,7 @@ public class DcxImageParser extends ImageParser {
         for (int i = 0; i < 1023; i++) {
             bos.write4Bytes(0);
         }
-        PcxImageParser pcxImageParser = new PcxImageParser();
+        final PcxImageParser pcxImageParser = new PcxImageParser();
         pcxImageParser.writeImage(src, bos, pcxParams);
     }
 
@@ -272,7 +272,7 @@ public class DcxImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(ByteSource byteSource, Map<String,Object> params)
+    public String getXmpXml(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return null;
     }

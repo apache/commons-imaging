@@ -22,19 +22,19 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 
 public class TagInfoLong extends TagInfo {
-    public TagInfoLong(String name, int tag, int length, TiffDirectoryType directoryType) {
+    public TagInfoLong(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, FIELD_TYPE_LONG, length, directoryType);
     }
     
-    public TagInfoLong(String name, int tag, int length, TiffDirectoryType directoryType, boolean isOffset) {
+    public TagInfoLong(final String name, final int tag, final int length, final TiffDirectoryType directoryType, final boolean isOffset) {
         super(name, tag, FIELD_TYPE_LONG, length, directoryType, isOffset);
     }
     
-    public int[] getValue(ByteOrder byteOrder, byte[] bytes) {
+    public int[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return BinaryConversions.toInts(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(ByteOrder byteOrder, int... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
         return BinaryConversions.toBytes(values, byteOrder);
     }
 }

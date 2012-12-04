@@ -31,42 +31,42 @@ public class PngReadTest extends PngBaseTest {
     public void test() throws Exception {
         Debug.debug("start");
 
-        List<File> images = getPngImages();
+        final List<File> images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
             if (isInvalidPNGTestFile(imageFile)) {
                 try {
                     Imaging.getMetadata(imageFile);
                     fail("Image read should have failed.");
-                } catch (Exception e) {
+                } catch (final Exception e) {
                 }
 
                 try {
                     Imaging.getImageInfo(imageFile);
                     fail("Image read should have failed.");
-                } catch (Exception e) {
+                } catch (final Exception e) {
                 }
 
                 try {
                     Imaging.getBufferedImage(imageFile);
                     fail("Image read should have failed.");
-                } catch (Exception e) {
+                } catch (final Exception e) {
                 }
             } else {
-                IImageMetadata metadata = Imaging.getMetadata(imageFile);
+                final IImageMetadata metadata = Imaging.getMetadata(imageFile);
                 // assertNotNull(metadata);
 
-                ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
+                final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
                 assertNotNull(imageInfo);
 
                 Debug.debug("ICC profile", Imaging.getICCProfile(imageFile));
                 
-                BufferedImage image = Imaging.getBufferedImage(imageFile);
+                final BufferedImage image = Imaging.getBufferedImage(imageFile);
                 assertNotNull(image);
             }
         }

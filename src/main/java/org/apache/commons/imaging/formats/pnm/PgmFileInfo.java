@@ -28,7 +28,7 @@ public class PgmFileInfo extends FileInfo {
     private final float scale;
     private final int bytesPerSample; 
 
-    public PgmFileInfo(int width, int height, boolean RAWBITS, int max) throws ImageReadException {
+    public PgmFileInfo(final int width, final int height, final boolean RAWBITS, final int max) throws ImageReadException {
         super(width, height, RAWBITS);
         if (max <= 0) {
             throw new ImageReadException("PGM maxVal " + max
@@ -82,28 +82,28 @@ public class PgmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(InputStream is) throws IOException {
+    public int getRGB(final InputStream is) throws IOException {
         int sample = readSample(is, bytesPerSample);
         
         sample = scaleSample(sample, scale, max);
 
-        int alpha = 0xff;
+        final int alpha = 0xff;
 
-        int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
+        final int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
                 | ((0xff & sample) << 8) | ((0xff & sample) << 0);
 
         return rgb;
     }
 
     @Override
-    public int getRGB(WhiteSpaceReader wsr) throws IOException {
+    public int getRGB(final WhiteSpaceReader wsr) throws IOException {
         int sample = Integer.parseInt(wsr.readtoWhiteSpace());
 
         sample = scaleSample(sample, scale, max);
         
-        int alpha = 0xff;
+        final int alpha = 0xff;
 
-        int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
+        final int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
                 | ((0xff & sample) << 8) | ((0xff & sample) << 0);
 
         return rgb;

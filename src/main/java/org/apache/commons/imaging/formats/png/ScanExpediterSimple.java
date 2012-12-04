@@ -25,10 +25,10 @@ import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
 public class ScanExpediterSimple extends ScanExpediter {
-    public ScanExpediterSimple(int width, int height, InputStream is,
-            BufferedImage bi, int color_type, int BitDepth, int bitsPerPixel,
-            PngChunkPlte pngChunkPLTE, GammaCorrection gammaCorrection,
-            TransparencyFilter transparencyFilter)
+    public ScanExpediterSimple(final int width, final int height, final InputStream is,
+            final BufferedImage bi, final int color_type, final int BitDepth, final int bitsPerPixel,
+            final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
+            final TransparencyFilter transparencyFilter)
 
     {
         super(width, height, is, bi, color_type, BitDepth, bitsPerPixel,
@@ -37,21 +37,21 @@ public class ScanExpediterSimple extends ScanExpediter {
 
     @Override
     public void drive() throws ImageReadException, IOException {
-        int bitsPerScanLine = bitsPerPixel * width;
-        int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
+        final int bitsPerScanLine = bitsPerPixel * width;
+        final int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
         byte prev[] = null;
 
         for (int y = 0; y < height; y++) {
-            byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
+            final byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
                     prev, bytesPerPixel);
 
             prev = unfiltered;
 
-            BitParser bitParser = new BitParser(unfiltered, bitsPerPixel,
+            final BitParser bitParser = new BitParser(unfiltered, bitsPerPixel,
                     bitDepth);
 
             for (int x = 0; x < width; x++) {
-                int rgb = getRGB(bitParser, x);
+                final int rgb = getRGB(bitParser, x);
 
                 bi.setRGB(x, y, rgb);
             }

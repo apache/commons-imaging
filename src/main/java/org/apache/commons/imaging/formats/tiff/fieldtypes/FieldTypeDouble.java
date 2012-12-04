@@ -28,21 +28,21 @@ public class FieldTypeDouble extends FieldType {
     }
 
     @Override
-    public Object getSimpleValue(TiffField entry) {
+    public Object getSimpleValue(final TiffField entry) {
         return "?";
     }
 
     @Override
-    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Double) {
             return BinaryConversions.toBytes(((Double) o).doubleValue(),
                     byteOrder);
         } else if (o instanceof double[]) {
-            double numbers[] = (double[]) o;
+            final double numbers[] = (double[]) o;
             return BinaryConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Double[]) {
-            Double numbers[] = (Double[]) o;
-            double values[] = new double[numbers.length];
+            final Double numbers[] = (Double[]) o;
+            final double values[] = new double[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].doubleValue();
             }

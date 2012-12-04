@@ -21,8 +21,8 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 
 public class DataParserCmyk extends DataParser {
     @Override
-    protected int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents) {
+    protected int getRGB(final int data[][][], final int x, final int y,
+            final ImageContents imageContents) {
         int sc = 0xff & data[0][y][x];
         int sm = 0xff & data[1][y][x];
         int sy = 0xff & data[2][y][x];
@@ -34,7 +34,7 @@ public class DataParserCmyk extends DataParser {
         sy = 255 - sy;
         sk = 255 - sk;
 
-        int rgb = ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
+        final int rgb = ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
 
         return rgb;
     }

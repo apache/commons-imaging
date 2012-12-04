@@ -30,7 +30,7 @@ import org.apache.commons.imaging.util.Debug;
 public class MedianCutQuantizer {
     private final boolean ignoreAlpha;
 
-    public MedianCutQuantizer(boolean ignore_alpha) {
+    public MedianCutQuantizer(final boolean ignore_alpha) {
         this.ignoreAlpha = ignore_alpha;
     }
 
@@ -39,7 +39,7 @@ public class MedianCutQuantizer {
         public int count = 0;
         public final int alpha, red, green, blue;
 
-        public ColorCount(int argb) {
+        public ColorCount(final int argb) {
             this.argb = argb;
 
             alpha = 0xff & (argb >> 24);
@@ -56,9 +56,9 @@ public class MedianCutQuantizer {
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (o instanceof ColorCount) {
-                ColorCount other = (ColorCount) o;
+                final ColorCount other = (ColorCount) o;
                 return other.argb == this.argb;
             }
             return false;
@@ -99,7 +99,7 @@ public class MedianCutQuantizer {
             }
 
             for (int i = 0; i < color_counts.size(); i++) {
-                ColorCount color = color_counts.get(i);
+                final ColorCount color = color_counts.get(i);
 
                 min_alpha = Math.min(min_alpha, color.alpha);
                 max_alpha = Math.max(max_alpha, color.alpha);
@@ -123,11 +123,11 @@ public class MedianCutQuantizer {
 
         }
 
-        public boolean contains(int argb) {
-            int alpha = 0xff & (argb >> 24);
-            int red = 0xff & (argb >> 16);
-            int green = 0xff & (argb >> 8);
-            int blue = 0xff & (argb >> 0);
+        public boolean contains(final int argb) {
+            final int alpha = 0xff & (argb >> 24);
+            final int red = 0xff & (argb >> 16);
+            final int green = 0xff & (argb >> 8);
+            final int blue = 0xff & (argb >> 0);
 
             if (!ignoreAlpha && (alpha < min_alpha || alpha > max_alpha)) {
                 return false;
@@ -149,7 +149,7 @@ public class MedianCutQuantizer {
             long alpha_total = 0, red_total = 0, green_total = 0, blue_total = 0;
 
             for (int i = 0; i < color_counts.size(); i++) {
-                ColorCount color = color_counts.get(i);
+                final ColorCount color = color_counts.get(i);
 
                 count_total += color.count;
                 alpha_total += color.count * color.alpha;
@@ -158,11 +158,11 @@ public class MedianCutQuantizer {
                 blue_total += color.count * color.blue;
             }
 
-            int alpha = ignoreAlpha ? 0xff : (int) Math
+            final int alpha = ignoreAlpha ? 0xff : (int) Math
                     .round((double) alpha_total / count_total);
-            int red = (int) Math.round((double) red_total / count_total);
-            int green = (int) Math.round((double) green_total / count_total);
-            int blue = (int) Math.round((double) blue_total / count_total);
+            final int red = (int) Math.round((double) red_total / count_total);
+            final int green = (int) Math.round((double) green_total / count_total);
+            final int blue = (int) Math.round((double) blue_total / count_total);
 
             return (alpha << 24) | (red << 16) | (green << 8) | blue;
         }
@@ -183,14 +183,14 @@ public class MedianCutQuantizer {
 
     }
 
-    public Map<Integer, ColorCount> groupColors1(BufferedImage image, int max,
-            int mask) {
-        Map<Integer, ColorCount> color_map = new HashMap<Integer, ColorCount>();
+    public Map<Integer, ColorCount> groupColors1(final BufferedImage image, final int max,
+            final int mask) {
+        final Map<Integer, ColorCount> color_map = new HashMap<Integer, ColorCount>();
 
-        int width = image.getWidth();
-        int height = image.getHeight();
+        final int width = image.getWidth();
+        final int height = image.getHeight();
 
-        int row[] = new int[width];
+        final int row[] = new int[width];
         for (int y = 0; y < height; y++) {
             image.getRGB(0, y, width, 1, row, 0, width);
             for (int x = 0; x < width; x++) {
@@ -216,9 +216,9 @@ public class MedianCutQuantizer {
         return color_map;
     }
 
-    public Map<Integer, ColorCount> groupColors(BufferedImage image,
-            int max_colors) {
-        int max = Integer.MAX_VALUE;
+    public Map<Integer, ColorCount> groupColors(final BufferedImage image,
+            final int max_colors) {
+        final int max = Integer.MAX_VALUE;
 
         for (int i = 0; i < 8; i++) {
             int mask = 0xff & (0xff << i);
@@ -227,7 +227,7 @@ public class MedianCutQuantizer {
             Debug.debug("mask(" + i + ")",
                     mask + " (" + Integer.toHexString(mask) + ")");
 
-            Map<Integer, ColorCount> result = groupColors1(image, max, mask);
+            final Map<Integer, ColorCount> result = groupColors1(image, max, mask);
             if (result != null) {
                 return result;
             }
@@ -235,22 +235,22 @@ public class MedianCutQuantizer {
         throw new Error("");
     }
 
-    public Palette process(BufferedImage image, int max_colors, boolean verbose)
+    public Palette process(final BufferedImage image, final int max_colors, final boolean verbose)
             throws ImageWriteException {
-        Map<Integer, ColorCount> color_map = groupColors(image, max_colors);
+        final Map<Integer, ColorCount> color_map = groupColors(image, max_colors);
 
-        int discrete_colors = color_map.keySet().size();
+        final int discrete_colors = color_map.keySet().size();
         if (discrete_colors <= max_colors) {
             if (verbose) {
                 Debug.debug("lossless palette: " + discrete_colors);
             }
 
-            int palette[] = new int[discrete_colors];
-            List<ColorCount> color_counts = new ArrayList<ColorCount>(
+            final int palette[] = new int[discrete_colors];
+            final List<ColorCount> color_counts = new ArrayList<ColorCount>(
                     color_map.values());
 
             for (int i = 0; i < color_counts.size(); i++) {
-                ColorCount color_count = color_counts.get(i);
+                final ColorCount color_count = color_counts.get(i);
                 palette[i] = color_count.argb;
                 if (ignoreAlpha) {
                     palette[i] |= 0xff000000;
@@ -264,13 +264,13 @@ public class MedianCutQuantizer {
             Debug.debug("discrete colors: " + discrete_colors);
         }
 
-        List<ColorGroup> color_groups = new ArrayList<ColorGroup>();
-        ColorGroup root = new ColorGroup(new ArrayList<ColorCount>(
+        final List<ColorGroup> color_groups = new ArrayList<ColorGroup>();
+        final ColorGroup root = new ColorGroup(new ArrayList<ColorCount>(
                 color_map.values()));
         color_groups.add(root);
 
         final Comparator<ColorGroup> comparator = new Comparator<ColorGroup>() {
-            public int compare(ColorGroup cg1, ColorGroup cg2) {
+            public int compare(final ColorGroup cg1, final ColorGroup cg2) {
                 if (cg1.max_diff == cg2.max_diff) {
                     return cg2.diff_total - cg1.diff_total;
                 }
@@ -281,7 +281,7 @@ public class MedianCutQuantizer {
         while (color_groups.size() < max_colors) {
             Collections.sort(color_groups, comparator);
 
-            ColorGroup color_group = color_groups.get(0);
+            final ColorGroup color_group = color_groups.get(0);
 
             if (color_group.max_diff == 0) {
                 break;
@@ -301,15 +301,15 @@ public class MedianCutQuantizer {
             }
         }
 
-        int palette_size = color_groups.size();
+        final int palette_size = color_groups.size();
         if (verbose) {
             Debug.debug("palette size: " + palette_size);
         }
 
-        int palette[] = new int[palette_size];
+        final int palette[] = new int[palette_size];
 
         for (int i = 0; i < color_groups.size(); i++) {
-            ColorGroup color_group = color_groups.get(i);
+            final ColorGroup color_group = color_groups.get(i);
 
             palette[i] = color_group.getMedianValue();
 
@@ -333,16 +333,16 @@ public class MedianCutQuantizer {
     private static final int GREEN = 2;
     private static final int BLUE = 3;
 
-    private void doCut(ColorGroup color_group, final int mode,
+    private void doCut(final ColorGroup color_group, final int mode,
             final List<ColorGroup> color_groups) throws ImageWriteException {
         int count_total = 0;
         for (int i = 0; i < color_group.color_counts.size(); i++) {
-            ColorCount color_count = color_group.color_counts.get(i);
+            final ColorCount color_count = color_group.color_counts.get(i);
             count_total += color_count.count;
         }
 
-        Comparator<ColorCount> comparator = new Comparator<ColorCount>() {
-            public int compare(ColorCount c1, ColorCount c2) {
+        final Comparator<ColorCount> comparator = new Comparator<ColorCount>() {
+            public int compare(final ColorCount c1, final ColorCount c2) {
                 switch (mode) {
                 case ALPHA:
                     return c1.alpha - c2.alpha;
@@ -359,11 +359,11 @@ public class MedianCutQuantizer {
         };
 
         Collections.sort(color_group.color_counts, comparator);
-        int count_half = (int) Math.round((double) count_total / 2);
+        final int count_half = (int) Math.round((double) count_total / 2);
         int old_count = 0, new_count = 0;
         int median_index;
         for (median_index = 0; median_index < color_group.color_counts.size(); median_index++) {
-            ColorCount color_count = color_group.color_counts.get(median_index);
+            final ColorCount color_count = color_group.color_counts.get(median_index);
 
             new_count += color_count.count;
 
@@ -377,17 +377,17 @@ public class MedianCutQuantizer {
         if (median_index == color_group.color_counts.size() - 1) {
             median_index--;
         } else if (median_index > 0) {
-            int new_diff = Math.abs(new_count - count_half);
-            int old_diff = Math.abs(count_half - old_count);
+            final int new_diff = Math.abs(new_count - count_half);
+            final int old_diff = Math.abs(count_half - old_count);
             if (old_diff < new_diff) {
                 median_index--;
             }
         }
 
         color_groups.remove(color_group);
-        List<ColorCount> color_counts1 = new ArrayList<ColorCount>(
+        final List<ColorCount> color_counts1 = new ArrayList<ColorCount>(
                 color_group.color_counts.subList(0, median_index + 1));
-        List<ColorCount> color_counts2 = new ArrayList<ColorCount>(
+        final List<ColorCount> color_counts2 = new ArrayList<ColorCount>(
                 color_group.color_counts.subList(median_index + 1,
                         color_group.color_counts.size()));
 
@@ -397,7 +397,7 @@ public class MedianCutQuantizer {
         more = new ColorGroup(new ArrayList<ColorCount>(color_counts2));
         color_groups.add(more);
 
-        ColorCount median_value = color_group.color_counts
+        final ColorCount median_value = color_group.color_counts
                 .get(median_index);
         int limit;
         switch (mode) {
@@ -423,15 +423,15 @@ public class MedianCutQuantizer {
         public final ColorGroup less, more;
         public final int mode, limit;
 
-        public ColorGroupCut(ColorGroup less, ColorGroup more, int mode,
-                int limit) {
+        public ColorGroupCut(final ColorGroup less, final ColorGroup more, final int mode,
+                final int limit) {
             this.less = less;
             this.more = more;
             this.mode = mode;
             this.limit = limit;
         }
 
-        public ColorGroup getColorGroup(int argb) {
+        public ColorGroup getColorGroup(final int argb) {
             int value;
             switch (mode) {
             case ALPHA:
@@ -460,13 +460,13 @@ public class MedianCutQuantizer {
     public static class MedianCutPalette extends SimplePalette {
         private final ColorGroup root;
 
-        public MedianCutPalette(ColorGroup root, int palette[]) {
+        public MedianCutPalette(final ColorGroup root, final int palette[]) {
             super(palette);
             this.root = root;
         }
 
         @Override
-        public int getPaletteIndex(int rgb) {
+        public int getPaletteIndex(final int rgb) {
             ColorGroup cg = root;
 
             while (cg.cut != null) {

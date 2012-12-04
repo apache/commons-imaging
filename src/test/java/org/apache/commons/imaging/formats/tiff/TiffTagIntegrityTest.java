@@ -74,11 +74,11 @@ public class TiffTagIntegrityTest extends ImagingTest {
         verifyFields(WangTagConstants.class, WangTagConstants.ALL_WANG_TAGS);
     }
 
-    private void verifyFields(Class<?> cls, List<TagInfo> tags) {
-        Field[] fields = cls.getFields();
+    private void verifyFields(final Class<?> cls, final List<TagInfo> tags) {
+        final Field[] fields = cls.getFields();
         int tagCount = 0;
         int foundCount = 0;
-        for (Field field : fields) {
+        for (final Field field : fields) {
             field.setAccessible(true);
             if (!(field.getType().isInstance(TagInfo.class))) {
                 continue;
@@ -87,13 +87,13 @@ public class TiffTagIntegrityTest extends ImagingTest {
             TagInfo src = null;
             try {
                 src = (TagInfo) field.get(null);
-            } catch (IllegalAccessException illegalAccess) {
+            } catch (final IllegalAccessException illegalAccess) {
             }
             if (src == null) {
                 continue;
             }
             for (int i = 0; i < tags.size(); i++) {
-                TagInfo tagInfo = tags.get(i);
+                final TagInfo tagInfo = tags.get(i);
                 if (tagInfo.tag == src.tag) {
                     ++foundCount;
                     break;

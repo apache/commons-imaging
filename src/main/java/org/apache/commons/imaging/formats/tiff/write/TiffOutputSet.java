@@ -41,11 +41,11 @@ public final class TiffOutputSet implements TiffConstants {
     }
 
     protected List<TiffOutputItem> getOutputItems(
-            TiffOutputSummary outputSummary) throws ImageWriteException {
-        List<TiffOutputItem> result = new ArrayList<TiffOutputItem>();
+            final TiffOutputSummary outputSummary) throws ImageWriteException {
+        final List<TiffOutputItem> result = new ArrayList<TiffOutputItem>();
 
         for (int i = 0; i < directories.size(); i++) {
-            TiffOutputDirectory directory = directories.get(i);
+            final TiffOutputDirectory directory = directories.get(i);
 
             result.addAll(directory.getOutputItems(outputSummary));
         }
@@ -53,7 +53,7 @@ public final class TiffOutputSet implements TiffConstants {
         return result;
     }
 
-    public void addDirectory(TiffOutputDirectory directory)
+    public void addDirectory(final TiffOutputDirectory directory)
             throws ImageWriteException {
         if (null != findDirectory(directory.type)) {
             throw new ImageWriteException(
@@ -76,7 +76,7 @@ public final class TiffOutputSet implements TiffConstants {
 
     public TiffOutputDirectory getOrCreateRootDirectory()
             throws ImageWriteException {
-        TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_ROOT);
+        final TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_ROOT);
         if (null != result) {
             return result;
         }
@@ -88,7 +88,7 @@ public final class TiffOutputSet implements TiffConstants {
         // EXIF directory requires root directory.
         getOrCreateRootDirectory();
 
-        TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_EXIF);
+        final TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_EXIF);
         if (null != result) {
             return result;
         }
@@ -100,7 +100,7 @@ public final class TiffOutputSet implements TiffConstants {
         // GPS directory requires EXIF directory
         getOrCreateExifDirectory();
 
-        TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_GPS);
+        final TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_GPS);
         if (null != result) {
             return result;
         }
@@ -115,9 +115,9 @@ public final class TiffOutputSet implements TiffConstants {
         return findDirectory(DIRECTORY_TYPE_INTEROPERABILITY);
     }
 
-    public TiffOutputDirectory findDirectory(int directoryType) {
+    public TiffOutputDirectory findDirectory(final int directoryType) {
         for (int i = 0; i < directories.size(); i++) {
-            TiffOutputDirectory directory = directories.get(i);
+            final TiffOutputDirectory directory = directories.get(i);
             if (directory.type == directoryType) {
                 return directory;
             }
@@ -136,11 +136,11 @@ public final class TiffOutputSet implements TiffConstants {
      */
     public void setGPSInDegrees(double longitude, double latitude)
             throws ImageWriteException {
-        TiffOutputDirectory gpsDirectory = getOrCreateGPSDirectory();
+        final TiffOutputDirectory gpsDirectory = getOrCreateGPSDirectory();
 
-        String longitudeRef = longitude < 0 ? "W" : "E";
+        final String longitudeRef = longitude < 0 ? "W" : "E";
         longitude = Math.abs(longitude);
-        String latitudeRef = latitude < 0 ? "S" : "N";
+        final String latitudeRef = latitude < 0 ? "S" : "N";
         latitude = Math.abs(latitude);
 
         gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
@@ -153,13 +153,13 @@ public final class TiffOutputSet implements TiffConstants {
 
         {
             double value = longitude;
-            double longitudeDegrees = (long) value;
+            final double longitudeDegrees = (long) value;
             value %= 1;
             value *= 60.0;
-            double longitudeMinutes = (long) value;
+            final double longitudeMinutes = (long) value;
             value %= 1;
             value *= 60.0;
-            double longitudeSeconds = value;
+            final double longitudeSeconds = value;
 
             gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
             gpsDirectory
@@ -174,13 +174,13 @@ public final class TiffOutputSet implements TiffConstants {
 
         {
             double value = latitude;
-            double latitudeDegrees = (long) value;
+            final double latitudeDegrees = (long) value;
             value %= 1;
             value *= 60.0;
-            double latitudeMinutes = (long) value;
+            final double latitudeMinutes = (long) value;
             value %= 1;
             value *= 60.0;
-            double latitudeSeconds = value;
+            final double latitudeSeconds = value;
 
             gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LATITUDE);
             gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_LATITUDE,
@@ -191,25 +191,25 @@ public final class TiffOutputSet implements TiffConstants {
 
     }
 
-    public void removeField(TagInfo tagInfo) {
+    public void removeField(final TagInfo tagInfo) {
         removeField(tagInfo.tag);
     }
 
-    public void removeField(int tag) {
+    public void removeField(final int tag) {
         for (int i = 0; i < directories.size(); i++) {
-            TiffOutputDirectory directory = directories.get(i);
+            final TiffOutputDirectory directory = directories.get(i);
             directory.removeField(tag);
         }
     }
 
-    public TiffOutputField findField(TagInfo tagInfo) {
+    public TiffOutputField findField(final TagInfo tagInfo) {
         return findField(tagInfo.tag);
     }
 
-    public TiffOutputField findField(int tag) {
+    public TiffOutputField findField(final int tag) {
         for (int i = 0; i < directories.size(); i++) {
-            TiffOutputDirectory directory = directories.get(i);
-            TiffOutputField field = directory.findField(tag);
+            final TiffOutputDirectory directory = directories.get(i);
+            final TiffOutputField field = directory.findField(tag);
             if (null != field) {
                 return field;
             }
@@ -218,21 +218,21 @@ public final class TiffOutputSet implements TiffConstants {
     }
 
     public TiffOutputDirectory addRootDirectory() throws ImageWriteException {
-        TiffOutputDirectory result = new TiffOutputDirectory(
+        final TiffOutputDirectory result = new TiffOutputDirectory(
                 DIRECTORY_TYPE_ROOT, byteOrder);
         addDirectory(result);
         return result;
     }
 
     public TiffOutputDirectory addExifDirectory() throws ImageWriteException {
-        TiffOutputDirectory result = new TiffOutputDirectory(
+        final TiffOutputDirectory result = new TiffOutputDirectory(
                 DIRECTORY_TYPE_EXIF, byteOrder);
         addDirectory(result);
         return result;
     }
 
     public TiffOutputDirectory addGPSDirectory() throws ImageWriteException {
-        TiffOutputDirectory result = new TiffOutputDirectory(
+        final TiffOutputDirectory result = new TiffOutputDirectory(
                 DIRECTORY_TYPE_GPS, byteOrder);
         addDirectory(result);
         return result;
@@ -242,7 +242,7 @@ public final class TiffOutputSet implements TiffConstants {
             throws ImageWriteException {
         getOrCreateExifDirectory();
 
-        TiffOutputDirectory result = new TiffOutputDirectory(
+        final TiffOutputDirectory result = new TiffOutputDirectory(
                 DIRECTORY_TYPE_INTEROPERABILITY, byteOrder);
         addDirectory(result);
         return result;
@@ -260,7 +260,7 @@ public final class TiffOutputSet implements TiffConstants {
             prefix = "";
         }
 
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
 
         result.append(prefix);
         result.append("TiffOutputSet {");
@@ -271,15 +271,15 @@ public final class TiffOutputSet implements TiffConstants {
         result.append(newline);
 
         for (int i = 0; i < directories.size(); i++) {
-            TiffOutputDirectory directory = directories.get(i);
+            final TiffOutputDirectory directory = directories.get(i);
             result.append(prefix);
             result.append("\t" + "directory " + i + ": "
                     + directory.description() + " (" + directory.type + ")");
             result.append(newline);
 
-            List<TiffOutputField> fields = directory.getFields();
+            final List<TiffOutputField> fields = directory.getFields();
             for (int j = 0; j < fields.size(); j++) {
-                TiffOutputField field = fields.get(j);
+                final TiffOutputField field = fields.get(j);
                 result.append(prefix);
                 result.append("\t\t" + "field " + i + ": " + field.tagInfo);
                 result.append(newline);

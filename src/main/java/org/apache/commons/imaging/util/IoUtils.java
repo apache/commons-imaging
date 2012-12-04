@@ -55,7 +55,7 @@ public class IoUtils implements ImagingConstants {
             is = new BufferedInputStream(is);
 
             int count;
-            byte[] buffer = new byte[4096];
+            final byte[] buffer = new byte[4096];
             while ((count = is.read(buffer, 0, 4096)) > 0) {
                 os.write(buffer, 0, count);
             }
@@ -68,7 +68,7 @@ public class IoUtils implements ImagingConstants {
                 if (os != null) {
                     os.close();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 Debug.debug(e);
             }
         }
@@ -83,7 +83,7 @@ public class IoUtils implements ImagingConstants {
      * @return A byte array containing the contents of the File
      * @see InputStream
      */
-    public static byte[] getFileBytes(File file) throws IOException {
+    public static byte[] getFileBytes(final File file) throws IOException {
         InputStream is = null;
 
         try {
@@ -95,13 +95,13 @@ public class IoUtils implements ImagingConstants {
                 if (is != null) {
                     is.close();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 Debug.debug(e);
             }
         }
     }
 
-    public static void writeToFile(byte[] src, File file) throws IOException {
+    public static void writeToFile(final byte[] src, final File file) throws IOException {
         ByteArrayInputStream stream = null;
 
         try {
@@ -113,14 +113,14 @@ public class IoUtils implements ImagingConstants {
                 if (stream != null) {
                     stream.close();
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Debug.debug(e);
 
             }
         }
     }
 
-    public static void putInputStreamToFile(InputStream src, File file)
+    public static void putInputStreamToFile(final InputStream src, final File file)
             throws IOException {
         FileOutputStream stream = null;
 
@@ -138,19 +138,19 @@ public class IoUtils implements ImagingConstants {
                 if (stream != null) {
                     stream.close();
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Debug.debug(e);
             }
         }
     }
 
-    public static void copyStreamToStream(InputStream src, OutputStream dst)
+    public static void copyStreamToStream(final InputStream src, final OutputStream dst)
             throws IOException {
         copyStreamToStream(src, dst, true);
     }
 
-    public static void copyStreamToStream(InputStream src, OutputStream dst,
-            boolean close_streams) throws IOException {
+    public static void copyStreamToStream(final InputStream src, final OutputStream dst,
+            final boolean close_streams) throws IOException {
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
 
@@ -159,7 +159,7 @@ public class IoUtils implements ImagingConstants {
             bos = new BufferedOutputStream(dst);
 
             int count;
-            byte[] buffer = new byte[4096];
+            final byte[] buffer = new byte[4096];
             while ((count = bis.read(buffer, 0, buffer.length)) > 0) {
                 dst.write(buffer, 0, count);
             }
@@ -170,14 +170,14 @@ public class IoUtils implements ImagingConstants {
                     if (bis != null) {
                         bis.close();
                     }
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     Debug.debug(e);
                 }
                 try {
                     if (bos != null) {
                         bos.close();
                     }
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     Debug.debug(e);
                 }
             }
@@ -185,7 +185,7 @@ public class IoUtils implements ImagingConstants {
 
     }
 
-    public static final boolean copyFileNio(File src, File dst)
+    public static final boolean copyFileNio(final File src, final File dst)
             throws IOException {
         FileChannel srcChannel = null, dstChannel = null;
         try {
@@ -200,8 +200,8 @@ public class IoUtils implements ImagingConstants {
 
             {
                 // long theoretical_max = (64 * 1024 * 1024) - (32 * 1024);
-                int safe_max = (64 * 1024 * 1024) / 4;
-                long size = srcChannel.size();
+                final int safe_max = (64 * 1024 * 1024) / 4;
+                final long size = srcChannel.size();
                 long position = 0;
                 while (position < size) {
                     position += srcChannel.transferTo(position, safe_max,
@@ -221,7 +221,7 @@ public class IoUtils implements ImagingConstants {
                 if (srcChannel != null) {
                     srcChannel.close();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 Debug.debug(e);
 
             }
@@ -229,7 +229,7 @@ public class IoUtils implements ImagingConstants {
                 if (dstChannel != null) {
                     dstChannel.close();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 Debug.debug(e);
             }
         }

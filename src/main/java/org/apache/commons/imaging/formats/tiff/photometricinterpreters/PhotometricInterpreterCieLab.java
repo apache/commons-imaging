@@ -23,8 +23,8 @@ import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterCieLab extends PhotometricInterpreter {
-    public PhotometricInterpreterCieLab(int fSamplesPerPixel,
-            int fBitsPerSample[], int Predictor, int width, int height) {
+    public PhotometricInterpreterCieLab(final int fSamplesPerPixel,
+            final int fBitsPerSample[], final int Predictor, final int width, final int height) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
     }
 
@@ -33,13 +33,13 @@ public class PhotometricInterpreterCieLab extends PhotometricInterpreter {
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
-            int y) throws ImageReadException, IOException {
-        int cieL = samples[0];
-        int cieA = (byte) samples[1];
-        int cieB = (byte) samples[2];
+    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+            final int y) throws ImageReadException, IOException {
+        final int cieL = samples[0];
+        final int cieA = (byte) samples[1];
+        final int cieB = (byte) samples[2];
 
-        int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
+        final int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
         imageBuilder.setRGB(x, y, rgb);
     }
 

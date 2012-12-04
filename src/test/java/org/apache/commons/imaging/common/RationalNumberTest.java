@@ -32,7 +32,7 @@ public class RationalNumberTest extends ImagingTest {
     //    }
 
     public void test() {
-        double testValues[] = {
+        final double testValues[] = {
                 0, //
                 0.1, //
                 0.01, //
@@ -105,12 +105,12 @@ public class RationalNumberTest extends ImagingTest {
                 -(Long.MAX_VALUE - 0.1), //
         };
 
-        for (double value : testValues) {
-            RationalNumber rational = RationalNumberUtilities
+        for (final double value : testValues) {
+            final RationalNumber rational = RationalNumberUtilities
                     .getRationalNumber(value);
-            double difference = Math.abs(value - rational.doubleValue());
+            final double difference = Math.abs(value - rational.doubleValue());
 
-            NumberFormat nf = DecimalFormat.getInstance();
+            final NumberFormat nf = DecimalFormat.getInstance();
             nf.setMaximumFractionDigits(15);
 
             Debug.debug("value", nf.format(value));

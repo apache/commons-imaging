@@ -19,7 +19,7 @@ package org.apache.commons.imaging.color;
 public final class ColorHsl {
     public final double H, S, L;
 
-    public ColorHsl(double h, double s, double v) {
+    public ColorHsl(final double h, final double s, final double v) {
         H = h;
         S = s;
         L = v;

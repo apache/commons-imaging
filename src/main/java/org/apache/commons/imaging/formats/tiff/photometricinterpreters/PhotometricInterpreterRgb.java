@@ -22,20 +22,20 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterRgb extends PhotometricInterpreter {
-    public PhotometricInterpreterRgb(int fSamplesPerPixel,
-            int fBitsPerSample[], int Predictor, int width, int height) {
+    public PhotometricInterpreterRgb(final int fSamplesPerPixel,
+            final int fBitsPerSample[], final int Predictor, final int width, final int height) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
-            int y) throws ImageReadException, IOException {
-        int red = samples[0];
-        int green = samples[1];
-        int blue = samples[2];
+    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+            final int y) throws ImageReadException, IOException {
+        final int red = samples[0];
+        final int green = samples[1];
+        final int blue = samples[2];
 
-        int alpha = 0xff;
-        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int alpha = 0xff;
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
         imageBuilder.setRGB(x, y, rgb);
 
     }

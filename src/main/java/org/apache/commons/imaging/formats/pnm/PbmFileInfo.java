@@ -23,7 +23,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageInfo;
 
 public class PbmFileInfo extends FileInfo {
-    public PbmFileInfo(int width, int height, boolean RAWBITS) {
+    public PbmFileInfo(final int width, final int height, final boolean RAWBITS) {
         super(width, height, RAWBITS);
     }
     
@@ -72,9 +72,9 @@ public class PbmFileInfo extends FileInfo {
     private int bits_in_cache = 0;
 
     @Override
-    public int getRGB(InputStream is) throws IOException {
+    public int getRGB(final InputStream is) throws IOException {
         if (bits_in_cache < 1) {
-            int bits = is.read();
+            final int bits = is.read();
             if (bits < 0) {
                 throw new IOException("PBM: Unexpected EOF");
             }
@@ -82,7 +82,7 @@ public class PbmFileInfo extends FileInfo {
             bits_in_cache += 8;
         }
 
-        int bit = 0x1 & (bitcache >> 7);
+        final int bit = 0x1 & (bitcache >> 7);
         bitcache <<= 1;
         bits_in_cache--;
 
@@ -96,8 +96,8 @@ public class PbmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getRGB(WhiteSpaceReader wsr) throws IOException {
-        int bit = Integer.parseInt(wsr.readtoWhiteSpace());
+    public int getRGB(final WhiteSpaceReader wsr) throws IOException {
+        final int bit = Integer.parseInt(wsr.readtoWhiteSpace());
         if (bit == 0) {
             return 0xff000000;
         }

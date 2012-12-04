@@ -73,13 +73,13 @@ public class ImageInfo {
 
     private final String compressionAlgorithm;
 
-    public ImageInfo(String formatDetails, int bitsPerPixel,
-            List<String> comments, ImageFormat format, String formatName,
-            int height, String mimeType, int numberOfImages,
-            int physicalHeightDpi, float physicalHeightInch,
-            int physicalWidthDpi, float physicalWidthInch, int width,
-            boolean isProgressive, boolean isTransparent, boolean usesPalette,
-            int colorType, String compressionAlgorithm) {
+    public ImageInfo(final String formatDetails, final int bitsPerPixel,
+            final List<String> comments, final ImageFormat format, final String formatName,
+            final int height, final String mimeType, final int numberOfImages,
+            final int physicalHeightDpi, final float physicalHeightInch,
+            final int physicalWidthDpi, final float physicalWidthInch, final int width,
+            final boolean isProgressive, final boolean isTransparent, final boolean usesPalette,
+            final int colorType, final String compressionAlgorithm) {
         this.formatDetails = formatDetails;
 
         this.bitsPerPixel = bitsPerPixel;
@@ -287,25 +287,25 @@ public class ImageInfo {
     @Override
     public String toString() {
         try {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
+            final StringWriter sw = new StringWriter();
+            final PrintWriter pw = new PrintWriter(sw);
 
             toString(pw, "");
             pw.flush();
 
             return sw.toString();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return "Image Data: Error";
         }
     }
 
-    public void toString(PrintWriter pw, String prefix) {
+    public void toString(final PrintWriter pw, final String prefix) {
         pw.println("Format Details: " + formatDetails);
 
         pw.println("Bits Per Pixel: " + bitsPerPixel);
         pw.println("Comments: " + comments.size());
         for (int i = 0; i < comments.size(); i++) {
-            String s = comments.get(i);
+            final String s = comments.get(i);
             pw.println("\t" + i + ": '" + s + "'");
 
         }

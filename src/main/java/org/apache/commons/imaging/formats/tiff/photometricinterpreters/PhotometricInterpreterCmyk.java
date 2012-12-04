@@ -23,21 +23,21 @@ import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterCmyk extends PhotometricInterpreter {
-    public PhotometricInterpreterCmyk(int fSamplesPerPixel,
-            int fBitsPerSample[], int Predictor, int width, int height) {
+    public PhotometricInterpreterCmyk(final int fSamplesPerPixel,
+            final int fBitsPerSample[], final int Predictor, final int width, final int height) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
-            int y) throws ImageReadException, IOException {
+    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+            final int y) throws ImageReadException, IOException {
 
-        int sc = samples[0];
-        int sm = samples[1];
-        int sy = samples[2];
-        int sk = samples[3];
+        final int sc = samples[0];
+        final int sm = samples[1];
+        final int sy = samples[2];
+        final int sk = samples[3];
 
-        int rgb = ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
+        final int rgb = ColorConversions.convertCMYKtoRGB(sc, sm, sy, sk);
         imageBuilder.setRGB(x, y, rgb);
     }
 

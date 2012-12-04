@@ -21,15 +21,15 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 public class DataParserIndexed extends DataParser {
     private final int ColorTable[];
 
-    public DataParserIndexed(byte ColorModeData[]) {
+    public DataParserIndexed(final byte ColorModeData[]) {
         ColorTable = new int[256];
         for (int i = 0; i < 256; i++) {
-            int red = 0xff & ColorModeData[0 * 256 + i];
-            int green = 0xff & ColorModeData[1 * 256 + i];
-            int blue = 0xff & ColorModeData[2 * 256 + i];
-            int alpha = 0xff;
+            final int red = 0xff & ColorModeData[0 * 256 + i];
+            final int green = 0xff & ColorModeData[1 * 256 + i];
+            final int blue = 0xff & ColorModeData[2 * 256 + i];
+            final int alpha = 0xff;
 
-            int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
+            final int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
                     | ((0xff & green) << 8) | ((0xff & blue) << 0);
 
             ColorTable[i] = rgb;
@@ -37,10 +37,10 @@ public class DataParserIndexed extends DataParser {
     }
 
     @Override
-    protected int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents) {
-        int sample = 0xff & data[0][y][x];
-        int rgb = ColorTable[sample];
+    protected int getRGB(final int data[][][], final int x, final int y,
+            final ImageContents imageContents) {
+        final int sample = 0xff & data[0][y][x];
+        final int rgb = ColorTable[sample];
 
         return rgb;
     }

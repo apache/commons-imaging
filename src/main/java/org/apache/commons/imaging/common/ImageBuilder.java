@@ -29,7 +29,7 @@ public class ImageBuilder {
     private final int height;
     private final boolean hasAlpha;
 
-    public ImageBuilder(int width, int height, boolean hasAlpha) {
+    public ImageBuilder(final int width, final int height, final boolean hasAlpha) {
         data = new int[width * height];
         this.width = width;
         this.height = height;
@@ -44,12 +44,12 @@ public class ImageBuilder {
         return height;
     }
 
-    public int getRGB(int x, int y) {
+    public int getRGB(final int x, final int y) {
         final int rowOffset = y * width;
         return data[rowOffset + x];
     }
 
-    public void setRGB(int x, int y, int argb) {
+    public void setRGB(final int x, final int y, final int argb) {
         final int rowOffset = y * width;
         data[rowOffset + x] = argb;
     }
@@ -57,7 +57,7 @@ public class ImageBuilder {
     public BufferedImage getBufferedImage() {
         ColorModel colorModel;
         WritableRaster raster;
-        DataBufferInt buffer = new DataBufferInt(data, width * height);
+        final DataBufferInt buffer = new DataBufferInt(data, width * height);
         if (hasAlpha) {
             colorModel = new DirectColorModel(32, 0x00ff0000, 0x0000ff00,
                     0x000000ff, 0xff000000);

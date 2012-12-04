@@ -42,13 +42,13 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
         setByteOrder(ByteOrder.NETWORK);
     }
 
-    public boolean isPhotoshopJpegSegment(byte segmentData[]) {
+    public boolean isPhotoshopJpegSegment(final byte segmentData[]) {
         if (!BinaryFileParser.byteArrayHasPrefix(segmentData,
                 PHOTOSHOP_IDENTIFICATION_STRING)) {
             return false;
         }
 
-        int index = PHOTOSHOP_IDENTIFICATION_STRING.size();
+        final int index = PHOTOSHOP_IDENTIFICATION_STRING.size();
         if (index + CONST_8BIM.size() > segmentData.length) {
             return false;
         }
@@ -97,25 +97,25 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
      * Some IPTC blocks are missing this first "record version" record, so we
      * don't require it.
      */
-    public PhotoshopApp13Data parsePhotoshopSegment(byte bytes[], Map<String,Object> params)
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte bytes[], final Map<String,Object> params)
             throws ImageReadException, IOException {
-        boolean strict = ParamMap.getParamBoolean(params,
+        final boolean strict = ParamMap.getParamBoolean(params,
                 ImagingConstants.PARAM_KEY_STRICT, false);
-        boolean verbose = ParamMap.getParamBoolean(params,
+        final boolean verbose = ParamMap.getParamBoolean(params,
                 ImagingConstants.PARAM_KEY_VERBOSE, false);
 
         return parsePhotoshopSegment(bytes, verbose, strict);
     }
 
-    public PhotoshopApp13Data parsePhotoshopSegment(byte bytes[],
-            boolean verbose, boolean strict) throws ImageReadException,
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte bytes[],
+            final boolean verbose, final boolean strict) throws ImageReadException,
             IOException {
-        List<IptcRecord> records = new ArrayList<IptcRecord>();
+        final List<IptcRecord> records = new ArrayList<IptcRecord>();
 
-        List<IptcBlock> allBlocks = parseAllBlocks(bytes, verbose, strict);
+        final List<IptcBlock> allBlocks = parseAllBlocks(bytes, verbose, strict);
 
         for (int i = 0; i < allBlocks.size(); i++) {
-            IptcBlock block = allBlocks.get(i);
+            final IptcBlock block = allBlocks.get(i);
 
             // Ignore everything but IPTC data.
             if (!block.isIPTCBlock()) {
@@ -128,14 +128,14 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
         return new PhotoshopApp13Data(records, allBlocks);
     }
 
-    protected List<IptcRecord> parseIPTCBlock(byte bytes[], boolean verbose)
+    protected List<IptcRecord> parseIPTCBlock(final byte bytes[], final boolean verbose)
             throws ImageReadException, IOException {
-        List<IptcRecord> elements = new ArrayList<IptcRecord>();
+        final List<IptcRecord> elements = new ArrayList<IptcRecord>();
 
         int index = 0;
         // Integer recordVersion = null;
         while (index + 1 < bytes.length) {
-            int tagMarker = 0xff & bytes[index++];
+            final int tagMarker = 0xff & bytes[index++];
             if (verbose) {
                 Debug.debug("tagMarker",
                         tagMarker + " (0x" + Integer.toHexString(tagMarker)
@@ -149,7 +149,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 return elements;
             }
 
-            int recordNumber = 0xff & bytes[index++];
+            final int recordNumber = 0xff & bytes[index++];
             if (verbose) {
                 Debug.debug(
                         "recordNumber",
@@ -175,7 +175,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // throw new ImageReadException(
             // "Unexpected record prefix in IPTC data.");
 
-            int recordType = 0xff & bytes[index];
+            final int recordType = 0xff & bytes[index];
             if (verbose) {
                 Debug.debug("recordType",
                         recordType + " (0x" + Integer.toHexString(recordType)
@@ -183,11 +183,11 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             }
             index++;
 
-            int recordSize = convertByteArrayToShort("recordSize", index, bytes);
+            final int recordSize = convertByteArrayToShort("recordSize", index, bytes);
             index += 2;
 
-            boolean extendedDataset = recordSize > IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE;
-            int dataFieldCountLength = recordSize & 0x7fff;
+            final boolean extendedDataset = recordSize > IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE;
+            final int dataFieldCountLength = recordSize & 0x7fff;
             if (extendedDataset && verbose) {
                 Debug.debug("extendedDataset. dataFieldCountLength: "
                         + dataFieldCountLength);
@@ -197,7 +197,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 return elements;
             }
 
-            byte recordData[] = readBytearray("recordData", bytes, index,
+            final byte recordData[] = readBytearray("recordData", bytes, index,
                     recordSize);
             index += recordSize;
 
@@ -240,9 +240,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // continue;
             // }
 
-            String value = new String(recordData, "ISO-8859-1");
+            final String value = new String(recordData, "ISO-8859-1");
 
-            IptcType iptcType = IptcTypeLookup.getIptcType(recordType);
+            final IptcType iptcType = IptcTypeLookup.getIptcType(recordType);
 
             // Debug.debug("iptcType", iptcType);
             // debugByteArray("iptcData", iptcData);
@@ -255,16 +255,16 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // Debug.debug("index", IPTC_TYPE_CREDIT.name);
             // }
 
-            IptcRecord element = new IptcRecord(iptcType, recordData, value);
+            final IptcRecord element = new IptcRecord(iptcType, recordData, value);
             elements.add(element);
         }
 
         return elements;
     }
 
-    protected List<IptcBlock> parseAllBlocks(byte bytes[], boolean verbose,
-            boolean strict) throws ImageReadException, IOException {
-        List<IptcBlock> blocks = new ArrayList<IptcBlock>();
+    protected List<IptcBlock> parseAllBlocks(final byte bytes[], final boolean verbose,
+            final boolean strict) throws ImageReadException, IOException {
+        final List<IptcBlock> blocks = new ArrayList<IptcBlock>();
 
         BinaryInputStream bis = null;
         try {
@@ -273,7 +273,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // Note that these are unsigned quantities. Name is always an even
             // number of bytes (including the 1st byte, which is the size.)
     
-            byte[] idString = bis.readByteArray(
+            final byte[] idString = bis.readByteArray(
                     PHOTOSHOP_IDENTIFICATION_STRING.size(),
                     "App13 Segment missing identification string");
             if (!PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
@@ -283,7 +283,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
     
             while (true) {
-                byte[] imageResourceBlockSignature = bis
+                final byte[] imageResourceBlockSignature = bis
                         .readByteArray(CONST_8BIM.size(),
                                 "App13 Segment missing identification string",
                                 false, false);
@@ -295,7 +295,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                             "Invalid Image Resource Block Signature");
                 }
     
-                int blockType = bis
+                final int blockType = bis
                         .read2ByteInteger("Image Resource Block missing type");
                 if (verbose) {
                     Debug.debug("blockType",
@@ -303,7 +303,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                                     + ")");
                 }
     
-                int blockNameLength = bis
+                final int blockNameLength = bis
                         .read1ByteInteger("Image Resource Block missing name length");
                 if (verbose && blockNameLength > 0) {
                     Debug.debug("blockNameLength", blockNameLength + " (0x"
@@ -325,7 +325,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                     }
                 }
     
-                int blockSize = bis
+                final int blockSize = bis
                         .read4ByteInteger("Image Resource Block missing size");
                 if (verbose) {
                     Debug.debug("blockSize",
@@ -342,7 +342,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                             + blockSize + " > " + bytes.length);
                 }
     
-                byte[] blockData = bis.readByteArray(blockSize,
+                final byte[] blockData = bis.readByteArray(blockSize,
                         "Invalid Image Resource Block data", verbose, strict);
                 if (null == blockData) {
                     break;
@@ -365,16 +365,16 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
 
     // private void writeIPTCRecord(BinaryOutputStream bos, )
 
-    public byte[] writePhotoshopApp13Segment(PhotoshopApp13Data data)
+    public byte[] writePhotoshopApp13Segment(final PhotoshopApp13Data data)
             throws IOException, ImageWriteException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        BinaryOutputStream bos = new BinaryOutputStream(os);
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        final BinaryOutputStream bos = new BinaryOutputStream(os);
 
         PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
 
-        List<IptcBlock> blocks = data.getRawBlocks();
+        final List<IptcBlock> blocks = data.getRawBlocks();
         for (int i = 0; i < blocks.size(); i++) {
-            IptcBlock block = blocks.get(i);
+            final IptcBlock block = blocks.get(i);
 
             CONST_8BIM.writeTo(bos);
 
@@ -412,8 +412,8 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
     public byte[] writeIPTCBlock(List<IptcRecord> elements)
             throws ImageWriteException, IOException {
         byte blockData[];
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BinaryOutputStream bos = new BinaryOutputStream(baos,
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final BinaryOutputStream bos = new BinaryOutputStream(baos,
                 getByteOrder());
 
         // first, right record version record
@@ -428,8 +428,8 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
         elements = new ArrayList<IptcRecord>(elements);
 
         // sort the list. Records must be in numerical order.
-        Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {
-            public int compare(IptcRecord e1, IptcRecord e2) {
+        final Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {
+            public int compare(final IptcRecord e1, final IptcRecord e2) {
                 return e2.iptcType.getType() - e1.iptcType.getType();
             }
         };
@@ -438,7 +438,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
 
         // write the list.
         for (int i = 0; i < elements.size(); i++) {
-            IptcRecord element = elements.get(i);
+            final IptcRecord element = elements.get(i);
 
             if (element.iptcType == IptcTypes.RECORD_VERSION) {
                 continue; // ignore
@@ -453,7 +453,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             }
             bos.write(element.iptcType.getType());
 
-            byte recordData[] = element.value.getBytes("ISO-8859-1");
+            final byte recordData[] = element.value.getBytes("ISO-8859-1");
             if (!new String(recordData, "ISO-8859-1").equals(element.value)) {
                 throw new ImageWriteException(
                         "Invalid record value, not ISO-8859-1");

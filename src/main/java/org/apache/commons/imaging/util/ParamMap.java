@@ -21,10 +21,10 @@ import java.util.Map;
 
 public class ParamMap {
 
-    public static boolean getParamBoolean(Map<String,Object> params, Object key,
-            boolean default_value) {
+    public static boolean getParamBoolean(final Map<String,Object> params, final Object key,
+            final boolean default_value) {
         boolean result = default_value;
-        Object o = params == null ? null : params.get(key);
+        final Object o = params == null ? null : params.get(key);
         if (o != null && o instanceof Boolean) {
             result = ((Boolean) o).booleanValue();
         }

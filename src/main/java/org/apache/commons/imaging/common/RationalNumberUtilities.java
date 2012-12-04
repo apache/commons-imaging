@@ -67,7 +67,7 @@ public abstract class RationalNumberUtilities extends Number {
         if (value == 0) {
             return new RationalNumber(0, 1);
         } else if (value >= 1) {
-            int approx = (int) value;
+            final int approx = (int) value;
             if (approx < value) {
                 l = new RationalNumber(approx, 1);
                 h = new RationalNumber(approx + 1, 1);
@@ -76,7 +76,7 @@ public abstract class RationalNumberUtilities extends Number {
                 h = new RationalNumber(approx, 1);
             }
         } else {
-            int approx = (int) (1.0 / value);
+            final int approx = (int) (1.0 / value);
             if ((1.0 / approx) < value) {
                 l = new RationalNumber(1, approx);
                 h = new RationalNumber(1, approx - 1);
@@ -98,12 +98,12 @@ public abstract class RationalNumberUtilities extends Number {
             // + ", right: " + high + ", value: " + value + ", error: "
             // + bestOption.error);
 
-            RationalNumber mediant = RationalNumber.factoryMethod(
+            final RationalNumber mediant = RationalNumber.factoryMethod(
                     (long) low.rationalNumber.numerator
                             + (long) high.rationalNumber.numerator,
                     (long) low.rationalNumber.divisor
                             + (long) high.rationalNumber.divisor);
-            Option mediantOption = Option.factory(mediant, value);
+            final Option mediantOption = Option.factory(mediant, value);
 
             if (value < mediant.doubleValue()) {
                 if (high.error <= mediantOption.error) {

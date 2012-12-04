@@ -95,7 +95,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @return A valid array of image parsers
      */
     public static final ImageParser[] getAllImageParsers() {
-        ImageParser result[] = {
+        final ImageParser result[] = {
                 new BmpImageParser(),
                 new DcxImageParser(),
                 new GifImageParser(),
@@ -132,7 +132,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * implementation.
      * @throws IOException In the event of unsuccessful data read operation. 
      */
-    public final IImageMetadata getMetadata(ByteSource byteSource)
+    public final IImageMetadata getMetadata(final ByteSource byteSource)
             throws ImageReadException, IOException {
         return getMetadata(byteSource, null);
     }
@@ -179,7 +179,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * implementation.
      * @throws IOException In the event of unsuccessful data read operation. 
      */
-    public final IImageMetadata getMetadata(byte bytes[])
+    public final IImageMetadata getMetadata(final byte bytes[])
             throws ImageReadException, IOException {
         return getMetadata(bytes, null);
     }
@@ -206,7 +206,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * implementation.
      * @throws IOException In the event of unsuccessful data read operation. 
      */
-    public final IImageMetadata getMetadata(byte bytes[], Map<String,Object> params)
+    public final IImageMetadata getMetadata(final byte bytes[], final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getMetadata(new ByteSourceArray(bytes), params);
     }
@@ -228,7 +228,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful file read or
      * access operation.
      */
-    public final IImageMetadata getMetadata(File file)
+    public final IImageMetadata getMetadata(final File file)
             throws ImageReadException, IOException {
         return getMetadata(file, null);
     }
@@ -256,7 +256,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful file read or
      * access operation.
      */
-    public final IImageMetadata getMetadata(File file, Map<String,Object> params)
+    public final IImageMetadata getMetadata(final File file, final Map<String,Object> params)
             throws ImageReadException, IOException {
         if (debug) {
             System.out.println(getName() + ".getMetadata" + ": "
@@ -314,7 +314,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful data
      * access operation.
      */
-    public final ImageInfo getImageInfo(ByteSource byteSource)
+    public final ImageInfo getImageInfo(final ByteSource byteSource)
             throws ImageReadException, IOException {
         return getImageInfo(byteSource, null);
     }
@@ -344,7 +344,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful data
      * access operation.
      */
-    public final ImageInfo getImageInfo(byte bytes[], Map<String,Object> params)
+    public final ImageInfo getImageInfo(final byte bytes[], final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceArray(bytes), params);
     }
@@ -372,7 +372,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful file read or
      * access operation.
      */
-    public final ImageInfo getImageInfo(File file, Map<String,Object> params)
+    public final ImageInfo getImageInfo(final File file, final Map<String,Object> params)
             throws ImageReadException, IOException {
         if (!canAcceptExtension(file)) {
             return null;
@@ -391,7 +391,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException
      *             may be thrown by sub-classes
      */
-    public FormatCompliance getFormatCompliance(ByteSource byteSource)
+    public FormatCompliance getFormatCompliance(final ByteSource byteSource)
             throws ImageReadException, IOException {
         return null;
     }
@@ -407,7 +407,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException
      *             may be thrown by sub-classes
      */
-    public final FormatCompliance getFormatCompliance(byte bytes[])
+    public final FormatCompliance getFormatCompliance(final byte bytes[])
             throws ImageReadException, IOException {
         return getFormatCompliance(new ByteSourceArray(bytes));
     }
@@ -423,7 +423,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException
      *             may be thrown by sub-classes
      */
-    public final FormatCompliance getFormatCompliance(File file)
+    public final FormatCompliance getFormatCompliance(final File file)
             throws ImageReadException, IOException {
         if (!canAcceptExtension(file)) {
             return null;
@@ -443,11 +443,11 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public List<BufferedImage> getAllBufferedImages(ByteSource byteSource)
+    public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        BufferedImage bi = getBufferedImage(byteSource, null);
+        final BufferedImage bi = getBufferedImage(byteSource, null);
 
-        List<BufferedImage> result = new ArrayList<BufferedImage>();
+        final List<BufferedImage> result = new ArrayList<BufferedImage>();
 
         result.add(bi);
 
@@ -465,7 +465,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final List<BufferedImage> getAllBufferedImages(byte bytes[])
+    public final List<BufferedImage> getAllBufferedImages(final byte bytes[])
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceArray(bytes));
     }
@@ -481,7 +481,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final List<BufferedImage> getAllBufferedImages(File file)
+    public final List<BufferedImage> getAllBufferedImages(final File file)
             throws ImageReadException, IOException {
         if (!canAcceptExtension(file)) {
             return null;
@@ -524,7 +524,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final BufferedImage getBufferedImage(byte bytes[], Map<String,Object> params)
+    public final BufferedImage getBufferedImage(final byte bytes[], final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceArray(bytes), params);
     }
@@ -544,7 +544,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final BufferedImage getBufferedImage(File file, Map<String,Object> params)
+    public final BufferedImage getBufferedImage(final File file, final Map<String,Object> params)
             throws ImageReadException, IOException {
         if (!canAcceptExtension(file)) {
             return null;
@@ -574,11 +574,11 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of an write error from
      * the output stream.
      */
-    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String,Object> params)
             throws ImageWriteException, IOException {
         try {
             os.close(); // we are obligated to close stream.
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Debug.debug(e);
         }
 
@@ -596,7 +596,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final Dimension getImageSize(byte bytes[])
+    public final Dimension getImageSize(final byte bytes[])
             throws ImageReadException, IOException {
         return getImageSize(bytes, null);
     }
@@ -613,7 +613,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final Dimension getImageSize(byte bytes[], Map<String,Object> params)
+    public final Dimension getImageSize(final byte bytes[], final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getImageSize(new ByteSourceArray(bytes), params);
     }
@@ -628,7 +628,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final Dimension getImageSize(File file) throws ImageReadException,
+    public final Dimension getImageSize(final File file) throws ImageReadException,
             IOException {
 
         return getImageSize(file, null);
@@ -646,7 +646,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final Dimension getImageSize(File file, Map<String,Object> params)
+    public final Dimension getImageSize(final File file, final Map<String,Object> params)
             throws ImageReadException, IOException {
 
         if (!canAcceptExtension(file)) {
@@ -706,7 +706,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final byte[] getICCProfileBytes(byte bytes[])
+    public final byte[] getICCProfileBytes(final byte bytes[])
             throws ImageReadException, IOException {
         return getICCProfileBytes(bytes, null);
     }
@@ -725,7 +725,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final byte[] getICCProfileBytes(byte bytes[], Map<String,Object> params)
+    public final byte[] getICCProfileBytes(final byte bytes[], final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getICCProfileBytes(new ByteSourceArray(bytes), params);
     }
@@ -742,7 +742,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final byte[] getICCProfileBytes(File file)
+    public final byte[] getICCProfileBytes(final File file)
             throws ImageReadException, IOException {
         return getICCProfileBytes(file, null);
     }
@@ -761,7 +761,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final byte[] getICCProfileBytes(File file, Map<String,Object> params)
+    public final byte[] getICCProfileBytes(final File file, final Map<String,Object> params)
             throws ImageReadException, IOException {
         if (!canAcceptExtension(file)) {
             return null;
@@ -804,7 +804,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final String dumpImageFile(byte bytes[]) throws ImageReadException,
+    public final String dumpImageFile(final byte bytes[]) throws ImageReadException,
             IOException {
         return dumpImageFile(new ByteSourceArray(bytes));
     }
@@ -821,7 +821,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final String dumpImageFile(File file) throws ImageReadException,
+    public final String dumpImageFile(final File file) throws ImageReadException,
             IOException {
         if (!canAcceptExtension(file)) {
             return null;
@@ -845,10 +845,10 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public final String dumpImageFile(ByteSource byteSource)
+    public final String dumpImageFile(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw);
 
         dumpImageFile(pw, byteSource);
 
@@ -868,7 +868,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public boolean dumpImageFile(PrintWriter pw, ByteSource byteSource)
+    public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
             throws ImageReadException, IOException {
         return false;
     }
@@ -919,10 +919,10 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @param type An instance of ImageFormat. 
      * @return If the parser can accept the format, true; otherwise, false.
      */
-    public boolean canAcceptType(ImageFormat type) {
-        ImageFormat types[] = getAcceptedTypes();
+    public boolean canAcceptType(final ImageFormat type) {
+        final ImageFormat types[] = getAcceptedTypes();
 
-        for (ImageFormat type2 : types) {
+        for (final ImageFormat type2 : types) {
             if (type2.equals(type)) {
                 return true;
             }
@@ -936,7 +936,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @param file An valid file reference. 
      * @return If the parser can accept the format, true; otherwise, false.
      */
-    protected final boolean canAcceptExtension(File file) {
+    protected final boolean canAcceptExtension(final File file) {
         return canAcceptExtension(file.getName());
     }
 
@@ -946,18 +946,18 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @param filename An valid string giving a file name or file path. 
      * @return If the parser can accept the format, true; otherwise, false.
      */
-    protected final boolean canAcceptExtension(String filename) {
-        String exts[] = getAcceptedExtensions();
+    protected final boolean canAcceptExtension(final String filename) {
+        final String exts[] = getAcceptedExtensions();
         if (exts == null) {
             return true;
         }
 
-        int index = filename.lastIndexOf('.');
+        final int index = filename.lastIndexOf('.');
         if (index >= 0) {
             String ext = filename.substring(index);
             ext = ext.toLowerCase();
 
-            for (String ext2 : exts) {
+            for (final String ext2 : exts) {
                 if (ext2.toLowerCase().equals(ext)) {
                     return true;
                 }
@@ -975,12 +975,12 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @return A valid instance of an implementation of a 
      * IBufferedImageFactory.
      */
-    protected IBufferedImageFactory getBufferedImageFactory(Map<String,Object> params) {
+    protected IBufferedImageFactory getBufferedImageFactory(final Map<String,Object> params) {
         if (params == null) {
             return new SimpleBufferedImageFactory();
         }
 
-        IBufferedImageFactory result = (IBufferedImageFactory) params
+        final IBufferedImageFactory result = (IBufferedImageFactory) params
                 .get(ImagingConstants.BUFFERED_IMAGE_FACTORY);
 
         if (null != result) {
@@ -999,7 +999,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @return If the params specify strict format compliance, true;
      * otherwise, false.
      */
-    public static final boolean isStrict(Map<String,Object> params) {
+    public static final boolean isStrict(final Map<String,Object> params) {
         if (params == null || !params.containsKey(PARAM_KEY_STRICT)) {
             return false;
         }

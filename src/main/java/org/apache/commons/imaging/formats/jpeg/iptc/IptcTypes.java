@@ -135,7 +135,7 @@ public enum IptcTypes implements IptcType {
     public final int type;
     public final String name;
     
-    IptcTypes(int type, String name) {
+    IptcTypes(final int type, final String name) {
         this.type = type;
         this.name = name;
     }

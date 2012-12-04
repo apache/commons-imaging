@@ -23,15 +23,15 @@ import org.apache.commons.imaging.ImageReadException;
 public class ScanlineFilterSub extends ScanlineFilter {
     private final int BytesPerPixel;
 
-    public ScanlineFilterSub(int BytesPerPixel) {
+    public ScanlineFilterSub(final int BytesPerPixel) {
         this.BytesPerPixel = BytesPerPixel;
     }
 
     @Override
-    public void unfilter(byte src[], byte dst[], byte up[])
+    public void unfilter(final byte src[], final byte dst[], final byte up[])
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
-            int prev_index = i - BytesPerPixel;
+            final int prev_index = i - BytesPerPixel;
             if (prev_index >= 0) {
                 dst[i] = (byte) ((src[i] + dst[prev_index]) % 256);
             // dst[i] = 0xff & (src[i] + src[prev_index]);

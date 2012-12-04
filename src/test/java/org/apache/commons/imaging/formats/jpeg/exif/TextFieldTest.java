@@ -35,7 +35,7 @@ public class TextFieldTest extends SpecificExifTagTest {
     // }
 
     @Override
-    protected void checkField(File imageFile, TiffField field)
+    protected void checkField(final File imageFile, final TiffField field)
             throws IOException, ImageReadException, ImageWriteException {
         if (field.tag == ExifTagConstants.EXIF_TAG_USER_COMMENT.tag) { /*
                                                                         * do
@@ -63,12 +63,12 @@ public class TextFieldTest extends SpecificExifTagTest {
         // Debug.debug("field", Debug.getType(field));
 
         try {
-            Object textFieldValue = field.getValue();
+            final Object textFieldValue = field.getValue();
             // Debug.debug("imageFile", imageFile.getAbsoluteFile());
             // Debug.debug("Text field value(" + field.tagInfo.name + ")",
             // textFieldValue);
             // Debug.debug("userCommentValue", Debug.getType(userCommentValue));
-        } catch (ImageReadException e) {
+        } catch (final ImageReadException e) {
             Debug.debug("imageFile", imageFile.getAbsoluteFile());
             Debug.debug(e);
             throw e;

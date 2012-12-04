@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 public abstract class GenericSegment extends Segment {
     public final byte bytes[];
 
-    public GenericSegment(int marker, int marker_length, InputStream is)
+    public GenericSegment(final int marker, final int marker_length, final InputStream is)
             throws IOException {
         super(marker, marker_length);
 
@@ -31,18 +31,18 @@ public abstract class GenericSegment extends Segment {
                 "Invalid Segment: insufficient data");
     }
 
-    public GenericSegment(int marker, byte bytes[]) {
+    public GenericSegment(final int marker, final byte bytes[]) {
         super(marker, bytes.length);
 
         this.bytes = bytes;
     }
 
     @Override
-    public void dump(PrintWriter pw) {
+    public void dump(final PrintWriter pw) {
         dump(pw, 0);
     }
 
-    public void dump(PrintWriter pw, int start) {
+    public void dump(final PrintWriter pw, final int start) {
         for (int i = 0; (i < 50) && ((i + start) < bytes.length); i++) {
             debugNumber(pw, "\t" + (i + start), bytes[i + start]);
         }

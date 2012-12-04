@@ -27,7 +27,7 @@ public class PngChunkZtxt extends PngTextChunk {
 
     public final String keyword, text;
 
-    public PngChunkZtxt(int length, int chunkType, int crc, byte bytes[])
+    public PngChunkZtxt(final int length, final int chunkType, final int crc, final byte bytes[])
             throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
 
@@ -40,15 +40,15 @@ public class PngChunkZtxt extends PngTextChunk {
         keyword = new String(bytes, 0, index, "ISO-8859-1");
         index++;
 
-        int compressionMethod = bytes[index++];
+        final int compressionMethod = bytes[index++];
         if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE) {
             throw new ImageReadException(
                     "PNG zTXt chunk has unexpected compression method: "
                             + compressionMethod);
         }
 
-        int compressedTextLength = bytes.length - index;
-        byte compressedText[] = new byte[compressedTextLength];
+        final int compressedTextLength = bytes.length - index;
+        final byte compressedText[] = new byte[compressedTextLength];
         System.arraycopy(bytes, index, compressedText, 0,
                 compressedTextLength);
 

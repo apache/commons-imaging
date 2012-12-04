@@ -25,21 +25,21 @@ import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
 public class ScanExpediterInterlaced extends ScanExpediter {
-    public ScanExpediterInterlaced(int width, int height, InputStream is,
-            BufferedImage bi, int color_type, int BitDepth, int bits_per_pixel,
-            PngChunkPlte fPNGChunkPLTE, GammaCorrection fGammaCorrection,
-            TransparencyFilter fTransparencyFilter)
+    public ScanExpediterInterlaced(final int width, final int height, final InputStream is,
+            final BufferedImage bi, final int color_type, final int BitDepth, final int bits_per_pixel,
+            final PngChunkPlte fPNGChunkPLTE, final GammaCorrection fGammaCorrection,
+            final TransparencyFilter fTransparencyFilter)
 
     {
         super(width, height, is, bi, color_type, BitDepth, bits_per_pixel,
                 fPNGChunkPLTE, fGammaCorrection, fTransparencyFilter);
     }
 
-    private void visit(int x, int y, BufferedImage bi, BitParser fBitParser,
-            int color_type, int pixel_index_in_scanline,
-            PngChunkPlte fPNGChunkPLTE, GammaCorrection fGammaCorrection)
+    private void visit(final int x, final int y, final BufferedImage bi, final BitParser fBitParser,
+            final int color_type, final int pixel_index_in_scanline,
+            final PngChunkPlte fPNGChunkPLTE, final GammaCorrection fGammaCorrection)
             throws ImageReadException, IOException {
-        int rgb = getRGB(fBitParser,
+        final int rgb = getRGB(fBitParser,
         // color_type,
                 pixel_index_in_scanline
         // ,
@@ -68,23 +68,23 @@ public class ScanExpediterInterlaced extends ScanExpediter {
 
             int y = Starting_Row[pass - 1];
             // int y_stride = Row_Increment[pass - 1];
-            boolean rows_in_pass = (y < height);
+            final boolean rows_in_pass = (y < height);
             while (y < height) {
                 int x = Starting_Col[pass - 1];
                 int pixel_index_in_scanline = 0;
 
                 if (x < width) {
                     // only get data if there are pixels in this scanline/pass
-                    int ColumnsInRow = 1 + ((width - Starting_Col[pass - 1] - 1) / Col_Increment[pass - 1]);
-                    int bitsPerScanLine = bitsPerPixel * ColumnsInRow;
-                    int pixel_bytes_per_scan_line = getBitsToBytesRoundingUp(bitsPerScanLine);
+                    final int ColumnsInRow = 1 + ((width - Starting_Col[pass - 1] - 1) / Col_Increment[pass - 1]);
+                    final int bitsPerScanLine = bitsPerPixel * ColumnsInRow;
+                    final int pixel_bytes_per_scan_line = getBitsToBytesRoundingUp(bitsPerScanLine);
 
-                    byte unfiltered[] = getNextScanline(is,
+                    final byte unfiltered[] = getNextScanline(is,
                             pixel_bytes_per_scan_line, prev, bytesPerPixel);
 
                     prev = unfiltered;
 
-                    BitParser fBitParser = new BitParser(unfiltered,
+                    final BitParser fBitParser = new BitParser(unfiltered,
                             bitsPerPixel, bitDepth);
 
                     while (x < width) {

@@ -29,7 +29,7 @@ import org.apache.commons.imaging.util.Debug;
 public class ByteSourceFile extends ByteSource {
     private final File file;
 
-    public ByteSourceFile(File file) {
+    public ByteSourceFile(final File file) {
         super(file.getName());
         this.file = file;
     }
@@ -44,7 +44,7 @@ public class ByteSourceFile extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(int start, int length) throws IOException {
+    public byte[] getBlock(final int start, final int length) throws IOException {
 
         RandomAccessFile raf = null;
         try {
@@ -65,7 +65,7 @@ public class ByteSourceFile extends ByteSource {
                 if (raf != null) {
                     raf.close();
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Debug.debug(e);
             }
 
@@ -79,13 +79,13 @@ public class ByteSourceFile extends ByteSource {
 
     @Override
     public byte[] getAll() throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         InputStream is = null;
         try {
             is = new FileInputStream(file);
             is = new BufferedInputStream(is);
-            byte buffer[] = new byte[1024];
+            final byte buffer[] = new byte[1024];
             int read;
             while ((read = is.read(buffer)) > 0) {
                 baos.write(buffer, 0, read);
@@ -96,7 +96,7 @@ public class ByteSourceFile extends ByteSource {
                 if (null != is) {
                     is.close();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 Debug.debug(e);
             }
         }

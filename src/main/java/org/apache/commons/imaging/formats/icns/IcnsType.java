@@ -93,8 +93,8 @@ public class IcnsType {
             ICNS_32x32_8BIT_MASK, ICNS_48x48_1BIT_IMAGE_AND_MASK,
             ICNS_48x48_8BIT_MASK, ICNS_128x128_8BIT_MASK };
 
-    private IcnsType(String type, int width, int height, int bitsPerPixel,
-            boolean hasMask) {
+    private IcnsType(final String type, final int width, final int height, final int bitsPerPixel,
+            final boolean hasMask) {
         this.type = typeAsInt(type);
         this.width = width;
         this.height = height;
@@ -129,13 +129,13 @@ public class IcnsType {
                 + hasMask + "]";
     }
 
-    public static IcnsType findAnyType(int type) {
-        for (IcnsType allImageType : allImageTypes) {
+    public static IcnsType findAnyType(final int type) {
+        for (final IcnsType allImageType : allImageTypes) {
             if (allImageType.getType() == type) {
                 return allImageType;
             }
         }
-        for (IcnsType allMaskType : allMaskTypes) {
+        for (final IcnsType allMaskType : allMaskTypes) {
             if (allMaskType.getType() == type) {
                 return allMaskType;
             }
@@ -143,8 +143,8 @@ public class IcnsType {
         return null;
     }
 
-    public static IcnsType findImageType(int type) {
-        for (IcnsType allImageType : allImageTypes) {
+    public static IcnsType findImageType(final int type) {
+        for (final IcnsType allImageType : allImageTypes) {
             if (allImageType.getType() == type) {
                 return allImageType;
             }
@@ -152,8 +152,8 @@ public class IcnsType {
         return null;
     }
 
-    public static IcnsType find8BPPMaskType(IcnsType imageType) {
-        for (IcnsType allMaskType : allMaskTypes) {
+    public static IcnsType find8BPPMaskType(final IcnsType imageType) {
+        for (final IcnsType allMaskType : allMaskTypes) {
             if (allMaskType.getBitsPerPixel() == 8
                     && allMaskType.getWidth() == imageType.getWidth()
                     && allMaskType.getHeight() == imageType.getHeight()) {
@@ -163,8 +163,8 @@ public class IcnsType {
         return null;
     }
 
-    public static IcnsType find1BPPMaskType(IcnsType imageType) {
-        for (IcnsType allMaskType : allMaskTypes) {
+    public static IcnsType find1BPPMaskType(final IcnsType imageType) {
+        for (final IcnsType allMaskType : allMaskTypes) {
             if (allMaskType.getBitsPerPixel() == 1
                     && allMaskType.getWidth() == imageType.getWidth()
                     && allMaskType.getHeight() == imageType.getHeight()) {
@@ -174,11 +174,11 @@ public class IcnsType {
         return null;
     }
 
-    public static int typeAsInt(String type) {
+    public static int typeAsInt(final String type) {
         byte[] bytes = null;
         try {
             bytes = type.getBytes("US-ASCII");
-        } catch (UnsupportedEncodingException cannotHappen) {
+        } catch (final UnsupportedEncodingException cannotHappen) {
             throw new IllegalArgumentException("Your Java doesn't support US-ASCII");
         }
         if (bytes.length != 4) {
@@ -188,15 +188,15 @@ public class IcnsType {
                 | ((0xff & bytes[2]) << 8) | (0xff & bytes[3]);
     }
 
-    public static String describeType(int type) {
-        byte[] bytes = new byte[4];
+    public static String describeType(final int type) {
+        final byte[] bytes = new byte[4];
         bytes[0] = (byte) (0xff & (type >> 24));
         bytes[1] = (byte) (0xff & (type >> 16));
         bytes[2] = (byte) (0xff & (type >> 8));
         bytes[3] = (byte) (0xff & type);
         try {
             return new String(bytes, "US-ASCII");
-        } catch (UnsupportedEncodingException cannotHappen) {
+        } catch (final UnsupportedEncodingException cannotHappen) {
         }
         return null;
     }

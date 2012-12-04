@@ -28,7 +28,7 @@ import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 public abstract class DataReader {
     protected final DataParser dataParser;
 
-    public DataReader(DataParser fDataParser) {
+    public DataReader(final DataParser fDataParser) {
         this.dataParser = fDataParser;
     }
 

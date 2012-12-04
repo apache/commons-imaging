@@ -28,18 +28,18 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
     public final byte icc_bytes[];
     public final int cur_marker, num_markers;
 
-    public App2Segment(int marker, byte segmentData[])
+    public App2Segment(final int marker, final byte segmentData[])
             throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public App2Segment(int marker, int marker_length, InputStream is2)
+    public App2Segment(final int marker, int marker_length, final InputStream is2)
             throws ImageReadException, IOException {
         super(marker, marker_length, is2);
 
         if (BinaryFileParser.byteArrayHasPrefix(bytes,
                 JpegImageParser.icc_profile_label)) {
-            InputStream is = new ByteArrayInputStream(bytes);
+            final InputStream is = new ByteArrayInputStream(bytes);
 
             readAndVerifyBytes(is, JpegImageParser.icc_profile_label,
                     "Not a Valid App2 Segment: missing ICC Profile label");
@@ -61,9 +61,9 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof App2Segment) {
-            App2Segment other = (App2Segment) obj;
+            final App2Segment other = (App2Segment) obj;
             return cur_marker == other.cur_marker;
         }
         return false;
@@ -74,7 +74,7 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
         return cur_marker;
     }
 
-    public int compareTo(App2Segment other) {
+    public int compareTo(final App2Segment other) {
         return cur_marker - other.cur_marker;
     }
 

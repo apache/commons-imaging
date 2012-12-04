@@ -36,7 +36,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class WriteExifMetadataExample {
-    public void removeExifMetadata(File jpegImageFile, File dst)
+    public void removeExifMetadata(final File jpegImageFile, final File dst)
             throws IOException, ImageReadException, ImageWriteException {
         OutputStream os = null;
         try {
@@ -48,7 +48,7 @@ public class WriteExifMetadataExample {
             if (os != null) {
                 try {
                     os.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
 
                 }
             }
@@ -66,18 +66,18 @@ public class WriteExifMetadataExample {
      * @throws ImageReadException
      * @throws ImageWriteException
      */
-    public void changeExifMetadata(File jpegImageFile, File dst)
+    public void changeExifMetadata(final File jpegImageFile, final File dst)
             throws IOException, ImageReadException, ImageWriteException {
         OutputStream os = null;
         try {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
-            IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
-            JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+            final IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
+            final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
             if (null != jpegMetadata) {
                 // note that exif might be null if no Exif metadata is found.
-                TiffImageMetadata exif = jpegMetadata.getExif();
+                final TiffImageMetadata exif = jpegMetadata.getExif();
 
                 if (null != exif) {
                     // TiffImageMetadata class is immutable (read-only).
@@ -116,7 +116,7 @@ public class WriteExifMetadataExample {
                 // see
                 // org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants
                 //
-                TiffOutputDirectory exifDirectory = outputSet
+                final TiffOutputDirectory exifDirectory = outputSet
                         .getOrCreateExifDirectory();
                 // make sure to remove old value if present (this method will
                 // not fail if the tag does not exist).
@@ -130,8 +130,8 @@ public class WriteExifMetadataExample {
                 // Example of how to add/update GPS info to output set.
 
                 // New York City
-                double longitude = -74.0; // 74 degrees W (in Degrees East)
-                double latitude = 40 + 43 / 60.0; // 40 degrees N (in Degrees
+                final double longitude = -74.0; // 74 degrees W (in Degrees East)
+                final double latitude = 40 + 43 / 60.0; // 40 degrees N (in Degrees
                 // North)
 
                 outputSet.setGPSInDegrees(longitude, latitude);
@@ -151,7 +151,7 @@ public class WriteExifMetadataExample {
             if (os != null) {
                 try {
                     os.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
 
                 }
             }
@@ -173,18 +173,18 @@ public class WriteExifMetadataExample {
      * @throws ImageReadException
      * @throws ImageWriteException
      */
-    public void removeExifTag(File jpegImageFile, File dst) throws IOException,
+    public void removeExifTag(final File jpegImageFile, final File dst) throws IOException,
             ImageReadException, ImageWriteException {
         OutputStream os = null;
         try {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
-            IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
-            JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+            final IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
+            final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
             if (null != jpegMetadata) {
                 // note that exif might be null if no Exif metadata is found.
-                TiffImageMetadata exif = jpegMetadata.getExif();
+                final TiffImageMetadata exif = jpegMetadata.getExif();
 
                 if (null != exif) {
                     // TiffImageMetadata class is immutable (read-only).
@@ -224,7 +224,7 @@ public class WriteExifMetadataExample {
                 // To learn which directory a tag appears in, either refer to
                 // the constants in ExifTagConstants.java or go to Phil Harvey's
                 // EXIF website.
-                TiffOutputDirectory exifDirectory = outputSet
+                final TiffOutputDirectory exifDirectory = outputSet
                         .getExifDirectory();
                 if (null != exifDirectory) {
                     exifDirectory
@@ -244,7 +244,7 @@ public class WriteExifMetadataExample {
             if (os != null) {
                 try {
                     os.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
 
                 }
             }
@@ -262,18 +262,18 @@ public class WriteExifMetadataExample {
      * @throws ImageReadException
      * @throws ImageWriteException
      */
-    public void setExifGPSTag(File jpegImageFile, File dst) throws IOException,
+    public void setExifGPSTag(final File jpegImageFile, final File dst) throws IOException,
             ImageReadException, ImageWriteException {
         OutputStream os = null;
         try {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
-            IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
-            JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+            final IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
+            final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
             if (null != jpegMetadata) {
                 // note that exif might be null if no Exif metadata is found.
-                TiffImageMetadata exif = jpegMetadata.getExif();
+                final TiffImageMetadata exif = jpegMetadata.getExif();
 
                 if (null != exif) {
                     // TiffImageMetadata class is immutable (read-only).
@@ -299,8 +299,8 @@ public class WriteExifMetadataExample {
                 // Example of how to add/update GPS info to output set.
 
                 // New York City
-                double longitude = -74.0; // 74 degrees W (in Degrees East)
-                double latitude = 40 + 43 / 60.0; // 40 degrees N (in Degrees
+                final double longitude = -74.0; // 74 degrees W (in Degrees East)
+                final double latitude = 40 + 43 / 60.0; // 40 degrees N (in Degrees
                 // North)
 
                 outputSet.setGPSInDegrees(longitude, latitude);
@@ -318,7 +318,7 @@ public class WriteExifMetadataExample {
             if (os != null) {
                 try {
                     os.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
 
                 }
             }

@@ -26,12 +26,12 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PcxBaseTest extends ImagingTest {
 
-    private static boolean isPcx(File file) {
+    private static boolean isPcx(final File file) {
         return file.getName().toLowerCase().endsWith(".pcx");
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isPcx(file);
         }
     };

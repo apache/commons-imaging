@@ -27,8 +27,8 @@ import java.io.OutputStream;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class ByteSourceTest extends ImagingTest {
-    protected File createTempFile(byte src[]) throws IOException {
-        File file = createTempFile("raw_", ".bin");
+    protected File createTempFile(final byte src[]) throws IOException {
+        final File file = createTempFile("raw_", ".bin");
 
         // write test bytes to file.
         OutputStream os = new FileOutputStream(file);
@@ -43,29 +43,29 @@ public abstract class ByteSourceTest extends ImagingTest {
     }
 
     protected byte[][] getTestByteArrays() {
-        byte emptyArray[] = (new byte[0]);
+        final byte emptyArray[] = (new byte[0]);
 
-        byte single[] = new byte[1];
+        final byte single[] = new byte[1];
         for (int i = 0; i < single.length; i++) {
             single[i] = (byte) i;
         }
 
-        byte simple[] = new byte[256];
+        final byte simple[] = new byte[256];
         for (int i = 0; i < simple.length; i++) {
             simple[i] = (byte) i;
         }
 
-        byte zeroes[] = new byte[256];
+        final byte zeroes[] = new byte[256];
         for (int i = 0; i < zeroes.length; i++) {
             zeroes[i] = 0;
         }
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (int i = 0; i < 256 * 256; i++) {
             baos.write(0xff & i);
             baos.write(0xff & (i >> 8));
         }
-        byte longArray[] = (baos.toByteArray());
+        final byte longArray[] = (baos.toByteArray());
 
         return new byte[][] { emptyArray, single, simple, zeroes, longArray, };
     }

@@ -28,11 +28,11 @@ public class PngChunkIhdr extends PngChunk {
     public final int filterMethod;
     public final int interlaceMethod;
 
-    public PngChunkIhdr(int Length, int ChunkType, int CRC, byte bytes[])
+    public PngChunkIhdr(final int Length, final int ChunkType, final int CRC, final byte bytes[])
             throws IOException {
         super(Length, ChunkType, CRC, bytes);
 
-        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
         width = read4Bytes("Width", is, "Not a Valid Png File: IHDR Corrupt");
         height = read4Bytes("Height", is, "Not a Valid Png File: IHDR Corrupt");
         bitDepth = readByte("BitDepth", is,

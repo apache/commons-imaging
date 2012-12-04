@@ -23,12 +23,12 @@ import java.io.InputStream;
 public class ByteSourceArray extends ByteSource {
     private final byte bytes[];
 
-    public ByteSourceArray(String filename, byte bytes[]) {
+    public ByteSourceArray(final String filename, final byte bytes[]) {
         super(filename);
         this.bytes = bytes;
     }
 
-    public ByteSourceArray(byte bytes[]) {
+    public ByteSourceArray(final byte bytes[]) {
         super(null);
         this.bytes = bytes;
     }
@@ -39,7 +39,7 @@ public class ByteSourceArray extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(int start, int length) throws IOException {
+    public byte[] getBlock(final int start, final int length) throws IOException {
         // We include a separate check for int overflow.
         if ((start < 0) || (length < 0) || (start + length < 0)
                 || (start + length > bytes.length)) {
@@ -48,7 +48,7 @@ public class ByteSourceArray extends ByteSource {
                     + bytes.length + ").");
         }
 
-        byte result[] = new byte[length];
+        final byte result[] = new byte[length];
         System.arraycopy(bytes, start, result, 0, length);
         return result;
     }

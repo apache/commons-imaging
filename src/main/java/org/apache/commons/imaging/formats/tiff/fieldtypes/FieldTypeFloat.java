@@ -30,7 +30,7 @@ public class FieldTypeFloat extends FieldType {
     // = new FieldType(11, 4, "Float")
 
     @Override
-    public Object getSimpleValue(TiffField entry) {
+    public Object getSimpleValue(final TiffField entry) {
         if (entry.length == 1) {
             return new Float(BinaryConversions.toFloat(
                     entry.valueOffsetBytes,
@@ -42,15 +42,15 @@ public class FieldTypeFloat extends FieldType {
     }
 
     @Override
-    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Float) {
             return BinaryConversions.toBytes(((Float) o).floatValue(), byteOrder);
         } else if (o instanceof float[]) {
-            float numbers[] = (float[]) o;
+            final float numbers[] = (float[]) o;
             return BinaryConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Float[]) {
-            Float numbers[] = (Float[]) o;
-            float values[] = new float[numbers.length];
+            final Float numbers[] = (Float[]) o;
+            final float values[] = new float[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].floatValue();
             }

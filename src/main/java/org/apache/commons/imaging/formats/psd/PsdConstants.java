@@ -21,8 +21,8 @@ import org.apache.commons.imaging.util.Debug;
 public class PsdConstants {
     static final ImageResourceType fImageResourceTypes[];
 
-    public String getDescription(int id) {
-        for (ImageResourceType fImageResourceType : fImageResourceTypes) {
+    public String getDescription(final int id) {
+        for (final ImageResourceType fImageResourceType : fImageResourceTypes) {
             if (fImageResourceType.ID == id) {
                 return fImageResourceType.Description;
             }
@@ -189,7 +189,7 @@ public class PsdConstants {
                             0x2710,
                             10000,
                             "Print flags information. 2 bytes version (=1), 1 byte center crop marks, 1 byte (=0), 4 bytes bleed width value, 2 bytes bleed width scale."), };
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Debug.debug(PsdConstants.class, e);
         }
         fImageResourceTypes = temp;

@@ -23,26 +23,26 @@ public class BitParser {
     private final int bitsPerPixel;
     private final int bitDepth;
 
-    public BitParser(byte bytes[], int bitsPerPixel, int bitDepth) {
+    public BitParser(final byte bytes[], final int bitsPerPixel, final int bitDepth) {
         this.bytes = bytes;
         this.bitsPerPixel = bitsPerPixel;
         this.bitDepth = bitDepth;
     }
 
-    public int getSample(int pixelIndexInScanline, int sampleIndex)
+    public int getSample(final int pixelIndexInScanline, final int sampleIndex)
             throws ImageReadException {
-        int pixelIndexBits = bitsPerPixel * pixelIndexInScanline;
-        int sampleIndexBits = pixelIndexBits + (sampleIndex * bitDepth);
-        int sampleIndexBytes = sampleIndexBits >> 3;
+        final int pixelIndexBits = bitsPerPixel * pixelIndexInScanline;
+        final int sampleIndexBits = pixelIndexBits + (sampleIndex * bitDepth);
+        final int sampleIndexBytes = sampleIndexBits >> 3;
 
         if (bitDepth == 8) {
             return 0xff & bytes[sampleIndexBytes];
         } else if (bitDepth < 8) {
             int b = 0xff & bytes[sampleIndexBytes];
-            int bitsToShift = 8 - ((pixelIndexBits & 7) + bitDepth);
+            final int bitsToShift = 8 - ((pixelIndexBits & 7) + bitDepth);
             b >>= bitsToShift;
 
-            int bitmask = (1 << bitDepth) - 1;
+            final int bitmask = (1 << bitDepth) - 1;
             return b & bitmask;
         } else if (bitDepth == 16) {
             return (((0xff & bytes[sampleIndexBytes]) << 8) | (0xff & bytes[sampleIndexBytes + 1]));
@@ -51,11 +51,11 @@ public class BitParser {
         throw new ImageReadException("PNG: bad BitDepth: " + bitDepth);
     }
 
-    public int getSampleAsByte(int pixelIndexInScanline, int sampleIndex)
+    public int getSampleAsByte(final int pixelIndexInScanline, final int sampleIndex)
             throws ImageReadException {
         int sample = getSample(pixelIndexInScanline, sampleIndex);
 
-        int rot = 8 - bitDepth;
+        final int rot = 8 - bitDepth;
         if (rot > 0) {
             sample = sample * 255 / ((1 << bitDepth) - 1);
         } else if (rot < 0) {

@@ -23,8 +23,8 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
 public abstract class PixelParserSimple extends PixelParser {
-    public PixelParserSimple(BmpHeaderInfo bhi, byte ColorTable[],
-            byte ImageData[]) {
+    public PixelParserSimple(final BmpHeaderInfo bhi, final byte ColorTable[],
+            final byte ImageData[]) {
         super(bhi, ColorTable, ImageData);
     }
 
@@ -33,13 +33,13 @@ public abstract class PixelParserSimple extends PixelParser {
     public abstract void newline() throws ImageReadException, IOException;
 
     @Override
-    public void processImage(ImageBuilder imageBuilder)
+    public void processImage(final ImageBuilder imageBuilder)
             throws ImageReadException, IOException {
         // DataBuffer db = bi.getRaster().getDataBuffer();
 
         for (int y = bhi.height - 1; y >= 0; y--) {
             for (int x = 0; x < bhi.width; x++) {
-                int rgb = getNextRGB();
+                final int rgb = getNextRGB();
 
                 imageBuilder.setRGB(x, y, rgb);
                 // db.setElem(y * bhi.width + x, rgb);

@@ -29,7 +29,7 @@ import org.apache.commons.imaging.icc.IccProfileParser;
  * image files.
  */
 public class ImageDump {
-    private String colorSpaceTypeToName(ColorSpace cs) {
+    private String colorSpaceTypeToName(final ColorSpace cs) {
         // System.out.println(prefix + ": " + "type: "
         // + cs.getType() );
         switch (cs.getType()) {
@@ -53,7 +53,7 @@ public class ImageDump {
         return "unknown";
     }
 
-    public void dumpColorSpace(String prefix, ColorSpace cs) {
+    public void dumpColorSpace(final String prefix, final ColorSpace cs) {
         System.out.println(prefix + ": " + "type: " + cs.getType() + " ("
                 + colorSpaceTypeToName(cs) + ")");
 
@@ -63,34 +63,34 @@ public class ImageDump {
             return;
         }
 
-        ICC_ColorSpace fICC_ColorSpace = (ICC_ColorSpace) cs;
-        ICC_Profile fICC_Profile = fICC_ColorSpace.getProfile();
+        final ICC_ColorSpace fICC_ColorSpace = (ICC_ColorSpace) cs;
+        final ICC_Profile fICC_Profile = fICC_ColorSpace.getProfile();
 
-        byte bytes[] = fICC_Profile.getData();
+        final byte bytes[] = fICC_Profile.getData();
 
-        IccProfileParser parser = new IccProfileParser();
+        final IccProfileParser parser = new IccProfileParser();
 
-        IccProfileInfo info = parser.getICCProfileInfo(bytes);
+        final IccProfileInfo info = parser.getICCProfileInfo(bytes);
         info.dump(prefix);
     }
 
-    public void dump(BufferedImage src) {
+    public void dump(final BufferedImage src) {
         dump("", src);
     }
 
-    public void dump(String prefix, BufferedImage src) {
+    public void dump(final String prefix, final BufferedImage src) {
         System.out.println(prefix + ": " + "dump");
         dumpColorSpace(prefix, src.getColorModel().getColorSpace());
         dumpBIProps(prefix, src);
     }
 
-    public void dumpBIProps(String prefix, BufferedImage src) {
-        String keys[] = src.getPropertyNames();
+    public void dumpBIProps(final String prefix, final BufferedImage src) {
+        final String keys[] = src.getPropertyNames();
         if (keys == null) {
             System.out.println(prefix + ": no props");
             return;
         }
-        for (String key : keys) {
+        for (final String key : keys) {
             System.out.println(prefix + ": " + key + ": "
                     + src.getProperty(key));
         }

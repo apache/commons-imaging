@@ -23,7 +23,7 @@ import java.util.List;
 class GenericGifBlock extends GifBlock {
     public final List<byte[]> subblocks;
 
-    public GenericGifBlock(int blockCode, List<byte[]> subblocks) {
+    public GenericGifBlock(final int blockCode, final List<byte[]> subblocks) {
         super(blockCode);
 
         this.subblocks = subblocks;
@@ -34,11 +34,11 @@ class GenericGifBlock extends GifBlock {
         return appendSubBlocks(false);
     }
 
-    public byte[] appendSubBlocks(boolean includeLengths) throws IOException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+    public byte[] appendSubBlocks(final boolean includeLengths) throws IOException {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         for (int i = 0; i < subblocks.size(); i++) {
-            byte subblock[] = subblocks.get(i);
+            final byte subblock[] = subblocks.get(i);
             if (includeLengths && i > 0) {
                 out.write(subblock.length);
             }

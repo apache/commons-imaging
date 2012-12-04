@@ -24,7 +24,7 @@ public class BitInputStream extends InputStream {
     private final InputStream is;
     private final ByteOrder byteOrder;
 
-    public BitInputStream(InputStream is, ByteOrder byteOrder) {
+    public BitInputStream(final InputStream is, final ByteOrder byteOrder) {
         this.is = is;
         this.byteOrder = byteOrder;
     }
@@ -41,7 +41,7 @@ public class BitInputStream extends InputStream {
     private int cacheBitsRemaining = 0;
     private long bytes_read = 0;
 
-    public final int readBits(int count) throws IOException {
+    public final int readBits(final int count) throws IOException {
         if (count < 8) {
             if (cacheBitsRemaining == 0) {
                 // fill cache
@@ -56,7 +56,7 @@ public class BitInputStream extends InputStream {
 
             // int bits_to_shift = cache_bits_remaining - count;
             cacheBitsRemaining -= count;
-            int bits = cache >> cacheBitsRemaining;
+            final int bits = cache >> cacheBitsRemaining;
 
             switch (count) {
             case 1:

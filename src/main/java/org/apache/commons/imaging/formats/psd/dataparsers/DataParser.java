@@ -23,17 +23,17 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 
 public abstract class DataParser {
-    public final void parseData(int data[][][], BufferedImage bi,
-            ImageContents imageContents) {
-        DataBuffer buffer = bi.getRaster().getDataBuffer();
+    public final void parseData(final int data[][][], final BufferedImage bi,
+            final ImageContents imageContents) {
+        final DataBuffer buffer = bi.getRaster().getDataBuffer();
 
-        PsdHeaderInfo header = imageContents.header;
-        int width = header.Columns;
-        int height = header.Rows;
+        final PsdHeaderInfo header = imageContents.header;
+        final int width = header.Columns;
+        final int height = header.Rows;
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int rgb = getRGB(data, x, y, imageContents);
+                final int rgb = getRGB(data, x, y, imageContents);
                 buffer.setElem(y * width + x, rgb);
             }
         }

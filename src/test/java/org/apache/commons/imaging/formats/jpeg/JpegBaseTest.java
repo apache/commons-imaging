@@ -28,14 +28,14 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class JpegBaseTest extends ImagingTest {
 
-    protected static boolean isJpeg(File file) throws IOException,
+    protected static boolean isJpeg(final File file) throws IOException,
             ImageReadException {
-        ImageFormat format = Imaging.guessFormat(file);
+        final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_JPEG;
     }
 
     public static final ImageFilter imageFilter = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isJpeg(file);
         }
     };

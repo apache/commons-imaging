@@ -31,7 +31,7 @@ abstract class TiffOutputItem implements AllTagConstants {
         return offset;
     }
 
-    protected void setOffset(int offset) {
+    protected void setOffset(final int offset) {
         this.offset = offset;
     }
 
@@ -61,7 +61,7 @@ abstract class TiffOutputItem implements AllTagConstants {
             return name;
         }
 
-        public void updateValue(byte bytes[]) throws ImageWriteException {
+        public void updateValue(final byte bytes[]) throws ImageWriteException {
             if (this.bytes.length != bytes.length) {
                 throw new ImageWriteException("Updated data size mismatch: "
                         + this.bytes.length + " vs. " + bytes.length);
@@ -70,7 +70,7 @@ abstract class TiffOutputItem implements AllTagConstants {
         }
 
         @Override
-        public void writeItem(BinaryOutputStream bos) throws IOException,
+        public void writeItem(final BinaryOutputStream bos) throws IOException,
                 ImageWriteException {
             bos.write(bytes);
         }

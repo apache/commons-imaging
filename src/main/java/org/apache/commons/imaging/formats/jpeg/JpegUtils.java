@@ -44,7 +44,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                 IOException;
     }
 
-    public void traverseJFIF(ByteSource byteSource, Visitor visitor)
+    public void traverseJFIF(final ByteSource byteSource, final Visitor visitor)
             throws ImageReadException,
             // ImageWriteException,
             IOException {
@@ -56,18 +56,18 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
             readAndVerifyBytes(is, SOI,
                     "Not a Valid JPEG File: doesn't begin with 0xffd8");
 
-            ByteOrder byteOrder = getByteOrder();
+            final ByteOrder byteOrder = getByteOrder();
 
             int markerCount;
             for (markerCount = 0; true; markerCount++) {
-                byte[] markerBytes = new byte[2];
+                final byte[] markerBytes = new byte[2];
                 do {
                     markerBytes[0] = markerBytes[1];
                     markerBytes[1] = readByte("marker", is,
                             "Could not read marker");
                 } while ((0xff & markerBytes[0]) != 0xff
                         || (0xff & markerBytes[1]) == 0xff);
-                int marker = ((0xff & markerBytes[0]) << 8)
+                final int marker = ((0xff & markerBytes[0]) << 8)
                         | (0xff & markerBytes[1]);
 
                 // Debug.debug("marker", marker + " (0x" +
@@ -79,21 +79,21 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                         return;
                     }
 
-                    byte imageData[] = getStreamBytes(is);
+                    final byte imageData[] = getStreamBytes(is);
                     visitor.visitSOS(marker, markerBytes, imageData);
                     break;
                 }
 
-                byte segmentLengthBytes[] = readByteArray("segmentLengthBytes",
+                final byte segmentLengthBytes[] = readByteArray("segmentLengthBytes",
                         2, is, "segmentLengthBytes");
-                int segmentLength = convertByteArrayToShort("segmentLength",
+                final int segmentLength = convertByteArrayToShort("segmentLength",
                         segmentLengthBytes, byteOrder);
 
                 // Debug.debug("segmentLength", segmentLength + " (0x" +
                 // Integer.toHexString(segmentLength) + ")");
                 // Debug.debug("segmentLengthBytes", segmentLengthBytes);
 
-                byte segmentData[] = readByteArray("Segment Data",
+                final byte segmentData[] = readByteArray("Segment Data",
                         segmentLength - 2, is,
                         "Invalid Segment: insufficient data");
 
@@ -112,13 +112,13 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                 if (is != null) {
                     is.close();
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Debug.debug(e);
             }
         }
     }
 
-    public static String getMarkerName(int marker) {
+    public static String getMarkerName(final int marker) {
         switch (marker) {
         case SOS_Marker:
             return "SOS_Marker";
@@ -177,25 +177,25 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
         }
     }
 
-    public void dumpJFIF(ByteSource byteSource) throws ImageReadException,
+    public void dumpJFIF(final ByteSource byteSource) throws ImageReadException,
             IOException {
-        Visitor visitor = new Visitor() {
+        final Visitor visitor = new Visitor() {
             // return false to exit before reading image data.
             public boolean beginSOS() {
                 return true;
             }
 
-            public void visitSOS(int marker, byte markerBytes[],
-                    byte imageData[]) {
+            public void visitSOS(final int marker, final byte markerBytes[],
+                    final byte imageData[]) {
                 Debug.debug("SOS marker.  " + imageData.length
                         + " bytes of image data.");
                 Debug.debug("");
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(int marker, byte markerBytes[],
-                    int segmentLength, byte segmentLengthBytes[],
-                    byte segmentData[]) {
+            public boolean visitSegment(final int marker, final byte markerBytes[],
+                    final int segmentLength, final byte segmentLengthBytes[],
+                    final byte segmentData[]) {
                 Debug.debug("Segment marker: " + Integer.toHexString(marker)
                         + " (" + getMarkerName(marker) + "), "
                         + segmentData.length + " bytes of segment data.");

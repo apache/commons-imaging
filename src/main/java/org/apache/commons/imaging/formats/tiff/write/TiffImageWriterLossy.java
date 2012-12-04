@@ -29,55 +29,55 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
     public TiffImageWriterLossy() {
     }
 
-    public TiffImageWriterLossy(ByteOrder byteOrder) {
+    public TiffImageWriterLossy(final ByteOrder byteOrder) {
         super(byteOrder);
     }
 
     @Override
-    public void write(OutputStream os, TiffOutputSet outputSet)
+    public void write(final OutputStream os, final TiffOutputSet outputSet)
             throws IOException, ImageWriteException {
-        TiffOutputSummary outputSummary = validateDirectories(outputSet);
+        final TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
-        List<TiffOutputItem> outputItems = outputSet
+        final List<TiffOutputItem> outputItems = outputSet
                 .getOutputItems(outputSummary);
 
         updateOffsetsStep(outputItems);
 
         outputSummary.updateOffsets(byteOrder);
 
-        BinaryOutputStream bos = new BinaryOutputStream(os, byteOrder);
+        final BinaryOutputStream bos = new BinaryOutputStream(os, byteOrder);
 
         writeStep(bos, outputItems);
     }
 
-    private void updateOffsetsStep(List<TiffOutputItem> outputItems) {
+    private void updateOffsetsStep(final List<TiffOutputItem> outputItems) {
         int offset = TIFF_HEADER_SIZE;
 
         for (int i = 0; i < outputItems.size(); i++) {
-            TiffOutputItem outputItem = outputItems.get(i);
+            final TiffOutputItem outputItem = outputItems.get(i);
 
             outputItem.setOffset(offset);
-            int itemLength = outputItem.getItemLength();
+            final int itemLength = outputItem.getItemLength();
             offset += itemLength;
 
-            int remainder = imageDataPaddingLength(itemLength);
+            final int remainder = imageDataPaddingLength(itemLength);
             offset += remainder;
         }
     }
 
-    private void writeStep(BinaryOutputStream bos,
-            List<TiffOutputItem> outputItems) throws IOException,
+    private void writeStep(final BinaryOutputStream bos,
+            final List<TiffOutputItem> outputItems) throws IOException,
             ImageWriteException {
         writeImageFileHeader(bos);
 
         for (int i = 0; i < outputItems.size(); i++) {
-            TiffOutputItem outputItem = outputItems.get(i);
+            final TiffOutputItem outputItem = outputItems.get(i);
 
             outputItem.writeItem(bos);
 
-            int length = outputItem.getItemLength();
+            final int length = outputItem.getItemLength();
 
-            int remainder = imageDataPaddingLength(length);
+            final int remainder = imageDataPaddingLength(length);
             for (int j = 0; j < remainder; j++) {
                 bos.write(0);
             }

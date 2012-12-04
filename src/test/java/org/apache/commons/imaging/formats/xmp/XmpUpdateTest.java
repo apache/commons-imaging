@@ -31,13 +31,13 @@ import org.apache.commons.imaging.util.Debug;
 public class XmpUpdateTest extends ImagingTest {
 
     public void test() throws Exception {
-        List<File> images = getTestImages();
+        final List<File> images = getTestImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
 
             if (imageFile.getName().toLowerCase().endsWith(".png")
                     && isInvalidPNGTestFile(imageFile)) {
@@ -47,7 +47,7 @@ public class XmpUpdateTest extends ImagingTest {
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
-            ImageFormat imageFormat = Imaging.guessFormat(imageFile);
+            final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
 
             String xmpXml = Imaging.getXmpXml(imageFile);
             if (null == xmpXml
@@ -76,17 +76,17 @@ public class XmpUpdateTest extends ImagingTest {
                 continue;
             }
 
-            File tempFile = this.createTempFile(imageFile.getName() + ".", "."
+            final File tempFile = this.createTempFile(imageFile.getName() + ".", "."
                     + imageFormat.getExtension());
-            BufferedImage image = Imaging.getBufferedImage(imageFile);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
 
             // ----
 
-            Map<String,Object> params = new HashMap<String,Object>();
+            final Map<String,Object> params = new HashMap<String,Object>();
             params.put(PARAM_KEY_XMP_XML, xmpXml);
             Imaging.writeImage(image, tempFile, imageFormat, params);
 
-            String xmpXmlOut = Imaging.getXmpXml(tempFile);
+            final String xmpXmlOut = Imaging.getXmpXml(tempFile);
 
             assertNotNull(xmpXmlOut);
 

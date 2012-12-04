@@ -38,11 +38,11 @@ import org.apache.commons.imaging.util.UnicodeUtils;
 public class PngWriter implements PngConstants {
     private final boolean verbose;
 
-    public PngWriter(boolean verbose) {
+    public PngWriter(final boolean verbose) {
         this.verbose = verbose;
     }
 
-    public PngWriter(Map<String,Object> params) {
+    public PngWriter(final Map<String,Object> params) {
         this.verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
                 false);
     }
@@ -62,28 +62,28 @@ public class PngWriter implements PngConstants {
      5. Time information: tIME (see 11.3.6: Time stamp information).
     */
     
-    private final void writeInt(OutputStream os, int value) throws IOException {
+    private final void writeInt(final OutputStream os, final int value) throws IOException {
         os.write(0xff & (value >> 24));
         os.write(0xff & (value >> 16));
         os.write(0xff & (value >> 8));
         os.write(0xff & (value >> 0));
     }
 
-    private final void writeChunk(OutputStream os, byte chunkType[],
-            byte data[]) throws IOException {
-        int dataLength = data == null ? 0 : data.length;
+    private final void writeChunk(final OutputStream os, final byte chunkType[],
+            final byte data[]) throws IOException {
+        final int dataLength = data == null ? 0 : data.length;
         writeInt(os, dataLength);
         os.write(chunkType);
         if (data != null) {
             os.write(data);
         }
 
-        PngCrc png_crc = new PngCrc();
+        final PngCrc png_crc = new PngCrc();
 
-        long crc1 = png_crc.start_partial_crc(chunkType, chunkType.length);
-        long crc2 = data == null ? crc1 : png_crc.continue_partial_crc(
+        final long crc1 = png_crc.start_partial_crc(chunkType, chunkType.length);
+        final long crc2 = data == null ? crc1 : png_crc.continue_partial_crc(
                 crc1, data, data.length);
-        int crc = (int) png_crc.finish_partial_crc(crc2);
+        final int crc = (int) png_crc.finish_partial_crc(crc2);
 
         writeInt(os, crc);
     }
@@ -97,9 +97,9 @@ public class PngWriter implements PngConstants {
         public final byte filterMethod;
         public final byte interlaceMethod;
 
-        public ImageHeader(int width, int height, byte bit_depth,
-                byte colorType, byte compressionMethod, byte filterMethod,
-                byte interlaceMethod) {
+        public ImageHeader(final int width, final int height, final byte bit_depth,
+                final byte colorType, final byte compressionMethod, final byte filterMethod,
+                final byte interlaceMethod) {
             this.width = width;
             this.height = height;
             this.bit_depth = bit_depth;
@@ -111,9 +111,9 @@ public class PngWriter implements PngConstants {
 
     }
 
-    private void writeChunkIHDR(OutputStream os, ImageHeader value)
+    private void writeChunkIHDR(final OutputStream os, final ImageHeader value)
             throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         writeInt(baos, value.width);
         writeInt(baos, value.height);
         baos.write(0xff & value.bit_depth);
@@ -127,7 +127,7 @@ public class PngWriter implements PngConstants {
         writeChunk(os, IHDR_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    private void writeChunkiTXt(OutputStream os, PngText.Itxt text)
+    private void writeChunkiTXt(final OutputStream os, final PngText.Itxt text)
             throws IOException, ImageWriteException {
         if (!UnicodeUtils.isValidISO_8859_1(text.keyword)) {
             throw new ImageWriteException(
@@ -139,7 +139,7 @@ public class PngWriter implements PngConstants {
                             + text.languageTag);
         }
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // keyword
         baos.write(text.keyword.getBytes("ISO-8859-1"));
@@ -161,7 +161,7 @@ public class PngWriter implements PngConstants {
         writeChunk(os, iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    private void writeChunkzTXt(OutputStream os, PngText.Ztxt text)
+    private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text)
             throws IOException, ImageWriteException {
         if (!UnicodeUtils.isValidISO_8859_1(text.keyword)) {
             throw new ImageWriteException(
@@ -172,7 +172,7 @@ public class PngWriter implements PngConstants {
                     "Png zTXt chunk text is not ISO-8859-1: " + text.text);
         }
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // keyword
         baos.write(text.keyword.getBytes("ISO-8859-1"));
@@ -187,7 +187,7 @@ public class PngWriter implements PngConstants {
         writeChunk(os, zTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    private void writeChunktEXt(OutputStream os, PngText.Text text)
+    private void writeChunktEXt(final OutputStream os, final PngText.Text text)
             throws IOException, ImageWriteException {
         if (!UnicodeUtils.isValidISO_8859_1(text.keyword)) {
             throw new ImageWriteException(
@@ -198,7 +198,7 @@ public class PngWriter implements PngConstants {
                     "Png tEXt chunk text is not ISO-8859-1: " + text.text);
         }
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // keyword
         baos.write(text.keyword.getBytes("ISO-8859-1"));
@@ -210,10 +210,10 @@ public class PngWriter implements PngConstants {
         writeChunk(os, tEXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    private void writeChunkXmpiTXt(OutputStream os, String xmpXml)
+    private void writeChunkXmpiTXt(final OutputStream os, final String xmpXml)
             throws IOException {
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // keyword
         baos.write(XMP_KEYWORD.getBytes("ISO-8859-1"));
@@ -233,15 +233,15 @@ public class PngWriter implements PngConstants {
         writeChunk(os, iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    private void writeChunkPLTE(OutputStream os, Palette palette)
+    private void writeChunkPLTE(final OutputStream os, final Palette palette)
             throws IOException {
-        int length = palette.length();
-        byte bytes[] = new byte[length * 3];
+        final int length = palette.length();
+        final byte bytes[] = new byte[length * 3];
 
         // Debug.debug("length", length);
         for (int i = 0; i < length; i++) {
-            int rgb = palette.getEntry(i);
-            int index = i * 3;
+            final int rgb = palette.getEntry(i);
+            final int index = i * 3;
             // Debug.debug("index", index);
             bytes[index + 0] = (byte) (0xff & (rgb >> 16));
             bytes[index + 1] = (byte) (0xff & (rgb >> 8));
@@ -251,8 +251,8 @@ public class PngWriter implements PngConstants {
         writeChunk(os, PLTE_CHUNK_TYPE.toByteArray(), bytes);
     }
 
-    private void writeChunkTRNS(OutputStream os, Palette palette) throws IOException {
-        byte[] bytes = new byte[palette.length()];
+    private void writeChunkTRNS(final OutputStream os, final Palette palette) throws IOException {
+        final byte[] bytes = new byte[palette.length()];
         
         for (int i = 0; i < bytes.length; i++) {
             bytes[i] = (byte) (0xff & (palette.getEntry(i) >> 24));
@@ -261,18 +261,18 @@ public class PngWriter implements PngConstants {
         writeChunk(os, TRNS_CHUNK_TYPE.toByteArray(), bytes);
     }
 
-    private void writeChunkIEND(OutputStream os) throws IOException {
+    private void writeChunkIEND(final OutputStream os) throws IOException {
         writeChunk(os, IEND_CHUNK_TYPE.toByteArray(), null);
     }
 
-    private void writeChunkIDAT(OutputStream os, byte bytes[])
+    private void writeChunkIDAT(final OutputStream os, final byte bytes[])
             throws IOException {
         writeChunk(os, IDAT_CHUNK_TYPE.toByteArray(), bytes);
     }
 
-    private void writeChunkPHYS(OutputStream os, int xPPU, int yPPU, byte units)
+    private void writeChunkPHYS(final OutputStream os, final int xPPU, final int yPPU, final byte units)
             throws IOException {
-        byte[] bytes = new byte[9];
+        final byte[] bytes = new byte[9];
         bytes[0] = (byte) (0xff & (xPPU >> 24));
         bytes[1] = (byte) (0xff & (xPPU >> 16));
         bytes[2] = (byte) (0xff & (xPPU >> 8));
@@ -285,10 +285,10 @@ public class PngWriter implements PngConstants {
         writeChunk(os, IPHYS_CHUNK_TYPE.toByteArray(), bytes);
     }
 
-    private byte getColourType(boolean hasAlpha, boolean isGrayscale) {
+    private byte getColourType(final boolean hasAlpha, final boolean isGrayscale) {
         byte result;
 
-        boolean index = false; // charles
+        final boolean index = false; // charles
 
         if (index) {
             result = COLOR_TYPE_INDEXED_COLOR;
@@ -307,12 +307,12 @@ public class PngWriter implements PngConstants {
         return result;
     }
 
-    private byte getBitDepth(final byte colorType, Map<String,Object> params) {
+    private byte getBitDepth(final byte colorType, final Map<String,Object> params) {
         byte result = 8;
 
-        Object o = params.get(PARAM_KEY_PNG_BIT_DEPTH);
+        final Object o = params.get(PARAM_KEY_PNG_BIT_DEPTH);
         if (o != null && o instanceof Number) {
-            int value = ((Number) o).intValue();
+            final int value = ((Number) o).intValue();
             switch (value) {
             case 1:
             case 2:
@@ -371,7 +371,7 @@ public class PngWriter implements PngConstants {
      tEXt   Yes None
      zTXt   Yes None
      */
-    public void writeImage(BufferedImage src, OutputStream os, Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
         params = new HashMap<String,Object>(params);
@@ -385,7 +385,7 @@ public class PngWriter implements PngConstants {
             params.remove(PARAM_KEY_VERBOSE);
         }
 
-        Map<String,Object> rawParams = new HashMap<String,Object>(params);
+        final Map<String,Object> rawParams = new HashMap<String,Object>(params);
         if (params.containsKey(PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
             params.remove(PARAM_KEY_PNG_FORCE_TRUE_COLOR);
         }
@@ -403,15 +403,15 @@ public class PngWriter implements PngConstants {
         }
         params.remove(PARAM_KEY_PIXEL_DENSITY);
         if (params.size() > 0) {
-            Object firstKey = params.keySet().iterator().next();
+            final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
         params = rawParams;
 
-        int width = src.getWidth();
-        int height = src.getHeight();
+        final int width = src.getWidth();
+        final int height = src.getHeight();
 
-        boolean hasAlpha = new PaletteFactory().hasTransparency(src);
+        final boolean hasAlpha = new PaletteFactory().hasTransparency(src);
         if (verbose) {
             Debug.debug("hasAlpha", hasAlpha);
         }
@@ -424,9 +424,9 @@ public class PngWriter implements PngConstants {
 
         byte colorType;
         {
-            boolean forceIndexedColor = ParamMap.getParamBoolean(params,
+            final boolean forceIndexedColor = ParamMap.getParamBoolean(params,
                     PARAM_KEY_PNG_FORCE_INDEXED_COLOR, false);
-            boolean forceTrueColor = ParamMap.getParamBoolean(params,
+            final boolean forceTrueColor = ParamMap.getParamBoolean(params,
                     PARAM_KEY_PNG_FORCE_TRUE_COLOR, false);
 
             if (forceIndexedColor && forceTrueColor) {
@@ -446,7 +446,7 @@ public class PngWriter implements PngConstants {
             }
         }
 
-        byte bitDepth = getBitDepth(colorType, params);
+        final byte bitDepth = getBitDepth(colorType, params);
         if (verbose) {
             Debug.debug("bit_depth", bitDepth);
         }
@@ -467,11 +467,11 @@ public class PngWriter implements PngConstants {
         {
             // IHDR must be first
 
-            byte compressionMethod = COMPRESSION_TYPE_INFLATE_DEFLATE;
-            byte filterMethod = FILTER_METHOD_ADAPTIVE;
-            byte interlaceMethod = INTERLACE_METHOD_NONE;
+            final byte compressionMethod = COMPRESSION_TYPE_INFLATE_DEFLATE;
+            final byte filterMethod = FILTER_METHOD_ADAPTIVE;
+            final byte interlaceMethod = INTERLACE_METHOD_NONE;
 
-            ImageHeader imageHeader = new ImageHeader(width, height, bitDepth,
+            final ImageHeader imageHeader = new ImageHeader(width, height, bitDepth,
                     colorType, compressionMethod, filterMethod, interlaceMethod);
 
             writeChunkIHDR(os, imageHeader);
@@ -488,7 +488,7 @@ public class PngWriter implements PngConstants {
         if (colorType == COLOR_TYPE_INDEXED_COLOR) {
             // PLTE No Before first IDAT
 
-            int max_colors = hasAlpha ? 255 : 256;
+            final int max_colors = hasAlpha ? 255 : 256;
 
             palette = new MedianCutQuantizer(true).process(src, max_colors,
                     verbose);
@@ -500,9 +500,9 @@ public class PngWriter implements PngConstants {
             writeChunkPLTE(os, palette);
         }
 
-        Object pixelDensityObj = params.get(PARAM_KEY_PIXEL_DENSITY);
+        final Object pixelDensityObj = params.get(PARAM_KEY_PIXEL_DENSITY);
         if (pixelDensityObj instanceof PixelDensity) {
-            PixelDensity pixelDensity = (PixelDensity) pixelDensityObj;
+            final PixelDensity pixelDensity = (PixelDensity) pixelDensityObj;
             if (pixelDensity.isUnitless()) {
                 writeChunkPHYS(os, (int) Math.round(pixelDensity
                         .getRawHorizontalDensity()),
@@ -517,14 +517,14 @@ public class PngWriter implements PngConstants {
         }
 
         if (params.containsKey(PARAM_KEY_XMP_XML)) {
-            String xmpXml = (String) params.get(PARAM_KEY_XMP_XML);
+            final String xmpXml = (String) params.get(PARAM_KEY_XMP_XML);
             writeChunkXmpiTXt(os, xmpXml);
         }
 
         if (params.containsKey(PARAM_KEY_PNG_TEXT_CHUNKS)) {
-            List<?> outputTexts = (List<?>) params.get(PARAM_KEY_PNG_TEXT_CHUNKS);
+            final List<?> outputTexts = (List<?>) params.get(PARAM_KEY_PNG_TEXT_CHUNKS);
             for (int i = 0; i < outputTexts.size(); i++) {
-                PngText text = (PngText) outputTexts.get(i);
+                final PngText text = (PngText) outputTexts.get(i);
                 if (text instanceof PngText.Text) {
                     writeChunktEXt(os, (PngText.Text) text);
                 } else if (text instanceof PngText.Ztxt) {
@@ -545,32 +545,32 @@ public class PngWriter implements PngConstants {
 
             byte uncompressed[];
             {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-                boolean useAlpha = colorType == COLOR_TYPE_GREYSCALE_WITH_ALPHA
+                final boolean useAlpha = colorType == COLOR_TYPE_GREYSCALE_WITH_ALPHA
                         || colorType == COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
 
-                int row[] = new int[width];
+                final int row[] = new int[width];
                 for (int y = 0; y < height; y++) {
                     // Debug.debug("y", y + "/" + height);
                     src.getRGB(0, y, width, 1, row, 0, width);
 
-                    byte filter_type = FILTER_TYPE_NONE;
+                    final byte filter_type = FILTER_TYPE_NONE;
                     baos.write(filter_type);
                     for (int x = 0; x < width; x++) {
-                        int argb = row[x];
+                        final int argb = row[x];
 
                         if (palette != null) {
-                            int index = palette.getPaletteIndex(argb);
+                            final int index = palette.getPaletteIndex(argb);
                             baos.write(0xff & index);
                         } else {
-                            int alpha = 0xff & (argb >> 24);
-                            int red = 0xff & (argb >> 16);
-                            int green = 0xff & (argb >> 8);
-                            int blue = 0xff & (argb >> 0);
+                            final int alpha = 0xff & (argb >> 24);
+                            final int red = 0xff & (argb >> 16);
+                            final int green = 0xff & (argb >> 8);
+                            final int blue = 0xff & (argb >> 0);
 
                             if (isGrayscale) {
-                                int gray = (red + green + blue) / 3;
+                                final int gray = (red + green + blue) / 3;
                                 // if(y==0)
                                 // {
                                 // Debug.debug("gray: " + x + ", " + y +
@@ -600,18 +600,18 @@ public class PngWriter implements PngConstants {
 
             // Debug.debug("uncompressed", uncompressed.length);
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            DeflaterOutputStream dos = new DeflaterOutputStream(baos);
-            int chunk_size = 256 * 1024;
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+            final int chunk_size = 256 * 1024;
             for (int index = 0; index < uncompressed.length; index += chunk_size) {
-                int end = Math.min(uncompressed.length, index + chunk_size);
-                int length = end - index;
+                final int end = Math.min(uncompressed.length, index + chunk_size);
+                final int length = end - index;
 
                 dos.write(uncompressed, index, length);
                 dos.flush();
                 baos.flush();
 
-                byte compressed[] = baos.toByteArray();
+                final byte compressed[] = baos.toByteArray();
                 baos.reset();
                 if (compressed.length > 0) {
                     // Debug.debug("compressed", compressed.length);
@@ -621,7 +621,7 @@ public class PngWriter implements PngConstants {
             }
             {
                 dos.finish();
-                byte compressed[] = baos.toByteArray();
+                final byte compressed[] = baos.toByteArray();
                 if (compressed.length > 0) {
                     // Debug.debug("compressed final", compressed.length);
                     writeChunkIDAT(os, compressed);

@@ -24,25 +24,25 @@ public class ImageFormat {
     private final String extension;
     public final boolean actual;
 
-    private ImageFormat(String name, boolean actual) {
+    private ImageFormat(final String name, final boolean actual) {
         this.name = name;
         this.extension = name;
         this.actual = actual;
     }
 
-    private ImageFormat(String name) {
+    private ImageFormat(final String name) {
         this.name = name;
         this.extension = name;
         actual = true;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (!(o instanceof ImageFormat)) {
             return false;
         }
 
-        ImageFormat other = (ImageFormat) o;
+        final ImageFormat other = (ImageFormat) o;
 
         return other.getName().equals(getName());
 
@@ -98,7 +98,7 @@ public class ImageFormat {
      * @return A valid array of ImageFormat objects.
      */
     public static ImageFormat[] getAllFormats() {
-        ImageFormat result[] = {
+        final ImageFormat result[] = {
                 IMAGE_FORMAT_UNKNOWN,
                 IMAGE_FORMAT_BMP,
                 IMAGE_FORMAT_DCX,

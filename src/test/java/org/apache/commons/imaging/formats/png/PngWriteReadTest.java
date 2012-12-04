@@ -37,8 +37,8 @@ public class PngWriteReadTest extends ImagingTest {
     // super(name);
     // }
 
-    private int[][] getSimpleRawData(int width, int height, int value) {
-        int[][] result = new int[height][width];
+    private int[][] getSimpleRawData(final int width, final int height, final int value) {
+        final int[][] result = new int[height][width];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 result[y][x] = value;
@@ -47,13 +47,13 @@ public class PngWriteReadTest extends ImagingTest {
         return result;
     }
 
-    private int[][] getAscendingRawData(int width, int height) {
-        int[][] result = new int[height][width];
+    private int[][] getAscendingRawData(final int width, final int height) {
+        final int[][] result = new int[height][width];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int alpha = (x + y) % 256;
-                int value = (x + y) % 256;
-                int argb = (0xff & alpha) << 24 | (0xff & value) << 16
+                final int alpha = (x + y) % 256;
+                final int value = (x + y) % 256;
+                final int argb = (0xff & alpha) << 24 | (0xff & value) << 16
                         | (0xff & value) << 8 | (0xff & value) << 0;
 
                 result[y][x] = argb;
@@ -62,12 +62,12 @@ public class PngWriteReadTest extends ImagingTest {
         return result;
     }
 
-    private int[][] randomRawData(int width, int height) {
-        Random random = new Random();
-        int[][] result = new int[height][width];
+    private int[][] randomRawData(final int width, final int height) {
+        final Random random = new Random();
+        final int[][] result = new int[height][width];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int argb = random.nextInt();
+                final int argb = random.nextInt();
                 result[y][x] = argb;
             }
         }
@@ -75,35 +75,35 @@ public class PngWriteReadTest extends ImagingTest {
     }
 
     public void test() throws Exception {
-        int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
-        int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
-        int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
-        int[][] singleRedPixel = getSimpleRawData(1, 1, 0xffff0000);
-        int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        int[][] smallRandomPixels = randomRawData(256, 256);
+        final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
+        final int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
+        final int[][] smallRedPixels = getSimpleRawData(256, 256, 0xffff0000);
+        final int[][] singleRedPixel = getSimpleRawData(1, 1, 0xffff0000);
+        final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
+        final int[][] smallRandomPixels = randomRawData(256, 256);
 
-        int[][][] testData = { smallBlackPixels, singleBlackPixel,
+        final int[][][] testData = { smallBlackPixels, singleBlackPixel,
                 smallRedPixels, singleRedPixel, smallAscendingPixels,
                 smallRandomPixels, };
 
-        for (int[][] rawData : testData) {
+        for (final int[][] rawData : testData) {
             writeAndReadImageData(rawData);
         }
     }
 
     public void testTransparency() throws Exception {
         // Test for https://issues.apache.org/jira/browse/SANSELAN-52
-        int[][] smallAscendingPixels = getAscendingRawData(256, 256);
-        byte[] pngBytes = Imaging.writeImageToBytes(
+        final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
+        final byte[] pngBytes = Imaging.writeImageToBytes(
                 imageDataToBufferedImage(smallAscendingPixels),
                 ImageFormat.IMAGE_FORMAT_PNG, null);
         assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
-    private BufferedImage imageDataToBufferedImage(int[][] rawData) {
-        int width = rawData[0].length;
-        int height = rawData.length;
-        BufferedImage image = new BufferedImage(width, height,
+    private BufferedImage imageDataToBufferedImage(final int[][] rawData) {
+        final int width = rawData[0].length;
+        final int height = rawData.length;
+        final BufferedImage image = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -113,10 +113,10 @@ public class PngWriteReadTest extends ImagingTest {
         return image;
     }
 
-    private int[][] bufferedImageToImageData(BufferedImage image) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int[][] result = new int[height][width];
+    private int[][] bufferedImageToImageData(final BufferedImage image) {
+        final int width = image.getWidth();
+        final int height = image.getHeight();
+        final int[][] result = new int[height][width];
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -126,35 +126,35 @@ public class PngWriteReadTest extends ImagingTest {
         return result;
     }
 
-    private void writeAndReadImageData(int[][] rawData) throws IOException,
+    private void writeAndReadImageData(final int[][] rawData) throws IOException,
             ImageReadException, ImageWriteException {
-        BufferedImage srcImage = imageDataToBufferedImage(rawData);
+        final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
-        Map<String,Object> writeParams = new HashMap<String,Object>();
+        final Map<String,Object> writeParams = new HashMap<String,Object>();
         // writeParams.put(SanselanConstants.PARAM_KEY_FORMAT,
         // ImageFormat.IMAGE_FORMAT_PNG);
         // writeParams.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
         // Boolean.TRUE);
 
-        byte bytes[] = Imaging.writeImageToBytes(srcImage,
+        final byte bytes[] = Imaging.writeImageToBytes(srcImage,
                 ImageFormat.IMAGE_FORMAT_PNG, writeParams);
 
         // Debug.debug("bytes", bytes);
 
-        File tempFile = createTempFile("temp", ".png");
+        final File tempFile = createTempFile("temp", ".png");
         IoUtils.writeToFile(bytes, tempFile);
 
-        BufferedImage dstImage = Imaging.getBufferedImage(bytes);
+        final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
 
         assertNotNull(dstImage);
         assertTrue(srcImage.getWidth() == dstImage.getWidth());
         assertTrue(srcImage.getHeight() == dstImage.getHeight());
 
-        int dstData[][] = bufferedImageToImageData(dstImage);
+        final int dstData[][] = bufferedImageToImageData(dstImage);
         compare(rawData, dstData);
     }
 
-    private void compare(int[][] a, int[][] b) {
+    private void compare(final int[][] a, final int[][] b) {
         assertNotNull(a);
         assertNotNull(b);
         assertTrue(a.length == b.length);

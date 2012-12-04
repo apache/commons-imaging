@@ -33,20 +33,20 @@ import org.apache.commons.imaging.util.Debug;
 public abstract class ImagingTest extends TestCase implements
         ImagingTestConstants, ImagingConstants {
 
-    protected File createTempFile(String prefix, String suffix)
+    protected File createTempFile(final String prefix, final String suffix)
             throws IOException {
-        File tempFolder = new File("tmp");
+        final File tempFolder = new File("tmp");
         if (!tempFolder.exists()) {
             tempFolder.mkdirs();
         }
         assertTrue(tempFolder.isDirectory());
 
-        File result = File.createTempFile(prefix, suffix, tempFolder);
+        final File result = File.createTempFile(prefix, suffix, tempFolder);
         result.deleteOnExit();
         return result;
     }
 
-    public void compareByteArrays(byte a[], byte b[]) {
+    public void compareByteArrays(final byte a[], final byte b[]) {
         assertTrue(a.length == b.length);
         for (int i = 0; i < b.length; i++) {
             assertTrue(b[i] == a[i]);
@@ -59,12 +59,12 @@ public abstract class ImagingTest extends TestCase implements
             Thread.sleep(50);
             System.runFinalization();
             Thread.sleep(50);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Debug.debug(e);
         }
     }
 
-    protected boolean isPhilHarveyTestImage(File file) {
+    protected boolean isPhilHarveyTestImage(final File file) {
         // Debug.debug("isPhilHarveyTestImage file", file.getAbsolutePath());
         // Debug.debug("isPhilHarveyTestImage folder",
         // PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
@@ -83,16 +83,16 @@ public abstract class ImagingTest extends TestCase implements
     protected File getTestImageByName(final String filename)
             throws IOException, ImageReadException {
         return getTestImage(new ImageFilter() {
-            public boolean accept(File file) throws IOException,
+            public boolean accept(final File file) throws IOException,
                     ImageReadException {
                 return file.getName().equals(filename);
             }
         });
     }
 
-    protected File getTestImage(ImageFilter filter) throws IOException,
+    protected File getTestImage(final ImageFilter filter) throws IOException,
             ImageReadException {
-        List<File> images = getTestImages(filter, 1);
+        final List<File> images = getTestImages(filter, 1);
 
         assertTrue(images.size() > 0);
 
@@ -103,7 +103,7 @@ public abstract class ImagingTest extends TestCase implements
         return getTestImages(null, -1);
     }
 
-    protected List<File> getTestImages(ImageFilter filter) throws IOException,
+    protected List<File> getTestImages(final ImageFilter filter) throws IOException,
             ImageReadException {
         return getTestImages(filter, -1);
     }
@@ -121,9 +121,9 @@ public abstract class ImagingTest extends TestCase implements
         Debug.debug("imagesFolder", imagesFolder);
         assertTrue(imagesFolder.exists());
 
-        FileSystemTraversal.Visitor visitor = new FileSystemTraversal.Visitor() {
+        final FileSystemTraversal.Visitor visitor = new FileSystemTraversal.Visitor() {
 
-            public boolean visit(File file, double progressEstimate) {
+            public boolean visit(final File file, final double progressEstimate) {
                 if (!Imaging.hasImageFileExtension(file)) {
                     return true;
                 }
@@ -140,7 +140,7 @@ public abstract class ImagingTest extends TestCase implements
         int counter = 0;
 
         for (int i = 0; i < ALL_IMAGES.size(); i++) {
-            File file = ALL_IMAGES.get(i);
+            final File file = ALL_IMAGES.get(i);
 
             if (!Imaging.hasImageFileExtension(file)) {
                 continue;
@@ -170,7 +170,7 @@ public abstract class ImagingTest extends TestCase implements
         return images;
     }
 
-    protected boolean isInvalidPNGTestFile(File file) {
+    protected boolean isInvalidPNGTestFile(final File file) {
         return (file.getParentFile().getName().equalsIgnoreCase("pngsuite") && file
                 .getName().toLowerCase().startsWith("x"));
     }

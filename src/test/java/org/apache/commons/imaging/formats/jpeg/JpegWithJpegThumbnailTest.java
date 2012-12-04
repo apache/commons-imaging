@@ -30,13 +30,13 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 public class JpegWithJpegThumbnailTest extends ImagingTest {
 
     public void testSingleImage() throws Exception {
-        File imageFile = getTestImageByName("img_F028c_small.jpg");
+        final File imageFile = getTestImageByName("img_F028c_small.jpg");
 
-        Map<String,Object> params = new HashMap<String,Object>();
-        IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
+        final Map<String,Object> params = new HashMap<String,Object>();
+        final IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
-        JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
-        BufferedImage image = jpegMetadata.getEXIFThumbnail();
+        final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+        final BufferedImage image = jpegMetadata.getEXIFThumbnail();
         assertNotNull(image);
     }
 }

@@ -39,7 +39,7 @@ public class PngChunkItxt extends PngTextChunk {
 
     public final String translatedKeyword;
 
-    public PngChunkItxt(int length, int chunkType, int crc, byte bytes[])
+    public PngChunkItxt(final int length, final int chunkType, final int crc, final byte bytes[])
             throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
         int terminator = findNull(bytes);
@@ -51,16 +51,16 @@ public class PngChunkItxt extends PngTextChunk {
         keyword = new String(bytes, 0, terminator, "ISO-8859-1");
         int index = terminator + 1;
 
-        int compressionFlag = bytes[index++];
+        final int compressionFlag = bytes[index++];
         if (compressionFlag != 0 && compressionFlag != 1) {
             throw new ImageReadException(
                     "PNG iTXt chunk has invalid compression flag: "
                             + compressionFlag);
         }
 
-        boolean compressed = compressionFlag == 1;
+        final boolean compressed = compressionFlag == 1;
 
-        int compressionMethod = bytes[index++];
+        final int compressionMethod = bytes[index++];
         if (compressed) {
             if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE) {
                 throw new ImageReadException(
@@ -94,9 +94,9 @@ public class PngChunkItxt extends PngTextChunk {
         index = terminator + 1;
 
         if (compressed) {
-            int compressedTextLength = bytes.length - index;
+            final int compressedTextLength = bytes.length - index;
 
-            byte compressedText[] = new byte[compressedTextLength];
+            final byte compressedText[] = new byte[compressedTextLength];
             System.arraycopy(bytes, index, compressedText, 0,
                     compressedTextLength);
 

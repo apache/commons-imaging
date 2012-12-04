@@ -22,8 +22,8 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
 public class PixelParserRgb extends PixelParserSimple {
-    public PixelParserRgb(BmpHeaderInfo bhi, byte ColorTable[],
-            byte ImageData[]) {
+    public PixelParserRgb(final BmpHeaderInfo bhi, final byte ColorTable[],
+            final byte ImageData[]) {
         super(bhi, ColorTable, ImageData);
 
     }
@@ -50,53 +50,53 @@ public class PixelParserRgb extends PixelParserSimple {
                 cached_byte = (0xff & imageData[bytecount]);
                 bytecount++;
             }
-            int cache_mask = (1 << bhi.bitsPerPixel) - 1;
-            int sample = cache_mask & (cached_byte >> (8 - bhi.bitsPerPixel));
+            final int cache_mask = (1 << bhi.bitsPerPixel) - 1;
+            final int sample = cache_mask & (cached_byte >> (8 - bhi.bitsPerPixel));
             cached_byte = 0xff & (cached_byte << bhi.bitsPerPixel);
             cached_bit_count -= bhi.bitsPerPixel;
 
-            int rgb = getColorTableRGB(sample);
+            final int rgb = getColorTableRGB(sample);
 
             return rgb;
         } else if (bhi.bitsPerPixel == 8) { // always grayscale?
-            int sample = 0xff & imageData[bytecount + 0];
+            final int sample = 0xff & imageData[bytecount + 0];
 
-            int rgb = getColorTableRGB(sample);
+            final int rgb = getColorTableRGB(sample);
 
             bytecount += 1;
 
             return rgb;
         } else if (bhi.bitsPerPixel == 16) {
-            int data = bfp.read2Bytes("Pixel", is, "BMP Image Data");
+            final int data = bfp.read2Bytes("Pixel", is, "BMP Image Data");
 
-            int blue = (0x1f & (data >> 0)) << 3;
-            int green = (0x1f & (data >> 5)) << 3;
-            int red = (0x1f & (data >> 10)) << 3;
-            int alpha = 0xff;
+            final int blue = (0x1f & (data >> 0)) << 3;
+            final int green = (0x1f & (data >> 5)) << 3;
+            final int red = (0x1f & (data >> 10)) << 3;
+            final int alpha = 0xff;
 
-            int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+            final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
             bytecount += 2;
 
             return rgb;
         } else if (bhi.bitsPerPixel == 24) {
-            int blue = 0xff & imageData[bytecount + 0];
-            int green = 0xff & imageData[bytecount + 1];
-            int red = 0xff & imageData[bytecount + 2];
-            int alpha = 0xff;
+            final int blue = 0xff & imageData[bytecount + 0];
+            final int green = 0xff & imageData[bytecount + 1];
+            final int red = 0xff & imageData[bytecount + 2];
+            final int alpha = 0xff;
 
-            int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+            final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
             bytecount += 3;
 
             return rgb;
         } else if (bhi.bitsPerPixel == 32) {
-            int blue = 0xff & imageData[bytecount + 0];
-            int green = 0xff & imageData[bytecount + 1];
-            int red = 0xff & imageData[bytecount + 2];
-            int alpha = 0xff;
+            final int blue = 0xff & imageData[bytecount + 0];
+            final int green = 0xff & imageData[bytecount + 1];
+            final int red = 0xff & imageData[bytecount + 2];
+            final int alpha = 0xff;
 
-            int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+            final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
             bytecount += 4;
 

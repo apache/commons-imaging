@@ -24,14 +24,14 @@ public abstract class Segment extends BinaryFileParser {
     public final int marker;
     public final int length;
 
-    public Segment(int marker, int length) {
+    public Segment(final int marker, final int length) {
         // super();
 
         this.marker = marker;
         this.length = length;
     }
 
-    public void dump(PrintWriter pw) {
+    public void dump(final PrintWriter pw) {
     }
 
     public abstract String getDescription();

@@ -34,16 +34,16 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 public class MetadataExample {
-    public static void metadataExample(File file) throws ImageReadException,
+    public static void metadataExample(final File file) throws ImageReadException,
             IOException {
         // get all metadata stored in EXIF format (ie. from JPEG or TIFF).
         // org.w3c.dom.Node node = Sanselan.getMetadataObsolete(imageBytes);
-        IImageMetadata metadata = Imaging.getMetadata(file);
+        final IImageMetadata metadata = Imaging.getMetadata(file);
 
         // System.out.println(metadata);
 
         if (metadata instanceof JpegImageMetadata) {
-            JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+            final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 
             // Jpeg EXIF metadata is stored in a TIFF-based directory structure
             // and is identified with TIFF tags.
@@ -77,13 +77,13 @@ public class MetadataExample {
             System.out.println();
 
             // simple interface to GPS data
-            TiffImageMetadata exifMetadata = jpegMetadata.getExif();
+            final TiffImageMetadata exifMetadata = jpegMetadata.getExif();
             if (null != exifMetadata) {
-                TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
+                final TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
                 if (null != gpsInfo) {
-                    String gpsDescription = gpsInfo.toString();
-                    double longitude = gpsInfo.getLongitudeAsDegreesEast();
-                    double latitude = gpsInfo.getLatitudeAsDegreesNorth();
+                    final String gpsDescription = gpsInfo.toString();
+                    final double longitude = gpsInfo.getLongitudeAsDegreesEast();
+                    final double latitude = gpsInfo.getLatitudeAsDegreesNorth();
 
                     System.out.println("    " + "GPS Description: "
                             + gpsDescription);
@@ -95,33 +95,33 @@ public class MetadataExample {
             }
 
             // more specific example of how to manually access GPS values
-            TiffField gpsLatitudeRefField = jpegMetadata
+            final TiffField gpsLatitudeRefField = jpegMetadata
                     .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
-            TiffField gpsLatitudeField = jpegMetadata
+            final TiffField gpsLatitudeField = jpegMetadata
                     .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LATITUDE);
-            TiffField gpsLongitudeRefField = jpegMetadata
+            final TiffField gpsLongitudeRefField = jpegMetadata
                     .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
-            TiffField gpsLongitudeField = jpegMetadata
+            final TiffField gpsLongitudeField = jpegMetadata
                     .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
             if (gpsLatitudeRefField != null && gpsLatitudeField != null
                     && gpsLongitudeRefField != null
                     && gpsLongitudeField != null) {
                 // all of these values are strings.
-                String gpsLatitudeRef = (String) gpsLatitudeRefField.getValue();
-                RationalNumber gpsLatitude[] = (RationalNumber[]) (gpsLatitudeField
+                final String gpsLatitudeRef = (String) gpsLatitudeRefField.getValue();
+                final RationalNumber gpsLatitude[] = (RationalNumber[]) (gpsLatitudeField
                         .getValue());
-                String gpsLongitudeRef = (String) gpsLongitudeRefField
+                final String gpsLongitudeRef = (String) gpsLongitudeRefField
                         .getValue();
-                RationalNumber gpsLongitude[] = (RationalNumber[]) gpsLongitudeField
+                final RationalNumber gpsLongitude[] = (RationalNumber[]) gpsLongitudeField
                         .getValue();
 
-                RationalNumber gpsLatitudeDegrees = gpsLatitude[0];
-                RationalNumber gpsLatitudeMinutes = gpsLatitude[1];
-                RationalNumber gpsLatitudeSeconds = gpsLatitude[2];
+                final RationalNumber gpsLatitudeDegrees = gpsLatitude[0];
+                final RationalNumber gpsLatitudeMinutes = gpsLatitude[1];
+                final RationalNumber gpsLatitudeSeconds = gpsLatitude[2];
 
-                RationalNumber gpsLongitudeDegrees = gpsLongitude[0];
-                RationalNumber gpsLongitudeMinutes = gpsLongitude[1];
-                RationalNumber gpsLongitudeSeconds = gpsLongitude[2];
+                final RationalNumber gpsLongitudeDegrees = gpsLongitude[0];
+                final RationalNumber gpsLongitudeMinutes = gpsLongitude[1];
+                final RationalNumber gpsLongitudeSeconds = gpsLongitude[2];
 
                 // This will format the gps info like so:
                 //
@@ -143,9 +143,9 @@ public class MetadataExample {
 
             System.out.println();
 
-            List<IImageMetadataItem> items = jpegMetadata.getItems();
+            final List<IImageMetadataItem> items = jpegMetadata.getItems();
             for (int i = 0; i < items.size(); i++) {
-                IImageMetadataItem item = items.get(i);
+                final IImageMetadataItem item = items.get(i);
                 System.out.println("    " + "item: " + item);
             }
 
@@ -153,9 +153,9 @@ public class MetadataExample {
         }
     }
 
-    private static void printTagValue(JpegImageMetadata jpegMetadata,
-            TagInfo tagInfo) {
-        TiffField field = jpegMetadata.findEXIFValueWithExactMatch(tagInfo);
+    private static void printTagValue(final JpegImageMetadata jpegMetadata,
+            final TagInfo tagInfo) {
+        final TiffField field = jpegMetadata.findEXIFValueWithExactMatch(tagInfo);
         if (field == null) {
             System.out.println(tagInfo.name + ": " + "Not Found.");
         } else {

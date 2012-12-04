@@ -49,9 +49,9 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @see java.io.File
      * @see java.io.OutputStream
      */
-    public void removeXmpXml(File src, OutputStream os)
+    public void removeXmpXml(final File src, final OutputStream os)
             throws ImageReadException, IOException {
-        ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = new ByteSourceFile(src);
         removeXmpXml(byteSource, os);
     }
 
@@ -65,9 +65,9 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @param os
      *            OutputStream to write the image to.
      */
-    public void removeXmpXml(byte src[], OutputStream os)
+    public void removeXmpXml(final byte src[], final OutputStream os)
             throws ImageReadException, IOException {
-        ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = new ByteSourceArray(src);
         removeXmpXml(byteSource, os);
     }
 
@@ -81,9 +81,9 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @param os
      *            OutputStream to write the image to.
      */
-    public void removeXmpXml(InputStream src, OutputStream os)
+    public void removeXmpXml(final InputStream src, final OutputStream os)
             throws ImageReadException, IOException {
-        ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = new ByteSourceInputStream(src, null);
         removeXmpXml(byteSource, os);
     }
 
@@ -97,9 +97,9 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @param os
      *            OutputStream to write the image to.
      */
-    public void removeXmpXml(ByteSource byteSource, OutputStream os)
+    public void removeXmpXml(final ByteSource byteSource, final OutputStream os)
             throws ImageReadException, IOException {
-        JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
         List<JFIFPiece> pieces = jfifPieces.pieces;
         pieces = removeXmpSegments(pieces);
         writeSegments(os, pieces);
@@ -116,9 +116,9 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @param xmpXml
      *            String containing XMP XML.
      */
-    public void updateXmpXml(byte src[], OutputStream os, String xmpXml)
+    public void updateXmpXml(final byte src[], final OutputStream os, final String xmpXml)
             throws ImageReadException, IOException, ImageWriteException {
-        ByteSource byteSource = new ByteSourceArray(src);
+        final ByteSource byteSource = new ByteSourceArray(src);
         updateXmpXml(byteSource, os, xmpXml);
     }
 
@@ -133,9 +133,9 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @param xmpXml
      *            String containing XMP XML.
      */
-    public void updateXmpXml(InputStream src, OutputStream os, String xmpXml)
+    public void updateXmpXml(final InputStream src, final OutputStream os, final String xmpXml)
             throws ImageReadException, IOException, ImageWriteException {
-        ByteSource byteSource = new ByteSourceInputStream(src, null);
+        final ByteSource byteSource = new ByteSourceInputStream(src, null);
         updateXmpXml(byteSource, os, xmpXml);
     }
 
@@ -150,9 +150,9 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @param xmpXml
      *            String containing XMP XML.
      */
-    public void updateXmpXml(File src, OutputStream os, String xmpXml)
+    public void updateXmpXml(final File src, final OutputStream os, final String xmpXml)
             throws ImageReadException, IOException, ImageWriteException {
-        ByteSource byteSource = new ByteSourceFile(src);
+        final ByteSource byteSource = new ByteSourceFile(src);
         updateXmpXml(byteSource, os, xmpXml);
     }
 
@@ -167,19 +167,19 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @param xmpXml
      *            String containing XMP XML.
      */
-    public void updateXmpXml(ByteSource byteSource, OutputStream os,
-            String xmpXml) throws ImageReadException, IOException,
+    public void updateXmpXml(final ByteSource byteSource, final OutputStream os,
+            final String xmpXml) throws ImageReadException, IOException,
             ImageWriteException {
-        JFIFPieces jfifPieces = analyzeJFIF(byteSource);
+        final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
         List<JFIFPiece> pieces = jfifPieces.pieces;
         pieces = removeXmpSegments(pieces);
 
-        List<JFIFPieceSegment> newPieces = new ArrayList<JFIFPieceSegment>();
-        byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
+        final List<JFIFPieceSegment> newPieces = new ArrayList<JFIFPieceSegment>();
+        final byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
         int index = 0;
         while (index < xmpXmlBytes.length) {
-            int segmentSize = Math.min(xmpXmlBytes.length, MAX_SEGMENT_SIZE);
-            byte segmentData[] = writeXmpSegment(xmpXmlBytes, index,
+            final int segmentSize = Math.min(xmpXmlBytes.length, MAX_SEGMENT_SIZE);
+            final byte segmentData[] = writeXmpSegment(xmpXmlBytes, index,
                     segmentSize);
             newPieces.add(new JFIFPieceSegment(JPEG_APP1_Marker, segmentData));
             index += segmentSize;
@@ -190,9 +190,9 @@ public class JpegXmpRewriter extends JpegRewriter {
         writeSegments(os, pieces);
     }
 
-    private byte[] writeXmpSegment(byte xmpXmlData[], int start, int length)
+    private byte[] writeXmpSegment(final byte xmpXmlData[], final int start, final int length)
             throws IOException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         XMP_IDENTIFIER.writeTo(os);
         os.write(xmpXmlData, start, length);

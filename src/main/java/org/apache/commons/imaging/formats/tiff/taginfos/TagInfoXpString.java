@@ -32,35 +32,35 @@ import org.apache.commons.imaging.util.Debug;
  * - here we deal with this.
  */
 public class TagInfoXpString extends TagInfo {
-    public TagInfoXpString(String name, int tag, int length,
-            TiffDirectoryType directoryType) {
+    public TagInfoXpString(final String name, final int tag, final int length,
+            final TiffDirectoryType directoryType) {
         super(name, tag, Arrays.asList(FIELD_TYPE_UNDEFINED), length,
                 directoryType);
     }
 
     @Override
-    public byte[] encodeValue(FieldType fieldType, Object value, ByteOrder byteOrder)
+    public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
             throws ImageWriteException {
         if (!(value instanceof String)) {
             throw new ImageWriteException("Text value not String: " + value
                     + " (" + Debug.getType(value) + ")");
         }
-        String s = (String) value;
+        final String s = (String) value;
         try {
             return s.getBytes("UTF-16LE");
-        } catch (UnsupportedEncodingException cannotHappen) {
+        } catch (final UnsupportedEncodingException cannotHappen) {
             return null;
         }
     }
 
     @Override
-    public String getValue(TiffField entry) throws ImageReadException {
+    public String getValue(final TiffField entry) throws ImageReadException {
         if (entry.type != FIELD_TYPE_BYTE.type) {
             throw new ImageReadException("Text field not encoded as bytes.");
         }
         try {
             return new String(entry.getByteArrayValue(), "UTF-16LE");
-        } catch (UnsupportedEncodingException cannotHappen) {
+        } catch (final UnsupportedEncodingException cannotHappen) {
             return null;
         }
     }

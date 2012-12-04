@@ -28,22 +28,22 @@ public abstract class FieldType extends BinaryFileFunctions implements
     public final int type, length;
     public final String name;
 
-    public FieldType(int type, int length, String name) {
+    public FieldType(final int type, final int length, final String name) {
         this.type = type;
         this.length = length;
         this.name = name;
     }
 
-    public boolean isLocalValue(TiffField entry) {
+    public boolean isLocalValue(final TiffField entry) {
         // FIXME: we should use unsigned ints for offsets and lengths
         // when parsing TIFF files. But since we don't,
         // at least make this method treat length as unsigned,
         // so that corrupt lengths are caught early.
-        long entryLength = 0xffffffffL & entry.length;
+        final long entryLength = 0xffffffffL & entry.length;
         return ((length > 0) && ((length * entryLength) <= TIFF_ENTRY_MAX_VALUE_LENGTH));
     }
 
-    public int getBytesLength(TiffField entry) throws ImageReadException {
+    public int getBytesLength(final TiffField entry) throws ImageReadException {
         if (length < 1) {
             throw new ImageReadException("Unknown field type");
         }
@@ -58,22 +58,22 @@ public abstract class FieldType extends BinaryFileFunctions implements
         return new byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
     }
 
-    public final byte[] getStubValue(int count) {
+    public final byte[] getStubValue(final int count) {
         return new byte[count * length];
     }
 
-    public String getDisplayValue(TiffField entry) throws ImageReadException {
-        Object o = getSimpleValue(entry);
+    public String getDisplayValue(final TiffField entry) throws ImageReadException {
+        final Object o = getSimpleValue(entry);
         if (o == null) {
             return "NULL";
         }
         return o.toString();
     }
 
-    public final byte[] getRawBytes(TiffField entry) {
+    public final byte[] getRawBytes(final TiffField entry) {
         if (isLocalValue(entry)) {
-            int rawLength = length * entry.length;
-            byte result[] = new byte[rawLength];
+            final int rawLength = length * entry.length;
+            final byte result[] = new byte[rawLength];
             System.arraycopy(entry.valueOffsetBytes, 0, result, 0, rawLength);
             return result;
             // return readBytearray(name, entry.valueOffsetBytes, 0, length

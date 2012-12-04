@@ -24,9 +24,9 @@ import org.apache.commons.imaging.common.ImageBuilder;
 public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     // private final boolean yOnly;
 
-    public PhotometricInterpreterLogLuv(int fSamplesPerPixel,
-            int fBitsPerSample[], int Predictor, int width, int height,
-            boolean yonly) {
+    public PhotometricInterpreterLogLuv(final int fSamplesPerPixel,
+            final int fBitsPerSample[], final int Predictor, final int width, final int height,
+            final boolean yonly) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
         // this.yOnly = yonly;
@@ -36,20 +36,20 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     public void dumpstats() throws ImageReadException, IOException {
     }
 
-    private float cube(float f) {
+    private float cube(final float f) {
         return f * f * f;
     }
 
     // private float function_f(float value, )
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
-            int y) throws ImageReadException, IOException {
+    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+            final int y) throws ImageReadException, IOException {
         float X, Y, Z;
 
-        int cieL = samples[0];
-        int cieA = (byte) samples[1];
-        int cieB = (byte) samples[2];
+        final int cieL = samples[0];
+        final int cieA = (byte) samples[1];
+        final int cieB = (byte) samples[2];
 
         {
 
@@ -57,9 +57,9 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
             float var_X = cieA / 500.0f + var_Y;
             float var_Z = var_Y - cieB / 200.0f;
 
-            float var_x_cube = cube(var_X);
-            float var_y_cube = cube(var_Y);
-            float var_z_cube = cube(var_Z);
+            final float var_x_cube = cube(var_X);
+            final float var_y_cube = cube(var_Y);
+            final float var_z_cube = cube(var_Z);
 
             if (var_y_cube > 0.008856f) {
                 var_Y = var_y_cube;
@@ -79,9 +79,9 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
                 var_Z = (var_Z - 16 / 116.0f) / 7.787f;
             }
 
-            float ref_X = 95.047f;
-            float ref_Y = 100.000f;
-            float ref_Z = 108.883f;
+            final float ref_X = 95.047f;
+            final float ref_Y = 100.000f;
+            final float ref_Z = 108.883f;
 
             X = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant= D65
             Y = ref_Y * var_Y; // ref_Y = 100.000
@@ -95,9 +95,9 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
 
         int R, G, B;
         {
-            float var_X = X / 100f; // X = From 0 to ref_X
-            float var_Y = Y / 100f; // Y = From 0 to ref_Y
-            float var_Z = Z / 100f; // Z = From 0 to ref_Y
+            final float var_X = X / 100f; // X = From 0 to ref_X
+            final float var_Y = Y / 100f; // Y = From 0 to ref_Y
+            final float var_Z = Z / 100f; // Z = From 0 to ref_Y
 
             float var_R = var_X * 3.2406f + var_Y * -1.5372f + var_Z * -0.4986f;
             float var_G = var_X * -0.9689f + var_Y * 1.8758f + var_Z * 0.0415f;
@@ -149,8 +149,8 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         red = Math.min(255, Math.max(0, red));
         green = Math.min(255, Math.max(0, green));
         blue = Math.min(255, Math.max(0, blue));
-        int alpha = 0xff;
-        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int alpha = 0xff;
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
         imageBuilder.setRGB(x, y, rgb);
 
     }

@@ -42,15 +42,15 @@ public class BmpWriterRgb extends BmpWriter {
     }
 
     @Override
-    public void writePalette(BinaryOutputStream bos) throws IOException {
+    public void writePalette(final BinaryOutputStream bos) throws IOException {
     }
 
     @Override
-    public byte[] getImageData(BufferedImage src) {
-        int width = src.getWidth();
-        int height = src.getHeight();
+    public byte[] getImageData(final BufferedImage src) {
+        final int width = src.getWidth();
+        final int height = src.getHeight();
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         // BinaryOutputStream bos = new BinaryOutputStream(baos,
         // BYTE_ORDER_Network);
 
@@ -58,12 +58,12 @@ public class BmpWriterRgb extends BmpWriter {
         for (int y = height - 1; y >= 0; y--) {
             // for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++) {
-                int argb = src.getRGB(x, y);
-                int rgb = 0xffffff & argb;
+                final int argb = src.getRGB(x, y);
+                final int rgb = 0xffffff & argb;
 
-                int red = 0xff & (rgb >> 16);
-                int green = 0xff & (rgb >> 8);
-                int blue = 0xff & (rgb >> 0);
+                final int red = 0xff & (rgb >> 16);
+                final int green = 0xff & (rgb >> 8);
+                final int blue = 0xff & (rgb >> 0);
 
                 baos.write(blue);
                 baos.write(green);

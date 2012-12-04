@@ -27,7 +27,7 @@ public class BmpWriterPalette extends BmpWriter {
     private final SimplePalette palette;
     private final int bitsPerSample;
 
-    public BmpWriterPalette(SimplePalette palette) {
+    public BmpWriterPalette(final SimplePalette palette) {
         this.palette = palette;
 
         if (palette.length() <= 2) {
@@ -50,13 +50,13 @@ public class BmpWriterPalette extends BmpWriter {
     }
 
     @Override
-    public void writePalette(BinaryOutputStream bos) throws IOException {
+    public void writePalette(final BinaryOutputStream bos) throws IOException {
         for (int i = 0; i < palette.length(); i++) {
-            int rgb = palette.getEntry(i);
+            final int rgb = palette.getEntry(i);
 
-            int red = 0xff & (rgb >> 16);
-            int green = 0xff & (rgb >> 8);
-            int blue = 0xff & (rgb >> 0);
+            final int red = 0xff & (rgb >> 16);
+            final int green = 0xff & (rgb >> 8);
+            final int blue = 0xff & (rgb >> 0);
 
             bos.write(blue);
             bos.write(green);
@@ -66,11 +66,11 @@ public class BmpWriterPalette extends BmpWriter {
     }
 
     @Override
-    public byte[] getImageData(BufferedImage src) {
-        int width = src.getWidth();
-        int height = src.getHeight();
+    public byte[] getImageData(final BufferedImage src) {
+        final int width = src.getWidth();
+        final int height = src.getHeight();
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         int bit_cache = 0;
         int bits_in_cache = 0;
@@ -78,10 +78,10 @@ public class BmpWriterPalette extends BmpWriter {
         int bytecount = 0;
         for (int y = height - 1; y >= 0; y--) {
             for (int x = 0; x < width; x++) {
-                int argb = src.getRGB(x, y);
-                int rgb = 0xffffff & argb;
+                final int argb = src.getRGB(x, y);
+                final int rgb = 0xffffff & argb;
 
-                int index = palette.getPaletteIndex(rgb);
+                final int index = palette.getPaletteIndex(rgb);
 
                 if (bitsPerSample == 8) {
                     baos.write(0xff & index);

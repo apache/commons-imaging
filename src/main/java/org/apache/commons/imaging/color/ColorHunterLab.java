@@ -19,7 +19,7 @@ package org.apache.commons.imaging.color;
 public final class ColorHunterLab {
     public final double L, a, b;
 
-    public ColorHunterLab(double l, double a, double b) {
+    public ColorHunterLab(final double l, final double a, final double b) {
         L = l;
         this.a = a;
         this.b = b;

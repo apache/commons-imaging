@@ -81,7 +81,7 @@ public class YCbCrConverter {
         // but is clamped to [0, 255]
         for (int Cb = 0; Cb < 256; Cb++) {
             for (int Cr = 0; Cr < 256; Cr++) {
-                int value = fastRound(0.34414f * (Cb - 128) + 0.71414f
+                final int value = fastRound(0.34414f * (Cb - 128) + 0.71414f
                         * (Cr - 128));
                 greens1[(Cb << 8) | Cr] = value + 135;
             }
@@ -99,16 +99,16 @@ public class YCbCrConverter {
         }
     }
 
-    private static int fastRound(float x) {
+    private static int fastRound(final float x) {
         // Math.round() is very slow
         return (int) (x + 0.5f);
     }
 
-    public static int convertYCbCrToRGB(int Y, int Cb, int Cr) {
-        int r = reds[(Cr << 8) | Y];
-        int g1 = greens1[(Cb << 8) | Cr];
-        int g = greens2[(g1 << 8) | Y];
-        int b = blues[(Cb << 8) | Y];
+    public static int convertYCbCrToRGB(final int Y, final int Cb, final int Cr) {
+        final int r = reds[(Cr << 8) | Y];
+        final int g1 = greens1[(Cb << 8) | Cr];
+        final int g = greens2[(g1 << 8) | Y];
+        final int b = blues[(Cb << 8) | Y];
         return r | g | b;
     }
 }

@@ -35,49 +35,49 @@ import org.apache.commons.imaging.util.IoUtils;
 public class PngTextTest extends PngBaseTest {
 
     public void test() throws Exception {
-        int width = 1;
-        int height = 1;
-        BufferedImage srcImage = new BufferedImage(width, height,
+        final int width = 1;
+        final int height = 1;
+        final BufferedImage srcImage = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         srcImage.setRGB(0, 0, Color.red.getRGB());
 
-        Map<String,Object> writeParams = new HashMap<String,Object>();
+        final Map<String,Object> writeParams = new HashMap<String,Object>();
 
-        List<PngText> writeTexts = new ArrayList<PngText>();
+        final List<PngText> writeTexts = new ArrayList<PngText>();
         {
-            String keyword = "a";
-            String text = "b";
+            final String keyword = "a";
+            final String text = "b";
             writeTexts.add(new PngText.Text(keyword, text));
         }
         {
-            String keyword = "c";
-            String text = "d";
+            final String keyword = "c";
+            final String text = "d";
             writeTexts.add(new PngText.Ztxt(keyword, text));
         }
         {
-            String keyword = "e";
-            String text = "f";
-            String languageTag = "g";
-            String translatedKeyword = "h";
+            final String keyword = "e";
+            final String text = "f";
+            final String languageTag = "g";
+            final String translatedKeyword = "h";
             writeTexts.add(new PngText.Itxt(keyword, text, languageTag,
                     translatedKeyword));
         }
 
         writeParams.put(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS, writeTexts);
 
-        byte bytes[] = Imaging.writeImageToBytes(srcImage,
+        final byte bytes[] = Imaging.writeImageToBytes(srcImage,
                 ImageFormat.IMAGE_FORMAT_PNG, writeParams);
 
-        File tempFile = createTempFile("temp", ".png");
+        final File tempFile = createTempFile("temp", ".png");
         IoUtils.writeToFile(bytes, tempFile);
 
-        PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);
+        final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);
         assertNotNull(imageInfo);
 
-        List<PngText> readTexts = imageInfo.getTextChunks();
+        final List<PngText> readTexts = imageInfo.getTextChunks();
         assertEquals(readTexts.size(), 3);
         for (int i = 0; i < readTexts.size(); i++) {
-            PngText text = readTexts.get(i);
+            final PngText text = readTexts.get(i);
             if (text.keyword.equals("a")) {
                 assertEquals(text.text, "b");
             } else if (text.keyword.equals("c")) {

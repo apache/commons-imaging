@@ -25,33 +25,33 @@ import org.apache.commons.imaging.formats.png.GammaCorrection;
 public class PngChunkPlte extends PngChunk {
     public final int rgb[];
 
-    public PngChunkPlte(int length, int ChunkType, int CRC, byte bytes[])
+    public PngChunkPlte(final int length, final int ChunkType, final int CRC, final byte bytes[])
             throws ImageReadException, IOException {
         super(length, ChunkType, CRC, bytes);
 
-        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 
         if ((length % 3) != 0) {
             throw new ImageReadException("PLTE: wrong length: " + length);
         }
 
-        int count = length / 3;
+        final int count = length / 3;
 
         rgb = new int[count];
 
         for (int i = 0; i < count; i++) {
-            int red = readByte("red[" + i + "]", is,
+            final int red = readByte("red[" + i + "]", is,
                     "Not a Valid Png File: PLTE Corrupt");
-            int green = readByte("green[" + i + "]", is,
+            final int green = readByte("green[" + i + "]", is,
                     "Not a Valid Png File: PLTE Corrupt");
-            int blue = readByte("blue[" + i + "]", is,
+            final int blue = readByte("blue[" + i + "]", is,
                     "Not a Valid Png File: PLTE Corrupt");
             rgb[i] = 0xff000000 | ((0xff & red) << 16) | ((0xff & green) << 8)
                     | ((0xff & blue) << 0);
         }
     }
 
-    public int getRGB(int index) throws ImageReadException {
+    public int getRGB(final int index) throws ImageReadException {
         if ((index < 0) || (index >= rgb.length)) {
             throw new ImageReadException("PNG: unknown Palette reference: "
                     + index);
@@ -70,7 +70,7 @@ public class PngChunkPlte extends PngChunk {
     // Debug.debug();
     // }
 
-    public void correct(GammaCorrection gammaCorrection) {
+    public void correct(final GammaCorrection gammaCorrection) {
         for (int i = 0; i < rgb.length; i++) {
             rgb[i] = gammaCorrection.correctARGB(rgb[i]);
         }

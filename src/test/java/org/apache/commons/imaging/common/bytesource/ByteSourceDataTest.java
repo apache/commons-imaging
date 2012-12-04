@@ -35,41 +35,41 @@ public class ByteSourceDataTest extends ByteSourceTest {
     }
 
     private class ByteSourceFileFactory implements ByteSourceFactory {
-        public ByteSource getByteSource(byte src[]) throws IOException {
-            File file = createTempFile(src);
+        public ByteSource getByteSource(final byte src[]) throws IOException {
+            final File file = createTempFile(src);
 
             // test that all bytes written to file.
             assertTrue(src.length == file.length());
 
-            ByteSource byteSource = new ByteSourceFile(file);
+            final ByteSource byteSource = new ByteSourceFile(file);
             return byteSource;
         }
     }
 
     private class ByteSourceInputStreamFileFactory implements ByteSourceFactory {
-        public ByteSource getByteSource(byte src[]) throws IOException {
-            File file = createTempFile(src);
+        public ByteSource getByteSource(final byte src[]) throws IOException {
+            final File file = createTempFile(src);
 
-            FileInputStream is = new FileInputStream(file);
+            final FileInputStream is = new FileInputStream(file);
 
-            ByteSource byteSource = new ByteSourceInputStream(is, null);
+            final ByteSource byteSource = new ByteSourceInputStream(is, null);
             return byteSource;
         }
     }
 
     private class ByteSourceInputStreamRawFactory implements ByteSourceFactory {
-        public ByteSource getByteSource(byte src[]) throws IOException {
-            ByteArrayInputStream is = new ByteArrayInputStream(src);
+        public ByteSource getByteSource(final byte src[]) throws IOException {
+            final ByteArrayInputStream is = new ByteArrayInputStream(src);
 
-            ByteSource byteSource = new ByteSourceInputStream(is, null);
+            final ByteSource byteSource = new ByteSourceInputStream(is, null);
             return byteSource;
         }
 
     }
 
-    protected void writeAndReadBytes(ByteSourceFactory byteSourceFactory,
-            byte src[]) throws IOException {
-        ByteSource byteSource = byteSourceFactory.getByteSource(src);
+    protected void writeAndReadBytes(final ByteSourceFactory byteSourceFactory,
+            final byte src[]) throws IOException {
+        final ByteSource byteSource = byteSourceFactory.getByteSource(src);
 
         // test cache during interrupted read cache by reading only first N
         // bytes.
@@ -77,8 +77,8 @@ public class ByteSourceDataTest extends ByteSourceTest {
             InputStream is = null;
             try {
                 is = byteSource.getInputStream();
-                byte prefix[] = new byte[256];
-                int read = is.read(prefix);
+                final byte prefix[] = new byte[256];
+                final int read = is.read(prefix);
 
                 assertTrue(read <= src.length);
                 for (int i = 0; i < read; i++) {
@@ -88,7 +88,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
                 if (is != null) {
                     try {
                         is.close();
-                    } catch (IOException ignore) {
+                    } catch (final IOException ignore) {
                     }
                 }
             }
@@ -96,27 +96,27 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
         // test cache by completely reading InputStream N times.
         for (int j = 0; j < 5; j++) {
-            InputStream is = byteSource.getInputStream();
-            byte dst[] = IoUtils.getInputStreamBytes(is);
+            final InputStream is = byteSource.getInputStream();
+            final byte dst[] = IoUtils.getInputStreamBytes(is);
 
             compareByteArrays(src, dst);
         }
 
         {
             // test getAll() method.
-            byte all[] = byteSource.getAll();
+            final byte all[] = byteSource.getAll();
             compareByteArrays(src, all);
         }
 
         if (src.length > 2) {
             // test optional start param to getInputStream()
 
-            int start = src.length / 2;
+            final int start = src.length / 2;
 
             InputStream is = null;
             try {
                 is = byteSource.getInputStream(start);
-                byte dst[] = IoUtils.getInputStreamBytes(is);
+                final byte dst[] = IoUtils.getInputStreamBytes(is);
 
                 assertTrue(src.length == dst.length + start);
                 for (int i = 0; i < dst.length; i++) {
@@ -126,7 +126,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
                 if (is != null) {
                     try {
                         is.close();
-                    } catch (IOException ignored) {
+                    } catch (final IOException ignored) {
                     }
                 }
             }
@@ -135,15 +135,15 @@ public class ByteSourceDataTest extends ByteSourceTest {
     }
 
     public void test() throws Exception {
-        ByteSourceFactory byteSourceFactories[] = {
+        final ByteSourceFactory byteSourceFactories[] = {
                 new ByteSourceFileFactory(),
                 new ByteSourceInputStreamFileFactory(),
                 new ByteSourceInputStreamRawFactory(), };
 
-        byte testByteArrays[][] = getTestByteArrays();
+        final byte testByteArrays[][] = getTestByteArrays();
 
-        for (byte[] testByteArray : testByteArrays) {
-            for (ByteSourceFactory byteSourceFactory : byteSourceFactories) {
+        for (final byte[] testByteArray : testByteArrays) {
+            for (final ByteSourceFactory byteSourceFactory : byteSourceFactories) {
                 writeAndReadBytes(byteSourceFactory, testByteArray);
             }
         }

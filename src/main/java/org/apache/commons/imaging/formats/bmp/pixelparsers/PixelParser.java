@@ -33,7 +33,7 @@ public abstract class PixelParser {
     protected final BinaryFileParser bfp;
     protected final ByteArrayInputStream is;
 
-    public PixelParser(BmpHeaderInfo bhi, byte ColorTable[], byte ImageData[]) {
+    public PixelParser(final BmpHeaderInfo bhi, final byte ColorTable[], final byte ImageData[]) {
         this.bhi = bhi;
         this.colorTable = ColorTable;
         this.imageData = ImageData;
@@ -47,12 +47,12 @@ public abstract class PixelParser {
 
     protected int getColorTableRGB(int index) {
         index *= 4;
-        int blue = 0xff & colorTable[index + 0];
-        int green = 0xff & colorTable[index + 1];
-        int red = 0xff & colorTable[index + 2];
-        int alpha = 0xff;
+        final int blue = 0xff & colorTable[index + 0];
+        final int green = 0xff & colorTable[index + 1];
+        final int red = 0xff & colorTable[index + 2];
+        final int alpha = 0xff;
 
-        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
         return rgb;
     }
 

@@ -28,7 +28,7 @@ public abstract class ByteSource extends BinaryFileFunctions {
         this.filename = filename;
     }
 
-    public final InputStream getInputStream(int start) throws IOException {
+    public final InputStream getInputStream(final int start) throws IOException {
         InputStream is = null;
         boolean succeeded = false;
         try {

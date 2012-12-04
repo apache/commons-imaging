@@ -24,7 +24,7 @@ public class IptcBlock {
     public final byte[] blockNameBytes;
     public final byte[] blockData;
 
-    public IptcBlock(int blockType, byte[] blockNameBytes, byte[] blockData) {
+    public IptcBlock(final int blockType, final byte[] blockNameBytes, final byte[] blockData) {
         this.blockData = blockData;
         this.blockNameBytes = blockNameBytes;
         this.blockType = blockType;

@@ -26,12 +26,12 @@ public abstract class UnicodeUtils {
     private UnicodeUtils() {
     }
 
-    public static final boolean isValidISO_8859_1(String s) {
+    public static final boolean isValidISO_8859_1(final String s) {
         try {
-            String roundtrip = new String(s.getBytes("ISO-8859-1"),
+            final String roundtrip = new String(s.getBytes("ISO-8859-1"),
                     "ISO-8859-1");
             return s.equals(roundtrip);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             // should never be thrown.
             throw new RuntimeException("Error parsing string.", e);
         }

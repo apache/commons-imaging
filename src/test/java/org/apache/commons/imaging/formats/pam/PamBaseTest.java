@@ -28,14 +28,14 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class PamBaseTest extends ImagingTest {
 
-    private static boolean isPam(File file) throws IOException,
+    private static boolean isPam(final File file) throws IOException,
             ImageReadException {
-        ImageFormat format = Imaging.guessFormat(file);
+        final ImageFormat format = Imaging.guessFormat(file);
         return format == ImageFormat.IMAGE_FORMAT_PAM;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isPam(file);
         }
     };

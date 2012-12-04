@@ -39,8 +39,8 @@ public class DhtSegment extends Segment {
         public final int[] maxCode = new int[1 + 16]; // 1-based
         public final int[] valPtr = new int[1 + 16]; // 1-based
 
-        public HuffmanTable(int tableClass, int destinationIdentifier,
-                int[] bits, int[] huffVal) {
+        public HuffmanTable(final int tableClass, final int destinationIdentifier,
+                final int[] bits, final int[] huffVal) {
             this.tableClass = tableClass;
             this.destinationIdentifier = destinationIdentifier;
             this.bits = bits;
@@ -113,28 +113,28 @@ public class DhtSegment extends Segment {
         }
     }
 
-    public DhtSegment(int marker, byte[] segmentData) throws IOException {
+    public DhtSegment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public DhtSegment(int marker, int length, InputStream is)
+    public DhtSegment(final int marker, int length, final InputStream is)
             throws IOException {
         super(marker, length);
 
         while (length > 0) {
-            int tableClassAndDestinationId = 0xff & readByte(
+            final int tableClassAndDestinationId = 0xff & readByte(
                     "TableClassAndDestinationId", is, "Not a Valid JPEG File");
             length--;
-            int tableClass = (tableClassAndDestinationId >> 4) & 0xf;
-            int destinationIdentifier = tableClassAndDestinationId & 0xf;
-            int[] bits = new int[1 + 16];
+            final int tableClass = (tableClassAndDestinationId >> 4) & 0xf;
+            final int destinationIdentifier = tableClassAndDestinationId & 0xf;
+            final int[] bits = new int[1 + 16];
             int bitsSum = 0;
             for (int i = 1; i < bits.length; i++) {
                 bits[i] = 0xff & readByte("Li", is, "Not a Valid JPEG File");
                 length--;
                 bitsSum += bits[i];
             }
-            int[] huffVal = new int[bitsSum];
+            final int[] huffVal = new int[bitsSum];
             for (int i = 0; i < bitsSum; i++) {
                 huffVal[i] = 0xff & readByte("Vij", is, "Not a Valid JPEG File");
                 length--;

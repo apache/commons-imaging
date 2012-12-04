@@ -26,7 +26,7 @@ public class MyBitInputStream extends InputStream {
     private final ByteOrder byteOrder;
     private boolean tiffLZWMode = false;
 
-    public MyBitInputStream(InputStream is, ByteOrder byteOrder) {
+    public MyBitInputStream(final InputStream is, final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
         this.is = is;
     }
@@ -44,9 +44,9 @@ public class MyBitInputStream extends InputStream {
         tiffLZWMode = true;
     }
 
-    public int readBits(int SampleBits) throws IOException {
+    public int readBits(final int SampleBits) throws IOException {
         while (bitsInCache < SampleBits) {
-            int next = is.read();
+            final int next = is.read();
 
             if (next < 0) {
                 if (tiffLZWMode) {
@@ -56,7 +56,7 @@ public class MyBitInputStream extends InputStream {
                 return -1;
             }
 
-            int newByte = (0xff & next);
+            final int newByte = (0xff & next);
 
             if (byteOrder == ByteOrder.NETWORK) {
                 bitCache = (bitCache << 8) | newByte;
@@ -67,7 +67,7 @@ public class MyBitInputStream extends InputStream {
             bytesRead++;
             bitsInCache += 8;
         }
-        int sampleMask = (1 << SampleBits) - 1;
+        final int sampleMask = (1 << SampleBits) - 1;
 
         int sample;
 
@@ -78,10 +78,10 @@ public class MyBitInputStream extends InputStream {
             bitCache >>= SampleBits;
         }
 
-        int result = sample;
+        final int result = sample;
 
         bitsInCache -= SampleBits;
-        int remainderMask = (1 << bitsInCache) - 1;
+        final int remainderMask = (1 << bitsInCache) - 1;
         bitCache &= remainderMask;
 
         return result;

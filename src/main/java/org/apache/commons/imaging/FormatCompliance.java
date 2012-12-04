@@ -32,12 +32,12 @@ public class FormatCompliance {
     private final String description;
     private final List<String> comments = new ArrayList<String>();
 
-    public FormatCompliance(String description) {
+    public FormatCompliance(final String description) {
         this.description = description;
         failOnError = false;
     }
 
-    public FormatCompliance(String description, boolean fail_on_error) {
+    public FormatCompliance(final String description, final boolean fail_on_error) {
         this.description = description;
         this.failOnError = fail_on_error;
     }
@@ -46,21 +46,21 @@ public class FormatCompliance {
         return new FormatCompliance("ignore", false);
     }
 
-    public void addComment(String s) throws ImageReadException {
+    public void addComment(final String s) throws ImageReadException {
         comments.add(s);
         if (failOnError) {
             throw new ImageReadException(s);
         }
     }
 
-    public void addComment(String s, int value) throws ImageReadException {
+    public void addComment(final String s, final int value) throws ImageReadException {
         addComment(s + ": " + getValueDescription(value));
     }
 
     @Override
     public String toString() {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw);
 
         dump(pw);
 
@@ -71,7 +71,7 @@ public class FormatCompliance {
         dump(new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset())));
     }
 
-    public void dump(PrintWriter pw) {
+    public void dump(final PrintWriter pw) {
         pw.println("Format Compliance: " + description);
 
         if (comments.size() == 0) {
@@ -85,11 +85,11 @@ public class FormatCompliance {
         pw.flush();
     }
 
-    private String getValueDescription(int value) {
+    private String getValueDescription(final int value) {
         return value + " (" + Integer.toHexString(value) + ")";
     }
 
-    public boolean compare_bytes(String name, byte expected[], byte actual[])
+    public boolean compare_bytes(final String name, final byte expected[], final byte actual[])
             throws ImageReadException {
         if (expected.length != actual.length) {
             addComment(name + ": " + "Unexpected length: (expected: "
@@ -112,7 +112,7 @@ public class FormatCompliance {
         return true;
     }
 
-    public boolean checkBounds(String name, int min, int max, int actual)
+    public boolean checkBounds(final String name, final int min, final int max, final int actual)
             throws ImageReadException {
         if ((actual < min) || (actual > max)) {
             addComment(name + ": " + "bounds check: " + min + " <= " + actual
@@ -123,20 +123,20 @@ public class FormatCompliance {
         return true;
     }
 
-    public boolean compare(String name, int valid, int actual)
+    public boolean compare(final String name, final int valid, final int actual)
             throws ImageReadException {
         return compare(name, new int[] { valid, }, actual);
     }
 
-    public boolean compare(String name, int valid[], int actual)
+    public boolean compare(final String name, final int valid[], final int actual)
             throws ImageReadException {
-        for (int element : valid) {
+        for (final int element : valid) {
             if (actual == element) {
                 return true;
             }
         }
 
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
         result.append(name + ": " + "Unexpected value: (valid: ");
         if (valid.length > 1) {
             result.append("{");

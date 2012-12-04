@@ -40,7 +40,7 @@ class RgbeInfo extends BinaryFileFunctions {
     private int height = -1;
     private static final byte[] TWO_TWO = new byte[] { 0x2, 0x2 };
 
-    RgbeInfo(ByteSource byteSource) throws IOException {
+    RgbeInfo(final ByteSource byteSource) throws IOException {
         this.in = new BinaryInputStream(byteSource.getInputStream(),
                 ByteOrder.BIG_ENDIAN);
     }
@@ -72,7 +72,7 @@ class RgbeInfo extends BinaryFileFunctions {
     void close() {
         try {
             in.close();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             Debug.debug(e);
         }
     }
@@ -80,9 +80,9 @@ class RgbeInfo extends BinaryFileFunctions {
     private void readDimensions() throws IOException, ImageReadException {
         getMetadata(); // Ensure we've read past this
 
-        InfoHeaderReader reader = new InfoHeaderReader(in);
-        String resolution = reader.readNextLine();
-        Matcher matcher = RESOLUTION_STRING.matcher(resolution);
+        final InfoHeaderReader reader = new InfoHeaderReader(in);
+        final String resolution = reader.readNextLine();
+        final Matcher matcher = RESOLUTION_STRING.matcher(resolution);
 
         if (!matcher.matches()) {
             throw new ImageReadException(
@@ -98,7 +98,7 @@ class RgbeInfo extends BinaryFileFunctions {
         in.readAndVerifyBytes(RgbeConstants.HEADER,
                 "Not a valid HDR: Incorrect Header");
 
-        InfoHeaderReader reader = new InfoHeaderReader(in);
+        final InfoHeaderReader reader = new InfoHeaderReader(in);
 
         if (reader.readNextLine().length() != 0) {
             throw new ImageReadException("Not a valid HDR: Incorrect Header");
@@ -109,11 +109,11 @@ class RgbeInfo extends BinaryFileFunctions {
         String info = reader.readNextLine();
 
         while (info.length() != 0) {
-            int equals = info.indexOf("=");
+            final int equals = info.indexOf("=");
 
             if (equals > 0) {
-                String variable = info.substring(0, equals);
-                String value = info.substring(equals + 1);
+                final String variable = info.substring(0, equals);
+                final String value = info.substring(equals + 1);
 
                 if ("FORMAT".equals(value) && !"32-bit_rle_rgbe".equals(value)) {
                     throw new ImageReadException(
@@ -133,18 +133,18 @@ class RgbeInfo extends BinaryFileFunctions {
     public float[][] getPixelData() throws IOException, ImageReadException {
         // Read into local variables to ensure that we have seeked into the file
         // far enough
-        int height = getHeight();
-        int width = getWidth();
+        final int height = getHeight();
+        final int width = getWidth();
 
         if (width >= 32768) {
             throw new ImageReadException(
                     "Scan lines must be less than 32768 bytes long");
         }
 
-        byte[] scanLineBytes = convertShortToByteArray(width,
+        final byte[] scanLineBytes = convertShortToByteArray(width,
                 ByteOrder.BIG_ENDIAN);
-        byte[] rgbe = new byte[width * 4];
-        float[][] out = new float[3][width * height];
+        final byte[] rgbe = new byte[width * 4];
+        final float[][] out = new float[3][width * height];
 
         for (int i = 0; i < height; i++) {
             in.readAndVerifyBytes(TWO_TWO, "Scan line " + i
@@ -155,17 +155,17 @@ class RgbeInfo extends BinaryFileFunctions {
             decompress(in, rgbe);
 
             for (int channel = 0; channel < 3; channel++) {
-                int channelOffset = channel * width;
-                int eOffset = 3 * width;
+                final int channelOffset = channel * width;
+                final int eOffset = 3 * width;
 
                 for (int p = 0; p < width; p++) {
-                    int mantissa = rgbe[p + eOffset] & 0xff;
-                    int pos = p + i * width;
+                    final int mantissa = rgbe[p + eOffset] & 0xff;
+                    final int pos = p + i * width;
 
                     if (0 == mantissa) {
                         out[channel][pos] = 0;
                     } else {
-                        float mult = (float) Math.pow(2, mantissa - (128 + 8));
+                        final float mult = (float) Math.pow(2, mantissa - (128 + 8));
                         out[channel][pos] = ((rgbe[p + channelOffset] & 0xff) + 0.5f)
                                 * mult;
                     }
@@ -176,16 +176,16 @@ class RgbeInfo extends BinaryFileFunctions {
         return out;
     }
 
-    private static void decompress(InputStream in, byte[] out)
+    private static void decompress(final InputStream in, final byte[] out)
             throws IOException {
         int position = 0;
-        int total = out.length;
+        final int total = out.length;
 
         while (position < total) {
-            int n = in.read();
+            final int n = in.read();
 
             if (n > 128) {
-                int value = in.read();
+                final int value = in.read();
 
                 for (int i = 0; i < (n & 0x7f); i++) {
                     out[position++] = (byte) value;

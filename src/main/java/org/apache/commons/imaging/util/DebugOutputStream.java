@@ -30,19 +30,19 @@ public class DebugOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(int b) throws IOException {
+    public void write(final int b) throws IOException {
         os.write(b);
         count++;
     }
 
     @Override
-    public void write(byte b[]) throws IOException {
+    public void write(final byte b[]) throws IOException {
         os.write(b);
         count += b.length;
     }
 
     @Override
-    public void write(byte b[], int off, int len) throws IOException {
+    public void write(final byte b[], final int off, final int len) throws IOException {
         os.write(b, off, len);
         count += len;
     }

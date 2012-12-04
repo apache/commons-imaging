@@ -39,16 +39,16 @@ public class JfifSegment extends Segment implements JpegConstants {
         return "JFIF (" + getSegmentType() + ")";
     }
 
-    public JfifSegment(int marker, byte segmentData[])
+    public JfifSegment(final int marker, final byte segmentData[])
             throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public JfifSegment(int marker, int marker_length, InputStream is)
+    public JfifSegment(final int marker, final int marker_length, final InputStream is)
             throws ImageReadException, IOException {
         super(marker, marker_length);
 
-        byte signature[] = readBytes(is, JFIF0_SIGNATURE.size());
+        final byte signature[] = readBytes(is, JFIF0_SIGNATURE.size());
         if (!JFIF0_SIGNATURE.equals(signature)
                 && !JFIF0_SIGNATURE_ALTERNATIVE.equals(signature)) {
             throw new ImageReadException(

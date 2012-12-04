@@ -44,10 +44,10 @@ public abstract class ScanExpediter extends BinaryFileParser {
     protected final GammaCorrection gammaCorrection;
     protected final TransparencyFilter transparencyFilter;
 
-    public ScanExpediter(int width, int height, InputStream is,
-            BufferedImage bi, int color_type, int bitDepth, int bitsPerPixel,
-            PngChunkPlte pngChunkPLTE, GammaCorrection gammaCorrection,
-            TransparencyFilter transparencyFilter)
+    public ScanExpediter(final int width, final int height, final InputStream is,
+            final BufferedImage bi, final int color_type, final int bitDepth, final int bitsPerPixel,
+            final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
+            final TransparencyFilter transparencyFilter)
 
     {
         this.width = width;
@@ -63,7 +63,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
         this.transparencyFilter = transparencyFilter;
     }
 
-    protected int getBitsToBytesRoundingUp(int bits) {
+    protected int getBitsToBytesRoundingUp(final int bits) {
         int bytes = bits / 8;
         if ((bits % 8 > 0)) {
             bytes++;
@@ -71,20 +71,20 @@ public abstract class ScanExpediter extends BinaryFileParser {
         return bytes;
     }
 
-    protected final int getPixelARGB(int alpha, int red, int green, int blue) {
-        int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
+    protected final int getPixelARGB(final int alpha, final int red, final int green, final int blue) {
+        final int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
                 | ((0xff & green) << 8) | ((0xff & blue) << 0);
 
         return rgb;
     }
 
-    protected final int getPixelRGB(int red, int green, int blue) {
+    protected final int getPixelRGB(final int red, final int green, final int blue) {
         return getPixelARGB(0xff, red, green, blue);
     }
 
     public abstract void drive() throws ImageReadException, IOException;
 
-    protected int getRGB(BitParser bitParser, int pixelIndexInScanline)
+    protected int getRGB(final BitParser bitParser, final int pixelIndexInScanline)
             throws ImageReadException, IOException {
 
         switch (colorType) {
@@ -118,7 +118,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
             }
 
             if (gammaCorrection != null) {
-                int alpha = (0xff000000 & rgb) >> 24; // make sure to preserve
+                final int alpha = (0xff000000 & rgb) >> 24; // make sure to preserve
                 // transparency
                 red = gammaCorrection.correctSample(red);
                 green = gammaCorrection.correctSample(green);
@@ -132,7 +132,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
         case 3: {
             // 1,2,4,8 Each pixel is a palette index;
             // a PLTE chunk must appear.
-            int index = bitParser.getSample(pixelIndexInScanline, 0);
+            final int index = bitParser.getSample(pixelIndexInScanline, 0);
 
             int rgb = pngChunkPLTE.getRGB(index);
 
@@ -146,13 +146,13 @@ public abstract class ScanExpediter extends BinaryFileParser {
             // 8,16 Each pixel is a grayscale sample,
             // followed by an alpha sample.
             int sample = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
-            int alpha = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
+            final int alpha = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
 
             if (gammaCorrection != null) {
                 sample = gammaCorrection.correctSample(sample);
             }
 
-            int rgb = getPixelARGB(alpha, sample, sample, sample);
+            final int rgb = getPixelARGB(alpha, sample, sample, sample);
             return rgb;
 
         }
@@ -161,7 +161,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
             int red = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
             int green = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
             int blue = bitParser.getSampleAsByte(pixelIndexInScanline, 2);
-            int alpha = bitParser.getSampleAsByte(pixelIndexInScanline, 3);
+            final int alpha = bitParser.getSampleAsByte(pixelIndexInScanline, 3);
 
             if (gammaCorrection != null) {
                 red = gammaCorrection.correctSample(red);
@@ -169,7 +169,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
                 blue = gammaCorrection.correctSample(blue);
             }
 
-            int rgb = getPixelARGB(alpha, red, green, blue);
+            final int rgb = getPixelARGB(alpha, red, green, blue);
             return rgb;
         }
         default:
@@ -178,8 +178,8 @@ public abstract class ScanExpediter extends BinaryFileParser {
         }
     }
 
-    protected ScanlineFilter getScanlineFilter(int filter_type,
-            int BytesPerPixel) throws ImageReadException {
+    protected ScanlineFilter getScanlineFilter(final int filter_type,
+            final int BytesPerPixel) throws ImageReadException {
         ScanlineFilter filter;
 
         switch (filter_type) {
@@ -212,26 +212,26 @@ public abstract class ScanExpediter extends BinaryFileParser {
         return filter;
     }
 
-    protected byte[] unfilterScanline(int filter_type, byte src[], byte prev[],
-            int BytesPerPixel) throws ImageReadException, IOException {
-        ScanlineFilter filter = getScanlineFilter(filter_type, BytesPerPixel);
+    protected byte[] unfilterScanline(final int filter_type, final byte src[], final byte prev[],
+            final int BytesPerPixel) throws ImageReadException, IOException {
+        final ScanlineFilter filter = getScanlineFilter(filter_type, BytesPerPixel);
 
-        byte dst[] = new byte[src.length];
+        final byte dst[] = new byte[src.length];
         filter.unfilter(src, dst, prev);
         return dst;
     }
 
-    protected byte[] getNextScanline(InputStream is, int length, byte prev[],
-            int BytesPerPixel) throws ImageReadException, IOException {
-        int filterType = is.read();
+    protected byte[] getNextScanline(final InputStream is, final int length, final byte prev[],
+            final int BytesPerPixel) throws ImageReadException, IOException {
+        final int filterType = is.read();
         if (filterType < 0) {
             throw new ImageReadException("PNG: missing filter type");
         }
 
-        byte scanline[] = this.readByteArray("scanline", length, is,
+        final byte scanline[] = this.readByteArray("scanline", length, is,
                 "PNG: missing image data");
 
-        byte unfiltered[] = unfilterScanline(filterType, scanline, prev,
+        final byte unfiltered[] = unfilterScanline(filterType, scanline, prev,
                 BytesPerPixel);
 
         return unfiltered;

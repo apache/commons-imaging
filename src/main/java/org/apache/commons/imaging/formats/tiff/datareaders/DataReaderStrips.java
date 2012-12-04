@@ -37,11 +37,11 @@ public final class DataReaderStrips extends DataReader {
 
     private final TiffImageData.Strips imageData;
 
-    public DataReaderStrips(TiffDirectory directory,
-            PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
-            int bitsPerSample[], int predictor, int samplesPerPixel, int width,
-            int height, int compression, ByteOrder byteOrder, int rowsPerStrip,
-            TiffImageData.Strips imageData) {
+    public DataReaderStrips(final TiffDirectory directory,
+            final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
+            final int bitsPerSample[], final int predictor, final int samplesPerPixel, final int width,
+            final int height, final int compression, final ByteOrder byteOrder, final int rowsPerStrip,
+            final TiffImageData.Strips imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
                 samplesPerPixel, width, height);
 
@@ -52,8 +52,8 @@ public final class DataReaderStrips extends DataReader {
         this.byteOrder = byteOrder;
     }
 
-    private void interpretStrip(ImageBuilder imageBuilder, byte bytes[],
-            int pixels_per_strip) throws ImageReadException, IOException {
+    private void interpretStrip(final ImageBuilder imageBuilder, final byte bytes[],
+            final int pixels_per_strip) throws ImageReadException, IOException {
         if (y >= height) {
             return;
         }
@@ -101,7 +101,7 @@ public final class DataReaderStrips extends DataReader {
 
         // verify that all samples are one byte in size
         boolean allSamplesAreOneByte = true;
-        for (int element : bitsPerSample) {
+        for (final int element : bitsPerSample) {
             if (element != 8) {
                 allSamplesAreOneByte = false;
                 break;
@@ -114,11 +114,11 @@ public final class DataReaderStrips extends DataReader {
             if (y + nRows > height) {
                 nRows = height - y;
             }
-            int i0 = y;
-            int i1 = y + nRows;
+            final int i0 = y;
+            final int i1 = y + nRows;
             x = 0;
             y += nRows;
-            int[] samples = new int[1];
+            final int[] samples = new int[1];
             for (int i = i0; i < i1; i++) {
                 for (int j = 0; j < width; j++) {
                     samples[0] = bytes[k++] & 0xff;
@@ -133,21 +133,21 @@ public final class DataReaderStrips extends DataReader {
             if (y + nRows > height) {
                 nRows = height - y;
             }
-            int i0 = y;
-            int i1 = y + nRows;
+            final int i0 = y;
+            final int i1 = y + nRows;
             x = 0;
             y += nRows;
             if (photometricInterpreter instanceof PhotometricInterpreterRgb) {
                 for (int i = i0; i < i1; i++) {
                     for (int j = 0; j < width; j++, k += 3) {
-                        int rgb = 0xff000000
+                        final int rgb = 0xff000000
                                 | (((bytes[k] << 8) | (bytes[k + 1] & 0xff)) << 8)
                                 | (bytes[k + 2] & 0xff);
                         imageBuilder.setRGB(j, i, rgb);
                     }
                 }
             } else {
-                int samples[] = new int[3];
+                final int samples[] = new int[3];
                 for (int i = i0; i < i1; i++) {
                     for (int j = 0; j < width; j++) {
                         samples[0] = bytes[k++] & 0xff;
@@ -167,8 +167,8 @@ public final class DataReaderStrips extends DataReader {
         // this logic will handle all cases not conforming to the
         // special case handled above
 
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        BitInputStream bis = new BitInputStream(bais, byteOrder);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        final BitInputStream bis = new BitInputStream(bais, byteOrder);
 
         int[] samples = new int[bitsPerSample.length];
         resetPredictor();
@@ -198,19 +198,19 @@ public final class DataReaderStrips extends DataReader {
     private int x = 0, y = 0;
 
     @Override
-    public void readImageData(ImageBuilder imageBuilder)
+    public void readImageData(final ImageBuilder imageBuilder)
             throws ImageReadException, IOException {
         for (int strip = 0; strip < imageData.strips.length; strip++) {
-            long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
-            long rowsRemaining = height - (strip * rowsPerStripLong);
-            long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
-            long bytesPerRow = (bitsPerPixel * width + 7) / 8;
-            long bytesPerStrip = rowsInThisStrip * bytesPerRow;
-            long pixelsPerStrip = rowsInThisStrip * width;
+            final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
+            final long rowsRemaining = height - (strip * rowsPerStripLong);
+            final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
+            final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
+            final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
+            final long pixelsPerStrip = rowsInThisStrip * width;
 
-            byte compressed[] = imageData.strips[strip].getData();
+            final byte compressed[] = imageData.strips[strip].getData();
 
-            byte decompressed[] = decompress(compressed, compression,
+            final byte decompressed[] = decompress(compressed, compression,
                     (int) bytesPerStrip, width, (int) rowsInThisStrip);
 
             interpretStrip(imageBuilder, decompressed, (int) pixelsPerStrip);

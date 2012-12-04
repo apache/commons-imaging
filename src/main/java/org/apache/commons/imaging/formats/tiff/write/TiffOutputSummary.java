@@ -56,20 +56,20 @@ class TiffOutputSummary implements TiffConstants {
         offsetItems.add(new OffsetItem(item, itemOffsetField));
     }
 
-    public void updateOffsets(ByteOrder byteOrder) throws ImageWriteException {
+    public void updateOffsets(final ByteOrder byteOrder) throws ImageWriteException {
         for (int i = 0; i < offsetItems.size(); i++) {
-            OffsetItem offset = offsetItems.get(i);
+            final OffsetItem offset = offsetItems.get(i);
 
-            byte value[] = FIELD_TYPE_LONG.writeData(
+            final byte value[] = FIELD_TYPE_LONG.writeData(
                     new int[] { offset.item.getOffset(), }, byteOrder);
             offset.itemOffsetField.setData(value);
         }
 
         for (int i = 0; i < imageDataItems.size(); i++) {
-            ImageDataOffsets imageDataInfo = imageDataItems.get(i);
+            final ImageDataOffsets imageDataInfo = imageDataItems.get(i);
 
             for (int j = 0; j < imageDataInfo.outputItems.length; j++) {
-                TiffOutputItem item = imageDataInfo.outputItems[j];
+                final TiffOutputItem item = imageDataInfo.outputItems[j];
                 imageDataInfo.imageDataOffsets[j] = item.getOffset();
             }
 

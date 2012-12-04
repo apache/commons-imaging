@@ -28,8 +28,8 @@ public abstract class PhotometricInterpreter {
     protected final int width;
     protected final int height;
 
-    public PhotometricInterpreter(int fSamplesPerPixel, int fBitsPerSample[],
-            int Predictor, int width, int height) {
+    public PhotometricInterpreter(final int fSamplesPerPixel, final int fBitsPerSample[],
+            final int Predictor, final int width, final int height) {
         this.samplesPerPixel = fSamplesPerPixel;
         this.bitsPerSample = fBitsPerSample;
         this.predictor = Predictor;

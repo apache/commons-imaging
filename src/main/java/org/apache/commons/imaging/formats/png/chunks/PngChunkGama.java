@@ -22,11 +22,11 @@ import java.io.IOException;
 public class PngChunkGama extends PngChunk {
     public final int Gamma;
 
-    public PngChunkGama(int Length, int ChunkType, int CRC, byte bytes[])
+    public PngChunkGama(final int Length, final int ChunkType, final int CRC, final byte bytes[])
             throws IOException {
         super(Length, ChunkType, CRC, bytes);
 
-        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
         Gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt");
     }
 

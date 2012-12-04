@@ -40,27 +40,27 @@ import java.io.IOException;
  */
 public class ColorTools {
 
-    public BufferedImage correctImage(BufferedImage src, File file)
+    public BufferedImage correctImage(final BufferedImage src, final File file)
             throws ImageReadException, IOException {
-        ICC_Profile icc = Imaging.getICCProfile(file);
+        final ICC_Profile icc = Imaging.getICCProfile(file);
         if (icc == null) {
             return src;
         }
 
-        ICC_ColorSpace cs = new ICC_ColorSpace(icc);
+        final ICC_ColorSpace cs = new ICC_ColorSpace(icc);
 
-        BufferedImage dst = convertFromColorSpace(src, cs);
+        final BufferedImage dst = convertFromColorSpace(src, cs);
         return dst;
     }
 
-    public BufferedImage relabelColorSpace(BufferedImage bi, ICC_Profile profile)
+    public BufferedImage relabelColorSpace(final BufferedImage bi, final ICC_Profile profile)
             throws ImagingOpException {
-        ICC_ColorSpace cs = new ICC_ColorSpace(profile);
+        final ICC_ColorSpace cs = new ICC_ColorSpace(profile);
 
         return relabelColorSpace(bi, cs);
     }
 
-    public BufferedImage relabelColorSpace(BufferedImage bi, ColorSpace cs)
+    public BufferedImage relabelColorSpace(final BufferedImage bi, final ColorSpace cs)
             throws ImagingOpException {
         // This does not do the conversion. It tries to relabel the
         // BufferedImage
@@ -68,13 +68,13 @@ public class ColorTools {
         // use this when the image is mislabeled, presumably having been
         // wrongly assumed to be sRGB
 
-        ColorModel cm = deriveColorModel(bi, cs);
+        final ColorModel cm = deriveColorModel(bi, cs);
 
         return relabelColorSpace(bi, cm);
 
     }
 
-    public BufferedImage relabelColorSpace(BufferedImage bi, ColorModel cm)
+    public BufferedImage relabelColorSpace(final BufferedImage bi, final ColorModel cm)
             throws ImagingOpException {
         // This does not do the conversion. It tries to relabel the
         // BufferedImage
@@ -82,28 +82,28 @@ public class ColorTools {
         // use this when the image is mislabeled, presumably having been
         // wrongly assumed to be sRGB
 
-        BufferedImage result = new BufferedImage(cm, bi.getRaster(), false,
+        final BufferedImage result = new BufferedImage(cm, bi.getRaster(), false,
                 null);
 
         return result;
     }
 
-    public ColorModel deriveColorModel(BufferedImage bi, ColorSpace cs)
+    public ColorModel deriveColorModel(final BufferedImage bi, final ColorSpace cs)
             throws ImagingOpException {
         // boolean hasAlpha = (bi.getAlphaRaster() != null);
         return deriveColorModel(bi, cs, false);
     }
 
-    public ColorModel deriveColorModel(BufferedImage bi, ColorSpace cs,
-            boolean force_no_alpha) throws ImagingOpException {
+    public ColorModel deriveColorModel(final BufferedImage bi, final ColorSpace cs,
+            final boolean force_no_alpha) throws ImagingOpException {
         return deriveColorModel(bi.getColorModel(), cs, force_no_alpha);
     }
 
-    public ColorModel deriveColorModel(ColorModel old_cm, ColorSpace cs,
-            boolean force_no_alpha) throws ImagingOpException {
+    public ColorModel deriveColorModel(final ColorModel old_cm, final ColorSpace cs,
+            final boolean force_no_alpha) throws ImagingOpException {
 
         if (old_cm instanceof ComponentColorModel) {
-            ComponentColorModel ccm = (ComponentColorModel) old_cm;
+            final ComponentColorModel ccm = (ComponentColorModel) old_cm;
             // ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
             if (force_no_alpha) {
                 return new ComponentColorModel(cs, false, false,
@@ -114,12 +114,12 @@ public class ColorTools {
                         ccm.getTransferType());
             }
         } else if (old_cm instanceof DirectColorModel) {
-            DirectColorModel dcm = (DirectColorModel) old_cm;
+            final DirectColorModel dcm = (DirectColorModel) old_cm;
 
-            int old_mask = dcm.getRedMask() | dcm.getGreenMask()
+            final int old_mask = dcm.getRedMask() | dcm.getGreenMask()
                     | dcm.getBlueMask() | dcm.getAlphaMask();
 
-            int old_bits = count_bits_in_mask(old_mask);
+            final int old_bits = count_bits_in_mask(old_mask);
 
             return new DirectColorModel(cs, old_bits, dcm.getRedMask(),
                     dcm.getGreenMask(), dcm.getBlueMask(), dcm.getAlphaMask(),
@@ -160,17 +160,17 @@ public class ColorTools {
         return count;
     }
 
-    public BufferedImage convertToColorSpace(BufferedImage bi, ColorSpace to) {
-        ColorSpace from = bi.getColorModel().getColorSpace();
+    public BufferedImage convertToColorSpace(final BufferedImage bi, final ColorSpace to) {
+        final ColorSpace from = bi.getColorModel().getColorSpace();
 
-        RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING,
+        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
         hints.put(RenderingHints.KEY_COLOR_RENDERING,
                 RenderingHints.VALUE_COLOR_RENDER_QUALITY);
         hints.put(RenderingHints.KEY_DITHERING,
                 RenderingHints.VALUE_DITHER_ENABLE);
 
-        ColorConvertOp op = new ColorConvertOp(from, to, hints);
+        final ColorConvertOp op = new ColorConvertOp(from, to, hints);
 
         BufferedImage result = op.filter(bi, null);
 
@@ -179,43 +179,43 @@ public class ColorTools {
         return result;
     }
 
-    public BufferedImage convertTosRGB(BufferedImage bi) {
+    public BufferedImage convertTosRGB(final BufferedImage bi) {
         ColorSpace cs_sRGB = ColorSpace.getInstance(ColorSpace.CS_sRGB);
 
-        ColorModel srgbCM = ColorModel.getRGBdefault();
+        final ColorModel srgbCM = ColorModel.getRGBdefault();
         cs_sRGB = srgbCM.getColorSpace();
 
         return convertToColorSpace(bi, cs_sRGB);
     }
 
-    protected BufferedImage convertFromColorSpace(BufferedImage bi,
-            ColorSpace from) {
+    protected BufferedImage convertFromColorSpace(final BufferedImage bi,
+            final ColorSpace from) {
         ColorSpace cs_sRGB;
 
-        ColorModel srgbCM = ColorModel.getRGBdefault();
+        final ColorModel srgbCM = ColorModel.getRGBdefault();
         cs_sRGB = srgbCM.getColorSpace();
 
         return convertBetweenColorSpaces(bi, from, cs_sRGB);
 
     }
 
-    public BufferedImage convertBetweenICCProfiles(BufferedImage bi,
-            ICC_Profile from, ICC_Profile to) {
-        ICC_ColorSpace cs_from = new ICC_ColorSpace(from);
-        ICC_ColorSpace cs_to = new ICC_ColorSpace(to);
+    public BufferedImage convertBetweenICCProfiles(final BufferedImage bi,
+            final ICC_Profile from, final ICC_Profile to) {
+        final ICC_ColorSpace cs_from = new ICC_ColorSpace(from);
+        final ICC_ColorSpace cs_to = new ICC_ColorSpace(to);
 
         return convertBetweenColorSpaces(bi, cs_from, cs_to);
     }
 
-    public BufferedImage convertToICCProfile(BufferedImage bi, ICC_Profile to) {
-        ICC_ColorSpace cs_to = new ICC_ColorSpace(to);
+    public BufferedImage convertToICCProfile(final BufferedImage bi, final ICC_Profile to) {
+        final ICC_ColorSpace cs_to = new ICC_ColorSpace(to);
 
         return convertToColorSpace(bi, cs_to);
     }
 
     public BufferedImage convertBetweenColorSpacesX2(BufferedImage bi,
-            ColorSpace from, ColorSpace to) {
-        RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING,
+            final ColorSpace from, final ColorSpace to) {
+        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
         hints.put(RenderingHints.KEY_COLOR_RENDERING,
                 RenderingHints.VALUE_COLOR_RENDER_QUALITY);
@@ -228,7 +228,7 @@ public class ColorTools {
         // ColorModel.getRGBdefault().getColorSpace());
 
         bi = relabelColorSpace(bi, from);
-        ColorConvertOp op = new ColorConvertOp(from, to, hints);
+        final ColorConvertOp op = new ColorConvertOp(from, to, hints);
         bi = op.filter(bi, null);
 
         bi = relabelColorSpace(bi, from);
@@ -242,15 +242,15 @@ public class ColorTools {
     }
 
     public BufferedImage convertBetweenColorSpaces(BufferedImage bi,
-            ColorSpace from, ColorSpace to) {
-        RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING,
+            final ColorSpace from, final ColorSpace to) {
+        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
         hints.put(RenderingHints.KEY_COLOR_RENDERING,
                 RenderingHints.VALUE_COLOR_RENDER_QUALITY);
         hints.put(RenderingHints.KEY_DITHERING,
                 RenderingHints.VALUE_DITHER_ENABLE);
 
-        ColorConvertOp op = new ColorConvertOp(from, to, hints);
+        final ColorConvertOp op = new ColorConvertOp(from, to, hints);
 
         bi = relabelColorSpace(bi, from);
 

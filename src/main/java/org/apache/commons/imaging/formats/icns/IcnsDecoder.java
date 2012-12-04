@@ -83,8 +83,8 @@ public class IcnsDecoder {
             0xFFBBBBBB, 0xFFAAAAAA, 0xFF888888, 0xFF777777, 0xFF555555,
             0xFF444444, 0xFF222222, 0xFF111111, 0xFF000000 };
 
-    private static void decode1BPPImage(IcnsType imageType, byte[] imageData,
-            ImageBuilder image) {
+    private static void decode1BPPImage(final IcnsType imageType, final byte[] imageData,
+            final ImageBuilder image) {
         int position = 0;
         int bitsLeft = 0;
         int value = 0;
@@ -107,8 +107,8 @@ public class IcnsDecoder {
         }
     }
 
-    private static void decode4BPPImage(IcnsType imageType, byte[] imageData,
-            ImageBuilder image) {
+    private static void decode4BPPImage(final IcnsType imageType, final byte[] imageData,
+            final ImageBuilder image) {
         int i = 0;
         boolean visited = false;
         for (int y = 0; y < imageType.getHeight(); y++) {
@@ -125,21 +125,21 @@ public class IcnsDecoder {
         }
     }
 
-    private static void decode8BPPImage(IcnsType imageType, byte[] imageData,
-            ImageBuilder image) {
+    private static void decode8BPPImage(final IcnsType imageType, final byte[] imageData,
+            final ImageBuilder image) {
         for (int y = 0; y < imageType.getHeight(); y++) {
             for (int x = 0; x < imageType.getWidth(); x++) {
-                int index = 0xff & imageData[y * imageType.getWidth() + x];
+                final int index = 0xff & imageData[y * imageType.getWidth() + x];
                 image.setRGB(x, y, palette_8bpp[index]);
             }
         }
     }
 
-    private static void decode32BPPImage(IcnsType imageType, byte[] imageData,
-            ImageBuilder image) {
+    private static void decode32BPPImage(final IcnsType imageType, final byte[] imageData,
+            final ImageBuilder image) {
         for (int y = 0; y < imageType.getHeight(); y++) {
             for (int x = 0; x < imageType.getWidth(); x++) {
-                int argb = 0xff000000 /* the "alpha" is ignored */
+                final int argb = 0xff000000 /* the "alpha" is ignored */
                         | ((0xff & imageData[4 * (y * imageType.getWidth() + x) + 1]) << 16)
                         | ((0xff & imageData[4 * (y * imageType.getWidth() + x) + 2]) << 8)
                         | (0xff & imageData[4 * (y * imageType.getWidth() + x) + 3]);
@@ -148,7 +148,7 @@ public class IcnsDecoder {
         }
     }
 
-    private static void apply1BPPMask(byte[] maskData, ImageBuilder image)
+    private static void apply1BPPMask(final byte[] maskData, final ImageBuilder image)
             throws ImageReadException {
         int position = 0;
         int bitsLeft = 0;
@@ -156,7 +156,7 @@ public class IcnsDecoder {
 
         // 1 bit icon types have image data followed by mask data in the same
         // entry
-        int totalBytes = (image.getWidth() * image.getHeight() + 7) / 8;
+        final int totalBytes = (image.getWidth() * image.getHeight() + 7) / 8;
         if (maskData.length >= 2 * totalBytes) {
             position = totalBytes;
         } else {
@@ -184,10 +184,10 @@ public class IcnsDecoder {
         }
     }
 
-    private static void apply8BPPMask(byte[] maskData, ImageBuilder image) {
+    private static void apply8BPPMask(final byte[] maskData, final ImageBuilder image) {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
-                int alpha = 0xff & maskData[y * image.getWidth() + x];
+                final int alpha = 0xff & maskData[y * image.getWidth() + x];
                 image.setRGB(x, y,
                         (alpha << 24) | (0xffffff & image.getRGB(x, y)));
             }
@@ -195,11 +195,11 @@ public class IcnsDecoder {
     }
 
     public static List<BufferedImage> decodeAllImages(
-            IcnsImageParser.IcnsElement[] icnsElements)
+            final IcnsImageParser.IcnsElement[] icnsElements)
             throws ImageReadException {
-        List<BufferedImage> result = new ArrayList<BufferedImage>();
-        for (IcnsElement imageElement : icnsElements) {
-            IcnsType imageType = IcnsType.findImageType(imageElement.type);
+        final List<BufferedImage> result = new ArrayList<BufferedImage>();
+        for (final IcnsElement imageElement : icnsElements) {
+            final IcnsType imageType = IcnsType.findImageType(imageElement.type);
             if (imageType == null) {
                 continue;
             }
@@ -212,7 +212,7 @@ public class IcnsDecoder {
             } else {
                 maskType = IcnsType.find8BPPMaskType(imageType);
                 if (maskType != null) {
-                    for (IcnsElement icnsElement : icnsElements) {
+                    for (final IcnsElement icnsElement : icnsElements) {
                         if (icnsElement.type == maskType.getType()) {
                             maskElement = icnsElement;
                             break;
@@ -222,7 +222,7 @@ public class IcnsDecoder {
                 if (maskElement == null) {
                     maskType = IcnsType.find1BPPMaskType(imageType);
                     if (maskType != null) {
-                        for (IcnsElement icnsElement : icnsElements) {
+                        for (final IcnsElement icnsElement : icnsElements) {
                             if (icnsElement.type == maskType.getType()) {
                                 maskElement = icnsElement;
                                 break;
@@ -238,7 +238,7 @@ public class IcnsDecoder {
                 continue;
             }
 
-            int expectedSize = (imageType.getWidth() * imageType.getHeight()
+            final int expectedSize = (imageType.getWidth() * imageType.getHeight()
                     * imageType.getBitsPerPixel() + 7) / 8;
             byte[] imageData;
             if (imageElement.data.length < expectedSize) {
@@ -254,7 +254,7 @@ public class IcnsDecoder {
                 imageData = imageElement.data;
             }
 
-            ImageBuilder imageBuilder = new ImageBuilder(imageType.getWidth(),
+            final ImageBuilder imageBuilder = new ImageBuilder(imageType.getWidth(),
                     imageType.getHeight(), true);
             switch (imageType.getBitsPerPixel()) {
             case 1:

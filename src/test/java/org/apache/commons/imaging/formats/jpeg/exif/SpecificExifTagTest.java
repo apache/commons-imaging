@@ -41,18 +41,18 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
     // }
 
     public void testSingleImage() throws Exception {
-        File imageFile = getImageWithExifData();
+        final File imageFile = getImageWithExifData();
         checkImage(imageFile);
     }
 
     public void testAllImages() throws Exception {
-        List<File> images = getImagesWithExifData();
+        final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             if (imageFile.getParentFile().getName().toLowerCase()
                     .equals("@broken")) {
                 continue;
@@ -64,30 +64,30 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
     protected abstract void checkField(File imageFile, TiffField field)
             throws IOException, ImageReadException, ImageWriteException;
 
-    private void checkImage(File imageFile) throws IOException,
+    private void checkImage(final File imageFile) throws IOException,
             ImageReadException, ImageWriteException {
         // Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-        Map<String,Object> params = new HashMap<String,Object>();
-        boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+        final Map<String,Object> params = new HashMap<String,Object>();
+        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
         // note that metadata might be null if no metadata is found.
-        IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
+        final IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         if (null == metadata) {
             return;
         }
-        JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
+        final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 
         // note that exif might be null if no Exif metadata is found.
-        TiffImageMetadata exif = jpegMetadata.getExif();
+        final TiffImageMetadata exif = jpegMetadata.getExif();
         if (null == exif) {
             return;
         }
 
-        List<TiffField> fields = exif.getAllFields();
+        final List<TiffField> fields = exif.getAllFields();
         for (int i = 0; i < fields.size(); i++) {
-            TiffField field = fields.get(i);
+            final TiffField field = fields.get(i);
             checkField(imageFile, field);
         }
 

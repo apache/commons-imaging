@@ -33,7 +33,7 @@ public abstract class ExifBaseTest extends ImagingTest {
     // super(name);
     // }
 
-    protected static boolean hasExifData(File file) {
+    protected static boolean hasExifData(final File file) {
         // Debug.debug("hasExifData file", file.getAbsoluteFile());
 
         if (!file.getName().toLowerCase().endsWith(".jpg"))
@@ -47,9 +47,9 @@ public abstract class ExifBaseTest extends ImagingTest {
         // Debug.debug("possible file", file);
 
         try {
-            ByteSource byteSource = new ByteSourceFile(file);
+            final ByteSource byteSource = new ByteSourceFile(file);
             return new JpegImageParser().hasExifSegment(byteSource);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // Debug.debug("Error file", file.getAbsoluteFile());
             // Debug.debug(e, 4);
             return false;
@@ -57,13 +57,13 @@ public abstract class ExifBaseTest extends ImagingTest {
     }
 
     private static final ImageFilter HAS_EXIF_IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return hasExifData(file);
         }
     };
 
     private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return file.getName().toLowerCase().endsWith(".jpg");
         }
     };
@@ -78,7 +78,7 @@ public abstract class ExifBaseTest extends ImagingTest {
         return getTestImages(HAS_EXIF_IMAGE_FILTER);
     }
 
-    protected List<File> getImagesWithExifData(int max) throws IOException,
+    protected List<File> getImagesWithExifData(final int max) throws IOException,
             ImageReadException {
         return getTestImages(HAS_EXIF_IMAGE_FILTER, max);
     }
@@ -91,7 +91,7 @@ public abstract class ExifBaseTest extends ImagingTest {
         return getTestImages(JPEG_IMAGE_FILTER);
     }
 
-    protected List<File> getJpegImages(int max) throws IOException,
+    protected List<File> getJpegImages(final int max) throws IOException,
             ImageReadException {
         return getTestImages(JPEG_IMAGE_FILTER, max);
     }

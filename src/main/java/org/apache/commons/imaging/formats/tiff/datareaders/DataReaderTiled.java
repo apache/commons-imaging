@@ -41,11 +41,11 @@ public final class DataReaderTiled extends DataReader {
 
     private final TiffImageData.Tiles imageData;
 
-    public DataReaderTiled(TiffDirectory directory,
-            PhotometricInterpreter photometricInterpreter, int tileWidth,
-            int tileLength, int bitsPerPixel, int bitsPerSample[],
-            int predictor, int samplesPerPixel, int width, int height,
-            int compression, ByteOrder byteOrder, TiffImageData.Tiles imageData) {
+    public DataReaderTiled(final TiffDirectory directory,
+            final PhotometricInterpreter photometricInterpreter, final int tileWidth,
+            final int tileLength, final int bitsPerPixel, final int bitsPerSample[],
+            final int predictor, final int samplesPerPixel, final int width, final int height,
+            final int compression, final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
                 samplesPerPixel, width, height);
 
@@ -59,8 +59,8 @@ public final class DataReaderTiled extends DataReader {
         this.byteOrder = byteOrder;
     }
 
-    private void interpretTile(ImageBuilder imageBuilder, byte bytes[],
-            int startX, int startY) throws ImageReadException, IOException {
+    private void interpretTile(final ImageBuilder imageBuilder, final byte bytes[],
+            final int startX, final int startY) throws ImageReadException, IOException {
         // changes introduced May 2012
         // The following block of code implements changes that
         // reduce image loading time by using special-case processing
@@ -71,7 +71,7 @@ public final class DataReaderTiled extends DataReader {
 
         // verify that all samples are one byte in size
         boolean allSamplesAreOneByte = true;
-        for (int element : bitsPerSample) {
+        for (final int element : bitsPerSample) {
             if (element != 8) {
                 allSamplesAreOneByte = false;
                 break;
@@ -80,13 +80,13 @@ public final class DataReaderTiled extends DataReader {
 
         if (predictor != 2 && bitsPerPixel == 24 && allSamplesAreOneByte) {
             int k = 0;
-            int i0 = startY;
+            final int i0 = startY;
             int i1 = startY + tileLength;
             if (i1 > height) {
                 // the tile is padded past bottom of image
                 i1 = height;
             }
-            int j0 = startX;
+            final int j0 = startX;
             int j1 = startX + tileWidth;
             if (j1 > width) {
                 // the tile is padded to beyond the tile width
@@ -96,14 +96,14 @@ public final class DataReaderTiled extends DataReader {
                 for (int i = i0; i < i1; i++) {
                     k = (i - i0) * tileWidth * 3;
                     for (int j = j0; j < j1; j++, k += 3) {
-                        int rgb = 0xff000000
+                        final int rgb = 0xff000000
                                 | (((bytes[k] << 8) | (bytes[k + 1] & 0xff)) << 8)
                                 | (bytes[k + 2] & 0xff);
                         imageBuilder.setRGB(j, i, rgb);
                     }
                 }
             } else {
-                int samples[] = new int[3];
+                final int samples[] = new int[3];
                 for (int i = i0; i < i1; i++) {
                     k = (i - i0) * tileWidth * 3;
                     for (int j = j0; j < j1; j++) {
@@ -120,10 +120,10 @@ public final class DataReaderTiled extends DataReader {
 
         // End of May 2012 changes
 
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        BitInputStream bis = new BitInputStream(bais, byteOrder);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        final BitInputStream bis = new BitInputStream(bais, byteOrder);
 
-        int pixelsPerTile = tileWidth * tileLength;
+        final int pixelsPerTile = tileWidth * tileLength;
 
         int tileX = 0, tileY = 0;
 
@@ -131,8 +131,8 @@ public final class DataReaderTiled extends DataReader {
         resetPredictor();
         for (int i = 0; i < pixelsPerTile; i++) {
 
-            int x = tileX + startX;
-            int y = tileY + startY;
+            final int x = tileX + startX;
+            final int y = tileY + startY;
 
             getSamplesAsBytes(bis, samples);
 
@@ -158,17 +158,17 @@ public final class DataReaderTiled extends DataReader {
     }
 
     @Override
-    public void readImageData(ImageBuilder imageBuilder)
+    public void readImageData(final ImageBuilder imageBuilder)
             throws ImageReadException, IOException {
-        int bitsPerRow = tileWidth * bitsPerPixel;
-        int bytesPerRow = (bitsPerRow + 7) / 8;
-        int bytesPerTile = bytesPerRow * tileLength;
+        final int bitsPerRow = tileWidth * bitsPerPixel;
+        final int bytesPerRow = (bitsPerRow + 7) / 8;
+        final int bytesPerTile = bytesPerRow * tileLength;
         int x = 0, y = 0;
 
-        for (DataElement tile2 : imageData.tiles) {
-            byte compressed[] = tile2.getData();
+        for (final DataElement tile2 : imageData.tiles) {
+            final byte compressed[] = tile2.getData();
 
-            byte decompressed[] = decompress(compressed, compression,
+            final byte decompressed[] = decompress(compressed, compression,
                     bytesPerTile, tileWidth, tileLength);
 
             interpretTile(imageBuilder, decompressed, x, y);

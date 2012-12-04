@@ -91,19 +91,19 @@ public class Dct {
     private static final float Q = C2 - C6;
     private static final float R = C2 + C6;
 
-    public static void scaleQuantizationVector(float[] vector) {
+    public static void scaleQuantizationVector(final float[] vector) {
         for (int x = 0; x < 8; x++) {
             vector[x] *= dctScalingFactors[x];
         }
     }
 
-    public static void scaleDequantizationVector(float[] vector) {
+    public static void scaleDequantizationVector(final float[] vector) {
         for (int x = 0; x < 8; x++) {
             vector[x] *= idctScalingFactors[x];
         }
     }
 
-    public static void scaleQuantizationMatrix(float[] matrix) {
+    public static void scaleQuantizationMatrix(final float[] matrix) {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 matrix[8 * y + x] *= dctScalingFactors[y]
@@ -112,7 +112,7 @@ public class Dct {
         }
     }
 
-    public static void scaleDequantizationMatrix(float[] matrix) {
+    public static void scaleDequantizationMatrix(final float[] matrix) {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 matrix[8 * y + x] *= idctScalingFactors[y]
@@ -126,36 +126,36 @@ public class Dct {
      * "JPEG still image data compression standard", by Pennebaker and Mitchell,
      * chapter 4, figure "4-8".
      */
-    public static void forwardDCT8(float[] vector) {
-        float a00 = vector[0] + vector[7];
-        float a10 = vector[1] + vector[6];
-        float a20 = vector[2] + vector[5];
-        float a30 = vector[3] + vector[4];
-        float a40 = vector[3] - vector[4];
-        float a50 = vector[2] - vector[5];
-        float a60 = vector[1] - vector[6];
-        float a70 = vector[0] - vector[7];
+    public static void forwardDCT8(final float[] vector) {
+        final float a00 = vector[0] + vector[7];
+        final float a10 = vector[1] + vector[6];
+        final float a20 = vector[2] + vector[5];
+        final float a30 = vector[3] + vector[4];
+        final float a40 = vector[3] - vector[4];
+        final float a50 = vector[2] - vector[5];
+        final float a60 = vector[1] - vector[6];
+        final float a70 = vector[0] - vector[7];
 
-        float a01 = a00 + a30;
-        float a11 = a10 + a20;
-        float a21 = a10 - a20;
-        float a31 = a00 - a30;
+        final float a01 = a00 + a30;
+        final float a11 = a10 + a20;
+        final float a21 = a10 - a20;
+        final float a31 = a00 - a30;
         // Avoid some negations:
         // float a41 = -a40 - a50;
-        float neg_a41 = a40 + a50;
-        float a51 = a50 + a60;
-        float a61 = a60 + a70;
+        final float neg_a41 = a40 + a50;
+        final float a51 = a50 + a60;
+        final float a61 = a60 + a70;
 
-        float a22 = a21 + a31;
+        final float a22 = a21 + a31;
 
-        float a23 = a22 * A1;
-        float mul5 = (a61 - neg_a41) * A5;
-        float a43 = neg_a41 * A2 - mul5;
-        float a53 = a51 * A3;
-        float a63 = a61 * A4 - mul5;
+        final float a23 = a22 * A1;
+        final float mul5 = (a61 - neg_a41) * A5;
+        final float a43 = neg_a41 * A2 - mul5;
+        final float a53 = a51 * A3;
+        final float a63 = a61 * A4 - mul5;
 
-        float a54 = a70 + a53;
-        float a74 = a70 - a53;
+        final float a54 = a70 + a53;
+        final float a74 = a70 - a53;
 
         vector[0] = a01 + a11;
         vector[4] = a01 - a11;
@@ -167,7 +167,7 @@ public class Dct {
         vector[3] = a74 - a43;
     }
 
-    public static void forwardDCT8x8(float[] matrix) {
+    public static void forwardDCT8x8(final float[] matrix) {
         float a00, a10, a20, a30, a40, a50, a60, a70;
         float a01, a11, a21, a31, neg_a41, a51, a61;
         float a22, a23, mul5, a43, a53, a63;
@@ -248,41 +248,41 @@ public class Dct {
      * easy equations and properly explains constants and scaling factors. Terms
      * have been inlined and the negation optimized out of existence.
      */
-    public static void inverseDCT8(float[] vector) {
+    public static void inverseDCT8(final float[] vector) {
         // B1
-        float a2 = vector[2] - vector[6];
-        float a3 = vector[2] + vector[6];
-        float a4 = vector[5] - vector[3];
-        float tmp1 = vector[1] + vector[7];
-        float tmp2 = vector[3] + vector[5];
-        float a5 = tmp1 - tmp2;
-        float a6 = vector[1] - vector[7];
-        float a7 = tmp1 + tmp2;
+        final float a2 = vector[2] - vector[6];
+        final float a3 = vector[2] + vector[6];
+        final float a4 = vector[5] - vector[3];
+        final float tmp1 = vector[1] + vector[7];
+        final float tmp2 = vector[3] + vector[5];
+        final float a5 = tmp1 - tmp2;
+        final float a6 = vector[1] - vector[7];
+        final float a7 = tmp1 + tmp2;
 
         // M
-        float tmp4 = C6 * (a4 + a6);
+        final float tmp4 = C6 * (a4 + a6);
         // Eliminate the negative:
         // float b4 = -Q*a4 - tmp4;
-        float neg_b4 = Q * a4 + tmp4;
-        float b6 = R * a6 - tmp4;
-        float b2 = a2 * C4;
-        float b5 = a5 * C4;
+        final float neg_b4 = Q * a4 + tmp4;
+        final float b6 = R * a6 - tmp4;
+        final float b2 = a2 * C4;
+        final float b5 = a5 * C4;
 
         // A1
-        float tmp3 = b6 - a7;
-        float n0 = tmp3 - b5;
-        float n1 = vector[0] - vector[4];
-        float n2 = b2 - a3;
-        float n3 = vector[0] + vector[4];
-        float neg_n5 = neg_b4;
+        final float tmp3 = b6 - a7;
+        final float n0 = tmp3 - b5;
+        final float n1 = vector[0] - vector[4];
+        final float n2 = b2 - a3;
+        final float n3 = vector[0] + vector[4];
+        final float neg_n5 = neg_b4;
 
         // A2
-        float m3 = n1 + n2;
-        float m4 = n3 + a3;
-        float m5 = n1 - n2;
-        float m6 = n3 - a3;
+        final float m3 = n1 + n2;
+        final float m4 = n3 + a3;
+        final float m5 = n1 - n2;
+        final float m6 = n3 - a3;
         // float m7 = n5 - n0;
-        float neg_m7 = neg_n5 + n0;
+        final float neg_m7 = neg_n5 + n0;
 
         // A3
         vector[0] = m4 + a7;
@@ -295,7 +295,7 @@ public class Dct {
         vector[7] = m4 - a7;
     }
 
-    public static void inverseDCT8x8(float[] matrix) {
+    public static void inverseDCT8x8(final float[] matrix) {
         float a2, a3, a4, tmp1, tmp2, a5, a6, a7;
         float tmp4, neg_b4, b6, b2, b5;
         float tmp3, n0, n1, n2, n3, neg_n5;

@@ -24,8 +24,8 @@ public class PhotoshopApp13Data implements IptcConstants {
     private final List<IptcRecord> records;
     private final List<IptcBlock> rawBlocks;
 
-    public PhotoshopApp13Data(List<IptcRecord> records,
-            List<IptcBlock> rawBlocks) {
+    public PhotoshopApp13Data(final List<IptcRecord> records,
+            final List<IptcBlock> rawBlocks) {
         this.rawBlocks = rawBlocks;
         this.records = records;
     }
@@ -39,9 +39,9 @@ public class PhotoshopApp13Data implements IptcConstants {
     }
 
     public List<IptcBlock> getNonIptcBlocks() {
-        List<IptcBlock> result = new ArrayList<IptcBlock>();
+        final List<IptcBlock> result = new ArrayList<IptcBlock>();
         for (int i = 0; i < rawBlocks.size(); i++) {
-            IptcBlock block = rawBlocks.get(i);
+            final IptcBlock block = rawBlocks.get(i);
             if (!block.isIPTCBlock()) {
                 result.add(block);
             }

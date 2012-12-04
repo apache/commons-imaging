@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImageReadException;
 
 public class ScanlineFilterNone extends ScanlineFilter {
     @Override
-    public void unfilter(byte src[], byte dst[], byte up[])
+    public void unfilter(final byte src[], final byte dst[], final byte up[])
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
             dst[i] = src[i];

@@ -25,7 +25,7 @@ public class CachingInputStream extends InputStream {
     private final InputStream is;
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-    public CachingInputStream(InputStream is) {
+    public CachingInputStream(final InputStream is) {
         this.is = is;
     }
 
@@ -35,7 +35,7 @@ public class CachingInputStream extends InputStream {
 
     @Override
     public int read() throws IOException {
-        int result = is.read();
+        final int result = is.read();
         baos.write(result);
         return result;
     }

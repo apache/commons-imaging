@@ -30,19 +30,19 @@ import org.apache.commons.imaging.util.Debug;
 public class JpegXmpDumpTest extends JpegXmpBaseTest {
 
     public void test() throws Exception {
-        List<File> images = getImagesWithXmpData();
+        final List<File> images = getImagesWithXmpData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
-            ByteSource byteSource = new ByteSourceFile(imageFile);
-            Map<String,Object> params = new HashMap<String,Object>();
-            String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
+            final ByteSource byteSource = new ByteSourceFile(imageFile);
+            final Map<String,Object> params = new HashMap<String,Object>();
+            final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
             assertNotNull(xmpXml);
 
             Debug.debug("xmpXml", xmpXml);

@@ -29,24 +29,24 @@ import org.apache.commons.imaging.util.Debug;
 public class TiffReadTest extends TiffBaseTest {
 
     public void test() throws Exception {
-        List<File> images = getTiffImages();
+        final List<File> images = getTiffImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
-            IImageMetadata metadata = Imaging.getMetadata(imageFile);
+            final IImageMetadata metadata = Imaging.getMetadata(imageFile);
             assertNotNull(metadata);
 
             Debug.debug("ICC profile", Imaging.getICCProfile(imageFile));
             
-            ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
+            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
 
-            BufferedImage image = Imaging.getBufferedImage(imageFile);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
         }
     }

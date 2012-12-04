@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.icns;
 
 class Rle24Compression {
-    public static byte[] decompress(int width, int height, byte[] data) {
+    public static byte[] decompress(final int width, final int height, final byte[] data) {
         final int pixelCount = width * height;
         final byte[] result = new byte[4 * pixelCount];
 
@@ -43,14 +43,14 @@ class Rle24Compression {
             int resultPos = 0;
             while (remaining > 0) {
                 if ((data[dataPos] & 0x80) != 0) {
-                    int count = (0xff & data[dataPos]) - 125;
+                    final int count = (0xff & data[dataPos]) - 125;
                     for (int i = 0; i < count; i++) {
                         result[band + 4 * (resultPos++)] = data[dataPos + 1];
                     }
                     dataPos += 2;
                     remaining -= count;
                 } else {
-                    int count = (0xff & data[dataPos]) + 1;
+                    final int count = (0xff & data[dataPos]) + 1;
                     dataPos++;
                     for (int i = 0; i < count; i++) {
                         result[band + 4 * (resultPos++)] = data[dataPos++];

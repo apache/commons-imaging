@@ -28,10 +28,10 @@ public class ImageContents {
     public final int LayerAndMaskDataLength;
     public final int Compression;
 
-    public ImageContents(PsdHeaderInfo header,
+    public ImageContents(final PsdHeaderInfo header,
 
-    int ColorModeDataLength, int ImageResourcesLength,
-            int LayerAndMaskDataLength, int Compression) {
+    final int ColorModeDataLength, final int ImageResourcesLength,
+            final int LayerAndMaskDataLength, final int Compression) {
         this.header = header;
         this.ColorModeDataLength = ColorModeDataLength;
         this.ImageResourcesLength = ImageResourcesLength;
@@ -40,12 +40,12 @@ public class ImageContents {
     }
 
     public void dump() {
-        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
+        final PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
         dump(pw);
         pw.flush();
     }
 
-    public void dump(PrintWriter pw) {
+    public void dump(final PrintWriter pw) {
         pw.println("");
         pw.println("ImageContents");
         pw.println("Compression: " + Compression + " ("

@@ -26,15 +26,15 @@ public class TagConstantsUtils implements TiffDirectoryConstants {
     private static final TiffDirectoryType[] tiffDirectoryTypes = TiffDirectoryType
             .values();
 
-    public static List<TagInfo> mergeTagLists(List<?>... tagLists) {
+    public static List<TagInfo> mergeTagLists(final List<?>... tagLists) {
         int count = 0;
-        for (List<?> tagList : tagLists) {
+        for (final List<?> tagList : tagLists) {
             count += tagList.size();
         }
 
-        ArrayList<TagInfo> result = new ArrayList<TagInfo>(count);
+        final ArrayList<TagInfo> result = new ArrayList<TagInfo>(count);
 
-        for (List<?> tagList : tagLists) {
+        for (final List<?> tagList : tagLists) {
             for (int j = 0; j < tagList.size(); j++) {
                 result.add((TagInfo)tagList.get(j));
             }
@@ -43,9 +43,9 @@ public class TagConstantsUtils implements TiffDirectoryConstants {
         return result;
     }
 
-    public static TiffDirectoryType getExifDirectoryType(int type) {
+    public static TiffDirectoryType getExifDirectoryType(final int type) {
 
-        for (TiffDirectoryType tiffDirectoryType : tiffDirectoryTypes) {
+        for (final TiffDirectoryType tiffDirectoryType : tiffDirectoryTypes) {
             if (tiffDirectoryType.directoryType == type) {
                 return tiffDirectoryType;
             }
@@ -53,7 +53,7 @@ public class TagConstantsUtils implements TiffDirectoryConstants {
         return TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN;
     }
 
-    public static BinaryConstant createMicrosoftHdPhotoGuidEndingWith(byte end) {
+    public static BinaryConstant createMicrosoftHdPhotoGuidEndingWith(final byte end) {
         return new BinaryConstant(new byte[] { (byte) 0x24, (byte) 0xC3,
                 (byte) 0xDD, (byte) 0x6F, (byte) 0x03, (byte) 0x4E,
                 (byte) 0xFE, (byte) 0x4B, (byte) 0xB1, (byte) 0x85,

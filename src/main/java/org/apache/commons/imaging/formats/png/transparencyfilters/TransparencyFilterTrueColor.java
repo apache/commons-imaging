@@ -27,11 +27,11 @@ public class TransparencyFilterTrueColor extends TransparencyFilter {
     private final int transparent_blue;
     private final int transparent_color;
 
-    public TransparencyFilterTrueColor(byte bytes[]) throws ImageReadException,
+    public TransparencyFilterTrueColor(final byte bytes[]) throws ImageReadException,
             IOException {
         super(bytes);
 
-        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
         transparent_red = read2Bytes("transparent_red", is,
                 "tRNS: Missing transparent_color");
         transparent_green = read2Bytes("transparent_green", is,
@@ -46,7 +46,7 @@ public class TransparencyFilterTrueColor extends TransparencyFilter {
     }
 
     @Override
-    public int filter(int rgb, int sample) throws ImageReadException,
+    public int filter(final int rgb, final int sample) throws ImageReadException,
             IOException {
         if ((0x00ffffff & rgb) == transparent_color) {
             return 0x00;

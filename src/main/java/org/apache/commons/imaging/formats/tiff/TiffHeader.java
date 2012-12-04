@@ -24,7 +24,7 @@ public class TiffHeader extends TiffElement {
     public final int tiffVersion;
     public final int offsetToFirstIFD;
 
-    public TiffHeader(final ByteOrder byteOrder, int tiffVersion, int offsetToFirstIFD) {
+    public TiffHeader(final ByteOrder byteOrder, final int tiffVersion, final int offsetToFirstIFD) {
         super(0, TiffConstants.TIFF_HEADER_SIZE);
 
         this.byteOrder = byteOrder;
@@ -33,7 +33,7 @@ public class TiffHeader extends TiffElement {
     }
 
     @Override
-    public String getElementDescription(boolean verbose) {
+    public String getElementDescription(final boolean verbose) {
         if (verbose) {
             return null;
         }

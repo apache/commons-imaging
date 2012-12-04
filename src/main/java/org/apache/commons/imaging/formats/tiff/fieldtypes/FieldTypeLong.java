@@ -23,12 +23,12 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeLong extends FieldType {
-    public FieldTypeLong(int type, String name) {
+    public FieldTypeLong(final int type, final String name) {
         super(type, 4, name);
     }
 
     @Override
-    public Object getSimpleValue(TiffField entry) {
+    public Object getSimpleValue(final TiffField entry) {
         if (entry.length == 1) {
             return BinaryConversions.toInt(
                     entry.valueOffsetBytes, entry.byteOrder);
@@ -39,15 +39,15 @@ public class FieldTypeLong extends FieldType {
     }
 
     @Override
-    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Integer) {
             return BinaryConversions.toBytes(((Integer)o).intValue(), byteOrder);
         } else if (o instanceof int[]) {
-            int numbers[] = (int[]) o;
+            final int numbers[] = (int[]) o;
             return BinaryConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Integer[]) {
-            Integer numbers[] = (Integer[]) o;
-            int values[] = new int[numbers.length];
+            final Integer numbers[] = (Integer[]) o;
+            final int values[] = new int[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].intValue();
             }

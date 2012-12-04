@@ -24,8 +24,8 @@ import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
 public class PixelParserRle extends PixelParser {
 
-    public PixelParserRle(BmpHeaderInfo bhi, byte ColorTable[],
-            byte ImageData[]) {
+    public PixelParserRle(final BmpHeaderInfo bhi, final byte ColorTable[],
+            final byte ImageData[]) {
         super(bhi, ColorTable, ImageData);
 
     }
@@ -41,7 +41,7 @@ public class PixelParserRle extends PixelParser {
         }
     }
 
-    private int[] convertDataToSamples(int data) throws ImageReadException {
+    private int[] convertDataToSamples(final int data) throws ImageReadException {
         int rgbs[];
         if (bhi.bitsPerPixel == 8) {
             rgbs = new int[1];
@@ -49,8 +49,8 @@ public class PixelParserRle extends PixelParser {
             // pixels_written = 1;
         } else if (bhi.bitsPerPixel == 4) {
             rgbs = new int[2];
-            int sample1 = data >> 4;
-            int sample2 = 0x0f & data;
+            final int sample1 = data >> 4;
+            final int sample2 = 0x0f & data;
             rgbs[0] = getColorTableRGB(sample1);
             rgbs[1] = getColorTableRGB(sample2);
             // pixels_written = 2;
@@ -62,8 +62,8 @@ public class PixelParserRle extends PixelParser {
         return rgbs;
     }
 
-    private int processByteOfData(int rgbs[], int repeat, int x, int y,
-            int width, int height, ImageBuilder imageBuilder) {
+    private int processByteOfData(final int rgbs[], final int repeat, int x, final int y,
+            final int width, final int height, final ImageBuilder imageBuilder) {
         // int rbg
         int pixels_written = 0;
         for (int i = 0; i < repeat; i++) {
@@ -71,7 +71,7 @@ public class PixelParserRle extends PixelParser {
             if ((x >= 0) && (x < width) && (y >= 0) && (y < height)) {
                 // int rgb = 0xff000000;
                 // rgb = getNextRGB();
-                int rgb = rgbs[i % rgbs.length];
+                final int rgb = rgbs[i % rgbs.length];
                 // bi.setRGB(x, y, rgb);
                 imageBuilder.setRGB(x, y, rgb);
                 // bi.setRGB(x, y, 0xff00ff00);
@@ -87,17 +87,17 @@ public class PixelParserRle extends PixelParser {
     }
 
     @Override
-    public void processImage(ImageBuilder imageBuilder)
+    public void processImage(final ImageBuilder imageBuilder)
             throws ImageReadException, IOException {
-        int width = bhi.width;
-        int height = bhi.height;
+        final int width = bhi.width;
+        final int height = bhi.height;
         int x = 0, y = height - 1;
 
         boolean done = false;
         while (!done) {
-            int a = 0xff & bfp.readByte("RLE (" + x + "," + y + ") a", is,
+            final int a = 0xff & bfp.readByte("RLE (" + x + "," + y + ") a", is,
                     "BMP: Bad RLE");
-            int b = 0xff & bfp.readByte("RLE (" + x + "," + y + ") b", is,
+            final int b = 0xff & bfp.readByte("RLE (" + x + "," + y + ") b", is,
                     "BMP: Bad RLE");
 
             if (a == 0) {
@@ -113,14 +113,14 @@ public class PixelParserRle extends PixelParser {
                     done = true;
                     break;
                 case 2: {
-                    int deltaX = 0xff & bfp.readByte("RLE deltaX", is, "BMP: Bad RLE");
-                    int deltaY = 0xff & bfp.readByte("RLE deltaY", is, "BMP: Bad RLE");
+                    final int deltaX = 0xff & bfp.readByte("RLE deltaX", is, "BMP: Bad RLE");
+                    final int deltaY = 0xff & bfp.readByte("RLE deltaY", is, "BMP: Bad RLE");
                     x += deltaX;
                     y -= deltaY;
                     break;
                 }
                 default: {
-                    int SamplesPerByte = getSamplesPerByte();
+                    final int SamplesPerByte = getSamplesPerByte();
                     int size = b / SamplesPerByte;
                     if ((b % SamplesPerByte) > 0) {
                         size++;
@@ -133,20 +133,20 @@ public class PixelParserRle extends PixelParser {
                     // System.out.println("size: " + size);
                     // System.out.println("SamplesPerByte: " + SamplesPerByte);
 
-                    byte bytes[] = bfp.readByteArray("bytes", size, is,
+                    final byte bytes[] = bfp.readByteArray("bytes", size, is,
                             "RLE: Absolute Mode");
 
                     int remaining = b;
 
                     for (int i = 0; remaining > 0; i++) {
                     // for (int i = 0; i < bytes.length; i++)
-                        int samples[] = convertDataToSamples(0xff & bytes[i]);
-                        int towrite = Math.min(remaining, SamplesPerByte);
+                        final int samples[] = convertDataToSamples(0xff & bytes[i]);
+                        final int towrite = Math.min(remaining, SamplesPerByte);
                         // System.out.println("remaining: " + remaining);
                         // System.out.println("SamplesPerByte: "
                         // + SamplesPerByte);
                         // System.out.println("towrite: " + towrite);
-                        int written = processByteOfData(samples, towrite, x, y,
+                        final int written = processByteOfData(samples, towrite, x, y,
                                 width, height, imageBuilder);
                         // System.out.println("written: " + written);
                         // System.out.println("");
@@ -157,7 +157,7 @@ public class PixelParserRle extends PixelParser {
                 }
                 }
             } else {
-                int rgbs[] = convertDataToSamples(b);
+                final int rgbs[] = convertDataToSamples(b);
 
                 x += processByteOfData(rgbs, a, x, y, width, height,
                         imageBuilder);

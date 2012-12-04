@@ -24,11 +24,11 @@ package org.apache.commons.imaging;
 public class ImageWriteException extends ImagingException {
     static final long serialVersionUID = -1L;
 
-    public ImageWriteException(String s) {
+    public ImageWriteException(final String s) {
         super(s);
     }
 
-    public ImageWriteException(String s, Exception e) {
+    public ImageWriteException(final String s, final Exception e) {
         super(s, e);
     }
 }

@@ -25,7 +25,7 @@ public class RationalNumber extends Number {
     public final int numerator;
     public final int divisor;
 
-    public RationalNumber(int numerator, int divisor) {
+    public RationalNumber(final int numerator, final int divisor) {
         this.numerator = numerator;
         this.divisor = divisor;
     }
@@ -51,7 +51,7 @@ public class RationalNumber extends Number {
             }
         }
 
-        long gcd = gcd(n, d);
+        final long gcd = gcd(n, d);
         d = d / gcd;
         n = n / gcd;
 
@@ -61,7 +61,7 @@ public class RationalNumber extends Number {
     /**
      * Return the greatest common divisor
      */
-    private static long gcd(long a, long b) {
+    private static long gcd(final long a, final long b) {
 
         if (b == 0) {
             return a;
@@ -116,7 +116,7 @@ public class RationalNumber extends Number {
         if ((numerator % divisor) == 0) {
             return "" + (numerator / divisor);
         }
-        NumberFormat nf = DecimalFormat.getInstance();
+        final NumberFormat nf = DecimalFormat.getInstance();
         nf.setMaximumFractionDigits(3);
         return nf.format((double) numerator / (double) divisor);
     }

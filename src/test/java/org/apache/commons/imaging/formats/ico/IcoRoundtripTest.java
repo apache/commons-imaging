@@ -70,10 +70,10 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor1BitBitmaps implements BitmapGenerator {
-        public byte[] generateBitmap(int foreground, int background,
-                int paletteSize) throws IOException, ImageWriteException {
-            ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
+        public byte[] generateBitmap(final int foreground, final int background,
+                final int paletteSize) throws IOException, ImageWriteException {
+            final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
                     ByteOrder.LITTLE_ENDIAN);
             // Palette
             bos.write3Bytes(background);
@@ -113,10 +113,10 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor4BitBitmaps implements BitmapGenerator {
-        public byte[] generateBitmap(int foreground, int background,
-                int paletteSize) throws IOException, ImageWriteException {
-            ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
+        public byte[] generateBitmap(final int foreground, final int background,
+                final int paletteSize) throws IOException, ImageWriteException {
+            final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
                     ByteOrder.LITTLE_ENDIAN);
             // Palette
             bos.write3Bytes(background);
@@ -147,10 +147,10 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor8BitBitmaps implements BitmapGenerator {
-        public byte[] generateBitmap(int foreground, int background,
-                int paletteSize) throws IOException, ImageWriteException {
-            ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
+        public byte[] generateBitmap(final int foreground, final int background,
+                final int paletteSize) throws IOException, ImageWriteException {
+            final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
                     ByteOrder.LITTLE_ENDIAN);
             // Palette
             bos.write3Bytes(background);
@@ -180,10 +180,10 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor16BitBitmaps implements BitmapGenerator {
-        public byte[] generateBitmap(int foreground, int background,
-                int paletteSize) throws IOException, ImageWriteException {
-            ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
+        public byte[] generateBitmap(final int foreground, final int background,
+                final int paletteSize) throws IOException, ImageWriteException {
+            final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
                     ByteOrder.LITTLE_ENDIAN);
             // Palette
             for (int i = 0; i < paletteSize; i++) {
@@ -217,10 +217,10 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor24BitBitmaps implements BitmapGenerator {
-        public byte[] generateBitmap(int foreground, int background,
-                int paletteSize) throws IOException, ImageWriteException {
-            ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
+        public byte[] generateBitmap(final int foreground, final int background,
+                final int paletteSize) throws IOException, ImageWriteException {
+            final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
                     ByteOrder.LITTLE_ENDIAN);
             // Palette
             for (int i = 0; i < paletteSize; i++) {
@@ -250,16 +250,16 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor32BitBitmaps implements BitmapGenerator {
-        public byte[] generateBitmap(int foreground, int background,
-                int paletteSize) throws IOException, ImageWriteException {
+        public byte[] generateBitmap(final int foreground, final int background,
+                final int paletteSize) throws IOException, ImageWriteException {
             return generate32bitRGBABitmap(foreground, background, paletteSize,
                     true);
         }
 
-        public byte[] generate32bitRGBABitmap(int foreground, int background,
-                int paletteSize, boolean writeMask) throws IOException {
-            ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
+        public byte[] generate32bitRGBABitmap(final int foreground, final int background,
+                final int paletteSize, final boolean writeMask) throws IOException {
+            final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
                     ByteOrder.LITTLE_ENDIAN);
             // Palette
             for (int i = 0; i < paletteSize; i++) {
@@ -290,16 +290,16 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
-    private void writeICONDIR(BinaryOutputStream bos, int reserved, int type,
-            int count) throws IOException {
+    private void writeICONDIR(final BinaryOutputStream bos, final int reserved, final int type,
+            final int count) throws IOException {
         bos.write2Bytes(reserved);
         bos.write2Bytes(type);
         bos.write2Bytes(count);
     }
 
-    private void writeICONDIRENTRY(BinaryOutputStream bos, int width,
-            int height, int colorCount, int reserved, int planes, int bitCount,
-            int bytesInRes) throws IOException {
+    private void writeICONDIRENTRY(final BinaryOutputStream bos, final int width,
+            final int height, final int colorCount, final int reserved, final int planes, final int bitCount,
+            final int bytesInRes) throws IOException {
         bos.write(width);
         bos.write(height);
         bos.write(colorCount);
@@ -310,9 +310,9 @@ public class IcoRoundtripTest extends IcoBaseTest {
         bos.write4Bytes(22); // image comes immediately after this
     }
 
-    private void writeBITMAPINFOHEADER(BinaryOutputStream bos, int width,
-            int height, int colorPlanes, int bitCount, int compression,
-            int colorsUsed, int colorsImportant) throws IOException {
+    private void writeBITMAPINFOHEADER(final BinaryOutputStream bos, final int width,
+            final int height, final int colorPlanes, final int bitCount, final int compression,
+            final int colorsUsed, final int colorsImportant) throws IOException {
         // BITMAPINFOHEADER
         bos.write4Bytes(40); // biSize, always 40 for BITMAPINFOHEADER
         bos.write4Bytes(width); // biWidth
@@ -330,14 +330,14 @@ public class IcoRoundtripTest extends IcoBaseTest {
     public void testNormalIcons() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
-        for (Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
-            int bitDepth = entry.getKey();
-            BitmapGenerator bitmapGenerator = entry.getValue();
+        for (final Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
+            final int bitDepth = entry.getKey();
+            final BitmapGenerator bitmapGenerator = entry.getValue();
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(baos,
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(baos,
                     ByteOrder.LITTLE_ENDIAN);
-            byte[] bitmap = bitmapGenerator.generateBitmap(foreground,
+            final byte[] bitmap = bitmapGenerator.generateBitmap(foreground,
                     background, (bitDepth <= 8) ? (1 << bitDepth) : 0);
             writeICONDIR(bos, 0, 1, 1);
             writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, bitDepth,
@@ -354,14 +354,14 @@ public class IcoRoundtripTest extends IcoBaseTest {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
         // Windows ignores the ICONDIRENTRY values when parsing the ICO file.
-        for (Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
-            int bitDepth = entry.getKey();
-            BitmapGenerator bitmapGenerator = entry.getValue();
+        for (final Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
+            final int bitDepth = entry.getKey();
+            final BitmapGenerator bitmapGenerator = entry.getValue();
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(baos,
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(baos,
                     ByteOrder.LITTLE_ENDIAN);
-            byte[] bitmap = bitmapGenerator.generateBitmap(foreground,
+            final byte[] bitmap = bitmapGenerator.generateBitmap(foreground,
                     background, (bitDepth <= 8) ? (1 << bitDepth) : 0);
             writeICONDIR(bos, 0, 1, 1);
             writeICONDIRENTRY(bos, 3 /* width, should be 16 */, 4 /*
@@ -396,14 +396,14 @@ public class IcoRoundtripTest extends IcoBaseTest {
     public void testColorsUsed() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
-        for (Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
-            int bitDepth = entry.getKey();
-            BitmapGenerator bitmapGenerator = entry.getValue();
+        for (final Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
+            final int bitDepth = entry.getKey();
+            final BitmapGenerator bitmapGenerator = entry.getValue();
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(baos,
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(baos,
                     ByteOrder.LITTLE_ENDIAN);
-            byte[] bitmap = bitmapGenerator.generateBitmap(foreground,
+            final byte[] bitmap = bitmapGenerator.generateBitmap(foreground,
                     background, 2);
             writeICONDIR(bos, 0, 1, 1);
             writeICONDIRENTRY(bos, 3, 4, 7, 20, 11, 19, 40 + bitmap.length);
@@ -418,14 +418,14 @@ public class IcoRoundtripTest extends IcoBaseTest {
     public void testZeroColorPlanes() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
-        for (Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
-            int bitDepth = entry.getKey();
-            BitmapGenerator bitmapGenerator = entry.getValue();
+        for (final Map.Entry<Integer,BitmapGenerator> entry : generatorMap.entrySet()) {
+            final int bitDepth = entry.getKey();
+            final BitmapGenerator bitmapGenerator = entry.getValue();
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            BinaryOutputStream bos = new BinaryOutputStream(baos,
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            final BinaryOutputStream bos = new BinaryOutputStream(baos,
                     ByteOrder.LITTLE_ENDIAN);
-            byte[] bitmap = bitmapGenerator.generateBitmap(foreground,
+            final byte[] bitmap = bitmapGenerator.generateBitmap(foreground,
                     background, (bitDepth <= 8) ? (1 << bitDepth) : 0);
             writeICONDIR(bos, 0, 1, 1);
             writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, bitDepth,
@@ -440,7 +440,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 writeAndReadImageData(
                         "16x16x" + bitDepth + "-zero-colorPlanes",
                         baos.toByteArray(), foreground, background);
-            } catch (ImageReadException imageReadException) {
+            } catch (final ImageReadException imageReadException) {
                 threw = true;
             }
             assertTrue(threw);
@@ -448,10 +448,10 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     public void testBitfieldCompression() throws Exception {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BinaryOutputStream bos = new BinaryOutputStream(baos,
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final BinaryOutputStream bos = new BinaryOutputStream(baos,
                 ByteOrder.LITTLE_ENDIAN);
-        byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
+        final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
                 0xFFFF0000, 0xFFFFFFFF, 0, true);
         writeICONDIR(bos, 0, 1, 1);
         writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
@@ -469,11 +469,11 @@ public class IcoRoundtripTest extends IcoBaseTest {
     public void test32bitMask() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BinaryOutputStream bos = new BinaryOutputStream(baos,
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final BinaryOutputStream bos = new BinaryOutputStream(baos,
                 ByteOrder.LITTLE_ENDIAN);
         // For 32 bit RGBA, the AND mask can be missing:
-        byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
+        final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
                 foreground, background, 0, false);
         writeICONDIR(bos, 0, 1, 1);
         writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
@@ -485,10 +485,10 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     public void testAlphaVersusANDMask() throws Exception {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BinaryOutputStream bos = new BinaryOutputStream(baos,
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final BinaryOutputStream bos = new BinaryOutputStream(baos,
                 ByteOrder.LITTLE_ENDIAN);
-        byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
+        final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
                 0xFF000000, 0x00000000, 0, true);
         writeICONDIR(bos, 0, 1, 1);
         writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
@@ -502,10 +502,10 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     public void testFullyTransparent32bitRGBA() throws Exception {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BinaryOutputStream bos = new BinaryOutputStream(baos,
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final BinaryOutputStream bos = new BinaryOutputStream(baos,
                 ByteOrder.LITTLE_ENDIAN);
-        byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
+        final byte[] bitmap = new GeneratorFor32BitBitmaps().generate32bitRGBABitmap(
                 0x00000000, 0x00FFFFFF, 0, true);
         writeICONDIR(bos, 0, 1, 1);
         writeICONDIRENTRY(bos, 16, 16, 0, 0, 1, 32, 40 + bitmap.length);
@@ -517,17 +517,17 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 0xFF000000, 0xFFFFFFFF);
     }
 
-    private void writeAndReadImageData(String description, byte[] rawData,
-            int foreground, int background) throws IOException,
+    private void writeAndReadImageData(final String description, final byte[] rawData,
+            final int foreground, final int background) throws IOException,
             ImageReadException {
         // Uncomment to generate ICO files that can be tested with Windows:
         // File exportFile = new File("/tmp/" + description + ".ico");
         // IoUtils.writeToFile(rawData, exportFile);
 
-        File tempFile = createTempFile("temp", ".ico");
+        final File tempFile = createTempFile("temp", ".ico");
         IoUtils.writeToFile(rawData, tempFile);
 
-        BufferedImage dstImage = Imaging.getBufferedImage(tempFile);
+        final BufferedImage dstImage = Imaging.getBufferedImage(tempFile);
 
         assertNotNull(dstImage);
         assertTrue(dstImage.getWidth() == image[0].length);
@@ -536,15 +536,15 @@ public class IcoRoundtripTest extends IcoBaseTest {
         verify(dstImage, foreground, background);
     }
 
-    private void verify(BufferedImage data, int foreground, int background) {
+    private void verify(final BufferedImage data, final int foreground, final int background) {
         assertNotNull(data);
         assertTrue(data.getHeight() == image.length);
 
         for (int y = 0; y < data.getHeight(); y++) {
             assertTrue(data.getWidth() == image[y].length);
             for (int x = 0; x < data.getWidth(); x++) {
-                int imageARGB = (image[y][x] == 1) ? foreground : background;
-                int dataARGB = data.getRGB(x, y);
+                final int imageARGB = (image[y][x] == 1) ? foreground : background;
+                final int dataARGB = data.getRGB(x, y);
 
                 if (imageARGB != dataARGB) {
                     Debug.debug("x: " + x + ", y: " + y + ", image: "

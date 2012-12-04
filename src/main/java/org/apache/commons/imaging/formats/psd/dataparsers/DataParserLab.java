@@ -26,16 +26,16 @@ public class DataParserLab extends DataParser {
     }
 
     @Override
-    protected int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents) {
-        int cieL = 0xff & data[0][y][x];
+    protected int getRGB(final int data[][][], final int x, final int y,
+            final ImageContents imageContents) {
+        final int cieL = 0xff & data[0][y][x];
         int cieA = 0xff & data[1][y][x];
         int cieB = 0xff & data[2][y][x];
 
         cieA -= 128;
         cieB -= 128;
 
-        int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
+        final int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
 
         return rgb;
     }

@@ -31,13 +31,13 @@ import org.apache.commons.imaging.util.Debug;
 public class IptcDumpTest extends IptcBaseTest {
 
     public void test() throws Exception {
-        List<File> images = getImagesWithIptcData();
+        final List<File> images = getImagesWithIptcData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
@@ -45,12 +45,12 @@ public class IptcDumpTest extends IptcBaseTest {
             // Debug.debug("Segments:");
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map<String,Object> params = new HashMap<String,Object>();
-            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            final Map<String,Object> params = new HashMap<String,Object>();
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
             // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-            JpegImageMetadata metadata = (JpegImageMetadata) Imaging
+            final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                     .getMetadata(imageFile, params);
             assertNotNull(metadata);
             assertNotNull(metadata.getPhotoshop());
@@ -60,12 +60,12 @@ public class IptcDumpTest extends IptcBaseTest {
             // Debug.debug("iptc size",
             // metadata.getPhotoshop().getItems().size());
 
-            JpegPhotoshopMetadata psMetadata = metadata.getPhotoshop();
-            List<IptcRecord> oldRecords = psMetadata.photoshopApp13Data.getRecords();
+            final JpegPhotoshopMetadata psMetadata = metadata.getPhotoshop();
+            final List<IptcRecord> oldRecords = psMetadata.photoshopApp13Data.getRecords();
 
             Debug.debug();
             for (int j = 0; j < oldRecords.size(); j++) {
-                IptcRecord record = oldRecords.get(j);
+                final IptcRecord record = oldRecords.get(j);
                 if (record.iptcType != IptcTypes.CITY) {
                     Debug.debug("Key: " + record.iptcType.getName() + " (0x"
                             + Integer.toHexString(record.iptcType.getType())

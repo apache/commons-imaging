@@ -26,7 +26,7 @@ public abstract class FileInfo {
     protected final int width, height;
     protected final boolean RAWBITS;
 
-    public FileInfo(int width, int height, boolean RAWBITS) {
+    public FileInfo(final int width, final int height, final boolean RAWBITS) {
         this.width = width;
         this.height = height;
         this.RAWBITS = RAWBITS;
@@ -54,10 +54,10 @@ public abstract class FileInfo {
         // do nothing by default.
     }
     
-    protected static int readSample(InputStream is, int bytesPerSample) throws IOException {
+    protected static int readSample(final InputStream is, final int bytesPerSample) throws IOException {
         int sample = 0;
         for (int i = 0; i < bytesPerSample; i++) {
-            int nextByte = is.read();
+            final int nextByte = is.read();
             if (nextByte < 0) {
                 throw new IOException("PNM: Unexpected EOF");
             }
@@ -67,7 +67,7 @@ public abstract class FileInfo {
         return sample;
     }
     
-    protected static int scaleSample(int sample, float scale, int max) throws IOException {
+    protected static int scaleSample(int sample, final float scale, final int max) throws IOException {
         if (sample < 0) {
             // Even netpbm tools break for files like this
             throw new IOException("Negative pixel values are invalid in PNM files");
@@ -78,7 +78,7 @@ public abstract class FileInfo {
         return (int)((sample * scale / max) + 0.5f);
     }
 
-    public void readImage(ImageBuilder imageBuilder, InputStream is)
+    public void readImage(final ImageBuilder imageBuilder, final InputStream is)
             throws IOException {
         // is = new BufferedInputStream(is);
         // int count = 0;
@@ -87,11 +87,11 @@ public abstract class FileInfo {
         // {
 
         if (!RAWBITS) {
-            WhiteSpaceReader wsr = new WhiteSpaceReader(is);
+            final WhiteSpaceReader wsr = new WhiteSpaceReader(is);
 
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    int rgb = getRGB(wsr);
+                    final int rgb = getRGB(wsr);
 
                     imageBuilder.setRGB(x, y, rgb);
                     // count++;
@@ -102,7 +102,7 @@ public abstract class FileInfo {
             for (int y = 0; y < height; y++) {
                 // System.out.println("y: " + y);
                 for (int x = 0; x < width; x++) {
-                    int rgb = getRGB(is);
+                    final int rgb = getRGB(is);
                     imageBuilder.setRGB(x, y, rgb);
                     // count++;
                 }

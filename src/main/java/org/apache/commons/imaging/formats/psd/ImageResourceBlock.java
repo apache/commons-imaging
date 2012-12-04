@@ -25,7 +25,7 @@ class ImageResourceBlock {
     protected final byte nameData[];
     protected final byte data[];
 
-    public ImageResourceBlock(int ID, byte NameData[], byte Data[]) {
+    public ImageResourceBlock(final int ID, final byte NameData[], final byte Data[]) {
         this.id = ID;
         this.nameData = NameData;
         this.data = Data;

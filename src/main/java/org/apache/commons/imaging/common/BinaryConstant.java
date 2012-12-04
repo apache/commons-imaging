@@ -23,7 +23,7 @@ import java.util.Arrays;
 public class BinaryConstant implements Cloneable {
     private final byte[] value;
 
-    public BinaryConstant(byte[] value) {
+    public BinaryConstant(final byte[] value) {
         this.value = value.clone();
     }
 
@@ -33,22 +33,22 @@ public class BinaryConstant implements Cloneable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
         if (!(obj instanceof BinaryConstant)) {
             return false;
         }
-        BinaryConstant other = (BinaryConstant) obj;
+        final BinaryConstant other = (BinaryConstant) obj;
         return equals(other.value);
     }
 
-    public boolean equals(byte[] bytes) {
+    public boolean equals(final byte[] bytes) {
         return Arrays.equals(value, bytes);
     }
 
-    public boolean equals(byte[] bytes, int offset, int length) {
+    public boolean equals(final byte[] bytes, final int offset, final int length) {
         if (value.length != length) {
             return false;
         }
@@ -65,7 +65,7 @@ public class BinaryConstant implements Cloneable {
         return Arrays.hashCode(value);
     }
 
-    public byte get(int i) {
+    public byte get(final int i) {
         return value[i];
     }
 
@@ -77,8 +77,8 @@ public class BinaryConstant implements Cloneable {
         return value.clone();
     }
 
-    public void writeTo(OutputStream os) throws IOException {
-        for (byte element : value) {
+    public void writeTo(final OutputStream os) throws IOException {
+        for (final byte element : value) {
             os.write(element);
         }
     }

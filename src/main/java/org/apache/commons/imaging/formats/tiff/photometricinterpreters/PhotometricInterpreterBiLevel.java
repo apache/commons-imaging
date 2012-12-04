@@ -26,9 +26,9 @@ public class PhotometricInterpreterBiLevel extends PhotometricInterpreter {
 
     // private final int bitsPerPixel;
 
-    public PhotometricInterpreterBiLevel(int fBitsPerPixel,
-            int fSamplesPerPixel, int fBitsPerSample[], int Predictor,
-            int width, int height, boolean invert) {
+    public PhotometricInterpreterBiLevel(final int fBitsPerPixel,
+            final int fSamplesPerPixel, final int fBitsPerSample[], final int Predictor,
+            final int width, final int height, final boolean invert) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
         this.invert = invert;
@@ -36,20 +36,20 @@ public class PhotometricInterpreterBiLevel extends PhotometricInterpreter {
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
-            int y) throws ImageReadException, IOException {
+    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+            final int y) throws ImageReadException, IOException {
         int sample = samples[0];
 
         if (invert) {
             sample = 255 - sample;
         }
 
-        int red = sample;
-        int green = sample;
-        int blue = sample;
+        final int red = sample;
+        final int green = sample;
+        final int blue = sample;
 
-        int alpha = 0xff;
-        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int alpha = 0xff;
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
         imageBuilder.setRGB(x, y, rgb);
     }

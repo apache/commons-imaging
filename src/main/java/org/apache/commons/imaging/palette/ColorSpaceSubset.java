@@ -26,7 +26,7 @@ class ColorSpaceSubset {
     public final int total;
     public int rgb; // median
 
-    public ColorSpaceSubset(int total, int precision) {
+    public ColorSpaceSubset(final int total, final int precision) {
         this.total = total;
         this.precision = precision;
         precision_mask = (1 << precision) - 1;
@@ -41,8 +41,8 @@ class ColorSpaceSubset {
         rgb = -1;
     }
 
-    public ColorSpaceSubset(int total, int precision, int mins[], int maxs[],
-            int table[]) {
+    public ColorSpaceSubset(final int total, final int precision, final int mins[], final int maxs[],
+            final int table[]) {
         this.total = total;
         this.precision = precision;
         this.mins = mins;
@@ -80,11 +80,11 @@ class ColorSpaceSubset {
         return true;
     }
 
-    public void dump(String prefix) {
-        int rdiff = maxs[0] - mins[0] + 1;
-        int gdiff = maxs[1] - mins[1] + 1;
-        int bdiff = maxs[2] - mins[2] + 1;
-        int color_area = rdiff * gdiff * bdiff;
+    public void dump(final String prefix) {
+        final int rdiff = maxs[0] - mins[0] + 1;
+        final int gdiff = maxs[1] - mins[1] + 1;
+        final int bdiff = maxs[2] - mins[2] + 1;
+        final int color_area = rdiff * gdiff * bdiff;
 
         System.out.println(prefix + ": [" + Integer.toHexString(rgb)
                 + "] total : " + total
@@ -108,7 +108,7 @@ class ColorSpaceSubset {
                         + color_area);
     }
 
-    public void dumpJustRGB(String prefix) {
+    public void dumpJustRGB(final String prefix) {
         System.out.println("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
                 + "red: " + Integer.toHexString(mins[0] << (8 - precision))
                 + ", " + Integer.toHexString(maxs[0] << (8 - precision)) + ", "
@@ -119,26 +119,26 @@ class ColorSpaceSubset {
     }
 
     public int getArea() {
-        int rdiff = maxs[0] - mins[0] + 1;
-        int gdiff = maxs[1] - mins[1] + 1;
-        int bdiff = maxs[2] - mins[2] + 1;
-        int color_area = rdiff * gdiff * bdiff;
+        final int rdiff = maxs[0] - mins[0] + 1;
+        final int gdiff = maxs[1] - mins[1] + 1;
+        final int bdiff = maxs[2] - mins[2] + 1;
+        final int color_area = rdiff * gdiff * bdiff;
 
         return color_area;
 
     }
 
-    public void setAverageRGB(int table[]) {
+    public void setAverageRGB(final int table[]) {
         long redsum = 0, greensum = 0, bluesum = 0;
 
         for (int red = mins[0]; red <= maxs[0]; red++) {
             for (int green = mins[1]; green <= maxs[1]; green++) {
                 for (int blue = mins[2]; blue <= maxs[2]; blue++) {
                     // note: order reversed
-                    int index = (blue << (2 * precision)) 
+                    final int index = (blue << (2 * precision)) 
                             | (green << (1 * precision))
                             | (red << (0 * precision));
-                    int count = table[index];
+                    final int count = table[index];
                     redsum += count * (red << (8 - precision));
                     greensum += count * (green << (8 - precision));
                     bluesum += count * (blue << (8 - precision));
@@ -159,14 +159,14 @@ class ColorSpaceSubset {
         return index;
     }
 
-    public final void setIndex(int i) {
+    public final void setIndex(final int i) {
         index = i;
     }
 
     public static class RgbComparator implements Comparator<ColorSpaceSubset>, Serializable {
         private static final long serialVersionUID = 509214838111679029L;
 
-        public int compare(ColorSpaceSubset c1, ColorSpaceSubset c2) {
+        public int compare(final ColorSpaceSubset c1, final ColorSpaceSubset c2) {
             return c1.rgb - c2.rgb;
         }
     }

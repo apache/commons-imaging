@@ -32,7 +32,7 @@ public class PamFileInfo extends FileInfo {
     private final boolean hasAlpha;
     private final TupleReader tupleReader;
 
-    PamFileInfo(int width, int height, int depth, int maxval, String tupleType) throws ImageReadException {
+    PamFileInfo(final int width, final int height, final int depth, final int maxval, final String tupleType) throws ImageReadException {
         super(width, height, true);
         this.depth = depth;
         this.maxval = maxval;
@@ -98,12 +98,12 @@ public class PamFileInfo extends FileInfo {
     }
     
     @Override
-    public int getRGB(WhiteSpaceReader wsr) throws IOException {
+    public int getRGB(final WhiteSpaceReader wsr) throws IOException {
         throw new UnsupportedOperationException("PAM files are only ever binary");
     }
 
     @Override
-    public int getRGB(InputStream is) throws IOException {
+    public int getRGB(final InputStream is) throws IOException {
         return tupleReader.getRGB(is);
     }
 
@@ -115,7 +115,7 @@ public class PamFileInfo extends FileInfo {
     private class GrayscaleTupleReader extends TupleReader {
         private final int colorType;
         
-        public GrayscaleTupleReader(int colorType) {
+        public GrayscaleTupleReader(final int colorType) {
             this.colorType = colorType;
         }
         
@@ -125,7 +125,7 @@ public class PamFileInfo extends FileInfo {
         }
         
         @Override
-        public int getRGB(InputStream is) throws IOException {
+        public int getRGB(final InputStream is) throws IOException {
             int sample = readSample(is, bytesPerSample);
             sample = scaleSample(sample, scale, maxval);
             
@@ -135,7 +135,7 @@ public class PamFileInfo extends FileInfo {
                 alpha = scaleSample(alpha, scale, maxval);
             }
 
-            int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
+            final int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
                     | ((0xff & sample) << 8) | ((0xff & sample) << 0);
 
             return rgb;
@@ -149,7 +149,7 @@ public class PamFileInfo extends FileInfo {
         }
         
         @Override
-        public int getRGB(InputStream is) throws IOException {
+        public int getRGB(final InputStream is) throws IOException {
             int red = readSample(is, bytesPerSample);
             int green = readSample(is, bytesPerSample);
             int blue = readSample(is, bytesPerSample);
@@ -164,7 +164,7 @@ public class PamFileInfo extends FileInfo {
                 alpha = scaleSample(alpha, scale, maxval);
             }
 
-            int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
+            final int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
                     | ((0xff & green) << 8) | ((0xff & blue) << 0);
 
             return rgb;

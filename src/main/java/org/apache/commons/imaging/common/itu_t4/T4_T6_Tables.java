@@ -23,12 +23,12 @@ class T4_T6_Tables {
         String bitString;
         Integer value;
 
-        public Entry(String bitString, Integer value) {
+        public Entry(final String bitString, final Integer value) {
             this.bitString = bitString;
             this.value = value;
         }
 
-        public void writeBits(BitArrayOutputStream outputStream) {
+        public void writeBits(final BitArrayOutputStream outputStream) {
             for (int i = 0; i < bitString.length(); i++) {
                 if (bitString.charAt(i) == '0') {
                     outputStream.writeBit(0);

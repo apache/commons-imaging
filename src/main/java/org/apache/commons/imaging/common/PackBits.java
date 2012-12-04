@@ -23,11 +23,11 @@ import org.apache.commons.imaging.ImageReadException;
 
 public class PackBits {
 
-    public byte[] decompress(byte bytes[], int expected)
+    public byte[] decompress(final byte bytes[], final int expected)
             throws ImageReadException {
         int total = 0;
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // Loop until you get the number of unpacked bytes you are expecting:
         int i = 0;
@@ -40,11 +40,11 @@ public class PackBits {
                                 + expected);
             }
 
-            int n = bytes[i++];
+            final int n = bytes[i++];
             if ((n >= 0) && (n <= 127)) {
                 // If n is between 0 and 127 inclusive, copy the next n+1 bytes
                 // literally.
-                int count = n + 1;
+                final int count = n + 1;
 
                 total += count;
                 for (int j = 0; j < count; j++) {
@@ -54,8 +54,8 @@ public class PackBits {
                 // Else if n is between -127 and -1 inclusive, copy the next byte
                 // -n+1 times.
 
-                int b = bytes[i++];
-                int count = -n + 1;
+                final int b = bytes[i++];
+                final int count = -n + 1;
 
                 total += count;
                 for (int j = 0; j < count; j++) {
@@ -66,13 +66,13 @@ public class PackBits {
                 throw new ImageReadException("Packbits: " + n);
             }
         }
-        byte result[] = baos.toByteArray();
+        final byte result[] = baos.toByteArray();
 
         return result;
 
     }
 
-    private int findNextDuplicate(byte bytes[], int start) {
+    private int findNextDuplicate(final byte bytes[], final int start) {
         // int last = -1;
         if (start >= bytes.length) {
             return -1;
@@ -81,7 +81,7 @@ public class PackBits {
         byte prev = bytes[start];
 
         for (int i = start + 1; i < bytes.length; i++) {
-            byte b = bytes[i];
+            final byte b = bytes[i];
 
             if (b == prev) {
                 return i - 1;
@@ -93,8 +93,8 @@ public class PackBits {
         return -1;
     }
 
-    private int findRunLength(byte bytes[], int start) {
-        byte b = bytes[start];
+    private int findRunLength(final byte bytes[], final int start) {
+        final byte b = bytes[start];
 
         int i;
 
@@ -105,7 +105,7 @@ public class PackBits {
         return i - start;
     }
 
-    public byte[] compress(byte bytes[]) throws IOException {
+    public byte[] compress(final byte bytes[]) throws IOException {
         MyByteArrayOutputStream baos = null;
         try {
             baos = new MyByteArrayOutputStream(
@@ -117,8 +117,8 @@ public class PackBits {
     
                 if (dup == ptr) {
                     // write run length
-                    int len = findRunLength(bytes, dup);
-                    int actual_len = Math.min(len, 128);
+                    final int len = findRunLength(bytes, dup);
+                    final int actual_len = Math.min(len, 128);
                     baos.write(-(actual_len - 1));
                     baos.write(bytes[ptr]);
                     ptr += actual_len;
@@ -127,11 +127,11 @@ public class PackBits {
                     int len = dup - ptr;
     
                     if (dup > 0) {
-                        int runlen = findRunLength(bytes, dup);
+                        final int runlen = findRunLength(bytes, dup);
                         if (runlen < 3) {
                             // may want to discard next run.
-                            int nextptr = ptr + len + runlen;
-                            int nextdup = findNextDuplicate(bytes, nextptr);
+                            final int nextptr = ptr + len + runlen;
+                            final int nextdup = findNextDuplicate(bytes, nextptr);
                             if (nextdup != nextptr) {
                                 // discard 2-byte run
                                 dup = nextdup;
@@ -143,7 +143,7 @@ public class PackBits {
                     if (dup < 0) {
                         len = bytes.length - ptr;
                     }
-                    int actual_len = Math.min(len, 128);
+                    final int actual_len = Math.min(len, 128);
     
                     baos.write(actual_len - 1);
                     for (int i = 0; i < actual_len; i++) {
@@ -152,7 +152,7 @@ public class PackBits {
                     }
                 }
             }
-            byte result[] = baos.toByteArray();
+            final byte result[] = baos.toByteArray();
     
             return result;
         } finally {

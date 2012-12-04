@@ -63,14 +63,14 @@ public class ImagingGuessFormatTest extends ImagingTest {
         testGuess(ImageFormat.IMAGE_FORMAT_UNKNOWN, UNKNOWN_IMAGE_FILE);
     }
 
-    public void testGuess(ImageFormat expectedFormat, String imagePath)
+    public void testGuess(final ImageFormat expectedFormat, String imagePath)
             throws Exception {
         imagePath = FilenameUtils.separatorsToSystem(imagePath);
-        File imageFile = new File(TEST_IMAGE_FOLDER, imagePath);
+        final File imageFile = new File(TEST_IMAGE_FOLDER, imagePath);
 
         assertTrue(imageFile.exists());
         assertTrue(imageFile.isFile());
-        ImageFormat guessedFormat = Imaging.guessFormat(imageFile);
+        final ImageFormat guessedFormat = Imaging.guessFormat(imageFile);
         assertNotNull(guessedFormat);
         assertEquals(guessedFormat, expectedFormat);
     }

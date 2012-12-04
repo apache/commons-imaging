@@ -22,12 +22,12 @@ public class ImageResourceType {
     public final int ID;
     public final String Description;
 
-    public ImageResourceType(int ID, String Description) {
+    public ImageResourceType(final int ID, final String Description) {
         this.ID = ID;
         this.Description = Description;
     }
 
-    public ImageResourceType(int ID, int ID2, String Description)
+    public ImageResourceType(final int ID, final int ID2, final String Description)
             throws ImageReadException {
         this(ID, Description);
         if (ID != ID2) {

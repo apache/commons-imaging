@@ -30,13 +30,13 @@ public class ConvertPngToGifTest extends PngBaseTest {
 
     public void test() throws Exception {
 
-        List<File> images = getPngImages();
+        final List<File> images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             if (isInvalidPNGTestFile(imageFile))
              {
                 continue;
@@ -44,13 +44,13 @@ public class ConvertPngToGifTest extends PngBaseTest {
             // Debug.debug();
             }
 
-            Hashtable<String,Object> params = new Hashtable<String,Object>();
+            final Hashtable<String,Object> params = new Hashtable<String,Object>();
             // params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-            BufferedImage image = Imaging.getBufferedImage(imageFile, params);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
             assertNotNull(image);
 
-            File outFile = createTempFile(imageFile.getName() + ".", ".gif");
+            final File outFile = createTempFile(imageFile.getName() + ".", ".gif");
             // Debug.debug("outFile", outFile);
 
             Imaging.writeImage(image, outFile, ImageFormat.IMAGE_FORMAT_GIF,

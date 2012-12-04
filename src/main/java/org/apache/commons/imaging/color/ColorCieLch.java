@@ -19,7 +19,7 @@ package org.apache.commons.imaging.color;
 public final class ColorCieLch {
     public final double L, C, H;
 
-    public ColorCieLch(double l, double C, double H) {
+    public ColorCieLch(final double l, final double C, final double H) {
         L = l;
         this.C = C;
         this.H = H;

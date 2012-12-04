@@ -30,15 +30,15 @@ public class PamWriter extends PnmWriter implements PnmConstants {
     }
     
     @Override
-    public void writeImage(BufferedImage src, OutputStream os,
-            Map<String, Object> params) throws ImageWriteException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os,
+            final Map<String, Object> params) throws ImageWriteException, IOException {
 
         os.write(PNM_PREFIX_BYTE);
         os.write(PAM_RAW_CODE);
         os.write(PNM_NEWLINE);
         
-        int width = src.getWidth();
-        int height = src.getHeight();
+        final int width = src.getWidth();
+        final int height = src.getHeight();
 
         os.write(("WIDTH " + width).getBytes("US-ASCII"));
         os.write(PNM_NEWLINE);
@@ -60,11 +60,11 @@ public class PamWriter extends PnmWriter implements PnmConstants {
         
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int argb = src.getRGB(x, y);
-                int alpha = 0xff & (argb >> 24);
-                int red = 0xff & (argb >> 16);
-                int green = 0xff & (argb >> 8);
-                int blue = 0xff & (argb >> 0);
+                final int argb = src.getRGB(x, y);
+                final int alpha = 0xff & (argb >> 24);
+                final int red = 0xff & (argb >> 16);
+                final int green = 0xff & (argb >> 8);
+                final int blue = 0xff & (argb >> 0);
 
                 os.write((byte) red);
                 os.write((byte) green);

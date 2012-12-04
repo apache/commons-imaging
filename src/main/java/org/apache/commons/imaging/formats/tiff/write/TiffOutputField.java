@@ -35,13 +35,13 @@ public class TiffOutputField implements TiffConstants {
 
     private final TiffOutputItem.Value separateValueItem;
 
-    public TiffOutputField(TagInfo tagInfo, FieldType tagtype, int count,
-            byte bytes[]) {
+    public TiffOutputField(final TagInfo tagInfo, final FieldType tagtype, final int count,
+            final byte bytes[]) {
         this(tagInfo.tag, tagInfo, tagtype, count, bytes);
     }
 
-    public TiffOutputField(final int tag, TagInfo tagInfo, FieldType fieldType,
-            int count, byte bytes[]) {
+    public TiffOutputField(final int tag, final TagInfo tagInfo, final FieldType fieldType,
+            final int count, final byte bytes[]) {
         this.tag = tag;
         this.tagInfo = tagInfo;
         this.fieldType = fieldType;
@@ -51,7 +51,7 @@ public class TiffOutputField implements TiffConstants {
         if (isLocalValue()) {
             separateValueItem = null;
         } else {
-            String name = "Field Seperate value (" + tagInfo.getDescription()
+            final String name = "Field Seperate value (" + tagInfo.getDescription()
                     + ")";
             separateValueItem = new TiffOutputItem.Value(name, bytes);
         }
@@ -59,13 +59,13 @@ public class TiffOutputField implements TiffConstants {
 
     private int sortHint = -1;
 
-    protected static final TiffOutputField createOffsetField(TagInfo tagInfo,
-            ByteOrder byteOrder) throws ImageWriteException {
+    protected static final TiffOutputField createOffsetField(final TagInfo tagInfo,
+            final ByteOrder byteOrder) throws ImageWriteException {
         return new TiffOutputField(tagInfo, FIELD_TYPE_LONG, 1,
                 FIELD_TYPE_LONG.writeData(new int[] { 0, }, byteOrder));
     }
 
-    protected void writeField(BinaryOutputStream bos) throws IOException,
+    protected void writeField(final BinaryOutputStream bos) throws IOException,
             ImageWriteException {
         bos.write2Bytes(tag);
         bos.write2Bytes(fieldType.type);
@@ -81,7 +81,7 @@ public class TiffOutputField implements TiffConstants {
             }
 
             bos.writeByteArray(bytes);
-            int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
+            final int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
             for (int i = 0; i < remainder; i++) {
                 bos.write(0);
             }
@@ -102,7 +102,7 @@ public class TiffOutputField implements TiffConstants {
         return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
 
-    protected void setData(byte bytes[]) throws ImageWriteException {
+    protected void setData(final byte bytes[]) throws ImageWriteException {
         // if(tagInfo.isUnknown())
         // Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
         // + ") setData", bytes);
@@ -132,7 +132,7 @@ public class TiffOutputField implements TiffConstants {
         if (prefix == null) {
             prefix = "";
         }
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
 
         result.append(prefix);
         result.append(tagInfo);
@@ -153,7 +153,7 @@ public class TiffOutputField implements TiffConstants {
         return sortHint;
     }
 
-    public void setSortHint(int sortHint) {
+    public void setSortHint(final int sortHint) {
         this.sortHint = sortHint;
     }
 }

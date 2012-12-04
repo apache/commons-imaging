@@ -35,8 +35,8 @@ public class SofnSegment extends Segment {
         public final int verticalSamplingFactor;
         public final int quantTabDestSelector;
 
-        public Component(int componentIdentifier, int horizontalSamplingFactor,
-                int veritcalSamplingFactor, int quantTabDestSelector) {
+        public Component(final int componentIdentifier, final int horizontalSamplingFactor,
+                final int veritcalSamplingFactor, final int quantTabDestSelector) {
             this.componentIdentifier = componentIdentifier;
             this.horizontalSamplingFactor = horizontalSamplingFactor;
             this.verticalSamplingFactor = veritcalSamplingFactor;
@@ -44,12 +44,12 @@ public class SofnSegment extends Segment {
         }
     }
 
-    public SofnSegment(int marker, byte segmentData[])
+    public SofnSegment(final int marker, final byte segmentData[])
             throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public SofnSegment(int marker, int marker_length, InputStream is)
+    public SofnSegment(final int marker, final int marker_length, final InputStream is)
             throws ImageReadException, IOException {
         super(marker, marker_length);
 
@@ -64,14 +64,14 @@ public class SofnSegment extends Segment {
                 "Not a Valid JPEG File");
         components = new Component[numberOfComponents];
         for (int i = 0; i < numberOfComponents; i++) {
-            int componentIdentifier = readByte("ComponentIdentifier", is,
+            final int componentIdentifier = readByte("ComponentIdentifier", is,
                     "Not a Valid JPEG File");
 
-            int hvSamplingFactors = readByte("SamplingFactors", is,
+            final int hvSamplingFactors = readByte("SamplingFactors", is,
                     "Not a Valid JPEG File");
-            int horizontalSamplingFactor = (hvSamplingFactors >> 4) & 0xf;
-            int verticalSamplingFactor = hvSamplingFactors & 0xf;
-            int quantTabDestSelector = readByte("QuantTabDestSel", is,
+            final int horizontalSamplingFactor = (hvSamplingFactors >> 4) & 0xf;
+            final int verticalSamplingFactor = hvSamplingFactors & 0xf;
+            final int quantTabDestSelector = readByte("QuantTabDestSel", is,
                     "Not a Valid JPEG File");
             components[i] = new Component(componentIdentifier,
                     horizontalSamplingFactor, verticalSamplingFactor,

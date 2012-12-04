@@ -53,35 +53,35 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     // }
 
     public void testRemove() throws Exception {
-        List<File> images = getImagesWithExifData();
+        final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
-            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             if (ignoreImageData) {
                 continue;
             }
 
-            ByteSource byteSource = new ByteSourceFile(imageFile);
+            final ByteSource byteSource = new ByteSourceFile(imageFile);
             Debug.debug("Source Segments:");
             new JpegUtils().dumpJFIF(byteSource);
 
             {
-                JpegImageMetadata metadata = (JpegImageMetadata) Imaging
+                final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile);
                 // assertNotNull(metadata.getExif());
             }
 
             {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
-                byte bytes[] = baos.toByteArray();
-                File tempFile = createTempFile("test", ".jpg");
+                final byte bytes[] = baos.toByteArray();
+                final File tempFile = createTempFile("test", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 IoUtils.writeToFile(bytes, tempFile);
 
@@ -94,37 +94,37 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     }
 
     public void testInsert() throws Exception {
-        List<File> images = getImagesWithExifData();
+        final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
-            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             if (ignoreImageData) {
                 continue;
             }
 
-            ByteSource byteSource = new ByteSourceFile(imageFile);
+            final ByteSource byteSource = new ByteSourceFile(imageFile);
             Debug.debug("Source Segments:");
             new JpegUtils().dumpJFIF(byteSource);
 
-            JpegImageMetadata originalMetadata = (JpegImageMetadata) Imaging
+            final JpegImageMetadata originalMetadata = (JpegImageMetadata) Imaging
                     .getMetadata(imageFile);
             assertNotNull(originalMetadata);
 
-            TiffImageMetadata oldExifMetadata = originalMetadata.getExif();
+            final TiffImageMetadata oldExifMetadata = originalMetadata.getExif();
             assertNotNull(oldExifMetadata);
 
             ByteSource stripped;
             {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
-                byte bytes[] = baos.toByteArray();
-                File tempFile = createTempFile("removed", ".jpg");
+                final byte bytes[] = baos.toByteArray();
+                final File tempFile = createTempFile("removed", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 IoUtils.writeToFile(bytes, tempFile);
 
@@ -136,16 +136,16 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             }
 
             {
-                TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
+                final TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
                 // outputSet.dump();
 
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
                 new ExifRewriter().updateExifMetadataLossy(stripped, baos,
                         outputSet);
 
-                byte bytes[] = baos.toByteArray();
-                File tempFile = createTempFile("inserted" + "_", ".jpg");
+                final byte bytes[] = baos.toByteArray();
+                final File tempFile = createTempFile("inserted" + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 IoUtils.writeToFile(bytes, tempFile);
 
@@ -154,10 +154,10 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
 
                 // assertTrue(!hasExifData(tempFile));
 
-                JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
+                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
                         .getMetadata(tempFile);
                 assertNotNull(newMetadata);
-                TiffImageMetadata newExifMetadata = newMetadata.getExif();
+                final TiffImageMetadata newExifMetadata = newMetadata.getExif();
                 assertNotNull(newExifMetadata);
                 // newMetadata.dump();
 
@@ -173,37 +173,37 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 IOException, ImageWriteException;
     }
 
-    private void rewrite(Rewriter rewriter, String name) throws IOException,
+    private void rewrite(final Rewriter rewriter, final String name) throws IOException,
             ImageReadException, ImageWriteException {
-        List<File> images = getImagesWithExifData();
+        final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
 
             try {
 
                 Debug.debug("imageFile", imageFile);
 
-                boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+                final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
                 if (ignoreImageData) {
                     continue;
                 }
 
-                ByteSource byteSource = new ByteSourceFile(imageFile);
+                final ByteSource byteSource = new ByteSourceFile(imageFile);
                 Debug.debug("Source Segments:");
                 new JpegUtils().dumpJFIF(byteSource);
 
-                JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging
+                final JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile);
                 if (null == oldMetadata) {
                     continue;
                 }
                 assertNotNull(oldMetadata);
 
-                TiffImageMetadata oldExifMetadata = oldMetadata.getExif();
+                final TiffImageMetadata oldExifMetadata = oldMetadata.getExif();
                 if (null == oldExifMetadata) {
                     continue;
                 }
@@ -213,13 +213,13 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 // TiffImageMetadata tiffImageMetadata = metadata.getExif();
                 // Photoshop photoshop = metadata.getPhotoshop();
 
-                TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
+                final TiffOutputSet outputSet = oldExifMetadata.getOutputSet();
                 // outputSet.dump();
 
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 rewriter.rewrite(byteSource, baos, outputSet);
-                byte bytes[] = baos.toByteArray();
-                File tempFile = createTempFile(name + "_", ".jpg");
+                final byte bytes[] = baos.toByteArray();
+                final File tempFile = createTempFile(name + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 IoUtils.writeToFile(bytes, tempFile);
 
@@ -228,23 +228,23 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
 
                 // assertTrue(!hasExifData(tempFile));
 
-                JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
+                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
                         .getMetadata(tempFile);
                 assertNotNull(newMetadata);
-                TiffImageMetadata newExifMetadata = newMetadata.getExif();
+                final TiffImageMetadata newExifMetadata = newMetadata.getExif();
                 assertNotNull(newExifMetadata);
                 // newMetadata.dump();
 
                 compare(imageFile, oldExifMetadata, newExifMetadata);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);
                 throw e;
-            } catch (ImageReadException e) {
+            } catch (final ImageReadException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);
                 throw e;
-            } catch (ImageWriteException e) {
+            } catch (final ImageWriteException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);
                 // FIXME: this image has 28kB of Maker Notes, causing the APP1
@@ -260,9 +260,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     }
 
     public void testRewriteLossy() throws Exception {
-        Rewriter rewriter = new Rewriter() {
-            public void rewrite(ByteSource byteSource, OutputStream os,
-                    TiffOutputSet outputSet) throws ImageReadException,
+        final Rewriter rewriter = new Rewriter() {
+            public void rewrite(final ByteSource byteSource, final OutputStream os,
+                    final TiffOutputSet outputSet) throws ImageReadException,
                     IOException, ImageWriteException {
                 new ExifRewriter().updateExifMetadataLossy(byteSource, os,
                         outputSet);
@@ -273,9 +273,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     }
 
     public void testRewriteLossless() throws Exception {
-        Rewriter rewriter = new Rewriter() {
-            public void rewrite(ByteSource byteSource, OutputStream os,
-                    TiffOutputSet outputSet) throws ImageReadException,
+        final Rewriter rewriter = new Rewriter() {
+            public void rewrite(final ByteSource byteSource, final OutputStream os,
+                    final TiffOutputSet outputSet) throws ImageReadException,
                     IOException, ImageWriteException {
                 new ExifRewriter().updateExifMetadataLossless(byteSource, os,
                         outputSet);
@@ -285,21 +285,21 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         rewrite(rewriter, "lossless");
     }
 
-    private Hashtable<Integer,TiffImageMetadata.Directory> makeDirectoryMap(List<? extends IImageMetadataItem> directories) {
-        Hashtable<Integer,TiffImageMetadata.Directory> directoryMap = new Hashtable<Integer,TiffImageMetadata.Directory>();
+    private Hashtable<Integer,TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends IImageMetadataItem> directories) {
+        final Hashtable<Integer,TiffImageMetadata.Directory> directoryMap = new Hashtable<Integer,TiffImageMetadata.Directory>();
         for (int i = 0; i < directories.size(); i++) {
-            TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories
+            final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories
                     .get(i);
             directoryMap.put(directory.type, directory);
         }
         return directoryMap;
     }
 
-    private Hashtable<Integer,TiffField> makeFieldMap(List<? extends IImageMetadataItem> items) {
-        Hashtable<Integer,TiffField> fieldMap = new Hashtable<Integer,TiffField>();
+    private Hashtable<Integer,TiffField> makeFieldMap(final List<? extends IImageMetadataItem> items) {
+        final Hashtable<Integer,TiffField> fieldMap = new Hashtable<Integer,TiffField>();
         for (int i = 0; i < items.size(); i++) {
-            TiffImageMetadata.Item item = (TiffImageMetadata.Item) items.get(i);
-            TiffField field = item.getTiffField();
+            final TiffImageMetadata.Item item = (TiffImageMetadata.Item) items.get(i);
+            final TiffField field = item.getTiffField();
             if (!fieldMap.containsKey(field.tag)) {
                 fieldMap.put(field.tag, field);
             }
@@ -307,40 +307,40 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         return fieldMap;
     }
 
-    private void compare(File imageFile, TiffImageMetadata oldExifMetadata,
-            TiffImageMetadata newExifMetadata) throws ImageReadException {
+    private void compare(final File imageFile, final TiffImageMetadata oldExifMetadata,
+            final TiffImageMetadata newExifMetadata) throws ImageReadException {
         assertNotNull(oldExifMetadata);
         assertNotNull(newExifMetadata);
 
-        List<? extends IImageMetadataItem> oldDirectories = oldExifMetadata.getDirectories();
-        List<? extends IImageMetadataItem> newDirectories = newExifMetadata.getDirectories();
+        final List<? extends IImageMetadataItem> oldDirectories = oldExifMetadata.getDirectories();
+        final List<? extends IImageMetadataItem> newDirectories = newExifMetadata.getDirectories();
 
         assertTrue(oldDirectories.size() == newDirectories.size());
 
-        Hashtable<Integer,TiffImageMetadata.Directory> oldDirectoryMap = makeDirectoryMap(oldDirectories);
-        Hashtable<Integer,TiffImageMetadata.Directory> newDirectoryMap = makeDirectoryMap(newDirectories);
+        final Hashtable<Integer,TiffImageMetadata.Directory> oldDirectoryMap = makeDirectoryMap(oldDirectories);
+        final Hashtable<Integer,TiffImageMetadata.Directory> newDirectoryMap = makeDirectoryMap(newDirectories);
 
         assertEquals(oldDirectories.size(), oldDirectoryMap.keySet().size());
-        List<Integer> oldDirectoryTypes = new ArrayList<Integer>(oldDirectoryMap.keySet());
+        final List<Integer> oldDirectoryTypes = new ArrayList<Integer>(oldDirectoryMap.keySet());
         Collections.sort(oldDirectoryTypes);
-        List<Integer> newDirectoryTypes = new ArrayList<Integer>(newDirectoryMap.keySet());
+        final List<Integer> newDirectoryTypes = new ArrayList<Integer>(newDirectoryMap.keySet());
         Collections.sort(newDirectoryTypes);
         assertEquals(oldDirectoryTypes, newDirectoryTypes);
 
         for (int i = 0; i < oldDirectoryTypes.size(); i++) {
-            Integer dirType = oldDirectoryTypes.get(i);
+            final Integer dirType = oldDirectoryTypes.get(i);
 
             // Debug.debug("dirType", dirType);
 
-            TiffImageMetadata.Directory oldDirectory = oldDirectoryMap
+            final TiffImageMetadata.Directory oldDirectory = oldDirectoryMap
                     .get(dirType);
-            TiffImageMetadata.Directory newDirectory = newDirectoryMap
+            final TiffImageMetadata.Directory newDirectory = newDirectoryMap
                     .get(dirType);
             assertNotNull(oldDirectory);
             assertNotNull(newDirectory);
 
-            List<? extends IImageMetadataItem> oldItems = oldDirectory.getItems();
-            List<? extends IImageMetadataItem> newItems = newDirectory.getItems();
+            final List<? extends IImageMetadataItem> oldItems = oldDirectory.getItems();
+            final List<? extends IImageMetadataItem> newItems = newDirectory.getItems();
 
             // Debug.debug("oldItems.size()", oldItems.size());
             // Debug.debug("newItems.size()", newItems.size());
@@ -355,13 +355,13 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             // }
             // assertTrue(oldItems.size() == newItems.size());
 
-            Hashtable<Integer,TiffField> oldFieldMap = makeFieldMap(oldItems);
-            Hashtable<Integer,TiffField> newFieldMap = makeFieldMap(newItems);
+            final Hashtable<Integer,TiffField> oldFieldMap = makeFieldMap(oldItems);
+            final Hashtable<Integer,TiffField> newFieldMap = makeFieldMap(newItems);
 
-            Set<Integer> missingInNew = new HashSet<Integer>(oldFieldMap.keySet());
+            final Set<Integer> missingInNew = new HashSet<Integer>(oldFieldMap.keySet());
             missingInNew.removeAll(newFieldMap.keySet());
 
-            Set<Integer> missingInOld = new HashSet<Integer>(newFieldMap.keySet());
+            final Set<Integer> missingInOld = new HashSet<Integer>(newFieldMap.keySet());
             missingInOld.removeAll(oldFieldMap.keySet());
 
             // dump("missingInNew", missingInNew);
@@ -380,17 +380,17 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             // assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
             // assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
 
-            List<Integer> oldFieldTags = new ArrayList<Integer>(oldFieldMap.keySet());
+            final List<Integer> oldFieldTags = new ArrayList<Integer>(oldFieldMap.keySet());
             Collections.sort(oldFieldTags);
-            List<Integer> newFieldTags = new ArrayList<Integer>(newFieldMap.keySet());
+            final List<Integer> newFieldTags = new ArrayList<Integer>(newFieldMap.keySet());
             Collections.sort(newFieldTags);
             assertEquals(oldFieldTags, newFieldTags);
 
             for (int j = 0; j < oldFieldTags.size(); j++) {
-                Integer fieldTag = oldFieldTags.get(j);
+                final Integer fieldTag = oldFieldTags.get(j);
 
-                TiffField oldField = oldFieldMap.get(fieldTag);
-                TiffField newField = newFieldMap.get(fieldTag);
+                final TiffField oldField = oldFieldMap.get(fieldTag);
+                final TiffField newField = newFieldMap.get(fieldTag);
 
                 // Debug.debug("fieldTag", fieldTag);
                 // Debug.debug("oldField", oldField);
@@ -408,9 +408,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                     // Imaging currently doesn't correctly rewrite
                     // strings if any byte had the highest bit set,
                     // so if the source had that, all bets are off.
-                    byte[] rawBytes = oldField.fieldType.getRawBytes(oldField);
+                    final byte[] rawBytes = oldField.fieldType.getRawBytes(oldField);
                     boolean hasInvalidByte = false;
-                    for (byte rawByte : rawBytes) {
+                    for (final byte rawByte : rawBytes) {
                         if ((rawByte & 0x80) != 0) {
                             hasInvalidByte = true;
                             break;
@@ -452,7 +452,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                         // Debug.debug("newField.valueOffsetBytes",
                         // newField.valueOffsetBytes);
 
-                        String label = imageFile.getName() + ", dirType[" + i
+                        final String label = imageFile.getName() + ", dirType[" + i
                                 + "]=" + dirType + ", fieldTag[" + j + "]="
                                 + fieldTag;
                         if (oldField.tag == 0x116 || oldField.tag == 0x117) {
@@ -489,8 +489,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         }
     }
 
-    private void compare(String label, byte a[], byte b[], int aLength,
-            int bLength) {
+    private void compare(final String label, final byte a[], final byte b[], final int aLength,
+            final int bLength) {
         // Debug.debug("c0 a", a);
         // Debug.debug("c0 b", b);
         assertEquals(aLength, bLength);
@@ -499,7 +499,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         assertNotNull(a);
         assertNotNull(b);
         assertEquals(a.length, b.length);
-        int length = aLength;
+        final int length = aLength;
         for (int i = 0; i < length; i++) {
             // byte ba = a[i];
             // byte bb = b[i];
@@ -518,17 +518,17 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         }
     }
 
-    private void compare(String label, TiffField a, TiffField b)
+    private void compare(final String label, final TiffField a, final TiffField b)
             throws ImageReadException {
-        Object v1 = a.getValue();
-        Object v2 = b.getValue();
+        final Object v1 = a.getValue();
+        final Object v2 = b.getValue();
 
         // Debug.debug("v1", v1 + " (" + Debug.getType(v1) + ")");
         // Debug.debug("v2", v2 + " (" + Debug.getType(v2) + ")");
         assertEquals(label, v1, v2);
     }
 
-    private void compare(byte a[], byte b[]) {
+    private void compare(final byte a[], final byte b[]) {
         // Debug.debug("c1 a", a);
         // Debug.debug("c1 b", b);
         assertNotNull(a);

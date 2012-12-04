@@ -24,11 +24,11 @@ import java.io.UnsupportedEncodingException;
 public class ComSegment extends Segment {
     public final byte[] comment;
 
-    public ComSegment(int marker, byte segmentData[]) throws IOException {
+    public ComSegment(final int marker, final byte segmentData[]) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public ComSegment(int marker, int marker_length, InputStream is)
+    public ComSegment(final int marker, final int marker_length, final InputStream is)
             throws IOException {
         super(marker, marker_length);
 
@@ -49,7 +49,7 @@ public class ComSegment extends Segment {
         String commentString = "";
         try {
             commentString = new String(comment, "UTF-8");
-        } catch (UnsupportedEncodingException cannotHappen) {
+        } catch (final UnsupportedEncodingException cannotHappen) {
         }
         return "COM (" + commentString + ")";
     }

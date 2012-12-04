@@ -24,12 +24,12 @@ import org.apache.commons.imaging.ImagingTest;
 
 public abstract class XpmBaseTest extends ImagingTest {
 
-    private static boolean isXpm(File file) {
+    private static boolean isXpm(final File file) {
         return file.getName().toLowerCase().endsWith(".xpm");
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isXpm(file);
         }
     };

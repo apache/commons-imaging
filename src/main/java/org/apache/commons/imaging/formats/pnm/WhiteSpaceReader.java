@@ -22,12 +22,12 @@ import java.io.InputStream;
 class WhiteSpaceReader {
     private final InputStream is;
 
-    public WhiteSpaceReader(InputStream is) {
+    public WhiteSpaceReader(final InputStream is) {
         this.is = is;
     }
 
     private char read() throws IOException {
-        int result = is.read();
+        final int result = is.read();
         if (result < 0) {
             throw new IOException("PNM: Unexpected EOF");
         }
@@ -52,7 +52,7 @@ class WhiteSpaceReader {
             c = nextChar();
         }
 
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
 
         while (!Character.isWhitespace(c)) {
             buffer.append(c);
@@ -63,7 +63,7 @@ class WhiteSpaceReader {
     }
     
     public String readLine() throws IOException {
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
         for (char c = read(); (c != '\n') && (c != '\r'); c = read()) {
             buffer.append(c);
         }

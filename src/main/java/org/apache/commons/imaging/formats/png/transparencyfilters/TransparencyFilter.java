@@ -24,7 +24,7 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 public abstract class TransparencyFilter extends BinaryFileParser {
     protected final byte bytes[];
 
-    public TransparencyFilter(byte bytes[]) {
+    public TransparencyFilter(final byte bytes[]) {
         this.bytes = bytes;
 
     }

@@ -20,7 +20,7 @@ public final class Block {
     public final int width;
     public final int height;
 
-    public Block(int width, int height) {
+    public Block(final int width, final int height) {
         samples = new int[width * height];
         this.width = width;
         this.height = height;

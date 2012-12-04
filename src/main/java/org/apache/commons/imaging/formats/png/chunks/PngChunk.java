@@ -29,7 +29,7 @@ public class PngChunk extends BinaryFileParser {
     public final boolean propertyBits[];
     public final boolean ancillary, isPrivate, reserved, safeToCopy;
 
-    public PngChunk(int Length, int ChunkType, int CRC, byte bytes[]) {
+    public PngChunk(final int Length, final int ChunkType, final int CRC, final byte bytes[]) {
         this.length = Length;
         this.chunkType = ChunkType;
         this.crc = CRC;
@@ -38,9 +38,9 @@ public class PngChunk extends BinaryFileParser {
         propertyBits = new boolean[4];
         int shift = 24;
         for (int i = 0; i < 4; i++) {
-            int theByte = 0xff & (ChunkType >> shift);
+            final int theByte = 0xff & (ChunkType >> shift);
             shift -= 8;
-            int theMask = 1 << 5;
+            final int theMask = 1 << 5;
             propertyBits[i] = ((theByte & theMask) > 0);
         }
 
@@ -51,7 +51,7 @@ public class PngChunk extends BinaryFileParser {
     }
 
     protected ByteArrayInputStream getDataStream() {
-        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
         return is;
     }
 

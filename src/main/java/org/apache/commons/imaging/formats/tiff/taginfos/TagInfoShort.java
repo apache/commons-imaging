@@ -21,15 +21,15 @@ import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 
 public class TagInfoShort extends TagInfo {
-    public TagInfoShort(String name, int tag, int length, TiffDirectoryType directoryType) {
+    public TagInfoShort(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, FIELD_TYPE_SHORT, length, directoryType);
     }
     
-    public short[] getValue(ByteOrder byteOrder, byte[] bytes) {
+    public short[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return BinaryConversions.toShorts(bytes, byteOrder);
     }
 
-    public byte[] encodeValue(ByteOrder byteOrder, short... values) {
+    public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
         return BinaryConversions.toBytes(values, byteOrder);
     }
 }

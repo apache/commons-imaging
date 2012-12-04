@@ -56,28 +56,28 @@ public class IptcUpdateTest extends IptcBaseTest {
      * Remove all Photoshop IPTC data from a JPEG file.
      */
     public void testRemove() throws Exception {
-        List<File> images = imagesWithIptcData;
+        final List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             // Debug.debug("imageFile", imageFile);
             // Debug.debug();
 
-            ByteSource byteSource = new ByteSourceFile(imageFile);
+            final ByteSource byteSource = new ByteSourceFile(imageFile);
 
-            Map<String,Object> params = new HashMap<String,Object>();
-            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            final Map<String,Object> params = new HashMap<String,Object>();
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
-            JpegPhotoshopMetadata metadata = new JpegImageParser()
+            final JpegPhotoshopMetadata metadata = new JpegImageParser()
                     .getPhotoshopMetadata(byteSource, params);
             assertNotNull(metadata);
             // metadata.dump();
 
-            File noIptcFile = createTempFile(imageFile.getName()
+            final File noIptcFile = createTempFile(imageFile.getName()
                     + ".iptc.remove.", ".jpg");
             {
                 // test remove
@@ -94,7 +94,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                     os = null;
                 }
 
-                JpegPhotoshopMetadata outMetadata = new JpegImageParser()
+                final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
                         .getPhotoshopMetadata(new ByteSourceFile(noIptcFile),
                                 params);
                 assertTrue(outMetadata == null
@@ -105,32 +105,32 @@ public class IptcUpdateTest extends IptcBaseTest {
     }
 
     public void testRemoveInsertUpdate() throws Exception {
-        List<File> images = imagesWithIptcData;
+        final List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
-            ByteSource byteSource = new ByteSourceFile(imageFile);
+            final ByteSource byteSource = new ByteSourceFile(imageFile);
             // Debug.debug("Segments:");
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map<String,Object> params = new HashMap<String,Object>();
-            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            final Map<String,Object> params = new HashMap<String,Object>();
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
             // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
             // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-            JpegPhotoshopMetadata metadata = new JpegImageParser()
+            final JpegPhotoshopMetadata metadata = new JpegImageParser()
                     .getPhotoshopMetadata(byteSource, params);
             assertNotNull(metadata);
             metadata.dump();
 
-            File noIptcFile = createTempFile(imageFile.getName()
+            final File noIptcFile = createTempFile(imageFile.getName()
                     + ".iptc.remove.", ".jpg");
             {
                 // test remove
@@ -150,7 +150,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                 // Debug.debug("Source Segments:");
                 // new JpegUtils().dumpJFIF(new ByteSourceFile(noIptcFile));
 
-                JpegPhotoshopMetadata outMetadata = new JpegImageParser()
+                final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
                         .getPhotoshopMetadata(new ByteSourceFile(noIptcFile),
                                 params);
                 assertTrue(outMetadata == null
@@ -159,11 +159,11 @@ public class IptcUpdateTest extends IptcBaseTest {
             {
                 // test no-change update
 
-                List<IptcBlock> newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
-                List<IptcRecord> oldRecords = metadata.photoshopApp13Data.getRecords();
-                List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
+                final List<IptcBlock> newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
+                final List<IptcRecord> oldRecords = metadata.photoshopApp13Data.getRecords();
+                final List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
                 for (int j = 0; j < oldRecords.size(); j++) {
-                    IptcRecord record = oldRecords.get(j);
+                    final IptcRecord record = oldRecords.get(j);
                     if (record.iptcType != IptcTypes.CITY
                             && record.iptcType != IptcTypes.CREDIT) {
                         newRecords.add(record);
@@ -174,10 +174,10 @@ public class IptcUpdateTest extends IptcBaseTest {
                 newRecords.add(new IptcRecord(IptcTypes.CREDIT,
                         "William Sorensen"));
 
-                PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
+                final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                         newBlocks);
 
-                File updated = createTempFile(imageFile.getName()
+                final File updated = createTempFile(imageFile.getName()
                         + ".iptc.update.", ".jpg");
                 OutputStream os = null;
                 try {
@@ -194,8 +194,8 @@ public class IptcUpdateTest extends IptcBaseTest {
                 // Debug.debug("Source Segments:");
                 // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
-                ByteSource updateByteSource = new ByteSourceFile(updated);
-                JpegPhotoshopMetadata outMetadata = new JpegImageParser()
+                final ByteSource updateByteSource = new ByteSourceFile(updated);
+                final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
                         .getPhotoshopMetadata(updateByteSource, params);
 
                 // Debug.debug("outMetadata", outMetadata.toString());
@@ -210,17 +210,17 @@ public class IptcUpdateTest extends IptcBaseTest {
             {
                 // test update
 
-                List<IptcBlock> newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
-                List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
+                final List<IptcBlock> newBlocks = metadata.photoshopApp13Data.getNonIptcBlocks();
+                final List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
 
                 newRecords.add(new IptcRecord(IptcTypes.CITY, "Albany, NY"));
                 newRecords.add(new IptcRecord(IptcTypes.CREDIT,
                         "William Sorensen"));
 
-                PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
+                final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                         newBlocks);
 
-                File updated = createTempFile(imageFile.getName()
+                final File updated = createTempFile(imageFile.getName()
                         + ".iptc.update.", ".jpg");
                 OutputStream os = null;
                 try {
@@ -237,8 +237,8 @@ public class IptcUpdateTest extends IptcBaseTest {
                 // Debug.debug("Source Segments:");
                 // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
-                ByteSource updateByteSource = new ByteSourceFile(updated);
-                JpegPhotoshopMetadata outMetadata = new JpegImageParser()
+                final ByteSource updateByteSource = new ByteSourceFile(updated);
+                final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
                         .getPhotoshopMetadata(updateByteSource, params);
 
                 // Debug.debug("outMetadata", outMetadata.toString());
@@ -253,17 +253,17 @@ public class IptcUpdateTest extends IptcBaseTest {
             {
                 // test insert
 
-                List<IptcBlock> newBlocks = new ArrayList<IptcBlock>();
-                List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
+                final List<IptcBlock> newBlocks = new ArrayList<IptcBlock>();
+                final List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
 
                 newRecords.add(new IptcRecord(IptcTypes.CITY, "Albany, NY"));
                 newRecords.add(new IptcRecord(IptcTypes.CREDIT,
                         "William Sorensen"));
 
-                PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
+                final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                         newBlocks);
 
-                File updated = createTempFile(imageFile.getName()
+                final File updated = createTempFile(imageFile.getName()
                         + ".iptc.insert.", ".jpg");
                 OutputStream os = null;
                 try {
@@ -281,8 +281,8 @@ public class IptcUpdateTest extends IptcBaseTest {
                 // Debug.debug("Source Segments:");
                 // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
-                ByteSource updateByteSource = new ByteSourceFile(updated);
-                JpegPhotoshopMetadata outMetadata = new JpegImageParser()
+                final ByteSource updateByteSource = new ByteSourceFile(updated);
+                final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
                         .getPhotoshopMetadata(updateByteSource, params);
 
                 // Debug.debug("outMetadata", outMetadata.toString());
@@ -302,46 +302,46 @@ public class IptcUpdateTest extends IptcBaseTest {
      * IPTC data.
      */
     public void testAddIptcData() throws Exception {
-        List<File> images = getJpegImages();
+        final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             // Debug.debug("imageFile", imageFile);
             // Debug.debug();
 
-            ByteSource byteSource = new ByteSourceFile(imageFile);
+            final ByteSource byteSource = new ByteSourceFile(imageFile);
             // Debug.debug("Segments:");
             // new JpegUtils().dumpJFIF(byteSource);
 
-            Map<String,Object> params = new HashMap<String,Object>();
-            boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            final Map<String,Object> params = new HashMap<String,Object>();
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
-            JpegPhotoshopMetadata metadata = new JpegImageParser()
+            final JpegPhotoshopMetadata metadata = new JpegImageParser()
                     .getPhotoshopMetadata(byteSource, params);
             // metadata.dump();
 
             {
-                List<IptcBlock> newBlocks = new ArrayList<IptcBlock>();
+                final List<IptcBlock> newBlocks = new ArrayList<IptcBlock>();
                 List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
 
                 if (null != metadata) {
-                    boolean keepOldIptcNonTextValues = true;
+                    final boolean keepOldIptcNonTextValues = true;
                     if (keepOldIptcNonTextValues) {
                         newBlocks.addAll(metadata.photoshopApp13Data
                                 .getNonIptcBlocks());
                     }
-                    boolean keepOldIptcTextValues = true;
+                    final boolean keepOldIptcTextValues = true;
                     if (keepOldIptcTextValues) {
-                        List<IptcRecord> oldRecords = metadata.photoshopApp13Data
+                        final List<IptcRecord> oldRecords = metadata.photoshopApp13Data
                                 .getRecords();
 
                         newRecords = new ArrayList<IptcRecord>();
                         for (int j = 0; j < oldRecords.size(); j++) {
-                            IptcRecord record = oldRecords.get(j);
+                            final IptcRecord record = oldRecords.get(j);
                             if (record.iptcType != IptcTypes.CITY
                                     && record.iptcType != IptcTypes.CREDIT) {
                                 newRecords.add(record);
@@ -354,10 +354,10 @@ public class IptcUpdateTest extends IptcBaseTest {
                 newRecords.add(new IptcRecord(IptcTypes.CREDIT,
                         "William Sorensen"));
 
-                PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
+                final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                         newBlocks);
 
-                File updated = createTempFile(imageFile.getName()
+                final File updated = createTempFile(imageFile.getName()
                         + ".iptc.add.", ".jpg");
                 OutputStream os = null;
                 try {
@@ -374,8 +374,8 @@ public class IptcUpdateTest extends IptcBaseTest {
                 // Debug.debug("Destination Segments:");
                 // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
-                ByteSource updateByteSource = new ByteSourceFile(updated);
-                JpegPhotoshopMetadata outMetadata = new JpegImageParser()
+                final ByteSource updateByteSource = new ByteSourceFile(updated);
+                final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
                         .getPhotoshopMetadata(updateByteSource, params);
 
                 // Debug.debug("outMetadata", outMetadata.toString());

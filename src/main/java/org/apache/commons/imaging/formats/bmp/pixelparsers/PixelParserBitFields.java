@@ -33,8 +33,8 @@ public class PixelParserBitFields extends PixelParserSimple {
     private final int blueMask;
     private final int alphaMask;
 
-    public PixelParserBitFields(BmpHeaderInfo bhi, byte ColorTable[],
-            byte ImageData[]) {
+    public PixelParserBitFields(final BmpHeaderInfo bhi, final byte ColorTable[],
+            final byte ImageData[]) {
         super(bhi, ColorTable, ImageData);
 
         redMask = bhi.redMask;
@@ -99,7 +99,7 @@ public class PixelParserBitFields extends PixelParserSimple {
         blue = (blueShift >= 0) ? blue >> blueShift : blue << -blueShift;
         alpha = (alphaShift >= 0) ? alpha >> alphaShift : alpha << -alphaShift;
 
-        int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
 
         return rgb;
     }

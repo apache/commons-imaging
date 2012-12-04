@@ -23,12 +23,12 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingTest;
 
 public abstract class WbmpBaseTest extends ImagingTest {
-    private static boolean isWbmp(File file) {
+    private static boolean isWbmp(final File file) {
         return file.getName().toLowerCase().endsWith(".wbmp");
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        public boolean accept(File file) throws IOException, ImageReadException {
+        public boolean accept(final File file) throws IOException, ImageReadException {
             return isWbmp(file);
         }
     };

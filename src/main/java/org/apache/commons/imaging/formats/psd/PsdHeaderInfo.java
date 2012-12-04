@@ -29,8 +29,8 @@ public class PsdHeaderInfo {
     public final int Depth;
     public final int Mode;
 
-    public PsdHeaderInfo(int Version, byte Reserved[], int Channels, int Rows,
-            int Columns, int Depth, int Mode) {
+    public PsdHeaderInfo(final int Version, final byte Reserved[], final int Channels, final int Rows,
+            final int Columns, final int Depth, final int Mode) {
         this.Version = Version;
         this.Reserved = Reserved;
         this.Channels = Channels;
@@ -42,12 +42,12 @@ public class PsdHeaderInfo {
     }
 
     public void dump() {
-        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
+        final PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
         dump(pw);
         pw.flush();
     }
 
-    public void dump(PrintWriter pw) {
+    public void dump(final PrintWriter pw) {
         pw.println("");
         pw.println("Header");
         pw.println("Version: " + Version + " (" + Integer.toHexString(Version)

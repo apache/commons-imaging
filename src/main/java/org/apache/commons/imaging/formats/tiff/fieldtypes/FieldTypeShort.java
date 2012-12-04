@@ -24,12 +24,12 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeShort extends FieldType {
-    public FieldTypeShort(int type, String name) {
+    public FieldTypeShort(final int type, final String name) {
         super(type, 2, name);
     }
 
     @Override
-    public Object getSimpleValue(TiffField entry) throws ImageReadException {
+    public Object getSimpleValue(final TiffField entry) throws ImageReadException {
         if (entry.length == 1) {
             return BinaryConversions.toShort(entry.valueOffsetBytes,
                     entry.byteOrder);
@@ -40,16 +40,16 @@ public class FieldTypeShort extends FieldType {
     }
 
     @Override
-    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Short) {
             return BinaryConversions.toBytes(
                     ((Short)o).shortValue(), byteOrder);
         } else if (o instanceof short[]) {
-            short numbers[] = (short[]) o;
+            final short numbers[] = (short[]) o;
             return BinaryConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Short[]) {
-            Short numbers[] = (Short[]) o;
-            short values[] = new short[numbers.length];
+            final Short numbers[] = (Short[]) o;
+            final short values[] = new short[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].shortValue();
             }

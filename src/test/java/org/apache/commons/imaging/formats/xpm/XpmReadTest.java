@@ -31,23 +31,23 @@ public class XpmReadTest extends XpmBaseTest {
     public void test() throws Exception {
         Debug.debug("start");
 
-        List<File> images = getXpmImages();
+        final List<File> images = getXpmImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = images.get(i);
+            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
-            IImageMetadata metadata = Imaging.getMetadata(imageFile);
+            final IImageMetadata metadata = Imaging.getMetadata(imageFile);
             // assertNotNull(metadata);
 
-            Map<String,Object> params = new HashMap<String,Object>();
-            ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
+            final Map<String,Object> params = new HashMap<String,Object>();
+            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
 
-            BufferedImage image = Imaging.getBufferedImage(imageFile);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
         }
     }

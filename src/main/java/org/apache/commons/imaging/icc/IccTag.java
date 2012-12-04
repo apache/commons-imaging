@@ -34,7 +34,7 @@ public class IccTag implements IccConstants {
 
     // public final byte data[];
 
-    public IccTag(int signature, int offset, int length, IccTagType fIccTagType) {
+    public IccTag(final int signature, final int offset, final int length, final IccTagType fIccTagType) {
         this.signature = signature;
         this.offset = offset;
         this.length = length;
@@ -45,7 +45,7 @@ public class IccTag implements IccConstants {
     private IccTagDataType itdt = null;
     private int data_type_signature;
 
-    public void setData(byte bytes[]) throws IOException {
+    public void setData(final byte bytes[]) throws IOException {
         data = bytes;
 
         BinaryInputStream bis = null;
@@ -65,13 +65,13 @@ public class IccTag implements IccConstants {
                 if (bis != null) {
                     bis.close();
                 }
-            } catch (IOException cannotHappen) {
+            } catch (final IOException cannotHappen) {
             }
         }
     }
 
-    private IccTagDataType getIccTagDataType(int quad) {
-        for (IccTagDataType iccTagDataType : IccTagDataTypes.values()) {
+    private IccTagDataType getIccTagDataType(final int quad) {
+        for (final IccTagDataType iccTagDataType : IccTagDataTypes.values()) {
             if (iccTagDataType.getSignature() == quad) {
                 return iccTagDataType;
             }
@@ -80,15 +80,15 @@ public class IccTag implements IccConstants {
         return null;
     }
 
-    public void dump(String prefix) throws ImageReadException, IOException {
-        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
+    public void dump(final String prefix) throws ImageReadException, IOException {
+        final PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
 
         dump(pw, prefix);
 
         pw.flush();
     }
 
-    public void dump(PrintWriter pw, String prefix) throws ImageReadException,
+    public void dump(final PrintWriter pw, final String prefix) throws ImageReadException,
             IOException {
         pw.println(prefix
                 + "tag signature: "

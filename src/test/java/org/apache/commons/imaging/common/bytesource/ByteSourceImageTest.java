@@ -38,17 +38,17 @@ import org.apache.commons.imaging.util.IoUtils;
 public class ByteSourceImageTest extends ByteSourceTest {
 
     public void test() throws Exception {
-        List<File> imageFiles = getTestImages();
+        final List<File> imageFiles = getTestImages();
         for (int i = 0; i < imageFiles.size(); i++) {
             if (i % 1 == 0) {
                 Debug.purgeMemory();
             }
 
-            File imageFile = imageFiles.get(i);
+            final File imageFile = imageFiles.get(i);
             Debug.debug("imageFile", imageFile);
             assertNotNull(imageFile);
 
-            byte imageFileBytes[] = IoUtils.getFileBytes(imageFile);
+            final byte imageFileBytes[] = IoUtils.getFileBytes(imageFile);
             assertNotNull(imageFileBytes);
             assertTrue(imageFileBytes.length == imageFile.length());
 
@@ -84,7 +84,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
 
             checkGetImageSize(imageFile, imageFileBytes);
 
-            ImageFormat imageFormat = Imaging.guessFormat(imageFile);
+            final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
             if (ImageFormat.IMAGE_FORMAT_JPEG != imageFormat
                     && ImageFormat.IMAGE_FORMAT_UNKNOWN != imageFormat) {
                 checkGetBufferedImage(imageFile, imageFileBytes);
@@ -92,43 +92,43 @@ public class ByteSourceImageTest extends ByteSourceTest {
         }
     }
 
-    public void checkGetBufferedImage(File file, byte[] bytes) throws Exception {
+    public void checkGetBufferedImage(final File file, final byte[] bytes) throws Exception {
         BufferedImage imageFile = Imaging.getBufferedImage(file);
         assertNotNull(imageFile);
         assertTrue(imageFile.getWidth() > 0);
         assertTrue(imageFile.getHeight() > 0);
-        int imageFileWidth = imageFile.getWidth();
-        int imageFileHeight = imageFile.getHeight();
+        final int imageFileWidth = imageFile.getWidth();
+        final int imageFileHeight = imageFile.getHeight();
         imageFile = null;
 
-        BufferedImage imageBytes = Imaging.getBufferedImage(bytes);
+        final BufferedImage imageBytes = Imaging.getBufferedImage(bytes);
         assertNotNull(imageBytes);
         assertTrue(imageFileWidth == imageBytes.getWidth());
         assertTrue(imageFileHeight == imageBytes.getHeight());
     }
 
-    public void checkGetImageSize(File imageFile, byte[] imageFileBytes)
+    public void checkGetImageSize(final File imageFile, final byte[] imageFileBytes)
             throws Exception {
-        Dimension imageSizeFile = Imaging.getImageSize(imageFile);
+        final Dimension imageSizeFile = Imaging.getImageSize(imageFile);
         assertNotNull(imageSizeFile);
         assertTrue(imageSizeFile.width > 0);
         assertTrue(imageSizeFile.height > 0);
 
-        Dimension imageSizeBytes = Imaging.getImageSize(imageFileBytes);
+        final Dimension imageSizeBytes = Imaging.getImageSize(imageFileBytes);
         assertNotNull(imageSizeBytes);
         assertTrue(imageSizeFile.width == imageSizeBytes.width);
         assertTrue(imageSizeFile.height == imageSizeBytes.height);
     }
 
-    public void checkGuessFormat(File imageFile, byte[] imageFileBytes)
+    public void checkGuessFormat(final File imageFile, final byte[] imageFileBytes)
             throws Exception {
         // check guessFormat()
-        ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
+        final ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
         assertNotNull(imageFormatFile);
         assertTrue(imageFormatFile != ImageFormat.IMAGE_FORMAT_UNKNOWN);
         // Debug.debug("imageFormatFile", imageFormatFile);
 
-        ImageFormat imageFormatBytes = Imaging.guessFormat(imageFileBytes);
+        final ImageFormat imageFormatBytes = Imaging.guessFormat(imageFileBytes);
         assertNotNull(imageFormatBytes);
         assertTrue(imageFormatBytes != ImageFormat.IMAGE_FORMAT_UNKNOWN);
         // Debug.debug("imageFormatBytes", imageFormatBytes);
@@ -136,12 +136,12 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertTrue(imageFormatBytes == imageFormatFile);
     }
 
-    public void checkGetICCProfileBytes(File imageFile, byte[] imageFileBytes)
+    public void checkGetICCProfileBytes(final File imageFile, final byte[] imageFileBytes)
             throws Exception {
         // check guessFormat()
-        byte iccBytesFile[] = Imaging.getICCProfileBytes(imageFile);
+        final byte iccBytesFile[] = Imaging.getICCProfileBytes(imageFile);
 
-        byte iccBytesBytes[] = Imaging.getICCProfileBytes(imageFileBytes);
+        final byte iccBytesBytes[] = Imaging.getICCProfileBytes(imageFileBytes);
 
         assertTrue((iccBytesFile != null) == (iccBytesBytes != null));
 
@@ -152,27 +152,27 @@ public class ByteSourceImageTest extends ByteSourceTest {
         compareByteArrays(iccBytesFile, iccBytesBytes);
     }
 
-    public void checkGetImageInfo(File imageFile, byte[] imageFileBytes)
+    public void checkGetImageInfo(final File imageFile, final byte[] imageFileBytes)
             throws IOException, ImageReadException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException {
-        Map<String,Object> params = new HashMap<String,Object>();
-        boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        ImageFormat imageFormat = Imaging.guessFormat(imageFile);
+        final Map<String,Object> params = new HashMap<String,Object>();
+        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+        final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF)
                 || imageFormat.equals(ImageFormat.IMAGE_FORMAT_JPEG)) {
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
         }
 
-        ImageInfo imageInfoFile = Imaging.getImageInfo(imageFile, params);
+        final ImageInfo imageInfoFile = Imaging.getImageInfo(imageFile, params);
 
-        ImageInfo imageInfoBytes = Imaging.getImageInfo(imageFileBytes, params);
+        final ImageInfo imageInfoBytes = Imaging.getImageInfo(imageFileBytes, params);
 
         assertNotNull(imageInfoFile);
         assertNotNull(imageInfoBytes);
 
-        Method methods[] = ImageInfo.class.getMethods();
-        for (Method method2 : methods) {
-            Method method = method2;
+        final Method methods[] = ImageInfo.class.getMethods();
+        for (final Method method2 : methods) {
+            final Method method = method2;
             method.getModifiers();
             if (!Modifier.isPublic(method.getModifiers())) {
                 continue;
@@ -187,8 +187,8 @@ public class ByteSourceImageTest extends ByteSourceTest {
             // continue;
             }
 
-            Object valueFile = method.invoke(imageInfoFile, (Object[])null);
-            Object valueBytes = method.invoke(imageInfoBytes, (Object[])null);
+            final Object valueFile = method.invoke(imageInfoFile, (Object[])null);
+            final Object valueBytes = method.invoke(imageInfoBytes, (Object[])null);
 
             assertTrue(valueFile.equals(valueBytes));
         }

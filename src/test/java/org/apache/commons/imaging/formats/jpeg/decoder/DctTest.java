@@ -21,19 +21,19 @@ import junit.framework.TestCase;
 
 public class DctTest extends TestCase {
     public void testVectors() throws Exception {
-        float[] originalData = new float[8];
+        final float[] originalData = new float[8];
         for (int i = 0; i < 8; i++) {
             originalData[i] = i;
         }
 
-        float[] transformed = REFERENCE_forwardDCT(originalData);
-        float[] reversed = REFERENCE_inverseDCT(transformed);
+        final float[] transformed = REFERENCE_forwardDCT(originalData);
+        final float[] reversed = REFERENCE_inverseDCT(transformed);
         for (int i = 0; i < 8; i++) {
             assertEquals("Reference transforms broken, at x=" + i,
                     originalData[i], reversed[i], 0.001);
         }
 
-        float[] data = originalData.clone();
+        final float[] data = originalData.clone();
         Dct.forwardDCT8(data);
         Dct.scaleQuantizationVector(data);
         for (int i = 0; i < 8; i++) {
@@ -50,18 +50,18 @@ public class DctTest extends TestCase {
     }
 
     public void testMatrices() throws Exception {
-        float[] originalData = new float[8 * 8];
-        float[][] originalData8x8 = new float[8][8];
+        final float[] originalData = new float[8 * 8];
+        final float[][] originalData8x8 = new float[8][8];
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                float value = 8 * y + x;
+                final float value = 8 * y + x;
                 originalData8x8[y][x] = value;
                 originalData[8 * y + x] = value;
             }
         }
 
-        float[][] transformed8x8 = REFERENCE_forwardDCT(originalData8x8);
-        float[][] reversed8x8 = REFERENCE_inverseDCT(transformed8x8);
+        final float[][] transformed8x8 = REFERENCE_forwardDCT(originalData8x8);
+        final float[][] reversed8x8 = REFERENCE_inverseDCT(transformed8x8);
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 assertEquals("Reference transforms broken, at x=" + x + ",y="
@@ -69,7 +69,7 @@ public class DctTest extends TestCase {
             }
         }
 
-        float[] data = originalData.clone();
+        final float[] data = originalData.clone();
         Dct.forwardDCT8x8(data);
         Dct.scaleQuantizationMatrix(data);
         for (int y = 0; y < 8; y++) {
@@ -89,16 +89,16 @@ public class DctTest extends TestCase {
         }
     }
 
-    private static float[][] REFERENCE_inverseDCT(float[][] matrix) {
-        float[][] ret = new float[8][8];
+    private static float[][] REFERENCE_inverseDCT(final float[][] matrix) {
+        final float[][] ret = new float[8][8];
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 float sum = 0;
                 for (int u = 0; u < 8; u++) {
                     for (int v = 0; v < 8; v++) {
-                        float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2)))
+                        final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2)))
                                 : 1;
-                        float cv = (v == 0) ? ((float) (1.0 / Math.sqrt(2)))
+                        final float cv = (v == 0) ? ((float) (1.0 / Math.sqrt(2)))
                                 : 1;
                         sum += cu * cv * matrix[v][u]
                                 * Math.cos((2 * x + 1) * u * Math.PI / 16)
@@ -111,12 +111,12 @@ public class DctTest extends TestCase {
         return ret;
     }
 
-    private static float[] REFERENCE_inverseDCT(float[] vector) {
-        float[] ret = new float[8];
+    private static float[] REFERENCE_inverseDCT(final float[] vector) {
+        final float[] ret = new float[8];
         for (int x = 0; x < 8; x++) {
             float sum = 0;
             for (int u = 0; u < 8; u++) {
-                float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
+                final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
                 sum += cu * vector[u]
                         * Math.cos((2 * x + 1) * u * Math.PI / 16);
             }
@@ -125,13 +125,13 @@ public class DctTest extends TestCase {
         return ret;
     }
 
-    private static float[][] REFERENCE_forwardDCT(float[][] matrix) {
-        float[][] ret = new float[8][8];
+    private static float[][] REFERENCE_forwardDCT(final float[][] matrix) {
+        final float[][] ret = new float[8][8];
         for (int u = 0; u < 8; u++) {
             for (int v = 0; v < 8; v++) {
                 float sum = 0;
-                float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
-                float cv = (v == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
+                final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
+                final float cv = (v == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
                 for (int x = 0; x < 8; x++) {
                     for (int y = 0; y < 8; y++) {
                         sum += matrix[y][x]
@@ -145,11 +145,11 @@ public class DctTest extends TestCase {
         return ret;
     }
 
-    private static float[] REFERENCE_forwardDCT(float[] vector) {
-        float[] ret = new float[8];
+    private static float[] REFERENCE_forwardDCT(final float[] vector) {
+        final float[] ret = new float[8];
         for (int u = 0; u < 8; u++) {
             float sum = 0;
-            float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
+            final float cu = (u == 0) ? ((float) (1.0 / Math.sqrt(2))) : 1;
             for (int x = 0; x < 8; x++) {
                 sum += vector[x] * Math.cos((2 * x + 1) * u * Math.PI / 16);
             }

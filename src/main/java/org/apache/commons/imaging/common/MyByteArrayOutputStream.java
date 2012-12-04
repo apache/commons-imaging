@@ -23,14 +23,14 @@ import java.io.OutputStream;
 public class MyByteArrayOutputStream extends OutputStream {
     private final byte bytes[];
 
-    public MyByteArrayOutputStream(int length) {
+    public MyByteArrayOutputStream(final int length) {
         bytes = new byte[length];
     }
 
     private int count = 0;
 
     @Override
-    public void write(int value) throws IOException {
+    public void write(final int value) throws IOException {
         if (count >= bytes.length) {
             throw new IOException("Write exceeded expected length (" + count
                     + ", " + bytes.length + ")");
@@ -42,7 +42,7 @@ public class MyByteArrayOutputStream extends OutputStream {
 
     public byte[] toByteArray() {
         if (count < bytes.length) {
-            byte result[] = new byte[count];
+            final byte result[] = new byte[count];
             System.arraycopy(bytes, 0, result, 0, count);
             return result;
         }

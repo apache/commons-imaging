@@ -52,11 +52,11 @@ public abstract class TiffImageData {
         }
 
         @Override
-        public DataReader getDataReader(TiffDirectory directory,
-                PhotometricInterpreter photometricInterpreter,
-                int bitsPerPixel, int bitsPerSample[], int predictor,
-                int samplesPerPixel, int width, int height, int compression,
-                ByteOrder byteOrder) throws IOException, ImageReadException {
+        public DataReader getDataReader(final TiffDirectory directory,
+                final PhotometricInterpreter photometricInterpreter,
+                final int bitsPerPixel, final int bitsPerSample[], final int predictor,
+                final int samplesPerPixel, final int width, final int height, final int compression,
+                final ByteOrder byteOrder) throws IOException, ImageReadException {
             return new DataReaderTiled(directory, photometricInterpreter,
                     tileWidth, tileLength, bitsPerPixel, bitsPerSample,
                     predictor, samplesPerPixel, width, height, compression,
@@ -91,11 +91,11 @@ public abstract class TiffImageData {
         }
 
         @Override
-        public DataReader getDataReader(TiffDirectory directory,
-                PhotometricInterpreter photometricInterpreter,
-                int bitsPerPixel, int bitsPerSample[], int predictor,
-                int samplesPerPixel, int width, int height, int compression,
-                ByteOrder byteorder) throws IOException, ImageReadException {
+        public DataReader getDataReader(final TiffDirectory directory,
+                final PhotometricInterpreter photometricInterpreter,
+                final int bitsPerPixel, final int bitsPerSample[], final int predictor,
+                final int samplesPerPixel, final int width, final int height, final int compression,
+                final ByteOrder byteorder) throws IOException, ImageReadException {
             return new DataReaderStrips(directory, photometricInterpreter,
                     bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
                     width, height, compression, byteorder, rowsPerStrip, this);
@@ -121,12 +121,12 @@ public abstract class TiffImageData {
             ImageReadException;
 
     public static class Data extends TiffElement.DataElement {
-        public Data(int offset, int length, final byte data[]) {
+        public Data(final int offset, final int length, final byte data[]) {
             super(offset, length, data);
         }
 
         @Override
-        public String getElementDescription(boolean verbose) {
+        public String getElementDescription(final boolean verbose) {
             return "Tiff image data: " + data.length + " bytes";
         }
 
@@ -135,13 +135,13 @@ public abstract class TiffImageData {
     public static class ByteSourceData extends Data {
         ByteSourceFile byteSourceFile;
 
-        public ByteSourceData(int offset, int length, ByteSourceFile byteSource) {
+        public ByteSourceData(final int offset, final int length, final ByteSourceFile byteSource) {
             super(offset, length, new byte[0]);
             byteSourceFile = byteSource;
         }
 
         @Override
-        public String getElementDescription(boolean verbose) {
+        public String getElementDescription(final boolean verbose) {
             return "Tiff image data: " + data.length + " bytes";
         }
 
@@ -149,7 +149,7 @@ public abstract class TiffImageData {
         public byte[] getData() {
             try {
                 return byteSourceFile.getBlock(offset, length);
-            } catch (IOException ioex) {
+            } catch (final IOException ioex) {
             }
             return new byte[0];
         }

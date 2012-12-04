@@ -30,20 +30,20 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
      */
     private final int[] indexColorMap;
 
-    public PhotometricInterpreterPalette(int fSamplesPerPixel,
-            int fBitsPerSample[], int Predictor, int width, int height,
-            int[] fColorMap) {
+    public PhotometricInterpreterPalette(final int fSamplesPerPixel,
+            final int fBitsPerSample[], final int Predictor, final int width, final int height,
+            final int[] fColorMap) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
 
         this.fColorMap = fColorMap;
 
-        int fBitsPerPixel = bitsPerSample[0];
-        int colormap_scale = (1 << fBitsPerPixel);
+        final int fBitsPerPixel = bitsPerSample[0];
+        final int colormap_scale = (1 << fBitsPerPixel);
         indexColorMap = new int[colormap_scale];
         for (int index = 0; index < colormap_scale; index++) {
-            int red = (fColorMap[index] >> 8) & 0xff;
-            int green = (fColorMap[index + (colormap_scale)] >> 8) & 0xff;
-            int blue = (fColorMap[index + (2 * colormap_scale)] >> 8) & 0xff;
+            final int red = (fColorMap[index] >> 8) & 0xff;
+            final int green = (fColorMap[index + (colormap_scale)] >> 8) & 0xff;
+            final int blue = (fColorMap[index + (2 * colormap_scale)] >> 8) & 0xff;
             indexColorMap[index] = 0xff000000 | (red << 16) | (green << 8)
                     | blue;
         }
@@ -51,8 +51,8 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
     }
 
     @Override
-    public void interpretPixel(ImageBuilder imageBuilder, int samples[], int x,
-            int y) throws ImageReadException, IOException {
+    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+            final int y) throws ImageReadException, IOException {
         imageBuilder.setRGB(x, y, indexColorMap[samples[0]]);
     }
 }

@@ -27,7 +27,7 @@ import org.apache.commons.imaging.ImageReadException;
 public class BasicCParser {
     private final PushbackInputStream is;
 
-    public BasicCParser(ByteArrayInputStream is) {
+    public BasicCParser(final ByteArrayInputStream is) {
         this.is = new PushbackInputStream(is);
     }
 
@@ -38,7 +38,7 @@ public class BasicCParser {
         boolean inString = false;
         boolean inIdentifier = false;
         boolean hadBackSlash = false;
-        StringBuilder token = new StringBuilder();
+        final StringBuilder token = new StringBuilder();
         for (int c = is.read(); c != -1; c = is.read()) {
             if (inString) {
                 if (c == '\\') {
@@ -94,8 +94,8 @@ public class BasicCParser {
         return null;
     }
 
-    public static ByteArrayOutputStream preprocess(InputStream is,
-            StringBuilder firstComment, Map<String, String> defines)
+    public static ByteArrayOutputStream preprocess(final InputStream is,
+            final StringBuilder firstComment, final Map<String, String> defines)
             throws IOException, ImageReadException {
         boolean inString = false;
         boolean inComment = false;
@@ -103,9 +103,9 @@ public class BasicCParser {
         boolean hadSlash = false;
         boolean hadStar = false;
         boolean hadBackSlash = false;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
         boolean seenFirstComment = (firstComment == null);
-        StringBuilder directiveBuffer = new StringBuilder();
+        final StringBuilder directiveBuffer = new StringBuilder();
         for (int c = is.read(); c != -1; c = is.read()) {
             if (inComment) {
                 if (c == '*') {
@@ -156,7 +156,7 @@ public class BasicCParser {
             } else if (inDirective) {
                 if (c == '\r' || c == '\n') {
                     inDirective = false;
-                    String[] tokens = tokenizeRow(directiveBuffer.toString());
+                    final String[] tokens = tokenizeRow(directiveBuffer.toString());
                     if (tokens.length < 2 || tokens.length > 3) {
                         throw new ImageReadException(
                                 "Bad preprocessor directive");
@@ -227,17 +227,17 @@ public class BasicCParser {
         return out;
     }
 
-    public static String[] tokenizeRow(String row) {
-        String[] tokens = row.split("[ \t]");
+    public static String[] tokenizeRow(final String row) {
+        final String[] tokens = row.split("[ \t]");
         int numLiveTokens = 0;
-        for (String token : tokens) {
+        for (final String token : tokens) {
             if (token != null && token.length() > 0) {
                 ++numLiveTokens;
             }
         }
-        String[] liveTokens = new String[numLiveTokens];
+        final String[] liveTokens = new String[numLiveTokens];
         int next = 0;
-        for (String token : tokens) {
+        for (final String token : tokens) {
             if (token != null && token.length() > 0) {
                 liveTokens[next++] = token;
             }
@@ -245,7 +245,7 @@ public class BasicCParser {
         return liveTokens;
     }
 
-    public static void unescapeString(StringBuilder stringBuilder, String string)
+    public static void unescapeString(final StringBuilder stringBuilder, final String string)
             throws ImageReadException {
         if (string.length() < 2) {
             throw new ImageReadException("Parsing XPM file failed, "
@@ -258,7 +258,7 @@ public class BasicCParser {
         }
         boolean hadBackSlash = false;
         for (int i = 1; i < (string.length() - 1); i++) {
-            char c = string.charAt(i);
+            final char c = string.charAt(i);
             if (hadBackSlash) {
                 if (c == '\\') {
                     stringBuilder.append('\\');
@@ -272,13 +272,13 @@ public class BasicCParser {
                                 "Parsing XPM file failed, "
                                         + "hex constant in string too short");
                     }
-                    char hex1 = string.charAt(i + 1);
-                    char hex2 = string.charAt(i + 2);
+                    final char hex1 = string.charAt(i + 1);
+                    final char hex2 = string.charAt(i + 2);
                     i += 2;
                     int constant;
                     try {
                         constant = Integer.parseInt("" + hex1 + hex2, 16);
-                    } catch (NumberFormatException nfe) {
+                    } catch (final NumberFormatException nfe) {
                         throw new ImageReadException(
                                 "Parsing XPM file failed, "
                                         + "hex constant invalid", nfe);

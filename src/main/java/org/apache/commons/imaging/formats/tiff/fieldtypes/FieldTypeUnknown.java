@@ -27,7 +27,7 @@ public class FieldTypeUnknown extends FieldType {
     }
 
     @Override
-    public Object getSimpleValue(TiffField entry) {
+    public Object getSimpleValue(final TiffField entry) {
         // Debug.debug("unknown field type. entry", entry.tagInfo.name);
         // Debug.debug("unknown field type. entry.type", entry.type);
         // Debug.debug("unknown field type. entry.length", entry.length);
@@ -46,7 +46,7 @@ public class FieldTypeUnknown extends FieldType {
     }
 
     @Override
-    public byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException {
+    public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Byte) {
             return new byte[] { ((Byte) o).byteValue(), };
         } else if (o instanceof byte[]) {
