@@ -78,14 +78,15 @@ public class PngTextTest extends PngBaseTest {
         assertEquals(readTexts.size(), 3);
         for (int i = 0; i < readTexts.size(); i++) {
             PngText text = readTexts.get(i);
-            if (text.keyword.equals("a"))
+            if (text.keyword.equals("a")) {
                 assertEquals(text.text, "b");
-            else if (text.keyword.equals("c"))
+            } else if (text.keyword.equals("c")) {
                 assertEquals(text.text, "d");
-            else if (text.keyword.equals("e"))
+            } else if (text.keyword.equals("e")) {
                 assertEquals(text.text, "f");
-            else
+            } else {
                 fail("unknown text chunk.");
+            }
         }
     }
 

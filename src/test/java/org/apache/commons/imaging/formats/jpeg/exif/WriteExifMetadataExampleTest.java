@@ -35,8 +35,9 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
     public void test() throws Exception {
         List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile.getAbsoluteFile());
@@ -46,8 +47,9 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
 
             try {
                 boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-                if (ignoreImageData)
+                if (ignoreImageData) {
                     continue;
+                }
                 new WriteExifMetadataExample().changeExifMetadata(imageFile,
                         tempFile);
             } catch (ExifRewriter.ExifOverflowException e) {
@@ -60,8 +62,9 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
     public void testInsert() throws Exception {
         List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile.getAbsoluteFile());
@@ -71,8 +74,9 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
 
             try {
                 boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-                if (ignoreImageData)
+                if (ignoreImageData) {
                     continue;
+                }
                 new WriteExifMetadataExample().changeExifMetadata(imageFile,
                         tempFile);
             } catch (ExifRewriter.ExifOverflowException e) {

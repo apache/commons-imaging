@@ -32,14 +32,17 @@ public class ConvertPngToGifTest extends PngBaseTest {
 
         List<File> images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             if (isInvalidPNGTestFile(imageFile))
+             {
                 continue;
             // Debug.debug("imageFile", imageFile);
             // Debug.debug();
+            }
 
             Hashtable<String,Object> params = new Hashtable<String,Object>();
             // params.put(SanselanConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);

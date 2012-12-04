@@ -57,8 +57,9 @@ public class FileSystemTraversal {
         if (file.isFile()) {
             if ((mode == MODE_FILES) || (mode == MODE_FILES_AND_FOLDERS)
                     || (mode == MODE_ALL)) {
-                if (!visitor.visit(file, estimate))
+                if (!visitor.visit(file, estimate)) {
                     return false;
+                }
             }
         } else if (file.isDirectory()) {
             File files[] = file.listFiles();
@@ -78,20 +79,23 @@ public class FileSystemTraversal {
 
                     if (!traverse(child, mode, visitor, estimate
                             + estimateIncrement * i / files.length,
-                            estimateIncrement / files.length))
+                            estimateIncrement / files.length)) {
                         return false;
+                    }
                 }
             }
 
             if ((mode == MODE_FOLDERS) || (mode == MODE_FILES_AND_FOLDERS)
                     || (mode == MODE_ALL)) {
-                if (!visitor.visit(file, estimate))
+                if (!visitor.visit(file, estimate)) {
                     return false;
+                }
             }
         } else {
             if (mode == MODE_ALL) {
-                if (!visitor.visit(file, estimate))
+                if (!visitor.visit(file, estimate)) {
                     return false;
+                }
             }
         }
 
@@ -136,21 +140,25 @@ public class FileSystemTraversal {
         if (ON_MAC_OS_X) {
             File Volumes = new File("/Volumes/");
             roots = Volumes.listFiles();
-        } else
+        } else {
             roots = File.listRoots();
+        }
 
-        if (roots == null)
+        if (roots == null) {
             return false;
+        }
 
         for (int i = 0; i < roots.length; i++) {
             File root = roots[i];
 
-            if (root == null || !root.exists())
+            if (root == null || !root.exists()) {
                 continue;
+            }
 
             if (!traverse(roots[i], mode, visitor, estimate + estimateIncrement
-                    * i / roots.length, estimateIncrement / roots.length))
+                    * i / roots.length, estimateIncrement / roots.length)) {
                 return false;
+            }
         }
 
         return true;

@@ -34,13 +34,15 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
 
         List<File> images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             try {
-                if (isInvalidPNGTestFile(imageFile))
+                if (isInvalidPNGTestFile(imageFile)) {
                     continue;
+                }
 
                 Debug.debug("imageFile", imageFile);
                 // Debug.debug();

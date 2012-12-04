@@ -33,14 +33,16 @@ public class XmpUpdateTest extends ImagingTest {
     public void test() throws Exception {
         List<File> images = getTestImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
 
             if (imageFile.getName().toLowerCase().endsWith(".png")
-                    && isInvalidPNGTestFile(imageFile))
+                    && isInvalidPNGTestFile(imageFile)) {
                 continue;
+            }
 
             Debug.debug("imageFile", imageFile);
             Debug.debug();
@@ -49,10 +51,12 @@ public class XmpUpdateTest extends ImagingTest {
 
             String xmpXml = Imaging.getXmpXml(imageFile);
             if (null == xmpXml
-                    && imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF))
+                    && imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF)) {
                 xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
-            if (null == xmpXml)
+            }
+            if (null == xmpXml) {
                 continue;
+            }
 
             assertNotNull(xmpXml);
 
@@ -68,8 +72,9 @@ public class XmpUpdateTest extends ImagingTest {
                                                                             * do
                                                                             * nothing
                                                                             */
-            } else
+            } else {
                 continue;
+            }
 
             File tempFile = this.createTempFile(imageFile.getName() + ".", "."
                     + imageFormat.getExtension());

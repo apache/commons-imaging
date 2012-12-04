@@ -36,8 +36,9 @@ public abstract class ImagingTest extends TestCase implements
     protected File createTempFile(String prefix, String suffix)
             throws IOException {
         File tempFolder = new File("tmp");
-        if (!tempFolder.exists())
+        if (!tempFolder.exists()) {
             tempFolder.mkdirs();
+        }
         assertTrue(tempFolder.isDirectory());
 
         File result = File.createTempFile(prefix, suffix, tempFolder);
@@ -47,8 +48,9 @@ public abstract class ImagingTest extends TestCase implements
 
     public void compareByteArrays(byte a[], byte b[]) {
         assertTrue(a.length == b.length);
-        for (int i = 0; i < b.length; i++)
+        for (int i = 0; i < b.length; i++) {
             assertTrue(b[i] == a[i]);
+        }
     }
 
     protected void purgeMemory() {
@@ -122,8 +124,9 @@ public abstract class ImagingTest extends TestCase implements
         FileSystemTraversal.Visitor visitor = new FileSystemTraversal.Visitor() {
 
             public boolean visit(File file, double progressEstimate) {
-                if (!Imaging.hasImageFileExtension(file))
+                if (!Imaging.hasImageFileExtension(file)) {
                     return true;
+                }
                 ALL_IMAGES.add(file);
                 return true;
             }
@@ -139,22 +142,27 @@ public abstract class ImagingTest extends TestCase implements
         for (int i = 0; i < ALL_IMAGES.size(); i++) {
             File file = ALL_IMAGES.get(i);
 
-            if (!Imaging.hasImageFileExtension(file))
+            if (!Imaging.hasImageFileExtension(file)) {
                 continue;
+            }
 
-            if (counter++ % 10 == 0)
+            if (counter++ % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
-            if (file.getParentFile().getName().toLowerCase().equals("@broken"))
+            if (file.getParentFile().getName().toLowerCase().equals("@broken")) {
                 continue;
+            }
 
-            if (filter != null && !filter.accept(file))
+            if (filter != null && !filter.accept(file)) {
                 continue;
+            }
 
             images.add(file);
 
-            if (max > 0 && images.size() >= max)
+            if (max > 0 && images.size() >= max) {
                 break;
+            }
         }
 
         assertTrue(images.size() > 0);

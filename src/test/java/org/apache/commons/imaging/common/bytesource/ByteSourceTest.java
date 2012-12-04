@@ -46,16 +46,19 @@ public abstract class ByteSourceTest extends ImagingTest {
         byte emptyArray[] = (new byte[0]);
 
         byte single[] = new byte[1];
-        for (int i = 0; i < single.length; i++)
+        for (int i = 0; i < single.length; i++) {
             single[i] = (byte) i;
+        }
 
         byte simple[] = new byte[256];
-        for (int i = 0; i < simple.length; i++)
+        for (int i = 0; i < simple.length; i++) {
             simple[i] = (byte) i;
+        }
 
         byte zeroes[] = new byte[256];
-        for (int i = 0; i < zeroes.length; i++)
+        for (int i = 0; i < zeroes.length; i++) {
             zeroes[i] = 0;
+        }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (int i = 0; i < 256 * 256; i++) {

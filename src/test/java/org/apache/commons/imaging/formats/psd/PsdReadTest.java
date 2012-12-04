@@ -17,8 +17,9 @@ public class PsdReadTest extends PsdBaseTest {
 
         List<File> images = getPsdImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);

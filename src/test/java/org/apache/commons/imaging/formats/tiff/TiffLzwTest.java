@@ -39,8 +39,9 @@ public class TiffLzwTest extends TiffBaseTest {
         int LENGTH = 1024 * 32;
         byte bytes[] = new byte[LENGTH];
         for (int modulator = 1; modulator < 255; modulator += 3) {
-            for (int i = 0; i < LENGTH; i++)
+            for (int i = 0; i < LENGTH; i++) {
                 bytes[i] = (byte) (0xff & (i % modulator));
+            }
 
             compressRoundtripAndValidate(bytes);
         }
@@ -153,8 +154,9 @@ public class TiffLzwTest extends TiffBaseTest {
         byte decompressed[] = decompressor.decompress(is, src.length);
 
         assertEquals(src.length, decompressed.length);
-        for (int i = 0; i < src.length; i++)
+        for (int i = 0; i < src.length; i++) {
             assertEquals(src[i], decompressed[i]);
+        }
     }
 
     private void decompressRoundtripAndValidate(byte src[]) throws IOException {
@@ -246,8 +248,9 @@ public class TiffLzwTest extends TiffBaseTest {
         byte compressed[] = compressor.compress(decompressed);
 
         assertEquals(src.length, compressed.length);
-        for (int i = 0; i < src.length; i++)
+        for (int i = 0; i < src.length; i++) {
             assertEquals(src[i], compressed[i]);
+        }
     }
 
 }

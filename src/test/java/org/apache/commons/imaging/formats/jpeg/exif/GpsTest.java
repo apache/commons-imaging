@@ -34,8 +34,9 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
 
         List<File> images = getImagesWithExifData(300);
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
 
@@ -43,8 +44,9 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
             // Debug.debug("imageFile", imageFile);
 
             if (imageFile.getParentFile().getName().toLowerCase()
-                    .equals("@broken"))
+                    .equals("@broken")) {
                 continue;
+            }
 
             try {
                 Map<String,Object> params = new HashMap<String,Object>();
@@ -54,16 +56,19 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
 
                 JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile, params);
-                if (null == metadata)
+                if (null == metadata) {
                     continue;
+                }
 
                 TiffImageMetadata exifMetadata = metadata.getExif();
-                if (null == exifMetadata)
+                if (null == exifMetadata) {
                     continue;
+                }
 
                 TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
-                if (null == gpsInfo)
+                if (null == gpsInfo) {
                     continue;
+                }
 
                 Debug.debug("imageFile", imageFile);
                 Debug.debug("gpsInfo", gpsInfo);

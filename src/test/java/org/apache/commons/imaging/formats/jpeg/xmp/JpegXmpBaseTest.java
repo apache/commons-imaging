@@ -31,10 +31,12 @@ public abstract class JpegXmpBaseTest extends ImagingTest {
 
     protected static boolean hasJpegXmpData(File file) {
         if (!file.getName().toLowerCase().endsWith(".jpg"))
+         {
             return false;
         // ImageFormat format = Sanselan.guessFormat(file);
         // if (format != ImageFormat.IMAGE_FORMAT_JPEG)
         // return false;
+        }
 
         // Debug.debug("possible file", file);
 

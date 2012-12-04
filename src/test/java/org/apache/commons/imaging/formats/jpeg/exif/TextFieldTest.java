@@ -51,8 +51,9 @@ public class TextFieldTest extends SpecificExifTagTest {
                                                                                                  * do
                                                                                                  * nothing
                                                                                                  */
-        } else
+        } else {
             return;
+        }
 
         // Debug.debug("field", field);
         // Debug.debug("field", Debug.getType(field));

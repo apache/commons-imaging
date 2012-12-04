@@ -156,11 +156,12 @@ public class MetadataExample {
     private static void printTagValue(JpegImageMetadata jpegMetadata,
             TagInfo tagInfo) {
         TiffField field = jpegMetadata.findEXIFValueWithExactMatch(tagInfo);
-        if (field == null)
+        if (field == null) {
             System.out.println(tagInfo.name + ": " + "Not Found.");
-        else
+        } else {
             System.out.println(tagInfo.name + ": "
                     + field.getValueDescription());
+        }
     }
 
 }

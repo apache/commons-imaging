@@ -75,10 +75,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.write4Bytes(4 + 4 + 16 * 16);
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     bos.write(0xff);
-                else
+                } else {
                     bos.write(0x00);
+                }
             }
         }
         bos.flush();
@@ -99,10 +100,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         // 8 BPP image
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     bos.write(0xff);
-                else
+                } else {
                     bos.write(43);
+                }
             }
         }
         // 8 BPP alpha mask
@@ -110,10 +112,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.write4Bytes(4 + 4 + 16 * 16);
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     bos.write(0xff);
-                else
+                } else {
                     bos.write(0x00);
+                }
             }
         }
         bos.flush();
@@ -135,10 +138,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         // 8 BPP image
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     bos.write(0xff);
-                else
+                } else {
                     bos.write(43);
+                }
             }
         }
         // 8 BPP alpha mask, some transparent
@@ -146,10 +150,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.write4Bytes(4 + 4 + 16 * 16);
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     bos.write(0xff);
-                else
+                } else {
                     bos.write(0x00);
+                }
             }
         }
         // 1 BPP mask
@@ -160,8 +165,9 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0)
+                    if (image[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
+                    }
                 }
                 bos.write(eightBits);
             }
@@ -190,10 +196,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         // 8 BPP image
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     bos.write(0xff);
-                else
+                } else {
                     bos.write(43);
+                }
             }
         }
         // 1 BPP mask
@@ -204,8 +211,9 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0)
+                    if (image[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
+                    }
                 }
                 bos.write(eightBits);
             }
@@ -220,10 +228,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.write4Bytes(4 + 4 + 16 * 16);
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     bos.write(0xff);
-                else
+                } else {
                     bos.write(0x00);
+                }
             }
         }
         bos.flush();
@@ -244,10 +253,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         // 8 BPP image
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     bos.write(0xff);
-                else
+                } else {
                     bos.write(43);
+                }
             }
         }
         bos.flush();
@@ -270,10 +280,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 // argb, a ignored
                 bos.write(0);
                 final int pixel;
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     pixel = foreground;
-                else
+                } else {
                     pixel = background;
+                }
                 bos.write(0xff & (pixel >> 16));
                 bos.write(0xff & (pixel >> 8));
                 bos.write(0xff & pixel);
@@ -286,8 +297,9 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0)
+                    if (image[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
+                    }
                 }
                 bos.write(eightBits);
             }
@@ -297,8 +309,9 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0)
+                    if (image[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
+                    }
                 }
                 bos.write(eightBits);
             }
@@ -323,10 +336,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 // argb, a ignored
                 bos.write(0);
                 final int pixel;
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     pixel = foreground;
-                else
+                } else {
                     pixel = background;
+                }
                 bos.write(0xff & (pixel >> 16));
                 bos.write(0xff & (pixel >> 8));
                 bos.write(0xff & pixel);
@@ -339,8 +353,9 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0)
+                    if (image[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
+                    }
                 }
                 bos.write(eightBits);
             }
@@ -373,10 +388,11 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 // argb, a ignored
                 bos.write(0);
                 final int pixel;
-                if (image[y][x] != 0)
+                if (image[y][x] != 0) {
                     pixel = foreground;
-                else
+                } else {
                     pixel = background;
+                }
                 bos.write(0xff & (pixel >> 16));
                 bos.write(0xff & (pixel >> 8));
                 bos.write(0xff & pixel);

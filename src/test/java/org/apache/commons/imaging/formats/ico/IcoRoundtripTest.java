@@ -80,8 +80,9 @@ public class IcoRoundtripTest extends IcoBaseTest {
             bos.write(0);
             bos.write3Bytes(foreground);
             bos.write(0);
-            for (int i = 2; i < paletteSize; i++)
+            for (int i = 2; i < paletteSize; i++) {
                 bos.write4Bytes(0);
+            }
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x += 8) {
@@ -122,8 +123,9 @@ public class IcoRoundtripTest extends IcoBaseTest {
             bos.write(0);
             bos.write3Bytes(foreground);
             bos.write(0);
-            for (int i = 2; i < paletteSize; i++)
+            for (int i = 2; i < paletteSize; i++) {
                 bos.write4Bytes(0);
+            }
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x += 2) {
@@ -155,8 +157,9 @@ public class IcoRoundtripTest extends IcoBaseTest {
             bos.write(0);
             bos.write3Bytes(foreground);
             bos.write(0);
-            for (int i = 2; i < paletteSize; i++)
+            for (int i = 2; i < paletteSize; i++) {
                 bos.write4Bytes(0);
+            }
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x++) {
@@ -183,19 +186,21 @@ public class IcoRoundtripTest extends IcoBaseTest {
             BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
                     ByteOrder.LITTLE_ENDIAN);
             // Palette
-            for (int i = 0; i < paletteSize; i++)
+            for (int i = 0; i < paletteSize; i++) {
                 bos.write4Bytes(0);
+            }
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x++) {
-                    if (image[y][x] == 1)
+                    if (image[y][x] == 1) {
                         bos.write2Bytes((0x1f & (foreground >> 3))
                                 | ((0x1f & (foreground >> 11)) << 5)
                                 | ((0x1f & (foreground >> 19)) << 10));
-                    else
+                    } else {
                         bos.write2Bytes((0x1f & (background >> 3))
                                 | ((0x1f & (background >> 11)) << 5)
                                 | ((0x1f & (background >> 19)) << 10));
+                    }
                 }
             }
             // Mask
@@ -218,15 +223,17 @@ public class IcoRoundtripTest extends IcoBaseTest {
             BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
                     ByteOrder.LITTLE_ENDIAN);
             // Palette
-            for (int i = 0; i < paletteSize; i++)
+            for (int i = 0; i < paletteSize; i++) {
                 bos.write4Bytes(0);
+            }
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x++) {
-                    if (image[y][x] == 1)
+                    if (image[y][x] == 1) {
                         bos.write3Bytes(0xffffff & foreground);
-                    else
+                    } else {
                         bos.write3Bytes(0xffffff & background);
+                    }
                 }
             }
             // Mask
@@ -255,15 +262,17 @@ public class IcoRoundtripTest extends IcoBaseTest {
             BinaryOutputStream bos = new BinaryOutputStream(byteArrayStream,
                     ByteOrder.LITTLE_ENDIAN);
             // Palette
-            for (int i = 0; i < paletteSize; i++)
+            for (int i = 0; i < paletteSize; i++) {
                 bos.write4Bytes(0);
+            }
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x++) {
-                    if (image[y][x] == 1)
+                    if (image[y][x] == 1) {
                         bos.write4Bytes(foreground);
-                    else
+                    } else {
                         bos.write4Bytes(background);
+                    }
                 }
             }
             // Mask

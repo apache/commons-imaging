@@ -33,8 +33,9 @@ public class IptcDumpTest extends IptcBaseTest {
     public void test() throws Exception {
         List<File> images = getImagesWithIptcData();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
@@ -65,10 +66,11 @@ public class IptcDumpTest extends IptcBaseTest {
             Debug.debug();
             for (int j = 0; j < oldRecords.size(); j++) {
                 IptcRecord record = oldRecords.get(j);
-                if (record.iptcType != IptcTypes.CITY)
+                if (record.iptcType != IptcTypes.CITY) {
                     Debug.debug("Key: " + record.iptcType.getName() + " (0x"
                             + Integer.toHexString(record.iptcType.getType())
                             + "), value: " + record.value);
+                }
             }
             Debug.debug();
         }

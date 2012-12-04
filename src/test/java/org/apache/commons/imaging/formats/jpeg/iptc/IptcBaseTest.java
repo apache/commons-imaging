@@ -32,10 +32,12 @@ public abstract class IptcBaseTest extends ImagingTest {
         // Debug.debug("hasIptcData file", file.getAbsoluteFile());
 
         if (!file.getName().toLowerCase().endsWith(".jpg"))
+         {
             return false;
         // ImageFormat format = Sanselan.guessFormat(file);
         // if (format != ImageFormat.IMAGE_FORMAT_JPEG)
         // return false;
+        }
 
         try {
             ByteSource byteSource = new ByteSourceFile(file);

@@ -38,10 +38,12 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
         File files[] = imagesFolder.listFiles();
         for (File file : files) {
             File imageFile = file;
-            if (!imageFile.isFile())
+            if (!imageFile.isFile()) {
                 continue;
-            if (!imageFile.getName().toLowerCase().endsWith(".png"))
+            }
+            if (!imageFile.getName().toLowerCase().endsWith(".png")) {
                 continue;
+            }
 
             Debug.debug();
             Debug.debug("imageFile", imageFile);

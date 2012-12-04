@@ -38,8 +38,9 @@ public class ExifDumpTest extends ExifBaseTest {
     public void test() throws Exception {
         List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
@@ -56,8 +57,10 @@ public class ExifDumpTest extends ExifBaseTest {
             JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                     .getMetadata(imageFile, params);
             if (null == metadata)
+             {
                 continue;
             // assertNotNull(metadata.getExif());
+            }
 
             metadata.dump();
         }

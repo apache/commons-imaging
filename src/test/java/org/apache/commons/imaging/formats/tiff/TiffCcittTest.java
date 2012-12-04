@@ -319,7 +319,7 @@ public class TiffCcittTest extends TiffBaseTest {
         assertEquals(a.getWidth(), b.getWidth());
         assertEquals(a.getHeight(), b.getHeight());
 
-        for (int x = 0; x < a.getWidth(); x++)
+        for (int x = 0; x < a.getWidth(); x++) {
             for (int y = 0; y < a.getHeight(); y++) {
                 int a_argb = a.getRGB(x, y);
                 int b_argb = b.getRGB(x, y);
@@ -335,5 +335,6 @@ public class TiffCcittTest extends TiffBaseTest {
                 }
                 assertEquals(a_argb, b_argb);
             }
+        }
     }
 }

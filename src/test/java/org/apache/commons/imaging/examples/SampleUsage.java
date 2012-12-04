@@ -83,10 +83,12 @@ public class SampleUsage {
             // transparency, etc.) </b>
             ImageInfo imageInfo = Imaging.getImageInfo(imageBytes);
 
-            if (imageInfo.getColorType() == ImageInfo.COLOR_TYPE_GRAYSCALE)
+            if (imageInfo.getColorType() == ImageInfo.COLOR_TYPE_GRAYSCALE) {
                 System.out.println("Grayscale image.");
-            if (imageInfo.getHeight() > 1000)
+            }
+            if (imageInfo.getHeight() > 1000) {
                 System.out.println("Large image.");
+            }
 
             // <b>try to guess the image's format. </b>
             ImageFormat image_format = Imaging.guessFormat(imageBytes);

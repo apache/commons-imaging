@@ -31,8 +31,9 @@ public class TiffReadTest extends TiffBaseTest {
     public void test() throws Exception {
         List<File> images = getTiffImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);

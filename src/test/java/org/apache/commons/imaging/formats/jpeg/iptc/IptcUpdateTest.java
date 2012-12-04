@@ -58,8 +58,9 @@ public class IptcUpdateTest extends IptcBaseTest {
     public void testRemove() throws Exception {
         List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             // Debug.debug("imageFile", imageFile);
@@ -106,8 +107,9 @@ public class IptcUpdateTest extends IptcBaseTest {
     public void testRemoveInsertUpdate() throws Exception {
         List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
@@ -163,8 +165,9 @@ public class IptcUpdateTest extends IptcBaseTest {
                 for (int j = 0; j < oldRecords.size(); j++) {
                     IptcRecord record = oldRecords.get(j);
                     if (record.iptcType != IptcTypes.CITY
-                            && record.iptcType != IptcTypes.CREDIT)
+                            && record.iptcType != IptcTypes.CREDIT) {
                         newRecords.add(record);
+                    }
                 }
 
                 newRecords.add(new IptcRecord(IptcTypes.CITY, "Albany, NY"));
@@ -301,8 +304,9 @@ public class IptcUpdateTest extends IptcBaseTest {
     public void testAddIptcData() throws Exception {
         List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             // Debug.debug("imageFile", imageFile);
@@ -326,9 +330,10 @@ public class IptcUpdateTest extends IptcBaseTest {
 
                 if (null != metadata) {
                     boolean keepOldIptcNonTextValues = true;
-                    if (keepOldIptcNonTextValues)
+                    if (keepOldIptcNonTextValues) {
                         newBlocks.addAll(metadata.photoshopApp13Data
                                 .getNonIptcBlocks());
+                    }
                     boolean keepOldIptcTextValues = true;
                     if (keepOldIptcTextValues) {
                         List<IptcRecord> oldRecords = metadata.photoshopApp13Data
@@ -338,8 +343,9 @@ public class IptcUpdateTest extends IptcBaseTest {
                         for (int j = 0; j < oldRecords.size(); j++) {
                             IptcRecord record = oldRecords.get(j);
                             if (record.iptcType != IptcTypes.CITY
-                                    && record.iptcType != IptcTypes.CREDIT)
+                                    && record.iptcType != IptcTypes.CREDIT) {
                                 newRecords.add(record);
+                            }
                         }
                     }
                 }

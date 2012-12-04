@@ -55,15 +55,17 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     public void testRemove() throws Exception {
         List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            if (ignoreImageData)
+            if (ignoreImageData) {
                 continue;
+            }
 
             ByteSource byteSource = new ByteSourceFile(imageFile);
             Debug.debug("Source Segments:");
@@ -94,15 +96,17 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     public void testInsert() throws Exception {
         List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            if (ignoreImageData)
+            if (ignoreImageData) {
                 continue;
+            }
 
             ByteSource byteSource = new ByteSourceFile(imageFile);
             Debug.debug("Source Segments:");
@@ -173,8 +177,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             ImageReadException, ImageWriteException {
         List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
 
@@ -183,8 +188,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 Debug.debug("imageFile", imageFile);
 
                 boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-                if (ignoreImageData)
+                if (ignoreImageData) {
                     continue;
+                }
 
                 ByteSource byteSource = new ByteSourceFile(imageFile);
                 Debug.debug("Source Segments:");
@@ -192,13 +198,15 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
 
                 JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile);
-                if (null == oldMetadata)
+                if (null == oldMetadata) {
                     continue;
+                }
                 assertNotNull(oldMetadata);
 
                 TiffImageMetadata oldExifMetadata = oldMetadata.getExif();
-                if (null == oldExifMetadata)
+                if (null == oldExifMetadata) {
                     continue;
+                }
                 assertNotNull(oldExifMetadata);
                 oldMetadata.dump();
 
@@ -292,8 +300,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         for (int i = 0; i < items.size(); i++) {
             TiffImageMetadata.Item item = (TiffImageMetadata.Item) items.get(i);
             TiffField field = item.getTiffField();
-            if (!fieldMap.containsKey(field.tag))
+            if (!fieldMap.containsKey(field.tag)) {
                 fieldMap.put(field.tag, field);
+            }
         }
         return fieldMap;
     }
@@ -407,8 +416,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                             break;
                         }
                     }
-                    if (hasInvalidByte)
+                    if (hasInvalidByte) {
                         continue;
+                    }
                 }
 
                 assertEquals(oldField.length, newField.length);
@@ -445,9 +455,9 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                         String label = imageFile.getName() + ", dirType[" + i
                                 + "]=" + dirType + ", fieldTag[" + j + "]="
                                 + fieldTag;
-                        if (oldField.tag == 0x116 || oldField.tag == 0x117)
+                        if (oldField.tag == 0x116 || oldField.tag == 0x117) {
                             compare(label, oldField, newField);
-                        else {
+                        } else {
                             compare(label, oldField.valueOffsetBytes,
                                     newField.valueOffsetBytes,
                                     oldField.getBytesLength(),
@@ -524,7 +534,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         assertNotNull(a);
         assertNotNull(b);
         assertEquals(a.length, b.length);
-        for (int i = 0; i < a.length; i++)
+        for (int i = 0; i < a.length; i++) {
             assertEquals(a[i], b[i]);
+        }
     }
 }

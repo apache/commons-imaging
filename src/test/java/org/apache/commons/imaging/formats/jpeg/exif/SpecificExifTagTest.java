@@ -48,13 +48,15 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
     public void testAllImages() throws Exception {
         List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0)
+            if (i % 10 == 0) {
                 Debug.purgeMemory();
+            }
 
             File imageFile = images.get(i);
             if (imageFile.getParentFile().getName().toLowerCase()
-                    .equals("@broken"))
+                    .equals("@broken")) {
                 continue;
+            }
             checkImage(imageFile);
         }
     }
@@ -72,14 +74,16 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
 
         // note that metadata might be null if no metadata is found.
         IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
-        if (null == metadata)
+        if (null == metadata) {
             return;
+        }
         JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 
         // note that exif might be null if no Exif metadata is found.
         TiffImageMetadata exif = jpegMetadata.getExif();
-        if (null == exif)
+        if (null == exif) {
             return;
+        }
 
         List<TiffField> fields = exif.getAllFields();
         for (int i = 0; i < fields.size(); i++) {

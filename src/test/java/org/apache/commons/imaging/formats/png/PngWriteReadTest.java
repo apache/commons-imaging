@@ -39,15 +39,17 @@ public class PngWriteReadTest extends ImagingTest {
 
     private int[][] getSimpleRawData(int width, int height, int value) {
         int[][] result = new int[height][width];
-        for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 result[y][x] = value;
+            }
+        }
         return result;
     }
 
     private int[][] getAscendingRawData(int width, int height) {
         int[][] result = new int[height][width];
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int alpha = (x + y) % 256;
                 int value = (x + y) % 256;
@@ -56,17 +58,19 @@ public class PngWriteReadTest extends ImagingTest {
 
                 result[y][x] = argb;
             }
+        }
         return result;
     }
 
     private int[][] randomRawData(int width, int height) {
         Random random = new Random();
         int[][] result = new int[height][width];
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int argb = random.nextInt();
                 result[y][x] = argb;
             }
+        }
         return result;
     }
 
@@ -101,10 +105,11 @@ public class PngWriteReadTest extends ImagingTest {
         int height = rawData.length;
         BufferedImage image = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 image.setRGB(x, y, rawData[y][x]);
             }
+        }
         return image;
     }
 
@@ -113,10 +118,11 @@ public class PngWriteReadTest extends ImagingTest {
         int height = image.getHeight();
         int[][] result = new int[height][width];
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 result[y][x] = image.getRGB(x, y);
             }
+        }
         return result;
     }
 

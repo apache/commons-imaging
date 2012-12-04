@@ -81,8 +81,9 @@ public class ByteSourceDataTest extends ByteSourceTest {
                 int read = is.read(prefix);
 
                 assertTrue(read <= src.length);
-                for (int i = 0; i < read; i++)
+                for (int i = 0; i < read; i++) {
                     assertTrue(src[i] == prefix[i]);
+                }
             } finally {
                 if (is != null) {
                     try {
@@ -118,8 +119,9 @@ public class ByteSourceDataTest extends ByteSourceTest {
                 byte dst[] = IoUtils.getInputStreamBytes(is);
 
                 assertTrue(src.length == dst.length + start);
-                for (int i = 0; i < dst.length; i++)
+                for (int i = 0; i < dst.length; i++) {
                     assertTrue(dst[i] == src[i + start]);
+                }
             } finally {
                 if (is != null) {
                     try {

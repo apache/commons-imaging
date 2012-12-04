@@ -45,12 +45,13 @@ public class WriteExifMetadataExample {
 
             new ExifRewriter().removeExifMetadata(jpegImageFile, os);
         } finally {
-            if (os != null)
+            if (os != null) {
                 try {
                     os.close();
                 } catch (IOException e) {
 
                 }
+            }
         }
     }
 
@@ -94,8 +95,9 @@ public class WriteExifMetadataExample {
             // if file does not contain any exif metadata, we create an empty
             // set of exif metadata. Otherwise, we keep all of the other
             // existing tags.
-            if (null == outputSet)
+            if (null == outputSet) {
                 outputSet = new TiffOutputSet();
+            }
 
             {
                 // Example of how to add a field/tag to the output set.
@@ -146,12 +148,13 @@ public class WriteExifMetadataExample {
             os.close();
             os = null;
         } finally {
-            if (os != null)
+            if (os != null) {
                 try {
                     os.close();
                 } catch (IOException e) {
 
                 }
+            }
         }
     }
 
@@ -223,9 +226,10 @@ public class WriteExifMetadataExample {
                 // EXIF website.
                 TiffOutputDirectory exifDirectory = outputSet
                         .getExifDirectory();
-                if (null != exifDirectory)
+                if (null != exifDirectory) {
                     exifDirectory
                             .removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
+                }
             }
 
             os = new FileOutputStream(dst);
@@ -237,12 +241,13 @@ public class WriteExifMetadataExample {
             os.close();
             os = null;
         } finally {
-            if (os != null)
+            if (os != null) {
                 try {
                     os.close();
                 } catch (IOException e) {
 
                 }
+            }
         }
     }
 
@@ -286,8 +291,9 @@ public class WriteExifMetadataExample {
             // if file does not contain any exif metadata, we create an empty
             // set of exif metadata. Otherwise, we keep all of the other
             // existing tags.
-            if (null == outputSet)
+            if (null == outputSet) {
                 outputSet = new TiffOutputSet();
+            }
 
             {
                 // Example of how to add/update GPS info to output set.
@@ -309,12 +315,13 @@ public class WriteExifMetadataExample {
             os.close();
             os = null;
         } finally {
-            if (os != null)
+            if (os != null) {
                 try {
                     os.close();
                 } catch (IOException e) {
 
                 }
+            }
         }
     }
 
