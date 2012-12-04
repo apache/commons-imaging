@@ -21,10 +21,10 @@ package org.apache.commons.imaging;
  * storing image information.
  */
 public class PixelDensity {
-    private double horizontalDensity;
-    private double verticalDensity;
+    private final double horizontalDensity;
+    private final double verticalDensity;
     // / One-tenth of a millimetre units.
-    private int unitLength;
+    private final int unitLength;
 
     private PixelDensity(double horizontalDensity, double verticalDensity,
             int unitLength) {

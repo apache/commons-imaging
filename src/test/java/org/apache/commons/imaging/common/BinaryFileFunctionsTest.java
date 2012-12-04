@@ -50,7 +50,7 @@ public class BinaryFileFunctionsTest extends ImagingTest {
         }
     }
 
-    private Extender extender = new Extender();
+    private final Extender extender = new Extender();
 
     public void testFloatToByteConversion() {
         extender.testFloatToByteConversion();

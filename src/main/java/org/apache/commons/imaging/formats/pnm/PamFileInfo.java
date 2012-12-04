@@ -25,11 +25,11 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 
 public class PamFileInfo extends FileInfo {
-    private int depth;
-    private int maxval;
+    private final int depth;
+    private final int maxval;
     private final float scale;
     private final int bytesPerSample; 
-    private boolean hasAlpha;
+    private final boolean hasAlpha;
     private final TupleReader tupleReader;
 
     PamFileInfo(int width, int height, int depth, int maxval, String tupleType) throws ImageReadException {

@@ -48,12 +48,12 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
      * positive numbers.
      */
 
-    private DqtSegment.QuantizationTable[] quantizationTables = new DqtSegment.QuantizationTable[4];
-    private DhtSegment.HuffmanTable[] huffmanDCTables = new DhtSegment.HuffmanTable[4];
-    private DhtSegment.HuffmanTable[] huffmanACTables = new DhtSegment.HuffmanTable[4];
+    private final DqtSegment.QuantizationTable[] quantizationTables = new DqtSegment.QuantizationTable[4];
+    private final DhtSegment.HuffmanTable[] huffmanDCTables = new DhtSegment.HuffmanTable[4];
+    private final DhtSegment.HuffmanTable[] huffmanACTables = new DhtSegment.HuffmanTable[4];
     private SofnSegment sofnSegment;
     private SosSegment sosSegment;
-    private float[][] scaledQuantizationTables = new float[4][];
+    private final float[][] scaledQuantizationTables = new float[4][];
     private BufferedImage image = null;
     private ImageReadException imageReadException = null;
     private IOException ioException = null;
@@ -285,9 +285,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
         return mcu;
     }
 
-    private int[] zz = new int[64];
-    private int[] blockInt = new int[64];
-    private float[] block = new float[64];
+    private final int[] zz = new int[64];
+    private final int[] blockInt = new int[64];
+    private final float[] block = new float[64];
 
     private void readMCU(JpegInputStream is, int[] preds, Block[] mcu)
             throws IOException, ImageReadException {

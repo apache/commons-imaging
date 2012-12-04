@@ -49,7 +49,7 @@ class TiffOutputSummary implements TiffConstants {
         }
     }
 
-    private List<OffsetItem> offsetItems = new ArrayList<OffsetItem>();
+    private final List<OffsetItem> offsetItems = new ArrayList<OffsetItem>();
 
     public void add(final TiffOutputItem item,
             final TiffOutputField itemOffsetField) {
@@ -78,7 +78,7 @@ class TiffOutputSummary implements TiffConstants {
         }
     }
 
-    private List<ImageDataOffsets> imageDataItems = new ArrayList<ImageDataOffsets>();
+    private final List<ImageDataOffsets> imageDataItems = new ArrayList<ImageDataOffsets>();
 
     public void addTiffImageData(final ImageDataOffsets imageDataInfo) {
         imageDataItems.add(imageDataInfo);

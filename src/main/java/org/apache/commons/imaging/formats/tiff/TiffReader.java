@@ -314,8 +314,8 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 
     private static class Collector implements Listener {
         private TiffHeader tiffHeader = null;
-        private List<TiffDirectory> directories = new ArrayList<TiffDirectory>();
-        private List<TiffField> fields = new ArrayList<TiffField>();
+        private final List<TiffDirectory> directories = new ArrayList<TiffDirectory>();
+        private final List<TiffField> fields = new ArrayList<TiffField>();
         private final boolean readThumbnails;
 
         public Collector() {

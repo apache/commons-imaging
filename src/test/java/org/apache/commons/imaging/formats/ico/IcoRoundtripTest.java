@@ -53,7 +53,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
-    private Map<Integer,BitmapGenerator> generatorMap = new HashMap<Integer,BitmapGenerator>();
+    private final Map<Integer,BitmapGenerator> generatorMap = new HashMap<Integer,BitmapGenerator>();
 
     public IcoRoundtripTest() {
         generatorMap.put(1, new GeneratorFor1BitBitmaps());
