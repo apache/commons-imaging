@@ -24,6 +24,7 @@ import org.apache.commons.imaging.common.BitInputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
+import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
@@ -70,8 +71,8 @@ public final class DataReaderTiled extends DataReader {
 
         // verify that all samples are one byte in size
         boolean allSamplesAreOneByte = true;
-        for (int i = 0; i < bitsPerSample.length; i++) {
-            if (bitsPerSample[i] != 8) {
+        for (int element : bitsPerSample) {
+            if (element != 8) {
                 allSamplesAreOneByte = false;
                 break;
             }
@@ -164,8 +165,8 @@ public final class DataReaderTiled extends DataReader {
         int bytesPerTile = bytesPerRow * tileLength;
         int x = 0, y = 0;
 
-        for (int tile = 0; tile < imageData.tiles.length; tile++) {
-            byte compressed[] = imageData.tiles[tile].getData();
+        for (DataElement tile2 : imageData.tiles) {
+            byte compressed[] = tile2.getData();
 
             byte decompressed[] = decompress(compressed, compression,
                     bytesPerTile, tileWidth, tileLength);

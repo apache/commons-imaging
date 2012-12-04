@@ -82,8 +82,7 @@ public class PngWriteReadTest extends ImagingTest {
                 smallRedPixels, singleRedPixel, smallAscendingPixels,
                 smallRandomPixels, };
 
-        for (int i = 0; i < testData.length; i++) {
-            int rawData[][] = testData[i];
+        for (int[][] rawData : testData) {
             writeAndReadImageData(rawData);
         }
     }

@@ -119,12 +119,10 @@ public abstract class Imaging implements ImagingConstants {
         filename = filename.toLowerCase();
 
         ImageParser imageParsers[] = ImageParser.getAllImageParsers();
-        for (int i = 0; i < imageParsers.length; i++) {
-            ImageParser imageParser = imageParsers[i];
+        for (ImageParser imageParser : imageParsers) {
             String exts[] = imageParser.getAcceptedExtensions();
 
-            for (int j = 0; j < exts.length; j++) {
-                String ext = exts[j];
+            for (String ext : exts) {
                 if (filename.endsWith(ext.toLowerCase())) {
                     return true;
                 }
@@ -704,9 +702,7 @@ public abstract class Imaging implements ImagingConstants {
 
             ImageParser imageParsers[] = ImageParser.getAllImageParsers();
 
-            for (int i = 0; i < imageParsers.length; i++) {
-                ImageParser imageParser = imageParsers[i];
-
+            for (ImageParser imageParser : imageParsers) {
                 if (imageParser.canAcceptType(format)) {
                     return imageParser;
                 }
@@ -717,9 +713,7 @@ public abstract class Imaging implements ImagingConstants {
         if (filename != null) {
             ImageParser imageParsers[] = ImageParser.getAllImageParsers();
 
-            for (int i = 0; i < imageParsers.length; i++) {
-                ImageParser imageParser = imageParsers[i];
-
+            for (ImageParser imageParser : imageParsers) {
                 if (imageParser.canAcceptExtension(filename)) {
                     return imageParser;
                 }
@@ -1489,8 +1483,8 @@ public abstract class Imaging implements ImagingConstants {
 
         params.put(PARAM_KEY_FORMAT, format);
 
-        for (int i = 0; i < imageParsers.length; i++) {
-            ImageParser imageParser = imageParsers[i];
+        for (ImageParser imageParser2 : imageParsers) {
+            ImageParser imageParser = imageParser2;
 
             if (!imageParser.canAcceptType(format)) {
                 continue;

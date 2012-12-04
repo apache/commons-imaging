@@ -276,11 +276,9 @@ public class RoundtripTest extends ImagingTest {
                 createBitmapBitmapImage(300, 300), // larger than 256
         };
 
-        for (int j = 0; j < testImages.length; j++) {
-            BufferedImage testImage = testImages[j];
-
-            for (int i = 0; i < FORMAT_INFOS.length; i++) {
-                FormatInfo formatInfo = FORMAT_INFOS[i];
+        for (BufferedImage testImage : testImages) {
+            for (FormatInfo element : FORMAT_INFOS) {
+                FormatInfo formatInfo = element;
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
 
@@ -305,11 +303,9 @@ public class RoundtripTest extends ImagingTest {
                 createGrayscaleGrayscaleImage(300, 300), // larger than 256
         };
 
-        for (int j = 0; j < testImages.length; j++) {
-            BufferedImage testImage = testImages[j];
-
-            for (int i = 0; i < FORMAT_INFOS.length; i++) {
-                FormatInfo formatInfo = FORMAT_INFOS[i];
+        for (BufferedImage testImage : testImages) {
+            for (FormatInfo element : FORMAT_INFOS) {
+                FormatInfo formatInfo = element;
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
 
@@ -333,11 +329,9 @@ public class RoundtripTest extends ImagingTest {
                 createLimitedColorImage(300, 300), // larger than 256
         };
 
-        for (int j = 0; j < testImages.length; j++) {
-            BufferedImage testImage = testImages[j];
-
-            for (int i = 0; i < FORMAT_INFOS.length; i++) {
-                FormatInfo formatInfo = FORMAT_INFOS[i];
+        for (BufferedImage testImage : testImages) {
+            for (FormatInfo element : FORMAT_INFOS) {
+                FormatInfo formatInfo = element;
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
 
@@ -363,11 +357,9 @@ public class RoundtripTest extends ImagingTest {
                 createFullColorImage(300, 300), // larger than 256
         };
 
-        for (int j = 0; j < testImages.length; j++) {
-            BufferedImage testImage = testImages[j];
-
-            for (int i = 0; i < FORMAT_INFOS.length; i++) {
-                FormatInfo formatInfo = FORMAT_INFOS[i];
+        for (BufferedImage testImage : testImages) {
+            for (FormatInfo element : FORMAT_INFOS) {
+                FormatInfo formatInfo = element;
                 if ((!formatInfo.canRead) || (!formatInfo.canWrite))
                     continue;
 

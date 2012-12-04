@@ -101,8 +101,8 @@ public final class DataReaderStrips extends DataReader {
 
         // verify that all samples are one byte in size
         boolean allSamplesAreOneByte = true;
-        for (int i = 0; i < bitsPerSample.length; i++) {
-            if (bitsPerSample[i] != 8) {
+        for (int element : bitsPerSample) {
+            if (element != 8) {
                 allSamplesAreOneByte = false;
                 break;
             }

@@ -922,8 +922,8 @@ public abstract class ImageParser extends BinaryFileParser implements
     public boolean canAcceptType(ImageFormat type) {
         ImageFormat types[] = getAcceptedTypes();
 
-        for (int i = 0; i < types.length; i++) {
-            if (types[i].equals(type)) {
+        for (ImageFormat type2 : types) {
+            if (type2.equals(type)) {
                 return true;
             }
         }
@@ -957,8 +957,8 @@ public abstract class ImageParser extends BinaryFileParser implements
             String ext = filename.substring(index);
             ext = ext.toLowerCase();
 
-            for (int i = 0; i < exts.length; i++) {
-                if (exts[i].toLowerCase().equals(ext)) {
+            for (String ext2 : exts) {
+                if (ext2.toLowerCase().equals(ext)) {
                     return true;
                 }
             }

@@ -177,8 +177,8 @@ public class PsdImageParser extends ImageParser {
             return true;
         }
 
-        for (int i = 0; i < imageResourceIDs.length; i++) {
-            if (ID == imageResourceIDs[i]) {
+        for (int imageResourceID : imageResourceIDs) {
+            if (ID == imageResourceID) {
                 return true;
             }
         }

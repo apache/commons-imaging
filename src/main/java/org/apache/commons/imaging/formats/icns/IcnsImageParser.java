@@ -270,8 +270,8 @@ public class IcnsImageParser extends ImageParser {
             throws ImageReadException, IOException {
         IcnsContents icnsContents = readImage(byteSource);
         icnsContents.icnsHeader.dump(pw);
-        for (int i = 0; i < icnsContents.icnsElements.length; i++) {
-            icnsContents.icnsElements[i].dump(pw);
+        for (IcnsElement icnsElement : icnsContents.icnsElements) {
+            icnsElement.dump(pw);
         }
         return true;
     }

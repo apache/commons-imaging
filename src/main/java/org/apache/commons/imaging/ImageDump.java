@@ -90,8 +90,7 @@ public class ImageDump {
             System.out.println(prefix + ": no props");
             return;
         }
-        for (int i = 0; i < keys.length; i++) {
-            String key = keys[i];
+        for (String key : keys) {
             System.out.println(prefix + ": " + key + ": "
                     + src.getProperty(key));
         }

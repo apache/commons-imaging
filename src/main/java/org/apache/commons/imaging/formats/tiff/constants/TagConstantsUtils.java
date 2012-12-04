@@ -28,15 +28,15 @@ public class TagConstantsUtils implements TiffDirectoryConstants {
 
     public static List<TagInfo> mergeTagLists(List<?>... tagLists) {
         int count = 0;
-        for (int i = 0; i < tagLists.length; i++) {
-            count += tagLists[i].size();
+        for (List<?> tagList : tagLists) {
+            count += tagList.size();
         }
 
         ArrayList<TagInfo> result = new ArrayList<TagInfo>(count);
 
-        for (int i = 0; i < tagLists.length; i++) {
-            for (int j = 0; j < tagLists[i].size(); j++) {
-                result.add((TagInfo)tagLists[i].get(j));
+        for (List<?> tagList : tagLists) {
+            for (int j = 0; j < tagList.size(); j++) {
+                result.add((TagInfo)tagList.get(j));
             }
         }
 
@@ -45,9 +45,9 @@ public class TagConstantsUtils implements TiffDirectoryConstants {
 
     public static TiffDirectoryType getExifDirectoryType(int type) {
 
-        for (int i = 0; i < tiffDirectoryTypes.length; i++) {
-            if (tiffDirectoryTypes[i].directoryType == type) {
-                return tiffDirectoryTypes[i];
+        for (TiffDirectoryType tiffDirectoryType : tiffDirectoryTypes) {
+            if (tiffDirectoryType.directoryType == type) {
+                return tiffDirectoryType;
             }
         }
         return TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN;

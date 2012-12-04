@@ -189,10 +189,10 @@ public class DcxImageParser extends ImageParser {
         DcxHeader dcxHeader = readDcxHeader(byteSource);
         List<BufferedImage> images = new ArrayList<BufferedImage>();
         PcxImageParser pcxImageParser = new PcxImageParser();
-        for (int i = 0; i < dcxHeader.pageTable.length; i++) {
+        for (int element : dcxHeader.pageTable) {
             InputStream stream = null;
             try {
-                stream = byteSource.getInputStream(dcxHeader.pageTable[i]);
+                stream = byteSource.getInputStream(element);
                 ByteSourceInputStream pcxSource = new ByteSourceInputStream(
                         stream, null);
                 BufferedImage image = pcxImageParser.getBufferedImage(

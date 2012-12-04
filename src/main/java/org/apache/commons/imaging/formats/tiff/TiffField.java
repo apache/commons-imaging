@@ -724,22 +724,22 @@ public class TiffField implements TiffConstants {
         } else if (o instanceof Number[]) {
             Number numbers[] = (Number[]) o;
             int sum = 0;
-            for (int i = 0; i < numbers.length; i++) {
-                sum += numbers[i].intValue();
+            for (Number number : numbers) {
+                sum += number.intValue();
             }
             return sum;
         } else if (o instanceof short[]) {
             short[] numbers = (short[]) o;
             int sum = 0;
-            for (int i = 0; i < numbers.length; i++) {
-                sum += numbers[i];
+            for (short number : numbers) {
+                sum += number;
             }
             return sum;
         } else if (o instanceof int[]) {
             int numbers[] = (int[]) o;
             int sum = 0;
-            for (int i = 0; i < numbers.length; i++) {
-                sum += numbers[i];
+            for (int number : numbers) {
+                sum += number;
             }
             return sum;
         }

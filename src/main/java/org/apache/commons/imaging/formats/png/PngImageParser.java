@@ -147,8 +147,8 @@ public class PngImageParser extends ImageParser implements PngConstants {
             return true;
         }
 
-        for (int i = 0; i < chunkTypes.length; i++) {
-            if (chunkTypes[i] == ChunkType) {
+        for (int chunkType2 : chunkTypes) {
+            if (chunkType2 == ChunkType) {
                 return true;
             }
         }

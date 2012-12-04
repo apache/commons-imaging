@@ -82,8 +82,8 @@ public final class Debug {
             result.append(message + " (" + null + ")" + newline);
         } else {
             result.append(message + " (" + v.length + ")" + newline);
-            for (int i = 0; i < v.length; i++) {
-                result.append("\t" + v[i] + newline);
+            for (int element : v) {
+                result.append("\t" + element + newline);
             }
             result.append(newline);
         }
@@ -132,8 +132,8 @@ public final class Debug {
             result.append(getDebug(message + " (" + null + ")") + newline);
         } else {
             result.append(getDebug(message + " (" + v.length + ")") + newline);
-            for (int i = 0; i < v.length; i++) {
-                result.append(getDebug("\t" + v[i] + " (" + (0xff & v[i]))
+            for (char element : v) {
+                result.append(getDebug("\t" + element + " (" + (0xff & element))
                         + ")" + newline);
             }
             result.append(newline);

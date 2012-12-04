@@ -36,6 +36,7 @@ import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
+import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
@@ -135,8 +136,8 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                 if (tiffImageData != null) {
                     TiffElement.DataElement data[] = tiffImageData
                             .getImageData();
-                    for (int i = 0; i < data.length; i++) {
-                        elements.add(data[i]);
+                    for (DataElement element : data) {
+                        elements.add(element);
                     }
                 }
             }

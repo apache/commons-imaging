@@ -31,8 +31,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -155,20 +155,18 @@ public class XbmImageParser extends ImageParser {
             int height = -1;
             int xHot = -1;
             int yHot = -1;
-            for (Iterator<Map.Entry<String, String>> it = defines.entrySet()
-                    .iterator(); it.hasNext();) {
-                Map.Entry<String, String> entry = it.next();
-                String name = entry.getKey();
-                if (name.endsWith("_width")) {
-                    width = Integer.parseInt(entry.getValue());
-                } else if (name.endsWith("_height")) {
-                    height = Integer.parseInt(entry.getValue());
-                } else if (name.endsWith("_x_hot")) {
-                    xHot = Integer.parseInt(entry.getValue());
-                } else if (name.endsWith("_y_hot")) {
-                    yHot = Integer.parseInt(entry.getValue());
-                }
+            for (Entry<String, String> entry : defines.entrySet()) {
+            String name = entry.getKey();
+            if (name.endsWith("_width")) {
+            width = Integer.parseInt(entry.getValue());
+            } else if (name.endsWith("_height")) {
+            height = Integer.parseInt(entry.getValue());
+            } else if (name.endsWith("_x_hot")) {
+            xHot = Integer.parseInt(entry.getValue());
+            } else if (name.endsWith("_y_hot")) {
+            yHot = Integer.parseInt(entry.getValue());
             }
+         }
             if (width == -1) {
                 throw new ImageReadException("width not found");
             }

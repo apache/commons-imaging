@@ -230,16 +230,16 @@ public class BasicCParser {
     public static String[] tokenizeRow(String row) {
         String[] tokens = row.split("[ \t]");
         int numLiveTokens = 0;
-        for (int i = 0; i < tokens.length; i++) {
-            if (tokens[i] != null && tokens[i].length() > 0) {
+        for (String token : tokens) {
+            if (token != null && token.length() > 0) {
                 ++numLiveTokens;
             }
         }
         String[] liveTokens = new String[numLiveTokens];
         int next = 0;
-        for (int i = 0; i < tokens.length; i++) {
-            if (tokens[i] != null && tokens[i].length() > 0) {
-                liveTokens[next++] = tokens[i];
+        for (String token : tokens) {
+            if (token != null && token.length() > 0) {
+                liveTokens[next++] = token;
             }
         }
         return liveTokens;

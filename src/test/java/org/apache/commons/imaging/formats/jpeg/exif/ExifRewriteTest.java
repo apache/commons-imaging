@@ -401,8 +401,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                     // so if the source had that, all bets are off.
                     byte[] rawBytes = oldField.fieldType.getRawBytes(oldField);
                     boolean hasInvalidByte = false;
-                    for (int k = 0; k < rawBytes.length; k++) {
-                        if ((rawBytes[k] & 0x80) != 0) {
+                    for (byte rawByte : rawBytes) {
+                        if ((rawByte & 0x80) != 0) {
                             hasInvalidByte = true;
                             break;
                         }

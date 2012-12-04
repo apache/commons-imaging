@@ -166,8 +166,8 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertNotNull(imageInfoBytes);
 
         Method methods[] = ImageInfo.class.getMethods();
-        for (int i = 0; i < methods.length; i++) {
-            Method method = methods[i];
+        for (Method method2 : methods) {
+            Method method = method2;
             method.getModifiers();
             if (!Modifier.isPublic(method.getModifiers()))
                 continue;

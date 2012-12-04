@@ -631,8 +631,8 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
 
         if (null != imageDataInfo) {
-            for (int i = 0; i < imageDataInfo.outputItems.length; i++) {
-                result.add(imageDataInfo.outputItems[i]);
+            for (TiffOutputItem outputItem : imageDataInfo.outputItems) {
+                result.add(outputItem);
             }
 
             outputSummary.addTiffImageData(imageDataInfo);

@@ -94,10 +94,10 @@ public class FieldTypeAscii extends FieldType {
         } else if (o instanceof String[]) {
             String[] strings = (String[]) o;
             int totalLength = 0;
-            for (int i = 0; i < strings.length; i++) {
+            for (String string : strings) {
                 byte[] bytes = null;
                 try {
-                    bytes = strings[i].getBytes("UTF-8");
+                    bytes = string.getBytes("UTF-8");
                 } catch (UnsupportedEncodingException cannotHappen) {
                     throw new IllegalArgumentException("Your Java doesn't support UTF-8");
                 }
@@ -105,10 +105,10 @@ public class FieldTypeAscii extends FieldType {
             }
             byte[] result = new byte[totalLength];
             int position = 0;
-            for (int i = 0; i < strings.length; i++) {
+            for (String string : strings) {
                 byte[] bytes = null;
                 try {
-                    bytes = strings[i].getBytes("UTF-8");
+                    bytes = string.getBytes("UTF-8");
                 } catch (UnsupportedEncodingException cannotHappen) {
                     throw new IllegalArgumentException("Your Java doesn't support UTF-8");
                 }

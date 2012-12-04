@@ -105,8 +105,7 @@ public class RationalNumberTest extends ImagingTest {
                 -(Long.MAX_VALUE - 0.1), //
         };
 
-        for (int i = 0; i < testValues.length; i++) {
-            double value = testValues[i];
+        for (double value : testValues) {
             RationalNumber rational = RationalNumberUtilities
                     .getRationalNumber(value);
             double difference = Math.abs(value - rational.doubleValue());

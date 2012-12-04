@@ -78,8 +78,8 @@ public class BinaryConstant implements Cloneable {
     }
 
     public void writeTo(OutputStream os) throws IOException {
-        for (int i = 0; i < value.length; i++) {
-            os.write(value[i]);
+        for (byte element : value) {
+            os.write(element);
         }
     }
 }

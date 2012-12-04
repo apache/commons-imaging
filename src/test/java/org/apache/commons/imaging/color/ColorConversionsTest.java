@@ -26,9 +26,7 @@ public class ColorConversionsTest extends TestCase {
             0xff00ffff, 0x00000000, 0xff7f7f7f, };
 
     public void testRGBtoCMYK() throws Exception {
-        for (int i = 0; i < SAMPLE_RGBS.length; i++) {
-            int rgb = SAMPLE_RGBS[i];
-
+        for (int rgb : SAMPLE_RGBS) {
             ColorCmy cmy = ColorConversions.convertRGBtoCMY(rgb);
             ColorCmyk cmyk = ColorConversions.convertCMYtoCMYK(cmy);
             ColorCmy cmyk_cmy = ColorConversions.convertCMYKtoCMY(cmyk);
@@ -46,9 +44,7 @@ public class ColorConversionsTest extends TestCase {
     }
 
     public void testRGBtoHSL() throws Exception {
-        for (int i = 0; i < SAMPLE_RGBS.length; i++) {
-            int rgb = SAMPLE_RGBS[i];
-
+        for (int rgb : SAMPLE_RGBS) {
             ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
             int hsl_rgb = ColorConversions.convertHSLtoRGB(hsl);
 
@@ -61,9 +57,7 @@ public class ColorConversionsTest extends TestCase {
     }
 
     public void testRGBtoHSV() throws Exception {
-        for (int i = 0; i < SAMPLE_RGBS.length; i++) {
-            int rgb = SAMPLE_RGBS[i];
-
+        for (int rgb : SAMPLE_RGBS) {
             ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
             int hsv_rgb = ColorConversions.convertHSVtoRGB(hsv);
 
@@ -76,9 +70,7 @@ public class ColorConversionsTest extends TestCase {
     }
 
     public void testXYZ() throws Exception {
-        for (int i = 0; i < SAMPLE_RGBS.length; i++) {
-            int rgb = SAMPLE_RGBS[i];
-
+        for (int rgb : SAMPLE_RGBS) {
             ColorXyz xyz = ColorConversions.convertRGBtoXYZ(rgb);
             int xyz_rgb = ColorConversions.convertXYZtoRGB(xyz);
 

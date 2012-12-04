@@ -161,8 +161,7 @@ public final class TagInfoGpsText extends TagInfo {
             }
         }
 
-        for (int i = 0; i < TEXT_ENCODINGS.length; i++) {
-            TagInfoGpsText.TextEncoding encoding = TEXT_ENCODINGS[i];
+        for (TextEncoding encoding : TEXT_ENCODINGS) {
             if (BinaryFileFunctions.compareBytes(bytes, 0, encoding.prefix, 0,
                     encoding.prefix.length)) {
                 try {

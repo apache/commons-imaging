@@ -108,7 +108,7 @@ public class BinaryFileFunctions {
 
     public final void readAndVerifyBytes(InputStream is, byte expected[],
             String exception) throws ImageReadException, IOException {
-        for (int i = 0; i < expected.length; i++) {
+        for (byte element : expected) {
             int data = is.read();
             byte b = (byte) (0xff & data);
 
@@ -116,7 +116,7 @@ public class BinaryFileFunctions {
                 throw new ImageReadException("Unexpected EOF.");
             }
 
-            if (b != expected[i]) {
+            if (b != element) {
                 // System.out.println("i" + ": " + i);
 
                 // this.debugByteArray("expected", expected);

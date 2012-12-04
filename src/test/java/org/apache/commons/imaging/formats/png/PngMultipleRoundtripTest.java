@@ -36,8 +36,8 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
         assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());
 
         File files[] = imagesFolder.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            File imageFile = files[i];
+        for (File file : files) {
+            File imageFile = file;
             if (!imageFile.isFile())
                 continue;
             if (!imageFile.getName().toLowerCase().endsWith(".png"))

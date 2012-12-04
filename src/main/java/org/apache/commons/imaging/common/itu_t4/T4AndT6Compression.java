@@ -23,6 +23,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BitArrayOutputStream;
 import org.apache.commons.imaging.common.BitInputStreamFlexible;
+import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
 import org.apache.commons.imaging.util.Debug;
 
 public class T4AndT6Compression {
@@ -35,24 +36,19 @@ public class T4AndT6Compression {
 
     static {
         try {
-            for (int i = 0; i < T4_T6_Tables.whiteTerminatingCodes.length; i++) {
-                T4_T6_Tables.Entry entry = T4_T6_Tables.whiteTerminatingCodes[i];
+            for (Entry entry : T4_T6_Tables.whiteTerminatingCodes) {
                 whiteRunLengths.insert(entry.bitString, entry.value);
             }
-            for (int i = 0; i < T4_T6_Tables.whiteMakeUpCodes.length; i++) {
-                T4_T6_Tables.Entry entry = T4_T6_Tables.whiteMakeUpCodes[i];
+            for (Entry entry : T4_T6_Tables.whiteMakeUpCodes) {
                 whiteRunLengths.insert(entry.bitString, entry.value);
             }
-            for (int i = 0; i < T4_T6_Tables.blackTerminatingCodes.length; i++) {
-                T4_T6_Tables.Entry entry = T4_T6_Tables.blackTerminatingCodes[i];
+            for (Entry entry : T4_T6_Tables.blackTerminatingCodes) {
                 blackRunLengths.insert(entry.bitString, entry.value);
             }
-            for (int i = 0; i < T4_T6_Tables.blackMakeUpCodes.length; i++) {
-                T4_T6_Tables.Entry entry = T4_T6_Tables.blackMakeUpCodes[i];
+            for (Entry entry : T4_T6_Tables.blackMakeUpCodes) {
                 blackRunLengths.insert(entry.bitString, entry.value);
             }
-            for (int i = 0; i < T4_T6_Tables.additionalMakeUpCodes.length; i++) {
-                T4_T6_Tables.Entry entry = T4_T6_Tables.additionalMakeUpCodes[i];
+            for (Entry entry : T4_T6_Tables.additionalMakeUpCodes) {
                 whiteRunLengths.insert(entry.bitString, entry.value);
                 blackRunLengths.insert(entry.bitString, entry.value);
             }

@@ -587,8 +587,8 @@ public class IcoImageParser extends ImageParser {
             throws ImageReadException, IOException {
         ImageContents contents = readImage(byteSource);
         contents.fileHeader.dump(pw);
-        for (int i = 0; i < contents.iconDatas.length; i++) {
-            contents.iconDatas[i].dump(pw);
+        for (IconData iconData : contents.iconDatas) {
+            iconData.dump(pw);
         }
         return true;
     }

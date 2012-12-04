@@ -140,12 +140,8 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
         byte testByteArrays[][] = getTestByteArrays();
 
-        for (int i = 0; i < testByteArrays.length; i++) {
-            byte testByteArray[] = testByteArrays[i];
-
-            for (int j = 0; j < byteSourceFactories.length; j++) {
-                ByteSourceFactory byteSourceFactory = byteSourceFactories[j];
-
+        for (byte[] testByteArray : testByteArrays) {
+            for (ByteSourceFactory byteSourceFactory : byteSourceFactories) {
                 writeAndReadBytes(byteSourceFactory, testByteArray);
             }
         }

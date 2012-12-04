@@ -100,8 +100,8 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             return true;
         }
 
-        for (int i = 0; i < markers.length; i++) {
-            if (markers[i] == marker) {
+        for (int marker2 : markers) {
+            if (marker2 == marker) {
                 return true;
             }
         }

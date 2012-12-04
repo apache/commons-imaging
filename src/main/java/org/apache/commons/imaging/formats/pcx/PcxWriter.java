@@ -100,8 +100,8 @@ public class PcxWriter implements PcxConstants {
             if (encoding == PcxImageParser.PcxHeader.ENCODING_RLE) {
                 int previousByte = -1;
                 int repeatCount = 0;
-                for (int i = 0; i < scanline.length; i++) {
-                    if ((scanline[i] & 0xff) == previousByte
+                for (byte element : scanline) {
+                    if ((element & 0xff) == previousByte
                             && repeatCount < 63) {
                         ++repeatCount;
                     } else {
@@ -114,7 +114,7 @@ public class PcxWriter implements PcxConstants {
                                 bos.write(previousByte);
                             }
                         }
-                        previousByte = 0xff & scanline[i];
+                        previousByte = 0xff & element;
                         repeatCount = 1;
                     }
                 }

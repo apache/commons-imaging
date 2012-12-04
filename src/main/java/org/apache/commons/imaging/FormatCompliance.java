@@ -130,8 +130,8 @@ public class FormatCompliance {
 
     public boolean compare(String name, int valid[], int actual)
             throws ImageReadException {
-        for (int i = 0; i < valid.length; i++) {
-            if (actual == valid[i]) {
+        for (int element : valid) {
+            if (actual == element) {
                 return true;
             }
         }

@@ -60,8 +60,8 @@ public class PaletteFactory {
         }
 
         int count = 0;
-        for (int i = 0; i < rgbmap.length; i++) {
-            int eight = 0xff & rgbmap[i];
+        for (byte element : rgbmap) {
+            int eight = 0xff & element;
             count += Integer.bitCount(eight);
         }
 
@@ -498,8 +498,7 @@ public class PaletteFactory {
     public int countTrasparentColors(int rgbs[]) {
         int first = -1;
 
-        for (int i = 0; i < rgbs.length; i++) {
-            int rgb = rgbs[i];
+        for (int rgb : rgbs) {
             int alpha = 0xff & (rgb >> 24);
             if (alpha < 0xff) {
                 if (first < 0) {

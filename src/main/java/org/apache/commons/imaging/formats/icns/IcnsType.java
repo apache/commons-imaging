@@ -130,45 +130,45 @@ public class IcnsType {
     }
 
     public static IcnsType findAnyType(int type) {
-        for (int i = 0; i < allImageTypes.length; i++) {
-            if (allImageTypes[i].getType() == type) {
-                return allImageTypes[i];
+        for (IcnsType allImageType : allImageTypes) {
+            if (allImageType.getType() == type) {
+                return allImageType;
             }
         }
-        for (int i = 0; i < allMaskTypes.length; i++) {
-            if (allMaskTypes[i].getType() == type) {
-                return allMaskTypes[i];
+        for (IcnsType allMaskType : allMaskTypes) {
+            if (allMaskType.getType() == type) {
+                return allMaskType;
             }
         }
         return null;
     }
 
     public static IcnsType findImageType(int type) {
-        for (int i = 0; i < allImageTypes.length; i++) {
-            if (allImageTypes[i].getType() == type) {
-                return allImageTypes[i];
+        for (IcnsType allImageType : allImageTypes) {
+            if (allImageType.getType() == type) {
+                return allImageType;
             }
         }
         return null;
     }
 
     public static IcnsType find8BPPMaskType(IcnsType imageType) {
-        for (int i = 0; i < allMaskTypes.length; i++) {
-            if (allMaskTypes[i].getBitsPerPixel() == 8
-                    && allMaskTypes[i].getWidth() == imageType.getWidth()
-                    && allMaskTypes[i].getHeight() == imageType.getHeight()) {
-                return allMaskTypes[i];
+        for (IcnsType allMaskType : allMaskTypes) {
+            if (allMaskType.getBitsPerPixel() == 8
+                    && allMaskType.getWidth() == imageType.getWidth()
+                    && allMaskType.getHeight() == imageType.getHeight()) {
+                return allMaskType;
             }
         }
         return null;
     }
 
     public static IcnsType find1BPPMaskType(IcnsType imageType) {
-        for (int i = 0; i < allMaskTypes.length; i++) {
-            if (allMaskTypes[i].getBitsPerPixel() == 1
-                    && allMaskTypes[i].getWidth() == imageType.getWidth()
-                    && allMaskTypes[i].getHeight() == imageType.getHeight()) {
-                return allMaskTypes[i];
+        for (IcnsType allMaskType : allMaskTypes) {
+            if (allMaskType.getBitsPerPixel() == 1
+                    && allMaskType.getWidth() == imageType.getWidth()
+                    && allMaskType.getHeight() == imageType.getHeight()) {
+                return allMaskType;
             }
         }
         return null;

@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.formats.icns.IcnsImageParser.IcnsElement;
 
 public class IcnsDecoder {
     private static final int[] palette_4bpp = { 0xffffffff, 0xfffcf305,
@@ -197,8 +198,7 @@ public class IcnsDecoder {
             IcnsImageParser.IcnsElement[] icnsElements)
             throws ImageReadException {
         List<BufferedImage> result = new ArrayList<BufferedImage>();
-        for (int i = 0; i < icnsElements.length; i++) {
-            IcnsImageParser.IcnsElement imageElement = icnsElements[i];
+        for (IcnsElement imageElement : icnsElements) {
             IcnsType imageType = IcnsType.findImageType(imageElement.type);
             if (imageType == null) {
                 continue;
@@ -212,9 +212,9 @@ public class IcnsDecoder {
             } else {
                 maskType = IcnsType.find8BPPMaskType(imageType);
                 if (maskType != null) {
-                    for (int j = 0; j < icnsElements.length; j++) {
-                        if (icnsElements[j].type == maskType.getType()) {
-                            maskElement = icnsElements[j];
+                    for (IcnsElement icnsElement : icnsElements) {
+                        if (icnsElement.type == maskType.getType()) {
+                            maskElement = icnsElement;
                             break;
                         }
                     }
@@ -222,9 +222,9 @@ public class IcnsDecoder {
                 if (maskElement == null) {
                     maskType = IcnsType.find1BPPMaskType(imageType);
                     if (maskType != null) {
-                        for (int j = 0; j < icnsElements.length; j++) {
-                            if (icnsElements[j].type == maskType.getType()) {
-                                maskElement = icnsElements[j];
+                        for (IcnsElement icnsElement : icnsElements) {
+                            if (icnsElement.type == maskType.getType()) {
+                                maskElement = icnsElement;
                                 break;
                             }
                         }
