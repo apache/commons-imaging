@@ -408,7 +408,8 @@ public class PaletteFactory {
      * @return the palette of at most {@code max} colors
      */
     public Palette makeQuantizedRgbaPalette(final BufferedImage src, final boolean transparent, final int max) throws ImageWriteException {
-        return new MedianCutQuantizer(!transparent).process(src, max, false);
+        return new MedianCutQuantizer(!transparent).process(src, max,
+                new MedianCutLongestAxisImplementation(), false);
     }
 
     /**

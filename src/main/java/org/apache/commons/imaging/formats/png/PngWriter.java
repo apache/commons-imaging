@@ -28,7 +28,6 @@ import java.util.zip.DeflaterOutputStream;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.ZLibUtils;
-import org.apache.commons.imaging.palette.MedianCutQuantizer;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.Debug;
@@ -490,8 +489,7 @@ public class PngWriter implements PngConstants {
 
             final int max_colors = hasAlpha ? 255 : 256;
 
-            palette = new MedianCutQuantizer(true).process(src, max_colors,
-                    verbose);
+            palette = new PaletteFactory().makeQuantizedRgbPalette(src, max_colors);
             // Palette palette2 = new PaletteFactory().makePaletteSimple(src,
             // max_colors);
 
