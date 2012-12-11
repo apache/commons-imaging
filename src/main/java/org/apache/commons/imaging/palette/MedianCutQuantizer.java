@@ -290,14 +290,14 @@ public class MedianCutQuantizer {
                     && color_group.alpha_diff > color_group.red_diff
                     && color_group.alpha_diff > color_group.green_diff
                     && color_group.alpha_diff > color_group.blue_diff) {
-                doCut(color_group, ALPHA, color_groups);
+                doCut(color_group, ColorComponent.ALPHA, color_groups);
             } else if (color_group.red_diff > color_group.green_diff
                     && color_group.red_diff > color_group.blue_diff) {
-                doCut(color_group, RED, color_groups);
+                doCut(color_group, ColorComponent.RED, color_groups);
             } else if (color_group.green_diff > color_group.blue_diff) {
-                doCut(color_group, GREEN, color_groups);
+                doCut(color_group, ColorComponent.GREEN, color_groups);
             } else {
-                doCut(color_group, BLUE, color_groups);
+                doCut(color_group, ColorComponent.BLUE, color_groups);
             }
         }
 
@@ -328,12 +328,36 @@ public class MedianCutQuantizer {
         return new MedianCutPalette(root, palette);
     }
 
-    private static final int ALPHA = 0;
-    private static final int RED = 1;
-    private static final int GREEN = 2;
-    private static final int BLUE = 3;
+    private static enum ColorComponent {
+        ALPHA {
+            @Override
+            public int argbComponent(int argb) {
+                return (argb >> 24) & 0xff;
+            }
+        },
+        RED {
+            @Override
+            public int argbComponent(int argb) {
+                return (argb >> 16) & 0xff;
+            }
+        },
+        GREEN {
+            @Override
+            public int argbComponent(int argb) {
+                return (argb >> 8) & 0xff;
+            }
+        },
+        BLUE {
+            @Override
+            public int argbComponent(int argb) {
+                return (argb & 0xff);
+            }
+        };
+        
+        public abstract int argbComponent(int argb);
+    }
 
-    private void doCut(final ColorGroup color_group, final int mode,
+    private void doCut(final ColorGroup color_group, final ColorComponent mode,
             final List<ColorGroup> color_groups) throws ImageWriteException {
         int count_total = 0;
         for (int i = 0; i < color_group.color_counts.size(); i++) {
@@ -421,9 +445,10 @@ public class MedianCutQuantizer {
 
     private static class ColorGroupCut {
         public final ColorGroup less, more;
-        public final int mode, limit;
+        public final ColorComponent mode;
+        public final int limit;
 
-        public ColorGroupCut(final ColorGroup less, final ColorGroup more, final int mode,
+        public ColorGroupCut(final ColorGroup less, final ColorGroup more, final ColorComponent mode,
                 final int limit) {
             this.less = less;
             this.more = more;
@@ -432,23 +457,7 @@ public class MedianCutQuantizer {
         }
 
         public ColorGroup getColorGroup(final int argb) {
-            int value;
-            switch (mode) {
-            case ALPHA:
-                value = 0xff & (argb >> 24);
-                break;
-            case RED:
-                value = 0xff & (argb >> 16);
-                break;
-            case GREEN:
-                value = 0xff & (argb >> 8);
-                break;
-            case BLUE:
-                value = 0xff & (argb >> 0);
-                break;
-            default:
-                throw new Error("bad mode.");
-            }
+            int value = mode.argbComponent(argb);
             if (value <= limit) {
                 return less;
             }
