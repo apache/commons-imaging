@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -60,7 +62,7 @@ public final class DataReaderTiled extends DataReader {
     }
 
     private void interpretTile(final ImageBuilder imageBuilder, final byte bytes[],
-            final int startX, final int startY) throws ImageReadException, IOException {
+            final int startX, final int startY, final int xLimit, final int yLimit) throws ImageReadException, IOException {
         // changes introduced May 2012
         // The following block of code implements changes that
         // reduce image loading time by using special-case processing
@@ -82,15 +84,15 @@ public final class DataReaderTiled extends DataReader {
             int k = 0;
             final int i0 = startY;
             int i1 = startY + tileLength;
-            if (i1 > height) {
+            if (i1 > yLimit) {
                 // the tile is padded past bottom of image
-                i1 = height;
+                i1 = yLimit;
             }
             final int j0 = startX;
             int j1 = startX + tileWidth;
-            if (j1 > width) {
+            if (j1 > xLimit) {
                 // the tile is padded to beyond the tile width
-                j1 = width;
+                j1 = xLimit;
             }
             if (photometricInterpreter instanceof PhotometricInterpreterRgb) {
                 for (int i = i0; i < i1; i++) {
@@ -136,7 +138,7 @@ public final class DataReaderTiled extends DataReader {
 
             getSamplesAsBytes(bis, samples);
 
-            if ((x < width) && (y < height)) {
+            if ((x < xLimit) && (y < yLimit)) {
                 samples = applyPredictor(samples);
                 photometricInterpreter.interpretPixel(imageBuilder, samples, x,
                         y);
@@ -171,7 +173,7 @@ public final class DataReaderTiled extends DataReader {
             final byte decompressed[] = decompress(compressed, compression,
                     bytesPerTile, tileWidth, tileLength);
 
-            interpretTile(imageBuilder, decompressed, x, y);
+            interpretTile(imageBuilder, decompressed, x, y, width, height);
 
             x += tileWidth;
             if (x >= width) {
@@ -184,4 +186,60 @@ public final class DataReaderTiled extends DataReader {
 
         }
     }
+    
+    @Override
+    public BufferedImage readImageData(final Rectangle subImage)
+            throws ImageReadException, IOException
+    {
+        int bitsPerRow = tileWidth * bitsPerPixel;
+        int bytesPerRow = (bitsPerRow + 7) / 8;
+        int bytesPerTile = bytesPerRow * tileLength;
+        int x = 0, y = 0;
+
+        // tileWidth is the width of the tile
+        // tileLength is the height of the tile 
+        int col0 = subImage.x / tileWidth;
+        int col1 = (subImage.x + subImage.width - 1) / tileWidth;
+        int row0 = subImage.y / tileLength;
+        int row1 = (subImage.y + subImage.height - 1) / tileLength;
+
+        int nCol = col1 - col0 + 1;
+        int nRow = row1 - row0 + 1;
+        int workingWidth = nCol * tileWidth;
+        int workingHeight = nRow * tileLength;
+
+        int nColumnsOfTiles = (width + tileWidth - 1) / tileWidth;
+
+        int x0 = col0*tileWidth;
+        int y0 = row0*tileLength;
+        
+        ImageBuilder workingBuilder =
+                new ImageBuilder(workingWidth, workingHeight, false);
+        
+        for (int iRow = row0; iRow <= row1; iRow++) {
+            for (int iCol = col0; iCol <= col1; iCol++) {
+                int tile = iRow * nColumnsOfTiles+iCol;
+                byte compressed[] = imageData.tiles[tile].getData();
+                byte decompressed[] = decompress(compressed, compression,
+                        bytesPerTile, tileWidth, tileLength);
+                x = iCol * tileWidth - x0;
+                y = iRow * tileLength - y0;
+                interpretTile(workingBuilder, decompressed, x, y, workingWidth, workingHeight);
+            }
+        }
+   
+        if (subImage.x == x0
+                && subImage.y == y0
+                && subImage.width == workingWidth
+                && subImage.height == workingHeight) {
+            return workingBuilder.getBufferedImage(); 
+        }else{
+            return workingBuilder.getSubimage(
+                subImage.x - x0,
+                subImage.y - y0,
+                subImage.width,
+                subImage.height);
+        }
+    }
+
 }

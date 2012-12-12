@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff;
 
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -435,6 +436,40 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         return result;
     }
 
+     /**
+     * Gets a buffered image specified by the byte source.
+     * The TiffImageParser class features support for a number of options that
+     * are unique to the TIFF format.  These options can be specified by
+     * supplying the appropriate parameters using the keys from the
+     * TiffConstants class and the params argument for this method.
+     * <h4>Loading Partial Images</h4>
+     * The TIFF parser includes support for loading partial images without
+     * committing significantly more memory resources than are necessary
+     * to store the image. This feature is useful for conserving memory
+     * in applications that require a relatively small sub image from a 
+     * very large TIFF file.  The specifications for partial images are
+     * as follows:
+     * <code><pre>
+     *   HashMap<String, Object> params = new HashMap<String, Object>();
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, new Integer(x));
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, new Integer(y));
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, new Integer(width));
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, new Integer(height));
+     * </pre></code>
+     * Note that the arguments x, y, width, and height must specify a
+     * valid rectangular region that is fully contained within the 
+     * source TIFF image.
+     * @param byteSource A valid instance of ByteSource
+     * @param params Optional instructions for special-handling or 
+     * interpretation of the input data (null objects are permitted and 
+     * must be supported by implementations).
+     * @return A valid instance of BufferedImage.
+     * @throws ImageReadException In the event that the the specified 
+     * content does not conform to the format of the specific parser
+     * implementation.
+     * @throws IOException In the event of unsuccessful read or
+     * access operation.
+     */
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
@@ -470,8 +505,67 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         return results;
     }
 
+    private Integer getIntegerParameter(
+            String key, Map<String, Object>params)
+            throws ImageReadException
+    {
+       
+        if(!params.containsKey(key))
+            return null;
+        
+        Object obj = params.get(key);
+        
+        if(obj instanceof Integer){
+            return (Integer)obj;
+        }
+        throw new ImageReadException(
+                "Non-Integer parameter "+key);
+    }
+    
+    private Rectangle checkForSubImage(
+            Map<String, Object> params)
+            throws ImageReadException
+    {
+        Integer ix0, iy0, iwidth, iheight;
+        ix0 = getIntegerParameter(
+                TiffConstants.PARAM_KEY_SUBIMAGE_X, params);
+        iy0 = getIntegerParameter(
+                TiffConstants.PARAM_KEY_SUBIMAGE_Y, params);
+        iwidth = getIntegerParameter(
+                TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
+        iheight = getIntegerParameter(
+                TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, params);
+        if (ix0 == null && iy0 == null && iwidth == null && iheight == null)
+            return null;
+
+        StringBuilder sb = new StringBuilder();
+        if (ix0 == null)
+            sb.append(" x0,");
+        if (iy0 == null)
+            sb.append(" y0,");
+        if (iwidth == null)
+            sb.append(" width,");
+        if (iheight == null)
+            sb.append(" height,");
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 1);
+            throw new ImageReadException(
+                    "Incomplete subimage parameters, missing"
+                    + sb.toString());
+        }
+        
+        int x0 = ix0.intValue();
+        int y0 = iy0.intValue();
+        int width = iwidth.intValue();
+        int height = iheight.intValue();
+
+        return new Rectangle(x0, y0, width, height);
+    }
+    
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
-            final ByteOrder byteOrder, final Map<String,Object> params) throws ImageReadException, IOException {
+            final ByteOrder byteOrder, final Map<String,Object> params) 
+            throws ImageReadException, IOException
+    {
         final List<TiffField> entries = directory.entries;
 
         if (entries == null) {
@@ -485,7 +579,43 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         final int width = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH,
                 true).getIntValue();
         final int height = directory.findField(
-                TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true).getIntValue();
+                TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true).getIntValue();      
+        Rectangle subImage = checkForSubImage(params);
+        if(subImage!=null){
+            // Check for valid subimage specification. The following checks
+            // are consistent with BufferedImage.getSubimage()
+            if (subImage.width <= 0) {
+                throw new ImageReadException("negative or zero subimage width");
+            }
+            if (subImage.height <= 0) {
+                throw new ImageReadException("negative or zero subimage height");
+            }
+            if(subImage.x<0 || subImage.x>=width){
+                throw new ImageReadException("subimage x is outside raster");
+            }
+            if(subImage.x+subImage.width>width){
+                throw new ImageReadException(
+                        "subimage (x+width) is outside raster");
+            }
+            if(subImage.y<0 || subImage.y>=height){
+                throw new ImageReadException("subimage y is outside raster");
+            }
+            if(subImage.y+subImage.height>height){
+                throw new ImageReadException(
+                        "subimage (y+height) is outside raster");
+            }            
+            
+            // if the subimage is just the same thing as the whole
+            // image, suppress the subimage processing
+            if(subImage.x==0 
+                    && subImage.y==0 
+                    && subImage.width==width 
+                    && subImage.height==height){
+                subImage = null;
+            }
+        }
+
+        
         int samplesPerPixel = 1;
         final TiffField samplesPerPixelField = directory
                 .findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
@@ -524,8 +654,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                     + bitsPerSample.length + ")");
         }
 
-        final boolean hasAlpha = false;
-        final ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
+
 
         final PhotometricInterpreter photometricInterpreter = getPhotometricInterpreter(
                 directory, photometricInterpretation, bitsPerPixel,
@@ -537,11 +666,18 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
                 samplesPerPixel, width, height, compression, byteOrder);
 
-        dataReader.readImageData(imageBuilder);
+        BufferedImage result = null;
+        if (subImage != null) {
+            result = dataReader.readImageData(subImage);
+        } else {
+            boolean hasAlpha = false;
+            ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
 
+            dataReader.readImageData(imageBuilder);
+            result =  imageBuilder.getBufferedImage();
+        }
         photometricInterpreter.dumpstats();
-
-        return imageBuilder.getBufferedImage();
+        return result;     
     }
 
     private PhotometricInterpreter getPhotometricInterpreter(

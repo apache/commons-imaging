@@ -248,6 +248,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-99" dev="damjan" type="fix" due-to="st.h">
          java.io.IOException: Could not read block
       </action>
+      <action issue="IMAGING-94" dev="damjan" type="add" due-to="gwlucas">
+         Add ability to load partial TIFF images
+      </action>
     </release>
     
   </body>

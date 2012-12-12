@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -52,9 +54,12 @@ public final class DataReaderStrips extends DataReader {
         this.byteOrder = byteOrder;
     }
 
-    private void interpretStrip(final ImageBuilder imageBuilder, final byte bytes[],
-            final int pixels_per_strip) throws ImageReadException, IOException {
-        if (y >= height) {
+    private void interpretStrip(
+            final ImageBuilder imageBuilder, 
+            final byte bytes[],
+            final int pixels_per_strip,
+            final int yLimit) throws ImageReadException, IOException {
+        if (y >= yLimit) {
             return;
         }
 
@@ -111,8 +116,8 @@ public final class DataReaderStrips extends DataReader {
         if (predictor != 2 && bitsPerPixel == 8 && allSamplesAreOneByte) {
             int k = 0;
             int nRows = pixels_per_strip / width;
-            if (y + nRows > height) {
-                nRows = height - y;
+            if (y + nRows > yLimit) {
+                nRows = yLimit - y;
             }
             final int i0 = y;
             final int i1 = y + nRows;
@@ -130,8 +135,8 @@ public final class DataReaderStrips extends DataReader {
         } else if (predictor != 2 && bitsPerPixel == 24 && allSamplesAreOneByte) {
             int k = 0;
             int nRows = pixels_per_strip / width;
-            if (y + nRows > height) {
-                nRows = height - y;
+            if (y + nRows > yLimit) {
+                nRows = yLimit - y;
             }
             final int i0 = y;
             final int i1 = y + nRows;
@@ -178,8 +183,8 @@ public final class DataReaderStrips extends DataReader {
             if (x < width) {
                 samples = applyPredictor(samples);
 
-                photometricInterpreter.interpretPixel(imageBuilder, samples, x,
-                        y);
+                photometricInterpreter.interpretPixel(
+                        imageBuilder, samples, x,  y);
             }
 
             x++;
@@ -188,7 +193,7 @@ public final class DataReaderStrips extends DataReader {
                 resetPredictor();
                 y++;
                 bis.flushCache();
-                if (y >= height) {
+                if (y >= yLimit) {
                     break;
                 }
             }
@@ -213,9 +218,82 @@ public final class DataReaderStrips extends DataReader {
             final byte decompressed[] = decompress(compressed, compression,
                     (int) bytesPerStrip, width, (int) rowsInThisStrip);
 
-            interpretStrip(imageBuilder, decompressed, (int) pixelsPerStrip);
+            interpretStrip(
+                    imageBuilder,
+                    decompressed,
+                    (int) pixelsPerStrip,
+                    height);
 
         }
+    }
+    
+    
+    @Override
+    public BufferedImage readImageData(Rectangle subImage)
+            throws ImageReadException, IOException
+    {
+        // the legacy code is optimized to the reading of whole
+        // strips (except for the last strip in the image, which can
+        // be a partial).  So create a working image with compatible 
+        // dimensions and read that.  Later on, the working image 
+        // will be sub-imaged to the proper size.
+
+        // strip0 and strip1 give the indices of the strips containing
+        // the first and last rows of pixels in the subimage
+        int strip0 = subImage.y / rowsPerStrip;
+        int strip1 = (subImage.y + subImage.height - 1) / rowsPerStrip;
+        int workingHeight = (strip1 - strip0 + 1) * rowsPerStrip;
+
+
+        // the legacy code uses a member element "y" to keep track
+        // of the row index of the output image that is being processed 
+        // by interpretStrip. y is set to zero before the first 
+        // call to interpretStrip.  y0 will be the index of the first row
+        // in the full image (the source image) that will be processed.
+ 
+        int y0 = strip0 * rowsPerStrip;
+        int yLimit = subImage.y-y0+subImage.height;
+
+
+        // TO DO: we can probably save some processing by using yLimit instead
+        //        or working 
+        ImageBuilder workingBuilder =
+                new ImageBuilder(width, workingHeight, false);
+
+        for (int strip = strip0; strip <= strip1; strip++) {
+            long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
+            long rowsRemaining = height - (strip * rowsPerStripLong);
+            long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
+            long bytesPerRow = (bitsPerPixel * width + 7) / 8;
+            long bytesPerStrip = rowsInThisStrip * bytesPerRow;
+            long pixelsPerStrip = rowsInThisStrip * width;
+
+            byte compressed[] = imageData.strips[strip].getData();
+
+            byte decompressed[] = decompress(compressed, compression,
+                    (int) bytesPerStrip, width, (int) rowsInThisStrip);
+
+            interpretStrip(
+                    workingBuilder,
+                    decompressed,
+                    (int) pixelsPerStrip,
+                    yLimit);
+        }
+ 
+
+        if (subImage.x == 0
+                && subImage.y == y0
+                && subImage.width == width
+                && subImage.height == workingHeight) {
+            // the subimage exactly matches the ImageBuilder bounds
+            return workingBuilder.getBufferedImage();
+        } else {
+            return workingBuilder.getSubimage(
+                    subImage.x,
+                    subImage.y - y0,
+                    subImage.width,
+                    subImage.height);
+        }      
     }
 
 }

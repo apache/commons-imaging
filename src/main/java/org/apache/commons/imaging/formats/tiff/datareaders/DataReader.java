@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,6 +63,12 @@ public abstract class DataReader implements TiffConstants {
     public abstract void readImageData(ImageBuilder imageBuilder)
             throws ImageReadException, IOException;
 
+
+    public abstract BufferedImage readImageData(Rectangle subImage)
+            throws ImageReadException, IOException;
+
+    
+    
     /**
      * Reads samples and returns them in an int array.
      * 
@@ -200,5 +208,4 @@ public abstract class DataReader implements TiffConstants {
                     "Tiff: unknown/unsupported compression: " + compression);
         }
     }
-
 }
