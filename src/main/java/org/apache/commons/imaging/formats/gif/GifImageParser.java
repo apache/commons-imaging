@@ -564,10 +564,9 @@ public class GifImageParser extends ImageParser {
                 blocks.blocks, GRAPHIC_CONTROL_EXTENSION);
 
         // Prefer the size information in the ImageDescriptor; it is more
-        // reliable
-        // than the size information in the header.
-        final int height = id.imageWidth;
-        final int width = id.imageHeight;
+        // reliable than the size information in the header.
+        final int height = id.imageHeight;
+        final int width = id.imageWidth;
 
         final List<String> comments = getComments(blocks.blocks);
         final int bitsPerPixel = (bhi.colorResolution + 1);
