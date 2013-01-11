@@ -510,8 +510,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             throws ImageReadException
     {
        
-        if(!params.containsKey(key))
+        if(!params.containsKey(key)) {
             return null;
+        }
         
         Object obj = params.get(key);
         
@@ -535,18 +536,23 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                 TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
         iheight = getIntegerParameter(
                 TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, params);
-        if (ix0 == null && iy0 == null && iwidth == null && iheight == null)
+        if (ix0 == null && iy0 == null && iwidth == null && iheight == null) {
             return null;
+        }
 
         StringBuilder sb = new StringBuilder();
-        if (ix0 == null)
+        if (ix0 == null) {
             sb.append(" x0,");
-        if (iy0 == null)
+        }
+        if (iy0 == null) {
             sb.append(" y0,");
-        if (iwidth == null)
+        }
+        if (iwidth == null) {
             sb.append(" width,");
-        if (iheight == null)
+        }
+        if (iheight == null) {
             sb.append(" height,");
+        }
         if (sb.length() > 0) {
             sb.setLength(sb.length() - 1);
             throw new ImageReadException(
