@@ -31,7 +31,7 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
         ColorGroup colorGroup = null;
         for (int i = 0; i < colorGroups.size(); i++) {
             if (colorGroups.get(i).max_diff > 0) {
-                ColorGroup c = colorGroups.get(i);
+                final ColorGroup c = colorGroups.get(i);
                 if (c.totalPoints > maxPoints) {
                     colorGroup = c;
                     maxPoints = c.totalPoints;
@@ -47,7 +47,7 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
         double bestScore = Double.MAX_VALUE;
         ColorComponent bestColorComponent = null;
         int bestMedianIndex = -1;
-        for (ColorComponent colorComponent : ColorComponent.values()) {
+        for (final ColorComponent colorComponent : ColorComponent.values()) {
             if (ignoreAlpha && colorComponent == ColorComponent.ALPHA) {
                 continue;
             }
@@ -84,10 +84,10 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
             if (lowerColors.size() == 0 || upperColors.size() == 0) {
                 continue;
             }
-            ColorGroup lowerGroup = new ColorGroup(lowerColors, ignoreAlpha);
-            ColorGroup upperGroup = new ColorGroup(upperColors, ignoreAlpha);
-            int diff = Math.abs(lowerGroup.totalPoints - upperGroup.totalPoints);
-            double score = diff / (double)Math.max(lowerGroup.totalPoints, upperGroup.totalPoints);
+            final ColorGroup lowerGroup = new ColorGroup(lowerColors, ignoreAlpha);
+            final ColorGroup upperGroup = new ColorGroup(upperColors, ignoreAlpha);
+            final int diff = Math.abs(lowerGroup.totalPoints - upperGroup.totalPoints);
+            final double score = diff / (double)Math.max(lowerGroup.totalPoints, upperGroup.totalPoints);
             if (score < bestScore) {
                 bestScore = score;
                 bestColorComponent = colorComponent;
@@ -105,8 +105,8 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
         final List<ColorCount> upperColors = new ArrayList<ColorCount>(
                 colorGroup.color_counts.subList(bestMedianIndex + 1,
                         colorGroup.color_counts.size()));
-        ColorGroup lowerGroup = new ColorGroup(lowerColors, ignoreAlpha);
-        ColorGroup upperGroup = new ColorGroup(upperColors, ignoreAlpha);
+        final ColorGroup lowerGroup = new ColorGroup(lowerColors, ignoreAlpha);
+        final ColorGroup upperGroup = new ColorGroup(upperColors, ignoreAlpha);
         colorGroups.remove(colorGroup);
         colorGroups.add(lowerGroup);
         colorGroups.add(upperGroup);

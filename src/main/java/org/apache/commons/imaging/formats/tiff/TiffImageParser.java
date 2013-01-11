@@ -514,7 +514,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             return null;
         }
         
-        Object obj = params.get(key);
+        final Object obj = params.get(key);
         
         if(obj instanceof Integer){
             return (Integer)obj;
@@ -540,7 +540,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             return null;
         }
 
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         if (ix0 == null) {
             sb.append(" x0,");
         }
@@ -560,10 +560,10 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                     + sb.toString());
         }
         
-        int x0 = ix0.intValue();
-        int y0 = iy0.intValue();
-        int width = iwidth.intValue();
-        int height = iheight.intValue();
+        final int x0 = ix0.intValue();
+        final int y0 = iy0.intValue();
+        final int width = iwidth.intValue();
+        final int height = iheight.intValue();
 
         return new Rectangle(x0, y0, width, height);
     }
@@ -676,8 +676,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         if (subImage != null) {
             result = dataReader.readImageData(subImage);
         } else {
-            boolean hasAlpha = false;
-            ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
+            final boolean hasAlpha = false;
+            final ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
 
             dataReader.readImageData(imageBuilder);
             result =  imageBuilder.getBufferedImage();

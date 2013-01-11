@@ -191,36 +191,36 @@ public final class DataReaderTiled extends DataReader {
     public BufferedImage readImageData(final Rectangle subImage)
             throws ImageReadException, IOException
     {
-        int bitsPerRow = tileWidth * bitsPerPixel;
-        int bytesPerRow = (bitsPerRow + 7) / 8;
-        int bytesPerTile = bytesPerRow * tileLength;
+        final int bitsPerRow = tileWidth * bitsPerPixel;
+        final int bytesPerRow = (bitsPerRow + 7) / 8;
+        final int bytesPerTile = bytesPerRow * tileLength;
         int x = 0, y = 0;
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile 
-        int col0 = subImage.x / tileWidth;
-        int col1 = (subImage.x + subImage.width - 1) / tileWidth;
-        int row0 = subImage.y / tileLength;
-        int row1 = (subImage.y + subImage.height - 1) / tileLength;
+        final int col0 = subImage.x / tileWidth;
+        final int col1 = (subImage.x + subImage.width - 1) / tileWidth;
+        final int row0 = subImage.y / tileLength;
+        final int row1 = (subImage.y + subImage.height - 1) / tileLength;
 
-        int nCol = col1 - col0 + 1;
-        int nRow = row1 - row0 + 1;
-        int workingWidth = nCol * tileWidth;
-        int workingHeight = nRow * tileLength;
+        final int nCol = col1 - col0 + 1;
+        final int nRow = row1 - row0 + 1;
+        final int workingWidth = nCol * tileWidth;
+        final int workingHeight = nRow * tileLength;
 
-        int nColumnsOfTiles = (width + tileWidth - 1) / tileWidth;
+        final int nColumnsOfTiles = (width + tileWidth - 1) / tileWidth;
 
-        int x0 = col0*tileWidth;
-        int y0 = row0*tileLength;
+        final int x0 = col0*tileWidth;
+        final int y0 = row0*tileLength;
         
-        ImageBuilder workingBuilder =
+        final ImageBuilder workingBuilder =
                 new ImageBuilder(workingWidth, workingHeight, false);
         
         for (int iRow = row0; iRow <= row1; iRow++) {
             for (int iCol = col0; iCol <= col1; iCol++) {
-                int tile = iRow * nColumnsOfTiles+iCol;
-                byte compressed[] = imageData.tiles[tile].getData();
-                byte decompressed[] = decompress(compressed, compression,
+                final int tile = iRow * nColumnsOfTiles+iCol;
+                final byte compressed[] = imageData.tiles[tile].getData();
+                final byte decompressed[] = decompress(compressed, compression,
                         bytesPerTile, tileWidth, tileLength);
                 x = iCol * tileWidth - x0;
                 y = iRow * tileLength - y0;

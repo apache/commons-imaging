@@ -30,7 +30,7 @@ class ColorGroupCut {
     }
 
     public ColorGroup getColorGroup(final int argb) {
-        int value = mode.argbComponent(argb);
+        final int value = mode.argbComponent(argb);
         if (value <= limit) {
             return less;
         }

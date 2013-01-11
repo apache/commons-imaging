@@ -173,10 +173,10 @@ public class ImageBuilder {
 
 
         // Transcribe the data to an output image array  
-        int[] argb = new int[w * h];
+        final int[] argb = new int[w * h];
         int k = 0;
         for (int iRow = 0; iRow < h; iRow++) {
-            int dIndex = (iRow + y) * width + x;
+            final int dIndex = (iRow + y) * width + x;
             System.arraycopy(this.data, dIndex, argb, k, w);
             k += w;
 

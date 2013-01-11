@@ -240,9 +240,9 @@ public final class DataReaderStrips extends DataReader {
 
         // strip0 and strip1 give the indices of the strips containing
         // the first and last rows of pixels in the subimage
-        int strip0 = subImage.y / rowsPerStrip;
-        int strip1 = (subImage.y + subImage.height - 1) / rowsPerStrip;
-        int workingHeight = (strip1 - strip0 + 1) * rowsPerStrip;
+        final int strip0 = subImage.y / rowsPerStrip;
+        final int strip1 = (subImage.y + subImage.height - 1) / rowsPerStrip;
+        final int workingHeight = (strip1 - strip0 + 1) * rowsPerStrip;
 
 
         // the legacy code uses a member element "y" to keep track
@@ -251,26 +251,26 @@ public final class DataReaderStrips extends DataReader {
         // call to interpretStrip.  y0 will be the index of the first row
         // in the full image (the source image) that will be processed.
  
-        int y0 = strip0 * rowsPerStrip;
-        int yLimit = subImage.y-y0+subImage.height;
+        final int y0 = strip0 * rowsPerStrip;
+        final int yLimit = subImage.y-y0+subImage.height;
 
 
         // TO DO: we can probably save some processing by using yLimit instead
         //        or working 
-        ImageBuilder workingBuilder =
+        final ImageBuilder workingBuilder =
                 new ImageBuilder(width, workingHeight, false);
 
         for (int strip = strip0; strip <= strip1; strip++) {
-            long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
-            long rowsRemaining = height - (strip * rowsPerStripLong);
-            long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
-            long bytesPerRow = (bitsPerPixel * width + 7) / 8;
-            long bytesPerStrip = rowsInThisStrip * bytesPerRow;
-            long pixelsPerStrip = rowsInThisStrip * width;
+            final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
+            final long rowsRemaining = height - (strip * rowsPerStripLong);
+            final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
+            final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
+            final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
+            final long pixelsPerStrip = rowsInThisStrip * width;
 
-            byte compressed[] = imageData.strips[strip].getData();
+            final byte compressed[] = imageData.strips[strip].getData();
 
-            byte decompressed[] = decompress(compressed, compression,
+            final byte decompressed[] = decompress(compressed, compression,
                     (int) bytesPerStrip, width, (int) rowsInThisStrip);
 
             interpretStrip(
