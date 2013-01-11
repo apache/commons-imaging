@@ -506,7 +506,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     private Integer getIntegerParameter(
-            String key, Map<String, Object>params)
+            final String key, final Map<String, Object>params)
             throws ImageReadException
     {
        
@@ -524,7 +524,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
     
     private Rectangle checkForSubImage(
-            Map<String, Object> params)
+            final Map<String, Object> params)
             throws ImageReadException
     {
         Integer ix0, iy0, iwidth, iheight;

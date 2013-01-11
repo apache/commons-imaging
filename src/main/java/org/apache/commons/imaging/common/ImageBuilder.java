@@ -148,7 +148,7 @@ public class ImageBuilder {
      * @throws RasterFormatException f the specified area is not contained 
      *         within this ImageBuilder
      */
-    public BufferedImage getSubimage(int x, int y, int w, int h)
+    public BufferedImage getSubimage(final int x, final int y, final int w, final int h)
     {
         if (w <= 0) {
             throw new RasterFormatException("negative or zero subimage width");
@@ -187,7 +187,7 @@ public class ImageBuilder {
     }
 
     private BufferedImage makeBufferedImage(
-            int[] argb, int w, int h, boolean useAlpha)
+            final int[] argb, final int w, final int h, final boolean useAlpha)
     {
         ColorModel colorModel;
         WritableRaster raster;

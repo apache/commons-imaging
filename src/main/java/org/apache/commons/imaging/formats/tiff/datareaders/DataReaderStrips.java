@@ -229,7 +229,7 @@ public final class DataReaderStrips extends DataReader {
     
     
     @Override
-    public BufferedImage readImageData(Rectangle subImage)
+    public BufferedImage readImageData(final Rectangle subImage)
             throws ImageReadException, IOException
     {
         // the legacy code is optimized to the reading of whole

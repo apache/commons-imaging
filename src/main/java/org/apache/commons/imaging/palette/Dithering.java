@@ -21,7 +21,7 @@ import java.awt.image.BufferedImage;
 import org.apache.commons.imaging.ImageWriteException;
 
 public class Dithering {
-    public static void applyFloydSteinbergDithering(BufferedImage image, Palette palette) throws ImageWriteException {
+    public static void applyFloydSteinbergDithering(final BufferedImage image, final Palette palette) throws ImageWriteException {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 int argb = image.getRGB(x, y);
@@ -65,7 +65,7 @@ public class Dithering {
         }
     }
     
-    private static int adjustPixel(int argb, int errA, int errR, int errG, int errB, int mul) {
+    private static int adjustPixel(final int argb, final int errA, final int errR, final int errG, final int errB, final int mul) {
         int a = (argb >> 24) & 0xff;
         int r = (argb >> 16) & 0xff;
         int g = (argb >> 8) & 0xff;

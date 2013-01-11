@@ -19,25 +19,25 @@ package org.apache.commons.imaging.palette;
 enum ColorComponent {
     ALPHA {
         @Override
-        public int argbComponent(int argb) {
+        public int argbComponent(final int argb) {
             return (argb >> 24) & 0xff;
         }
     },
     RED {
         @Override
-        public int argbComponent(int argb) {
+        public int argbComponent(final int argb) {
             return (argb >> 16) & 0xff;
         }
     },
     GREEN {
         @Override
-        public int argbComponent(int argb) {
+        public int argbComponent(final int argb) {
             return (argb >> 8) & 0xff;
         }
     },
     BLUE {
         @Override
-        public int argbComponent(int argb) {
+        public int argbComponent(final int argb) {
             return (argb & 0xff);
         }
     };

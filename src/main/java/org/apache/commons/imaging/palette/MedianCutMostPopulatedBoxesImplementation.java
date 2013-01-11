@@ -26,7 +26,7 @@ import org.apache.commons.imaging.ImageWriteException;
 public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplementation {
     @Override
     public boolean performNextMedianCut(final List<ColorGroup> colorGroups,
-            boolean ignoreAlpha) throws ImageWriteException {
+            final boolean ignoreAlpha) throws ImageWriteException {
         int maxPoints = 0;
         ColorGroup colorGroup = null;
         for (int i = 0; i < colorGroups.size(); i++) {
@@ -137,7 +137,7 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
     private static class ColorComparer implements Comparator<ColorCount> {
         private final ColorComponent colorComponent;
         
-        public ColorComparer(ColorComponent colorComponent) {
+        public ColorComparer(final ColorComponent colorComponent) {
             this.colorComponent = colorComponent;
         }
         
