@@ -135,7 +135,7 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
     }
     
     private static class ColorComparer implements Comparator<ColorCount> {
-        private ColorComponent colorComponent;
+        private final ColorComponent colorComponent;
         
         public ColorComparer(ColorComponent colorComponent) {
             this.colorComponent = colorComponent;
