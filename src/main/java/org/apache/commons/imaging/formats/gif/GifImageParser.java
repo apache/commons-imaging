@@ -569,10 +569,7 @@ public class GifImageParser extends ImageParser {
         final int height = id.imageWidth;
         final int width = id.imageHeight;
 
-        List<String> comments;
-
-        comments = getComments(blocks.blocks);
-
+        final List<String> comments = getComments(blocks.blocks);
         final int bitsPerPixel = (bhi.colorResolution + 1);
         final ImageFormat format = ImageFormat.IMAGE_FORMAT_GIF;
         final String formatName = "GIF Graphics Interchange Format";
