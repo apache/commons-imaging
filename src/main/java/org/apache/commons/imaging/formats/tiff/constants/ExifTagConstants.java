@@ -318,8 +318,8 @@ public interface ExifTagConstants
     public static final TagInfoRational EXIF_TAG_FOCAL_LENGTH = new TagInfoRational(
             "FocalLength", 0x920a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoShort EXIF_TAG_SUBJECT_LOCATION_1 = new TagInfoShort(
-            "SubjectLocation", 0x9214, -1,
+    public static final TagInfoShort EXIF_TAG_SUBJECT_AREA = new TagInfoShort(
+            "SubjectArea", 0x9214, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoDouble EXIF_TAG_STO_NITS = new TagInfoDouble(
             "StoNits", 0x923f, 1,
@@ -386,7 +386,7 @@ public interface ExifTagConstants
     public static final TagInfoUnknown EXIF_TAG_IMAGE_HISTORY = new TagInfoUnknown(
             "ImageHistory", 0xa213, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoShort EXIF_TAG_SUBJECT_LOCATION_2 = new TagInfoShort(
+    public static final TagInfoShort EXIF_TAG_SUBJECT_LOCATION = new TagInfoShort(
             "SubjectLocation", 0xa214, 2,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoRational EXIF_TAG_EXPOSURE_INDEX_EXIF_IFD = new TagInfoRational(
@@ -585,7 +585,7 @@ public interface ExifTagConstants
                     EXIF_TAG_EXPOSURE_COMPENSATION, EXIF_TAG_MAX_APERTURE_VALUE,
                     EXIF_TAG_SUBJECT_DISTANCE, EXIF_TAG_METERING_MODE,
                     EXIF_TAG_LIGHT_SOURCE, EXIF_TAG_FLASH, EXIF_TAG_FOCAL_LENGTH,
-                    EXIF_TAG_SUBJECT_LOCATION_1,
+                    EXIF_TAG_SUBJECT_AREA,
                     EXIF_TAG_STO_NITS, EXIF_TAG_SUB_SEC_TIME,
                     EXIF_TAG_SUB_SEC_TIME_ORIGINAL, EXIF_TAG_SUB_SEC_TIME_DIGITIZED,
                     EXIF_TAG_FLASHPIX_VERSION,
@@ -597,7 +597,7 @@ public interface ExifTagConstants
                     EXIF_TAG_FOCAL_PLANE_YRESOLUTION_EXIF_IFD,
                     EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT_EXIF_IFD,
                     EXIF_TAG_IMAGE_NUMBER, EXIF_TAG_SECURITY_CLASSIFICATION,
-                    EXIF_TAG_IMAGE_HISTORY, EXIF_TAG_SUBJECT_LOCATION_2,
+                    EXIF_TAG_IMAGE_HISTORY, EXIF_TAG_SUBJECT_LOCATION,
                     EXIF_TAG_EXPOSURE_INDEX_EXIF_IFD, EXIF_TAG_TIFF_EPSTANDARD_ID_2,
                     EXIF_TAG_SENSING_METHOD_EXIF_IFD, EXIF_TAG_FILE_SOURCE,
                     EXIF_TAG_SCENE_TYPE, EXIF_TAG_CFAPATTERN, EXIF_TAG_CUSTOM_RENDERED,
