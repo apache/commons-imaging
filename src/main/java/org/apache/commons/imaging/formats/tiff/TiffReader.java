@@ -258,7 +258,8 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                 };
                 for (int i = 0; i < offsetFields.length; i++) {
                     final TagInfoLong offsetField = offsetFields[i];
-                    if (directory.findField(offsetField) != null) {
+                    TiffField field = directory.findField(offsetField);
+                    if (field != null) {
                         int subDirectoryOffset;
                         int subDirectoryType;
                         boolean subDirectoryRead = false;
@@ -275,7 +276,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                             }
                         }
                         if (!subDirectoryRead) {
-                            fields.remove(offsetField);
+                            fields.remove(field);
                         }
                     }
                 }
