@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,6 @@ import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
-import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.util.Debug;
 
 public class TiffImageWriterLossless extends TiffImageWriterBase {
@@ -87,8 +87,8 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         }
         Debug.debug();
     }
-
-    private List<TiffElement> analyzeOldTiff() throws ImageWriteException,
+    
+    private List<TiffElement> analyzeOldTiff(Map<Integer,TiffOutputField> frozenFields) throws ImageWriteException,
             IOException {
         try {
             final ByteSource byteSource = new ByteSourceArray(exifBytes);
@@ -108,22 +108,16 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                 final List<TiffField> fields = directory.getDirectoryEntrys();
                 for (int f = 0; f < fields.size(); f++) {
                     final TiffField field = fields.get(f);
-                    if (field.tag == ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag) {
-                        // Some maker notes reference values stored
-                        // inside the maker note itself
-                        // using addresses relative to the beginning
-                        // of the TIFF file, making it impossible
-                        // to move the note to a different location.
-                        // To avoid corrupting these maker notes,
-                        // pretend all maker notes are a gap in the file
-                        // that must be preserved, so the copy that
-                        // will be written later will reference
-                        // the old copy's values. Happy days.
-                        continue;
-                    }
                     final TiffElement oversizeValue = field.getOversizeValueElement();
                     if (oversizeValue != null) {
-                        elements.add(oversizeValue);
+                        final TiffOutputField frozenField = frozenFields.get(field.tag);
+                        if (frozenField != null &&
+                                frozenField.getSeperateValue() != null &&
+                                frozenField.bytesEqual(field.getByteArrayValue())) {
+                            frozenField.getSeperateValue().setOffset(field.valueOffset);
+                        } else {
+                            elements.add(oversizeValue);
+                        }
                     }
                 }
 
@@ -146,7 +140,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
             // dumpElements(byteSource, elements);
 
-            final List<TiffElement> result = new ArrayList<TiffElement>();
+            final List<TiffElement> rewritableElements = new ArrayList<TiffElement>();
             {
                 final int TOLERANCE = 3;
                 // int last = TIFF_HEADER_SIZE;
@@ -159,7 +153,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                         start = element;
                         index = lastElementByte;
                     } else if (element.offset - index > TOLERANCE) {
-                        result.add(new TiffElement.Stub(start.offset, index
+                        rewritableElements.add(new TiffElement.Stub(start.offset, index
                                 - start.offset));
                         start = element;
                         index = lastElementByte;
@@ -168,14 +162,14 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                     }
                 }
                 if (null != start) {
-                    result.add(new TiffElement.Stub(start.offset, index
+                    rewritableElements.add(new TiffElement.Stub(start.offset, index
                             - start.offset));
                 }
             }
 
             // dumpElements(byteSource, result);
 
-            return result;
+            return rewritableElements;
         } catch (final ImageReadException e) {
             throw new ImageWriteException(e.getMessage(), e);
         }
@@ -184,13 +178,19 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
     @Override
     public void write(final OutputStream os, final TiffOutputSet outputSet)
             throws IOException, ImageWriteException {
-        final List<TiffElement> analysis = analyzeOldTiff();
+        // There are some fields whose address in the file must not change,
+        // unless of course their value is changed. 
+        final Map<Integer,TiffOutputField> frozenFields = new HashMap<Integer,TiffOutputField>();
+        final TiffOutputField makerNoteField = outputSet.findField(EXIF_TAG_MAKER_NOTE);
+        if (makerNoteField != null && makerNoteField.getSeperateValue() != null) {
+            frozenFields.put(EXIF_TAG_MAKER_NOTE.tag, makerNoteField);
+        }
+        List<TiffElement> analysis = analyzeOldTiff(frozenFields);
         final int oldLength = exifBytes.length;
         if (analysis.size() < 1) {
             throw new ImageWriteException("Couldn't analyze old tiff data.");
         } else if (analysis.size() == 1) {
             final TiffElement onlyElement = analysis.get(0);
-            // Debug.debug("onlyElement", onlyElement.getElementDescription());
             if (onlyElement.offset == TIFF_HEADER_SIZE
                     && onlyElement.offset + onlyElement.length
                             + TIFF_HEADER_SIZE == oldLength) {
@@ -199,19 +199,26 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                 return;
             }
         }
-
-        // if (true)
-        // throw new ImageWriteException("hahah");
-
-        // List directories = outputSet.getDirectories();
+        final Map<Integer,TiffOutputField> frozenFieldOffsets = new HashMap<Integer, TiffOutputField>();
+        for (Map.Entry<Integer,TiffOutputField> entry : frozenFields.entrySet()) {
+            final TiffOutputField frozenField = entry.getValue();
+            if (frozenField.getSeperateValue().getOffset() != TiffOutputItem.UNDEFINED_VALUE) {
+                frozenFieldOffsets.put(frozenField.getSeperateValue().getOffset(), frozenField);
+            }
+        }
 
         final TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
-        final List<TiffOutputItem> outputItems = outputSet
+        final List<TiffOutputItem> allOutputItems = outputSet
                 .getOutputItems(outputSummary);
+        final List<TiffOutputItem> outputItems = new ArrayList<TiffOutputItem>();
+        for (TiffOutputItem outputItem : allOutputItems) {
+            if (!frozenFieldOffsets.containsKey(outputItem.getOffset())) {
+                outputItems.add(outputItem);
+            }
+        }
 
         final int outputLength = updateOffsetsStep(analysis, outputItems);
-        // Debug.debug("outputLength", outputLength);
 
         outputSummary.updateOffsets(byteOrder);
 
@@ -259,9 +266,6 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         Collections.sort(unusedElements, ELEMENT_SIZE_COMPARATOR);
         Collections.reverse(unusedElements);
 
-        // Debug.debug("unusedElements");
-        // dumpElements(unusedElements);
-
         // make copy.
         final List<TiffOutputItem> unplacedItems = new ArrayList<TiffOutputItem>(
                 outputItems);
@@ -272,10 +276,6 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             // pop off largest unplaced item.
             final TiffOutputItem outputItem = unplacedItems.remove(0);
             final int outputItemLength = outputItem.getItemLength();
-            // Debug.debug("largest unplaced item: "
-            // + outputItem.getItemDescription() + " (" + outputItemLength
-            // + ")");
-
             // search for the smallest possible element large enough to hold the
             // item.
             TiffElement bestFit = null;
@@ -309,24 +309,6 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         }
 
         return overflowIndex;
-        //
-        // if (true)
-        // throw new IOException("mew");
-        //
-        // // int offset = TIFF_HEADER_SIZE;
-        // int offset = exifBytes.length;
-        //
-        // for (int i = 0; i < outputItems.size(); i++)
-        // {
-        // TiffOutputItem outputItem = (TiffOutputItem) outputItems.get(i);
-        //
-        // outputItem.setOffset(offset);
-        // int itemLength = outputItem.getItemLength();
-        // offset += itemLength;
-        //
-        // int remainder = imageDataPaddingLength(itemLength);
-        // offset += remainder;
-        // }
     }
 
     private static class BufferOutputStream extends OutputStream {

@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.write;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
@@ -100,6 +101,10 @@ public class TiffOutputField implements TiffConstants {
 
     protected boolean isLocalValue() {
         return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
+    }
+    
+    public boolean bytesEqual(final byte[] data) {
+        return Arrays.equals(bytes, data);
     }
 
     protected void setData(final byte bytes[]) throws ImageWriteException {

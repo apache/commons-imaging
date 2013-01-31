@@ -247,13 +247,6 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             } catch (final ImageWriteException e) {
                 Debug.debug("imageFile", imageFile.getAbsoluteFile());
                 Debug.debug(e);
-                // FIXME: this image has 28kB of Maker Notes, causing the APP1
-                // segment
-                // to go beyond 64kB, so ignore the exception this throws.
-                if (!imageFile.getName().equalsIgnoreCase(
-                        "Nikon D50 - 2007.12.19.n.DSC_3656.JPG")) {
-                    throw e;
-                }
             }
 
         }
