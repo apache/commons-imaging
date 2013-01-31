@@ -778,7 +778,8 @@ public class PngImageParser extends ImageParser implements PngConstants {
             final int bitsPerPixel = bitsPerSample * samplesPerPixel;
 
             final boolean hasAlpha = colorType == COLOR_TYPE_GREYSCALE_WITH_ALPHA
-                    || colorType == COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
+                    || colorType == COLOR_TYPE_TRUE_COLOR_WITH_ALPHA
+                    || transparencyFilter != null;
 
             BufferedImage result;
             if (isGrayscale) {
