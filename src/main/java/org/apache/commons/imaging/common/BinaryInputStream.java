@@ -24,6 +24,9 @@ import java.io.RandomAccessFile;
 import org.apache.commons.imaging.ImageReadException;
 
 public class BinaryInputStream extends InputStream {
+    private final InputStream is;
+    // default byte order for Java, many file formats.
+    private ByteOrder byteOrder = ByteOrder.NETWORK;
     protected boolean debug = false;
 
     public final void setDebug(final boolean b) {
@@ -33,8 +36,6 @@ public class BinaryInputStream extends InputStream {
     public final boolean getDebug() {
         return debug;
     }
-
-    private final InputStream is;
 
     public BinaryInputStream(final byte bytes[], final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -49,9 +50,6 @@ public class BinaryInputStream extends InputStream {
     public BinaryInputStream(final InputStream is) {
         this.is = is;
     }
-
-    // default byte order for Java, many file formats.
-    private ByteOrder byteOrder = ByteOrder.NETWORK;
 
     protected void setByteOrder(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -401,7 +399,7 @@ public class BinaryInputStream extends InputStream {
             throws ImageReadException, IOException {
         final int byte0 = is.read();
         final int byte1 = is.read();
-        if (byte0 < 0 || byte1 < 0) {
+        if ((byte0 | byte1) < 0) {
             throw new ImageReadException(exception);
         }
 
@@ -418,7 +416,7 @@ public class BinaryInputStream extends InputStream {
         final int byte1 = is.read();
         final int byte2 = is.read();
         final int byte3 = is.read();
-        if (byte0 < 0 || byte1 < 0 || byte2 < 0 || byte3 < 0) {
+        if ((byte0 | byte1 | byte2 | byte3) < 0) {
             throw new ImageReadException(exception);
         }
 

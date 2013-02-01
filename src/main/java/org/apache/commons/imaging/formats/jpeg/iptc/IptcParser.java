@@ -381,7 +381,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             if (block.blockType < 0 || block.blockType > 0xffff) {
                 throw new ImageWriteException("Invalid IPTC block type.");
             }
-            bos.write2ByteInteger(block.blockType);
+            bos.write2Bytes(block.blockType);
 
             if (block.blockNameBytes.length > 255) {
                 throw new ImageWriteException("IPTC block name is too long: "
@@ -397,7 +397,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 throw new ImageWriteException("IPTC block data is too long: "
                         + block.blockData.length);
             }
-            bos.write4ByteInteger(block.blockData.length);
+            bos.write4Bytes(block.blockData.length);
             bos.write(block.blockData);
             if (block.blockData.length % 2 == 1) {
                 bos.write(0); // pad to even size

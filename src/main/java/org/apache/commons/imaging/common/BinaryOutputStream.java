@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class BinaryOutputStream extends OutputStream {
+    private final OutputStream os;
+    // default byte order for Java, many file formats.
+    private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
     protected boolean debug = false;
     private int count = 0;
 
@@ -31,8 +34,6 @@ public class BinaryOutputStream extends OutputStream {
         return debug;
     }
 
-    private final OutputStream os;
-
     public BinaryOutputStream(final OutputStream os, final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
         this.os = os;
@@ -41,9 +42,6 @@ public class BinaryOutputStream extends OutputStream {
     public BinaryOutputStream(final OutputStream os) {
         this.os = os;
     }
-
-    // default byte order for Java, many file formats.
-    private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
     protected void setByteOrder(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -64,32 +62,34 @@ public class BinaryOutputStream extends OutputStream {
     }
 
     public final void write4Bytes(final int value) throws IOException {
-        writeNBytes(value, 4);
+        if (byteOrder == ByteOrder.MOTOROLA) {
+            write(0xff & (value >> 24));
+            write(0xff & (value >> 16));
+            write(0xff & (value >> 8));
+            write(0xff & value);
+        } else {
+            write(0xff & value);
+            write(0xff & (value >> 8));
+            write(0xff & (value >> 16));
+            write(0xff & (value >> 24));
+        }
+        count += 4;
     }
 
     public final void write3Bytes(final int value) throws IOException {
-        writeNBytes(value, 3);
+        if (byteOrder == ByteOrder.MOTOROLA) {
+            write(0xff & (value >> 16));
+            write(0xff & (value >> 8));
+            write(0xff & value);
+        } else {
+            write(0xff & value);
+            write(0xff & (value >> 8));
+            write(0xff & (value >> 16));
+        }
+        count += 3;
     }
 
     public final void write2Bytes(final int value) throws IOException {
-        writeNBytes(value, 2);
-    }
-
-    public final void write4ByteInteger(final int value) throws IOException {
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            write(0xff & (value >> 24));
-            write(0xff & (value >> 16));
-            write(0xff & (value >> 8));
-            write(0xff & value);
-        } else {
-            write(0xff & value);
-            write(0xff & (value >> 8));
-            write(0xff & (value >> 16));
-            write(0xff & (value >> 24));
-        }
-    }
-
-    public final void write2ByteInteger(final int value) throws IOException {
         if (byteOrder == ByteOrder.MOTOROLA) {
             write(0xff & (value >> 8));
             write(0xff & value);
@@ -97,33 +97,11 @@ public class BinaryOutputStream extends OutputStream {
             write(0xff & value);
             write(0xff & (value >> 8));
         }
+        count += 2;
     }
 
     public final void writeByteArray(final byte bytes[]) throws IOException {
         os.write(bytes, 0, bytes.length);
         count += bytes.length;
     }
-
-    private byte[] convertValueToByteArray(final int value, final int n) {
-        final byte result[] = new byte[n];
-
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            for (int i = 0; i < n; i++) {
-                final int b = 0xff & (value >> (8 * (n - i - 1)));
-                result[i] = (byte) b;
-            }
-        } else {
-            for (int i = 0; i < n; i++) {
-                final int b = 0xff & (value >> (8 * i));
-                result[i] = (byte) b;
-            }
-        }
-
-        return result;
-    }
-
-    private final void writeNBytes(final int value, final int n) throws IOException {
-        write(convertValueToByteArray(value, n));
-    }
-
 }
