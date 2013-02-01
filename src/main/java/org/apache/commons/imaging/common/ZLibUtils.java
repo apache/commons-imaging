@@ -23,9 +23,7 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
 public class ZLibUtils extends BinaryFileFunctions {
-    public final byte[] inflate(final byte bytes[]) throws IOException
-    // slow, probably.
-    {
+    public final byte[] inflate(final byte bytes[]) throws IOException {
         final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         final InflaterInputStream zIn = new InflaterInputStream(in);
         return getStreamBytes(zIn);

@@ -24,6 +24,10 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 
+/**
+ * A rudimentary preprocessor and parser for the C programming
+ * language. 
+ */
 public class BasicCParser {
     private final PushbackInputStream is;
 

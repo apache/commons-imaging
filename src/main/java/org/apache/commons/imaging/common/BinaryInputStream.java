@@ -66,39 +66,9 @@ public class BinaryInputStream extends InputStream {
         return is.read();
     }
 
-    protected final int convertByteArrayToInt(final String name, final byte bytes[]) {
-        return convertByteArrayToInt(name, bytes, byteOrder);
-    }
-
-    public final int convertByteArrayToShort(final String name, final byte bytes[]) {
-        return convertByteArrayToShort(name, bytes, byteOrder);
-    }
-
-    public final int convertByteArrayToShort(final String name, final int start,
-            final byte bytes[]) {
-        return convertByteArrayToShort(name, start, bytes, byteOrder);
-    }
-
     public final int read4Bytes(final String name, final String exception)
             throws IOException {
         return read4Bytes(name, exception, byteOrder);
-    }
-
-    public final int read3Bytes(final String name, final String exception)
-            throws IOException {
-        return read3Bytes(name, exception, byteOrder);
-    }
-
-    public final int read2Bytes(final String name, final String exception)
-            throws IOException {
-        return read2Bytes(name, exception, byteOrder);
-    }
-
-    protected final void readRandomBytes() throws IOException {
-
-        for (int counter = 0; counter < 100; counter++) {
-            readByte("" + counter, "Random Data");
-        }
     }
 
     public final void debugNumber(final String msg, final int data) {
@@ -195,41 +165,6 @@ public class BinaryInputStream extends InputStream {
         return (byte) (0xff & result);
     }
 
-    protected final RationalNumber[] convertByteArrayToRationalArray(
-            final String name, final byte bytes[], final int start, final int length, final ByteOrder byteOrder) {
-        final int expectedLength = start + length * 8;
-
-        if (bytes.length < expectedLength) {
-            System.out.println(name + ": expected length: " + expectedLength
-                    + ", actual length: " + bytes.length);
-            return null;
-        }
-
-        final RationalNumber result[] = new RationalNumber[length];
-
-        for (int i = 0; i < length; i++) {
-            result[i] = convertByteArrayToRational(name, bytes, start + i * 8,
-                    byteOrder);
-        }
-
-        return result;
-    }
-
-    protected final RationalNumber convertByteArrayToRational(final String name,
-            final byte bytes[], final ByteOrder byteOrder) {
-        return convertByteArrayToRational(name, bytes, 0, byteOrder);
-    }
-
-    protected final RationalNumber convertByteArrayToRational(final String name,
-            final byte bytes[], final int start, final ByteOrder byteOrder) {
-        final int numerator = convertByteArrayToInt(name, bytes, start + 0, 4,
-                byteOrder);
-        final int divisor = convertByteArrayToInt(name, bytes, start + 4, 4,
-                byteOrder);
-
-        return new RationalNumber(numerator, divisor);
-    }
-
     protected final int convertByteArrayToInt(final String name, final byte bytes[],
             final ByteOrder byteOrder) {
         return convertByteArrayToInt(name, bytes, 0, 4, byteOrder);
@@ -262,26 +197,6 @@ public class BinaryInputStream extends InputStream {
         return result;
     }
 
-    protected final int[] convertByteArrayToIntArray(final String name, final byte bytes[],
-            final int start, final int length, final ByteOrder byteOrder) {
-        final int expectedLength = start + length * 4;
-
-        if (bytes.length < expectedLength) {
-            System.out.println(name + ": expected length: " + expectedLength
-                    + ", actual length: " + bytes.length);
-            return null;
-        }
-
-        final int result[] = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            result[i] = convertByteArrayToInt(name, bytes, start + i * 4, 4,
-                    byteOrder);
-        }
-
-        return result;
-    }
-
     protected final int convertByteArrayToShort(final String name, final byte bytes[],
             final ByteOrder byteOrder) {
         return convertByteArrayToShort(name, 0, bytes, byteOrder);
@@ -302,30 +217,6 @@ public class BinaryInputStream extends InputStream {
 
         if (debug) {
             debugNumber(name, result, 2);
-        }
-
-        return result;
-    }
-
-    protected final int[] convertByteArrayToShortArray(final String name,
-            final byte bytes[], final int start, final int length, final ByteOrder byteOrder) {
-        final int expectedLength = start + length * 2;
-
-        if (bytes.length < expectedLength) {
-            System.out.println(name + ": expected length: " + expectedLength
-                    + ", actual length: " + bytes.length);
-            return null;
-        }
-
-        final int result[] = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            result[i] = convertByteArrayToShort(name, start + i * 2, bytes,
-                    byteOrder);
-
-            // byte byte0 = bytes[start + i * 2];
-            // byte byte1 = bytes[start + i * 2 + 1];
-            // result[i] = convertBytesToShort(name, byte0, byte1, byteOrder);
         }
 
         return result;

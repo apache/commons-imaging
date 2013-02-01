@@ -390,7 +390,7 @@ public class BinaryConversions {
         final int byte1 = 0xff & bytes[offset + 1];
         final int byte2 = 0xff & bytes[offset + 2];
         final int byte3 = 0xff & bytes[offset + 3];
-        int bits;
+        final int bits;
         if (byteOrder == ByteOrder.MOTOROLA) {
             bits = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | (byte3 << 0);
         } else {
@@ -430,7 +430,7 @@ public class BinaryConversions {
         final long byte5 = 0xffL & bytes[offset + 5];
         final long byte6 = 0xffL & bytes[offset + 6];
         final long byte7 = 0xffL & bytes[offset + 7];
-        long bits;
+        final long bits;
         if (byteOrder == ByteOrder.MOTOROLA) {
             bits = (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
                     | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
@@ -475,8 +475,8 @@ public class BinaryConversions {
         final int byte5 = 0xff & bytes[offset + 5];
         final int byte6 = 0xff & bytes[offset + 6];
         final int byte7 = 0xff & bytes[offset + 7];
-        int numerator;
-        int divisor;
+        final int numerator;
+        final int divisor;
         if (byteOrder == ByteOrder.MOTOROLA) {
             numerator = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3;
             divisor = (byte4 << 24) | (byte5 << 16) | (byte6 << 8) | byte7;

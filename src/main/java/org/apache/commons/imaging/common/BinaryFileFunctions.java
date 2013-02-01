@@ -204,88 +204,6 @@ public class BinaryFileFunctions {
         return (byte) (0xff & result);
     }
 
-    protected final RationalNumber[] convertByteArrayToRationalArray(
-            final String name, final byte bytes[], final int start, final int length, final ByteOrder byteOrder) {
-        final int expectedLength = start + length * 8;
-
-        if (bytes.length < expectedLength) {
-            System.out.println(name + ": expected length: " + expectedLength
-                    + ", actual length: " + bytes.length);
-            return null;
-        }
-
-        final RationalNumber result[] = new RationalNumber[length];
-
-        for (int i = 0; i < length; i++) {
-            result[i] = convertByteArrayToRational(name, bytes, start + i * 8,
-                    byteOrder);
-        }
-
-        return result;
-    }
-
-    protected final RationalNumber convertByteArrayToRational(final String name,
-            final byte bytes[], final ByteOrder byteOrder) {
-        return convertByteArrayToRational(name, bytes, 0, byteOrder);
-    }
-
-    protected final RationalNumber convertByteArrayToRational(final String name,
-            final byte bytes[], final int start, final ByteOrder byteOrder) {
-        final int numerator = convertByteArrayToInt(name, bytes, start + 0, byteOrder);
-        final int divisor = convertByteArrayToInt(name, bytes, start + 4, byteOrder);
-
-        return new RationalNumber(numerator, divisor);
-    }
-
-    protected final int convertByteArrayToInt(final String name, final byte bytes[],
-            final ByteOrder byteOrder) {
-        return convertByteArrayToInt(name, bytes, 0, byteOrder);
-    }
-
-    protected final int convertByteArrayToInt(final String name, final byte bytes[],
-            final int start, final ByteOrder byteOrder) {
-        final byte byte0 = bytes[start + 0];
-        final byte byte1 = bytes[start + 1];
-        final byte byte2 = bytes[start + 2];
-        final byte byte3 = bytes[start + 3];
-
-        int result;
-
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            result = ((0xff & byte0) << 24) | ((0xff & byte1) << 16)
-                    | ((0xff & byte2) << 8) | ((0xff & byte3) << 0);
-        } else {
-            result = ((0xff & byte3) << 24) | ((0xff & byte2) << 16)
-                    | ((0xff & byte1) << 8) | ((0xff & byte0) << 0);
-        }
-
-        if (debug) {
-            debugNumber(name, result, 4);
-        }
-
-        return result;
-    }
-
-    protected final int[] convertByteArrayToIntArray(final String name, final byte bytes[],
-            final int start, final int length, final ByteOrder byteOrder) {
-        final int expectedLength = start + length * 4;
-
-        if (bytes.length < expectedLength) {
-            System.out.println(name + ": expected length: " + expectedLength
-                    + ", actual length: " + bytes.length);
-            return null;
-        }
-
-        final int result[] = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            result[i] = convertByteArrayToInt(name, bytes, start + i * 4,
-                    byteOrder);
-        }
-
-        return result;
-    }
-
     protected final void writeIntInToByteArray(final int value, final byte bytes[],
             final int start, final ByteOrder byteOrder) {
         if (byteOrder == ByteOrder.MOTOROLA) {
@@ -307,36 +225,6 @@ public class BinaryFileFunctions {
         } else {
             return new byte[] { (byte) (value >> 0), (byte) (value >> 8), };
         }
-    }
-
-    protected final byte[] convertIntArrayToByteArray(final int values[],
-            final ByteOrder byteOrder) {
-        final byte result[] = new byte[values.length * 4];
-
-        for (int i = 0; i < values.length; i++) {
-            writeIntInToByteArray(values[i], result, i * 4, byteOrder);
-        }
-
-        return result;
-    }
-
-    protected final byte[] convertShortArrayToByteArray(final int values[],
-            final ByteOrder byteOrder) {
-        final byte result[] = new byte[values.length * 2];
-
-        for (int i = 0; i < values.length; i++) {
-            final int value = values[i];
-
-            if (byteOrder == ByteOrder.MOTOROLA) {
-                result[i * 2 + 0] = (byte) (value >> 8);
-                result[i * 2 + 1] = (byte) (value >> 0);
-            } else {
-                result[i * 2 + 1] = (byte) (value >> 8);
-                result[i * 2 + 0] = (byte) (value >> 0);
-            }
-        }
-
-        return result;
     }
 
     protected final byte[] convertShortToByteArray(final int value, final ByteOrder byteOrder) {
@@ -371,31 +259,6 @@ public class BinaryFileFunctions {
         return result;
     }
 
-    protected final byte[] convertRationalArrayToByteArray(
-            final RationalNumber numbers[], final ByteOrder byteOrder) {
-        // Debug.debug("convertRationalArrayToByteArray 2");
-        final byte result[] = new byte[numbers.length * 8];
-
-        for (int i = 0; i < numbers.length; i++) {
-            writeIntInToByteArray(numbers[i].numerator, result, i * 8,
-                    byteOrder);
-            writeIntInToByteArray(numbers[i].divisor, result, i * 8 + 4,
-                    byteOrder);
-        }
-
-        return result;
-    }
-
-    protected final byte[] convertRationalToByteArray(final RationalNumber number,
-            final ByteOrder byteOrder) {
-        final byte result[] = new byte[8];
-
-        writeIntInToByteArray(number.numerator, result, 0, byteOrder);
-        writeIntInToByteArray(number.divisor, result, 4, byteOrder);
-
-        return result;
-    }
-
     protected final int convertByteArrayToShort(final String name, final byte bytes[],
             final ByteOrder byteOrder) throws ImageReadException {
         return convertByteArrayToShort(name, 0, bytes, byteOrder);
@@ -422,29 +285,6 @@ public class BinaryFileFunctions {
 
         if (debug) {
             debugNumber(name, result, 2);
-        }
-
-        return result;
-    }
-
-    protected final int[] convertByteArrayToShortArray(final String name,
-            final byte bytes[], final int start, final int length, final ByteOrder byteOrder)
-            throws ImageReadException
-
-    {
-        final int expectedLength = start + length * 2;
-
-        if (bytes.length < expectedLength) {
-            System.out.println(name + ": expected length: " + expectedLength
-                    + ", actual length: " + bytes.length);
-            return null;
-        }
-
-        final int result[] = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            result[i] = convertByteArrayToShort(name, start + i * 2, bytes,
-                    byteOrder);
         }
 
         return result;
@@ -606,36 +446,46 @@ public class BinaryFileFunctions {
 
     protected final int read4Bytes(final String name, final InputStream is,
             final String exception, final ByteOrder byteOrder) throws IOException {
-        final int size = 4;
-        final byte bytes[] = new byte[size];
-
-        int read = 0;
-        while (read < size) {
-            final int count = is.read(bytes, read, size - read);
-            if (count < 1) {
-                throw new IOException(exception);
-            }
-
-            read += count;
+        final int byte0 = is.read();
+        final int byte1 = is.read();
+        final int byte2 = is.read();
+        final int byte3 = is.read();
+        if ((byte0 | byte1 | byte2 | byte3) < 0) {
+            throw new IOException(exception);
         }
 
-        return convertByteArrayToInt(name, bytes, byteOrder);
+        final int result;
+        if (byteOrder == ByteOrder.MOTOROLA) {
+            result = (byte0 << 24) | (byte1 << 16)
+                    | (byte2 << 8) | (byte3 << 0);
+        } else {
+            result = (byte3 << 24) | (byte2 << 16)
+                    | (byte1 << 8) | (byte0 << 0);
+        }
+
+        if (debug) {
+            debugNumber(name, result, 4);
+        }
+
+        return result;
     }
 
     protected final int read3Bytes(final String name, final InputStream is,
             final String exception, final ByteOrder byteOrder) throws IOException {
-        final byte byte0 = (byte) is.read();
-        final byte byte1 = (byte) is.read();
-        final byte byte2 = (byte) is.read();
+        final int byte0 = is.read();
+        final int byte1 = is.read();
+        final int byte2 = is.read();
+        if ((byte0 | byte1 | byte2) < 0) {
+            throw new IOException(exception);
+        }
 
-        int result;
-
+        final int result;
         if (byteOrder == ByteOrder.MOTOROLA) {
-            result = ((0xff & byte0) << 16) | ((0xff & byte1) << 8)
-                    | ((0xff & byte2) << 0);
+            result = (byte0 << 16) | (byte1 << 8)
+                    | (byte2 << 0);
         } else {
-            result = ((0xff & byte2) << 16) | ((0xff & byte1) << 8)
-                    | ((0xff & byte0) << 0);
+            result = (byte2 << 16) | (byte1 << 8)
+                    | (byte0 << 0);
         }
 
         if (debug) {
@@ -648,20 +498,24 @@ public class BinaryFileFunctions {
     protected final int read2Bytes(final String name, final InputStream is,
             final String exception, final ByteOrder byteOrder) throws ImageReadException,
             IOException {
-        final int size = 2;
-        final byte bytes[] = new byte[size];
-
-        int read = 0;
-        while (read < size) {
-            final int count = is.read(bytes, read, size - read);
-            if (count < 1) {
-                throw new IOException(exception);
-            }
-
-            read += count;
+        final int byte0 = is.read();
+        final int byte1 = is.read();
+        if ((byte0 | byte1) < 0) {
+            throw new IOException(exception);
+        }
+        
+        final int result;
+        if (byteOrder == ByteOrder.MOTOROLA) {
+            result = (byte0 << 8) | byte1;
+        } else {
+            result = (byte1 << 8) | byte0;
+        }
+        
+        if (debug) {
+            debugNumber(name, result, 2);
         }
 
-        return convertByteArrayToShort(name, bytes, byteOrder);
+        return result;
     }
 
     protected final void printCharQuad(final String msg, final int i) {
@@ -722,162 +576,6 @@ public class BinaryFileFunctions {
 
         return result;
 
-    }
-
-    protected final float convertByteArrayToFloat(final String name, final byte bytes[],
-            final ByteOrder byteOrder) {
-        return convertByteArrayToFloat(name, bytes, 0, byteOrder);
-    }
-
-    protected final float convertByteArrayToFloat(final String name, final byte bytes[],
-            final int start, final ByteOrder byteOrder) {
-        // TODO: not tested; probably wrong.
-
-        final byte byte0 = bytes[start + 0];
-        final byte byte1 = bytes[start + 1];
-        final byte byte2 = bytes[start + 2];
-        final byte byte3 = bytes[start + 3];
-
-        int bits;
-
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            bits = ((0xff & byte0) << 24) | ((0xff & byte1) << 16)
-                    | ((0xff & byte2) << 8) | ((0xff & byte3) << 0);
-        } else {
-            bits = ((0xff & byte3) << 24) | ((0xff & byte2) << 16)
-                    | ((0xff & byte1) << 8) | ((0xff & byte0) << 0);
-        }
-
-        final float result = Float.intBitsToFloat(bits);
-
-        return result;
-    }
-
-    protected final float[] convertByteArrayToFloatArray(final String name,
-            final byte bytes[], final int start, final int length, final ByteOrder byteOrder) {
-        final int expectedLength = start + length * 4;
-
-        if (bytes.length < expectedLength) {
-            System.out.println(name + ": expected length: " + expectedLength
-                    + ", actual length: " + bytes.length);
-            return null;
-        }
-
-        final float result[] = new float[length];
-
-        for (int i = 0; i < length; i++) {
-            result[i] = convertByteArrayToFloat(name, bytes, start + i * 4,
-                    byteOrder);
-        }
-
-        return result;
-    }
-
-    protected final byte[] convertFloatToByteArray(final float value, final ByteOrder byteOrder) {
-        final byte result[] = new byte[4];
-
-        final int bits = Float.floatToRawIntBits(value);
-
-        if (byteOrder == ByteOrder.INTEL) {
-            result[0] = (byte) (0xff & (bits >> 0));
-            result[1] = (byte) (0xff & (bits >> 8));
-            result[2] = (byte) (0xff & (bits >> 16));
-            result[3] = (byte) (0xff & (bits >> 24));
-        } else {
-            result[3] = (byte) (0xff & (bits >> 0));
-            result[2] = (byte) (0xff & (bits >> 8));
-            result[1] = (byte) (0xff & (bits >> 16));
-            result[0] = (byte) (0xff & (bits >> 24));
-        }
-
-        return result;
-    }
-
-    protected final byte[] convertDoubleArrayToByteArray(final double values[],
-            final ByteOrder byteOrder) {
-        final byte result[] = new byte[values.length * 8];
-        for (int i = 0; i < values.length; i++) {
-            final double value = values[i];
-            final long bits = Double.doubleToRawLongBits(value);
-
-            final int start = i * 8;
-            if (byteOrder == ByteOrder.INTEL) {
-                result[start + 0] = (byte) (0xff & (bits >> 0));
-                result[start + 1] = (byte) (0xff & (bits >> 8));
-                result[start + 2] = (byte) (0xff & (bits >> 16));
-                result[start + 3] = (byte) (0xff & (bits >> 24));
-                result[start + 4] = (byte) (0xff & (bits >> 32));
-                result[start + 5] = (byte) (0xff & (bits >> 40));
-                result[start + 6] = (byte) (0xff & (bits >> 48));
-                result[start + 7] = (byte) (0xff & (bits >> 56));
-            } else {
-                result[start + 7] = (byte) (0xff & (bits >> 0));
-                result[start + 6] = (byte) (0xff & (bits >> 8));
-                result[start + 5] = (byte) (0xff & (bits >> 16));
-                result[start + 4] = (byte) (0xff & (bits >> 24));
-                result[start + 3] = (byte) (0xff & (bits >> 32));
-                result[start + 2] = (byte) (0xff & (bits >> 40));
-                result[start + 1] = (byte) (0xff & (bits >> 48));
-                result[start + 0] = (byte) (0xff & (bits >> 56));
-            }
-        }
-        return result;
-    }
-
-    protected final double convertByteArrayToDouble(final String name, final byte bytes[],
-            final ByteOrder byteOrder) {
-        return convertByteArrayToDouble(name, bytes, 0, byteOrder);
-    }
-
-    protected final double convertByteArrayToDouble(final String name, final byte bytes[],
-            final int start, final ByteOrder byteOrder) {
-        final byte byte0 = bytes[start + 0];
-        final byte byte1 = bytes[start + 1];
-        final byte byte2 = bytes[start + 2];
-        final byte byte3 = bytes[start + 3];
-        final byte byte4 = bytes[start + 4];
-        final byte byte5 = bytes[start + 5];
-        final byte byte6 = bytes[start + 6];
-        final byte byte7 = bytes[start + 7];
-
-        long bits;
-
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            bits = ((0xffL & byte0) << 56) | ((0xffL & byte1) << 48)
-                    | ((0xffL & byte2) << 40) | ((0xffL & byte3) << 32)
-                    | ((0xffL & byte4) << 24) | ((0xffL & byte5) << 16)
-                    | ((0xffL & byte6) << 8) | ((0xffL & byte7) << 0);
-
-        } else {
-            bits = ((0xffL & byte7) << 56) | ((0xffL & byte6) << 48)
-                    | ((0xffL & byte5) << 40) | ((0xffL & byte4) << 32)
-                    | ((0xffL & byte3) << 24) | ((0xffL & byte2) << 16)
-                    | ((0xffL & byte1) << 8) | ((0xffL & byte0) << 0);
-        }
-
-        final double result = Double.longBitsToDouble(bits);
-
-        return result;
-    }
-
-    protected final double[] convertByteArrayToDoubleArray(final String name,
-            final byte bytes[], final int start, final int length, final ByteOrder byteOrder) {
-        final int expectedLength = start + length * 8;
-
-        if (bytes.length < expectedLength) {
-            System.out.println(name + ": expected length: " + expectedLength
-                    + ", actual length: " + bytes.length);
-            return null;
-        }
-
-        final double result[] = new double[length];
-
-        for (int i = 0; i < length; i++) {
-            result[i] = convertByteArrayToDouble(name, bytes, start + i * 8,
-                    byteOrder);
-        }
-
-        return result;
     }
 
     protected void skipBytes(final InputStream is, final int length) throws IOException {

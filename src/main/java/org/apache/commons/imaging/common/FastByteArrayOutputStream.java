@@ -19,11 +19,13 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/// Some performance benefit, because not thread safe.
-public class MyByteArrayOutputStream extends OutputStream {
+/** Like ByteArrayOutputStream, but has some performance benefit,
+  * because it's not thread safe.
+  */
+public class FastByteArrayOutputStream extends OutputStream {
     private final byte bytes[];
 
-    public MyByteArrayOutputStream(final int length) {
+    public FastByteArrayOutputStream(final int length) {
         bytes = new byte[length];
     }
 

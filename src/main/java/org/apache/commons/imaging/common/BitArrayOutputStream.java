@@ -16,7 +16,13 @@
  */
 package org.apache.commons.imaging.common;
 
-public class BitArrayOutputStream {
+import java.io.OutputStream;
+
+/**
+ * Output stream writing to a byte array, and capable
+ * of writing 1 bit at a time, starting from the most significant bit.
+ */
+public class BitArrayOutputStream extends OutputStream {
     private byte[] buffer;
     private int bytesWritten = 0;
     private int cache = 0;
@@ -44,10 +50,12 @@ public class BitArrayOutputStream {
         return out;
     }
 
+    @Override
     public void close() {
         flush();
     }
 
+    @Override
     public void flush() {
         if (cacheMask != 0x80) {
             writeByte(cache);
@@ -56,6 +64,7 @@ public class BitArrayOutputStream {
         }
     }
 
+    @Override
     public void write(final int b) {
         flush();
         writeByte(b);

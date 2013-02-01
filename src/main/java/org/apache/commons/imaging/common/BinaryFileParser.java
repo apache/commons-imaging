@@ -43,20 +43,15 @@ public class BinaryFileParser extends BinaryFileFunctions {
         return byteOrder;
     }
 
-    protected final int convertByteArrayToInt(final String name, final int start,
-            final byte bytes[]) {
-        return convertByteArrayToInt(name, bytes, start, byteOrder);
-    }
-
     protected final int convertByteArrayToInt(final String name, final byte bytes[]) {
-        return convertByteArrayToInt(name, bytes, byteOrder);
+        return BinaryConversions.toInt(bytes, byteOrder);
     }
 
-    public final int convertByteArrayToShort(final String name, final byte bytes[])
+    public final int convertByteArrayToShort(final String name, final byte[] bytes)
             throws ImageReadException {
         return convertByteArrayToShort(name, bytes, byteOrder);
     }
-
+    
     public final int convertByteArrayToShort(final String name, final int start,
             final byte bytes[]) throws ImageReadException {
         return convertByteArrayToShort(name, start, bytes, byteOrder);
@@ -104,9 +99,4 @@ public class BinaryFileParser extends BinaryFileFunctions {
 
         return true;
     }
-
-    protected final byte[] int2ToByteArray(final int value) {
-        return int2ToByteArray(value, byteOrder);
-    }
-
 }

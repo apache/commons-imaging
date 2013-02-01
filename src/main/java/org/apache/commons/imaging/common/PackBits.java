@@ -106,9 +106,9 @@ public class PackBits {
     }
 
     public byte[] compress(final byte bytes[]) throws IOException {
-        MyByteArrayOutputStream baos = null;
+        FastByteArrayOutputStream baos = null;
         try {
-            baos = new MyByteArrayOutputStream(
+            baos = new FastByteArrayOutputStream(
                     bytes.length * 2); // max length 1 extra byte for every 128
 
             int ptr = 0;

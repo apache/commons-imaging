@@ -102,7 +102,7 @@ public class ImageBuilder {
      * no bounds checking is applied.
      * @param x the X coordinate of the pixel to be read
      * @param y the Y coordinate of the pixel to be read
-     * @return 
+     * @return the RGB or ARGB pixel value
      */
     public int getRGB(final int x, final int y) {
         final int rowOffset = y * width;

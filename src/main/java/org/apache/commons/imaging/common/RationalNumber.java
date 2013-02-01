@@ -19,6 +19,9 @@ package org.apache.commons.imaging.common;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+/**
+ * Rational number, as used by the TIFF image format.
+ */
 public class RationalNumber extends Number {
     private static final long serialVersionUID = -1;
 

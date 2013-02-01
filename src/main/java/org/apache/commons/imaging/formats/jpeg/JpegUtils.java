@@ -40,13 +40,11 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
         public boolean visitSegment(int marker, byte markerBytes[],
                 int segmentLength, byte segmentLengthBytes[],
                 byte segmentData[]) throws ImageReadException,
-        // ImageWriteException,
                 IOException;
     }
 
     public void traverseJFIF(final ByteSource byteSource, final Visitor visitor)
             throws ImageReadException,
-            // ImageWriteException,
             IOException {
         InputStream is = null;
 
@@ -55,8 +53,6 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
 
             readAndVerifyBytes(is, SOI,
                     "Not a Valid JPEG File: doesn't begin with 0xffd8");
-
-            final ByteOrder byteOrder = getByteOrder();
 
             int markerCount;
             for (markerCount = 0; true; markerCount++) {
@@ -69,10 +65,6 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                         || (0xff & markerBytes[1]) == 0xff);
                 final int marker = ((0xff & markerBytes[0]) << 8)
                         | (0xff & markerBytes[1]);
-
-                // Debug.debug("marker", marker + " (0x" +
-                // Integer.toHexString(marker) + ")");
-                // Debug.debug("markerBytes", markerBytes);
 
                 if (marker == EOIMarker || marker == SOS_Marker) {
                     if (!visitor.beginSOS()) {
@@ -87,17 +79,11 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                 final byte segmentLengthBytes[] = readByteArray("segmentLengthBytes",
                         2, is, "segmentLengthBytes");
                 final int segmentLength = convertByteArrayToShort("segmentLength",
-                        segmentLengthBytes, byteOrder);
-
-                // Debug.debug("segmentLength", segmentLength + " (0x" +
-                // Integer.toHexString(segmentLength) + ")");
-                // Debug.debug("segmentLengthBytes", segmentLengthBytes);
+                        segmentLengthBytes);
 
                 final byte segmentData[] = readByteArray("Segment Data",
                         segmentLength - 2, is,
                         "Invalid Segment: insufficient data");
-
-                // Debug.debug("segmentLength", segmentLength);
 
                 if (!visitor.visitSegment(marker, markerBytes, segmentLength,
                         segmentLengthBytes, segmentData)) {

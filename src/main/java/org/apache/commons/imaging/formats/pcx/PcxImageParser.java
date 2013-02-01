@@ -261,18 +261,12 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
         final int version = 0xff & pcxHeaderBytes[1];
         final int encoding = 0xff & pcxHeaderBytes[2];
         final int bitsPerPixel = 0xff & pcxHeaderBytes[3];
-        final int xMin = convertByteArrayToShort("xMin", 4, pcxHeaderBytes,
-                ByteOrder.LITTLE_ENDIAN);
-        final int yMin = convertByteArrayToShort("yMin", 6, pcxHeaderBytes,
-                ByteOrder.LITTLE_ENDIAN);
-        final int xMax = convertByteArrayToShort("xMax", 8, pcxHeaderBytes,
-                ByteOrder.LITTLE_ENDIAN);
-        final int yMax = convertByteArrayToShort("yMax", 10, pcxHeaderBytes,
-                ByteOrder.LITTLE_ENDIAN);
-        final int hDpi = convertByteArrayToShort("hDpi", 12, pcxHeaderBytes,
-                ByteOrder.LITTLE_ENDIAN);
-        final int vDpi = convertByteArrayToShort("vDpi", 14, pcxHeaderBytes,
-                ByteOrder.LITTLE_ENDIAN);
+        final int xMin = convertByteArrayToShort("xMin", 4, pcxHeaderBytes);
+        final int yMin = convertByteArrayToShort("yMin", 6, pcxHeaderBytes);
+        final int xMax = convertByteArrayToShort("xMax", 8, pcxHeaderBytes);
+        final int yMax = convertByteArrayToShort("yMax", 10, pcxHeaderBytes);
+        final int hDpi = convertByteArrayToShort("hDpi", 12, pcxHeaderBytes);
+        final int vDpi = convertByteArrayToShort("vDpi", 14, pcxHeaderBytes);
         final int[] colormap = new int[16];
         for (int i = 0; i < 16; i++) {
             colormap[i] = 0xff000000
@@ -283,13 +277,13 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
         final int reserved = 0xff & pcxHeaderBytes[64];
         final int nPlanes = 0xff & pcxHeaderBytes[65];
         final int bytesPerLine = convertByteArrayToShort("BytesPerLine", 66,
-                pcxHeaderBytes, ByteOrder.LITTLE_ENDIAN);
+                pcxHeaderBytes);
         final int paletteInfo = convertByteArrayToShort("PaletteInfo", 68,
-                pcxHeaderBytes, ByteOrder.LITTLE_ENDIAN);
+                pcxHeaderBytes);
         final int hScreenSize = convertByteArrayToShort("hScreenSize", 70,
-                pcxHeaderBytes, ByteOrder.LITTLE_ENDIAN);
+                pcxHeaderBytes);
         final int vScreenSize = convertByteArrayToShort("vScreenSize", 72,
-                pcxHeaderBytes, ByteOrder.LITTLE_ENDIAN);
+                pcxHeaderBytes);
 
         if (manufacturer != 10) {
             throw new ImageReadException(

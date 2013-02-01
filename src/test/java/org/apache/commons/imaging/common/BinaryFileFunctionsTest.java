@@ -16,47 +16,31 @@
 package org.apache.commons.imaging.common;
 
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.common.BinaryFileFunctions;
 
 public class BinaryFileFunctionsTest extends ImagingTest {
-    // Work around that pesky "protected"...
-    private static class Extender extends BinaryFileFunctions {
-        public void testFloatToByteConversion() {
-            final byte[] bytesLE = convertFloatToByteArray(1.0f,
-                    ByteOrder.LITTLE_ENDIAN);
-            assertEquals(
-                    convertByteArrayToFloat("bytes", bytesLE,
-                            ByteOrder.LITTLE_ENDIAN), 1.0f, 0f);
-
-            final byte[] bytesBE = convertFloatToByteArray(1.0f,
-                    ByteOrder.BIG_ENDIAN);
-            assertEquals(
-                    convertByteArrayToFloat("bytes", bytesBE,
-                            ByteOrder.BIG_ENDIAN), 1.0f, 0f);
-        }
-
-        public void testDoubleToByteConversion() {
-            final byte[] bytesLE = BinaryConversions.toBytes(1.0,
-                    ByteOrder.LITTLE_ENDIAN);
-            assertEquals(
-                    convertByteArrayToDouble("bytes", bytesLE,
-                            ByteOrder.LITTLE_ENDIAN), 1.0, 0);
-
-            final byte[] bytesBE = BinaryConversions.toBytes(1.0,
-                    ByteOrder.BIG_ENDIAN);
-            assertEquals(
-                    convertByteArrayToDouble("bytes", bytesBE,
-                            ByteOrder.BIG_ENDIAN), 1.0, 0);
-        }
-    }
-
-    private final Extender extender = new Extender();
-
     public void testFloatToByteConversion() {
-        extender.testFloatToByteConversion();
+        final byte[] bytesLE = BinaryConversions.toBytes(1.0f,
+                ByteOrder.LITTLE_ENDIAN);
+        assertEquals(
+                BinaryConversions.toFloat(bytesLE, ByteOrder.LITTLE_ENDIAN),
+                1.0f, 0f);
+
+        final byte[] bytesBE = BinaryConversions.toBytes(1.0f,
+                ByteOrder.BIG_ENDIAN);
+        assertEquals(BinaryConversions.toFloat(bytesBE, ByteOrder.BIG_ENDIAN),
+                1.0f, 0f);
     }
 
     public void testDoubleToByteConversion() {
-        extender.testDoubleToByteConversion();
+        final byte[] bytesLE = BinaryConversions.toBytes(1.0,
+                ByteOrder.LITTLE_ENDIAN);
+        assertEquals(
+                BinaryConversions.toDouble(bytesLE, ByteOrder.LITTLE_ENDIAN),
+                1.0, 0);
+
+        final byte[] bytesBE = BinaryConversions.toBytes(1.0,
+                ByteOrder.BIG_ENDIAN);
+        assertEquals(BinaryConversions.toDouble(bytesBE, ByteOrder.BIG_ENDIAN),
+                1.0, 0);
     }
 }

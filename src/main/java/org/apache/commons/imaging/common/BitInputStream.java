@@ -19,6 +19,11 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Input stream reading 1-8, 16, 24 or 32 bits, starting from the most
+ * significant bit, but incapable of reading non-aligned and
+ * < 8 bit fields across byte boundaries.
+ */
 public class BitInputStream extends InputStream {
 
     private final InputStream is;
