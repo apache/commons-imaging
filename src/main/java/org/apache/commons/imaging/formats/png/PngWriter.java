@@ -30,6 +30,7 @@ import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.ZLibUtils;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
+import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.ParamMap;
 import org.apache.commons.imaging.util.UnicodeUtils;
@@ -342,6 +343,42 @@ public class PngWriter implements PngConstants {
         return result;
     }
 
+    /// Wraps a palette by adding a single transparent entry at index 0.
+    private static class TransparentPalette extends Palette {
+        private final Palette palette;
+        
+        TransparentPalette(Palette palette) {
+            this.palette = palette;
+        }
+        
+        @Override
+        public int getEntry(int index) {
+            if (index == 0) {
+                return 0x00000000;
+            } else {
+                return palette.getEntry(index - 1);
+            }
+        }
+        
+        @Override
+        public int length() {
+            return 1 + palette.length();
+        }
+        
+        @Override
+        public int getPaletteIndex(int rgb) throws ImageWriteException {
+            if (rgb == 0x00000000) {
+                return 0;
+            } else {
+                int index = palette.getPaletteIndex(rgb);
+                if (index >= 0) {
+                    return 1 + index;
+                } else {
+                    return index;
+                }
+            }
+        }
+    }
     /*
      between two chunk types indicates alternatives.
      Table 5.3 - Chunk ordering rules
@@ -489,13 +526,20 @@ public class PngWriter implements PngConstants {
 
             final int max_colors = hasAlpha ? 255 : 256;
 
-            palette = new PaletteFactory().makeQuantizedRgbPalette(src, max_colors);
+            PaletteFactory paletteFactory = new PaletteFactory();
+            palette = paletteFactory.makeQuantizedRgbPalette(src, max_colors);
             // Palette palette2 = new PaletteFactory().makePaletteSimple(src,
             // max_colors);
 
             // palette.dump();
 
-            writeChunkPLTE(os, palette);
+            if (hasAlpha) {
+                palette = new TransparentPalette(palette);
+                writeChunkPLTE(os, palette);                
+                writeChunkTRNS(os, new SimplePalette(new int[] { 0x00000000 }));
+            } else {
+                writeChunkPLTE(os, palette);
+            }
         }
 
         final Object pixelDensityObj = params.get(PARAM_KEY_PIXEL_DENSITY);
@@ -559,8 +603,12 @@ public class PngWriter implements PngConstants {
                         final int argb = row[x];
 
                         if (palette != null) {
-                            final int index = palette.getPaletteIndex(argb);
-                            baos.write(0xff & index);
+                            if (hasAlpha && (argb >>> 24) == 0x00) {
+                                baos.write(0);
+                            } else {
+                                final int index = palette.getPaletteIndex(argb);
+                                baos.write(0xff & index);
+                            }
                         } else {
                             final int alpha = 0xff & (argb >> 24);
                             final int red = 0xff & (argb >> 16);
