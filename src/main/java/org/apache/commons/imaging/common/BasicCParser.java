@@ -97,6 +97,7 @@ public class BasicCParser {
     public static ByteArrayOutputStream preprocess(final InputStream is,
             final StringBuilder firstComment, final Map<String, String> defines)
             throws IOException, ImageReadException {
+        boolean inSingleQuotes = false;
         boolean inString = false;
         boolean inComment = false;
         boolean inDirective = false;
@@ -119,7 +120,9 @@ public class BasicCParser {
                         inComment = false;
                         seenFirstComment = true;
                     } else {
-                        out.write(c);
+                        if (!seenFirstComment) {
+                            firstComment.append((char)c);
+                        }
                     }
                 } else {
                     if (hadStar && !seenFirstComment) {
@@ -130,12 +133,44 @@ public class BasicCParser {
                         firstComment.append((char) c);
                     }
                 }
+            } else if (inSingleQuotes) {
+                if (c == '\\') {
+                    if (hadBackSlash) {
+                        out.write('\\');
+                        out.write('\\');
+                        hadBackSlash = false;
+                    } else {
+                        hadBackSlash = true;
+                    }
+                } else if (c == '\'') {
+                    if (hadBackSlash) {
+                        out.write('\\');
+                        hadBackSlash = false;
+                    } else {
+                        inSingleQuotes = false;
+                    }
+                    out.write('\'');
+                } else if (c == '\r' || c == '\n') {
+                    byte[] bb = out.toByteArray();
+                    System.err.println(new String(bb));
+                    System.err.println();
+                    throw new ImageReadException("Unterminated single quote in file");
+                } else {
+                    if (hadBackSlash) {
+                        out.write('\\');
+                        hadBackSlash = false;
+                    }
+                    out.write(c);
+                }
             } else if (inString) {
                 if (c == '\\') {
                     if (hadBackSlash) {
                         out.write('\\');
+                        out.write('\\');
+                        hadBackSlash = false;
+                    } else {
+                        hadBackSlash = true;
                     }
-                    hadBackSlash = true;
                 } else if (c == '"') {
                     if (hadBackSlash) {
                         out.write('\\');
@@ -184,6 +219,13 @@ public class BasicCParser {
                     } else {
                         out.write(c);
                     }
+                } else if (c == '\'') {
+                    if (hadSlash) {
+                        out.write('/');
+                    }
+                    hadSlash = false;
+                    out.write(c);
+                    inSingleQuotes = true;
                 } else if (c == '"') {
                     if (hadSlash) {
                         out.write('/');
