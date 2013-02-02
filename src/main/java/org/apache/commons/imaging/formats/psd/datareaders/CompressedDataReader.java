@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
@@ -49,8 +50,8 @@ public class CompressedDataReader extends DataReader {
         final int scanline_count = height * header.Channels;
         final int scanline_bytecounts[] = new int[scanline_count];
         for (int i = 0; i < scanline_count; i++) {
-            scanline_bytecounts[i] = bfp.read2Bytes("scanline_bytecount[" + i
-                    + "]", is, "PSD: bad Image Data");
+            scanline_bytecounts[i] = BinaryFunctions.read2Bytes("scanline_bytecount[" + i
+                    + "]", is, "PSD: bad Image Data", bfp.getByteOrder());
         }
         bfp.setDebug(false);
         // System.out.println("fImageContents.Compression: "
@@ -64,7 +65,7 @@ public class CompressedDataReader extends DataReader {
         for (int channel = 0; channel < channel_count; channel++) {
             for (int y = 0; y < height; y++) {
                 final int index = channel * height + y;
-                final byte packed[] = bfp.readByteArray("scanline",
+                final byte packed[] = BinaryFunctions.readByteArray("scanline",
                         scanline_bytecounts[index], is,
                         "PSD: Missing Image Data");
 

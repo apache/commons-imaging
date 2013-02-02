@@ -95,9 +95,9 @@ public class PixelParserRle extends PixelParser {
 
         boolean done = false;
         while (!done) {
-            final int a = 0xff & bfp.readByte("RLE (" + x + "," + y + ") a", is,
+            final int a = 0xff & is.readByte("RLE (" + x + "," + y + ") a",
                     "BMP: Bad RLE");
-            final int b = 0xff & bfp.readByte("RLE (" + x + "," + y + ") b", is,
+            final int b = 0xff & is.readByte("RLE (" + x + "," + y + ") b",
                     "BMP: Bad RLE");
 
             if (a == 0) {
@@ -113,8 +113,8 @@ public class PixelParserRle extends PixelParser {
                     done = true;
                     break;
                 case 2: {
-                    final int deltaX = 0xff & bfp.readByte("RLE deltaX", is, "BMP: Bad RLE");
-                    final int deltaY = 0xff & bfp.readByte("RLE deltaY", is, "BMP: Bad RLE");
+                    final int deltaX = 0xff & is.readByte("RLE deltaX", "BMP: Bad RLE");
+                    final int deltaY = 0xff & is.readByte("RLE deltaY", "BMP: Bad RLE");
                     x += deltaX;
                     y -= deltaY;
                     break;
@@ -133,7 +133,7 @@ public class PixelParserRle extends PixelParser {
                     // System.out.println("size: " + size);
                     // System.out.println("SamplesPerByte: " + SamplesPerByte);
 
-                    final byte bytes[] = bfp.readByteArray("bytes", size, is,
+                    final byte bytes[] = is.readByteArray("bytes", size,
                             "RLE: Absolute Mode");
 
                     int remaining = b;

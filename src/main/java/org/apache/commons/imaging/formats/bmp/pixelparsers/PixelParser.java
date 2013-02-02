@@ -20,7 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
@@ -30,16 +30,14 @@ public abstract class PixelParser {
     public final byte colorTable[];
     public final byte imageData[];
 
-    protected final BinaryFileParser bfp;
-    protected final ByteArrayInputStream is;
+    protected final BinaryInputStream is;
 
     public PixelParser(final BmpHeaderInfo bhi, final byte ColorTable[], final byte ImageData[]) {
         this.bhi = bhi;
         this.colorTable = ColorTable;
         this.imageData = ImageData;
 
-        bfp = new BinaryFileParser(ByteOrder.INTEL);
-        is = new ByteArrayInputStream(ImageData);
+        is = new BinaryInputStream(new ByteArrayInputStream(ImageData), ByteOrder.INTEL);
     }
 
     public abstract void processImage(ImageBuilder imageBuilder)

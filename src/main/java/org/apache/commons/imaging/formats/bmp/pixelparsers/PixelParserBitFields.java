@@ -76,13 +76,13 @@ public class PixelParserBitFields extends PixelParserSimple {
             data = 0xff & imageData[bytecount + 0];
             bytecount += 1;
         } else if (bhi.bitsPerPixel == 24) {
-            data = bfp.read3Bytes("Pixel", is, "BMP Image Data");
+            data = is.read3Bytes("Pixel", "BMP Image Data");
             bytecount += 3;
         } else if (bhi.bitsPerPixel == 32) {
-            data = bfp.read4Bytes("Pixel", is, "BMP Image Data");
+            data = is.read4Bytes("Pixel", "BMP Image Data");
             bytecount += 4;
         } else if (bhi.bitsPerPixel == 16) {
-            data = bfp.read2Bytes("Pixel", is, "BMP Image Data");
+            data = is.read2Bytes("Pixel", "BMP Image Data");
             bytecount += 2;
         } else {
             throw new ImageReadException("Unknown BitsPerPixel: "
@@ -107,7 +107,7 @@ public class PixelParserBitFields extends PixelParserSimple {
     @Override
     public void newline() throws ImageReadException, IOException {
         while (((bytecount) % 4) != 0) {
-            bfp.readByte("Pixel", is, "BMP Image Data");
+            is.readByte("Pixel", "BMP Image Data");
             bytecount++;
         }
     }

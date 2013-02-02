@@ -67,7 +67,7 @@ public class PixelParserRgb extends PixelParserSimple {
 
             return rgb;
         } else if (bhi.bitsPerPixel == 16) {
-            final int data = bfp.read2Bytes("Pixel", is, "BMP Image Data");
+            final int data = is.read2Bytes("Pixel", "BMP Image Data");
 
             final int blue = (0x1f & (data >> 0)) << 3;
             final int green = (0x1f & (data >> 5)) << 3;
@@ -112,7 +112,7 @@ public class PixelParserRgb extends PixelParserSimple {
         cached_bit_count = 0;
 
         while (((bytecount) % 4) != 0) {
-            bfp.readByte("Pixel", is, "BMP Image Data");
+            is.readByte("Pixel", "BMP Image Data");
             bytecount++;
         }
     }

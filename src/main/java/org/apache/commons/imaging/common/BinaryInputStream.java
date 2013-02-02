@@ -192,11 +192,21 @@ public class BinaryInputStream extends InputStream {
         return BinaryFunctions.read3Bytes(name, is, exception, byteOrder);
     }
 
+    public final int read3Bytes(final String name, final String exception)
+            throws IOException {
+        return BinaryFunctions.read3Bytes(name, is, exception, byteOrder);
+    }
+
     protected final int read2Bytes(final String name, final String exception, final ByteOrder byteOrder)
             throws IOException {
         return BinaryFunctions.read2Bytes(name, is, exception, byteOrder);
     }
-    
+
+    public final int read2Bytes(final String name, final String exception)
+            throws IOException {
+        return BinaryFunctions.read2Bytes(name, is, exception, byteOrder);
+    }
+
     public final int read2Bytes(final String exception) throws IOException {
         return BinaryFunctions.read2Bytes("", is, exception, byteOrder);
     }
