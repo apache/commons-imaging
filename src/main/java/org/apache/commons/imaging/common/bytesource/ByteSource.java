@@ -19,9 +19,9 @@ package org.apache.commons.imaging.common.bytesource;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.common.BinaryFileFunctions;
+import org.apache.commons.imaging.common.BinaryFunctions;
 
-public abstract class ByteSource extends BinaryFileFunctions {
+public abstract class ByteSource extends BinaryFunctions {
     protected final String filename;
 
     public ByteSource(final String filename) {

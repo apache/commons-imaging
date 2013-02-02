@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryFileFunctions;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
@@ -30,7 +30,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
 
-class RgbeInfo extends BinaryFileFunctions {
+class RgbeInfo extends BinaryFunctions {
     private static final Pattern RESOLUTION_STRING = Pattern
             .compile("-Y (\\d+) \\+X (\\d+)");
 

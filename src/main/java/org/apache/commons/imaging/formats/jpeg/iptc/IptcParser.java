@@ -183,7 +183,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             }
             index++;
 
-            final int recordSize = convertByteArrayToShort("recordSize", index, bytes);
+            final int recordSize = toUInt16(bytes, index);
             index += 2;
 
             final boolean extendedDataset = recordSize > IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE;

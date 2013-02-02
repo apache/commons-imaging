@@ -18,22 +18,23 @@ package org.apache.commons.imaging.common;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class BinaryFileParser extends BinaryFileFunctions {
+public class BinaryFileParser {
+    // default byte order for Java, many file formats.
+    private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+    protected boolean debug = false;
+
     public BinaryFileParser(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
     public BinaryFileParser() {
-
     }
-
-    // default byte order for Java, many file formats.
-    private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-
-    // protected boolean BYTE_ORDER_reversed = true;
 
     protected void setByteOrder(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -42,36 +43,176 @@ public class BinaryFileParser extends BinaryFileFunctions {
     public ByteOrder getByteOrder() {
         return byteOrder;
     }
-
-    protected final int convertByteArrayToInt(final String name, final byte bytes[]) {
-        return BinaryConversions.toInt(bytes, byteOrder);
-    }
-
-    public final int convertByteArrayToShort(final String name, final byte[] bytes)
-            throws ImageReadException {
-        return convertByteArrayToShort(name, bytes, byteOrder);
+    
+    public boolean getDebug() {
+        return debug;
     }
     
-    public final int convertByteArrayToShort(final String name, final int start,
-            final byte bytes[]) throws ImageReadException {
-        return convertByteArrayToShort(name, start, bytes, byteOrder);
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 
+    protected final byte[] toBytes(short value) {
+        return BinaryConversions.toBytes(value, byteOrder);
+    }
+
+    protected final byte[] toBytes(short value, ByteOrder byteOrder) {
+        return BinaryConversions.toBytes(value, byteOrder);
+    }
+
+    protected final int toInt(final byte bytes[]) {
+        return BinaryConversions.toInt(bytes, byteOrder);
+    }
+    
+    protected final int toUInt16(final byte[] bytes) {
+        return BinaryConversions.toUInt16(bytes, byteOrder);
+    }
+
+    public final int toUInt16(final byte bytes[], final int start) {
+        return BinaryConversions.toUInt16(bytes, start, byteOrder);
+    }
+
+    public byte[] getStreamBytes(final InputStream is) throws IOException {
+        return BinaryFunctions.getStreamBytes(is);
+    }
+    
     public final int read4Bytes(final String name, final InputStream is, final String exception)
             throws IOException {
-        return read4Bytes(name, is, exception, byteOrder);
+        return BinaryFunctions.read4Bytes(name, is, exception, byteOrder);
     }
 
     public final int read3Bytes(final String name, final InputStream is, final String exception)
             throws IOException {
-        return read3Bytes(name, is, exception, byteOrder);
+        return BinaryFunctions.read3Bytes(name, is, exception, byteOrder);
     }
 
     public final int read2Bytes(final String name, final InputStream is, final String exception)
             throws ImageReadException, IOException {
-        return read2Bytes(name, is, exception, byteOrder);
+        return BinaryFunctions.read2Bytes(name, is, exception, byteOrder);
+    }
+    
+    public final byte readByte(final String name, final InputStream is, final String exception)
+            throws IOException {
+        return BinaryFunctions.readByte(name, is, exception);
+    }
+    
+    public final byte[] readByteArray(final String name, final int length, final InputStream is,
+            final String exception) throws IOException {
+        return BinaryFunctions.readByteArray(name, length, is, exception);
+    }
+    
+    public final byte[] readByteArray(final String name, final int length, final InputStream is)
+            throws IOException {
+        return BinaryFunctions.readByteArray(name, length, is);
+    }
+    
+    public byte[] readBytearray(final String name, final byte bytes[], final int start,
+            final int count) throws ImageReadException {
+        return BinaryFunctions.readBytearray(name, bytes, start, count);
+    }
+    
+    public final byte[] readBytes(final InputStream is, final int count) throws IOException {
+        return BinaryFunctions.readBytes(is, count);
+    }
+    
+    public final void readAndVerifyBytes(final InputStream is,
+            final BinaryConstant expected, final String exception)
+                    throws IOException, ImageReadException {
+        BinaryFunctions.readAndVerifyBytes(is, expected, exception);
+    }
+    
+    public final void readAndVerifyBytes(final InputStream is, final byte expected[],
+            final String exception) throws ImageReadException, IOException {
+        BinaryFunctions.readAndVerifyBytes(is, expected, exception);
+    }
+    
+    public final void skipBytes(final InputStream is, final int length)
+            throws IOException {
+        BinaryFunctions.skipBytes(is, length);
+    }
+    
+    public final void skipBytes(final InputStream is, final int length, final String exception)
+            throws IOException {
+        BinaryFunctions.skipBytes(is, length, exception);
+    }
+    
+    public final byte[] getByteArrayTail(final String name, final byte bytes[], final int count)
+            throws ImageReadException {
+        return BinaryFunctions.getByteArrayTail(name, bytes, count);
+    }
+    
+    public final int findNull(final byte src[]) {
+        return BinaryFunctions.findNull(src);
+    }
+    
+    public final int findNull(final byte src[], final int start) {
+        return BinaryFunctions.findNull(src, start);
+    }
+    
+    public void printByteBits(final String msg, final byte i) {
+        BinaryFunctions.printByteBits(msg, i);
+    }
+    
+    public void printCharQuad(final String msg, final int i) {
+        BinaryFunctions.printCharQuad(msg, i);
     }
 
+    public final void printCharQuad(final PrintWriter pw, final String msg, final int i) {
+        BinaryFunctions.printCharQuad(pw, msg, i);
+    }
+    
+    public final void debugNumber(final String msg, final int data) {
+        debugNumber(msg, data, 1);
+    }
+
+    public final void debugNumber(final String msg, final int data, final int bytes) {
+        final PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
+        debugNumber(pw, msg, data, bytes);
+        pw.flush();
+    }
+
+    public final void debugNumber(final PrintWriter pw, final String msg, final int data) {
+        debugNumber(pw, msg, data, 1);
+    }
+
+    public final void debugNumber(final PrintWriter pw, final String msg, final int data,
+            final int bytes) {
+        pw.print(msg + ": " + data + " (");
+        int byteData = data;
+        for (int i = 0; i < bytes; i++) {
+            if (i > 0) {
+                pw.print(",");
+            }
+            final int singleByte = 0xff & byteData;
+            pw.print((char) singleByte + " [" + singleByte + "]");
+            byteData >>= 8;
+        }
+        pw.println(") [0x" + Integer.toHexString(data) + ", "
+                + Integer.toBinaryString(data) + "]");
+        pw.flush();
+    }
+
+    public final void debugByteArray(final String name, final byte bytes[]) {
+        System.out.println(name + ": " + bytes.length);
+
+        for (int i = 0; ((i < bytes.length) && (i < 50)); i++) {
+            debugNumber("\t" + " (" + i + ")", 0xff & bytes[i]);
+        }
+    }
+
+    public final void debugNumberArray(final String name, final int numbers[], final int length) {
+        System.out.println(name + ": " + numbers.length);
+
+        for (int i = 0; ((i < numbers.length) && (i < 50)); i++) {
+            debugNumber(name + " (" + i + ")", numbers[i], length);
+        }
+    }
+
+    public final boolean compareByteArrays(final byte a[], final int aStart, final byte b[],
+            final int bStart, final int length) {
+        return BinaryFunctions.compareByteArrays(a, aStart, b, bStart, length);
+    }
+    
     public static boolean byteArrayHasPrefix(final byte bytes[], final BinaryConstant prefix) {
         if ((bytes == null) || (bytes.length < prefix.size())) {
             return false;

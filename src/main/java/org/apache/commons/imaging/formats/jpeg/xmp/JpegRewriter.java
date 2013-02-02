@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.BinaryConversions;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -72,8 +73,9 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
         public final byte segmentData[];
 
         public JFIFPieceSegment(final int marker, final byte[] segmentData) {
-            this(marker, int2ToByteArray(marker, JPEG_BYTE_ORDER),
-                    int2ToByteArray(segmentData.length + 2, JPEG_BYTE_ORDER),
+            this(marker,
+                    BinaryConversions.toBytes((short)marker, JPEG_BYTE_ORDER),
+                    BinaryConversions.toBytes((short)(segmentData.length + 2), JPEG_BYTE_ORDER),
                     segmentData);
         }
 

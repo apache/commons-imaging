@@ -200,50 +200,50 @@ public class BmpImageParser extends ImageParser {
         }
 
         if (verbose) {
-            this.debugNumber("identifier1", identifier1, 1);
-            this.debugNumber("identifier2", identifier2, 1);
-            this.debugNumber("fileSize", fileSize, 4);
-            this.debugNumber("reserved", reserved, 4);
-            this.debugNumber("bitmapDataOffset", bitmapDataOffset, 4);
-            this.debugNumber("bitmapHeaderSize", bitmapHeaderSize, 4);
-            this.debugNumber("width", width, 4);
-            this.debugNumber("height", height, 4);
-            this.debugNumber("planes", planes, 2);
-            this.debugNumber("bitsPerPixel", bitsPerPixel, 2);
-            this.debugNumber("compression", compression, 4);
-            this.debugNumber("bitmapDataSize", bitmapDataSize, 4);
-            this.debugNumber("hResolution", hResolution, 4);
-            this.debugNumber("vResolution", vResolution, 4);
-            this.debugNumber("colorsUsed", colorsUsed, 4);
-            this.debugNumber("colorsImportant", colorsImportant, 4);
+            debugNumber("identifier1", identifier1, 1);
+            debugNumber("identifier2", identifier2, 1);
+            debugNumber("fileSize", fileSize, 4);
+            debugNumber("reserved", reserved, 4);
+            debugNumber("bitmapDataOffset", bitmapDataOffset, 4);
+            debugNumber("bitmapHeaderSize", bitmapHeaderSize, 4);
+            debugNumber("width", width, 4);
+            debugNumber("height", height, 4);
+            debugNumber("planes", planes, 2);
+            debugNumber("bitsPerPixel", bitsPerPixel, 2);
+            debugNumber("compression", compression, 4);
+            debugNumber("bitmapDataSize", bitmapDataSize, 4);
+            debugNumber("hResolution", hResolution, 4);
+            debugNumber("vResolution", vResolution, 4);
+            debugNumber("colorsUsed", colorsUsed, 4);
+            debugNumber("colorsImportant", colorsImportant, 4);
             if (bitmapHeaderSize >= 52 || compression == BI_BITFIELDS) {
-                this.debugNumber("redMask", redMask, 4);
-                this.debugNumber("greenMask", greenMask, 4);
-                this.debugNumber("blueMask", blueMask, 4);
+                debugNumber("redMask", redMask, 4);
+                debugNumber("greenMask", greenMask, 4);
+                debugNumber("blueMask", blueMask, 4);
             }
             if (bitmapHeaderSize >= 56) {
-                this.debugNumber("alphaMask", alphaMask, 4);
+                debugNumber("alphaMask", alphaMask, 4);
             }
             if (bitmapHeaderSize >= 108) {
-                this.debugNumber("colorSpaceType", colorSpaceType, 4);
-                this.debugNumber("colorSpace.red.x", colorSpace.red.x);
-                this.debugNumber("colorSpace.red.y", colorSpace.red.y);
-                this.debugNumber("colorSpace.red.z", colorSpace.red.z);
-                this.debugNumber("colorSpace.green.x", colorSpace.green.x);
-                this.debugNumber("colorSpace.green.y", colorSpace.green.y);
-                this.debugNumber("colorSpace.green.z", colorSpace.green.z);
-                this.debugNumber("colorSpace.blue.x", colorSpace.blue.x);
-                this.debugNumber("colorSpace.blue.y", colorSpace.blue.y);
-                this.debugNumber("colorSpace.blue.z", colorSpace.blue.z);
-                this.debugNumber("gammaRed", gammaRed, 4);
-                this.debugNumber("gammaGreen", gammaGreen, 4);
-                this.debugNumber("gammaBlue", gammaBlue, 4);
+                debugNumber("colorSpaceType", colorSpaceType, 4);
+                debugNumber("colorSpace.red.x", colorSpace.red.x);
+                debugNumber("colorSpace.red.y", colorSpace.red.y);
+                debugNumber("colorSpace.red.z", colorSpace.red.z);
+                debugNumber("colorSpace.green.x", colorSpace.green.x);
+                debugNumber("colorSpace.green.y", colorSpace.green.y);
+                debugNumber("colorSpace.green.z", colorSpace.green.z);
+                debugNumber("colorSpace.blue.x", colorSpace.blue.x);
+                debugNumber("colorSpace.blue.y", colorSpace.blue.y);
+                debugNumber("colorSpace.blue.z", colorSpace.blue.z);
+                debugNumber("gammaRed", gammaRed, 4);
+                debugNumber("gammaGreen", gammaGreen, 4);
+                debugNumber("gammaBlue", gammaBlue, 4);
             }
             if (bitmapHeaderSize >= 124) {
-                this.debugNumber("intent", intent, 4);
-                this.debugNumber("profileData", profileData, 4);
-                this.debugNumber("profileSize", profileSize, 4);
-                this.debugNumber("reservedV5", reservedV5, 4);
+                debugNumber("intent", intent, 4);
+                debugNumber("profileData", profileData, 4);
+                debugNumber("profileSize", profileSize, 4);
+                debugNumber("reservedV5", reservedV5, 4);
             }
         }
 
@@ -332,11 +332,11 @@ public class BmpImageParser extends ImageParser {
         }
 
         if (verbose) {
-            this.debugNumber("ColorsUsed", bhi.colorsUsed, 4);
-            this.debugNumber("BitsPerPixel", bhi.bitsPerPixel, 4);
-            this.debugNumber("ColorTableSize", colorTableSize, 4);
-            this.debugNumber("bhi.colorsUsed", bhi.colorsUsed, 4);
-            this.debugNumber("Compression", bhi.compression, 4);
+            debugNumber("ColorsUsed", bhi.colorsUsed, 4);
+            debugNumber("BitsPerPixel", bhi.bitsPerPixel, 4);
+            debugNumber("ColorTableSize", colorTableSize, 4);
+            debugNumber("bhi.colorsUsed", bhi.colorsUsed, 4);
+            debugNumber("Compression", bhi.compression, 4);
         }
 
         // A palette is always valid, even for images that don't need it
@@ -411,7 +411,7 @@ public class BmpImageParser extends ImageParser {
         }
 
         if (verbose) {
-            this.debugNumber("paletteLength", paletteLength, 4);
+            debugNumber("paletteLength", paletteLength, 4);
             System.out.println("ColorTable: "
                     + ((colorTable == null) ? "null" : "" + colorTable.length));
         }
@@ -426,11 +426,11 @@ public class BmpImageParser extends ImageParser {
             // this.debugNumber("Total Bit Per Line",
             // ((ExtraBitsPerPixel + bhi.BitsPerPixel) * bhi.Width), 4);
             // this.debugNumber("ExtraBitsPerPixel", ExtraBitsPerPixel, 4);
-            this.debugNumber("bhi.Width", bhi.width, 4);
-            this.debugNumber("bhi.Height", bhi.height, 4);
-            this.debugNumber("ImageLineLength", imageLineLength, 4);
+            debugNumber("bhi.Width", bhi.width, 4);
+            debugNumber("bhi.Height", bhi.height, 4);
+            debugNumber("ImageLineLength", imageLineLength, 4);
             // this.debugNumber("imageDataSize", imageDataSize, 4);
-            this.debugNumber("PixelCount", pixelCount, 4);
+            debugNumber("PixelCount", pixelCount, 4);
         }
         // int ImageLineLength = BytesPerPixel * bhi.Width;
         while ((imageLineLength % 4) != 0) {
@@ -444,8 +444,8 @@ public class BmpImageParser extends ImageParser {
         final int expectedDataOffset = headerSize + paletteLength;
 
         if (verbose) {
-            this.debugNumber("bhi.BitmapDataOffset", bhi.bitmapDataOffset, 4);
-            this.debugNumber("expectedDataOffset", expectedDataOffset, 4);
+            debugNumber("bhi.BitmapDataOffset", bhi.bitmapDataOffset, 4);
+            debugNumber("expectedDataOffset", expectedDataOffset, 4);
         }
         final int extraBytes = bhi.bitmapDataOffset - expectedDataOffset;
         if (extraBytes < 0) {
@@ -461,7 +461,7 @@ public class BmpImageParser extends ImageParser {
         final int imageDataSize = bhi.height * imageLineLength;
 
         if (verbose) {
-            this.debugNumber("imageDataSize", imageDataSize, 4);
+            debugNumber("imageDataSize", imageDataSize, 4);
         }
 
         byte imageData[];
@@ -473,7 +473,7 @@ public class BmpImageParser extends ImageParser {
         }
 
         if (verbose) {
-            this.debugNumber("ImageData.length", imageData.length, 4);
+            debugNumber("ImageData.length", imageData.length, 4);
         }
 
         PixelParser pixelParser;

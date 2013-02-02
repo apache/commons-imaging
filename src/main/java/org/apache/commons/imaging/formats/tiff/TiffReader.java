@@ -180,8 +180,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 
                 final byte valueOffsetBytes[] = readByteArray("ValueOffset", 4, is,
                         "Not a Valid TIFF File");
-                final int valueOffset = convertByteArrayToInt("ValueOffset",
-                        valueOffsetBytes);
+                final int valueOffset = toInt(valueOffsetBytes);
 
                 if (tag == 0) {
                     // skip invalid fields.

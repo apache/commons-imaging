@@ -320,13 +320,7 @@ public class BinaryConversions {
     }
 
     public static short toShort(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
-        final int byte0 = 0xff & bytes[offset + 0];
-        final int byte1 = 0xff & bytes[offset + 1];
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            return (short) ((byte0 << 8) | byte1);
-        } else {
-            return (short) ((byte1 << 8) | byte0);
-        }
+        return (short) toUInt16(bytes, offset, byteOrder);
     }
 
     public static short[] toShorts(final byte[] bytes, final ByteOrder byteOrder) {
@@ -347,10 +341,24 @@ public class BinaryConversions {
         return result;
     }
 
+    public static int toUInt16(final byte[] bytes, final ByteOrder byteOrder) {
+        return toUInt16(bytes, 0, byteOrder);
+    }
+    
+    public static int toUInt16(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
+        final int byte0 = 0xff & bytes[offset + 0];
+        final int byte1 = 0xff & bytes[offset + 1];
+        if (byteOrder == ByteOrder.MOTOROLA) {
+            return ((byte0 << 8) | byte1);
+        } else {
+            return ((byte1 << 8) | byte0);
+        }
+    }
+    
     public static int toInt(final byte[] bytes, final ByteOrder byteOrder) {
         return toInt(bytes, 0, byteOrder);
     }
-
+    
     public static int toInt(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
         final int byte0 = 0xff & bytes[offset + 0];
         final int byte1 = 0xff & bytes[offset + 1];

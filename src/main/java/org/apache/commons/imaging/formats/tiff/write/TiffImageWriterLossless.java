@@ -28,7 +28,7 @@ import java.util.Map;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryFileFunctions;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -67,9 +67,9 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                 final byte bytes[] = byteSource.getBlock(last, gepLength);
                 if (bytes.length > 2 * SLICE_SIZE) {
                     Debug.debug("\t" + "head",
-                            BinaryFileFunctions.head(bytes, SLICE_SIZE));
+                            BinaryFunctions.head(bytes, SLICE_SIZE));
                     Debug.debug("\t" + "tail",
-                            BinaryFileFunctions.tail(bytes, SLICE_SIZE));
+                            BinaryFunctions.tail(bytes, SLICE_SIZE));
                 } else {
                     Debug.debug("\t" + "bytes", bytes);
                 }

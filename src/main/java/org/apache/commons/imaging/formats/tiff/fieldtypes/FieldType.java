@@ -18,12 +18,12 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryFileFunctions;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
-public abstract class FieldType extends BinaryFileFunctions implements
+public abstract class FieldType extends BinaryFunctions implements
         TiffConstants {
     public final int type, length;
     public final String name;

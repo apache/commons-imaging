@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryFileFunctions;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
@@ -162,7 +162,7 @@ public final class TagInfoGpsText extends TagInfo {
         }
 
         for (final TextEncoding encoding : TEXT_ENCODINGS) {
-            if (BinaryFileFunctions.compareBytes(bytes, 0, encoding.prefix, 0,
+            if (BinaryFunctions.compareBytes(bytes, 0, encoding.prefix, 0,
                     encoding.prefix.length)) {
                 try {
                     return new String(bytes, encoding.prefix.length,

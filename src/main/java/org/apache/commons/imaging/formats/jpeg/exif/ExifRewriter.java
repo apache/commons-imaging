@@ -496,7 +496,6 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
     private void writeSegmentsReplacingExif(final OutputStream os,
             final List<JFIFPiece> segments, final byte newBytes[])
             throws ImageWriteException, IOException {
-        final ByteOrder byteOrder = getByteOrder();
 
         try {
             SOI.writeTo(os);
@@ -511,15 +510,13 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
             }
 
             if (!hasExif && newBytes != null) {
-                final byte markerBytes[] = convertShortToByteArray(JPEG_APP1_Marker,
-                        byteOrder);
+                final byte markerBytes[] = toBytes((short)JPEG_APP1_Marker);
                 if (newBytes.length > 0xffff) {
                     throw new ExifOverflowException(
                             "APP1 Segment is too long: " + newBytes.length);
                 }
                 final int markerLength = newBytes.length + 2;
-                final byte markerLengthBytes[] = convertShortToByteArray(
-                        markerLength, byteOrder);
+                final byte markerLengthBytes[] = toBytes((short)markerLength);
 
                 int index = 0;
                 final JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments
@@ -546,15 +543,13 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
                         continue;
                     }
 
-                    final byte markerBytes[] = convertShortToByteArray(
-                            JPEG_APP1_Marker, byteOrder);
+                    final byte markerBytes[] = toBytes((short)JPEG_APP1_Marker);
                     if (newBytes.length > 0xffff) {
                         throw new ExifOverflowException(
                                 "APP1 Segment is too long: " + newBytes.length);
                     }
                     final int markerLength = newBytes.length + 2;
-                    final byte markerLengthBytes[] = convertShortToByteArray(
-                            markerLength, byteOrder);
+                    final byte markerLengthBytes[] = toBytes((short)markerLength);
 
                     os.write(markerBytes);
                     os.write(markerLengthBytes);

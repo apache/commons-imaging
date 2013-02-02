@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
-public class ZLibUtils extends BinaryFileFunctions {
+public class ZLibUtils extends BinaryFunctions {
     public final byte[] inflate(final byte bytes[]) throws IOException {
         final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         final InflaterInputStream zIn = new InflaterInputStream(in);
