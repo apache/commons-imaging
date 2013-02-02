@@ -81,7 +81,7 @@ public class TiffOutputField implements TiffConstants {
                         "Local value has invalid length: " + bytes.length);
             }
 
-            bos.writeByteArray(bytes);
+            bos.write(bytes);
             final int remainder = TIFF_ENTRY_MAX_VALUE_LENGTH - bytes.length;
             for (int i = 0; i < remainder; i++) {
                 bos.write(0);

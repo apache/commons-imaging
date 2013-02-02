@@ -95,7 +95,7 @@ public class PcxWriter implements PcxConstants {
     private void writeScanLine(final BinaryOutputStream bos, final byte[] scanline)
             throws IOException, ImageWriteException {
         if (encoding == PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED) {
-            bos.writeByteArray(scanline);
+            bos.write(scanline);
         } else {
             if (encoding == PcxImageParser.PcxHeader.ENCODING_RLE) {
                 int previousByte = -1;
@@ -189,14 +189,14 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes((short) Math.round(pixelDensity
                 .horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
-        bos.writeByteArray(new byte[48]); // 16 color palette
+        bos.write(new byte[48]); // 16 color palette
         bos.write(0); // reserved
         bos.write(1); // planes
         bos.write2Bytes(bytesPerLine); // bytes per line
         bos.write2Bytes(1); // palette info
         bos.write2Bytes(0); // hScreenSize
         bos.write2Bytes(0); // vScreenSize
-        bos.writeByteArray(new byte[54]);
+        bos.write(new byte[54]);
 
         final int rgbs[] = new int[src.getWidth()];
         final byte rgbBytes[] = new byte[4 * bytesPerLine];
@@ -229,14 +229,14 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes((short) Math.round(pixelDensity
                 .horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
-        bos.writeByteArray(new byte[48]); // 16 color palette
+        bos.write(new byte[48]); // 16 color palette
         bos.write(0); // reserved
         bos.write(3); // planes
         bos.write2Bytes(bytesPerLine); // bytes per line
         bos.write2Bytes(1); // palette info
         bos.write2Bytes(0); // hScreenSize
         bos.write2Bytes(0); // vScreenSize
-        bos.writeByteArray(new byte[54]);
+        bos.write(new byte[54]);
 
         final int rgbs[] = new int[src.getWidth()];
         final byte rgbBytes[] = new byte[3 * bytesPerLine];
@@ -272,14 +272,14 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes((short) Math.round(pixelDensity
                 .horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
-        bos.writeByteArray(new byte[48]); // 16 color palette
+        bos.write(new byte[48]); // 16 color palette
         bos.write(0); // reserved
         bos.write(1); // planes
         bos.write2Bytes(bytesPerLine); // bytes per line
         bos.write2Bytes(1); // palette info
         bos.write2Bytes(0); // hScreenSize
         bos.write2Bytes(0); // vScreenSize
-        bos.writeByteArray(new byte[54]);
+        bos.write(new byte[54]);
 
         final byte[] row = new byte[bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {
@@ -333,14 +333,14 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes((short) Math.round(pixelDensity
                 .horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
-        bos.writeByteArray(palette16); // 16 color palette
+        bos.write(palette16); // 16 color palette
         bos.write(0); // reserved
         bos.write(1); // planes
         bos.write2Bytes(bytesPerLine); // bytes per line
         bos.write2Bytes(1); // palette info
         bos.write2Bytes(0); // hScreenSize
         bos.write2Bytes(0); // vScreenSize
-        bos.writeByteArray(new byte[54]);
+        bos.write(new byte[54]);
 
         final byte[] indeces = new byte[bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {
@@ -371,14 +371,14 @@ public class PcxWriter implements PcxConstants {
         bos.write2Bytes((short) Math.round(pixelDensity
                 .horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
-        bos.writeByteArray(new byte[48]); // 16 color palette
+        bos.write(new byte[48]); // 16 color palette
         bos.write(0); // reserved
         bos.write(1); // planes
         bos.write2Bytes(bytesPerLine); // bytes per line
         bos.write2Bytes(1); // palette info
         bos.write2Bytes(0); // hScreenSize
         bos.write2Bytes(0); // vScreenSize
-        bos.writeByteArray(new byte[54]);
+        bos.write(new byte[54]);
 
         final byte[] indeces = new byte[bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {

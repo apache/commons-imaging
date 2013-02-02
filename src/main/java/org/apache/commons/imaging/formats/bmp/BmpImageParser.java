@@ -858,7 +858,7 @@ public class BmpImageParser extends ImageParser {
         // write Palette
         writer.writePalette(bos);
         // write Image Data
-        bos.writeByteArray(imagedata);
+        bos.write(imagedata);
     }
 
     /**

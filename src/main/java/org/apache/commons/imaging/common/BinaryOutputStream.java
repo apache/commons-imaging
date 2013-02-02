@@ -57,6 +57,28 @@ public class BinaryOutputStream extends OutputStream {
         count++;
     }
 
+    @Override
+    public final void write(final byte bytes[]) throws IOException {
+        os.write(bytes, 0, bytes.length);
+        count += bytes.length;
+    }
+    
+    @Override
+    public final void write(final byte bytes[], int offset, int length) throws IOException {
+        os.write(bytes, offset, length);
+        count += length;
+    }
+    
+    @Override
+    public void flush() throws IOException {
+        os.flush();
+    }
+    
+    @Override
+    public void close() throws IOException {
+        os.close();
+    }
+    
     public int getByteCount() {
         return count;
     }
@@ -95,10 +117,5 @@ public class BinaryOutputStream extends OutputStream {
             write(0xff & value);
             write(0xff & (value >> 8));
         }
-    }
-
-    public final void writeByteArray(final byte bytes[]) throws IOException {
-        os.write(bytes, 0, bytes.length);
-        count += bytes.length;
     }
 }
