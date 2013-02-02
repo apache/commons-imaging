@@ -37,7 +37,7 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
             throws ImageReadException, IOException {
         super(marker, marker_length, is2);
 
-        if (BinaryFileParser.byteArrayHasPrefix(bytes,
+        if (BinaryFileParser.startsWith(bytes,
                 JpegImageParser.icc_profile_label)) {
             final InputStream is = new ByteArrayInputStream(bytes);
 

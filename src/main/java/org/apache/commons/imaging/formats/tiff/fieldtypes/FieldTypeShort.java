@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
@@ -31,29 +31,29 @@ public class FieldTypeShort extends FieldType {
     @Override
     public Object getSimpleValue(final TiffField entry) throws ImageReadException {
         if (entry.length == 1) {
-            return BinaryConversions.toShort(entry.valueOffsetBytes,
+            return ByteConversions.toShort(entry.valueOffsetBytes,
                     entry.byteOrder);
         }
 
-        return BinaryConversions.toShorts(getRawBytes(entry),
+        return ByteConversions.toShorts(getRawBytes(entry),
                 entry.byteOrder);
     }
 
     @Override
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Short) {
-            return BinaryConversions.toBytes(
+            return ByteConversions.toBytes(
                     ((Short)o).shortValue(), byteOrder);
         } else if (o instanceof short[]) {
             final short numbers[] = (short[]) o;
-            return BinaryConversions.toBytes(numbers, byteOrder);
+            return ByteConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Short[]) {
             final Short numbers[] = (Short[]) o;
             final short values[] = new short[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].shortValue();
             }
-            return BinaryConversions.toBytes(values, byteOrder);
+            return ByteConversions.toBytes(values, byteOrder);
         } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");

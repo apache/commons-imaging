@@ -160,7 +160,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
                 if (marker != JPEG_APP1_Marker) {
                     pieces.add(new JFIFPieceSegment(marker, markerBytes,
                             markerLengthBytes, segmentData));
-                } else if (!byteArrayHasPrefix(segmentData,
+                } else if (!startsWith(segmentData,
                         EXIF_IDENTIFIER_CODE)) {
                     pieces.add(new JFIFPieceSegment(marker, markerBytes,
                             markerLengthBytes, segmentData));

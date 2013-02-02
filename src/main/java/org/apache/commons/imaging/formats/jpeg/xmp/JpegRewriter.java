@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -74,8 +74,8 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
 
         public JFIFPieceSegment(final int marker, final byte[] segmentData) {
             this(marker,
-                    BinaryConversions.toBytes((short)marker, JPEG_BYTE_ORDER),
-                    BinaryConversions.toBytes((short)(segmentData.length + 2), JPEG_BYTE_ORDER),
+                    ByteConversions.toBytes((short)marker, JPEG_BYTE_ORDER),
+                    ByteConversions.toBytes((short)(segmentData.length + 2), JPEG_BYTE_ORDER),
                     segmentData);
         }
 
@@ -112,7 +112,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
             if (marker != JPEG_APP1_Marker) {
                 return false;
             }
-            if (!byteArrayHasPrefix(segmentData, EXIF_IDENTIFIER_CODE)) {
+            if (!startsWith(segmentData, EXIF_IDENTIFIER_CODE)) {
                 return false;
             }
             return true;
@@ -132,7 +132,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
             if (marker != JPEG_APP1_Marker) {
                 return false;
             }
-            if (!byteArrayHasPrefix(segmentData, XMP_IDENTIFIER)) {
+            if (!startsWith(segmentData, XMP_IDENTIFIER)) {
                 return false;
             }
             return true;

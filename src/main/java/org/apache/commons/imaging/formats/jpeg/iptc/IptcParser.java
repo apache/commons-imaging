@@ -43,7 +43,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
     }
 
     public boolean isPhotoshopJpegSegment(final byte segmentData[]) {
-        if (!BinaryFileParser.byteArrayHasPrefix(segmentData,
+        if (!BinaryFileParser.startsWith(segmentData,
                 PHOTOSHOP_IDENTIFICATION_STRING)) {
             return false;
         }
@@ -296,7 +296,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 }
     
                 final int blockType = bis
-                        .read2ByteInteger("Image Resource Block missing type");
+                        .read2Bytes("Image Resource Block missing type");
                 if (verbose) {
                     Debug.debug("blockType",
                             blockType + " (0x" + Integer.toHexString(blockType)
@@ -326,7 +326,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 }
     
                 final int blockSize = bis
-                        .read4ByteInteger("Image Resource Block missing size");
+                        .read4Bytes("Image Resource Block missing size");
                 if (verbose) {
                     Debug.debug("blockSize",
                             blockSize + " (0x" + Integer.toHexString(blockSize)

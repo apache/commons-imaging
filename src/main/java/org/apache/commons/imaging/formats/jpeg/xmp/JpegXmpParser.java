@@ -31,7 +31,7 @@ public class JpegXmpParser extends BinaryFileParser implements JpegConstants {
     }
 
     public boolean isXmpJpegSegment(final byte segmentData[]) {
-        return BinaryFileParser.byteArrayHasPrefix(segmentData, XMP_IDENTIFIER);
+        return BinaryFileParser.startsWith(segmentData, XMP_IDENTIFIER);
     }
 
     public String parseXmpJpegSegment(final byte segmentData[])

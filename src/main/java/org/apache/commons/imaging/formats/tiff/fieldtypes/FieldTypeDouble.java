@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
@@ -35,18 +35,18 @@ public class FieldTypeDouble extends FieldType {
     @Override
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Double) {
-            return BinaryConversions.toBytes(((Double) o).doubleValue(),
+            return ByteConversions.toBytes(((Double) o).doubleValue(),
                     byteOrder);
         } else if (o instanceof double[]) {
             final double numbers[] = (double[]) o;
-            return BinaryConversions.toBytes(numbers, byteOrder);
+            return ByteConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Double[]) {
             final Double numbers[] = (Double[]) o;
             final double values[] = new double[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].doubleValue();
             }
-            return BinaryConversions.toBytes(values, byteOrder);
+            return ByteConversions.toBytes(values, byteOrder);
         } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");

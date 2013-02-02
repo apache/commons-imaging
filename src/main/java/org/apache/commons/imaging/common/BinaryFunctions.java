@@ -24,7 +24,6 @@ import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImageWriteException;
 
 /**
  * Convenience methods for various binary and I/O operations.
@@ -143,61 +142,6 @@ public class BinaryFunctions {
         return (byte) (0xff & result);
     }
 
-    public static final void writeIntInToByteArray(final int value, final byte bytes[],
-            final int start, final ByteOrder byteOrder) {
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            bytes[start + 0] = (byte) (value >> 24);
-            bytes[start + 1] = (byte) (value >> 16);
-            bytes[start + 2] = (byte) (value >> 8);
-            bytes[start + 3] = (byte) (value >> 0);
-        } else {
-            bytes[start + 3] = (byte) (value >> 24);
-            bytes[start + 2] = (byte) (value >> 16);
-            bytes[start + 1] = (byte) (value >> 8);
-            bytes[start + 0] = (byte) (value >> 0);
-        }
-    }
-
-    public static final byte[] int2ToByteArray(final int value, final ByteOrder byteOrder) {
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            return new byte[] { (byte) (value >> 8), (byte) (value >> 0), };
-        } else {
-            return new byte[] { (byte) (value >> 0), (byte) (value >> 8), };
-        }
-    }
-
-    public static final byte[] convertShortToByteArray(final int value, final ByteOrder byteOrder) {
-        final byte result[] = new byte[2];
-
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            result[0] = (byte) (value >> 8);
-            result[1] = (byte) (value >> 0);
-        } else {
-            result[1] = (byte) (value >> 8);
-            result[0] = (byte) (value >> 0);
-        }
-
-        return result;
-    }
-
-    public static final byte[] convertIntArrayToRationalArray(final int numerators[],
-            final int denominators[], final ByteOrder byteOrder) throws ImageWriteException {
-        if (numerators.length != denominators.length) {
-            throw new ImageWriteException("numerators.length ("
-                    + numerators.length + " != denominators.length ("
-                    + denominators.length + ")");
-        }
-
-        final byte result[] = new byte[numerators.length * 8];
-
-        for (int i = 0; i < numerators.length; i++) {
-            writeIntInToByteArray(numerators[i], result, i * 8, byteOrder);
-            writeIntInToByteArray(denominators[i], result, i * 8 + 4, byteOrder);
-        }
-
-        return result;
-    }
-
     public static final byte[] readByteArray(final String name, final int length, final InputStream is)
             throws IOException {
         final String exception = name + " could not be read.";
@@ -239,7 +183,7 @@ public class BinaryFunctions {
         return readBytearray(name, bytes, count, bytes.length - count);
     }
 
-    public static final byte[] getBytearrayHead(final String name, final byte bytes[], final int count)
+    public static final byte[] getByteArrayHead(final String name, final byte bytes[], final int count)
             throws ImageReadException {
         return readBytearray(name, bytes, 0, bytes.length - count);
     }
@@ -365,8 +309,7 @@ public class BinaryFunctions {
     }
 
     public static final int read2Bytes(final String name, final InputStream is,
-            final String exception, final ByteOrder byteOrder) throws ImageReadException,
-            IOException {
+            final String exception, final ByteOrder byteOrder) throws IOException {
         final int byte0 = is.read();
         final int byte1 = is.read();
         if ((byte0 | byte1) < 0) {

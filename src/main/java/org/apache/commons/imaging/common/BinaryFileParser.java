@@ -53,23 +53,23 @@ public class BinaryFileParser {
     }
 
     protected final byte[] toBytes(short value) {
-        return BinaryConversions.toBytes(value, byteOrder);
+        return ByteConversions.toBytes(value, byteOrder);
     }
 
     protected final byte[] toBytes(short value, ByteOrder byteOrder) {
-        return BinaryConversions.toBytes(value, byteOrder);
+        return ByteConversions.toBytes(value, byteOrder);
     }
 
     protected final int toInt(final byte bytes[]) {
-        return BinaryConversions.toInt(bytes, byteOrder);
+        return ByteConversions.toInt(bytes, byteOrder);
     }
     
     protected final int toUInt16(final byte[] bytes) {
-        return BinaryConversions.toUInt16(bytes, byteOrder);
+        return ByteConversions.toUInt16(bytes, byteOrder);
     }
 
     public final int toUInt16(final byte bytes[], final int start) {
-        return BinaryConversions.toUInt16(bytes, start, byteOrder);
+        return ByteConversions.toUInt16(bytes, start, byteOrder);
     }
 
     public byte[] getStreamBytes(final InputStream is) throws IOException {
@@ -87,7 +87,7 @@ public class BinaryFileParser {
     }
 
     public final int read2Bytes(final String name, final InputStream is, final String exception)
-            throws ImageReadException, IOException {
+            throws IOException {
         return BinaryFunctions.read2Bytes(name, is, exception, byteOrder);
     }
     
@@ -213,13 +213,13 @@ public class BinaryFileParser {
         return BinaryFunctions.compareByteArrays(a, aStart, b, bStart, length);
     }
     
-    public static boolean byteArrayHasPrefix(final byte bytes[], final BinaryConstant prefix) {
-        if ((bytes == null) || (bytes.length < prefix.size())) {
+    public static boolean startsWith(final byte haystack[], final BinaryConstant needle) {
+        if ((haystack == null) || (haystack.length < needle.size())) {
             return false;
         }
 
-        for (int i = 0; i < prefix.size(); i++) {
-            if (bytes[i] != prefix.get(i)) {
+        for (int i = 0; i < needle.size(); i++) {
+            if (haystack[i] != needle.get(i)) {
                 return false;
             }
         }
@@ -227,17 +227,7 @@ public class BinaryFileParser {
         return true;
     }
 
-    public static boolean byteArrayHasPrefix(final byte bytes[], final byte prefix[]) {
-        if ((bytes == null) || (bytes.length < prefix.length)) {
-            return false;
-        }
-
-        for (int i = 0; i < prefix.length; i++) {
-            if (bytes[i] != prefix[i]) {
-                return false;
-            }
-        }
-
-        return true;
+    public static boolean startsWith(final byte haystack[], final byte needle[]) {
+        return BinaryFunctions.startsWith(haystack, needle);
     }
 }

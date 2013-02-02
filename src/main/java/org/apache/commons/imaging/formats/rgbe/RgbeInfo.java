@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryInputStream;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -141,7 +142,7 @@ class RgbeInfo extends BinaryFunctions {
                     "Scan lines must be less than 32768 bytes long");
         }
 
-        final byte[] scanLineBytes = convertShortToByteArray(width,
+        final byte[] scanLineBytes = ByteConversions.toBytes((short)width,
                 ByteOrder.BIG_ENDIAN);
         final byte[] rgbe = new byte[width * 4];
         final float[][] out = new float[3][width * height];

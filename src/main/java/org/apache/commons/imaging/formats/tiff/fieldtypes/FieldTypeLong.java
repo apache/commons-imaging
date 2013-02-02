@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
@@ -30,28 +30,28 @@ public class FieldTypeLong extends FieldType {
     @Override
     public Object getSimpleValue(final TiffField entry) {
         if (entry.length == 1) {
-            return BinaryConversions.toInt(
+            return ByteConversions.toInt(
                     entry.valueOffsetBytes, entry.byteOrder);
         }
 
-        return BinaryConversions.toInts(getRawBytes(entry), 0, 4*entry.length,
+        return ByteConversions.toInts(getRawBytes(entry), 0, 4*entry.length,
                 entry.byteOrder);
     }
 
     @Override
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Integer) {
-            return BinaryConversions.toBytes(((Integer)o).intValue(), byteOrder);
+            return ByteConversions.toBytes(((Integer)o).intValue(), byteOrder);
         } else if (o instanceof int[]) {
             final int numbers[] = (int[]) o;
-            return BinaryConversions.toBytes(numbers, byteOrder);
+            return ByteConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Integer[]) {
             final Integer numbers[] = (Integer[]) o;
             final int values[] = new int[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].intValue();
             }
-            return BinaryConversions.toBytes(values, byteOrder);
+            return ByteConversions.toBytes(values, byteOrder);
         } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");

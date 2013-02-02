@@ -66,7 +66,7 @@ public class BinaryInputStream extends InputStream {
 
     public final int read4Bytes(final String name, final String exception)
             throws IOException {
-        return read4Bytes(name, exception, byteOrder);
+        return BinaryFunctions.read4Bytes(name, is, exception, byteOrder);
     }
 
     public final void debugNumber(final String msg, final int data) {
@@ -90,156 +90,31 @@ public class BinaryInputStream extends InputStream {
 
     public final void readAndVerifyBytes(final byte expected[], final String exception)
             throws ImageReadException, IOException {
-        for (int i = 0; i < expected.length; i++) {
-            final int data = is.read();
-            final byte b = (byte) (0xff & data);
-
-            if ((data < 0) || (b != expected[i])) {
-                System.out.println("i" + ": " + i);
-
-                this.debugByteArray("expected", expected);
-                debugNumber("data[" + i + "]", b);
-                // debugNumber("expected[" + i + "]", expected[i]);
-
-                throw new ImageReadException(exception);
-            }
-        }
+        BinaryFunctions.readAndVerifyBytes(is, expected, exception);
     }
 
     protected final void readAndVerifyBytes(final String name, final byte expected[],
             final String exception) throws ImageReadException, IOException {
-        final byte bytes[] = readByteArray(name, expected.length, exception);
-
-        for (int i = 0; i < expected.length; i++) {
-            if (bytes[i] != expected[i]) {
-                System.out.println("i" + ": " + i);
-                debugNumber("bytes[" + i + "]", bytes[i]);
-                debugNumber("expected[" + i + "]", expected[i]);
-
-                throw new ImageReadException(exception);
-            }
-        }
+        BinaryFunctions.readAndVerifyBytes(name, is, expected, exception);
     }
 
     public final void skipBytes(final int length, final String exception)
             throws IOException {
-        long total = 0;
-        while (length != total) {
-            final long skipped = is.skip(length - total);
-            if (skipped < 1) {
-                throw new IOException(exception + " (" + skipped + ")");
-            }
-            total += skipped;
-        }
+        BinaryFunctions.skipBytes(is, length, exception);
     }
 
     protected final void scanForByte(final byte value) throws IOException {
-        int count = 0;
-        for (int i = 0; count < 3; i++) {
-            final int b = is.read();
-            if (b < 0) {
-                return;
-            }
-            if ((0xff & b) == value) {
-                System.out.println("\t" + i + ": match.");
-                count++;
-            }
-        }
+        BinaryFunctions.scanForByte(is, value);
     }
 
     public final byte readByte(final String name, final String exception)
             throws IOException {
-        final int result = is.read();
-
-        if ((result < 0)) {
-            System.out.println(name + ": " + result);
-            throw new IOException(exception);
-        }
-
-        if (debug) {
-            debugNumber(name, result);
-        }
-
-        return (byte) (0xff & result);
-    }
-
-    protected final int convertByteArrayToInt(final String name, final byte bytes[],
-            final ByteOrder byteOrder) {
-        return convertByteArrayToInt(name, bytes, 0, 4, byteOrder);
-    }
-
-    protected final int convertByteArrayToInt(final String name, final byte bytes[],
-            final int start, final int length, final ByteOrder byteOrder) {
-        final byte byte0 = bytes[start + 0];
-        final byte byte1 = bytes[start + 1];
-        final byte byte2 = bytes[start + 2];
-        byte byte3 = 0;
-        if (length == 4) {
-            byte3 = bytes[start + 3];
-        }
-
-        int result;
-
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            result = ((0xff & byte0) << 24) + ((0xff & byte1) << 16)
-                    + ((0xff & byte2) << 8) + ((0xff & byte3) << 0);
-        } else {
-            result = ((0xff & byte3) << 24) + ((0xff & byte2) << 16)
-                    + ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
-        }
-
-        if (debug) {
-            debugNumber(name, result, 4);
-        }
-
-        return result;
-    }
-
-    protected final int convertByteArrayToShort(final String name, final byte bytes[],
-            final ByteOrder byteOrder) {
-        return convertByteArrayToShort(name, 0, bytes, byteOrder);
-    }
-
-    protected final int convertByteArrayToShort(final String name, final int start,
-            final byte bytes[], final ByteOrder byteOrder) {
-        final byte byte0 = bytes[start + 0];
-        final byte byte1 = bytes[start + 1];
-
-        int result;
-
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            result = ((0xff & byte0) << 8) + ((0xff & byte1) << 0);
-        } else {
-            result = ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
-        }
-
-        if (debug) {
-            debugNumber(name, result, 2);
-        }
-
-        return result;
+        return BinaryFunctions.readByte(name, is, exception);
     }
 
     public final byte[] readByteArray(final String name, final int length, final String exception)
             throws IOException {
-        final byte result[] = new byte[length];
-
-        int read = 0;
-        while (read < length) {
-            final int count = is.read(result, read, length - read);
-            if (count < 1) {
-                throw new IOException(exception);
-            }
-
-            read += count;
-        }
-
-        if (debug) {
-            for (int i = 0; ((i < length) && (i < 150)); i++) {
-                debugNumber(name + " (" + i + ")", 0xff & result[i]);
-            }
-        }
-        return result;
+        return BinaryFunctions.readByteArray(name, length, is, exception);
     }
 
     protected final void debugByteArray(final String name, final byte bytes[]) {
@@ -259,26 +134,13 @@ public class BinaryInputStream extends InputStream {
     }
 
     public final byte[] readBytearray(final String name, final byte bytes[], final int start,
-            final int count) {
-        if (bytes.length < (start + count)) {
-            return null;
-        }
-
-        final byte result[] = new byte[count];
-        System.arraycopy(bytes, start, result, 0, count);
-
-        if (debug) {
-            debugByteArray(name, result);
-        }
-
-        return result;
+            final int count) throws ImageReadException {
+        return BinaryFunctions.readBytearray(name, bytes, start, count);
     }
 
     public final byte[] readByteArray(final int length, final String error)
             throws ImageReadException, IOException {
-        final boolean verbose = false;
-        final boolean strict = true;
-        return readByteArray(length, error, verbose, strict);
+        return BinaryFunctions.readByteArray("", length, is, error);
     }
 
     public final byte[] readByteArray(final int length, final String error,
@@ -301,188 +163,76 @@ public class BinaryInputStream extends InputStream {
         return bytes;
     }
 
-    protected final byte[] getBytearrayTail(final String name, final byte bytes[], final int count) {
-        return readBytearray(name, bytes, count, bytes.length - count);
+    protected final byte[] getBytearrayTail(final String name, final byte bytes[], final int count)
+            throws ImageReadException {
+        return BinaryFunctions.getByteArrayTail(name, bytes, count);
     }
 
-    protected final byte[] getBytearrayHead(final String name, final byte bytes[], final int count) {
-        return readBytearray(name, bytes, 0, bytes.length - count);
+    protected final byte[] getBytearrayHead(final String name, final byte bytes[], final int count)
+            throws ImageReadException {
+        return BinaryFunctions.getByteArrayHead(name, bytes, count);
     }
 
     public final boolean compareByteArrays(final byte a[], final int aStart, final byte b[],
             final int bStart, final int length) {
-        if (a.length < (aStart + length)) {
-            return false;
-        }
-        if (b.length < (bStart + length)) {
-            return false;
-        }
-
-        for (int i = 0; i < length; i++) {
-            if (a[aStart + i] != b[bStart + i]) {
-                debugNumber("a[" + (aStart + i) + "]", a[aStart + i]);
-                debugNumber("b[" + (bStart + i) + "]", b[bStart + i]);
-
-                return false;
-            }
-        }
-
-        return true;
+        return BinaryFunctions.compareByteArrays(a, aStart, b, bStart, length);
     }
 
     protected final int read4Bytes(final String name, final String exception, final ByteOrder byteOrder)
             throws IOException {
-        final int size = 4;
-        final byte bytes[] = new byte[size];
-
-        int read = 0;
-        while (read < size) {
-            final int count = is.read(bytes, read, size - read);
-            if (count < 1) {
-                throw new IOException(exception);
-            }
-
-            read += count;
-        }
-
-        return convertByteArrayToInt(name, bytes, byteOrder);
+        return BinaryFunctions.read4Bytes(name, is, exception, byteOrder);
+    }
+    
+    public final int read4Bytes(final String exception) throws IOException {
+        return BinaryFunctions.read4Bytes("", is, exception, byteOrder);
     }
 
     protected final int read3Bytes(final String name, final String exception, final ByteOrder byteOrder)
             throws IOException {
-        final int size = 3;
-        final byte bytes[] = new byte[size];
-
-        int read = 0;
-        while (read < size) {
-            final int count = is.read(bytes, read, size - read);
-            if (count < 1) {
-                throw new IOException(exception);
-            }
-
-            read += count;
-        }
-
-        return convertByteArrayToInt(name, bytes, 0, 3, byteOrder);
-
+        return BinaryFunctions.read3Bytes(name, is, exception, byteOrder);
     }
 
     protected final int read2Bytes(final String name, final String exception, final ByteOrder byteOrder)
             throws IOException {
-        final int size = 2;
-        final byte bytes[] = new byte[size];
-
-        int read = 0;
-        while (read < size) {
-            final int count = is.read(bytes, read, size - read);
-            if (count < 1) {
-                throw new IOException(exception);
-            }
-
-            read += count;
-        }
-
-        return convertByteArrayToShort(name, bytes, byteOrder);
+        return BinaryFunctions.read2Bytes(name, is, exception, byteOrder);
+    }
+    
+    public final int read2Bytes(final String exception) throws IOException {
+        return BinaryFunctions.read2Bytes("", is, exception, byteOrder);
     }
 
     public final int read1ByteInteger(final String exception)
             throws ImageReadException, IOException {
-        final int byte0 = is.read();
-        if (byte0 < 0) {
-            throw new ImageReadException(exception);
-        }
-
-        return 0xff & byte0;
-    }
-
-    public final int read2ByteInteger(final String exception)
-            throws ImageReadException, IOException {
-        final int byte0 = is.read();
-        final int byte1 = is.read();
-        if ((byte0 | byte1) < 0) {
-            throw new ImageReadException(exception);
-        }
-
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            return ((0xff & byte0) << 8) + ((0xff & byte1) << 0);
-        } else {
-            return ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
-        }
-    }
-
-    public final int read4ByteInteger(final String exception)
-            throws ImageReadException, IOException {
-        final int byte0 = is.read();
-        final int byte1 = is.read();
-        final int byte2 = is.read();
-        final int byte3 = is.read();
-        if ((byte0 | byte1 | byte2 | byte3) < 0) {
-            throw new ImageReadException(exception);
-        }
-
-        if (byteOrder == ByteOrder.MOTOROLA) {
-            return ((0xff & byte0) << 24) + ((0xff & byte1) << 16)
-                    + ((0xff & byte2) << 8) + ((0xff & byte3) << 0);
-        } else {
-            return ((0xff & byte3) << 24) + ((0xff & byte2) << 16)
-                    + ((0xff & byte1) << 8) + ((0xff & byte0) << 0);
-        }
+        return BinaryFunctions.readByte("", is, exception);
     }
 
     protected final void printCharQuad(final String msg, final int i) {
-        System.out.println(msg + ": '" + (char) (0xff & (i >> 24))
-                + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
-                + (char) (0xff & (i >> 0)) + "'");
+        BinaryFunctions.printCharQuad(msg, i);
     }
 
     protected final void printByteBits(final String msg, final byte i) {
-        System.out.println(msg + ": '" + Integer.toBinaryString(0xff & i));
+        BinaryFunctions.printByteBits(msg, i);
     }
 
     protected final static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
-        return (((0xff & c1) << 24) | ((0xff & c2) << 16) | ((0xff & c3) << 8) | ((0xff & c4) << 0));
+        return BinaryFunctions.charsToQuad(c1, c2, c3, c4);
     }
 
     public final int findNull(final byte src[]) {
-        return findNull(src, 0);
+        return BinaryFunctions.findNull(src);
     }
 
     public final int findNull(final byte src[], final int start) {
-        for (int i = start; i < src.length; i++) {
-            if (src[i] == 0) {
-                return i;
-            }
-        }
-        return -1;
+        return BinaryFunctions.findNull(src, start);
     }
 
     protected final byte[] getRAFBytes(final RandomAccessFile raf, final long pos,
             final int length, final String exception) throws IOException {
-        final byte result[] = new byte[length];
-
-        if (debug) {
-            System.out.println("getRAFBytes pos" + ": " + pos);
-            System.out.println("getRAFBytes length" + ": " + length);
-        }
-
-        raf.seek(pos);
-
-        int read = 0;
-        while (read < length) {
-            final int count = raf.read(result, read, length - read);
-            if (count < 1) {
-                throw new IOException(exception);
-            }
-
-            read += count;
-        }
-
-        return result;
-
+        return BinaryFunctions.getRAFBytes(raf, pos, length, exception);
     }
 
     protected void skipBytes(final int length) throws IOException {
-        skipBytes(length, "Couldn't skip bytes");
+        BinaryFunctions.skipBytes(is, length);
     }
 
 }

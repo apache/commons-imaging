@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryConversions;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.RationalNumberUtilities;
@@ -32,25 +32,25 @@ public class FieldTypeRational extends FieldType {
     @Override
     public Object getSimpleValue(final TiffField entry) {
         if (entry.length == 1) {
-            return BinaryConversions.toRational(entry.oversizeValue, entry.byteOrder);
+            return ByteConversions.toRational(entry.oversizeValue, entry.byteOrder);
         }
 
-        return BinaryConversions.toRationals(getRawBytes(entry), 0, 8*entry.length,
+        return ByteConversions.toRationals(getRawBytes(entry), 0, 8*entry.length,
                 entry.byteOrder);
     }
 
     @Override
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof RationalNumber) {
-            return BinaryConversions.toBytes((RationalNumber) o, byteOrder);
+            return ByteConversions.toBytes((RationalNumber) o, byteOrder);
         } else if (o instanceof RationalNumber[]) {
-            return BinaryConversions.toBytes((RationalNumber[]) o,
+            return ByteConversions.toBytes((RationalNumber[]) o,
                     byteOrder);
         } else if (o instanceof Number) {
             final Number number = (Number) o;
             final RationalNumber rationalNumber = RationalNumberUtilities
                     .getRationalNumber(number.doubleValue());
-            return BinaryConversions.toBytes(rationalNumber, byteOrder);
+            return ByteConversions.toBytes(rationalNumber, byteOrder);
         } else if (o instanceof Number[]) {
             final Number numbers[] = (Number[]) o;
             final RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
@@ -59,7 +59,7 @@ public class FieldTypeRational extends FieldType {
                 rationalNumbers[i] = RationalNumberUtilities
                         .getRationalNumber(number.doubleValue());
             }
-            return BinaryConversions.toBytes(rationalNumbers, byteOrder);
+            return ByteConversions.toBytes(rationalNumbers, byteOrder);
         } else if (o instanceof double[]) {
             final double numbers[] = (double[]) o;
             final RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
@@ -68,22 +68,10 @@ public class FieldTypeRational extends FieldType {
                 rationalNumbers[i] = RationalNumberUtilities
                         .getRationalNumber(number);
             }
-            return BinaryConversions.toBytes(rationalNumbers, byteOrder);
+            return ByteConversions.toBytes(rationalNumbers, byteOrder);
         } else {
             throw new ImageWriteException("Invalid data: " + o + " ("
                     + Debug.getType(o) + ")");
         }
-    }
-
-    public byte[] writeData(final int numerator, final int denominator, final ByteOrder byteOrder)
-            throws ImageWriteException {
-        return writeData(new int[] { numerator }, new int[] { denominator },
-                byteOrder);
-    }
-
-    public byte[] writeData(final int numerators[], final int denominators[], final ByteOrder byteOrder)
-            throws ImageWriteException {
-        return convertIntArrayToRationalArray(numerators, denominators,
-                byteOrder);
     }
 }
