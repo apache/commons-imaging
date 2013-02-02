@@ -133,7 +133,7 @@ public class PixelParserRle extends PixelParser {
                     // System.out.println("size: " + size);
                     // System.out.println("SamplesPerByte: " + SamplesPerByte);
 
-                    final byte bytes[] = is.readByteArray("bytes", size,
+                    final byte bytes[] = is.readBytes("bytes", size,
                             "RLE: Absolute Mode");
 
                     int remaining = b;

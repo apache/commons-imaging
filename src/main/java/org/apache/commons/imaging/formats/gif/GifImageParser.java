@@ -186,7 +186,7 @@ public class GifImageParser extends ImageParser {
     private byte[] readSubBlock(final InputStream is) throws IOException {
         final int block_size = 0xff & readByte("block_size", is, "GIF: corrupt block");
 
-        final byte bytes[] = readByteArray("block", block_size, is,
+        final byte bytes[] = readBytes("block", block_size, is,
                 "GIF: corrupt block");
 
         return bytes;
@@ -422,7 +422,7 @@ public class GifImageParser extends ImageParser {
             final FormatCompliance formatCompliance) throws IOException {
         final int actual_size = convertColorTableSize(ct_size);
 
-        final byte bytes[] = readByteArray("block", actual_size, is,
+        final byte bytes[] = readBytes("block", actual_size, is,
                 "GIF: corrupt Color Table");
 
         return bytes;
@@ -1082,7 +1082,7 @@ public class GifImageParser extends ImageParser {
                     continue;
                 }
 
-                if (!compareByteArrays(blockBytes, 0,
+                if (!compareBytes(blockBytes, 0,
                         XMP_APPLICATION_ID_AND_AUTH_CODE, 0,
                         XMP_APPLICATION_ID_AND_AUTH_CODE.length)) {
                     continue;
@@ -1097,7 +1097,7 @@ public class GifImageParser extends ImageParser {
                         + GIF_MAGIC_TRAILER.length) {
                     continue;
                 }
-                if (!compareByteArrays(blockBytes, blockBytes.length
+                if (!compareBytes(blockBytes, blockBytes.length
                         - GIF_MAGIC_TRAILER.length, GIF_MAGIC_TRAILER, 0,
                         GIF_MAGIC_TRAILER.length)) {
                     throw new ImageReadException(

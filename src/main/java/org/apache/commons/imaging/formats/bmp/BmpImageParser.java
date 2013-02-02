@@ -309,7 +309,7 @@ public class BmpImageParser extends ImageParser {
                     // RLESamplesPerByte);
                     // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                     // );
-                    final byte bytes[] = this.readByteArray("bytes", size, is,
+                    final byte bytes[] = this.readBytes("bytes", size, is,
                             "RLE: Absolute Mode");
                     baos.write(bytes);
                 }
@@ -406,7 +406,7 @@ public class BmpImageParser extends ImageParser {
 
         byte colorTable[] = null;
         if (paletteLength > 0) {
-            colorTable = this.readByteArray("ColorTable", paletteLength, is,
+            colorTable = this.readBytes("ColorTable", paletteLength, is,
                     "Not a Valid BMP File");
         }
 
@@ -454,7 +454,7 @@ public class BmpImageParser extends ImageParser {
                     + expectedDataOffset + ", paletteLength: " + paletteLength
                     + ", headerSize: " + headerSize + ")");
         } else if (extraBytes > 0) {
-            this.readByteArray("BitmapDataOffset", extraBytes, is,
+            this.readBytes("BitmapDataOffset", extraBytes, is,
                     "Not a Valid BMP File");
         }
 
@@ -468,7 +468,7 @@ public class BmpImageParser extends ImageParser {
         if (rle) {
             imageData = getRLEBytes(is, rleSamplesPerByte);
         } else {
-            imageData = this.readByteArray("ImageData", imageDataSize, is,
+            imageData = this.readBytes("ImageData", imageDataSize, is,
                     "Not a Valid BMP File");
         }
 

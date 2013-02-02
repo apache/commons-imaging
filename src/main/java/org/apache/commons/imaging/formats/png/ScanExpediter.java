@@ -228,7 +228,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
             throw new ImageReadException("PNG: missing filter type");
         }
 
-        final byte scanline[] = this.readByteArray("scanline", length, is,
+        final byte scanline[] = this.readBytes("scanline", length, is,
                 "PNG: missing image data");
 
         final byte unfiltered[] = unfilterScanline(filterType, scanline, prev,

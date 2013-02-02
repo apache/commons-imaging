@@ -390,7 +390,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         //
         // Debug.debug("head", head);
 
-        return getByteArrayTail("trimmed exif bytes", bytes, 6);
+        return remainingBytes("trimmed exif bytes", bytes, 6);
     }
 
     public boolean hasExifSegment(final ByteSource byteSource)

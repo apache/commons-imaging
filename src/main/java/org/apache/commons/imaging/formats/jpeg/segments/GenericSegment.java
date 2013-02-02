@@ -27,7 +27,7 @@ public abstract class GenericSegment extends Segment {
             throws IOException {
         super(marker, marker_length);
 
-        bytes = readByteArray("Segment Data", marker_length, is,
+        bytes = readBytes("Segment Data", marker_length, is,
                 "Invalid Segment: insufficient data");
     }
 

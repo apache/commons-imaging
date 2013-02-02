@@ -73,7 +73,6 @@ public class BinaryOutputStream extends OutputStream {
             write(0xff & (value >> 16));
             write(0xff & (value >> 24));
         }
-        count += 4;
     }
 
     public final void write3Bytes(final int value) throws IOException {
@@ -86,7 +85,6 @@ public class BinaryOutputStream extends OutputStream {
             write(0xff & (value >> 8));
             write(0xff & (value >> 16));
         }
-        count += 3;
     }
 
     public final void write2Bytes(final int value) throws IOException {
@@ -97,7 +95,6 @@ public class BinaryOutputStream extends OutputStream {
             write(0xff & value);
             write(0xff & (value >> 8));
         }
-        count += 2;
     }
 
     public final void writeByteArray(final byte bytes[]) throws IOException {

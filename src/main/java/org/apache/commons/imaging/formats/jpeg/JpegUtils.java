@@ -76,11 +76,11 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                     break;
                 }
 
-                final byte segmentLengthBytes[] = readByteArray("segmentLengthBytes",
+                final byte segmentLengthBytes[] = readBytes("segmentLengthBytes",
                         2, is, "segmentLengthBytes");
                 final int segmentLength = toUInt16(segmentLengthBytes);
 
-                final byte segmentData[] = readByteArray("Segment Data",
+                final byte segmentData[] = readBytes("Segment Data",
                         segmentLength - 2, is,
                         "Invalid Segment: insufficient data");
 

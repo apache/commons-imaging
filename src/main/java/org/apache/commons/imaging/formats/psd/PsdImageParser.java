@@ -106,7 +106,7 @@ public class PsdImageParser extends ImageParser {
 
         final int Version = read2Bytes("Version", is, "Not a Valid PSD File");
 
-        final byte Reserved[] = readByteArray("Reserved", 6, is,
+        final byte Reserved[] = readBytes("Reserved", 6, is,
                 "Not a Valid PSD File");
 
         final int Channels = read2Bytes("Channels", is, "Not a Valid PSD File");
@@ -202,7 +202,7 @@ public class PsdImageParser extends ImageParser {
             final int nameLength = readByte("NameLength", is, "Not a Valid PSD File");
 
             available -= 1;
-            final byte nameBytes[] = readByteArray("NameData", nameLength, is,
+            final byte nameBytes[] = readBytes("NameData", nameLength, is,
                     "Not a Valid PSD File");
             available -= nameLength;
             if (((nameLength + 1) % 2) != 0) {
@@ -217,7 +217,7 @@ public class PsdImageParser extends ImageParser {
             // ? DataSize
             // : DataSize + 1; // pad to make even
 
-            final byte Data[] = readByteArray("Data", DataSize, is,
+            final byte Data[] = readBytes("Data", DataSize, is,
                     "Not a Valid PSD File");
             available -= DataSize;
 
@@ -255,7 +255,7 @@ public class PsdImageParser extends ImageParser {
             is.close();
 
             is = this.getInputStream(byteSource, PSD_SECTION_IMAGE_RESOURCES);
-            final byte ImageResources[] = readByteArray("ImageResources",
+            final byte ImageResources[] = readBytes("ImageResources",
                     imageContents.ImageResourcesLength, is,
                     "Not a Valid PSD File");
 
@@ -358,7 +358,7 @@ public class PsdImageParser extends ImageParser {
 
             // PsdHeaderInfo header = readHeader(is);
             if (section == PSD_SECTION_HEADER) {
-                return readByteArray("Header", PSD_HEADER_LENGTH, is,
+                return readBytes("Header", PSD_HEADER_LENGTH, is,
                         "Not a Valid PSD File");
             }
             skipBytes(is, PSD_HEADER_LENGTH);
@@ -367,7 +367,7 @@ public class PsdImageParser extends ImageParser {
                     "Not a Valid PSD File");
 
             if (section == PSD_SECTION_COLOR_MODE) {
-                return readByteArray("ColorModeData", ColorModeDataLength, is,
+                return readBytes("ColorModeData", ColorModeDataLength, is,
                         "Not a Valid PSD File");
             }
 
@@ -379,7 +379,7 @@ public class PsdImageParser extends ImageParser {
                     "Not a Valid PSD File");
 
             if (section == PSD_SECTION_IMAGE_RESOURCES) {
-                return readByteArray("ImageResources", ImageResourcesLength,
+                return readBytes("ImageResources", ImageResourcesLength,
                         is, "Not a Valid PSD File");
             }
 
@@ -391,7 +391,7 @@ public class PsdImageParser extends ImageParser {
                     is, "Not a Valid PSD File");
 
             if (section == PSD_SECTION_LAYER_AND_MASK_DATA) {
-                return readByteArray("LayerAndMaskData",
+                return readBytes("LayerAndMaskData",
                         LayerAndMaskDataLength, is, "Not a Valid PSD File");
             }
 

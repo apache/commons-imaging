@@ -207,7 +207,7 @@ public class WbmpImageParser extends ImageParser {
     private BufferedImage readImage(final WbmpHeader wbmpHeader, final InputStream is)
             throws IOException {
         final int rowLength = (wbmpHeader.width + 7) / 8;
-        final byte[] image = readByteArray("Pixels", rowLength * wbmpHeader.height,
+        final byte[] image = readBytes("Pixels", rowLength * wbmpHeader.height,
                 is, "Error reading image pixels");
         final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
         final WritableRaster raster = WritableRaster.createPackedRaster(dataBuffer,

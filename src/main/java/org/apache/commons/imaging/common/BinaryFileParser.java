@@ -29,11 +29,11 @@ public class BinaryFileParser {
     private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
     protected boolean debug = false;
 
-    protected BinaryFileParser(final ByteOrder byteOrder) {
+    public BinaryFileParser(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
-    protected BinaryFileParser() {
+    public BinaryFileParser() {
     }
 
     protected void setByteOrder(final ByteOrder byteOrder) {
@@ -96,19 +96,14 @@ public class BinaryFileParser {
         return BinaryFunctions.readByte(name, is, exception);
     }
     
-    protected final byte[] readByteArray(final String name, final int length, final InputStream is,
+    protected final byte[] readBytes(final String name, final int length, final InputStream is,
             final String exception) throws IOException {
-        return BinaryFunctions.readByteArray(name, length, is, exception);
+        return BinaryFunctions.readBytes(name, length, is, exception);
     }
     
-    protected final byte[] readByteArray(final String name, final int length, final InputStream is)
+    protected final byte[] readBytes(final String name, final int length, final InputStream is)
             throws IOException {
-        return BinaryFunctions.readByteArray(name, length, is);
-    }
-    
-    protected byte[] readBytearray(final String name, final byte bytes[], final int start,
-            final int count) throws ImageReadException {
-        return BinaryFunctions.readBytearray(name, bytes, start, count);
+        return BinaryFunctions.readBytes(name, length, is);
     }
     
     protected final byte[] readBytes(final InputStream is, final int count) throws IOException {
@@ -136,9 +131,13 @@ public class BinaryFileParser {
         BinaryFunctions.skipBytes(is, length, exception);
     }
     
-    protected final byte[] getByteArrayTail(final String name, final byte bytes[], final int count)
+    protected final byte[] remainingBytes(final String name, final byte bytes[], final int count)
             throws ImageReadException {
-        return BinaryFunctions.getByteArrayTail(name, bytes, count);
+        return BinaryFunctions.remainingBytes(name, bytes, count);
+    }
+    
+    protected final byte[] slice(final byte bytes[], final int start, final int count) {
+        return BinaryFunctions.slice(bytes, start, count);
     }
     
     protected final int findNull(final byte src[]) {
@@ -208,9 +207,9 @@ public class BinaryFileParser {
         }
     }
 
-    protected final boolean compareByteArrays(final byte a[], final int aStart, final byte b[],
+    protected final boolean compareBytes(final byte a[], final int aStart, final byte b[],
             final int bStart, final int length) {
-        return BinaryFunctions.compareByteArrays(a, aStart, b, bStart, length);
+        return BinaryFunctions.compareBytes(a, aStart, b, bStart, length);
     }
     
     protected static boolean startsWith(final byte haystack[], final BinaryConstant needle) {

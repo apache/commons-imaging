@@ -379,7 +379,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
             exifPiece = (JFIFPieceSegment) jfifPieces.exifPieces.get(0);
 
             byte exifBytes[] = exifPiece.segmentData;
-            exifBytes = getByteArrayTail("trimmed exif bytes", exifBytes, 6);
+            exifBytes = remainingBytes("trimmed exif bytes", exifBytes, 6);
 
             writer = new TiffImageWriterLossless(outputSet.byteOrder, exifBytes);
 

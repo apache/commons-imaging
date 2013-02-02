@@ -178,7 +178,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                 // Debug.debug("tag*", tag + " (0x" + Integer.toHexString(tag)
                 // + ")");
 
-                final byte valueOffsetBytes[] = readByteArray("ValueOffset", 4, is,
+                final byte valueOffsetBytes[] = readBytes("ValueOffset", 4, is,
                         "Not a Valid TIFF File");
                 final int valueOffset = toInt(valueOffsetBytes);
 

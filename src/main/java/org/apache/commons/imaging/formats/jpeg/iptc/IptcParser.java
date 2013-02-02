@@ -29,6 +29,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteOrder;
@@ -197,8 +198,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 return elements;
             }
 
-            final byte recordData[] = readBytearray("recordData", bytes, index,
-                    recordSize);
+            final byte recordData[] = slice(bytes, index, recordSize);
             index += recordSize;
 
             // Debug.debug("recordSize", recordSize + " (0x"
@@ -273,7 +273,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // Note that these are unsigned quantities. Name is always an even
             // number of bytes (including the 1st byte, which is the size.)
     
-            final byte[] idString = bis.readByteArray(
+            final byte[] idString = bis.readBytes(
                     PHOTOSHOP_IDENTIFICATION_STRING.size(),
                     "App13 Segment missing identification string");
             if (!PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
@@ -284,7 +284,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
     
             while (true) {
                 final byte[] imageResourceBlockSignature = bis
-                        .readByteArray(CONST_8BIM.size(),
+                        .readBytes(CONST_8BIM.size(),
                                 "App13 Segment missing identification string",
                                 false, false);
                 if (null == imageResourceBlockSignature) {
@@ -303,25 +303,25 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                                     + ")");
                 }
     
-                final int blockNameLength = bis
-                        .read1ByteInteger("Image Resource Block missing name length");
+                final int blockNameLength = bis.readByte("Name length",
+                        "Image Resource Block missing name length");
                 if (verbose && blockNameLength > 0) {
                     Debug.debug("blockNameLength", blockNameLength + " (0x"
                             + Integer.toHexString(blockNameLength) + ")");
                 }
                 byte[] blockNameBytes;
                 if (blockNameLength == 0) {
-                    bis.read1ByteInteger("Image Resource Block has invalid name");
+                    bis.readByte("Block name bytes", "Image Resource Block has invalid name");
                     blockNameBytes = new byte[0];
                 } else {
-                    blockNameBytes = bis.readByteArray(blockNameLength,
+                    blockNameBytes = bis.readBytes(blockNameLength,
                             "Invalid Image Resource Block name", verbose, strict);
                     if (null == blockNameBytes) {
                         break;
                     }
     
                     if (blockNameLength % 2 == 0) {
-                        bis.read1ByteInteger("Image Resource Block missing padding byte");
+                        bis.readByte("Padding byte", "Image Resource Block missing padding byte");
                     }
                 }
     
@@ -342,7 +342,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                             + blockSize + " > " + bytes.length);
                 }
     
-                final byte[] blockData = bis.readByteArray(blockSize,
+                final byte[] blockData = bis.readBytes(blockSize,
                         "Invalid Image Resource Block data", verbose, strict);
                 if (null == blockData) {
                     break;
@@ -351,7 +351,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 blocks.add(new IptcBlock(blockType, blockNameBytes, blockData));
     
                 if ((blockSize % 2) != 0) {
-                    bis.read1ByteInteger("Image Resource Block missing padding byte");
+                    bis.readByte("Padding byte", "Image Resource Block missing padding byte");
                 }
             }
     

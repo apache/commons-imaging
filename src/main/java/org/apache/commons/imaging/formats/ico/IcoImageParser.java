@@ -406,7 +406,7 @@ public class IcoImageParser extends ImageParser {
             GreenMask = read4Bytes("GreenMask", is, "Not a Valid ICO File");
             BlueMask = read4Bytes("BlueMask", is, "Not a Valid ICO File");
         }
-        final byte[] RestOfFile = readByteArray("RestOfFile", is.available(), is);
+        final byte[] RestOfFile = readBytes("RestOfFile", is.available(), is);
 
         if (Size != 40) {
             throw new ImageReadException(
@@ -483,7 +483,7 @@ public class IcoImageParser extends ImageParser {
         final int tcolor_map_size_bytes = t_scanline_size * (Height / 2);
         byte[] transparency_map = null;
         try {
-            transparency_map = this.readByteArray("transparency_map",
+            transparency_map = this.readBytes("transparency_map",
                     tcolor_map_size_bytes, bmpInputStream,
                     "Not a Valid ICO File");
         } catch (final IOException ioEx) {

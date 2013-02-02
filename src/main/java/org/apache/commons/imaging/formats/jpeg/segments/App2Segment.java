@@ -50,7 +50,7 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
             marker_length -= JpegImageParser.icc_profile_label.size();
             marker_length -= (1 + 1);
 
-            icc_bytes = readByteArray("App2 Data", marker_length, is,
+            icc_bytes = readBytes("App2 Data", marker_length, is,
                     "Invalid App2 Segment: insufficient data");
         } else {
             // debugByteArray("Unknown APP2 Segment Type", bytes);

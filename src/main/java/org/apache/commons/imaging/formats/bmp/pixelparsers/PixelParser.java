@@ -37,7 +37,7 @@ public abstract class PixelParser {
         this.colorTable = ColorTable;
         this.imageData = ImageData;
 
-        is = new BinaryInputStream(new ByteArrayInputStream(ImageData), ByteOrder.INTEL);
+        is = new BinaryInputStream(new ByteArrayInputStream(ImageData), ByteOrder.LITTLE_ENDIAN);
     }
 
     public abstract void processImage(ImageBuilder imageBuilder)

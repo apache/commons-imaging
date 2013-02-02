@@ -255,7 +255,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
 
     private PcxHeader readPcxHeader(final InputStream is, final boolean isStrict)
             throws ImageReadException, IOException {
-        final byte[] pcxHeaderBytes = readByteArray("PcxHeader", 128, is,
+        final byte[] pcxHeaderBytes = readBytes("PcxHeader", 128, is,
                 "Not a Valid PCX File");
         final int manufacturer = 0xff & pcxHeaderBytes[0];
         final int version = 0xff & pcxHeaderBytes[1];
@@ -344,7 +344,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
     }
 
     private int[] read256ColorPalette(final InputStream stream) throws IOException {
-        final byte[] paletteBytes = readByteArray("Palette", 769, stream,
+        final byte[] paletteBytes = readBytes("Palette", 769, stream,
                 "Error reading palette");
         if (paletteBytes[0] != 12) {
             return null;

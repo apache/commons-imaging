@@ -65,7 +65,7 @@ public class CompressedDataReader extends DataReader {
         for (int channel = 0; channel < channel_count; channel++) {
             for (int y = 0; y < height; y++) {
                 final int index = channel * height + y;
-                final byte packed[] = BinaryFunctions.readByteArray("scanline",
+                final byte packed[] = BinaryFunctions.readBytes("scanline",
                         scanline_bytecounts[index], is,
                         "PSD: Missing Image Data");
 

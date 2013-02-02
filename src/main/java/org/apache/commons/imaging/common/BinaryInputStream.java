@@ -51,11 +51,11 @@ public class BinaryInputStream extends InputStream {
         this.is = is;
     }
 
-    protected void setByteOrder(final ByteOrder byteOrder) {
+    public final void setByteOrder(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
     }
 
-    protected ByteOrder getByteOrder() {
+    public final ByteOrder getByteOrder() {
         return byteOrder;
     }
 
@@ -93,7 +93,7 @@ public class BinaryInputStream extends InputStream {
         BinaryFunctions.readAndVerifyBytes(is, expected, exception);
     }
 
-    protected final void readAndVerifyBytes(final String name, final byte expected[],
+    public final void readAndVerifyBytes(final String name, final byte expected[],
             final String exception) throws ImageReadException, IOException {
         BinaryFunctions.readAndVerifyBytes(name, is, expected, exception);
     }
@@ -103,21 +103,16 @@ public class BinaryInputStream extends InputStream {
         BinaryFunctions.skipBytes(is, length, exception);
     }
 
-    protected final void scanForByte(final byte value) throws IOException {
+    public final void scanForByte(final byte value) throws IOException {
         BinaryFunctions.scanForByte(is, value);
     }
 
-    public final byte readByte(final String name, final String exception)
+    public final byte[] readBytes(final String name, final int length, final String exception)
             throws IOException {
-        return BinaryFunctions.readByte(name, is, exception);
+        return BinaryFunctions.readBytes(name, length, is, exception);
     }
 
-    public final byte[] readByteArray(final String name, final int length, final String exception)
-            throws IOException {
-        return BinaryFunctions.readByteArray(name, length, is, exception);
-    }
-
-    protected final void debugByteArray(final String name, final byte bytes[]) {
+    public final void debugByteArray(final String name, final byte bytes[]) {
         System.out.println(name + ": " + bytes.length);
 
         for (int i = 0; ((i < bytes.length) && (i < 50)); i++) {
@@ -125,7 +120,7 @@ public class BinaryInputStream extends InputStream {
         }
     }
 
-    protected final void debugNumberArray(final String name, final int numbers[], final int length) {
+    public final void debugNumberArray(final String name, final int numbers[], final int length) {
         System.out.println(name + ": " + numbers.length);
 
         for (int i = 0; ((i < numbers.length) && (i < 50)); i++) {
@@ -133,17 +128,12 @@ public class BinaryInputStream extends InputStream {
         }
     }
 
-    public final byte[] readBytearray(final String name, final byte bytes[], final int start,
-            final int count) throws ImageReadException {
-        return BinaryFunctions.readBytearray(name, bytes, start, count);
-    }
-
-    public final byte[] readByteArray(final int length, final String error)
+    public final byte[] readBytes(final int length, final String error)
             throws ImageReadException, IOException {
-        return BinaryFunctions.readByteArray("", length, is, error);
+        return BinaryFunctions.readBytes("", length, is, error);
     }
 
-    public final byte[] readByteArray(final int length, final String error,
+    public final byte[] readBytes(final int length, final String error,
             final boolean verbose, final boolean strict) throws ImageReadException,
             IOException {
         final byte bytes[] = new byte[length];
@@ -163,22 +153,12 @@ public class BinaryInputStream extends InputStream {
         return bytes;
     }
 
-    protected final byte[] getBytearrayTail(final String name, final byte bytes[], final int count)
-            throws ImageReadException {
-        return BinaryFunctions.getByteArrayTail(name, bytes, count);
-    }
-
-    protected final byte[] getBytearrayHead(final String name, final byte bytes[], final int count)
-            throws ImageReadException {
-        return BinaryFunctions.getByteArrayHead(name, bytes, count);
-    }
-
-    public final boolean compareByteArrays(final byte a[], final int aStart, final byte b[],
+    public final boolean compareBytes(final byte a[], final int aStart, final byte b[],
             final int bStart, final int length) {
-        return BinaryFunctions.compareByteArrays(a, aStart, b, bStart, length);
+        return BinaryFunctions.compareBytes(a, aStart, b, bStart, length);
     }
 
-    protected final int read4Bytes(final String name, final String exception, final ByteOrder byteOrder)
+    public final int read4Bytes(final String name, final String exception, final ByteOrder byteOrder)
             throws IOException {
         return BinaryFunctions.read4Bytes(name, is, exception, byteOrder);
     }
@@ -187,17 +167,16 @@ public class BinaryInputStream extends InputStream {
         return BinaryFunctions.read4Bytes("", is, exception, byteOrder);
     }
 
-    protected final int read3Bytes(final String name, final String exception, final ByteOrder byteOrder)
+    public final int read3Bytes(final String name, final String exception, final ByteOrder byteOrder)
             throws IOException {
         return BinaryFunctions.read3Bytes(name, is, exception, byteOrder);
     }
-
-    public final int read3Bytes(final String name, final String exception)
-            throws IOException {
+    
+    public final int read3Bytes(final String name, final String exception) throws IOException {
         return BinaryFunctions.read3Bytes(name, is, exception, byteOrder);
     }
 
-    protected final int read2Bytes(final String name, final String exception, final ByteOrder byteOrder)
+    public final int read2Bytes(final String name, final String exception, final ByteOrder byteOrder)
             throws IOException {
         return BinaryFunctions.read2Bytes(name, is, exception, byteOrder);
     }
@@ -211,20 +190,19 @@ public class BinaryInputStream extends InputStream {
         return BinaryFunctions.read2Bytes("", is, exception, byteOrder);
     }
 
-    public final int read1ByteInteger(final String exception)
-            throws ImageReadException, IOException {
-        return BinaryFunctions.readByte("", is, exception);
+    public final byte readByte(final String name, final String exception) throws IOException {
+        return BinaryFunctions.readByte(name, is, exception);
     }
 
-    protected final void printCharQuad(final String msg, final int i) {
+    public final void printCharQuad(final String msg, final int i) {
         BinaryFunctions.printCharQuad(msg, i);
     }
 
-    protected final void printByteBits(final String msg, final byte i) {
+    public final void printByteBits(final String msg, final byte i) {
         BinaryFunctions.printByteBits(msg, i);
     }
 
-    protected final static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
+    public final static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
         return BinaryFunctions.charsToQuad(c1, c2, c3, c4);
     }
 
@@ -236,12 +214,12 @@ public class BinaryInputStream extends InputStream {
         return BinaryFunctions.findNull(src, start);
     }
 
-    protected final byte[] getRAFBytes(final RandomAccessFile raf, final long pos,
+    public final byte[] getRAFBytes(final RandomAccessFile raf, final long pos,
             final int length, final String exception) throws IOException {
         return BinaryFunctions.getRAFBytes(raf, pos, length, exception);
     }
 
-    protected void skipBytes(final int length) throws IOException {
+    public void skipBytes(final int length) throws IOException {
         BinaryFunctions.skipBytes(is, length);
     }
 

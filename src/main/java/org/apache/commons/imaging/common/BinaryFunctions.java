@@ -97,7 +97,7 @@ public class BinaryFunctions {
     public static final void readAndVerifyBytes(final String name, final InputStream is,
             final byte expected[], final String exception) throws ImageReadException,
             IOException {
-        final byte bytes[] = readByteArray(name, expected.length, is, exception);
+        final byte bytes[] = readBytes(name, expected.length, is, exception);
 
         for (int i = 0; i < expected.length; i++) {
             if (bytes[i] != expected[i]) {
@@ -142,13 +142,13 @@ public class BinaryFunctions {
         return (byte) (0xff & result);
     }
 
-    public static final byte[] readByteArray(final String name, final int length, final InputStream is)
+    public static final byte[] readBytes(final String name, final int length, final InputStream is)
             throws IOException {
         final String exception = name + " could not be read.";
-        return readByteArray(name, length, is, exception);
+        return readBytes(name, length, is, exception);
     }
 
-    public static final byte[] readByteArray(final String name, final int length, final InputStream is,
+    public static final byte[] readBytes(final String name, final int length, final InputStream is,
             final String exception) throws IOException {
         final byte result[] = new byte[length];
         int read = 0;
@@ -165,37 +165,14 @@ public class BinaryFunctions {
         return result;
     }
 
-    public static final byte[] readBytearray(final String name, final byte bytes[], final int start,
-            final int count) throws ImageReadException {
-        if (bytes.length < (start + count)) {
-            throw new ImageReadException("Invalid read. bytes.length: "
-                    + bytes.length + ", start: " + start + ", count: " + count);
-        }
-
-        final byte result[] = new byte[count];
-        System.arraycopy(bytes, start, result, 0, count);
-
-        return result;
-    }
-
-    public static final byte[] getByteArrayTail(final String name, final byte bytes[], final int count)
+    public static final byte[] remainingBytes(final String name, final byte bytes[], final int count)
             throws ImageReadException {
-        return readBytearray(name, bytes, count, bytes.length - count);
-    }
-
-    public static final byte[] getByteArrayHead(final String name, final byte bytes[], final int count)
-            throws ImageReadException {
-        return readBytearray(name, bytes, 0, bytes.length - count);
+        return slice(bytes, count, bytes.length - count);
     }
 
     public static final byte[] slice(final byte bytes[], final int start, final int count) {
-        if (bytes.length < (start + count)) {
-            return null;
-        }
-
         final byte result[] = new byte[count];
         System.arraycopy(bytes, start, result, 0, count);
-
         return result;
     }
 
@@ -211,40 +188,6 @@ public class BinaryFunctions {
             count = bytes.length;
         }
         return slice(bytes, 0, count);
-    }
-
-    public static final boolean compareByteArrays(final byte a[], final byte b[]) {
-        if (a.length != b.length) {
-            return false;
-        }
-
-        return compareByteArrays(a, 0, b, 0, a.length);
-    }
-
-    public static final boolean compareByteArrays(final byte a[], final int aStart, final byte b[],
-            final int bStart, final int length) {
-        if (a.length < (aStart + length)) {
-            return false;
-        }
-        if (b.length < (bStart + length)) {
-            return false;
-        }
-
-        for (int i = 0; i < length; i++) {
-            if (a[aStart + i] != b[bStart + i]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public static final boolean compareBytes(final byte a[], final byte b[]) {
-        if (a.length != b.length) {
-            return false;
-        }
-
-        return compareBytes(a, 0, b, 0, a.length);
     }
 
     public static final boolean compareBytes(final byte a[], final int aStart, final byte b[],
