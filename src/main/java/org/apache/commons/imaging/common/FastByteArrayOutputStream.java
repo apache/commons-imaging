@@ -48,7 +48,8 @@ public class FastByteArrayOutputStream extends OutputStream {
             System.arraycopy(bytes, 0, result, 0, count);
             return result;
         }
-        return bytes;
+        final byte[] result = bytes;
+        return result;
     }
 
     public int getBytesWritten() {

@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.common.BinaryConstant;
+import org.apache.commons.imaging.common.BinaryFunctions;
 
 public interface JpegConstants {
     public static final int MAX_SEGMENT_SIZE = 0xffff;
@@ -145,10 +146,5 @@ public interface JpegConstants {
                     0x2E, // .
                     0x30, // 0
                     0, });
-    public static final BinaryConstant CONST_8BIM = new BinaryConstant(
-            new byte[] { 0x38, // 8
-                    0x42, // B
-                    0x49, // I
-                    0x4D, // M
-            });
+    public static final int CONST_8BIM = BinaryFunctions.charsToQuad('8', 'B', 'I', 'M');
 }

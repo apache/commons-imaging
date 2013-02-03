@@ -31,6 +31,7 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.BinaryOutputStream;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.ParamMap;
@@ -49,15 +50,8 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
         }
 
         final int index = PHOTOSHOP_IDENTIFICATION_STRING.size();
-        if (index + CONST_8BIM.size() > segmentData.length) {
-            return false;
-        }
-
-        if (!CONST_8BIM.equals(segmentData, index, CONST_8BIM.size())) {
-            return false;
-        }
-
-        return true;
+        return (index + 4) <= segmentData.length &&
+                ByteConversions.toInt(segmentData, APP13_BYTE_ORDER) == CONST_8BIM;
     }
 
     /*
@@ -282,15 +276,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
     
             while (true) {
-                final byte[] imageResourceBlockSignature;
-                try {
-                    imageResourceBlockSignature = bis.readBytes(
-                            CONST_8BIM.size(),
-                            "App13 Segment missing identification string");
-                } catch (IOException ioEx) {
-                    break;
-                }
-                if (!CONST_8BIM.equals(imageResourceBlockSignature)) {
+                final int imageResourceBlockSignature = bis.read4Bytes(
+                        "App13 Segment missing identification string");
+                if (imageResourceBlockSignature != CONST_8BIM) {
                     throw new ImageReadException(
                             "Invalid Image Resource Block Signature");
                 }
@@ -384,7 +372,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
         for (int i = 0; i < blocks.size(); i++) {
             final IptcBlock block = blocks.get(i);
 
-            CONST_8BIM.writeTo(bos);
+            bos.write4Bytes(CONST_8BIM);
 
             if (block.blockType < 0 || block.blockType > 0xffff) {
                 throw new ImageWriteException("Invalid IPTC block type.");
