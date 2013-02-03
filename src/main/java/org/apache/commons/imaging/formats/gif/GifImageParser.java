@@ -973,7 +973,7 @@ public class GifImageParser extends ImageParser {
         }
 
         { // get Image Data.
-            int image_data_total = 0;
+//            int image_data_total = 0;
 
             int LZWMinimumCodeSize = colorTableScaleLessOne + 1;
             // LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
@@ -1017,7 +1017,7 @@ public class GifImageParser extends ImageParser {
 
             final byte compressed[] = compressor.compress(imagedata);
             writeAsSubBlocks(bos, compressed);
-            image_data_total += compressed.length;
+//            image_data_total += compressed.length;
         }
 
         // palette2.dump();

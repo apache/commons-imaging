@@ -21,10 +21,8 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 
 public class ScanlineFilterUp extends ScanlineFilter {
-    private final int BytesPerPixel;
 
     public ScanlineFilterUp(final int BytesPerPixel) {
-        this.BytesPerPixel = BytesPerPixel;
     }
 
     @Override

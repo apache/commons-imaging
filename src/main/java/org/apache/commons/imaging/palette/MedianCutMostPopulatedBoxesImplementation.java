@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.palette;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -134,7 +135,9 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
         return true;
     }
     
-    private static class ColorComparer implements Comparator<ColorCount> {
+    private static class ColorComparer implements Comparator<ColorCount>, Serializable {
+        private static final long serialVersionUID = 1L;
+        
         private final ColorComponent colorComponent;
         
         public ColorComparer(final ColorComponent colorComponent) {

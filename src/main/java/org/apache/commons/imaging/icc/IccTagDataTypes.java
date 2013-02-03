@@ -29,19 +29,26 @@ public enum IccTagDataTypes implements IccTagDataType {
         public void dump(final String prefix, final byte bytes[])
                 throws ImageReadException, IOException
         {
-            final BinaryInputStream bis = new BinaryInputStream(
-                    new ByteArrayInputStream(bytes),
-                    ByteOrder.NETWORK);
-            bis.read4Bytes("type_signature", "ICC: corrupt tag data");
-
-            //            bis.setDebug(true);
-            bis.read4Bytes("ignore", "ICC: corrupt tag data");
-            final int string_length = bis.read4Bytes("string_length",
-                    "ICC: corrupt tag data");
-
-            //            bis.readByteArray("ignore", bytes.length -12, "none");
-            final String s = new String(bytes, 12, string_length - 1, "US-ASCII");
-            System.out.println(prefix + "s: '" + s + "'");
+            BinaryInputStream bis = null;
+            try {
+                bis = new BinaryInputStream(
+                        new ByteArrayInputStream(bytes),
+                        ByteOrder.NETWORK);
+                bis.read4Bytes("type_signature", "ICC: corrupt tag data");
+    
+                //            bis.setDebug(true);
+                bis.read4Bytes("ignore", "ICC: corrupt tag data");
+                final int string_length = bis.read4Bytes("string_length",
+                        "ICC: corrupt tag data");
+    
+                //            bis.readByteArray("ignore", bytes.length -12, "none");
+                final String s = new String(bytes, 12, string_length - 1, "US-ASCII");
+                System.out.println(prefix + "s: '" + s + "'");
+            } finally {
+                if (bis != null) {
+                    bis.close();
+                }
+            }
         }
 
     },
@@ -51,10 +58,17 @@ public enum IccTagDataTypes implements IccTagDataType {
         public void dump(final String prefix, final byte bytes[])
                 throws ImageReadException, IOException
         {
-            final BinaryInputStream bis = new BinaryInputStream(
-                    new ByteArrayInputStream(bytes),
-                    ByteOrder.NETWORK);
-            bis.read4Bytes("type_signature", "ICC: corrupt tag data");
+            BinaryInputStream bis = null;
+            try {
+                bis = new BinaryInputStream(
+                        new ByteArrayInputStream(bytes),
+                        ByteOrder.NETWORK);
+                bis.read4Bytes("type_signature", "ICC: corrupt tag data");
+            } finally {
+                if (bis != null) {
+                    bis.close();
+                }
+            }
         }
 
     },
@@ -64,10 +78,17 @@ public enum IccTagDataTypes implements IccTagDataType {
         public void dump(final String prefix, final byte bytes[])
                 throws ImageReadException, IOException
         {
-            final BinaryInputStream bis = new BinaryInputStream(
-                    new ByteArrayInputStream(bytes),
-                    ByteOrder.NETWORK);
-            bis.read4Bytes("type_signature", "ICC: corrupt tag data");
+            BinaryInputStream bis = null;
+            try {
+                bis = new BinaryInputStream(
+                        new ByteArrayInputStream(bytes),
+                        ByteOrder.NETWORK);
+                bis.read4Bytes("type_signature", "ICC: corrupt tag data");
+            } finally {
+                if (bis != null) {
+                    bis.close();
+                }
+            }
         }
 
     },
@@ -77,23 +98,30 @@ public enum IccTagDataTypes implements IccTagDataType {
         public void dump(final String prefix, final byte bytes[])
                 throws ImageReadException, IOException
         {
-            final BinaryInputStream bis = new BinaryInputStream(
-                    new ByteArrayInputStream(bytes),
-                    ByteOrder.NETWORK);
-            bis.read4Bytes("type_signature", "ICC: corrupt tag data");
-            bis.read4Bytes("ignore", "ICC: corrupt tag data");
-            final int thesignature = bis.read4Bytes("thesignature ",
-                    "ICC: corrupt tag data");
-            System.out.println(prefix
-                    + "thesignature: "
-                    + Integer.toHexString(thesignature)
-                    + " ("
-                    + new String(new byte[]{
-                            (byte) (0xff & (thesignature >> 24)),
-                            (byte) (0xff & (thesignature >> 16)),
-                            (byte) (0xff & (thesignature >> 8)),
-                            (byte) (0xff & (thesignature >> 0)), }, "US-ASCII")
-                    + ")");
+            BinaryInputStream bis = null;
+            try {
+                bis = new BinaryInputStream(
+                        new ByteArrayInputStream(bytes),
+                        ByteOrder.NETWORK);
+                bis.read4Bytes("type_signature", "ICC: corrupt tag data");
+                bis.read4Bytes("ignore", "ICC: corrupt tag data");
+                final int thesignature = bis.read4Bytes("thesignature ",
+                        "ICC: corrupt tag data");
+                System.out.println(prefix
+                        + "thesignature: "
+                        + Integer.toHexString(thesignature)
+                        + " ("
+                        + new String(new byte[]{
+                                (byte) (0xff & (thesignature >> 24)),
+                                (byte) (0xff & (thesignature >> 16)),
+                                (byte) (0xff & (thesignature >> 8)),
+                                (byte) (0xff & (thesignature >> 0)), }, "US-ASCII")
+                        + ")");
+            } finally {
+                if (bis != null) {
+                    bis.close();
+                }
+            }
         }
 
     },
@@ -103,13 +131,20 @@ public enum IccTagDataTypes implements IccTagDataType {
         public void dump(final String prefix, final byte bytes[])
                 throws ImageReadException, IOException
         {
-            final BinaryInputStream bis = new BinaryInputStream(
-                    new ByteArrayInputStream(bytes),
-                    ByteOrder.NETWORK);
-            bis.read4Bytes("type_signature", "ICC: corrupt tag data");
-            bis.read4Bytes("ignore", "ICC: corrupt tag data");
-            final String s = new String(bytes, 8, bytes.length - 8, "US-ASCII");
-            System.out.println(prefix + "s: '" + s + "'");
+            BinaryInputStream bis = null;
+            try {
+                bis = new BinaryInputStream(
+                        new ByteArrayInputStream(bytes),
+                        ByteOrder.NETWORK);
+                bis.read4Bytes("type_signature", "ICC: corrupt tag data");
+                bis.read4Bytes("ignore", "ICC: corrupt tag data");
+                final String s = new String(bytes, 8, bytes.length - 8, "US-ASCII");
+                System.out.println(prefix + "s: '" + s + "'");
+            } finally {
+                if (bis != null) {
+                    bis.close();
+                }
+            }
         }
 
     };

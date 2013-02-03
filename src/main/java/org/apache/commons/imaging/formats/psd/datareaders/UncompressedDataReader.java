@@ -48,20 +48,26 @@ public class UncompressedDataReader extends DataReader {
         final int depth = header.Depth;
         final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.MOTOROLA);
         // we want all samples to be bytes
-        final BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8);
+        BitsToByteInputStream bbis = null;
+        try {
+            bbis = new BitsToByteInputStream(mbis, 8);
 
-        final int data[][][] = new int[channel_count][height][width];
-        for (int channel = 0; channel < channel_count; channel++) {
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    final int b = bbis.readBits(depth);
-
-                    data[channel][y][x] = (byte) b;
+            final int data[][][] = new int[channel_count][height][width];
+            for (int channel = 0; channel < channel_count; channel++) {
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++) {
+                        final int b = bbis.readBits(depth);
+    
+                        data[channel][y][x] = (byte) b;
+                    }
                 }
             }
+    
+            dataParser.parseData(data, bi, imageContents);
+        } finally {
+            if (bbis != null) {
+                bbis.close();
+            }
         }
-
-        dataParser.parseData(data, bi, imageContents);
-
     }
 }

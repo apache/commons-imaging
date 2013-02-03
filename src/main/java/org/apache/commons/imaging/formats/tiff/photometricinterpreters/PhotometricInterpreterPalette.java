@@ -22,7 +22,6 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterPalette extends PhotometricInterpreter {
-    private final int[] fColorMap;
 
     /**
      * The color map of integer ARGB values tied to the pixel index of the
@@ -34,8 +33,6 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
             final int fBitsPerSample[], final int Predictor, final int width, final int height,
             final int[] fColorMap) {
         super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
-
-        this.fColorMap = fColorMap;
 
         final int fBitsPerPixel = bitsPerSample[0];
         final int colormap_scale = (1 << fBitsPerPixel);

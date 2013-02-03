@@ -436,32 +436,39 @@ public class IcoImageParser extends ImageParser {
         final int bitmapSize = 14 + 56 + RestOfFile.length;
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream(bitmapSize);
-        final BinaryOutputStream bos = new BinaryOutputStream(baos,
-                ByteOrder.LITTLE_ENDIAN);
-
-        bos.write('B');
-        bos.write('M');
-        bos.write4Bytes(bitmapSize);
-        bos.write4Bytes(0);
-        bos.write4Bytes(bitmapPixelsOffset);
-
-        bos.write4Bytes(56);
-        bos.write4Bytes(Width);
-        bos.write4Bytes(Height / 2);
-        bos.write2Bytes(Planes);
-        bos.write2Bytes(BitCount);
-        bos.write4Bytes(Compression);
-        bos.write4Bytes(SizeImage);
-        bos.write4Bytes(XPelsPerMeter);
-        bos.write4Bytes(YPelsPerMeter);
-        bos.write4Bytes(ColorsUsed);
-        bos.write4Bytes(ColorsImportant);
-        bos.write4Bytes(RedMask);
-        bos.write4Bytes(GreenMask);
-        bos.write4Bytes(BlueMask);
-        bos.write4Bytes(AlphaMask);
-        bos.write(RestOfFile);
-        bos.flush();
+        BinaryOutputStream bos = null;
+        try {
+            bos = new BinaryOutputStream(baos,
+                    ByteOrder.LITTLE_ENDIAN);
+    
+            bos.write('B');
+            bos.write('M');
+            bos.write4Bytes(bitmapSize);
+            bos.write4Bytes(0);
+            bos.write4Bytes(bitmapPixelsOffset);
+    
+            bos.write4Bytes(56);
+            bos.write4Bytes(Width);
+            bos.write4Bytes(Height / 2);
+            bos.write2Bytes(Planes);
+            bos.write2Bytes(BitCount);
+            bos.write4Bytes(Compression);
+            bos.write4Bytes(SizeImage);
+            bos.write4Bytes(XPelsPerMeter);
+            bos.write4Bytes(YPelsPerMeter);
+            bos.write4Bytes(ColorsUsed);
+            bos.write4Bytes(ColorsImportant);
+            bos.write4Bytes(RedMask);
+            bos.write4Bytes(GreenMask);
+            bos.write4Bytes(BlueMask);
+            bos.write4Bytes(AlphaMask);
+            bos.write(RestOfFile);
+            bos.flush();
+        } finally {
+            if (bos != null) {
+                bos.close();
+            }
+        }
 
         final ByteArrayInputStream bmpInputStream = new ByteArrayInputStream(
                 baos.toByteArray());

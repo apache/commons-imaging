@@ -414,54 +414,61 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             throws ImageWriteException, IOException {
         byte blockData[];
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final BinaryOutputStream bos = new BinaryOutputStream(baos,
-                getByteOrder());
-
-        // first, right record version record
-        bos.write(IPTC_RECORD_TAG_MARKER);
-        bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
-        bos.write(IptcTypes.RECORD_VERSION.type); // record version record
-                                                  // type.
-        bos.write2Bytes(2); // record version record size
-        bos.write2Bytes(2); // record version value
-
-        // make a copy of the list.
-        elements = new ArrayList<IptcRecord>(elements);
-
-        // sort the list. Records must be in numerical order.
-        final Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {
-            public int compare(final IptcRecord e1, final IptcRecord e2) {
-                return e2.iptcType.getType() - e1.iptcType.getType();
-            }
-        };
-        Collections.sort(elements, comparator);
-        // TODO: make sure order right
-
-        // write the list.
-        for (int i = 0; i < elements.size(); i++) {
-            final IptcRecord element = elements.get(i);
-
-            if (element.iptcType == IptcTypes.RECORD_VERSION) {
-                continue; // ignore
-            }
-
+        BinaryOutputStream bos = null;
+        try {
+            bos = new BinaryOutputStream(baos,
+                    getByteOrder());
+    
+            // first, right record version record
             bos.write(IPTC_RECORD_TAG_MARKER);
             bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
-            if (element.iptcType.getType() < 0
-                    || element.iptcType.getType() > 0xff) {
-                throw new ImageWriteException("Invalid record type: "
-                        + element.iptcType.getType());
+            bos.write(IptcTypes.RECORD_VERSION.type); // record version record
+                                                      // type.
+            bos.write2Bytes(2); // record version record size
+            bos.write2Bytes(2); // record version value
+    
+            // make a copy of the list.
+            elements = new ArrayList<IptcRecord>(elements);
+    
+            // sort the list. Records must be in numerical order.
+            final Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {
+                public int compare(final IptcRecord e1, final IptcRecord e2) {
+                    return e2.iptcType.getType() - e1.iptcType.getType();
+                }
+            };
+            Collections.sort(elements, comparator);
+            // TODO: make sure order right
+    
+            // write the list.
+            for (int i = 0; i < elements.size(); i++) {
+                final IptcRecord element = elements.get(i);
+    
+                if (element.iptcType == IptcTypes.RECORD_VERSION) {
+                    continue; // ignore
+                }
+    
+                bos.write(IPTC_RECORD_TAG_MARKER);
+                bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
+                if (element.iptcType.getType() < 0
+                        || element.iptcType.getType() > 0xff) {
+                    throw new ImageWriteException("Invalid record type: "
+                            + element.iptcType.getType());
+                }
+                bos.write(element.iptcType.getType());
+    
+                final byte recordData[] = element.value.getBytes("ISO-8859-1");
+                if (!new String(recordData, "ISO-8859-1").equals(element.value)) {
+                    throw new ImageWriteException(
+                            "Invalid record value, not ISO-8859-1");
+                }
+    
+                bos.write2Bytes(recordData.length);
+                bos.write(recordData);
             }
-            bos.write(element.iptcType.getType());
-
-            final byte recordData[] = element.value.getBytes("ISO-8859-1");
-            if (!new String(recordData, "ISO-8859-1").equals(element.value)) {
-                throw new ImageWriteException(
-                        "Invalid record value, not ISO-8859-1");
+        } finally {
+            if (bos != null) {
+                bos.close();
             }
-
-            bos.write2Bytes(recordData.length);
-            bos.write(recordData);
         }
 
         blockData = baos.toByteArray();

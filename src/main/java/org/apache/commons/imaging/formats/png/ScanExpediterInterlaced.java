@@ -56,8 +56,8 @@ public class ScanExpediterInterlaced extends ScanExpediter {
     private static final int Starting_Col[] = { 0, 4, 0, 2, 0, 1, 0 };
     private static final int Row_Increment[] = { 8, 8, 8, 4, 4, 2, 2 };
     private static final int Col_Increment[] = { 8, 8, 4, 4, 2, 2, 1 };
-    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
-    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
+//    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
+//    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
 
     @Override
     public void drive() throws ImageReadException, IOException {
@@ -68,7 +68,7 @@ public class ScanExpediterInterlaced extends ScanExpediter {
 
             int y = Starting_Row[pass - 1];
             // int y_stride = Row_Increment[pass - 1];
-            final boolean rows_in_pass = (y < height);
+            //final boolean rows_in_pass = (y < height);
             while (y < height) {
                 int x = Starting_Col[pass - 1];
                 int pixel_index_in_scanline = 0;

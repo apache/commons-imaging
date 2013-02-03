@@ -28,7 +28,6 @@ import java.util.Map;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -41,7 +40,6 @@ import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
-import org.apache.commons.imaging.util.Debug;
 
 public class TiffImageWriterLossless extends TiffImageWriterBase {
     private final byte exifBytes[];
@@ -55,39 +53,6 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         this.exifBytes = exifBytes;
     }
 
-    private void dumpElements(final ByteSource byteSource, final List<TiffElement> elements)
-            throws IOException {
-        int last = TIFF_HEADER_SIZE;
-        for (int i = 0; i < elements.size(); i++) {
-            final TiffElement element = elements.get(i);
-            if (element.offset > last) {
-                final int SLICE_SIZE = 32;
-                final int gepLength = element.offset - last;
-                Debug.debug("gap of " + gepLength + " bytes.");
-                final byte bytes[] = byteSource.getBlock(last, gepLength);
-                if (bytes.length > 2 * SLICE_SIZE) {
-                    Debug.debug("\t" + "head",
-                            BinaryFunctions.head(bytes, SLICE_SIZE));
-                    Debug.debug("\t" + "tail",
-                            BinaryFunctions.tail(bytes, SLICE_SIZE));
-                } else {
-                    Debug.debug("\t" + "bytes", bytes);
-                }
-            }
-
-            Debug.debug("element[" + i + "]:" + element.getElementDescription()
-                    + " (" + element.offset + " + " + element.length + " = "
-                    + (element.offset + element.length) + ")");
-            if (element instanceof TiffDirectory) {
-                final TiffDirectory dir = (TiffDirectory) element;
-                Debug.debug("\t" + "next Directory Offset: "
-                        + dir.nextDirectoryOffset);
-            }
-            last = element.offset + element.length;
-        }
-        Debug.debug();
-    }
-    
     private List<TiffElement> analyzeOldTiff(Map<Integer,TiffOutputField> frozenFields) throws ImageWriteException,
             IOException {
         try {

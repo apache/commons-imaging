@@ -279,15 +279,7 @@ public class PaletteFactory {
             final int desired_count, final int table[], final int precision) {
         final List<ColorSpaceSubset> ignore = new ArrayList<ColorSpaceSubset>();
 
-        int count = 0;
         while (true) {
-            count++;
-
-            if (debug) {
-                System.out.println("cycle(" + count + "): " + v.size()
-                        + " done");
-            }
-
             int max_area = -1;
             ColorSpaceSubset max_subset = null;
 

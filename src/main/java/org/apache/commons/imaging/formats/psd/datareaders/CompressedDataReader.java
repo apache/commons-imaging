@@ -73,16 +73,16 @@ public class CompressedDataReader extends DataReader {
                 final InputStream bais = new ByteArrayInputStream(unpacked);
                 final MyBitInputStream mbis = new MyBitInputStream(bais,
                         ByteOrder.MOTOROLA);
-                final BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8); // we
-                                                                                 // want
-                                                                                 // all
-                                                                                 // samples
-                                                                                 // to
-                                                                                 // be
-                                                                                 // bytes
-                final int scanline[] = bbis.readBitsArray(depth, width);
-                data[channel][y] = scanline;
-
+                BitsToByteInputStream bbis = null;
+                try {
+                    bbis = new BitsToByteInputStream(mbis, 8); // we want all samples to be bytes
+                    final int scanline[] = bbis.readBitsArray(depth, width);
+                    data[channel][y] = scanline;
+                } finally {
+                    if (bbis != null) {
+                        bbis.close();
+                    }
+                }
             }
         }
 

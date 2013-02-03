@@ -155,9 +155,6 @@ public class BasicCParser {
                     }
                     out.write('\'');
                 } else if (c == '\r' || c == '\n') {
-                    byte[] bb = out.toByteArray();
-                    System.err.println(new String(bb));
-                    System.err.println();
                     throw new ImageReadException("Unterminated single quote in file");
                 } else {
                     if (hadBackSlash) {

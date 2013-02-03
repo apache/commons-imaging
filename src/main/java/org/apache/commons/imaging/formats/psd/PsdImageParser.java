@@ -206,7 +206,8 @@ public class PsdImageParser extends ImageParser {
                     "Not a Valid PSD File");
             available -= nameLength;
             if (((nameLength + 1) % 2) != 0) {
-                final int NameDiscard = readByte("NameDiscard", is,
+                //final int NameDiscard = 
+                readByte("NameDiscard", is,
                         "Not a Valid PSD File");
                 available -= 1;
             }
@@ -222,7 +223,8 @@ public class PsdImageParser extends ImageParser {
             available -= DataSize;
 
             if ((DataSize % 2) != 0) {
-                final int DataDiscard = readByte("DataDiscard", is,
+                //final int DataDiscard =
+                readByte("DataDiscard", is,
                         "Not a Valid PSD File");
                 available -= 1;
             }
@@ -585,18 +587,18 @@ public class PsdImageParser extends ImageParser {
         return result;
     }
 
-    // TODO not used
-    private ImageResourceBlock findImageResourceBlock(
-            final List<ImageResourceBlock> blocks, final int ID) {
-        for (int i = 0; i < blocks.size(); i++) {
-            final ImageResourceBlock block = blocks.get(i);
-
-            if (block.id == ID) {
-                return block;
-            }
-        }
-        return null;
-    }
+//    // TODO not used
+//    private ImageResourceBlock findImageResourceBlock(
+//            final List<ImageResourceBlock> blocks, final int ID) {
+//        for (int i = 0; i < blocks.size(); i++) {
+//            final ImageResourceBlock block = blocks.get(i);
+//
+//            if (block.id == ID) {
+//                return block;
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
@@ -803,18 +805,18 @@ public class PsdImageParser extends ImageParser {
         }
 
         final List<ImageResourceBlock> xmpBlocks = new ArrayList<ImageResourceBlock>();
-        if (false) {
-            // TODO: for PSD 7 and later, verify "XMP" name.
-            for (int i = 0; i < blocks.size(); i++) {
-                final ImageResourceBlock block = blocks.get(i);
-                if (!block.getName().equals(BLOCK_NAME_XMP)) {
-                    continue;
-                }
-                xmpBlocks.add(block);
-            }
-        } else {
+//        if (false) {
+//            // TODO: for PSD 7 and later, verify "XMP" name.
+//            for (int i = 0; i < blocks.size(); i++) {
+//                final ImageResourceBlock block = blocks.get(i);
+//                if (!block.getName().equals(BLOCK_NAME_XMP)) {
+//                    continue;
+//                }
+//                xmpBlocks.add(block);
+//            }
+//        } else {
             xmpBlocks.addAll(blocks);
-        }
+//        }
 
         if (xmpBlocks.size() < 1) {
             return null;

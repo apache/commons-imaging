@@ -31,8 +31,6 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
-import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -504,19 +502,6 @@ public class TiffField implements TiffConstants {
         pw.flush();
     }
 
-    // private void errorDump()
-    // {
-    // Debug.debug("tagInfo", tagInfo);
-    // Debug.debug("fieldType", fieldType);
-    // Debug.debug("tag", tag);
-    // Debug.debug("type", type);
-    // Debug.debug("length", length);
-    // Debug.debug("valueOffset", valueOffset);
-    // Debug.debug("valueOffsetBytes", valueOffsetBytes);
-    // Debug.debug("oversizeValue", oversizeValue);
-    // Debug.debug("byteOrder", byteOrder);
-    // }
-
     public String getDescriptionWithoutValue() {
         return tag + " (0x" + Integer.toHexString(tag) + ": " + tagInfo.name
                 + "): ";
@@ -578,57 +563,13 @@ public class TiffField implements TiffConstants {
                 map.put(tag.tag, tagList);
             }
             tagList.add(tag);
-
-            // if (map.get(key) == null)
-            // map.put(key, tag);
-            // else if (!ignoreDuplicates)
-            // {
-            // System.out.println("Duplicate tag in " + name + ": " + tag.tag
-            // + " (0x" + Integer.toHexString(tag.tag) + ")");
-            // System.out.println("\t" + "New name: " + tag.name);
-            // System.out.println("\t" + "Old name: "
-            // + ((TagInfo) map.get(key)).name);
-            // }
         }
 
         return map;
     }
 
-    private static final Map<Object, List<TagInfo>> GPS_TAG_MAP = makeTagMap(
-            GpsTagConstants.ALL_GPS_TAGS, false, "GPS");
-    private static final Map<Object, List<TagInfo>> TIFF_TAG_MAP = makeTagMap(
-            TiffTagConstants.ALL_TIFF_TAGS, false, "TIFF");
-    private static final Map<Object, List<TagInfo>> EXIF_TAG_MAP = makeTagMap(
-            ExifTagConstants.ALL_EXIF_TAGS, true, "EXIF");
     private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(
             ALL_TAGS, true, "All");
-
-    // static
-    // {
-    // Map map = new HashMap();
-    //
-    // for (int i = 0; i < ALL_TAGS.length; i++)
-    // {
-    // TagInfo2 tag = ALL_TAGS[i];
-    // Object o = map.get("" + tag.tag);
-    // if (o == null)
-    // map.put("" + tag.tag, tag);
-    // else
-    // {
-    // System.out.println("Duplicate tag: " + tag.tag);
-    // System.out.println("\t" + "New name: " + tag.name);
-    // System.out.println("\t" + "Old name: " + ((TagInfo2) o).name);
-    // }
-    // }
-    //
-    // }
-
-    // public static final TagInfo2 ALL_TAGS[] = TagConstantsUtils
-    // .mergeTagLists(new TagInfo2[][]{
-    // ALL_EXIF_TAGS, ALL_TIFF_TAGS, ALL_GPS_TAGS,
-    // });
-    //
-    //
 
     public int[] getIntArrayValue() throws ImageReadException {
         final Object o = getValue();
