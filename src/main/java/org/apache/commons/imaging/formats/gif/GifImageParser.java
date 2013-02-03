@@ -186,7 +186,7 @@ public class GifImageParser extends ImageParser {
     private byte[] readSubBlock(final InputStream is) throws IOException {
         final int block_size = 0xff & readByte("block_size", is, "GIF: corrupt block");
 
-        final byte bytes[] = readBytes("block", block_size, is,
+        final byte bytes[] = readBytes("block", is, block_size,
                 "GIF: corrupt block");
 
         return bytes;
@@ -422,7 +422,7 @@ public class GifImageParser extends ImageParser {
             final FormatCompliance formatCompliance) throws IOException {
         final int actual_size = convertColorTableSize(ct_size);
 
-        final byte bytes[] = readBytes("block", actual_size, is,
+        final byte bytes[] = readBytes("block", is, actual_size,
                 "GIF: corrupt Color Table");
 
         return bytes;

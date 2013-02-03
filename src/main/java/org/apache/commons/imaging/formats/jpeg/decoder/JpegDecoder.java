@@ -68,7 +68,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             final int segmentLength = read2Bytes("segmentLength", is,
                     "Not a Valid JPEG File");
             final byte[] sosSegmentBytes = readBytes("SosSegment",
-                    segmentLength - 2, is, "Not a Valid JPEG File");
+                    is, segmentLength - 2, "Not a Valid JPEG File");
             sosSegment = new SosSegment(marker, sosSegmentBytes);
 
             int hMax = 0;

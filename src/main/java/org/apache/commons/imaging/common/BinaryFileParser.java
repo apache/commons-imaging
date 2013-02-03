@@ -96,14 +96,14 @@ public class BinaryFileParser {
         return BinaryFunctions.readByte(name, is, exception);
     }
     
-    protected final byte[] readBytes(final String name, final int length, final InputStream is,
+    protected final byte[] readBytes(final String name, final InputStream is, final int length,
             final String exception) throws IOException {
-        return BinaryFunctions.readBytes(name, length, is, exception);
+        return BinaryFunctions.readBytes(name, is, length, exception);
     }
     
-    protected final byte[] readBytes(final String name, final int length, final InputStream is)
+    protected final byte[] readBytes(final String name, final InputStream is, final int length)
             throws IOException {
-        return BinaryFunctions.readBytes(name, length, is);
+        return BinaryFunctions.readBytes(name, is, length);
     }
     
     protected final byte[] readBytes(final InputStream is, final int count) throws IOException {

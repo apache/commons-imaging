@@ -175,7 +175,7 @@ public class PngImageParser extends ImageParser implements PngConstants {
 
             byte bytes[] = null;
             if (keep) {
-                bytes = readBytes("Chunk Data", length, is,
+                bytes = readBytes("Chunk Data", is, length,
                         "Not a Valid PNG File: Couldn't read Chunk Data.");
             } else {
                 skipBytes(is, length, "Not a Valid PNG File");

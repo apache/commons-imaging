@@ -29,7 +29,6 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteOrder;
@@ -283,11 +282,12 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
     
             while (true) {
-                final byte[] imageResourceBlockSignature = bis
-                        .readBytes(CONST_8BIM.size(),
-                                "App13 Segment missing identification string",
-                                false, false);
-                if (null == imageResourceBlockSignature) {
+                final byte[] imageResourceBlockSignature;
+                try {
+                    imageResourceBlockSignature = bis.readBytes(
+                            CONST_8BIM.size(),
+                            "App13 Segment missing identification string");
+                } catch (IOException ioEx) {
                     break;
                 }
                 if (!CONST_8BIM.equals(imageResourceBlockSignature)) {
@@ -314,9 +314,13 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                     bis.readByte("Block name bytes", "Image Resource Block has invalid name");
                     blockNameBytes = new byte[0];
                 } else {
-                    blockNameBytes = bis.readBytes(blockNameLength,
-                            "Invalid Image Resource Block name", verbose, strict);
-                    if (null == blockNameBytes) {
+                    try {
+                        blockNameBytes = bis.readBytes(blockNameLength,
+                                "Invalid Image Resource Block name");
+                    } catch (IOException ioEx) {
+                        if (strict) {
+                            throw ioEx;
+                        }
                         break;
                     }
     
@@ -342,9 +346,13 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                             + blockSize + " > " + bytes.length);
                 }
     
-                final byte[] blockData = bis.readBytes(blockSize,
-                        "Invalid Image Resource Block data", verbose, strict);
-                if (null == blockData) {
+                final byte[] blockData;
+                try {
+                    blockData = bis.readBytes(blockSize, "Invalid Image Resource Block data");
+                } catch (IOException ioEx) {
+                    if (strict) {
+                        throw ioEx;
+                    }
                     break;
                 }
     

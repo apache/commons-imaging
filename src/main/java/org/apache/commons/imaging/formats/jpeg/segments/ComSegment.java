@@ -36,7 +36,7 @@ public class ComSegment extends Segment {
             System.out.println("ComSegment marker_length: " + marker_length);
         }
 
-        comment = readBytes("Comment", marker_length, is,
+        comment = readBytes("Comment", is, marker_length,
                 "Error reading JPEG comment");
 
         if (getDebug()) {

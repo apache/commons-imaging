@@ -109,7 +109,7 @@ public class BinaryInputStream extends InputStream {
 
     public final byte[] readBytes(final String name, final int length, final String exception)
             throws IOException {
-        return BinaryFunctions.readBytes(name, length, is, exception);
+        return BinaryFunctions.readBytes(name, is, length, exception);
     }
 
     public final void debugByteArray(final String name, final byte bytes[]) {
@@ -130,27 +130,7 @@ public class BinaryInputStream extends InputStream {
 
     public final byte[] readBytes(final int length, final String error)
             throws ImageReadException, IOException {
-        return BinaryFunctions.readBytes("", length, is, error);
-    }
-
-    public final byte[] readBytes(final int length, final String error,
-            final boolean verbose, final boolean strict) throws ImageReadException,
-            IOException {
-        final byte bytes[] = new byte[length];
-        int total = 0;
-        int read;
-        while ((read = read(bytes, total, length - total)) > 0) {
-            total += read;
-        }
-        if (total < length) {
-            if (strict) {
-                throw new ImageReadException(error);
-            } else if (verbose) {
-                System.out.println(error);
-            }
-            return null;
-        }
-        return bytes;
+        return BinaryFunctions.readBytes("", is, length, error);
     }
 
     public final boolean compareBytes(final byte a[], final int aStart, final byte b[],

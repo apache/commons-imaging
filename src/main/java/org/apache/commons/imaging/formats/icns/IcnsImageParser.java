@@ -218,7 +218,7 @@ public class IcnsImageParser extends ImageParser {
                                                                                   // including
                                                                                   // this
                                                                                   // header
-        final byte[] data = readBytes("Data", elementSize - 8, is,
+        final byte[] data = readBytes("Data", is, elementSize - 8,
                 "Not a Valid ICNS File");
 
         return new IcnsElement(type, elementSize, data);

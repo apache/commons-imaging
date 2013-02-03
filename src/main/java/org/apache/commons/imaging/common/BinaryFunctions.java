@@ -49,16 +49,40 @@ public class BinaryFunctions {
         return true;
     }
 
-    public static final byte[] readBytes(final InputStream is, final int count) throws IOException {
-        final byte result[] = new byte[count];
-        for (int i = 0; i < count; i++) {
-            final int data = is.read();
-            if (data < 0) {
-                throw new IOException("Unexpected EOF");
-            }
-            result[i] = (byte) data;
+    public static final byte readByte(final String name, final InputStream is, final String exception)
+            throws IOException {
+        final int result = is.read();
+        if ((result < 0)) {
+            throw new IOException(exception);
         }
+        return (byte) (0xff & result);
+    }
+
+    public static final byte[] readBytes(final String name, final InputStream is, final int length)
+            throws IOException {
+        final String exception = name + " could not be read.";
+        return readBytes(name, is, length, exception);
+    }
+
+    public static final byte[] readBytes(final String name, final InputStream is, final int length,
+            final String exception) throws IOException {
+        final byte result[] = new byte[length];
+        int read = 0;
+        while (read < length) {
+            final int count = is.read(result, read, length - read);
+            if (count < 0) {
+                throw new IOException(exception + " count: " + count
+                        + " read: " + read + " length: " + length);
+            }
+
+            read += count;
+        }
+
         return result;
+    }
+
+    public static final byte[] readBytes(final InputStream is, final int count) throws IOException {
+        return readBytes("", is, count, "Unexpected EOF");
     }
 
     public static final void readAndVerifyBytes(final InputStream is, final byte expected[],
@@ -97,7 +121,7 @@ public class BinaryFunctions {
     public static final void readAndVerifyBytes(final String name, final InputStream is,
             final byte expected[], final String exception) throws ImageReadException,
             IOException {
-        final byte bytes[] = readBytes(name, expected.length, is, exception);
+        final byte bytes[] = readBytes(name, is, expected.length, exception);
 
         for (int i = 0; i < expected.length; i++) {
             if (bytes[i] != expected[i]) {
@@ -133,40 +157,7 @@ public class BinaryFunctions {
         }
     }
 
-    public static final byte readByte(final String name, final InputStream is, final String exception)
-            throws IOException {
-        final int result = is.read();
-        if ((result < 0)) {
-            throw new IOException(exception);
-        }
-        return (byte) (0xff & result);
-    }
-
-    public static final byte[] readBytes(final String name, final int length, final InputStream is)
-            throws IOException {
-        final String exception = name + " could not be read.";
-        return readBytes(name, length, is, exception);
-    }
-
-    public static final byte[] readBytes(final String name, final int length, final InputStream is,
-            final String exception) throws IOException {
-        final byte result[] = new byte[length];
-        int read = 0;
-        while (read < length) {
-            final int count = is.read(result, read, length - read);
-            if (count < 0) {
-                throw new IOException(exception + " count: " + count
-                        + " read: " + read + " length: " + length);
-            }
-
-            read += count;
-        }
-
-        return result;
-    }
-
-    public static final byte[] remainingBytes(final String name, final byte bytes[], final int count)
-            throws ImageReadException {
+    public static final byte[] remainingBytes(final String name, final byte bytes[], final int count) {
         return slice(bytes, count, bytes.length - count);
     }
 
