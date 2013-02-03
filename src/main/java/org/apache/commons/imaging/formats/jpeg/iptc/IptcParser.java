@@ -51,7 +51,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
 
         final int index = PHOTOSHOP_IDENTIFICATION_STRING.size();
         return (index + 4) <= segmentData.length &&
-                ByteConversions.toInt(segmentData, APP13_BYTE_ORDER) == CONST_8BIM;
+                ByteConversions.toInt(segmentData, index, APP13_BYTE_ORDER) == CONST_8BIM;
     }
 
     /*
@@ -276,8 +276,13 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
     
             while (true) {
-                final int imageResourceBlockSignature = bis.read4Bytes(
-                        "App13 Segment missing identification string");
+                final int imageResourceBlockSignature;
+                try {
+                    imageResourceBlockSignature = bis.read4Bytes(
+                            "Image Resource Block missing identification string");
+                } catch (IOException ioEx) {
+                    break;
+                }
                 if (imageResourceBlockSignature != CONST_8BIM) {
                     throw new ImageReadException(
                             "Invalid Image Resource Block Signature");

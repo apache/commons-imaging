@@ -42,9 +42,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSShort;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 
-public class TiffDirectory extends TiffElement implements TiffConstants
-// extends BinaryFileFunctions
-{
+public class TiffDirectory extends TiffElement implements TiffConstants {
 
     public String description() {
         return TiffDirectory.description(type);
