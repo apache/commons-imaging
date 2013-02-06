@@ -37,19 +37,27 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
+/**
+ * A TIFF field in a TIFF directory. 
+ */
 public class TiffField implements TiffConstants {
     public final TagInfo tagInfo;
     public final FieldType fieldType;
 
+    /// The tag, bytes 0-1.
     public final int tag;
     public final int directoryType;
+    /// The type, bytes 2-3.
     public final int type;
+    /// The count, bytes 4-7.
     public final int length;
+    /// The value offset, bytes 8-11, containing either the value, or its offset in the file.
     public final int valueOffset;
     public final byte valueOffsetBytes[];
 
     public byte oversizeValue[] = null;
     public final ByteOrder byteOrder;
+    private int sortHint = -1;
 
     public TiffField(final int tag, final int directoryType, final int type, final int Length,
             final int ValueOffset, final byte ValueOffsetBytes[], final ByteOrder byteOrder) {
@@ -65,8 +73,6 @@ public class TiffField implements TiffConstants {
         fieldType = getFieldType(type);
         tagInfo = getTag(directoryType, tag);
     }
-
-    private int sortHint = -1;
 
     public boolean isLocalValue() {
         return fieldType.isLocalValue(this);
