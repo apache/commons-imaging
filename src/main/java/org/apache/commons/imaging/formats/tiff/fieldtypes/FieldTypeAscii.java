@@ -24,14 +24,14 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 
 public class FieldTypeAscii extends FieldType {
     public FieldTypeAscii(final int type, final String name) {
-        super(type, 1, name);
+        super(type, name, 1);
     }
 
     @Override
-    public Object getSimpleValue(final TiffField entry) {
+    public Object getValue(final TiffField entry) {
         // According to EXIF specification
         // "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL."
-        final byte bytes[] = getRawBytes(entry);
+        final byte bytes[] = entry.getByteArrayValue();
         int nullCount = 1;
         for (int i = 0; i < bytes.length - 1; i++) {
             if (bytes[i] == 0) {

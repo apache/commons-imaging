@@ -23,6 +23,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 class TiffOutputSummary implements TiffConstants {
     public final ByteOrder byteOrder;
@@ -60,8 +61,8 @@ class TiffOutputSummary implements TiffConstants {
         for (int i = 0; i < offsetItems.size(); i++) {
             final OffsetItem offset = offsetItems.get(i);
 
-            final byte value[] = FIELD_TYPE_LONG.writeData(
-                    new int[] { offset.item.getOffset(), }, byteOrder);
+            final byte value[] = FieldType.LONG.writeData(
+                    (int)offset.item.getOffset(), byteOrder);
             offset.itemOffsetField.setData(value);
         }
 
@@ -70,10 +71,10 @@ class TiffOutputSummary implements TiffConstants {
 
             for (int j = 0; j < imageDataInfo.outputItems.length; j++) {
                 final TiffOutputItem item = imageDataInfo.outputItems[j];
-                imageDataInfo.imageDataOffsets[j] = item.getOffset();
+                imageDataInfo.imageDataOffsets[j] = (int)item.getOffset();
             }
 
-            imageDataInfo.imageDataOffsetsField.setData(FIELD_TYPE_LONG
+            imageDataInfo.imageDataOffsetsField.setData(FieldType.LONG
                     .writeData(imageDataInfo.imageDataOffsets, byteOrder));
         }
     }

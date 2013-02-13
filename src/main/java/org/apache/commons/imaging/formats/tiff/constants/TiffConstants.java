@@ -22,7 +22,6 @@ import org.apache.commons.imaging.common.ByteOrder;
 public interface TiffConstants
         extends
             ImagingConstants,
-            TiffFieldTypeConstants,
             TiffDirectoryConstants,
             AllTagConstants {
     public static final ByteOrder DEFAULT_TIFF_BYTE_ORDER = ByteOrder.INTEL;

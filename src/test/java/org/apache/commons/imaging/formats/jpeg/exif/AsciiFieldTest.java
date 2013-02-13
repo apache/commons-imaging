@@ -56,7 +56,7 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
         // Good enough for our purposes, since the image in question is known.
         for (int i = 0; i < fields.size(); i++) {
             final TiffField field = fields.get(i);
-            fieldMap.put(field.tag, field);
+            fieldMap.put(field.getTag(), field);
         }
 
         final Map<Integer,Object> expectedFieldValues = new Hashtable<Integer,Object>();

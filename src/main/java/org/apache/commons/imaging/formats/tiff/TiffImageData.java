@@ -141,7 +141,7 @@ public abstract class TiffImageData {
             ImageReadException;
 
     public static class Data extends TiffElement.DataElement {
-        public Data(final int offset, final int length, final byte data[]) {
+        public Data(final long offset, final int length, final byte data[]) {
             super(offset, length, data);
         }
 
@@ -155,7 +155,7 @@ public abstract class TiffImageData {
     public static class ByteSourceData extends Data {
         ByteSourceFile byteSourceFile;
 
-        public ByteSourceData(final int offset, final int length, final ByteSourceFile byteSource) {
+        public ByteSourceData(final long offset, final int length, final ByteSourceFile byteSource) {
             super(offset, length, new byte[0]);
             byteSourceFile = byteSource;
         }

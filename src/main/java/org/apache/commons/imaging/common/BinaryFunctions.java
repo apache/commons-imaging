@@ -130,7 +130,7 @@ public class BinaryFunctions {
         }
     }
 
-    public static final void skipBytes(final InputStream is, final int length, final String exception)
+    public static final void skipBytes(final InputStream is, final long length, final String exception)
             throws IOException {
         long total = 0;
         while (length != total) {
@@ -315,7 +315,7 @@ public class BinaryFunctions {
 
     }
 
-    public static final void skipBytes(final InputStream is, final int length) throws IOException {
+    public static final void skipBytes(final InputStream is, final long length) throws IOException {
         skipBytes(is, length, "Couldn't skip bytes");
     }
 

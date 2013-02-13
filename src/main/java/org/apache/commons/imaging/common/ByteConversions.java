@@ -355,6 +355,24 @@ public class ByteConversions {
         }
     }
     
+    public static int[] toUInt16s(final byte[] bytes, final ByteOrder byteOrder) {
+        return toUInt16s(bytes, 0, bytes.length, byteOrder);
+    }
+
+    public static int[] toUInt16s(final byte[] bytes, final int length,
+            final ByteOrder byteOrder) {
+        return toUInt16s(bytes, 0, length, byteOrder);
+    }
+
+    public static int[] toUInt16s(final byte[] bytes, final int offset, final int length,
+            final ByteOrder byteOrder) {
+        final int[] result = new int[length / 2];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = toUInt16(bytes, offset + 2 * i, byteOrder);
+        }
+        return result;
+    }
+    
     public static int toInt(final byte[] bytes, final ByteOrder byteOrder) {
         return toInt(bytes, 0, byteOrder);
     }

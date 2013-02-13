@@ -37,11 +37,10 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
-import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
-import org.apache.commons.imaging.formats.tiff.constants.TiffFieldTypeConstants;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
@@ -293,8 +292,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         for (int i = 0; i < items.size(); i++) {
             final TiffImageMetadata.Item item = (TiffImageMetadata.Item) items.get(i);
             final TiffField field = item.getTiffField();
-            if (!fieldMap.containsKey(field.tag)) {
-                fieldMap.put(field.tag, field);
+            if (!fieldMap.containsKey(field.getTag())) {
+                fieldMap.put(field.getTag(), field);
             }
         }
         return fieldMap;
@@ -393,15 +392,15 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 assertNotNull(oldField);
                 assertNotNull(newField);
 
-                assertEquals(oldField.tag, newField.tag);
-                assertEquals(dirType.intValue(), newField.directoryType);
-                assertEquals(oldField.directoryType, newField.directoryType);
+                assertEquals(oldField.getTag(), newField.getTag());
+                assertEquals(dirType.intValue(), newField.getDirectoryType());
+                assertEquals(oldField.getDirectoryType(), newField.getDirectoryType());
 
-                if (oldField.fieldType == TiffFieldTypeConstants.FIELD_TYPE_ASCII) {
+                if (oldField.getFieldType() == FieldType.ASCII) {
                     // Imaging currently doesn't correctly rewrite
                     // strings if any byte had the highest bit set,
                     // so if the source had that, all bets are off.
-                    final byte[] rawBytes = oldField.fieldType.getRawBytes(oldField);
+                    final byte[] rawBytes = oldField.getByteArrayValue();
                     boolean hasInvalidByte = false;
                     for (final byte rawByte : rawBytes) {
                         if ((rawByte & 0x80) != 0) {
@@ -414,18 +413,18 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                     }
                 }
 
-                assertEquals(oldField.length, newField.length);
+                assertEquals(oldField.getCount(), newField.getCount());
                 assertEquals(oldField.isLocalValue(), newField.isLocalValue());
 
-                if (oldField.tag == 0x202) {
+                if (oldField.getTag() == 0x202) {
                     // ignore "jpg from raw length" value. may have off-by-one
                     // bug in certain cameras.
                     // i.e. Sony DCR-PC110
                     continue;
                 }
 
-                if (!oldField.tagInfo.isOffset()) {
-                    if (oldField.tagInfo.isText()) { /* do nothing */
+                if (!oldField.getTagInfo().isOffset()) {
+                    if (oldField.getTagInfo().isText()) { /* do nothing */
                     } else if (oldField.isLocalValue()) {
                         // Debug.debug("oldField.tag", oldField.tag);
                         // Debug.debug("newField.tag", newField.tag);
@@ -448,11 +447,11 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                         final String label = imageFile.getName() + ", dirType[" + i
                                 + "]=" + dirType + ", fieldTag[" + j + "]="
                                 + fieldTag;
-                        if (oldField.tag == 0x116 || oldField.tag == 0x117) {
+                        if (oldField.getTag() == 0x116 || oldField.getTag() == 0x117) {
                             compare(label, oldField, newField);
                         } else {
-                            compare(label, oldField.valueOffsetBytes,
-                                    newField.valueOffsetBytes,
+                            compare(label, oldField.getByteArrayValue(),
+                                    newField.getByteArrayValue(),
                                     oldField.getBytesLength(),
                                     newField.getBytesLength());
                         }
@@ -472,7 +471,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                         // Debug.debug("newField.oversizeValue",
                         // newField.oversizeValue);
 
-                        compare(oldField.oversizeValue, newField.oversizeValue);
+                        compare(oldField.getByteArrayValue(), newField.getByteArrayValue());
                     }
                 }
 

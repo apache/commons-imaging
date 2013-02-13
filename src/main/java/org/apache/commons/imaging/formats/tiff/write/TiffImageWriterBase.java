@@ -588,7 +588,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
     }
 
     protected void writeImageFileHeader(final BinaryOutputStream bos,
-            final int offsetToFirstIFD) throws IOException {
+            final long offsetToFirstIFD) throws IOException {
         if (byteOrder == ByteOrder.INTEL) {
             bos.write('I');
             bos.write('I');
@@ -599,7 +599,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
 
         bos.write2Bytes(42); // tiffVersion
 
-        bos.write4Bytes(offsetToFirstIFD);
+        bos.write4Bytes((int)offsetToFirstIFD);
     }
 
 }

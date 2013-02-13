@@ -21,11 +21,12 @@ import java.io.UnsupportedEncodingException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoAscii extends TagInfo {
     public TagInfoAscii(final String name, final int tag, final int length,
             final TiffDirectoryType directoryType) {
-        super(name, tag, FIELD_TYPE_ASCII, length, directoryType);
+        super(name, tag, FieldType.ASCII, length, directoryType);
     }
 
     public String[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
@@ -67,6 +68,6 @@ public class TagInfoAscii extends TagInfo {
 
     public byte[] encodeValue(final ByteOrder byteOrder, final String... values)
             throws ImageWriteException {
-        return FIELD_TYPE_ASCII.writeData(values, byteOrder);
+        return FieldType.ASCII.writeData(values, byteOrder);
     }
 }

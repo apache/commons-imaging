@@ -28,7 +28,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
  * <BR>
  * http://www.awaresystems.be/imaging/tiff/tifftags/docs/alias.html
  */
-public interface AliasSketchbookProTagConstants extends TiffFieldTypeConstants {
+public interface AliasSketchbookProTagConstants {
     public static final TagInfoAscii EXIF_TAG_ALIAS_LAYER_METADATA = new TagInfoAscii(
             "Alias Layer Metadata", 0xc660, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);

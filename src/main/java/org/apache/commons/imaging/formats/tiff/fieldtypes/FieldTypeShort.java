@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
@@ -25,18 +24,18 @@ import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeShort extends FieldType {
     public FieldTypeShort(final int type, final String name) {
-        super(type, 2, name);
+        super(type, name, 2);
     }
 
     @Override
-    public Object getSimpleValue(final TiffField entry) throws ImageReadException {
-        if (entry.length == 1) {
-            return ByteConversions.toShort(entry.valueOffsetBytes,
-                    entry.byteOrder);
+    public Object getValue(final TiffField entry) {
+        final byte[] bytes = entry.getByteArrayValue();
+        if (entry.getCount() == 1) {
+            return ByteConversions.toShort(bytes,
+                    entry.getByteOrder());
         }
-
-        return ByteConversions.toShorts(getRawBytes(entry),
-                entry.byteOrder);
+        return ByteConversions.toShorts(bytes,
+                entry.getByteOrder());
     }
 
     @Override

@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLongOrIFD;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 
@@ -33,8 +34,8 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  * <BR>
  * http://partners.adobe.com/public/developer/en/tiff/TIFFPM6.pdf
  */
-public interface AdobePageMaker6TagConstants extends TiffFieldTypeConstants {
-    public static final TagInfoLong TIFF_TAG_SUB_IFD = new TagInfoLong(
+public interface AdobePageMaker6TagConstants {
+    public static final TagInfoLongOrIFD TIFF_TAG_SUB_IFD = new TagInfoLongOrIFD(
             "SubIFDs",  0x014a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
 

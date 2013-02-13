@@ -27,10 +27,16 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.util.Debug;
 
+/**
+ * Used by some GPS tags and the EXIF user comment tag,
+ * this badly documented value is meant to contain
+ * the text encoding in the first 8 bytes followed by
+ * the non-null-terminated text in an unknown byte order.  
+ */
 public final class TagInfoGpsText extends TagInfo {
-    public TagInfoGpsText(final String name, final int tag, final FieldType dataType, final int length,
+    public TagInfoGpsText(final String name, final int tag, final int length,
             final TiffDirectoryType exifDirectory) {
-        super(name, tag, dataType, length, exifDirectory);
+        super(name, tag, FieldType.UNDEFINED, length, exifDirectory);
     }
 
     @Override
@@ -40,43 +46,35 @@ public final class TagInfoGpsText extends TagInfo {
 
     private static final class TextEncoding {
         public final byte prefix[];
-        public final String encodingNameLE;
-        public final String encodingNameBE;
+        public final String encodingName;
 
-        public TextEncoding(final byte[] prefix, final String encodingNameLE,
-                final String encodingNameBE) {
+        public TextEncoding(final byte[] prefix, final String encodingName) {
             this.prefix = prefix;
-            this.encodingNameLE = encodingNameLE;
-            this.encodingNameBE = encodingNameBE;
-        }
-
-        public String getEncodingName(final ByteOrder byteOrder) {
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                return encodingNameBE;
-            } else {
-                return encodingNameLE;
-            }
+            this.encodingName = encodingName;
         }
     }
 
     private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_ASCII = new TextEncoding(
             new byte[] { 0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00, },
-            "US-ASCII", "US-ASCII"); // ITU-T T.50 IA5
+            "US-ASCII"); // ITU-T T.50 IA5
     private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_JIS = new TextEncoding(
             new byte[] { 0x4A, 0x49, 0x53, 0x00, 0x00, 0x00, 0x00, 0x00, },
-            "JIS", "JIS"); // JIS X208-1990
-    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNICODE = new TextEncoding(
-            new byte[] { 0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00,
-            // Which Unicode encoding to use, UTF-8?
-            }, "UTF-16LE", "UTF-16BE"); // Unicode Standard
+            "JIS"); // JIS X208-1990
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNICODE_LE = new TextEncoding(
+            new byte[] { 0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00},
+            "UTF-16LE"); // Unicode Standard
+    private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNICODE_BE = new TextEncoding(
+            new byte[] { 0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00},
+            "UTF-16BE"); // Unicode Standard
     private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_UNDEFINED = new TextEncoding(
-            new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
             // Try to interpret an undefined text as ISO-8859-1 (Latin)
-            }, "ISO-8859-1", "ISO-8859-1"); // Undefined
+            "ISO-8859-1"); // Undefined
     private static final TagInfoGpsText.TextEncoding TEXT_ENCODINGS[] = {
             TEXT_ENCODING_ASCII, //
             TEXT_ENCODING_JIS, //
-            TEXT_ENCODING_UNICODE, //
+            TEXT_ENCODING_UNICODE_LE, //
+            TEXT_ENCODING_UNICODE_BE, //
             TEXT_ENCODING_UNDEFINED, //
     };
 
@@ -91,10 +89,8 @@ public final class TagInfoGpsText extends TagInfo {
 
         try {
             // try ASCII, with NO prefix.
-            final byte asciiBytes[] = s.getBytes(TEXT_ENCODING_ASCII
-                    .getEncodingName(byteOrder));
-            final String decodedAscii = new String(asciiBytes,
-                    TEXT_ENCODING_ASCII.getEncodingName(byteOrder));
+            final byte asciiBytes[] = s.getBytes(TEXT_ENCODING_ASCII.encodingName);
+            final String decodedAscii = new String(asciiBytes, TEXT_ENCODING_ASCII.encodingName);
             if (decodedAscii.equals(s)) {
                 // no unicode/non-ascii values.
                 final byte result[] = new byte[asciiBytes.length
@@ -106,15 +102,19 @@ public final class TagInfoGpsText extends TagInfo {
                 return result;
             } else {
                 // use unicode
-                final byte unicodeBytes[] = s.getBytes(TEXT_ENCODING_UNICODE
-                        .getEncodingName(byteOrder));
-                final byte result[] = new byte[unicodeBytes.length
-                        + TEXT_ENCODING_UNICODE.prefix.length];
-                System.arraycopy(TEXT_ENCODING_UNICODE.prefix, 0, result, 0,
-                        TEXT_ENCODING_UNICODE.prefix.length);
-                System.arraycopy(unicodeBytes, 0, result,
-                        TEXT_ENCODING_UNICODE.prefix.length,
-                        unicodeBytes.length);
+                final TextEncoding encoding;
+                if (byteOrder == ByteOrder.BIG_ENDIAN) {
+                    encoding = TEXT_ENCODING_UNICODE_BE;
+                } else {
+                    encoding = TEXT_ENCODING_UNICODE_LE;
+                }
+                final byte unicodeBytes[] = s.getBytes(encoding.encodingName);
+                final byte result[] = new byte[unicodeBytes.length +
+                                               encoding.prefix.length];
+                System.arraycopy(encoding.prefix, 0,
+                        result, 0, encoding.prefix.length);
+                System.arraycopy(unicodeBytes, 0,
+                        result, encoding.prefix.length, unicodeBytes.length);
                 return result;
             }
         } catch (final UnsupportedEncodingException e) {
@@ -124,8 +124,8 @@ public final class TagInfoGpsText extends TagInfo {
 
     @Override
     public String getValue(final TiffField entry) throws ImageReadException {
-        if (entry.type == FIELD_TYPE_ASCII.type) {
-            final Object object = FIELD_TYPE_ASCII.getSimpleValue(entry);
+        if (entry.getFieldType() == FieldType.ASCII) {
+            final Object object = FieldType.ASCII.getValue(entry);
             if (object instanceof String) {
                 return (String) object;
             } else if (object instanceof String[]) {
@@ -138,19 +138,19 @@ public final class TagInfoGpsText extends TagInfo {
             } else {
                 throw new ImageReadException("Unexpected ASCII type decoded");
             }
-        } else if (entry.type == FIELD_TYPE_UNDEFINED.type) {
+        } else if (entry.getFieldType() == FieldType.UNDEFINED) {
             /* later */
-        } else if (entry.type == FIELD_TYPE_BYTE.type) {
+        } else if (entry.getFieldType() == FieldType.BYTE) {
             /* later */
         } else {
-            Debug.debug("entry.type", entry.type);
-            Debug.debug("entry.directoryType", entry.directoryType);
+            Debug.debug("entry.type", entry.getFieldType());
+            Debug.debug("entry.directoryType", entry.getDirectoryType());
             Debug.debug("entry.type", entry.getDescriptionWithoutValue());
-            Debug.debug("entry.type", entry.fieldType);
+            Debug.debug("entry.type", entry.getFieldType());
             throw new ImageReadException("GPS text field not encoded as bytes.");
         }
 
-        final byte bytes[] = entry.fieldType.getRawBytes(entry);
+        final byte bytes[] = entry.getByteArrayValue();
         if (bytes.length < 8) {
             try {
                 // try ASCII, with NO prefix.
@@ -165,9 +165,17 @@ public final class TagInfoGpsText extends TagInfo {
             if (BinaryFunctions.compareBytes(bytes, 0, encoding.prefix, 0,
                     encoding.prefix.length)) {
                 try {
-                    return new String(bytes, encoding.prefix.length,
+                    final String decodedString = new String(
+                            bytes, encoding.prefix.length,
                             bytes.length - encoding.prefix.length,
-                            encoding.getEncodingName(entry.byteOrder));
+                            encoding.encodingName);
+                    final byte[] reEncodedBytes = decodedString.getBytes(
+                            encoding.encodingName);
+                    if (BinaryFunctions.compareBytes(bytes, encoding.prefix.length,
+                            reEncodedBytes, 0,
+                            reEncodedBytes.length)) {
+                        return decodedString;
+                    }
                 } catch (final UnsupportedEncodingException e) {
                     throw new ImageReadException(e.getMessage(), e);
                 }

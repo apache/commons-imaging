@@ -20,10 +20,11 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoSRational extends TagInfo {
     public TagInfoSRational(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FIELD_TYPE_SRATIONAL, length, directoryType);
+        super(name, tag, FieldType.SRATIONAL, length, directoryType);
     }
 
     public RationalNumber[] getValue(final ByteOrder byteOrder, final byte[] bytes) {

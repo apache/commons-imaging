@@ -40,7 +40,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefined;
  * <BR>
  * http://www.adobe.com/products/dng/pdfs/dng_spec_1_3_0_0.pdf
  */
-public interface DngTagConstants extends TiffFieldTypeConstants {
+public interface DngTagConstants {
     public static final TagInfoByte EXIF_TAG_DNG_VERSION = new TagInfoByte(
             "DNGVersion", 0xc612, 4,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);

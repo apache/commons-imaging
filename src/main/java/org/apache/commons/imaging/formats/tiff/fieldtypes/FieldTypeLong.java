@@ -24,18 +24,17 @@ import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeLong extends FieldType {
     public FieldTypeLong(final int type, final String name) {
-        super(type, 4, name);
+        super(type, name, 4);
     }
 
     @Override
-    public Object getSimpleValue(final TiffField entry) {
-        if (entry.length == 1) {
-            return ByteConversions.toInt(
-                    entry.valueOffsetBytes, entry.byteOrder);
+    public Object getValue(final TiffField entry) {
+        final byte[] bytes = entry.getByteArrayValue();
+        if (entry.getCount() == 1) {
+            return ByteConversions.toInt(bytes,
+                    entry.getByteOrder());
         }
-
-        return ByteConversions.toInts(getRawBytes(entry), 0, 4*entry.length,
-                entry.byteOrder);
+        return ByteConversions.toInts(bytes, entry.getByteOrder());
     }
 
     @Override

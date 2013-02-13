@@ -1,112 +1,104 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 
-public abstract class FieldType extends BinaryFunctions implements
-        TiffConstants {
-    public final int type, length;
-    public final String name;
+/**
+ * TIFF field types.
+ */
+public abstract class FieldType {
+    public static final FieldTypeByte BYTE = new FieldTypeByte(1, "Byte");
+    public static final FieldTypeAscii ASCII = new FieldTypeAscii(2, "ASCII");
+    public static final FieldTypeShort SHORT = new FieldTypeShort(3, "Short");
+    public static final FieldTypeLong LONG = new FieldTypeLong(4, "Long");
+    public static final FieldTypeRational RATIONAL = new FieldTypeRational(5, "Rational");
+    public static final FieldTypeByte SBYTE = new FieldTypeByte(6, "SByte");
+    public static final FieldTypeByte UNDEFINED = new FieldTypeByte(7, "Undefined");
+    public static final FieldTypeShort SSHORT = new FieldTypeShort(8, "SShort");
+    public static final FieldTypeLong SLONG = new FieldTypeLong(9, "SLong");
+    public static final FieldTypeRational SRATIONAL = new FieldTypeRational(10, "SRational");
+    public static final FieldTypeFloat FLOAT = new FieldTypeFloat(11, "Float");
+    public static final FieldTypeDouble DOUBLE = new FieldTypeDouble(12, "Double");
+    public static final FieldTypeLong IFD = new FieldTypeLong(13, "IFD");
 
-    public FieldType(final int type, final int length, final String name) {
+    private final int type;
+    private final String name;
+    private final int elementSize;
+
+    protected FieldType(final int type, final String name, final int elementSize) {
         this.type = type;
-        this.length = length;
         this.name = name;
+        this.elementSize = elementSize;
     }
-
-    public boolean isLocalValue(final TiffField entry) {
-        // FIXME: we should use unsigned ints for offsets and lengths
-        // when parsing TIFF files. But since we don't,
-        // at least make this method treat length as unsigned,
-        // so that corrupt lengths are caught early.
-        final long entryLength = 0xffffffffL & entry.length;
-        return ((length > 0) && ((length * entryLength) <= TIFF_ENTRY_MAX_VALUE_LENGTH));
+    
+    
+    public int getType() {
+        return type;
     }
-
-    public int getBytesLength(final TiffField entry) throws ImageReadException {
-        if (length < 1) {
-            throw new ImageReadException("Unknown field type");
+    
+    public String getName() {
+        return name;
+    }
+    
+    public int getSize() {
+        return elementSize;
+    }
+    
+    public static FieldType getFieldType(int type) throws ImageReadException {
+        for (final FieldType fieldType : ANY) {
+            if (fieldType.getType() == type) {
+                return fieldType;
+            }
         }
-
-        return length * entry.length;
+        throw new ImageReadException("Field type " + type + " is unsupported");
     }
+    
+    public abstract Object getValue(final TiffField entry);
+    public abstract byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException;
+    
+    public static final List<FieldType> ANY =
+            Collections.unmodifiableList(Arrays.asList(
+                    BYTE, ASCII, SHORT,
+                    LONG, RATIONAL, SBYTE,
+                    UNDEFINED, SSHORT, SLONG,
+                    SRATIONAL, FLOAT, DOUBLE,
+                    IFD));
 
-    // public static final byte[] STUB_LOCAL_VALUE = new
-    // byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
-
-    public static final byte[] getStubLocalValue() {
-        return new byte[TIFF_ENTRY_MAX_VALUE_LENGTH];
-    }
-
-    public final byte[] getStubValue(final int count) {
-        return new byte[count * length];
-    }
-
-    public String getDisplayValue(final TiffField entry) throws ImageReadException {
-        final Object o = getSimpleValue(entry);
-        if (o == null) {
-            return "NULL";
-        }
-        return o.toString();
-    }
-
-    public final byte[] getRawBytes(final TiffField entry) {
-        if (isLocalValue(entry)) {
-            final int rawLength = length * entry.length;
-            final byte result[] = new byte[rawLength];
-            System.arraycopy(entry.valueOffsetBytes, 0, result, 0, rawLength);
-            return result;
-            // return readBytearray(name, entry.valueOffsetBytes, 0, length
-            // * entry.length);
-            // return getBytearrayHead(name + " (" + entry.tagInfo.name + ")",
-            // entry.valueOffsetBytes, length * entry.length);
-        }
-
-        return entry.oversizeValue;
-    }
-
-    public abstract Object getSimpleValue(TiffField entry)
-            throws ImageReadException;
-
-    // public final Object getSimpleValue(TiffField entry)
-    // {
-    // Object array[] = getValueArray(entry);
-    // if (null == array)
-    // return null;
-    // if (array.length == 1)
-    // return array[0];
-    // return array;
-    // }
-    //
-    // public abstract Object[] getValueArray(TiffField entry);
-
-    @Override
-    public String toString() {
-        return "[" + getClass().getName() + ". type: " + type + ", name: "
-                + name + ", length: " + length + "]";
-    }
-
-    public abstract byte[] writeData(Object o, ByteOrder byteOrder)
-            throws ImageWriteException;
-
+    public static final List<FieldType> SHORT_OR_LONG =
+            Collections.unmodifiableList(Arrays.asList(
+                    SHORT, LONG));
+    
+    public static final List<FieldType> SHORT_OR_RATIONAL =
+            Collections.unmodifiableList(Arrays.asList(
+                    SHORT, RATIONAL));
+    
+    public static final List<FieldType> SHORT_OR_LONG_OR_RATIONAL =
+            Collections.unmodifiableList(Arrays.asList(
+                    SHORT, LONG, RATIONAL));
+    
+    public static final List<FieldType> LONG_OR_SHORT =
+            Collections.unmodifiableList(Arrays.asList(
+                    SHORT, LONG));
+    
+    public static final List<FieldType> BYTE_OR_SHORT =
+            Collections.unmodifiableList(Arrays.asList(
+                    SHORT, BYTE));
+    
+    public static final List<FieldType> LONG_OR_IFD =
+            Collections.unmodifiableList(Arrays.asList(
+                    (FieldType)LONG, IFD));
+    
+    public static final List<FieldType> ASCII_OR_RATIONAL =
+            Collections.unmodifiableList(Arrays.asList(
+                    ASCII, RATIONAL));
+    
+    public static final List<FieldType> ASCII_OR_BYTE =
+            Collections.unmodifiableList(Arrays.asList(
+                    ASCII, BYTE));
 }

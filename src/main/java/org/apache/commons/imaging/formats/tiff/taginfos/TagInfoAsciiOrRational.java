@@ -17,11 +17,12 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoAsciiOrRational extends TagInfo {
     public TagInfoAsciiOrRational(final String name, final int tag, final int length,
             final TiffDirectoryType directoryType) {
-        super(name, tag, FIELD_TYPE_DESCRIPTION_ASCII_OR_RATIONAL, length,
+        super(name, tag, FieldType.ASCII_OR_RATIONAL, length,
                 directoryType, false);
     }
 }

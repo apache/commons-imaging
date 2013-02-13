@@ -26,6 +26,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDouble;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoGpsText;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDirectory;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSLong;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSRational;
@@ -42,10 +43,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknown;
  * 
  * "Stonits": http://www.anyhere.com/gward/pixformat/tiffluv.html
  */
-public interface ExifTagConstants
-        extends
-            TiffFieldTypeConstants
-{
+public interface ExifTagConstants {
     public static final TagInfoAscii EXIF_TAG_INTEROPERABILITY_INDEX = new TagInfoAscii(
             "InteroperabilityIndex", 0x0001, -1,
             TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
@@ -191,9 +189,9 @@ public interface ExifTagConstants
     public static final TagInfoByte EXIF_TAG_PHOTOSHOP_SETTINGS = new TagInfoByte(
             "PhotoshopSettings", 0x8649, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    public static final TagInfoLong EXIF_TAG_EXIF_OFFSET = new TagInfoLong(
+    public static final TagInfoDirectory EXIF_TAG_EXIF_OFFSET = new TagInfoDirectory(
             "ExifOffset", 0x8769, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoShort EXIF_TAG_EXPOSURE_PROGRAM = new TagInfoShort(
             "ExposureProgram", 0x8822, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -208,9 +206,9 @@ public interface ExifTagConstants
     public static final TagInfoAscii EXIF_TAG_SPECTRAL_SENSITIVITY = new TagInfoAscii(
             "SpectralSensitivity", 0x8824, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoLong EXIF_TAG_GPSINFO = new TagInfoLong(
+    public static final TagInfoDirectory EXIF_TAG_GPSINFO = new TagInfoDirectory(
             "GPSInfo", 0x8825, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoShort EXIF_TAG_ISO = new TagInfoShort(
             "PhotographicSensitivity", 0x8827, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -328,7 +326,7 @@ public interface ExifTagConstants
             "MakerNote", 0x927c, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoGpsText EXIF_TAG_USER_COMMENT = new TagInfoGpsText(
-            "UserComment", 0x9286, FIELD_TYPE_UNDEFINED, 1,
+            "UserComment", 0x9286, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_SUB_SEC_TIME = new TagInfoAscii(
             "SubSecTime", 0x9290, -1,
@@ -351,9 +349,9 @@ public interface ExifTagConstants
     public static final TagInfoAscii EXIF_TAG_RELATED_SOUND_FILE = new TagInfoAscii(
             "RelatedSoundFile", 0xa004, 13,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final TagInfoLong EXIF_TAG_INTEROP_OFFSET = new TagInfoLong(
+    public static final TagInfoDirectory EXIF_TAG_INTEROP_OFFSET = new TagInfoDirectory(
             "InteropOffset", 0xa005, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoRational EXIF_TAG_FLASH_ENERGY_EXIF_IFD = new TagInfoRational(
             "FlashEnergy", 0xa20b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);

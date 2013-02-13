@@ -125,8 +125,13 @@ public class BinaryFileParser {
             throws IOException {
         BinaryFunctions.skipBytes(is, length);
     }
-    
-    protected final void skipBytes(final InputStream is, final int length, final String exception)
+
+    protected final void skipBytes(final InputStream is, final long length)
+            throws IOException {
+        BinaryFunctions.skipBytes(is, length);
+    }
+
+    protected final void skipBytes(final InputStream is, final long length, final String exception)
             throws IOException {
         BinaryFunctions.skipBytes(is, length, exception);
     }

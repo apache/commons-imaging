@@ -81,7 +81,7 @@ public class TiffContents {
 
         Collections.sort(elements, TiffElement.COMPARATOR);
 
-        int lastEnd = 0;
+        long lastEnd = 0;
         for (int i = 0; i < elements.size(); i++) {
             final TiffElement element = elements.get(i);
 

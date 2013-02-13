@@ -19,10 +19,10 @@ package org.apache.commons.imaging.formats.tiff;
 import java.util.Comparator;
 
 public abstract class TiffElement {
-    public final int offset;
+    public final long offset;
     public final int length;
 
-    public TiffElement(final int offset, final int length) {
+    public TiffElement(final long offset, final int length) {
         this.offset = offset;
         this.length = length;
     }
@@ -35,14 +35,20 @@ public abstract class TiffElement {
 
     public static final Comparator<TiffElement> COMPARATOR = new Comparator<TiffElement>() {
         public int compare(final TiffElement e1, final TiffElement e2) {
-            return e1.offset - e2.offset;
+            if (e1.offset < e2.offset) {
+                return -1;
+            } else if (e1.offset > e2.offset){
+                return 1;
+            } else {
+                return 0;
+            }
         }
     };
 
     public static abstract class DataElement extends TiffElement {
         public final byte data[];
 
-        public DataElement(final int offset, final int length, final byte data[]) {
+        public DataElement(final long offset, final int length, final byte data[]) {
             super(offset, length);
 
             this.data = data;
@@ -55,7 +61,7 @@ public abstract class TiffElement {
     }
 
     public static final class Stub extends TiffElement {
-        public Stub(final int offset, final int length) {
+        public Stub(final long offset, final int length) {
             super(offset, length);
         }
 

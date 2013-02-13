@@ -30,7 +30,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefined;
 /**
  * Microsoft's HDP/WDP file format. 
  */
-public interface MicrosoftHdPhotoTagConstants extends TiffFieldTypeConstants {
+public interface MicrosoftHdPhotoTagConstants {
     /*
      * The byte order for this GUID field is as follows:
      * Data1 (int), Data2 (short), Data3 (short) are little-endian,

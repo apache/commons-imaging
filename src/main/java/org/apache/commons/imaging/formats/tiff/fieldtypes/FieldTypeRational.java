@@ -26,17 +26,17 @@ import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeRational extends FieldType {
     public FieldTypeRational(final int type, final String name) {
-        super(type, 8, name);
+        super(type, name, 8);
     }
 
     @Override
-    public Object getSimpleValue(final TiffField entry) {
-        if (entry.length == 1) {
-            return ByteConversions.toRational(entry.oversizeValue, entry.byteOrder);
+    public Object getValue(final TiffField entry) {
+        final byte[] bytes = entry.getByteArrayValue();
+        if (entry.getCount() == 1) {
+            return ByteConversions.toRational(bytes,
+                    entry.getByteOrder());
         }
-
-        return ByteConversions.toRationals(getRawBytes(entry), 0, 8*entry.length,
-                entry.byteOrder);
+        return ByteConversions.toRationals(bytes, entry.getByteOrder());
     }
 
     @Override

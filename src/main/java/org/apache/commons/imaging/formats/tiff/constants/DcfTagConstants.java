@@ -30,7 +30,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
  * <BR>
  * http://www.exif.org/dcf.PDF
  */
-public interface DcfTagConstants extends TiffFieldTypeConstants {
+public interface DcfTagConstants {
     public static final TagInfoAscii EXIF_TAG_RELATED_IMAGE_FILE_FORMAT = new TagInfoAscii(
             "RelatedImageFileFormat", 0x1000, -1,
             TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);

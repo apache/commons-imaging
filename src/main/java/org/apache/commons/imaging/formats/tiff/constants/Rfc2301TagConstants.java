@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDirectory;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
@@ -36,7 +37,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
  * <BR>
  * http://cool.conservation-us.org/bytopic/imaging/std/tiff-f.html
  */
-public interface Rfc2301TagConstants extends TiffFieldTypeConstants {
+public interface Rfc2301TagConstants {
     public static final TagInfoShortOrLong TIFF_TAG_BAD_FAX_LINES = new TagInfoShortOrLong(
             "BadFaxLines", 0x0146, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -52,9 +53,9 @@ public interface Rfc2301TagConstants extends TiffFieldTypeConstants {
             "ConsecutiveBadFaxLines", 0x0148, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoLong TIFF_TAG_GLOBAL_PARAMETERS_IFD = new TagInfoLong(
+    public static final TagInfoDirectory TIFF_TAG_GLOBAL_PARAMETERS_IFD = new TagInfoDirectory(
             "GlobalParametersIFD", 0x0190, 1,
-            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoLong TIFF_TAG_PROFILE_TYPE = new TagInfoLong(
             "ProfileType", 0x0191, 1,

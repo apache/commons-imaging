@@ -145,7 +145,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             final TiffImageMetadata.Directory metadataDirectory = new TiffImageMetadata.Directory(
                     tiffReader.getByteOrder(), dir);
 
-            final List<TiffField> entries = dir.getDirectoryEntrys();
+            final List<TiffField> entries = dir.getDirectoryEntries();
 
             for (int j = 0; j < entries.size(); j++) {
                 final TiffField entry = entries.get(j);
@@ -578,14 +578,14 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             throw new ImageReadException("TIFF missing entries");
         }
 
-        final int photometricInterpretation = 0xffff & directory
-                .getSingleFieldValue(TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
-        final int compression = 0xffff & directory
-                .getSingleFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
-        final int width = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH,
-                true).getIntValue();
-        final int height = directory.findField(
-                TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, true).getIntValue();      
+        final int photometricInterpretation = 0xffff & directory.getSingleFieldValue(
+                TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
+        final int compression = 0xffff & directory.getSingleFieldValue(
+                TiffTagConstants.TIFF_TAG_COMPRESSION);
+        final int width = directory.getSingleFieldValue(
+                TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
+        final int height = directory.getSingleFieldValue(
+                TiffConstants.TIFF_TAG_IMAGE_LENGTH);      
         Rectangle subImage = checkForSubImage(params);
         if(subImage!=null){
             // Check for valid subimage specification. The following checks
@@ -623,15 +623,15 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
         
         int samplesPerPixel = 1;
-        final TiffField samplesPerPixelField = directory
-                .findField(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
+        final TiffField samplesPerPixelField = directory.findField(
+                TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
         if (samplesPerPixelField != null) {
             samplesPerPixel = samplesPerPixelField.getIntValue();
         }
         int bitsPerSample[] = { 1 };
         int bitsPerPixel = samplesPerPixel;
-        final TiffField bitsPerSampleField = directory
-                .findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
+        final TiffField bitsPerSampleField = directory.findField(
+                TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
         if (bitsPerSampleField != null) {
             bitsPerSample = bitsPerSampleField.getIntArrayValue();
             bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
@@ -647,8 +647,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             // dumpOptionalNumberTag(entries, TIFF_TAG_FREE_OFFSETS);
             // dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
             // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
-            final TiffField predictorField = directory
-                    .findField(TiffTagConstants.TIFF_TAG_PREDICTOR);
+            final TiffField predictorField = directory.findField(
+                    TiffTagConstants.TIFF_TAG_PREDICTOR);
             if (null != predictorField) {
                 predictor = predictorField.getIntValueOrArraySum();
             }

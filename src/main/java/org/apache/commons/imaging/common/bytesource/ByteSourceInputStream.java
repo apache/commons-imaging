@@ -206,7 +206,7 @@ public class ByteSourceInputStream extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(final int blockStart, final int blockLength) throws IOException {
+    public byte[] getBlock(final long blockStart, final int blockLength) throws IOException {
         // We include a separate check for int overflow.
         if ((blockStart < 0) || (blockLength < 0)
                 || (blockStart + blockLength < 0)

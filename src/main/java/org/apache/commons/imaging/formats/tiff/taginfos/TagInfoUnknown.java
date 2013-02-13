@@ -16,16 +16,14 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
-import java.util.Arrays;
-
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
+/**
+ * A TIFF tag whose definition isn't known.
+ */
 public final class TagInfoUnknown extends TagInfoByte {
     public TagInfoUnknown(final String name, final int tag, final int length, final TiffDirectoryType exifDirectory) {
-        super(name, tag, Arrays.asList(FIELD_TYPE_UNKNOWN), length, exifDirectory);
-    }
-
-    public boolean isUnknown() {
-        return true;
+        super(name, tag, FieldType.ANY, length, exifDirectory);
     }
 }

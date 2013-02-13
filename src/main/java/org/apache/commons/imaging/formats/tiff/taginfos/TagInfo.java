@@ -26,13 +26,10 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.apache.commons.imaging.formats.tiff.constants.TiffFieldTypeConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
-public abstract class TagInfo implements TiffDirectoryConstants,
-        TiffFieldTypeConstants {
+public abstract class TagInfo {
     public static final int LENGTH_UNKNOWN = -1;
 
     public TagInfo(final String name, final int tag, final FieldType dataType, final int length,
@@ -80,7 +77,7 @@ public abstract class TagInfo implements TiffDirectoryConstants,
     }
 
     public Object getValue(final TiffField entry) throws ImageReadException {
-        final Object o = entry.fieldType.getSimpleValue(entry);
+        final Object o = entry.getFieldType().getValue(entry);
         return o;
     }
 

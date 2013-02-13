@@ -23,16 +23,16 @@ import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeByte extends FieldType {
     public FieldTypeByte(final int type, final String name) {
-        super(type, 1, name);
+        super(type, name, 1);
     }
 
     @Override
-    public Object getSimpleValue(final TiffField entry) {
-        if (entry.length == 1) {
-            return entry.valueOffsetBytes[0];
+    public Object getValue(final TiffField entry) {
+        final byte[] bytes = entry.getByteArrayValue();
+        if (entry.getCount() == 1) {
+            return bytes[0];
         }
-
-        return getRawBytes(entry);
+        return bytes;
     }
 
     @Override

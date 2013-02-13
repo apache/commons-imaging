@@ -35,7 +35,7 @@ public class MakerNoteFieldTest extends SpecificExifTagTest {
     @Override
     protected void checkField(final File imageFile, final TiffField field)
             throws IOException, ImageReadException, ImageWriteException {
-        if (field.tag != ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag) {
+        if (field.getTag() != ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag) {
             // if (field.tag == EXIF_TAG_EXIF_OFFSET.tag)
             // ;
             // else
@@ -46,10 +46,10 @@ public class MakerNoteFieldTest extends SpecificExifTagTest {
         Debug.debug("field", field);
         Debug.debug("field", Debug.getType(field));
 
-        Debug.debug("field", field.tag);
-        Debug.debug("field", field.tagInfo);
-        Debug.debug("length", field.length);
-        Debug.debug("fieldType", field.fieldType);
+        Debug.debug("field", field.getTag());
+        Debug.debug("field", field.getTagInfo());
+        Debug.debug("length", field.getCount());
+        Debug.debug("fieldType", field.getFieldType());
         // Debug.debug("field", Debug.getType(field));
         Debug.debug();
 

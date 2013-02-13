@@ -23,12 +23,11 @@ import java.util.List;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoGpsText;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoGpsText;
 
-public interface GpsTagConstants
-        extends TiffFieldTypeConstants {
+public interface GpsTagConstants {
     public static final TagInfoByte GPS_TAG_GPS_VERSION_ID = new TagInfoByte(
             "GPSVersionID", 0x0000, 4,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
@@ -191,12 +190,12 @@ public interface GpsTagConstants
 
     // ************************************************************
     public static final TagInfoGpsText GPS_TAG_GPS_PROCESSING_METHOD = new TagInfoGpsText(
-            "GPSProcessingMethod", 0x001b, FIELD_TYPE_UNKNOWN,
-            -1, TiffDirectoryType.EXIF_DIRECTORY_GPS);
+            "GPSProcessingMethod", 0x001b, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
     public static final TagInfoGpsText GPS_TAG_GPS_AREA_INFORMATION = new TagInfoGpsText(
-            "GPSAreaInformation", 0x001c, FIELD_TYPE_UNKNOWN, -1,
+            "GPSAreaInformation", 0x001c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************

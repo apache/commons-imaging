@@ -108,9 +108,9 @@ public class DcxImageParser extends ImageParser {
 
         public static final int DCX_ID = 0x3ADE68B1;
         public final int id;
-        public final int[] pageTable;
+        public final long[] pageTable;
 
-        public DcxHeader(final int id, final int[] pageTable) {
+        public DcxHeader(final int id, final long[] pageTable) {
             this.id = id;
             this.pageTable = pageTable;
         }
@@ -129,9 +129,9 @@ public class DcxImageParser extends ImageParser {
         try {
             is = byteSource.getInputStream();
             final int id = read4Bytes("Id", is, "Not a Valid DCX File");
-            final List<Integer> pageTable = new ArrayList<Integer>(1024);
+            final List<Long> pageTable = new ArrayList<Long>(1024);
             for (int i = 0; i < 1024; i++) {
-                final int pageOffset = read4Bytes("PageTable", is,
+                final long pageOffset = 0xFFFFffffL & read4Bytes("PageTable", is,
                         "Not a Valid DCX File");
                 if (pageOffset == 0) {
                     break;
@@ -149,9 +149,9 @@ public class DcxImageParser extends ImageParser {
             }
 
             final Object[] objects = pageTable.toArray();
-            final int[] pages = new int[objects.length];
+            final long[] pages = new long[objects.length];
             for (int i = 0; i < objects.length; i++) {
-                pages[i] = ((Integer) objects[i]).intValue();
+                pages[i] = ((Long) objects[i]);
             }
 
             return new DcxHeader(id, pages);
@@ -189,7 +189,7 @@ public class DcxImageParser extends ImageParser {
         final DcxHeader dcxHeader = readDcxHeader(byteSource);
         final List<BufferedImage> images = new ArrayList<BufferedImage>();
         final PcxImageParser pcxImageParser = new PcxImageParser();
-        for (final int element : dcxHeader.pageTable) {
+        for (final long element : dcxHeader.pageTable) {
             InputStream stream = null;
             try {
                 stream = byteSource.getInputStream(element);

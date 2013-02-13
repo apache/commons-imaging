@@ -23,22 +23,18 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeFloat extends FieldType {
-    public FieldTypeFloat() {
-        super(11, 4, "Float");
+    public FieldTypeFloat(final int type, final String name) {
+        super(type, name, 4);
     }
 
-    // = new FieldType(11, 4, "Float")
-
     @Override
-    public Object getSimpleValue(final TiffField entry) {
-        if (entry.length == 1) {
-            return new Float(ByteConversions.toFloat(
-                    entry.valueOffsetBytes,
-                    entry.byteOrder));
+    public Object getValue(final TiffField entry) {
+        final byte[] bytes = entry.getByteArrayValue();
+        if (entry.getCount() == 1) {
+            return ByteConversions.toFloat(bytes,
+                    entry.getByteOrder());
         }
-
-        return ByteConversions.toFloats(getRawBytes(entry), 0, 4*entry.length,
-                entry.byteOrder);
+        return ByteConversions.toFloats(bytes, entry.getByteOrder());
     }
 
     @Override

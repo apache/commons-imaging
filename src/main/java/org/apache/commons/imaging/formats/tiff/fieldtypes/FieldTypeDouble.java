@@ -23,13 +23,18 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeDouble extends FieldType {
-    public FieldTypeDouble() {
-        super(12, 8, "Double");
+    public FieldTypeDouble(final int type, final String name) {
+        super(type, name, 8);
     }
 
     @Override
-    public Object getSimpleValue(final TiffField entry) {
-        return "?";
+    public Object getValue(final TiffField entry) {
+        final byte[] bytes = entry.getByteArrayValue();
+        if (entry.getCount() == 1) {
+            return ByteConversions.toDouble(bytes,
+                    entry.getByteOrder());
+        }
+        return ByteConversions.toDoubles(bytes, entry.getByteOrder());
     }
 
     @Override

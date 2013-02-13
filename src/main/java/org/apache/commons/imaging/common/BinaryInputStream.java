@@ -98,7 +98,7 @@ public class BinaryInputStream extends InputStream {
         BinaryFunctions.readAndVerifyBytes(name, is, expected, exception);
     }
 
-    public final void skipBytes(final int length, final String exception)
+    public final void skipBytes(final long length, final String exception)
             throws IOException {
         BinaryFunctions.skipBytes(is, length, exception);
     }
@@ -199,7 +199,7 @@ public class BinaryInputStream extends InputStream {
         return BinaryFunctions.getRAFBytes(raf, pos, length, exception);
     }
 
-    public void skipBytes(final int length) throws IOException {
+    public void skipBytes(final long length) throws IOException {
         BinaryFunctions.skipBytes(is, length);
     }
 

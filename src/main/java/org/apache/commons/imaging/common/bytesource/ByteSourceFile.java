@@ -44,7 +44,7 @@ public class ByteSourceFile extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(final int start, final int length) throws IOException {
+    public byte[] getBlock(final long start, final int length) throws IOException {
 
         RandomAccessFile raf = null;
         try {

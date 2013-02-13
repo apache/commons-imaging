@@ -20,10 +20,11 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoSShort extends TagInfo {
     public TagInfoSShort(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FIELD_TYPE_SSHORT, length, directoryType);
+        super(name, tag, FieldType.SSHORT, length, directoryType);
     }
     
     public short[] getValue(final ByteOrder byteOrder, final byte[] bytes) {

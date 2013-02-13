@@ -24,7 +24,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
 
-public interface HylaFaxTagConstants extends TiffFieldTypeConstants {
+public interface HylaFaxTagConstants {
     public static final TagInfoLong EXIF_TAG_FAX_RECV_PARAMS = new TagInfoLong(
             "FaxRecvParams", 0x885c, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);

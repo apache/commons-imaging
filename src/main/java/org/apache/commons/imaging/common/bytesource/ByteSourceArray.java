@@ -39,7 +39,8 @@ public class ByteSourceArray extends ByteSource {
     }
 
     @Override
-    public byte[] getBlock(final int start, final int length) throws IOException {
+    public byte[] getBlock(final long startLong, final int length) throws IOException {
+        final int start = (int) startLong;
         // We include a separate check for int overflow.
         if ((start < 0) || (length < 0) || (start + length < 0)
                 || (start + length > bytes.length)) {

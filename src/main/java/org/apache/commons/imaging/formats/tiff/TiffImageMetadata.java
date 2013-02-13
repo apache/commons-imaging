@@ -110,7 +110,7 @@ public class TiffImageMetadata extends ImageMetadata implements
         }
 
         public List<TiffField> getAllFields() {
-            return directory.getDirectoryEntrys();
+            return directory.getDirectoryEntries();
         }
 
         public JpegImageData getJpegImageData() {
@@ -138,16 +138,16 @@ public class TiffImageMetadata extends ImageMetadata implements
                             .get(i);
                     final TiffField srcField = item.getTiffField();
 
-                    if (null != dstDir.findField(srcField.tag)) {
+                    if (null != dstDir.findField(srcField.getTag())) {
                         // ignore duplicate tags in a directory.
                         continue;
-                    } else if (srcField.tagInfo.isOffset()) {
+                    } else if (srcField.getTagInfo().isOffset()) {
                         // ignore offset fields.
                         continue;
                     }
 
-                    final TagInfo tagInfo = srcField.tagInfo;
-                    final FieldType fieldType = srcField.fieldType;
+                    final TagInfo tagInfo = srcField.getTagInfo();
+                    final FieldType fieldType = srcField.getFieldType();
                     // byte bytes[] = srcField.fieldType.getRawBytes(srcField);
 
                     // Debug.debug("tagInfo", tagInfo);
@@ -165,9 +165,9 @@ public class TiffImageMetadata extends ImageMetadata implements
                     // + Integer.toHexString(srcField.tag)
                     // + ") bytes", bytes);
 
-                    final int count = bytes.length / fieldType.length;
+                    final int count = bytes.length / fieldType.getSize();
                     final TiffOutputField dstField = new TiffOutputField(
-                            srcField.tag, tagInfo, fieldType, count, bytes);
+                            srcField.getTag(), tagInfo, fieldType, count, bytes);
                     dstField.setSortHint(srcField.getSortHint());
                     dstDir.add(dstField);
                 }
@@ -306,10 +306,10 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        return field.fieldType.getRawBytes(field);
+        return field.getByteArrayValue();
     }
 
     public String[] getFieldValue(final TagInfoAscii tag) throws ImageReadException {
@@ -317,11 +317,11 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        final byte[] bytes = field.fieldType.getRawBytes(field);
-        return tag.getValue(field.byteOrder, bytes);
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
     }
 
     public short[] getFieldValue(final TagInfoShort tag) throws ImageReadException {
@@ -329,11 +329,11 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        final byte[] bytes = field.fieldType.getRawBytes(field);
-        return tag.getValue(field.byteOrder, bytes);
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
     }
 
     public int[] getFieldValue(final TagInfoLong tag) throws ImageReadException {
@@ -341,11 +341,11 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        final byte[] bytes = field.fieldType.getRawBytes(field);
-        return tag.getValue(field.byteOrder, bytes);
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
     }
 
     public RationalNumber[] getFieldValue(final TagInfoRational tag)
@@ -354,11 +354,11 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        final byte[] bytes = field.fieldType.getRawBytes(field);
-        return tag.getValue(field.byteOrder, bytes);
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
     }
 
     public byte[] getFieldValue(final TagInfoSByte tag) throws ImageReadException {
@@ -366,10 +366,10 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        return field.fieldType.getRawBytes(field);
+        return field.getByteArrayValue();
     }
 
     public short[] getFieldValue(final TagInfoSShort tag) throws ImageReadException {
@@ -377,11 +377,11 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        final byte[] bytes = field.fieldType.getRawBytes(field);
-        return tag.getValue(field.byteOrder, bytes);
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
     }
 
     public int[] getFieldValue(final TagInfoSLong tag) throws ImageReadException {
@@ -389,11 +389,11 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        final byte[] bytes = field.fieldType.getRawBytes(field);
-        return tag.getValue(field.byteOrder, bytes);
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
     }
 
     public RationalNumber[] getFieldValue(final TagInfoSRational tag)
@@ -402,11 +402,11 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        final byte[] bytes = field.fieldType.getRawBytes(field);
-        return tag.getValue(field.byteOrder, bytes);
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
     }
 
     public float[] getFieldValue(final TagInfoFloat tag) throws ImageReadException {
@@ -414,11 +414,11 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        final byte[] bytes = field.fieldType.getRawBytes(field);
-        return tag.getValue(field.byteOrder, bytes);
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
     }
 
     public double[] getFieldValue(final TagInfoDouble tag) throws ImageReadException {
@@ -426,11 +426,11 @@ public class TiffImageMetadata extends ImageMetadata implements
         if (field == null) {
             return null;
         }
-        if (!tag.dataTypes.contains(field.fieldType)) {
+        if (!tag.dataTypes.contains(field.getFieldType())) {
             return null;
         }
-        final byte[] bytes = field.fieldType.getRawBytes(field);
-        return tag.getValue(field.byteOrder, bytes);
+        final byte[] bytes = field.getByteArrayValue();
+        return tag.getValue(field.getByteOrder(), bytes);
     }
 
     public String getFieldValue(final TagInfoGpsText tag) throws ImageReadException {

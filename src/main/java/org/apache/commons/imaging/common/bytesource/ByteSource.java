@@ -28,7 +28,7 @@ public abstract class ByteSource extends BinaryFunctions {
         this.filename = filename;
     }
 
-    public final InputStream getInputStream(final int start) throws IOException {
+    public final InputStream getInputStream(final long start) throws IOException {
         InputStream is = null;
         boolean succeeded = false;
         try {
@@ -45,7 +45,11 @@ public abstract class ByteSource extends BinaryFunctions {
 
     public abstract InputStream getInputStream() throws IOException;
 
-    public abstract byte[] getBlock(int start, int length) throws IOException;
+    public byte[] getBlock(int start, int length) throws IOException {
+        return getBlock(0xFFFFffffL & start, length);
+    }
+    
+    public abstract byte[] getBlock(long start, int length) throws IOException;
 
     public abstract byte[] getAll() throws IOException;
 

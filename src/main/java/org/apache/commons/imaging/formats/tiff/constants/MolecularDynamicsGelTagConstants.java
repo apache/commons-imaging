@@ -31,7 +31,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  * <BR>  
  * http://www.awaresystems.be/imaging/tiff/tifftags/docs/gel.html
  */
-public interface MolecularDynamicsGelTagConstants extends TiffFieldTypeConstants {
+public interface MolecularDynamicsGelTagConstants {
     public static final TagInfoLong EXIF_TAG_MD_FILE_TAG = new TagInfoLong(
             "MD FileTag", 0x82a5, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);

@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -34,8 +33,7 @@ import org.apache.commons.imaging.util.Debug;
 public class TagInfoXpString extends TagInfo {
     public TagInfoXpString(final String name, final int tag, final int length,
             final TiffDirectoryType directoryType) {
-        super(name, tag, Arrays.asList(FIELD_TYPE_UNDEFINED), length,
-                directoryType);
+        super(name, tag, FieldType.BYTE, length, directoryType);
     }
 
     @Override
@@ -55,7 +53,7 @@ public class TagInfoXpString extends TagInfo {
 
     @Override
     public String getValue(final TiffField entry) throws ImageReadException {
-        if (entry.type != FIELD_TYPE_BYTE.type) {
+        if (entry.getFieldType() != FieldType.BYTE) {
             throw new ImageReadException("Text field not encoded as bytes.");
         }
         try {

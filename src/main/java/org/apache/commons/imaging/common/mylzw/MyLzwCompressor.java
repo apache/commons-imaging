@@ -57,7 +57,7 @@ public class MyLzwCompressor {
         InitializeStringTable();
     }
 
-    private final Map<Object, Integer> map = new HashMap<Object, Integer>();
+    private final Map<ByteArray, Integer> map = new HashMap<ByteArray, Integer>();
 
     private final void InitializeStringTable() {
         codeSize = initialCodeSize;
@@ -67,7 +67,7 @@ public class MyLzwCompressor {
         map.clear();
         for (codes = 0; codes < intial_entries_count; codes++) {
             if ((codes != clearCode) && (codes != eoiCode)) {
-                final Object key = arrayToKey((byte) codes);
+                final ByteArray key = arrayToKey((byte) codes);
 
                 map.put(key, codes);
             }
@@ -85,7 +85,7 @@ public class MyLzwCompressor {
         }
     }
 
-    private final Object arrayToKey(final byte b) {
+    private final ByteArray arrayToKey(final byte b) {
         return arrayToKey(new byte[] { b, }, 0, 1);
     }
 
@@ -138,7 +138,7 @@ public class MyLzwCompressor {
         }
     }
 
-    private final Object arrayToKey(final byte bytes[], final int start, final int length) {
+    private final ByteArray arrayToKey(final byte bytes[], final int start, final int length) {
         return new ByteArray(bytes, start, length);
     }
 
@@ -170,28 +170,28 @@ public class MyLzwCompressor {
     }
 
     private final boolean isInTable(final byte bytes[], final int start, final int length) {
-        final Object key = arrayToKey(bytes, start, length);
+        final ByteArray key = arrayToKey(bytes, start, length);
 
         return map.containsKey(key);
     }
 
     private final int codeFromString(final byte bytes[], final int start, final int length)
             throws IOException {
-        final Object key = arrayToKey(bytes, start, length);
-        final Object o = map.get(key);
-        if (o == null) {
+        final ByteArray key = arrayToKey(bytes, start, length);
+        final Integer code = map.get(key);
+        if (code == null) {
             throw new IOException("CodeFromString");
         }
-        return ((Integer) o).intValue();
+        return code;
     }
 
     private final boolean addTableEntry(final MyBitOutputStream bos, final byte bytes[],
             final int start, final int length) throws IOException {
-        final Object key = arrayToKey(bytes, start, length);
+        final ByteArray key = arrayToKey(bytes, start, length);
         return addTableEntry(bos, key);
     }
 
-    private final boolean addTableEntry(final MyBitOutputStream bos, final Object key)
+    private final boolean addTableEntry(final MyBitOutputStream bos, final ByteArray key)
             throws IOException {
         boolean cleared = false;
 

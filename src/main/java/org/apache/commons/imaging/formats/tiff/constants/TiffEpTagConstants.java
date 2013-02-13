@@ -33,7 +33,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefined;
 /**
  * 
  */
-public interface TiffEpTagConstants extends TiffFieldTypeConstants {
+public interface TiffEpTagConstants {
     public static final TagInfoShort EXIF_TAG_CFAREPEAT_PATTERN_DIM = new TagInfoShort(
             "CFARepeatPatternDim", 0x828d, 2,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);

@@ -18,10 +18,11 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoSByte extends TagInfo {
     public TagInfoSByte(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FIELD_TYPE_SBYTE, length, directoryType);
+        super(name, tag, FieldType.SBYTE, length, directoryType);
     }
 
     public byte[] encodeValue(final ByteOrder byteOrder, final byte... values) {

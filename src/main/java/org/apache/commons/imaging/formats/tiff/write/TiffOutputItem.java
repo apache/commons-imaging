@@ -23,15 +23,15 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 
 abstract class TiffOutputItem implements AllTagConstants {
-    public static final int UNDEFINED_VALUE = -1;
+    public static final long UNDEFINED_VALUE = -1;
 
-    private int offset = UNDEFINED_VALUE;
+    private long offset = UNDEFINED_VALUE;
 
-    protected int getOffset() {
+    protected long getOffset() {
         return offset;
     }
 
-    protected void setOffset(final int offset) {
+    protected void setOffset(final long offset) {
         this.offset = offset;
     }
 
