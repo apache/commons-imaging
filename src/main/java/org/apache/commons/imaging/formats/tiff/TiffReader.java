@@ -181,7 +181,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                 final FieldType fieldType;
                 try {
                     fieldType = FieldType.getFieldType(type);
-                } catch (ImageReadException imageReadEx) {
+                } catch (final ImageReadException imageReadEx) {
                     // skip over unknown fields types, since we
                     // can't calculate their size without
                     // knowing their type
@@ -254,7 +254,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                 };
                 for (int i = 0; i < offsetFields.length; i++) {
                     final TagInfoLong offsetField = offsetFields[i];
-                    TiffField field = directory.findField(offsetField);
+                    final TiffField field = directory.findField(offsetField);
                     if (field != null) {
                         long subDirectoryOffset;
                         int subDirectoryType;

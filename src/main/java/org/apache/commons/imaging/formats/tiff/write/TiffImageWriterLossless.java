@@ -53,7 +53,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         this.exifBytes = exifBytes;
     }
 
-    private List<TiffElement> analyzeOldTiff(Map<Integer,TiffOutputField> frozenFields) throws ImageWriteException,
+    private List<TiffElement> analyzeOldTiff(final Map<Integer,TiffOutputField> frozenFields) throws ImageWriteException,
             IOException {
         try {
             final ByteSource byteSource = new ByteSourceArray(exifBytes);
@@ -150,7 +150,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         if (makerNoteField != null && makerNoteField.getSeperateValue() != null) {
             frozenFields.put(EXIF_TAG_MAKER_NOTE.tag, makerNoteField);
         }
-        List<TiffElement> analysis = analyzeOldTiff(frozenFields);
+        final List<TiffElement> analysis = analyzeOldTiff(frozenFields);
         final int oldLength = exifBytes.length;
         if (analysis.size() < 1) {
             throw new ImageWriteException("Couldn't analyze old tiff data.");
@@ -165,7 +165,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             }
         }
         final Map<Long,TiffOutputField> frozenFieldOffsets = new HashMap<Long, TiffOutputField>();
-        for (Map.Entry<Integer,TiffOutputField> entry : frozenFields.entrySet()) {
+        for (final Map.Entry<Integer,TiffOutputField> entry : frozenFields.entrySet()) {
             final TiffOutputField frozenField = entry.getValue();
             if (frozenField.getSeperateValue().getOffset() != TiffOutputItem.UNDEFINED_VALUE) {
                 frozenFieldOffsets.put(frozenField.getSeperateValue().getOffset(), frozenField);
@@ -177,7 +177,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         final List<TiffOutputItem> allOutputItems = outputSet
                 .getOutputItems(outputSummary);
         final List<TiffOutputItem> outputItems = new ArrayList<TiffOutputItem>();
-        for (TiffOutputItem outputItem : allOutputItems) {
+        for (final TiffOutputItem outputItem : allOutputItems) {
             if (!frozenFieldOffsets.containsKey(outputItem.getOffset())) {
                 outputItems.add(outputItem);
             }

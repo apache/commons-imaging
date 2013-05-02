@@ -347,12 +347,12 @@ public class PngWriter implements PngConstants {
     private static class TransparentPalette extends Palette {
         private final Palette palette;
         
-        TransparentPalette(Palette palette) {
+        TransparentPalette(final Palette palette) {
             this.palette = palette;
         }
         
         @Override
-        public int getEntry(int index) {
+        public int getEntry(final int index) {
             if (index == 0) {
                 return 0x00000000;
             } else {
@@ -366,11 +366,11 @@ public class PngWriter implements PngConstants {
         }
         
         @Override
-        public int getPaletteIndex(int rgb) throws ImageWriteException {
+        public int getPaletteIndex(final int rgb) throws ImageWriteException {
             if (rgb == 0x00000000) {
                 return 0;
             } else {
-                int index = palette.getPaletteIndex(rgb);
+                final int index = palette.getPaletteIndex(rgb);
                 if (index >= 0) {
                     return 1 + index;
                 } else {
@@ -526,7 +526,7 @@ public class PngWriter implements PngConstants {
 
             final int max_colors = hasAlpha ? 255 : 256;
 
-            PaletteFactory paletteFactory = new PaletteFactory();
+            final PaletteFactory paletteFactory = new PaletteFactory();
             palette = paletteFactory.makeQuantizedRgbPalette(src, max_colors);
             // Palette palette2 = new PaletteFactory().makePaletteSimple(src,
             // max_colors);

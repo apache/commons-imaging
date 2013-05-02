@@ -588,7 +588,7 @@ public class T4AndT6Compression {
                 if (inputStream != null) {
                     inputStream.close();
                 }
-            } catch (IOException ignore) {
+            } catch (final IOException ignore) {
             }
         }
     }

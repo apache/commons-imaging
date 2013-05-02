@@ -64,7 +64,7 @@ public class BinaryOutputStream extends OutputStream {
     }
     
     @Override
-    public final void write(final byte bytes[], int offset, int length) throws IOException {
+    public final void write(final byte bytes[], final int offset, final int length) throws IOException {
         os.write(bytes, offset, length);
         count += length;
     }

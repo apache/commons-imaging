@@ -45,7 +45,7 @@ public abstract class ByteSource extends BinaryFunctions {
 
     public abstract InputStream getInputStream() throws IOException;
 
-    public byte[] getBlock(int start, int length) throws IOException {
+    public byte[] getBlock(final int start, final int length) throws IOException {
         return getBlock(0xFFFFffffL & start, length);
     }
     

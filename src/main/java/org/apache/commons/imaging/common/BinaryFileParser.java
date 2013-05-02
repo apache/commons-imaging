@@ -48,15 +48,15 @@ public class BinaryFileParser {
         return debug;
     }
     
-    public void setDebug(boolean debug) {
+    public void setDebug(final boolean debug) {
         this.debug = debug;
     }
 
-    protected final byte[] toBytes(short value) {
+    protected final byte[] toBytes(final short value) {
         return ByteConversions.toBytes(value, byteOrder);
     }
 
-    protected final byte[] toBytes(short value, ByteOrder byteOrder) {
+    protected final byte[] toBytes(final short value, final ByteOrder byteOrder) {
         return ByteConversions.toBytes(value, byteOrder);
     }
 

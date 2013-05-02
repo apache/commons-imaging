@@ -50,7 +50,7 @@ public abstract class FieldType {
         return elementSize;
     }
     
-    public static FieldType getFieldType(int type) throws ImageReadException {
+    public static FieldType getFieldType(final int type) throws ImageReadException {
         for (final FieldType fieldType : ANY) {
             if (fieldType.getType() == type) {
                 return fieldType;

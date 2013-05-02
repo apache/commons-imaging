@@ -280,7 +280,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 try {
                     imageResourceBlockSignature = bis.read4Bytes(
                             "Image Resource Block missing identification string");
-                } catch (IOException ioEx) {
+                } catch (final IOException ioEx) {
                     break;
                 }
                 if (imageResourceBlockSignature != CONST_8BIM) {
@@ -310,7 +310,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                     try {
                         blockNameBytes = bis.readBytes(blockNameLength,
                                 "Invalid Image Resource Block name");
-                    } catch (IOException ioEx) {
+                    } catch (final IOException ioEx) {
                         if (strict) {
                             throw ioEx;
                         }
@@ -342,7 +342,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 final byte[] blockData;
                 try {
                     blockData = bis.readBytes(blockSize, "Invalid Image Resource Block data");
-                } catch (IOException ioEx) {
+                } catch (final IOException ioEx) {
                     if (strict) {
                         throw ioEx;
                     }

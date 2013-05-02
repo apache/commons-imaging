@@ -39,20 +39,20 @@ public class MicrosoftTagTest extends ExifBaseTest {
     private static final String title = "title";
 
     public void testWrite() throws Exception {
-        BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
-        TiffOutputSet exifSet = new TiffOutputSet();
-        TiffOutputDirectory exif = exifSet.getOrCreateExifDirectory();
+        final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+        final TiffOutputSet exifSet = new TiffOutputSet();
+        final TiffOutputDirectory exif = exifSet.getOrCreateExifDirectory();
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR, author);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, comment);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, subject);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, title);
-        Map<String,Object> params = new TreeMap<String,Object>();
+        final Map<String,Object> params = new TreeMap<String,Object>();
         params.put(TiffConstants.PARAM_KEY_EXIF, exifSet);
-        byte[] bytes = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+        final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
         checkFields(bytes);
     }
     
-    private TiffImageMetadata toTiffMetadata(IImageMetadata metadata) throws Exception {
+    private TiffImageMetadata toTiffMetadata(final IImageMetadata metadata) throws Exception {
         if (metadata instanceof JpegImageMetadata) {
             return ((JpegImageMetadata)metadata).getExif();
         } else if (metadata instanceof TiffImageMetadata) {
@@ -63,22 +63,22 @@ public class MicrosoftTagTest extends ExifBaseTest {
     }
     
     public void testRewrite() throws Exception {
-        File imageWithExif = getImageWithExifData();
-        TiffImageMetadata metadata = toTiffMetadata(Imaging.getMetadata(imageWithExif));
-        ExifRewriter rewriter = new ExifRewriter();
-        TiffOutputSet outputSet = metadata.getOutputSet();
-        TiffOutputDirectory exif = outputSet.getOrCreateExifDirectory();
+        final File imageWithExif = getImageWithExifData();
+        final TiffImageMetadata metadata = toTiffMetadata(Imaging.getMetadata(imageWithExif));
+        final ExifRewriter rewriter = new ExifRewriter();
+        final TiffOutputSet outputSet = metadata.getOutputSet();
+        final TiffOutputDirectory exif = outputSet.getOrCreateExifDirectory();
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR, author);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, comment);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, subject);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, title);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         rewriter.updateExifMetadataLossy(imageWithExif, baos, outputSet);
         checkFields(baos.toByteArray());
     }
     
-    private void checkFields(byte[] file) throws Exception {
-        TiffImageMetadata metadata = toTiffMetadata(Imaging.getMetadata(file));
+    private void checkFields(final byte[] file) throws Exception {
+        final TiffImageMetadata metadata = toTiffMetadata(Imaging.getMetadata(file));
         assertEquals(author, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR));
         assertEquals(comment, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT));
         assertEquals(subject, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT));
