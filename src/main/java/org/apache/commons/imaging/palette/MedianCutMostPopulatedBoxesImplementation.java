@@ -158,6 +158,6 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
                     return 0;
             }
         }
-    };
+    }
 
 }
