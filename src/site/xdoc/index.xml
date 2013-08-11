@@ -27,8 +27,6 @@
 
 <section name="Commons Imaging: a Pure-Java Image Library">
 
-<subsection name="Introduction">
-
 <p>
   Apache Commons Imaging, previously known as Apache Commons Sanselan, is a library that
   reads and writes a variety of image formats, including fast parsing
@@ -53,36 +51,84 @@
   </ul>
 </p>
 
-</subsection>
+ <!-- ================================================== -->
+ <section name="Documentation">
+     <p>
+         A getting started <a href="gettingstarted.html">guide</a> is available
+         together with various <a href="project-reports.html">project reports</a>.
+     </p>
+     <p>
+         The JavaDoc API documents are available online:
+     </p>
+     <ul>
+         <li>The <a href="apidocs/index.html">latest API docs</a></li>
+         <li>Older releases - see the <a href="history.html">Release History</a> page</li>
+     </ul>
+     <p>
+         The <a href="source-repository.html">subversion repository</a> can be
+         <a href="http://svn.apache.org/viewvc/commons/proper/imaging/trunk/">browsed</a>, or you can browse/contribute via <a href="https://github.com/apache/commons-imaging">GitHub</a>.
+     </p>
+ </section>
+ <!-- ================================================== -->
+ <section name="Release Information">
+     <subsection name="Latest Imaging Release">
+         <p>Imaging has not yet been release, but the latest snapshot build can be downloaded from the snapshot repository: </p>
+         <ul>
+             <li>Download <a href="https://repository.apache.org/content/groups/snapshots/org/apache/commons/commons-imaging/1.0-SNAPSHOT/">1.0-SNAPSHOT</a></li>
+         </ul>
 
-<subsection name="Downloads">
-<p>
-  Imaging has not been released yet. Nightly builds can be retrieved from the snapshot repository.
-  <ul>
-    <li><a href="https://repository.apache.org/content/groups/snapshots/org/apache/commons/commons-imaging/1.0-SNAPSHOT/">Download latest snapshot</a></li>
-  </ul>
-</p>
-<p>
-  Latest Sanselan release: 0.97, February 14th, 2009
-  <ul>
-    <li><a href="http://commons.apache.org/imaging/download_sanselan.cgi">Download latest release</a></li>
-  </ul>
-</p>
+         <p>
+             Alternatively you can pull it via central Maven snapshot repositories:
+             <pre>
+                 &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+                 &lt;artifactId&gt;commons-imaging&lt;/artifactId&gt;
+                 &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+             </pre>
+             To make maven aware of the snapshot repository you have to add it to the repositories section
+             of your pom (see <a href="http://maven.apache.org/pom.html#Repositories">maven pom reference</a>):
+             <pre>
+                 &lt;repository&gt;
+                    &lt;id&gt;apache.snapshots&lt;/id&gt;
+                    &lt;url&gt;http://repository.apache.org/snapshots/&lt;/url&gt;
+                 &lt;/repository&gt;
+             </pre>
+         </p>
+     </subsection>
+     <subsection name="Latest Sanselan Release">
+         <p>The latest stable release of Sanselan is 0.97 You may: </p>
+         <ul>
+             <li>Download <a href="http://commons.apache.org/sanselan/download_sanselan.cgi">0.97</a></li>
+         </ul>
 
-<p>
-  API reference:
-  <ul>
-    <li><a href="apidocs/index.html">Javadocs</a></li>
-    <ul>
-      <li>Start with the <a href="apidocs/index.html?org/apache/commons/imaging/Imaging.html">Imaging class</a></li>
-    </ul>
-  </ul>
-</p>
+         <p>
+             Alternatively you can pull it from the central Maven repositories:
+             <pre>
+                 &lt;groupId&gt;org.apache.sanselan&lt;/groupId&gt;
+                 &lt;artifactId&gt;sanselan&lt;/artifactId&gt;
+                 &lt;version&gt;0.97-incubator&lt;/version&gt;
+             </pre>
+         </p>
+     </subsection>
 
-</subsection>
-
-</section>
-
+     <p>
+         For information on previous releases see the <a href="release-history.html">Release History</a>, and to download previous releases see the <a href="http://archive.apache.org/dist/commons/sanselan/">Commons Sanselan Archive</a>.
+     </p>
+ </section>
+ <!-- ================================================== -->
+ <section name="Support">
+     <p>
+         The <a href="mail-lists.html">commons mailing lists</a> act as the main support forum.
+         The user list is suitable for most library usage queries.
+         The dev list is intended for the development discussion.
+         Please remember that the lists are shared between all commons components,
+         so prefix your email by [imaging].
+     </p>
+     <p>
+         Bug reports and enhancements are also welcomed via the <a href="issue-tracking.html">JIRA</a> issue tracker.
+         Please read the instructions carefully.
+     </p>
+ </section>
+ <!-- ================================================== -->
 
 </body>
 </document>
