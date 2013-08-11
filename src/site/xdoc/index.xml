@@ -27,30 +27,31 @@
 
 <section name="Commons Imaging: a Pure-Java Image Library">
 
-<p>
-  Apache Commons Imaging, previously known as Apache Commons Sanselan, is a library that
-  reads and writes a variety of image formats, including fast parsing
-  of image info (size, color space, ICC profile, etc.) and metadata.
-</p>
-<p>
-  This library is pure Java. It's slower, consequently, but perfectly portable.
-  It's easier to use than ImageIO/JAI/Toolkit (Sun/Java's image support), supports
-  more formats (and supports them more correctly). It also provides easy access to metadata.
-</p>
-<p>
-  Imaging was working and was used by a number of projects in production even before version 1.0.
-</p>
-<p>
-  This project is Open Source; free as in freedom and free as in beer.
-  It is available under the ASF (Apache) License. This is a non-viral Open Source license.
-</p>
-<p>
-  <ul>
-    <li><a href="whyimaging.html">Why Use Commons Imaging?</a></li>
-    <li><a href="gettingstarted.html">Getting Started</a></li>
-  </ul>
-</p>
+    <p>
+      Apache Commons Imaging, previously known as Apache Commons Sanselan, is a library that
+      reads and writes a variety of image formats, including fast parsing
+      of image info (size, color space, ICC profile, etc.) and metadata.
+    </p>
+    <p>
+      This library is pure Java. It's slower, consequently, but perfectly portable.
+      It's easier to use than ImageIO/JAI/Toolkit (Sun/Java's image support), supports
+      more formats (and supports them more correctly). It also provides easy access to metadata.
+    </p>
+    <p>
+      Imaging was working and was used by a number of projects in production even before version 1.0.
+    </p>
+    <p>
+      This project is Open Source; free as in freedom and free as in beer.
+      It is available under the ASF (Apache) License. This is a non-viral Open Source license.
+    </p>
+    <p>
+      <ul>
+        <li><a href="whyimaging.html">Why Use Commons Imaging?</a></li>
+        <li><a href="gettingstarted.html">Getting Started</a></li>
+      </ul>
+    </p>
 
+</section>
  <!-- ================================================== -->
  <section name="Documentation">
      <p>
