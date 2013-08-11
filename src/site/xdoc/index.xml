@@ -57,9 +57,15 @@
 
 <subsection name="Downloads">
 <p>
-  Current release: 0.97, February 14th, 2009
+  Imaging has not been released yet. Nightly builds can be retrieved from the snapshot repository.
   <ul>
-    <li><a href="http://commons.apache.org/imaging/download_imaging.cgi">Download latest release</a></li>
+    <li><a href="https://repository.apache.org/content/groups/snapshots/org/apache/commons/commons-imaging/1.0-SNAPSHOT/">Download latest snapshot</a></li>
+  </ul>
+</p>
+<p>
+  Latest Sanselan release: 0.97, February 14th, 2009
+  <ul>
+    <li><a href="http://commons.apache.org/imaging/download_sanselan.cgi">Download latest release</a></li>
   </ul>
 </p>
 
