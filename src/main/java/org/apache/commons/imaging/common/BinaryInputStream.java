@@ -27,7 +27,7 @@ public class BinaryInputStream extends InputStream {
     private final InputStream is;
     // default byte order for Java, many file formats.
     private ByteOrder byteOrder = ByteOrder.NETWORK;
-    protected boolean debug = false;
+    private boolean debug = false;
 
     public final void setDebug(final boolean b) {
         debug = b;
