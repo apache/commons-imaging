@@ -148,7 +148,7 @@ public class PsdConstants {
                     new ImageResourceType(
                             0x0414,
                             1044,
-                            "Document specific IDs, layer IDs will be generated starting at this base value or a greater value if we find existing IDs to already exceed it. It’s purpose is to avoid the case where we add layers, flatten, save, open, and then add more layers that end up with the same IDs as the first set. 4 bytes."),
+                            "Document specific IDs, layer IDs will be generated starting at this base value or a greater value if we find existing IDs to already exceed it. It's purpose is to avoid the case where we add layers, flatten, save, open, and then add more layers that end up with the same IDs as the first set. 4 bytes."),
                     new ImageResourceType(0x0415, 1045,
                             "Unicode Alpha Names. 4 bytes for length and the string as a unicode string."),
                     new ImageResourceType(
@@ -166,7 +166,7 @@ public class PsdConstants {
                     new ImageResourceType(
                             0x041C,
                             1052,
-                            "Jump To XPEP. 2 bytes major version, 2 bytes minor version, 4 bytes count. Following is repeated for count: 4 bytes block size, 4 bytes key, if key = 'jtDd' then next is a Boolean for the dirty flag otherwise it’s a 4 byte entry for the mod date."),
+                            "Jump To XPEP. 2 bytes major version, 2 bytes minor version, 4 bytes count. Following is repeated for count: 4 bytes block size, 4 bytes key, if key = 'jtDd' then next is a Boolean for the dirty flag otherwise it's a 4 byte entry for the mod date."),
                     new ImageResourceType(
                             0x041D,
                             1053,

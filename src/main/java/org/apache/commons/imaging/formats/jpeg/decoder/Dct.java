@@ -33,7 +33,7 @@ public class Dct {
      * are reduced from 80 in AA&N to only 54. But in practice:
      * 
      * Benchmarks, Intel Core i3 @ 2.93 GHz in long mode, 4 GB RAM Time taken to
-     * do 100 million IDCTs (less is better): Rene' Stöckel's Feig, int: 45.07
+     * do 100 million IDCTs (less is better): Rene' StÃ¶ckel's Feig, int: 45.07
      * seconds My Feig, floating point: 36.252 seconds AA&N, unrolled loops,
      * double[][] -> double[][]: 25.167 seconds
      * 

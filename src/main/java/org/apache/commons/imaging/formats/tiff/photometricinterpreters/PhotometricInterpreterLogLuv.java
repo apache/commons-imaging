@@ -83,13 +83,13 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
             final float ref_Y = 100.000f;
             final float ref_Z = 108.883f;
 
-            X = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant= D65
+            X = ref_X * var_X; // ref_X = 95.047 Observer= 2Â°, Illuminant= D65
             Y = ref_Y * var_Y; // ref_Y = 100.000
             Z = ref_Z * var_Z; // ref_Z = 108.883
 
         }
 
-        // ref_X = 95.047 //Observer = 2°, Illuminant = D65
+        // ref_X = 95.047 //Observer = 2Â°, Illuminant = D65
         // ref_Y = 100.000
         // ref_Z = 108.883
 

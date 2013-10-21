@@ -17,12 +17,12 @@
 package org.apache.commons.imaging.formats.bmp;
 
 public class BmpHeaderInfo {
-    // ‘BM’ - Windows 3.1x, 95, NT, …
-    // ‘BA’ - OS/2 Bitmap Array
-    // ‘CI’ - OS/2 Color Icon‘
-    // CP’ - OS/2 Color Pointer
-    // ‘IC’ - OS/2 Icon
-    // ‘PT’ - OS/2 Pointer
+    // BM - Windows 3.1x, 95, NT
+    // BA - OS/2 Bitmap Array
+    // CI - OS/2 Color Icon
+    // CP - OS/2 Color Pointer
+    // IC - OS/2 Icon
+    // PT - OS/2 Pointer
     public final byte identifier1;
     public final byte identifier2;
 
