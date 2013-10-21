@@ -506,8 +506,9 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         }
         final byte data[] = byteSource.getBlock(offset, length);
         // check if the last read byte is actually the end of the image data
-        if (length < 2 ||
-                (((data[data.length - 2] & 0xff) << 8) | (data[data.length - 1] & 0xff)) != JpegConstants.EOIMarker) {
+        if (strict &&
+                (length < 2 ||
+                (((data[data.length - 2] & 0xff) << 8) | (data[data.length - 1] & 0xff)) != JpegConstants.EOIMarker)) {
             throw new ImageReadException("JPEG EOI marker could not be found at expected location");
         }
         return new JpegImageData(offset, length, data);
