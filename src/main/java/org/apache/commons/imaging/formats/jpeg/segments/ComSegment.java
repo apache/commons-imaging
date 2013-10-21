@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 public class ComSegment extends Segment {
-    public final byte[] comment;
+    private final byte[] comment;
 
     public ComSegment(final int marker, final byte segmentData[]) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
@@ -42,6 +42,10 @@ public class ComSegment extends Segment {
         if (getDebug()) {
             System.out.println("");
         }
+    }
+    
+    public byte[] getComment() {
+        return comment;
     }
 
     @Override

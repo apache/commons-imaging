@@ -46,8 +46,11 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="TBA">
+      <action issue="IMAGING-114" dev="damjan" type="fix">
+        ComSegment.comment is a public final byte array.
+      </action>
       <action issue="IMAGING-109" dev="damjan" type="fix">
-        Several files contain non-UTF8 characters
+        Several files contain non-UTF8 characters.
       </action>
       <action issue="IMAGING-113" dev="damjan" type="fix">
         Cannot read multipage tiff.

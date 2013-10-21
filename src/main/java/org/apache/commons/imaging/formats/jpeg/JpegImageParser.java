@@ -773,7 +773,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
             final ComSegment comSegment = (ComSegment) commentSegments.get(i);
             String comment = "";
             try {
-                comment = new String(comSegment.comment, "UTF-8");
+                comment = new String(comSegment.getComment(), "UTF-8");
             } catch (final UnsupportedEncodingException cannotHappen) {
             }
             Comments.add(comment);
