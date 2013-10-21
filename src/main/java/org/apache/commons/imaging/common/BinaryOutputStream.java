@@ -23,7 +23,7 @@ public class BinaryOutputStream extends OutputStream {
     private final OutputStream os;
     // default byte order for Java, many file formats.
     private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-    protected boolean debug = false;
+    private boolean debug = false;
     private int count = 0;
 
     public final void setDebug(final boolean b) {
