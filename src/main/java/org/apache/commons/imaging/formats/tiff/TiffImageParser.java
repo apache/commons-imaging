@@ -509,6 +509,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             final String key, final Map<String, Object>params)
             throws ImageReadException
     {
+        if (params == null) {
+            return null;
+        }
        
         if(!params.containsKey(key)) {
             return null;
