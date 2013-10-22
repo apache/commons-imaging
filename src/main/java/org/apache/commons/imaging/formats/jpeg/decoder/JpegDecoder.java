@@ -229,23 +229,23 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
 
     private void rescaleMCU(final Block[] dataUnits, final int hSize, final int vSize, final Block[] ret) {
         for (int i = 0; i < dataUnits.length; i++) {
-            final Block block = dataUnits[i];
-            if (block.width == hSize && block.height == vSize) {
-                System.arraycopy(block.samples, 0, ret[i].samples, 0, hSize
+            final Block dataUnit = dataUnits[i];
+            if (dataUnit.width == hSize && dataUnit.height == vSize) {
+                System.arraycopy(dataUnit.samples, 0, ret[i].samples, 0, hSize
                         * vSize);
             } else {
-                final int hScale = hSize / block.width;
-                final int vScale = vSize / block.height;
+                final int hScale = hSize / dataUnit.width;
+                final int vScale = vSize / dataUnit.height;
                 if (hScale == 2 && vScale == 2) {
                     int srcRowOffset = 0;
                     int dstRowOffset = 0;
-                    for (int y = 0; y < block.height; y++) {
+                    for (int y = 0; y < dataUnit.height; y++) {
                         for (int x = 0; x < hSize; x++) {
-                            final int sample = block.samples[srcRowOffset + (x >> 1)];
+                            final int sample = dataUnit.samples[srcRowOffset + (x >> 1)];
                             ret[i].samples[dstRowOffset + x] = sample;
                             ret[i].samples[dstRowOffset + hSize + x] = sample;
                         }
-                        srcRowOffset += block.width;
+                        srcRowOffset += dataUnit.width;
                         dstRowOffset += 2 * hSize;
                     }
                 } else {
@@ -253,8 +253,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
                     int dstRowOffset = 0;
                     for (int y = 0; y < vSize; y++) {
                         for (int x = 0; x < hSize; x++) {
-                            ret[i].samples[dstRowOffset + x] = block.samples[(y / vScale)
-                                    * block.width + (x / hScale)];
+                            ret[i].samples[dstRowOffset + x] = dataUnit.samples[(y / vScale)
+                                    * dataUnit.width + (x / hScale)];
                         }
                         dstRowOffset += hSize;
                     }
