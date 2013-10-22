@@ -22,7 +22,7 @@ import java.nio.charset.Charset;
 
 public class PsdHeaderInfo {
     public final int Version;
-    public final byte Reserved[];
+    private final byte Reserved[];
     public final int Channels;
     public final int Rows;
     public final int Columns;
@@ -39,6 +39,10 @@ public class PsdHeaderInfo {
         this.Depth = Depth;
         this.Mode = Mode;
 
+    }
+
+    public byte[] getReserved() {
+        return Reserved.clone();
     }
 
     public void dump() {

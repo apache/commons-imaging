@@ -485,11 +485,11 @@ public class PngImageParser extends ImageParser implements PngConstants {
         switch (ColorType) {
         case COLOR_TYPE_GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale
             // sample.
-            return new TransparencyFilterGrayscale(pngChunktRNS.bytes);
+            return new TransparencyFilterGrayscale(pngChunktRNS.getBytes());
         case COLOR_TYPE_TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
-            return new TransparencyFilterTrueColor(pngChunktRNS.bytes);
+            return new TransparencyFilterTrueColor(pngChunktRNS.getBytes());
         case COLOR_TYPE_INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette index;
-            return new TransparencyFilterIndexedColor(pngChunktRNS.bytes);
+            return new TransparencyFilterIndexedColor(pngChunktRNS.getBytes());
         case COLOR_TYPE_GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale
             // sample,
         case COLOR_TYPE_TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B
@@ -690,7 +690,7 @@ public class PngImageParser extends ImageParser implements PngConstants {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (int i = 0; i < IDATs.size(); i++) {
             final PngChunkIdat pngChunkIDAT = (PngChunkIdat) IDATs.get(i);
-            final byte bytes[] = pngChunkIDAT.bytes;
+            final byte bytes[] = pngChunkIDAT.getBytes();
             // System.out.println(i + ": bytes: " + bytes.length);
             baos.write(bytes);
         }

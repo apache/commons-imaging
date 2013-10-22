@@ -76,7 +76,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
             is.close();
             is = null;
 
-            for (final IccTag tag : result.tags) {
+            for (final IccTag tag : result.getTags()) {
                 final byte bytes[] = byteSource.getBlock(tag.offset, tag.length);
                 // Debug.debug("bytes: " + bytes.length);
                 tag.setData(bytes);

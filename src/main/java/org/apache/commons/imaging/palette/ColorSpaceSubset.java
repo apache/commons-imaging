@@ -20,13 +20,13 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 class ColorSpaceSubset {
-    public final int mins[], maxs[];
-    public final int precision;
-    public final int precision_mask;
-    public final int total;
-    public int rgb; // median
+    final int mins[], maxs[];
+    final int precision;
+    final int precision_mask;
+    final int total;
+    int rgb; // median
 
-    public ColorSpaceSubset(final int total, final int precision) {
+    ColorSpaceSubset(final int total, final int precision) {
         this.total = total;
         this.precision = precision;
         precision_mask = (1 << precision) - 1;
@@ -41,7 +41,7 @@ class ColorSpaceSubset {
         rgb = -1;
     }
 
-    public ColorSpaceSubset(final int total, final int precision, final int mins[], final int maxs[],
+    ColorSpaceSubset(final int total, final int precision, final int mins[], final int maxs[],
             final int table[]) {
         this.total = total;
         this.precision = precision;

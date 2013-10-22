@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImageReadException;
 
 public class IccProfileInfo implements IccConstants {
 
-    public final byte data[];
+    private final byte data[];
     public final int ProfileSize;
     public final int CMMTypeSignature;
     public final int ProfileVersion;
@@ -38,8 +38,8 @@ public class IccProfileInfo implements IccConstants {
     public final int DeviceModel;
     public final int RenderingIntent;
     public final int ProfileCreatorSignature;
-    public final byte ProfileID[];
-    public final IccTag tags[];
+    private final byte ProfileID[];
+    private final IccTag tags[];
 
     public IccProfileInfo(final byte data[], final int ProfileSize, final int CMMTypeSignature,
             final int ProfileVersion, final int ProfileDeviceClassSignature,
@@ -66,6 +66,18 @@ public class IccProfileInfo implements IccConstants {
         this.ProfileID = ProfileID;
 
         this.tags = tags;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public byte[] getProfileID() {
+        return ProfileID;
+    }
+
+    public IccTag[] getTags() {
+        return tags;
     }
 
     public boolean issRGB() {
