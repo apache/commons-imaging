@@ -27,7 +27,7 @@ import org.apache.commons.imaging.ImageReadException;
 public class BinaryFileParser {
     // default byte order for Java, many file formats.
     private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-    protected boolean debug = false;
+    private boolean debug = false;
 
     public BinaryFileParser(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;

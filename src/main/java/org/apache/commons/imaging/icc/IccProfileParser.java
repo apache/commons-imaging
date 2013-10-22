@@ -99,7 +99,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
         }
 
-        if (debug) {
+        if (getDebug()) {
             Debug.debug();
         }
 
@@ -110,13 +110,13 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
         final CachingInputStream cis = new CachingInputStream(is);
         is = cis;
 
-        if (debug) {
+        if (getDebug()) {
             Debug.debug();
         }
 
         // setDebug(true);
 
-        // if (debug)
+        // if (getDebug())
         // Debug.debug("length: " + length);
 
         try {
@@ -136,7 +136,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
             final int CMMTypeSignature = read4Bytes("Signature", is,
                     "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("CMMTypeSignature", CMMTypeSignature);
             }
 
@@ -146,20 +146,20 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
             final int ProfileDeviceClassSignature = read4Bytes(
                     "ProfileDeviceClassSignature", is,
                     "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("ProfileDeviceClassSignature",
                         ProfileDeviceClassSignature);
             }
 
             final int ColorSpace = read4Bytes("ColorSpace", is,
                     "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("ColorSpace", ColorSpace);
             }
 
             final int ProfileConnectionSpace = read4Bytes("ProfileConnectionSpace",
                     is, "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("ProfileConnectionSpace", ProfileConnectionSpace);
             }
 
@@ -167,32 +167,32 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
             final int ProfileFileSignature = read4Bytes("ProfileFileSignature", is,
                     "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("ProfileFileSignature", ProfileFileSignature);
             }
 
             final int PrimaryPlatformSignature = read4Bytes(
                     "PrimaryPlatformSignature", is, "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("PrimaryPlatformSignature",
                         PrimaryPlatformSignature);
             }
 
             final int VariousFlags = read4Bytes("ProfileFileSignature", is,
                     "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("ProfileFileSignature", ProfileFileSignature);
             }
 
             final int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
                     "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("DeviceManufacturer", DeviceManufacturer);
             }
 
             final int DeviceModel = read4Bytes("DeviceModel", is,
                     "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("DeviceModel", DeviceModel);
             }
 
@@ -200,7 +200,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
             final int RenderingIntent = read4Bytes("RenderingIntent", is,
                     "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("RenderingIntent", RenderingIntent);
             }
 
@@ -208,7 +208,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
             final int ProfileCreatorSignature = read4Bytes("ProfileCreatorSignature",
                     is, "Not a Valid ICC Profile");
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("ProfileCreatorSignature",
                         ProfileCreatorSignature);
             }
@@ -217,7 +217,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
             skipBytes(is, 16, "Not a Valid ICC Profile");
             // readByteArray("ProfileID", 16, is,
             // "Not a Valid ICC Profile");
-            // if (debug)
+            // if (getDebug())
             // System.out
             // .println("ProfileID: '" + new String(ProfileID) + "'");
 
@@ -282,7 +282,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
                     DeviceModel, RenderingIntent, ProfileCreatorSignature,
                     ProfileID, tags);
 
-            if (debug) {
+            if (getDebug()) {
                 Debug.debug("issRGB: " + result.issRGB());
             }
 
@@ -330,7 +330,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
     public Boolean issRGB(final ByteSource byteSource) {
         try {
-            if (debug) {
+            if (getDebug()) {
                 Debug.debug();
             }
 
@@ -338,7 +338,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
             // long length = byteSource.getLength();
             //
-            // if (debug)
+            // if (getDebug())
             // Debug.debug("length: " + length);
 
             InputStream is = null;
@@ -358,13 +358,13 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
 
                 final int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
                         "Not a Valid ICC Profile");
-                if (debug) {
+                if (getDebug()) {
                     printCharQuad("DeviceManufacturer", DeviceManufacturer);
                 }
 
                 final int DeviceModel = read4Bytes("DeviceModel", is,
                         "Not a Valid ICC Profile");
-                if (debug) {
+                if (getDebug()) {
                     printCharQuad("DeviceModel", DeviceModel);
                 }
 

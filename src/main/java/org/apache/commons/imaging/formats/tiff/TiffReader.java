@@ -96,7 +96,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         skipBytes(is, offsetToFirstIFD - 8,
                 "Not a Valid TIFF File: couldn't find IFDs");
 
-        if (debug) {
+        if (getDebug()) {
             System.out.println("");
         }
 

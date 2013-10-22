@@ -258,7 +258,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      */
     public final IImageMetadata getMetadata(final File file, final Map<String,Object> params)
             throws ImageReadException, IOException {
-        if (debug) {
+        if (getDebug()) {
             System.out.println(getName() + ".getMetadata" + ": "
                     + file.getName());
         }
@@ -767,7 +767,7 @@ public abstract class ImageParser extends BinaryFileParser implements
             return null;
         }
 
-        if (debug) {
+        if (getDebug()) {
             System.out.println(getName() + ": " + file.getName());
         }
 
@@ -827,7 +827,7 @@ public abstract class ImageParser extends BinaryFileParser implements
             return null;
         }
 
-        if (debug) {
+        if (getDebug()) {
             System.out.println(getName() + ": " + file.getName());
         }
 

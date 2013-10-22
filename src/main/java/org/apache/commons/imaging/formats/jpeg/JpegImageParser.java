@@ -292,11 +292,11 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
 
         final byte bytes[] = assembleSegments(filtered);
 
-        if (debug) {
+        if (getDebug()) {
             System.out.println("bytes" + ": " + bytes.length);
         }
 
-        if (debug) {
+        if (getDebug()) {
             System.out.println("");
         }
 
@@ -365,7 +365,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         }
 
         final List<Segment> exifSegments = filterAPP1Segments(segments);
-        if (debug) {
+        if (getDebug()) {
             System.out.println("exif_segments.size" + ": "
                     + exifSegments.size());
         }

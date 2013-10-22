@@ -160,14 +160,14 @@ public class PngImageParser extends ImageParser implements PngConstants {
         final List<PngChunk> result = new ArrayList<PngChunk>();
 
         while (true) {
-            if (debug) {
+            if (getDebug()) {
                 System.out.println("");
             }
 
             final int length = read4Bytes("Length", is, "Not a Valid PNG File");
             final int chunkType = read4Bytes("ChunkType", is, "Not a Valid PNG File");
 
-            if (debug) {
+            if (getDebug()) {
                 printCharQuad("ChunkType", chunkType);
                 debugNumber("Length", length, 4);
             }
@@ -181,7 +181,7 @@ public class PngImageParser extends ImageParser implements PngConstants {
                 skipBytes(is, length, "Not a Valid PNG File");
             }
 
-            if (debug) {
+            if (getDebug()) {
                 if (bytes != null) {
                     debugNumber("bytes", bytes.length, 4);
                 }
@@ -726,11 +726,11 @@ public class PngImageParser extends ImageParser implements PngConstants {
 
             if (sRGBs.size() == 1) {
                 // no color management neccesary.
-                if (debug) {
+                if (getDebug()) {
                     System.out.println("sRGB, no color management neccesary.");
                 }
             } else if (iCCPs.size() == 1) {
-                if (debug) {
+                if (getDebug()) {
                     System.out.println("iCCP.");
                 }
 
@@ -842,7 +842,7 @@ public class PngImageParser extends ImageParser implements PngConstants {
         final List<PngChunk> chunks = readChunks(byteSource, null, false);
         final List<PngChunk> IHDRs = filterChunks(chunks, IHDR);
         if (IHDRs.size() != 1) {
-            if (debug) {
+            if (getDebug()) {
                 System.out.println("PNG contains more than one Header");
             }
             return false;

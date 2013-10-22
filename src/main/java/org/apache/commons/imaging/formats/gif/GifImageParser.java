@@ -101,7 +101,7 @@ public class GifImageParser extends ImageParser {
             formatCompliance.compare("version", 97, version3);
         }
 
-        if (debug) {
+        if (getDebug()) {
             printCharQuad("identifier: ", ((identifier1 << 16)
                     | (identifier2 << 8) | (identifier3 << 0)));
             printCharQuad("version: ",
@@ -127,24 +127,24 @@ public class GifImageParser extends ImageParser {
         final byte pixelAspectRatio = readByte("Pixel Aspect Ratio", is,
                 "Not a Valid GIF File");
 
-        if (debug) {
+        if (getDebug()) {
             printByteBits("PackedFields bits", packedFields);
         }
 
         final boolean globalColorTableFlag = ((packedFields & 128) > 0);
-        if (debug) {
+        if (getDebug()) {
             System.out.println("GlobalColorTableFlag: " + globalColorTableFlag);
         }
         final byte colorResolution = (byte) ((packedFields >> 4) & 7);
-        if (debug) {
+        if (getDebug()) {
             System.out.println("ColorResolution: " + colorResolution);
         }
         final boolean sortFlag = ((packedFields & 8) > 0);
-        if (debug) {
+        if (getDebug()) {
             System.out.println("SortFlag: " + sortFlag);
         }
         final byte sizeofGlobalColorTable = (byte) (packedFields & 7);
-        if (debug) {
+        if (getDebug()) {
             System.out.println("SizeofGlobalColorTable: "
                     + sizeofGlobalColorTable);
         }
@@ -346,25 +346,25 @@ public class GifImageParser extends ImageParser {
                     ghi.logicalScreenHeight - imageHeight, ImageTopPosition);
         }
 
-        if (debug) {
+        if (getDebug()) {
             printByteBits("PackedFields bits", PackedFields);
         }
 
         final boolean LocalColorTableFlag = (((PackedFields >> 7) & 1) > 0);
-        if (debug) {
+        if (getDebug()) {
             System.out.println("LocalColorTableFlag: " + LocalColorTableFlag);
         }
         final boolean InterlaceFlag = (((PackedFields >> 6) & 1) > 0);
-        if (debug) {
+        if (getDebug()) {
             System.out.println("Interlace Flag: " + InterlaceFlag);
         }
         final boolean SortFlag = (((PackedFields >> 5) & 1) > 0);
-        if (debug) {
+        if (getDebug()) {
             System.out.println("Sort  Flag: " + SortFlag);
         }
 
         final byte SizeofLocalColorTable = (byte) (PackedFields & 7);
-        if (debug) {
+        if (getDebug()) {
             System.out.println("SizeofLocalColorTable: "
                     + SizeofLocalColorTable);
         }
@@ -389,7 +389,7 @@ public class GifImageParser extends ImageParser {
             imageData = myLzwDecompressor.decompress(bais, size);
         } else {
             final int LZWMinimumCodeSize = is.read();
-            if (debug) {
+            if (getDebug()) {
                 System.out.println("LZWMinimumCodeSize: " + LZWMinimumCodeSize);
             }
 
