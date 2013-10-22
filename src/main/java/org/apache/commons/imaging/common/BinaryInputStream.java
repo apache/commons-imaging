@@ -129,7 +129,7 @@ public class BinaryInputStream extends InputStream {
     }
 
     public final byte[] readBytes(final int length, final String error)
-            throws ImageReadException, IOException {
+            throws IOException {
         return BinaryFunctions.readBytes("", is, length, error);
     }
 
