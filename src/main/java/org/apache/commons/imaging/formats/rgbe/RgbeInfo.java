@@ -32,6 +32,10 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
 
 class RgbeInfo extends BinaryFunctions {
+    // #?RADIANCE
+    private static byte[] HEADER = new byte[] {
+        0x23, 0x3F, 0x52, 0x41, 0x44, 0x49, 0x41, 0x4E, 0x43, 0x45
+    };
     private static final Pattern RESOLUTION_STRING = Pattern
             .compile("-Y (\\d+) \\+X (\\d+)");
 
@@ -96,7 +100,7 @@ class RgbeInfo extends BinaryFunctions {
     }
 
     private void readMetadata() throws IOException, ImageReadException {
-        in.readAndVerifyBytes(RgbeConstants.HEADER,
+        in.readAndVerifyBytes(HEADER,
                 "Not a valid HDR: Incorrect Header");
 
         final InfoHeaderReader reader = new InfoHeaderReader(in);
