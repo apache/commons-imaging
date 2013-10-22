@@ -35,13 +35,13 @@ public class IptcRecord {
 
     public IptcRecord(final IptcType iptcType, final String value) {
         this.iptcType = iptcType;
-        byte[] bytes;
+        byte[] tempBytes;
         try {
-            bytes = value.getBytes("ISO-8859-1");
+            tempBytes = value.getBytes("ISO-8859-1");
         } catch (final UnsupportedEncodingException cannotHappen) {
-            bytes = null;
+            tempBytes = null;
         }
-        this.bytes = bytes;
+        this.bytes = tempBytes;
         this.value = value;
     }
 
