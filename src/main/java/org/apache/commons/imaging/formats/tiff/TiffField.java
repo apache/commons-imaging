@@ -366,7 +366,7 @@ public class TiffField {
             final StringBuffer result = new StringBuffer();
 
             for (int i = 0; i < values.length; i++) {
-                final short value = values[i];
+                final short sval = values[i];
 
                 if (i > 50) {
                     result.append("... (" + values.length + ")");
@@ -375,7 +375,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + value);
+                result.append("" + sval);
             }
             return result.toString();
         } else if (o instanceof int[]) {
@@ -383,7 +383,7 @@ public class TiffField {
             final StringBuffer result = new StringBuffer();
 
             for (int i = 0; i < values.length; i++) {
-                final int value = values[i];
+                final int iVal = values[i];
 
                 if (i > 50) {
                     result.append("... (" + values.length + ")");
@@ -392,7 +392,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + value);
+                result.append("" + iVal);
             }
             return result.toString();
         } else if (o instanceof long[]) {
@@ -400,7 +400,7 @@ public class TiffField {
             final StringBuffer result = new StringBuffer();
 
             for (int i = 0; i < values.length; i++) {
-                final long value = values[i];
+                final long lVal = values[i];
 
                 if (i > 50) {
                     result.append("... (" + values.length + ")");
@@ -409,7 +409,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + value);
+                result.append("" + lVal);
             }
             return result.toString();
         } else if (o instanceof double[]) {
@@ -417,7 +417,7 @@ public class TiffField {
             final StringBuffer result = new StringBuffer();
 
             for (int i = 0; i < values.length; i++) {
-                final double value = values[i];
+                final double dVal = values[i];
 
                 if (i > 50) {
                     result.append("... (" + values.length + ")");
@@ -426,7 +426,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + value);
+                result.append("" + dVal);
             }
             return result.toString();
         } else if (o instanceof byte[]) {
@@ -434,7 +434,7 @@ public class TiffField {
             final StringBuffer result = new StringBuffer();
 
             for (int i = 0; i < values.length; i++) {
-                final byte value = values[i];
+                final byte bVal = values[i];
 
                 if (i > 50) {
                     result.append("... (" + values.length + ")");
@@ -443,7 +443,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + value);
+                result.append("" + bVal);
             }
             return result.toString();
         } else if (o instanceof char[]) {
@@ -451,7 +451,7 @@ public class TiffField {
             final StringBuffer result = new StringBuffer();
 
             for (int i = 0; i < values.length; i++) {
-                final char value = values[i];
+                final char cVal = values[i];
 
                 if (i > 50) {
                     result.append("... (" + values.length + ")");
@@ -460,7 +460,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + value);
+                result.append("" + cVal);
             }
             return result.toString();
         } else if (o instanceof float[]) {
@@ -468,7 +468,7 @@ public class TiffField {
             final StringBuffer result = new StringBuffer();
 
             for (int i = 0; i < values.length; i++) {
-                final float value = values[i];
+                final float fVal = values[i];
 
                 if (i > 50) {
                     result.append("... (" + values.length + ")");
@@ -477,7 +477,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + value);
+                result.append("" + fVal);
             }
             return result.toString();
         }
