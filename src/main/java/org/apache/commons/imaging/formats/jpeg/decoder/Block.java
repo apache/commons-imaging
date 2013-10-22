@@ -13,14 +13,14 @@
  *  under the License.
  */
 
-package org.apache.commons.imaging.formats.jpeg;
+package org.apache.commons.imaging.formats.jpeg.decoder;
 
-public final class Block {
-    public final int[] samples;
-    public final int width;
-    public final int height;
+final class Block {
+    final int[] samples;
+    final int width;
+    final int height;
 
-    public Block(final int width, final int height) {
+    Block(final int width, final int height) {
         samples = new int[width * height];
         this.width = width;
         this.height = height;
