@@ -691,10 +691,10 @@ public class TiffDirectory extends TiffElement {
 
         if ((jpegInterchangeFormat != null)
                 && (jpegInterchangeFormatLength != null)) {
-            final int offset = jpegInterchangeFormat.getIntArrayValue()[0];
+            final int offSet = jpegInterchangeFormat.getIntArrayValue()[0];
             final int byteCount = jpegInterchangeFormatLength.getIntArrayValue()[0];
 
-            return new ImageDataElement(offset, byteCount);
+            return new ImageDataElement(offSet, byteCount);
         } else {
             throw new ImageReadException("Couldn't find image data.");
         }

@@ -138,20 +138,20 @@ class RgbeInfo extends BinaryFunctions {
     public float[][] getPixelData() throws IOException, ImageReadException {
         // Read into local variables to ensure that we have seeked into the file
         // far enough
-        final int height = getHeight();
-        final int width = getWidth();
+        final int ht = getHeight();
+        final int wd = getWidth();
 
-        if (width >= 32768) {
+        if (wd >= 32768) {
             throw new ImageReadException(
                     "Scan lines must be less than 32768 bytes long");
         }
 
-        final byte[] scanLineBytes = ByteConversions.toBytes((short)width,
+        final byte[] scanLineBytes = ByteConversions.toBytes((short)wd,
                 ByteOrder.BIG_ENDIAN);
-        final byte[] rgbe = new byte[width * 4];
-        final float[][] out = new float[3][width * height];
+        final byte[] rgbe = new byte[wd * 4];
+        final float[][] out = new float[3][wd * ht];
 
-        for (int i = 0; i < height; i++) {
+        for (int i = 0; i < ht; i++) {
             in.readAndVerifyBytes(TWO_TWO, "Scan line " + i
                     + " expected to start with 0x2 0x2");
             in.readAndVerifyBytes(scanLineBytes, "Scan line " + i
@@ -160,12 +160,12 @@ class RgbeInfo extends BinaryFunctions {
             decompress(in, rgbe);
 
             for (int channel = 0; channel < 3; channel++) {
-                final int channelOffset = channel * width;
-                final int eOffset = 3 * width;
+                final int channelOffset = channel * wd;
+                final int eOffset = 3 * wd;
 
-                for (int p = 0; p < width; p++) {
+                for (int p = 0; p < wd; p++) {
                     final int mantissa = rgbe[p + eOffset] & 0xff;
-                    final int pos = p + i * width;
+                    final int pos = p + i * wd;
 
                     if (0 == mantissa) {
                         out[channel][pos] = 0;

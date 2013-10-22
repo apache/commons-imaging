@@ -61,7 +61,7 @@ public class MedianCutLongestAxisImplementation extends MedianCutImplementation 
     private void doCut(final ColorGroup color_group, final ColorComponent mode,
             final List<ColorGroup> color_groups, final boolean ignoreAlpha) throws ImageWriteException {
 
-        final Comparator<ColorCount> comparator = new Comparator<ColorCount>() {
+        final Comparator<ColorCount> comp = new Comparator<ColorCount>() {
             public int compare(final ColorCount c1, final ColorCount c2) {
                 switch (mode) {
                 case ALPHA:
@@ -78,7 +78,7 @@ public class MedianCutLongestAxisImplementation extends MedianCutImplementation 
             }
         };
 
-        Collections.sort(color_group.color_counts, comparator);
+        Collections.sort(color_group.color_counts, comp);
         final int count_half = (int) Math.round((double) color_group.totalPoints / 2);
         int old_count = 0, new_count = 0;
         int median_index;

@@ -56,10 +56,10 @@ class ColorGroup {
             throw new ImageWriteException("empty color_group");
         }
 
-        int totalPoints = 0;
+        int total = 0;
         for (int i = 0; i < color_counts.size(); i++) {
             final ColorCount color = color_counts.get(i);
-            totalPoints += color.count;
+            total += color.count;
 
             min_alpha = Math.min(min_alpha, color.alpha);
             max_alpha = Math.max(max_alpha, color.alpha);
@@ -70,7 +70,7 @@ class ColorGroup {
             min_blue = Math.min(min_blue, color.blue);
             max_blue = Math.max(max_blue, color.blue);
         }
-        this.totalPoints = totalPoints;
+        this.totalPoints = total;
 
         alpha_diff = max_alpha - min_alpha;
         red_diff = max_red - min_red;

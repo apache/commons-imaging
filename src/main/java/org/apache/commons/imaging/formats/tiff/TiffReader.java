@@ -317,12 +317,12 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         }
 
         public Collector(final Map<String,Object> params) {
-            boolean readThumbnails = true;
+            boolean tmpReadThumbnails = true;
             if (params != null && params.containsKey(PARAM_KEY_READ_THUMBNAILS)) {
-                readThumbnails = Boolean.TRUE.equals(params
+                tmpReadThumbnails = Boolean.TRUE.equals(params
                         .get(PARAM_KEY_READ_THUMBNAILS));
             }
-            this.readThumbnails = readThumbnails;
+            this.readThumbnails = tmpReadThumbnails;
         }
 
         public boolean setTiffHeader(final TiffHeader tiffHeader) {
@@ -372,24 +372,25 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         }
     }
 
-    private static class DirectoryCollector extends Collector {
-        private final boolean readImageData;
-
-        public DirectoryCollector(final boolean readImageData) {
-            this.readImageData = readImageData;
-        }
-
-        @Override
-        public boolean addDirectory(final TiffDirectory directory) {
-            super.addDirectory(directory);
-            return false;
-        }
-
-        @Override
-        public boolean readImageData() {
-            return readImageData;
-        }
-    }
+//    NOT USED
+//    private static class DirectoryCollector extends Collector {
+//        private final boolean readImageData;
+//
+//        public DirectoryCollector(final boolean readImageData) {
+//            this.readImageData = readImageData;
+//        }
+//
+//        @Override
+//        public boolean addDirectory(final TiffDirectory directory) {
+//            super.addDirectory(directory);
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean readImageData() {
+//            return readImageData;
+//        }
+//    }
 
     public TiffContents readFirstDirectory(final ByteSource byteSource, final Map<String,Object> params,
             final boolean readImageData, final FormatCompliance formatCompliance)
