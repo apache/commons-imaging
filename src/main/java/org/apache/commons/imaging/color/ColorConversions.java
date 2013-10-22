@@ -22,7 +22,7 @@ public abstract class ColorConversions {
         return convertXYZtoCIELab(xyz.X, xyz.Y, xyz.Z);
     }
 
-    private static final double ref_X = 95.047;
+    private static final double ref_X = 95.047;  // Observer= 2°, Illuminant= D65
     private static final double ref_Y = 100.000;
     private static final double ref_Z = 108.883;
 
@@ -706,10 +706,6 @@ public abstract class ColorConversions {
             var_Y = (7.787 * var_Y) + (16 / 116.0);
         }
 
-        final double ref_X = 95.047; // Observer= 2°, Illuminant= D65
-        final double ref_Y = 100.000;
-        final double ref_Z = 108.883;
-
         // Debug.debug("var_Y", var_Y);
 
         final double ref_U = (4 * ref_X) / (ref_X + (15 * ref_Y) + (3 * ref_Z));
@@ -738,10 +734,6 @@ public abstract class ColorConversions {
         } else {
             var_Y = (var_Y - 16 / 116) / 7.787;
         }
-
-        final double ref_X = 95.047; // Observer= 2°, Illuminant= D65
-        final double ref_Y = 100.000;
-        final double ref_Z = 108.883;
 
         final double ref_U = (4 * ref_X) / (ref_X + (15 * ref_Y) + (3 * ref_Z));
         final double ref_V = (9 * ref_Y) / (ref_X + (15 * ref_Y) + (3 * ref_Z));
