@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.palette;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
@@ -48,7 +49,7 @@ class ColorGroup {
 
     public ColorGroup(final List<ColorCount> color_counts, final boolean ignoreAlpha)
             throws ImageWriteException {
-        this.color_counts = color_counts;
+        this.color_counts = Collections.unmodifiableList(color_counts);
         this.ignoreAlpha = ignoreAlpha;
 
         if (color_counts.size() < 1) {

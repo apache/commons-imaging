@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public class TiffDirectory extends TiffElement {
                 TiffConstants.TIFF_DIRECTORY_FOOTER_LENGTH);
 
         this.type = type;
-        this.entries = entries;
+        this.entries = Collections.unmodifiableList(entries);
         this.nextDirectoryOffset = nextDirectoryOffset;
     }
     
