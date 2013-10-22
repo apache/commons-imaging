@@ -109,7 +109,7 @@ public class BasicCParser {
         boolean hadStar = false;
         boolean hadBackSlash = false;
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        boolean seenFirstComment = (firstComment == null);
+        boolean seenFirstComment = firstComment == null;
         final StringBuilder directiveBuffer = new StringBuilder();
         for (int c = is.read(); c != -1; c = is.read()) {
             if (inComment) {
