@@ -46,6 +46,9 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="TBA">
+      <action issue="IMAGING-117" dev="damjan" type="fix">
+        SofnSegment.components - public mutable array.
+      </action>
       <action issue="IMAGING-116" dev="damjan" type="fix">
         GenericSegment.bytes - public mutable array.
       </action>

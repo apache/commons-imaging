@@ -74,9 +74,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             int vMax = 0;
             for (int i = 0; i < sofnSegment.numberOfComponents; i++) {
                 hMax = Math.max(hMax,
-                        sofnSegment.components[i].horizontalSamplingFactor);
+                        sofnSegment.getComponents(i).horizontalSamplingFactor);
                 vMax = Math.max(vMax,
-                        sofnSegment.components[i].verticalSamplingFactor);
+                        sofnSegment.getComponents(i).verticalSamplingFactor);
             }
             final int hSize = 8 * hMax;
             final int vSize = 8 * vMax;
@@ -268,8 +268,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             final SosSegment.Component scanComponent = sosSegment.components[i];
             SofnSegment.Component frameComponent = null;
             for (int j = 0; j < sofnSegment.numberOfComponents; j++) {
-                if (sofnSegment.components[j].componentIdentifier == scanComponent.scanComponentSelector) {
-                    frameComponent = sofnSegment.components[j];
+                if (sofnSegment.getComponents(j).componentIdentifier == scanComponent.scanComponentSelector) {
+                    frameComponent = sofnSegment.getComponents(j);
                     break;
                 }
             }
@@ -294,8 +294,8 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             final SosSegment.Component scanComponent = sosSegment.components[i];
             SofnSegment.Component frameComponent = null;
             for (int j = 0; j < sofnSegment.numberOfComponents; j++) {
-                if (sofnSegment.components[j].componentIdentifier == scanComponent.scanComponentSelector) {
-                    frameComponent = sofnSegment.components[j];
+                if (sofnSegment.getComponents(j).componentIdentifier == scanComponent.scanComponentSelector) {
+                    frameComponent = sofnSegment.getComponents(j);
                     break;
                 }
             }

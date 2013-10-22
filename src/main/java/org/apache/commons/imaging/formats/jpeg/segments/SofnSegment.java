@@ -27,7 +27,7 @@ public class SofnSegment extends Segment {
     public final int width, height;
     public final int numberOfComponents;
     public final int precision;
-    public final Component[] components;
+    private final Component[] components;
 
     public static class Component {
         public final int componentIdentifier;
@@ -82,6 +82,24 @@ public class SofnSegment extends Segment {
             System.out.println("");
         }
     }
+    
+    /**
+     * Returns a copy of all the components.
+     * @return the components
+     */
+    public Component[] getComponents() {
+        return components.clone();
+    }
+    
+    /**
+     * Returns the component at the specified index.
+     * @param index the array index
+     * @return the component
+     */
+    public Component getComponents(final int index) {
+        return components[index];
+    }
+    
 
     @Override
     public String getDescription() {

@@ -829,7 +829,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                 boolean have3 = false;
                 boolean have4 = false;
                 boolean haveOther = false;
-                for (final SofnSegment.Component component : fSOFNSegment.components) {
+                for (final SofnSegment.Component component : fSOFNSegment.getComponents()) {
                     final int id = component.componentIdentifier;
                     if (id == 1) {
                         have1 = true;
@@ -856,7 +856,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                     boolean haveC = false;
                     boolean havec = false;
                     boolean haveY = false;
-                    for (final SofnSegment.Component component : fSOFNSegment.components) {
+                    for (final SofnSegment.Component component : fSOFNSegment.getComponents()) {
                         final int id = component.componentIdentifier;
                         if (id == 'R') {
                             haveR = true;
@@ -889,7 +889,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
                         int maxHorizontalSmaplingFactor = Integer.MIN_VALUE;
                         int minVerticalSamplingFactor = Integer.MAX_VALUE;
                         int maxVerticalSamplingFactor = Integer.MIN_VALUE;
-                        for (final SofnSegment.Component component : fSOFNSegment.components) {
+                        for (final SofnSegment.Component component : fSOFNSegment.getComponents()) {
                             if (minHorizontalSamplingFactor > component.horizontalSamplingFactor) {
                                 minHorizontalSamplingFactor = component.horizontalSamplingFactor;
                             }
