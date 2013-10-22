@@ -216,13 +216,13 @@ public class ByteSourceInputStream extends ByteSource {
                     + ", data length: " + streamLength + ").");
         }
 
-        final InputStream is = getInputStream();
-        skipBytes(is, blockStart);
+        final InputStream cis = getInputStream();
+        skipBytes(cis, blockStart);
 
         final byte bytes[] = new byte[blockLength];
         int total = 0;
         while (true) {
-            final int read = is.read(bytes, total, bytes.length - total);
+            final int read = cis.read(bytes, total, bytes.length - total);
             if (read < 1) {
                 throw new IOException("Could not read block.");
             }
@@ -241,10 +241,10 @@ public class ByteSourceInputStream extends ByteSource {
             return streamLength;
         }
 
-        final InputStream is = getInputStream();
+        final InputStream cis = getInputStream();
         long result = 0;
         long skipped;
-        while ((skipped = is.skip(1024)) > 0) {
+        while ((skipped = cis.skip(1024)) > 0) {
             result += skipped;
         }
         streamLength = result;
