@@ -22,7 +22,7 @@ import java.io.InputStream;
 
 public class SosSegment extends Segment {
     public final int numberOfComponents;
-    public final Component[] components;
+    private final Component[] components;
     public final int startOfSpectralSelection;
     public final int endOfSpectralSelection;
     public final int successiveApproximationBitHigh;
@@ -95,6 +95,23 @@ public class SosSegment extends Segment {
         if (getDebug()) {
             System.out.println("");
         }
+    }
+    
+    /**
+     * Returns a copy of all the components.
+     * @return all the components
+     */
+    public Component[] getComponents() {
+        return components.clone();
+    }
+    
+    /**
+     * Return a component at the specified index.
+     * @param index the component index
+     * @return the component
+     */
+    public Component getComponents(final int index) {
+        return components[index];
     }
 
     @Override

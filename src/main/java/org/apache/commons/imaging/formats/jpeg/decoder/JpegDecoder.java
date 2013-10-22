@@ -265,7 +265,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
     private Block[] allocateMCUMemory() throws ImageReadException {
         final Block[] mcu = new Block[sosSegment.numberOfComponents];
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
-            final SosSegment.Component scanComponent = sosSegment.components[i];
+            final SosSegment.Component scanComponent = sosSegment.getComponents(i);
             SofnSegment.Component frameComponent = null;
             for (int j = 0; j < sofnSegment.numberOfComponents; j++) {
                 if (sofnSegment.getComponents(j).componentIdentifier == scanComponent.scanComponentSelector) {
@@ -291,7 +291,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
     private void readMCU(final JpegInputStream is, final int[] preds, final Block[] mcu)
             throws IOException, ImageReadException {
         for (int i = 0; i < sosSegment.numberOfComponents; i++) {
-            final SosSegment.Component scanComponent = sosSegment.components[i];
+            final SosSegment.Component scanComponent = sosSegment.getComponents(i);
             SofnSegment.Component frameComponent = null;
             for (int j = 0; j < sofnSegment.numberOfComponents; j++) {
                 if (sofnSegment.getComponents(j).componentIdentifier == scanComponent.scanComponentSelector) {
