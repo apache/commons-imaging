@@ -101,13 +101,13 @@ public class RationalNumber extends Number {
         return divisor != 0;
     }
 
-    private static final NumberFormat nf = DecimalFormat.getInstance();
-
     @Override
     public String toString() {
         if (divisor == 0) {
             return "Invalid rational (" + numerator + "/" + divisor + ")";
         }
+        final NumberFormat nf = DecimalFormat.getInstance();
+
         if ((numerator % divisor) == 0) {
             return nf.format(numerator / divisor);
         }
