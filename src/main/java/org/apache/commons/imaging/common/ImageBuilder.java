@@ -44,6 +44,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBufferInt;
 import java.awt.image.DirectColorModel;
+import java.awt.image.Raster;
 import java.awt.image.RasterFormatException;
 import java.awt.image.WritableRaster;
 import java.util.Properties;
@@ -195,13 +196,13 @@ public class ImageBuilder {
         if (useAlpha) {
             colorModel = new DirectColorModel(32, 0x00ff0000, 0x0000ff00,
                     0x000000ff, 0xff000000);
-            raster = WritableRaster.createPackedRaster(buffer, w, h,
+            raster = Raster.createPackedRaster(buffer, w, h,
                     w, new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff,
                             0xff000000 }, null);
         } else {
             colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
                     0x000000ff);
-            raster = WritableRaster.createPackedRaster(buffer, w, h,
+            raster = Raster.createPackedRaster(buffer, w, h,
                     w, new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff },
                     null);
         }
