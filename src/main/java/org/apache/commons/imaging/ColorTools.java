@@ -18,6 +18,7 @@
 package org.apache.commons.imaging;
 
 import java.awt.RenderingHints;
+import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
@@ -107,7 +108,7 @@ public class ColorTools {
             // ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
             if (force_no_alpha) {
                 return new ComponentColorModel(cs, false, false,
-                        ComponentColorModel.OPAQUE, ccm.getTransferType());
+                        Transparency.OPAQUE, ccm.getTransferType());
             } else {
                 return new ComponentColorModel(cs, ccm.hasAlpha(),
                         ccm.isAlphaPremultiplied(), ccm.getTransparency(),
