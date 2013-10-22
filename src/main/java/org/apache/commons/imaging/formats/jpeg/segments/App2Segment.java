@@ -37,9 +37,9 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
             throws ImageReadException, IOException {
         super(marker, marker_length, is2);
 
-        if (BinaryFileParser.startsWith(bytes,
+        if (BinaryFileParser.startsWith(getSegmentData(),
                 JpegImageParser.icc_profile_label)) {
-            final InputStream is = new ByteArrayInputStream(bytes);
+            final InputStream is = new ByteArrayInputStream(getSegmentData());
 
             readAndVerifyBytes(is, JpegImageParser.icc_profile_label,
                     "Not a Valid App2 Segment: missing ICC Profile label");

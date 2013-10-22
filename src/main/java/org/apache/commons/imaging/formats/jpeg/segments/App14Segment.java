@@ -53,10 +53,10 @@ public class App14Segment extends AppnSegment {
     }
 
     public boolean isAdobeJpegSegment() {
-        return BinaryFileParser.startsWith(bytes, adobePrefix);
+        return BinaryFileParser.startsWith(getSegmentData(), adobePrefix);
     }
 
     public int getAdobeColorTransform() {
-        return 0xff & bytes[11];
+        return 0xff & segmentData[11];
     }
 }

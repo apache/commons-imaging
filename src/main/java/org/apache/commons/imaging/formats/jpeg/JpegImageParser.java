@@ -321,7 +321,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
     }
 
     public static boolean isExifAPP1Segment(final GenericSegment segment) {
-        return startsWith(segment.bytes, EXIF_IDENTIFIER_CODE);
+        return startsWith(segment.getSegmentData(), EXIF_IDENTIFIER_CODE);
     }
 
     private List<Segment> filterAPP1Segments(final List<Segment> v) {
@@ -384,7 +384,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         }
 
         final GenericSegment segment = (GenericSegment) exifSegments.get(0);
-        final byte bytes[] = segment.bytes;
+        final byte bytes[] = segment.getSegmentData();
 
         // byte head[] = readBytearray("exif head", bytes, 0, 6);
         //

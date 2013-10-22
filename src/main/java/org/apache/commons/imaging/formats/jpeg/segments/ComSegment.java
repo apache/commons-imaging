@@ -16,43 +16,33 @@
  */
 package org.apache.commons.imaging.formats.jpeg.segments;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-public class ComSegment extends Segment {
-    private final byte[] comment;
-
+public class ComSegment extends GenericSegment {
     public ComSegment(final int marker, final byte segmentData[]) throws IOException {
-        this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
+        super(marker, segmentData);
     }
 
     public ComSegment(final int marker, final int marker_length, final InputStream is)
             throws IOException {
-        super(marker, marker_length);
-
-        if (getDebug()) {
-            System.out.println("ComSegment marker_length: " + marker_length);
-        }
-
-        comment = readBytes("Comment", is, marker_length,
-                "Error reading JPEG comment");
-
-        if (getDebug()) {
-            System.out.println("");
-        }
+        super(marker, marker_length, is);
     }
     
+    /**
+     * Returns a copy of the comment.
+     * @return a copy of the comment's bytes
+     */
     public byte[] getComment() {
-        return comment;
+        return getSegmentData();
     }
 
     @Override
     public String getDescription() {
         String commentString = "";
         try {
-            commentString = new String(comment, "UTF-8");
+            commentString = new String(segmentData, "UTF-8");
         } catch (final UnsupportedEncodingException cannotHappen) {
         }
         return "COM (" + commentString + ")";

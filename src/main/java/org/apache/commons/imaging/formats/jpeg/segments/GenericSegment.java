@@ -21,20 +21,20 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 public abstract class GenericSegment extends Segment {
-    public final byte bytes[];
+    protected final byte segmentData[];
 
     public GenericSegment(final int marker, final int marker_length, final InputStream is)
             throws IOException {
         super(marker, marker_length);
 
-        bytes = readBytes("Segment Data", is, marker_length,
+        segmentData = readBytes("Segment Data", is, marker_length,
                 "Invalid Segment: insufficient data");
     }
 
     public GenericSegment(final int marker, final byte bytes[]) {
         super(marker, bytes.length);
 
-        this.bytes = bytes;
+        this.segmentData = bytes;
     }
 
     @Override
@@ -43,9 +43,19 @@ public abstract class GenericSegment extends Segment {
     }
 
     public void dump(final PrintWriter pw, final int start) {
-        for (int i = 0; (i < 50) && ((i + start) < bytes.length); i++) {
-            debugNumber(pw, "\t" + (i + start), bytes[i + start]);
+        for (int i = 0; (i < 50) && ((i + start) < segmentData.length); i++) {
+            debugNumber(pw, "\t" + (i + start), segmentData[i + start]);
         }
+    }
+
+    /**
+     * Returns a copy of the segment's contents,
+     * excluding the marker and length bytes at
+     * the beginning.
+     * @return the segment's contents
+     */
+    public byte[] getSegmentData() {
+        return segmentData.clone();
     }
 
     // public String getDescription()

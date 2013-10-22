@@ -59,7 +59,7 @@ public class App13Segment extends AppnSegment {
     }
 
     public boolean isPhotoshopJpegSegment() {
-        return new IptcParser().isPhotoshopJpegSegment(bytes);
+        return new IptcParser().isPhotoshopJpegSegment(getSegmentData());
     }
 
     public PhotoshopApp13Data parsePhotoshopSegment(final Map<String,Object> params)
@@ -73,6 +73,6 @@ public class App13Segment extends AppnSegment {
             return null;
         }
 
-        return new IptcParser().parsePhotoshopSegment(bytes, params);
+        return new IptcParser().parsePhotoshopSegment(getSegmentData(), params);
     }
 }
