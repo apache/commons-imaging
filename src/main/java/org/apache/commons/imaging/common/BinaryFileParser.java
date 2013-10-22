@@ -136,8 +136,7 @@ public class BinaryFileParser {
         BinaryFunctions.skipBytes(is, length, exception);
     }
     
-    protected final byte[] remainingBytes(final String name, final byte bytes[], final int count)
-            throws ImageReadException {
+    protected final byte[] remainingBytes(final String name, final byte bytes[], final int count) {
         return BinaryFunctions.remainingBytes(name, bytes, count);
     }
     
