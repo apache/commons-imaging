@@ -109,11 +109,10 @@ public class ColorTools {
             if (force_no_alpha) {
                 return new ComponentColorModel(cs, false, false,
                         Transparency.OPAQUE, ccm.getTransferType());
-            } else {
-                return new ComponentColorModel(cs, ccm.hasAlpha(),
-                        ccm.isAlphaPremultiplied(), ccm.getTransparency(),
-                        ccm.getTransferType());
             }
+            return new ComponentColorModel(cs, ccm.hasAlpha(),
+                    ccm.isAlphaPremultiplied(), ccm.getTransparency(),
+                    ccm.getTransferType());
         } else if (old_cm instanceof DirectColorModel) {
             final DirectColorModel dcm = (DirectColorModel) old_cm;
 
