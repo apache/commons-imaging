@@ -64,10 +64,6 @@ public enum ImageFormat {
         return name();
     }
 
-    public boolean isActual() {
-        return actual;
-    }
-
     @Deprecated
     public static final ImageFormat IMAGE_FORMAT_UNKNOWN = UNKNOWN;
     @Deprecated
