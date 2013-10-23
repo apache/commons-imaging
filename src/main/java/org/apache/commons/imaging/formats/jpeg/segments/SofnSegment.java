@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
 public class SofnSegment extends Segment {
@@ -103,7 +104,7 @@ public class SofnSegment extends Segment {
 
     @Override
     public String getDescription() {
-        return "SOFN (SOF" + (marker - JpegImageParser.SOF0Marker) + ") ("
+        return "SOFN (SOF" + (marker - JpegConstants.SOF0Marker) + ") ("
                 + getSegmentType() + ")";
     }
 
