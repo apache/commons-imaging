@@ -114,7 +114,7 @@ public abstract class ImagingTest extends TestCase implements
         File imagesFolder = TEST_IMAGE_FOLDER;
 
         // imagesFolder = new File(
-        // "C:\\personal\\apache\\sanselan\\src\\test\\data\\images\\bmp\\2");
+        // "C:\\personal\\apache\\imaging\\src\\test\\data\\images\\bmp\\2");
 
         imagesFolder = imagesFolder.getAbsoluteFile();
 

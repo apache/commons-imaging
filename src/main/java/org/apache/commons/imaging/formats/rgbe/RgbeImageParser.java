@@ -107,7 +107,7 @@ public class RgbeImageParser extends ImageParser {
 
         try {
             // It is necessary to create our own BufferedImage here as the
-            // org.apache.sanselan.common.IBufferedImageFactory interface does
+            // org.apache.commons.imaging.common.IBufferedImageFactory interface does
             // not expose this complexity
             final DataBuffer buffer = new DataBufferFloat(info.getPixelData(),
                     info.getWidth() * info.getHeight());

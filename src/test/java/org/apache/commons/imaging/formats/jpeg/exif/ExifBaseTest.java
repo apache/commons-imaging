@@ -39,7 +39,7 @@ public abstract class ExifBaseTest extends ImagingTest {
         if (!file.getName().toLowerCase().endsWith(".jpg"))
          {
             return false;
-        // ImageFormat format = Sanselan.guessFormat(file);
+        // ImageFormat format = Imaging.guessFormat(file);
         // if (format != ImageFormat.IMAGE_FORMAT_JPEG)
         // return false;
         }

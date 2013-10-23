@@ -114,7 +114,7 @@ public class WriteExifMetadataExample {
                 // directories are associated with a given tag.
                 //
                 // see
-                // org.apache.commons.sanselan.formats.tiff.constants.AllTagConstants
+                // org.apache.commons.imaging.formats.tiff.constants.AllTagConstants
                 //
                 final TiffOutputDirectory exifDirectory = outputSet
                         .getOrCreateExifDirectory();

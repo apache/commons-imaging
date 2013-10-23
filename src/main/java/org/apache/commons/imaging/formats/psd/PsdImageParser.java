@@ -779,7 +779,7 @@ public class PsdImageParser extends ImageParser {
      * @param byteSource
      *            File containing image data.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override

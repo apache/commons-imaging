@@ -38,7 +38,7 @@ public class SampleUsage {
         try {
             // <b>Code won't work unless these variables are properly
             // initialized.
-            // Sanselan works equally well with File, byte array or InputStream
+            // Imaging works equally well with File, byte array or InputStream
             // inputs.</b>
             final BufferedImage someImage = null;
             final byte someBytes[] = null;
@@ -46,14 +46,14 @@ public class SampleUsage {
             final InputStream someInputStream = null;
             final OutputStream someOutputStream = null;
 
-            // <b>The Sanselan class provides a simple interface to the library.
+            // <b>The Imaging class provides a simple interface to the library.
             // </b>
 
             // <b>how to read an image: </b>
             final byte imageBytes[] = someBytes;
             final BufferedImage image_1 = Imaging.getBufferedImage(imageBytes);
 
-            // <b>methods of Sanselan usually accept files, byte arrays, or
+            // <b>methods of Imaging usually accept files, byte arrays, or
             // inputstreams as arguments. </b>
             final BufferedImage image_2 = Imaging.getBufferedImage(imageBytes);
             final File file = someFile;
@@ -96,8 +96,6 @@ public class SampleUsage {
 
             // <b>get all metadata stored in EXIF format (ie. from JPEG or
             // TIFF). </b>
-            // <b>org.w3c.dom.Node node =
-            // Sanselan.getMetadataObsolete(imageBytes); </b>
             final IImageMetadata metadata = Imaging.getMetadata(imageBytes);
 
             // <b>print a dump of information about an image to stdout. </b>

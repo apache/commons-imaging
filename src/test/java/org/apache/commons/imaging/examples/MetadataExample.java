@@ -37,7 +37,6 @@ public class MetadataExample {
     public static void metadataExample(final File file) throws ImageReadException,
             IOException {
         // get all metadata stored in EXIF format (ie. from JPEG or TIFF).
-        // org.w3c.dom.Node node = Sanselan.getMetadataObsolete(imageBytes);
         final IImageMetadata metadata = Imaging.getMetadata(file);
 
         // System.out.println(metadata);

@@ -131,7 +131,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
         final Map<String,Object> writeParams = new HashMap<String,Object>();
-        // writeParams.put(SanselanConstants.PARAM_KEY_FORMAT,
+        // writeParams.put(ImagingConstants.PARAM_KEY_FORMAT,
         // ImageFormat.IMAGE_FORMAT_BMP);
         // writeParams.put(PngConstants.PARAM_KEY_BMP_FORCE_TRUE_COLOR,
         // Boolean.TRUE);

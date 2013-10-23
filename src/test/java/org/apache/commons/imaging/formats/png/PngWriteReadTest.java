@@ -131,7 +131,7 @@ public class PngWriteReadTest extends ImagingTest {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
         final Map<String,Object> writeParams = new HashMap<String,Object>();
-        // writeParams.put(SanselanConstants.PARAM_KEY_FORMAT,
+        // writeParams.put(ImagingConstants.PARAM_KEY_FORMAT,
         // ImageFormat.IMAGE_FORMAT_PNG);
         // writeParams.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
         // Boolean.TRUE);

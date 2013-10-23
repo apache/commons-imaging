@@ -47,7 +47,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 Debug.debug("imageFile", imageFile);
                 // Debug.debug();
 
-                // params.put(SanselanConstants.PARAM_KEY_VERBOSE,
+                // params.put(ImagingConstants.PARAM_KEY_VERBOSE,
                 // Boolean.TRUE);
 
                 final BufferedImage image = Imaging.getBufferedImage(imageFile,

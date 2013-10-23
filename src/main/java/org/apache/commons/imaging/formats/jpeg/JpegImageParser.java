@@ -379,8 +379,8 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         }
         if (exifSegments.size() > 1) {
             throw new ImageReadException(
-                    "Sanselan currently can't parse EXIF metadata split across multiple APP1 segments.  "
-                            + "Please send this image to the Sanselan project.");
+                    "Imaging currently can't parse EXIF metadata split across multiple APP1 segments.  "
+                            + "Please send this image to the Imaging project.");
         }
 
         final GenericSegment segment = (GenericSegment) exifSegments.get(0);
@@ -513,7 +513,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
      * @param byteSource
      *            File containing image data.
      * @param params
-     *            Map of optional parameters, defined in SanselanConstants.
+     *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
