@@ -22,7 +22,6 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
-import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
 public class SofnSegment extends Segment {
     public final int width, height;
