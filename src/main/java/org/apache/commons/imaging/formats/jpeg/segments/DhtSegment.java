@@ -19,25 +19,26 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DhtSegment extends Segment {
-    public final List<HuffmanTable> huffmanTables = new ArrayList<HuffmanTable>();
+    public final List<HuffmanTable> huffmanTables;
 
     public static class HuffmanTable {
         // some arrays are better off one-based
         // to avoid subtractions by one later when indexing them
         public final int tableClass;
         public final int destinationIdentifier;
-        public final int[] bits; // 1-based
-        public final int[] huffVal; // 0-based
+        private final int[] bits; // 1-based
+        private final int[] huffVal; // 0-based
 
         // derived properties:
-        public final int[] huffSize = new int[16 * 256]; // 0-based
-        public final int[] huffCode; // 0-based
-        public final int[] minCode = new int[1 + 16]; // 1-based
-        public final int[] maxCode = new int[1 + 16]; // 1-based
-        public final int[] valPtr = new int[1 + 16]; // 1-based
+        private final int[] huffSize = new int[16 * 256]; // 0-based
+        private final int[] huffCode; // 0-based
+        private final int[] minCode = new int[1 + 16]; // 1-based
+        private final int[] maxCode = new int[1 + 16]; // 1-based
+        private final int[] valPtr = new int[1 + 16]; // 1-based
 
         public HuffmanTable(final int tableClass, final int destinationIdentifier,
                 final int[] bits, final int[] huffVal) {
@@ -111,6 +112,34 @@ public class DhtSegment extends Segment {
             }
 
         }
+
+        public int[] getBits() {
+            return bits;
+        }
+
+        public int[] getHuffVal() {
+            return huffVal;
+        }
+
+        public int[] getHuffSize() {
+            return huffSize;
+        }
+
+        public int[] getHuffCode() {
+            return huffCode;
+        }
+
+        public int[] getMinCode() {
+            return minCode;
+        }
+
+        public int[] getMaxCode() {
+            return maxCode;
+        }
+
+        public int[] getValPtr() {
+            return valPtr;
+        }
     }
 
     public DhtSegment(final int marker, final byte[] segmentData) throws IOException {
@@ -121,6 +150,7 @@ public class DhtSegment extends Segment {
             throws IOException {
         super(marker, length);
 
+        final ArrayList<HuffmanTable> huffmanTables = new ArrayList<DhtSegment.HuffmanTable>();
         while (length > 0) {
             final int tableClassAndDestinationId = 0xff & readByte(
                     "TableClassAndDestinationId", is, "Not a Valid JPEG File");
@@ -143,6 +173,7 @@ public class DhtSegment extends Segment {
             huffmanTables.add(new HuffmanTable(tableClass,
                     destinationIdentifier, bits, huffVal));
         }
+        this.huffmanTables = Collections.unmodifiableList(huffmanTables);
     }
 
     @Override

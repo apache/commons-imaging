@@ -411,13 +411,13 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
         // "DECODE", section F.2.2.3, figure F.16, page 109 of T.81
         int i = 1;
         int code = is.nextBit();
-        while (code > huffmanTable.maxCode[i]) {
+        while (code > huffmanTable.getMaxCode()[i]) {
             i++;
             code = (code << 1) | is.nextBit();
         }
-        int j = huffmanTable.valPtr[i];
-        j += code - huffmanTable.minCode[i];
-        final int value = huffmanTable.huffVal[j];
+        int j = huffmanTable.getValPtr()[i];
+        j += code - huffmanTable.getMinCode()[i];
+        final int value = huffmanTable.getHuffVal()[j];
         return value;
     }
 
