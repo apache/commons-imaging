@@ -64,7 +64,7 @@ public class SampleUsage {
             // <b>Write an image. </b>
             final BufferedImage image = someImage;
             final File dst = someFile;
-            final ImageFormat format = ImageFormat.IMAGE_FORMAT_PNG;
+            final ImageFormat format = ImageFormat.PNG;
             final Map<String,Object> optional_params = new HashMap<String,Object>();
             Imaging.writeImage(image, dst, format, optional_params);
 
@@ -92,7 +92,7 @@ public class SampleUsage {
 
             // <b>try to guess the image's format. </b>
             final ImageFormat image_format = Imaging.guessFormat(imageBytes);
-            image_format.equals(ImageFormat.IMAGE_FORMAT_PNG);
+            image_format.equals(ImageFormat.PNG);
 
             // <b>get all metadata stored in EXIF format (ie. from JPEG or
             // TIFF). </b>

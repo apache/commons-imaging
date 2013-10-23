@@ -79,7 +79,7 @@ public class PamFileInfo extends FileInfo {
 
     @Override
     public ImageFormat getImageType() {
-        return ImageFormat.IMAGE_FORMAT_PAM;
+        return ImageFormat.PAM;
     }
 
     @Override

@@ -65,7 +65,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_JPEG, //
+        return new ImageFormat[] { ImageFormat.JPEG, //
         };
     }
 
@@ -783,7 +783,7 @@ public class JpegImageParser extends ImageParser implements JpegConstants {
         final int Precision = fSOFNSegment.precision;
 
         final int BitsPerPixel = Number_of_components * Precision;
-        final ImageFormat Format = ImageFormat.IMAGE_FORMAT_JPEG;
+        final ImageFormat Format = ImageFormat.JPEG;
         final String FormatName = "JPEG (Joint Photographic Experts Group) Format";
         final String MimeType = "image/jpeg";
         // we ought to count images, but don't yet.

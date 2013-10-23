@@ -31,7 +31,7 @@ public abstract class JpegBaseTest extends ImagingTest {
     protected static boolean isJpeg(final File file) throws IOException,
             ImageReadException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormat.IMAGE_FORMAT_JPEG;
+        return format == ImageFormat.JPEG;
     }
 
     public static final ImageFilter imageFilter = new ImageFilter() {

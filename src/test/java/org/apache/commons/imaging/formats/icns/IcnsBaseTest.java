@@ -31,7 +31,7 @@ public abstract class IcnsBaseTest extends ImagingTest {
     private static boolean isIcns(final File file) throws IOException,
             ImageReadException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormat.IMAGE_FORMAT_ICNS;
+        return format == ImageFormat.ICNS;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {

@@ -137,7 +137,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
         // Boolean.TRUE);
 
         final byte bytes[] = Imaging.writeImageToBytes(srcImage,
-                ImageFormat.IMAGE_FORMAT_BMP, writeParams);
+                ImageFormat.BMP, writeParams);
 
         // Debug.debug("bytes", bytes);
 

@@ -69,7 +69,7 @@ public class XbmImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_XBM, //
+        return new ImageFormat[] { ImageFormat.XBM, //
         };
     }
 
@@ -89,7 +89,7 @@ public class XbmImageParser extends ImageParser {
             throws ImageReadException, IOException {
         final XbmHeader xbmHeader = readXbmHeader(byteSource);
         return new ImageInfo("XBM", 1, new ArrayList<String>(),
-                ImageFormat.IMAGE_FORMAT_XBM, "X BitMap", xbmHeader.height,
+                ImageFormat.XBM, "X BitMap", xbmHeader.height,
                 "image/x-xbitmap", 1, 0, 0, 0, 0, xbmHeader.width, false,
                 false, false, ImageInfo.COLOR_TYPE_BW,
                 ImageInfo.COMPRESSION_ALGORITHM_NONE);

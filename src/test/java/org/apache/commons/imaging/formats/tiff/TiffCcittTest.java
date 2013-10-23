@@ -175,7 +175,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_1D);
                 final byte[] compressed = Imaging.writeImageToBytes(image,
-                        ImageFormat.IMAGE_FORMAT_TIFF, params);
+                        ImageFormat.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (final ImageWriteException ex) {
@@ -195,7 +195,7 @@ public class TiffCcittTest extends TiffBaseTest {
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 0);
                 final byte[] compressed = Imaging.writeImageToBytes(image,
-                        ImageFormat.IMAGE_FORMAT_TIFF, params);
+                        ImageFormat.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (final ImageWriteException ex) {
@@ -215,7 +215,7 @@ public class TiffCcittTest extends TiffBaseTest {
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 4);
                 final byte[] compressed = Imaging.writeImageToBytes(image,
-                        ImageFormat.IMAGE_FORMAT_TIFF, params);
+                        ImageFormat.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (final ImageWriteException ex) {
@@ -235,7 +235,7 @@ public class TiffCcittTest extends TiffBaseTest {
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 1);
                 final byte[] compressed = Imaging.writeImageToBytes(image,
-                        ImageFormat.IMAGE_FORMAT_TIFF, params);
+                        ImageFormat.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (final ImageWriteException ex) {
@@ -255,7 +255,7 @@ public class TiffCcittTest extends TiffBaseTest {
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 5);
                 final byte[] compressed = Imaging.writeImageToBytes(image,
-                        ImageFormat.IMAGE_FORMAT_TIFF, params);
+                        ImageFormat.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (final ImageWriteException ex) {
@@ -274,7 +274,7 @@ public class TiffCcittTest extends TiffBaseTest {
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
                 final byte[] compressed = Imaging.writeImageToBytes(image,
-                        ImageFormat.IMAGE_FORMAT_TIFF, params);
+                        ImageFormat.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
                 compareImages(image, result);
             } catch (final ImageWriteException ex) {

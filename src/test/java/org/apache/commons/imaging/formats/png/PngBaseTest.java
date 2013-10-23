@@ -31,7 +31,7 @@ public abstract class PngBaseTest extends ImagingTest {
     private static boolean isPng(final File file) throws IOException,
             ImageReadException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormat.IMAGE_FORMAT_PNG;
+        return format == ImageFormat.PNG;
     }
 
     private static final ImageFilter imageFilter = new ImageFilter() {

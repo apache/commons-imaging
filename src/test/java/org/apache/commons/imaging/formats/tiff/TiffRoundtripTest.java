@@ -52,7 +52,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
 
             final File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
             final Map<String,Object> params = new HashMap<String,Object>();
-            Imaging.writeImage(image, tempFile, ImageFormat.IMAGE_FORMAT_TIFF,
+            Imaging.writeImage(image, tempFile, ImageFormat.TIFF,
                     params);
             image = null;
 

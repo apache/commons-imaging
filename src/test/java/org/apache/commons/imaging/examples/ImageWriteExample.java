@@ -35,7 +35,7 @@ public class ImageWriteExample {
         // read image
         final BufferedImage image = Imaging.getBufferedImage(file);
 
-        final ImageFormat format = ImageFormat.IMAGE_FORMAT_TIFF;
+        final ImageFormat format = ImageFormat.TIFF;
         final Map<String,Object> params = new HashMap<String,Object>();
 
         // set optional parameters if you like

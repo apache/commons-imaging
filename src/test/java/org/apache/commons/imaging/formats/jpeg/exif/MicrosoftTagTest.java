@@ -48,7 +48,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, title);
         final Map<String,Object> params = new TreeMap<String,Object>();
         params.put(TiffConstants.PARAM_KEY_EXIF, exifSet);
-        final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormat.IMAGE_FORMAT_TIFF, params);
+        final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormat.TIFF, params);
         checkFields(bytes);
     }
     

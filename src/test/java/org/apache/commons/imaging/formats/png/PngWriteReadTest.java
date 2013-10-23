@@ -96,7 +96,7 @@ public class PngWriteReadTest extends ImagingTest {
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
         final byte[] pngBytes = Imaging.writeImageToBytes(
                 imageDataToBufferedImage(smallAscendingPixels),
-                ImageFormat.IMAGE_FORMAT_PNG, null);
+                ImageFormat.PNG, null);
         assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
@@ -137,7 +137,7 @@ public class PngWriteReadTest extends ImagingTest {
         // Boolean.TRUE);
 
         final byte bytes[] = Imaging.writeImageToBytes(srcImage,
-                ImageFormat.IMAGE_FORMAT_PNG, writeParams);
+                ImageFormat.PNG, writeParams);
 
         // Debug.debug("bytes", bytes);
 

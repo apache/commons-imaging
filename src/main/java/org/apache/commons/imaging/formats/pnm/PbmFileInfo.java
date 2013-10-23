@@ -44,7 +44,7 @@ public class PbmFileInfo extends FileInfo {
 
     @Override
     public ImageFormat getImageType() {
-        return ImageFormat.IMAGE_FORMAT_PBM;
+        return ImageFormat.PBM;
     }
 
     @Override

@@ -80,7 +80,7 @@ public class BmpImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_BMP, //
+        return new ImageFormat[] { ImageFormat.BMP, //
         };
     }
 
@@ -640,7 +640,7 @@ public class BmpImageParser extends ImageParser {
         // TODO: comments...
 
         final int bitsPerPixel = bhi.bitsPerPixel;
-        final ImageFormat format = ImageFormat.IMAGE_FORMAT_BMP;
+        final ImageFormat format = ImageFormat.BMP;
         final String name = "BMP Windows Bitmap";
         final String mimeType = "image/x-ms-bmp";
         // we ought to count images, but don't yet.

@@ -31,7 +31,7 @@ public abstract class TiffBaseTest extends ImagingTest {
     private static boolean isTiff(final File file) throws IOException,
             ImageReadException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormat.IMAGE_FORMAT_TIFF;
+        return format == ImageFormat.TIFF;
     }
 
     private static final ImageFilter imageFilter = new ImageFilter() {

@@ -122,7 +122,7 @@ public class XpmImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_XPM, //
+        return new ImageFormat[] { ImageFormat.XPM, //
         };
     }
 
@@ -157,7 +157,7 @@ public class XpmImageParser extends ImageParser {
          }
       }
         return new ImageInfo("XPM version 3", xpmHeader.numCharsPerPixel * 8,
-                new ArrayList<String>(), ImageFormat.IMAGE_FORMAT_XPM,
+                new ArrayList<String>(), ImageFormat.XPM,
                 "X PixMap", xpmHeader.height, "image/x-xpixmap", 1, 0, 0, 0, 0,
                 xpmHeader.width, false, isTransparent, true, colorType,
                 ImageInfo.COMPRESSION_ALGORITHM_NONE);

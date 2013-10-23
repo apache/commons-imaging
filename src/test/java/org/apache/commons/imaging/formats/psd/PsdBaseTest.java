@@ -29,7 +29,7 @@ public abstract class PsdBaseTest extends ImagingTest {
     private static boolean isPsd(final File file) throws IOException,
             ImageReadException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormat.IMAGE_FORMAT_PSD;
+        return format == ImageFormat.PSD;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {

@@ -89,7 +89,7 @@ public class PngImageParser extends ImageParser implements PngConstants {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PNG, //
+        return new ImageFormat[] { ImageFormat.PNG, //
         };
     }
 
@@ -567,7 +567,7 @@ public class PngImageParser extends ImageParser implements PngConstants {
 
         final int BitsPerPixel = pngChunkIHDR.bitDepth
                 * samplesPerPixel(pngChunkIHDR.colorType);
-        final ImageFormat Format = ImageFormat.IMAGE_FORMAT_PNG;
+        final ImageFormat Format = ImageFormat.PNG;
         final String FormatName = "PNG Portable Network Graphics";
         final int Height = pngChunkIHDR.height;
         final String MimeType = "image/png";

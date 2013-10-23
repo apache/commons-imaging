@@ -51,7 +51,7 @@ public class XmpUpdateTest extends ImagingTest {
 
             String xmpXml = Imaging.getXmpXml(imageFile);
             if (null == xmpXml
-                    && imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF)) {
+                    && imageFormat.equals(ImageFormat.GIF)) {
                 xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
             }
             if (null == xmpXml) {
@@ -60,15 +60,15 @@ public class XmpUpdateTest extends ImagingTest {
 
             assertNotNull(xmpXml);
 
-            if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_PNG)) { /*
+            if (imageFormat.equals(ImageFormat.PNG)) { /*
                                                                      * do
                                                                      * nothing
                                                                      */
-            } else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF)) { /*
+            } else if (imageFormat.equals(ImageFormat.TIFF)) { /*
                                                                              * do
                                                                              * nothing
                                                                              */
-            } else if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_GIF)) { /*
+            } else if (imageFormat.equals(ImageFormat.GIF)) { /*
                                                                             * do
                                                                             * nothing
                                                                             */

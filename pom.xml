@@ -310,6 +310,10 @@
       <name>Damjan Jovanovic</name>
       <id>damjan</id>
     </developer>
+    <developer>
+      <name>Matt Benson</name>
+      <id>mbenson</id>
+    </developer>
   </developers>
 
   <contributors>

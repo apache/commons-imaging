@@ -85,8 +85,8 @@ public class ByteSourceImageTest extends ByteSourceTest {
             checkGetImageSize(imageFile, imageFileBytes);
 
             final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-            if (ImageFormat.IMAGE_FORMAT_JPEG != imageFormat
-                    && ImageFormat.IMAGE_FORMAT_UNKNOWN != imageFormat) {
+            if (ImageFormat.JPEG != imageFormat
+                    && ImageFormat.UNKNOWN != imageFormat) {
                 checkGetBufferedImage(imageFile, imageFileBytes);
             }
         }
@@ -125,12 +125,12 @@ public class ByteSourceImageTest extends ByteSourceTest {
         // check guessFormat()
         final ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
         assertNotNull(imageFormatFile);
-        assertTrue(imageFormatFile != ImageFormat.IMAGE_FORMAT_UNKNOWN);
+        assertTrue(imageFormatFile != ImageFormat.UNKNOWN);
         // Debug.debug("imageFormatFile", imageFormatFile);
 
         final ImageFormat imageFormatBytes = Imaging.guessFormat(imageFileBytes);
         assertNotNull(imageFormatBytes);
-        assertTrue(imageFormatBytes != ImageFormat.IMAGE_FORMAT_UNKNOWN);
+        assertTrue(imageFormatBytes != ImageFormat.UNKNOWN);
         // Debug.debug("imageFormatBytes", imageFormatBytes);
 
         assertTrue(imageFormatBytes == imageFormatFile);
@@ -158,8 +158,8 @@ public class ByteSourceImageTest extends ByteSourceTest {
         final Map<String,Object> params = new HashMap<String,Object>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-        if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF)
-                || imageFormat.equals(ImageFormat.IMAGE_FORMAT_JPEG)) {
+        if (imageFormat.equals(ImageFormat.TIFF)
+                || imageFormat.equals(ImageFormat.JPEG)) {
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
         }
 
@@ -198,7 +198,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertTrue(imageInfoFile.getBitsPerPixel() > 0);
 
         assertNotNull(imageInfoFile.getFormat());
-        assertTrue(imageInfoFile.getFormat() != ImageFormat.IMAGE_FORMAT_UNKNOWN);
+        assertTrue(imageInfoFile.getFormat() != ImageFormat.UNKNOWN);
 
         assertNotNull(imageInfoFile.getFormatName());
 

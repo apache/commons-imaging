@@ -64,41 +64,41 @@ public class RoundtripTest extends ImagingTest {
     }
 
     private static final FormatInfo FORMAT_INFOS[] = { //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_PNG, true, true,
+            new FormatInfo(ImageFormat.PNG, true, true,
                     COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_GIF, true, true,
+            new FormatInfo(ImageFormat.GIF, true, true,
                     COLOR_LIMITED_INDEX, true, false), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_ICO, true, true,
+            new FormatInfo(ImageFormat.ICO, true, true,
                     COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_TIFF, true, true,
+            new FormatInfo(ImageFormat.TIFF, true, true,
                     COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_JPEG, true, false,
+            new FormatInfo(ImageFormat.JPEG, true, false,
                     COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_BMP, true, true,
+            new FormatInfo(ImageFormat.BMP, true, true,
                     COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_PSD, true, false,
+            new FormatInfo(ImageFormat.PSD, true, false,
                     COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_PBM, true, true,
+            new FormatInfo(ImageFormat.PBM, true, true,
                     COLOR_BITMAP, true, false), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_PGM, true, true,
+            new FormatInfo(ImageFormat.PGM, true, true,
                     COLOR_GRAYSCALE, true, false), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_PPM, true, true,
+            new FormatInfo(ImageFormat.PPM, true, true,
                     COLOR_FULL_RGB, true, false), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_PAM, true, true,
+            new FormatInfo(ImageFormat.PAM, true, true,
                     COLOR_FULL_RGB, true, false),//
             // new FormatInfo(ImageFormat.IMAGE_FORMAT_PNM, true, true,
             // COLOR_FULL_RGB, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_TGA, false, false,
+            new FormatInfo(ImageFormat.TGA, false, false,
                     COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_WBMP, true, true,
+            new FormatInfo(ImageFormat.WBMP, true, true,
                     COLOR_BITMAP, true, false), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_PCX, true, true,
+            new FormatInfo(ImageFormat.PCX, true, true,
                     COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_DCX, true, true,
+            new FormatInfo(ImageFormat.DCX, true, true,
                     COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_XBM, true, true,
+            new FormatInfo(ImageFormat.XBM, true, true,
                     COLOR_BITMAP, false, false), //
-            new FormatInfo(ImageFormat.IMAGE_FORMAT_XPM, true, true,
+            new FormatInfo(ImageFormat.XPM, true, true,
                     COLOR_FULL_RGB, false, false), //
     };
 

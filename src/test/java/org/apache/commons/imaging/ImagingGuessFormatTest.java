@@ -38,18 +38,18 @@ public class ImagingGuessFormatTest extends ImagingTest {
     public static final String TGA_IMAGE_FILE = "tga\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tga";
 
     public void testGuess_all() throws Exception {
-        testGuess(ImageFormat.IMAGE_FORMAT_PNG, PNG_IMAGE_FILE);
-        testGuess(ImageFormat.IMAGE_FORMAT_GIF, GIF_IMAGE_FILE);
-        testGuess(ImageFormat.IMAGE_FORMAT_ICNS, ICNS_IMAGE_FILE);
+        testGuess(ImageFormat.PNG, PNG_IMAGE_FILE);
+        testGuess(ImageFormat.GIF, GIF_IMAGE_FILE);
+        testGuess(ImageFormat.ICNS, ICNS_IMAGE_FILE);
         // TODO(cmchen): add ability to sniff ICOs if possible.
         // testGuess(ImageFormat.IMAGE_FORMAT_ICO, ICO_IMAGE_FILE);
-        testGuess(ImageFormat.IMAGE_FORMAT_TIFF, TIFF_IMAGE_FILE);
-        testGuess(ImageFormat.IMAGE_FORMAT_JPEG, JPEG_IMAGE_FILE);
-        testGuess(ImageFormat.IMAGE_FORMAT_BMP, BMP_IMAGE_FILE);
-        testGuess(ImageFormat.IMAGE_FORMAT_PSD, PSD_IMAGE_FILE);
-        testGuess(ImageFormat.IMAGE_FORMAT_PBM, PBM_IMAGE_FILE);
-        testGuess(ImageFormat.IMAGE_FORMAT_PGM, PGM_IMAGE_FILE);
-        testGuess(ImageFormat.IMAGE_FORMAT_PPM, PPM_IMAGE_FILE);
+        testGuess(ImageFormat.TIFF, TIFF_IMAGE_FILE);
+        testGuess(ImageFormat.JPEG, JPEG_IMAGE_FILE);
+        testGuess(ImageFormat.BMP, BMP_IMAGE_FILE);
+        testGuess(ImageFormat.PSD, PSD_IMAGE_FILE);
+        testGuess(ImageFormat.PBM, PBM_IMAGE_FILE);
+        testGuess(ImageFormat.PGM, PGM_IMAGE_FILE);
+        testGuess(ImageFormat.PPM, PPM_IMAGE_FILE);
         // TODO(cmchen): add ability to sniff TGAs if possible.
         // testGuess(ImageFormat.IMAGE_FORMAT_TGA, TGA_IMAGE_FILE);
         // TODO(cmchen): Add test images for these formats.
@@ -60,7 +60,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
     public static final String UNKNOWN_IMAGE_FILE = "jpg\\1\\info.txt";
 
     public void testGuess_unknown() throws Exception {
-        testGuess(ImageFormat.IMAGE_FORMAT_UNKNOWN, UNKNOWN_IMAGE_FILE);
+        testGuess(ImageFormat.UNKNOWN, UNKNOWN_IMAGE_FILE);
     }
 
     public void testGuess(final ImageFormat expectedFormat, String imagePath)

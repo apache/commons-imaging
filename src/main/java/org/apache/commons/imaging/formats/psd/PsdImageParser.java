@@ -75,7 +75,7 @@ public class PsdImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PSD, //
+        return new ImageFormat[] { ImageFormat.PSD, //
         };
     }
 
@@ -547,7 +547,7 @@ public class PsdImageParser extends ImageParser {
         if (BitsPerPixel < 0) {
             BitsPerPixel = 0;
         }
-        final ImageFormat Format = ImageFormat.IMAGE_FORMAT_PSD;
+        final ImageFormat Format = ImageFormat.PSD;
         final String FormatName = "Photoshop";
         final String MimeType = "image/x-photoshop";
         // we ought to count images, but don't yet.

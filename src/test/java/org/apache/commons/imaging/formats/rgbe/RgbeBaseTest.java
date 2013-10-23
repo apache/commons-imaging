@@ -29,7 +29,7 @@ public abstract class RgbeBaseTest extends ImagingTest {
     private static boolean isRgbe(final File file) throws IOException,
             ImageReadException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormat.IMAGE_FORMAT_RGBE;
+        return format == ImageFormat.RGBE;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {

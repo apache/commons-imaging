@@ -83,7 +83,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_PCX, //
+        return new ImageFormat[] { ImageFormat.PCX, //
         };
     }
 
@@ -107,7 +107,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
                 "PCX",
                 pcxHeader.nPlanes * pcxHeader.bitsPerPixel,
                 new ArrayList<String>(),
-                ImageFormat.IMAGE_FORMAT_PCX,
+                ImageFormat.PCX,
                 "ZSoft PCX Image",
                 size.height,
                 "image/x-pcx",

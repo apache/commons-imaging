@@ -63,7 +63,7 @@ public class PgmFileInfo extends FileInfo {
 
     @Override
     public ImageFormat getImageType() {
-        return ImageFormat.IMAGE_FORMAT_PGM;
+        return ImageFormat.PGM;
     }
 
     @Override

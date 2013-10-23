@@ -71,11 +71,11 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     @Override
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] {
-                ImageFormat.IMAGE_FORMAT_PBM, //
-                ImageFormat.IMAGE_FORMAT_PGM, //
-                ImageFormat.IMAGE_FORMAT_PPM, //
-                ImageFormat.IMAGE_FORMAT_PNM,
-                ImageFormat.IMAGE_FORMAT_PAM
+                ImageFormat.PBM, //
+                ImageFormat.PGM, //
+                ImageFormat.PPM, //
+                ImageFormat.PNM,
+                ImageFormat.PAM
         };
     }
 
@@ -343,13 +343,13 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
 
             final Object subtype = params.get(PARAM_KEY_FORMAT);
             if (subtype != null) {
-                if (subtype.equals(ImageFormat.IMAGE_FORMAT_PBM)) {
+                if (subtype.equals(ImageFormat.PBM)) {
                     writer = new PbmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PGM)) {
+                } else if (subtype.equals(ImageFormat.PGM)) {
                     writer = new PgmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PPM)) {
+                } else if (subtype.equals(ImageFormat.PPM)) {
                     writer = new PpmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormat.IMAGE_FORMAT_PAM)) { 
+                } else if (subtype.equals(ImageFormat.PAM)) { 
                     writer = new PamWriter();
                 }
             }

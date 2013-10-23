@@ -71,7 +71,7 @@ public class DcxImageParser extends ImageParser {
     @Override
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] {
-                ImageFormat.IMAGE_FORMAT_DCX, //
+                ImageFormat.DCX, //
         };
     }
 

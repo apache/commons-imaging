@@ -31,7 +31,7 @@ public abstract class DcxBaseTest extends ImagingTest {
     private static boolean isDcx(final File file) throws IOException,
             ImageReadException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormat.IMAGE_FORMAT_DCX;
+        return format == ImageFormat.DCX;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {

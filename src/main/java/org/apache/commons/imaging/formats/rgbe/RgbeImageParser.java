@@ -67,7 +67,7 @@ public class RgbeImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_RGBE };
+        return new ImageFormat[] { ImageFormat.RGBE };
     }
 
     @Override
@@ -91,7 +91,7 @@ public class RgbeImageParser extends ImageParser {
             return new ImageInfo(
                     getName(),
                     32, // todo may be 64 if double?
-                    new ArrayList<String>(), ImageFormat.IMAGE_FORMAT_RGBE, getName(),
+                    new ArrayList<String>(), ImageFormat.RGBE, getName(),
                     info.getHeight(), "image/vnd.radiance", 1, -1, -1, -1, -1,
                     info.getWidth(), false, false, false,
                     ImageInfo.COLOR_TYPE_RGB, "Adaptive RLE");

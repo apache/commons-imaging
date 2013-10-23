@@ -75,7 +75,7 @@ public class GifImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_GIF, //
+        return new ImageFormat[] { ImageFormat.GIF, //
         };
     }
 
@@ -570,7 +570,7 @@ public class GifImageParser extends ImageParser {
 
         final List<String> comments = getComments(blocks.blocks);
         final int bitsPerPixel = (bhi.colorResolution + 1);
-        final ImageFormat format = ImageFormat.IMAGE_FORMAT_GIF;
+        final ImageFormat format = ImageFormat.GIF;
         final String formatName = "GIF Graphics Interchange Format";
         final String mimeType = "image/gif";
         // we ought to count images, but don't yet.

@@ -68,7 +68,7 @@ public class IcnsImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_ICNS };
+        return new ImageFormat[] { ImageFormat.ICNS };
     }
 
     @Override
@@ -107,7 +107,7 @@ public class IcnsImageParser extends ImageParser {
         }
         final BufferedImage image0 = images.get(0);
         return new ImageInfo("Icns", 32, new ArrayList<String>(),
-                ImageFormat.IMAGE_FORMAT_ICNS, "ICNS Apple Icon Image",
+                ImageFormat.ICNS, "ICNS Apple Icon Image",
                 image0.getHeight(), "image/x-icns", images.size(), 0, 0, 0, 0,
                 image0.getWidth(), false, true, false,
                 ImageInfo.COLOR_TYPE_RGB,

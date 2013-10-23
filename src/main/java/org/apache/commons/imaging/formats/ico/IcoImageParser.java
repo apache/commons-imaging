@@ -73,7 +73,7 @@ public class IcoImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_ICO, //
+        return new ImageFormat[] { ImageFormat.ICO, //
         };
     }
 
@@ -536,7 +536,7 @@ public class IcoImageParser extends ImageParser {
     private IconData readIconData(final byte[] iconData, final IconInfo fIconInfo)
             throws ImageReadException, IOException {
         final ImageFormat imageFormat = Imaging.guessFormat(iconData);
-        if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_PNG)) {
+        if (imageFormat.equals(ImageFormat.PNG)) {
             final BufferedImage bufferedImage = Imaging.getBufferedImage(iconData);
             final PNGIconData pngIconData = new PNGIconData(fIconInfo, bufferedImage);
             return pngIconData;

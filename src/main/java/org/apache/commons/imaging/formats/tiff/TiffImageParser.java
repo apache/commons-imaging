@@ -79,7 +79,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_TIFF, //
+        return new ImageFormat[] { ImageFormat.TIFF, //
         };
     }
 
@@ -255,7 +255,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             comments.add(comment);
         }
 
-        final ImageFormat format = ImageFormat.IMAGE_FORMAT_TIFF;
+        final ImageFormat format = ImageFormat.TIFF;
         final String formatName = "TIFF Tag-based Image File Format";
         final String mimeType = "image/tiff";
         final int numberOfImages = contents.directories.size();

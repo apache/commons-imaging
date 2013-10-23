@@ -31,7 +31,7 @@ public abstract class GifBaseTest extends ImagingTest {
     private static boolean isGif(final File file) throws IOException,
             ImageReadException {
         final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormat.IMAGE_FORMAT_GIF;
+        return format == ImageFormat.GIF;
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {

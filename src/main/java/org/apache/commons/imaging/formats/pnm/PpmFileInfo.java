@@ -63,7 +63,7 @@ public class PpmFileInfo extends FileInfo {
 
     @Override
     public ImageFormat getImageType() {
-        return ImageFormat.IMAGE_FORMAT_PPM;
+        return ImageFormat.PPM;
     }
 
     @Override

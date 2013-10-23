@@ -63,7 +63,7 @@ public class WbmpImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.IMAGE_FORMAT_WBMP, //
+        return new ImageFormat[] { ImageFormat.WBMP, //
         };
     }
 
@@ -83,7 +83,7 @@ public class WbmpImageParser extends ImageParser {
             throws ImageReadException, IOException {
         final WbmpHeader wbmpHeader = readWbmpHeader(byteSource);
         return new ImageInfo("WBMP", 1, new ArrayList<String>(),
-                ImageFormat.IMAGE_FORMAT_WBMP,
+                ImageFormat.WBMP,
                 "Wireless Application Protocol Bitmap", wbmpHeader.height,
                 "image/vnd.wap.wbmp", 1, 0, 0, 0, 0, wbmpHeader.width, false,
                 false, false, ImageInfo.COLOR_TYPE_BW,

@@ -63,7 +63,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
 
                 final Map<String,Object> writeParams = new HashMap<String,Object>();
                 Imaging.writeImage(image, tempFile,
-                        ImageFormat.IMAGE_FORMAT_PNG, writeParams);
+                        ImageFormat.PNG, writeParams);
 
                 lastFile = tempFile;
             }
