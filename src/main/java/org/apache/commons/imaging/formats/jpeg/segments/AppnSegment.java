@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.jpeg.segments;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
+import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class AppnSegment extends GenericSegment {
     public AppnSegment(final int marker, final int marker_length, final InputStream is)
@@ -29,7 +29,7 @@ public class AppnSegment extends GenericSegment {
 
     @Override
     public String getDescription() {
-        return "APPN (APP" + (marker - JpegImageParser.JPEG_APP0_Marker)
+        return "APPN (APP" + (marker - JpegConstants.JPEG_APP0_Marker)
                 + ") (" + getSegmentType() + ")";
     }
 }
