@@ -165,7 +165,7 @@ public class GifImageParser extends ImageParser {
     }
 
     private GraphicControlExtension readGraphicControlExtension(final int code,
-            final InputStream is) throws ImageReadException, IOException {
+            final InputStream is) throws IOException {
         readByte("block_size", is, "GIF: corrupt GraphicControlExt");
         final int packed = readByte("packed fields", is,
                 "GIF: corrupt GraphicControlExt");
