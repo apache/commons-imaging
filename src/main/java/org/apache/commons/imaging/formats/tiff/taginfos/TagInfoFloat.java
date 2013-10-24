@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
-import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
