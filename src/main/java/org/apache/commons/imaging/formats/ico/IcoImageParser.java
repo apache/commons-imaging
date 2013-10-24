@@ -184,8 +184,7 @@ public class IcoImageParser extends ImageParser {
         }
     }
 
-    private IconInfo readIconInfo(final InputStream is) throws ImageReadException,
-            IOException {
+    private IconInfo readIconInfo(final InputStream is) throws IOException {
         // Width (1 byte), Width of Icon (1 to 255)
         final byte Width = readByte("Width", is, "Not a Valid ICO File");
         // Height (1 byte), Height of Icon (1 to 255)
