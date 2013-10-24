@@ -76,6 +76,12 @@ public abstract class TagInfo {
         this.isOffset = isOffset;
     }
 
+    /**
+     * 
+     * @param entry
+     * @return
+     * @throws ImageReadException thrown by subclasses
+     */
     public Object getValue(final TiffField entry) throws ImageReadException {
         final Object o = entry.getFieldType().getValue(entry);
         return o;
