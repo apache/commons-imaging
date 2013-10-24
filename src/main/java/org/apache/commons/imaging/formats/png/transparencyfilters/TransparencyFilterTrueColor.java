@@ -27,8 +27,7 @@ public class TransparencyFilterTrueColor extends TransparencyFilter {
     private final int transparent_blue;
     private final int transparent_color;
 
-    public TransparencyFilterTrueColor(final byte bytes[]) throws ImageReadException,
-            IOException {
+    public TransparencyFilterTrueColor(final byte bytes[]) throws IOException {
         super(bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
