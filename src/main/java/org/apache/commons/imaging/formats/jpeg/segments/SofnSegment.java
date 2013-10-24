@@ -50,7 +50,7 @@ public class SofnSegment extends Segment {
     }
 
     public SofnSegment(final int marker, final int marker_length, final InputStream is)
-            throws ImageReadException, IOException {
+            throws IOException {
         super(marker, marker_length);
 
         if (getDebug()) {
