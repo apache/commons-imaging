@@ -25,6 +25,7 @@ import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.IndexColorModel;
+import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
@@ -423,11 +424,11 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             }
             WritableRaster raster;
             if (pcxHeader.bitsPerPixel == 8) {
-                raster = WritableRaster.createInterleavedRaster(dataBuffer,
+                raster = Raster.createInterleavedRaster(dataBuffer,
                         xSize, ySize, bytesPerImageRow, 1, new int[] { 0 },
                         null);
             } else {
-                raster = WritableRaster.createPackedRaster(dataBuffer, xSize,
+                raster = Raster.createPackedRaster(dataBuffer, xSize,
                         ySize, pcxHeader.bitsPerPixel, null);
             }
             final IndexColorModel colorModel = new IndexColorModel(
@@ -473,7 +474,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             }
             final DataBufferByte dataBuffer = new DataBufferByte(image,
                     image[0].length);
-            final WritableRaster raster = WritableRaster.createBandedRaster(
+            final WritableRaster raster = Raster.createBandedRaster(
                     dataBuffer, xSize, ySize, xSize, new int[] { 0, 1, 2 },
                     new int[] { 0, 0, 0 }, null);
             final ColorModel colorModel = new ComponentColorModel(
@@ -499,7 +500,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
                 }
             }
             final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
-            final WritableRaster raster = WritableRaster.createInterleavedRaster(
+            final WritableRaster raster = Raster.createInterleavedRaster(
                     dataBuffer, xSize, ySize, rowLength, 3,
                     new int[] { 2, 1, 0 }, null);
             final ColorModel colorModel = new ComponentColorModel(
