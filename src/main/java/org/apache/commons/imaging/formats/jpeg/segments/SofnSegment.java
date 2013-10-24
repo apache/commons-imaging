@@ -45,7 +45,7 @@ public class SofnSegment extends Segment {
     }
 
     public SofnSegment(final int marker, final byte segmentData[])
-            throws ImageReadException, IOException {
+            throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
