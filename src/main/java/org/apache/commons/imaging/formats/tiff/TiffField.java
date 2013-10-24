@@ -53,7 +53,7 @@ public class TiffField {
 
     public TiffField(final int tag, final int directoryType, final FieldType fieldType,
             final long count, final long offset, final byte[] value,
-            final ByteOrder byteOrder, final int sortHint) throws ImageReadException{
+            final ByteOrder byteOrder, final int sortHint){
 
         this.tag = tag;
         this.directoryType = directoryType;
