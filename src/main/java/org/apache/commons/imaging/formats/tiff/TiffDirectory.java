@@ -28,6 +28,7 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
@@ -97,19 +98,19 @@ public class TiffDirectory extends TiffElement {
 
     public static final String description(final int type) {
         switch (type) {
-        case TiffConstants.DIRECTORY_TYPE_UNKNOWN:
+        case TiffDirectoryConstants.DIRECTORY_TYPE_UNKNOWN:
             return "Unknown";
-        case TiffConstants.DIRECTORY_TYPE_ROOT:
+        case TiffDirectoryConstants.DIRECTORY_TYPE_ROOT:
             return "Root";
-        case TiffConstants.DIRECTORY_TYPE_SUB:
+        case TiffDirectoryConstants.DIRECTORY_TYPE_SUB:
             return "Sub";
-        case TiffConstants.DIRECTORY_TYPE_THUMBNAIL:
+        case TiffDirectoryConstants.DIRECTORY_TYPE_THUMBNAIL:
             return "Thumbnail";
-        case TiffConstants.DIRECTORY_TYPE_EXIF:
+        case TiffDirectoryConstants.DIRECTORY_TYPE_EXIF:
             return "Exif";
-        case TiffConstants.DIRECTORY_TYPE_GPS:
+        case TiffDirectoryConstants.DIRECTORY_TYPE_GPS:
             return "Gps";
-        case TiffConstants.DIRECTORY_TYPE_INTEROPERABILITY:
+        case TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY:
             return "Interoperability";
         default:
             return "Bad Type";
