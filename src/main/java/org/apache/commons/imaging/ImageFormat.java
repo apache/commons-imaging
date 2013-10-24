@@ -21,7 +21,7 @@ package org.apache.commons.imaging;
  */
 //@formatter:off
 public enum ImageFormat {
-    UNKNOWN(false),
+    UNKNOWN,
     BMP,
     DCX,
     GIF,
@@ -44,17 +44,6 @@ public enum ImageFormat {
     XBM,
     XPM;
 //@formatter:on
-
-    @Deprecated
-    public final boolean actual;
-
-    private ImageFormat(final boolean actual) {
-        this.actual = actual;
-    }
-
-    private ImageFormat() {
-        this(true);
-    }
 
     public String getName() {
         return name();
