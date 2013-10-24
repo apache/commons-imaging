@@ -21,6 +21,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.IndexColorModel;
+import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -287,7 +288,7 @@ public class XbmImageParser extends ImageParser {
                 -1, DataBuffer.TYPE_BYTE);
         final DataBufferByte dataBuffer = new DataBufferByte(imageData,
                 imageData.length);
-        final WritableRaster raster = WritableRaster.createPackedRaster(dataBuffer,
+        final WritableRaster raster = Raster.createPackedRaster(dataBuffer,
                 xbmHeader.width, xbmHeader.height, 1, null);
         final BufferedImage image = new BufferedImage(colorModel, raster,
                 colorModel.isAlphaPremultiplied(), new Properties());
