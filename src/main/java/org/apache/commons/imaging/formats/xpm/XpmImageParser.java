@@ -21,6 +21,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
+import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -531,7 +532,7 @@ public class XpmImageParser extends ImageParser {
          }
             colorModel = new IndexColorModel(8, xpmHeader.palette.size(),
                     palette, 0, true, -1, DataBuffer.TYPE_BYTE);
-            raster = WritableRaster.createInterleavedRaster(
+            raster = Raster.createInterleavedRaster(
                     DataBuffer.TYPE_BYTE, xpmHeader.width, xpmHeader.height, 1,
                     null);
             bpp = 8;
@@ -544,14 +545,14 @@ public class XpmImageParser extends ImageParser {
          }
             colorModel = new IndexColorModel(16, xpmHeader.palette.size(),
                     palette, 0, true, -1, DataBuffer.TYPE_USHORT);
-            raster = WritableRaster.createInterleavedRaster(
+            raster = Raster.createInterleavedRaster(
                     DataBuffer.TYPE_USHORT, xpmHeader.width, xpmHeader.height,
                     1, null);
             bpp = 16;
         } else {
             colorModel = new DirectColorModel(32, 0x00ff0000, 0x0000ff00,
                     0x000000ff, 0xff000000);
-            raster = WritableRaster.createPackedRaster(DataBuffer.TYPE_INT,
+            raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
                     xpmHeader.width, xpmHeader.height, new int[] { 0x00ff0000,
                             0x0000ff00, 0x000000ff, 0xff000000 }, null);
             bpp = 32;
