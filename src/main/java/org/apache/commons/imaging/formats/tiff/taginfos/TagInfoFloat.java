@@ -31,7 +31,7 @@ public class TagInfoFloat extends TagInfo {
         return ByteConversions.toFloats(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(final ByteOrder byteOrder, final float... values) throws ImageWriteException {
+    public byte[] encodeValue(final ByteOrder byteOrder, final float... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }
 }
