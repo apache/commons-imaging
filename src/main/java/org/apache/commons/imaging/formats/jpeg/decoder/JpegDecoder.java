@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DirectColorModel;
+import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -95,13 +96,13 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor,
             if (sofnSegment.numberOfComponents == 3) {
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
                         0x000000ff);
-                raster = WritableRaster.createPackedRaster(DataBuffer.TYPE_INT,
+                raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
                         sofnSegment.width, sofnSegment.height, new int[] {
                                 0x00ff0000, 0x0000ff00, 0x000000ff }, null);
             } else if (sofnSegment.numberOfComponents == 1) {
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
                         0x000000ff);
-                raster = WritableRaster.createPackedRaster(DataBuffer.TYPE_INT,
+                raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
                         sofnSegment.width, sofnSegment.height, new int[] {
                                 0x00ff0000, 0x0000ff00, 0x000000ff }, null);
                 // FIXME: why do images come out too bright with CS_GRAY?
