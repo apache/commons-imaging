@@ -24,8 +24,7 @@ import org.apache.commons.imaging.ImageReadException;
 public class TransparencyFilterGrayscale extends TransparencyFilter {
     private final int transparent_color;
 
-    public TransparencyFilterGrayscale(final byte bytes[]) throws ImageReadException,
-            IOException {
+    public TransparencyFilterGrayscale(final byte bytes[]) throws IOException {
         super(bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
