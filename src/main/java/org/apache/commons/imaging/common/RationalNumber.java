@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.common;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 /**
