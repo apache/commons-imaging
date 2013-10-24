@@ -123,7 +123,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
     }
 
     protected List<IptcRecord> parseIPTCBlock(final byte bytes[], final boolean verbose)
-            throws ImageReadException, IOException {
+            throws IOException {
         final List<IptcRecord> elements = new ArrayList<IptcRecord>();
 
         int index = 0;
