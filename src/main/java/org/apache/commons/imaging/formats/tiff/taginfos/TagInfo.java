@@ -83,8 +83,7 @@ public abstract class TagInfo {
      * @throws ImageReadException thrown by subclasses
      */
     public Object getValue(final TiffField entry) throws ImageReadException {
-        final Object o = entry.getFieldType().getValue(entry);
-        return o;
+        return entry.getFieldType().getValue(entry);
     }
 
     public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
