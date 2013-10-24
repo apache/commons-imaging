@@ -22,7 +22,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
+import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class App2Segment extends AppnSegment implements Comparable<App2Segment> {
     public final byte icc_bytes[];
@@ -38,16 +38,16 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
         super(marker, marker_length, is2);
 
         if (BinaryFileParser.startsWith(getSegmentData(),
-                JpegImageParser.icc_profile_label)) {
+                JpegConstants.icc_profile_label)) {
             final InputStream is = new ByteArrayInputStream(getSegmentData());
 
-            readAndVerifyBytes(is, JpegImageParser.icc_profile_label,
+            readAndVerifyBytes(is, JpegConstants.icc_profile_label,
                     "Not a Valid App2 Segment: missing ICC Profile label");
 
             cur_marker = readByte("cur_marker", is, "Not a valid App2 Marker");
             num_markers = readByte("num_markers", is, "Not a valid App2 Marker");
 
-            marker_length -= JpegImageParser.icc_profile_label.size();
+            marker_length -= JpegConstants.icc_profile_label.size();
             marker_length -= (1 + 1);
 
             icc_bytes = readBytes("App2 Data", is, marker_length,
