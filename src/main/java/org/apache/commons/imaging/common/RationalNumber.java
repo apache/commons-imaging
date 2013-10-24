@@ -106,7 +106,7 @@ public class RationalNumber extends Number {
         if (divisor == 0) {
             return "Invalid rational (" + numerator + "/" + divisor + ")";
         }
-        final NumberFormat nf = DecimalFormat.getInstance();
+        final NumberFormat nf = NumberFormat.getInstance();
 
         if ((numerator % divisor) == 0) {
             return nf.format(numerator / divisor);
@@ -119,7 +119,7 @@ public class RationalNumber extends Number {
         if ((numerator % divisor) == 0) {
             return "" + (numerator / divisor);
         }
-        final NumberFormat nf = DecimalFormat.getInstance();
+        final NumberFormat nf = NumberFormat.getInstance();
         nf.setMaximumFractionDigits(3);
         return nf.format((double) numerator / (double) divisor);
     }
