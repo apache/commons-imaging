@@ -39,7 +39,6 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
-import org.apache.commons.imaging.util.Debug;
 
 public class PnmImageParser extends ImageParser implements PnmConstants {
 
@@ -190,12 +189,8 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
 
             return readHeader(is);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
         }
     }
@@ -312,12 +307,8 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
 
             return imageBuilder.getBufferedImage();
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
         }
     }

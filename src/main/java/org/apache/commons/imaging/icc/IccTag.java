@@ -61,11 +61,8 @@ public class IccTag implements IccConstants {
             // System.out.println("\t\t\t" + "itdt: " + itdt.name);
             // }
         } finally {
-            try {
-                if (bis != null) {
-                    bis.close();
-                }
-            } catch (final IOException cannotHappen) {
+            if (bis != null) {
+                bis.close();
             }
         }
     }

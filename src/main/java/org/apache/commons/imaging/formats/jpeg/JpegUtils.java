@@ -93,12 +93,8 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
             Debug.debug("" + markerCount + " markers");
 
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
         }
     }

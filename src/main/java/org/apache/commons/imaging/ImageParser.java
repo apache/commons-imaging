@@ -49,7 +49,6 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.wbmp.WbmpImageParser;
 import org.apache.commons.imaging.formats.xbm.XbmImageParser;
 import org.apache.commons.imaging.formats.xpm.XpmImageParser;
-import org.apache.commons.imaging.util.Debug;
 
 /**
  * Provides the abstract base class for all image reading and writing
@@ -576,11 +575,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      */
     public void writeImage(final BufferedImage src, final OutputStream os, final Map<String,Object> params)
             throws ImageWriteException, IOException {
-        try {
-            os.close(); // we are obligated to close stream.
-        } catch (final Exception e) {
-            Debug.debug(e);
-        }
+        os.close(); // we are obligated to close stream.
 
         throw new ImageWriteException("This image format (" + getName()
                 + ") cannot be written.");

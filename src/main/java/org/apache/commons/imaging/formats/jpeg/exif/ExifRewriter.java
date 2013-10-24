@@ -38,7 +38,6 @@ import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterBase;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossless;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
-import org.apache.commons.imaging.util.Debug;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -559,11 +558,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
                 }
             }
         } finally {
-            try {
-                os.close();
-            } catch (final Exception e) {
-                Debug.debug(e);
-            }
+            os.close();
         }
     }
 

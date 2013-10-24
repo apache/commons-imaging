@@ -181,11 +181,8 @@ public class XbmImageParser extends ImageParser {
             xbmParseResult.xbmHeader = new XbmHeader(width, height, xHot, yHot);
             return xbmParseResult;
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final IOException ignored) {
+            if (is != null) {
+                is.close();
             }
         }
     }

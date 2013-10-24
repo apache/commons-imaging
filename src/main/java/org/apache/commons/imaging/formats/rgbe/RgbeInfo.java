@@ -29,7 +29,6 @@ import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.util.Debug;
 
 class RgbeInfo extends BinaryFunctions {
     // #?RADIANCE
@@ -74,12 +73,8 @@ class RgbeInfo extends BinaryFunctions {
         return height;
     }
 
-    void close() {
-        try {
-            in.close();
-        } catch (final IOException e) {
-            Debug.debug(e);
-        }
+    void close() throws IOException {
+        in.close();
     }
 
     private void readDimensions() throws IOException, ImageReadException {

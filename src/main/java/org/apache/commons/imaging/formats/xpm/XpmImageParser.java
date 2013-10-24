@@ -50,7 +50,6 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
-import org.apache.commons.imaging.util.Debug;
 
 public class XpmImageParser extends ImageParser {
     private static Map<String, Integer> colorNames = null;
@@ -58,48 +57,46 @@ public class XpmImageParser extends ImageParser {
     public XpmImageParser() {
     }
 
-    private synchronized static boolean loadColorNames() {
+    private synchronized static void loadColorNames() throws ImageReadException {
         if (colorNames != null) {
-            return true;
+            return;
         }
 
-        BufferedReader reader = null;
         try {
-            final InputStream rgbTxtStream = XpmImageParser.class
-                    .getResourceAsStream("rgb.txt");
+            final InputStream rgbTxtStream =
+                    XpmImageParser.class.getResourceAsStream("rgb.txt");
             if (rgbTxtStream == null) {
-                return false;
+                throw new ImageReadException("Couldn't find rgb.txt in our resources");
             }
-            reader = new BufferedReader(new InputStreamReader(rgbTxtStream,
-                    "US-ASCII"));
             final Map<String, Integer> colors = new HashMap<String, Integer>();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith("!")) {
-                    continue;
-                }
-                try {
-                    final int red = Integer.parseInt(line.substring(0, 3).trim());
-                    final int green = Integer.parseInt(line.substring(4, 7).trim());
-                    final int blue = Integer.parseInt(line.substring(8, 11).trim());
-                    final String colorName = line.substring(11).trim();
-                    colors.put(colorName, 0xff000000 | (red << 16)
-                            | (green << 8) | blue);
-                } catch (final NumberFormatException nfe) {
-                }
-            }
-            colorNames = colors;
-            return true;
-        } catch (final IOException ioException) {
-            Debug.debug(ioException);
-            return false;
-        } finally {
+            BufferedReader reader = null;
             try {
+                reader = new BufferedReader(new InputStreamReader(rgbTxtStream,
+                        "US-ASCII"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.startsWith("!")) {
+                        continue;
+                    }
+                    try {
+                        final int red = Integer.parseInt(line.substring(0, 3).trim());
+                        final int green = Integer.parseInt(line.substring(4, 7).trim());
+                        final int blue = Integer.parseInt(line.substring(8, 11).trim());
+                        final String colorName = line.substring(11).trim();
+                        colors.put(colorName, 0xff000000 | (red << 16)
+                                | (green << 8) | blue);
+                    } catch (final NumberFormatException nfe) {
+                        throw new ImageReadException("Couldn't parse color in rgb.txt", nfe);
+                    }
+                }
+            } finally {
                 if (reader != null) {
                     reader.close();
                 }
-            } catch (final IOException ignored) {
             }
+            colorNames = colors;
+        } catch (final IOException ioException) {
+            throw new ImageReadException("Could not parse rgb.txt", ioException);
         }
     }
 
@@ -269,11 +266,8 @@ public class XpmImageParser extends ImageParser {
             xpmParseResult.xpmHeader = parseXpmHeader(xpmParseResult.cParser);
             return xpmParseResult;
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final IOException ignored) {
+            if (is != null) {
+                is.close();
             }
         }
     }
@@ -365,9 +359,7 @@ public class XpmImageParser extends ImageParser {
         } else if (color.equals("None")) {
             return 0x00000000;
         } else {
-            if (!loadColorNames()) {
-                return 0x00000000;
-            }
+            loadColorNames();
             if (colorNames.containsKey(color)) {
                 return (colorNames.get(color)).intValue();
             } else {

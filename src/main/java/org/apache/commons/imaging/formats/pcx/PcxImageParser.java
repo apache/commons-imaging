@@ -245,11 +245,8 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             is = byteSource.getInputStream();
             return readPcxHeader(is, false);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final IOException ignored) {
+            if (is != null) {
+                is.close();
             }
         }
     }
@@ -368,11 +365,8 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             skipBytes(stream, (int) toSkip);
             return read256ColorPalette(stream);
         } finally {
-            try {
-                if (stream != null) {
-                    stream.close();
-                }
-            } catch (final IOException closeException) {
+            if (stream != null) {
+                stream.close();
             }
         }
     }
@@ -532,11 +526,8 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
             final PcxHeader pcxHeader = readPcxHeader(is, isStrict);
             return readImage(pcxHeader, is, byteSource);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final IOException ignored) {
+            if (is != null) {
+                is.close();
             }
         }
     }

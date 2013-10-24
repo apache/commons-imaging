@@ -32,8 +32,11 @@ public class ZLibUtils extends BinaryFunctions {
     public final byte[] deflate(final byte bytes[]) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
-        dos.write(bytes);
-        dos.close();
+        try {
+            dos.write(bytes);
+        } finally {
+            dos.close();
+        }
         return baos.toByteArray();
     }
 

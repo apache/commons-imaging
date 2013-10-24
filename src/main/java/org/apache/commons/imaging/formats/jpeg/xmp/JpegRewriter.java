@@ -310,25 +310,17 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
         return result;
     }
 
-    protected void writeSegments(OutputStream os,
+    protected void writeSegments(final OutputStream os,
             final List<? extends JFIFPiece> segments) throws IOException {
         try {
             SOI.writeTo(os);
-
+    
             for (int i = 0; i < segments.size(); i++) {
                 final JFIFPiece piece = segments.get(i);
                 piece.write(os);
             }
-            os.close();
-            os = null;
         } finally {
-            try {
-                if (os != null) {
-                    os.close();
-                }
-            } catch (final Exception e) {
-                // swallow exception; already in the context of an exception.
-            }
+            os.close();
         }
     }
 

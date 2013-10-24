@@ -35,7 +35,6 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
-import org.apache.commons.imaging.util.Debug;
 
 public class TiffReader extends BinaryFileParser implements TiffConstants {
 
@@ -53,12 +52,8 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
             is = byteSource.getInputStream();
             return readTiffHeader(is, formatCompliance);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
         }
     }
@@ -284,12 +279,8 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 
             return true;
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
         }
     }

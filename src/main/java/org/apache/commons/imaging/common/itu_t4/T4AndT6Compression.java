@@ -584,11 +584,12 @@ public class T4AndT6Compression {
             T4_T6_Tables.EOL.writeBits(outputStream);
             return outputStream.toByteArray();
         } finally {
-            try {
-                if (inputStream != null) {
+            if (inputStream != null) {
+                try {
                     inputStream.close();
+                } catch (final IOException ioException) {
+                    throw new ImageWriteException("I/O error", ioException);
                 }
-            } catch (final IOException ignore) {
             }
         }
     }

@@ -166,11 +166,8 @@ public class WbmpImageParser extends ImageParser {
             is = byteSource.getInputStream();
             return readWbmpHeader(is);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final IOException ignored) {
+            if (is != null) {
+                is.close();
             }
         }
     }
@@ -229,11 +226,8 @@ public class WbmpImageParser extends ImageParser {
             final WbmpHeader wbmpHeader = readWbmpHeader(is);
             return readImage(wbmpHeader, is);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final IOException ignored) {
+            if (is != null) {
+                is.close();
             }
         }
     }

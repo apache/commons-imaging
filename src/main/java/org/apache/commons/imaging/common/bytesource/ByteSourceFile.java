@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 
-import org.apache.commons.imaging.util.Debug;
-
 public class ByteSourceFile extends ByteSource {
     private final File file;
 
@@ -61,14 +59,9 @@ public class ByteSourceFile extends ByteSource {
             return getRAFBytes(raf, start, length,
                     "Could not read value from file");
         } finally {
-            try {
-                if (raf != null) {
-                    raf.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (raf != null) {
+                raf.close();
             }
-
         }
     }
 
@@ -92,12 +85,8 @@ public class ByteSourceFile extends ByteSource {
             }
             return baos.toByteArray();
         } finally {
-            try {
-                if (null != is) {
-                    is.close();
-                }
-            } catch (final IOException e) {
-                Debug.debug(e);
+            if (null != is) {
+                is.close();
             }
         }
     }

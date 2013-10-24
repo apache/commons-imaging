@@ -86,10 +86,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
                 }
             } finally {
                 if (is != null) {
-                    try {
-                        is.close();
-                    } catch (final IOException ignore) {
-                    }
+                    is.close();
                 }
             }
         }
@@ -124,10 +121,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
                 }
             } finally {
                 if (is != null) {
-                    try {
-                        is.close();
-                    } catch (final IOException ignored) {
-                    }
+                    is.close();
                 }
             }
         }

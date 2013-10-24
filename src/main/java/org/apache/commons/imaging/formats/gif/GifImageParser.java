@@ -45,7 +45,6 @@ import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
-import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class GifImageParser extends ImageParser {
@@ -467,14 +466,9 @@ public class GifImageParser extends ImageParser {
 
             return result;
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
-
         }
     }
 
@@ -1127,14 +1121,9 @@ public class GifImageParser extends ImageParser {
             return result.get(0);
 
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
-
         }
     }
 }

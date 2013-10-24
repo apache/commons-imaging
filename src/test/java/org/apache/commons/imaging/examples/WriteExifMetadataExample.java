@@ -46,11 +46,7 @@ public class WriteExifMetadataExample {
             new ExifRewriter().removeExifMetadata(jpegImageFile, os);
         } finally {
             if (os != null) {
-                try {
-                    os.close();
-                } catch (final IOException e) {
-
-                }
+                os.close();
             }
         }
     }
@@ -149,11 +145,7 @@ public class WriteExifMetadataExample {
             os = null;
         } finally {
             if (os != null) {
-                try {
-                    os.close();
-                } catch (final IOException e) {
-
-                }
+                os.close();
             }
         }
     }
@@ -237,16 +229,9 @@ public class WriteExifMetadataExample {
 
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
                     outputSet);
-
-            os.close();
-            os = null;
         } finally {
             if (os != null) {
-                try {
-                    os.close();
-                } catch (final IOException e) {
-
-                }
+                os.close();
             }
         }
     }
@@ -311,16 +296,9 @@ public class WriteExifMetadataExample {
 
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
                     outputSet);
-
-            os.close();
-            os = null;
         } finally {
             if (os != null) {
-                try {
-                    os.close();
-                } catch (final IOException e) {
-
-                }
+                os.close();
             }
         }
     }

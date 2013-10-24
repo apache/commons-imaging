@@ -37,7 +37,6 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class IcnsImageParser extends ImageParser {
@@ -257,10 +256,8 @@ public class IcnsImageParser extends ImageParser {
 
             return new IcnsContents(icnsHeader, icnsElements);
         } finally {
-            try {
+            if (is != null) {
                 is.close();
-            } catch (final Exception e) {
-                Debug.debug(e);
             }
         }
     }

@@ -50,7 +50,6 @@ import org.apache.commons.imaging.formats.bmp.writers.BmpWriterPalette;
 import org.apache.commons.imaging.formats.bmp.writers.BmpWriterRgb;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
-import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class BmpImageParser extends ImageParser {
@@ -506,14 +505,9 @@ public class BmpImageParser extends ImageParser {
             // readSignature(is);
             return readBmpHeaderInfo(is, null, verbose);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
-
         }
     }
 
@@ -614,11 +608,7 @@ public class BmpImageParser extends ImageParser {
             ic = readImageContents(is, FormatCompliance.getDefault(), verbose);
         } finally {
             if (is != null) {
-                try {
-                    is.close();
-                } catch (final IOException ignore) {
-                    Debug.debug(ignore);
-                }
+                is.close();
             }
         }
 
@@ -703,11 +693,7 @@ public class BmpImageParser extends ImageParser {
             readImageContents(is, result, verbose);
         } finally {
             if (is != null) {
-                try {
-                    is.close();
-                } catch (final IOException ignore) {
-                    Debug.debug(ignore);
-                }
+                is.close();
             }
         }
 
@@ -723,11 +709,7 @@ public class BmpImageParser extends ImageParser {
             return getBufferedImage(is, params);
         } finally {
             if (is != null) {
-                try {
-                    is.close();
-                } catch (final IOException ignore) {
-                    Debug.debug(ignore);
-                }
+                is.close();
             }
         }
     }

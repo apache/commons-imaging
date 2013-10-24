@@ -44,7 +44,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.bmp.BmpImageParser;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
-import org.apache.commons.imaging.util.Debug;
 
 public class IcoImageParser extends ImageParser {
 
@@ -577,14 +576,9 @@ public class IcoImageParser extends ImageParser {
 
             return new ImageContents(fileHeader, fIconDatas);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
-
         }
     }
 

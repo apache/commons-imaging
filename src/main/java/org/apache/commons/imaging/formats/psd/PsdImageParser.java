@@ -45,7 +45,6 @@ import org.apache.commons.imaging.formats.psd.dataparsers.DataParserRgb;
 import org.apache.commons.imaging.formats.psd.datareaders.CompressedDataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.DataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader;
-import org.apache.commons.imaging.util.Debug;
 
 public class PsdImageParser extends ImageParser {
 
@@ -88,14 +87,9 @@ public class PsdImageParser extends ImageParser {
 
             return readHeader(is);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
-
         }
     }
 
@@ -264,14 +258,9 @@ public class PsdImageParser extends ImageParser {
             return readImageResourceBlocks(ImageResources, imageResourceIDs,
                     maxBlocksToRead);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
-
         }
     }
 
@@ -341,10 +330,7 @@ public class PsdImageParser extends ImageParser {
             notFound = true;
         } finally {
             if (notFound && is != null) {
-                try {
-                    is.close();
-                } catch (final IOException ignore) {
-                }
+                is.close();
             }
         }
         throw new ImageReadException("getInputStream: Unknown Section: "
@@ -412,14 +398,9 @@ public class PsdImageParser extends ImageParser {
             // "Not a Valid PSD File");
 
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
-
         }
         throw new ImageReadException("getInputStream: Unknown Section: "
                 + section);
@@ -435,14 +416,9 @@ public class PsdImageParser extends ImageParser {
             final ImageContents imageContents = readImageContents(is);
             return imageContents;
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
-
         }
 
     }
@@ -754,14 +730,9 @@ public class PsdImageParser extends ImageParser {
             // ImageContents imageContents = readImageContents(is);
             // return imageContents;
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
-
         }
 
         return result;

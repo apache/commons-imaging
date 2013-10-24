@@ -63,20 +63,23 @@ public class IoUtils implements ImagingConstants {
 
             return true;
         } finally {
-            try {
-                if (srcChannel != null) {
+            IOException closeException = null;
+            if (srcChannel != null) {
+                try {
                     srcChannel.close();
+                } catch (final IOException ioException) {
+                    closeException = ioException;
                 }
-            } catch (final IOException e) {
-                Debug.debug(e);
-
             }
-            try {
-                if (dstChannel != null) {
+            if (dstChannel != null) {
+                try {
                     dstChannel.close();
+                } catch (final IOException ioException) {
+                    closeException = ioException;
                 }
-            } catch (final IOException e) {
-                Debug.debug(e);
+            }
+            if (closeException != null) {
+                throw closeException;
             }
         }
     }
@@ -103,19 +106,23 @@ public class IoUtils implements ImagingConstants {
             bos.flush();
         } finally {
             if (close_streams) {
-                try {
-                    if (bis != null) {
+                IOException closeException = null;
+                if (bis != null) {
+                    try {
                         bis.close();
+                    } catch (final IOException ioException) {
+                        closeException = ioException;
                     }
-                } catch (final IOException e) {
-                    Debug.debug(e);
                 }
-                try {
-                    if (bos != null) {
+                if (bos != null) {
+                    try {
                         bos.close();
+                    } catch (final IOException ioException) {
+                        closeException = ioException;
                     }
-                } catch (final IOException e) {
-                    Debug.debug(e);
+                }
+                if (closeException != null) {
+                    throw closeException;
                 }
             }
         }
@@ -139,12 +146,8 @@ public class IoUtils implements ImagingConstants {
 
             return getInputStreamBytes(is);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final IOException e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
         }
     }
@@ -176,12 +179,8 @@ public class IoUtils implements ImagingConstants {
 
             return os.toByteArray();
         } finally {
-            try {
-                if (os != null) {
-                    os.close();
-                }
-            } catch (final IOException e) {
-                Debug.debug(e);
+            if (os != null) {
+                os.close();
             }
         }
     }
@@ -200,12 +199,8 @@ public class IoUtils implements ImagingConstants {
 
             copyStreamToStream(src, stream);
         } finally {
-            try {
-                if (stream != null) {
-                    stream.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (stream != null) {
+                stream.close();
             }
         }
     }
@@ -218,13 +213,8 @@ public class IoUtils implements ImagingConstants {
 
             putInputStreamToFile(stream, file);
         } finally {
-            try {
-                if (stream != null) {
-                    stream.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
-
+            if (stream != null) {
+                stream.close();
             }
         }
     }

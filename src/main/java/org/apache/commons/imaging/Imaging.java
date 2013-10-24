@@ -37,7 +37,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
-import org.apache.commons.imaging.util.Debug;
 
 /**
  * The primary application programming interface (API) to the Imaging library.
@@ -300,13 +299,7 @@ public abstract class Imaging implements ImagingConstants {
             return ImageFormat.UNKNOWN;
         } finally {
             if (is != null) {
-                try {
-                    is.close();
-
-                } catch (final IOException e) {
-                    Debug.debug(e);
-
-                }
+                is.close();
             }
         }
     }
@@ -1403,12 +1396,8 @@ public abstract class Imaging implements ImagingConstants {
 
             writeImage(src, os, format, params);
         } finally {
-            try {
-                if (os != null) {
-                    os.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (os != null) {
+                os.close();
             }
         }
     }

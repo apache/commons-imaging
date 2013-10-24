@@ -44,13 +44,13 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.png.chunks.PngChunk;
-import org.apache.commons.imaging.formats.png.chunks.PngChunkIdat;
-import org.apache.commons.imaging.formats.png.chunks.PngChunkIhdr;
-import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkGama;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkIccp;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkIdat;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkIhdr;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkItxt;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPhys;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkText;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkZtxt;
 import org.apache.commons.imaging.formats.png.chunks.PngTextChunk;
@@ -59,7 +59,6 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterIndexedColor;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.commons.imaging.icc.IccProfileParser;
-import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class PngImageParser extends ImageParser implements PngConstants {
@@ -131,12 +130,8 @@ public class PngImageParser extends ImageParser implements PngConstants {
             chunks = readChunks(is, new int[] { chunkType, }, true);
             return chunks.size() > 0;
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
         }
     }
@@ -245,12 +240,8 @@ public class PngImageParser extends ImageParser implements PngConstants {
 
             return readChunks(is, chunkTypes, returnAfterFirst);
         } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (final Exception e) {
-                Debug.debug(e);
+            if (is != null) {
+                is.close();
             }
         }
     }
