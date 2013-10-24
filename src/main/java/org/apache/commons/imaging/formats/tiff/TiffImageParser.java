@@ -39,8 +39,8 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
-import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReader;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -91,7 +91,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                 .readFirstDirectory(byteSource, params, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
-        return directory.getFieldValue(AllTagConstants.EXIF_TAG_INTER_COLOR_PROFILE,
+        return directory.getFieldValue(TiffEpTagConstants.EXIF_TAG_INTER_COLOR_PROFILE,
                 false);
     }
 
@@ -588,7 +588,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         final int width = directory.getSingleFieldValue(
                 TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
         final int height = directory.getSingleFieldValue(
-                TiffConstants.TIFF_TAG_IMAGE_LENGTH);      
+                TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);      
         Rectangle subImage = checkForSubImage(params);
         if(subImage!=null){
             // Check for valid subimage specification. The following checks
