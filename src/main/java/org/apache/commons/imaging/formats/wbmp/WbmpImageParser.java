@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.IndexColorModel;
+import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
@@ -210,7 +211,7 @@ public class WbmpImageParser extends ImageParser {
         final byte[] image = readBytes("Pixels", is,
                 rowLength * wbmpHeader.height, "Error reading image pixels");
         final DataBufferByte dataBuffer = new DataBufferByte(image, image.length);
-        final WritableRaster raster = WritableRaster.createPackedRaster(dataBuffer,
+        final WritableRaster raster = Raster.createPackedRaster(dataBuffer,
                 wbmpHeader.width, wbmpHeader.height, 1, null);
         final int[] palette = { 0x000000, 0xffffff };
         final IndexColorModel colorModel = new IndexColorModel(1, 2, palette, 0,
