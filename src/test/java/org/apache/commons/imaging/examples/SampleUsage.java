@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
@@ -64,7 +65,7 @@ public class SampleUsage {
             // <b>Write an image. </b>
             final BufferedImage image = someImage;
             final File dst = someFile;
-            final ImageFormats format = ImageFormats.PNG;
+            final ImageFormat format = ImageFormats.PNG;
             final Map<String,Object> optional_params = new HashMap<String,Object>();
             Imaging.writeImage(image, dst, format, optional_params);
 
@@ -91,7 +92,7 @@ public class SampleUsage {
             }
 
             // <b>try to guess the image's format. </b>
-            final ImageFormats image_format = Imaging.guessFormat(imageBytes);
+            final ImageFormat image_format = Imaging.guessFormat(imageBytes);
             image_format.equals(ImageFormats.PNG);
 
             // <b>get all metadata stored in EXIF format (ie. from JPEG or

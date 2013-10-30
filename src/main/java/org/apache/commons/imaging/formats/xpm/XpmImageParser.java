@@ -40,6 +40,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.UUID;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
@@ -120,8 +121,8 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    protected ImageFormats[] getAcceptedTypes() {
-        return new ImageFormats[] { ImageFormats.XPM, //
+    protected ImageFormat[] getAcceptedTypes() {
+        return new ImageFormat[] { ImageFormats.XPM, //
         };
     }
 

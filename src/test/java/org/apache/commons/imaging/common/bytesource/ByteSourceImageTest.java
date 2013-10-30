@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
@@ -84,7 +85,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
 
             checkGetImageSize(imageFile, imageFileBytes);
 
-            final ImageFormats imageFormat = Imaging.guessFormat(imageFile);
+            final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
             if (ImageFormats.JPEG != imageFormat
                     && ImageFormats.UNKNOWN != imageFormat) {
                 checkGetBufferedImage(imageFile, imageFileBytes);
@@ -123,12 +124,12 @@ public class ByteSourceImageTest extends ByteSourceTest {
     public void checkGuessFormat(final File imageFile, final byte[] imageFileBytes)
             throws Exception {
         // check guessFormat()
-        final ImageFormats imageFormatFile = Imaging.guessFormat(imageFile);
+        final ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
         assertNotNull(imageFormatFile);
         assertTrue(imageFormatFile != ImageFormats.UNKNOWN);
         // Debug.debug("imageFormatFile", imageFormatFile);
 
-        final ImageFormats imageFormatBytes = Imaging.guessFormat(imageFileBytes);
+        final ImageFormat imageFormatBytes = Imaging.guessFormat(imageFileBytes);
         assertNotNull(imageFormatBytes);
         assertTrue(imageFormatBytes != ImageFormats.UNKNOWN);
         // Debug.debug("imageFormatBytes", imageFormatBytes);
@@ -157,7 +158,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
             IllegalArgumentException, InvocationTargetException {
         final Map<String,Object> params = new HashMap<String,Object>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        final ImageFormats imageFormat = Imaging.guessFormat(imageFile);
+        final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         if (imageFormat.equals(ImageFormats.TIFF)
                 || imageFormat.equals(ImageFormats.JPEG)) {
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));

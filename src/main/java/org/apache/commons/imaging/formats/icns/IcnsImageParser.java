@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
@@ -67,8 +68,8 @@ public class IcnsImageParser extends ImageParser {
     }
 
     @Override
-    protected ImageFormats[] getAcceptedTypes() {
-        return new ImageFormats[] { ImageFormats.ICNS };
+    protected ImageFormat[] getAcceptedTypes() {
+        return new ImageFormat[] { ImageFormats.ICNS };
     }
 
     @Override

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
@@ -43,14 +44,14 @@ public class RoundtripTest extends ImagingTest {
 
     private static class FormatInfo {
 
-        public final ImageFormats format;
+        public final ImageFormat format;
         public final boolean canRead;
         public final boolean canWrite;
         public final int colorSupport;
         public final boolean identicalSecondWrite;
         public final boolean preservesResolution;
 
-        public FormatInfo(final ImageFormats format, final boolean canRead,
+        public FormatInfo(final ImageFormat format, final boolean canRead,
                 final boolean canWrite, final int colorSupport,
                 final boolean identicalSecondWrite,
                 final boolean preservesResolution) {

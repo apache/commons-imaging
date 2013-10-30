@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
@@ -69,8 +70,8 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     }
 
     @Override
-    protected ImageFormats[] getAcceptedTypes() {
-        return new ImageFormats[] {
+    protected ImageFormat[] getAcceptedTypes() {
+        return new ImageFormat[] {
                 ImageFormats.PBM, //
                 ImageFormats.PGM, //
                 ImageFormats.PPM, //
@@ -241,7 +242,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
         final List<String> Comments = new ArrayList<String>();
 
         final int BitsPerPixel = info.getBitDepth() * info.getNumComponents();
-        final ImageFormats Format = info.getImageType();
+        final ImageFormat Format = info.getImageType();
         final String FormatName = info.getImageTypeDescription();
         final String MimeType = info.getMIMEType();
         final int NumberOfImages = 1;

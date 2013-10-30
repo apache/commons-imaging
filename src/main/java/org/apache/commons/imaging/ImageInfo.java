@@ -31,7 +31,7 @@ public class ImageInfo {
     private final int bitsPerPixel;
     private final List<String> comments;
 
-    private final ImageFormats format;
+    private final ImageFormat format;
     private final String formatName;
     private final int height;
     private final String mimeType;
@@ -74,7 +74,7 @@ public class ImageInfo {
     private final String compressionAlgorithm;
 
     public ImageInfo(final String formatDetails, final int bitsPerPixel,
-            final List<String> comments, final ImageFormats format, final String formatName,
+            final List<String> comments, final ImageFormat format, final String formatName,
             final int height, final String mimeType, final int numberOfImages,
             final int physicalHeightDpi, final float physicalHeightInch,
             final int physicalWidthDpi, final float physicalWidthInch, final int width,
@@ -129,7 +129,7 @@ public class ImageInfo {
      * @return A constant defined in ImageFormat.
      * @see ImageFormats
      */
-    public ImageFormats getFormat() {
+    public ImageFormat getFormat() {
         return format;
     }
 

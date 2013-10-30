@@ -906,7 +906,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * accepted types
      * @return A valid array of one or more elements.
      */
-    protected abstract ImageFormats[] getAcceptedTypes();
+    protected abstract ImageFormat[] getAcceptedTypes();
 
     /**
      * Indicates whether the ImageParser implementation can accept
@@ -914,10 +914,10 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @param type An instance of ImageFormat. 
      * @return If the parser can accept the format, true; otherwise, false.
      */
-    public boolean canAcceptType(final ImageFormats type) {
-        final ImageFormats types[] = getAcceptedTypes();
+    public boolean canAcceptType(final ImageFormat type) {
+        final ImageFormat types[] = getAcceptedTypes();
 
-        for (final ImageFormats type2 : types) {
+        for (final ImageFormat type2 : types) {
             if (type2.equals(type)) {
                 return true;
             }

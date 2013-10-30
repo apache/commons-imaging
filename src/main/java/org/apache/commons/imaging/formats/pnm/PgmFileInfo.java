@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.pnm;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
@@ -62,7 +63,7 @@ public class PgmFileInfo extends FileInfo {
     }
 
     @Override
-    public ImageFormats getImageType() {
+    public ImageFormat getImageType() {
         return ImageFormats.PGM;
     }
 

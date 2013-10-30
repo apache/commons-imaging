@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
@@ -47,7 +48,7 @@ public class XmpUpdateTest extends ImagingTest {
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
-            final ImageFormats imageFormat = Imaging.guessFormat(imageFile);
+            final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
 
             String xmpXml = Imaging.getXmpXml(imageFile);
             if (null == xmpXml

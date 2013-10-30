@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
@@ -67,8 +68,8 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    protected ImageFormats[] getAcceptedTypes() {
-        return new ImageFormats[] { ImageFormats.RGBE };
+    protected ImageFormat[] getAcceptedTypes() {
+        return new ImageFormat[] { ImageFormats.RGBE };
     }
 
     @Override

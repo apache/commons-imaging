@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -35,7 +36,7 @@ public class ImageWriteExample {
         // read image
         final BufferedImage image = Imaging.getBufferedImage(file);
 
-        final ImageFormats format = ImageFormats.TIFF;
+        final ImageFormat format = ImageFormats.TIFF;
         final Map<String,Object> params = new HashMap<String,Object>();
 
         // set optional parameters if you like

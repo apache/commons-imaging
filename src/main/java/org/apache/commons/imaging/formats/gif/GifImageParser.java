@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
@@ -74,8 +75,8 @@ public class GifImageParser extends ImageParser {
     }
 
     @Override
-    protected ImageFormats[] getAcceptedTypes() {
-        return new ImageFormats[] { ImageFormats.GIF, //
+    protected ImageFormat[] getAcceptedTypes() {
+        return new ImageFormat[] { ImageFormats.GIF, //
         };
     }
 
@@ -564,7 +565,7 @@ public class GifImageParser extends ImageParser {
 
         final List<String> comments = getComments(blocks.blocks);
         final int bitsPerPixel = (bhi.colorResolution + 1);
-        final ImageFormats format = ImageFormats.GIF;
+        final ImageFormat format = ImageFormats.GIF;
         final String formatName = "GIF Graphics Interchange Format";
         final String mimeType = "image/gif";
         // we ought to count images, but don't yet.

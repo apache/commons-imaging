@@ -147,7 +147,7 @@ public abstract class Imaging implements ImagingConstants {
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
      *         determined.
      */
-    public static ImageFormats guessFormat(final byte bytes[])
+    public static ImageFormat guessFormat(final byte bytes[])
             throws ImageReadException, IOException {
         return guessFormat(new ByteSourceArray(bytes));
     }
@@ -167,7 +167,7 @@ public abstract class Imaging implements ImagingConstants {
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
      *         determined.
      */
-    public static ImageFormats guessFormat(final File file) throws ImageReadException,
+    public static ImageFormat guessFormat(final File file) throws ImageReadException,
             IOException {
         return guessFormat(new ByteSourceFile(file));
     }
@@ -219,7 +219,7 @@ public abstract class Imaging implements ImagingConstants {
      * attempt to read the image data
      * @throws IOException in the event of an unrecoverable I/O condition.
      */
-    public static ImageFormats guessFormat(final ByteSource byteSource)
+    public static ImageFormat guessFormat(final ByteSource byteSource)
             throws ImageReadException, IOException {
         
         if (byteSource==null) {
@@ -707,7 +707,7 @@ public abstract class Imaging implements ImagingConstants {
 
     private static ImageParser getImageParser(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final ImageFormats format = guessFormat(byteSource);
+        final ImageFormat format = guessFormat(byteSource);
         if (!format.equals(ImageFormats.UNKNOWN)) {
 
             final ImageParser imageParsers[] = ImageParser.getAllImageParsers();
@@ -1403,7 +1403,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImagingConstants
      */    
     public static void writeImage(final BufferedImage src, final File file,
-            final ImageFormats format, final Map<String,Object> params) throws ImageWriteException,
+            final ImageFormat format, final Map<String,Object> params) throws ImageWriteException,
             IOException {
         OutputStream os = null;
         boolean canThrow = false;
@@ -1443,7 +1443,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImagingConstants
      */   
     public static byte[] writeImageToBytes(final BufferedImage src,
-            final ImageFormats format, final Map<String,Object> params) throws ImageWriteException,
+            final ImageFormat format, final Map<String,Object> params) throws ImageWriteException,
             IOException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
@@ -1477,7 +1477,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImagingConstants
      */    
     public static void writeImage(final BufferedImage src, final OutputStream os,
-            final ImageFormats format, Map<String,Object> params) throws ImageWriteException,
+            final ImageFormat format, Map<String,Object> params) throws ImageWriteException,
             IOException {
         final ImageParser imageParsers[] = ImageParser.getAllImageParsers();
 

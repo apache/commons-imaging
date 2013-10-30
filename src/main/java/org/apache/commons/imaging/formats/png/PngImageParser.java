@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ColorTools;
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
@@ -88,8 +89,8 @@ public class PngImageParser extends ImageParser implements PngConstants {
     }
 
     @Override
-    protected ImageFormats[] getAcceptedTypes() {
-        return new ImageFormats[] { ImageFormats.PNG, //
+    protected ImageFormat[] getAcceptedTypes() {
+        return new ImageFormat[] { ImageFormats.PNG, //
         };
     }
 
@@ -556,7 +557,7 @@ public class PngImageParser extends ImageParser implements PngConstants {
 
         final int BitsPerPixel = pngChunkIHDR.bitDepth
                 * samplesPerPixel(pngChunkIHDR.colorType);
-        final ImageFormats Format = ImageFormats.PNG;
+        final ImageFormat Format = ImageFormats.PNG;
         final String FormatName = "PNG Portable Network Graphics";
         final int Height = pngChunkIHDR.height;
         final String MimeType = "image/png";

@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
@@ -72,8 +73,8 @@ public class IcoImageParser extends ImageParser {
     }
 
     @Override
-    protected ImageFormats[] getAcceptedTypes() {
-        return new ImageFormats[] { ImageFormats.ICO, //
+    protected ImageFormat[] getAcceptedTypes() {
+        return new ImageFormat[] { ImageFormats.ICO, //
         };
     }
 
@@ -534,7 +535,7 @@ public class IcoImageParser extends ImageParser {
 
     private IconData readIconData(final byte[] iconData, final IconInfo fIconInfo)
             throws ImageReadException, IOException {
-        final ImageFormats imageFormat = Imaging.guessFormat(iconData);
+        final ImageFormat imageFormat = Imaging.guessFormat(iconData);
         if (imageFormat.equals(ImageFormats.PNG)) {
             final BufferedImage bufferedImage = Imaging.getBufferedImage(iconData);
             final PNGIconData pngIconData = new PNGIconData(fIconInfo, bufferedImage);
