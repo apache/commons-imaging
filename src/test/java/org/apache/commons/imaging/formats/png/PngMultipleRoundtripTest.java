@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 
@@ -63,7 +63,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
 
                 final Map<String,Object> writeParams = new HashMap<String,Object>();
                 Imaging.writeImage(image, tempFile,
-                        ImageFormat.PNG, writeParams);
+                        ImageFormats.PNG, writeParams);
 
                 lastFile = tempFile;
             }

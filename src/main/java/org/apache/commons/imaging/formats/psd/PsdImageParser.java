@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -75,7 +76,7 @@ public class PsdImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.PSD, //
+        return new ImageFormat[] { ImageFormats.PSD, //
         };
     }
 
@@ -524,7 +525,7 @@ public class PsdImageParser extends ImageParser {
         if (BitsPerPixel < 0) {
             BitsPerPixel = 0;
         }
-        final ImageFormat Format = ImageFormat.PSD;
+        final ImageFormat Format = ImageFormats.PSD;
         final String FormatName = "Photoshop";
         final String MimeType = "image/x-photoshop";
         // we ought to count images, but don't yet.

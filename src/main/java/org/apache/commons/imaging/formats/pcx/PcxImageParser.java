@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -85,7 +86,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.PCX, //
+        return new ImageFormat[] { ImageFormats.PCX, //
         };
     }
 
@@ -109,7 +110,7 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
                 "PCX",
                 pcxHeader.nPlanes * pcxHeader.bitsPerPixel,
                 new ArrayList<String>(),
-                ImageFormat.PCX,
+                ImageFormats.PCX,
                 "ZSoft PCX Image",
                 size.height,
                 "image/x-pcx",

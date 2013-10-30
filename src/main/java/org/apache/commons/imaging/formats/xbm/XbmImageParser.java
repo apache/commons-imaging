@@ -38,6 +38,7 @@ import java.util.Properties;
 import java.util.UUID;
 
 import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -71,7 +72,7 @@ public class XbmImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.XBM, //
+        return new ImageFormat[] { ImageFormats.XBM, //
         };
     }
 
@@ -91,7 +92,7 @@ public class XbmImageParser extends ImageParser {
             throws ImageReadException, IOException {
         final XbmHeader xbmHeader = readXbmHeader(byteSource);
         return new ImageInfo("XBM", 1, new ArrayList<String>(),
-                ImageFormat.XBM, "X BitMap", xbmHeader.height,
+                ImageFormats.XBM, "X BitMap", xbmHeader.height,
                 "image/x-xbitmap", 1, 0, 0, 0, 0, xbmHeader.width, false,
                 false, false, ImageInfo.COLOR_TYPE_BW,
                 ImageInfo.COMPRESSION_ALGORITHM_NONE);

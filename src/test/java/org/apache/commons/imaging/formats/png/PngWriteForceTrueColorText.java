@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.util.Debug;
@@ -61,7 +61,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 params.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
                         Boolean.TRUE);
                 Imaging.writeImage(image, outFile,
-                        ImageFormat.PNG, params);
+                        ImageFormats.PNG, params);
 
                 final BufferedImage image2 = Imaging.getBufferedImage(outFile,
                         new HashMap<String,Object>());

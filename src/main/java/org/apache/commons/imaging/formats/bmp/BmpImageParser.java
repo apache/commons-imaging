@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -80,7 +81,7 @@ public class BmpImageParser extends ImageParser {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.BMP, //
+        return new ImageFormat[] { ImageFormats.BMP, //
         };
     }
 
@@ -632,7 +633,7 @@ public class BmpImageParser extends ImageParser {
         // TODO: comments...
 
         final int bitsPerPixel = bhi.bitsPerPixel;
-        final ImageFormat format = ImageFormat.BMP;
+        final ImageFormat format = ImageFormats.BMP;
         final String name = "BMP Windows Bitmap";
         final String mimeType = "image/x-ms-bmp";
         // we ought to count images, but don't yet.

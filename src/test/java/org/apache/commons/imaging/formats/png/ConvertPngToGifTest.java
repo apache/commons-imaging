@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 
@@ -53,7 +53,7 @@ public class ConvertPngToGifTest extends PngBaseTest {
             final File outFile = createTempFile(imageFile.getName() + ".", ".gif");
             // Debug.debug("outFile", outFile);
 
-            Imaging.writeImage(image, outFile, ImageFormat.GIF,
+            Imaging.writeImage(image, outFile, ImageFormats.GIF,
                     params);
         }
         Debug.debug("complete.");

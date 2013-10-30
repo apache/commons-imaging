@@ -52,7 +52,7 @@ public interface ImagingConstants {
      * ImageFormat.IMAGE_FORMAT_PNG.
      * <p>
      * 
-     * @see org.apache.commons.imaging.ImageFormat
+     * @see org.apache.commons.imaging.ImageFormats
      */
     public static final String PARAM_KEY_FORMAT = "FORMAT";
 

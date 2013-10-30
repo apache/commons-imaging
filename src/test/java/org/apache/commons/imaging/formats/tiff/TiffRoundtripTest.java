@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
@@ -52,7 +52,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
 
             final File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
             final Map<String,Object> params = new HashMap<String,Object>();
-            Imaging.writeImage(image, tempFile, ImageFormat.TIFF,
+            Imaging.writeImage(image, tempFile, ImageFormats.TIFF,
                     params);
             image = null;
 

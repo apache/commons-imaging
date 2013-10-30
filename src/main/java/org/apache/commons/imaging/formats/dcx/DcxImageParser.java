@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -71,7 +72,7 @@ public class DcxImageParser extends ImageParser {
     @Override
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] {
-                ImageFormat.DCX, //
+                ImageFormats.DCX, //
         };
     }
 

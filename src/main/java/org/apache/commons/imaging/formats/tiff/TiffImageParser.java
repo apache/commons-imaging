@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -79,7 +80,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
     @Override
     protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.TIFF, //
+        return new ImageFormat[] { ImageFormats.TIFF, //
         };
     }
 
@@ -255,7 +256,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             comments.add(comment);
         }
 
-        final ImageFormat format = ImageFormat.TIFF;
+        final ImageFormat format = ImageFormats.TIFF;
         final String formatName = "TIFF Tag-based Image File Format";
         final String mimeType = "image/tiff";
         final int numberOfImages = contents.directories.size();

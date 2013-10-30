@@ -127,7 +127,7 @@ public class ImageInfo {
      * Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if format is unknown.
      * 
      * @return A constant defined in ImageFormat.
-     * @see ImageFormat
+     * @see ImageFormats
      */
     public ImageFormat getFormat() {
         return format;
