@@ -1,0 +1,3 @@
+Image contributed by James E-J
+
+Demonstrates JPEG with thumbnail stored as JPEG (not TIFF).

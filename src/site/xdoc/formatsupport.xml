@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Building</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="Image Format Support">
+
+<table>
+  <tr>
+    <th>Format</th>
+    <th>Read</th>
+    <th>Write</th>
+    <th>Notes</th>
+    <th>References</th>
+  </tr>
+
+  <!-- BMP Format -->
+  <tr>
+    <td>BMP</td><td>yes</td><td>yes</td>
+    <td>
+        Mostly Complete. May not read some cursors, icons and OS/2 bitmaps.
+        Controlling the exact format when writing is incomplete.
+    </td>
+    <td>
+       No spec, see:
+       <a href="http://en.wikipedia.org/wiki/Windows_bitmap">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- GIF Format -->
+  <tr>
+    <td>GIF</td><td>yes</td><td>yes</td>
+    <td>
+        Both versions 87a and 89a Reading of animated GIFs is supported to the extent that
+        you can read all of the images contained in a GIF, but timing/loop info is ignored.
+        Controlling the exact format when writing is incomplete.
+    </td>
+    <td>
+       <a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">spec</a>
+       <a href="http://en.wikipedia.org/wiki/GIF">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- JPEG/JFIF Format -->
+  <tr>
+    <td>JPEG/JFIF</td><td>some</td><td>no</td>
+    <td>
+        Reads only simple grayscale and YCbCr baseline sequential JPEG images without RST markers,
+        which must use 8 bits per component and be Huffman encoded.
+        Can read image info, metadata and extract ICC Profiles. Both JFIF and DCF/EXIF.
+        Provides JPEG comments in ImageInfo.
+    </td>
+    <td>
+       <a href="http://www.jpeg.org/public/jfif.pdf">JFIF spec</a>
+       <a href="http://www.jpeg.org/jpeg/index.html">JPEG Group</a>
+       <a href="http://en.wikipedia.org/wiki/JPEG">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- ICNS Format -->
+  <tr>
+    <td>ICNS</td><td>mostly</td><td>mostly</td>
+    <td>
+        Missing support for JPEG2000 icons, but all other formats and sizes are correctly read and written.
+        Extensively tested for correctness against MacOS X, including behavior with missing masks.
+    </td>
+    <td>
+       <a href="http://en.wikipedia.org/wiki/Apple_Icon_Image">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- ICO/CUR Format -->
+  <tr>
+    <td>ICO/CUR</td><td>yes</td><td>mostly</td>
+    <td>
+        Reads 1/4/8/16/24/32 bpp .ico and .cur files. Supports the new Windows Vista ICO files with embedded PNGs.
+        Deals correctly with alpha vs bitmask transparency issues in 32 bpp. Supports bitfield compressed bitmaps.
+        Extensively tested. Probably the best open-source implementation under the sun.
+    </td>
+    <td>
+       No spec, see:
+       <a href="http://en.wikipedia.org/wiki/ICO_(icon_image_file_format)">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- PCX/DCX -->
+  <tr>
+    <td>PCX/DCX</td><td>yes</td><td>yes</td>
+    <td>
+        Reads 1 plane 1/2/4/8 bit, 1 bit 1/2/3/4 plane, 3 plane 8 bit, 1 plane 24 bit, and 1 plane 32 bit images.
+        Monochrome is parsed correctly. Reads and can write the undocumented uncompressed PCX format.
+        Reading short DCX tables is supported. Thoroughly tested.
+    </td>
+    <td>
+    </td>
+  </tr>
+
+  <!-- PNM/PGM/PBM/PPM/PAM Portable Pixmap -->
+  <tr>
+    <td>PNM/PGM/PBM/PPM/PAM Portable Pixmap</td><td>yes</td><td>mostly</td>
+    <td>
+        Reading complete. PAM writing only in RGB_ALPHA format.
+    </td>
+    <td>
+       <a href="http://netpbm.sourceforge.net/doc/index.html">spec</a>
+       <a href="http://en.wikipedia.org/wiki/Portable_pixmap">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- PNG Format -->
+  <tr>
+    <td>PNG</td><td>yes</td><td>yes</td>
+    <td>
+        Supported through version 1.2/ISO/IEC standard (15948:2003).
+        Controlling the exact format when writing is incomplete.
+    </td>
+    <td>
+       <a href="http://www.libpng.org/pub/png/">spec</a>
+       <a href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- PSD/Photoshop Format -->
+  <tr>
+    <td>PSD/Photoshop</td><td>yes</td><td>no</td>
+    <td>
+        Basic support. Can only read the first Layer. No support for extra channels.
+        Supports all modes except Multichannel. Can read some image metadata.
+    </td>
+    <td>
+       <a href="http://www.fileformat.info/format/psd/egff.htm">Unofficial spec</a>
+       <a href="http://www.fileformat.info/format/psd/egff.htm">spec</a>
+       <a href="http://en.wikipedia.org/wiki/PSD">wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- RGBE/Radiance HDR Format -->
+  <tr>
+    <td>RGBE/Radiance HDR</td><td>yes</td><td>no</td>
+    <td>
+        Basic support.
+    </td>
+    <td>
+      <a href="http://en.wikipedia.org/wiki/RGBE_image_format">Wikipedia</a>
+    </td>
+  </tr>
+
+  <!-- TIFF Format -->
+  <tr>
+    <td>TIFF</td><td>yes</td><td>yes</td>
+    <td>
+        Supported through version 6.0. TIFFs is a open-ended container format, so it's not
+        possible to support every possibly variation.
+        Supports Bi-Level, Palette/Indexed, RGB, CMYK, YCbCr, CIELab and LOGLUV images.
+        Supports reading and writing LZW, CCITT Modified Huffman/Group 3/Group 4,
+        and Packbits/RLE compression. Notably missing other forms of compression though,
+        including JPEG. Supports reading Tiled images.
+    </td>
+    <td>
+       <a href="http://partners.adobe.com/public/developer/tiff/index.html">Adobe</a>
+       <a href="http://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf">spec</a>
+       <a href="http://en.wikipedia.org/wiki/TIFF">wikipedia</a>
+       <a href="http://www.awaresystems.be/imaging/tiff/tifftags.html">AWare Systems TIFF Tag Reference</a>
+    </td>
+  </tr>
+
+  <!-- WBMP Format -->
+  <tr>
+    <td>WBMP</td><td>yes</td><td>yes</td>
+    <td>
+        Complete support for WBMP type 0 bitmaps.
+    </td>
+    <td>
+       <a href="http://en.wikipedia.org/wiki/WBMP">wikipedia</a>
+       <a href="http://www.wapforum.org/what/technical/SPEC-WAESpec-19990524.pdf">spec</a>
+    </td>
+  </tr>
+
+  <!-- XBM Format -->
+  <tr>
+    <td>XBM</td><td>yes</td><td>yes</td>
+    <td>
+        Complete.
+    </td>
+    <td>
+       <a href="http://en.wikipedia.org/wiki/XBM">wikipedia</a>
+       <a href="www.xfree86.org/current/xlib.pdf">spec</a>
+    </td>
+  </tr>
+
+  <!-- XPM Format -->
+  <tr>
+    <td>XPM</td><td>yes</td><td>yes</td>
+    <td>
+        Only XPM version 3 is currently supported, but the other versions are obsolete.
+        Reads all color formats, including those using symbolic names from rgb.txt.
+        Writing only writes color data.
+    </td>
+    <td>
+       <a href="http://en.wikipedia.org/wiki/X_PixMap">wikipedia</a>
+       <a href="http://www.xfree86.org/current/xpm.pdf">spec</a>
+    </td>
+  </tr>
+</table>
+
+</section>
+
+<!-- ================================================== -->
+
+<section name="Metadata Format Support">
+
+<table>
+  <tr>
+    <th>Format</th>
+    <th>Read</th>
+    <th>Write</th>
+    <th>Notes</th>
+    <th>References</th>
+  </tr>
+
+  <!-- JPEG/JFIF EXIF Metadata -->
+  <tr>
+    <td>JPEG/JFIF EXIF Metadata</td><td>yes</td><td>yes</td>
+    <td>
+        Can read and write EXIF data to and from exsiting JPEG/JFIF files WITHOUT modifying image data.
+    </td>
+    <td>
+       <a href="http://www.exif.org/">Exif Specs, etc.</a>
+       <a href="http://en.wikipedia.org/wiki/Exif">wikipedia</a>
+       <a href="http://www.awaresystems.be/imaging/tiff/tifftags.html">AWare Systems TIFF Tag Reference</a> (JPEG EXIF metadata is stored in TIFF directories)
+       <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/index.html">Phil Harvey's exiftool and metadata reference</a>
+       <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/writing.html">Phil Harvey on writing EXIF</a>
+    </td>
+  </tr>
+
+  <!-- JPEG/JFIF IPTC Metadata -->
+  <tr>
+    <td>JPEG/JFIF IPTC Metadata</td><td>yes</td><td>soon</td>
+    <td>
+        Can read IPTC data from existing JPEG/JFIF files WITHOUT modifying image data.
+    </td>
+    <td>
+       <a href="http://www.iptc.org/cms/site/index.html?channel=CH0108">IPTC Specs, etc.</a>
+       <a href="http://en.wikipedia.org/wiki/IPTC_(image_meta-data)">wikipedia</a>
+       <a href="http://www2.computer.org/portal/web/csdl/doi/10.1109/MMUL.2005.50">IEEE article</a>
+    </td>
+  </tr>
+
+  <!-- XMP Format -->
+  <tr>
+    <td>XMP</td><td>yes</td><td>yes</td>
+    <td>
+        Can read XMP XML (as as String) from TIFF, GIF, PNG, JPEG and PSD.
+        Can embed XMP XML when writing GIF, PNG and TIFF.
+        Can remove, insert and update XMP XML into existing JPEG files.
+    </td>
+    <td>
+       <a href="http://www.adobe.com/devnet/xmp/">Adobe site with Spec</a>
+       <a href="http://en.wikipedia.org/wiki/Extensible_Metadata_Platform">wikipedia</a>
+    </td>
+  </tr>
+</table>
+
+</section>
+
+</body>
+</document>

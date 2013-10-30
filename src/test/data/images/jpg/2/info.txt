@@ -1,0 +1,3 @@
+Image contributed by jncharli at free dot fr
+
+EXIF data demonstrates the EXIF_TAG_XPTITLE tag.

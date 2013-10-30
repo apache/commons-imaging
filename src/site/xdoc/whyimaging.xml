@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Building</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="Why use Commons Imaging?">
+
+<p>
+    Why another image library? There are so many already.
+</p>
+
+<p>
+    Apache Commons Imaging is written in 100% pure Java. It will run on any JVM, and any platform, without modification.
+</p>
+
+<p>
+    There are no dependencies. Commons Imaging only requires Java 1.5 or later.
+</p>
+
+<p>
+    It is designed to be very easy to use. It has a simple, clean interface. Most operations are a single Imaging method call. See the <a href="sampleusage.html">Sample Usage</a> section.
+</p>
+
+<p>
+    Commons Imaging aims to be transparent. There are no hidden buffers to dispose, no native memory to free, no background threads.
+</p>
+
+<p>
+    It reads and writes a wide variety of image formats, and supports some variations and encodings missed by all or most other libaries. See the <a href="formatsupport.html">Format Support</a> list.
+</p>
+
+<p>
+    Commons Imaging does more than read and write images. Reading image info (image size, colorspace, bit depth, etc.) and metadata is easy, and does not require reading the image pixels.
+    It presents image info and metadata in a format-neutral manner.
+    It also gives easy, structured access to format-specific info.
+</p>
+
+<p>
+    It supports reading and writing a variety of metadata in a structured way, including EXIF metadata.
+</p>
+
+<p>
+    Most other libraries offer little or incomplete support for ICC Profiles.
+    Commons Imaging can extract and (simply) parse embedded ICC Profiles.
+    Moreover, it applies the ICC profile by default, coverting read images to sRGB.
+    This means images are color-corrected by default.
+    see: <a href="http://en.wikipedia.org/wiki/International_Color_Consortium">http://en.wikipedia.org/wiki/International_Color_Consortium</a>,
+    <a href="http://en.wikipedia.org/wiki/sRGB">http://en.wikipedia.org/wiki/sRGB</a>
+</p>
+
+<p>
+    Was written with an eye to correctness and code clarity, but also good performance.
+    Hopefully it is easy to use, easy to extend and can be used to explore images + image formats,
+    rather than just read images for display.
+</p>
+
+<p>
+    It is Free Software/Open Source. It is available under the 
+    <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache Software License</a>.
+</p>
+
+<p>
+    Commons Imaging also includes a number of useful functions such as guess an image's format by examining its "magic numbers" (header info).
+</p>
+
+<p>
+    It is network-friendly. Commons Imaging will only read the data it needs, and caches what is read so that it isn't too heavy on the network.
+</p>
+
+<p>
+    The ColorConversions class offers methods to convert between the following color spaces: CIE-L*CH°, CIE-L*ab, CIE-L*uv,
+    CMY, CMYK, HSL, HSV, Hunter-Lab, RGB, XYZ and Yxy (algorithms courtesy of EasyRGB's).
+    see: <a href="http://www.easyrgb.com/">http://www.easyrgb.com/</a>
+</p>
+
+</section>
+</body>
+</document>

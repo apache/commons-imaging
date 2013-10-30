@@ -1,0 +1,14 @@
+/* XPM */
+static char *symbolic[] = {
+  "8 8 2 1",
+  "  c None",
+  "x s DarkSlateGray",
+  "x      x",
+  " x    x ",
+  "  x  x  ",
+  "   xx   ",
+  "   xx   ",
+  "  x  x  ",
+  " x    x ",
+  "x      x"
+};

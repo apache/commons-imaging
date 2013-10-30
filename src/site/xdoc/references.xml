@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Building</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="References">
+
+<p>
+
+  <ul>
+    <li>Marco Schmidt's list of Java image libaries: 
+        <a href="http://www.geocities.com/marcoschmidt.geo/java-image-coding.html">http://www.geocities.com/marcoschmidt.geo/java-image-coding.html</a>
+    </li>
+    <li>Another list of Java image libaries 
+        <a href="http://dmoz.org/Computers/Programming/Languages/Java/Class_Libraries/Graphics/Data_Formats/">http://dmoz.org/Computers/Programming/Languages/Java/Class_Libraries/Graphics/Data_Formats/</a>
+    </li>
+    <li>File format cloud. <a href="http://www.fileformat.info/format/cloud.htm">http://www.fileformat.info/format/cloud.htm</a></li>
+    <li>ImageInfo an excellent Java class to extract image properties. 
+        <a href="http://www.geocities.com/marcoschmidt.geo/image-info.html">http://www.geocities.com/marcoschmidt.geo/image-info.html</a>
+    </li>
+    <li>EasyRGB's color conversion formulas.
+        <a href="http://www.easyrgb.com/">http://www.easyrgb.com/</a>
+    </li>
+    <li>AWare Systems TIFF Tag Reference (JPEG EXIF metadata is stored in TIFF directories).
+        <a href="http://www.awaresystems.be/imaging/tiff/tifftags.html">http://www.awaresystems.be/imaging/tiff/tifftags.html</a>
+    </li>
+    <li>Phil Harvey's exiftool and metadata reference 
+        <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/index.html">http://www.sno.phy.queensu.ca/~phil/exiftool/index.html</a>
+    </li>
+  </ul>
+
+</p>
+
+</section>
+</body>
+</document>

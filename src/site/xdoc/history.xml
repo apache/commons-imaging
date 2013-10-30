@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Building</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="Project Status and History">
+
+<p>
+  Apache Commons Sanselan was renamed to Apache Commons Imaging on 16 April 2012.
+</p>
+
+<p>
+  Version 0.90 released January 31st, 2008.
+  <ul>
+    <li>Added some convenience functions for reading and writing GPS data.</li>
+    <li>These are demonstrated in the metadata sample usage classes.</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.89 released January 22nd, 2008. <b>This release was mislabeled as 0.88</b>
+  <ul>
+    <li>Added EXIF insert/update/remove functionality. See WriteExifMetadataExample.java for examples.</li>
+    <li>Rewrote JPEG and TIFF parsing.</li>
+    <li>Greatly elaborated the unit test suite and test image suite.</li>
+    <li>In the process found and resolved many bugs.</li>
+    <li>Once again, I hope this is the last non-apache release. =)</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.88 released November 17th, 2007.
+  <ul>
+    <li>Restored original package structure. (org.apache.commons.sanselan.* -> org.cmc.sanselan.*)</li>
+    <li>Refactored "byte sources," improving performance reading image data from InputStreams.</li>
+    <li>More code cleanup, mostly removing debugging code and applying naming conventions.</li>
+    <li>Fixed two bugs around pngs: alpha channels weren't be written properly, and alpha channel was not being preserved when reading grayscale pngs.</li>
+    <li>Improved javadocs.</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.87 released October 6th, 2007.
+  <ul>
+    <li>Fixed a number of bugs.</li>
+    <li>Began adding javadocs, starting with the facade classes: Sanselan, and every class returned by its methods.</li>
+    <li>This is probably the last pre-apache release.</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.86 released September 17th, 2007.
+  <ul>
+    <li>Fixed bug with writing grayscale pngs.</li>
+    <li>Fixed bug with gamma correction when reading pngs.</li>
+    <li>Added image read param that allows control over BufferedImage creation.</li>
+    <li>Removed an erroneous javadoc.</li>
+    <li>Minor cleanup.</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.85 released September 5th, 2007.
+  <ul>
+    <li>Cleaned up Tiff image parser and writer.</li>
+    <li>Added compression parameter to tiff image writer.</li>
+    <li>Added an example that illustrates image writing, optional parameters, etc.</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.84 released September 3rd, 2007.
+  <ul>
+    <li>Fixed Tiff/Exif bug wherein rational number fields with a zero divisor prevented the metadata from being read, due to a "divide by zero" error.</li>
+  </ul>
+</p>
+
+
+<p>
+  Version 0.83 released August 30th, 2007.
+  <ul>
+    <li>Fixed Tiff/Exif bug wherein Private IFD Tags were not being properly read.</li>
+    <li>Added better metadata sample code.</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.82 released August 30th, 2007.
+  <ul>
+    <li>Complete refactor of the image metadata methods. See the new MetadataExample class for a simple example.</li>
+    <li>Converted all of the Sanselan class's methods to static.</li>
+    <li>Cleaned up some old code.</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.81 released August 17th, 2007.
+  <ul>
+    <li>Made a couple of methods of ImageInfo public (getColorType() and getColorTypeDescription()).</li>
+  </ul>
+</p>
+
+
+<p>
+  Version 0.80 released July 25th, 2007.
+  <ul>
+    <li>I've begun a overhaul of the codebase in anticipation of becoming an Apache Incubator project.</li>
+    <li>I've changed the package names (again) to be org.apache.commons.sanselan.*.</li>
+    <li>I've removed the dependency on sharedlib.</li>
+    <li>I've removed a great deal of old cruft.</li>
+    <li>I've begun to apply a consistent naming convention to variables (lowerCamelCase) and constant names (ALL_CAPS).</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.79 released June 21th, 2007.
+  <ul>
+    <li>I've fixed that pernicious bug in LZW compression. I've switched the default TIFF compression scheme back to LZW.</li>
+    <li>TIFF uses an unusual variation of LZW. For details, see this article. http://www.fileformat.info/mirror/egff/ch09_04.htm</li>
+    <li>In this case, the bug was: trailing EndOfInformation codes are sometimes omitted. That is, if a EndOfInformation code is the last code of a block, it may not appear.</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.78 released June 20th, 2007.
+  <ul>
+    <li>LZW compression is buggy; this only effects writing TIFF. I've switched the default TIFF compression scheme to packbits which performs worse until this can be corrected.</li>
+  </ul>
+</p>
+
+
+<p>
+  Version 0.77 released June 16th, 2007.
+  <ul>
+    <li>I've open sourced the last dependency of this project, sharedlib.</li>
+    <li>I've also renamed almost all of the package names. Sorry about this; a simple global search and replace should be easy to do.</li>
+  </ul>
+</p>
+
+<p>
+  Version 0.76 released September 16th, 2006.
+</p>
+
+<p>
+  Version 0.75 released September 5th, 2006.
+</p>
+
+<p>
+  First released September 22nd, 2004.
+</p>
+
+</section>
+</body>
+</document>
