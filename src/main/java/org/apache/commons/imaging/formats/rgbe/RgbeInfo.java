@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.formats.rgbe;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Matcher;
@@ -30,7 +31,7 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
-class RgbeInfo extends BinaryFunctions {
+class RgbeInfo extends BinaryFunctions implements Closeable {
     // #?RADIANCE
     private static byte[] HEADER = new byte[] {
         0x23, 0x3F, 0x52, 0x41, 0x44, 0x49, 0x41, 0x4E, 0x43, 0x45
@@ -73,7 +74,7 @@ class RgbeInfo extends BinaryFunctions {
         return height;
     }
 
-    void close() throws IOException {
+    public void close() throws IOException {
         in.close();
     }
 

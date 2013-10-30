@@ -45,6 +45,7 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class XbmImageParser extends ImageParser {
     public XbmImageParser() {
@@ -147,6 +148,7 @@ public class XbmImageParser extends ImageParser {
     private XbmParseResult parseXbmHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
             final Map<String, String> defines = new HashMap<String, String>();
@@ -179,11 +181,10 @@ public class XbmImageParser extends ImageParser {
             xbmParseResult.cParser = new BasicCParser(new ByteArrayInputStream(
                     preprocessedFile.toByteArray()));
             xbmParseResult.xbmHeader = new XbmHeader(width, height, xHot, yHot);
+            canThrow = true;
             return xbmParseResult;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

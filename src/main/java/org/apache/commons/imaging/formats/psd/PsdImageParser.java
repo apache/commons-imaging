@@ -45,6 +45,7 @@ import org.apache.commons.imaging.formats.psd.dataparsers.DataParserRgb;
 import org.apache.commons.imaging.formats.psd.datareaders.CompressedDataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.DataReader;
 import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class PsdImageParser extends ImageParser {
 
@@ -81,15 +82,15 @@ public class PsdImageParser extends ImageParser {
     private PsdHeaderInfo readHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
-            return readHeader(is);
+            final PsdHeaderInfo ret = readHeader(is);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -241,26 +242,25 @@ public class PsdImageParser extends ImageParser {
     private List<ImageResourceBlock> readImageResourceBlocks(
             final ByteSource byteSource, final int imageResourceIDs[], final int maxBlocksToRead)
             throws ImageReadException, IOException {
-        InputStream is = null;
-
+        InputStream imageStream = null;
+        InputStream resourceStream = null;
+        boolean canThrow = false;
         try {
-            is = byteSource.getInputStream();
+            imageStream = byteSource.getInputStream();
 
-            final ImageContents imageContents = readImageContents(is);
+            final ImageContents imageContents = readImageContents(imageStream);
 
-            is.close();
-
-            is = this.getInputStream(byteSource, PSD_SECTION_IMAGE_RESOURCES);
+            resourceStream = this.getInputStream(byteSource, PSD_SECTION_IMAGE_RESOURCES);
             final byte ImageResources[] = readBytes("ImageResources",
-                    is, imageContents.ImageResourcesLength,
+                    resourceStream, imageContents.ImageResourcesLength,
                     "Not a Valid PSD File");
 
-            return readImageResourceBlocks(ImageResources, imageResourceIDs,
+            final List<ImageResourceBlock> ret = readImageResourceBlocks(ImageResources, imageResourceIDs,
                     maxBlocksToRead);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, imageStream, resourceStream);
         }
     }
 
@@ -340,12 +340,13 @@ public class PsdImageParser extends ImageParser {
     private byte[] getData(final ByteSource byteSource, final int section)
             throws ImageReadException, IOException {
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
             // PsdHeaderInfo header = readHeader(is);
             if (section == PSD_SECTION_HEADER) {
+                canThrow = true;
                 return readBytes("Header", is, PSD_HEADER_LENGTH,
                         "Not a Valid PSD File");
             }
@@ -355,6 +356,7 @@ public class PsdImageParser extends ImageParser {
                     "Not a Valid PSD File");
 
             if (section == PSD_SECTION_COLOR_MODE) {
+                canThrow = true;
                 return readBytes("ColorModeData", is, ColorModeDataLength,
                         "Not a Valid PSD File");
             }
@@ -367,6 +369,7 @@ public class PsdImageParser extends ImageParser {
                     "Not a Valid PSD File");
 
             if (section == PSD_SECTION_IMAGE_RESOURCES) {
+                canThrow = true;
                 return readBytes("ImageResources", is,
                         ImageResourcesLength, "Not a Valid PSD File");
             }
@@ -379,6 +382,7 @@ public class PsdImageParser extends ImageParser {
                     is, "Not a Valid PSD File");
 
             if (section == PSD_SECTION_LAYER_AND_MASK_DATA) {
+                canThrow = true;
                 return readBytes("LayerAndMaskData",
                         is, LayerAndMaskDataLength, "Not a Valid PSD File");
             }
@@ -396,11 +400,9 @@ public class PsdImageParser extends ImageParser {
             // return readByteArray("LayerAndMaskData", LayerAndMaskDataLength,
             // is,
             // "Not a Valid PSD File");
-
+            canThrow = true;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
         throw new ImageReadException("getInputStream: Unknown Section: "
                 + section);
@@ -409,16 +411,15 @@ public class PsdImageParser extends ImageParser {
     private ImageContents readImageContents(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
             final ImageContents imageContents = readImageContents(is);
+            canThrow = true;
             return imageContents;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
 
     }
@@ -720,19 +721,18 @@ public class PsdImageParser extends ImageParser {
         }
         
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = getInputStream(byteSource, PSD_SECTION_IMAGE_DATA);
             fDataReader.readData(is, result, imageContents, this);
 
             fDataReader.dump();
+            canThrow = true;
             // is.
             // ImageContents imageContents = readImageContents(is);
             // return imageContents;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
 
         return result;

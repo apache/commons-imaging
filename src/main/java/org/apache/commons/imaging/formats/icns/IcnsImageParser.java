@@ -37,6 +37,7 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class IcnsImageParser extends ImageParser {
@@ -238,6 +239,7 @@ public class IcnsImageParser extends ImageParser {
     private IcnsContents readImage(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
             final IcnsHeader icnsHeader = readIcnsHeader(is);
@@ -254,11 +256,11 @@ public class IcnsImageParser extends ImageParser {
                 icnsElements[i] = icnsElementList.get(i);
             }
 
-            return new IcnsContents(icnsHeader, icnsElements);
+            final IcnsContents ret = new IcnsContents(icnsHeader, icnsElements);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

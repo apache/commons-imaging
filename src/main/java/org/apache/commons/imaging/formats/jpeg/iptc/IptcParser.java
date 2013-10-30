@@ -34,6 +34,7 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class IptcParser extends BinaryFileParser implements IptcConstants {
@@ -260,6 +261,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
         final List<IptcBlock> blocks = new ArrayList<IptcBlock>();
 
         BinaryInputStream bis = null;
+        boolean canThrow = false;
         try {
             bis = new BinaryInputStream(bytes, APP13_BYTE_ORDER);
 
@@ -356,11 +358,10 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 }
             }
     
+            canThrow = true;
             return blocks;
         } finally {
-            if (bis != null) {
-                bis.close();
-            }
+            IoUtils.closeQuietly(canThrow, bis);
         }
     }
 
@@ -415,6 +416,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
         byte blockData[];
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BinaryOutputStream bos = null;
+        boolean canThrow = false;
         try {
             bos = new BinaryOutputStream(baos,
                     getByteOrder());
@@ -465,10 +467,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 bos.write2Bytes(recordData.length);
                 bos.write(recordData);
             }
+            canThrow = true;
         } finally {
-            if (bos != null) {
-                bos.close();
-            }
+            IoUtils.closeQuietly(canThrow, bos);
         }
 
         blockData = baos.toByteArray();

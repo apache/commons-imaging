@@ -30,6 +30,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
+import org.apache.commons.imaging.util.IoUtils;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -312,6 +313,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
 
     protected void writeSegments(final OutputStream os,
             final List<? extends JFIFPiece> segments) throws IOException {
+        boolean canThrow = false;
         try {
             SOI.writeTo(os);
     
@@ -319,8 +321,9 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
                 final JFIFPiece piece = segments.get(i);
                 piece.write(os);
             }
+            canThrow = true;
         } finally {
-            os.close();
+            IoUtils.closeQuietly(canThrow, os);
         }
     }
 

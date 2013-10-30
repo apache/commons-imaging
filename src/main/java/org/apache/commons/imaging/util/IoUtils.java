@@ -20,6 +20,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -31,9 +32,29 @@ import java.nio.channels.FileChannel;
 import org.apache.commons.imaging.ImagingConstants;
 
 public class IoUtils implements ImagingConstants {
+    public static void closeQuietly(final boolean mayThrow, final Closeable... closeables)
+            throws IOException {
+        IOException firstException = null;
+        for (final Closeable closeable : closeables) {
+            if (closeable != null) {
+                try {
+                    closeable.close();
+                } catch (final IOException ioException) {
+                    if (mayThrow && firstException == null) {
+                        firstException = ioException;
+                    }
+                }
+            }
+        }
+        if (firstException != null) {
+            throw firstException;
+        }
+    }
+    
     public static final boolean copyFileNio(final File src, final File dst)
             throws IOException {
         FileChannel srcChannel = null, dstChannel = null;
+        boolean canThrow = false;
         try {
             // Create channel on the source
             srcChannel = new FileInputStream(src).getChannel();
@@ -54,33 +75,10 @@ public class IoUtils implements ImagingConstants {
                             dstChannel);
                 }
             }
-
-            // Close the channels
-            srcChannel.close();
-            srcChannel = null;
-            dstChannel.close();
-            dstChannel = null;
-
+            canThrow = true;
             return true;
         } finally {
-            IOException closeException = null;
-            if (srcChannel != null) {
-                try {
-                    srcChannel.close();
-                } catch (final IOException ioException) {
-                    closeException = ioException;
-                }
-            }
-            if (dstChannel != null) {
-                try {
-                    dstChannel.close();
-                } catch (final IOException ioException) {
-                    closeException = ioException;
-                }
-            }
-            if (closeException != null) {
-                throw closeException;
-            }
+            IoUtils.closeQuietly(canThrow, srcChannel, dstChannel);
         }
     }
 
@@ -93,7 +91,7 @@ public class IoUtils implements ImagingConstants {
             final boolean close_streams) throws IOException {
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
-
+        boolean canThrow = false;
         try {
             bis = new BufferedInputStream(src);
             bos = new BufferedOutputStream(dst);
@@ -104,26 +102,10 @@ public class IoUtils implements ImagingConstants {
                 dst.write(buffer, 0, count);
             }
             bos.flush();
+            canThrow = true;
         } finally {
             if (close_streams) {
-                IOException closeException = null;
-                if (bis != null) {
-                    try {
-                        bis.close();
-                    } catch (final IOException ioException) {
-                        closeException = ioException;
-                    }
-                }
-                if (bos != null) {
-                    try {
-                        bos.close();
-                    } catch (final IOException ioException) {
-                        closeException = ioException;
-                    }
-                }
-                if (closeException != null) {
-                    throw closeException;
-                }
+                IoUtils.closeQuietly(canThrow, bis, bos);
             }
         }
 
@@ -140,15 +122,15 @@ public class IoUtils implements ImagingConstants {
      */
     public static byte[] getFileBytes(final File file) throws IOException {
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = new FileInputStream(file);
 
-            return getInputStreamBytes(is);
+            final byte[] ret = getInputStreamBytes(is);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -163,7 +145,7 @@ public class IoUtils implements ImagingConstants {
      */
     public static byte[] getInputStreamBytes(InputStream is) throws IOException {
         ByteArrayOutputStream os = null;
-
+        boolean canThrow = false;
         try {
             os = new ByteArrayOutputStream(4096);
 
@@ -177,18 +159,18 @@ public class IoUtils implements ImagingConstants {
 
             os.flush();
 
-            return os.toByteArray();
+            final byte[] ret = os.toByteArray();
+            canThrow = true;
+            return ret;
         } finally {
-            if (os != null) {
-                os.close();
-            }
+            IoUtils.closeQuietly(canThrow, os);
         }
     }
 
     public static void putInputStreamToFile(final InputStream src, final File file)
             throws IOException {
         FileOutputStream stream = null;
-
+        boolean canThrow = false;
         try {
             if (file.getParentFile() != null && !file.getParentFile().exists() &&
                 !file.getParentFile().mkdirs()) {
@@ -198,24 +180,22 @@ public class IoUtils implements ImagingConstants {
             stream = new FileOutputStream(file);
 
             copyStreamToStream(src, stream);
+            canThrow = true;
         } finally {
-            if (stream != null) {
-                stream.close();
-            }
+            IoUtils.closeQuietly(canThrow, stream);
         }
     }
 
     public static void writeToFile(final byte[] src, final File file) throws IOException {
         ByteArrayInputStream stream = null;
-
+        boolean canThrow = false;
         try {
             stream = new ByteArrayInputStream(src);
 
             putInputStreamToFile(stream, file);
+            canThrow = true;
         } finally {
-            if (stream != null) {
-                stream.close();
-            }
+            IoUtils.closeQuietly(canThrow, stream);
         }
     }
 

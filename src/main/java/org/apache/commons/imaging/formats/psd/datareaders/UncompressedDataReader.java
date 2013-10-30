@@ -28,6 +28,7 @@ import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
 import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class UncompressedDataReader extends DataReader {
     public UncompressedDataReader(final DataParser fDataParser) {
@@ -49,6 +50,7 @@ public class UncompressedDataReader extends DataReader {
         final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.MOTOROLA);
         // we want all samples to be bytes
         BitsToByteInputStream bbis = null;
+        boolean canThrow = false;
         try {
             bbis = new BitsToByteInputStream(mbis, 8);
 
@@ -64,10 +66,9 @@ public class UncompressedDataReader extends DataReader {
             }
     
             dataParser.parseData(data, bi, imageContents);
+            canThrow = true;
         } finally {
-            if (bbis != null) {
-                bbis.close();
-            }
+            IoUtils.closeQuietly(canThrow, bbis);
         }
     }
 }

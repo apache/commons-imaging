@@ -22,6 +22,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.ByteOrder;
+import org.apache.commons.imaging.util.IoUtils;
 
 public enum IccTagDataTypes implements IccTagDataType {
     DESC_TYPE(
@@ -30,6 +31,7 @@ public enum IccTagDataTypes implements IccTagDataType {
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;
+            boolean canThrow = false;
             try {
                 bis = new BinaryInputStream(
                         new ByteArrayInputStream(bytes),
@@ -44,10 +46,9 @@ public enum IccTagDataTypes implements IccTagDataType {
                 //            bis.readByteArray("ignore", bytes.length -12, "none");
                 final String s = new String(bytes, 12, string_length - 1, "US-ASCII");
                 System.out.println(prefix + "s: '" + s + "'");
+                canThrow = true;
             } finally {
-                if (bis != null) {
-                    bis.close();
-                }
+                IoUtils.closeQuietly(canThrow, bis);
             }
         }
 
@@ -59,15 +60,15 @@ public enum IccTagDataTypes implements IccTagDataType {
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;
+            boolean canThrow = false;
             try {
                 bis = new BinaryInputStream(
                         new ByteArrayInputStream(bytes),
                         ByteOrder.NETWORK);
                 bis.read4Bytes("type_signature", "ICC: corrupt tag data");
+                canThrow = true;
             } finally {
-                if (bis != null) {
-                    bis.close();
-                }
+                IoUtils.closeQuietly(canThrow, bis);
             }
         }
 
@@ -79,15 +80,15 @@ public enum IccTagDataTypes implements IccTagDataType {
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;
+            boolean canThrow = false;
             try {
                 bis = new BinaryInputStream(
                         new ByteArrayInputStream(bytes),
                         ByteOrder.NETWORK);
                 bis.read4Bytes("type_signature", "ICC: corrupt tag data");
+                canThrow = true;
             } finally {
-                if (bis != null) {
-                    bis.close();
-                }
+                IoUtils.closeQuietly(canThrow, bis);
             }
         }
 
@@ -99,6 +100,7 @@ public enum IccTagDataTypes implements IccTagDataType {
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;
+            boolean canThrow = false;
             try {
                 bis = new BinaryInputStream(
                         new ByteArrayInputStream(bytes),
@@ -117,10 +119,9 @@ public enum IccTagDataTypes implements IccTagDataType {
                                 (byte) (0xff & (thesignature >> 8)),
                                 (byte) (0xff & (thesignature >> 0)), }, "US-ASCII")
                         + ")");
+                canThrow = true;
             } finally {
-                if (bis != null) {
-                    bis.close();
-                }
+                IoUtils.closeQuietly(canThrow, bis);
             }
         }
 
@@ -132,6 +133,7 @@ public enum IccTagDataTypes implements IccTagDataType {
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;
+            boolean canThrow = false;
             try {
                 bis = new BinaryInputStream(
                         new ByteArrayInputStream(bytes),
@@ -140,10 +142,9 @@ public enum IccTagDataTypes implements IccTagDataType {
                 bis.read4Bytes("ignore", "ICC: corrupt tag data");
                 final String s = new String(bytes, 8, bytes.length - 8, "US-ASCII");
                 System.out.println(prefix + "s: '" + s + "'");
+                canThrow = true;
             } finally {
-                if (bis != null) {
-                    bis.close();
-                }
+                IoUtils.closeQuietly(canThrow, bis);
             }
         }
 

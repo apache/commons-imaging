@@ -41,6 +41,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.pcx.PcxConstants;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class DcxImageParser extends ImageParser {
     // See http://www.fileformat.info/format/pcx/egff.htm for documentation
@@ -125,6 +126,7 @@ public class DcxImageParser extends ImageParser {
     private DcxHeader readDcxHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
             final int id = read4Bytes("Id", is, "Not a Valid DCX File");
@@ -153,11 +155,11 @@ public class DcxImageParser extends ImageParser {
                 pages[i] = ((Long) objects[i]);
             }
 
-            return new DcxHeader(id, pages);
+            final DcxHeader ret = new DcxHeader(id, pages);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -186,6 +188,7 @@ public class DcxImageParser extends ImageParser {
         final PcxImageParser pcxImageParser = new PcxImageParser();
         for (final long element : dcxHeader.pageTable) {
             InputStream stream = null;
+            boolean canThrow = false;
             try {
                 stream = byteSource.getInputStream(element);
                 final ByteSourceInputStream pcxSource = new ByteSourceInputStream(
@@ -193,10 +196,9 @@ public class DcxImageParser extends ImageParser {
                 final BufferedImage image = pcxImageParser.getBufferedImage(
                         pcxSource, new HashMap<String,Object>());
                 images.add(image);
+                canThrow = true;
             } finally {
-                if (stream != null) {
-                    stream.close();
-                }
+                IoUtils.closeQuietly(canThrow, stream);
             }
         }
         return images;

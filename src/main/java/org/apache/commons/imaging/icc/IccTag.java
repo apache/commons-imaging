@@ -26,6 +26,7 @@ import java.util.Arrays;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.ByteOrder;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class IccTag implements IccConstants {
     public final int signature;
@@ -49,6 +50,7 @@ public class IccTag implements IccConstants {
         data = bytes;
 
         BinaryInputStream bis = null;
+        boolean canThrow = false;
         try {
             bis = new BinaryInputStream(new ByteArrayInputStream(
                 bytes), ByteOrder.NETWORK);
@@ -60,10 +62,9 @@ public class IccTag implements IccConstants {
             // {
             // System.out.println("\t\t\t" + "itdt: " + itdt.name);
             // }
+            canThrow = true;
         } finally {
-            if (bis != null) {
-                bis.close();
-            }
+            IoUtils.closeQuietly(canThrow, bis);
         }
     }
 

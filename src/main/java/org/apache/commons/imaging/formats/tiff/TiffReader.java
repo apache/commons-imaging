@@ -35,6 +35,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class TiffReader extends BinaryFileParser implements TiffConstants {
 
@@ -48,13 +49,14 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
             final FormatCompliance formatCompliance) throws ImageReadException,
             IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
-            return readTiffHeader(is, formatCompliance);
+            final TiffHeader ret = readTiffHeader(is, formatCompliance);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
     
@@ -133,8 +135,10 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         visited.add(directoryOffset);
 
         InputStream is = null;
+        boolean canThrow = false;
         try {
             if (directoryOffset >= byteSource.getLength()) {
+                canThrow = true;
                 return true;
             }
 
@@ -151,6 +155,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                 if (strict) {
                     throw e;
                 } else {
+                    canThrow = true;
                     return true;
                 }
             }
@@ -207,6 +212,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                 fields.add(field);
 
                 if (!listener.addField(field)) {
+                    canThrow = true;
                     return true;
                 }
             }
@@ -231,6 +237,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
             }
 
             if (!listener.addDirectory(directory)) {
+                canThrow = true;
                 return true;
             }
 
@@ -277,11 +284,10 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                         dirType + 1, formatCompliance, listener, visited);
             }
 
+            canThrow = true;
             return true;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

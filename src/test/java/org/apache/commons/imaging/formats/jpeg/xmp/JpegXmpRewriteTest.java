@@ -30,6 +30,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegXmpRewriter;
 import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class JpegXmpRewriteTest extends JpegXmpBaseTest {
 
@@ -63,15 +64,14 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
                 // test remove
 
                 OutputStream os = null;
+                boolean canThrow = false;
                 try {
                     os = new FileOutputStream(noXmpFile);
                     os = new BufferedOutputStream(os);
                     new JpegXmpRewriter().removeXmpXml(byteSource, os);
+                    canThrow = true;
                 } finally {
-                    if (os != null) {
-                        os.close();
-                    }
-                    os = null;
+                    IoUtils.closeQuietly(canThrow, os);
                 }
 
                 // Debug.debug("Source Segments:");
@@ -88,16 +88,15 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
                 final String newXmpXml = "test";
                 final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
                 OutputStream os = null;
+                boolean canThrow = false;
                 try {
                     os = new FileOutputStream(updated);
                     os = new BufferedOutputStream(os);
                     new JpegXmpRewriter().updateXmpXml(byteSource, os,
                             newXmpXml);
+                    canThrow = true;
                 } finally {
-                    if (os != null) {
-                        os.close();
-                    }
-                    os = null;
+                    IoUtils.closeQuietly(canThrow, os);
                 }
 
                 // Debug.debug("Source Segments:");
@@ -115,16 +114,15 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
                 final String newXmpXml = "test";
                 final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
                 OutputStream os = null;
+                boolean canThrow = false;
                 try {
                     os = new FileOutputStream(updated);
                     os = new BufferedOutputStream(os);
                     new JpegXmpRewriter().updateXmpXml(new ByteSourceFile(
                             noXmpFile), os, newXmpXml);
+                    canThrow = true;
                 } finally {
-                    if (os != null) {
-                        os.close();
-                    }
-                    os = null;
+                    IoUtils.closeQuietly(canThrow, os);
                 }
 
                 // Debug.debug("Source Segments:");

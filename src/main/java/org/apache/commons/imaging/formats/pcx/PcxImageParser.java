@@ -46,6 +46,7 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class PcxImageParser extends ImageParser implements PcxConstants {
     // ZSoft's official spec is at http://www.qzx.com/pc-gpe/pcx.txt
@@ -241,13 +242,14 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
     private PcxHeader readPcxHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
-            return readPcxHeader(is, false);
+            final PcxHeader ret = readPcxHeader(is, false);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -359,15 +361,16 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
     private int[] read256ColorPaletteFromEndOfFile(final ByteSource byteSource)
             throws IOException {
         InputStream stream = null;
+        boolean canThrow = false;
         try {
             stream = byteSource.getInputStream();
             final long toSkip = byteSource.getLength() - 769;
             skipBytes(stream, (int) toSkip);
-            return read256ColorPalette(stream);
+            final int[] ret = read256ColorPalette(stream);
+            canThrow = true;
+            return ret;
         } finally {
-            if (stream != null) {
-                stream.close();
-            }
+            IoUtils.closeQuietly(canThrow, stream);
         }
     }
 
@@ -521,14 +524,15 @@ public class PcxImageParser extends ImageParser implements PcxConstants {
         }
 
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
             final PcxHeader pcxHeader = readPcxHeader(is, isStrict);
-            return readImage(pcxHeader, is, byteSource);
+            final BufferedImage ret = readImage(pcxHeader, is, byteSource);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

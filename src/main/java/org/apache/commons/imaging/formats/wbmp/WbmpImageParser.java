@@ -39,6 +39,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class WbmpImageParser extends ImageParser {
     public WbmpImageParser() {
@@ -162,13 +163,14 @@ public class WbmpImageParser extends ImageParser {
     private WbmpHeader readWbmpHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
-            return readWbmpHeader(is);
+            final WbmpHeader ret = readWbmpHeader(is);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -221,14 +223,15 @@ public class WbmpImageParser extends ImageParser {
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
             final Map<String,Object> params) throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
             final WbmpHeader wbmpHeader = readWbmpHeader(is);
-            return readImage(wbmpHeader, is);
+            final BufferedImage ret = readImage(wbmpHeader, is);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

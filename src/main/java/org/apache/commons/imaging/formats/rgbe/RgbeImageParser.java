@@ -38,6 +38,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.util.IoUtils;
 
 /**
  * Parser for Radiance HDR images
@@ -74,11 +75,13 @@ public class RgbeImageParser extends ImageParser {
     public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         final RgbeInfo info = new RgbeInfo(byteSource);
-
+        boolean canThrow = false;
         try {
-            return info.getMetadata();
+            IImageMetadata ret = info.getMetadata();
+            canThrow = true;
+            return ret;
         } finally {
-            info.close();
+            IoUtils.closeQuietly(canThrow, info);
         }
     }
 
@@ -86,17 +89,19 @@ public class RgbeImageParser extends ImageParser {
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         final RgbeInfo info = new RgbeInfo(byteSource);
-
+        boolean canThrow = false;
         try {
-            return new ImageInfo(
+            final ImageInfo ret = new ImageInfo(
                     getName(),
                     32, // todo may be 64 if double?
                     new ArrayList<String>(), ImageFormat.RGBE, getName(),
                     info.getHeight(), "image/vnd.radiance", 1, -1, -1, -1, -1,
                     info.getWidth(), false, false, false,
                     ImageInfo.COLOR_TYPE_RGB, "Adaptive RLE");
+            canThrow = true;
+            return ret;
         } finally {
-            info.close();
+            IoUtils.closeQuietly(canThrow, info);
         }
     }
 
@@ -104,7 +109,7 @@ public class RgbeImageParser extends ImageParser {
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         final RgbeInfo info = new RgbeInfo(byteSource);
-
+        boolean canThrow = false;
         try {
             // It is necessary to create our own BufferedImage here as the
             // org.apache.commons.imaging.common.IBufferedImageFactory interface does
@@ -112,15 +117,17 @@ public class RgbeImageParser extends ImageParser {
             final DataBuffer buffer = new DataBufferFloat(info.getPixelData(),
                     info.getWidth() * info.getHeight());
 
-            return new BufferedImage(new ComponentColorModel(
+            final BufferedImage ret = new BufferedImage(new ComponentColorModel(
                     ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
                     Transparency.OPAQUE, buffer.getDataType()),
                     Raster.createWritableRaster(
                             new BandedSampleModel(buffer.getDataType(), info
                                     .getWidth(), info.getHeight(), 3), buffer,
                             new Point()), false, null);
+            canThrow = true;
+            return ret;
         } finally {
-            info.close();
+            IoUtils.closeQuietly(canThrow, info);
         }
     }
 
@@ -128,11 +135,13 @@ public class RgbeImageParser extends ImageParser {
     public Dimension getImageSize(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         final RgbeInfo info = new RgbeInfo(byteSource);
-
+        boolean canThrow = false;
         try {
-            return new Dimension(info.getWidth(), info.getHeight());
+            final Dimension ret = new Dimension(info.getWidth(), info.getHeight());
+            canThrow = true;
+            return ret;
         } finally {
-            info.close();
+            IoUtils.closeQuietly(canThrow, info);
         }
     }
 

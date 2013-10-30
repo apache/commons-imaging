@@ -34,6 +34,7 @@ import org.apache.commons.imaging.formats.jpeg.iptc.IptcRecord;
 import org.apache.commons.imaging.formats.jpeg.iptc.JpegIptcRewriter;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class IptcUpdateTest extends IptcBaseTest {
     private List<File> imagesWithIptcData;
@@ -83,15 +84,14 @@ public class IptcUpdateTest extends IptcBaseTest {
                 // test remove
 
                 OutputStream os = null;
+                boolean canThrow = false;
                 try {
                     os = new FileOutputStream(noIptcFile);
                     os = new BufferedOutputStream(os);
                     new JpegIptcRewriter().removeIPTC(byteSource, os);
+                    canThrow = true;
                 } finally {
-                    if (os != null) {
-                        os.close();
-                    }
-                    os = null;
+                    IoUtils.closeQuietly(canThrow, os);
                 }
 
                 final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
@@ -136,15 +136,14 @@ public class IptcUpdateTest extends IptcBaseTest {
                 // test remove
 
                 OutputStream os = null;
+                boolean canThrow = false;
                 try {
                     os = new FileOutputStream(noIptcFile);
                     os = new BufferedOutputStream(os);
                     new JpegIptcRewriter().removeIPTC(byteSource, os);
+                    canThrow = true;
                 } finally {
-                    if (os != null) {
-                        os.close();
-                    }
-                    os = null;
+                    IoUtils.closeQuietly(canThrow, os);
                 }
 
                 // Debug.debug("Source Segments:");
@@ -180,15 +179,14 @@ public class IptcUpdateTest extends IptcBaseTest {
                 final File updated = createTempFile(imageFile.getName()
                         + ".iptc.update.", ".jpg");
                 OutputStream os = null;
+                boolean canThrow = false;
                 try {
                     os = new FileOutputStream(updated);
                     os = new BufferedOutputStream(os);
                     new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
+                    canThrow = true;
                 } finally {
-                    if (os != null) {
-                        os.close();
-                    }
-                    os = null;
+                    IoUtils.closeQuietly(canThrow, os);
                 }
 
                 // Debug.debug("Source Segments:");
@@ -223,15 +221,14 @@ public class IptcUpdateTest extends IptcBaseTest {
                 final File updated = createTempFile(imageFile.getName()
                         + ".iptc.update.", ".jpg");
                 OutputStream os = null;
+                boolean canThrow = false;
                 try {
                     os = new FileOutputStream(updated);
                     os = new BufferedOutputStream(os);
                     new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
+                    canThrow = true;
                 } finally {
-                    if (os != null) {
-                        os.close();
-                    }
-                    os = null;
+                    IoUtils.closeQuietly(canThrow, os);
                 }
 
                 // Debug.debug("Source Segments:");
@@ -266,16 +263,15 @@ public class IptcUpdateTest extends IptcBaseTest {
                 final File updated = createTempFile(imageFile.getName()
                         + ".iptc.insert.", ".jpg");
                 OutputStream os = null;
+                boolean canThrow = false;
                 try {
                     os = new FileOutputStream(updated);
                     os = new BufferedOutputStream(os);
                     new JpegIptcRewriter().writeIPTC(new ByteSourceFile(
                             noIptcFile), os, newData);
+                    canThrow = true;
                 } finally {
-                    if (os != null) {
-                        os.close();
-                    }
-                    os = null;
+                    IoUtils.closeQuietly(canThrow, os);
                 }
 
                 // Debug.debug("Source Segments:");
@@ -360,15 +356,14 @@ public class IptcUpdateTest extends IptcBaseTest {
                 final File updated = createTempFile(imageFile.getName()
                         + ".iptc.add.", ".jpg");
                 OutputStream os = null;
+                boolean canThrow = false;
                 try {
                     os = new FileOutputStream(updated);
                     os = new BufferedOutputStream(os);
                     new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
+                    canThrow = true;
                 } finally {
-                    if (os != null) {
-                        os.close();
-                    }
-                    os = null;
+                    IoUtils.closeQuietly(canThrow, os);
                 }
 
                 // Debug.debug("Destination Segments:");

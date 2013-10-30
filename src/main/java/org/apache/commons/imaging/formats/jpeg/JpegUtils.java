@@ -24,6 +24,7 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class JpegUtils extends BinaryFileParser implements JpegConstants {
     public JpegUtils() {
@@ -47,7 +48,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
             throws ImageReadException,
             IOException {
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
@@ -68,6 +69,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
 
                 if (marker == EOIMarker || marker == SOS_Marker) {
                     if (!visitor.beginSOS()) {
+                        canThrow = true;
                         return;
                     }
 
@@ -86,16 +88,15 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
 
                 if (!visitor.visitSegment(marker, markerBytes, segmentLength,
                         segmentLengthBytes, segmentData)) {
+                    canThrow = true;
                     return;
                 }
             }
             
             Debug.debug("" + markerCount + " markers");
-
+            canThrow = true;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

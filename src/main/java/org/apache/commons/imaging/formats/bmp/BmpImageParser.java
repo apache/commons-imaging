@@ -50,6 +50,7 @@ import org.apache.commons.imaging.formats.bmp.writers.BmpWriterPalette;
 import org.apache.commons.imaging.formats.bmp.writers.BmpWriterRgb;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
+import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class BmpImageParser extends ImageParser {
@@ -499,15 +500,16 @@ public class BmpImageParser extends ImageParser {
     private BmpHeaderInfo readBmpHeaderInfo(final ByteSource byteSource,
             final boolean verbose) throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
             // readSignature(is);
-            return readBmpHeaderInfo(is, null, verbose);
+            final BmpHeaderInfo ret = readBmpHeaderInfo(is, null, verbose);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -603,13 +605,13 @@ public class BmpImageParser extends ImageParser {
 
         InputStream is = null;
         ImageContents ic = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
             ic = readImageContents(is, FormatCompliance.getDefault(), verbose);
+            canThrow = true;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
 
         if (ic == null) {
@@ -688,13 +690,13 @@ public class BmpImageParser extends ImageParser {
                 byteSource.getDescription());
 
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
             readImageContents(is, result, verbose);
+            canThrow = true;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
 
         return result;
@@ -704,13 +706,14 @@ public class BmpImageParser extends ImageParser {
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
-            return getBufferedImage(is, params);
+            final BufferedImage ret = getBufferedImage(is, params);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

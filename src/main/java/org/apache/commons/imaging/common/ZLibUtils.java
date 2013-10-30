@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
+import org.apache.commons.imaging.util.IoUtils;
+
 public class ZLibUtils extends BinaryFunctions {
     public final byte[] inflate(final byte bytes[]) throws IOException {
         final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
@@ -32,10 +34,12 @@ public class ZLibUtils extends BinaryFunctions {
     public final byte[] deflate(final byte bytes[]) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+        boolean canThrow = false;
         try {
             dos.write(bytes);
+            canThrow = true;
         } finally {
-            dos.close();
+            IoUtils.closeQuietly(canThrow, dos);
         }
         return baos.toByteArray();
     }

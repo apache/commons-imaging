@@ -39,15 +39,15 @@ public class WriteExifMetadataExample {
     public void removeExifMetadata(final File jpegImageFile, final File dst)
             throws IOException, ImageReadException, ImageWriteException {
         OutputStream os = null;
+        boolean canThrow = false;
         try {
             os = new FileOutputStream(dst);
             os = new BufferedOutputStream(os);
 
             new ExifRewriter().removeExifMetadata(jpegImageFile, os);
+            canThrow = true;
         } finally {
-            if (os != null) {
-                os.close();
-            }
+            IoUtils.closeQuietly(canThrow, os);
         }
     }
 
@@ -65,6 +65,7 @@ public class WriteExifMetadataExample {
     public void changeExifMetadata(final File jpegImageFile, final File dst)
             throws IOException, ImageReadException, ImageWriteException {
         OutputStream os = null;
+        boolean canThrow = false;
         try {
             TiffOutputSet outputSet = null;
 
@@ -141,12 +142,9 @@ public class WriteExifMetadataExample {
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
                     outputSet);
 
-            os.close();
-            os = null;
+            canThrow = true;
         } finally {
-            if (os != null) {
-                os.close();
-            }
+            IoUtils.closeQuietly(canThrow, os);
         }
     }
 
@@ -168,6 +166,7 @@ public class WriteExifMetadataExample {
     public void removeExifTag(final File jpegImageFile, final File dst) throws IOException,
             ImageReadException, ImageWriteException {
         OutputStream os = null;
+        boolean canThrow = false;
         try {
             TiffOutputSet outputSet = null;
 
@@ -229,10 +228,9 @@ public class WriteExifMetadataExample {
 
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
                     outputSet);
+            canThrow = true;
         } finally {
-            if (os != null) {
-                os.close();
-            }
+            IoUtils.closeQuietly(canThrow, os);
         }
     }
 
@@ -250,6 +248,7 @@ public class WriteExifMetadataExample {
     public void setExifGPSTag(final File jpegImageFile, final File dst) throws IOException,
             ImageReadException, ImageWriteException {
         OutputStream os = null;
+        boolean canThrow = false;
         try {
             TiffOutputSet outputSet = null;
 
@@ -296,10 +295,9 @@ public class WriteExifMetadataExample {
 
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
                     outputSet);
+            canThrow = true;
         } finally {
-            if (os != null) {
-                os.close();
-            }
+            IoUtils.closeQuietly(canThrow, os);
         }
     }
 

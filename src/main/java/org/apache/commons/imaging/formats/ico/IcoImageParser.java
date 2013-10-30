@@ -44,6 +44,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.bmp.BmpImageParser;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class IcoImageParser extends ImageParser {
 
@@ -435,6 +436,7 @@ public class IcoImageParser extends ImageParser {
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream(bitmapSize);
         BinaryOutputStream bos = null;
+        boolean canThrow = false;
         try {
             bos = new BinaryOutputStream(baos,
                     ByteOrder.LITTLE_ENDIAN);
@@ -462,10 +464,9 @@ public class IcoImageParser extends ImageParser {
             bos.write4Bytes(AlphaMask);
             bos.write(RestOfFile);
             bos.flush();
+            canThrow = true;
         } finally {
-            if (bos != null) {
-                bos.close();
-            }
+            IoUtils.closeQuietly(canThrow, bos);
         }
 
         final ByteArrayInputStream bmpInputStream = new ByteArrayInputStream(
@@ -558,6 +559,7 @@ public class IcoImageParser extends ImageParser {
     private ImageContents readImage(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
             final FileHeader fileHeader = readFileHeader(is);
@@ -574,11 +576,11 @@ public class IcoImageParser extends ImageParser {
                 fIconDatas[i] = readIconData(iconData, fIconInfos[i]);
             }
 
-            return new ImageContents(fileHeader, fIconDatas);
+            final ImageContents ret = new ImageContents(fileHeader, fIconDatas);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

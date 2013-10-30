@@ -39,6 +39,7 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class PnmImageParser extends ImageParser implements PnmConstants {
 
@@ -183,15 +184,15 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     private FileInfo readHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
-            return readHeader(is);
+            final FileInfo ret = readHeader(is);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -291,7 +292,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
@@ -305,11 +306,11 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
                     hasAlpha);
             info.readImage(imageBuilder, is);
 
-            return imageBuilder.getBufferedImage();
+            final BufferedImage ret = imageBuilder.getBufferedImage();
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

@@ -59,6 +59,7 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterIndexedColor;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.commons.imaging.icc.IccProfileParser;
+import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class PngImageParser extends ImageParser implements PngConstants {
@@ -120,19 +121,16 @@ public class PngImageParser extends ImageParser implements PngConstants {
     public boolean hasChuckType(final ByteSource byteSource, final int chunkType)
             throws ImageReadException, IOException {
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
-            List<PngChunk> chunks = null;
-
             readSignature(is);
-            chunks = readChunks(is, new int[] { chunkType, }, true);
+            List<PngChunk> chunks = readChunks(is, new int[] { chunkType, }, true);
+            canThrow = true;
             return chunks.size() > 0;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -232,17 +230,17 @@ public class PngImageParser extends ImageParser implements PngConstants {
     private List<PngChunk> readChunks(final ByteSource byteSource, final int chunkTypes[],
             final boolean returnAfterFirst) throws ImageReadException, IOException {
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
             readSignature(is);
 
-            return readChunks(is, chunkTypes, returnAfterFirst);
+            final List<PngChunk> ret = readChunks(is, chunkTypes, returnAfterFirst);
+            canThrow = true;
+            return ret;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

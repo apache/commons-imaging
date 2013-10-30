@@ -31,6 +31,7 @@ import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
 import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class CompressedDataReader extends DataReader {
 
@@ -74,14 +75,14 @@ public class CompressedDataReader extends DataReader {
                 final MyBitInputStream mbis = new MyBitInputStream(bais,
                         ByteOrder.MOTOROLA);
                 BitsToByteInputStream bbis = null;
+                boolean canThrow = false;
                 try {
                     bbis = new BitsToByteInputStream(mbis, 8); // we want all samples to be bytes
                     final int scanline[] = bbis.readBitsArray(depth, width);
                     data[channel][y] = scanline;
+                    canThrow = true;
                 } finally {
-                    if (bbis != null) {
-                        bbis.close();
-                    }
+                    IoUtils.closeQuietly(canThrow, bbis);
                 }
             }
         }

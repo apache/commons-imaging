@@ -25,6 +25,7 @@ import org.apache.commons.imaging.common.BitArrayOutputStream;
 import org.apache.commons.imaging.common.BitInputStreamFlexible;
 import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
 import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class T4AndT6Compression {
     private static final HuffmanTree whiteRunLengths = new HuffmanTree();
@@ -147,6 +148,7 @@ public class T4AndT6Compression {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(compressed));
         BitArrayOutputStream outputStream = null;
+        boolean canThrow = false;
         try {
             outputStream = new BitArrayOutputStream();
             for (int y = 0; y < height; y++) {
@@ -169,12 +171,16 @@ public class T4AndT6Compression {
                             "Unrecoverable row length error in image row " + y);
                 }
             }
+            final byte[] ret = outputStream.toByteArray();
+            canThrow = true;
+            return ret;
         } finally {
-            if (outputStream != null) {
-                outputStream.close();
+            try {
+                IoUtils.closeQuietly(canThrow, outputStream);
+            } catch (final IOException ioException) {
+                // cannot happen
             }
         }
-        return outputStream.toByteArray();
     }
 
     public static byte[] compressT4_1D(final byte[] uncompressed, final int width,
@@ -221,6 +227,7 @@ public class T4AndT6Compression {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
                 new ByteArrayInputStream(compressed));
         BitArrayOutputStream outputStream = null;
+        boolean canThrow = false;
         try {
             outputStream = new BitArrayOutputStream();
             for (int y = 0; y < height; y++) {
@@ -252,12 +259,16 @@ public class T4AndT6Compression {
                             "Unrecoverable row length error in image row " + y);
                 }
             }
+            final byte[] ret = outputStream.toByteArray();
+            canThrow = true;
+            return ret;
         } finally {
-            if (outputStream != null) {
-                outputStream.close();
+            try {
+                IoUtils.closeQuietly(canThrow, outputStream);
+            } catch (final IOException ioException) {
+                // cannot happen
             }
         }
-        return outputStream.toByteArray();
     }
 
     public static byte[] compressT4_2D(final byte[] uncompressed, final int width,
@@ -502,6 +513,7 @@ public class T4AndT6Compression {
     public static byte[] compressT6(final byte[] uncompressed, final int width, final int height)
             throws ImageWriteException {
         BitInputStreamFlexible inputStream = null;
+        boolean canThrow = false;
         try {
             inputStream = new BitInputStreamFlexible(
                     new ByteArrayInputStream(uncompressed));
@@ -582,14 +594,14 @@ public class T4AndT6Compression {
             // EOFB
             T4_T6_Tables.EOL.writeBits(outputStream);
             T4_T6_Tables.EOL.writeBits(outputStream);
-            return outputStream.toByteArray();
+            final byte[] ret = outputStream.toByteArray();
+            canThrow = true;
+            return ret;
         } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (final IOException ioException) {
-                    throw new ImageWriteException("I/O error", ioException);
-                }
+            try {
+                IoUtils.closeQuietly(canThrow, inputStream);
+            } catch (final IOException ioException) {
+                throw new ImageWriteException("I/O error", ioException);
             }
         }
     }

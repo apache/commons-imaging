@@ -50,6 +50,7 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class XpmImageParser extends ImageParser {
     private static Map<String, Integer> colorNames = null;
@@ -70,6 +71,7 @@ public class XpmImageParser extends ImageParser {
             }
             final Map<String, Integer> colors = new HashMap<String, Integer>();
             BufferedReader reader = null;
+            boolean canThrow = false;
             try {
                 reader = new BufferedReader(new InputStreamReader(rgbTxtStream,
                         "US-ASCII"));
@@ -89,10 +91,9 @@ public class XpmImageParser extends ImageParser {
                         throw new ImageReadException("Couldn't parse color in rgb.txt", nfe);
                     }
                 }
+                canThrow = true;
             } finally {
-                if (reader != null) {
-                    reader.close();
-                }
+                IoUtils.closeQuietly(canThrow, reader);
             }
             colorNames = colors;
         } catch (final IOException ioException) {
@@ -250,6 +251,7 @@ public class XpmImageParser extends ImageParser {
     private XpmParseResult parseXpmHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
             final StringBuilder firstComment = new StringBuilder();
@@ -264,11 +266,10 @@ public class XpmImageParser extends ImageParser {
             xpmParseResult.cParser = new BasicCParser(new ByteArrayInputStream(
                     preprocessedFile.toByteArray()));
             xpmParseResult.xpmHeader = parseXpmHeader(xpmParseResult.cParser);
+            canThrow = true;
             return xpmParseResult;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

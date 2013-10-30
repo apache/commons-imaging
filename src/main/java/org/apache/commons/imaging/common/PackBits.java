@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class PackBits {
 
@@ -107,6 +108,7 @@ public class PackBits {
 
     public byte[] compress(final byte bytes[]) throws IOException {
         FastByteArrayOutputStream baos = null;
+        boolean canThrow = false;
         try {
             baos = new FastByteArrayOutputStream(
                     bytes.length * 2); // max length 1 extra byte for every 128
@@ -153,12 +155,10 @@ public class PackBits {
                 }
             }
             final byte result[] = baos.toByteArray();
-    
+            canThrow = true;
             return result;
         } finally {
-            if (baos != null) {
-                baos.close();
-            }
+            IoUtils.closeQuietly(canThrow, baos);
         }
     }
 }

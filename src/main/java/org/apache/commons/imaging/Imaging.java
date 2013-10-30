@@ -37,6 +37,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
+import org.apache.commons.imaging.util.IoUtils;
 
 /**
  * The primary application programming interface (API) to the Imaging library.
@@ -226,7 +227,7 @@ public abstract class Imaging implements ImagingConstants {
         }
         
         InputStream is = null;
-
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
@@ -242,6 +243,7 @@ public abstract class Imaging implements ImagingConstants {
             final int bytePair[] = { b1, b2, };
 
             if (compareBytePair(MAGIC_NUMBERS_GIF, bytePair)) {
+                canThrow = true;
                 return ImageFormat.GIF;
             }
             // else if (b1 == 0x00 && b2 == 0x00) // too similar to TGA
@@ -249,30 +251,43 @@ public abstract class Imaging implements ImagingConstants {
             // return ImageFormat.IMAGE_FORMAT_ICO;
             // }
             else if (compareBytePair(MAGIC_NUMBERS_PNG, bytePair)) {
+                canThrow = true;
                 return ImageFormat.PNG;
             } else if (compareBytePair(MAGIC_NUMBERS_JPEG, bytePair)) {
+                canThrow = true;
                 return ImageFormat.JPEG;
             } else if (compareBytePair(MAGIC_NUMBERS_BMP, bytePair)) {
+                canThrow = true;
                 return ImageFormat.BMP;
             } else if (compareBytePair(MAGIC_NUMBERS_TIFF_MOTOROLA, bytePair)) {
+                canThrow = true;
                 return ImageFormat.TIFF;
             } else if (compareBytePair(MAGIC_NUMBERS_TIFF_INTEL, bytePair)) {
+                canThrow = true;
                 return ImageFormat.TIFF;
             } else if (compareBytePair(MAGIC_NUMBERS_PSD, bytePair)) {
+                canThrow = true;
                 return ImageFormat.PSD;
             } else if (compareBytePair(MAGIC_NUMBERS_PAM, bytePair)) {
+                canThrow = true;
                 return ImageFormat.PAM;
             } else if (compareBytePair(MAGIC_NUMBERS_PBM_A, bytePair)) {
+                canThrow = true;
                 return ImageFormat.PBM;
             } else if (compareBytePair(MAGIC_NUMBERS_PBM_B, bytePair)) {
+                canThrow = true;
                 return ImageFormat.PBM;
             } else if (compareBytePair(MAGIC_NUMBERS_PGM_A, bytePair)) {
+                canThrow = true;
                 return ImageFormat.PGM;
             } else if (compareBytePair(MAGIC_NUMBERS_PGM_B, bytePair)) {
+                canThrow = true;
                 return ImageFormat.PGM;
             } else if (compareBytePair(MAGIC_NUMBERS_PPM_A, bytePair)) {
+                canThrow = true;
                 return ImageFormat.PPM;
             } else if (compareBytePair(MAGIC_NUMBERS_PPM_B, bytePair)) {
+                canThrow = true;
                 return ImageFormat.PPM;
             } else if (compareBytePair(MAGIC_NUMBERS_JBIG2_1, bytePair)) {
                 final int i3 = is.read();
@@ -286,21 +301,23 @@ public abstract class Imaging implements ImagingConstants {
                 final int b4 = i4 & 0xff;
                 final int bytePair2[] = { b3, b4, };
                 if (compareBytePair(MAGIC_NUMBERS_JBIG2_2, bytePair2)) {
+                    canThrow = true;
                     return ImageFormat.JBIG2;
                 }
             } else if (compareBytePair(MAGIC_NUMBERS_ICNS, bytePair)) {
+                canThrow = true;
                 return ImageFormat.ICNS;
             } else if (compareBytePair(MAGIC_NUMBERS_DCX, bytePair)) {
+                canThrow = true;
                 return ImageFormat.DCX;
             } else if (compareBytePair(MAGIC_NUMBERS_RGBE, bytePair)) {
+                canThrow = true;
                 return ImageFormat.RGBE;
             }
-
+            canThrow = true;
             return ImageFormat.UNKNOWN;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -1389,16 +1406,15 @@ public abstract class Imaging implements ImagingConstants {
             final ImageFormat format, final Map<String,Object> params) throws ImageWriteException,
             IOException {
         OutputStream os = null;
-
+        boolean canThrow = false;
         try {
             os = new FileOutputStream(file);
             os = new BufferedOutputStream(os);
 
             writeImage(src, os, format, params);
+            canThrow = true;
         } finally {
-            if (os != null) {
-                os.close();
-            }
+            IoUtils.closeQuietly(canThrow, os);
         }
     }
 

@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 
+import org.apache.commons.imaging.util.IoUtils;
+
 public class ByteSourceFile extends ByteSource {
     private final File file;
 
@@ -45,6 +47,7 @@ public class ByteSourceFile extends ByteSource {
     public byte[] getBlock(final long start, final int length) throws IOException {
 
         RandomAccessFile raf = null;
+        boolean canThrow = false;
         try {
             raf = new RandomAccessFile(file, "r");
 
@@ -56,12 +59,12 @@ public class ByteSourceFile extends ByteSource {
                         + ", data length: " + raf.length() + ").");
             }
 
-            return getRAFBytes(raf, start, length,
+            final byte[] ret = getRAFBytes(raf, start, length,
                     "Could not read value from file");
+            canThrow = true;
+            return ret;
         } finally {
-            if (raf != null) {
-                raf.close();
-            }
+            IoUtils.closeQuietly(canThrow, raf);
         }
     }
 
@@ -75,6 +78,7 @@ public class ByteSourceFile extends ByteSource {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = new FileInputStream(file);
             is = new BufferedInputStream(is);
@@ -83,11 +87,11 @@ public class ByteSourceFile extends ByteSource {
             while ((read = is.read(buffer)) > 0) {
                 baos.write(buffer, 0, read);
             }
-            return baos.toByteArray();
+            final byte[] ret = baos.toByteArray();
+            canThrow = true;
+            return ret;
         } finally {
-            if (null != is) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

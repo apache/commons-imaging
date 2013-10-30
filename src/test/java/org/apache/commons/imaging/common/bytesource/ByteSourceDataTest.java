@@ -75,6 +75,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
         // bytes.
         {
             InputStream is = null;
+            boolean canThrow = false;
             try {
                 is = byteSource.getInputStream();
                 final byte prefix[] = new byte[256];
@@ -84,10 +85,9 @@ public class ByteSourceDataTest extends ByteSourceTest {
                 for (int i = 0; i < read; i++) {
                     assertTrue(src[i] == prefix[i]);
                 }
+                canThrow = false;
             } finally {
-                if (is != null) {
-                    is.close();
-                }
+                IoUtils.closeQuietly(canThrow, is);
             }
         }
 
@@ -111,6 +111,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
             final int start = src.length / 2;
 
             InputStream is = null;
+            boolean canThrow = false;
             try {
                 is = byteSource.getInputStream(start);
                 final byte dst[] = IoUtils.getInputStreamBytes(is);
@@ -119,10 +120,9 @@ public class ByteSourceDataTest extends ByteSourceTest {
                 for (int i = 0; i < dst.length; i++) {
                     assertTrue(dst[i] == src[i + start]);
                 }
+                canThrow = true;
             } finally {
-                if (is != null) {
-                    is.close();
-                }
+                IoUtils.closeQuietly(canThrow, is);
             }
         }
 

@@ -38,6 +38,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterBase;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossless;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.apache.commons.imaging.util.IoUtils;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -496,6 +497,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
             final List<JFIFPiece> segments, final byte newBytes[])
             throws ImageWriteException, IOException {
 
+        boolean canThrow = false;
         try {
             SOI.writeTo(os);
 
@@ -557,8 +559,9 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
                     piece.write(os);
                 }
             }
+            canThrow = true;
         } finally {
-            os.close();
+            IoUtils.closeQuietly(canThrow, os);
         }
     }
 

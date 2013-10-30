@@ -45,6 +45,7 @@ import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
+import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class GifImageParser extends ImageParser {
@@ -447,6 +448,7 @@ public class GifImageParser extends ImageParser {
             final boolean stopBeforeImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
@@ -463,12 +465,10 @@ public class GifImageParser extends ImageParser {
 
             final ImageContents result = new ImageContents(ghi, globalColorTable,
                     blocks);
-
+            canThrow = true;
             return result;
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -1050,6 +1050,7 @@ public class GifImageParser extends ImageParser {
             throws ImageReadException, IOException {
 
         InputStream is = null;
+        boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
 
@@ -1118,12 +1119,11 @@ public class GifImageParser extends ImageParser {
             if (result.size() > 1) {
                 throw new ImageReadException("More than one XMP Block in GIF.");
             }
+            canThrow = true;
             return result.get(0);
 
         } finally {
-            if (is != null) {
-                is.close();
-            }
+            IoUtils.closeQuietly(canThrow, is);
         }
     }
 }
