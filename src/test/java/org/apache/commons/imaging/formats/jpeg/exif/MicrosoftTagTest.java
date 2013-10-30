@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
@@ -48,7 +48,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, title);
         final Map<String,Object> params = new TreeMap<String,Object>();
         params.put(TiffConstants.PARAM_KEY_EXIF, exifSet);
-        final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormat.TIFF, params);
+        final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormats.TIFF, params);
         checkFields(bytes);
     }
     

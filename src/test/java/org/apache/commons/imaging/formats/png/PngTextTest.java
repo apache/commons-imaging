@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngImageInfo;
@@ -66,7 +66,7 @@ public class PngTextTest extends PngBaseTest {
         writeParams.put(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS, writeTexts);
 
         final byte bytes[] = Imaging.writeImageToBytes(srcImage,
-                ImageFormat.PNG, writeParams);
+                ImageFormats.PNG, writeParams);
 
         final File tempFile = createTempFile("temp", ".png");
         IoUtils.writeToFile(bytes, tempFile);

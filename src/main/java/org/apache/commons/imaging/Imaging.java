@@ -147,7 +147,7 @@ public abstract class Imaging implements ImagingConstants {
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
      *         determined.
      */
-    public static ImageFormat guessFormat(final byte bytes[])
+    public static ImageFormats guessFormat(final byte bytes[])
             throws ImageReadException, IOException {
         return guessFormat(new ByteSourceArray(bytes));
     }
@@ -167,7 +167,7 @@ public abstract class Imaging implements ImagingConstants {
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
      *         determined.
      */
-    public static ImageFormat guessFormat(final File file) throws ImageReadException,
+    public static ImageFormats guessFormat(final File file) throws ImageReadException,
             IOException {
         return guessFormat(new ByteSourceFile(file));
     }
@@ -219,11 +219,11 @@ public abstract class Imaging implements ImagingConstants {
      * attempt to read the image data
      * @throws IOException in the event of an unrecoverable I/O condition.
      */
-    public static ImageFormat guessFormat(final ByteSource byteSource)
+    public static ImageFormats guessFormat(final ByteSource byteSource)
             throws ImageReadException, IOException {
         
         if (byteSource==null) {
-            return ImageFormat.UNKNOWN;
+            return ImageFormats.UNKNOWN;
         }
         
         InputStream is = null;
@@ -244,7 +244,7 @@ public abstract class Imaging implements ImagingConstants {
 
             if (compareBytePair(MAGIC_NUMBERS_GIF, bytePair)) {
                 canThrow = true;
-                return ImageFormat.GIF;
+                return ImageFormats.GIF;
             }
             // else if (b1 == 0x00 && b2 == 0x00) // too similar to TGA
             // {
@@ -252,43 +252,43 @@ public abstract class Imaging implements ImagingConstants {
             // }
             else if (compareBytePair(MAGIC_NUMBERS_PNG, bytePair)) {
                 canThrow = true;
-                return ImageFormat.PNG;
+                return ImageFormats.PNG;
             } else if (compareBytePair(MAGIC_NUMBERS_JPEG, bytePair)) {
                 canThrow = true;
-                return ImageFormat.JPEG;
+                return ImageFormats.JPEG;
             } else if (compareBytePair(MAGIC_NUMBERS_BMP, bytePair)) {
                 canThrow = true;
-                return ImageFormat.BMP;
+                return ImageFormats.BMP;
             } else if (compareBytePair(MAGIC_NUMBERS_TIFF_MOTOROLA, bytePair)) {
                 canThrow = true;
-                return ImageFormat.TIFF;
+                return ImageFormats.TIFF;
             } else if (compareBytePair(MAGIC_NUMBERS_TIFF_INTEL, bytePair)) {
                 canThrow = true;
-                return ImageFormat.TIFF;
+                return ImageFormats.TIFF;
             } else if (compareBytePair(MAGIC_NUMBERS_PSD, bytePair)) {
                 canThrow = true;
-                return ImageFormat.PSD;
+                return ImageFormats.PSD;
             } else if (compareBytePair(MAGIC_NUMBERS_PAM, bytePair)) {
                 canThrow = true;
-                return ImageFormat.PAM;
+                return ImageFormats.PAM;
             } else if (compareBytePair(MAGIC_NUMBERS_PBM_A, bytePair)) {
                 canThrow = true;
-                return ImageFormat.PBM;
+                return ImageFormats.PBM;
             } else if (compareBytePair(MAGIC_NUMBERS_PBM_B, bytePair)) {
                 canThrow = true;
-                return ImageFormat.PBM;
+                return ImageFormats.PBM;
             } else if (compareBytePair(MAGIC_NUMBERS_PGM_A, bytePair)) {
                 canThrow = true;
-                return ImageFormat.PGM;
+                return ImageFormats.PGM;
             } else if (compareBytePair(MAGIC_NUMBERS_PGM_B, bytePair)) {
                 canThrow = true;
-                return ImageFormat.PGM;
+                return ImageFormats.PGM;
             } else if (compareBytePair(MAGIC_NUMBERS_PPM_A, bytePair)) {
                 canThrow = true;
-                return ImageFormat.PPM;
+                return ImageFormats.PPM;
             } else if (compareBytePair(MAGIC_NUMBERS_PPM_B, bytePair)) {
                 canThrow = true;
-                return ImageFormat.PPM;
+                return ImageFormats.PPM;
             } else if (compareBytePair(MAGIC_NUMBERS_JBIG2_1, bytePair)) {
                 final int i3 = is.read();
                 final int i4 = is.read();
@@ -302,20 +302,20 @@ public abstract class Imaging implements ImagingConstants {
                 final int bytePair2[] = { b3, b4, };
                 if (compareBytePair(MAGIC_NUMBERS_JBIG2_2, bytePair2)) {
                     canThrow = true;
-                    return ImageFormat.JBIG2;
+                    return ImageFormats.JBIG2;
                 }
             } else if (compareBytePair(MAGIC_NUMBERS_ICNS, bytePair)) {
                 canThrow = true;
-                return ImageFormat.ICNS;
+                return ImageFormats.ICNS;
             } else if (compareBytePair(MAGIC_NUMBERS_DCX, bytePair)) {
                 canThrow = true;
-                return ImageFormat.DCX;
+                return ImageFormats.DCX;
             } else if (compareBytePair(MAGIC_NUMBERS_RGBE, bytePair)) {
                 canThrow = true;
-                return ImageFormat.RGBE;
+                return ImageFormats.RGBE;
             }
             canThrow = true;
-            return ImageFormat.UNKNOWN;
+            return ImageFormats.UNKNOWN;
         } finally {
             IoUtils.closeQuietly(canThrow, is);
         }
@@ -707,8 +707,8 @@ public abstract class Imaging implements ImagingConstants {
 
     private static ImageParser getImageParser(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final ImageFormat format = guessFormat(byteSource);
-        if (!format.equals(ImageFormat.UNKNOWN)) {
+        final ImageFormats format = guessFormat(byteSource);
+        if (!format.equals(ImageFormats.UNKNOWN)) {
 
             final ImageParser imageParsers[] = ImageParser.getAllImageParsers();
 
@@ -1403,7 +1403,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImagingConstants
      */    
     public static void writeImage(final BufferedImage src, final File file,
-            final ImageFormat format, final Map<String,Object> params) throws ImageWriteException,
+            final ImageFormats format, final Map<String,Object> params) throws ImageWriteException,
             IOException {
         OutputStream os = null;
         boolean canThrow = false;
@@ -1443,7 +1443,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImagingConstants
      */   
     public static byte[] writeImageToBytes(final BufferedImage src,
-            final ImageFormat format, final Map<String,Object> params) throws ImageWriteException,
+            final ImageFormats format, final Map<String,Object> params) throws ImageWriteException,
             IOException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
@@ -1477,7 +1477,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see ImagingConstants
      */    
     public static void writeImage(final BufferedImage src, final OutputStream os,
-            final ImageFormat format, Map<String,Object> params) throws ImageWriteException,
+            final ImageFormats format, Map<String,Object> params) throws ImageWriteException,
             IOException {
         final ImageParser imageParsers[] = ImageParser.getAllImageParsers();
 

@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -137,7 +137,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
         // Boolean.TRUE);
 
         final byte bytes[] = Imaging.writeImageToBytes(srcImage,
-                ImageFormat.BMP, writeParams);
+                ImageFormats.BMP, writeParams);
 
         // Debug.debug("bytes", bytes);
 

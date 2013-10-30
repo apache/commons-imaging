@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
@@ -47,11 +47,11 @@ public class XmpUpdateTest extends ImagingTest {
             Debug.debug("imageFile", imageFile);
             Debug.debug();
 
-            final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
+            final ImageFormats imageFormat = Imaging.guessFormat(imageFile);
 
             String xmpXml = Imaging.getXmpXml(imageFile);
             if (null == xmpXml
-                    && imageFormat.equals(ImageFormat.GIF)) {
+                    && imageFormat.equals(ImageFormats.GIF)) {
                 xmpXml = "temporary test until I can locate a GIF with XMP in the wild.";
             }
             if (null == xmpXml) {
@@ -60,15 +60,15 @@ public class XmpUpdateTest extends ImagingTest {
 
             assertNotNull(xmpXml);
 
-            if (imageFormat.equals(ImageFormat.PNG)) { /*
+            if (imageFormat.equals(ImageFormats.PNG)) { /*
                                                                      * do
                                                                      * nothing
                                                                      */
-            } else if (imageFormat.equals(ImageFormat.TIFF)) { /*
+            } else if (imageFormat.equals(ImageFormats.TIFF)) { /*
                                                                              * do
                                                                              * nothing
                                                                              */
-            } else if (imageFormat.equals(ImageFormat.GIF)) { /*
+            } else if (imageFormat.equals(ImageFormats.GIF)) { /*
                                                                             * do
                                                                             * nothing
                                                                             */

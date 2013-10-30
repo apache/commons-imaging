@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
@@ -30,8 +30,8 @@ public abstract class TiffBaseTest extends ImagingTest {
 
     private static boolean isTiff(final File file) throws IOException,
             ImageReadException {
-        final ImageFormat format = Imaging.guessFormat(file);
-        return format == ImageFormat.TIFF;
+        final ImageFormats format = Imaging.guessFormat(file);
+        return format == ImageFormats.TIFF;
     }
 
     private static final ImageFilter imageFilter = new ImageFilter() {

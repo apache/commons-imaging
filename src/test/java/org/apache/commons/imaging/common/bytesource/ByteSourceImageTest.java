@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
@@ -84,9 +84,9 @@ public class ByteSourceImageTest extends ByteSourceTest {
 
             checkGetImageSize(imageFile, imageFileBytes);
 
-            final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-            if (ImageFormat.JPEG != imageFormat
-                    && ImageFormat.UNKNOWN != imageFormat) {
+            final ImageFormats imageFormat = Imaging.guessFormat(imageFile);
+            if (ImageFormats.JPEG != imageFormat
+                    && ImageFormats.UNKNOWN != imageFormat) {
                 checkGetBufferedImage(imageFile, imageFileBytes);
             }
         }
@@ -123,14 +123,14 @@ public class ByteSourceImageTest extends ByteSourceTest {
     public void checkGuessFormat(final File imageFile, final byte[] imageFileBytes)
             throws Exception {
         // check guessFormat()
-        final ImageFormat imageFormatFile = Imaging.guessFormat(imageFile);
+        final ImageFormats imageFormatFile = Imaging.guessFormat(imageFile);
         assertNotNull(imageFormatFile);
-        assertTrue(imageFormatFile != ImageFormat.UNKNOWN);
+        assertTrue(imageFormatFile != ImageFormats.UNKNOWN);
         // Debug.debug("imageFormatFile", imageFormatFile);
 
-        final ImageFormat imageFormatBytes = Imaging.guessFormat(imageFileBytes);
+        final ImageFormats imageFormatBytes = Imaging.guessFormat(imageFileBytes);
         assertNotNull(imageFormatBytes);
-        assertTrue(imageFormatBytes != ImageFormat.UNKNOWN);
+        assertTrue(imageFormatBytes != ImageFormats.UNKNOWN);
         // Debug.debug("imageFormatBytes", imageFormatBytes);
 
         assertTrue(imageFormatBytes == imageFormatFile);
@@ -157,9 +157,9 @@ public class ByteSourceImageTest extends ByteSourceTest {
             IllegalArgumentException, InvocationTargetException {
         final Map<String,Object> params = new HashMap<String,Object>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-        if (imageFormat.equals(ImageFormat.TIFF)
-                || imageFormat.equals(ImageFormat.JPEG)) {
+        final ImageFormats imageFormat = Imaging.guessFormat(imageFile);
+        if (imageFormat.equals(ImageFormats.TIFF)
+                || imageFormat.equals(ImageFormats.JPEG)) {
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
         }
 
@@ -198,7 +198,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertTrue(imageInfoFile.getBitsPerPixel() > 0);
 
         assertNotNull(imageInfoFile.getFormat());
-        assertTrue(imageInfoFile.getFormat() != ImageFormat.UNKNOWN);
+        assertTrue(imageInfoFile.getFormat() != ImageFormats.UNKNOWN);
 
         assertNotNull(imageInfoFile.getFormatName());
 

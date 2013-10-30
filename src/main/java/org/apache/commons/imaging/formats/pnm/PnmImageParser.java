@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -69,13 +69,13 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
     }
 
     @Override
-    protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] {
-                ImageFormat.PBM, //
-                ImageFormat.PGM, //
-                ImageFormat.PPM, //
-                ImageFormat.PNM,
-                ImageFormat.PAM
+    protected ImageFormats[] getAcceptedTypes() {
+        return new ImageFormats[] {
+                ImageFormats.PBM, //
+                ImageFormats.PGM, //
+                ImageFormats.PPM, //
+                ImageFormats.PNM,
+                ImageFormats.PAM
         };
     }
 
@@ -241,7 +241,7 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
         final List<String> Comments = new ArrayList<String>();
 
         final int BitsPerPixel = info.getBitDepth() * info.getNumComponents();
-        final ImageFormat Format = info.getImageType();
+        final ImageFormats Format = info.getImageType();
         final String FormatName = info.getImageTypeDescription();
         final String MimeType = info.getMIMEType();
         final int NumberOfImages = 1;
@@ -335,13 +335,13 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
 
             final Object subtype = params.get(PARAM_KEY_FORMAT);
             if (subtype != null) {
-                if (subtype.equals(ImageFormat.PBM)) {
+                if (subtype.equals(ImageFormats.PBM)) {
                     writer = new PbmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormat.PGM)) {
+                } else if (subtype.equals(ImageFormats.PGM)) {
                     writer = new PgmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormat.PPM)) {
+                } else if (subtype.equals(ImageFormats.PPM)) {
                     writer = new PpmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormat.PAM)) { 
+                } else if (subtype.equals(ImageFormats.PAM)) { 
                     writer = new PamWriter();
                 }
             }

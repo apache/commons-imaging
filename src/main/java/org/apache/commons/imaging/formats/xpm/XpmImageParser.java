@@ -40,7 +40,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.UUID;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -120,8 +120,8 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.XPM, //
+    protected ImageFormats[] getAcceptedTypes() {
+        return new ImageFormats[] { ImageFormats.XPM, //
         };
     }
 
@@ -156,7 +156,7 @@ public class XpmImageParser extends ImageParser {
          }
       }
         return new ImageInfo("XPM version 3", xpmHeader.numCharsPerPixel * 8,
-                new ArrayList<String>(), ImageFormat.XPM,
+                new ArrayList<String>(), ImageFormats.XPM,
                 "X PixMap", xpmHeader.height, "image/x-xpixmap", 1, 0, 0, 0, 0,
                 xpmHeader.width, false, isTransparent, true, colorType,
                 ImageInfo.COMPRESSION_ALGORITHM_NONE);

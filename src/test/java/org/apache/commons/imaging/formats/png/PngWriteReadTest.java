@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -96,7 +96,7 @@ public class PngWriteReadTest extends ImagingTest {
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
         final byte[] pngBytes = Imaging.writeImageToBytes(
                 imageDataToBufferedImage(smallAscendingPixels),
-                ImageFormat.PNG, null);
+                ImageFormats.PNG, null);
         assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
     }
 
@@ -137,7 +137,7 @@ public class PngWriteReadTest extends ImagingTest {
         // Boolean.TRUE);
 
         final byte bytes[] = Imaging.writeImageToBytes(srcImage,
-                ImageFormat.PNG, writeParams);
+                ImageFormats.PNG, writeParams);
 
         // Debug.debug("bytes", bytes);
 

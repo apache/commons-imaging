@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.pnm;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public abstract class FileInfo {
@@ -38,7 +38,7 @@ public abstract class FileInfo {
 
     public abstract int getBitDepth();
 
-    public abstract ImageFormat getImageType();
+    public abstract ImageFormats getImageType();
 
     public abstract String getImageTypeDescription();
 

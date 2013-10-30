@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -67,8 +67,8 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.RGBE };
+    protected ImageFormats[] getAcceptedTypes() {
+        return new ImageFormats[] { ImageFormats.RGBE };
     }
 
     @Override
@@ -94,7 +94,7 @@ public class RgbeImageParser extends ImageParser {
             final ImageInfo ret = new ImageInfo(
                     getName(),
                     32, // todo may be 64 if double?
-                    new ArrayList<String>(), ImageFormat.RGBE, getName(),
+                    new ArrayList<String>(), ImageFormats.RGBE, getName(),
                     info.getHeight(), "image/vnd.radiance", 1, -1, -1, -1, -1,
                     info.getWidth(), false, false, false,
                     ImageInfo.COLOR_TYPE_RGB, "Adaptive RLE");

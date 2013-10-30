@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
@@ -64,8 +64,8 @@ public class WbmpImageParser extends ImageParser {
     }
 
     @Override
-    protected ImageFormat[] getAcceptedTypes() {
-        return new ImageFormat[] { ImageFormat.WBMP, //
+    protected ImageFormats[] getAcceptedTypes() {
+        return new ImageFormats[] { ImageFormats.WBMP, //
         };
     }
 
@@ -85,7 +85,7 @@ public class WbmpImageParser extends ImageParser {
             throws ImageReadException, IOException {
         final WbmpHeader wbmpHeader = readWbmpHeader(byteSource);
         return new ImageInfo("WBMP", 1, new ArrayList<String>(),
-                ImageFormat.WBMP,
+                ImageFormats.WBMP,
                 "Wireless Application Protocol Bitmap", wbmpHeader.height,
                 "image/vnd.wap.wbmp", 1, 0, 0, 0, 0, wbmpHeader.width, false,
                 false, false, ImageInfo.COLOR_TYPE_BW,

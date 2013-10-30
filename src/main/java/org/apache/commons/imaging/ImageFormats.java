@@ -20,7 +20,7 @@ package org.apache.commons.imaging;
  * Enum of known image formats.
  */
 //@formatter:off
-public enum ImageFormat {
+public enum ImageFormats {
     UNKNOWN,
     BMP,
     DCX,
@@ -54,48 +54,48 @@ public enum ImageFormat {
     }
 
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_UNKNOWN = UNKNOWN;
+    public static final ImageFormats IMAGE_FORMAT_UNKNOWN = UNKNOWN;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_BMP = BMP;
+    public static final ImageFormats IMAGE_FORMAT_BMP = BMP;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_DCX = DCX;
+    public static final ImageFormats IMAGE_FORMAT_DCX = DCX;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_GIF = GIF;
+    public static final ImageFormats IMAGE_FORMAT_GIF = GIF;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_ICNS = ICNS;
+    public static final ImageFormats IMAGE_FORMAT_ICNS = ICNS;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_ICO = ICO;
+    public static final ImageFormats IMAGE_FORMAT_ICO = ICO;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_JBIG2 = JBIG2;
+    public static final ImageFormats IMAGE_FORMAT_JBIG2 = JBIG2;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_JPEG = JPEG;
+    public static final ImageFormats IMAGE_FORMAT_JPEG = JPEG;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PAM = PAM;
+    public static final ImageFormats IMAGE_FORMAT_PAM = PAM;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PSD = PSD;
+    public static final ImageFormats IMAGE_FORMAT_PSD = PSD;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PBM = PBM;
+    public static final ImageFormats IMAGE_FORMAT_PBM = PBM;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PGM = PGM;
+    public static final ImageFormats IMAGE_FORMAT_PGM = PGM;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PNM = PNM;
+    public static final ImageFormats IMAGE_FORMAT_PNM = PNM;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PPM = PPM;
+    public static final ImageFormats IMAGE_FORMAT_PPM = PPM;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PCX = PCX;
+    public static final ImageFormats IMAGE_FORMAT_PCX = PCX;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PNG = PNG;
+    public static final ImageFormats IMAGE_FORMAT_PNG = PNG;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_RGBE = RGBE;
+    public static final ImageFormats IMAGE_FORMAT_RGBE = RGBE;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_TGA = TGA;
+    public static final ImageFormats IMAGE_FORMAT_TGA = TGA;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_TIFF = TIFF;
+    public static final ImageFormats IMAGE_FORMAT_TIFF = TIFF;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_WBMP = WBMP;
+    public static final ImageFormats IMAGE_FORMAT_WBMP = WBMP;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_XBM = XBM;
+    public static final ImageFormats IMAGE_FORMAT_XBM = XBM;
     @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_XPM = XPM;
+    public static final ImageFormats IMAGE_FORMAT_XPM = XPM;
 
 }
