@@ -27,6 +27,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -150,10 +151,22 @@ public class JpegImageMetadata implements IImageMetadata {
 
             final JpegImageData jpegImageData = dir.getJpegImageData();
             if (jpegImageData != null) {
-                final ByteArrayInputStream input = new ByteArrayInputStream(
-                        jpegImageData.data);
                 // JPEG thumbnail as JPEG or other format; try to parse.
-                image = ImageIO.read(input);
+                boolean imageSucceeded = false;
+                try {
+                    image = Imaging.getBufferedImage(jpegImageData.data);
+                    imageSucceeded = true;
+                } catch (final ImagingException imagingException) {
+                } catch (final IOException ioException) {
+                } finally {
+                    // our JPEG reading is still a bit buggy -
+                    // fall back to ImageIO on error
+                    if (!imageSucceeded) {
+                        final ByteArrayInputStream input = new ByteArrayInputStream(
+                                jpegImageData.data);
+                        image = ImageIO.read(input);
+                    }
+                }
                 if (image != null) {
                     return image;
                 }
