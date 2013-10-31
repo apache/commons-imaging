@@ -55,6 +55,12 @@ limitations under the License.
 </p>
 
 <p>
+	It can read from and write to files, byte arrays, or any InputStream/OutputStream. Reading InputStreams
+	only reads data it needs, and caches what has been read, so it's efficient on I/O, and fast on
+	slow storage and networked files.
+</p>
+
+<p>
     It supports reading and writing a variety of metadata in a structured way, including EXIF metadata.
 </p>
 
@@ -80,10 +86,6 @@ limitations under the License.
 
 <p>
     Commons Imaging also includes a number of useful functions such as guess an image's format by examining its "magic numbers" (header info).
-</p>
-
-<p>
-    It is network-friendly. Commons Imaging will only read the data it needs, and caches what is read so that it isn't too heavy on the network.
 </p>
 
 <p>

@@ -241,7 +241,7 @@ limitations under the License.
   <tr>
     <td>JPEG/JFIF EXIF Metadata</td><td>yes</td><td>yes</td>
     <td>
-        Can read and write EXIF data to and from exsiting JPEG/JFIF files WITHOUT modifying image data.
+        Can read and write EXIF data to and from existing JPEG/JFIF files WITHOUT modifying image data.
     </td>
     <td>
        <a href="http://www.exif.org/">Exif Specs, etc.</a>

@@ -33,8 +33,10 @@
       of image info (size, color space, ICC profile, etc.) and metadata.
     </p>
     <p>
-      This library is pure Java. It's slower, consequently, but perfectly portable.
-      It's easier to use than ImageIO/JAI/Toolkit (Sun/Java's image support), supports
+      This library is pure Java. Compared to typical image I/O libraries in native code,
+      it's more portable, and should be more reliable and more secure against corrupt/malicious
+      images, yet still performs reasonably well.
+      It's easier to use than ImageIO/JAI/java.awt.Toolkit (Sun/Java's image support), supports
       more formats (and supports them more correctly). It also provides easy access to metadata.
     </p>
     <p>

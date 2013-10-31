@@ -29,7 +29,8 @@ limitations under the License.
       <li>Commons Imaging requires Java 1.5 or higher.</li>
       <li>The questions of porting to J2ME and Android have been raised, but not yet pursued.</li>
       <li>Commons Imaging has no dependencies.</li>
-      <li>It does not use ImageIO/AWT.</li>
+      <li>AWT is required. ImageIO is only required to compile and used optionally
+      	as a fallback when reading JPEG thumbnails.</li>
   </ul>
 </p>
 
