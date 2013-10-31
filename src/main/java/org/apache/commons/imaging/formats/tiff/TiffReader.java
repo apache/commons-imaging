@@ -459,7 +459,11 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         if (directory.imageDataInStrips()) {
             final TiffField rowsPerStripField = directory
                     .findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
-            int rowsPerStrip;
+            /*
+             * Default value of rowsperstrip is assumed to be infinity
+             * http://www.awaresystems.be/imaging/tiff/tifftags/rowsperstrip.html
+             */
+            int rowsPerStrip = Integer.MAX_VALUE;
 
             if (null != rowsPerStripField) {
                 rowsPerStrip = rowsPerStripField.getIntValue();
@@ -470,7 +474,10 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                  * if rows per strip not present then rowsPerStrip is equal to
                  * imageLength or an infinity value;
                  */
-                rowsPerStrip = imageHeight.getIntValue();
+                if (imageHeight != null) {
+                	rowsPerStrip = imageHeight.getIntValue();
+                }
+                
             }
 
             return new TiffImageData.Strips(data, rowsPerStrip);
