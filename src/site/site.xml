@@ -31,7 +31,7 @@
       <item name="Issue Tracking"          href="/issue-tracking.html"/>
       <item name="Source Repository"       href="/source-repository.html"/>
       <item name="Javadoc"                 href="/apidocs/index.html"/>
-      <item name="Download"                href="/download_sanselan.cgi"/>
+      <item name="Download"                href="/download_imaging.cgi"/>
     </menu>
 
     <menu name="Documentation">
