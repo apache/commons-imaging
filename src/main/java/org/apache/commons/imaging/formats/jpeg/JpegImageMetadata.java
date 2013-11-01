@@ -56,11 +56,7 @@ public class JpegImageMetadata implements IImageMetadata {
 
     public TiffField findEXIFValue(final TagInfo tagInfo) {
         try {
-            if (exif != null) {
-                return exif.findField(tagInfo);
-            } else {
-                return null;
-            }
+            return exif != null ? exif.findField(tagInfo) : null;
         } catch (final ImageReadException cannotHappen) {
             return null;
         }
@@ -68,11 +64,7 @@ public class JpegImageMetadata implements IImageMetadata {
 
     public TiffField findEXIFValueWithExactMatch(final TagInfo tagInfo) {
         try {
-            if (exif != null) {
-                return exif.findField(tagInfo, true);
-            } else {
-                return null;
-            }
+            return exif != null ? exif.findField(tagInfo, true) : null;
         } catch (final ImageReadException cannotHappen) {
             return null;
         }
