@@ -46,10 +46,9 @@ public class JpegInputStream {
                 if (b2 != 0) {
                     if (b2 == (0xff & JpegConstants.DNLMarker)) {
                         throw new ImageReadException("DNL not yet supported");
-                    } else {
-                        throw new ImageReadException("Invalid marker found "
-                                + "in entropy data");
                     }
+                    throw new ImageReadException("Invalid marker found "
+                            + "in entropy data");
                 }
             }
         }
