@@ -355,9 +355,8 @@ public class PngWriter implements PngConstants {
         public int getEntry(final int index) {
             if (index == 0) {
                 return 0x00000000;
-            } else {
-                return palette.getEntry(index - 1);
             }
+            return palette.getEntry(index - 1);
         }
         
         @Override
@@ -369,14 +368,12 @@ public class PngWriter implements PngConstants {
         public int getPaletteIndex(final int rgb) throws ImageWriteException {
             if (rgb == 0x00000000) {
                 return 0;
-            } else {
-                final int index = palette.getPaletteIndex(rgb);
-                if (index >= 0) {
-                    return 1 + index;
-                } else {
-                    return index;
-                }
             }
+            final int index = palette.getPaletteIndex(rgb);
+            if (index >= 0) {
+                return 1 + index;
+            }
+            return index;
         }
     }
     /*
