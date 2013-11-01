@@ -284,9 +284,8 @@ public class IcnsImageParser extends ImageParser {
                 .decodeAllImages(icnsContents.icnsElements);
         if (result.size() > 0) {
             return result.get(0);
-        } else {
-            throw new ImageReadException("No icons in ICNS file");
         }
+        throw new ImageReadException("No icons in ICNS file");
     }
 
     @Override
