@@ -101,7 +101,7 @@ public final class TagInfoGpsText extends TagInfo {
                         TEXT_ENCODING_ASCII.prefix.length, asciiBytes.length);
                 return result;
             }
-            // use unicode
+            // use Unicode
             final TextEncoding encoding;
             if (byteOrder == ByteOrder.BIG_ENDIAN) {
                 encoding = TEXT_ENCODING_UNICODE_BE;
