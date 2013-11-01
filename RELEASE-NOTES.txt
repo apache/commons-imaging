@@ -1,6 +1,6 @@
 
 Apache Commons Imaging
-Version 1.0-SNAPSHOT
+Version 1.0
 Release Notes
 
 INTRODUCTION
@@ -45,7 +45,7 @@ and has been renamed to Apache Commons Imaging. As part of this rename:
 
 VERSION HISTORY
 
-Release 1.0-SNAPSHOT
+Release 1.0
 ------------
 TBA
 
@@ -67,8 +67,19 @@ o IMAGING-65:  Provide a way to write the pixel density (DPI) into an image.
 o IMAGING-61:  Include a test utility for timing and memory in project example classes. Thanks to gwlucas. 
 o IMAGING-81:  Add more Javadoc to main package. Thanks to gwlucas. 
 o IMAGING-89:  Detect the YCCK color space/type in JPEG files' APP14 segment. 
+o IMAGING-94:  Add ability to load partial TIFF images Thanks to gwlucas. 
 
 Fixed Bugs:
+o IMAGING_121:  Null Pointer exception while extracting metadata for CR2 image. Thanks to Piyush Kapoor. 
+o IMAGING-115:  DhtSegment class contains mutable public arrays. 
+o IMAGING-117:  SofnSegment.components - public mutable array. 
+o IMAGING-116:  GenericSegment.bytes - public mutable array. 
+o IMAGING-118:  interface RgbeConstants contains mutable array. 
+o IMAGING-114:  ComSegment.comment is a public final byte array. 
+o IMAGING-109:  Several files contain non-UTF8 characters. 
+o IMAGING-113:  Cannot read multipage tiff. 
+o IMAGING-108:  JPEG EOI marker could not be found at expected location. 
+o IMAGING-101:  GIF dimensions transposed. Thanks to Colm O hEigeartaigh. 
 o IMAGING-23:  JpegXMPWriter throws NullPointerException. 
 o IMAGING-74:  Fixed a couple of platform-dependent paths in the tests.
         Constantized the magic numbers used when guessing formats.  
@@ -118,7 +129,14 @@ o IMAGING-69:  Add a streamlined TIFF reader that reduces load time by a factor 
 o IMAGING-82:  Fix BMP width and height DPI. Thanks to pkapoor. 
 o IMAGING-86:  Fix the lengths for DateTimeOriginal and DateTimeDigitized TIFF/EXIF tags. 
 o IMAGING-88:  Method lowerBound in org.apache.commons.imaging.common.itu_t4.T4AndT6Compression has a division error. Thanks to craigkelly. 
+o IMAGING-92:  Issue trying to update GPS metadata info in a JPG. Thanks to hmarmy. 
+o IMAGING-93:  Tiled TIFF images do not correctly load partial tiles. Thanks to gwlucas. 
+o IMAGING-90:  Allow non-1 TIFF field lengths when parsing offset fields in non-strict mode. 
+o IMAGING-99:  java.io.IOException: Could not read block Thanks to st.h. 
 
+Changes:
+o IMAGING-91:  ByteSourceInputStream.streamLength could be a long. 
+o IMAGING-95:  Some tiff processing takes very long. Thanks to amitgupt. 
 
 Minimum Java version: 1.5
 Compatibility with 0.97:
