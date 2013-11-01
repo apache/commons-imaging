@@ -127,7 +127,7 @@ public interface JpegConstants {
                     SOF14Marker, SOF15Marker, EOIMarker, SOS_Marker, DQTMarker,
                     DNLMarker, COMMarker));
 
-    public static final BinaryConstant icc_profile_label = new BinaryConstant(
+    public static final BinaryConstant ICC_PROFILE_LABEL = new BinaryConstant(
             new byte[] { 0x49, 0x43, 0x43, 0x5F, 0x50, 0x52, 0x4F, 0x46, 0x49,
                     0x4C, 0x45, 0x0 });
 

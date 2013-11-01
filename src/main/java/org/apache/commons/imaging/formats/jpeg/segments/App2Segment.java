@@ -38,16 +38,16 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
         super(marker, marker_length, is2);
 
         if (BinaryFileParser.startsWith(getSegmentData(),
-                JpegConstants.icc_profile_label)) {
+                JpegConstants.ICC_PROFILE_LABEL)) {
             final InputStream is = new ByteArrayInputStream(getSegmentData());
 
-            readAndVerifyBytes(is, JpegConstants.icc_profile_label,
+            readAndVerifyBytes(is, JpegConstants.ICC_PROFILE_LABEL,
                     "Not a Valid App2 Segment: missing ICC Profile label");
 
             cur_marker = readByte("cur_marker", is, "Not a valid App2 Marker");
             num_markers = readByte("num_markers", is, "Not a valid App2 Marker");
 
-            marker_length -= JpegConstants.icc_profile_label.size();
+            marker_length -= JpegConstants.ICC_PROFILE_LABEL.size();
             marker_length -= (1 + 1);
 
             icc_bytes = readBytes("App2 Data", is, marker_length,
