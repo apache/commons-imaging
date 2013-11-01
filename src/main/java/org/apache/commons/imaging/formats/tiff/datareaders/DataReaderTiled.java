@@ -233,13 +233,12 @@ public final class DataReaderTiled extends DataReader {
                 && subImage.width == workingWidth
                 && subImage.height == workingHeight) {
             return workingBuilder.getBufferedImage(); 
-        }else{
-            return workingBuilder.getSubimage(
-                subImage.x - x0,
-                subImage.y - y0,
-                subImage.width,
-                subImage.height);
         }
+        return workingBuilder.getSubimage(
+            subImage.x - x0,
+            subImage.y - y0,
+            subImage.width,
+            subImage.height);
     }
 
 }

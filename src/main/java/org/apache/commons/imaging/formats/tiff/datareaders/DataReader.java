@@ -159,10 +159,9 @@ public abstract class DataReader implements TiffConstants {
             if (is2D) {
                 return T4AndT6Compression.decompressT4_2D(compressed,
                         tileWidth, tileHeight, hasFillBitsBeforeEOL);
-            } else {
-                return T4AndT6Compression.decompressT4_1D(compressed,
-                        tileWidth, tileHeight, hasFillBitsBeforeEOL);
             }
+            return T4AndT6Compression.decompressT4_1D(compressed,
+                    tileWidth, tileHeight, hasFillBitsBeforeEOL);
         }
         case TIFF_COMPRESSION_CCITT_GROUP_4: {
             int t6Options = 0;

@@ -287,13 +287,12 @@ public final class DataReaderStrips extends DataReader {
                 && subImage.height == workingHeight) {
             // the subimage exactly matches the ImageBuilder bounds
             return workingBuilder.getBufferedImage();
-        } else {
-            return workingBuilder.getSubimage(
-                    subImage.x,
-                    subImage.y - y0,
-                    subImage.width,
-                    subImage.height);
-        }      
+        }
+        return workingBuilder.getSubimage(
+                subImage.x,
+                subImage.y - y0,
+                subImage.width,
+                subImage.height);      
     }
 
 }
