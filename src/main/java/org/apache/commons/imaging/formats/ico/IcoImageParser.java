@@ -540,9 +540,8 @@ public class IcoImageParser extends ImageParser {
             final BufferedImage bufferedImage = Imaging.getBufferedImage(iconData);
             final PNGIconData pngIconData = new PNGIconData(fIconInfo, bufferedImage);
             return pngIconData;
-        } else {
-            return readBitmapIconData(iconData, fIconInfo);
         }
+        return readBitmapIconData(iconData, fIconInfo);
     }
 
     private static class ImageContents {
@@ -603,9 +602,8 @@ public class IcoImageParser extends ImageParser {
         final FileHeader fileHeader = contents.fileHeader;
         if (fileHeader.iconCount > 0) {
             return contents.iconDatas[0].readBufferedImage();
-        } else {
-            throw new ImageReadException("No icons in ICO file");
         }
+        throw new ImageReadException("No icons in ICO file");
     }
 
     @Override
