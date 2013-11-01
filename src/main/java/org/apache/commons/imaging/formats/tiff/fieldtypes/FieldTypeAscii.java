@@ -67,9 +67,8 @@ public class FieldTypeAscii extends FieldType {
         }
         if (strings.length == 1) {
             return strings[0];
-        } else {
-            return strings;
         }
+        return strings;
     }
 
     @Override
