@@ -475,7 +475,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                  * imageLength or an infinity value;
                  */
                 if (imageHeight != null) {
-                	rowsPerStrip = imageHeight.getIntValue();
+                    rowsPerStrip = imageHeight.getIntValue();
                 }
                 
             }
