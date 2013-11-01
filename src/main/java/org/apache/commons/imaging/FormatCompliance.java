@@ -95,17 +95,16 @@ public class FormatCompliance {
             addComment(name + ": " + "Unexpected length: (expected: "
                     + expected.length + ", actual: " + actual.length + ")");
             return false;
-        } else {
-            for (int i = 0; i < expected.length; i++) {
-                // System.out.println("expected: "
-                // + getValueDescription(expected[i]) + ", actual: "
-                // + getValueDescription(actual[i]) + ")");
-                if (expected[i] != actual[i]) {
-                    addComment(name + ": " + "Unexpected value: (expected: "
-                            + getValueDescription(expected[i]) + ", actual: "
-                            + getValueDescription(actual[i]) + ")");
-                    return false;
-                }
+        }
+        for (int i = 0; i < expected.length; i++) {
+            // System.out.println("expected: "
+            // + getValueDescription(expected[i]) + ", actual: "
+            // + getValueDescription(actual[i]) + ")");
+            if (expected[i] != actual[i]) {
+                addComment(name + ": " + "Unexpected value: (expected: "
+                        + getValueDescription(expected[i]) + ", actual: "
+                        + getValueDescription(actual[i]) + ")");
+                return false;
             }
         }
 
