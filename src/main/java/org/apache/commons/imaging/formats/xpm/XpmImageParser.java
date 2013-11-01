@@ -364,9 +364,8 @@ public class XpmImageParser extends ImageParser {
             loadColorNames();
             if (colorNames.containsKey(color)) {
                 return (colorNames.get(color)).intValue();
-            } else {
-                return 0x00000000;
             }
+            return 0x00000000;
         }
     }
     
@@ -645,9 +644,8 @@ public class XpmImageParser extends ImageParser {
             final char zeroes[] = new char[6 - hex.length()];
             Arrays.fill(zeroes, '0');
             return "#" + new String(zeroes) + hex;
-        } else {
-            return "#" + hex;
         }
+        return "#" + hex;
     }
 
     @Override
