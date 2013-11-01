@@ -100,23 +100,22 @@ public final class TagInfoGpsText extends TagInfo {
                 System.arraycopy(asciiBytes, 0, result,
                         TEXT_ENCODING_ASCII.prefix.length, asciiBytes.length);
                 return result;
-            } else {
-                // use unicode
-                final TextEncoding encoding;
-                if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                    encoding = TEXT_ENCODING_UNICODE_BE;
-                } else {
-                    encoding = TEXT_ENCODING_UNICODE_LE;
-                }
-                final byte unicodeBytes[] = s.getBytes(encoding.encodingName);
-                final byte result[] = new byte[unicodeBytes.length +
-                                               encoding.prefix.length];
-                System.arraycopy(encoding.prefix, 0,
-                        result, 0, encoding.prefix.length);
-                System.arraycopy(unicodeBytes, 0,
-                        result, encoding.prefix.length, unicodeBytes.length);
-                return result;
             }
+            // use unicode
+            final TextEncoding encoding;
+            if (byteOrder == ByteOrder.BIG_ENDIAN) {
+                encoding = TEXT_ENCODING_UNICODE_BE;
+            } else {
+                encoding = TEXT_ENCODING_UNICODE_LE;
+            }
+            final byte unicodeBytes[] = s.getBytes(encoding.encodingName);
+            final byte result[] = new byte[unicodeBytes.length +
+                                           encoding.prefix.length];
+            System.arraycopy(encoding.prefix, 0,
+                    result, 0, encoding.prefix.length);
+            System.arraycopy(unicodeBytes, 0,
+                    result, encoding.prefix.length, unicodeBytes.length);
+            return result;
         } catch (final UnsupportedEncodingException e) {
             throw new ImageWriteException(e.getMessage(), e);
         }
