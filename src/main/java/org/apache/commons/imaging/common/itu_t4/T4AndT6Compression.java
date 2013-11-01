@@ -719,9 +719,8 @@ public class T4AndT6Compression {
                     || entry == T4_T6_Tables.EOL17
                     || entry == T4_T6_Tables.EOL18
                     || entry == T4_T6_Tables.EOL19;
-        } else {
-            return false;
         }
+        return false;
     }
 
     private static void writeRunLength(final BitArrayOutputStream bitStream,
