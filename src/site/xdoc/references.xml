@@ -27,15 +27,17 @@ limitations under the License.
 <p>
 
   <ul>
-    <li>Marco Schmidt's list of Java image libaries: 
-        <a href="http://www.geocities.com/marcoschmidt.geo/java-image-coding.html">http://www.geocities.com/marcoschmidt.geo/java-image-coding.html</a>
+    <li>Marco Schmidt's list of Java image libaries (archived): 
+        <a href="http://web.archive.org/web/20090204080356/http://schmidt.devlib.org/java/image-io-libraries.html">http://web.archive.org/web/20090204080356/http://schmidt.devlib.org/java/image-io-libraries.html</a>
     </li>
     <li>Another list of Java image libaries 
         <a href="http://dmoz.org/Computers/Programming/Languages/Java/Class_Libraries/Graphics/Data_Formats/">http://dmoz.org/Computers/Programming/Languages/Java/Class_Libraries/Graphics/Data_Formats/</a>
     </li>
-    <li>File format cloud. <a href="http://www.fileformat.info/format/cloud.htm">http://www.fileformat.info/format/cloud.htm</a></li>
-    <li>ImageInfo an excellent Java class to extract image properties. 
-        <a href="http://www.geocities.com/marcoschmidt.geo/image-info.html">http://www.geocities.com/marcoschmidt.geo/image-info.html</a>
+    <li>File format cloud.
+    	<a href="http://www.fileformat.info/format/cloud.htm">http://www.fileformat.info/format/cloud.htm</a>
+    </li>
+    <li>ImageInfo an excellent Java class to extract image properties (archived):
+        <a href="http://web.archive.org/web/20090216122500/http://schmidt.devlib.org/image-info">http://web.archive.org/web/20090216122500/http://schmidt.devlib.org/image-info</a>
     </li>
     <li>EasyRGB's color conversion formulas.
         <a href="http://www.easyrgb.com/">http://www.easyrgb.com/</a>
