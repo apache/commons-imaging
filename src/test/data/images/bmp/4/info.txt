@@ -1,3 +1,0 @@
-rle4deltaXY.bmp: 4 bit RLE compression with an encoded-mode delta-Y. Added by Damjan Jovanovic.
-rle8deltaXY.bmp: 8 bit RLE compression with an encoded-mode delta-Y. Added by Damjan Jovanovic.
-

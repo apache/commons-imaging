@@ -1,1 +1,0 @@
-V4-bitfields.bmp: V4 BMP with bitfields and alpha, blue "16" on transparent background. Contributed by Damjan Jovanovic.

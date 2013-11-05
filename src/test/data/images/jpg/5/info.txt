@@ -1,2 +1,0 @@
-2010-01-04T052300Z_01_BTRE6021PS000_RTROPTP_3_BUSINESS-US-TSE.JPG
-Submitted by Alex Vigdor on SANSELAN-35. Demonstrates an IPTC parsing bug in Sanselan.

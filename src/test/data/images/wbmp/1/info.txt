@@ -1,2 +1,0 @@
-Contributed to the project by Damjan Jovanovic.
-Converted from ../../pxm/1/Oregon Scientific DS6639 - DSC_0307 - small.pbm

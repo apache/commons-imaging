@@ -1,0 +1,223 @@
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+
+
+
+bmp/1/Oregon Scientific DS6639 - DSC_0307 - small.bmp
+    Contributed by Charles Matthew Chen.
+    These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+bmp/2/@broken/SanselanTest.bmp
+    Contributed by Kevin Theisen.
+    
+bmp/3/V4-bitfields.bmp
+	Contributed by Damjan Jovanovic.
+	V4 BMP with bitfields and alpha, blue "16" on transparent background.
+
+bmp/4/rle4.bmp
+bmp/4/rle8.asm
+bmp/4/rle8.bmp
+	Contributed by Damjan Jovanovic.
+
+bmp/4/rle4deltaXY.asm
+bmp/4/rle4deltaXY.bmp
+	Contributed by Damjan Jovanovic.
+	4 bit RLE compression with an encoded-mode delta-Y
+	
+dcx/1/Oregon Scientific DS6639 - DSC_0307 - small.dcx
+	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
+
+gif/1/Oregon Scientific DS6639 - DSC_0307 - small.gif
+	Contributed to the project by Charles Matthew Chen.
+	These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+gif/2/test.gif
+	Contributed by Holger Veltrup.
+	Image is 300x320, but oddly the Logical Screen Width in the Logical Screen Descriptor is 301, not 300.
+	This appears to be a bug in how Microsoft Office writes gifs.
+	The Image Descriptor has the correct value.
+
+icns/1/poedit16x16.icns
+icns/1/poedit32x32.icns
+icns/1/poedit48x48.icns
+	Contributed by Damjan Jovanovic.
+	These icons are taken from http://openiconlibrary.sourceforge.net, the Mac icon package,
+	file poedit.icns, which is listed as public domain.
+
+ico/1/Oregon Scientific DS6639 - DSC_0307 - small.ico
+	Contributed to the project by Charles Matthew Chen.
+	These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+iptc/1/Oregon Scientific DS6639 - DSC_0307 - iptc added with irfanview.jpg
+iptc/1/Oregon Scientific DS6639 - DSC_0307 - iptc added with photoshop.jpg
+	Contributed to the project by Charles Matthew Chen.
+	These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+jpg/1/Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG
+jpg/1/Nikon D50 - 2007.12.19.n.DSC_3656.JPG
+jpg/1/Oregon Scientific DS6639 - DSC_0307 - small.jpg
+jpg/1/Oregon Scientific DS6639 - DSC_0307.JPG
+	Contributed to the project by Charles Matthew Chen.
+	These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+jpg/2/2008-07-27+-+Photo+216+-+WE+a+l'etang+de+Blodelsheim.jpg
+	Contributed by jncharli at free dot fr
+	EXIF data demonstrates the EXIF_TAG_XPTITLE tag.
+
+jpg/3/img_F028c_small.jpg
+	Contributed by James E-J
+	Demonstrates JPEG with thumbnail stored as JPEG (not TIFF).
+	
+jpg/4/0x00-to-0xFF-between-segments.jpg
+	Contributed by Damjan Jovanovic.
+	This is a badly corrupted JPEG: 0x00 0x01 ... 0xFF
+	is written between each segment. A resilient JPEG
+	parser must skip this data, and scan forward
+	looking for 0xFF followed by a non-0xFF byte
+	which marks the next segment.
+
+jpg/5/2010-01-04T052300Z_01_BTRE6021PS000_RTROPTP_3_BUSINESS-US-TSE.JPG
+	Contributed by Alex Vigdor on SANSELAN-35.
+	Demonstrates an IPTC parsing bug in Sanselan.
+	
+pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.pbm
+pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.pgm
+pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.ppm
+	Contributed by Charles Matthew Chen.
+	These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+pbm/2/5x5-bw-alpha.asm
+pbm/2/5x5-bw-alpha.pam
+pbm/2/5x5-bw.asm
+pbm/2/5x5-bw.pam
+pbm/2/5x5-grayscale-alpha.asm
+pbm/2/5x5-grayscale-alpha.pam
+pbm/2/5x5-grayscale.asm
+pbm/2/5x5-grayscale.pam
+pbm/2/5x5-rgb-alpha.asm
+pbm/2/5x5-rgb-alpha.pam
+pbm/2/5x5-rgb.asm
+pbm/2/5x5-rgb.pam
+	Contributed by Damjan Jovanovic.
+
+pcx/1/1plane1bppCompressed.pcx
+pcx/1/1plane1bppUncompressed.pcx
+pcx/1/1plane24bppCompressed.pcx
+pcx/1/1plane2bppCompressed.pcx
+pcx/1/1plane32bppCompressed.pcx
+pcx/1/1plane4bppCompressed.pcx
+pcx/1/1plane8bppCompressed.pcx
+pcx/1/1plane8bppUncompressed.pcx
+pcx/1/2plane1bppCompressed.pcx
+pcx/1/3plane1bppCompressed.pcx
+pcx/1/3plane8bppCompressed.pcx
+pcx/1/3plane8bppUncompressed.pcx
+pcx/1/4plane1bppCompressed.pcx
+	Contributed by Damjan Jovanovic.
+	Programmatically generated.
+
+pcx/1/Oregon Scientific DS6639 - DSC_0307 - small.pcx
+	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
+
+png/1/Oregon Scientific DS6639 - DSC_0307 - small.png
+	Contributed by Charles Matthew Chen.
+	These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+png/2/12118.png
+png/2/28569-4.png
+png/2/28569-8.png
+png/2/28569.png
+	Contributed by Dirk Daems.
+
+png/3/testImage.png
+png/3/testImageNoAlpha.png
+	Contributed by Kevin Theisen.
+
+png/4/buttons_level_menu_down.ipad.png
+	Contributed by Charles Matthew Chen in revision 995505.
+
+png/5/trns-gray.png
+png/5/trns-palette8.png
+png/5/trns-rgb.png
+	Contributed by Damjan Jovanovic.
+
+psd/1/Oregon Scientific DS6639 - DSC_0307 - small.psd
+	Contributed by Charles Matthew Chen.
+	These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+rgbe/1/body_wave_N_0001.hdr
+	Contributed by Peter Royal <proyal at apache dot org> in SANSELAN-25.
+
+tga/1/Oregon Scientific DS6639 - DSC_0307 - small.tga
+	Contributed by Charles Matthew Chen.
+	These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+tiff/1/matthew2.tif
+tiff/1/Oregon Scientific DS6639 - DSC_0307 - small.tif
+tiff/1/PICT2833.TIF
+tiff/1/ron and andy.2.tif
+tiff/1/ron and andy.tif
+tiff/1/Ron at 2001 CWA convention.tif
+	Contributed by Charles Matthew Chen.
+	These photos are from my cameras - a Canon SD 750, a Nikon D50.  
+
+tiff/2/bad-offsets-lengths.asm
+tiff/2/bad-offsets-lengths.tiff
+	Contributed by Damjan Jovanovic.
+	Test image with bad offsets and field counts/lengths.
+
+tiff/3/1pagefax.tif
+	Contributed to the project by Damjan Jovanovic
+	This is a completely blank standard resolution fax,
+	in compression=2 format.
+	It was generated from a similarly blank PDF using Ghostscript:
+	gs -q -sDEVICE=tiffcrle -r204x98 -dBATCH -dPDFFitPage -dNOPAUSE -sOutputFile=1pagefax.tif 1pagefax.pdf
+
+tiff/3/Oregon Scientific DS6639 - DSC_0307 - small CCITT T.4 1D fill.tiff
+tiff/3/Oregon Scientific DS6639 - DSC_0307 - small CCITT T.4 1D no fill.tiff
+tiff/3/Oregon Scientific DS6639 - DSC_0307 - small CCITT T.4 2D fill.tiff
+tiff/3/Oregon Scientific DS6639 - DSC_0307 - small CCITT T.4 2D no fill.tiff
+tiff/3/Oregon Scientific DS6639 - DSC_0307 - small CCITT T.6.tiff
+	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
+	Converted from ../../pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.pbm
+	using ppm2tiff with various T.4 and T.6 compression options.
+
+tiff/4/IndexColorPalette.tif
+	Contributed by Gary Lucas in SANSELAN-75. 	
+
+tiff/5/Oregon Scientific DS6639 - DSC_0307 - small - LZW - strips.tif
+tiff/5/Oregon Scientific DS6639 - DSC_0307 - small - LZW - tiled.tif
+	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
+	From IMAGING-33.
+
+tiff/6/bad-interoperability.asm
+tiff/6/bad-interoperability.tiff
+	Contributed by Damjan Jovanovic.
+	Test image with a 0 count interoperability TIFF tag.
+	
+wbmp/1/Oregon Scientific DS6639 - DSC_0307 - small.wbmp
+	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
+
+xbm/1/Oregon Scientific DS6639 - DSC_0307 - small.xbm
+	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
+
+xpm/1/Oregon Scientific DS6639 - DSC_0307 - small.xpm
+	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
+
+xpm/1/symbolic.xpm
+	Contributed by Damjan Jovanovic.
+	Hand-written to demonstrate the use of a symbolic color name.

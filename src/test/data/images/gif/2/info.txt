@@ -1,3 +1,0 @@
-Contributed to the project by Holger Veltrup.Image is 300x320, but oddly the Logical Screen Width in the Logical Screen Descriptor is 301, not 300.
-This appears to be a bug in how Microsoft Office writes gifs.
-The Image Descriptor has the correct value.
