@@ -22,10 +22,29 @@ limitations under the License.
  </properties>
 <body>
 <!-- ================================================== -->
-<section name="Project Status and History">
+<section name="History">
 
 <p>
-  Apache Commons Sanselan was renamed to Apache Commons Imaging on 16 April 2012.
+  Version 1.0 released November, 2013, brought many changes and is
+  best followed in the release notes.
+</p>
+
+<p>
+  Apache Commons Sanselan was renamed to Apache Commons Imaging on 16 April 2012,
+  the package changed from <code>org.apache.sanselan</code> to <code>org.apache.commons.imaging</code>,
+  the "main" class changed from <code>org.apache.sanselan.Sanselan</code> to
+  <code>org.apache.commons.imaging.Imaging</code>, the website became
+  <a href="http://commons.apache.org/imaging">http://commons.apache.org/imaging</a>
+  and Maven co-ordinates also changed.
+</p>
+
+<p>
+  Version 0.97 released February 14th, 2009, was the last Sanselan release before the rename,
+  and the last incubator release.
+</p>
+
+<p>
+  Version 0.94 released July 30th, 2008, was the first Apache release of Sanselan.
 </p>
 
 <p>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Building</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="Roadmap">
+<subsection name="Version 2.0">
+  <p>
+      Features we hope to have for the 2.0 release.
+  </p>
+  <h4>Interoperability</h4>
+  <ul>
+  	  <li>Port to use the Java 7 language but only use basic Java 5 APIs.</li>
+  	  <li>Android support. Needs AWT to be an optional dependency.</li>
+      <li>Add the ability to use Commons Imaging as an Image I/O plugin.</li>
+  </ul>
+  <h4>File formats</h4>
+  <ul>
+  	  <li>Improve JPEG read support.</li>
+  	  <li>Rewrite and fully generalize TIFF parsing to support arbitrary complexity TIFF files instead of just EXIF.
+  	  		Lower level API for reading raw fields and directories, and a higher level API for image structures.</li>
+  	  <li>Add pluggable TIFF tag sets.</li>
+  	  <li>Parse some EXIF maker notes.</li>
+      <li>Add a structured way to write IPTC image metadata to JPEG files.</li>
+      <li>Reading all images from .gif files isn't working. see: getAllBufferedImages().</li>
+      <li>Add DNG metadata/image info read. Perhaps some RAW formats as well.</li>
+      <li>Other file formats, eg. WebP.</li>
+  </ul>
+  <h4>API</h4>
+  <ul>
+      <li>Support reading images incrementally, eg. page at a time for multi-page TIFFs, to save memory.</li>
+      <li>Provide per-image image info in multi-image formats.</li>
+	  <li>More control over writing.</li>
+	  <li>Writing multiple images into a file.</li>
+	  <li>Add support for more than 8 bits per channel.</li>
+	  <li>Add support for reading and writing detailed XMP metadata fields.</li>
+	  <li>Add request/hint params to ImageFactory, per Endre's suggestion.</li>
+	  <li>Allow user to disable autoconvesion to sRGB/Grayscale.</li>
+	  <li>More formats should subclass imagemetadata class to include format-specific info ie. GIF's transparency index.</li>
+	  <li>Improve Javadoc and write more FAQs / examples.</li>
+  </ul>
+  <h4>Test suite</h4>
+  <ul>
+      <li>Publish image library (possibly) and links to other libraries.</li>
+      <li>Develop suite of unit tests that only depend on images in the public domain.</li>
+      <li>Share test image suite with comments.</li>
+  </ul>
+</subsection>
+</section>
+</body>
+</document>
