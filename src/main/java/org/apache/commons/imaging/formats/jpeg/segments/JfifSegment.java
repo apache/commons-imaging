@@ -23,7 +23,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public class JfifSegment extends Segment implements JpegConstants {
+public class JfifSegment extends Segment {
     public final int jfifMajorVersion;
     public final int jfifMinorVersion;
     public final int densityUnits;
@@ -48,9 +48,9 @@ public class JfifSegment extends Segment implements JpegConstants {
             throws ImageReadException, IOException {
         super(marker, marker_length);
 
-        final byte signature[] = readBytes(is, JFIF0_SIGNATURE.size());
-        if (!JFIF0_SIGNATURE.equals(signature)
-                && !JFIF0_SIGNATURE_ALTERNATIVE.equals(signature)) {
+        final byte signature[] = readBytes(is, JpegConstants.JFIF0_SIGNATURE.size());
+        if (!JpegConstants.JFIF0_SIGNATURE.equals(signature)
+                && !JpegConstants.JFIF0_SIGNATURE_ALTERNATIVE.equals(signature)) {
             throw new ImageReadException(
                     "Not a Valid JPEG File: missing JFIF string");
         }

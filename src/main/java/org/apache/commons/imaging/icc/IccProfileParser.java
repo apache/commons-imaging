@@ -30,7 +30,7 @@ import org.apache.commons.imaging.util.CachingInputStream;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class IccProfileParser extends BinaryFileParser implements IccConstants {
+public class IccProfileParser extends BinaryFileParser {
     public IccProfileParser() {
         this.setByteOrder(ByteOrder.BIG_ENDIAN);
     }
@@ -357,7 +357,7 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
                 printCharQuad("DeviceModel", DeviceModel);
             }
 
-            final boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
+            final boolean result = ((DeviceManufacturer == IccConstants.IEC) && (DeviceModel == IccConstants.sRGB));
             canThrow = true;
             return result;
         } finally {

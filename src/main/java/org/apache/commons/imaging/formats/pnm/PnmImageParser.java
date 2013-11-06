@@ -42,7 +42,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class PnmImageParser extends ImageParser implements PnmConstants {
+public class PnmImageParser extends ImageParser {
 
     public PnmImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -85,42 +85,42 @@ public class PnmImageParser extends ImageParser implements PnmConstants {
         final byte identifier1 = readByte("Identifier1", is, "Not a Valid PNM File");
         final byte identifier2 = readByte("Identifier2", is, "Not a Valid PNM File");
 
-        if (identifier1 != PNM_PREFIX_BYTE) {
+        if (identifier1 != PnmConstants.PNM_PREFIX_BYTE) {
             throw new ImageReadException("PNM file has invalid prefix byte 1");
         }
         
         final WhiteSpaceReader wsr = new WhiteSpaceReader(is);
         
-        if (identifier2 == PBM_TEXT_CODE ||
-                identifier2 == PBM_RAW_CODE ||
-                identifier2 == PGM_TEXT_CODE ||
-                identifier2 == PGM_RAW_CODE ||
-                identifier2 == PPM_TEXT_CODE ||
-                identifier2 == PPM_RAW_CODE) {
+        if (identifier2 == PnmConstants.PBM_TEXT_CODE ||
+                identifier2 == PnmConstants.PBM_RAW_CODE ||
+                identifier2 == PnmConstants.PGM_TEXT_CODE ||
+                identifier2 == PnmConstants.PGM_RAW_CODE ||
+                identifier2 == PnmConstants.PPM_TEXT_CODE ||
+                identifier2 == PnmConstants.PPM_RAW_CODE) {
             
             final int width = Integer.parseInt(wsr.readtoWhiteSpace());
             final int height = Integer.parseInt(wsr.readtoWhiteSpace());
     
-            if (identifier2 == PBM_TEXT_CODE) {
+            if (identifier2 == PnmConstants.PBM_TEXT_CODE) {
                 return new PbmFileInfo(width, height, false);
-            } else if (identifier2 == PBM_RAW_CODE) {
+            } else if (identifier2 == PnmConstants.PBM_RAW_CODE) {
                 return new PbmFileInfo(width, height, true);
-            } else if (identifier2 == PGM_TEXT_CODE) {
+            } else if (identifier2 == PnmConstants.PGM_TEXT_CODE) {
                 final int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PgmFileInfo(width, height, false, maxgray);
-            } else if (identifier2 == PGM_RAW_CODE) {
+            } else if (identifier2 == PnmConstants.PGM_RAW_CODE) {
                 final int maxgray = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PgmFileInfo(width, height, true, maxgray);
-            } else if (identifier2 == PPM_TEXT_CODE) {
+            } else if (identifier2 == PnmConstants.PPM_TEXT_CODE) {
                 final int max = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PpmFileInfo(width, height, false, max);
-            } else if (identifier2 == PPM_RAW_CODE) {
+            } else if (identifier2 == PnmConstants.PPM_RAW_CODE) {
                 final int max = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PpmFileInfo(width, height, true, max);
             } else {
                 throw new ImageReadException("PNM file has invalid header.");
             }
-        } else if (identifier2 == PAM_RAW_CODE) {
+        } else if (identifier2 == PnmConstants.PAM_RAW_CODE) {
             int width = -1;
             boolean seenWidth = false;
             int height = -1;

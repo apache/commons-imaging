@@ -26,7 +26,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class JpegUtils extends BinaryFileParser implements JpegConstants {
+public class JpegUtils extends BinaryFileParser {
     public JpegUtils() {
         setByteOrder(ByteOrder.NETWORK);
     }
@@ -52,7 +52,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
         try {
             is = byteSource.getInputStream();
 
-            readAndVerifyBytes(is, SOI,
+            readAndVerifyBytes(is, JpegConstants.SOI,
                     "Not a Valid JPEG File: doesn't begin with 0xffd8");
 
             int markerCount;
@@ -67,7 +67,7 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
                 final int marker = ((0xff & markerBytes[0]) << 8)
                         | (0xff & markerBytes[1]);
 
-                if (marker == EOIMarker || marker == SOS_Marker) {
+                if (marker == JpegConstants.EOIMarker || marker == JpegConstants.SOS_Marker) {
                     if (!visitor.beginSOS()) {
                         canThrow = true;
                         return;
@@ -102,57 +102,57 @@ public class JpegUtils extends BinaryFileParser implements JpegConstants {
 
     public static String getMarkerName(final int marker) {
         switch (marker) {
-        case SOS_Marker:
+        case JpegConstants.SOS_Marker:
             return "SOS_Marker";
             // case JPEG_APP0 :
             // return "JPEG_APP0";
             // case JPEG_APP0_Marker :
             // return "JPEG_APP0_Marker";
-        case JPEG_APP1_Marker:
+        case JpegConstants.JPEG_APP1_Marker:
             return "JPEG_APP1_Marker";
-        case JPEG_APP2_Marker:
+        case JpegConstants.JPEG_APP2_Marker:
             return "JPEG_APP2_Marker";
-        case JPEG_APP13_Marker:
+        case JpegConstants.JPEG_APP13_Marker:
             return "JPEG_APP13_Marker";
-        case JPEG_APP14_Marker:
+        case JpegConstants.JPEG_APP14_Marker:
             return "JPEG_APP14_Marker";
-        case JPEG_APP15_Marker:
+        case JpegConstants.JPEG_APP15_Marker:
             return "JPEG_APP15_Marker";
-        case JFIFMarker:
+        case JpegConstants.JFIFMarker:
             return "JFIFMarker";
-        case SOF0Marker:
+        case JpegConstants.SOF0Marker:
             return "SOF0Marker";
-        case SOF1Marker:
+        case JpegConstants.SOF1Marker:
             return "SOF1Marker";
-        case SOF2Marker:
+        case JpegConstants.SOF2Marker:
             return "SOF2Marker";
-        case SOF3Marker:
+        case JpegConstants.SOF3Marker:
             return "SOF3Marker";
-        case DHTMarker:
+        case JpegConstants.DHTMarker:
             return "SOF4Marker";
-        case SOF5Marker:
+        case JpegConstants.SOF5Marker:
             return "SOF5Marker";
-        case SOF6Marker:
+        case JpegConstants.SOF6Marker:
             return "SOF6Marker";
-        case SOF7Marker:
+        case JpegConstants.SOF7Marker:
             return "SOF7Marker";
-        case SOF8Marker:
+        case JpegConstants.SOF8Marker:
             return "SOF8Marker";
-        case SOF9Marker:
+        case JpegConstants.SOF9Marker:
             return "SOF9Marker";
-        case SOF10Marker:
+        case JpegConstants.SOF10Marker:
             return "SOF10Marker";
-        case SOF11Marker:
+        case JpegConstants.SOF11Marker:
             return "SOF11Marker";
-        case DACMarker:
+        case JpegConstants.DACMarker:
             return "DACMarker";
-        case SOF13Marker:
+        case JpegConstants.SOF13Marker:
             return "SOF13Marker";
-        case SOF14Marker:
+        case JpegConstants.SOF14Marker:
             return "SOF14Marker";
-        case SOF15Marker:
+        case JpegConstants.SOF15Marker:
             return "SOF15Marker";
-        case DQTMarker:
+        case JpegConstants.DQTMarker:
             return "DQTMarker";
         default:
             return "Unknown";

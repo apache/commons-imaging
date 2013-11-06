@@ -49,7 +49,7 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class PcxImageParser extends ImageParser implements PcxConstants {
+public class PcxImageParser extends ImageParser {
     // ZSoft's official spec is at http://www.qzx.com/pc-gpe/pcx.txt
     // (among other places) but it's pretty thin. The fileformat.info document
     // at http://www.fileformat.info/format/pcx/egff.htm is a little better

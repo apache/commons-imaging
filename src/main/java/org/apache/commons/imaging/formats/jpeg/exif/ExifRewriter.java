@@ -49,7 +49,7 @@ import org.apache.commons.imaging.util.IoUtils;
  * @see <a
  *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/WriteExifMetadataExample.java">org.apache.commons.imaging.examples.WriteExifMetadataExample</a>
  */
-public class ExifRewriter extends BinaryFileParser implements JpegConstants {
+public class ExifRewriter extends BinaryFileParser {
     /**
      * Constructor. to guess whether a file contains an image based on its file
      * extension.
@@ -157,11 +157,11 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
                     final byte segmentData[]) throws
             // ImageWriteException,
                     ImageReadException, IOException {
-                if (marker != JPEG_APP1_Marker) {
+                if (marker != JpegConstants.JPEG_APP1_Marker) {
                     pieces.add(new JFIFPieceSegment(marker, markerBytes,
                             markerLengthBytes, segmentData));
                 } else if (!startsWith(segmentData,
-                        EXIF_IDENTIFIER_CODE)) {
+                        JpegConstants.EXIF_IDENTIFIER_CODE)) {
                     pieces.add(new JFIFPieceSegment(marker, markerBytes,
                             markerLengthBytes, segmentData));
                 // } else if (exifSegmentArray[0] != null) {
@@ -499,7 +499,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
 
         boolean canThrow = false;
         try {
-            SOI.writeTo(os);
+            JpegConstants.SOI.writeTo(os);
 
             boolean hasExif = false;
 
@@ -511,7 +511,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
             }
 
             if (!hasExif && newBytes != null) {
-                final byte markerBytes[] = toBytes((short)JPEG_APP1_Marker);
+                final byte markerBytes[] = toBytes((short)JpegConstants.JPEG_APP1_Marker);
                 if (newBytes.length > 0xffff) {
                     throw new ExifOverflowException(
                             "APP1 Segment is too long: " + newBytes.length);
@@ -522,10 +522,10 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
                 int index = 0;
                 final JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments
                         .get(index);
-                if (firstSegment.marker == JFIFMarker) {
+                if (firstSegment.marker == JpegConstants.JFIFMarker) {
                     index = 1;
                 }
-                segments.add(0, new JFIFPieceSegmentExif(JPEG_APP1_Marker,
+                segments.add(0, new JFIFPieceSegmentExif(JpegConstants.JPEG_APP1_Marker,
                         markerBytes, markerLengthBytes, newBytes));
             }
 
@@ -544,7 +544,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
                         continue;
                     }
 
-                    final byte markerBytes[] = toBytes((short)JPEG_APP1_Marker);
+                    final byte markerBytes[] = toBytes((short)JpegConstants.JPEG_APP1_Marker);
                     if (newBytes.length > 0xffff) {
                         throw new ExifOverflowException(
                                 "APP1 Segment is too long: " + newBytes.length);
@@ -579,7 +579,7 @@ public class ExifRewriter extends BinaryFileParser implements JpegConstants {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         if (includeEXIFPrefix) {
-            EXIF_IDENTIFIER_CODE.writeTo(os);
+            JpegConstants.EXIF_IDENTIFIER_CODE.writeTo(os);
             os.write(0);
             os.write(0);
         }

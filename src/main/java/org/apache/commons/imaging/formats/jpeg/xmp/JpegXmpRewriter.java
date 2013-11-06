@@ -30,6 +30,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
+import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -178,10 +179,10 @@ public class JpegXmpRewriter extends JpegRewriter {
         final byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
         int index = 0;
         while (index < xmpXmlBytes.length) {
-            final int segmentSize = Math.min(xmpXmlBytes.length, MAX_SEGMENT_SIZE);
+            final int segmentSize = Math.min(xmpXmlBytes.length, JpegConstants.MAX_SEGMENT_SIZE);
             final byte segmentData[] = writeXmpSegment(xmpXmlBytes, index,
                     segmentSize);
-            newPieces.add(new JFIFPieceSegment(JPEG_APP1_Marker, segmentData));
+            newPieces.add(new JFIFPieceSegment(JpegConstants.JPEG_APP1_Marker, segmentData));
             index += segmentSize;
         }
 
@@ -194,7 +195,7 @@ public class JpegXmpRewriter extends JpegRewriter {
             throws IOException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-        XMP_IDENTIFIER.writeTo(os);
+        JpegConstants.XMP_IDENTIFIER.writeTo(os);
         os.write(xmpXmlData, start, length);
 
         return os.toByteArray();

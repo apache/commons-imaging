@@ -33,11 +33,12 @@ import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
+import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
-public class IptcParser extends BinaryFileParser implements IptcConstants {
+public class IptcParser extends BinaryFileParser {
     private static final ByteOrder APP13_BYTE_ORDER = ByteOrder.NETWORK;
 
     public IptcParser() {
@@ -46,13 +47,13 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
 
     public boolean isPhotoshopJpegSegment(final byte segmentData[]) {
         if (!BinaryFileParser.startsWith(segmentData,
-                PHOTOSHOP_IDENTIFICATION_STRING)) {
+                JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING)) {
             return false;
         }
 
-        final int index = PHOTOSHOP_IDENTIFICATION_STRING.size();
+        final int index = JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size();
         return (index + 4) <= segmentData.length &&
-                ByteConversions.toInt(segmentData, index, APP13_BYTE_ORDER) == CONST_8BIM;
+                ByteConversions.toInt(segmentData, index, APP13_BYTE_ORDER) == JpegConstants.CONST_8BIM;
     }
 
     /*
@@ -137,7 +138,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                                 + ")");
             }
 
-            if (tagMarker != IPTC_RECORD_TAG_MARKER) {
+            if (tagMarker != IptcConstants.IPTC_RECORD_TAG_MARKER) {
                 if (verbose) {
                     System.out.println("Unexpected record tag marker in IPTC data.");
                 }
@@ -181,7 +182,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             final int recordSize = toUInt16(bytes, index);
             index += 2;
 
-            final boolean extendedDataset = recordSize > IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE;
+            final boolean extendedDataset = recordSize > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE;
             final int dataFieldCountLength = recordSize & 0x7fff;
             if (extendedDataset && verbose) {
                 Debug.debug("extendedDataset. dataFieldCountLength: "
@@ -198,7 +199,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // Debug.debug("recordSize", recordSize + " (0x"
             // + Integer.toHexString(recordSize) + ")");
 
-            if (recordNumber != IPTC_APPLICATION_2_RECORD_NUMBER) {
+            if (recordNumber != IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER) {
                 continue;
             }
 
@@ -269,9 +270,9 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
             // number of bytes (including the 1st byte, which is the size.)
     
             final byte[] idString = bis.readBytes(
-                    PHOTOSHOP_IDENTIFICATION_STRING.size(),
+                    JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(),
                     "App13 Segment missing identification string");
-            if (!PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
+            if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
                 throw new ImageReadException("Not a Photoshop App13 Segment");
             }
     
@@ -285,7 +286,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 } catch (final IOException ioEx) {
                     break;
                 }
-                if (imageResourceBlockSignature != CONST_8BIM) {
+                if (imageResourceBlockSignature != JpegConstants.CONST_8BIM) {
                     throw new ImageReadException(
                             "Invalid Image Resource Block Signature");
                 }
@@ -372,13 +373,13 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         final BinaryOutputStream bos = new BinaryOutputStream(os);
 
-        PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
+        JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
 
         final List<IptcBlock> blocks = data.getRawBlocks();
         for (int i = 0; i < blocks.size(); i++) {
             final IptcBlock block = blocks.get(i);
 
-            bos.write4Bytes(CONST_8BIM);
+            bos.write4Bytes(JpegConstants.CONST_8BIM);
 
             if (block.blockType < 0 || block.blockType > 0xffff) {
                 throw new ImageWriteException("Invalid IPTC block type.");
@@ -395,7 +396,7 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                 bos.write(0); // pad to even size, including length byte.
             }
 
-            if (block.blockData.length > IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
+            if (block.blockData.length > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
                 throw new ImageWriteException("IPTC block data is too long: "
                         + block.blockData.length);
             }
@@ -422,8 +423,8 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                     getByteOrder());
     
             // first, right record version record
-            bos.write(IPTC_RECORD_TAG_MARKER);
-            bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
+            bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
+            bos.write(IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER);
             bos.write(IptcTypes.RECORD_VERSION.type); // record version record
                                                       // type.
             bos.write2Bytes(2); // record version record size
@@ -449,8 +450,8 @@ public class IptcParser extends BinaryFileParser implements IptcConstants {
                     continue; // ignore
                 }
     
-                bos.write(IPTC_RECORD_TAG_MARKER);
-                bos.write(IPTC_APPLICATION_2_RECORD_NUMBER);
+                bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
+                bos.write(IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER);
                 if (element.iptcType.getType() < 0
                         || element.iptcType.getType() > 0xff) {
                     throw new ImageWriteException("Invalid record type: "

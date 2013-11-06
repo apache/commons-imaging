@@ -16,9 +16,8 @@
  */
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
-import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public interface IptcConstants extends JpegConstants {
+public class IptcConstants {
     public static final int IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE = 32767;
 
     public static final int IMAGE_RESOURCE_BLOCK_PHOTOSHOP2_INFO = 0x03e8;

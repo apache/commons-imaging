@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class PbmWriter extends PnmWriter implements PnmConstants {
+public class PbmWriter extends PnmWriter {
     public PbmWriter(final boolean RAWBITS) {
         super(RAWBITS);
     }
@@ -31,18 +31,18 @@ public class PbmWriter extends PnmWriter implements PnmConstants {
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final Map<String,Object> params)
             throws ImageWriteException, IOException {
-        os.write(PNM_PREFIX_BYTE);
-        os.write(RAWBITS ? PBM_RAW_CODE : PBM_TEXT_CODE);
-        os.write(PNM_SEPARATOR);
+        os.write(PnmConstants.PNM_PREFIX_BYTE);
+        os.write(RAWBITS ? PnmConstants.PBM_RAW_CODE : PnmConstants.PBM_TEXT_CODE);
+        os.write(PnmConstants.PNM_SEPARATOR);
 
         final int width = src.getWidth();
         final int height = src.getHeight();
 
         os.write(("" + width).getBytes("US-ASCII"));
-        os.write(PNM_SEPARATOR);
+        os.write(PnmConstants.PNM_SEPARATOR);
 
         os.write(("" + height).getBytes("US-ASCII"));
-        os.write(PNM_NEWLINE);
+        os.write(PnmConstants.PNM_NEWLINE);
 
         int bitcache = 0;
         int bits_in_cache = 0;
@@ -73,7 +73,7 @@ public class PbmWriter extends PnmWriter implements PnmConstants {
                     os.write(("" + sample).getBytes("US-ASCII")); // max
                                                                   // component
                                                                   // value
-                    os.write(PNM_SEPARATOR);
+                    os.write(PnmConstants.PNM_SEPARATOR);
                 }
             }
 

@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.ZLibUtils;
 import org.apache.commons.imaging.palette.Palette;
@@ -35,7 +36,7 @@ import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.ParamMap;
 import org.apache.commons.imaging.util.UnicodeUtils;
 
-public class PngWriter implements PngConstants {
+public class PngWriter {
     private final boolean verbose;
 
     public PngWriter(final boolean verbose) {
@@ -43,7 +44,7 @@ public class PngWriter implements PngConstants {
     }
 
     public PngWriter(final Map<String,Object> params) {
-        this.verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
+        this.verbose = ParamMap.getParamBoolean(params, ImagingConstants.PARAM_KEY_VERBOSE,
                 false);
     }
 
@@ -124,7 +125,7 @@ public class PngWriter implements PngConstants {
 
         // Debug.debug("baos", baos.toByteArray());
 
-        writeChunk(os, IHDR_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, PngConstants.IHDR_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunkiTXt(final OutputStream os, final PngText.Itxt text)
@@ -146,7 +147,7 @@ public class PngWriter implements PngConstants {
         baos.write(0);
 
         baos.write(1); // compressed flag, true
-        baos.write(COMPRESSION_DEFLATE_INFLATE); // compression method
+        baos.write(PngConstants.COMPRESSION_DEFLATE_INFLATE); // compression method
 
         // language tag
         baos.write(text.languageTag.getBytes("ISO-8859-1"));
@@ -158,7 +159,7 @@ public class PngWriter implements PngConstants {
 
         baos.write(new ZLibUtils().deflate(text.text.getBytes("utf-8")));
 
-        writeChunk(os, iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, PngConstants.iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text)
@@ -184,7 +185,7 @@ public class PngWriter implements PngConstants {
         // text
         baos.write(new ZLibUtils().deflate(text.text.getBytes("ISO-8859-1")));
 
-        writeChunk(os, zTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, PngConstants.zTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunktEXt(final OutputStream os, final PngText.Text text)
@@ -207,7 +208,7 @@ public class PngWriter implements PngConstants {
         // text
         baos.write(text.text.getBytes("ISO-8859-1"));
 
-        writeChunk(os, tEXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, PngConstants.tEXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunkXmpiTXt(final OutputStream os, final String xmpXml)
@@ -216,21 +217,21 @@ public class PngWriter implements PngConstants {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // keyword
-        baos.write(XMP_KEYWORD.getBytes("ISO-8859-1"));
+        baos.write(PngConstants.XMP_KEYWORD.getBytes("ISO-8859-1"));
         baos.write(0);
 
         baos.write(1); // compressed flag, true
-        baos.write(COMPRESSION_DEFLATE_INFLATE); // compression method
+        baos.write(PngConstants.COMPRESSION_DEFLATE_INFLATE); // compression method
 
         baos.write(0); // language tag (ignore). TODO
 
         // translated keyword
-        baos.write(XMP_KEYWORD.getBytes("utf-8"));
+        baos.write(PngConstants.XMP_KEYWORD.getBytes("utf-8"));
         baos.write(0);
 
         baos.write(new ZLibUtils().deflate(xmpXml.getBytes("utf-8")));
 
-        writeChunk(os, iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, PngConstants.iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
     private void writeChunkPLTE(final OutputStream os, final Palette palette)
@@ -248,7 +249,7 @@ public class PngWriter implements PngConstants {
             bytes[index + 2] = (byte) (0xff & (rgb >> 0));
         }
 
-        writeChunk(os, PLTE_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, PngConstants.PLTE_CHUNK_TYPE.toByteArray(), bytes);
     }
 
     private void writeChunkTRNS(final OutputStream os, final Palette palette) throws IOException {
@@ -258,16 +259,16 @@ public class PngWriter implements PngConstants {
             bytes[i] = (byte) (0xff & (palette.getEntry(i) >> 24));
         }
         
-        writeChunk(os, TRNS_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, PngConstants.TRNS_CHUNK_TYPE.toByteArray(), bytes);
     }
 
     private void writeChunkIEND(final OutputStream os) throws IOException {
-        writeChunk(os, IEND_CHUNK_TYPE.toByteArray(), null);
+        writeChunk(os, PngConstants.IEND_CHUNK_TYPE.toByteArray(), null);
     }
 
     private void writeChunkIDAT(final OutputStream os, final byte bytes[])
             throws IOException {
-        writeChunk(os, IDAT_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, PngConstants.IDAT_CHUNK_TYPE.toByteArray(), bytes);
     }
 
     private void writeChunkPHYS(final OutputStream os, final int xPPU, final int yPPU, final byte units)
@@ -282,7 +283,7 @@ public class PngWriter implements PngConstants {
         bytes[6] = (byte) (0xff & (yPPU >> 8));
         bytes[7] = (byte) (0xff & (yPPU >> 0));
         bytes[8] = units;
-        writeChunk(os, IPHYS_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, PngConstants.IPHYS_CHUNK_TYPE.toByteArray(), bytes);
     }
 
     private byte getColourType(final boolean hasAlpha, final boolean isGrayscale) {
@@ -291,17 +292,17 @@ public class PngWriter implements PngConstants {
         final boolean index = false; // charles
 
         if (index) {
-            result = COLOR_TYPE_INDEXED_COLOR;
+            result = PngConstants.COLOR_TYPE_INDEXED_COLOR;
         } else if (isGrayscale) {
             if (hasAlpha) {
-                result = COLOR_TYPE_GREYSCALE_WITH_ALPHA;
+                result = PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA;
             } else {
-                result = COLOR_TYPE_GREYSCALE;
+                result = PngConstants.COLOR_TYPE_GREYSCALE;
             }
         } else if (hasAlpha) {
-            result = COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
+            result = PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
         } else {
-            result = COLOR_TYPE_TRUE_COLOR;
+            result = PngConstants.COLOR_TYPE_TRUE_COLOR;
         }
 
         return result;
@@ -310,7 +311,7 @@ public class PngWriter implements PngConstants {
     private byte getBitDepth(final byte colorType, final Map<String,Object> params) {
         byte result = 8;
 
-        final Object o = params.get(PARAM_KEY_PNG_BIT_DEPTH);
+        final Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
         if (o != null && o instanceof Number) {
             final int value = ((Number) o).intValue();
             switch (value) {
@@ -325,14 +326,14 @@ public class PngWriter implements PngConstants {
                 result = 8;
             }
             switch (colorType) {
-            case COLOR_TYPE_GREYSCALE:
+            case PngConstants.COLOR_TYPE_GREYSCALE:
                 break;
-            case COLOR_TYPE_INDEXED_COLOR:
+            case PngConstants.COLOR_TYPE_INDEXED_COLOR:
                 result = (byte) Math.min(8, result);
                 break;
-            case COLOR_TYPE_GREYSCALE_WITH_ALPHA:
-            case COLOR_TYPE_TRUE_COLOR:
-            case COLOR_TYPE_TRUE_COLOR_WITH_ALPHA:
+            case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA:
+            case PngConstants.COLOR_TYPE_TRUE_COLOR:
+            case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA:
                 result = (byte) Math.max(8, result);
                 break;
             default:
@@ -410,31 +411,31 @@ public class PngWriter implements PngConstants {
         params = new HashMap<String,Object>(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
+            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
         }
         // clear verbose key.
-        if (params.containsKey(PARAM_KEY_VERBOSE)) {
-            params.remove(PARAM_KEY_VERBOSE);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_VERBOSE)) {
+            params.remove(ImagingConstants.PARAM_KEY_VERBOSE);
         }
 
         final Map<String,Object> rawParams = new HashMap<String,Object>(params);
-        if (params.containsKey(PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
-            params.remove(PARAM_KEY_PNG_FORCE_TRUE_COLOR);
+        if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
+            params.remove(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR);
         }
-        if (params.containsKey(PARAM_KEY_PNG_FORCE_INDEXED_COLOR)) {
-            params.remove(PARAM_KEY_PNG_FORCE_INDEXED_COLOR);
+        if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR)) {
+            params.remove(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR);
         }
-        if (params.containsKey(PARAM_KEY_PNG_BIT_DEPTH)) {
-            params.remove(PARAM_KEY_PNG_BIT_DEPTH);
+        if (params.containsKey(PngConstants.PARAM_KEY_PNG_BIT_DEPTH)) {
+            params.remove(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
         }
-        if (params.containsKey(PARAM_KEY_XMP_XML)) {
-            params.remove(PARAM_KEY_XMP_XML);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
+            params.remove(ImagingConstants.PARAM_KEY_XMP_XML);
         }
-        if (params.containsKey(PARAM_KEY_PNG_TEXT_CHUNKS)) {
-            params.remove(PARAM_KEY_PNG_TEXT_CHUNKS);
+        if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
+            params.remove(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
         }
-        params.remove(PARAM_KEY_PIXEL_DENSITY);
+        params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
         if (params.size() > 0) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
@@ -458,18 +459,18 @@ public class PngWriter implements PngConstants {
         byte colorType;
         {
             final boolean forceIndexedColor = ParamMap.getParamBoolean(params,
-                    PARAM_KEY_PNG_FORCE_INDEXED_COLOR, false);
+                    PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR, false);
             final boolean forceTrueColor = ParamMap.getParamBoolean(params,
-                    PARAM_KEY_PNG_FORCE_TRUE_COLOR, false);
+                    PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR, false);
 
             if (forceIndexedColor && forceTrueColor) {
                 throw new ImageWriteException(
                         "Params: Cannot force both indexed and true color modes");
             } else if (forceIndexedColor) {
-                colorType = COLOR_TYPE_INDEXED_COLOR;
+                colorType = PngConstants.COLOR_TYPE_INDEXED_COLOR;
             } else if (forceTrueColor) {
-                colorType = (byte) (hasAlpha ? COLOR_TYPE_TRUE_COLOR_WITH_ALPHA
-                        : COLOR_TYPE_TRUE_COLOR);
+                colorType = (byte) (hasAlpha ? PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA
+                        : PngConstants.COLOR_TYPE_TRUE_COLOR);
                 isGrayscale = false;
             } else {
                 colorType = getColourType(hasAlpha, isGrayscale);
@@ -485,7 +486,7 @@ public class PngWriter implements PngConstants {
         }
 
         int sampleDepth;
-        if (colorType == COLOR_TYPE_INDEXED_COLOR) {
+        if (colorType == PngConstants.COLOR_TYPE_INDEXED_COLOR) {
             sampleDepth = 8;
         } else {
             sampleDepth = bitDepth;
@@ -495,14 +496,14 @@ public class PngWriter implements PngConstants {
         }
 
         {
-            PNG_Signature.writeTo(os);
+            PngConstants.PNG_Signature.writeTo(os);
         }
         {
             // IHDR must be first
 
-            final byte compressionMethod = COMPRESSION_TYPE_INFLATE_DEFLATE;
-            final byte filterMethod = FILTER_METHOD_ADAPTIVE;
-            final byte interlaceMethod = INTERLACE_METHOD_NONE;
+            final byte compressionMethod = PngConstants.COMPRESSION_TYPE_INFLATE_DEFLATE;
+            final byte filterMethod = PngConstants.FILTER_METHOD_ADAPTIVE;
+            final byte interlaceMethod = PngConstants.INTERLACE_METHOD_NONE;
 
             final ImageHeader imageHeader = new ImageHeader(width, height, bitDepth,
                     colorType, compressionMethod, filterMethod, interlaceMethod);
@@ -518,7 +519,7 @@ public class PngWriter implements PngConstants {
         }
 
         Palette palette = null;
-        if (colorType == COLOR_TYPE_INDEXED_COLOR) {
+        if (colorType == PngConstants.COLOR_TYPE_INDEXED_COLOR) {
             // PLTE No Before first IDAT
 
             final int max_colors = hasAlpha ? 255 : 256;
@@ -539,7 +540,7 @@ public class PngWriter implements PngConstants {
             }
         }
 
-        final Object pixelDensityObj = params.get(PARAM_KEY_PIXEL_DENSITY);
+        final Object pixelDensityObj = params.get(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
         if (pixelDensityObj instanceof PixelDensity) {
             final PixelDensity pixelDensity = (PixelDensity) pixelDensityObj;
             if (pixelDensity.isUnitless()) {
@@ -555,13 +556,13 @@ public class PngWriter implements PngConstants {
             }
         }
 
-        if (params.containsKey(PARAM_KEY_XMP_XML)) {
-            final String xmpXml = (String) params.get(PARAM_KEY_XMP_XML);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
+            final String xmpXml = (String) params.get(ImagingConstants.PARAM_KEY_XMP_XML);
             writeChunkXmpiTXt(os, xmpXml);
         }
 
-        if (params.containsKey(PARAM_KEY_PNG_TEXT_CHUNKS)) {
-            final List<?> outputTexts = (List<?>) params.get(PARAM_KEY_PNG_TEXT_CHUNKS);
+        if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
+            final List<?> outputTexts = (List<?>) params.get(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
             for (int i = 0; i < outputTexts.size(); i++) {
                 final PngText text = (PngText) outputTexts.get(i);
                 if (text instanceof PngText.Text) {
@@ -586,15 +587,15 @@ public class PngWriter implements PngConstants {
             {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-                final boolean useAlpha = colorType == COLOR_TYPE_GREYSCALE_WITH_ALPHA
-                        || colorType == COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
+                final boolean useAlpha = colorType == PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA
+                        || colorType == PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
 
                 final int row[] = new int[width];
                 for (int y = 0; y < height; y++) {
                     // Debug.debug("y", y + "/" + height);
                     src.getRGB(0, y, width, 1, row, 0, width);
 
-                    final byte filter_type = FILTER_TYPE_NONE;
+                    final byte filter_type = PngConstants.FILTER_TYPE_NONE;
                     baos.write(filter_type);
                     for (int x = 0; x < width; x++) {
                         final int argb = row[x];

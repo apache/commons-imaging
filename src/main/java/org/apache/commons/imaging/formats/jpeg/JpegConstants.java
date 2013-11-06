@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.commons.imaging.common.BinaryConstant;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
-public interface JpegConstants {
+public class JpegConstants {
     public static final int MAX_SEGMENT_SIZE = 0xffff;
 
     public static final BinaryConstant JFIF0_SIGNATURE = new BinaryConstant(

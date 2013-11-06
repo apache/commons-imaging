@@ -28,7 +28,7 @@ import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class IccTag implements IccConstants {
+public class IccTag {
     public final int signature;
     public final int offset, length;
     public final IccTagType fIccTagType;

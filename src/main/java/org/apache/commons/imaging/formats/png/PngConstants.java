@@ -16,11 +16,10 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryConstant;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
-public interface PngConstants extends ImagingConstants {
+public class PngConstants {
 
     public static final int COMPRESSION_DEFLATE_INFLATE = 0;
 
@@ -135,7 +134,7 @@ public interface PngConstants extends ImagingConstants {
      * image.
      */
 
-    public final String XMP_KEYWORD = "XML:com.adobe.xmp";
+    public static final String XMP_KEYWORD = "XML:com.adobe.xmp";
 
     /**
      * Parameter key.

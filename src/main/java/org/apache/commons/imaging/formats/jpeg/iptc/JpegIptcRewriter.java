@@ -32,12 +32,13 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
+import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.xmp.JpegRewriter;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
  */
-public class JpegIptcRewriter extends JpegRewriter implements IptcConstants {
+public class JpegIptcRewriter extends JpegRewriter {
 
     /**
      * Reads a Jpeg image, removes all IPTC data from the App13 segment but
@@ -221,7 +222,7 @@ public class JpegIptcRewriter extends JpegRewriter implements IptcConstants {
             final byte[] newBlockBytes = new IptcParser().writeIPTCBlock(newData
                     .getRecords());
 
-            final int blockType = IMAGE_RESOURCE_BLOCK_IPTC_DATA;
+            final int blockType = IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
             final byte[] blockNameBytes = new byte[0];
             final IptcBlock newBlock = new IptcBlock(blockType, blockNameBytes,
                     newBlockBytes);
@@ -232,7 +233,7 @@ public class JpegIptcRewriter extends JpegRewriter implements IptcConstants {
             final byte segmentBytes[] = new IptcParser()
                     .writePhotoshopApp13Segment(newData);
             final JFIFPieceSegment newSegment = new JFIFPieceSegment(
-                    JPEG_APP13_Marker, segmentBytes);
+                    JpegConstants.JPEG_APP13_Marker, segmentBytes);
 
             newPieces = insertAfterLastAppSegments(newPieces,
                     Arrays.asList(new JFIFPieceSegment[] { newSegment, }));

@@ -23,13 +23,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-public class PcxWriter implements PcxConstants {
+public class PcxWriter {
     private int encoding;
     private int bitDepth = -1;
     private PixelDensity pixelDensity = null;
@@ -39,29 +40,29 @@ public class PcxWriter implements PcxConstants {
         params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
+            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
         }
 
         // uncompressed PCX files are not even documented in ZSoft's spec,
         // let alone supported by most image viewers
         encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
-        if (params.containsKey(PARAM_KEY_PCX_COMPRESSION)) {
-            final Object value = params.remove(PARAM_KEY_PCX_COMPRESSION);
+        if (params.containsKey(PcxConstants.PARAM_KEY_PCX_COMPRESSION)) {
+            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_COMPRESSION);
             if (value != null) {
                 if (!(value instanceof Number)) {
                     throw new ImageWriteException(
                             "Invalid compression parameter: " + value);
                 }
                 final int compression = ((Number) value).intValue();
-                if (compression == PCX_COMPRESSION_UNCOMPRESSED) {
+                if (compression == PcxConstants.PCX_COMPRESSION_UNCOMPRESSED) {
                     encoding = PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED;
                 }
             }
         }
 
-        if (params.containsKey(PARAM_KEY_PCX_BIT_DEPTH)) {
-            final Object value = params.remove(PARAM_KEY_PCX_BIT_DEPTH);
+        if (params.containsKey(PcxConstants.PARAM_KEY_PCX_BIT_DEPTH)) {
+            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_BIT_DEPTH);
             if (value != null) {
                 if (!(value instanceof Number)) {
                     throw new ImageWriteException(
@@ -71,8 +72,8 @@ public class PcxWriter implements PcxConstants {
             }
         }
 
-        if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
-            final Object value = params.remove(PARAM_KEY_PIXEL_DENSITY);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_PIXEL_DENSITY)) {
+            final Object value = params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
             if (value != null) {
                 if (!(value instanceof PixelDensity)) {
                     throw new ImageWriteException(

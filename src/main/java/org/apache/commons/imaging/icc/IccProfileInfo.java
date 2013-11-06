@@ -22,7 +22,7 @@ import java.io.StringWriter;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class IccProfileInfo implements IccConstants {
+public class IccProfileInfo {
 
     private final byte data[];
     public final int ProfileSize;
@@ -81,7 +81,7 @@ public class IccProfileInfo implements IccConstants {
     }
 
     public boolean issRGB() {
-        final boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
+        final boolean result = ((DeviceManufacturer == IccConstants.IEC) && (DeviceModel == IccConstants.sRGB));
         return result;
     }
 

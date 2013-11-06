@@ -35,7 +35,7 @@ import org.apache.commons.imaging.util.IoUtils;
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
  */
-public class JpegRewriter extends BinaryFileParser implements JpegConstants {
+public class JpegRewriter extends BinaryFileParser {
     private static final ByteOrder JPEG_BYTE_ORDER = ByteOrder.NETWORK;
 
     /**
@@ -102,25 +102,25 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
         }
 
         public boolean isApp1Segment() {
-            return marker == JPEG_APP1_Marker;
+            return marker == JpegConstants.JPEG_APP1_Marker;
         }
 
         public boolean isAppSegment() {
-            return marker >= JPEG_APP0_Marker && marker <= JPEG_APP15_Marker;
+            return marker >= JpegConstants.JPEG_APP0_Marker && marker <= JpegConstants.JPEG_APP15_Marker;
         }
 
         public boolean isExifSegment() {
-            if (marker != JPEG_APP1_Marker) {
+            if (marker != JpegConstants.JPEG_APP1_Marker) {
                 return false;
             }
-            if (!startsWith(segmentData, EXIF_IDENTIFIER_CODE)) {
+            if (!startsWith(segmentData, JpegConstants.EXIF_IDENTIFIER_CODE)) {
                 return false;
             }
             return true;
         }
 
         public boolean isPhotoshopApp13Segment() {
-            if (marker != JPEG_APP13_Marker) {
+            if (marker != JpegConstants.JPEG_APP13_Marker) {
                 return false;
             }
             if (!new IptcParser().isPhotoshopJpegSegment(segmentData)) {
@@ -130,10 +130,10 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
         }
 
         public boolean isXmpSegment() {
-            if (marker != JPEG_APP1_Marker) {
+            if (marker != JpegConstants.JPEG_APP1_Marker) {
                 return false;
             }
-            if (!startsWith(segmentData, XMP_IDENTIFIER)) {
+            if (!startsWith(segmentData, JpegConstants.XMP_IDENTIFIER)) {
                 return false;
             }
             return true;
@@ -315,7 +315,7 @@ public class JpegRewriter extends BinaryFileParser implements JpegConstants {
             final List<? extends JFIFPiece> segments) throws IOException {
         boolean canThrow = false;
         try {
-            SOI.writeTo(os);
+            JpegConstants.SOI.writeTo(os);
     
             for (int i = 0; i < segments.size(); i++) {
                 final JFIFPiece piece = segments.get(i);

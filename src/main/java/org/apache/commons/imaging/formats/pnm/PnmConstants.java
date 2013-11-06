@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.pnm;
 
-public interface PnmConstants {
+public class PnmConstants {
     public static final byte PNM_PREFIX_BYTE = 0x50; // P
 
     public static final byte PBM_TEXT_CODE = 0x31; // Textual Bitmap
