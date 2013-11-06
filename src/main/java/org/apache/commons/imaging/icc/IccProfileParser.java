@@ -28,6 +28,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.util.CachingInputStream;
 import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class IccProfileParser extends BinaryFileParser implements IccConstants {
     public IccProfileParser() {
@@ -304,86 +305,64 @@ public class IccProfileParser extends BinaryFileParser implements IccConstants {
         return null;
     }
 
-    public Boolean issRGB(final ICC_Profile icc_profile) {
-        if (icc_profile == null) {
-            return null;
-        }
-
+    public boolean issRGB(final ICC_Profile icc_profile) throws IOException {
         return issRGB(new ByteSourceArray(icc_profile.getData()));
     }
 
-    public Boolean issRGB(final byte bytes[]) {
-        if (bytes == null) {
-            return null;
-        }
-
+    public boolean issRGB(final byte bytes[]) throws IOException {
         return issRGB(new ByteSourceArray(bytes));
     }
 
-    public Boolean issRGB(final File file) {
-        if (file == null) {
-            return null;
-        }
-
+    public boolean issRGB(final File file) throws IOException {
         return issRGB(new ByteSourceFile(file));
     }
 
-    public Boolean issRGB(final ByteSource byteSource) {
-        try {
-            if (getDebug()) {
-                Debug.debug();
-            }
-
-            // setDebug(true);
-
-            // long length = byteSource.getLength();
-            //
-            // if (getDebug())
-            // Debug.debug("length: " + length);
-
-            InputStream is = null;
-            try {
-                is = byteSource.getInputStream();
-
-                read4Bytes("ProfileSize", is, "Not a Valid ICC Profile");
-
-                // if (length != ProfileSize)
-                // return null;
-
-                this.skipBytes(is, 4 * 5);
-
-                skipBytes(is, 12, "Not a Valid ICC Profile");
-
-                this.skipBytes(is, 4 * 3);
-
-                final int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
-                        "Not a Valid ICC Profile");
-                if (getDebug()) {
-                    printCharQuad("DeviceManufacturer", DeviceManufacturer);
-                }
-
-                final int DeviceModel = read4Bytes("DeviceModel", is,
-                        "Not a Valid ICC Profile");
-                if (getDebug()) {
-                    printCharQuad("DeviceModel", DeviceModel);
-                }
-
-                final boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
-
-                return result;
-            } finally {
-                if (is != null) {
-                    try {
-                        is.close();
-                    } catch (final IOException ignore) {
-                    }
-                }
-            }
-        } catch (final Exception e) {
-            Debug.debug(e);
+    public boolean issRGB(final ByteSource byteSource) throws IOException {
+        if (getDebug()) {
+            Debug.debug();
         }
 
-        return null;
+        // setDebug(true);
+
+        // long length = byteSource.getLength();
+        //
+        // if (getDebug())
+        // Debug.debug("length: " + length);
+
+        InputStream is = null;
+        boolean canThrow = false;
+        try {
+            is = byteSource.getInputStream();
+
+            read4Bytes("ProfileSize", is, "Not a Valid ICC Profile");
+
+            // if (length != ProfileSize)
+            // return null;
+
+            this.skipBytes(is, 4 * 5);
+
+            skipBytes(is, 12, "Not a Valid ICC Profile");
+
+            this.skipBytes(is, 4 * 3);
+
+            final int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
+                    "Not a Valid ICC Profile");
+            if (getDebug()) {
+                printCharQuad("DeviceManufacturer", DeviceManufacturer);
+            }
+
+            final int DeviceModel = read4Bytes("DeviceModel", is,
+                    "Not a Valid ICC Profile");
+            if (getDebug()) {
+                printCharQuad("DeviceModel", DeviceModel);
+            }
+
+            final boolean result = ((DeviceManufacturer == IEC) && (DeviceModel == sRGB));
+            canThrow = true;
+            return result;
+        } finally {
+            IoUtils.closeQuietly(canThrow, is);
+        }
     }
 
 }
