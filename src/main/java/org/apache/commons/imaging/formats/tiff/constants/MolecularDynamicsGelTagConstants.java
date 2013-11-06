@@ -32,39 +32,39 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  * http://www.awaresystems.be/imaging/tiff/tifftags/docs/gel.html
  */
 public interface MolecularDynamicsGelTagConstants {
-    public static final TagInfoLong EXIF_TAG_MD_FILE_TAG = new TagInfoLong(
+    TagInfoLong EXIF_TAG_MD_FILE_TAG = new TagInfoLong(
             "MD FileTag", 0x82a5, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoRational EXIF_TAG_MD_SCALE_PIXEL = new TagInfoRational(
+    TagInfoRational EXIF_TAG_MD_SCALE_PIXEL = new TagInfoRational(
             "MD ScalePixel", 0x82a6, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoShort EXIF_TAG_MD_COLOR_TABLE = new TagInfoShort(
+    TagInfoShort EXIF_TAG_MD_COLOR_TABLE = new TagInfoShort(
             "MD ColorTable", 0x82a7, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoAscii EXIF_TAG_MD_LAB_NAME = new TagInfoAscii(
+    TagInfoAscii EXIF_TAG_MD_LAB_NAME = new TagInfoAscii(
             "MD LabName", 0x82a8, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoAscii EXIF_TAG_MD_SAMPLE_INFO = new TagInfoAscii(
+    TagInfoAscii EXIF_TAG_MD_SAMPLE_INFO = new TagInfoAscii(
             "MD SampleInfo", 0x82a9, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoAscii EXIF_TAG_MD_PREP_DATE = new TagInfoAscii(
+    TagInfoAscii EXIF_TAG_MD_PREP_DATE = new TagInfoAscii(
             "MD PrepDate", 0x82aa, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoAscii EXIF_TAG_MD_PREP_TIME = new TagInfoAscii(
+    TagInfoAscii EXIF_TAG_MD_PREP_TIME = new TagInfoAscii(
             "MD PrepTime", 0x82ab, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoAscii EXIF_TAG_MD_FILE_UNITS = new TagInfoAscii(
+    TagInfoAscii EXIF_TAG_MD_FILE_UNITS = new TagInfoAscii(
             "MD FileUnits", 0x82ac, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final List<TagInfo> ALL_MOLECULAR_DYNAMICS_GEL_TAGS =
+    List<TagInfo> ALL_MOLECULAR_DYNAMICS_GEL_TAGS =
             Collections.unmodifiableList(Arrays.asList(
                     EXIF_TAG_MD_FILE_TAG,
                     EXIF_TAG_MD_SCALE_PIXEL,

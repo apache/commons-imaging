@@ -28,191 +28,191 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 
 public interface GpsTagConstants {
-    public static final TagInfoByte GPS_TAG_GPS_VERSION_ID = new TagInfoByte(
+    TagInfoByte GPS_TAG_GPS_VERSION_ID = new TagInfoByte(
             "GPSVersionID", 0x0000, 4,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_LATITUDE_REF = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_LATITUDE_REF = new TagInfoAscii(
             "GPSLatitudeRef", 0x0001, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_LATITUDE_REF_VALUE_NORTH = "N";
-    public static final String GPS_TAG_GPS_LATITUDE_REF_VALUE_SOUTH = "S";
+    String GPS_TAG_GPS_LATITUDE_REF_VALUE_NORTH = "N";
+    String GPS_TAG_GPS_LATITUDE_REF_VALUE_SOUTH = "S";
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_LATITUDE = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_LATITUDE = new TagInfoRational(
             "GPSLatitude", 0x0002, 3,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_LONGITUDE_REF = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_LONGITUDE_REF = new TagInfoAscii(
             "GPSLongitudeRef", 0x0003, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_LONGITUDE_REF_VALUE_EAST = "E";
-    public static final String GPS_TAG_GPS_LONGITUDE_REF_VALUE_WEST = "W";
+    String GPS_TAG_GPS_LONGITUDE_REF_VALUE_EAST = "E";
+    String GPS_TAG_GPS_LONGITUDE_REF_VALUE_WEST = "W";
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_LONGITUDE = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_LONGITUDE = new TagInfoRational(
             "GPSLongitude", 0x0004, 3,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoByte GPS_TAG_GPS_ALTITUDE_REF = new TagInfoByte(
+    TagInfoByte GPS_TAG_GPS_ALTITUDE_REF = new TagInfoByte(
             "GPSAltitudeRef", 0x0005, 1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final int GPS_TAG_GPS_ALTITUDE_REF_VALUE_ABOVE_SEA_LEVEL = 0;
-    public static final int GPS_TAG_GPS_ALTITUDE_REF_VALUE_BELOW_SEA_LEVEL = 1;
+    int GPS_TAG_GPS_ALTITUDE_REF_VALUE_ABOVE_SEA_LEVEL = 0;
+    int GPS_TAG_GPS_ALTITUDE_REF_VALUE_BELOW_SEA_LEVEL = 1;
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_ALTITUDE = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_ALTITUDE = new TagInfoRational(
             "GPSAltitude", 0x0006, 1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_TIME_STAMP = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_TIME_STAMP = new TagInfoRational(
             "GPSTimeStamp", 0x0007, 3,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_SATELLITES = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_SATELLITES = new TagInfoAscii(
             "GPSSatellites", 0x0008, -1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_STATUS = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_STATUS = new TagInfoAscii(
             "GPSStatus", 0x0009, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_STATUS_VALUE_MEASUREMENT_IN_PROGRESS = "A";
-    public static final String GPS_TAG_GPS_STATUS_VALUE_MEASUREMENT_INTEROPERABILITY = "V";
+    String GPS_TAG_GPS_STATUS_VALUE_MEASUREMENT_IN_PROGRESS = "A";
+    String GPS_TAG_GPS_STATUS_VALUE_MEASUREMENT_INTEROPERABILITY = "V";
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_MEASURE_MODE = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_MEASURE_MODE = new TagInfoAscii(
             "GPSMeasureMode", 0x000a, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final int GPS_TAG_GPS_MEASURE_MODE_VALUE_2_DIMENSIONAL_MEASUREMENT = 2;
-    public static final int GPS_TAG_GPS_MEASURE_MODE_VALUE_3_DIMENSIONAL_MEASUREMENT = 3;
+    int GPS_TAG_GPS_MEASURE_MODE_VALUE_2_DIMENSIONAL_MEASUREMENT = 2;
+    int GPS_TAG_GPS_MEASURE_MODE_VALUE_3_DIMENSIONAL_MEASUREMENT = 3;
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_DOP = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_DOP = new TagInfoRational(
             "GPSDOP", 0x000b, 1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_SPEED_REF = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_SPEED_REF = new TagInfoAscii(
             "GPSSpeedRef", 0x000c, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_SPEED_REF_VALUE_KMPH = "K";
-    public static final String GPS_TAG_GPS_SPEED_REF_VALUE_MPH = "M";
-    public static final String GPS_TAG_GPS_SPEED_REF_VALUE_KNOTS = "N";
+    String GPS_TAG_GPS_SPEED_REF_VALUE_KMPH = "K";
+    String GPS_TAG_GPS_SPEED_REF_VALUE_MPH = "M";
+    String GPS_TAG_GPS_SPEED_REF_VALUE_KNOTS = "N";
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_SPEED = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_SPEED = new TagInfoRational(
             "GPSSpeed", 0x000d, 1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_TRACK_REF = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_TRACK_REF = new TagInfoAscii(
             "GPSTrackRef", 0x000e, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_TRACK_REF_VALUE_MAGNETIC_NORTH = "M";
-    public static final String GPS_TAG_GPS_TRACK_REF_VALUE_TRUE_NORTH = "T";
+    String GPS_TAG_GPS_TRACK_REF_VALUE_MAGNETIC_NORTH = "M";
+    String GPS_TAG_GPS_TRACK_REF_VALUE_TRUE_NORTH = "T";
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_TRACK = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_TRACK = new TagInfoRational(
             "GPSTrack", 0x000f, 1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_IMG_DIRECTION_REF = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_IMG_DIRECTION_REF = new TagInfoAscii(
             "GPSImgDirectionRef", 0x0010, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_IMG_DIRECTION_REF_VALUE_MAGNETIC_NORTH = "M";
-    public static final String GPS_TAG_GPS_IMG_DIRECTION_REF_VALUE_TRUE_NORTH = "T";
+    String GPS_TAG_GPS_IMG_DIRECTION_REF_VALUE_MAGNETIC_NORTH = "M";
+    String GPS_TAG_GPS_IMG_DIRECTION_REF_VALUE_TRUE_NORTH = "T";
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_IMG_DIRECTION = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_IMG_DIRECTION = new TagInfoRational(
             "GPSImgDirection", 0x0011, 1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_MAP_DATUM = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_MAP_DATUM = new TagInfoAscii(
             "GPSMapDatum", 0x0012, -1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_DEST_LATITUDE_REF = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_DEST_LATITUDE_REF = new TagInfoAscii(
             "GPSDestLatitudeRef", 0x0013, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_DEST_LATITUDE_REF_VALUE_NORTH = "N";
-    public static final String GPS_TAG_GPS_DEST_LATITUDE_REF_VALUE_SOUTH = "S";
+    String GPS_TAG_GPS_DEST_LATITUDE_REF_VALUE_NORTH = "N";
+    String GPS_TAG_GPS_DEST_LATITUDE_REF_VALUE_SOUTH = "S";
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_DEST_LATITUDE = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_DEST_LATITUDE = new TagInfoRational(
             "GPSDestLatitude", 0x0014, 3,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_DEST_LONGITUDE_REF = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_DEST_LONGITUDE_REF = new TagInfoAscii(
             "GPSDestLongitudeRef", 0x0015, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_DEST_LONGITUDE_REF_VALUE_EAST = "E";
-    public static final String GPS_TAG_GPS_DEST_LONGITUDE_REF_VALUE_WEST = "W";
+    String GPS_TAG_GPS_DEST_LONGITUDE_REF_VALUE_EAST = "E";
+    String GPS_TAG_GPS_DEST_LONGITUDE_REF_VALUE_WEST = "W";
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_DEST_LONGITUDE = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_DEST_LONGITUDE = new TagInfoRational(
             "GPSDestLongitude", 0x0016, 3,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_DEST_BEARING_REF = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_DEST_BEARING_REF = new TagInfoAscii(
             "GPSDestBearingRef", 0x0017, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_DEST_BEARING_REF_VALUE_MAGNETIC_NORTH = "M";
-    public static final String GPS_TAG_GPS_DEST_BEARING_REF_VALUE_TRUE_NORTH = "T";
+    String GPS_TAG_GPS_DEST_BEARING_REF_VALUE_MAGNETIC_NORTH = "M";
+    String GPS_TAG_GPS_DEST_BEARING_REF_VALUE_TRUE_NORTH = "T";
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_DEST_BEARING = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_DEST_BEARING = new TagInfoRational(
             "GPSDestBearing", 0x0018, 1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_DEST_DISTANCE_REF = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_DEST_DISTANCE_REF = new TagInfoAscii(
             "GPSDestDistanceRef", 0x0019, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final String GPS_TAG_GPS_DEST_DISTANCE_REF_VALUE_KILOMETERS = "K";
-    public static final String GPS_TAG_GPS_DEST_DISTANCE_REF_VALUE_MILES = "M";
-    public static final String GPS_TAG_GPS_DEST_DISTANCE_REF_VALUE_NAUTICAL_MILES = "N";
+    String GPS_TAG_GPS_DEST_DISTANCE_REF_VALUE_KILOMETERS = "K";
+    String GPS_TAG_GPS_DEST_DISTANCE_REF_VALUE_MILES = "M";
+    String GPS_TAG_GPS_DEST_DISTANCE_REF_VALUE_NAUTICAL_MILES = "N";
     // ************************************************************
-    public static final TagInfoRational GPS_TAG_GPS_DEST_DISTANCE = new TagInfoRational(
+    TagInfoRational GPS_TAG_GPS_DEST_DISTANCE = new TagInfoRational(
             "GPSDestDistance", 0x001a, 1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoGpsText GPS_TAG_GPS_PROCESSING_METHOD = new TagInfoGpsText(
+    TagInfoGpsText GPS_TAG_GPS_PROCESSING_METHOD = new TagInfoGpsText(
             "GPSProcessingMethod", 0x001b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoGpsText GPS_TAG_GPS_AREA_INFORMATION = new TagInfoGpsText(
+    TagInfoGpsText GPS_TAG_GPS_AREA_INFORMATION = new TagInfoGpsText(
             "GPSAreaInformation", 0x001c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoAscii GPS_TAG_GPS_DATE_STAMP = new TagInfoAscii(
+    TagInfoAscii GPS_TAG_GPS_DATE_STAMP = new TagInfoAscii(
             "GPSDateStamp", 0x001d, 11,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
     // ************************************************************
-    public static final TagInfoShort GPS_TAG_GPS_DIFFERENTIAL = new TagInfoShort(
+    TagInfoShort GPS_TAG_GPS_DIFFERENTIAL = new TagInfoShort(
             "GPSDifferential", 0x001e, 1,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final int GPS_TAG_GPS_DIFFERENTIAL_VALUE_NO_CORRECTION = 0;
-    public static final int GPS_TAG_GPS_DIFFERENTIAL_VALUE_DIFFERENTIAL_CORRECTED = 1;
+    int GPS_TAG_GPS_DIFFERENTIAL_VALUE_NO_CORRECTION = 0;
+    int GPS_TAG_GPS_DIFFERENTIAL_VALUE_DIFFERENTIAL_CORRECTED = 1;
     // ************************************************************
 
-    public static final List<TagInfo> ALL_GPS_TAGS =
+    List<TagInfo> ALL_GPS_TAGS =
             Collections.unmodifiableList(Arrays.asList(
                     GPS_TAG_GPS_VERSION_ID, GPS_TAG_GPS_LATITUDE_REF,
                     GPS_TAG_GPS_LATITUDE, GPS_TAG_GPS_LONGITUDE_REF,

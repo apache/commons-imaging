@@ -35,39 +35,39 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  * http://partners.adobe.com/public/developer/en/tiff/TIFFPM6.pdf
  */
 public interface AdobePageMaker6TagConstants {
-    final TagInfoLongOrIFD TIFF_TAG_SUB_IFD = new TagInfoLongOrIFD(
+    TagInfoLongOrIFD TIFF_TAG_SUB_IFD = new TagInfoLongOrIFD(
             "SubIFDs",  0x014a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
 
-    final TagInfoByte TIFF_TAG_CLIP_PATH = new TagInfoByte(
+    TagInfoByte TIFF_TAG_CLIP_PATH = new TagInfoByte(
             "ClipPath",  0x0157, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
-    final TagInfoLong TIFF_TAG_XCLIP_PATH_UNITS = new TagInfoLong(
+    TagInfoLong TIFF_TAG_XCLIP_PATH_UNITS = new TagInfoLong(
             "XClipPathUnits", 0x0158, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
-    final TagInfoLong TIFF_TAG_YCLIP_PATH_UNITS = new TagInfoLong(
+    TagInfoLong TIFF_TAG_YCLIP_PATH_UNITS = new TagInfoLong(
             "YClipPathUnits", 0x0159, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    final TagInfoShort TIFF_TAG_INDEXED = new TagInfoShort(
+    TagInfoShort TIFF_TAG_INDEXED = new TagInfoShort(
             "Indexed", 0x015a, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    final int INDEXED_VALUE_NOT_INDEXED = 0;
-    final int INDEXED_VALUE_INDEXED = 1;
+    int INDEXED_VALUE_NOT_INDEXED = 0;
+    int INDEXED_VALUE_INDEXED = 1;
 
-    final TagInfoShort TIFF_TAG_OPIPROXY = new TagInfoShort(
+    TagInfoShort TIFF_TAG_OPIPROXY = new TagInfoShort(
             "OPIProxy", 0x015f, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_DOES_NOT_EXIST = 0;
-    final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_EXISTS = 1;
+    int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_DOES_NOT_EXIST = 0;
+    int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_EXISTS = 1;
 
-    final TagInfoAscii TIFF_TAG_IMAGE_ID = new TagInfoAscii(
+    TagInfoAscii TIFF_TAG_IMAGE_ID = new TagInfoAscii(
             "ImageID", 0x800d, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
-    final List<TagInfo> ALL_ADOBE_PAGEMAKER_6_TAGS =
+    List<TagInfo> ALL_ADOBE_PAGEMAKER_6_TAGS =
             Collections.unmodifiableList(Arrays.asList(
                     TIFF_TAG_SUB_IFD,
                     TIFF_TAG_CLIP_PATH,

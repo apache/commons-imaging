@@ -31,15 +31,15 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
  * http://www.awaresystems.be/imaging/tiff/tifftags/gdal_nodata.html
  */
 public interface GdalLibraryTagConstants {
-    public static final TagInfoAscii EXIF_TAG_GDAL_METADATA = new TagInfoAscii(
+    TagInfoAscii EXIF_TAG_GDAL_METADATA = new TagInfoAscii(
             "GDALMetadata", 0xa480, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
-    public static final TagInfoAscii EXIF_TAG_GDAL_NO_DATA = new TagInfoAscii(
+    TagInfoAscii EXIF_TAG_GDAL_NO_DATA = new TagInfoAscii(
             "GDALNoData", 0xa481, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final List<TagInfo> ALL_GDAL_LIBRARY_TAGS =
+    List<TagInfo> ALL_GDAL_LIBRARY_TAGS =
             Collections.unmodifiableList(Arrays.asList(new TagInfo[] {
                     EXIF_TAG_GDAL_METADATA,
                     EXIF_TAG_GDAL_NO_DATA}));
