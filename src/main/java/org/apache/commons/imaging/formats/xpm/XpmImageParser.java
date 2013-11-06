@@ -104,7 +104,7 @@ public class XpmImageParser extends ImageParser {
 
     @Override
     public String getName() {
-        return "Xpm-Custom";
+        return "X PixMap";
     }
 
     @Override

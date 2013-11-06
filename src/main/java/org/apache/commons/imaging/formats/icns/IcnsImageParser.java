@@ -50,7 +50,7 @@ public class IcnsImageParser extends ImageParser {
 
     @Override
     public String getName() {
-        return "icns-Custom";
+        return "Apple Icon Image";
     }
 
     @Override

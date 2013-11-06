@@ -48,7 +48,7 @@ public class WbmpImageParser extends ImageParser {
 
     @Override
     public String getName() {
-        return "Wbmp-Custom";
+        return "Wireless Application Protocol Bitmap Format";
     }
 
     @Override

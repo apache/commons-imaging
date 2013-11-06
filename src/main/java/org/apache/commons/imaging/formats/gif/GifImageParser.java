@@ -57,7 +57,7 @@ public class GifImageParser extends ImageParser {
 
     @Override
     public String getName() {
-        return "Gif-Custom";
+        return "Graphics Interchange Format";
     }
 
     @Override

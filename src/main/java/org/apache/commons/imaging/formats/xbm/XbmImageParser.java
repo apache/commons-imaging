@@ -54,7 +54,7 @@ public class XbmImageParser extends ImageParser {
 
     @Override
     public String getName() {
-        return "Xbm-Custom";
+        return "X BitMap";
     }
 
     @Override
