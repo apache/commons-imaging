@@ -208,7 +208,8 @@ Apache Commons Imaging includes a number of components with separate copyright
 notices and license terms. Your use of these components is subject to the terms
 and conditions of the following licenses.
 
-rgb.txt comes from the X.org project and is under the following licenses:
+src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt
+comes from the X.org project and is under the following licenses:
 
    Copyright 1985, 1989, 1998  The Open Group
 

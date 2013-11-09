@@ -107,9 +107,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <argLine>-Xmx512m</argLine>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -272,6 +269,21 @@
             <tag>NOPMD</tag>
             <tag>NOTE</tag>
           </tags>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>src/test/data/images/xpm/1/symbolic.xpm</exclude>
+            <exclude>src/test/data/images/xpm/1/Oregon Scientific DS6639 - DSC_0307 - small.xpm</exclude>
+            <exclude>src/test/data/images/pbm/2/5x5-grayscale.pam</exclude>
+            <exclude>src/test/data/images/pbm/2/5x5-bw.pam</exclude>
+            <exclude>src/test/data/images/pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.pgm</exclude>
+            <exclude>src/test/data/images/xbm/1/Oregon Scientific DS6639 - DSC_0307 - small.xbm</exclude>
+            <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
+          </excludes>
         </configuration>
       </plugin>
     </plugins>
