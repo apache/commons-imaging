@@ -16,6 +16,6 @@
  */
 package org.apache.commons.imaging.formats.tga;
 
-public class TgaConstants {
-
-}
+//public class TgaConstants {
+//
+//}
