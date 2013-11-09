@@ -27,6 +27,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.util.Debug;
 
 public class TiffRoundtripTest extends TiffBaseTest {
@@ -50,14 +51,20 @@ public class TiffRoundtripTest extends TiffBaseTest {
             BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
 
-            final File tempFile = createTempFile(imageFile.getName() + ".", ".tif");
-            final Map<String,Object> params = new HashMap<String,Object>();
-            Imaging.writeImage(image, tempFile, ImageFormats.TIFF,
-                    params);
-            image = null;
-
-            final BufferedImage image2 = Imaging.getBufferedImage(tempFile);
-            assertNotNull(image2);
+            final int[] compressions = new int[] {
+                    TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
+                    TiffConstants.TIFF_COMPRESSION_LZW,
+                    TiffConstants.TIFF_COMPRESSION_PACKBITS
+            };
+            for (final int compression : compressions) {
+                final File tempFile = createTempFile(imageFile.getName() + "-" + compression + ".", ".tif");
+                final Map<String,Object> params = new HashMap<String,Object>();
+                params.put(TiffConstants.PARAM_KEY_COMPRESSION, compression);
+                Imaging.writeImage(image, tempFile, ImageFormats.TIFF,
+                        params);
+                final BufferedImage image2 = Imaging.getBufferedImage(tempFile);
+                assertNotNull(image2);
+            }
         }
     }
 

@@ -20,7 +20,18 @@ import java.awt.image.BufferedImage;
 
 import org.apache.commons.imaging.ImageWriteException;
 
+/**
+ * Dithering algorithms to use when quantizing an image to paletted form.
+ */
 public class Dithering {
+    /**
+     * Changes the given image to only use colors from the given palette,
+     * applying Floyd-Steinberg dithering in the process. Ensure that
+     * your alpha values in the image and in the palette are consistent.
+     * @param image the image to change
+     * @param palette the palette to use
+     * @throws ImageWriteException
+     */
     public static void applyFloydSteinbergDithering(final BufferedImage image, final Palette palette) throws ImageWriteException {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {

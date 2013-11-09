@@ -30,7 +30,7 @@ public class TagInfoAscii extends TagInfo {
     }
 
     public String[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
-        int nullCount = 1;
+        int nullCount = 0;
         for (int i = 0; i < bytes.length - 1; i++) {
             if (bytes[i] == 0) {
                 nullCount++;

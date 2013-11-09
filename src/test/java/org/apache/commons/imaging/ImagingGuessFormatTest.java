@@ -57,7 +57,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
         // testGuess(ImageFormat.IMAGE_FORMAT_JBIG2, JBIG2_IMAGE_FILE);
     }
 
-    public static final String UNKNOWN_IMAGE_FILE = "jpg\\1\\info.txt";
+    public static final String UNKNOWN_IMAGE_FILE = "info.txt";
 
     public void testGuess_unknown() throws Exception {
         testGuess(ImageFormats.UNKNOWN, UNKNOWN_IMAGE_FILE);

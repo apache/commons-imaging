@@ -208,6 +208,10 @@ tiff/6/bad-interoperability.asm
 tiff/6/bad-interoperability.tiff
 	Contributed by Damjan Jovanovic.
 	Test image with a 0 count interoperability TIFF tag.
+
+tiff/7/Oregon Scientific DS6639 - DSC_0307 - small - CMYK.tiff
+	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
+	Test TIFF with CMYK color.
 	
 wbmp/1/Oregon Scientific DS6639 - DSC_0307 - small.wbmp
 	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
