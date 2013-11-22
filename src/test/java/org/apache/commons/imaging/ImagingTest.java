@@ -33,14 +33,18 @@ import org.apache.commons.imaging.util.Debug;
 public abstract class ImagingTest extends TestCase implements
         ImagingTestConstants, ImagingConstants {
 
-    protected File createTempFile(final String prefix, final String suffix)
-            throws IOException {
+    protected File createTempDirectory() throws IOException {
         final File tempFolder = new File("tmp");
         if (!tempFolder.exists()) {
             tempFolder.mkdirs();
         }
         assertTrue(tempFolder.isDirectory());
-
+        return tempFolder;
+    }
+    
+    protected File createTempFile(final String prefix, final String suffix)
+            throws IOException {
+        final File tempFolder = createTempDirectory();
         final File result = File.createTempFile(prefix, suffix, tempFolder);
         result.deleteOnExit();
         return result;

@@ -406,14 +406,10 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     private void writeAndReadImageData(final String description, final byte[] rawData,
             final int foreground, final int background) throws IOException,
             ImageReadException {
-        // Uncomment to generate ICNS files that can be tested with MacOS:
-        final File exportFile = new File("/tmp/" + description + ".icns");
+        final File exportFile = new File(createTempDirectory(), description + ".icns");
+        exportFile.deleteOnExit();
         IoUtils.writeToFile(rawData, exportFile);
-
-        final File tempFile = createTempFile("temp", ".icns");
-        IoUtils.writeToFile(rawData, tempFile);
-
-        final BufferedImage dstImage = Imaging.getBufferedImage(tempFile);
+        final BufferedImage dstImage = Imaging.getBufferedImage(exportFile);
 
         assertNotNull(dstImage);
         assertTrue(dstImage.getWidth() == image[0].length);
