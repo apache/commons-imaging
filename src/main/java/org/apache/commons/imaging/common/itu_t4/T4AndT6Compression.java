@@ -738,12 +738,12 @@ public class T4AndT6Compression {
             final T4_T6_Tables.Entry entry = lowerBound(
                     T4_T6_Tables.additionalMakeUpCodes, runLength);
             entry.writeBits(bitStream);
-            runLength -= entry.value.intValue();
+            runLength -= entry.value;
         }
         while (runLength >= 64) {
             final T4_T6_Tables.Entry entry = lowerBound(makeUpCodes, runLength);
             entry.writeBits(bitStream);
-            runLength -= entry.value.intValue();
+            runLength -= entry.value;
         }
         final T4_T6_Tables.Entry terminatingEntry = terminatingCodes[runLength];
         terminatingEntry.writeBits(bitStream);
@@ -755,11 +755,10 @@ public class T4AndT6Compression {
         int last = entries.length - 1;
         do {
             final int middle = (first + last) >>> 1;
-            if (entries[middle].value.intValue() <= value
-                    && ((middle + 1) >= entries.length || value < entries[middle + 1].value
-                            .intValue())) {
+            if (entries[middle].value <= value
+                    && ((middle + 1) >= entries.length || value < entries[middle + 1].value)) {
                 return entries[middle];
-            } else if (entries[middle].value.intValue() > value) {
+            } else if (entries[middle].value > value) {
                 last = middle - 1;
             } else {
                 first = middle + 1;
@@ -779,8 +778,8 @@ public class T4AndT6Compression {
                 } else {
                     runLength = (Integer) blackRunLengths.decode(bitStream);
                 }
-                totalLength += runLength.intValue();
-            } while (runLength.intValue() > 63);
+                totalLength += runLength;
+            } while (runLength > 63);
             return totalLength;
         } catch (final HuffmanTreeException huffmanException) {
             throw new ImageReadException("Decompression error",

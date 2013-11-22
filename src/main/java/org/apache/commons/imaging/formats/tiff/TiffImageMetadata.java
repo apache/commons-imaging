@@ -247,7 +247,7 @@ public class TiffImageMetadata extends ImageMetadata implements
             throws ImageReadException {
         // Please keep this method in sync with TiffField's getTag()
         final Integer tagCount = tagCounts.get(tagInfo.tag);
-        final int tagsMatching = tagCount == null ? 0 : tagCount.intValue();
+        final int tagsMatching = tagCount == null ? 0 : tagCount;
 
         final List<? extends IImageMetadataItem> directories = getDirectories();
         if (exactDirectoryMatch

@@ -564,12 +564,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                     + sb.toString());
         }
         
-        final int x0 = ix0.intValue();
-        final int y0 = iy0.intValue();
-        final int width = iwidth.intValue();
-        final int height = iheight.intValue();
-
-        return new Rectangle(x0, y0, width, height);
+        return new Rectangle(ix0, iy0, iwidth, iheight);
     }
     
     protected BufferedImage getBufferedImage(final TiffDirectory directory,

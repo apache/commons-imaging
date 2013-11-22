@@ -121,15 +121,15 @@ public class TiffLzwTest extends TiffBaseTest {
                     }
                 }
                 final Integer expectedCode = codes.get(index++);
-                if (code != expectedCode.intValue()) {
+                if (code != expectedCode) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
                     Debug.debug("code: " + code + " (0x"
                             + Integer.toHexString(code) + ") "
                             + Integer.toBinaryString(code));
                     Debug.debug("expected: " + expectedCode + " (0x"
-                            + Integer.toHexString(expectedCode.intValue())
+                            + Integer.toHexString(expectedCode)
                             + ") "
-                            + Integer.toBinaryString(expectedCode.intValue()));
+                            + Integer.toBinaryString(expectedCode));
                     Debug.debug("clearCode: " + clearCode + " (0x"
                             + Integer.toHexString(clearCode) + ") "
                             + Integer.toBinaryString(clearCode));
@@ -210,15 +210,15 @@ public class TiffLzwTest extends TiffBaseTest {
                     Debug.debug();
                 }
                 final Integer expectedCode = codes.get(index++);
-                if (code != expectedCode.intValue()) {
+                if (code != expectedCode) {
                     Debug.debug("bad code: " + index + "/" + codes.size());
                     Debug.debug("code: " + code + " (0x"
                             + Integer.toHexString(code) + ") "
                             + Integer.toBinaryString(code));
                     Debug.debug("expected: " + expectedCode + " (0x"
-                            + Integer.toHexString(expectedCode.intValue())
+                            + Integer.toHexString(expectedCode)
                             + ") "
-                            + Integer.toBinaryString(expectedCode.intValue()));
+                            + Integer.toBinaryString(expectedCode));
                     Debug.debug("clearCode: " + clearCode + " (0x"
                             + Integer.toHexString(clearCode) + ") "
                             + Integer.toBinaryString(clearCode));

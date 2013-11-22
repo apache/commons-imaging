@@ -363,7 +363,7 @@ public class XpmImageParser extends ImageParser {
         } else {
             loadColorNames();
             if (colorNames.containsKey(color)) {
-                return (colorNames.get(color)).intValue();
+                return colorNames.get(color);
             }
             return 0x00000000;
         }

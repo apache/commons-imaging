@@ -168,7 +168,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
         TiffOutputDirectory previousDirectory = null;
         for (int i = 0; i < directoryIndices.size(); i++) {
             final Integer index = directoryIndices.get(i);
-            if (index.intValue() != i) {
+            if (index != i) {
                 throw new ImageWriteException("Missing directory: " + i + ".");
             }
 
