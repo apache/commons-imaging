@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class IptcTypeLookup {
+public final class IptcTypeLookup {
 
     private static final Map<Integer, IptcType> IPTC_TYPE_MAP = new HashMap<Integer, IptcType>();
     static {
@@ -28,7 +28,10 @@ public abstract class IptcTypeLookup {
         }
     }
 
-    public static final IptcType getIptcType(final int type) {
+    private IptcTypeLookup() {
+    }
+    
+    public static IptcType getIptcType(final int type) {
         if (!IPTC_TYPE_MAP.containsKey(type)) {
             return IptcTypes.getUnknown(type);
         }

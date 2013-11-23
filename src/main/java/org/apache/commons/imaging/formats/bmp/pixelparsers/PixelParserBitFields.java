@@ -33,6 +33,8 @@ public class PixelParserBitFields extends PixelParserSimple {
     private final int blueMask;
     private final int alphaMask;
 
+    private int bytecount = 0;
+    
     public PixelParserBitFields(final BmpHeaderInfo bhi, final byte ColorTable[],
             final byte ImageData[]) {
         super(bhi, ColorTable, ImageData);
@@ -65,8 +67,6 @@ public class PixelParserBitFields extends PixelParserSimple {
 
         return (trailingZeroes - (8 - maskLength));
     }
-
-    private int bytecount = 0;
 
     @Override
     public int getNextRGB() throws ImageReadException, IOException {

@@ -48,6 +48,8 @@ import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class IcoImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".ico";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".ico", ".cur", };
 
     public IcoImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -62,10 +64,6 @@ public class IcoImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".ico";
-
-    private static final String ACCEPTED_EXTENSIONS[] = { ".ico", ".cur", };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -661,7 +659,7 @@ public class IcoImageParser extends ImageParser {
         
         final PixelDensity pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

@@ -59,6 +59,10 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.util.Debug;
 
 public class JpegImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".jpg";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".jpg", ".jpeg", };
+    public static final boolean permissive = true;
+    
     public JpegImageParser() {
         setByteOrder(ByteOrder.BIG_ENDIAN);
         // setDebug(true);
@@ -80,9 +84,6 @@ public class JpegImageParser extends ImageParser {
         return DEFAULT_EXTENSION;
     }
 
-    private static final String DEFAULT_EXTENSION = ".jpg";
-
-    private static final String ACCEPTED_EXTENSIONS[] = { ".jpg", ".jpeg", };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -140,6 +141,7 @@ public class JpegImageParser extends ImageParser {
 
             public void visitSOS(final int marker, final byte markerBytes[],
                     final byte imageData[]) {
+                // don't need image data
             }
 
             // return false to exit traversal.
@@ -193,8 +195,6 @@ public class JpegImageParser extends ImageParser {
         return result;
     }
 
-    public static final boolean permissive = true;
-
     private byte[] assembleSegments(final List<App2Segment> v)
             throws ImageReadException {
         try {
@@ -206,7 +206,7 @@ public class JpegImageParser extends ImageParser {
 
     private byte[] assembleSegments(final List<App2Segment> v, final boolean start_with_zero)
             throws ImageReadException {
-        if (v.size() < 1) {
+        if (v.isEmpty()) {
             throw new ImageReadException("No App2 Segments Found.");
         }
 
@@ -296,7 +296,7 @@ public class JpegImageParser extends ImageParser {
             }
         }
 
-        if (filtered.size() < 1) {
+        if (filtered.isEmpty()) {
             return null;
         }
 
@@ -370,7 +370,7 @@ public class JpegImageParser extends ImageParser {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP1_Marker, }, false);
 
-        if ((segments == null) || (segments.size() < 1)) {
+        if ((segments == null) || (segments.isEmpty())) {
             return null;
         }
 
@@ -384,7 +384,7 @@ public class JpegImageParser extends ImageParser {
         // Debug.debug("exifSegments", exifSegments);
 
         // TODO: concatenate if multiple segments, need example.
-        if (exifSegments.size() < 1) {
+        if (exifSegments.isEmpty()) {
             return null;
         }
         if (exifSegments.size() > 1) {
@@ -415,6 +415,7 @@ public class JpegImageParser extends ImageParser {
 
             public void visitSOS(final int marker, final byte markerBytes[],
                     final byte imageData[]) {
+                // don't need image data
             }
 
             // return false to exit traversal.
@@ -453,6 +454,7 @@ public class JpegImageParser extends ImageParser {
 
             public void visitSOS(final int marker, final byte markerBytes[],
                     final byte imageData[]) {
+                // don't need image data
             }
 
             // return false to exit traversal.
@@ -491,6 +493,7 @@ public class JpegImageParser extends ImageParser {
 
             public void visitSOS(final int marker, final byte markerBytes[],
                     final byte imageData[]) {
+                // don't need image data
             }
 
             // return false to exit traversal.
@@ -540,6 +543,7 @@ public class JpegImageParser extends ImageParser {
 
             public void visitSOS(final int marker, final byte markerBytes[],
                     final byte imageData[]) {
+                // don't need image data
             }
 
             // return false to exit traversal.
@@ -563,7 +567,7 @@ public class JpegImageParser extends ImageParser {
         };
         new JpegUtils().traverseJFIF(byteSource, visitor);
 
-        if (result.size() < 1) {
+        if (result.isEmpty()) {
             return null;
         }
         if (result.size() > 1) {
@@ -578,7 +582,7 @@ public class JpegImageParser extends ImageParser {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP13_Marker, }, false);
 
-        if ((segments == null) || (segments.size() < 1)) {
+        if ((segments == null) || (segments.isEmpty())) {
             return null;
         }
 
@@ -623,7 +627,7 @@ public class JpegImageParser extends ImageParser {
 
         }, true);
 
-        if ((segments == null) || (segments.size() < 1)) {
+        if ((segments == null) || (segments.isEmpty())) {
             throw new ImageReadException("No JFIF Data Found.");
         }
 
@@ -693,7 +697,7 @@ public class JpegImageParser extends ImageParser {
 
         JfifSegment jfifSegment = null;
 
-        if ((jfifSegments != null) && (jfifSegments.size() > 0)) {
+        if ((jfifSegments != null) && (!jfifSegments.isEmpty())) {
             jfifSegment = (JfifSegment) jfifSegments.get(0);
         }
 
@@ -802,7 +806,7 @@ public class JpegImageParser extends ImageParser {
             String comment = "";
             try {
                 comment = new String(comSegment.getComment(), "UTF-8");
-            } catch (final UnsupportedEncodingException cannotHappen) {
+            } catch (final UnsupportedEncodingException cannotHappen) { // NOPMD - can't happen
             }
             Comments.add(comment);
         }

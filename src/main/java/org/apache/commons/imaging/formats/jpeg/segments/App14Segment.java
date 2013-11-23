@@ -36,7 +36,7 @@ public class App14Segment extends AppnSegment {
         byte[] adobe = null;
         try {
             adobe = "Adobe".getBytes("US-ASCII");
-        } catch (final UnsupportedEncodingException cannotHappen) {
+        } catch (final UnsupportedEncodingException cannotHappen) { // NOPMD - can't happen
         }
         adobePrefix = adobe;
     }

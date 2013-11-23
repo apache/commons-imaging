@@ -20,7 +20,7 @@ package org.apache.commons.imaging;
  * Used to specify pixel density and physical dimensions when reading or
  * storing image information.
  */
-public class PixelDensity {
+public final class PixelDensity {
     private final double horizontalDensity;
     private final double verticalDensity;
     // / One-tenth of a millimetre units.

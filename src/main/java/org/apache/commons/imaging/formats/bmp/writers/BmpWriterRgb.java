@@ -43,6 +43,7 @@ public class BmpWriterRgb extends BmpWriter {
 
     @Override
     public void writePalette(final BinaryOutputStream bos) throws IOException {
+        // no palette
     }
 
     @Override

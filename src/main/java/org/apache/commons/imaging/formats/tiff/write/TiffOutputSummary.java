@@ -29,7 +29,9 @@ class TiffOutputSummary implements TiffConstants {
     public final ByteOrder byteOrder;
     public final TiffOutputDirectory rootDirectory;
     public final Map<Integer, TiffOutputDirectory> directoryTypeMap;
-
+    private final List<OffsetItem> offsetItems = new ArrayList<OffsetItem>();
+    private final List<ImageDataOffsets> imageDataItems = new ArrayList<ImageDataOffsets>();
+    
     public TiffOutputSummary(final ByteOrder byteOrder,
             final TiffOutputDirectory rootDirectory,
             final Map<Integer, TiffOutputDirectory> directoryTypeMap) {
@@ -49,8 +51,6 @@ class TiffOutputSummary implements TiffConstants {
             this.item = item;
         }
     }
-
-    private final List<OffsetItem> offsetItems = new ArrayList<OffsetItem>();
 
     public void add(final TiffOutputItem item,
             final TiffOutputField itemOffsetField) {
@@ -78,8 +78,6 @@ class TiffOutputSummary implements TiffConstants {
                     .writeData(imageDataInfo.imageDataOffsets, byteOrder));
         }
     }
-
-    private final List<ImageDataOffsets> imageDataItems = new ArrayList<ImageDataOffsets>();
 
     public void addTiffImageData(final ImageDataOffsets imageDataInfo) {
         imageDataItems.add(imageDataInfo);

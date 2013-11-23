@@ -43,6 +43,16 @@ import org.apache.commons.imaging.formats.tiff.TiffReader;
 
 public class TiffImageWriterLossless extends TiffImageWriterBase {
     private final byte exifBytes[];
+    private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = new Comparator<TiffElement>() {
+        public int compare(final TiffElement e1, final TiffElement e2) {
+            return e1.length - e2.length;
+        }
+    };
+    private static final Comparator<TiffOutputItem> ITEM_SIZE_COMPARATOR = new Comparator<TiffOutputItem>() {
+        public int compare(final TiffOutputItem e1, final TiffOutputItem e2) {
+            return e1.getItemLength() - e2.getItemLength();
+        }
+    };
 
     public TiffImageWriterLossless(final byte exifBytes[]) {
         this.exifBytes = exifBytes;
@@ -152,7 +162,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         }
         final List<TiffElement> analysis = analyzeOldTiff(frozenFields);
         final int oldLength = exifBytes.length;
-        if (analysis.size() < 1) {
+        if (analysis.isEmpty()) {
             throw new ImageWriteException("Couldn't analyze old tiff data.");
         } else if (analysis.size() == 1) {
             final TiffElement onlyElement = analysis.get(0);
@@ -191,18 +201,6 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
     }
 
-    private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = new Comparator<TiffElement>() {
-        public int compare(final TiffElement e1, final TiffElement e2) {
-            return e1.length - e2.length;
-        }
-    };
-
-    private static final Comparator<TiffOutputItem> ITEM_SIZE_COMPARATOR = new Comparator<TiffOutputItem>() {
-        public int compare(final TiffOutputItem e1, final TiffOutputItem e2) {
-            return e1.getItemLength() - e2.getItemLength();
-        }
-    };
-
     private long updateOffsetsStep(final List<TiffElement> analysis,
             final List<TiffOutputItem> outputItems) {
         // items we cannot fit into a gap, we shall append to tail.
@@ -216,7 +214,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         Collections.reverse(unusedElements);
         // any items that represent a gap at the end of the exif segment, can be
         // discarded.
-        while (unusedElements.size() > 0) {
+        while (!unusedElements.isEmpty()) {
             final TiffElement element = unusedElements.get(0);
             final long elementEnd = element.offset + element.length;
             if (elementEnd == overflowIndex) {
@@ -237,7 +235,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         Collections.sort(unplacedItems, ITEM_SIZE_COMPARATOR);
         Collections.reverse(unplacedItems);
 
-        while (unplacedItems.size() > 0) {
+        while (!unplacedItems.isEmpty()) {
             // pop off largest unplaced item.
             final TiffOutputItem outputItem = unplacedItems.remove(0);
             final int outputItemLength = outputItem.getItemLength();

@@ -27,7 +27,7 @@ import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class T4AndT6Compression {
+public final class T4AndT6Compression {
     private static final HuffmanTree whiteRunLengths = new HuffmanTree();
     private static final HuffmanTree blackRunLengths = new HuffmanTree();
     private static final HuffmanTree controlCodes = new HuffmanTree();
@@ -80,6 +80,9 @@ public class T4AndT6Compression {
         } catch (final HuffmanTreeException cannotHappen) {
             Debug.debug(cannotHappen);
         }
+    }
+
+    private T4AndT6Compression() {
     }
 
     private static void compress1DLine(final BitInputStreamFlexible inputStream,
@@ -178,7 +181,7 @@ public class T4AndT6Compression {
             try {
                 IoUtils.closeQuietly(canThrow, outputStream);
             } catch (final IOException ioException) {
-                // cannot happen
+                throw new ImageReadException("I/O error", ioException);
             }
         }
     }
@@ -266,7 +269,7 @@ public class T4AndT6Compression {
             try {
                 IoUtils.closeQuietly(canThrow, outputStream);
             } catch (final IOException ioException) {
-                // cannot happen
+                throw new ImageReadException("I/O error", ioException);
             }
         }
     }

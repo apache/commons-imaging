@@ -320,7 +320,7 @@ public class BasicCParser {
                     i += 2;
                     int constant;
                     try {
-                        constant = Integer.parseInt("" + hex1 + hex2, 16);
+                        constant = Integer.parseInt(Character.toString(hex1) + Character.toString(hex2), 16);
                     } catch (final NumberFormatException nfe) {
                         throw new ImageReadException(
                                 "Parsing XPM file failed, "

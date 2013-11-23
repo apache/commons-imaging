@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.commons.imaging.common.BinaryConstant;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
-public class JpegConstants {
+public final class JpegConstants {
     public static final int MAX_SEGMENT_SIZE = 0xffff;
 
     public static final BinaryConstant JFIF0_SIGNATURE = new BinaryConstant(
@@ -147,4 +147,7 @@ public class JpegConstants {
                     0x30, // 0
                     0, });
     public static final int CONST_8BIM = BinaryFunctions.charsToQuad('8', 'B', 'I', 'M');
+    
+    private JpegConstants() {
+    }
 }

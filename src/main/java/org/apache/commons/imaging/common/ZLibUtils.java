@@ -24,11 +24,11 @@ import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.util.IoUtils;
 
-public class ZLibUtils extends BinaryFunctions {
+public class ZLibUtils {
     public final byte[] inflate(final byte bytes[]) throws IOException {
         final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         final InflaterInputStream zIn = new InflaterInputStream(in);
-        return getStreamBytes(zIn);
+        return BinaryFunctions.getStreamBytes(zIn);
     }
 
     public final byte[] deflate(final byte bytes[]) throws IOException {

@@ -54,7 +54,17 @@ import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class XpmImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".xpm";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".xpm", };
     private static Map<String, Integer> colorNames = null;
+    private static final char writePalette[] = { ' ', '.', 'X', 'o', 'O', '+',
+        '@', '#', '$', '%', '&', '*', '=', '-', ';', ':', '>', ',', '<',
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'q', 'w', 'e',
+        'r', 't', 'y', 'u', 'i', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j',
+        'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'M', 'N', 'B', 'V',
+        'C', 'Z', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'P', 'I',
+        'U', 'Y', 'T', 'R', 'E', 'W', 'Q', '!', '~', '^', '/', '(', ')',
+        '_', '`', '\'', ']', '[', '{', '}', '|', };
 
     public XpmImageParser() {
     }
@@ -78,7 +88,7 @@ public class XpmImageParser extends ImageParser {
                         "US-ASCII"));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    if (line.startsWith("!")) {
+                    if (line.charAt(0) == '!') {
                         continue;
                     }
                     try {
@@ -111,9 +121,6 @@ public class XpmImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".xpm";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".xpm", };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -258,7 +265,7 @@ public class XpmImageParser extends ImageParser {
             final StringBuilder firstComment = new StringBuilder();
             final ByteArrayOutputStream preprocessedFile = BasicCParser.preprocess(
                     is, firstComment, null);
-            if (!firstComment.toString().trim().equals("XPM")) {
+            if (!"XPM".equals(firstComment.toString().trim())) {
                 throw new ImageReadException("Parsing XPM file failed, "
                         + "signature isn't '/* XPM */'");
             }
@@ -287,9 +294,9 @@ public class XpmImageParser extends ImageParser {
                 .nextToken()) {
             BasicCParser.unescapeString(stringBuilder, token);
         }
-        if (token.equals(",")) {
+        if (",".equals(token)) {
             return true;
-        } else if (token.equals("}")) {
+        } else if ("}".equals(token)) {
             return false;
         } else {
             throw new ImageReadException("Parsing XPM file failed, "
@@ -317,7 +324,7 @@ public class XpmImageParser extends ImageParser {
                 yHotSpot = Integer.parseInt(tokens[5]);
             }
             if (tokens.length == 5 || tokens.length == 7) {
-                if (tokens[tokens.length - 1].equals("XPMEXT")) {
+                if ("XPMEXT".equals(tokens[tokens.length - 1])) {
                     xpmExt = true;
                 } else {
                     throw new ImageReadException("Parsing XPM file failed, "
@@ -358,7 +365,7 @@ public class XpmImageParser extends ImageParser {
         } else if (color.charAt(0) == '%') {
             throw new ImageReadException("HSV colors are not implemented "
                     + "even in the XPM specification!");
-        } else if (color.equals("None")) {
+        } else if ("None".equals(color)) {
             return 0x00000000;
         } else {
             loadColorNames();
@@ -370,19 +377,19 @@ public class XpmImageParser extends ImageParser {
     }
     
     private void populatePaletteEntry(final PaletteEntry paletteEntry, final String key, final String color) throws ImageReadException {
-        if (key.equals("m")) {
+        if ("m".equals(key)) {
             paletteEntry.monoArgb = parseColor(color);
             paletteEntry.haveMono = true;
-        } else if (key.equals("g4")) {
+        } else if ("g4".equals(key)) {
             paletteEntry.gray4LevelArgb = parseColor(color);
             paletteEntry.haveGray4Level = true;
-        } else if (key.equals("g")) {
+        } else if ("g".equals(key)) {
             paletteEntry.grayArgb = parseColor(color);
             paletteEntry.haveGray = true;
-        } else if (key.equals("s")) {
+        } else if ("s".equals(key)) {
             paletteEntry.colorArgb = parseColor(color);
             paletteEntry.haveColor = true;
-        } else if (key.equals("c")) {
+        } else if ("c".equals(key)) {
             paletteEntry.colorArgb = parseColor(color);
             paletteEntry.haveColor = true;
         }
@@ -409,9 +416,9 @@ public class XpmImageParser extends ImageParser {
                 final String token = tokens[j];
                 boolean isKey = false;
                 if (previousKeyIndex < (j - 1) && 
-                    token.equals("m") || token.equals("g4") ||
-                    token.equals("g") || token.equals("c") ||
-                    token.equals("s")) {
+                    "m".equals(token) || "g4".equals(token) ||
+                    "g".equals(token) || "c".equals(token) ||
+                    "s".equals(token)) {
                     isKey = true;
                 }
                 if (isKey) {
@@ -447,17 +454,17 @@ public class XpmImageParser extends ImageParser {
         String name;
         String token;
         token = cParser.nextToken();
-        if (token == null || !token.equals("static")) {
+        if (!"static".equals(token)) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no 'static' token");
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("char")) {
+        if (!"char".equals(token)) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no 'char' token");
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("*")) {
+        if (!"*".equals(token)) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no '*' token");
         }
@@ -480,22 +487,22 @@ public class XpmImageParser extends ImageParser {
             }
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("[")) {
+        if (!"[".equals(token)) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no '[' token");
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("]")) {
+        if (!"]".equals(token)) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no ']' token");
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("=")) {
+        if (!"=".equals(token)) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no '=' token");
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("{")) {
+        if (!"{".equals(token)) {
             throw new ImageReadException(
                     "Parsing XPM file failed, no '{' token");
         }
@@ -587,7 +594,7 @@ public class XpmImageParser extends ImageParser {
         }
 
         final String token = cParser.nextToken();
-        if (!token.equals(";")) {
+        if (!";".equals(token)) {
             throw new ImageReadException("Last token wasn't ';'");
         }
 
@@ -659,7 +666,7 @@ public class XpmImageParser extends ImageParser {
             params.remove(PARAM_KEY_FORMAT);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
@@ -729,15 +736,6 @@ public class XpmImageParser extends ImageParser {
         line = "\n};\n";
         os.write(line.getBytes("US-ASCII"));
     }
-
-    private static final char writePalette[] = { ' ', '.', 'X', 'o', 'O', '+',
-            '@', '#', '$', '%', '&', '*', '=', '-', ';', ':', '>', ',', '<',
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'q', 'w', 'e',
-            'r', 't', 'y', 'u', 'i', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j',
-            'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'M', 'N', 'B', 'V',
-            'C', 'Z', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'P', 'I',
-            'U', 'Y', 'T', 'R', 'E', 'W', 'Q', '!', '~', '^', '/', '(', ')',
-            '_', '`', '\'', ']', '[', '{', '}', '|', };
 
     /**
      * Extracts embedded XML metadata as XML string.

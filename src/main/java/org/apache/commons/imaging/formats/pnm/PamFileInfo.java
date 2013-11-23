@@ -52,11 +52,11 @@ public class PamFileInfo extends FileInfo {
         }
 
         hasAlpha = tupleType.endsWith("_ALPHA");
-        if (tupleType.equals("BLACKANDWHITE") || tupleType.equals("BLACKANDWHITE_ALPHA")) {
+        if ("BLACKANDWHITE".equals(tupleType) || "BLACKANDWHITE_ALPHA".equals(tupleType)) {
             tupleReader = new GrayscaleTupleReader(ImageInfo.COLOR_TYPE_BW);
-        } else if (tupleType.equals("GRAYSCALE") || tupleType.equals("GRAYSCALE_ALPHA")) {
+        } else if ("GRAYSCALE".equals(tupleType) || "GRAYSCALE_ALPHA".equals(tupleType)) {
             tupleReader = new GrayscaleTupleReader(ImageInfo.COLOR_TYPE_GRAYSCALE);
-        } else if (tupleType.equals("RGB") || tupleType.equals("RGB_ALPHA")) {
+        } else if ("RGB".equals(tupleType) || "RGB_ALPHA".equals(tupleType)) {
             tupleReader = new ColorTupleReader();
         } else {
             throw new ImageReadException("Unknown PAM tupletype '" + tupleType + "'");

@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class ByteSourceFile extends ByteSource {
@@ -59,7 +60,7 @@ public class ByteSourceFile extends ByteSource {
                         + ", data length: " + raf.length() + ").");
             }
 
-            final byte[] ret = getRAFBytes(raf, start, length,
+            final byte[] ret = BinaryFunctions.getRAFBytes(raf, start, length,
                     "Could not read value from file");
             canThrow = true;
             return ret;

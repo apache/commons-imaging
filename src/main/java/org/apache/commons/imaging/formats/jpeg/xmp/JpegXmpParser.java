@@ -47,7 +47,7 @@ public class JpegXmpParser extends BinaryFileParser {
                     - index, "utf-8");
             return xml;
         } catch (final UnsupportedEncodingException e) {
-            throw new ImageReadException("Invalid JPEG XMP Segment.");
+            throw new ImageReadException("Invalid JPEG XMP Segment.", e);
         }
     }
 

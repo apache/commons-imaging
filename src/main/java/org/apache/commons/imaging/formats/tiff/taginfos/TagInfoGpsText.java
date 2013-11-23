@@ -34,26 +34,6 @@ import org.apache.commons.imaging.util.Debug;
  * the non-null-terminated text in an unknown byte order.  
  */
 public final class TagInfoGpsText extends TagInfo {
-    public TagInfoGpsText(final String name, final int tag, final int length,
-            final TiffDirectoryType exifDirectory) {
-        super(name, tag, FieldType.UNDEFINED, length, exifDirectory);
-    }
-
-    @Override
-    public boolean isText() {
-        return true;
-    }
-
-    private static final class TextEncoding {
-        public final byte prefix[];
-        public final String encodingName;
-
-        public TextEncoding(final byte[] prefix, final String encodingName) {
-            this.prefix = prefix;
-            this.encodingName = encodingName;
-        }
-    }
-
     private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_ASCII = new TextEncoding(
             new byte[] { 0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00, },
             "US-ASCII"); // ITU-T T.50 IA5
@@ -77,6 +57,26 @@ public final class TagInfoGpsText extends TagInfo {
             TEXT_ENCODING_UNICODE_BE, //
             TEXT_ENCODING_UNDEFINED, //
     };
+
+    public TagInfoGpsText(final String name, final int tag, final int length,
+            final TiffDirectoryType exifDirectory) {
+        super(name, tag, FieldType.UNDEFINED, length, exifDirectory);
+    }
+
+    @Override
+    public boolean isText() {
+        return true;
+    }
+
+    private static final class TextEncoding {
+        public final byte prefix[];
+        public final String encodingName;
+
+        public TextEncoding(final byte[] prefix, final String encodingName) {
+            this.prefix = prefix;
+            this.encodingName = encodingName;
+        }
+    }
 
     @Override
     public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)

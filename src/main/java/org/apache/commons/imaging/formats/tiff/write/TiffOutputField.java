@@ -31,10 +31,10 @@ public class TiffOutputField implements TiffConstants {
     public final TagInfo tagInfo;
     public final FieldType fieldType;
     public final int count;
-
     private byte bytes[];
-
     private final TiffOutputItem.Value separateValueItem;
+    private int sortHint = -1;
+    private static final String newline = System.getProperty("line.separator");
 
     public TiffOutputField(final TagInfo tagInfo, final FieldType tagtype, final int count,
             final byte bytes[]) {
@@ -57,8 +57,6 @@ public class TiffOutputField implements TiffConstants {
             separateValueItem = new TiffOutputItem.Value(name, bytes);
         }
     }
-
-    private int sortHint = -1;
 
     protected static final TiffOutputField createOffsetField(final TagInfo tagInfo,
             final ByteOrder byteOrder) throws ImageWriteException {
@@ -125,8 +123,6 @@ public class TiffOutputField implements TiffConstants {
         // throw new Error("Bug. Locality disrupted! "
         // + tagInfo.getDescription());
     }
-
-    private static final String newline = System.getProperty("line.separator");
 
     @Override
     public String toString() {

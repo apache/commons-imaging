@@ -24,6 +24,9 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 
 public class PbmFileInfo extends FileInfo {
+    private int bitcache = 0;
+    private int bits_in_cache = 0;
+
     public PbmFileInfo(final int width, final int height, final boolean RAWBITS) {
         super(width, height, RAWBITS);
     }
@@ -68,9 +71,6 @@ public class PbmFileInfo extends FileInfo {
         bitcache = 0;
         bits_in_cache = 0;
     }
-
-    private int bitcache = 0;
-    private int bits_in_cache = 0;
 
     @Override
     public int getRGB(final InputStream is) throws IOException {

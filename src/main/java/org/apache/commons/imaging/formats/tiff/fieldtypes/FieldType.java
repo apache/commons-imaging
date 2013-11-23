@@ -46,37 +46,6 @@ public abstract class FieldType {
     private final int type;
     private final String name;
     private final int elementSize;
-
-    protected FieldType(final int type, final String name, final int elementSize) {
-        this.type = type;
-        this.name = name;
-        this.elementSize = elementSize;
-    }
-    
-    
-    public int getType() {
-        return type;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
-    public int getSize() {
-        return elementSize;
-    }
-    
-    public static FieldType getFieldType(final int type) throws ImageReadException {
-        for (final FieldType fieldType : ANY) {
-            if (fieldType.getType() == type) {
-                return fieldType;
-            }
-        }
-        throw new ImageReadException("Field type " + type + " is unsupported");
-    }
-    
-    public abstract Object getValue(final TiffField entry);
-    public abstract byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException;
     
     public static final List<FieldType> ANY =
             Collections.unmodifiableList(Arrays.asList(
@@ -117,4 +86,35 @@ public abstract class FieldType {
     public static final List<FieldType> ASCII_OR_BYTE =
             Collections.unmodifiableList(Arrays.asList(
                     ASCII, BYTE));
+
+    protected FieldType(final int type, final String name, final int elementSize) {
+        this.type = type;
+        this.name = name;
+        this.elementSize = elementSize;
+    }
+    
+    
+    public int getType() {
+        return type;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public int getSize() {
+        return elementSize;
+    }
+    
+    public static FieldType getFieldType(final int type) throws ImageReadException {
+        for (final FieldType fieldType : ANY) {
+            if (fieldType.getType() == type) {
+                return fieldType;
+            }
+        }
+        throw new ImageReadException("Field type " + type + " is unsupported");
+    }
+    
+    public abstract Object getValue(final TiffField entry);
+    public abstract byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException;
 }

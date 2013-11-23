@@ -43,6 +43,9 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class WbmpImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".wbmp";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".wbmp", };
+
     public WbmpImageParser() {
     }
 
@@ -55,9 +58,6 @@ public class WbmpImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".wbmp";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".wbmp", };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -247,7 +247,7 @@ public class WbmpImageParser extends ImageParser {
             params.remove(PARAM_KEY_FORMAT);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

@@ -51,7 +51,9 @@ public class TiffDirectory extends TiffElement {
     public final int type;
     public final List<TiffField> entries;
     public final long nextDirectoryOffset;
-
+    private TiffImageData tiffImageData = null;
+    private JpegImageData jpegImageData = null;
+    
     public TiffDirectory(final int type, final List<TiffField> entries, final long offset,
             final long nextDirectoryOffset) {
         super(offset, TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH +
@@ -701,8 +703,6 @@ public class TiffDirectory extends TiffElement {
         }
     }
 
-    private TiffImageData tiffImageData = null;
-
     public void setTiffImageData(final TiffImageData rawImageData) {
         this.tiffImageData = rawImageData;
     }
@@ -710,8 +710,6 @@ public class TiffDirectory extends TiffElement {
     public TiffImageData getTiffImageData() {
         return tiffImageData;
     }
-
-    private JpegImageData jpegImageData = null;
 
     public void setJpegImageData(final JpegImageData value) {
         this.jpegImageData = value;

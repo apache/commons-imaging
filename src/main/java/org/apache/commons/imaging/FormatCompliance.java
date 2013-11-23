@@ -74,7 +74,7 @@ public class FormatCompliance {
     public void dump(final PrintWriter pw) {
         pw.println("Format Compliance: " + description);
 
-        if (comments.size() == 0) {
+        if (comments.isEmpty()) {
             pw.println("\t" + "No comments.");
         } else {
             for (int i = 0; i < comments.size(); i++) {
@@ -135,10 +135,11 @@ public class FormatCompliance {
             }
         }
 
-        final StringBuilder result = new StringBuilder();
-        result.append(name + ": " + "Unexpected value: (valid: ");
+        final StringBuilder result = new StringBuilder(43);
+        result.append(name);
+        result.append(": Unexpected value: (valid: ");
         if (valid.length > 1) {
-            result.append("{");
+            result.append('{');
         }
         for (int i = 0; i < valid.length; i++) {
             if (i > 0) {
@@ -147,7 +148,7 @@ public class FormatCompliance {
             result.append(getValueDescription(valid[i]));
         }
         if (valid.length > 1) {
-            result.append("}");
+            result.append('}');
         }
         result.append(", actual: " + getValueDescription(actual) + ")");
         addComment(result.toString());

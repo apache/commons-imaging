@@ -31,14 +31,14 @@ public class JpegUtils extends BinaryFileParser {
         setByteOrder(ByteOrder.NETWORK);
     }
 
-    public static interface Visitor {
+    public interface Visitor {
         // return false to exit before reading image data.
-        public boolean beginSOS();
+        boolean beginSOS();
 
-        public void visitSOS(int marker, byte markerBytes[], byte imageData[]);
+        void visitSOS(int marker, byte markerBytes[], byte imageData[]);
 
         // return false to exit traversal.
-        public boolean visitSegment(int marker, byte markerBytes[],
+        boolean visitSegment(int marker, byte markerBytes[],
                 int segmentLength, byte segmentLengthBytes[],
                 byte segmentData[]) throws ImageReadException,
                 IOException;
@@ -93,7 +93,7 @@ public class JpegUtils extends BinaryFileParser {
                 }
             }
             
-            Debug.debug("" + markerCount + " markers");
+            Debug.debug(Integer.toString(markerCount) + " markers");
             canThrow = true;
         } finally {
             IoUtils.closeQuietly(canThrow, is);

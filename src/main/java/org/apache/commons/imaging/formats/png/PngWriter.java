@@ -436,7 +436,7 @@ public class PngWriter {
             params.remove(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
         }
         params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

@@ -19,13 +19,13 @@ package org.apache.commons.imaging.common;
 import java.util.List;
 
 public interface IImageMetadata {
-    public String toString(String prefix);
+    String toString(String prefix);
 
-    public List<? extends IImageMetadataItem> getItems();
+    List<? extends IImageMetadataItem> getItems();
 
-    public interface IImageMetadataItem {
-        public String toString(String prefix);
+    interface IImageMetadataItem {
+        String toString(String prefix);
 
-        public String toString();
+        String toString();
     }
 }

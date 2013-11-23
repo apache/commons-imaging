@@ -25,20 +25,21 @@ import org.apache.commons.imaging.common.ByteOrder;
 
 public final class MyLzwDecompressor {
     private static final int MAX_TABLE_SIZE = 1 << 12;
-
     private final byte[][] table;
     private int codeSize;
     private final int initialCodeSize;
     private int codes = -1;
-
     private final ByteOrder byteOrder;
-
     private final Listener listener;
+    private final int clearCode;
+    private final int eoiCode;
+    private int written = 0;
+    private boolean tiffLZWMode = false;
 
-    public static interface Listener {
-        public void code(int code);
+    public interface Listener {
+        void code(int code);
 
-        public void init(int clearCode, int eoiCode);
+        void init(int clearCode, int eoiCode);
     }
 
     public MyLzwDecompressor(final int initialCodeSize, final ByteOrder byteOrder) {
@@ -78,9 +79,6 @@ public final class MyLzwDecompressor {
         codeSize = initialCodeSize;
         incrementCodeSize();
     }
-
-    private final int clearCode;
-    private final int eoiCode;
 
     private int getNextCode(final MyBitInputStream is) throws IOException {
         final int code = is.readBits(codeSize);
@@ -126,15 +124,11 @@ public final class MyLzwDecompressor {
         return result;
     }
 
-    private int written = 0;
-
     private void writeToResult(final OutputStream os, final byte bytes[])
             throws IOException {
         os.write(bytes);
         written += bytes.length;
     }
-
-    private boolean tiffLZWMode = false;
 
     public void setTiffLZWMode() {
         tiffLZWMode = true;

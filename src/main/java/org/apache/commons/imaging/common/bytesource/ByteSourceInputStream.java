@@ -21,10 +21,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.imaging.common.BinaryFunctions;
+
 public class ByteSourceInputStream extends ByteSource {
     private final InputStream is;
     private CacheBlock cacheHead = null;
     private static final int BLOCK_SIZE = 1024;
+    private byte readBuffer[] = null;
+    private long streamLength = -1;
 
     public ByteSourceInputStream(final InputStream is, final String filename) {
         super(filename);
@@ -53,8 +57,6 @@ public class ByteSourceInputStream extends ByteSource {
         }
 
     }
-
-    private byte readBuffer[] = null;
 
     private CacheBlock readBlock() throws IOException {
         if (null == readBuffer) {
@@ -217,7 +219,7 @@ public class ByteSourceInputStream extends ByteSource {
         }
 
         final InputStream cis = getInputStream();
-        skipBytes(cis, blockStart);
+        BinaryFunctions.skipBytes(cis, blockStart);
 
         final byte bytes[] = new byte[blockLength];
         int total = 0;
@@ -232,8 +234,6 @@ public class ByteSourceInputStream extends ByteSource {
             }
         }
     }
-
-    private long streamLength = -1;
 
     @Override
     public long getLength() throws IOException {

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -50,6 +51,9 @@ public class TiffField {
     private final byte[] value;
     private final ByteOrder byteOrder;
     private final int sortHint;
+    public static final String Attribute_Tag = "Tag";
+    private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(
+            AllTagConstants.ALL_TAGS, true, "All");
 
     public TiffField(final int tag, final int directoryType, final FieldType fieldType,
             final long count, final long offset, final byte[] value,
@@ -327,7 +331,7 @@ public class TiffField {
         } else if (o instanceof String) {
             return "'" + o.toString().trim() + "'";
         } else if (o instanceof Date) {
-            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ENGLISH);
             return df.format((Date) o);
         } else if (o instanceof Object[]) {
             final Object objects[] = (Object[]) o;
@@ -343,7 +347,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + object);
+                result.append(object.toString());
             }
             return result.toString();
         // } else if (o instanceof Number[])
@@ -375,7 +379,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + sval);
+                result.append(Short.toString(sval));
             }
             return result.toString();
         } else if (o instanceof int[]) {
@@ -392,7 +396,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + iVal);
+                result.append(Integer.toString(iVal));
             }
             return result.toString();
         } else if (o instanceof long[]) {
@@ -409,7 +413,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + lVal);
+                result.append(Long.toString(lVal));
             }
             return result.toString();
         } else if (o instanceof double[]) {
@@ -426,7 +430,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + dVal);
+                result.append(Double.toString(dVal));
             }
             return result.toString();
         } else if (o instanceof byte[]) {
@@ -443,7 +447,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + bVal);
+                result.append(Byte.toString(bVal));
             }
             return result.toString();
         } else if (o instanceof char[]) {
@@ -460,7 +464,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + cVal);
+                result.append(Character.toString(cVal));
             }
             return result.toString();
         } else if (o instanceof float[]) {
@@ -477,7 +481,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append("" + fVal);
+                result.append(Float.toString(fVal));
             }
             return result.toString();
         }
@@ -547,8 +551,6 @@ public class TiffField {
         return getFieldType().getName();
     }
 
-    public static final String Attribute_Tag = "Tag";
-
     public Object getValue() throws ImageReadException {
         // System.out.print("getValue");
         return getTagInfo().getValue(this);
@@ -585,9 +587,6 @@ public class TiffField {
         return map;
     }
 
-    private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(
-            AllTagConstants.ALL_TAGS, true, "All");
-
     public int[] getIntArrayValue() throws ImageReadException {
         final Object o = getValue();
         // if (o == null)
@@ -612,9 +611,7 @@ public class TiffField {
         } else if (o instanceof int[]) {
             final int numbers[] = (int[]) o;
             final int result[] = new int[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                result[i] = numbers[i];
-            }
+            System.arraycopy(numbers, 0, result, 0, numbers.length);
             return result;
         }
 
@@ -661,9 +658,7 @@ public class TiffField {
         } else if (o instanceof double[]) {
             final double numbers[] = (double[]) o;
             final double result[] = new double[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                result[i] = numbers[i];
-            }
+            System.arraycopy(numbers, 0, result, 0, numbers.length);
             return result;
         }
 

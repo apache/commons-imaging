@@ -46,6 +46,8 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class DcxImageParser extends ImageParser {
     // See http://www.fileformat.info/format/pcx/egff.htm for documentation
+    private static final String DEFAULT_EXTENSION = ".dcx";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".dcx", };
 
     public DcxImageParser() {
         super.setByteOrder(ByteOrder.INTEL);
@@ -60,9 +62,6 @@ public class DcxImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".dcx";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".dcx", };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -236,7 +235,7 @@ public class DcxImageParser extends ImageParser {
         }
 
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

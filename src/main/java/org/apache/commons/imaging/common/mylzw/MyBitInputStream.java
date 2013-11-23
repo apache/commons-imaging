@@ -25,6 +25,9 @@ public class MyBitInputStream extends InputStream {
     private final InputStream is;
     private final ByteOrder byteOrder;
     private boolean tiffLZWMode = false;
+    private long bytesRead = 0;
+    private int bitsInCache = 0;
+    private int bitCache = 0;
 
     public MyBitInputStream(final InputStream is, final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -35,10 +38,6 @@ public class MyBitInputStream extends InputStream {
     public int read() throws IOException {
         return readBits(8);
     }
-
-    private long bytesRead = 0;
-    private int bitsInCache = 0;
-    private int bitCache = 0;
 
     public void setTiffLZWMode() {
         tiffLZWMode = true;

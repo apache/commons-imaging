@@ -21,7 +21,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
 
-public abstract class ByteSource extends BinaryFunctions {
+public abstract class ByteSource {
     protected final String filename;
 
     public ByteSource(final String filename) {
@@ -33,7 +33,7 @@ public abstract class ByteSource extends BinaryFunctions {
         boolean succeeded = false;
         try {
             is = getInputStream();
-            skipBytes(is, start);
+            BinaryFunctions.skipBytes(is, start);
             succeeded = true;
         } finally {
             if (!succeeded && is != null) {

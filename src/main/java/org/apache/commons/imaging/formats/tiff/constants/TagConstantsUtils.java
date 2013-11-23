@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.commons.imaging.common.BinaryConstant;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
-public class TagConstantsUtils implements TiffDirectoryConstants {
+public final class TagConstantsUtils implements TiffDirectoryConstants {
     private static final TiffDirectoryType[] tiffDirectoryTypes = TiffDirectoryType
             .values();
 
@@ -61,4 +61,6 @@ public class TagConstantsUtils implements TiffDirectoryConstants {
                 (byte) 0xC9, end });
     }
 
+    private TagConstantsUtils() {
+    }
 }

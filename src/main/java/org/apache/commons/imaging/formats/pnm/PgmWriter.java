@@ -40,13 +40,13 @@ public class PgmWriter extends PnmWriter {
         final int width = src.getWidth();
         final int height = src.getHeight();
 
-        os.write(("" + width).getBytes("US-ASCII"));
+        os.write(Integer.toString(width).getBytes("US-ASCII"));
         os.write(PnmConstants.PNM_SEPARATOR);
 
-        os.write(("" + height).getBytes("US-ASCII"));
+        os.write(Integer.toString(height).getBytes("US-ASCII"));
         os.write(PnmConstants.PNM_SEPARATOR);
 
-        os.write(("" + 255).getBytes("US-ASCII")); // max component value
+        os.write(Integer.toString(255).getBytes("US-ASCII")); // max component value
         os.write(PnmConstants.PNM_NEWLINE);
 
         for (int y = 0; y < height; y++) {
@@ -60,9 +60,7 @@ public class PgmWriter extends PnmWriter {
                 if (RAWBITS) {
                     os.write((byte) sample);
                 } else {
-                    os.write(("" + sample).getBytes("US-ASCII")); // max
-                                                                  // component
-                                                                  // value
+                    os.write(Integer.toString(sample).getBytes("US-ASCII")); // max component value
                     os.write(PnmConstants.PNM_SEPARATOR);
                 }
             }

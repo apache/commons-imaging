@@ -55,6 +55,15 @@ import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class BmpImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".bmp";
+    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
+    private static final byte BMP_HEADER_SIGNATURE[] = { 0x42, 0x4d, };
+    private static final int BI_RGB = 0;
+    private static final int BI_RLE4 = 2;
+    private static final int BI_RLE8 = 1;
+    private static final int BI_BITFIELDS = 3;
+    private static final int BITMAP_FILE_HEADER_SIZE = 14;
+    private static final int BITMAP_INFO_HEADER_SIZE = 40;
 
     public BmpImageParser() {
         super.setByteOrder(ByteOrder.INTEL);
@@ -70,10 +79,6 @@ public class BmpImageParser extends ImageParser {
         return DEFAULT_EXTENSION;
     }
 
-    private static final String DEFAULT_EXTENSION = ".bmp";
-
-    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
-
     @Override
     protected String[] getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
@@ -84,8 +89,6 @@ public class BmpImageParser extends ImageParser {
         return new ImageFormat[] { ImageFormats.BMP, //
         };
     }
-
-    private static final byte BMP_HEADER_SIGNATURE[] = { 0x42, 0x4d, };
 
     private BmpHeaderInfo readBmpHeaderInfo(final InputStream is,
             final FormatCompliance formatCompliance, final boolean verbose)
@@ -258,11 +261,6 @@ public class BmpImageParser extends ImageParser {
         return result;
     }
 
-    private static final int BI_RGB = 0;
-    private static final int BI_RLE4 = 2;
-    private static final int BI_RLE8 = 1;
-    private static final int BI_BITFIELDS = 3;
-
     private byte[] getRLEBytes(final InputStream is, final int RLESamplesPerByte)
             throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -414,7 +412,7 @@ public class BmpImageParser extends ImageParser {
         if (verbose) {
             debugNumber("paletteLength", paletteLength, 4);
             System.out.println("ColorTable: "
-                    + ((colorTable == null) ? "null" : "" + colorTable.length));
+                    + ((colorTable == null) ? "null" : Integer.toString(colorTable.length)));
         }
 
         final int pixelCount = bhi.width * bhi.height;
@@ -533,7 +531,7 @@ public class BmpImageParser extends ImageParser {
             params.remove(PARAM_KEY_VERBOSE);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageReadException("Unknown parameter: " + firstKey);
         }
@@ -599,7 +597,7 @@ public class BmpImageParser extends ImageParser {
             params.remove(PARAM_KEY_VERBOSE);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageReadException("Unknown parameter: " + firstKey);
         }
@@ -733,7 +731,7 @@ public class BmpImageParser extends ImageParser {
             params.remove(BUFFERED_IMAGE_FACTORY);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageReadException("Unknown parameter: " + firstKey);
         }
@@ -766,9 +764,6 @@ public class BmpImageParser extends ImageParser {
 
     }
 
-    private static final int BITMAP_FILE_HEADER_SIZE = 14;
-    private static final int BITMAP_INFO_HEADER_SIZE = 40;
-
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
@@ -785,7 +780,7 @@ public class BmpImageParser extends ImageParser {
             pixelDensity = (PixelDensity) params
                     .remove(PARAM_KEY_PIXEL_DENSITY);
         }
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

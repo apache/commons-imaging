@@ -55,6 +55,9 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
 public class TiffImageParser extends ImageParser implements TiffConstants {
+    private static final String DEFAULT_EXTENSION = ".tif";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".tif", ".tiff", };
+
     public TiffImageParser() {
         // setDebug(true);
     }
@@ -68,10 +71,6 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".tif";
-
-    private static final String ACCEPTED_EXTENSIONS[] = { ".tif", ".tiff", };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -387,7 +386,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                     for (int i = 0; i < entries.size(); i++) {
                         final TiffField field = entries.get(i);
 
-                        field.dump(pw, d + "");
+                        field.dump(pw, Integer.toString(d));
                     }
                 }
 

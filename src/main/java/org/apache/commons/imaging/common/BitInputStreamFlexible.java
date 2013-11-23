@@ -28,6 +28,9 @@ public class BitInputStreamFlexible extends InputStream {
     // TODO should be byte order conscious, ie TIFF for reading
     // samples size<8 - shuoldn't that effect their order within byte?
     private final InputStream is;
+    private int cache;
+    private int cacheBitsRemaining = 0;
+    private long bytesRead = 0;
 
     public BitInputStreamFlexible(final InputStream is) {
         this.is = is;
@@ -41,10 +44,6 @@ public class BitInputStreamFlexible extends InputStream {
         }
         return is.read();
     }
-
-    private int cache;
-    private int cacheBitsRemaining = 0;
-    private long bytesRead = 0;
 
     public final int readBits(int count) throws IOException {
 

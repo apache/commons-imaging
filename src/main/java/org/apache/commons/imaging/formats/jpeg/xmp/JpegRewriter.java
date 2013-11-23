@@ -37,6 +37,21 @@ import org.apache.commons.imaging.util.IoUtils;
  */
 public class JpegRewriter extends BinaryFileParser {
     private static final ByteOrder JPEG_BYTE_ORDER = ByteOrder.NETWORK;
+    private static final SegmentFilter EXIF_SEGMENT_FILTER = new SegmentFilter() {
+        public boolean filter(final JFIFPieceSegment segment) {
+            return segment.isExifSegment();
+        }
+    };
+    private static final SegmentFilter XMP_SEGMENT_FILTER = new SegmentFilter() {
+        public boolean filter(final JFIFPieceSegment segment) {
+            return segment.isXmpSegment();
+        }
+    };
+    private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = new SegmentFilter() {
+        public boolean filter(final JFIFPieceSegment segment) {
+            return segment.isPhotoshopApp13Segment();
+        }
+    };
 
     /**
      * Constructor. to guess whether a file contains an image based on its file
@@ -195,27 +210,9 @@ public class JpegRewriter extends BinaryFileParser {
         return new JFIFPieces(pieces, segmentPieces);
     }
 
-    private static interface SegmentFilter {
-        public boolean filter(JFIFPieceSegment segment);
+    private interface SegmentFilter {
+        boolean filter(JFIFPieceSegment segment);
     }
-
-    private static final SegmentFilter EXIF_SEGMENT_FILTER = new SegmentFilter() {
-        public boolean filter(final JFIFPieceSegment segment) {
-            return segment.isExifSegment();
-        }
-    };
-
-    private static final SegmentFilter XMP_SEGMENT_FILTER = new SegmentFilter() {
-        public boolean filter(final JFIFPieceSegment segment) {
-            return segment.isXmpSegment();
-        }
-    };
-
-    private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = new SegmentFilter() {
-        public boolean filter(final JFIFPieceSegment segment) {
-            return segment.isPhotoshopApp13Segment();
-        }
-    };
 
     protected <T extends JFIFPiece> List<T> removeXmpSegments(final List<T> segments) {
         return filterSegments(segments, XMP_SEGMENT_FILTER);

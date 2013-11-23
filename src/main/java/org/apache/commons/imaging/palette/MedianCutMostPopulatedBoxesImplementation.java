@@ -63,9 +63,9 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
     
                 if (new_count < count_half) {
                     old_count = new_count;
-                    continue;
+                } else {
+                    break;
                 }
-                break;
             }
             if (median_index == colorGroup.color_counts.size() - 1) {
                 median_index--;
@@ -82,7 +82,7 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
             final List<ColorCount> upperColors = new ArrayList<ColorCount>(
                     colorGroup.color_counts.subList(median_index + 1,
                             colorGroup.color_counts.size()));
-            if (lowerColors.size() == 0 || upperColors.size() == 0) {
+            if (lowerColors.isEmpty() || upperColors.isEmpty()) {
                 continue;
             }
             final ColorGroup lowerGroup = new ColorGroup(lowerColors, ignoreAlpha);

@@ -19,6 +19,8 @@ package org.apache.commons.imaging.common;
 public abstract class RationalNumberUtilities extends Number {
 
     private static final long serialVersionUID = 4636553158238799602L;
+    // int-precision tolerance
+    private static final double TOLERANCE = 1E-8;
 
     private static class Option {
         public final RationalNumber rationalNumber;
@@ -40,9 +42,6 @@ public abstract class RationalNumberUtilities extends Number {
             return rationalNumber.toString();
         }
     }
-
-    // int-precision tolerance
-    private static final double TOLERANCE = 1E-8;
 
     //
     // calculate rational number using successive approximations.

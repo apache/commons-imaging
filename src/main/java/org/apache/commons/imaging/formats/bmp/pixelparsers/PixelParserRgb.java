@@ -22,17 +22,16 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
 public class PixelParserRgb extends PixelParserSimple {
+    private int bytecount = 0;
+    private int cached_bit_count = 0;
+    private int cached_byte = 0;
+    int pixelCount = 0;
+
     public PixelParserRgb(final BmpHeaderInfo bhi, final byte ColorTable[],
             final byte ImageData[]) {
         super(bhi, ColorTable, ImageData);
 
     }
-
-    private int bytecount = 0;
-    private int cached_bit_count = 0;
-    private int cached_byte = 0;
-
-    int pixelCount = 0;
 
     @Override
     public int getNextRGB() throws ImageReadException, IOException {

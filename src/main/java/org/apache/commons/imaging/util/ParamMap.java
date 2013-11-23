@@ -19,13 +19,15 @@ package org.apache.commons.imaging.util;
 
 import java.util.Map;
 
-public class ParamMap {
-
+public final class ParamMap {
+    private ParamMap() {
+    }
+    
     public static boolean getParamBoolean(final Map<String,Object> params, final Object key,
             final boolean default_value) {
         boolean result = default_value;
         final Object o = params == null ? null : params.get(key);
-        if (o != null && o instanceof Boolean) {
+        if (o instanceof Boolean) {
             result = ((Boolean) o).booleanValue();
         }
         return result;

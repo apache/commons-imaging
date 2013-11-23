@@ -73,6 +73,8 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
             }
         }
     };
+    private JpegImageData jpegImageData = null;
+    private TiffImageData tiffImageData = null;
 
     public void setNextDirectory(final TiffOutputDirectory nextDirectory) {
         this.nextDirectory = nextDirectory;
@@ -487,8 +489,6 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
     }
 
-    private JpegImageData jpegImageData = null;
-
     public void setJpegImageData(final JpegImageData rawJpegImageData) {
         this.jpegImageData = rawJpegImageData;
     }
@@ -496,8 +496,6 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
     public JpegImageData getRawJpegImageData() {
         return jpegImageData;
     }
-
-    private TiffImageData tiffImageData = null;
 
     public void setTiffImageData(final TiffImageData rawTiffImageData) {
         this.tiffImageData = rawTiffImageData;

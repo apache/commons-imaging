@@ -26,6 +26,11 @@ public class IptcRecord {
     public final IptcType iptcType;
     private final byte[] bytes;
     public final String value;
+    public static final Comparator<IptcRecord> COMPARATOR = new Comparator<IptcRecord>() {
+        public int compare(final IptcRecord e1, final IptcRecord e2) {
+            return e1.iptcType.getType() - e2.iptcType.getType();
+        }
+    };
 
     public IptcRecord(final IptcType iptcType, final byte[] bytes, final String value) {
         this.iptcType = iptcType;
@@ -56,11 +61,4 @@ public class IptcRecord {
     public String getIptcTypeName() {
         return iptcType.getName();
     }
-
-    public static final Comparator<IptcRecord> COMPARATOR = new Comparator<IptcRecord>() {
-        public int compare(final IptcRecord e1, final IptcRecord e2) {
-            return e1.iptcType.getType() - e2.iptcType.getType();
-        }
-    };
-
 }

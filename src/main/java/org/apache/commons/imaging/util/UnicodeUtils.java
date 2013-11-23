@@ -19,14 +19,14 @@ package org.apache.commons.imaging.util;
 
 import java.io.UnsupportedEncodingException;
 
-public abstract class UnicodeUtils {
+public final class UnicodeUtils {
     /**
      * This class should never be instantiated.
      */
     private UnicodeUtils() {
     }
 
-    public static final boolean isValidISO_8859_1(final String s) {
+    public static boolean isValidISO_8859_1(final String s) {
         try {
             final String roundtrip = new String(s.getBytes("ISO-8859-1"),
                     "ISO-8859-1");

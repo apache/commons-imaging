@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.imaging.common.IImageMetadata;
@@ -84,6 +85,25 @@ import org.apache.commons.imaging.util.IoUtils;
  * @see <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  */
 public abstract class Imaging implements ImagingConstants {
+    private static final int[] MAGIC_NUMBERS_GIF = { 0x47, 0x49, };
+    private static final int[] MAGIC_NUMBERS_PNG = { 0x89, 0x50, };
+    private static final int[] MAGIC_NUMBERS_JPEG = { 0xff, 0xd8, };
+    private static final int[] MAGIC_NUMBERS_BMP = { 0x42, 0x4d, };
+    private static final int[] MAGIC_NUMBERS_TIFF_MOTOROLA = { 0x4D, 0x4D, };
+    private static final int[] MAGIC_NUMBERS_TIFF_INTEL = { 0x49, 0x49, };
+    private static final int[] MAGIC_NUMBERS_PAM = { 0x50, 0x37, };
+    private static final int[] MAGIC_NUMBERS_PSD = { 0x38, 0x42, };
+    private static final int[] MAGIC_NUMBERS_PBM_A = { 0x50, 0x31, };
+    private static final int[] MAGIC_NUMBERS_PBM_B = { 0x50, 0x34, };
+    private static final int[] MAGIC_NUMBERS_PGM_A = { 0x50, 0x32, };
+    private static final int[] MAGIC_NUMBERS_PGM_B = { 0x50, 0x35, };
+    private static final int[] MAGIC_NUMBERS_PPM_A = { 0x50, 0x33, };
+    private static final int[] MAGIC_NUMBERS_PPM_B = { 0x50, 0x36, };
+    private static final int[] MAGIC_NUMBERS_JBIG2_1 = { 0x97, 0x4A, };
+    private static final int[] MAGIC_NUMBERS_JBIG2_2 = { 0x42, 0x32, };
+    private static final int[] MAGIC_NUMBERS_ICNS = { 0x69, 0x63, };
+    private static final int[] MAGIC_NUMBERS_DCX = { 0xB1, 0x68, };
+    private static final int[] MAGIC_NUMBERS_RGBE = { 0x23, 0x3F, };
 
     /**
      * Attempts to determine if a file contains an image recorded in 
@@ -116,14 +136,14 @@ public abstract class Imaging implements ImagingConstants {
             return false;
         }
         
-        filename = filename.toLowerCase();
+        filename = filename.toLowerCase(Locale.ENGLISH);
 
         final ImageParser imageParsers[] = ImageParser.getAllImageParsers();
         for (final ImageParser imageParser : imageParsers) {
             final String exts[] = imageParser.getAcceptedExtensions();
 
             for (final String ext : exts) {
-                if (filename.endsWith(ext.toLowerCase())) {
+                if (filename.endsWith(ext.toLowerCase(Locale.ENGLISH))) {
                     return true;
                 }
             }
@@ -171,26 +191,6 @@ public abstract class Imaging implements ImagingConstants {
             IOException {
         return guessFormat(new ByteSourceFile(file));
     }
-
-    private static final int[] MAGIC_NUMBERS_GIF = { 0x47, 0x49, };
-    private static final int[] MAGIC_NUMBERS_PNG = { 0x89, 0x50, };
-    private static final int[] MAGIC_NUMBERS_JPEG = { 0xff, 0xd8, };
-    private static final int[] MAGIC_NUMBERS_BMP = { 0x42, 0x4d, };
-    private static final int[] MAGIC_NUMBERS_TIFF_MOTOROLA = { 0x4D, 0x4D, };
-    private static final int[] MAGIC_NUMBERS_TIFF_INTEL = { 0x49, 0x49, };
-    private static final int[] MAGIC_NUMBERS_PAM = { 0x50, 0x37, };
-    private static final int[] MAGIC_NUMBERS_PSD = { 0x38, 0x42, };
-    private static final int[] MAGIC_NUMBERS_PBM_A = { 0x50, 0x31, };
-    private static final int[] MAGIC_NUMBERS_PBM_B = { 0x50, 0x34, };
-    private static final int[] MAGIC_NUMBERS_PGM_A = { 0x50, 0x32, };
-    private static final int[] MAGIC_NUMBERS_PGM_B = { 0x50, 0x35, };
-    private static final int[] MAGIC_NUMBERS_PPM_A = { 0x50, 0x33, };
-    private static final int[] MAGIC_NUMBERS_PPM_B = { 0x50, 0x36, };
-    private static final int[] MAGIC_NUMBERS_JBIG2_1 = { 0x97, 0x4A, };
-    private static final int[] MAGIC_NUMBERS_JBIG2_2 = { 0x42, 0x32, };
-    private static final int[] MAGIC_NUMBERS_ICNS = { 0x69, 0x63, };
-    private static final int[] MAGIC_NUMBERS_DCX = { 0xB1, 0x68, };
-    private static final int[] MAGIC_NUMBERS_RGBE = { 0x23, 0x3F, };
 
     private static boolean compareBytePair(final int[] a, final int b[]) {
         if (a.length != 2 && b.length != 2) {
@@ -1488,18 +1488,18 @@ public abstract class Imaging implements ImagingConstants {
 
         params.put(PARAM_KEY_FORMAT, format);
 
+        ImageParser imageParser = null;
         for (final ImageParser imageParser2 : imageParsers) {
-            final ImageParser imageParser = imageParser2;
-
-            if (!imageParser.canAcceptType(format)) {
-                continue;
+            if (imageParser2.canAcceptType(format)) {
+                imageParser = imageParser2;
+                break;
             }
-
-            imageParser.writeImage(src, os, params);
-            return;
         }
-
-        throw new ImageWriteException("Unknown Format: " + format);
+        if (imageParser != null) {
+            imageParser.writeImage(src, os, params);
+        } else {
+            throw new ImageWriteException("Unknown Format: " + format);
+        }
     }
 
 }

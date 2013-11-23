@@ -62,6 +62,9 @@ public class PcxImageParser extends ImageParser {
     // don't support uncompressed PCX, and/or don't handle black and white
     // images properly.
 
+    private static final String DEFAULT_EXTENSION = ".pcx";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".pcx", ".pcc", };
+
     public PcxImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
     }
@@ -75,9 +78,6 @@ public class PcxImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".pcx";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".pcx", ".pcc", };
 
     @Override
     protected String[] getAcceptedExtensions() {

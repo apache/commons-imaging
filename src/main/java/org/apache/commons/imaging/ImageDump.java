@@ -48,9 +48,9 @@ public class ImageDump {
             return "CS_LINEAR_RGB";
         case ColorSpace.CS_PYCC:
             return "CS_PYCC";
+        default:
+            return "unknown";
         }
-
-        return "unknown";
     }
 
     public void dumpColorSpace(final String prefix, final ColorSpace cs) {

@@ -33,7 +33,11 @@ public class BinaryFileParser {
         this.byteOrder = byteOrder;
     }
 
+    /**
+     * Constructs a BinaryFileParser with the default, big-endian, byte order.
+     */
     public BinaryFileParser() {
+        // as above
     }
 
     protected void setByteOrder(final ByteOrder byteOrder) {

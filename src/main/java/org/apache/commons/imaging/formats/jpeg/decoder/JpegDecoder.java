@@ -56,6 +56,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     private BufferedImage image = null;
     private ImageReadException imageReadException = null;
     private IOException ioException = null;
+    private final int[] zz = new int[64];
+    private final int[] blockInt = new int[64];
+    private final float[] block = new float[64];
 
     public boolean beginSOS() {
         return true;
@@ -294,10 +297,6 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         }
         return mcu;
     }
-
-    private final int[] zz = new int[64];
-    private final int[] blockInt = new int[64];
-    private final float[] block = new float[64];
 
     private void readMCU(final JpegInputStream is, final int[] preds, final Block[] mcu)
             throws IOException, ImageReadException {

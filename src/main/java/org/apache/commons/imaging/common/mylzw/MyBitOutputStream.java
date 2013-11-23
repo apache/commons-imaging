@@ -24,6 +24,9 @@ import org.apache.commons.imaging.common.ByteOrder;
 public class MyBitOutputStream extends OutputStream {
     private final OutputStream os;
     private final ByteOrder byteOrder;
+    private int bitsInCache = 0;
+    private int bitCache = 0;
+    private int bytesWritten = 0;
 
     public MyBitOutputStream(final OutputStream os, final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -34,9 +37,6 @@ public class MyBitOutputStream extends OutputStream {
     public void write(final int value) throws IOException {
         writeBits(value, 8);
     }
-
-    private int bitsInCache = 0;
-    private int bitCache = 0;
 
     // TODO: in and out streams CANNOT accurately read/write 32bits at a time,
     // as int will overflow. should have used a long
@@ -73,8 +73,6 @@ public class MyBitOutputStream extends OutputStream {
         }
 
     }
-
-    private int bytesWritten = 0;
 
     private void actualWrite(final int value) throws IOException {
         os.write(value);

@@ -78,7 +78,7 @@ public class RgbeImageParser extends ImageParser {
         final RgbeInfo info = new RgbeInfo(byteSource);
         boolean canThrow = false;
         try {
-            IImageMetadata ret = info.getMetadata();
+            final IImageMetadata ret = info.getMetadata();
             canThrow = true;
             return ret;
         } finally {

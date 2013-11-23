@@ -25,9 +25,11 @@ import java.io.InputStream;
  * < 8 bit fields across byte boundaries.
  */
 public class BitInputStream extends InputStream {
-
     private final InputStream is;
     private final ByteOrder byteOrder;
+    private int cache;
+    private int cacheBitsRemaining = 0;
+    private long bytes_read = 0;
 
     public BitInputStream(final InputStream is, final ByteOrder byteOrder) {
         this.is = is;
@@ -41,10 +43,6 @@ public class BitInputStream extends InputStream {
         }
         return is.read();
     }
-
-    private int cache;
-    private int cacheBitsRemaining = 0;
-    private long bytes_read = 0;
 
     public final int readBits(final int count) throws IOException {
         if (count < 8) {

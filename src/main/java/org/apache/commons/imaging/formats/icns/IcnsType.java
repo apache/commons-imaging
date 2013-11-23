@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.icns;
 
 import java.io.UnsupportedEncodingException;
 
-public class IcnsType {
+public final class IcnsType {
     private final int type;
     private final int width;
     private final int height;
@@ -178,8 +178,8 @@ public class IcnsType {
         byte[] bytes = null;
         try {
             bytes = type.getBytes("US-ASCII");
-        } catch (final UnsupportedEncodingException cannotHappen) {
-            throw new IllegalArgumentException("Your Java doesn't support US-ASCII");
+        } catch (final UnsupportedEncodingException unsupportedEncodingException) {
+            throw new IllegalArgumentException("Your Java doesn't support US-ASCII", unsupportedEncodingException);
         }
         if (bytes.length != 4) {
             throw new IllegalArgumentException("Invalid ICNS type");
@@ -196,8 +196,8 @@ public class IcnsType {
         bytes[3] = (byte) (0xff & type);
         try {
             return new String(bytes, "US-ASCII");
-        } catch (final UnsupportedEncodingException cannotHappen) {
+        } catch (final UnsupportedEncodingException unsupportedEncodingException) {
+            throw new IllegalArgumentException("Your Java doesn't support US-ASCII", unsupportedEncodingException);
         }
-        return null;
     }
 }

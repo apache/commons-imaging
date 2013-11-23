@@ -63,7 +63,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
             throws ImageWriteException {
         final List<TiffOutputDirectory> directories = outputSet.getDirectories();
 
-        if (1 > directories.size()) { 
+        if (directories.isEmpty()) { 
             throw new ImageWriteException("No directories.");
         }
 
@@ -157,7 +157,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
             // directory.
         }
 
-        if (directoryIndices.size() < 1) {
+        if (directoryIndices.isEmpty()) {
             throw new ImageWriteException("Missing root directory.");
         }
 
@@ -288,7 +288,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
         final HashMap<String,Object> rawParams = new HashMap<String,Object>(params);
         params.remove(PARAM_KEY_T4_OPTIONS);
         params.remove(PARAM_KEY_T6_OPTIONS);
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

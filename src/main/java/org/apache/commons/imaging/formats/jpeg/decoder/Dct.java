@@ -15,7 +15,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
-public class Dct {
+public final class Dct {
     /*
      * The book "JPEG still image data compression standard", by Pennebaker and
      * Mitchell, Chapter 4, discusses a number of approaches to the fast DCT.
@@ -91,6 +91,9 @@ public class Dct {
     private static final float Q = C2 - C6;
     private static final float R = C2 + C6;
 
+    private Dct() {
+    }
+    
     public static void scaleQuantizationVector(final float[] vector) {
         for (int x = 0; x < 8; x++) {
             vector[x] *= dctScalingFactors[x];

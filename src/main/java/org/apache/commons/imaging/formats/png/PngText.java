@@ -17,12 +17,12 @@
 package org.apache.commons.imaging.formats.png;
 
 public abstract class PngText {
+    public final String keyword, text;
+    
     public PngText(final String keyword, final String text) {
         this.keyword = keyword;
         this.text = text;
     }
-
-    public final String keyword, text;
 
     public static class Text extends PngText {
         public Text(final String keyword, final String text) {

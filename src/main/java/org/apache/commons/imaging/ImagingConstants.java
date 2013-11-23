@@ -29,7 +29,7 @@ public interface ImagingConstants {
      * <p>
      * Valid values: Boolean.TRUE and Boolean.FALSE.
      */
-    public static final String PARAM_KEY_VERBOSE = "VERBOSE";
+    String PARAM_KEY_VERBOSE = "VERBOSE";
 
     /**
      * Parameter key. Used to hint the filename when reading from a byte array
@@ -43,7 +43,7 @@ public interface ImagingConstants {
      * 
      * @see java.io.InputStream
      */
-    public static final String PARAM_KEY_FILENAME = "FILENAME";
+    String PARAM_KEY_FILENAME = "FILENAME";
 
     /**
      * Parameter key. Used in write operations to indicate desired image format.
@@ -54,7 +54,7 @@ public interface ImagingConstants {
      * 
      * @see org.apache.commons.imaging.ImageFormats
      */
-    public static final String PARAM_KEY_FORMAT = "FORMAT";
+    String PARAM_KEY_FORMAT = "FORMAT";
 
     /**
      * Parameter key. Used in write operations to indicate desired compression
@@ -70,9 +70,9 @@ public interface ImagingConstants {
      * 
      * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
-    public static final String PARAM_KEY_COMPRESSION = "COMPRESSION";
+    String PARAM_KEY_COMPRESSION = "COMPRESSION";
 
-    public static final String BUFFERED_IMAGE_FACTORY = "BUFFERED_IMAGE_FACTORY";
+    String BUFFERED_IMAGE_FACTORY = "BUFFERED_IMAGE_FACTORY";
 
     /**
      * Parameter key. Indicates whether to read embedded thumbnails.
@@ -84,7 +84,7 @@ public interface ImagingConstants {
      * 
      * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
-    public static final String PARAM_KEY_READ_THUMBNAILS = "READ_THUMBNAILS";
+    String PARAM_KEY_READ_THUMBNAILS = "READ_THUMBNAILS";
 
     /**
      * Parameter key. Indicates whether to throw exceptions when parsing invalid
@@ -96,7 +96,7 @@ public interface ImagingConstants {
      * 
      * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
-    public static final String PARAM_KEY_STRICT = "STRICT";
+    String PARAM_KEY_STRICT = "STRICT";
 
     /**
      * Parameter key.
@@ -108,7 +108,7 @@ public interface ImagingConstants {
      * 
      * @see org.apache.commons.imaging.formats.tiff.write.TiffOutputSet
      */
-    public static final String PARAM_KEY_EXIF = "EXIF";
+    String PARAM_KEY_EXIF = "EXIF";
 
     /**
      * Parameter key.
@@ -118,7 +118,7 @@ public interface ImagingConstants {
      * Valid values: String of XMP XML.
      * <p>
      */
-    public static final String PARAM_KEY_XMP_XML = "XMP_XML";
+    String PARAM_KEY_XMP_XML = "XMP_XML";
 
     /**
      * Parameter key. Used in write operations to indicate the desired pixel
@@ -129,5 +129,5 @@ public interface ImagingConstants {
      * 
      * @see org.apache.commons.imaging.PixelDensity
      */
-    public static final String PARAM_KEY_PIXEL_DENSITY = "PIXEL_DENSITY";
+    String PARAM_KEY_PIXEL_DENSITY = "PIXEL_DENSITY";
 }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageMetadata implements IImageMetadata {
+    protected static final String newline = System.getProperty("line.separator");
     private final List<IImageMetadataItem> items = new ArrayList<IImageMetadataItem>();
 
     public void add(final String keyword, final String text) {
@@ -33,9 +34,6 @@ public class ImageMetadata implements IImageMetadata {
     public List<? extends IImageMetadataItem> getItems() {
         return new ArrayList<IImageMetadataItem>(items);
     }
-
-    protected static final String newline = System
-            .getProperty("line.separator");
 
     @Override
     public String toString() {

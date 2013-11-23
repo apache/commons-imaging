@@ -49,6 +49,9 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class XbmImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".xbm";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".xbm", };
+
     public XbmImageParser() {
     }
 
@@ -61,9 +64,6 @@ public class XbmImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".xbm";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".xbm", };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -193,7 +193,7 @@ public class XbmImageParser extends ImageParser {
             throws ImageReadException, IOException {
         String token;
         token = cParser.nextToken();
-        if (token == null || !token.equals("static")) {
+        if (!"static".equals(token)) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no 'static' token");
         }
@@ -203,10 +203,10 @@ public class XbmImageParser extends ImageParser {
                     "Parsing XBM file failed, no 'unsigned' "
                             + "or 'char' token");
         }
-        if (token.equals("unsigned")) {
+        if ("unsigned".equals(token)) {
             token = cParser.nextToken();
         }
-        if (token == null || !token.equals("char")) {
+        if (!"char".equals(token)) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no 'char' token");
         }
@@ -229,22 +229,22 @@ public class XbmImageParser extends ImageParser {
             }
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("[")) {
+        if (!"[".equals(token)) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no '[' token");
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("]")) {
+        if (!"]".equals(token)) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no ']' token");
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("=")) {
+        if (!"=".equals(token)) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no '=' token");
         }
         token = cParser.nextToken();
-        if (token == null || !token.equals("{")) {
+        if (!"{".equals(token)) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no '{' token");
         }
@@ -275,8 +275,8 @@ public class XbmImageParser extends ImageParser {
                 throw new ImageReadException("Parsing XBM file failed, "
                         + "premature end of file");
             }
-            if (!token.equals(",")
-                    && (i < (imageData.length - 1) || !token.equals("}"))) {
+            if (!",".equals(token)
+                    && (i < (imageData.length - 1) || !"}".equals(token))) {
                 throw new ImageReadException("Parsing XBM file failed, "
                         + "punctuation error");
             }
@@ -344,7 +344,7 @@ public class XbmImageParser extends ImageParser {
             params.remove(PARAM_KEY_FORMAT);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

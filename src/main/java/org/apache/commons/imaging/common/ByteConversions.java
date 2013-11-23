@@ -20,7 +20,10 @@ package org.apache.commons.imaging.common;
  * Convenience methods for converting data types to and from
  * byte arrays.
  */
-public class ByteConversions {
+public final class ByteConversions {
+    private ByteConversions() {
+    }
+    
     public static byte[] toBytes(final short value, final ByteOrder byteOrder) {
         final byte[] result = new byte[2];
         toBytes(value, byteOrder, result, 0);

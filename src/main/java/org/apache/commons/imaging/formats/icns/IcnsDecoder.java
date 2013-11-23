@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.icns.IcnsImageParser.IcnsElement;
 
-public class IcnsDecoder {
+public final class IcnsDecoder {
     private static final int[] palette_4bpp = { 0xffffffff, 0xfffcf305,
             0xffff6402, 0xffdd0806, 0xfff20884, 0xff4600a5, 0xff0000d4,
             0xff02abea, 0xff1fb714, 0xff006411, 0xff562c05, 0xff90713a,
@@ -82,6 +82,9 @@ public class IcnsDecoder {
             0xFF000044, 0xFF000022, 0xFF000011, 0xFFEEEEEE, 0xFFDDDDDD,
             0xFFBBBBBB, 0xFFAAAAAA, 0xFF888888, 0xFF777777, 0xFF555555,
             0xFF444444, 0xFF222222, 0xFF111111, 0xFF000000 };
+
+    private IcnsDecoder() {
+    }
 
     private static void decode1BPPImage(final IcnsType imageType, final byte[] imageData,
             final ImageBuilder image) {

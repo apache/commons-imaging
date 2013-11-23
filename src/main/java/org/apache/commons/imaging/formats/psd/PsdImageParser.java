@@ -49,6 +49,18 @@ import org.apache.commons.imaging.formats.psd.datareaders.UncompressedDataReader
 import org.apache.commons.imaging.util.IoUtils;
 
 public class PsdImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".psd";
+    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
+    private static final int PSD_SECTION_HEADER = 0;
+    private static final int PSD_SECTION_COLOR_MODE = 1;
+    private static final int PSD_SECTION_IMAGE_RESOURCES = 2;
+    private static final int PSD_SECTION_LAYER_AND_MASK_DATA = 3;
+    private static final int PSD_SECTION_IMAGE_DATA = 4;
+    private static final int PSD_HEADER_LENGTH = 26;
+    private static final int COLOR_MODE_INDEXED = 2;
+    public final static int IMAGE_RESOURCE_ID_ICC_PROFILE = 0x040F;
+    public final static int IMAGE_RESOURCE_ID_XMP = 0x0424;
+    public final static String BLOCK_NAME_XMP = "XMP";
 
     public PsdImageParser() {
         super.setByteOrder(ByteOrder.MOTOROLA);
@@ -64,10 +76,6 @@ public class PsdImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".psd";
-
-    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -265,14 +273,6 @@ public class PsdImageParser extends ImageParser {
         }
     }
 
-    private static final int PSD_SECTION_HEADER = 0;
-    private static final int PSD_SECTION_COLOR_MODE = 1;
-    private static final int PSD_SECTION_IMAGE_RESOURCES = 2;
-    private static final int PSD_SECTION_LAYER_AND_MASK_DATA = 3;
-    private static final int PSD_SECTION_IMAGE_DATA = 4;
-
-    private static final int PSD_HEADER_LENGTH = 26;
-
     private InputStream getInputStream(final ByteSource byteSource, final int section)
             throws ImageReadException, IOException {
         InputStream is = null;
@@ -424,8 +424,6 @@ public class PsdImageParser extends ImageParser {
         }
 
     }
-
-    public final static int IMAGE_RESOURCE_ID_ICC_PROFILE = 0x040F;
 
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String,Object> params)
@@ -623,8 +621,6 @@ public class PsdImageParser extends ImageParser {
         return true;
     }
 
-    private static final int COLOR_MODE_INDEXED = 2;
-
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
@@ -739,10 +735,6 @@ public class PsdImageParser extends ImageParser {
         return result;
 
     }
-
-    public final static int IMAGE_RESOURCE_ID_XMP = 0x0424;
-
-    public final static String BLOCK_NAME_XMP = "XMP";
 
     /**
      * Extracts embedded XML metadata as XML string.

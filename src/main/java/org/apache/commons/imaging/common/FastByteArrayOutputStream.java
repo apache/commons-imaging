@@ -24,12 +24,11 @@ import java.io.OutputStream;
   */
 public class FastByteArrayOutputStream extends OutputStream {
     private final byte bytes[];
+    private int count = 0;
 
     public FastByteArrayOutputStream(final int length) {
         bytes = new byte[length];
     }
-
-    private int count = 0;
 
     @Override
     public void write(final int value) throws IOException {

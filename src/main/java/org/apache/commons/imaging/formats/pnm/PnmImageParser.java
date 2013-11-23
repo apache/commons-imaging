@@ -43,6 +43,12 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class PnmImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".pnm";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".pbm", ".pgm",
+            ".ppm", ".pnm", ".pam" };
+    public static final String PARAM_KEY_PNM_RAWBITS = "PNM_RAWBITS";
+    public static final String PARAM_VALUE_PNM_RAWBITS_YES = "YES";
+    public static final String PARAM_VALUE_PNM_RAWBITS_NO = "NO";
 
     public PnmImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -58,11 +64,6 @@ public class PnmImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".pnm";
-
-    private static final String ACCEPTED_EXTENSIONS[] = { ".pbm", ".pgm",
-            ".ppm", ".pnm", ".pam" };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -137,27 +138,27 @@ public class PnmImageParser extends ImageParser {
             String line;
             while ((line = wsr.readLine()) != null) {
                 line = line.trim();
-                if (line.startsWith("#")) {
+                if (line.charAt(0) == '#') {
                     continue;
                 }
                 final StringTokenizer tokenizer = new StringTokenizer(line, " ", false);
                 final String type = tokenizer.nextToken();
-                if (type.equals("WIDTH")) {
+                if ("WIDTH".equals(type)) {
                     seenWidth = true;
                     width = Integer.parseInt(tokenizer.nextToken());
-                } else if (type.equals("HEIGHT")) {
+                } else if ("HEIGHT".equals(type)) {
                     seenHeight = true;
                     height = Integer.parseInt(tokenizer.nextToken());
-                } else if (type.equals("DEPTH")) {
+                } else if ("DEPTH".equals(type)) {
                     seenDepth = true;
                     depth = Integer.parseInt(tokenizer.nextToken());
-                } else if (type.equals("MAXVAL")) {
+                } else if ("MAXVAL".equals(type)) {
                     seenMaxVal = true;
                     maxVal = Integer.parseInt(tokenizer.nextToken());
-                } else if (type.equals("TUPLTYPE")) {
+                } else if ("TUPLTYPE".equals(type)) {
                     seenTupleType = true;
                     tupleType += tokenizer.nextToken();
-                } else if (type.equals("ENDHDR")) {
+                } else if ("ENDHDR".equals(type)) {
                     break;
                 } else {
                     throw new ImageReadException("Invalid PAM file header type " + type);
@@ -315,10 +316,6 @@ public class PnmImageParser extends ImageParser {
         }
     }
 
-    public static final String PARAM_KEY_PNM_RAWBITS = "PNM_RAWBITS";
-    public static final String PARAM_VALUE_PNM_RAWBITS_YES = "YES";
-    public static final String PARAM_VALUE_PNM_RAWBITS_NO = "NO";
-
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
@@ -368,7 +365,7 @@ public class PnmImageParser extends ImageParser {
             params.remove(PARAM_KEY_FORMAT);
         }
         
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

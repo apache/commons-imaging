@@ -25,6 +25,13 @@ import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
 public class ScanExpediterInterlaced extends ScanExpediter {
+    private static final int Starting_Row[] = { 0, 0, 4, 0, 2, 0, 1 };
+    private static final int Starting_Col[] = { 0, 4, 0, 2, 0, 1, 0 };
+    private static final int Row_Increment[] = { 8, 8, 8, 4, 4, 2, 2 };
+    private static final int Col_Increment[] = { 8, 8, 4, 4, 2, 2, 1 };
+//    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
+//    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
+
     public ScanExpediterInterlaced(final int width, final int height, final InputStream is,
             final BufferedImage bi, final int color_type, final int BitDepth, final int bits_per_pixel,
             final PngChunkPlte fPNGChunkPLTE, final GammaCorrection fGammaCorrection,
@@ -51,13 +58,6 @@ public class ScanExpediterInterlaced extends ScanExpediter {
         // buffer.setElem(y * width +x , rgb);
 
     }
-
-    private static final int Starting_Row[] = { 0, 0, 4, 0, 2, 0, 1 };
-    private static final int Starting_Col[] = { 0, 4, 0, 2, 0, 1, 0 };
-    private static final int Row_Increment[] = { 8, 8, 8, 4, 4, 2, 2 };
-    private static final int Col_Increment[] = { 8, 8, 4, 4, 2, 2, 1 };
-//    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
-//    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
 
     @Override
     public void drive() throws ImageReadException, IOException {

@@ -291,16 +291,16 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         }
     }
 
-    public static interface Listener {
-        public boolean setTiffHeader(TiffHeader tiffHeader);
+    public interface Listener {
+        boolean setTiffHeader(TiffHeader tiffHeader);
 
-        public boolean addDirectory(TiffDirectory directory);
+        boolean addDirectory(TiffDirectory directory);
 
-        public boolean addField(TiffField field);
+        boolean addField(TiffField field);
 
-        public boolean readImageData();
+        boolean readImageData();
 
-        public boolean readOffsetDirectories();
+        boolean readOffsetDirectories();
     }
 
     private static class Collector implements Listener {

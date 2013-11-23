@@ -39,6 +39,7 @@ import org.apache.commons.imaging.util.Debug;
 public class JpegImageMetadata implements IImageMetadata {
     private final JpegPhotoshopMetadata photoshop;
     private final TiffImageMetadata exif;
+    private static final String newline = System.getProperty("line.separator");
 
     public JpegImageMetadata(final JpegPhotoshopMetadata photoshop,
             final TiffImageMetadata exif) {
@@ -149,7 +150,9 @@ public class JpegImageMetadata implements IImageMetadata {
                     image = Imaging.getBufferedImage(jpegImageData.data);
                     imageSucceeded = true;
                 } catch (final ImagingException imagingException) {
+                    // NOPMD
                 } catch (final IOException ioException) {
+                    // NOPMD
                 } finally {
                     // our JPEG reading is still a bit buggy -
                     // fall back to ImageIO on error
@@ -199,8 +202,6 @@ public class JpegImageMetadata implements IImageMetadata {
 
         return result;
     }
-
-    private static final String newline = System.getProperty("line.separator");
 
     @Override
     public String toString() {

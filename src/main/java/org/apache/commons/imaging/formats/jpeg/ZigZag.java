@@ -15,7 +15,7 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
-public class ZigZag {
+public final class ZigZag {
     private static final int zigZag[] = {
          0,  1,  5,  6, 14, 15, 27, 28,
          2,  4,  7, 13, 16, 26, 29, 42,
@@ -27,6 +27,9 @@ public class ZigZag {
         35, 36, 48, 49, 57, 58, 62, 63
     };
 
+    private ZigZag() {
+    }
+    
     public static void zigZagToBlock(final int[] zz, final int[] block) {
         for (int i = 0; i < 64; i++) {
             block[i] = zz[zigZag[i]];

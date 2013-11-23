@@ -116,7 +116,7 @@ public class RationalNumber extends Number {
 
     public String toDisplayString() {
         if ((numerator % divisor) == 0) {
-            return "" + (numerator / divisor);
+            return Integer.toString(numerator / divisor);
         }
         final NumberFormat nf = NumberFormat.getInstance();
         nf.setMaximumFractionDigits(3);

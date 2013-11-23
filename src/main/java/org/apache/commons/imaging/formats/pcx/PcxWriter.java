@@ -87,7 +87,7 @@ public class PcxWriter {
             pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

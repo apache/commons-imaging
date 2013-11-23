@@ -32,6 +32,7 @@ public abstract class Segment extends BinaryFileParser {
     }
 
     public void dump(final PrintWriter pw) {
+        // empty
     }
 
     public abstract String getDescription();

@@ -50,6 +50,35 @@ import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class GifImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".gif";
+    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
+    private static final byte GIF_HEADER_SIGNATURE[] = { 71, 73, 70 };
+    private final static int EXTENSION_CODE = 0x21;
+    private final static int IMAGE_SEPARATOR = 0x2C;
+    private final static int GRAPHIC_CONTROL_EXTENSION = (EXTENSION_CODE << 8) | 0xf9;
+    private final static int COMMENT_EXTENSION = 0xfe;
+    private final static int PLAIN_TEXT_EXTENSION = 0x01;
+    private final static int XMP_EXTENSION = 0xff;
+    private final static int TERMINATOR_BYTE = 0x3b;
+    private final static int APPLICATION_EXTENSION_LABEL = 0xff;
+    private final static int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8)
+            | XMP_EXTENSION;
+    private static final int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
+    private static final int INTERLACE_FLAG_MASK = 1 << 6;
+    private static final int SORT_FLAG_MASK = 1 << 5;
+    private static final byte XMP_APPLICATION_ID_AND_AUTH_CODE[] = {
+        0x58, // X
+        0x4D, // M
+        0x50, // P
+        0x20, //
+        0x44, // D
+        0x61, // a
+        0x74, // t
+        0x61, // a
+        0x58, // X
+        0x4D, // M
+        0x50, // P
+    };
 
     public GifImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -65,10 +94,6 @@ public class GifImageParser extends ImageParser {
         return DEFAULT_EXTENSION;
     }
 
-    private static final String DEFAULT_EXTENSION = ".gif";
-
-    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
-
     @Override
     protected String[] getAcceptedExtensions() {
         return ACCEPTED_EXTENSIONS;
@@ -79,8 +104,6 @@ public class GifImageParser extends ImageParser {
         return new ImageFormat[] { ImageFormats.GIF, //
         };
     }
-
-    private static final byte GIF_HEADER_SIGNATURE[] = { 71, 73, 70 };
 
     private GifHeaderInfo readHeader(final InputStream is,
             final FormatCompliance formatCompliance) throws ImageReadException,
@@ -216,17 +239,6 @@ public class GifImageParser extends ImageParser {
 
         return new GenericGifBlock(code, subblocks);
     }
-
-    private final static int EXTENSION_CODE = 0x21;
-    private final static int IMAGE_SEPARATOR = 0x2C;
-    private final static int GRAPHIC_CONTROL_EXTENSION = (EXTENSION_CODE << 8) | 0xf9;
-    private final static int COMMENT_EXTENSION = 0xfe;
-    private final static int PLAIN_TEXT_EXTENSION = 0x01;
-    private final static int XMP_EXTENSION = 0xff;
-    private final static int TERMINATOR_BYTE = 0x3b;
-    private final static int APPLICATION_EXTENSION_LABEL = 0xff;
-    private final static int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8)
-            | XMP_EXTENSION;
 
     private List<GifBlock> readBlocks(final GifHeaderInfo ghi, final InputStream is,
             final boolean stopBeforeImageData, final FormatCompliance formatCompliance)
@@ -776,10 +788,6 @@ public class GifImageParser extends ImageParser {
         os.write(0); // last block
     }
 
-    private static final int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
-    private static final int INTERLACE_FLAG_MASK = 1 << 6;
-    private static final int SORT_FLAG_MASK = 1 << 5;
-
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String,Object> params)
             throws ImageWriteException, IOException {
@@ -803,7 +811,7 @@ public class GifImageParser extends ImageParser {
             params.remove(PARAM_KEY_XMP_XML);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
@@ -1022,19 +1030,6 @@ public class GifImageParser extends ImageParser {
         bos.close();
         os.close();
     }
-
-    private static final byte XMP_APPLICATION_ID_AND_AUTH_CODE[] = { 0x58, // X
-            0x4D, // M
-            0x50, // P
-            0x20, //
-            0x44, // D
-            0x61, // a
-            0x74, // t
-            0x61, // a
-            0x58, // X
-            0x4D, // M
-            0x50, // P
-    };
 
     /**
      * Extracts embedded XML metadata as XML string.

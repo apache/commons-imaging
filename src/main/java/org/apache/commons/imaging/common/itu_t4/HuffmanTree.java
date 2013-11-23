@@ -26,12 +26,12 @@ import org.apache.commons.imaging.common.BitInputStreamFlexible;
  * A Huffman tree implemented as 1 array for high locality of reference.
  */
 class HuffmanTree {
+    private final List<Node> nodes = new ArrayList<Node>();
+    
     private final static class Node {
         boolean isEmpty = true;
         Object value = null;
     }
-
-    private final List<Node> nodes = new ArrayList<Node>();
 
     public final void insert(final String pattern, final Object value)
             throws HuffmanTreeException {

@@ -15,7 +15,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
-public class YCbCrConverter {
+public final class YCbCrConverter {
     private static final int[] reds = new int[256 * 256];
     private static final int[] blues = new int[256 * 256];
     private static final int[] greens1 = new int[256 * 256];
@@ -97,6 +97,9 @@ public class YCbCrConverter {
                 greens2[(value << 8) | Y] = green << 8;
             }
         }
+    }
+    
+    private YCbCrConverter() {
     }
 
     private static int fastRound(final float x) {

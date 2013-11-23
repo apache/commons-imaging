@@ -31,7 +31,7 @@ import java.nio.channels.FileChannel;
 
 import org.apache.commons.imaging.ImagingConstants;
 
-public class IoUtils implements ImagingConstants {
+public final class IoUtils implements ImagingConstants {
     public static void closeQuietly(final boolean mayThrow, final Closeable... closeables)
             throws IOException {
         IOException firstException = null;
@@ -51,7 +51,7 @@ public class IoUtils implements ImagingConstants {
         }
     }
     
-    public static final boolean copyFileNio(final File src, final File dst)
+    public static boolean copyFileNio(final File src, final File dst)
             throws IOException {
         FileChannel srcChannel = null, dstChannel = null;
         boolean canThrow = false;

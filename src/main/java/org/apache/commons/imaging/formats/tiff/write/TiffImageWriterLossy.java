@@ -27,6 +27,7 @@ import org.apache.commons.imaging.common.ByteOrder;
 public class TiffImageWriterLossy extends TiffImageWriterBase {
 
     public TiffImageWriterLossy() {
+        // with default byte order
     }
 
     public TiffImageWriterLossy(final ByteOrder byteOrder) {

@@ -43,6 +43,8 @@ import org.apache.commons.imaging.util.ParamMap;
 
 public class IcnsImageParser extends ImageParser {
     public static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
+    private static final String DEFAULT_EXTENSION = ".icns";
+    private static final String ACCEPTED_EXTENSIONS[] = { ".icns", };
 
     public IcnsImageParser() {
         super.setByteOrder(ByteOrder.BIG_ENDIAN);
@@ -57,10 +59,6 @@ public class IcnsImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".icns";
-
-    private static final String ACCEPTED_EXTENSIONS[] = { ".icns", };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -95,7 +93,7 @@ public class IcnsImageParser extends ImageParser {
             params.remove(PARAM_KEY_VERBOSE);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageReadException("Unknown parameter: " + firstKey);
         }
@@ -127,7 +125,7 @@ public class IcnsImageParser extends ImageParser {
             params.remove(PARAM_KEY_VERBOSE);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageReadException("Unknown parameter: " + firstKey);
         }
@@ -282,7 +280,7 @@ public class IcnsImageParser extends ImageParser {
         final IcnsContents icnsContents = readImage(byteSource);
         final List<BufferedImage> result = IcnsDecoder
                 .decodeAllImages(icnsContents.icnsElements);
-        if (result.size() > 0) {
+        if (!result.isEmpty()) {
             return result.get(0);
         }
         throw new ImageReadException("No icons in ICNS file");
@@ -306,7 +304,7 @@ public class IcnsImageParser extends ImageParser {
             params.remove(PARAM_KEY_FORMAT);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }

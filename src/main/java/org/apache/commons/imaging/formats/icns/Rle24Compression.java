@@ -16,7 +16,10 @@
  */
 package org.apache.commons.imaging.formats.icns;
 
-class Rle24Compression {
+final class Rle24Compression {
+    private Rle24Compression() {
+    }
+    
     public static byte[] decompress(final int width, final int height, final byte[] data) {
         final int pixelCount = width * height;
         final byte[] result = new byte[4 * pixelCount];

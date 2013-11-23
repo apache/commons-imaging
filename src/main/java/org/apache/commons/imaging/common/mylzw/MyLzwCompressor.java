@@ -33,6 +33,7 @@ public class MyLzwCompressor {
     private final int clearCode;
     private final int eoiCode;
     private final Listener listener;
+    private final Map<ByteArray, Integer> map = new HashMap<ByteArray, Integer>();
 
     public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder,
             final boolean earlyLimit) {
@@ -56,8 +57,6 @@ public class MyLzwCompressor {
 
         InitializeStringTable();
     }
-
-    private final Map<ByteArray, Integer> map = new HashMap<ByteArray, Integer>();
 
     private final void InitializeStringTable() {
         codeSize = initialCodeSize;
@@ -218,14 +217,14 @@ public class MyLzwCompressor {
         return cleared;
     }
 
-    public static interface Listener {
-        public void dataCode(int code);
+    public interface Listener {
+        void dataCode(int code);
 
-        public void eoiCode(int code);
+        void eoiCode(int code);
 
-        public void clearCode(int code);
+        void clearCode(int code);
 
-        public void init(int clearCode, int eoiCode);
+        void init(int clearCode, int eoiCode);
     }
 
     public byte[] compress(final byte bytes[]) throws IOException {

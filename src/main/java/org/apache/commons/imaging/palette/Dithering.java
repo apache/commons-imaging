@@ -23,7 +23,10 @@ import org.apache.commons.imaging.ImageWriteException;
 /**
  * Dithering algorithms to use when quantizing an image to paletted form.
  */
-public class Dithering {
+public final class Dithering {
+    private Dithering() {
+    }
+    
     /**
      * Changes the given image to only use colors from the given palette,
      * applying Floyd-Steinberg dithering in the process. Ensure that

@@ -25,6 +25,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
@@ -950,10 +951,11 @@ public abstract class ImageParser extends BinaryFileParser implements
         final int index = filename.lastIndexOf('.');
         if (index >= 0) {
             String ext = filename.substring(index);
-            ext = ext.toLowerCase();
+            ext = ext.toLowerCase(Locale.ENGLISH);
 
             for (final String ext2 : exts) {
-                if (ext2.toLowerCase().equals(ext)) {
+                final String ext2Lower = ext2.toLowerCase(Locale.ENGLISH);
+                if (ext2Lower.equals(ext)) {
                     return true;
                 }
             }

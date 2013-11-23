@@ -33,7 +33,8 @@ import org.apache.commons.imaging.ImageWriteException;
  */
 public class PaletteFactory {
     private static final boolean debug = false;
-
+    public static final int components = 3; // in bits
+    
     /**
      * Builds an exact complete opaque palette containing all the colors in {@code src},
      * using an algorithm that is faster than {@linkplain #makeExactRgbPaletteSimple} for large images
@@ -260,8 +261,6 @@ public class PaletteFactory {
 
         return best_v;
     }
-
-    public static final int components = 3; // in bits
 
     private static class DivisionCandidate {
         // private final ColorSpaceSubset src;

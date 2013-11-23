@@ -89,9 +89,9 @@ public class MedianCutLongestAxisImplementation extends MedianCutImplementation 
 
             if (new_count < count_half) {
                 old_count = new_count;
-                continue;
+            } else {
+                break;
             }
-            break;
         }
 
         if (median_index == color_group.color_counts.size() - 1) {

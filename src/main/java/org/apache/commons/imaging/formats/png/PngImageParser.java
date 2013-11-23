@@ -64,6 +64,8 @@ import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class PngImageParser extends ImageParser {
+    private static final String DEFAULT_EXTENSION = ".png";
+    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
 
     public PngImageParser() {
         // setDebug(true);
@@ -78,10 +80,6 @@ public class PngImageParser extends ImageParser {
     public String getDefaultExtension() {
         return DEFAULT_EXTENSION;
     }
-
-    private static final String DEFAULT_EXTENSION = ".png";
-
-    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
 
     @Override
     protected String[] getAcceptedExtensions() {
@@ -127,9 +125,9 @@ public class PngImageParser extends ImageParser {
             is = byteSource.getInputStream();
 
             readSignature(is);
-            List<PngChunk> chunks = readChunks(is, new int[] { chunkType, }, true);
+            final List<PngChunk> chunks = readChunks(is, new int[] { chunkType, }, true);
             canThrow = true;
-            return chunks.size() > 0;
+            return !chunks.isEmpty();
         } finally {
             IoUtils.closeQuietly(canThrow, is);
         }
@@ -251,7 +249,7 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> chunks = readChunks(byteSource, new int[] { PngConstants.iCCP, },
                 true);
 
-        if ((chunks == null) || (chunks.size() < 1)) {
+        if ((chunks == null) || (chunks.isEmpty())) {
             // throw new ImageReadException("Png: No chunks");
             return null;
         }
@@ -273,7 +271,7 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> chunks = readChunks(byteSource, new int[] { PngConstants.IHDR, },
                 true);
 
-        if ((chunks == null) || (chunks.size() < 1)) {
+        if ((chunks == null) || (chunks.isEmpty())) {
             throw new ImageReadException("Png: No chunks");
         }
 
@@ -301,7 +299,7 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> chunks = readChunks(byteSource,
                 new int[] { PngConstants.tEXt, PngConstants.zTXt, }, true);
 
-        if ((chunks == null) || (chunks.size() < 1)) {
+        if ((chunks == null) || (chunks.isEmpty())) {
             return null;
         }
 
@@ -507,7 +505,7 @@ public class PngImageParser extends ImageParser {
         // if(chunks!=null)
         // System.out.println("chunks: " + chunks.size());
 
-        if ((chunks == null) || (chunks.size() < 1)) {
+        if ((chunks == null) || (chunks.isEmpty())) {
             throw new ImageReadException("PNG: no chunks");
         }
 
@@ -521,7 +519,7 @@ public class PngImageParser extends ImageParser {
         boolean isTransparent = false;
 
         final List<PngChunk> tRNSs = filterChunks(chunks, PngConstants.tRNS);
-        if (tRNSs.size() > 0) {
+        if (!tRNSs.isEmpty()) {
             isTransparent = true;
         } else {
             // CE - Fix Alpha.
@@ -663,7 +661,7 @@ public class PngImageParser extends ImageParser {
                 PngConstants.sRGB,
             }, false);
 
-        if ((chunks == null) || (chunks.size() < 1)) {
+        if ((chunks == null) || (chunks.isEmpty())) {
             throw new ImageReadException("PNG: no chunks");
         }
 
@@ -687,7 +685,7 @@ public class PngImageParser extends ImageParser {
         // -----
 
         final List<PngChunk> IDATs = filterChunks(chunks, PngConstants.IDAT);
-        if (IDATs.size() < 1) {
+        if (IDATs.isEmpty()) {
             throw new ImageReadException("PNG missing image data");
         }
 
@@ -706,7 +704,7 @@ public class PngImageParser extends ImageParser {
         TransparencyFilter transparencyFilter = null;
 
         final List<PngChunk> tRNSs = filterChunks(chunks, PngConstants.tRNS);
-        if (tRNSs.size() > 0) {
+        if (!tRNSs.isEmpty()) {
             final PngChunk pngChunktRNS = tRNSs.get(0);
             transparencyFilter = getTransparencyFilter(pngChunkIHDR.colorType,
                     pngChunktRNS);
@@ -857,7 +855,7 @@ public class PngImageParser extends ImageParser {
 
         pw.println("chunks: " + chunks.size());
 
-        if ((chunks.size() < 1)) {
+        if ((chunks.isEmpty())) {
             return false;
         }
 
@@ -896,7 +894,7 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> chunks = readChunks(byteSource, new int[] { PngConstants.iTXt, },
                 false);
 
-        if ((chunks == null) || (chunks.size() < 1)) {
+        if ((chunks == null) || (chunks.isEmpty())) {
             return null;
         }
 
@@ -909,7 +907,7 @@ public class PngImageParser extends ImageParser {
             xmpChunks.add(chunk);
         }
 
-        if (xmpChunks.size() < 1) {
+        if (xmpChunks.isEmpty()) {
             return null;
         }
         if (xmpChunks.size() > 1) {

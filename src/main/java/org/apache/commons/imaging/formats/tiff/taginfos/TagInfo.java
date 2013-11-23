@@ -29,8 +29,14 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
-public abstract class TagInfo {
+public class TagInfo {
     public static final int LENGTH_UNKNOWN = -1;
+    public final String name;
+    public final int tag;
+    public final List<FieldType> dataTypes;
+    public final int length;
+    public final TiffDirectoryType directoryType;
+    private final boolean isOffset;
 
     public TagInfo(final String name, final int tag, final FieldType dataType, final int length,
             final TiffDirectoryType exifDirectory) {
@@ -52,13 +58,6 @@ public abstract class TagInfo {
         this(name, tag, dataType, LENGTH_UNKNOWN,
                 TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     }
-
-    public final String name;
-    public final int tag;
-    public final List<FieldType> dataTypes;
-    public final int length;
-    public final TiffDirectoryType directoryType;
-    private final boolean isOffset;
 
     public TagInfo(final String name, final int tag, final List<FieldType> dataTypes, final int length,
             final TiffDirectoryType exifDirectory) {

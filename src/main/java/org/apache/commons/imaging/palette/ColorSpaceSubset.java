@@ -25,6 +25,9 @@ class ColorSpaceSubset {
     final int precision_mask;
     final int total;
     int rgb; // median
+    // the index in the palette.
+    private int index;
+    public static final RgbComparator rgbComparator = new RgbComparator();
 
     ColorSpaceSubset(final int total, final int precision) {
         this.total = total;
@@ -152,9 +155,6 @@ class ColorSpaceSubset {
         rgb = (int) (((redsum & 0xff) << 16) | ((greensum & 0xff) << 8) | ((bluesum & 0xff) << 0));
     }
 
-    // the index in the palette.
-    private int index;
-    
     public final int getIndex() {
         return index;
     }
@@ -170,6 +170,4 @@ class ColorSpaceSubset {
             return c1.rgb - c2.rgb;
         }
     }
-    
-    public static final RgbComparator rgbComparator = new RgbComparator();
 }

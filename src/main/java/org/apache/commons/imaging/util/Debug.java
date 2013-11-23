@@ -27,11 +27,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public final class Debug {
 
     private static final boolean DEBUG = false;
+    // public static String newline = System.getProperty("line.separator");
+    public static final String newline = "\r\n";
+    private static long counter = 0;
 
     public static void debug(final String message) {
         if (DEBUG) {
@@ -141,9 +145,7 @@ public final class Debug {
         return result.toString();
     }
 
-    private static long counter = 0;
-
-    public static String getDebug(final String message, final java.util.List<?> v) {
+    public static String getDebug(final String message, final List<?> v) {
         final StringBuilder result = new StringBuilder();
 
         final String suffix = " [" + counter++ + "]";
@@ -188,9 +190,6 @@ public final class Debug {
     public static boolean compare(final String prefix, final Map<?, ?> a, final Map<?, ?> b) {
         return compare(prefix, a, b, null, null);
     }
-
-    // public static String newline = System.getProperty("line.separator");
-    public static final String newline = "\r\n";
 
     private static void log(final StringBuilder buffer, final String s) {
         Debug.debug(s);
@@ -309,12 +308,12 @@ public final class Debug {
     }
 
     public static String getDebug(final String message, final Date value) {
-        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
         return getDebug(message, (value == null) ? "null" : df.format(value));
     }
 
     public static String getDebug(final String message, final Calendar value) {
-        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
         return getDebug(message,
                 (value == null) ? "null" : df.format(value.getTime()));
     }
@@ -330,8 +329,8 @@ public final class Debug {
             debug(message, (int[]) value);
         } else if (value instanceof String) {
             debug(message, (String) value);
-        } else if (value instanceof java.util.List) {
-            debug(message, (java.util.List<?>) value);
+        } else if (value instanceof List) {
+            debug(message, (List<?>) value);
         } else if (value instanceof Map) {
             debug(message, (Map<?, ?>) value);
         // } else if (value instanceof Object) {
@@ -390,8 +389,8 @@ public final class Debug {
             return getDebug(message, (char[]) value);
         } else if (value instanceof int[]) {
             return getDebug(message, (int[]) value);
-        } else if (value instanceof java.util.List) {
-            return getDebug(message, (java.util.List<?>) value);
+        } else if (value instanceof List) {
+            return getDebug(message, (List<?>) value);
         } else {
             return getDebug(message, value.toString());
         }
@@ -490,12 +489,12 @@ public final class Debug {
     }
 
     public static void debug(final String message, final Calendar value) {
-        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
         debug(message, (value == null) ? "null" : df.format(value.getTime()));
     }
 
     public static void debug(final String message, final Date value) {
-        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
         debug(message, (value == null) ? "null" : df.format(value));
     }
 
@@ -537,7 +536,7 @@ public final class Debug {
         debug(getDebug(message, v, max));
     }
 
-    public static void debug(final String message, final java.util.List<?> v) {
+    public static void debug(final String message, final List<?> v) {
         final String suffix = " [" + counter++ + "]";
 
         debug(message + " (" + v.size() + ")" + suffix);
@@ -596,7 +595,7 @@ public final class Debug {
         final StringBuilder result = new StringBuilder();
 
         final SimpleDateFormat timestamp = new SimpleDateFormat(
-                "yyyy-MM-dd kk:mm:ss:SSS");
+                "yyyy-MM-dd kk:mm:ss:SSS", Locale.ENGLISH);
         final String datetime = timestamp.format(new Date()).toLowerCase();
 
         result.append(newline);
@@ -692,8 +691,8 @@ public final class Debug {
             final double aspect_ratio = ((double) r.width) / ((double) r.height);
             final double aspect_ratio2 = 1.0 / aspect_ratio;
 
-            s_ar1 = "" + aspect_ratio;
-            s_ar2 = "" + aspect_ratio2;
+            s_ar1 = Double.toString(aspect_ratio);
+            s_ar2 = Double.toString(aspect_ratio2);
 
             if (s_ar1.length() > 7) {
                 s_ar1 = s_ar1.substring(0, 7);
@@ -720,8 +719,8 @@ public final class Debug {
             final double aspect_ratio = ((double) r.width) / ((double) r.height);
             final double aspect_ratio2 = 1.0 / aspect_ratio;
 
-            s_ar1 = "" + aspect_ratio;
-            s_ar2 = "" + aspect_ratio2;
+            s_ar1 = Double.toString(aspect_ratio);
+            s_ar2 = Double.toString(aspect_ratio2);
 
             if (s_ar1.length() > 7) {
                 s_ar1 = s_ar1.substring(0, 7);
@@ -790,14 +789,14 @@ public final class Debug {
             for (int i = 0; i < array.length; i++) {
                 debug(prefix + "\t" + i + ": ", array[i]);
             }
-        } else if (value instanceof java.util.List) {
-            final java.util.List<?> list = (java.util.List<?>) value;
+        } else if (value instanceof List) {
+            final List<?> list = (List<?>) value;
             debug(prefix, "list");
             for (int i = 0; i < list.size(); i++) {
                 dump(prefix + "\t" + "list: " + i + ": ", list.get(i));
             }
         } else if (value instanceof Map) {
-            final java.util.Map<?,?> map = (java.util.Map<?,?>) value;
+            final Map<?,?> map = (Map<?,?>) value;
             debug(prefix, "map");
             for (final Map.Entry<?,?> entry : map.entrySet()) {
                 dump(prefix + "\t" + "map: " + entry.getKey() + " -> ", entry.getValue());

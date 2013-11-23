@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
 
-public class IptcConstants {
+public final class IptcConstants {
     public static final int IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE = 32767;
 
     public static final int IMAGE_RESOURCE_BLOCK_PHOTOSHOP2_INFO = 0x03e8;
@@ -88,4 +88,7 @@ public class IptcConstants {
     public static final int IPTC_RECORD_TAG_MARKER = 0x1c;
     public static final int IPTC_ENVELOPE_RECORD_NUMBER = 0x01;
     public static final int IPTC_APPLICATION_2_RECORD_NUMBER = 0x02;
+    
+    private IptcConstants() {
+    }
 }

@@ -30,6 +30,7 @@ import org.apache.commons.imaging.util.Debug;
 public final class TiffOutputSet implements TiffConstants {
     public final ByteOrder byteOrder;
     private final List<TiffOutputDirectory> directories = new ArrayList<TiffOutputDirectory>();
+    private static final String newline = System.getProperty("line.separator");
 
     public TiffOutputSet() {
         this(TiffConstants.DEFAULT_TIFF_BYTE_ORDER);
@@ -247,8 +248,6 @@ public final class TiffOutputSet implements TiffConstants {
         addDirectory(result);
         return result;
     }
-
-    private static final String newline = System.getProperty("line.separator");
 
     @Override
     public String toString() {
