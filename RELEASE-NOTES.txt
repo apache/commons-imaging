@@ -47,7 +47,7 @@ VERSION HISTORY
 
 Release 1.0
 ------------
-TBA
+24 November 2013
 
 Changes in this version include:
 
