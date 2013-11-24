@@ -49,7 +49,7 @@
     <maven.compiler.target>1.5</maven.compiler.target>
     <commons.componentid>imaging</commons.componentid>
     <commons.release.version>1.0</commons.release.version>
-    <commons.rc.version>RC5</commons.rc.version>
+    <commons.rc.version>RC7</commons.rc.version>
     <commons.jira.id>IMAGING</commons.jira.id>
     <commons.jira.pid>12313421</commons.jira.pid>
     <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
