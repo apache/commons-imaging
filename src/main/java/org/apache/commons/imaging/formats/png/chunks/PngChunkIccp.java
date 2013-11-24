@@ -63,8 +63,7 @@ public class PngChunkIccp extends PngChunk {
         UncompressedProfile = new ZLibUtils().inflate(CompressedProfile);
 
         if (getDebug()) {
-            System.out.println("UncompressedProfile: "
-                    + ((UncompressedProfile == null) ? "null" : Integer.toString(bytes.length)));
+            System.out.println("UncompressedProfile: " + Integer.toString(bytes.length));
         }
     }
 
