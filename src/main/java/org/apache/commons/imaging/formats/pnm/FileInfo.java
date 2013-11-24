@@ -116,8 +116,4 @@ public abstract class FileInfo {
         // dump();
         // }
     }
-
-    public void dump() {
-
-    }
 }

@@ -43,8 +43,7 @@ public class ComSegment extends GenericSegment {
         String commentString = "";
         try {
             commentString = new String(segmentData, "UTF-8");
-        } catch (final UnsupportedEncodingException cannotHappen) {
-            // NOPMD
+        } catch (final UnsupportedEncodingException cannotHappen) { // NOPMD
         }
         return "COM (" + commentString + ")";
     }

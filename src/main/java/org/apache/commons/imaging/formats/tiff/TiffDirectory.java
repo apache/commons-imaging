@@ -81,19 +81,13 @@ public class TiffDirectory extends TiffElement {
         for (int i = 0; i < entries.size(); i++) {
             final TiffField entry = entries.get(i);
 
-            result.append("\t");
-            result.append("[" + entryOffset + "]: ");
-            result.append(entry.getTagInfo().name);
-            result.append(" (" + entry.getTag() + ", 0x"
-                    + Integer.toHexString(entry.getTag()) + ")");
-            result.append(", " + entry.getFieldType().getName());
-            result.append(", " + entry.getBytesLength());
-            result.append(": " + entry.getValueDescription());
-
-            result.append("\n");
+            result.append(String.format("\t[%d]: %s (%d, 0x%x), %s, %d: %s%n",
+                    entryOffset, entry.getTagInfo().name,
+                    entry.getTag(), entry.getTag(),
+                    entry.getFieldType().getName(), entry.getBytesLength(),
+                    entry.getValueDescription()));
 
             entryOffset += TiffConstants.TIFF_ENTRY_LENGTH;
-            // entry.fillInValue(byteSource);
         }
         return result.toString();
     }

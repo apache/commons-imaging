@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.palette;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.util.Debug;
 
 /**
  * Color palette.
@@ -45,6 +46,9 @@ public abstract class Palette {
     public abstract int length();
 
     public void dump() {
+        for (int i = 0; i < length(); i++) {
+            Debug.debug("\t" + "palette[" + i + "]", getEntry(i) + " (0x"
+                    + Integer.toHexString(getEntry(i)) + ")");
+        }
     }
-
 }

@@ -52,9 +52,6 @@ public class XbmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".xbm";
     private static final String ACCEPTED_EXTENSIONS[] = { ".xbm", };
 
-    public XbmImageParser() {
-    }
-
     @Override
     public String getName() {
         return "X BitMap";

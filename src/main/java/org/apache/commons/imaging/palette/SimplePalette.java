@@ -16,8 +16,6 @@
  */
 package org.apache.commons.imaging.palette;
 
-import org.apache.commons.imaging.util.Debug;
-
 public class SimplePalette extends Palette {
     private final int palette[];
 
@@ -43,14 +41,6 @@ public class SimplePalette extends Palette {
         }
 
         return -1;
-    }
-
-    @Override
-    public void dump() {
-        for (int i = 0; i < palette.length; i++) {
-            Debug.debug("\t" + "palette[" + i + "]", palette[i] + " (0x"
-                    + Integer.toHexString(palette[i]) + ")");
-        }
     }
 
     @Override

@@ -166,7 +166,7 @@ public class PcxWriter {
                 }
             }
             if (onlyBlackAndWhite) {
-                writeBlackAndWhitePCX(src, palette, bos);
+                writeBlackAndWhitePCX(src, bos);
             } else {
                 write16ColorPCX(src, palette, bos);
             }
@@ -253,7 +253,7 @@ public class PcxWriter {
     }
 
     private void writeBlackAndWhitePCX(final BufferedImage src,
-            final SimplePalette palette, final BinaryOutputStream bos)
+            final BinaryOutputStream bos)
             throws ImageWriteException, IOException {
         int bytesPerLine = (src.getWidth() + 7) / 8;
         if (bytesPerLine % 2 != 0) {

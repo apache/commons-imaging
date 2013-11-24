@@ -53,7 +53,7 @@ public class TiffField {
     private final int sortHint;
     public static final String Attribute_Tag = "Tag";
     private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(
-            AllTagConstants.ALL_TAGS, true, "All");
+            AllTagConstants.ALL_TAGS);
 
     public TiffField(final int tag, final int directoryType, final FieldType fieldType,
             final long count, final long offset, final byte[] value,
@@ -172,8 +172,7 @@ public class TiffField {
         return new OversizeValueElement(getOffset(), value.length);
     }
 
-    private static TagInfo getTag(final int directoryType, final int tag,
-            final List<TagInfo> possibleMatches) {
+    private static TagInfo getTag(final int directoryType, final List<TagInfo> possibleMatches) {
         // Please keep this method in sync with TiffImageMetadata's findField()
 
         if (possibleMatches.size() < 1) {
@@ -309,7 +308,7 @@ public class TiffField {
             return TiffTagConstants.TIFF_TAG_UNKNOWN;
         }
 
-        final TagInfo result = getTag(directoryType, tag, possibleMatches);
+        final TagInfo result = getTag(directoryType, possibleMatches);
         return result;
     }
 
@@ -569,7 +568,7 @@ public class TiffField {
     }
 
     private static final Map<Object, List<TagInfo>> makeTagMap(
-            final List<TagInfo> tags, final boolean ignoreDuplicates, final String name) {
+            final List<TagInfo> tags) {
         // make sure to use the thread-safe version; this is shared state.
         final Map<Object, List<TagInfo>> map = new Hashtable<Object, List<TagInfo>>();
 

@@ -43,9 +43,4 @@ public abstract class DataParser {
             ImageContents imageContents);
 
     public abstract int getBasicChannelsCount();
-
-    public void dump() {
-
-    }
-
 }

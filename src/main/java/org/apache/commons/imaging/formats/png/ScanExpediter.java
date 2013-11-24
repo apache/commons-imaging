@@ -63,12 +63,8 @@ public abstract class ScanExpediter extends BinaryFileParser {
         this.transparencyFilter = transparencyFilter;
     }
 
-    protected int getBitsToBytesRoundingUp(final int bits) {
-        int bytes = bits / 8;
-        if ((bits % 8 > 0)) {
-            bytes++;
-        }
-        return bytes;
+    protected final int getBitsToBytesRoundingUp(final int bits) {
+        return (bits + 7) / 8;
     }
 
     protected final int getPixelARGB(final int alpha, final int red, final int green, final int blue) {
@@ -192,7 +188,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
             break;
 
         case 2: // Up
-            filter = new ScanlineFilterUp(BytesPerPixel);
+            filter = new ScanlineFilterUp();
             break;
 
         case 3: // Average

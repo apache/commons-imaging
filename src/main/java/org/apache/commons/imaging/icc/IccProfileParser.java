@@ -265,7 +265,7 @@ public class IccProfileParser extends BinaryFileParser {
 
             {
                 // read stream to end, filling cache.
-                while (is.read() >= 0) { /* do nothing */
+                while (is.read() >= 0) { // NOPMD we're doing nothing with the data
                 }
             }
 

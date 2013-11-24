@@ -58,10 +58,6 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     private static final String DEFAULT_EXTENSION = ".tif";
     private static final String ACCEPTED_EXTENSIONS[] = { ".tif", ".tiff", };
 
-    public TiffImageParser() {
-        // setDebug(true);
-    }
-
     @Override
     public String getName() {
         return "Tiff-Custom";
@@ -337,7 +333,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             final String xml = new String(bytes, "utf-8");
             return xml;
         } catch (final UnsupportedEncodingException e) {
-            throw new ImageReadException("Invalid JPEG XMP Segment.");
+            throw new ImageReadException("Invalid JPEG XMP Segment.", e);
         }
     }
 
@@ -543,7 +539,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             return null;
         }
 
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder(32);
         if (ix0 == null) {
             sb.append(" x0,");
         }
@@ -680,7 +676,6 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             dataReader.readImageData(imageBuilder);
             result =  imageBuilder.getBufferedImage();
         }
-        photometricInterpreter.dumpstats();
         return result;     
     }
 
@@ -694,9 +689,8 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         case 1:
             final boolean invert = photometricInterpretation == 0;
 
-            return new PhotometricInterpreterBiLevel(bitsPerPixel,
-                    samplesPerPixel, bitsPerSample, predictor, width, height,
-                    invert);
+            return new PhotometricInterpreterBiLevel(samplesPerPixel,
+                    bitsPerSample, predictor, width, height, invert);
         case 3: // Palette
         {
             final int colorMap[] = directory.findField(
@@ -722,24 +716,24 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                     bitsPerSample, predictor, width, height);
         case 6: //
         {
-            final double yCbCrCoefficients[] = directory.findField(
-                    TiffTagConstants.TIFF_TAG_YCBCR_COEFFICIENTS, true)
-                    .getDoubleArrayValue();
+//            final double yCbCrCoefficients[] = directory.findField(
+//                    TiffTagConstants.TIFF_TAG_YCBCR_COEFFICIENTS, true)
+//                    .getDoubleArrayValue();
+//
+//            final int yCbCrPositioning[] = directory.findField(
+//                    TiffTagConstants.TIFF_TAG_YCBCR_POSITIONING, true)
+//                    .getIntArrayValue();
+//            final int yCbCrSubSampling[] = directory.findField(
+//                    TiffTagConstants.TIFF_TAG_YCBCR_SUB_SAMPLING, true)
+//                    .getIntArrayValue();
+//
+//            final double referenceBlackWhite[] = directory.findField(
+//                    TiffTagConstants.TIFF_TAG_REFERENCE_BLACK_WHITE, true)
+//                    .getDoubleArrayValue();
 
-            final int yCbCrPositioning[] = directory.findField(
-                    TiffTagConstants.TIFF_TAG_YCBCR_POSITIONING, true)
-                    .getIntArrayValue();
-            final int yCbCrSubSampling[] = directory.findField(
-                    TiffTagConstants.TIFF_TAG_YCBCR_SUB_SAMPLING, true)
-                    .getIntArrayValue();
-
-            final double referenceBlackWhite[] = directory.findField(
-                    TiffTagConstants.TIFF_TAG_REFERENCE_BLACK_WHITE, true)
-                    .getDoubleArrayValue();
-
-            return new PhotometricInterpreterYCbCr(yCbCrCoefficients,
-                    yCbCrPositioning, yCbCrSubSampling, referenceBlackWhite,
-                    samplesPerPixel, bitsPerSample, predictor, width, height);
+            return new PhotometricInterpreterYCbCr(samplesPerPixel,
+                    bitsPerSample, predictor, width,
+                    height);
         }
 
         case 8:
@@ -748,9 +742,9 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
         case 32844:
         case 32845: {
-            final boolean yonly = (photometricInterpretation == 32844);
+//            final boolean yonly = (photometricInterpretation == 32844);
             return new PhotometricInterpreterLogLuv(samplesPerPixel,
-                    bitsPerSample, predictor, width, height, yonly);
+                    bitsPerSample, predictor, width, height);
         }
 
         default:

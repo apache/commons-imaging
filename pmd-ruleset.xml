@@ -49,12 +49,15 @@
     <exclude name="ConfusingTernary"/>
     <exclude name="EmptyMethodInAbstractClassShouldBeAbstract"/>
     <exclude name="GodClass"/>
+    <!-- PMD seems to want only break, not return -->
+    <exclude name="MissingBreakInSwitch"/>
     <exclude name="ReturnEmptyArrayRatherThanNull"/>
+    <exclude name="SimplifyBooleanReturns"/>
     <exclude name="SwitchStmtsShouldHaveDefault"/>
     <exclude name="UnnecessaryLocalBeforeReturn"/>
   </rule>
   <rule ref="rulesets/java/empty.xml">
-    <!-- empty if statements are useful to skip actions taken by else (if(s)) -->
+    <!-- empty if statements are useful to skip actions taken by the else (if(s)) -->
     <exclude name="EmptyIfStmt"/>
   </rule>
   <rule ref="rulesets/java/finalizers.xml"/>

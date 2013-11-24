@@ -67,10 +67,6 @@ public class PngImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".png";
     private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
 
-    public PngImageParser() {
-        // setDebug(true);
-    }
-
     @Override
     public String getName() {
         return "Png-Custom";

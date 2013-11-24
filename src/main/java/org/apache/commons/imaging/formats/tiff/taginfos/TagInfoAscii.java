@@ -49,7 +49,7 @@ public class TagInfoAscii extends TagInfo {
                     final String string = new String(bytes, nextStringPos, i
                             - nextStringPos, "UTF-8");
                     strings[stringsAdded++] = string;
-                } catch (final UnsupportedEncodingException unsupportedEncoding) {
+                } catch (final UnsupportedEncodingException unsupportedEncoding) { // NOPMD
                 }
                 nextStringPos = i + 1;
             }
@@ -60,7 +60,7 @@ public class TagInfoAscii extends TagInfo {
                 final String string = new String(bytes, nextStringPos, bytes.length
                         - nextStringPos, "UTF-8");
                 strings[stringsAdded++] = string;
-            } catch (final UnsupportedEncodingException unsupportedEncoding) {
+            } catch (final UnsupportedEncodingException unsupportedEncoding) { // NOPMD
             }
         }
         return strings;

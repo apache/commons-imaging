@@ -115,9 +115,4 @@ public class PpmFileInfo extends FileInfo {
 
         return rgb;
     }
-
-    @Override
-    public void dump() {
-        // System.out.println("count: " + count);
-    }
 }

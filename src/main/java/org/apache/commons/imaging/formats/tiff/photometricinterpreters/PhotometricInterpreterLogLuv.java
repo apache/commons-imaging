@@ -25,15 +25,10 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     // private final boolean yOnly;
 
     public PhotometricInterpreterLogLuv(final int fSamplesPerPixel,
-            final int fBitsPerSample[], final int Predictor, final int width, final int height,
-            final boolean yonly) {
-        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+            final int fBitsPerSample[], final int predictor, final int width, final int height) {
+        super(fSamplesPerPixel, fBitsPerSample, predictor, width, height);
 
         // this.yOnly = yonly;
-    }
-
-    @Override
-    public void dumpstats() throws ImageReadException, IOException {
     }
 
     private float cube(final float f) {

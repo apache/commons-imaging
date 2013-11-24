@@ -21,10 +21,6 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 
 public class DataParserLab extends DataParser {
 
-    public DataParserLab() {
-
-    }
-
     @Override
     protected int getRGB(final int data[][][], final int x, final int y,
             final ImageContents imageContents) {
@@ -43,14 +39,5 @@ public class DataParserLab extends DataParser {
     @Override
     public int getBasicChannelsCount() {
         return 3;
-    }
-
-    @Override
-    public void dump() {
-        // for(int i=0;i<3;i++)
-        // {
-        // System.out.println("CIE: " + i + ": min: " + mins[i] + ", max: " +
-        // maxs[i]);
-        // }
     }
 }

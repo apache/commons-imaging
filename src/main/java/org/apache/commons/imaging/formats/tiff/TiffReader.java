@@ -45,14 +45,13 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         this.strict = strict;
     }
 
-    private TiffHeader readTiffHeader(final ByteSource byteSource,
-            final FormatCompliance formatCompliance) throws ImageReadException,
+    private TiffHeader readTiffHeader(final ByteSource byteSource) throws ImageReadException,
             IOException {
         InputStream is = null;
         boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
-            final TiffHeader ret = readTiffHeader(is, formatCompliance);
+            final TiffHeader ret = readTiffHeader(is);
             canThrow = true;
             return ret;
         } finally {
@@ -70,8 +69,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         }
     }
 
-    private TiffHeader readTiffHeader(final InputStream is,
-            final FormatCompliance formatCompliance) throws ImageReadException,
+    private TiffHeader readTiffHeader(final InputStream is) throws ImageReadException,
             IOException {
         final int BYTE_ORDER_1 = readByte("BYTE_ORDER_1", is, "Not a Valid TIFF File");
         final int BYTE_ORDER_2 = readByte("BYTE_ORDER_2", is, "Not a Valid TIFF File");
@@ -103,7 +101,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
     private void readDirectories(final ByteSource byteSource,
             final FormatCompliance formatCompliance, final Listener listener)
             throws ImageReadException, IOException {
-        final TiffHeader tiffHeader = readTiffHeader(byteSource, formatCompliance);
+        final TiffHeader tiffHeader = readTiffHeader(byteSource);
         if (!listener.setTiffHeader(tiffHeader)) {
             return;
         }

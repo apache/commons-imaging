@@ -22,20 +22,17 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 
 public class TransparencyFilterTrueColor extends TransparencyFilter {
-    private final int transparent_red;
-    private final int transparent_green;
-    private final int transparent_blue;
     private final int transparent_color;
 
     public TransparencyFilterTrueColor(final byte bytes[]) throws IOException {
         super(bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        transparent_red = read2Bytes("transparent_red", is,
+        final int transparent_red = read2Bytes("transparent_red", is,
                 "tRNS: Missing transparent_color");
-        transparent_green = read2Bytes("transparent_green", is,
+        final int transparent_green = read2Bytes("transparent_green", is,
                 "tRNS: Missing transparent_color");
-        transparent_blue = read2Bytes("transparent_blue", is,
+        final int transparent_blue = read2Bytes("transparent_blue", is,
                 "tRNS: Missing transparent_color");
 
         transparent_color = ((0xff & transparent_red) << 16)

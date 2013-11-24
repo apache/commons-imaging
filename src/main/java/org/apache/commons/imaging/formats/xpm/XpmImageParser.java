@@ -66,49 +66,48 @@ public class XpmImageParser extends ImageParser {
         'U', 'Y', 'T', 'R', 'E', 'W', 'Q', '!', '~', '^', '/', '(', ')',
         '_', '`', '\'', ']', '[', '{', '}', '|', };
 
-    public XpmImageParser() {
-    }
-
-    private synchronized static void loadColorNames() throws ImageReadException {
-        if (colorNames != null) {
-            return;
-        }
-
-        try {
-            final InputStream rgbTxtStream =
-                    XpmImageParser.class.getResourceAsStream("rgb.txt");
-            if (rgbTxtStream == null) {
-                throw new ImageReadException("Couldn't find rgb.txt in our resources");
+    private static void loadColorNames() throws ImageReadException {
+        synchronized (XpmImageParser.class) {
+            if (colorNames != null) {
+                return;
             }
-            final Map<String, Integer> colors = new HashMap<String, Integer>();
-            BufferedReader reader = null;
-            boolean canThrow = false;
+    
             try {
-                reader = new BufferedReader(new InputStreamReader(rgbTxtStream,
-                        "US-ASCII"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    if (line.charAt(0) == '!') {
-                        continue;
-                    }
-                    try {
-                        final int red = Integer.parseInt(line.substring(0, 3).trim());
-                        final int green = Integer.parseInt(line.substring(4, 7).trim());
-                        final int blue = Integer.parseInt(line.substring(8, 11).trim());
-                        final String colorName = line.substring(11).trim();
-                        colors.put(colorName, 0xff000000 | (red << 16)
-                                | (green << 8) | blue);
-                    } catch (final NumberFormatException nfe) {
-                        throw new ImageReadException("Couldn't parse color in rgb.txt", nfe);
-                    }
+                final InputStream rgbTxtStream =
+                        XpmImageParser.class.getResourceAsStream("rgb.txt");
+                if (rgbTxtStream == null) {
+                    throw new ImageReadException("Couldn't find rgb.txt in our resources");
                 }
-                canThrow = true;
-            } finally {
-                IoUtils.closeQuietly(canThrow, reader);
+                final Map<String, Integer> colors = new HashMap<String, Integer>();
+                BufferedReader reader = null;
+                boolean canThrow = false;
+                try {
+                    reader = new BufferedReader(new InputStreamReader(rgbTxtStream,
+                            "US-ASCII"));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        if (line.charAt(0) == '!') {
+                            continue;
+                        }
+                        try {
+                            final int red = Integer.parseInt(line.substring(0, 3).trim());
+                            final int green = Integer.parseInt(line.substring(4, 7).trim());
+                            final int blue = Integer.parseInt(line.substring(8, 11).trim());
+                            final String colorName = line.substring(11).trim();
+                            colors.put(colorName, 0xff000000 | (red << 16)
+                                    | (green << 8) | blue);
+                        } catch (final NumberFormatException nfe) {
+                            throw new ImageReadException("Couldn't parse color in rgb.txt", nfe);
+                        }
+                    }
+                    canThrow = true;
+                } finally {
+                    IoUtils.closeQuietly(canThrow, reader);
+                }
+                colorNames = colors;
+            } catch (final IOException ioException) {
+                throw new ImageReadException("Could not parse rgb.txt", ioException);
             }
-            colorNames = colors;
-        } catch (final IOException ioException) {
-            throw new ImageReadException("Could not parse rgb.txt", ioException);
         }
     }
 
@@ -679,7 +678,7 @@ public class XpmImageParser extends ImageParser {
         SimplePalette palette = null;
         int maxColors = writePalette.length;
         int charsPerPixel = 1;
-        for (; palette == null;) {
+        while (palette == null) {
             palette = paletteFactory.makeExactRgbPaletteSimple(src,
                     hasTransparency ? maxColors - 1 : maxColors);
             if (palette == null) {

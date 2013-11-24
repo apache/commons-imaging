@@ -26,10 +26,10 @@ public class PhotometricInterpreterBiLevel extends PhotometricInterpreter {
 
     // private final int bitsPerPixel;
 
-    public PhotometricInterpreterBiLevel(final int fBitsPerPixel,
-            final int fSamplesPerPixel, final int fBitsPerSample[], final int Predictor,
-            final int width, final int height, final boolean invert) {
-        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+    public PhotometricInterpreterBiLevel(final int fSamplesPerPixel,
+            final int fBitsPerSample[], final int predictor, final int width,
+            final int height, final boolean invert) {
+        super(fSamplesPerPixel, fBitsPerSample, predictor, width, height);
 
         this.invert = invert;
         // this.bitsPerPixel = fBitsPerPixel;

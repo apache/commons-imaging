@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.palette;
 
 import java.util.List;
-
 import org.apache.commons.imaging.ImageWriteException;
 
 public class QuantizedPalette extends Palette {
@@ -57,14 +56,6 @@ public class QuantizedPalette extends Palette {
                 | ((rgb >> (8 - precision)) & (precisionMask));
 
         return straight[index].getIndex();
-    }
-
-    @Override
-    public void dump() {
-        // System.out.println("ColorSpaceSubset.compares: "
-        // + ColorSpaceSubset.compares);
-        // System.out.println("converted: " + converted);
-        // System.out.println("avg. distance: " + (distance / converted));
     }
 
     @Override

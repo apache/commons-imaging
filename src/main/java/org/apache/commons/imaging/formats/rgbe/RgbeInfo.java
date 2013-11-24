@@ -109,7 +109,7 @@ class RgbeInfo implements Closeable {
         String info = reader.readNextLine();
 
         while (info.length() != 0) {
-            final int equals = info.indexOf("=");
+            final int equals = info.indexOf('=');
 
             if (equals > 0) {
                 final String variable = info.substring(0, equals);

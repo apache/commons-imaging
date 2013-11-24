@@ -125,9 +125,8 @@ public class PaletteFactory {
         return sum;
     }
 
-    private DivisionCandidate finishDivision(final int table[],
-            final ColorSpaceSubset subset, final int component, final int precision, final int sum,
-            final int slice) {
+    private DivisionCandidate finishDivision(final ColorSpaceSubset subset,
+            final int component, final int precision, final int sum, final int slice) {
         if (debug) {
             subset.dump("trying (" + component + "): ");
         }
@@ -167,11 +166,11 @@ public class PaletteFactory {
         }
 
         final ColorSpaceSubset first = new ColorSpaceSubset(sum, precision,
-                subset.mins, slice_maxs, table);
+                subset.mins, slice_maxs);
         final ColorSpaceSubset second = new ColorSpaceSubset(total - sum, precision,
-                slice_mins, subset.maxs, table);
+                slice_mins, subset.maxs);
 
-        return new DivisionCandidate(subset, first, second);
+        return new DivisionCandidate(first, second);
 
     }
 
@@ -210,10 +209,10 @@ public class PaletteFactory {
         sum2 = sum1 - last;
         slice2 = slice1 - 1;
 
-        final DivisionCandidate dc1 = finishDivision(table, subset, component,
-                precision, sum1, slice1);
-        final DivisionCandidate dc2 = finishDivision(table, subset, component,
-                precision, sum2, slice2);
+        final DivisionCandidate dc1 = finishDivision(subset, component, precision,
+                sum1, slice1);
+        final DivisionCandidate dc2 = finishDivision(subset, component, precision,
+                sum2, slice2);
 
         final List<DivisionCandidate> result = new ArrayList<DivisionCandidate>();
 
@@ -266,8 +265,7 @@ public class PaletteFactory {
         // private final ColorSpaceSubset src;
         private final ColorSpaceSubset dst_a, dst_b;
 
-        public DivisionCandidate(final ColorSpaceSubset src, final ColorSpaceSubset dst_a,
-                final ColorSpaceSubset dst_b) {
+        public DivisionCandidate(final ColorSpaceSubset dst_a, final ColorSpaceSubset dst_b) {
             // this.src = src;
             this.dst_a = dst_a;
             this.dst_b = dst_b;

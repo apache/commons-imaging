@@ -46,9 +46,6 @@ public class WbmpImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".wbmp";
     private static final String ACCEPTED_EXTENSIONS[] = { ".wbmp", };
 
-    public WbmpImageParser() {
-    }
-
     @Override
     public String getName() {
         return "Wireless Application Protocol Bitmap Format";

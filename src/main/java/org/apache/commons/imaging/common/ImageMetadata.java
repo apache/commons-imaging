@@ -85,11 +85,12 @@ public class ImageMetadata implements IImageMetadata {
         }
 
         public String toString(final String prefix) {
-            String result = keyword + ": " + text;
+            final String result = keyword + ": " + text;
             if (null != prefix) {
-                result = prefix + result;
+                return prefix + result;
+            } else {
+                return result;
             }
-            return result;
         }
     }
 

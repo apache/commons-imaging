@@ -43,20 +43,10 @@ public class ScanExpediterInterlaced extends ScanExpediter {
     }
 
     private void visit(final int x, final int y, final BufferedImage bi, final BitParser fBitParser,
-            final int color_type, final int pixel_index_in_scanline,
-            final PngChunkPlte fPNGChunkPLTE, final GammaCorrection fGammaCorrection)
+            final int pixel_index_in_scanline)
             throws ImageReadException, IOException {
-        final int rgb = getRGB(fBitParser,
-        // color_type,
-                pixel_index_in_scanline
-        // ,
-        // fPNGChunkPLTE, fGammaCorrection
-        );
-
+        final int rgb = getRGB(fBitParser, pixel_index_in_scanline);
         bi.setRGB(x, y, rgb);
-
-        // buffer.setElem(y * width +x , rgb);
-
     }
 
     @Override
@@ -88,9 +78,7 @@ public class ScanExpediterInterlaced extends ScanExpediter {
                             bitsPerPixel, bitDepth);
 
                     while (x < width) {
-                        visit(x, y, bi, fBitParser, colorType,
-                                pixel_index_in_scanline, pngChunkPLTE,
-                                gammaCorrection);
+                        visit(x, y, bi, fBitParser, pixel_index_in_scanline);
 
                         x = x + Col_Increment[pass - 1];
                         pixel_index_in_scanline++;

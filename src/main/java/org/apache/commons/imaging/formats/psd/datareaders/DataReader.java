@@ -35,8 +35,4 @@ public abstract class DataReader {
     public abstract void readData(InputStream is, BufferedImage bi,
             ImageContents imageContents, BinaryFileParser bfp)
             throws ImageReadException, IOException;
-
-    public void dump() {
-        dataParser.dump();
-    }
 }

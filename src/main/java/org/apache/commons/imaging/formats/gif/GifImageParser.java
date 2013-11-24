@@ -295,9 +295,9 @@ public class GifImageParser extends ImageParser {
                     }
 
                     // if (label == new String("ICCRGBG1"))
-                    {
+                    //{
                         // GIF's can have embedded ICC Profiles - who knew?
-                    }
+                    //}
 
                     if ((label != null) && (label.length > 0)) {
                         final GenericGifBlock block = readGenericGIFBlock(is,
@@ -384,8 +384,7 @@ public class GifImageParser extends ImageParser {
 
         byte LocalColorTable[] = null;
         if (LocalColorTableFlag) {
-            LocalColorTable = readColorTable(is, SizeofLocalColorTable,
-                    formatCompliance);
+            LocalColorTable = readColorTable(is, SizeofLocalColorTable);
         }
 
         byte imageData[] = null;
@@ -431,8 +430,7 @@ public class GifImageParser extends ImageParser {
         return 3 * simple_pow(2, ct_size + 1);
     }
 
-    private byte[] readColorTable(final InputStream is, final int ct_size,
-            final FormatCompliance formatCompliance) throws IOException {
+    private byte[] readColorTable(final InputStream is, final int ct_size) throws IOException {
         final int actual_size = convertColorTableSize(ct_size);
 
         final byte bytes[] = readBytes("block", is, actual_size,
@@ -470,7 +468,7 @@ public class GifImageParser extends ImageParser {
             byte globalColorTable[] = null;
             if (ghi.globalColorTableFlag) {
                 globalColorTable = readColorTable(is,
-                        ghi.sizeOfGlobalColorTable, formatCompliance);
+                        ghi.sizeOfGlobalColorTable);
             }
 
             final List<GifBlock> blocks = readBlocks(ghi, is, stopBeforeImageData,
@@ -891,9 +889,10 @@ public class GifImageParser extends ImageParser {
             bos.write(PixelAspectRatio);
         }
 
-        { // write Global Color Table.
+        //{
+            // write Global Color Table.
 
-        }
+        //}
 
         { // ALWAYS write GraphicControlExtension
             bos.write(EXTENSION_CODE);
@@ -1054,7 +1053,7 @@ public class GifImageParser extends ImageParser {
             final GifHeaderInfo ghi = readHeader(is, formatCompliance);
 
             if (ghi.globalColorTableFlag) {
-                readColorTable(is, ghi.sizeOfGlobalColorTable, formatCompliance);
+                readColorTable(is, ghi.sizeOfGlobalColorTable);
             }
 
             final List<GifBlock> blocks = readBlocks(ghi, is, true, formatCompliance);
@@ -1105,7 +1104,7 @@ public class GifImageParser extends ImageParser {
                             "utf-8");
                     result.add(xml);
                 } catch (final UnsupportedEncodingException e) {
-                    throw new ImageReadException("Invalid XMP Block in GIF.");
+                    throw new ImageReadException("Invalid XMP Block in GIF.", e);
                 }
             }
 

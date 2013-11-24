@@ -170,8 +170,8 @@ public abstract class TiffImageData {
             try {
                 return byteSourceFile.getBlock(offset, length);
             } catch (final IOException ioex) {
+                return new byte[0];
             }
-            return new byte[0];
         }
     }
 }

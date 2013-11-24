@@ -312,7 +312,7 @@ public class PngWriter {
         byte result = 8;
 
         final Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
-        if (o != null && o instanceof Number) {
+        if (o instanceof Number) {
             final int value = ((Number) o).intValue();
             switch (value) {
             case 1:
@@ -511,12 +511,12 @@ public class PngWriter {
             writeChunkIHDR(os, imageHeader);
         }
 
-        {
+        //{
             // sRGB No Before PLTE and IDAT. If the sRGB chunk is present, the
             // iCCP chunk should not be present.
 
             // charles
-        }
+        //}
 
         Palette palette = null;
         if (colorType == PngConstants.COLOR_TYPE_INDEXED_COLOR) {

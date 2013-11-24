@@ -259,34 +259,33 @@ public final class TiffOutputSet implements TiffConstants {
             prefix = "";
         }
 
-        final StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder(39);
 
         result.append(prefix);
         result.append("TiffOutputSet {");
         result.append(newline);
 
         result.append(prefix);
-        result.append("byteOrder: " + byteOrder);
+        result.append("byteOrder: ");
+        result.append(byteOrder);
         result.append(newline);
 
         for (int i = 0; i < directories.size(); i++) {
             final TiffOutputDirectory directory = directories.get(i);
-            result.append(prefix);
-            result.append("\t" + "directory " + i + ": "
-                    + directory.description() + " (" + directory.type + ")");
-            result.append(newline);
+            result.append(String.format("%s\tdirectory %d: %s (%d)%n",
+                    prefix, i, directory.description(), directory.type));
 
             final List<TiffOutputField> fields = directory.getFields();
             for (int j = 0; j < fields.size(); j++) {
                 final TiffOutputField field = fields.get(j);
                 result.append(prefix);
-                result.append("\t\t" + "field " + i + ": " + field.tagInfo);
+                result.append("\t\tfield " + i + ": " + field.tagInfo);
                 result.append(newline);
             }
         }
-
         result.append(prefix);
-        result.append("}");
+
+        result.append('}');
         result.append(newline);
 
         return result.toString();

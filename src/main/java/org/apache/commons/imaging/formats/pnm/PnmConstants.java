@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.pnm;
 
-public class PnmConstants {
+public final class PnmConstants {
     public static final byte PNM_PREFIX_BYTE = 0x50; // P
 
     public static final byte PBM_TEXT_CODE = 0x31; // Textual Bitmap
@@ -30,4 +30,7 @@ public class PnmConstants {
     public static final byte PNM_SEPARATOR = 0x20; // Space
     public static final byte PNM_NEWLINE = 0x0A; // "usually a newline"
                                                  // (http://netpbm.sourceforge.net/doc/pbm.html)
+    
+    private PnmConstants() {
+    }
 }

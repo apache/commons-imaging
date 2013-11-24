@@ -121,7 +121,7 @@ public final class Debug {
                         + Integer.toHexString(b) + ")" + newline);
             }
             if (v.length > max) {
-                result.append("\t" + "..." + newline);
+                result.append("\t..." + newline);
             }
 
             result.append(newline);
@@ -264,20 +264,25 @@ public final class Debug {
         final char c3 = (char) b3;
         final char c4 = (char) b4;
         // return new String(new char[] { c1, c2, c3, c4 });
-        final StringBuilder fStringBuffer = new StringBuilder();
+        final StringBuilder fStringBuffer = new StringBuilder(31);
         fStringBuffer.append(new String(new char[] { c1, c2, c3, c4 }));
-        fStringBuffer.append(" bytequad: " + bytequad);
-        fStringBuffer.append(" b1: " + b1);
-        fStringBuffer.append(" b2: " + b2);
-        fStringBuffer.append(" b3: " + b3);
-        fStringBuffer.append(" b4: " + b4);
+        fStringBuffer.append(" bytequad: ");
+        fStringBuffer.append(bytequad);
+        fStringBuffer.append(" b1: ");
+        fStringBuffer.append(b1);
+        fStringBuffer.append(" b2: ");
+        fStringBuffer.append(b2);
+        fStringBuffer.append(" b3: ");
+        fStringBuffer.append(b3);
+        fStringBuffer.append(" b4: ");
+        fStringBuffer.append(b4);
 
         return fStringBuffer.toString();
     }
 
     public static String getDebug(final String message, final ICC_Profile value) {
 
-        final StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder(37);
 
         result.append(getDebug("ICC_Profile " + message + ": "
                 + ((value == null) ? "null" : value.toString()))
@@ -592,7 +597,7 @@ public final class Debug {
     }
 
     public static String getDebug(final Throwable e, final int max) {
-        final StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder(35);
 
         final SimpleDateFormat timestamp = new SimpleDateFormat(
                 "yyyy-MM-dd kk:mm:ss:SSS", Locale.ENGLISH);
@@ -824,4 +829,6 @@ public final class Debug {
         // }
     }
 
+    private Debug() {
+    }
 }

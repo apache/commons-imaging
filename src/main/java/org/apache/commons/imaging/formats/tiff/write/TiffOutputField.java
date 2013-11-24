@@ -97,7 +97,7 @@ public class TiffOutputField implements TiffConstants {
         return separateValueItem;
     }
 
-    protected boolean isLocalValue() {
+    protected final boolean isLocalValue() {
         return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
     
@@ -140,7 +140,8 @@ public class TiffOutputField implements TiffConstants {
         result.append(newline);
 
         result.append(prefix);
-        result.append("count: " + count);
+        result.append("count: ");
+        result.append(count);
         result.append(newline);
 
         result.append(prefix);

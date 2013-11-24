@@ -44,8 +44,7 @@ class ColorSpaceSubset {
         rgb = -1;
     }
 
-    ColorSpaceSubset(final int total, final int precision, final int mins[], final int maxs[],
-            final int table[]) {
+    ColorSpaceSubset(final int total, final int precision, final int mins[], final int maxs[]) {
         this.total = total;
         this.precision = precision;
         this.mins = mins;

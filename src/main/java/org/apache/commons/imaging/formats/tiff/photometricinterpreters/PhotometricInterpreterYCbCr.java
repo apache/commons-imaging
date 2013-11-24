@@ -23,14 +23,13 @@ import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
 
-    public PhotometricInterpreterYCbCr(final double[] fYCbCrCoefficients,
-            final int[] fYCbCrPositioning, final int[] fYCbCrSubSampling,
-            final double[] fReferenceBlackWhite, final int fSamplesPerPixel,
-            final int fBitsPerSample[], final int Predictor, final int width, final int height) {
-        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+    public PhotometricInterpreterYCbCr(final int fSamplesPerPixel,
+            final int fBitsPerSample[], final int predictor,
+            final int width, final int height) {
+        super(fSamplesPerPixel, fBitsPerSample, predictor, width, height);
     }
 
-    public int limit(final int value, final int min, final int max) {
+    public static int limit(final int value, final int min, final int max) {
         return Math.min(max, Math.max(min, value));
     }
 
@@ -51,7 +50,7 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
      *            The Cr component set.
      * @return R The R component.
      */
-    public int convertYCbCrtoRGB(final int Y, final int Cb, final int Cr) {
+    public static int convertYCbCrtoRGB(final int Y, final int Cb, final int Cr) {
         final double r1 = (((1.164 * (Y - 16.0))) + (1.596 * (Cr - 128.0)));
         final double g1 = (((1.164 * (Y - 16.0))) - (0.813 * (Cr - 128.0)) - (0.392 * (Cb - 128.0)));
         final double b1 = (((1.164 * (Y - 16.0))) + (2.017 * (Cb - 128.0)));

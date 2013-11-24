@@ -723,7 +723,6 @@ public class PsdImageParser extends ImageParser {
             is = getInputStream(byteSource, PSD_SECTION_IMAGE_DATA);
             fDataReader.readData(is, result, imageContents, this);
 
-            fDataReader.dump();
             canThrow = true;
             // is.
             // ImageContents imageContents = readImageContents(is);
@@ -797,7 +796,7 @@ public class PsdImageParser extends ImageParser {
             final String xml = new String(block.data, 0, block.data.length, "utf-8");
             return xml;
         } catch (final UnsupportedEncodingException e) {
-            throw new ImageReadException("Invalid JPEG XMP Segment.");
+            throw new ImageReadException("Invalid JPEG XMP Segment.", e);
         }
     }
 

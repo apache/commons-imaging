@@ -156,7 +156,7 @@ public final class TagInfoGpsText extends TagInfo {
                 return new String(bytes, "US-ASCII");
             } catch (final UnsupportedEncodingException e) {
                 throw new ImageReadException(
-                        "GPS text field missing encoding prefix.");
+                        "GPS text field missing encoding prefix.", e);
             }
         }
 
@@ -185,7 +185,7 @@ public final class TagInfoGpsText extends TagInfo {
             // try ASCII, with NO prefix.
             return new String(bytes, "US-ASCII");
         } catch (final UnsupportedEncodingException e) {
-            throw new ImageReadException("Unknown GPS text encoding prefix.");
+            throw new ImageReadException("Unknown GPS text encoding prefix.", e);
         }
 
     }

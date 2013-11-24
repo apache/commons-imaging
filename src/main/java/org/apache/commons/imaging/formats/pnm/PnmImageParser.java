@@ -130,7 +130,7 @@ public class PnmImageParser extends ImageParser {
             boolean seenDepth = false;
             int maxVal = -1;
             boolean seenMaxVal = false;
-            String tupleType = "";
+            final StringBuilder tupleType = new StringBuilder();
             boolean seenTupleType = false;
             
             // Advance to next line
@@ -157,7 +157,7 @@ public class PnmImageParser extends ImageParser {
                     maxVal = Integer.parseInt(tokenizer.nextToken());
                 } else if ("TUPLTYPE".equals(type)) {
                     seenTupleType = true;
-                    tupleType += tokenizer.nextToken();
+                    tupleType.append(tokenizer.nextToken());
                 } else if ("ENDHDR".equals(type)) {
                     break;
                 } else {
@@ -177,7 +177,7 @@ public class PnmImageParser extends ImageParser {
                 throw new ImageReadException("PAM header has no TUPLTYPE");
             }
             
-            return new PamFileInfo(width, height, depth, maxVal, tupleType);
+            return new PamFileInfo(width, height, depth, maxVal, tupleType.toString());
         } else {
             throw new ImageReadException("PNM file has invalid prefix byte 2");
         }
