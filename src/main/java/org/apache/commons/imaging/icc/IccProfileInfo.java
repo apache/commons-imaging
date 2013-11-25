@@ -109,7 +109,6 @@ public class IccProfileInfo {
         final StringWriter sw = new StringWriter();
         final PrintWriter pw = new PrintWriter(sw);
 
-        // StringBuffer result = new StringBuffer();
         pw.println(prefix + ": " + "data length: " + data.length);
 
         printCharQuad(pw, prefix + ": " + "ProfileDeviceClassSignature",

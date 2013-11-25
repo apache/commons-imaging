@@ -259,20 +259,20 @@ public final class Debug {
         final char c3 = (char) b3;
         final char c4 = (char) b4;
         // return new String(new char[] { c1, c2, c3, c4 });
-        final StringBuilder fStringBuffer = new StringBuilder(31);
-        fStringBuffer.append(new String(new char[] { c1, c2, c3, c4 }));
-        fStringBuffer.append(" bytequad: ");
-        fStringBuffer.append(bytequad);
-        fStringBuffer.append(" b1: ");
-        fStringBuffer.append(b1);
-        fStringBuffer.append(" b2: ");
-        fStringBuffer.append(b2);
-        fStringBuffer.append(" b3: ");
-        fStringBuffer.append(b3);
-        fStringBuffer.append(" b4: ");
-        fStringBuffer.append(b4);
+        final StringBuilder buffer = new StringBuilder(31);
+        buffer.append(new String(new char[]{c1, c2, c3, c4}));
+        buffer.append(" bytequad: ");
+        buffer.append(bytequad);
+        buffer.append(" b1: ");
+        buffer.append(b1);
+        buffer.append(" b2: ");
+        buffer.append(b2);
+        buffer.append(" b3: ");
+        buffer.append(b3);
+        buffer.append(" b4: ");
+        buffer.append(b4);
 
-        return fStringBuffer.toString();
+        return buffer.toString();
     }
 
     public static String getDebug(final String message, final ICC_Profile value) {

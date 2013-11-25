@@ -347,7 +347,7 @@ public class TiffField {
         // } else if (o instanceof Number[])
         // {
         // Number numbers[] = (Number[]) o;
-        // StringBuffer result = new StringBuffer();
+        // StringBuilder result = new StringBuilder();
         //
         // for (int i = 0; i < numbers.length; i++)
         // {
@@ -361,7 +361,7 @@ public class TiffField {
         // }
         } else if (o instanceof short[]) {
             final short values[] = (short[]) o;
-            final StringBuffer result = new StringBuffer();
+            final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
                 final short sval = values[i];
@@ -378,7 +378,7 @@ public class TiffField {
             return result.toString();
         } else if (o instanceof int[]) {
             final int values[] = (int[]) o;
-            final StringBuffer result = new StringBuffer();
+            final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
                 final int iVal = values[i];
@@ -395,7 +395,7 @@ public class TiffField {
             return result.toString();
         } else if (o instanceof long[]) {
             final long values[] = (long[]) o;
-            final StringBuffer result = new StringBuffer();
+            final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
                 final long lVal = values[i];
@@ -412,7 +412,7 @@ public class TiffField {
             return result.toString();
         } else if (o instanceof double[]) {
             final double values[] = (double[]) o;
-            final StringBuffer result = new StringBuffer();
+            final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
                 final double dVal = values[i];
@@ -429,7 +429,7 @@ public class TiffField {
             return result.toString();
         } else if (o instanceof byte[]) {
             final byte values[] = (byte[]) o;
-            final StringBuffer result = new StringBuffer();
+            final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
                 final byte bVal = values[i];
@@ -446,7 +446,7 @@ public class TiffField {
             return result.toString();
         } else if (o instanceof char[]) {
             final char values[] = (char[]) o;
-            final StringBuffer result = new StringBuffer();
+            final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
                 final char cVal = values[i];
@@ -463,7 +463,7 @@ public class TiffField {
             return result.toString();
         } else if (o instanceof float[]) {
             final float values[] = (float[]) o;
-            final StringBuffer result = new StringBuffer();
+            final StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < values.length; i++) {
                 final float fVal = values[i];
@@ -482,7 +482,7 @@ public class TiffField {
         // else if (o instanceof short[])
         // {
         // short numbers[] = (short[]) o;
-        // StringBuffer result = new StringBuffer();
+        // StringBuilder result = new StringBuilder();
         //
         // for (int i = 0; i < numbers.length; i++)
         // {
