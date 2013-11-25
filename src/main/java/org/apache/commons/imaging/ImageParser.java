@@ -94,7 +94,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * Gets an array of new instances of all image parsers.
      * @return A valid array of image parsers
      */
-    public static final ImageParser[] getAllImageParsers() {
+    public static ImageParser[] getAllImageParsers() {
         final ImageParser result[] = {
                 new BmpImageParser(),
                 new DcxImageParser(),
@@ -996,7 +996,7 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @return If the params specify strict format compliance, true;
      * otherwise, false.
      */
-    public static final boolean isStrict(final Map<String,Object> params) {
+    public static boolean isStrict(final Map<String,Object> params) {
         if (params == null || !params.containsKey(PARAM_KEY_STRICT)) {
             return false;
         }

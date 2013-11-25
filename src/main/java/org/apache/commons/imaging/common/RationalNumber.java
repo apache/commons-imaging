@@ -32,7 +32,7 @@ public class RationalNumber extends Number {
         this.divisor = divisor;
     }
 
-    public static final RationalNumber factoryMethod(long n, long d) {
+    public static RationalNumber factoryMethod(long n, long d) {
         // safer than constructor - handles values outside min/max range.
         // also does some simple finding of common denominators.
 

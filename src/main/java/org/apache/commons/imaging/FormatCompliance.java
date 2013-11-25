@@ -42,7 +42,7 @@ public class FormatCompliance {
         this.failOnError = fail_on_error;
     }
 
-    public static final FormatCompliance getDefault() {
+    public static FormatCompliance getDefault() {
         return new FormatCompliance("ignore", false);
     }
 

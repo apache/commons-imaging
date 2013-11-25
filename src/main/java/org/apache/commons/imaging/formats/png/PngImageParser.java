@@ -90,7 +90,7 @@ public class PngImageParser extends ImageParser {
 
     // private final static int tRNS = CharsToQuad('t', 'R', 'N', 's');
 
-    public static final String getChunkTypeName(final int chunkType) {
+    public static String getChunkTypeName(final int chunkType) {
         final StringBuilder result = new StringBuilder();
         result.append((char) (0xff & (chunkType >> 24)));
         result.append((char) (0xff & (chunkType >> 16)));

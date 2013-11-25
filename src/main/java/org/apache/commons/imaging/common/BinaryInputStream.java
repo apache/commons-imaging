@@ -182,7 +182,7 @@ public class BinaryInputStream extends InputStream {
         BinaryFunctions.printByteBits(msg, i);
     }
 
-    public final static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
+    public static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {
         return BinaryFunctions.charsToQuad(c1, c2, c3, c4);
     }
 

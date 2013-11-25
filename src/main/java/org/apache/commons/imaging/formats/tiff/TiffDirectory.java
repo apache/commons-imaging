@@ -92,7 +92,7 @@ public class TiffDirectory extends TiffElement {
         return result.toString();
     }
 
-    public static final String description(final int type) {
+    public static String description(final int type) {
         switch (type) {
         case TiffDirectoryConstants.DIRECTORY_TYPE_UNKNOWN:
             return "Unknown";

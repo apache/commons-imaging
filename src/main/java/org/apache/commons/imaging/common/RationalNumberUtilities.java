@@ -31,7 +31,7 @@ public abstract class RationalNumberUtilities extends Number {
             this.error = error;
         }
 
-        public static final Option factory(final RationalNumber rationalNumber,
+        public static Option factory(final RationalNumber rationalNumber,
                 final double value) {
             return new Option(rationalNumber, Math.abs(rationalNumber
                     .doubleValue() - value));
@@ -46,7 +46,7 @@ public abstract class RationalNumberUtilities extends Number {
     //
     // calculate rational number using successive approximations.
     //
-    public static final RationalNumber getRationalNumber(double value) {
+    public static RationalNumber getRationalNumber(double value) {
         if (value >= Integer.MAX_VALUE) {
             return new RationalNumber(Integer.MAX_VALUE, 1);
         } else if (value <= -Integer.MAX_VALUE) {
