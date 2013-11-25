@@ -43,9 +43,7 @@ public class JpegXmpParser extends BinaryFileParser {
 
         try {
             // segment data is UTF-8 encoded xml.
-            final String xml = new String(segmentData, index, segmentData.length
-                    - index, "utf-8");
-            return xml;
+            return new String(segmentData, index, segmentData.length - index, "utf-8");
         } catch (final UnsupportedEncodingException e) {
             throw new ImageReadException("Invalid JPEG XMP Segment.", e);
         }

@@ -183,9 +183,7 @@ public final class MyLzwDecompressor {
             }
         } // end of while loop
 
-        final byte result[] = baos.toByteArray();
-
-        return result;
+        return baos.toByteArray();
     }
 
     private void checkCodeSize() {

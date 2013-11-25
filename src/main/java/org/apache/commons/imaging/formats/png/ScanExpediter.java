@@ -68,10 +68,10 @@ public abstract class ScanExpediter extends BinaryFileParser {
     }
 
     protected final int getPixelARGB(final int alpha, final int red, final int green, final int blue) {
-        final int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
-                | ((0xff & green) << 8) | ((0xff & blue) << 0);
-
-        return rgb;
+        return ((0xff & alpha) << 24)
+             | ((0xff & red)   << 16)
+             | ((0xff & green) << 8)
+             | ((0xff & blue)  << 0);
     }
 
     protected final int getPixelRGB(final int red, final int green, final int blue) {

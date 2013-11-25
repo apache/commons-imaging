@@ -50,8 +50,10 @@ public abstract class PixelParser {
         final int red = 0xff & colorTable[index + 2];
         final int alpha = 0xff;
 
-        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-        return rgb;
+        return (alpha << 24)
+                | (red << 16)
+                | (green << 8)
+                | (blue << 0);
     }
 
 }

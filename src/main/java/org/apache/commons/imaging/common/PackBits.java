@@ -67,9 +67,8 @@ public class PackBits {
                 throw new ImageReadException("Packbits: " + n);
             }
         }
-        final byte result[] = baos.toByteArray();
 
-        return result;
+        return baos.toByteArray();
 
     }
 

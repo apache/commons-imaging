@@ -30,29 +30,23 @@ public class Compression {
             final int expectedSize, final ByteOrder byteOrder) throws IOException {
         final InputStream is = new ByteArrayInputStream(compressed);
 
-        final MyLzwDecompressor decompressor = new MyLzwDecompressor(
-                LZWMinimumCodeSize, byteOrder);
-        final byte[] result = decompressor.decompress(is, expectedSize);
+        final MyLzwDecompressor decompressor = new MyLzwDecompressor(LZWMinimumCodeSize, byteOrder);
 
-        return result;
+        return decompressor.decompress(is, expectedSize);
     }
 
     public byte[] decompressPackBits(final byte compressed[], final int expectedSize,
             final ByteOrder byteOrder) throws ImageReadException {
-        final byte unpacked[] = new PackBits().decompress(compressed, expectedSize);
-        return unpacked;
+        return new PackBits().decompress(compressed, expectedSize);
     }
 
     public byte[] compressLZW(final byte src[], final int LZWMinimumCodeSize,
             final ByteOrder byteOrder, final boolean earlyLimit) throws IOException
 
     {
-        final MyLzwCompressor compressor = new MyLzwCompressor(LZWMinimumCodeSize,
-                byteOrder, earlyLimit);
+        final MyLzwCompressor compressor = new MyLzwCompressor(LZWMinimumCodeSize, byteOrder, earlyLimit);
 
-        final byte compressed[] = compressor.compress(src);
-
-        return compressed;
+        return compressor.compress(src);
     }
 
 }

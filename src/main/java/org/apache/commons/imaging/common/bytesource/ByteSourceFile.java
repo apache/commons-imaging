@@ -37,11 +37,7 @@ public class ByteSourceFile extends ByteSource {
 
     @Override
     public InputStream getInputStream() throws IOException {
-        FileInputStream is = null;
-        BufferedInputStream bis = null;
-        is = new FileInputStream(file);
-        bis = new BufferedInputStream(is);
-        return bis;
+        return new BufferedInputStream(new FileInputStream(file));
     }
 
     @Override

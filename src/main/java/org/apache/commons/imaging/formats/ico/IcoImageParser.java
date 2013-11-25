@@ -536,8 +536,7 @@ public class IcoImageParser extends ImageParser {
         final ImageFormat imageFormat = Imaging.guessFormat(iconData);
         if (imageFormat.equals(ImageFormats.PNG)) {
             final BufferedImage bufferedImage = Imaging.getBufferedImage(iconData);
-            final PNGIconData pngIconData = new PNGIconData(fIconInfo, bufferedImage);
-            return pngIconData;
+            return new PNGIconData(fIconInfo, bufferedImage);
         }
         return readBitmapIconData(iconData, fIconInfo);
     }

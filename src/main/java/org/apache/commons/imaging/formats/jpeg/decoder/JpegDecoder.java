@@ -427,8 +427,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         }
         int j = huffmanTable.getValPtr()[i];
         j += code - huffmanTable.getMinCode()[i];
-        final int value = huffmanTable.getHuffVal()[j];
-        return value;
+        return huffmanTable.getHuffVal()[j];
     }
 
     public BufferedImage decode(final ByteSource byteSource) throws IOException,

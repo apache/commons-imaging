@@ -210,10 +210,7 @@ public class GifImageParser extends ImageParser {
     private byte[] readSubBlock(final InputStream is) throws IOException {
         final int block_size = 0xff & readByte("block_size", is, "GIF: corrupt block");
 
-        final byte bytes[] = readBytes("block", is, block_size,
-                "GIF: corrupt block");
-
-        return bytes;
+        return readBytes("block", is, block_size, "GIF: corrupt block");
     }
 
     protected GenericGifBlock readGenericGIFBlock(final InputStream is, final int code)
@@ -408,12 +405,10 @@ public class GifImageParser extends ImageParser {
             readGenericGIFBlock(is, -1);
         }
 
-        final ImageDescriptor result = new ImageDescriptor(blockCode,
+        return new ImageDescriptor(blockCode,
                 ImageLeftPosition, ImageTopPosition, imageWidth, imageHeight,
                 PackedFields, LocalColorTableFlag, InterlaceFlag, SortFlag,
                 SizeofLocalColorTable, LocalColorTable, imageData);
-
-        return result;
     }
 
     private int simple_pow(final int base, final int power) {
@@ -433,15 +428,11 @@ public class GifImageParser extends ImageParser {
     private byte[] readColorTable(final InputStream is, final int ct_size) throws IOException {
         final int actual_size = convertColorTableSize(ct_size);
 
-        final byte bytes[] = readBytes("block", is, actual_size,
-                "GIF: corrupt Color Table");
-
-        return bytes;
+        return readBytes("block", is, actual_size, "GIF: corrupt Color Table");
     }
 
-    private GifBlock findBlock(final List<GifBlock> v, final int code) {
-        for (int i = 0; i < v.size(); i++) {
-            final GifBlock gifBlock = v.get(i);
+    private GifBlock findBlock(final List<GifBlock> blocks, final int code) {
+        for (GifBlock gifBlock : blocks) {
             if (gifBlock.blockCode == code) {
                 return gifBlock;
             }
@@ -530,12 +521,11 @@ public class GifImageParser extends ImageParser {
         return null;
     }
 
-    private List<String> getComments(final List<GifBlock> v) throws IOException {
+    private List<String> getComments(final List<GifBlock> blocks) throws IOException {
         final List<String> result = new ArrayList<String>();
         final int code = 0x21fe;
 
-        for (int i = 0; i < v.size(); i++) {
-            final GifBlock block = v.get(i);
+        for (GifBlock block : blocks) {
             if (block.blockCode == code) {
                 final byte bytes[] = ((GenericGifBlock) block).appendSubBlocks();
                 result.add(new String(bytes, "US-ASCII"));
@@ -601,13 +591,11 @@ public class GifImageParser extends ImageParser {
         final int colorType = ImageInfo.COLOR_TYPE_RGB;
         final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_LZW;
 
-        final ImageInfo result = new ImageInfo(formatDetails, bitsPerPixel, comments,
+        return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, formatName, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
                 physicalWidthInch, width, isProgressive, isTransparent,
                 usesPalette, colorType, compressionAlgorithm);
-
-        return result;
     }
 
     @Override
@@ -1059,8 +1047,7 @@ public class GifImageParser extends ImageParser {
             final List<GifBlock> blocks = readBlocks(ghi, is, true, formatCompliance);
 
             final List<String> result = new ArrayList<String>();
-            for (int i = 0; i < blocks.size(); i++) {
-                final GifBlock block = blocks.get(i);
+            for (GifBlock block : blocks) {
                 if (block.blockCode != XMP_COMPLETE_CODE) {
                     continue;
                 }

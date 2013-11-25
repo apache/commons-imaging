@@ -322,9 +322,7 @@ public class JpegImageParser extends ImageParser {
             return null;
         }
 
-        final JpegImageMetadata result = new JpegImageMetadata(photoshop, exif);
-
-        return result;
+        return new JpegImageMetadata(photoshop, exif);
     }
 
     public static boolean isExifAPP1Segment(final GenericSegment segment) {
@@ -954,13 +952,11 @@ public class JpegImageParser extends ImageParser {
 
         final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_JPEG;
 
-        final ImageInfo result = new ImageInfo(FormatDetails, BitsPerPixel, Comments,
+        return new ImageInfo(FormatDetails, BitsPerPixel, Comments,
                 Format, FormatName, Height, MimeType, NumberOfImages,
                 PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
                 PhysicalWidthInch, Width, isProgressive, isTransparent,
                 usesPalette, colorType, compressionAlgorithm);
-
-        return result;
     }
 
     // public ImageInfo getImageInfo(ByteSource byteSource, Map params)

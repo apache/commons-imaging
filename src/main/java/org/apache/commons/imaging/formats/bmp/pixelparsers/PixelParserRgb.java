@@ -54,9 +54,7 @@ public class PixelParserRgb extends PixelParserSimple {
             cached_byte = 0xff & (cached_byte << bhi.bitsPerPixel);
             cached_bit_count -= bhi.bitsPerPixel;
 
-            final int rgb = getColorTableRGB(sample);
-
-            return rgb;
+            return getColorTableRGB(sample);
         } else if (bhi.bitsPerPixel == 8) { // always grayscale?
             final int sample = 0xff & imageData[bytecount + 0];
 

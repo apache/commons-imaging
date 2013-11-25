@@ -657,13 +657,11 @@ public class BmpImageParser extends ImageParser {
         final int colorType = ImageInfo.COLOR_TYPE_RGB;
         final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_RLE;
 
-        final ImageInfo result = new ImageInfo(formatDetails, bitsPerPixel, comments,
+        return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, name, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
                 physicalWidthInch, width, isProgressive, isTransparent,
                 usesPalette, colorType, compressionAlgorithm);
-
-        return result;
     }
 
     @Override
@@ -788,7 +786,7 @@ public class BmpImageParser extends ImageParser {
         final SimplePalette palette = new PaletteFactory().makeExactRgbPaletteSimple(
                 src, 256);
 
-        BmpWriter writer = null;
+        BmpWriter writer;
         if (palette == null) {
             writer = new BmpWriterRgb();
         } else {
