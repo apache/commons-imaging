@@ -34,8 +34,7 @@ public class JpegPhotoshopMetadata extends ImageMetadata {
 
         final List<IptcRecord> records = photoshopApp13Data.getRecords();
         Collections.sort(records, IptcRecord.COMPARATOR);
-        for (int j = 0; j < records.size(); j++) {
-            final IptcRecord element = records.get(j);
+        for (IptcRecord element : records) {
             if (element.iptcType != IptcTypes.RECORD_VERSION) {
                 add(element.getIptcTypeName(), element.getValue());
             }

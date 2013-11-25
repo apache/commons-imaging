@@ -51,7 +51,7 @@ public class TiffField {
     private final byte[] value;
     private final ByteOrder byteOrder;
     private final int sortHint;
-    public static final String Attribute_Tag = "Tag";
+    public static final String ATTRIBUTE_TAG = "Tag";
     private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(
             AllTagConstants.ALL_TAGS);
 
@@ -185,8 +185,7 @@ public class TiffField {
         // }
 
         // first search for exact match.
-        for (int i = 0; i < possibleMatches.size(); i++) {
-            final TagInfo tagInfo = possibleMatches.get(i);
+        for (TagInfo tagInfo : possibleMatches) {
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
                 // pass
                 continue;
@@ -196,9 +195,7 @@ public class TiffField {
         }
 
         // accept an inexact match.
-        for (int i = 0; i < possibleMatches.size(); i++) {
-            final TagInfo tagInfo = possibleMatches.get(i);
-
+        for (TagInfo tagInfo : possibleMatches) {
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
                 // pass
                 continue;
@@ -212,9 +209,7 @@ public class TiffField {
         }
 
         // accept a wildcard match.
-        for (int i = 0; i < possibleMatches.size(); i++) {
-            final TagInfo tagInfo = possibleMatches.get(i);
-
+        for (TagInfo tagInfo : possibleMatches) {
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
                 return tagInfo;
             }
@@ -567,14 +562,12 @@ public class TiffField {
         return (String) o;
     }
 
-    private static final Map<Object, List<TagInfo>> makeTagMap(
+    private static Map<Object, List<TagInfo>> makeTagMap(
             final List<TagInfo> tags) {
         // make sure to use the thread-safe version; this is shared state.
         final Map<Object, List<TagInfo>> map = new Hashtable<Object, List<TagInfo>>();
 
-        for (int i = 0; i < tags.size(); i++) {
-            final TagInfo tag = tags.get(i);
-
+        for (TagInfo tag : tags) {
             List<TagInfo> tagList = map.get(tag.tag);
             if (tagList == null) {
                 tagList = new ArrayList<TagInfo>();

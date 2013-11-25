@@ -106,8 +106,7 @@ public class PngImageParser extends ImageParser {
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(is, null, false);
         final List<String> chunkTypes = new ArrayList<String>();
-        for (int i = 0; i < chunks.size(); i++) {
-            final PngChunk chunk = chunks.get(i);
+        for (PngChunk chunk : chunks) {
             chunkTypes.add(getChunkTypeName(chunk.chunkType));
         }
         return chunkTypes;

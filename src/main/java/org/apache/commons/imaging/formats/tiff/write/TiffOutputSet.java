@@ -45,9 +45,7 @@ public final class TiffOutputSet implements TiffConstants {
             final TiffOutputSummary outputSummary) throws ImageWriteException {
         final List<TiffOutputItem> result = new ArrayList<TiffOutputItem>();
 
-        for (int i = 0; i < directories.size(); i++) {
-            final TiffOutputDirectory directory = directories.get(i);
-
+        for (TiffOutputDirectory directory : directories) {
             result.addAll(directory.getOutputItems(outputSummary));
         }
 
@@ -117,8 +115,7 @@ public final class TiffOutputSet implements TiffConstants {
     }
 
     public TiffOutputDirectory findDirectory(final int directoryType) {
-        for (int i = 0; i < directories.size(); i++) {
-            final TiffOutputDirectory directory = directories.get(i);
+        for (TiffOutputDirectory directory : directories) {
             if (directory.type == directoryType) {
                 return directory;
             }
@@ -197,8 +194,7 @@ public final class TiffOutputSet implements TiffConstants {
     }
 
     public void removeField(final int tag) {
-        for (int i = 0; i < directories.size(); i++) {
-            final TiffOutputDirectory directory = directories.get(i);
+        for (TiffOutputDirectory directory : directories) {
             directory.removeField(tag);
         }
     }
@@ -208,8 +204,7 @@ public final class TiffOutputSet implements TiffConstants {
     }
 
     public TiffOutputField findField(final int tag) {
-        for (int i = 0; i < directories.size(); i++) {
-            final TiffOutputDirectory directory = directories.get(i);
+        for (TiffOutputDirectory directory : directories) {
             final TiffOutputField field = directory.findField(tag);
             if (null != field) {
                 return field;
@@ -276,8 +271,7 @@ public final class TiffOutputSet implements TiffConstants {
                     prefix, i, directory.description(), directory.type));
 
             final List<TiffOutputField> fields = directory.getFields();
-            for (int j = 0; j < fields.size(); j++) {
-                final TiffOutputField field = fields.get(j);
+            for (TiffOutputField field : fields) {
                 result.append(prefix);
                 result.append("\t\tfield " + i + ": " + field.tagInfo);
                 result.append(NEWLINE);

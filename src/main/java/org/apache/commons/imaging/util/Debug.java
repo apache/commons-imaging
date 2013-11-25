@@ -34,7 +34,7 @@ public final class Debug {
 
     private static final boolean DEBUG = false;
     // public static String newline = System.getProperty("line.separator");
-    public static final String newline = "\r\n";
+    public static final String NEWLINE = "\r\n";
     private static long counter = 0;
 
     public static void debug(final String message) {
@@ -59,7 +59,7 @@ public final class Debug {
 
     public static void newline() {
         if (DEBUG) {
-            System.out.print(newline);
+            System.out.print(NEWLINE);
         }
     }
 
@@ -83,13 +83,13 @@ public final class Debug {
         final StringBuilder result = new StringBuilder();
 
         if (v == null) {
-            result.append(message + " (" + null + ")" + newline);
+            result.append(message + " (" + null + ")" + NEWLINE);
         } else {
-            result.append(message + " (" + v.length + ")" + newline);
+            result.append(message + " (" + v.length + ")" + NEWLINE);
             for (final int element : v) {
-                result.append("\t" + element + newline);
+                result.append("\t" + element + NEWLINE);
             }
-            result.append(newline);
+            result.append(NEWLINE);
         }
         return result.toString();
     }
@@ -104,9 +104,9 @@ public final class Debug {
         final StringBuilder result = new StringBuilder();
 
         if (v == null) {
-            result.append(message + " (" + null + ")" + newline);
+            result.append(message + " (" + null + ")" + NEWLINE);
         } else {
-            result.append(message + " (" + v.length + ")" + newline);
+            result.append(message + " (" + v.length + ")" + NEWLINE);
             for (int i = 0; i < max && i < v.length; i++) {
                 final int b = 0xff & v[i];
 
@@ -118,13 +118,13 @@ public final class Debug {
                 }
 
                 result.append("\t" + i + ": " + b + " (" + c + ", 0x"
-                        + Integer.toHexString(b) + ")" + newline);
+                        + Integer.toHexString(b) + ")" + NEWLINE);
             }
             if (v.length > max) {
-                result.append("\t..." + newline);
+                result.append("\t..." + NEWLINE);
             }
 
-            result.append(newline);
+            result.append(NEWLINE);
         }
         return result.toString();
     }
@@ -133,14 +133,14 @@ public final class Debug {
         final StringBuilder result = new StringBuilder();
 
         if (v == null) {
-            result.append(getDebug(message + " (" + null + ")") + newline);
+            result.append(getDebug(message + " (" + null + ")") + NEWLINE);
         } else {
-            result.append(getDebug(message + " (" + v.length + ")") + newline);
+            result.append(getDebug(message + " (" + v.length + ")") + NEWLINE);
             for (final char element : v) {
                 result.append(getDebug("\t" + element + " (" + (0xff & element))
-                        + ")" + newline);
+                        + ")" + NEWLINE);
             }
-            result.append(newline);
+            result.append(NEWLINE);
         }
         return result.toString();
     }
@@ -150,13 +150,11 @@ public final class Debug {
 
         final String suffix = " [" + counter++ + "]";
 
-        result.append(getDebug(message + " (" + v.size() + ")" + suffix)
-                + newline);
-        for (int i = 0; i < v.size(); i++) {
-            result.append(getDebug("\t" + v.get(i).toString() + suffix)
-                    + newline);
+        result.append(getDebug(message + " (" + v.size() + ")" + suffix) + NEWLINE);
+        for (Object aV : v) {
+            result.append(getDebug("\t" + aV.toString() + suffix) + NEWLINE);
         }
-        result.append(newline);
+        result.append(NEWLINE);
 
         return result.toString();
     }
@@ -173,16 +171,16 @@ public final class Debug {
         }
 
         final List<Object> keys = new ArrayList<Object>(map.keySet());
-        result.append(getDebug(message + " map: " + keys.size()) + newline);
+        result.append(getDebug(message + " map: " + keys.size()) + NEWLINE);
         for (int i = 0; i < keys.size(); i++) {
             final Object key = keys.get(i);
             final Object value = map.get(key);
             result.append(getDebug("\t" + i + ": '" + key + "' -> '" + value
                     + "'")
-                    + newline);
+                    + NEWLINE);
         }
 
-        result.append(newline);
+        result.append(NEWLINE);
 
         return result.toString();
     }
@@ -194,7 +192,7 @@ public final class Debug {
     private static void log(final StringBuilder buffer, final String s) {
         Debug.debug(s);
         if (buffer != null) {
-            buffer.append(s + newline);
+            buffer.append(s + NEWLINE);
         }
     }
 
@@ -223,8 +221,7 @@ public final class Debug {
 
         boolean result = true;
 
-        for (int i = 0; i < keys_a.size(); i++) {
-            final Object key = keys_a.get(i);
+        for (Object key : keys_a) {
             if (!keys_b.contains(key)) {
                 log(buffer, prefix + "b is missing key '" + key + "' from a");
                 result = false;
@@ -239,9 +236,7 @@ public final class Debug {
                 }
             }
         }
-        for (int i = 0; i < keys_b.size(); i++) {
-            final Object key = keys_b.get(i);
-
+        for (Object key : keys_b) {
             log(buffer, prefix + "a is missing key '" + key + "' from b");
             result = false;
         }
@@ -286,17 +281,17 @@ public final class Debug {
 
         result.append(getDebug("ICC_Profile " + message + ": "
                 + ((value == null) ? "null" : value.toString()))
-                + newline);
+                + NEWLINE);
         if (value != null) {
             result.append(getDebug("\t getProfileClass: "
                     + byteQuadToString(value.getProfileClass()))
-                    + newline);
+                    + NEWLINE);
             result.append(getDebug("\t getPCSType: "
                     + byteQuadToString(value.getPCSType()))
-                    + newline);
+                    + NEWLINE);
             result.append(getDebug("\t getColorSpaceType() : "
                     + byteQuadToString(value.getColorSpaceType()))
-                    + newline);
+                    + NEWLINE);
         }
 
         return result.toString();
@@ -457,18 +452,18 @@ public final class Debug {
         final StringBuilder result = new StringBuilder();
 
         if (value == null) {
-            result.append(getDebug(message, "null") + newline);
+            result.append(getDebug(message, "null") + NEWLINE);
         } else {
             result.append(getDebug(message, value.length));
             final int max = 10;
             for (int i = 0; i < value.length && i < max; i++) {
-                result.append(getDebug("\t" + i, value[i]) + newline);
+                result.append(getDebug("\t" + i, value[i]) + NEWLINE);
             }
             if (value.length > max) {
-                result.append(getDebug("\t...") + newline);
+                result.append(getDebug("\t...") + NEWLINE);
             }
         }
-        result.append(newline);
+        result.append(NEWLINE);
 
         return result.toString();
     }
@@ -545,8 +540,8 @@ public final class Debug {
         final String suffix = " [" + counter++ + "]";
 
         debug(message + " (" + v.size() + ")" + suffix);
-        for (int i = 0; i < v.size(); i++) {
-            debug("\t" + v.get(i).toString() + suffix);
+        for (Object aV : v) {
+            debug("\t" + aV.toString() + suffix);
         }
         debug();
     }
@@ -589,7 +584,7 @@ public final class Debug {
     }
 
     public static String getDebug(final String message, final Throwable e) {
-        return message + newline + getDebug(e);
+        return message + NEWLINE + getDebug(e);
     }
 
     public static String getDebug(final Throwable e) {
@@ -603,20 +598,20 @@ public final class Debug {
                 "yyyy-MM-dd kk:mm:ss:SSS", Locale.ENGLISH);
         final String datetime = timestamp.format(new Date()).toLowerCase();
 
-        result.append(newline);
+        result.append(NEWLINE);
         result.append("Throwable: "
                 + ((e == null) ? "" : ("(" + e.getClass().getName() + ")"))
-                + ":" + datetime + newline);
+                + ":" + datetime + NEWLINE);
         result.append("Throwable: "
-                + ((e == null) ? "null" : e.getLocalizedMessage()) + newline);
-        result.append(newline);
+                + ((e == null) ? "null" : e.getLocalizedMessage()) + NEWLINE);
+        result.append(NEWLINE);
 
         result.append(getStackTrace(e, max));
 
-        result.append("Caught here:" + newline);
+        result.append("Caught here:" + NEWLINE);
         result.append(getStackTrace(new Exception(), max, 1));
         // Debug.dumpStack();
-        result.append(newline);
+        result.append(NEWLINE);
         return result.toString();
     }
 
@@ -639,15 +634,15 @@ public final class Debug {
 
                     result.append("\tat " + ste.getClassName() + "."
                             + ste.getMethodName() + "(" + ste.getFileName()
-                            + ":" + ste.getLineNumber() + ")" + newline);
+                            + ":" + ste.getLineNumber() + ")" + NEWLINE);
                 }
                 if (limit >= 0 && stes.length > limit) {
-                    result.append("\t..." + newline);
+                    result.append("\t..." + NEWLINE);
                 }
             }
 
             // e.printStackTrace(System.out);
-            result.append(newline);
+            result.append(NEWLINE);
         }
 
         return result.toString();

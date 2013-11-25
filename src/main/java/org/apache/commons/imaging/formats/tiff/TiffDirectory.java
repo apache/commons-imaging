@@ -119,8 +119,7 @@ public class TiffDirectory extends TiffElement {
     }
 
     public void dump() {
-        for (int i = 0; i < entries.size(); i++) {
-            final TiffField entry = entries.get(i);
+        for (TiffField entry : entries) {
             entry.dump();
         }
 

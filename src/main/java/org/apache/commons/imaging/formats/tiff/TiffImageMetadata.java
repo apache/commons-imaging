@@ -54,18 +54,16 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 public class TiffImageMetadata extends ImageMetadata implements
         TiffDirectoryConstants {
     public final TiffContents contents;
-    private static final Map<Object, Integer> tagCounts = countTags(AllTagConstants.ALL_TAGS);
+    private static final Map<Object, Integer> TAG_COUNTS = countTags(AllTagConstants.ALL_TAGS);
 
     public TiffImageMetadata(final TiffContents contents) {
         this.contents = contents;
     }
 
-    private static final Map<Object, Integer> countTags(final List<TagInfo> tags) {
+    private static Map<Object, Integer> countTags(final List<TagInfo> tags) {
         final Map<Object, Integer> map = new Hashtable<Object, Integer>();
 
-        for (int i = 0; i < tags.size(); i++) {
-            final TagInfo tag = tags.get(i);
-
+        for (TagInfo tag : tags) {
             final Integer count = map.get(tag.tag);
             if (count == null) {
                 map.put(tag.tag, 1);
@@ -133,9 +131,8 @@ public class TiffImageMetadata extends ImageMetadata implements
                         byteOrder);
 
                 final List<? extends IImageMetadataItem> entries = getItems();
-                for (int i = 0; i < entries.size(); i++) {
-                    final TiffImageMetadata.Item item = (TiffImageMetadata.Item) entries
-                            .get(i);
+                for (IImageMetadataItem entry : entries) {
+                    final TiffImageMetadata.Item item = (TiffImageMetadata.Item) entry;
                     final TiffField srcField = item.getTiffField();
 
                     if (null != dstDir.findField(srcField.getTag())) {
@@ -192,8 +189,8 @@ public class TiffImageMetadata extends ImageMetadata implements
         final List<IImageMetadataItem> result = new ArrayList<IImageMetadataItem>();
 
         final List<? extends IImageMetadataItem> items = super.getItems();
-        for (int i = 0; i < items.size(); i++) {
-            final Directory dir = (Directory) items.get(i);
+        for (IImageMetadataItem item : items) {
+            final Directory dir = (Directory) item;
             result.addAll(dir.getItems());
         }
 
@@ -220,9 +217,8 @@ public class TiffImageMetadata extends ImageMetadata implements
         final TiffOutputSet result = new TiffOutputSet(byteOrder);
 
         final List<? extends IImageMetadataItem> srcDirs = getDirectories();
-        for (int i = 0; i < srcDirs.size(); i++) {
-            final TiffImageMetadata.Directory srcDir = (TiffImageMetadata.Directory) srcDirs
-                    .get(i);
+        for (IImageMetadataItem srcDir1 : srcDirs) {
+            final Directory srcDir = (Directory) srcDir1;
 
             if (null != result.findDirectory(srcDir.type)) {
                 // Certain cameras right directories more than once.
@@ -246,14 +242,14 @@ public class TiffImageMetadata extends ImageMetadata implements
     public TiffField findField(final TagInfo tagInfo, final boolean exactDirectoryMatch)
             throws ImageReadException {
         // Please keep this method in sync with TiffField's getTag()
-        final Integer tagCount = tagCounts.get(tagInfo.tag);
+        final Integer tagCount = TAG_COUNTS.get(tagInfo.tag);
         final int tagsMatching = tagCount == null ? 0 : tagCount;
 
         final List<? extends IImageMetadataItem> directories = getDirectories();
         if (exactDirectoryMatch
                 || tagInfo.directoryType != TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
-            for (int i = 0; i < directories.size(); i++) {
-                final Directory directory = (Directory) directories.get(i);
+            for (IImageMetadataItem directory1 : directories) {
+                final Directory directory = (Directory) directory1;
                 if (directory.type == tagInfo.directoryType.directoryType) {
                     final TiffField field = directory.findField(tagInfo);
                     if (field != null) {
@@ -264,8 +260,8 @@ public class TiffImageMetadata extends ImageMetadata implements
             if (exactDirectoryMatch || tagsMatching > 1) {
                 return null;
             }
-            for (int i = 0; i < directories.size(); i++) {
-                final Directory directory = (Directory) directories.get(i);
+            for (IImageMetadataItem directory1 : directories) {
+                final Directory directory = (Directory) directory1;
                 if (tagInfo.directoryType.isImageDirectory()
                         && directory.type >= 0) {
                     final TiffField field = directory.findField(tagInfo);
@@ -282,8 +278,8 @@ public class TiffImageMetadata extends ImageMetadata implements
             }
         }
 
-        for (int i = 0; i < directories.size(); i++) {
-            final Directory directory = (Directory) directories.get(i);
+        for (IImageMetadataItem directory1 : directories) {
+            final Directory directory = (Directory) directory1;
             final TiffField field = directory.findField(tagInfo);
             if (field != null) {
                 return field;
@@ -451,8 +447,8 @@ public class TiffImageMetadata extends ImageMetadata implements
 
     public TiffDirectory findDirectory(final int directoryType) {
         final List<? extends IImageMetadataItem> directories = getDirectories();
-        for (int i = 0; i < directories.size(); i++) {
-            final Directory directory = (Directory) directories.get(i);
+        for (IImageMetadataItem directory1 : directories) {
+            final Directory directory = (Directory) directory1;
             if (directory.type == directoryType) {
                 return directory.directory;
             }
@@ -463,8 +459,8 @@ public class TiffImageMetadata extends ImageMetadata implements
     public List<TiffField> getAllFields() {
         final List<TiffField> result = new ArrayList<TiffField>();
         final List<? extends IImageMetadataItem> directories = getDirectories();
-        for (int i = 0; i < directories.size(); i++) {
-            final Directory directory = (Directory) directories.get(i);
+        for (IImageMetadataItem directory1 : directories) {
+            final Directory directory = (Directory) directory1;
             result.addAll(directory.getAllFields());
         }
         return result;

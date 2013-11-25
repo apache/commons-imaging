@@ -52,7 +52,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
         this.byteOrder = byteOrder;
     }
 
-    protected final static int imageDataPaddingLength(final int dataLength) {
+    protected static int imageDataPaddingLength(final int dataLength) {
         return (4 - (dataLength % 4)) % 4;
     }
 
@@ -76,8 +76,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
 
         final List<Integer> directoryIndices = new ArrayList<Integer>();
         final Map<Integer, TiffOutputDirectory> directoryTypeMap = new HashMap<Integer, TiffOutputDirectory>();
-        for (int i = 0; i < directories.size(); i++) {
-            final TiffOutputDirectory directory = directories.get(i);
+        for (TiffOutputDirectory directory : directories) {
             final int dirType = directory.type;
             directoryTypeMap.put(dirType, directory);
             // Debug.debug("validating dirType", dirType + " ("
@@ -85,32 +84,32 @@ public abstract class TiffImageWriterBase implements TiffConstants {
 
             if (dirType < 0) {
                 switch (dirType) {
-                case DIRECTORY_TYPE_EXIF:
-                    if (exifDirectory != null) {
-                        throw new ImageWriteException(
-                                "More than one EXIF directory.");
-                    }
-                    exifDirectory = directory;
-                    break;
+                    case DIRECTORY_TYPE_EXIF:
+                        if (exifDirectory != null) {
+                            throw new ImageWriteException(
+                                    "More than one EXIF directory.");
+                        }
+                        exifDirectory = directory;
+                        break;
 
-                case DIRECTORY_TYPE_GPS:
-                    if (gpsDirectory != null) {
-                        throw new ImageWriteException(
-                                "More than one GPS directory.");
-                    }
-                    gpsDirectory = directory;
-                    break;
+                    case DIRECTORY_TYPE_GPS:
+                        if (gpsDirectory != null) {
+                            throw new ImageWriteException(
+                                    "More than one GPS directory.");
+                        }
+                        gpsDirectory = directory;
+                        break;
 
-                case DIRECTORY_TYPE_INTEROPERABILITY:
-                    if (interoperabilityDirectory != null) {
-                        throw new ImageWriteException(
-                                "More than one Interoperability directory.");
-                    }
-                    interoperabilityDirectory = directory;
-                    break;
-                default:
-                    throw new ImageWriteException("Unknown directory: "
-                            + dirType);
+                    case DIRECTORY_TYPE_INTEROPERABILITY:
+                        if (interoperabilityDirectory != null) {
+                            throw new ImageWriteException(
+                                    "More than one Interoperability directory.");
+                        }
+                        interoperabilityDirectory = directory;
+                        break;
+                    default:
+                        throw new ImageWriteException("Unknown directory: "
+                                + dirType);
                 }
             } else {
                 if (directoryIndices.contains(dirType)) {
@@ -124,9 +123,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
 
             final HashSet<Integer> fieldTags = new HashSet<Integer>();
             final List<TiffOutputField> fields = directory.getFields();
-            for (int j = 0; j < fields.size(); j++) {
-                final TiffOutputField field = fields.get(j);
-
+            for (TiffOutputField field : fields) {
                 if (fieldTags.contains(field.tag)) {
                     throw new ImageWriteException("Tag ("
                             + field.tagInfo.getDescription()

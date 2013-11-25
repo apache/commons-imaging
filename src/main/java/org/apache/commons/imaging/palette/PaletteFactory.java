@@ -237,9 +237,7 @@ public class PaletteFactory {
         DivisionCandidate best_v = null;
         double best_score = Double.MAX_VALUE;
 
-        for (int i = 0; i < dcs.size(); i++) {
-            final DivisionCandidate dc = dcs.get(i);
-
+        for (DivisionCandidate dc : dcs) {
             final ColorSpaceSubset first = dc.dst_a;
             final ColorSpaceSubset second = dc.dst_b;
             final int area1 = first.total;
@@ -280,8 +278,7 @@ public class PaletteFactory {
             int max_area = -1;
             ColorSpaceSubset max_subset = null;
 
-            for (int i = 0; i < v.size(); i++) {
-                final ColorSpaceSubset subset = v.get(i);
+            for (ColorSpaceSubset subset : v) {
                 if (ignore.contains(subset)) {
                     continue;
                 }

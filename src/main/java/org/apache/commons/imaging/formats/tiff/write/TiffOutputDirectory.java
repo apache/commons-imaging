@@ -420,8 +420,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
     public void removeField(final int tag) {
         final List<TiffOutputField> matches = new ArrayList<TiffOutputField>();
-        for (int i = 0; i < fields.size(); i++) {
-            final TiffOutputField field = fields.get(i);
+        for (TiffOutputField field : fields) {
             if (field.tag == tag) {
                 matches.add(field);
             }
@@ -434,8 +433,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
     }
 
     public TiffOutputField findField(final int tag) {
-        for (int i = 0; i < fields.size(); i++) {
-            final TiffOutputField field = fields.get(i);
+        for (TiffOutputField field : fields) {
             if (field.tag == tag) {
                 return field;
             }
@@ -466,8 +464,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         bos.write2Bytes(fields.size()); // DirectoryFieldCount
 
         // Write Fields
-        for (int i = 0; i < fields.size(); i++) {
-            final TiffOutputField field = fields.get(i);
+        for (TiffOutputField field : fields) {
             field.writeField(bos);
 
             // Debug.debug("\t" + "writing field (" + field.tag + ", 0x" +
@@ -616,8 +613,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         result.add(this);
         sortFields();
 
-        for (int i = 0; i < fields.size(); i++) {
-            final TiffOutputField field = fields.get(i);
+        for (TiffOutputField field : fields) {
             if (field.isLocalValue()) {
                 continue;
             }
@@ -628,9 +624,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         }
 
         if (null != imageDataInfo) {
-            for (final TiffOutputItem outputItem : imageDataInfo.outputItems) {
-                result.add(outputItem);
-            }
+            Collections.addAll(result, imageDataInfo.outputItems);
 
             outputSummary.addTiffImageData(imageDataInfo);
         }

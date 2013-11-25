@@ -30,12 +30,11 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
             final boolean ignoreAlpha) throws ImageWriteException {
         int maxPoints = 0;
         ColorGroup colorGroup = null;
-        for (int i = 0; i < colorGroups.size(); i++) {
-            if (colorGroups.get(i).max_diff > 0) {
-                final ColorGroup c = colorGroups.get(i);
-                if (c.totalPoints > maxPoints) {
-                    colorGroup = c;
-                    maxPoints = c.totalPoints;
+        for (ColorGroup group : colorGroups) {
+            if (group.max_diff > 0) {
+                if (group.totalPoints > maxPoints) {
+                    colorGroup = group;
+                    maxPoints = group.totalPoints;
                 }
             }
         }

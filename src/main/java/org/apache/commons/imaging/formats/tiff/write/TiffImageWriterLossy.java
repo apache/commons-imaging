@@ -54,9 +54,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
     private void updateOffsetsStep(final List<TiffOutputItem> outputItems) {
         int offset = TIFF_HEADER_SIZE;
 
-        for (int i = 0; i < outputItems.size(); i++) {
-            final TiffOutputItem outputItem = outputItems.get(i);
-
+        for (TiffOutputItem outputItem : outputItems) {
             outputItem.setOffset(offset);
             final int itemLength = outputItem.getItemLength();
             offset += itemLength;
@@ -71,9 +69,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
             ImageWriteException {
         writeImageFileHeader(bos);
 
-        for (int i = 0; i < outputItems.size(); i++) {
-            final TiffOutputItem outputItem = outputItems.get(i);
-
+        for (TiffOutputItem outputItem : outputItems) {
             outputItem.writeItem(bos);
 
             final int length = outputItem.getItemLength();

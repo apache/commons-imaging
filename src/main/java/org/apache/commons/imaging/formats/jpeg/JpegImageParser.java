@@ -61,7 +61,7 @@ import org.apache.commons.imaging.util.Debug;
 public class JpegImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".jpg";
     private static final String ACCEPTED_EXTENSIONS[] = { ".jpg", ".jpeg", };
-    public static final boolean permissive = true;
+    public static final boolean PERMISSIVE = true;
     
     public JpegImageParser() {
         setByteOrder(ByteOrder.BIG_ENDIAN);
@@ -204,32 +204,32 @@ public class JpegImageParser extends ImageParser {
         }
     }
 
-    private byte[] assembleSegments(final List<App2Segment> v, final boolean start_with_zero)
+    private byte[] assembleSegments(final List<App2Segment> segments, final boolean start_with_zero)
             throws ImageReadException {
-        if (v.isEmpty()) {
+        if (segments.isEmpty()) {
             throw new ImageReadException("No App2 Segments Found.");
         }
 
-        final int markerCount = v.get(0).num_markers;
+        final int markerCount = segments.get(0).num_markers;
 
         // if (permissive && (markerCount == 0))
         // markerCount = v.size();
 
-        if (v.size() != markerCount) {
+        if (segments.size() != markerCount) {
             throw new ImageReadException("App2 Segments Missing.  Found: "
-                    + v.size() + ", Expected: " + markerCount + ".");
+                    + segments.size() + ", Expected: " + markerCount + ".");
         }
 
-        Collections.sort(v);
+        Collections.sort(segments);
 
         final int offset = start_with_zero ? 0 : 1;
 
         int total = 0;
-        for (int i = 0; i < v.size(); i++) {
-            final App2Segment segment = v.get(i);
+        for (int i = 0; i < segments.size(); i++) {
+            final App2Segment segment = segments.get(i);
 
             if ((i + offset) != segment.cur_marker) {
-                dumpSegments(v);
+                dumpSegments(segments);
                 throw new ImageReadException(
                         "Incoherent App2 Segment Ordering.  i: " + i
                                 + ", segment[" + i + "].cur_marker: "
@@ -237,7 +237,7 @@ public class JpegImageParser extends ImageParser {
             }
 
             if (markerCount != segment.num_markers) {
-                dumpSegments(v);
+                dumpSegments(segments);
                 throw new ImageReadException(
                         "Inconsistent App2 Segment Count info.  markerCount: "
                                 + markerCount + ", segment[" + i
@@ -250,11 +250,8 @@ public class JpegImageParser extends ImageParser {
         final byte result[] = new byte[total];
         int progress = 0;
 
-        for (int i = 0; i < v.size(); i++) {
-            final App2Segment segment = v.get(i);
-
-            System.arraycopy(segment.icc_bytes, 0, result, progress,
-                    segment.icc_bytes.length);
+        for (App2Segment segment : segments) {
+            System.arraycopy(segment.icc_bytes, 0, result, progress, segment.icc_bytes.length);
             progress += segment.icc_bytes.length;
         }
 
@@ -288,8 +285,8 @@ public class JpegImageParser extends ImageParser {
         final List<App2Segment> filtered = new ArrayList<App2Segment>();
         if (segments != null) {
             // throw away non-icc profile app2 segments.
-            for (int i = 0; i < segments.size(); i++) {
-                final App2Segment segment = (App2Segment) segments.get(i);
+            for (Segment s : segments) {
+                final App2Segment segment = (App2Segment) s;
                 if (segment.icc_bytes != null) {
                     filtered.add(segment);
                 }
@@ -334,11 +331,11 @@ public class JpegImageParser extends ImageParser {
         return startsWith(segment.getSegmentData(), JpegConstants.EXIF_IDENTIFIER_CODE);
     }
 
-    private List<Segment> filterAPP1Segments(final List<Segment> v) {
+    private List<Segment> filterAPP1Segments(final List<Segment> segments) {
         final List<Segment> result = new ArrayList<Segment>();
 
-        for (int i = 0; i < v.size(); i++) {
-            final GenericSegment segment = (GenericSegment) v.get(i);
+        for (Segment s : segments) {
+            final GenericSegment segment = (GenericSegment) s;
             if (isExifAPP1Segment(segment)) {
                 result.add(segment);
             }
@@ -588,8 +585,8 @@ public class JpegImageParser extends ImageParser {
 
         PhotoshopApp13Data photoshopApp13Data = null;
 
-        for (int i = 0; i < segments.size(); i++) {
-            final App13Segment segment = (App13Segment) segments.get(i);
+        for (Segment s : segments) {
+            final App13Segment segment = (App13Segment) s;
 
             final PhotoshopApp13Data data = segment.parsePhotoshopSegment(params);
             if (data != null && photoshopApp13Data != null) {
@@ -801,8 +798,8 @@ public class JpegImageParser extends ImageParser {
         final List<String> Comments = new ArrayList<String>();
         final List<Segment> commentSegments = readSegments(byteSource,
                 new int[] { JpegConstants.COMMarker }, false);
-        for (int i = 0; i < commentSegments.size(); i++) {
-            final ComSegment comSegment = (ComSegment) commentSegments.get(i);
+        for (Segment commentSegment : commentSegments) {
+            final ComSegment comSegment = (ComSegment) commentSegment;
             String comment = "";
             try {
                 comment = new String(comSegment.getComment(), "UTF-8");

@@ -135,16 +135,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
         final TiffImageMetadata result = new TiffImageMetadata(contents);
 
-        for (int i = 0; i < directories.size(); i++) {
-            final TiffDirectory dir = directories.get(i);
-
+        for (TiffDirectory dir : directories) {
             final TiffImageMetadata.Directory metadataDirectory = new TiffImageMetadata.Directory(
                     tiffReader.getByteOrder(), dir);
 
             final List<TiffField> entries = dir.getDirectoryEntries();
 
-            for (int j = 0; j < entries.size(); j++) {
-                final TiffField entry = entries.get(j);
+            for (TiffField entry : entries) {
                 metadataDirectory.add(entry);
             }
 
@@ -245,8 +242,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
         final List<String> comments = new ArrayList<String>();
         final List<TiffField> entries = directory.entries;
-        for (int i = 0; i < entries.size(); i++) {
-            final TiffField field = entries.get(i);
+        for (TiffField field : entries) {
             final String comment = field.toString();
             comments.add(comment);
         }
@@ -379,9 +375,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
                     // Debug.debug("directory offset", directory.offset);
 
-                    for (int i = 0; i < entries.size(); i++) {
-                        final TiffField field = entries.get(i);
-
+                    for (TiffField field : entries) {
                         field.dump(pw, Integer.toString(d));
                     }
                 }
@@ -422,8 +416,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             final TiffDirectory directory = contents.directories.get(i);
             final List<ImageDataElement> dataElements = directory
                     .getTiffRawImageDataElements();
-            for (int j = 0; j < dataElements.size(); j++) {
-                final TiffDirectory.ImageDataElement element = dataElements.get(j);
+            for (ImageDataElement element : dataElements) {
                 final byte bytes[] = byteSource.getBlock(element.offset,
                         element.length);
                 result.add(bytes);

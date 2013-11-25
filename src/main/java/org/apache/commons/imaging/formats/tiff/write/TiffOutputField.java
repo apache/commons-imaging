@@ -58,7 +58,7 @@ public class TiffOutputField implements TiffConstants {
         }
     }
 
-    protected static final TiffOutputField createOffsetField(final TagInfo tagInfo,
+    protected static TiffOutputField createOffsetField(final TagInfo tagInfo,
             final ByteOrder byteOrder) throws ImageWriteException {
         return new TiffOutputField(tagInfo, FieldType.LONG, 1,
                 FieldType.LONG.writeData(0, byteOrder));

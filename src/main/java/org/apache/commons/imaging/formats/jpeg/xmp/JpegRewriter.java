@@ -241,8 +241,7 @@ public class JpegRewriter extends BinaryFileParser {
             final SegmentFilter filter, final boolean reverse) {
         final List<T> result = new ArrayList<T>();
 
-        for (int i = 0; i < segments.size(); i++) {
-            final T piece = segments.get(i);
+        for (T piece : segments) {
             if (piece instanceof JFIFPieceSegment) {
                 if (filter.filter((JFIFPieceSegment) piece) ^ !reverse) {
                     result.add(piece);
@@ -313,9 +312,8 @@ public class JpegRewriter extends BinaryFileParser {
         boolean canThrow = false;
         try {
             JpegConstants.SOI.writeTo(os);
-    
-            for (int i = 0; i < segments.size(); i++) {
-                final JFIFPiece piece = segments.get(i);
+
+            for (JFIFPiece piece : segments) {
                 piece.write(os);
             }
             canThrow = true;

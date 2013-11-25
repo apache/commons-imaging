@@ -563,8 +563,8 @@ public class PngWriter {
 
         if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
             final List<?> outputTexts = (List<?>) params.get(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
-            for (int i = 0; i < outputTexts.size(); i++) {
-                final PngText text = (PngText) outputTexts.get(i);
+            for (Object outputText : outputTexts) {
+                final PngText text = (PngText) outputText;
                 if (text instanceof PngText.Text) {
                     writeChunktEXt(os, (PngText.Text) text);
                 } else if (text instanceof PngText.Ztxt) {

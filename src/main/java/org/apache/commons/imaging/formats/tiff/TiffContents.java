@@ -38,14 +38,11 @@ public class TiffContents {
 
         result.add(header);
 
-        for (int i = 0; i < directories.size(); i++) {
-            final TiffDirectory directory = directories.get(i);
-
+        for (TiffDirectory directory : directories) {
             result.add(directory);
 
             final List<TiffField> fields = directory.entries;
-            for (int j = 0; j < fields.size(); j++) {
-                final TiffField field = fields.get(j);
+            for (TiffField field : fields) {
                 final TiffElement oversizeValue = field.getOversizeValueElement();
                 if (null != oversizeValue) {
                     result.add(oversizeValue);
@@ -64,9 +61,7 @@ public class TiffContents {
     }
 
     public TiffField findField(final TagInfo tag) throws ImageReadException {
-        for (int i = 0; i < directories.size(); i++) {
-            final TiffDirectory directory = directories.get(i);
-
+        for (TiffDirectory directory : directories) {
             final TiffField field = directory.findField(tag);
             if (null != field) {
                 return field;
@@ -82,9 +77,7 @@ public class TiffContents {
         Collections.sort(elements, TiffElement.COMPARATOR);
 
         long lastEnd = 0;
-        for (int i = 0; i < elements.size(); i++) {
-            final TiffElement element = elements.get(i);
-
+        for (TiffElement element : elements) {
             if (element.offset > lastEnd) {
                 Debug.debug("\t" + "gap: " + (element.offset - lastEnd));
             }

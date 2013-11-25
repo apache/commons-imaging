@@ -108,11 +108,9 @@ public class IptcParser extends BinaryFileParser {
             IOException {
         final List<IptcRecord> records = new ArrayList<IptcRecord>();
 
-        final List<IptcBlock> allBlocks = parseAllBlocks(bytes, verbose, strict);
+        final List<IptcBlock> blocks = parseAllBlocks(bytes, verbose, strict);
 
-        for (int i = 0; i < allBlocks.size(); i++) {
-            final IptcBlock block = allBlocks.get(i);
-
+        for (IptcBlock block : blocks) {
             // Ignore everything but IPTC data.
             if (!block.isIPTCBlock()) {
                 continue;
@@ -121,7 +119,7 @@ public class IptcParser extends BinaryFileParser {
             records.addAll(parseIPTCBlock(block.blockData, verbose));
         }
 
-        return new PhotoshopApp13Data(records, allBlocks);
+        return new PhotoshopApp13Data(records, blocks);
     }
 
     protected List<IptcRecord> parseIPTCBlock(final byte bytes[], final boolean verbose)
@@ -376,9 +374,7 @@ public class IptcParser extends BinaryFileParser {
         JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
 
         final List<IptcBlock> blocks = data.getRawBlocks();
-        for (int i = 0; i < blocks.size(); i++) {
-            final IptcBlock block = blocks.get(i);
-
+        for (IptcBlock block : blocks) {
             bos.write4Bytes(JpegConstants.CONST_8BIM);
 
             if (block.blockType < 0 || block.blockType > 0xffff) {
@@ -443,13 +439,11 @@ public class IptcParser extends BinaryFileParser {
             // TODO: make sure order right
     
             // write the list.
-            for (int i = 0; i < elements.size(); i++) {
-                final IptcRecord element = elements.get(i);
-    
+            for (IptcRecord element : elements) {
                 if (element.iptcType == IptcTypes.RECORD_VERSION) {
                     continue; // ignore
                 }
-    
+
                 bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
                 bos.write(IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER);
                 if (element.iptcType.getType() < 0
@@ -458,13 +452,13 @@ public class IptcParser extends BinaryFileParser {
                             + element.iptcType.getType());
                 }
                 bos.write(element.iptcType.getType());
-    
+
                 final byte recordData[] = element.value.getBytes("ISO-8859-1");
                 if (!new String(recordData, "ISO-8859-1").equals(element.value)) {
                     throw new ImageWriteException(
                             "Invalid record value, not ISO-8859-1");
                 }
-    
+
                 bos.write2Bytes(recordData.length);
                 bos.write(recordData);
             }
