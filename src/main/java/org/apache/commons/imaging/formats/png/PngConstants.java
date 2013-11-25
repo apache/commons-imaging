@@ -23,65 +23,65 @@ public final class PngConstants {
 
     public static final int COMPRESSION_DEFLATE_INFLATE = 0;
 
-    public final static BinaryConstant IHDR_CHUNK_TYPE = new BinaryConstant(
+    public static final BinaryConstant IHDR_CHUNK_TYPE = new BinaryConstant(
             new byte[] { 73, 72, 68, 82 });
-    public final static BinaryConstant PLTE_CHUNK_TYPE = new BinaryConstant(
+    public static final BinaryConstant PLTE_CHUNK_TYPE = new BinaryConstant(
             new byte[] { 80, 76, 84, 69 });
-    public final static BinaryConstant TRNS_CHUNK_TYPE = new BinaryConstant(
+    public static final BinaryConstant TRNS_CHUNK_TYPE = new BinaryConstant(
             new byte[] { 't', 'R', 'N', 'S'});
-    public final static BinaryConstant IEND_CHUNK_TYPE = new BinaryConstant(
+    public static final BinaryConstant IEND_CHUNK_TYPE = new BinaryConstant(
             new byte[] { 73, 69, 78, 68 });
-    public final static BinaryConstant IDAT_CHUNK_TYPE = new BinaryConstant(
+    public static final BinaryConstant IDAT_CHUNK_TYPE = new BinaryConstant(
             new byte[] { 73, 68, 65, 84 });
-    public final static BinaryConstant iTXt_CHUNK_TYPE = new BinaryConstant(
+    public static final BinaryConstant iTXt_CHUNK_TYPE = new BinaryConstant(
             new byte[] { //
             105, //
                     84, //
                     88, //
                     116, //
             });
-    public final static BinaryConstant tEXt_CHUNK_TYPE = new BinaryConstant(
+    public static final BinaryConstant tEXt_CHUNK_TYPE = new BinaryConstant(
             new byte[] { //
             0x74, //
                     0x45, //
                     0x58, //
                     0x74, //
             });
-    public final static BinaryConstant zTXt_CHUNK_TYPE = new BinaryConstant(
+    public static final BinaryConstant zTXt_CHUNK_TYPE = new BinaryConstant(
             new byte[] { //
             0x7A, //
                     0x54, //
                     0x58, //
                     0x74, //
             });
-    public final static BinaryConstant IPHYS_CHUNK_TYPE = new BinaryConstant(
+    public static final BinaryConstant IPHYS_CHUNK_TYPE = new BinaryConstant(
             new byte[] { 'p', 'H', 'Y', 's' });
 
-    public final static int IEND = BinaryFunctions.charsToQuad('I', 'E',
+    public static final int IEND = BinaryFunctions.charsToQuad('I', 'E',
             'N', 'D');
-    public final static int IHDR = BinaryFunctions.charsToQuad('I', 'H',
+    public static final int IHDR = BinaryFunctions.charsToQuad('I', 'H',
             'D', 'R');
-    public final static int iCCP = BinaryFunctions.charsToQuad('i', 'C',
+    public static final int iCCP = BinaryFunctions.charsToQuad('i', 'C',
             'C', 'P');
-    public final static int tEXt = BinaryFunctions.charsToQuad('t', 'E',
+    public static final int tEXt = BinaryFunctions.charsToQuad('t', 'E',
             'X', 't');
-    public final static int zTXt = BinaryFunctions.charsToQuad('z', 'T',
+    public static final int zTXt = BinaryFunctions.charsToQuad('z', 'T',
             'X', 't');
-    public final static int pHYs = BinaryFunctions.charsToQuad('p', 'H',
+    public static final int pHYs = BinaryFunctions.charsToQuad('p', 'H',
             'Y', 's');
-    public final static int PLTE = BinaryFunctions.charsToQuad('P', 'L',
+    public static final int PLTE = BinaryFunctions.charsToQuad('P', 'L',
             'T', 'E');
-    public final static int IDAT = BinaryFunctions.charsToQuad('I', 'D',
+    public static final int IDAT = BinaryFunctions.charsToQuad('I', 'D',
             'A', 'T');
-    public final static int tRNS = BinaryFunctions.charsToQuad('t', 'R',
+    public static final int tRNS = BinaryFunctions.charsToQuad('t', 'R',
             'N', 'S');
-    public final static int gAMA = BinaryFunctions.charsToQuad('g', 'A',
+    public static final int gAMA = BinaryFunctions.charsToQuad('g', 'A',
             'M', 'A');
-    public final static int sRGB = BinaryFunctions.charsToQuad('s', 'R',
+    public static final int sRGB = BinaryFunctions.charsToQuad('s', 'R',
             'G', 'B');
 
     // XMP chunk type.
-    public final static int iTXt = BinaryFunctions.charsToQuad('i', 'T',
+    public static final int iTXt = BinaryFunctions.charsToQuad('i', 'T',
             'X', 't');
 
     public static final BinaryConstant PNG_Signature = new BinaryConstant(

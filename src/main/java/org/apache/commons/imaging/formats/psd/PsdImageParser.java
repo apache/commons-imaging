@@ -58,9 +58,9 @@ public class PsdImageParser extends ImageParser {
     private static final int PSD_SECTION_IMAGE_DATA = 4;
     private static final int PSD_HEADER_LENGTH = 26;
     private static final int COLOR_MODE_INDEXED = 2;
-    public final static int IMAGE_RESOURCE_ID_ICC_PROFILE = 0x040F;
-    public final static int IMAGE_RESOURCE_ID_XMP = 0x0424;
-    public final static String BLOCK_NAME_XMP = "XMP";
+    public static final int IMAGE_RESOURCE_ID_ICC_PROFILE = 0x040F;
+    public static final int IMAGE_RESOURCE_ID_XMP = 0x0424;
+    public static final String BLOCK_NAME_XMP = "XMP";
 
     public PsdImageParser() {
         super.setByteOrder(ByteOrder.MOTOROLA);
