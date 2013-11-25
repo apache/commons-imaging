@@ -377,8 +377,6 @@ public final class Debug {
             return getDebug(message, (ICC_Profile) value);
         } else if (value instanceof Map) {
             return getDebug(message, (Map<?,?>) value);
-        } else if (value instanceof Map) {
-            return getDebug(message, (Map<?,?>) value); //
         // else if (value instanceof Object) // getDebug(message, (Object)
         // value);
         } else if (value instanceof String) {
