@@ -566,8 +566,8 @@ public class ExifRewriter extends BinaryFileParser {
     public static class ExifOverflowException extends ImageWriteException {
         private static final long serialVersionUID = 1401484357224931218L;
 
-        public ExifOverflowException(final String s) {
-            super(s);
+        public ExifOverflowException(final String message) {
+            super(message);
         }
     }
 

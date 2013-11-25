@@ -339,12 +339,11 @@ public class JpegRewriter extends BinaryFileParser {
     // os.write(piece.segmentData);
     // }
 
-    public static class JpegSegmentOverflowException extends
-            ImageWriteException {
+    public static class JpegSegmentOverflowException extends ImageWriteException {
         private static final long serialVersionUID = -1062145751550646846L;
 
-        public JpegSegmentOverflowException(final String s) {
-            super(s);
+        public JpegSegmentOverflowException(final String message) {
+            super(message);
         }
     }
 

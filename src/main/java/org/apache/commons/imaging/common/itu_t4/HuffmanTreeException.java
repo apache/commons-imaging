@@ -23,7 +23,7 @@ class HuffmanTreeException extends Exception {
         super(message);
     }
 
-    public HuffmanTreeException(final String message, final Throwable throwable) {
-        super(message, throwable);
+    public HuffmanTreeException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 }

@@ -22,13 +22,13 @@ package org.apache.commons.imaging;
  * condition that renders image data unwritable.
  */
 public class ImageWriteException extends ImagingException {
-    static final long serialVersionUID = -1L;
+    private static final long serialVersionUID = -1L;
 
-    public ImageWriteException(final String s) {
-        super(s);
+    public ImageWriteException(final String message) {
+        super(message);
     }
 
-    public ImageWriteException(final String s, final Exception e) {
-        super(s, e);
+    public ImageWriteException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 }
