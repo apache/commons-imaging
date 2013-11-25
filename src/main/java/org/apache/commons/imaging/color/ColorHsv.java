@@ -17,7 +17,9 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorHsv {
-    public final double H, S, V;
+    public final double H;
+    public final double S;
+    public final double V;
 
     public ColorHsv(final double h, final double s, final double v) {
         H = h;
