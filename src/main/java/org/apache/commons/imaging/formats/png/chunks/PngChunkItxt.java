@@ -61,16 +61,8 @@ public class PngChunkItxt extends PngTextChunk {
         final boolean compressed = compressionFlag == 1;
 
         final int compressionMethod = bytes[index++];
-        if (compressed) {
-            if (compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE) {
-                throw new ImageReadException(
-                        "PNG iTXt chunk has unexpected compression method: "
-                                + compressionMethod);
-            } else if (compressionMethod != 0) {
-                throw new ImageReadException(
-                        "PNG iTXt chunk has unexpected compression method: "
-                                + compressionMethod);
-            }
+        if (compressed && compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE) {
+            throw new ImageReadException("PNG iTXt chunk has unexpected compression method: " + compressionMethod);
         }
 
         terminator = findNull(bytes, index);
