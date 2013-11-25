@@ -63,14 +63,14 @@ public class PngWriter {
      5. Time information: tIME (see 11.3.6: Time stamp information).
     */
     
-    private final void writeInt(final OutputStream os, final int value) throws IOException {
+    private void writeInt(final OutputStream os, final int value) throws IOException {
         os.write(0xff & (value >> 24));
         os.write(0xff & (value >> 16));
         os.write(0xff & (value >> 8));
         os.write(0xff & (value >> 0));
     }
 
-    private final void writeChunk(final OutputStream os, final byte chunkType[],
+    private void writeChunk(final OutputStream os, final byte chunkType[],
             final byte data[]) throws IOException {
         final int dataLength = data == null ? 0 : data.length;
         writeInt(os, dataLength);

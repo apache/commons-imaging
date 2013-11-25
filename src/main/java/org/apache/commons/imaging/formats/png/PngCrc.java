@@ -49,7 +49,7 @@ public class PngCrc {
      * of the final running CRC (see the crc() routine below)).
      */
 
-    private final long update_crc(final long crc, final byte buf[]) {
+    private long update_crc(final long crc, final byte buf[]) {
         long c = crc;
         int n;
 
