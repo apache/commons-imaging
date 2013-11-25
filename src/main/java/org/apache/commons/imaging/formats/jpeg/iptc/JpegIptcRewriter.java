@@ -235,8 +235,7 @@ public class JpegIptcRewriter extends JpegRewriter {
             final JFIFPieceSegment newSegment = new JFIFPieceSegment(
                     JpegConstants.JPEG_APP13_Marker, segmentBytes);
 
-            newPieces = insertAfterLastAppSegments(newPieces,
-                    Arrays.asList(new JFIFPieceSegment[] { newSegment, }));
+            newPieces = insertAfterLastAppSegments(newPieces, Arrays.asList(newSegment));
         }
 
         writeSegments(os, newPieces);
