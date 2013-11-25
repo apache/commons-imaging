@@ -78,9 +78,7 @@ public class TiffDirectory extends TiffElement {
         long entryOffset = offset + TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH;
 
         final StringBuilder result = new StringBuilder();
-        for (int i = 0; i < entries.size(); i++) {
-            final TiffField entry = entries.get(i);
-
+        for (TiffField entry : entries) {
             result.append(String.format("\t[%d]: %s (%d, 0x%x), %s, %d: %s%n",
                     entryOffset, entry.getTagInfo().name,
                     entry.getTag(), entry.getTag(),
@@ -171,8 +169,7 @@ public class TiffDirectory extends TiffElement {
             return null;
         }
 
-        for (int i = 0; i < entries.size(); i++) {
-            final TiffField field = entries.get(i);
+        for (TiffField field : entries) {
             if (field.getTag() == tag.tag) {
                 return field;
             }

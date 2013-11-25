@@ -300,10 +300,10 @@ public class PngImageParser extends ImageParser {
 
         final ImageMetadata result = new ImageMetadata();
 
-        for (int i = 0; i < chunks.size(); i++) {
-            final PngTextChunk chunk = (PngTextChunk) chunks.get(i);
+        for (PngChunk chunk : chunks) {
+            final PngTextChunk textChunk = (PngTextChunk) chunk;
 
-            result.add(chunk.getKeyword(), chunk.getText());
+            result.add(textChunk.getKeyword(), textChunk.getText());
         }
 
         return result;
@@ -401,11 +401,10 @@ public class PngImageParser extends ImageParser {
         throw new ImageReadException("PNG: unknown color type: " + colorType);
     }
 
-    private List<PngChunk> filterChunks(final List<PngChunk> v, final int type) {
+    private List<PngChunk> filterChunks(final List<PngChunk> chunks, final int type) {
         final List<PngChunk> result = new ArrayList<PngChunk>();
 
-        for (int i = 0; i < v.size(); i++) {
-            final PngChunk chunk = v.get(i);
+        for (PngChunk chunk : chunks) {
             if (chunk.chunkType == type) {
                 result.add(chunk);
             }
@@ -539,18 +538,18 @@ public class PngImageParser extends ImageParser {
         final List<String> comments = new ArrayList<String>();
         final List<PngText> textChunks = new ArrayList<PngText>();
 
-        for (int i = 0; i < tEXts.size(); i++) {
-            final PngChunkText pngChunktEXt = (PngChunkText) tEXts.get(i);
+        for (PngChunk tEXt : tEXts) {
+            final PngChunkText pngChunktEXt = (PngChunkText) tEXt;
             comments.add(pngChunktEXt.keyword + ": " + pngChunktEXt.text);
             textChunks.add(pngChunktEXt.getContents());
         }
-        for (int i = 0; i < zTXts.size(); i++) {
-            final PngChunkZtxt pngChunkzTXt = (PngChunkZtxt) zTXts.get(i);
+        for (PngChunk zTXt : zTXts) {
+            final PngChunkZtxt pngChunkzTXt = (PngChunkZtxt) zTXt;
             comments.add(pngChunkzTXt.keyword + ": " + pngChunkzTXt.text);
             textChunks.add(pngChunkzTXt.getContents());
         }
-        for (int i = 0; i < iTXts.size(); i++) {
-            final PngChunkItxt pngChunkiTXt = (PngChunkItxt) iTXts.get(i);
+        for (PngChunk iTXt : iTXts) {
+            final PngChunkItxt pngChunkiTXt = (PngChunkItxt) iTXt;
             comments.add(pngChunkiTXt.keyword + ": " + pngChunkiTXt.text);
             textChunks.add(pngChunkiTXt.getContents());
         }
@@ -685,8 +684,8 @@ public class PngImageParser extends ImageParser {
         }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (int i = 0; i < IDATs.size(); i++) {
-            final PngChunkIdat pngChunkIDAT = (PngChunkIdat) IDATs.get(i);
+        for (PngChunk IDAT : IDATs) {
+            final PngChunkIdat pngChunkIDAT = (PngChunkIdat) IDAT;
             final byte bytes[] = pngChunkIDAT.getBytes();
             // System.out.println(i + ": bytes: " + bytes.length);
             baos.write(bytes);
@@ -894,12 +893,12 @@ public class PngImageParser extends ImageParser {
         }
 
         final List<PngChunkItxt> xmpChunks = new ArrayList<PngChunkItxt>();
-        for (int i = 0; i < chunks.size(); i++) {
-            final PngChunkItxt chunk = (PngChunkItxt) chunks.get(i);
-            if (!chunk.getKeyword().equals(PngConstants.XMP_KEYWORD)) {
+        for (PngChunk chunk : chunks) {
+            final PngChunkItxt itxtChunk = (PngChunkItxt) chunk;
+            if (!itxtChunk.getKeyword().equals(PngConstants.XMP_KEYWORD)) {
                 continue;
             }
-            xmpChunks.add(chunk);
+            xmpChunks.add(itxtChunk);
         }
 
         if (xmpChunks.isEmpty()) {
