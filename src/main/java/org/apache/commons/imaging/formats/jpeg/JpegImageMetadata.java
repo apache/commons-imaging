@@ -39,7 +39,7 @@ import org.apache.commons.imaging.util.Debug;
 public class JpegImageMetadata implements IImageMetadata {
     private final JpegPhotoshopMetadata photoshop;
     private final TiffImageMetadata exif;
-    private static final String newline = System.getProperty("line.separator");
+    private static final String NEWLINE = System.getProperty("line.separator");
 
     public JpegImageMetadata(final JpegPhotoshopMetadata photoshop,
             final TiffImageMetadata exif) {
@@ -218,19 +218,19 @@ public class JpegImageMetadata implements IImageMetadata {
             result.append("No Exif metadata.");
         } else {
             result.append("Exif metadata:");
-            result.append(newline);
+            result.append(NEWLINE);
             result.append(exif.toString("\t"));
         }
 
         // if (null != exif && null != photoshop)
-        result.append(newline);
+        result.append(NEWLINE);
 
         result.append(prefix);
         if (null == photoshop) {
             result.append("No Photoshop (IPTC) metadata.");
         } else {
             result.append("Photoshop (IPTC) metadata:");
-            result.append(newline);
+            result.append(NEWLINE);
             result.append(photoshop.toString("\t"));
         }
 

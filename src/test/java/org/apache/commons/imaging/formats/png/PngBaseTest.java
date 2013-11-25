@@ -35,14 +35,14 @@ public abstract class PngBaseTest extends ImagingTest {
         return format == ImageFormats.PNG;
     }
 
-    private static final ImageFilter imageFilter = new ImageFilter() {
+    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
         public boolean accept(final File file) throws IOException, ImageReadException {
             return isPng(file);
         }
     };
 
     protected List<File> getPngImages() throws IOException, ImageReadException {
-        return getTestImages(imageFilter);
+        return getTestImages(IMAGE_FILTER);
     }
 
 }

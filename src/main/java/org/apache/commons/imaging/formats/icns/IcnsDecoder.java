@@ -25,12 +25,12 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.icns.IcnsImageParser.IcnsElement;
 
 public final class IcnsDecoder {
-    private static final int[] palette_4bpp = { 0xffffffff, 0xfffcf305,
+    private static final int[] PALETTE_4BPP = { 0xffffffff, 0xfffcf305,
             0xffff6402, 0xffdd0806, 0xfff20884, 0xff4600a5, 0xff0000d4,
             0xff02abea, 0xff1fb714, 0xff006411, 0xff562c05, 0xff90713a,
             0xffc0c0c0, 0xff808080, 0xff404040, 0xff000000 };
 
-    private static final int[] palette_8bpp = { 0xFFFFFFFF, 0xFFFFFFCC,
+    private static final int[] PALETTE_8BPP = { 0xFFFFFFFF, 0xFFFFFFCC,
             0xFFFFFF99, 0xFFFFFF66, 0xFFFFFF33, 0xFFFFFF00, 0xFFFFCCFF,
             0xFFFFCCCC, 0xFFFFCC99, 0xFFFFCC66, 0xFFFFCC33, 0xFFFFCC00,
             0xFFFF99FF, 0xFFFF99CC, 0xFFFF9999, 0xFFFF9966, 0xFFFF9933,
@@ -123,7 +123,7 @@ public final class IcnsDecoder {
                     index = 0xf & imageData[i++];
                 }
                 visited = !visited;
-                image.setRGB(x, y, palette_4bpp[index]);
+                image.setRGB(x, y, PALETTE_4BPP[index]);
             }
         }
     }
@@ -133,7 +133,7 @@ public final class IcnsDecoder {
         for (int y = 0; y < imageType.getHeight(); y++) {
             for (int x = 0; x < imageType.getWidth(); x++) {
                 final int index = 0xff & imageData[y * imageType.getWidth() + x];
-                image.setRGB(x, y, palette_8bpp[index]);
+                image.setRGB(x, y, PALETTE_8BPP[index]);
             }
         }
     }

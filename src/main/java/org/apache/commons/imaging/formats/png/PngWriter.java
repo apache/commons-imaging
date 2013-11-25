@@ -496,7 +496,7 @@ public class PngWriter {
         }
 
         {
-            PngConstants.PNG_Signature.writeTo(os);
+            PngConstants.PNG_SIGNATURE.writeTo(os);
         }
         {
             // IHDR must be first

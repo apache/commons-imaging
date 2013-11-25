@@ -27,7 +27,7 @@ import org.apache.commons.imaging.common.BinaryFileParser;
  * http://www.aiim.org/documents/standards/PDF-Ref/References/Adobe/5116.DCT_Filter.pdf
  */
 public class App14Segment extends AppnSegment {
-    private static final byte[] adobePrefix;
+    private static final byte[] ADOBE_PREFIX;
     public static final int ADOBE_COLOR_TRANSFORM_UNKNOWN = 0;
     public static final int ADOBE_COLOR_TRANSFORM_YCbCr = 1;
     public static final int ADOBE_COLOR_TRANSFORM_YCCK = 2;
@@ -38,7 +38,7 @@ public class App14Segment extends AppnSegment {
             adobe = "Adobe".getBytes("US-ASCII");
         } catch (final UnsupportedEncodingException cannotHappen) { // NOPMD - can't happen
         }
-        adobePrefix = adobe;
+        ADOBE_PREFIX = adobe;
     }
 
     public App14Segment(final int marker, final byte segmentData[])
@@ -53,7 +53,7 @@ public class App14Segment extends AppnSegment {
     }
 
     public boolean isAdobeJpegSegment() {
-        return BinaryFileParser.startsWith(getSegmentData(), adobePrefix);
+        return BinaryFileParser.startsWith(getSegmentData(), ADOBE_PREFIX);
     }
 
     public int getAdobeColorTransform() {

@@ -34,7 +34,7 @@ public class TiffOutputField implements TiffConstants {
     private byte bytes[];
     private final TiffOutputItem.Value separateValueItem;
     private int sortHint = -1;
-    private static final String newline = System.getProperty("line.separator");
+    private static final String NEWLINE = System.getProperty("line.separator");
 
     public TiffOutputField(final TagInfo tagInfo, final FieldType tagtype, final int count,
             final byte bytes[]) {
@@ -137,16 +137,16 @@ public class TiffOutputField implements TiffConstants {
 
         result.append(prefix);
         result.append(tagInfo);
-        result.append(newline);
+        result.append(NEWLINE);
 
         result.append(prefix);
         result.append("count: ");
         result.append(count);
-        result.append(newline);
+        result.append(NEWLINE);
 
         result.append(prefix);
         result.append(fieldType);
-        result.append(newline);
+        result.append(NEWLINE);
 
         return result.toString();
     }

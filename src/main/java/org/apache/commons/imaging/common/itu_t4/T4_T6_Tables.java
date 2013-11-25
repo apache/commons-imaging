@@ -19,7 +19,7 @@ package org.apache.commons.imaging.common.itu_t4;
 import org.apache.commons.imaging.common.BitArrayOutputStream;
 
 class T4_T6_Tables {
-    public static final Entry[] whiteTerminatingCodes = {
+    public static final Entry[] WHITE_TERMINATING_CODES = {
             new Entry("00110101", Integer.valueOf(0)),
             new Entry("000111", Integer.valueOf(1)),
             new Entry("0111", Integer.valueOf(2)),
@@ -85,7 +85,7 @@ class T4_T6_Tables {
             new Entry("00110011", Integer.valueOf(62)),
             new Entry("00110100", Integer.valueOf(63)), };
 
-    public static final Entry[] blackTerminatingCodes = {
+    public static final Entry[] BLACK_TERMINATING_CODES = {
             new Entry("0000110111", Integer.valueOf(0)),
             new Entry("010", Integer.valueOf(1)),
             new Entry("11", Integer.valueOf(2)),
@@ -151,7 +151,7 @@ class T4_T6_Tables {
             new Entry("000001100110", Integer.valueOf(62)),
             new Entry("000001100111", Integer.valueOf(63)), };
 
-    public static final Entry[] whiteMakeUpCodes = {
+    public static final Entry[] WHITE_MAKE_UP_CODES = {
             new Entry("11011", Integer.valueOf(64)),
             new Entry("10010", Integer.valueOf(128)),
             new Entry("010111", Integer.valueOf(192)),
@@ -180,7 +180,7 @@ class T4_T6_Tables {
             new Entry("011000", Integer.valueOf(1664)),
             new Entry("010011011", Integer.valueOf(1728)), };
 
-    public static final Entry[] blackMakeUpCodes = {
+    public static final Entry[] BLACK_MAKE_UP_CODES = {
             new Entry("0000001111", Integer.valueOf(64)),
             new Entry("000011001000", Integer.valueOf(128)),
             new Entry("000011001001", Integer.valueOf(192)),
@@ -209,7 +209,7 @@ class T4_T6_Tables {
             new Entry("0000001100100", Integer.valueOf(1664)),
             new Entry("0000001100101", Integer.valueOf(1728)), };
 
-    public static final Entry[] additionalMakeUpCodes = {
+    public static final Entry[] ADDITIONAL_MAKE_UP_CODES = {
             new Entry("00000001000", Integer.valueOf(1792)),
             new Entry("00000001100", Integer.valueOf(1856)),
             new Entry("00000001101", Integer.valueOf(1920)),

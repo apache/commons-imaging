@@ -217,7 +217,7 @@ public class PngImageParser extends ImageParser {
 
     public void readSignature(final InputStream is) throws ImageReadException,
             IOException {
-        readAndVerifyBytes(is, PngConstants.PNG_Signature,
+        readAndVerifyBytes(is, PngConstants.PNG_SIGNATURE,
                 "Not a Valid PNG Segment: Incorrect Signature");
 
     }

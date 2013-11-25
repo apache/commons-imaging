@@ -34,7 +34,7 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class IcoRoundtripTest extends IcoBaseTest {
     // 16x16 test image
-    private static final int[][] image = {
+    private static final int[][] IMAGE = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0},
@@ -86,21 +86,21 @@ public class IcoRoundtripTest extends IcoBaseTest {
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x += 8) {
-                    bos.write(((0x1 & image[y][x]) << 7)
-                            | ((0x1 & image[y][x + 1]) << 6)
-                            | ((0x1 & image[y][x + 2]) << 5)
-                            | ((0x1 & image[y][x + 3]) << 4)
-                            | ((0x1 & image[y][x + 4]) << 3)
-                            | ((0x1 & image[y][x + 5]) << 2)
-                            | ((0x1 & image[y][x + 6]) << 1)
-                            | ((0x1 & image[y][x + 7]) << 0));
+                    bos.write(((0x1 & IMAGE[y][x]) << 7)
+                            | ((0x1 & IMAGE[y][x + 1]) << 6)
+                            | ((0x1 & IMAGE[y][x + 2]) << 5)
+                            | ((0x1 & IMAGE[y][x + 3]) << 4)
+                            | ((0x1 & IMAGE[y][x + 4]) << 3)
+                            | ((0x1 & IMAGE[y][x + 5]) << 2)
+                            | ((0x1 & IMAGE[y][x + 6]) << 1)
+                            | ((0x1 & IMAGE[y][x + 7]) << 0));
                 }
                 // Pad to multiple of 32 bytes
                 bos.write(0);
                 bos.write(0);
             }
             // Mask
-            for (int y = image.length - 1; y >= 0; y--) {
+            for (int y = IMAGE.length - 1; y >= 0; y--) {
                 bos.write(0);
                 bos.write(0);
                 // Pad to 4 bytes:
@@ -129,12 +129,12 @@ public class IcoRoundtripTest extends IcoBaseTest {
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x += 2) {
-                    bos.write(((0xf & image[y][x]) << 4)
-                            | (0xf & image[y][x + 1]));
+                    bos.write(((0xf & IMAGE[y][x]) << 4)
+                            | (0xf & IMAGE[y][x + 1]));
                 }
             }
             // Mask
-            for (int y = image.length - 1; y >= 0; y--) {
+            for (int y = IMAGE.length - 1; y >= 0; y--) {
                 bos.write(0);
                 bos.write(0);
                 // Pad to 4 bytes:
@@ -163,11 +163,11 @@ public class IcoRoundtripTest extends IcoBaseTest {
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x++) {
-                    bos.write(image[y][x]);
+                    bos.write(IMAGE[y][x]);
                 }
             }
             // Mask
-            for (int y = image.length - 1; y >= 0; y--) {
+            for (int y = IMAGE.length - 1; y >= 0; y--) {
                 bos.write(0);
                 bos.write(0);
                 // Pad to 4 bytes:
@@ -192,7 +192,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x++) {
-                    if (image[y][x] == 1) {
+                    if (IMAGE[y][x] == 1) {
                         bos.write2Bytes((0x1f & (foreground >> 3))
                                 | ((0x1f & (foreground >> 11)) << 5)
                                 | ((0x1f & (foreground >> 19)) << 10));
@@ -204,7 +204,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 }
             }
             // Mask
-            for (int y = image.length - 1; y >= 0; y--) {
+            for (int y = IMAGE.length - 1; y >= 0; y--) {
                 bos.write(0);
                 bos.write(0);
                 // Pad to 4 bytes:
@@ -229,7 +229,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x++) {
-                    if (image[y][x] == 1) {
+                    if (IMAGE[y][x] == 1) {
                         bos.write3Bytes(0xffffff & foreground);
                     } else {
                         bos.write3Bytes(0xffffff & background);
@@ -237,7 +237,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 }
             }
             // Mask
-            for (int y = image.length - 1; y >= 0; y--) {
+            for (int y = IMAGE.length - 1; y >= 0; y--) {
                 bos.write(0);
                 bos.write(0);
                 // Pad to 4 bytes:
@@ -268,7 +268,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
             // Image
             for (int y = 15; y >= 0; y--) {
                 for (int x = 0; x < 16; x++) {
-                    if (image[y][x] == 1) {
+                    if (IMAGE[y][x] == 1) {
                         bos.write4Bytes(foreground);
                     } else {
                         bos.write4Bytes(background);
@@ -277,7 +277,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
             }
             // Mask
             if (writeMask) {
-                for (int y = image.length - 1; y >= 0; y--) {
+                for (int y = IMAGE.length - 1; y >= 0; y--) {
                     bos.write(0);
                     bos.write(0);
                     // Pad to 4 bytes:
@@ -530,20 +530,20 @@ public class IcoRoundtripTest extends IcoBaseTest {
         final BufferedImage dstImage = Imaging.getBufferedImage(tempFile);
 
         assertNotNull(dstImage);
-        assertTrue(dstImage.getWidth() == image[0].length);
-        assertTrue(dstImage.getHeight() == image.length);
+        assertTrue(dstImage.getWidth() == IMAGE[0].length);
+        assertTrue(dstImage.getHeight() == IMAGE.length);
 
         verify(dstImage, foreground, background);
     }
 
     private void verify(final BufferedImage data, final int foreground, final int background) {
         assertNotNull(data);
-        assertTrue(data.getHeight() == image.length);
+        assertTrue(data.getHeight() == IMAGE.length);
 
         for (int y = 0; y < data.getHeight(); y++) {
-            assertTrue(data.getWidth() == image[y].length);
+            assertTrue(data.getWidth() == IMAGE[y].length);
             for (int x = 0; x < data.getWidth(); x++) {
-                final int imageARGB = (image[y][x] == 1) ? foreground : background;
+                final int imageARGB = (IMAGE[y][x] == 1) ? foreground : background;
                 final int dataARGB = data.getRGB(x, y);
 
                 if (imageARGB != dataARGB) {

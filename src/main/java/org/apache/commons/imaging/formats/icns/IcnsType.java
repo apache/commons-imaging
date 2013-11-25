@@ -76,7 +76,7 @@ public final class IcnsType {
     public static final IcnsType ICNS_512x512_32BIT_ARGB_IMAGE = new IcnsType(
             "ic09", 512, 512, 32, false);
 
-    private static final IcnsType[] allImageTypes = {
+    private static final IcnsType[] ALL_IMAGE_TYPES = {
             ICNS_16x12_1BIT_IMAGE_AND_MASK, ICNS_16x12_4BIT_IMAGE,
             ICNS_16x12_8BIT_IMAGE, ICNS_16x16_1BIT_IMAGE_AND_MASK,
             ICNS_16x16_4BIT_IMAGE, ICNS_16x16_8BIT_IMAGE,
@@ -87,7 +87,7 @@ public final class IcnsType {
             ICNS_48x48_32BIT_IMAGE, ICNS_128x128_32BIT_IMAGE,
             ICNS_256x256_32BIT_ARGB_IMAGE, ICNS_512x512_32BIT_ARGB_IMAGE };
 
-    private static final IcnsType[] allMaskTypes = {
+    private static final IcnsType[] ALL_MASK_TYPES = {
             ICNS_16x12_1BIT_IMAGE_AND_MASK, ICNS_16x16_1BIT_IMAGE_AND_MASK,
             ICNS_16x16_8BIT_MASK, ICNS_32x32_1BIT_IMAGE_AND_MASK,
             ICNS_32x32_8BIT_MASK, ICNS_48x48_1BIT_IMAGE_AND_MASK,
@@ -130,12 +130,12 @@ public final class IcnsType {
     }
 
     public static IcnsType findAnyType(final int type) {
-        for (final IcnsType allImageType : allImageTypes) {
+        for (final IcnsType allImageType : ALL_IMAGE_TYPES) {
             if (allImageType.getType() == type) {
                 return allImageType;
             }
         }
-        for (final IcnsType allMaskType : allMaskTypes) {
+        for (final IcnsType allMaskType : ALL_MASK_TYPES) {
             if (allMaskType.getType() == type) {
                 return allMaskType;
             }
@@ -144,7 +144,7 @@ public final class IcnsType {
     }
 
     public static IcnsType findImageType(final int type) {
-        for (final IcnsType allImageType : allImageTypes) {
+        for (final IcnsType allImageType : ALL_IMAGE_TYPES) {
             if (allImageType.getType() == type) {
                 return allImageType;
             }
@@ -153,7 +153,7 @@ public final class IcnsType {
     }
 
     public static IcnsType find8BPPMaskType(final IcnsType imageType) {
-        for (final IcnsType allMaskType : allMaskTypes) {
+        for (final IcnsType allMaskType : ALL_MASK_TYPES) {
             if (allMaskType.getBitsPerPixel() == 8
                     && allMaskType.getWidth() == imageType.getWidth()
                     && allMaskType.getHeight() == imageType.getHeight()) {
@@ -164,7 +164,7 @@ public final class IcnsType {
     }
 
     public static IcnsType find1BPPMaskType(final IcnsType imageType) {
-        for (final IcnsType allMaskType : allMaskTypes) {
+        for (final IcnsType allMaskType : ALL_MASK_TYPES) {
             if (allMaskType.getBitsPerPixel() == 1
                     && allMaskType.getWidth() == imageType.getWidth()
                     && allMaskType.getHeight() == imageType.getHeight()) {

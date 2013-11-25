@@ -32,8 +32,8 @@ import org.apache.commons.imaging.ImageWriteException;
  * Factory for creating palettes.
  */
 public class PaletteFactory {
-    private static final boolean debug = false;
-    public static final int components = 3; // in bits
+    private static final boolean DEBUG = false;
+    public static final int COMPONENTS = 3; // in bits
     
     /**
      * Builds an exact complete opaque palette containing all the colors in {@code src},
@@ -66,7 +66,7 @@ public class PaletteFactory {
             count += Integer.bitCount(eight);
         }
 
-        if (debug) {
+        if (DEBUG) {
             System.out.println("Used colors: " + count);
         }
 
@@ -95,7 +95,7 @@ public class PaletteFactory {
         int result = 0;
         final int precision_mask = (1 << precision) - 1;
 
-        for (int i = 0; i < components; i++) {
+        for (int i = 0; i < COMPONENTS; i++) {
             int sample = argb & 0xff;
             argb >>= 8;
 
@@ -127,7 +127,7 @@ public class PaletteFactory {
 
     private DivisionCandidate finishDivision(final ColorSpaceSubset subset,
             final int component, final int precision, final int sum, final int slice) {
-        if (debug) {
+        if (DEBUG) {
             subset.dump("trying (" + component + "): ");
         }
 
@@ -155,7 +155,7 @@ public class PaletteFactory {
         slice_maxs[component] = slice;
         slice_mins[component] = slice + 1;
 
-        if (debug) {
+        if (DEBUG) {
             System.out.println("total: " + total);
             System.out.println("first total: " + sum);
             System.out.println("second total: " + (total - sum));
@@ -176,7 +176,7 @@ public class PaletteFactory {
 
     private List<DivisionCandidate> divideSubset2(final int table[],
             final ColorSpaceSubset subset, final int component, final int precision) {
-        if (debug) {
+        if (DEBUG) {
             subset.dump("trying (" + component + "): ");
         }
 
@@ -299,7 +299,7 @@ public class PaletteFactory {
             if (max_subset == null) {
                 return v;
             }
-            if (debug) {
+            if (DEBUG) {
                 System.out.println("\t" + "area: " + max_area);
             }
 
@@ -331,7 +331,7 @@ public class PaletteFactory {
     public Palette makeQuantizedRgbPalette(final BufferedImage src, final int max) {
         final int precision = 6; // in bits
 
-        final int table_scale = precision * components;
+        final int table_scale = precision * COMPONENTS;
         final int table_size = 1 << table_scale;
         final int table[] = new int[table_size];
 
@@ -342,7 +342,7 @@ public class PaletteFactory {
         final ColorSpaceSubset all = new ColorSpaceSubset(width * height, precision);
         subsets.add(all);
 
-        if (debug) {
+        if (DEBUG) {
             final int pre_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
             System.out.println("pre total: " + pre_total);
         }
@@ -358,7 +358,7 @@ public class PaletteFactory {
             }
         }
 
-        if (debug) {
+        if (DEBUG) {
             final int all_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
             System.out.println("all total: " + all_total);
             System.out.println("width * height: " + (width * height));
@@ -366,7 +366,7 @@ public class PaletteFactory {
 
         subsets = divide(subsets, max, table, precision);
 
-        if (debug) {
+        if (DEBUG) {
             System.out.println("subsets: " + subsets.size());
             System.out.println("width*height: " + width * height);
         }
@@ -376,7 +376,7 @@ public class PaletteFactory {
 
             subset.setAverageRGB(table);
 
-            if (debug) {
+            if (DEBUG) {
                 subset.dump(i + ": ");
             }
         }

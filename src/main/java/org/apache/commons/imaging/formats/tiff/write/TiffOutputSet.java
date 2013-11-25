@@ -30,7 +30,7 @@ import org.apache.commons.imaging.util.Debug;
 public final class TiffOutputSet implements TiffConstants {
     public final ByteOrder byteOrder;
     private final List<TiffOutputDirectory> directories = new ArrayList<TiffOutputDirectory>();
-    private static final String newline = System.getProperty("line.separator");
+    private static final String NEWLINE = System.getProperty("line.separator");
 
     public TiffOutputSet() {
         this(TiffConstants.DEFAULT_TIFF_BYTE_ORDER);
@@ -263,12 +263,12 @@ public final class TiffOutputSet implements TiffConstants {
 
         result.append(prefix);
         result.append("TiffOutputSet {");
-        result.append(newline);
+        result.append(NEWLINE);
 
         result.append(prefix);
         result.append("byteOrder: ");
         result.append(byteOrder);
-        result.append(newline);
+        result.append(NEWLINE);
 
         for (int i = 0; i < directories.size(); i++) {
             final TiffOutputDirectory directory = directories.get(i);
@@ -280,13 +280,13 @@ public final class TiffOutputSet implements TiffConstants {
                 final TiffOutputField field = fields.get(j);
                 result.append(prefix);
                 result.append("\t\tfield " + i + ": " + field.tagInfo);
-                result.append(newline);
+                result.append(NEWLINE);
             }
         }
         result.append(prefix);
 
         result.append('}');
-        result.append(newline);
+        result.append(NEWLINE);
 
         return result.toString();
     }

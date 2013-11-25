@@ -18,9 +18,9 @@ package org.apache.commons.imaging.color;
 
 
 public final class ColorConversions {
-    private static final double ref_X = 95.047;  // Observer= 2°, Illuminant= D65
-    private static final double ref_Y = 100.000;
-    private static final double ref_Z = 108.883;
+    private static final double REF_X = 95.047;  // Observer= 2°, Illuminant= D65
+    private static final double REF_Y = 100.000;
+    private static final double REF_Z = 108.883;
     
     private ColorConversions() {
     }
@@ -32,10 +32,10 @@ public final class ColorConversions {
     public static ColorCieLab convertXYZtoCIELab(final double X, final double Y,
             final double Z) {
 
-        double var_X = X / ref_X; // ref_X = 95.047 Observer= 2°, Illuminant=
+        double var_X = X / REF_X; // REF_X = 95.047 Observer= 2°, Illuminant=
                                   // D65
-        double var_Y = Y / ref_Y; // ref_Y = 100.000
-        double var_Z = Z / ref_Z; // ref_Z = 108.883
+        double var_Y = Y / REF_Y; // REF_Y = 100.000
+        double var_Z = Z / REF_Z; // REF_Z = 108.883
 
         if (var_X > 0.008856) {
             var_X = Math.pow(var_X, (1 / 3.0));
@@ -84,10 +84,10 @@ public final class ColorConversions {
             var_Z = (var_Z - 16 / 116.0) / 7.787;
         }
 
-        final double X = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant=
+        final double X = REF_X * var_X; // REF_X = 95.047 Observer= 2°, Illuminant=
                                   // D65
-        final double Y = ref_Y * var_Y; // ref_Y = 100.000
-        final double Z = ref_Z * var_Z; // ref_Z = 108.883
+        final double Y = REF_Y * var_Y; // REF_Y = 100.000
+        final double Z = REF_Z * var_Z; // REF_Z = 108.883
 
         return new ColorXyz(X, Y, Z);
     }
@@ -574,21 +574,21 @@ public final class ColorConversions {
                 var_Z = (var_Z - 16 / 116.0) / 7.787;
             }
 
-            // double ref_X = 95.047;
-            // double ref_Y = 100.000;
-            // double ref_Z = 108.883;
+            // double REF_X = 95.047;
+            // double REF_Y = 100.000;
+            // double REF_Z = 108.883;
 
-            X = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant= D65
-            Y = ref_Y * var_Y; // ref_Y = 100.000
-            Z = ref_Z * var_Z; // ref_Z = 108.883
+            X = REF_X * var_X; // REF_X = 95.047 Observer= 2°, Illuminant= D65
+            Y = REF_Y * var_Y; // REF_Y = 100.000
+            Z = REF_Z * var_Z; // REF_Z = 108.883
 
         }
 
         double R, G, B;
         {
-            final double var_X = X / 100; // X = From 0 to ref_X
-            final double var_Y = Y / 100; // Y = From 0 to ref_Y
-            final double var_Z = Z / 100; // Z = From 0 to ref_Y
+            final double var_X = X / 100; // X = From 0 to REF_X
+            final double var_Y = Y / 100; // Y = From 0 to REF_Y
+            final double var_Z = Z / 100; // Z = From 0 to REF_Y
 
             double var_R = var_X * 3.2406 + var_Y * -1.5372 + var_Z * -0.4986;
             double var_G = var_X * -0.9689 + var_Y * 1.8758 + var_Z * 0.0415;
@@ -711,8 +711,8 @@ public final class ColorConversions {
 
         // Debug.debug("var_Y", var_Y);
 
-        final double ref_U = (4 * ref_X) / (ref_X + (15 * ref_Y) + (3 * ref_Z));
-        final double ref_V = (9 * ref_Y) / (ref_X + (15 * ref_Y) + (3 * ref_Z));
+        final double ref_U = (4 * REF_X) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
+        final double ref_V = (9 * REF_Y) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
 
         // Debug.debug("ref_U", ref_U);
         // Debug.debug("ref_V", ref_V);
@@ -738,8 +738,8 @@ public final class ColorConversions {
             var_Y = (var_Y - 16 / 116) / 7.787;
         }
 
-        final double ref_U = (4 * ref_X) / (ref_X + (15 * ref_Y) + (3 * ref_Z));
-        final double ref_V = (9 * ref_Y) / (ref_X + (15 * ref_Y) + (3 * ref_Z));
+        final double ref_U = (4 * REF_X) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
+        final double ref_V = (9 * REF_Y) / (REF_X + (15 * REF_Y) + (3 * REF_Z));
         final double var_U = u / (13 * L) + ref_U;
         final double var_V = v / (13 * L) + ref_V;
 

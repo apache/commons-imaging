@@ -35,14 +35,14 @@ public abstract class TiffBaseTest extends ImagingTest {
         return format == ImageFormats.TIFF;
     }
 
-    private static final ImageFilter imageFilter = new ImageFilter() {
+    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
         public boolean accept(final File file) throws IOException, ImageReadException {
             return isTiff(file);
         }
     };
 
     protected List<File> getTiffImages() throws IOException, ImageReadException {
-        return getTestImages(imageFilter);
+        return getTestImages(IMAGE_FILTER);
     }
 
 }

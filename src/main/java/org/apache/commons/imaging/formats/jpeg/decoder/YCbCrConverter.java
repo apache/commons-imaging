@@ -16,10 +16,10 @@
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
 public final class YCbCrConverter {
-    private static final int[] reds = new int[256 * 256];
-    private static final int[] blues = new int[256 * 256];
-    private static final int[] greens1 = new int[256 * 256];
-    private static final int[] greens2 = new int[256 * 512];
+    private static final int[] REDS = new int[256 * 256];
+    private static final int[] BLUES = new int[256 * 256];
+    private static final int[] GREENS1 = new int[256 * 256];
+    private static final int[] GREENS2 = new int[256 * 512];
 
     static {
         /*
@@ -37,7 +37,7 @@ public final class YCbCrConverter {
                 if (r > 255) {
                     r = 255;
                 }
-                reds[(Cr << 8) | Y] = r << 16;
+                REDS[(Cr << 8) | Y] = r << 16;
             }
         }
         for (int Y = 0; Y < 256; Y++) {
@@ -49,7 +49,7 @@ public final class YCbCrConverter {
                 if (b > 255) {
                     b = 255;
                 }
-                blues[(Cb << 8) | Y] = b;
+                BLUES[(Cb << 8) | Y] = b;
             }
         }
         // green is the hardest
@@ -83,7 +83,7 @@ public final class YCbCrConverter {
             for (int Cr = 0; Cr < 256; Cr++) {
                 final int value = fastRound(0.34414f * (Cb - 128) + 0.71414f
                         * (Cr - 128));
-                greens1[(Cb << 8) | Cr] = value + 135;
+                GREENS1[(Cb << 8) | Cr] = value + 135;
             }
         }
         for (int Y = 0; Y < 256; Y++) {
@@ -94,7 +94,7 @@ public final class YCbCrConverter {
                 } else if (green > 255) {
                     green = 255;
                 }
-                greens2[(value << 8) | Y] = green << 8;
+                GREENS2[(value << 8) | Y] = green << 8;
             }
         }
     }
@@ -108,10 +108,10 @@ public final class YCbCrConverter {
     }
 
     public static int convertYCbCrToRGB(final int Y, final int Cb, final int Cr) {
-        final int r = reds[(Cr << 8) | Y];
-        final int g1 = greens1[(Cb << 8) | Cr];
-        final int g = greens2[(g1 << 8) | Y];
-        final int b = blues[(Cb << 8) | Y];
+        final int r = REDS[(Cr << 8) | Y];
+        final int g1 = GREENS1[(Cb << 8) | Cr];
+        final int g = GREENS2[(g1 << 8) | Y];
+        final int b = BLUES[(Cb << 8) | Y];
         return r | g | b;
     }
 }

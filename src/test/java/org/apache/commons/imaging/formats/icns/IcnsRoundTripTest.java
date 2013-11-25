@@ -31,7 +31,7 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class IcnsRoundTripTest extends IcnsBaseTest {
     // 16x16 test image
-    private static final int[][] image = {
+    private static final int[][] IMAGE = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0},
@@ -75,7 +75,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.write4Bytes(4 + 4 + 16 * 16);
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     bos.write(0xff);
                 } else {
                     bos.write(0x00);
@@ -100,7 +100,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         // 8 BPP image
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     bos.write(0xff);
                 } else {
                     bos.write(43);
@@ -112,7 +112,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.write4Bytes(4 + 4 + 16 * 16);
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     bos.write(0xff);
                 } else {
                     bos.write(0x00);
@@ -138,7 +138,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         // 8 BPP image
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     bos.write(0xff);
                 } else {
                     bos.write(43);
@@ -150,7 +150,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.write4Bytes(4 + 4 + 16 * 16);
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     bos.write(0xff);
                 } else {
                     bos.write(0x00);
@@ -165,7 +165,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0) {
+                    if (IMAGE[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
                     }
                 }
@@ -196,7 +196,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         // 8 BPP image
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     bos.write(0xff);
                 } else {
                     bos.write(43);
@@ -211,7 +211,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0) {
+                    if (IMAGE[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
                     }
                 }
@@ -228,7 +228,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.write4Bytes(4 + 4 + 16 * 16);
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     bos.write(0xff);
                 } else {
                     bos.write(0x00);
@@ -253,7 +253,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         // 8 BPP image
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     bos.write(0xff);
                 } else {
                     bos.write(43);
@@ -280,7 +280,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 // argb, a ignored
                 bos.write(0);
                 final int pixel;
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     pixel = foreground;
                 } else {
                     pixel = background;
@@ -297,7 +297,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0) {
+                    if (IMAGE[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
                     }
                 }
@@ -309,7 +309,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0) {
+                    if (IMAGE[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
                     }
                 }
@@ -336,7 +336,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 // argb, a ignored
                 bos.write(0);
                 final int pixel;
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     pixel = foreground;
                 } else {
                     pixel = background;
@@ -353,7 +353,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             for (int x = 0; x < 16; x += 8) {
                 int eightBits = 0;
                 for (int pos = 0; pos < 8; pos++) {
-                    if (image[y][x + pos] != 0) {
+                    if (IMAGE[y][x + pos] != 0) {
                         eightBits |= (1 << (7 - pos));
                     }
                 }
@@ -388,7 +388,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 // argb, a ignored
                 bos.write(0);
                 final int pixel;
-                if (image[y][x] != 0) {
+                if (IMAGE[y][x] != 0) {
                     pixel = foreground;
                 } else {
                     pixel = background;
@@ -412,20 +412,20 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         final BufferedImage dstImage = Imaging.getBufferedImage(exportFile);
 
         assertNotNull(dstImage);
-        assertTrue(dstImage.getWidth() == image[0].length);
-        assertTrue(dstImage.getHeight() == image.length);
+        assertTrue(dstImage.getWidth() == IMAGE[0].length);
+        assertTrue(dstImage.getHeight() == IMAGE.length);
 
         verify(dstImage, foreground, background);
     }
 
     private void verify(final BufferedImage data, final int foreground, final int background) {
         assertNotNull(data);
-        assertTrue(data.getHeight() == image.length);
+        assertTrue(data.getHeight() == IMAGE.length);
 
         for (int y = 0; y < data.getHeight(); y++) {
-            assertTrue(data.getWidth() == image[y].length);
+            assertTrue(data.getWidth() == IMAGE[y].length);
             for (int x = 0; x < data.getWidth(); x++) {
-                final int imageARGB = (image[y][x] == 1) ? foreground : background;
+                final int imageARGB = (IMAGE[y][x] == 1) ? foreground : background;
                 final int dataARGB = data.getRGB(x, y);
 
                 if (imageARGB != dataARGB) {

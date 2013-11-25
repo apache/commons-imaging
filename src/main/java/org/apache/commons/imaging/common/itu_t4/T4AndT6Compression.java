@@ -37,19 +37,19 @@ public final class T4AndT6Compression {
 
     static {
         try {
-            for (final Entry entry : T4_T6_Tables.whiteTerminatingCodes) {
+            for (final Entry entry : T4_T6_Tables.WHITE_TERMINATING_CODES) {
                 whiteRunLengths.insert(entry.bitString, entry.value);
             }
-            for (final Entry entry : T4_T6_Tables.whiteMakeUpCodes) {
+            for (final Entry entry : T4_T6_Tables.WHITE_MAKE_UP_CODES) {
                 whiteRunLengths.insert(entry.bitString, entry.value);
             }
-            for (final Entry entry : T4_T6_Tables.blackTerminatingCodes) {
+            for (final Entry entry : T4_T6_Tables.BLACK_TERMINATING_CODES) {
                 blackRunLengths.insert(entry.bitString, entry.value);
             }
-            for (final Entry entry : T4_T6_Tables.blackMakeUpCodes) {
+            for (final Entry entry : T4_T6_Tables.BLACK_MAKE_UP_CODES) {
                 blackRunLengths.insert(entry.bitString, entry.value);
             }
-            for (final Entry entry : T4_T6_Tables.additionalMakeUpCodes) {
+            for (final Entry entry : T4_T6_Tables.ADDITIONAL_MAKE_UP_CODES) {
                 whiteRunLengths.insert(entry.bitString, entry.value);
                 blackRunLengths.insert(entry.bitString, entry.value);
             }
@@ -731,15 +731,15 @@ public final class T4AndT6Compression {
         final T4_T6_Tables.Entry[] makeUpCodes;
         final T4_T6_Tables.Entry[] terminatingCodes;
         if (color == WHITE) {
-            makeUpCodes = T4_T6_Tables.whiteMakeUpCodes;
-            terminatingCodes = T4_T6_Tables.whiteTerminatingCodes;
+            makeUpCodes = T4_T6_Tables.WHITE_MAKE_UP_CODES;
+            terminatingCodes = T4_T6_Tables.WHITE_TERMINATING_CODES;
         } else {
-            makeUpCodes = T4_T6_Tables.blackMakeUpCodes;
-            terminatingCodes = T4_T6_Tables.blackTerminatingCodes;
+            makeUpCodes = T4_T6_Tables.BLACK_MAKE_UP_CODES;
+            terminatingCodes = T4_T6_Tables.BLACK_TERMINATING_CODES;
         }
         while (runLength >= 1792) {
             final T4_T6_Tables.Entry entry = lowerBound(
-                    T4_T6_Tables.additionalMakeUpCodes, runLength);
+                    T4_T6_Tables.ADDITIONAL_MAKE_UP_CODES, runLength);
             entry.writeBits(bitStream);
             runLength -= entry.value;
         }

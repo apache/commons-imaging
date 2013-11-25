@@ -84,7 +84,7 @@ public final class PngConstants {
     public static final int iTXt = BinaryFunctions.charsToQuad('i', 'T',
             'X', 't');
 
-    public static final BinaryConstant PNG_Signature = new BinaryConstant(
+    public static final BinaryConstant PNG_SIGNATURE = new BinaryConstant(
             new byte[] { (byte) 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, });
 
     public static final String PARAM_KEY_PNG_BIT_DEPTH = "PNG_BIT_DEPTH";

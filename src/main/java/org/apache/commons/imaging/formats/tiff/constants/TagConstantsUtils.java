@@ -23,7 +23,7 @@ import org.apache.commons.imaging.common.BinaryConstant;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
 public final class TagConstantsUtils implements TiffDirectoryConstants {
-    private static final TiffDirectoryType[] tiffDirectoryTypes = TiffDirectoryType
+    private static final TiffDirectoryType[] TIFF_DIRECTORY_TYPES = TiffDirectoryType
             .values();
 
     public static List<TagInfo> mergeTagLists(final List<?>... tagLists) {
@@ -35,8 +35,8 @@ public final class TagConstantsUtils implements TiffDirectoryConstants {
         final ArrayList<TagInfo> result = new ArrayList<TagInfo>(count);
 
         for (final List<?> tagList : tagLists) {
-            for (int j = 0; j < tagList.size(); j++) {
-                result.add((TagInfo)tagList.get(j));
+            for (Object tag : tagList) {
+                result.add((TagInfo) tag);
             }
         }
 
@@ -45,7 +45,7 @@ public final class TagConstantsUtils implements TiffDirectoryConstants {
 
     public static TiffDirectoryType getExifDirectoryType(final int type) {
 
-        for (final TiffDirectoryType tiffDirectoryType : tiffDirectoryTypes) {
+        for (final TiffDirectoryType tiffDirectoryType : TIFF_DIRECTORY_TYPES) {
             if (tiffDirectoryType.directoryType == type) {
                 return tiffDirectoryType;
             }

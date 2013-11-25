@@ -57,7 +57,7 @@ public final class Dct {
      * transforms per second per core :-)
      */
 
-    private static final float[] dctScalingFactors = {
+    private static final float[] DCT_SCALING_FACTORS = {
             (float) (0.5 / Math.sqrt(2.0)),
             (float) (0.25 / Math.cos(Math.PI / 16.0)),
             (float) (0.25 / Math.cos(2.0 * Math.PI / 16.0)),
@@ -67,7 +67,7 @@ public final class Dct {
             (float) (0.25 / Math.cos(6.0 * Math.PI / 16.0)),
             (float) (0.25 / Math.cos(7.0 * Math.PI / 16.0)), };
 
-    private static final float[] idctScalingFactors = {
+    private static final float[] IDCT_SCALING_FACTORS = {
             (float) (2.0 * 4.0 / Math.sqrt(2.0) * 0.0625),
             (float) (4.0 * Math.cos(Math.PI / 16.0) * 0.125),
             (float) (4.0 * Math.cos(2.0 * Math.PI / 16.0) * 0.125),
@@ -96,21 +96,21 @@ public final class Dct {
     
     public static void scaleQuantizationVector(final float[] vector) {
         for (int x = 0; x < 8; x++) {
-            vector[x] *= dctScalingFactors[x];
+            vector[x] *= DCT_SCALING_FACTORS[x];
         }
     }
 
     public static void scaleDequantizationVector(final float[] vector) {
         for (int x = 0; x < 8; x++) {
-            vector[x] *= idctScalingFactors[x];
+            vector[x] *= IDCT_SCALING_FACTORS[x];
         }
     }
 
     public static void scaleQuantizationMatrix(final float[] matrix) {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                matrix[8 * y + x] *= dctScalingFactors[y]
-                        * dctScalingFactors[x];
+                matrix[8 * y + x] *= DCT_SCALING_FACTORS[y]
+                        * DCT_SCALING_FACTORS[x];
             }
         }
     }
@@ -118,8 +118,8 @@ public final class Dct {
     public static void scaleDequantizationMatrix(final float[] matrix) {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                matrix[8 * y + x] *= idctScalingFactors[y]
-                        * idctScalingFactors[x];
+                matrix[8 * y + x] *= IDCT_SCALING_FACTORS[y]
+                        * IDCT_SCALING_FACTORS[x];
             }
         }
     }

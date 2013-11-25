@@ -57,7 +57,7 @@ public class XpmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".xpm";
     private static final String ACCEPTED_EXTENSIONS[] = { ".xpm", };
     private static Map<String, Integer> colorNames = null;
-    private static final char writePalette[] = { ' ', '.', 'X', 'o', 'O', '+',
+    private static final char WRITE_PALETTE[] = { ' ', '.', 'X', 'o', 'O', '+',
         '@', '#', '$', '%', '&', '*', '=', '-', ';', ':', '>', ',', '<',
         '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'q', 'w', 'e',
         'r', 't', 'y', 'u', 'i', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j',
@@ -633,13 +633,13 @@ public class XpmImageParser extends ImageParser {
         final StringBuilder stringBuilder = new StringBuilder();
         int highestPower = 1;
         for (int i = 1; i < charsPerPixel; i++) {
-            highestPower *= writePalette.length;
+            highestPower *= WRITE_PALETTE.length;
         }
         for (int i = 0; i < charsPerPixel; i++) {
             final int multiple = index / highestPower;
             index -= (multiple * highestPower);
-            highestPower /= writePalette.length;
-            stringBuilder.append(writePalette[multiple]);
+            highestPower /= WRITE_PALETTE.length;
+            stringBuilder.append(WRITE_PALETTE[multiple]);
         }
         return stringBuilder.toString();
     }
@@ -676,13 +676,13 @@ public class XpmImageParser extends ImageParser {
             hasTransparency = true;
         }
         SimplePalette palette = null;
-        int maxColors = writePalette.length;
+        int maxColors = WRITE_PALETTE.length;
         int charsPerPixel = 1;
         while (palette == null) {
             palette = paletteFactory.makeExactRgbPaletteSimple(src,
                     hasTransparency ? maxColors - 1 : maxColors);
             if (palette == null) {
-                maxColors *= writePalette.length;
+                maxColors *= WRITE_PALETTE.length;
                 charsPerPixel++;
             }
         }
