@@ -264,13 +264,11 @@ public class PnmImageParser extends ImageParser {
         final int ColorType = info.getColorType();
         final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
 
-        final ImageInfo result = new ImageInfo(FormatDetails, BitsPerPixel, Comments,
+        return new ImageInfo(FormatDetails, BitsPerPixel, Comments,
                 Format, FormatName, info.height, MimeType, NumberOfImages,
                 PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
                 PhysicalWidthInch, info.width, isProgressive, isTransparent,
                 usesPalette, ColorType, compressionAlgorithm);
-
-        return result;
     }
 
     @Override

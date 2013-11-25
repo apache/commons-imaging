@@ -27,21 +27,17 @@ public class TransparencyFilterIndexedColor extends TransparencyFilter {
     }
 
     @Override
-    public int filter(final int rgb, final int index) throws ImageReadException,
-            IOException {
+    public int filter(final int rgb, final int index) throws ImageReadException, IOException {
         if (index >= bytes.length) {
             return rgb;
         }
 
         if ((index < 0) || (index > bytes.length)) {
             throw new ImageReadException(
-                    "TransparencyFilterIndexedColor index: " + index
-                            + ", bytes.length: " + bytes.length);
+                    "TransparencyFilterIndexedColor index: " + index + ", bytes.length: " + bytes.length);
         }
 
         final int alpha = bytes[index];
-        final int result = ((0xff & alpha) << 24) | (0x00ffffff & rgb);
-
-        return result;
+        return ((0xff & alpha) << 24) | (0x00ffffff & rgb);
     }
 }

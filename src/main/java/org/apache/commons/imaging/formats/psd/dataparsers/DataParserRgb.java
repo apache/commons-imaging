@@ -27,10 +27,10 @@ public class DataParserRgb extends DataParser {
         final int blue = 0xff & data[2][y][x];
         final int alpha = 0xff;
 
-        final int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
-                | ((0xff & green) << 8) | ((0xff & blue) << 0);
-
-        return rgb;
+        return ((0xff & alpha) << 24)
+             | ((0xff & red)   << 16)
+             | ((0xff & green) << 8)
+             | ((0xff & blue)  << 0);
     }
 
     @Override

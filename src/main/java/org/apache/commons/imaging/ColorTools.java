@@ -50,8 +50,7 @@ public class ColorTools {
 
         final ICC_ColorSpace cs = new ICC_ColorSpace(icc);
 
-        final BufferedImage dst = convertFromColorSpace(src, cs);
-        return dst;
+        return convertFromColorSpace(src, cs);
     }
 
     public BufferedImage relabelColorSpace(final BufferedImage bi, final ICC_Profile profile)
@@ -83,10 +82,7 @@ public class ColorTools {
         // use this when the image is mislabeled, presumably having been
         // wrongly assumed to be sRGB
 
-        final BufferedImage result = new BufferedImage(cm, bi.getRaster(), false,
-                null);
-
-        return result;
+        return new BufferedImage(cm, bi.getRaster(), false, null);
     }
 
     public ColorModel deriveColorModel(final BufferedImage bi, final ColorSpace cs)

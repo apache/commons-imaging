@@ -437,8 +437,7 @@ public abstract class Imaging implements ImagingConstants {
             return null;
         }
 
-        final ICC_Profile icc = ICC_Profile.getInstance(bytes);
-        return icc;
+        return ICC_Profile.getInstance(bytes);
     }
 
     /**
@@ -700,9 +699,7 @@ public abstract class Imaging implements ImagingConstants {
             throws ImageReadException, IOException {
         final ImageParser imageParser = getImageParser(byteSource);
 
-        final ImageInfo imageInfo = imageParser.getImageInfo(byteSource, params);
-
-        return imageInfo;
+        return imageParser.getImageInfo(byteSource, params);
     }
 
     private static ImageParser getImageParser(final ByteSource byteSource)

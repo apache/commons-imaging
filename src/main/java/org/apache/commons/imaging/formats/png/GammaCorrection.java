@@ -52,10 +52,7 @@ public class GammaCorrection {
         green = correctSample(green);
         blue = correctSample(blue);
 
-        final int rgb = alpha | ((0xff & red) << 16) | ((0xff & green) << 8)
-                | ((0xff & blue) << 0);
-
-        return rgb;
+        return alpha | ((0xff & red) << 16) | ((0xff & green) << 8) | ((0xff & blue) << 0);
     }
 
     private int correctSample(final int sample, final double src_gamma, final double dst_gamma) {

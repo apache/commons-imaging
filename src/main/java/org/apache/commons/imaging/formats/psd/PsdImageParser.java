@@ -119,10 +119,7 @@ public class PsdImageParser extends ImageParser {
         final int Depth = read2Bytes("Depth", is, "Not a Valid PSD File");
         final int Mode = read2Bytes("Mode", is, "Not a Valid PSD File");
 
-        final PsdHeaderInfo result = new PsdHeaderInfo(Version, Reserved, Channels,
-                Rows, Columns, Depth, Mode);
-
-        return result;
+        return new PsdHeaderInfo(Version, Reserved, Channels, Rows, Columns, Depth, Mode);
     }
 
     private ImageContents readImageContents(final InputStream is)
@@ -158,15 +155,13 @@ public class PsdImageParser extends ImageParser {
 
         // System.out.println("Compression: " + Compression);
 
-        final ImageContents result = new ImageContents(header, ColorModeDataLength,
+        return new ImageContents(header, ColorModeDataLength,
         // ColorModeData,
                 ImageResourcesLength,
                 // ImageResources,
                 LayerAndMaskDataLength,
                 // LayerAndMaskData,
                 Compression);
-
-        return result;
     }
 
     private List<ImageResourceBlock> readImageResourceBlocks(final byte bytes[],
@@ -554,13 +549,11 @@ public class PsdImageParser extends ImageParser {
             compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN;
         }
 
-        final ImageInfo result = new ImageInfo(FormatDetails, BitsPerPixel, Comments,
+        return new ImageInfo(FormatDetails, BitsPerPixel, Comments,
                 Format, FormatName, Height, MimeType, NumberOfImages,
                 PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
                 PhysicalWidthInch, Width, isProgressive, isTransparent,
                 usesPalette, ColorType, compressionAlgorithm);
-
-        return result;
     }
 
 //    // TODO not used
@@ -793,8 +786,7 @@ public class PsdImageParser extends ImageParser {
 
         try {
             // segment data is UTF-8 encoded xml.
-            final String xml = new String(block.data, 0, block.data.length, "utf-8");
-            return xml;
+            return new String(block.data, 0, block.data.length, "utf-8");
         } catch (final UnsupportedEncodingException e) {
             throw new ImageReadException("Invalid JPEG XMP Segment.", e);
         }

@@ -95,7 +95,8 @@ public abstract class ImageParser extends BinaryFileParser implements
      * @return A valid array of image parsers
      */
     public static ImageParser[] getAllImageParsers() {
-        final ImageParser result[] = {
+
+        return new ImageParser[]{
                 new BmpImageParser(),
                 new DcxImageParser(),
                 new GifImageParser(),
@@ -111,11 +112,9 @@ public abstract class ImageParser extends BinaryFileParser implements
                 new WbmpImageParser(),
                 new XbmImageParser(),
                 new XpmImageParser(),
-        // new JBig2ImageParser(),
-        // new TgaImageParser(),
+                // new JBig2ImageParser(),
+                // new TgaImageParser(),
         };
-
-        return result;
     }
 
     /**

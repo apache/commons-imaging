@@ -81,8 +81,8 @@ public class IccProfileInfo {
     }
 
     public boolean issRGB() {
-        final boolean result = ((DeviceManufacturer == IccConstants.IEC) && (DeviceModel == IccConstants.sRGB));
-        return result;
+        return DeviceManufacturer == IccConstants.IEC 
+                && DeviceModel == IccConstants.sRGB;
     }
 
     private void printCharQuad(final PrintWriter pw, final String msg, final int i) {

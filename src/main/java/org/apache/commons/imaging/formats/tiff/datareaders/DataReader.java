@@ -189,22 +189,16 @@ public abstract class DataReader implements TiffConstants {
 
             myLzwDecompressor.setTiffLZWMode();
 
-            final byte[] result = myLzwDecompressor.decompress(is, expected_size);
-
-            return result;
+            return myLzwDecompressor.decompress(is, expected_size);
         }
 
         case TIFF_COMPRESSION_PACKBITS: // Packbits
         {
-            final byte unpacked[] = new PackBits().decompress(compressed,
-                    expected_size);
-
-            return unpacked;
+            return new PackBits().decompress(compressed, expected_size);
         }
 
         default:
-            throw new ImageReadException(
-                    "Tiff: unknown/unsupported compression: " + compression);
+            throw new ImageReadException("Tiff: unknown/unsupported compression: " + compression);
         }
     }
 }

@@ -419,8 +419,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 
         final Collector collector = new Collector(params);
         read(byteSource, params, formatCompliance, collector);
-        final TiffContents contents = collector.getContents();
-        return contents;
+        return collector.getContents();
     }
 
     public void read(final ByteSource byteSource, final Map<String,Object> params,

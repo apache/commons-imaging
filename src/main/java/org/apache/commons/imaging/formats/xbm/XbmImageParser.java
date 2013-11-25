@@ -279,16 +279,12 @@ public class XbmImageParser extends ImageParser {
             }
         }
 
-        final int[] palette = { 0xffffff, 0x000000 };
-        final ColorModel colorModel = new IndexColorModel(1, 2, palette, 0, false,
-                -1, DataBuffer.TYPE_BYTE);
-        final DataBufferByte dataBuffer = new DataBufferByte(imageData,
-                imageData.length);
-        final WritableRaster raster = Raster.createPackedRaster(dataBuffer,
-                xbmHeader.width, xbmHeader.height, 1, null);
-        final BufferedImage image = new BufferedImage(colorModel, raster,
-                colorModel.isAlphaPremultiplied(), new Properties());
-        return image;
+        int[] palette = { 0xffffff, 0x000000 };
+        ColorModel colorModel = new IndexColorModel(1, 2, palette, 0, false, -1, DataBuffer.TYPE_BYTE);
+        DataBufferByte dataBuffer = new DataBufferByte(imageData, imageData.length);
+        WritableRaster raster = Raster.createPackedRaster(dataBuffer, xbmHeader.width, xbmHeader.height, 1, null);
+        
+        return new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), new Properties());
     }
 
     @Override

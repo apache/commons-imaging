@@ -25,10 +25,10 @@ public class DataParserGrayscale extends DataParser {
         final int sample = 0xff & data[0][y][x];
         final int alpha = 0xff;
 
-        final int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
-                | ((0xff & sample) << 8) | ((0xff & sample) << 0);
-
-        return rgb;
+        return ((0xff & alpha)   << 24)
+              | ((0xff & sample) << 16)
+              | ((0xff & sample) << 8)
+              | ((0xff & sample) << 0);
     }
 
     @Override

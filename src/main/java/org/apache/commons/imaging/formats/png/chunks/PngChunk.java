@@ -59,8 +59,7 @@ public class PngChunk extends BinaryFileParser {
     }
 
     protected ByteArrayInputStream getDataStream() {
-        final ByteArrayInputStream is = new ByteArrayInputStream(getBytes());
-        return is;
+        return new ByteArrayInputStream(getBytes());
     }
 
 }

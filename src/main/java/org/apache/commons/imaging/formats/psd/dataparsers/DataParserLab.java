@@ -22,8 +22,7 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 public class DataParserLab extends DataParser {
 
     @Override
-    protected int getRGB(final int data[][][], final int x, final int y,
-            final ImageContents imageContents) {
+    protected int getRGB(final int data[][][], final int x, final int y, final ImageContents imageContents) {
         final int cieL = 0xff & data[0][y][x];
         int cieA = 0xff & data[1][y][x];
         int cieB = 0xff & data[2][y][x];
@@ -31,9 +30,7 @@ public class DataParserLab extends DataParser {
         cieA -= 128;
         cieB -= 128;
 
-        final int rgb = ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
-
-        return rgb;
+        return ColorConversions.convertCIELabtoARGBTest(cieL, cieA, cieB);
     }
 
     @Override

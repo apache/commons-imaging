@@ -148,9 +148,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
                 sample = gammaCorrection.correctSample(sample);
             }
 
-            final int rgb = getPixelARGB(alpha, sample, sample, sample);
-            return rgb;
-
+            return getPixelARGB(alpha, sample, sample, sample);
         }
         case 6: {
             // 8,16 Each pixel is an R,G,B triple,
@@ -165,8 +163,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
                 blue = gammaCorrection.correctSample(blue);
             }
 
-            final int rgb = getPixelARGB(alpha, red, green, blue);
-            return rgb;
+            return getPixelARGB(alpha, red, green, blue);
         }
         default:
             throw new ImageReadException("PNG: unknown color type: "
@@ -227,10 +224,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
         final byte scanline[] = this.readBytes("scanline", is, length,
                 "PNG: missing image data");
 
-        final byte unfiltered[] = unfilterScanline(filterType, scanline, prev,
-                BytesPerPixel);
-
-        return unfiltered;
+        return unfilterScanline(filterType, scanline, prev, BytesPerPixel);
     }
 
 }

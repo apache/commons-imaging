@@ -303,8 +303,7 @@ public class TiffField {
             return TiffTagConstants.TIFF_TAG_UNKNOWN;
         }
 
-        final TagInfo result = getTag(directoryType, possibleMatches);
-        return result;
+        return getTag(directoryType, possibleMatches);
     }
 
     public String getValueDescription() {

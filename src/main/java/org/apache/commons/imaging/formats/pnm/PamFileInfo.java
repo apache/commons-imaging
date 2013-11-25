@@ -136,13 +136,13 @@ public class PamFileInfo extends FileInfo {
                 alpha = scaleSample(alpha, scale, maxval);
             }
 
-            final int rgb = ((0xff & alpha) << 24) | ((0xff & sample) << 16)
-                    | ((0xff & sample) << 8) | ((0xff & sample) << 0);
-
-            return rgb;
+            return ((0xff & alpha)  << 24) 
+                 | ((0xff & sample) << 16)
+                 | ((0xff & sample) << 8)
+                 | ((0xff & sample) << 0);
         }
     }
-    
+
     private class ColorTupleReader extends TupleReader {
         @Override
         public int getColorType() {
@@ -165,10 +165,10 @@ public class PamFileInfo extends FileInfo {
                 alpha = scaleSample(alpha, scale, maxval);
             }
 
-            final int rgb = ((0xff & alpha) << 24) | ((0xff & red) << 16)
-                    | ((0xff & green) << 8) | ((0xff & blue) << 0);
-
-            return rgb;
+            return ((0xff & alpha) << 24) 
+                 | ((0xff & red)   << 16)
+                 | ((0xff & green) << 8)
+                 | ((0xff & blue)  << 0);
         }
     }
 }
