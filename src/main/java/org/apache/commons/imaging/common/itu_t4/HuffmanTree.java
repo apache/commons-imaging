@@ -25,16 +25,15 @@ import org.apache.commons.imaging.common.BitInputStreamFlexible;
 /**
  * A Huffman tree implemented as 1 array for high locality of reference.
  */
-class HuffmanTree {
-    private final List<Node> nodes = new ArrayList<Node>();
+class HuffmanTree<T> {
+    private final List<Node<T>> nodes = new ArrayList<Node<T>>();
     
-    private final static class Node {
-        boolean isEmpty = true;
-        Object value = null;
+    private final static class Node<T> {
+        boolean empty = true;
+        T value;
     }
 
-    public final void insert(final String pattern, final Object value)
-            throws HuffmanTreeException {
+    public final void insert(final String pattern, final T value) throws HuffmanTreeException {
         int position = 0;
         Node node = growAndGetNode(position);
         if (node.value != null) {
@@ -55,19 +54,18 @@ class HuffmanTree {
         node.value = value;
     }
 
-    private Node growAndGetNode(final int position) {
+    private Node<T> growAndGetNode(final int position) {
         while (position >= nodes.size()) {
-            nodes.add(new Node());
+            nodes.add(new Node<T>());
         }
-        final Node node = nodes.get(position);
-        node.isEmpty = false;
+        final Node<T> node = nodes.get(position);
+        node.empty = false;
         return node;
     }
 
-    public final Object decode(final BitInputStreamFlexible bitStream)
-            throws HuffmanTreeException {
+    public final T decode(final BitInputStreamFlexible bitStream) throws HuffmanTreeException {
         int position = 0;
-        Node node = nodes.get(0);
+        Node<T> node = nodes.get(0);
         while (node.value == null) {
             int nextBit;
             try {
@@ -85,7 +83,7 @@ class HuffmanTree {
                 throw new HuffmanTreeException("Invalid bit pattern");
             }
             node = nodes.get(position);
-            if (node.isEmpty) {
+            if (node.empty) {
                 throw new HuffmanTreeException("Invalid bit pattern");
             }
         }

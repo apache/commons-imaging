@@ -28,9 +28,9 @@ import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
 public final class T4AndT6Compression {
-    private static final HuffmanTree whiteRunLengths = new HuffmanTree();
-    private static final HuffmanTree blackRunLengths = new HuffmanTree();
-    private static final HuffmanTree controlCodes = new HuffmanTree();
+    private static final HuffmanTree<Integer> WHITE_RUN_LENGTHS = new HuffmanTree<Integer>();
+    private static final HuffmanTree<Integer> BLACK_RUN_LENGTHS = new HuffmanTree<Integer>();
+    private static final HuffmanTree<Entry> CONTROL_CODES = new HuffmanTree<Entry>();
 
     public static final int WHITE = 0;
     public static final int BLACK = 1;
@@ -38,45 +38,38 @@ public final class T4AndT6Compression {
     static {
         try {
             for (final Entry entry : T4_T6_Tables.WHITE_TERMINATING_CODES) {
-                whiteRunLengths.insert(entry.bitString, entry.value);
+                WHITE_RUN_LENGTHS.insert(entry.bitString, entry.value);
             }
             for (final Entry entry : T4_T6_Tables.WHITE_MAKE_UP_CODES) {
-                whiteRunLengths.insert(entry.bitString, entry.value);
+                WHITE_RUN_LENGTHS.insert(entry.bitString, entry.value);
             }
             for (final Entry entry : T4_T6_Tables.BLACK_TERMINATING_CODES) {
-                blackRunLengths.insert(entry.bitString, entry.value);
+                BLACK_RUN_LENGTHS.insert(entry.bitString, entry.value);
             }
             for (final Entry entry : T4_T6_Tables.BLACK_MAKE_UP_CODES) {
-                blackRunLengths.insert(entry.bitString, entry.value);
+                BLACK_RUN_LENGTHS.insert(entry.bitString, entry.value);
             }
             for (final Entry entry : T4_T6_Tables.ADDITIONAL_MAKE_UP_CODES) {
-                whiteRunLengths.insert(entry.bitString, entry.value);
-                blackRunLengths.insert(entry.bitString, entry.value);
+                WHITE_RUN_LENGTHS.insert(entry.bitString, entry.value);
+                BLACK_RUN_LENGTHS.insert(entry.bitString, entry.value);
             }
-            controlCodes.insert(T4_T6_Tables.EOL.bitString, T4_T6_Tables.EOL);
-            controlCodes.insert(T4_T6_Tables.EOL13.bitString,
-                    T4_T6_Tables.EOL13);
-            controlCodes.insert(T4_T6_Tables.EOL14.bitString,
-                    T4_T6_Tables.EOL14);
-            controlCodes.insert(T4_T6_Tables.EOL15.bitString,
-                    T4_T6_Tables.EOL15);
-            controlCodes.insert(T4_T6_Tables.EOL16.bitString,
-                    T4_T6_Tables.EOL16);
-            controlCodes.insert(T4_T6_Tables.EOL17.bitString,
-                    T4_T6_Tables.EOL17);
-            controlCodes.insert(T4_T6_Tables.EOL18.bitString,
-                    T4_T6_Tables.EOL18);
-            controlCodes.insert(T4_T6_Tables.EOL19.bitString,
-                    T4_T6_Tables.EOL19);
-            controlCodes.insert(T4_T6_Tables.P.bitString, T4_T6_Tables.P);
-            controlCodes.insert(T4_T6_Tables.H.bitString, T4_T6_Tables.H);
-            controlCodes.insert(T4_T6_Tables.V0.bitString, T4_T6_Tables.V0);
-            controlCodes.insert(T4_T6_Tables.VL1.bitString, T4_T6_Tables.VL1);
-            controlCodes.insert(T4_T6_Tables.VL2.bitString, T4_T6_Tables.VL2);
-            controlCodes.insert(T4_T6_Tables.VL3.bitString, T4_T6_Tables.VL3);
-            controlCodes.insert(T4_T6_Tables.VR1.bitString, T4_T6_Tables.VR1);
-            controlCodes.insert(T4_T6_Tables.VR2.bitString, T4_T6_Tables.VR2);
-            controlCodes.insert(T4_T6_Tables.VR3.bitString, T4_T6_Tables.VR3);
+            CONTROL_CODES.insert(T4_T6_Tables.EOL.bitString, T4_T6_Tables.EOL);
+            CONTROL_CODES.insert(T4_T6_Tables.EOL13.bitString, T4_T6_Tables.EOL13);
+            CONTROL_CODES.insert(T4_T6_Tables.EOL14.bitString, T4_T6_Tables.EOL14);
+            CONTROL_CODES.insert(T4_T6_Tables.EOL15.bitString, T4_T6_Tables.EOL15);
+            CONTROL_CODES.insert(T4_T6_Tables.EOL16.bitString, T4_T6_Tables.EOL16);
+            CONTROL_CODES.insert(T4_T6_Tables.EOL17.bitString, T4_T6_Tables.EOL17);
+            CONTROL_CODES.insert(T4_T6_Tables.EOL18.bitString, T4_T6_Tables.EOL18);
+            CONTROL_CODES.insert(T4_T6_Tables.EOL19.bitString, T4_T6_Tables.EOL19);
+            CONTROL_CODES.insert(T4_T6_Tables.P.bitString, T4_T6_Tables.P);
+            CONTROL_CODES.insert(T4_T6_Tables.H.bitString, T4_T6_Tables.H);
+            CONTROL_CODES.insert(T4_T6_Tables.V0.bitString, T4_T6_Tables.V0);
+            CONTROL_CODES.insert(T4_T6_Tables.VL1.bitString, T4_T6_Tables.VL1);
+            CONTROL_CODES.insert(T4_T6_Tables.VL2.bitString, T4_T6_Tables.VL2);
+            CONTROL_CODES.insert(T4_T6_Tables.VL3.bitString, T4_T6_Tables.VL3);
+            CONTROL_CODES.insert(T4_T6_Tables.VR1.bitString, T4_T6_Tables.VR1);
+            CONTROL_CODES.insert(T4_T6_Tables.VR2.bitString, T4_T6_Tables.VR2);
+            CONTROL_CODES.insert(T4_T6_Tables.VR3.bitString, T4_T6_Tables.VR3);
         } catch (final HuffmanTreeException cannotHappen) {
             Debug.debug(cannotHappen);
         }
@@ -237,7 +230,7 @@ public final class T4AndT6Compression {
                 T4_T6_Tables.Entry entry;
                 int rowLength;
                 try {
-                    entry = (T4_T6_Tables.Entry) controlCodes.decode(inputStream);
+                    entry = CONTROL_CODES.decode(inputStream);
                     if (!isEOL(entry, hasFill)) {
                         throw new ImageReadException("Expected EOL not found");
                     }
@@ -251,15 +244,13 @@ public final class T4AndT6Compression {
                         rowLength += runLength;
                     }
                 } catch (final HuffmanTreeException huffmanException) {
-                    throw new ImageReadException("Decompression error",
-                            huffmanException);
+                    throw new ImageReadException("Decompression error", huffmanException);
                 }
     
                 if (rowLength == width) {
                     outputStream.flush();
                 } else if (rowLength > width) {
-                    throw new ImageReadException(
-                            "Unrecoverable row length error in image row " + y);
+                    throw new ImageReadException("Unrecoverable row length error in image row " + y);
                 }
             }
             final byte[] ret = outputStream.toByteArray();
@@ -409,7 +400,7 @@ public final class T4AndT6Compression {
             T4_T6_Tables.Entry entry;
             int rowLength = 0;
             try {
-                entry = (T4_T6_Tables.Entry) controlCodes.decode(inputStream);
+                entry = CONTROL_CODES.decode(inputStream);
                 if (!isEOL(entry, hasFill)) {
                     throw new ImageReadException("Expected EOL not found");
                 }
@@ -424,8 +415,7 @@ public final class T4AndT6Compression {
                             1 - referenceA0Color, b1 + 1);
                     for (int a0 = 0; a0 < width;) {
                         int a1, a2;
-                        entry = (T4_T6_Tables.Entry) controlCodes
-                                .decode(inputStream);
+                        entry = CONTROL_CODES.decode(inputStream);
                         if (entry == T4_T6_Tables.P) {
                             fillRange(outputStream, referenceLine, a0, b2,
                                     codingA0Color);
@@ -637,8 +627,7 @@ public final class T4AndT6Compression {
                         1 - referenceA0Color, b1 + 1);
                 for (int a0 = 0; a0 < width;) {
                     int a1, a2;
-                    entry = (T4_T6_Tables.Entry) controlCodes
-                            .decode(inputStream);
+                    entry = CONTROL_CODES.decode(inputStream);
                     if (entry == T4_T6_Tables.P) {
                         fillRange(outputStream, referenceLine, a0, b2,
                                 codingA0Color);
@@ -777,16 +766,15 @@ public final class T4AndT6Compression {
             Integer runLength;
             do {
                 if (color == WHITE) {
-                    runLength = (Integer) whiteRunLengths.decode(bitStream);
+                    runLength = WHITE_RUN_LENGTHS.decode(bitStream);
                 } else {
-                    runLength = (Integer) blackRunLengths.decode(bitStream);
+                    runLength = BLACK_RUN_LENGTHS.decode(bitStream);
                 }
                 totalLength += runLength;
             } while (runLength > 63);
             return totalLength;
         } catch (final HuffmanTreeException huffmanException) {
-            throw new ImageReadException("Decompression error",
-                    huffmanException);
+            throw new ImageReadException("Decompression error", huffmanException);
         }
     }
 
