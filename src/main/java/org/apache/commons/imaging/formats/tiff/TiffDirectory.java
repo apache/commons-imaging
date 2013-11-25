@@ -670,8 +670,6 @@ public class TiffDirectory extends TiffElement {
             return false;
         } else if ((stripOffsets != null) && (stripByteCounts != null)) {
             return true;
-        } else if ((stripOffsets != null) && (stripByteCounts != null)) {
-            return true;
         } else {
             throw new ImageReadException("Couldn't find image data.");
         }
