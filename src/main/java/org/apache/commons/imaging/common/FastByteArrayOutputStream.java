@@ -19,10 +19,11 @@ package org.apache.commons.imaging.common;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/** Like ByteArrayOutputStream, but has some performance benefit,
-  * because it's not thread safe.
-  */
-public class FastByteArrayOutputStream extends OutputStream {
+/**
+ * Like ByteArrayOutputStream, but has some performance benefit,
+ * because it's not thread safe.
+ */
+class FastByteArrayOutputStream extends OutputStream {
     private final byte bytes[];
     private int count = 0;
 
@@ -33,8 +34,7 @@ public class FastByteArrayOutputStream extends OutputStream {
     @Override
     public void write(final int value) throws IOException {
         if (count >= bytes.length) {
-            throw new IOException("Write exceeded expected length (" + count
-                    + ", " + bytes.length + ")");
+            throw new IOException("Write exceeded expected length (" + count + ", " + bytes.length + ")");
         }
 
         bytes[count] = (byte) value;
