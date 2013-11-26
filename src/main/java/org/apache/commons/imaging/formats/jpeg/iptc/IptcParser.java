@@ -37,7 +37,6 @@ import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
-import org.apache.commons.imaging.util.ParamMap;
 
 public class IptcParser extends BinaryFileParser {
     private static final ByteOrder APP13_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
@@ -96,10 +95,8 @@ public class IptcParser extends BinaryFileParser {
      */
     public PhotoshopApp13Data parsePhotoshopSegment(final byte bytes[], final Map<String,Object> params)
             throws ImageReadException, IOException {
-        final boolean strict = ParamMap.getParamBoolean(params,
-                ImagingConstants.PARAM_KEY_STRICT, false);
-        final boolean verbose = ParamMap.getParamBoolean(params,
-                ImagingConstants.PARAM_KEY_VERBOSE, false);
+        final boolean strict =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_STRICT));
+        final boolean verbose =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_VERBOSE));
 
         return parsePhotoshopSegment(bytes, verbose, strict);
     }

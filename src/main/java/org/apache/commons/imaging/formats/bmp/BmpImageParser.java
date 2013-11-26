@@ -52,7 +52,6 @@ import org.apache.commons.imaging.formats.bmp.writers.BmpWriterRgb;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.IoUtils;
-import org.apache.commons.imaging.util.ParamMap;
 
 public class BmpImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".bmp";
@@ -524,8 +523,7 @@ public class BmpImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
 
-        final boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
-                false);
+        final boolean verbose =  Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
@@ -590,8 +588,7 @@ public class BmpImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
 
-        final boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
-                false);
+        final boolean verbose =  Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
@@ -719,8 +716,7 @@ public class BmpImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
 
-        final boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
-                false);
+        final boolean verbose = Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);

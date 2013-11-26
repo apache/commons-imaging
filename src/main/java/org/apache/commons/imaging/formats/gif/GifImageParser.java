@@ -47,7 +47,6 @@ import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.IoUtils;
-import org.apache.commons.imaging.util.ParamMap;
 
 public class GifImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".gif";
@@ -780,8 +779,7 @@ public class GifImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = new HashMap<String,Object>(params);
 
-        final boolean verbose = ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE,
-                false);
+        final boolean verbose =  Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {

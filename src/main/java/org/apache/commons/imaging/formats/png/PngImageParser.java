@@ -61,7 +61,6 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.commons.imaging.icc.IccProfileParser;
 import org.apache.commons.imaging.util.IoUtils;
-import org.apache.commons.imaging.util.ParamMap;
 
 public class PngImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".png";
@@ -634,7 +633,6 @@ public class PngImageParser extends ImageParser {
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
-        ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE, false);
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);

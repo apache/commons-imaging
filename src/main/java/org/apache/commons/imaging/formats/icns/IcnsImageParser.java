@@ -39,7 +39,6 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
-import org.apache.commons.imaging.util.ParamMap;
 
 public class IcnsImageParser extends ImageParser {
     public static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
@@ -87,8 +86,6 @@ public class IcnsImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
 
-        ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE, false);
-
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
         }
@@ -118,8 +115,6 @@ public class IcnsImageParser extends ImageParser {
             throws ImageReadException, IOException {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
-
-        ParamMap.getParamBoolean(params, PARAM_KEY_VERBOSE, false);
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);

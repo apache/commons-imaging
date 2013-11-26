@@ -34,7 +34,6 @@ import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.ParamMap;
 
 public class PngWriter {
     private final boolean verbose;
@@ -44,8 +43,7 @@ public class PngWriter {
     }
 
     public PngWriter(final Map<String,Object> params) {
-        this.verbose = ParamMap.getParamBoolean(params, ImagingConstants.PARAM_KEY_VERBOSE,
-                false);
+        this.verbose =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_VERBOSE));
     }
 
     /*
@@ -461,10 +459,8 @@ public class PngWriter {
 
         byte colorType;
         {
-            final boolean forceIndexedColor = ParamMap.getParamBoolean(params,
-                    PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR, false);
-            final boolean forceTrueColor = ParamMap.getParamBoolean(params,
-                    PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR, false);
+            final boolean forceIndexedColor =  Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR));
+            final boolean forceTrueColor = Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR));
 
             if (forceIndexedColor && forceTrueColor) {
                 throw new ImageWriteException(
