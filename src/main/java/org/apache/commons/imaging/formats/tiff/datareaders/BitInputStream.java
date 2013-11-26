@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.common;
+package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +25,7 @@ import java.nio.ByteOrder;
  * significant bit, but incapable of reading non-aligned and
  * < 8 bit fields across byte boundaries.
  */
-public class BitInputStream extends InputStream {
+class BitInputStream extends InputStream {
     private final InputStream is;
     private final ByteOrder byteOrder;
     private int cache;

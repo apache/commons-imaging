@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BitInputStream;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
@@ -79,8 +78,7 @@ public abstract class DataReader implements TiffConstants {
      *            bitsPerSample.length
      * @throws IOException
      */
-    protected void getSamplesAsBytes(final BitInputStream bis, final int[] result)
-            throws IOException {
+    void getSamplesAsBytes(final BitInputStream bis, final int[] result) throws IOException {
         for (int i = 0; i < bitsPerSample.length; i++) {
             final int bits = bitsPerSample[i];
             int sample = bis.readBits(bits);
