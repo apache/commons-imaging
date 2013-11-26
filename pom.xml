@@ -240,7 +240,10 @@
         <version>2.11</version>
         <inherited>false</inherited>
         <configuration>
-          <configLocation>${basedir}/checkstyle.xml</configLocation>
+          <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
+          <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
+          <enableRulesSummary>false</enableRulesSummary>
+          <propertyExpansion>basedir=${basedir}</propertyExpansion>
         </configuration>
         <!-- Work around CHECKSTYLE-172 -->
         <reportSets>
