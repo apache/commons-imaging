@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,9 +29,8 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import java.nio.ByteOrder;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.IoUtils;
+import org.apache.commons.io.FileUtils;
 
 public class IcoRoundtripTest extends IcoBaseTest {
     // 16x16 test image
@@ -525,7 +525,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         // IoUtils.writeToFile(rawData, exportFile);
 
         final File tempFile = createTempFile("temp", ".ico");
-        IoUtils.writeToFile(rawData, tempFile);
+        FileUtils.writeByteArrayToFile(tempFile, rawData);
 
         final BufferedImage dstImage = Imaging.getBufferedImage(tempFile);
 

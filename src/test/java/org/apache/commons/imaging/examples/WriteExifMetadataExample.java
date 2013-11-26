@@ -34,6 +34,7 @@ import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
+import org.apache.commons.io.FileUtils;
 
 public class WriteExifMetadataExample {
     public void removeExifMetadata(final File jpegImageFile, final File dst)
@@ -193,7 +194,7 @@ public class WriteExifMetadataExample {
             if (null == outputSet) {
                 // file does not contain any exif metadata. We don't need to
                 // update the file; just copy it.
-                IoUtils.copyFileNio(jpegImageFile, dst);
+                FileUtils.copyFile(jpegImageFile, dst);
                 return;
             }
 

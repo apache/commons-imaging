@@ -34,7 +34,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.IoUtils;
+import org.apache.commons.io.FileUtils;
 
 public class ByteSourceImageTest extends ByteSourceTest {
 
@@ -49,7 +49,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
             Debug.debug("imageFile", imageFile);
             assertNotNull(imageFile);
 
-            final byte imageFileBytes[] = IoUtils.getFileBytes(imageFile);
+            final byte imageFileBytes[] = FileUtils.readFileToByteArray(imageFile);
             assertNotNull(imageFileBytes);
             assertTrue(imageFileBytes.length == imageFile.length());
 

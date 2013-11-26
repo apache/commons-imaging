@@ -29,7 +29,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.util.IoUtils;
+import org.apache.commons.io.FileUtils;
 
 public class PngWriteReadTest extends ImagingTest {
     // public PngWriteReadTest(String name)
@@ -142,7 +142,7 @@ public class PngWriteReadTest extends ImagingTest {
         // Debug.debug("bytes", bytes);
 
         final File tempFile = createTempFile("temp", ".png");
-        IoUtils.writeToFile(bytes, tempFile);
+        FileUtils.writeByteArrayToFile(tempFile, bytes);
 
         final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
 

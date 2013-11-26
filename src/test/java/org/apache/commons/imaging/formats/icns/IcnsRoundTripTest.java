@@ -21,13 +21,13 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import java.nio.ByteOrder;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.IoUtils;
+import org.apache.commons.io.FileUtils;
 
 public class IcnsRoundTripTest extends IcnsBaseTest {
     // 16x16 test image
@@ -408,7 +408,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             ImageReadException {
         final File exportFile = new File(createTempDirectory(), description + ".icns");
         exportFile.deleteOnExit();
-        IoUtils.writeToFile(rawData, exportFile);
+        FileUtils.writeByteArrayToFile(exportFile, rawData);
         final BufferedImage dstImage = Imaging.getBufferedImage(exportFile);
 
         assertNotNull(dstImage);

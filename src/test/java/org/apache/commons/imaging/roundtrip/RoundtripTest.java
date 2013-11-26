@@ -35,6 +35,7 @@ import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
+import org.apache.commons.io.FileUtils;
 
 public class RoundtripTest extends ImagingTest {
     private static final int COLOR_FULL_RGB = 0;
@@ -252,8 +253,8 @@ public class RoundtripTest extends ImagingTest {
         assertTrue(b.exists() && b.isFile());
         assertEquals(a.length(), b.length());
 
-        final byte aData[] = IoUtils.getFileBytes(a);
-        final byte bData[] = IoUtils.getFileBytes(b);
+        final byte aData[] = FileUtils.readFileToByteArray(a);
+        final byte bData[] = FileUtils.readFileToByteArray(b);
 
         for (int i = 0; i < a.length(); i++) {
             final int aByte = 0xff & aData[i];

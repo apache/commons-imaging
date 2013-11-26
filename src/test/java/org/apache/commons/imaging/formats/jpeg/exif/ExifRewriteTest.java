@@ -43,7 +43,7 @@ import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.IoUtils;
+import org.apache.commons.io.FileUtils;
 
 public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     // public ExifRewriteTest(String name)
@@ -82,7 +82,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 final byte bytes[] = baos.toByteArray();
                 final File tempFile = createTempFile("test", ".jpg");
                 Debug.debug("tempFile", tempFile);
-                IoUtils.writeToFile(bytes, tempFile);
+                FileUtils.writeByteArrayToFile(tempFile, bytes);
 
                 Debug.debug("Output Segments:");
                 new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
@@ -125,7 +125,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 final byte bytes[] = baos.toByteArray();
                 final File tempFile = createTempFile("removed", ".jpg");
                 Debug.debug("tempFile", tempFile);
-                IoUtils.writeToFile(bytes, tempFile);
+                FileUtils.writeByteArrayToFile(tempFile, bytes);
 
                 Debug.debug("Output Segments:");
                 stripped = new ByteSourceArray(bytes);
@@ -146,7 +146,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 final byte bytes[] = baos.toByteArray();
                 final File tempFile = createTempFile("inserted" + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
-                IoUtils.writeToFile(bytes, tempFile);
+                FileUtils.writeByteArrayToFile(tempFile, bytes);
 
                 Debug.debug("Output Segments:");
                 new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));
@@ -220,7 +220,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 final byte bytes[] = baos.toByteArray();
                 final File tempFile = createTempFile(name + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
-                IoUtils.writeToFile(bytes, tempFile);
+                FileUtils.writeByteArrayToFile(tempFile, bytes);
 
                 Debug.debug("Output Segments:");
                 new JpegUtils().dumpJFIF(new ByteSourceArray(bytes));

@@ -27,10 +27,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.formats.png.PngConstants;
-import org.apache.commons.imaging.formats.png.PngImageInfo;
-import org.apache.commons.imaging.formats.png.PngText;
-import org.apache.commons.imaging.util.IoUtils;
+import org.apache.commons.io.FileUtils;
 
 public class PngTextTest extends PngBaseTest {
 
@@ -69,15 +66,14 @@ public class PngTextTest extends PngBaseTest {
                 ImageFormats.PNG, writeParams);
 
         final File tempFile = createTempFile("temp", ".png");
-        IoUtils.writeToFile(bytes, tempFile);
+        FileUtils.writeByteArrayToFile(tempFile, bytes);
 
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);
         assertNotNull(imageInfo);
 
         final List<PngText> readTexts = imageInfo.getTextChunks();
         assertEquals(readTexts.size(), 3);
-        for (int i = 0; i < readTexts.size(); i++) {
-            final PngText text = readTexts.get(i);
+        for (PngText text : readTexts) {
             if (text.keyword.equals("a")) {
                 assertEquals(text.text, "b");
             } else if (text.keyword.equals("c")) {

@@ -23,10 +23,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.util.IoUtils;
+import org.apache.commons.io.IOUtils;
 
 public class ByteSourceDataTest extends ByteSourceTest {
 
@@ -94,7 +92,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
         // test cache by completely reading InputStream N times.
         for (int j = 0; j < 5; j++) {
             final InputStream is = byteSource.getInputStream();
-            final byte dst[] = IoUtils.getInputStreamBytes(is);
+            final byte dst[] = IOUtils.toByteArray(is);
 
             compareByteArrays(src, dst);
         }
@@ -114,7 +112,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
             boolean canThrow = false;
             try {
                 is = byteSource.getInputStream(start);
-                final byte dst[] = IoUtils.getInputStreamBytes(is);
+                final byte dst[] = IOUtils.toByteArray(is);
 
                 assertTrue(src.length == dst.length + start);
                 for (int i = 0; i < dst.length; i++) {
