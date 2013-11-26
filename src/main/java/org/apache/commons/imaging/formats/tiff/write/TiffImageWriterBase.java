@@ -308,8 +308,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
         int rowsPerStrip = 64000 / (width * bitsPerSample * samplesPerPixel); // TODO:
         rowsPerStrip = Math.max(1, rowsPerStrip); // must have at least one.
 
-        final byte strips[][] = getStrips(src, samplesPerPixel, bitsPerSample,
-                rowsPerStrip);
+        final byte[][] strips = getStrips(src, samplesPerPixel, bitsPerSample, rowsPerStrip);
 
         // System.out.println("width: " + width);
         // System.out.println("height: " + height);
@@ -369,13 +368,13 @@ public abstract class TiffImageWriterBase implements TiffConstants {
             }
         } else if (compression == TIFF_COMPRESSION_LZW) {
             for (int i = 0; i < strips.length; i++) {
-                final byte uncompressed[] = strips[i];
+                final byte[] uncompressed = strips[i];
 
                 final int LZW_MINIMUM_CODE_SIZE = 8;
 
                 final MyLzwCompressor compressor = new MyLzwCompressor(
                         LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true);
-                final byte compressed[] = compressor.compress(uncompressed);
+                final byte[] compressed = compressor.compress(uncompressed);
 
                 strips[i] = compressed;
             }
@@ -386,10 +385,9 @@ public abstract class TiffImageWriterBase implements TiffConstants {
                     "Invalid compression parameter (Only CCITT 1D/Group 3/Group 4, LZW, Packbits and uncompressed supported).");
         }
 
-        final TiffElement.DataElement imageData[] = new TiffElement.DataElement[strips.length];
+        final TiffElement.DataElement[] imageData = new TiffElement.DataElement[strips.length];
         for (int i = 0; i < strips.length; i++) {
-            imageData[i] = new TiffImageData.Data(0, strips[i].length,
-                    strips[i]);
+            imageData[i] = new TiffImageData.Data(0, strips[i].length, strips[i]);
         }
 
         final TiffOutputSet outputSet = new TiffOutputSet(byteOrder);
@@ -461,7 +459,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
             }
 
             if (null != xmpXml) {
-                final byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
+                final byte[] xmpXmlBytes = xmpXml.getBytes("utf-8");
                 directory.add(TiffTagConstants.TIFF_TAG_XMP, xmpXmlBytes);
             }
 
@@ -507,7 +505,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
 
         final int stripCount = (height + rowsPerStrip - 1) / rowsPerStrip;
 
-        byte result[][] = null;
+        byte[][] result;
         { // Write Strips
             result = new byte[stripCount][];
 
@@ -521,7 +519,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
                 final int bytesPerRow = (bitsInRow + 7) / 8;
                 final int bytesInStrip = rowsInStrip * bytesPerRow;
 
-                final byte uncompressed[] = new byte[bytesInStrip];
+                final byte[] uncompressed = new byte[bytesInStrip];
 
                 int counter = 0;
                 int y = i * rowsPerStrip;

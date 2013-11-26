@@ -536,7 +536,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
                     FieldType.LONG, 1, new byte[TIFF_ENTRY_MAX_VALUE_LENGTH]);
             add(jpegOffsetField);
 
-            final byte lengthValue[] = FieldType.LONG.writeData(
+            final byte[] lengthValue = FieldType.LONG.writeData(
                     jpegImageData.length,
                     outputSummary.byteOrder);
 
@@ -571,14 +571,12 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
             // --------
 
-            final TiffElement.DataElement imageData[] = tiffImageData.getImageData();
+            final TiffElement.DataElement[] imageData = tiffImageData.getImageData();
 
-            int imageDataOffsets[] = null;
-            int imageDataByteCounts[] = null;
             // TiffOutputField imageDataOffsetsField = null;
 
-            imageDataOffsets = new int[imageData.length];
-            imageDataByteCounts = new int[imageData.length];
+            int[] imageDataOffsets = new int[imageData.length];
+            int[] imageDataByteCounts = new int[imageData.length];
             for (int i = 0; i < imageData.length; i++) {
                 imageDataByteCounts[i] = imageData[i].length;
             }
@@ -594,8 +592,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
             // --------
 
-            final byte data[] = FieldType.LONG.writeData(imageDataByteCounts,
-                    outputSummary.byteOrder);
+            final byte[] data = FieldType.LONG.writeData(imageDataByteCounts, outputSummary.byteOrder);
             final TiffOutputField byteCountsField = new TiffOutputField(
                     byteCountsTag, FieldType.LONG, imageDataByteCounts.length,
                     data);
@@ -603,8 +600,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
 
             // --------
 
-            imageDataInfo = new ImageDataOffsets(imageData, imageDataOffsets,
-                    imageDataOffsetField);
+            imageDataInfo = new ImageDataOffsets(imageData, imageDataOffsets, imageDataOffsetField);
         }
 
         // --------------------------------------------------------------

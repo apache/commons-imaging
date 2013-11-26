@@ -55,8 +55,8 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class BmpImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".bmp";
-    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
-    private static final byte BMP_HEADER_SIGNATURE[] = { 0x42, 0x4d, };
+    private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
+    private static final byte[] BMP_HEADER_SIGNATURE = { 0x42, 0x4d, };
     private static final int BI_RGB = 0;
     private static final int BI_RLE4 = 2;
     private static final int BI_RLE8 = 1;
@@ -250,14 +250,13 @@ public class BmpImageParser extends ImageParser {
             }
         }
 
-        final BmpHeaderInfo result = new BmpHeaderInfo(identifier1, identifier2,
+        return new BmpHeaderInfo(identifier1, identifier2,
                 fileSize, reserved, bitmapDataOffset, bitmapHeaderSize, width,
                 height, planes, bitsPerPixel, compression, bitmapDataSize,
                 hResolution, vResolution, colorsUsed, colorsImportant, redMask,
                 greenMask, blueMask, alphaMask, colorSpaceType, colorSpace,
                 gammaRed, gammaGreen, gammaBlue, intent, profileData,
                 profileSize, reservedV5);
-        return result;
     }
 
     private byte[] getRLEBytes(final InputStream is, final int RLESamplesPerByte)
@@ -307,7 +306,7 @@ public class BmpImageParser extends ImageParser {
                     // RLESamplesPerByte);
                     // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                     // );
-                    final byte bytes[] = this.readBytes("bytes", is, size,
+                    final byte[] bytes = this.readBytes("bytes", is, size,
                             "RLE: Absolute Mode");
                     baos.write(bytes);
                 }
@@ -402,7 +401,7 @@ public class BmpImageParser extends ImageParser {
                     + bhi.compression);
         }
 
-        byte colorTable[] = null;
+        byte[] colorTable = null;
         if (paletteLength > 0) {
             colorTable = this.readBytes("ColorTable", is, paletteLength,
                     "Not a Valid BMP File");
@@ -462,7 +461,7 @@ public class BmpImageParser extends ImageParser {
             debugNumber("imageDataSize", imageDataSize, 4);
         }
 
-        byte imageData[];
+        byte[] imageData;
         if (rle) {
             imageData = getRLEBytes(is, rleSamplesPerByte);
         } else {
@@ -544,12 +543,12 @@ public class BmpImageParser extends ImageParser {
 
     }
 
-    public byte[] embedICCProfile(final byte image[], final byte profile[]) {
+    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 
@@ -615,7 +614,7 @@ public class BmpImageParser extends ImageParser {
         }
 
         final BmpHeaderInfo bhi = ic.bhi;
-        final byte colorTable[] = ic.colorTable;
+        final byte[] colorTable = ic.colorTable;
 
         if (bhi == null) {
             throw new ImageReadException("BMP: couldn't read header");
@@ -789,7 +788,7 @@ public class BmpImageParser extends ImageParser {
             writer = new BmpWriterPalette(palette);
         }
 
-        final byte imagedata[] = writer.getImageData(src);
+        final byte[] imagedata = writer.getImageData(src);
         final BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.LITTLE_ENDIAN);
 
         // write BitmapFileHeader

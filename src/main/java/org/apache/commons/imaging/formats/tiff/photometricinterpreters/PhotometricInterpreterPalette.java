@@ -29,18 +29,18 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
      */
     private final int[] indexColorMap;
 
-    public PhotometricInterpreterPalette(final int fSamplesPerPixel,
-            final int fBitsPerSample[], final int Predictor, final int width, final int height,
-            final int[] fColorMap) {
-        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+    public PhotometricInterpreterPalette(final int samplesPerPixel,
+            final int[] bitsPerSample, final int predictor, final int width, final int height,
+            final int[] colorMap) {
+        super(samplesPerPixel, bitsPerSample, predictor, width, height);
 
-        final int fBitsPerPixel = bitsPerSample[0];
-        final int colormap_scale = (1 << fBitsPerPixel);
-        indexColorMap = new int[colormap_scale];
-        for (int index = 0; index < colormap_scale; index++) {
-            final int red = (fColorMap[index] >> 8) & 0xff;
-            final int green = (fColorMap[index + (colormap_scale)] >> 8) & 0xff;
-            final int blue = (fColorMap[index + (2 * colormap_scale)] >> 8) & 0xff;
+        final int bitsPerPixel = this.bitsPerSample[0];
+        final int colormapScale = (1 << bitsPerPixel);
+        indexColorMap = new int[colormapScale];
+        for (int index = 0; index < colormapScale; index++) {
+            final int red = (colorMap[index] >> 8) & 0xff;
+            final int green = (colorMap[index + (colormapScale)] >> 8) & 0xff;
+            final int blue = (colorMap[index + (2 * colormapScale)] >> 8) & 0xff;
             indexColorMap[index] = 0xff000000 | (red << 16) | (green << 8)
                     | blue;
         }
@@ -48,7 +48,7 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
     }
 
     @Override
-    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+    public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImageReadException, IOException {
         imageBuilder.setRGB(x, y, indexColorMap[samples[0]]);
     }

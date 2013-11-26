@@ -40,7 +40,7 @@ public final class DataReaderStrips extends DataReader {
 
     public DataReaderStrips(final TiffDirectory directory,
             final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
-            final int bitsPerSample[], final int predictor, final int samplesPerPixel, final int width,
+            final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width,
             final int height, final int compression, final ByteOrder byteOrder, final int rowsPerStrip,
             final TiffImageData.Strips imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
@@ -55,7 +55,7 @@ public final class DataReaderStrips extends DataReader {
 
     private void interpretStrip(
             final ImageBuilder imageBuilder, 
-            final byte bytes[],
+            final byte[] bytes,
             final int pixels_per_strip,
             final int yLimit) throws ImageReadException, IOException {
         if (y >= yLimit) {
@@ -151,7 +151,7 @@ public final class DataReaderStrips extends DataReader {
                     }
                 }
             } else {
-                final int samples[] = new int[3];
+                final int[] samples = new int[3];
                 for (int i = i0; i < i1; i++) {
                     for (int j = 0; j < width; j++) {
                         samples[0] = bytes[k++] & 0xff;
@@ -210,9 +210,9 @@ public final class DataReaderStrips extends DataReader {
             final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
             final long pixelsPerStrip = rowsInThisStrip * width;
 
-            final byte compressed[] = imageData.strips[strip].getData();
+            final byte[] compressed = imageData.strips[strip].getData();
 
-            final byte decompressed[] = decompress(compressed, compression,
+            final byte[] decompressed = decompress(compressed, compression,
                     (int) bytesPerStrip, width, (int) rowsInThisStrip);
 
             interpretStrip(
@@ -265,9 +265,9 @@ public final class DataReaderStrips extends DataReader {
             final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
             final long pixelsPerStrip = rowsInThisStrip * width;
 
-            final byte compressed[] = imageData.strips[strip].getData();
+            final byte[] compressed = imageData.strips[strip].getData();
 
-            final byte decompressed[] = decompress(compressed, compression,
+            final byte[] decompressed = decompress(compressed, compression,
                     (int) bytesPerStrip, width, (int) rowsInThisStrip);
 
             interpretStrip(

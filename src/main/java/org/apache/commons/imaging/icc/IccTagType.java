@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.icc;
 
 interface IccTagType {
+
     String getName();
 
     String getTypeDescription();

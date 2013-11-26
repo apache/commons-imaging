@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 public class ComSegment extends GenericSegment {
-    public ComSegment(final int marker, final byte segmentData[]) {
+    public ComSegment(final int marker, final byte[] segmentData) {
         super(marker, segmentData);
     }
 

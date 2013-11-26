@@ -17,9 +17,9 @@
 package org.apache.commons.imaging.palette;
 
 public class SimplePalette extends Palette {
-    private final int palette[];
+    private final int[] palette;
 
-    public SimplePalette(final int palette[]) {
+    public SimplePalette(final int[] palette) {
         this.palette = palette;
     }
 
@@ -33,7 +33,7 @@ public class SimplePalette extends Palette {
         return palette[index];
     }
 
-    private int getPaletteIndex(final int palette[], final int argb) {
+    private int getPaletteIndex(final int[] palette, final int argb) {
         for (int i = 0; i < palette.length; i++) {
             if (palette[i] == argb) {
                 return i;

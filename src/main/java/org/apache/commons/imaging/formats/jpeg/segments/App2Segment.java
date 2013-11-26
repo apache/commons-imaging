@@ -25,10 +25,10 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class App2Segment extends AppnSegment implements Comparable<App2Segment> {
-    public final byte icc_bytes[];
+    public final byte[] icc_bytes;
     public final int cur_marker, num_markers;
 
-    public App2Segment(final int marker, final byte segmentData[])
+    public App2Segment(final int marker, final byte[] segmentData)
             throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }

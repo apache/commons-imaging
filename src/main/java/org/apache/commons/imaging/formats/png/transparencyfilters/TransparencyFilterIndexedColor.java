@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImageReadException;
 
 public class TransparencyFilterIndexedColor extends TransparencyFilter {
 
-    public TransparencyFilterIndexedColor(final byte bytes[]) {
+    public TransparencyFilterIndexedColor(final byte[] bytes) {
         super(bytes);
     }
 

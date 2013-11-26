@@ -22,14 +22,14 @@ import java.nio.charset.Charset;
 
 public class PsdHeaderInfo {
     public final int Version;
-    private final byte Reserved[];
+    private final byte[] Reserved;
     public final int Channels;
     public final int Rows;
     public final int Columns;
     public final int Depth;
     public final int Mode;
 
-    public PsdHeaderInfo(final int Version, final byte Reserved[], final int Channels, final int Rows,
+    public PsdHeaderInfo(final int Version, final byte[] Reserved, final int Channels, final int Rows,
             final int Columns, final int Depth, final int Mode) {
         this.Version = Version;
         this.Reserved = Reserved;

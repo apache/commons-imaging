@@ -29,13 +29,13 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 
 public abstract class TiffImageData {
     public static class Tiles extends TiffImageData {
-        public final TiffElement.DataElement tiles[];
+        public final TiffElement.DataElement[] tiles;
 
         // public final byte tiles[][];
-        private final int tileWidth, tileLength;
+        private final int tileWidth;
+        private final int tileLength;
 
-        public Tiles(final TiffElement.DataElement tiles[],
-                final int tileWidth, final int tileLength) {
+        public Tiles(final TiffElement.DataElement[] tiles, final int tileWidth, final int tileLength) {
             this.tiles = tiles;
             this.tileWidth = tileWidth;
             this.tileLength = tileLength;
@@ -54,7 +54,7 @@ public abstract class TiffImageData {
         @Override
         public DataReader getDataReader(final TiffDirectory directory,
                 final PhotometricInterpreter photometricInterpreter,
-                final int bitsPerPixel, final int bitsPerSample[], final int predictor,
+                final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
                 final int samplesPerPixel, final int width, final int height, final int compression,
                 final ByteOrder byteOrder) throws IOException, ImageReadException {
             return new DataReaderTiled(directory, photometricInterpreter,
@@ -90,12 +90,11 @@ public abstract class TiffImageData {
     }
 
     public static class Strips extends TiffImageData {
-        public final TiffElement.DataElement strips[];
+        public final TiffElement.DataElement[] strips;
         // public final byte strips[][];
         public final int rowsPerStrip;
 
-        public Strips(final TiffElement.DataElement strips[],
-                final int rowsPerStrip) {
+        public Strips(final TiffElement.DataElement[] strips, final int rowsPerStrip) {
             this.strips = strips;
             this.rowsPerStrip = rowsPerStrip;
         }
@@ -113,7 +112,7 @@ public abstract class TiffImageData {
         @Override
         public DataReader getDataReader(final TiffDirectory directory,
                 final PhotometricInterpreter photometricInterpreter,
-                final int bitsPerPixel, final int bitsPerSample[], final int predictor,
+                final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
                 final int samplesPerPixel, final int width, final int height, final int compression,
                 final ByteOrder byteorder) throws IOException, ImageReadException {
             return new DataReaderStrips(directory, photometricInterpreter,
@@ -136,12 +135,12 @@ public abstract class TiffImageData {
 
     public abstract DataReader getDataReader(TiffDirectory directory,
             PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
-            int bitsPerSample[], int predictor, int samplesPerPixel, int width,
+            int[] bitsPerSample, int predictor, int samplesPerPixel, int width,
             int height, int compression, ByteOrder byteOrder) throws IOException,
             ImageReadException;
 
     public static class Data extends TiffElement.DataElement {
-        public Data(final long offset, final int length, final byte data[]) {
+        public Data(final long offset, final int length, final byte[] data) {
             super(offset, length, data);
         }
 

@@ -88,12 +88,12 @@ public class MyLzwCompressor {
     }
 
     private final static class ByteArray {
-        private final byte bytes[];
+        private final byte[] bytes;
         private final int start;
         private final int length;
         private final int hash;
 
-        public ByteArray(final byte bytes[], final int start, final int length) {
+        public ByteArray(final byte[] bytes, final int start, final int length) {
             this.bytes = bytes;
             this.start = start;
             this.length = length;
@@ -136,7 +136,7 @@ public class MyLzwCompressor {
         }
     }
 
-    private ByteArray arrayToKey(final byte bytes[], final int start, final int length) {
+    private ByteArray arrayToKey(final byte[] bytes, final int start, final int length) {
         return new ByteArray(bytes, start, length);
     }
 
@@ -167,13 +167,13 @@ public class MyLzwCompressor {
         bos.writeBits(code, codeSize);
     }
 
-    private boolean isInTable(final byte bytes[], final int start, final int length) {
+    private boolean isInTable(final byte[] bytes, final int start, final int length) {
         final ByteArray key = arrayToKey(bytes, start, length);
 
         return map.containsKey(key);
     }
 
-    private int codeFromString(final byte bytes[], final int start, final int length)
+    private int codeFromString(final byte[] bytes, final int start, final int length)
             throws IOException {
         final ByteArray key = arrayToKey(bytes, start, length);
         final Integer code = map.get(key);
@@ -183,7 +183,7 @@ public class MyLzwCompressor {
         return code;
     }
 
-    private boolean addTableEntry(final MyBitOutputStream bos, final byte bytes[],
+    private boolean addTableEntry(final MyBitOutputStream bos, final byte[] bytes,
             final int start, final int length) throws IOException {
         final ByteArray key = arrayToKey(bytes, start, length);
         return addTableEntry(bos, key);
@@ -226,7 +226,7 @@ public class MyLzwCompressor {
         void init(int clearCode, int eoiCode);
     }
 
-    public byte[] compress(final byte bytes[]) throws IOException {
+    public byte[] compress(final byte[] bytes) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream(bytes.length);
         final MyBitOutputStream bos = new MyBitOutputStream(baos, byteOrder);
 

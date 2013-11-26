@@ -44,7 +44,7 @@ public final class DataReaderTiled extends DataReader {
 
     public DataReaderTiled(final TiffDirectory directory,
             final PhotometricInterpreter photometricInterpreter, final int tileWidth,
-            final int tileLength, final int bitsPerPixel, final int bitsPerSample[],
+            final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
             final int predictor, final int samplesPerPixel, final int width, final int height,
             final int compression, final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
@@ -60,7 +60,7 @@ public final class DataReaderTiled extends DataReader {
         this.byteOrder = byteOrder;
     }
 
-    private void interpretTile(final ImageBuilder imageBuilder, final byte bytes[],
+    private void interpretTile(final ImageBuilder imageBuilder, final byte[] bytes,
             final int startX, final int startY, final int xLimit, final int yLimit) throws ImageReadException, IOException {
         // changes introduced May 2012
         // The following block of code implements changes that
@@ -104,7 +104,7 @@ public final class DataReaderTiled extends DataReader {
                     }
                 }
             } else {
-                final int samples[] = new int[3];
+                final int[] samples = new int[3];
                 for (int i = i0; i < i1; i++) {
                     k = (i - i0) * tileWidth * 3;
                     for (int j = j0; j < j1; j++) {
@@ -167,9 +167,9 @@ public final class DataReaderTiled extends DataReader {
         int x = 0, y = 0;
 
         for (final DataElement tile2 : imageData.tiles) {
-            final byte compressed[] = tile2.getData();
+            final byte[] compressed = tile2.getData();
 
-            final byte decompressed[] = decompress(compressed, compression,
+            final byte[] decompressed = decompress(compressed, compression,
                     bytesPerTile, tileWidth, tileLength);
 
             interpretTile(imageBuilder, decompressed, x, y, width, height);
@@ -218,8 +218,8 @@ public final class DataReaderTiled extends DataReader {
         for (int iRow = row0; iRow <= row1; iRow++) {
             for (int iCol = col0; iCol <= col1; iCol++) {
                 final int tile = iRow * nColumnsOfTiles+iCol;
-                final byte compressed[] = imageData.tiles[tile].getData();
-                final byte decompressed[] = decompress(compressed, compression,
+                final byte[] compressed = imageData.tiles[tile].getData();
+                final byte[] decompressed = decompress(compressed, compression,
                         bytesPerTile, tileWidth, tileLength);
                 x = iCol * tileWidth - x0;
                 y = iRow * tileLength - y0;

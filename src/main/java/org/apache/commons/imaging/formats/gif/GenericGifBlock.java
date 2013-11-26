@@ -38,7 +38,7 @@ class GenericGifBlock extends GifBlock {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         for (int i = 0; i < subblocks.size(); i++) {
-            final byte subblock[] = subblocks.get(i);
+            final byte[] subblock = subblocks.get(i);
             if (includeLengths && i > 0) {
                 out.write(subblock.length);
             }

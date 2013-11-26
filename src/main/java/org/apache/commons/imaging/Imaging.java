@@ -138,9 +138,9 @@ public abstract class Imaging implements ImagingConstants {
         
         filename = filename.toLowerCase(Locale.ENGLISH);
 
-        final ImageParser imageParsers[] = ImageParser.getAllImageParsers();
+        final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
         for (final ImageParser imageParser : imageParsers) {
-            final String exts[] = imageParser.getAcceptedExtensions();
+            final String[] exts = imageParser.getAcceptedExtensions();
 
             for (final String ext : exts) {
                 if (filename.endsWith(ext.toLowerCase(Locale.ENGLISH))) {
@@ -167,7 +167,7 @@ public abstract class Imaging implements ImagingConstants {
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
      *         determined.
      */
-    public static ImageFormat guessFormat(final byte bytes[])
+    public static ImageFormat guessFormat(final byte[] bytes)
             throws ImageReadException, IOException {
         return guessFormat(new ByteSourceArray(bytes));
     }
@@ -192,7 +192,7 @@ public abstract class Imaging implements ImagingConstants {
         return guessFormat(new ByteSourceFile(file));
     }
 
-    private static boolean compareBytePair(final int[] a, final int b[]) {
+    private static boolean compareBytePair(final int[] a, final int[] b) {
         if (a.length != 2 && b.length != 2) {
             throw new RuntimeException("Invalid Byte Pair.");
         }
@@ -240,7 +240,7 @@ public abstract class Imaging implements ImagingConstants {
 
             final int b1 = i1 & 0xff;
             final int b2 = i2 & 0xff;
-            final int bytePair[] = { b1, b2, };
+            final int[] bytePair = { b1, b2, };
 
             if (compareBytePair(MAGIC_NUMBERS_GIF, bytePair)) {
                 canThrow = true;
@@ -299,7 +299,7 @@ public abstract class Imaging implements ImagingConstants {
 
                 final int b3 = i3 & 0xff;
                 final int b4 = i4 & 0xff;
-                final int bytePair2[] = { b3, b4, };
+                final int[] bytePair2 = { b3, b4, };
                 if (compareBytePair(MAGIC_NUMBERS_JBIG2_2, bytePair2)) {
                     canThrow = true;
                     return ImageFormats.JBIG2;
@@ -331,7 +331,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile.
      */
-    public static ICC_Profile getICCProfile(final byte bytes[])
+    public static ICC_Profile getICCProfile(final byte[] bytes)
             throws ImageReadException, IOException {
         return getICCProfile(bytes, null);
     }
@@ -348,7 +348,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
      */
-    public static ICC_Profile getICCProfile(final byte bytes[], final Map<String,Object> params)
+    public static ICC_Profile getICCProfile(final byte[] bytes, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getICCProfile(new ByteSourceArray(bytes), params);
     }
@@ -423,7 +423,7 @@ public abstract class Imaging implements ImagingConstants {
 
     protected static ICC_Profile getICCProfile(final ByteSource byteSource, final Map<String,Object> params)
             throws ImageReadException, IOException {
-        final byte bytes[] = getICCProfileBytes(byteSource, params);
+        final byte[] bytes = getICCProfileBytes(byteSource, params);
         if (bytes == null) {
             return null;
         }
@@ -454,7 +454,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see IccProfileParser
      * @see ICC_Profile
      */
-    public static byte[] getICCProfileBytes(final byte bytes[])
+    public static byte[] getICCProfileBytes(final byte[] bytes)
             throws ImageReadException, IOException {
         return getICCProfileBytes(bytes, null);
     }
@@ -475,7 +475,7 @@ public abstract class Imaging implements ImagingConstants {
      * @see IccProfileParser
      * @see ICC_Profile
      */
-    public static byte[] getICCProfileBytes(final byte bytes[], final Map<String,Object> params)
+    public static byte[] getICCProfileBytes(final byte[] bytes, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getICCProfileBytes(new ByteSourceArray(bytes), params);
     }
@@ -545,7 +545,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
-    public static ImageInfo getImageInfo(final String filename, final byte bytes[],
+    public static ImageInfo getImageInfo(final String filename, final byte[] bytes,
             final Map<String,Object> params) throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceArray(filename, bytes), params);
     }
@@ -566,7 +566,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
-    public static ImageInfo getImageInfo(final String filename, final byte bytes[])
+    public static ImageInfo getImageInfo(final String filename, final byte[] bytes)
             throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceArray(filename, bytes), null);
     }
@@ -629,7 +629,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
-    public static ImageInfo getImageInfo(final byte bytes[])
+    public static ImageInfo getImageInfo(final byte[] bytes)
             throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceArray(bytes), null);
     }
@@ -650,7 +650,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of ImageInfo.
      * @see ImageInfo
      */
-    public static ImageInfo getImageInfo(final byte bytes[], final Map<String,Object> params)
+    public static ImageInfo getImageInfo(final byte[] bytes, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getImageInfo(new ByteSourceArray(bytes), params);
     }
@@ -707,7 +707,7 @@ public abstract class Imaging implements ImagingConstants {
         final ImageFormat format = guessFormat(byteSource);
         if (!format.equals(ImageFormats.UNKNOWN)) {
 
-            final ImageParser imageParsers[] = ImageParser.getAllImageParsers();
+            final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
 
             for (final ImageParser imageParser : imageParsers) {
                 if (imageParser.canAcceptType(format)) {
@@ -718,7 +718,7 @@ public abstract class Imaging implements ImagingConstants {
 
         final String filename = byteSource.getFilename();
         if (filename != null) {
-            final ImageParser imageParsers[] = ImageParser.getAllImageParsers();
+            final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
 
             for (final ImageParser imageParser : imageParsers) {
                 if (imageParser.canAcceptExtension(filename)) {
@@ -770,7 +770,7 @@ public abstract class Imaging implements ImagingConstants {
      *            Byte array containing an image file.
      * @return The width and height of the image.
      */
-    public static Dimension getImageSize(final byte bytes[])
+    public static Dimension getImageSize(final byte[] bytes)
             throws ImageReadException, IOException {
         return getImageSize(bytes, null);
     }
@@ -785,7 +785,7 @@ public abstract class Imaging implements ImagingConstants {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return The width and height of the image.
      */
-    public static Dimension getImageSize(final byte bytes[], final Map<String,Object> params)
+    public static Dimension getImageSize(final byte[] bytes, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getImageSize(new ByteSourceArray(bytes), params);
     }
@@ -865,7 +865,7 @@ public abstract class Imaging implements ImagingConstants {
      *            Byte array containing an image file.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
-    public static String getXmpXml(final byte bytes[]) throws ImageReadException,
+    public static String getXmpXml(final byte[] bytes) throws ImageReadException,
             IOException {
         return getXmpXml(bytes, null);
     }
@@ -880,7 +880,7 @@ public abstract class Imaging implements ImagingConstants {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
-    public static String getXmpXml(final byte bytes[], final Map<String,Object> params)
+    public static String getXmpXml(final byte[] bytes, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getXmpXml(new ByteSourceArray(bytes), params);
     }
@@ -948,7 +948,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of IImageMetadata.
      * @see IImageMetadata
      */
-    public static IImageMetadata getMetadata(final byte bytes[])
+    public static IImageMetadata getMetadata(final byte[] bytes)
             throws ImageReadException, IOException {
         return getMetadata(bytes, null);
     }
@@ -973,7 +973,7 @@ public abstract class Imaging implements ImagingConstants {
      * @return An instance of IImageMetadata.
      * @see IImageMetadata
      */
-    public static IImageMetadata getMetadata(final byte bytes[], final Map<String,Object> params)
+    public static IImageMetadata getMetadata(final byte[] bytes, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getMetadata(new ByteSourceArray(bytes), params);
     }
@@ -1096,7 +1096,7 @@ public abstract class Imaging implements ImagingConstants {
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public static String dumpImageFile(final byte bytes[]) throws ImageReadException,
+    public static String dumpImageFile(final byte[] bytes) throws ImageReadException,
             IOException {
         return dumpImageFile(new ByteSourceArray(bytes));
     }
@@ -1134,7 +1134,7 @@ public abstract class Imaging implements ImagingConstants {
      * @throws ImageReadException in the event of unreadable data.
      * @throws IOException in the event of an unrecoverable I/O condition.
      */
-    public static FormatCompliance getFormatCompliance(final byte bytes[])
+    public static FormatCompliance getFormatCompliance(final byte[] bytes)
             throws ImageReadException, IOException {
         return getFormatCompliance(new ByteSourceArray(bytes));
     }
@@ -1188,7 +1188,7 @@ public abstract class Imaging implements ImagingConstants {
      * @throws IOException In the event of unsuccessful read or
      * access operation.
      */
-    public static List<BufferedImage> getAllBufferedImages(final byte bytes[])
+    public static List<BufferedImage> getAllBufferedImages(final byte[] bytes)
             throws ImageReadException, IOException {
         return getAllBufferedImages(new ByteSourceArray(bytes));
     }
@@ -1285,7 +1285,7 @@ public abstract class Imaging implements ImagingConstants {
      * while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */
-    public static BufferedImage getBufferedImage(final byte bytes[])
+    public static BufferedImage getBufferedImage(final byte[] bytes)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceArray(bytes), null);
     }
@@ -1311,7 +1311,7 @@ public abstract class Imaging implements ImagingConstants {
      * while reading an image (i.e. a format violation, etc.).
      * @throws IOException  in the event of an unrecoverable I/O exception.
      */ 
-    public static BufferedImage getBufferedImage(final byte bytes[], final Map<String,Object> params)
+    public static BufferedImage getBufferedImage(final byte[] bytes, final Map<String,Object> params)
             throws ImageReadException, IOException {
         return getBufferedImage(new ByteSourceArray(bytes), params);
     }
@@ -1476,7 +1476,7 @@ public abstract class Imaging implements ImagingConstants {
     public static void writeImage(final BufferedImage src, final OutputStream os,
             final ImageFormat format, Map<String,Object> params) throws ImageWriteException,
             IOException {
-        final ImageParser imageParsers[] = ImageParser.getAllImageParsers();
+        final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
 
         // make sure params are non-null
         if (params == null) {

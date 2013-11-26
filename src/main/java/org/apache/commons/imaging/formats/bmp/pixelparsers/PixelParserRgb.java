@@ -27,9 +27,9 @@ public class PixelParserRgb extends PixelParserSimple {
     private int cached_byte = 0;
     int pixelCount = 0;
 
-    public PixelParserRgb(final BmpHeaderInfo bhi, final byte ColorTable[],
-            final byte ImageData[]) {
-        super(bhi, ColorTable, ImageData);
+    public PixelParserRgb(final BmpHeaderInfo bhi, final byte[] colorTable,
+            final byte[] imageData) {
+        super(bhi, colorTable, imageData);
 
     }
 

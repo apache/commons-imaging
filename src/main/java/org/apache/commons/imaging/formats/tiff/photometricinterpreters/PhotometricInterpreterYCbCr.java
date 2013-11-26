@@ -23,10 +23,10 @@ import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
 
-    public PhotometricInterpreterYCbCr(final int fSamplesPerPixel,
-            final int fBitsPerSample[], final int predictor,
+    public PhotometricInterpreterYCbCr(final int samplesPerPixel,
+            final int[] bitsPerSample, final int predictor,
             final int width, final int height) {
-        super(fSamplesPerPixel, fBitsPerSample, predictor, width, height);
+        super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }
 
     public static int limit(final int value, final int min, final int max) {
@@ -65,7 +65,7 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
     }
 
     @Override
-    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+    public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImageReadException, IOException {
         final int Y = samples[0];
         final int Cb = samples[1];

@@ -66,7 +66,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @param os
      *            OutputStream to write the image to.
      */
-    public void removeXmpXml(final byte src[], final OutputStream os)
+    public void removeXmpXml(final byte[] src, final OutputStream os)
             throws ImageReadException, IOException {
         final ByteSource byteSource = new ByteSourceArray(src);
         removeXmpXml(byteSource, os);
@@ -117,7 +117,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      * @param xmpXml
      *            String containing XMP XML.
      */
-    public void updateXmpXml(final byte src[], final OutputStream os, final String xmpXml)
+    public void updateXmpXml(final byte[] src, final OutputStream os, final String xmpXml)
             throws ImageReadException, IOException, ImageWriteException {
         final ByteSource byteSource = new ByteSourceArray(src);
         updateXmpXml(byteSource, os, xmpXml);
@@ -176,11 +176,11 @@ public class JpegXmpRewriter extends JpegRewriter {
         pieces = removeXmpSegments(pieces);
 
         final List<JFIFPieceSegment> newPieces = new ArrayList<JFIFPieceSegment>();
-        final byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
+        final byte[] xmpXmlBytes = xmpXml.getBytes("utf-8");
         int index = 0;
         while (index < xmpXmlBytes.length) {
             final int segmentSize = Math.min(xmpXmlBytes.length, JpegConstants.MAX_SEGMENT_SIZE);
-            final byte segmentData[] = writeXmpSegment(xmpXmlBytes, index,
+            final byte[] segmentData = writeXmpSegment(xmpXmlBytes, index,
                     segmentSize);
             newPieces.add(new JFIFPieceSegment(JpegConstants.JPEG_APP1_Marker, segmentData));
             index += segmentSize;
@@ -191,7 +191,7 @@ public class JpegXmpRewriter extends JpegRewriter {
         writeSegments(os, pieces);
     }
 
-    private byte[] writeXmpSegment(final byte xmpXmlData[], final int start, final int length)
+    private byte[] writeXmpSegment(final byte[] xmpXmlData, final int start, final int length)
             throws IOException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 

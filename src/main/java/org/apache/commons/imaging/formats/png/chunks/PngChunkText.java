@@ -22,9 +22,10 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.PngText;
 
 public class PngChunkText extends PngTextChunk {
-    public final String keyword, text;
+    public final String keyword;
+    public final String text;
 
-    public PngChunkText(final int length, final int chunkType, final int crc, final byte bytes[])
+    public PngChunkText(final int length, final int chunkType, final int crc, final byte[] bytes)
             throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
         final int index = findNull(bytes);

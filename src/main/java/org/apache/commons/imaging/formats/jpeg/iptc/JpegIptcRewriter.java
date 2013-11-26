@@ -71,7 +71,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      * @param os
      *            OutputStream to write the image to.
      */
-    public void removeIPTC(final byte src[], final OutputStream os)
+    public void removeIPTC(final byte[] src, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
         final ByteSource byteSource = new ByteSourceArray(src);
         removeIPTC(byteSource, os);
@@ -126,7 +126,7 @@ public class JpegIptcRewriter extends JpegRewriter {
             final List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
             final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                     newBlocks);
-            final byte segmentBytes[] = new IptcParser()
+            final byte[] segmentBytes = new IptcParser()
                     .writePhotoshopApp13Segment(newData);
             final JFIFPieceSegment newSegment = new JFIFPieceSegment(
                     oldSegment.marker, segmentBytes);
@@ -147,7 +147,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      * @param newData
      *            structure containing IPTC data.
      */
-    public void writeIPTC(final byte src[], final OutputStream os,
+    public void writeIPTC(final byte[] src, final OutputStream os,
             final PhotoshopApp13Data newData) throws ImageReadException, IOException,
             ImageWriteException {
         final ByteSource byteSource = new ByteSourceArray(src);
@@ -219,21 +219,17 @@ public class JpegIptcRewriter extends JpegRewriter {
         {
             // discard old iptc blocks.
             final List<IptcBlock> newBlocks = newData.getNonIptcBlocks();
-            final byte[] newBlockBytes = new IptcParser().writeIPTCBlock(newData
-                    .getRecords());
+            final byte[] newBlockBytes = new IptcParser().writeIPTCBlock(newData.getRecords());
 
             final int blockType = IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
             final byte[] blockNameBytes = new byte[0];
-            final IptcBlock newBlock = new IptcBlock(blockType, blockNameBytes,
-                    newBlockBytes);
+            final IptcBlock newBlock = new IptcBlock(blockType, blockNameBytes,newBlockBytes);
             newBlocks.add(newBlock);
 
             newData = new PhotoshopApp13Data(newData.getRecords(), newBlocks);
 
-            final byte segmentBytes[] = new IptcParser()
-                    .writePhotoshopApp13Segment(newData);
-            final JFIFPieceSegment newSegment = new JFIFPieceSegment(
-                    JpegConstants.JPEG_APP13_Marker, segmentBytes);
+            byte[] segmentBytes = new IptcParser().writePhotoshopApp13Segment(newData);
+            JFIFPieceSegment newSegment = new JFIFPieceSegment(JpegConstants.JPEG_APP13_Marker, segmentBytes);
 
             newPieces = insertAfterLastAppSegments(newPieces, Arrays.asList(newSegment));
         }

@@ -43,23 +43,22 @@ public class FieldTypeRational extends FieldType {
         if (o instanceof RationalNumber) {
             return ByteConversions.toBytes((RationalNumber) o, byteOrder);
         } else if (o instanceof RationalNumber[]) {
-            return ByteConversions.toBytes((RationalNumber[]) o,
-                    byteOrder);
+            return ByteConversions.toBytes((RationalNumber[]) o, byteOrder);
         } else if (o instanceof Number) {
             final Number number = (Number) o;
             final RationalNumber rationalNumber = RationalNumber.valueOf(number.doubleValue());
             return ByteConversions.toBytes(rationalNumber, byteOrder);
         } else if (o instanceof Number[]) {
-            final Number numbers[] = (Number[]) o;
-            final RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
+            final Number[] numbers = (Number[]) o;
+            final RationalNumber[] rationalNumbers = new RationalNumber[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 final Number number = numbers[i];
                 rationalNumbers[i] = RationalNumber.valueOf(number.doubleValue());
             }
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         } else if (o instanceof double[]) {
-            final double numbers[] = (double[]) o;
-            final RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
+            final double[] numbers = (double[]) o;
+            final RationalNumber[] rationalNumbers = new RationalNumber[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 final double number = numbers[i];
                 rationalNumbers[i] = RationalNumber.valueOf(number);

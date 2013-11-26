@@ -43,11 +43,11 @@ public class FieldTypeDouble extends FieldType {
             return ByteConversions.toBytes(((Double) o).doubleValue(),
                     byteOrder);
         } else if (o instanceof double[]) {
-            final double numbers[] = (double[]) o;
+            final double[] numbers = (double[]) o;
             return ByteConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Double[]) {
-            final Double numbers[] = (Double[]) o;
-            final double values[] = new double[numbers.length];
+            final Double[] numbers = (Double[]) o;
+            final double[] values = new double[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i].doubleValue();
             }

@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 public abstract class GenericSegment extends Segment {
-    protected final byte segmentData[];
+    protected final byte[] segmentData;
 
     public GenericSegment(final int marker, final int marker_length, final InputStream is)
             throws IOException {
@@ -31,7 +31,7 @@ public abstract class GenericSegment extends Segment {
                 "Invalid Segment: insufficient data");
     }
 
-    public GenericSegment(final int marker, final byte bytes[]) {
+    public GenericSegment(final int marker, final byte[] bytes) {
         super(marker, bytes.length);
 
         this.segmentData = bytes;

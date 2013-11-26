@@ -20,7 +20,8 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 class ColorSpaceSubset {
-    final int mins[], maxs[];
+    final int[] mins;
+    final int[] maxs;
     final int precision;
     final int precision_mask;
     final int total;
@@ -44,7 +45,7 @@ class ColorSpaceSubset {
         rgb = -1;
     }
 
-    ColorSpaceSubset(final int total, final int precision, final int mins[], final int maxs[]) {
+    ColorSpaceSubset(final int total, final int precision, final int[] mins, final int[] maxs) {
         this.total = total;
         this.precision = precision;
         this.mins = mins;
@@ -130,7 +131,7 @@ class ColorSpaceSubset {
 
     }
 
-    public void setAverageRGB(final int table[]) {
+    public void setAverageRGB(final int[] table) {
         long redsum = 0, greensum = 0, bluesum = 0;
 
         for (int red = mins[0]; red <= maxs[0]; red++) {

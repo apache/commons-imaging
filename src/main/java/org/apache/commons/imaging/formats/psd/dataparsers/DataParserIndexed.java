@@ -19,9 +19,9 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import org.apache.commons.imaging.formats.psd.ImageContents;
 
 public class DataParserIndexed extends DataParser {
-    private final int ColorTable[];
+    private final int[] ColorTable;
 
-    public DataParserIndexed(final byte ColorModeData[]) {
+    public DataParserIndexed(final byte[] ColorModeData) {
         ColorTable = new int[256];
         for (int i = 0; i < 256; i++) {
             final int red = 0xff & ColorModeData[0 * 256 + i];
@@ -37,7 +37,7 @@ public class DataParserIndexed extends DataParser {
     }
 
     @Override
-    protected int getRGB(final int data[][][], final int x, final int y, final ImageContents imageContents) {
+    protected int getRGB(final int[][][] data, final int x, final int y, final ImageContents imageContents) {
         final int sample = 0xff & data[0][y][x];
         return ColorTable[sample];
     }

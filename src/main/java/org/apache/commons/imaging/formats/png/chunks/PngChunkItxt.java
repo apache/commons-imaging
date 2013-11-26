@@ -26,7 +26,8 @@ import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
 
 public class PngChunkItxt extends PngTextChunk {
-    public final String keyword, text;
+    public final String keyword;
+    public final String text;
 
     /*
      * The language tag defined in [RFC-3066] indicates the human language used
@@ -41,7 +42,7 @@ public class PngChunkItxt extends PngTextChunk {
 
     public final String translatedKeyword;
 
-    public PngChunkItxt(final int length, final int chunkType, final int crc, final byte bytes[])
+    public PngChunkItxt(final int length, final int chunkType, final int crc, final byte[] bytes)
             throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
         int terminator = findNull(bytes);
@@ -69,33 +70,28 @@ public class PngChunkItxt extends PngTextChunk {
 
         terminator = findNull(bytes, index);
         if (terminator < 0) {
-            throw new ImageReadException(
-                    "PNG iTXt chunk language tag is not terminated.");
+            throw new ImageReadException("PNG iTXt chunk language tag is not terminated.");
         }
 
-        languageTag = new String(bytes, index, terminator - index,
-                "ISO-8859-1");
+        languageTag = new String(bytes, index, terminator - index, "ISO-8859-1");
         index = terminator + 1;
 
         terminator = findNull(bytes, index);
         if (terminator < 0) {
-            throw new ImageReadException(
-                    "PNG iTXt chunk translated keyword is not terminated.");
+            throw new ImageReadException("PNG iTXt chunk translated keyword is not terminated.");
         }
 
-        translatedKeyword = new String(bytes, index, terminator - index,
-                "utf-8");
+        translatedKeyword = new String(bytes, index, terminator - index, "utf-8");
         index = terminator + 1;
 
         if (compressed) {
             final int compressedTextLength = bytes.length - index;
 
-            final byte compressedText[] = new byte[compressedTextLength];
-            System.arraycopy(bytes, index, compressedText, 0,
-                    compressedTextLength);
+            final byte[] compressedText = new byte[compressedTextLength];
+            System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
-            text = new String(BinaryFunctions.getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(bytes))),
-                    "utf-8");
+            text = new String(BinaryFunctions.getStreamBytes(
+                    new InflaterInputStream(new ByteArrayInputStream(compressedText))), "utf-8");
 
         } else {
             text = new String(bytes, index, bytes.length - index, "utf-8");

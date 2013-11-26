@@ -63,7 +63,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         return true;
     }
 
-    public void visitSOS(final int marker, final byte markerBytes[], final byte imageData[]) {
+    public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
         final ByteArrayInputStream is = new ByteArrayInputStream(imageData);
         try {
             final int segmentLength = read2Bytes("segmentLength", is,

@@ -50,8 +50,8 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class GifImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".gif";
-    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
-    private static final byte GIF_HEADER_SIGNATURE[] = { 71, 73, 70 };
+    private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
+    private static final byte[] GIF_HEADER_SIGNATURE = { 71, 73, 70 };
     private final static int EXTENSION_CODE = 0x21;
     private final static int IMAGE_SEPARATOR = 0x2C;
     private final static int GRAPHIC_CONTROL_EXTENSION = (EXTENSION_CODE << 8) | 0xf9;
@@ -65,7 +65,7 @@ public class GifImageParser extends ImageParser {
     private static final int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
     private static final int INTERLACE_FLAG_MASK = 1 << 6;
     private static final int SORT_FLAG_MASK = 1 << 5;
-    private static final byte XMP_APPLICATION_ID_AND_AUTH_CODE[] = {
+    private static final byte[] XMP_APPLICATION_ID_AND_AUTH_CODE = {
         0x58, // X
         0x4D, // M
         0x50, // P
@@ -218,7 +218,7 @@ public class GifImageParser extends ImageParser {
     }
 
     protected GenericGifBlock readGenericGIFBlock(final InputStream is, final int code,
-            final byte first[]) throws IOException {
+            final byte[] first) throws IOException {
         final List<byte[]> subblocks = new ArrayList<byte[]>();
 
         if (first != null) {
@@ -226,7 +226,7 @@ public class GifImageParser extends ImageParser {
         }
 
         while (true) {
-            final byte bytes[] = readSubBlock(is);
+            final byte[] bytes = readSubBlock(is);
             if (bytes.length < 1) {
                 break;
             }
@@ -281,7 +281,7 @@ public class GifImageParser extends ImageParser {
                 case APPLICATION_EXTENSION_LABEL: // 255 (hex 0xFF) Application
                     // Extension Label
                 {
-                    final byte label[] = readSubBlock(is);
+                    final byte[] label = readSubBlock(is);
 
                     if (formatCompliance != null) {
                         formatCompliance.addComment(
@@ -378,17 +378,17 @@ public class GifImageParser extends ImageParser {
                     + SizeofLocalColorTable);
         }
 
-        byte LocalColorTable[] = null;
+        byte[] localColorTable = null;
         if (LocalColorTableFlag) {
-            LocalColorTable = readColorTable(is, SizeofLocalColorTable);
+            localColorTable = readColorTable(is, SizeofLocalColorTable);
         }
 
-        byte imageData[] = null;
+        byte[] imageData = null;
         if (!stopBeforeImageData) {
             final int LZWMinimumCodeSize = is.read();
 
             final GenericGifBlock block = readGenericGIFBlock(is, -1);
-            final byte bytes[] = block.appendSubBlocks();
+            final byte[] bytes = block.appendSubBlocks();
             final InputStream bais = new ByteArrayInputStream(bytes);
 
             final int size = imageWidth * imageHeight;
@@ -407,7 +407,7 @@ public class GifImageParser extends ImageParser {
         return new ImageDescriptor(blockCode,
                 ImageLeftPosition, ImageTopPosition, imageWidth, imageHeight,
                 PackedFields, LocalColorTableFlag, InterlaceFlag, SortFlag,
-                SizeofLocalColorTable, LocalColorTable, imageData);
+                SizeofLocalColorTable, localColorTable, imageData);
     }
 
     private int simple_pow(final int base, final int power) {
@@ -455,7 +455,7 @@ public class GifImageParser extends ImageParser {
 
             final GifHeaderInfo ghi = readHeader(is, formatCompliance);
 
-            byte globalColorTable[] = null;
+            byte[] globalColorTable = null;
             if (ghi.globalColorTableFlag) {
                 globalColorTable = readColorTable(is,
                         ghi.sizeOfGlobalColorTable);
@@ -505,12 +505,12 @@ public class GifImageParser extends ImageParser {
         return new Dimension(id.imageWidth, id.imageHeight);
     }
 
-    public byte[] embedICCProfile(final byte image[], final byte profile[]) {
+    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 
@@ -526,7 +526,7 @@ public class GifImageParser extends ImageParser {
 
         for (GifBlock block : blocks) {
             if (block.blockCode == code) {
-                final byte bytes[] = ((GenericGifBlock) block).appendSubBlocks();
+                final byte[] bytes = ((GenericGifBlock) block).appendSubBlocks();
                 result.add(new String(bytes, "US-ASCII"));
             }
         }
@@ -624,14 +624,14 @@ public class GifImageParser extends ImageParser {
         return true;
     }
 
-    private int[] getColorTable(final byte bytes[]) throws ImageReadException {
+    private int[] getColorTable(final byte[] bytes) throws ImageReadException {
         if ((bytes.length % 3) != 0) {
             throw new ImageReadException("Bad Color Table Length: "
                     + bytes.length);
         }
         final int length = bytes.length / 3;
 
-        final int result[] = new int[length];
+        final int[] result = new int[length];
 
         for (int i = 0; i < length; i++) {
             final int red = 0xff & bytes[(i * 3) + 0];
@@ -693,7 +693,7 @@ public class GifImageParser extends ImageParser {
 
         final ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
 
-        int colorTable[];
+        int[] colorTable;
         if (id.localColorTable != null) {
             colorTable = getColorTable(id.localColorTable);
         } else if (imageContents.globalColorTable != null) {
@@ -760,7 +760,7 @@ public class GifImageParser extends ImageParser {
 
     }
 
-    private void writeAsSubBlocks(final OutputStream os, final byte bytes[])
+    private void writeAsSubBlocks(final OutputStream os, final byte[] bytes)
             throws IOException {
         int index = 0;
 
@@ -904,7 +904,7 @@ public class GifImageParser extends ImageParser {
             bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE.length); // 0x0B
             bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE);
 
-            final byte xmpXmlBytes[] = xmpXml.getBytes("utf-8");
+            final byte[] xmpXmlBytes = xmpXml.getBytes("utf-8");
             bos.write(xmpXmlBytes);
 
             // write "magic trailer"
@@ -980,7 +980,7 @@ public class GifImageParser extends ImageParser {
                     LZWMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false); // GIF
             // Mode);
 
-            final byte imagedata[] = new byte[width * height];
+            final byte[] imagedata = new byte[width * height];
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     final int argb = src.getRGB(x, y);
@@ -1003,7 +1003,7 @@ public class GifImageParser extends ImageParser {
                 }
             }
 
-            final byte compressed[] = compressor.compress(imagedata);
+            final byte[] compressed = compressor.compress(imagedata);
             writeAsSubBlocks(bos, compressed);
 //            image_data_total += compressed.length;
         }
@@ -1052,7 +1052,7 @@ public class GifImageParser extends ImageParser {
 
                 final GenericGifBlock genericBlock = (GenericGifBlock) block;
 
-                final byte blockBytes[] = genericBlock.appendSubBlocks(true);
+                final byte[] blockBytes = genericBlock.appendSubBlocks(true);
                 if (blockBytes.length < XMP_APPLICATION_ID_AND_AUTH_CODE.length) {
                     continue;
                 }
@@ -1063,7 +1063,7 @@ public class GifImageParser extends ImageParser {
                     continue;
                 }
 
-                final byte GIF_MAGIC_TRAILER[] = new byte[256];
+                final byte[] GIF_MAGIC_TRAILER = new byte[256];
                 for (int magic = 0; magic <= 0xff; magic++) {
                     GIF_MAGIC_TRAILER[magic] = (byte) (0xff - magic);
                 }

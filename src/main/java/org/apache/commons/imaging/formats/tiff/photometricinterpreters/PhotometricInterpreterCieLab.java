@@ -23,13 +23,13 @@ import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 public class PhotometricInterpreterCieLab extends PhotometricInterpreter {
-    public PhotometricInterpreterCieLab(final int fSamplesPerPixel,
-            final int fBitsPerSample[], final int Predictor, final int width, final int height) {
-        super(fSamplesPerPixel, fBitsPerSample, Predictor, width, height);
+    public PhotometricInterpreterCieLab(final int samplesPerPixel,
+            final int[] bitsPerSample, final int predictor, final int width, final int height) {
+        super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }
 
     @Override
-    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+    public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImageReadException, IOException {
         final int cieL = samples[0];
         final int cieA = (byte) samples[1];

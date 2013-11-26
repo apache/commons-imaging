@@ -50,7 +50,7 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class PsdImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".psd";
-    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
+    private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
     private static final int PSD_SECTION_HEADER = 0;
     private static final int PSD_SECTION_COLOR_MODE = 1;
     private static final int PSD_SECTION_IMAGE_RESOURCES = 2;
@@ -110,7 +110,7 @@ public class PsdImageParser extends ImageParser {
 
         final int Version = read2Bytes("Version", is, "Not a Valid PSD File");
 
-        final byte Reserved[] = readBytes("Reserved", is, 6,
+        final byte[] Reserved = readBytes("Reserved", is, 6,
                 "Not a Valid PSD File");
 
         final int Channels = read2Bytes("Channels", is, "Not a Valid PSD File");
@@ -164,14 +164,14 @@ public class PsdImageParser extends ImageParser {
                 Compression);
     }
 
-    private List<ImageResourceBlock> readImageResourceBlocks(final byte bytes[],
-            final int imageResourceIDs[], final int maxBlocksToRead)
+    private List<ImageResourceBlock> readImageResourceBlocks(final byte[] bytes,
+            final int[] imageResourceIDs, final int maxBlocksToRead)
             throws ImageReadException, IOException {
         return readImageResourceBlocks(new ByteArrayInputStream(bytes),
                 imageResourceIDs, maxBlocksToRead, bytes.length);
     }
 
-    private boolean keepImageResourceBlock(final int ID, final int imageResourceIDs[]) {
+    private boolean keepImageResourceBlock(final int ID, final int[] imageResourceIDs) {
         if (imageResourceIDs == null) {
             return true;
         }
@@ -186,7 +186,7 @@ public class PsdImageParser extends ImageParser {
     }
 
     private List<ImageResourceBlock> readImageResourceBlocks(final InputStream is,
-            final int imageResourceIDs[], final int maxBlocksToRead, int available)
+            final int[] imageResourceIDs, final int maxBlocksToRead, int available)
             throws ImageReadException, IOException {
         final List<ImageResourceBlock> result = new ArrayList<ImageResourceBlock>();
 
@@ -201,7 +201,7 @@ public class PsdImageParser extends ImageParser {
             final int nameLength = readByte("NameLength", is, "Not a Valid PSD File");
 
             available -= 1;
-            final byte nameBytes[] = readBytes("NameData", is, nameLength,
+            final byte[] nameBytes = readBytes("NameData", is, nameLength,
                     "Not a Valid PSD File");
             available -= nameLength;
             if (((nameLength + 1) % 2) != 0) {
@@ -211,25 +211,23 @@ public class PsdImageParser extends ImageParser {
                 available -= 1;
             }
             // String Name = readPString("Name", 6, is, "Not a Valid PSD File");
-            final int DataSize = read4Bytes("Size", is, "Not a Valid PSD File");
+            final int dataSize = read4Bytes("Size", is, "Not a Valid PSD File");
             available -= 4;
             // int ActualDataSize = ((DataSize % 2) == 0)
             // ? DataSize
             // : DataSize + 1; // pad to make even
 
-            final byte Data[] = readBytes("Data", is, DataSize,
-                    "Not a Valid PSD File");
-            available -= DataSize;
+            final byte[] data = readBytes("Data", is, dataSize, "Not a Valid PSD File");
+            available -= dataSize;
 
-            if ((DataSize % 2) != 0) {
+            if ((dataSize % 2) != 0) {
                 //final int DataDiscard =
-                readByte("DataDiscard", is,
-                        "Not a Valid PSD File");
+                readByte("DataDiscard", is, "Not a Valid PSD File");
                 available -= 1;
             }
 
             if (keepImageResourceBlock(id, imageResourceIDs)) {
-                result.add(new ImageResourceBlock(id, nameBytes, Data));
+                result.add(new ImageResourceBlock(id, nameBytes, data));
 
                 if ((maxBlocksToRead >= 0)
                         && (result.size() >= maxBlocksToRead)) {
@@ -244,7 +242,7 @@ public class PsdImageParser extends ImageParser {
     }
 
     private List<ImageResourceBlock> readImageResourceBlocks(
-            final ByteSource byteSource, final int imageResourceIDs[], final int maxBlocksToRead)
+            final ByteSource byteSource, final int[] imageResourceIDs, final int maxBlocksToRead)
             throws ImageReadException, IOException {
         InputStream imageStream = null;
         InputStream resourceStream = null;
@@ -255,7 +253,7 @@ public class PsdImageParser extends ImageParser {
             final ImageContents imageContents = readImageContents(imageStream);
 
             resourceStream = this.getInputStream(byteSource, PSD_SECTION_IMAGE_RESOURCES);
-            final byte ImageResources[] = readBytes("ImageResources",
+            final byte[] ImageResources = readBytes("ImageResources",
                     resourceStream, imageContents.ImageResourcesLength,
                     "Not a Valid PSD File");
 
@@ -431,7 +429,7 @@ public class PsdImageParser extends ImageParser {
         }
 
         final ImageResourceBlock irb = blocks.get(0);
-        final byte bytes[] = irb.data;
+        final byte[] bytes = irb.data;
         if ((bytes == null) || (bytes.length < 1)) {
             return null;
         }
@@ -450,12 +448,12 @@ public class PsdImageParser extends ImageParser {
 
     }
 
-    public byte[] embedICCProfile(final byte image[], final byte profile[]) {
+    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 
@@ -675,7 +673,7 @@ public class PsdImageParser extends ImageParser {
         // case 2 : // Indexed=2;
         {
 
-            final byte ColorModeData[] = getData(byteSource, PSD_SECTION_COLOR_MODE);
+            final byte[] ColorModeData = getData(byteSource, PSD_SECTION_COLOR_MODE);
 
             // ImageResourceBlock block = findImageResourceBlock(blocks,
             // 0x03EB);

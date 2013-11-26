@@ -19,11 +19,11 @@ package org.apache.commons.imaging.formats.png;
 import org.apache.commons.imaging.ImageReadException;
 
 public class BitParser {
-    private final byte bytes[];
+    private final byte[] bytes;
     private final int bitsPerPixel;
     private final int bitDepth;
 
-    public BitParser(final byte bytes[], final int bitsPerPixel, final int bitDepth) {
+    public BitParser(final byte[] bytes, final int bitsPerPixel, final int bitDepth) {
         this.bytes = bytes;
         this.bitsPerPixel = bitsPerPixel;
         this.bitDepth = bitDepth;

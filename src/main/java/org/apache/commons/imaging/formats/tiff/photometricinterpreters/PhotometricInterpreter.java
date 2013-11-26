@@ -23,20 +23,20 @@ import org.apache.commons.imaging.common.ImageBuilder;
 
 public abstract class PhotometricInterpreter {
     protected final int samplesPerPixel;
-    protected final int bitsPerSample[];
+    protected final int[] bitsPerSample;
     protected final int predictor;
     protected final int width;
     protected final int height;
 
-    public PhotometricInterpreter(final int fSamplesPerPixel, final int fBitsPerSample[],
-            final int Predictor, final int width, final int height) {
-        this.samplesPerPixel = fSamplesPerPixel;
-        this.bitsPerSample = fBitsPerSample;
-        this.predictor = Predictor;
+    public PhotometricInterpreter(final int samplesPerPixel, final int[] bitsPerSample,
+            final int predictor, final int width, final int height) {
+        this.samplesPerPixel = samplesPerPixel;
+        this.bitsPerSample = bitsPerSample;
+        this.predictor = predictor;
         this.width = width;
         this.height = height;
     }
 
     public abstract void interpretPixel(ImageBuilder imageBuilder,
-            int samples[], int x, int y) throws ImageReadException, IOException;
+            int[] samples, int x, int y) throws ImageReadException, IOException;
 }

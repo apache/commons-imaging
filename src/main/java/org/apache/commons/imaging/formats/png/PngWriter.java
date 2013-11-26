@@ -68,8 +68,8 @@ public class PngWriter {
         os.write(0xff & (value >> 0));
     }
 
-    private void writeChunk(final OutputStream os, final byte chunkType[],
-            final byte data[]) throws IOException {
+    private void writeChunk(final OutputStream os, final byte[] chunkType,
+            final byte[] data) throws IOException {
         final int dataLength = data == null ? 0 : data.length;
         writeInt(os, dataLength);
         os.write(chunkType);
@@ -202,7 +202,7 @@ public class PngWriter {
         writeChunk(os, PngConstants.tEXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    public final byte[] deflate(final byte bytes[]) throws IOException {
+    public final byte[] deflate(final byte[] bytes) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
         boolean canThrow = false;
@@ -251,7 +251,7 @@ public class PngWriter {
     private void writeChunkPLTE(final OutputStream os, final Palette palette)
             throws IOException {
         final int length = palette.length();
-        final byte bytes[] = new byte[length * 3];
+        final byte[] bytes = new byte[length * 3];
 
         // Debug.debug("length", length);
         for (int i = 0; i < length; i++) {
@@ -280,7 +280,7 @@ public class PngWriter {
         writeChunk(os, PngConstants.IEND_CHUNK_TYPE.toByteArray(), null);
     }
 
-    private void writeChunkIDAT(final OutputStream os, final byte bytes[])
+    private void writeChunkIDAT(final OutputStream os, final byte[] bytes)
             throws IOException {
         writeChunk(os, PngConstants.IDAT_CHUNK_TYPE.toByteArray(), bytes);
     }
@@ -595,14 +595,14 @@ public class PngWriter {
 
             // IDAT Yes Multiple IDAT chunks shall be consecutive
 
-            byte uncompressed[];
+            byte[] uncompressed;
             {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
                 final boolean useAlpha = colorType == PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA
                         || colorType == PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
 
-                final int row[] = new int[width];
+                final int[] row = new int[width];
                 for (int y = 0; y < height; y++) {
                     // Debug.debug("y", y + "/" + height);
                     src.getRGB(0, y, width, 1, row, 0, width);
@@ -667,7 +667,7 @@ public class PngWriter {
                 dos.flush();
                 baos.flush();
 
-                final byte compressed[] = baos.toByteArray();
+                final byte[] compressed = baos.toByteArray();
                 baos.reset();
                 if (compressed.length > 0) {
                     // Debug.debug("compressed", compressed.length);
@@ -677,7 +677,7 @@ public class PngWriter {
             }
             {
                 dos.finish();
-                final byte compressed[] = baos.toByteArray();
+                final byte[] compressed = baos.toByteArray();
                 if (compressed.length > 0) {
                     // Debug.debug("compressed final", compressed.length);
                     writeChunkIDAT(os, compressed);

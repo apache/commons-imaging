@@ -27,9 +27,10 @@ import org.apache.commons.imaging.formats.png.PngText;
 
 public class PngChunkZtxt extends PngTextChunk {
 
-    public final String keyword, text;
+    public final String keyword;
+    public final String text;
 
-    public PngChunkZtxt(final int length, final int chunkType, final int crc, final byte bytes[])
+    public PngChunkZtxt(final int length, final int chunkType, final int crc, final byte[] bytes)
             throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
 
@@ -50,7 +51,7 @@ public class PngChunkZtxt extends PngTextChunk {
         }
 
         final int compressedTextLength = bytes.length - index;
-        final byte compressedText[] = new byte[compressedTextLength];
+        final byte[] compressedText = new byte[compressedTextLength];
         System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
         text = new String(BinaryFunctions.getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedText))), "ISO-8859-1");

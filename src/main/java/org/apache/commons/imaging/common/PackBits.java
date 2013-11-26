@@ -24,7 +24,7 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class PackBits {
 
-    public byte[] decompress(final byte bytes[], final int expected)
+    public byte[] decompress(final byte[] bytes, final int expected)
             throws ImageReadException {
         int total = 0;
 
@@ -72,7 +72,7 @@ public class PackBits {
 
     }
 
-    private int findNextDuplicate(final byte bytes[], final int start) {
+    private int findNextDuplicate(final byte[] bytes, final int start) {
         // int last = -1;
         if (start >= bytes.length) {
             return -1;
@@ -93,7 +93,7 @@ public class PackBits {
         return -1;
     }
 
-    private int findRunLength(final byte bytes[], final int start) {
+    private int findRunLength(final byte[] bytes, final int start) {
         final byte b = bytes[start];
 
         int i;
@@ -105,7 +105,7 @@ public class PackBits {
         return i - start;
     }
 
-    public byte[] compress(final byte bytes[]) throws IOException {
+    public byte[] compress(final byte[] bytes) throws IOException {
         FastByteArrayOutputStream baos = null;
         boolean canThrow = false;
         try {
@@ -153,7 +153,7 @@ public class PackBits {
                     }
                 }
             }
-            final byte result[] = baos.toByteArray();
+            final byte[] result = baos.toByteArray();
             canThrow = true;
             return result;
         } finally {

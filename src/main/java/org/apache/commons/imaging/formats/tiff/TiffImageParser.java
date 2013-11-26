@@ -56,7 +56,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
 public class TiffImageParser extends ImageParser implements TiffConstants {
     private static final String DEFAULT_EXTENSION = ".tif";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".tif", ".tiff", };
+    private static final String[] ACCEPTED_EXTENSIONS = { ".tif", ".tiff", };
 
     @Override
     public String getName() {
@@ -114,12 +114,12 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         return new Dimension(width, height);
     }
 
-    public byte[] embedICCProfile(final byte image[], final byte profile[]) {
+    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 
@@ -318,7 +318,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                 .readDirectories(byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
-        final byte bytes[] = directory.getFieldValue(TiffTagConstants.TIFF_TAG_XMP,
+        final byte[] bytes = directory.getFieldValue(TiffTagConstants.TIFF_TAG_XMP,
                 false);
         if (bytes == null) {
             return null;
@@ -417,7 +417,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             final List<ImageDataElement> dataElements = directory
                     .getTiffRawImageDataElements();
             for (ImageDataElement element : dataElements) {
-                final byte bytes[] = byteSource.getBlock(element.offset,
+                final byte[] bytes = byteSource.getBlock(element.offset,
                         element.length);
                 result.add(bytes);
             }
@@ -615,7 +615,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         if (samplesPerPixelField != null) {
             samplesPerPixel = samplesPerPixelField.getIntValue();
         }
-        int bitsPerSample[] = { 1 };
+        int[] bitsPerSample = { 1 };
         int bitsPerPixel = samplesPerPixel;
         final TiffField bitsPerSampleField = directory.findField(
                 TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
@@ -674,7 +674,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
     private PhotometricInterpreter getPhotometricInterpreter(
             final TiffDirectory directory, final int photometricInterpretation,
-            final int bitsPerPixel, final int bitsPerSample[], final int predictor,
+            final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
             final int samplesPerPixel, final int width, final int height)
             throws ImageReadException {
         switch (photometricInterpretation) {
@@ -686,7 +686,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                     bitsPerSample, predictor, width, height, invert);
         case 3: // Palette
         {
-            final int colorMap[] = directory.findField(
+            final int[] colorMap = directory.findField(
                     TiffTagConstants.TIFF_TAG_COLOR_MAP, true)
                     .getIntArrayValue();
 

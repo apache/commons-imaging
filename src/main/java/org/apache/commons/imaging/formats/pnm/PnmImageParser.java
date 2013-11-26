@@ -44,7 +44,7 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class PnmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".pnm";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".pbm", ".pgm",
+    private static final String[] ACCEPTED_EXTENSIONS = { ".pbm", ".pgm",
             ".ppm", ".pnm", ".pam" };
     public static final String PARAM_KEY_PNM_RAWBITS = "PNM_RAWBITS";
     public static final String PARAM_VALUE_PNM_RAWBITS_YES = "YES";
@@ -216,12 +216,12 @@ public class PnmImageParser extends ImageParser {
         return new Dimension(info.width, info.height);
     }
 
-    public byte[] embedICCProfile(final byte image[], final byte profile[]) {
+    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 

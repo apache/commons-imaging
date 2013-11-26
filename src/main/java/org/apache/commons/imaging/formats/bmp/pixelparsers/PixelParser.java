@@ -27,17 +27,17 @@ import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
 public abstract class PixelParser {
     public final BmpHeaderInfo bhi;
-    public final byte colorTable[];
-    public final byte imageData[];
+    public final byte[] colorTable;
+    public final byte[] imageData;
 
     protected final BinaryInputStream is;
 
-    public PixelParser(final BmpHeaderInfo bhi, final byte ColorTable[], final byte ImageData[]) {
+    public PixelParser(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         this.bhi = bhi;
-        this.colorTable = ColorTable;
-        this.imageData = ImageData;
+        this.colorTable = colorTable;
+        this.imageData = imageData;
 
-        is = new BinaryInputStream(new ByteArrayInputStream(ImageData), ByteOrder.LITTLE_ENDIAN);
+        is = new BinaryInputStream(new ByteArrayInputStream(imageData), ByteOrder.LITTLE_ENDIAN);
     }
 
     public abstract void processImage(ImageBuilder imageBuilder)

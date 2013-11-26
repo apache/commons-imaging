@@ -84,9 +84,9 @@ public class JpegRewriter extends BinaryFileParser {
 
     protected static class JFIFPieceSegment extends JFIFPiece {
         public final int marker;
-        public final byte markerBytes[];
-        public final byte segmentLengthBytes[];
-        public final byte segmentData[];
+        public final byte[] markerBytes;
+        public final byte[] segmentLengthBytes;
+        public final byte[] segmentData;
 
         public JFIFPieceSegment(final int marker, final byte[] segmentData) {
             this(marker,
@@ -157,11 +157,10 @@ public class JpegRewriter extends BinaryFileParser {
     }
 
     protected static class JFIFPieceImageData extends JFIFPiece {
-        public final byte markerBytes[];
-        public final byte imageData[];
+        public final byte[] markerBytes;
+        public final byte[] imageData;
 
-        public JFIFPieceImageData(final byte[] markerBytes,
-                final byte[] imageData) {
+        public JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
             super();
             this.markerBytes = markerBytes;
             this.imageData = imageData;
@@ -187,15 +186,14 @@ public class JpegRewriter extends BinaryFileParser {
                 return true;
             }
 
-            public void visitSOS(final int marker, final byte markerBytes[],
-                    final byte imageData[]) {
+            public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
                 pieces.add(new JFIFPieceImageData(markerBytes, imageData));
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(final int marker, final byte markerBytes[],
-                    final int segmentLength, final byte segmentLengthBytes[],
-                    final byte segmentData[]) throws ImageReadException, IOException {
+            public boolean visitSegment(final int marker, final byte[] markerBytes,
+                    final int segmentLength, final byte[] segmentLengthBytes,
+                    final byte[] segmentData) throws ImageReadException, IOException {
                 final JFIFPiece piece = new JFIFPieceSegment(marker, markerBytes,
                         segmentLengthBytes, segmentData);
                 pieces.add(piece);

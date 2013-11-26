@@ -21,7 +21,7 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 public class DataParserBitmap extends DataParser {
 
     @Override
-    protected int getRGB(final int data[][][], final int x, final int y,
+    protected int getRGB(final int[][][] data, final int x, final int y,
             final ImageContents imageContents) {
         int sample = 0xff & data[0][y][x];
         if (sample == 0) {

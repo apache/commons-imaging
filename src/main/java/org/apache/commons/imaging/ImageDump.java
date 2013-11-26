@@ -66,7 +66,7 @@ public class ImageDump {
         final ICC_ColorSpace fICC_ColorSpace = (ICC_ColorSpace) cs;
         final ICC_Profile fICC_Profile = fICC_ColorSpace.getProfile();
 
-        final byte bytes[] = fICC_Profile.getData();
+        final byte[] bytes = fICC_Profile.getData();
 
         final IccProfileParser parser = new IccProfileParser();
 
@@ -85,7 +85,7 @@ public class ImageDump {
     }
 
     public void dumpBIProps(final String prefix, final BufferedImage src) {
-        final String keys[] = src.getPropertyNames();
+        final String[] keys = src.getPropertyNames();
         if (keys == null) {
             System.out.println(prefix + ": no props");
             return;

@@ -50,7 +50,7 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class XbmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".xbm";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".xbm", };
+    private static final String[] ACCEPTED_EXTENSIONS = { ".xbm", };
 
     @Override
     public String getName() {
@@ -74,7 +74,7 @@ public class XbmImageParser extends ImageParser {
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 

@@ -31,18 +31,18 @@ public class TiffOutputField implements TiffConstants {
     public final TagInfo tagInfo;
     public final FieldType fieldType;
     public final int count;
-    private byte bytes[];
+    private byte[] bytes;
     private final TiffOutputItem.Value separateValueItem;
     private int sortHint = -1;
     private static final String NEWLINE = System.getProperty("line.separator");
 
     public TiffOutputField(final TagInfo tagInfo, final FieldType tagtype, final int count,
-            final byte bytes[]) {
+            final byte[] bytes) {
         this(tagInfo.tag, tagInfo, tagtype, count, bytes);
     }
 
     public TiffOutputField(final int tag, final TagInfo tagInfo, final FieldType fieldType,
-            final int count, final byte bytes[]) {
+            final int count, final byte[] bytes) {
         this.tag = tag;
         this.tagInfo = tagInfo;
         this.fieldType = fieldType;
@@ -105,7 +105,7 @@ public class TiffOutputField implements TiffConstants {
         return Arrays.equals(bytes, data);
     }
 
-    protected void setData(final byte bytes[]) throws ImageWriteException {
+    protected void setData(final byte[] bytes) throws ImageWriteException {
         // if(tagInfo.isUnknown())
         // Debug.debug("unknown tag(0x" + Integer.toHexString(tag)
         // + ") setData", bytes);

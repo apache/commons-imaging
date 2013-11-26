@@ -47,7 +47,7 @@ import org.apache.commons.imaging.util.IoUtils;
 public class DcxImageParser extends ImageParser {
     // See http://www.fileformat.info/format/pcx/egff.htm for documentation
     private static final String DEFAULT_EXTENSION = ".dcx";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".dcx", };
+    private static final String[] ACCEPTED_EXTENSIONS = { ".dcx", };
 
     public DcxImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -76,7 +76,7 @@ public class DcxImageParser extends ImageParser {
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 

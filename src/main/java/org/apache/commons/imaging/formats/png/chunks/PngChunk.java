@@ -24,21 +24,24 @@ public class PngChunk extends BinaryFileParser {
     public final int length;
     public final int chunkType;
     public final int crc;
-    private final byte bytes[];
+    private final byte[] bytes;
 
-    private final boolean propertyBits[];
-    public final boolean ancillary, isPrivate, reserved, safeToCopy;
+    private final boolean[] propertyBits;
+    public final boolean ancillary;
+    public final boolean isPrivate;
+    public final boolean reserved;
+    public final boolean safeToCopy;
 
-    public PngChunk(final int Length, final int ChunkType, final int CRC, final byte bytes[]) {
-        this.length = Length;
-        this.chunkType = ChunkType;
+    public PngChunk(final int length, final int chunkType, final int CRC, final byte[] bytes) {
+        this.length = length;
+        this.chunkType = chunkType;
         this.crc = CRC;
         this.bytes = bytes;
 
         propertyBits = new boolean[4];
         int shift = 24;
         for (int i = 0; i < 4; i++) {
-            final int theByte = 0xff & (ChunkType >> shift);
+            final int theByte = 0xff & (chunkType >> shift);
             shift -= 8;
             final int theMask = 1 << 5;
             propertyBits[i] = ((theByte & theMask) > 0);

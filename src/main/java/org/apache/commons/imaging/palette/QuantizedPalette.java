@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImageWriteException;
 public class QuantizedPalette extends Palette {
     private final int precision;
     private final List<ColorSpaceSubset> subsets;
-    private final ColorSpaceSubset straight[];
+    private final ColorSpaceSubset[] straight;
 
     public QuantizedPalette(final List<ColorSpaceSubset> subsets, final int precision) {
         this.subsets = subsets;

@@ -37,15 +37,15 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 public abstract class DataReader implements TiffConstants {
     protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
-    protected final int bitsPerSample[];
-    protected final int last[];
+    protected final int[] bitsPerSample;
+    protected final int[] last;
 
     protected final int predictor;
     protected final int samplesPerPixel;
     protected final int width, height;
 
     public DataReader(final TiffDirectory directory,
-            final PhotometricInterpreter photometricInterpreter, final int bitsPerSample[],
+            final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,
             final int predictor, final int samplesPerPixel, final int width, final int height) {
         this.directory = directory;
         this.photometricInterpreter = photometricInterpreter;
@@ -101,7 +101,7 @@ public abstract class DataReader implements TiffConstants {
         }
     }
 
-    protected int[] applyPredictor(final int samples[]) {
+    protected int[] applyPredictor(final int[] samples) {
         if (predictor == 2) {
             // Horizontal differencing.
             for (int i = 0; i < samples.length; i++) {
@@ -113,7 +113,7 @@ public abstract class DataReader implements TiffConstants {
         return samples;
     }
 
-    protected byte[] decompress(final byte compressed[], final int compression,
+    protected byte[] decompress(final byte[] compressed, final int compression,
             final int expected_size, final int tileWidth, final int tileHeight)
             throws ImageReadException, IOException {
         final TiffField fillOrderField = directory

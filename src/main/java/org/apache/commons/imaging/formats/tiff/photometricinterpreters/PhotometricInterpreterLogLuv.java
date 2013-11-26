@@ -24,9 +24,9 @@ import org.apache.commons.imaging.common.ImageBuilder;
 public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     // private final boolean yOnly;
 
-    public PhotometricInterpreterLogLuv(final int fSamplesPerPixel,
-            final int fBitsPerSample[], final int predictor, final int width, final int height) {
-        super(fSamplesPerPixel, fBitsPerSample, predictor, width, height);
+    public PhotometricInterpreterLogLuv(final int samplesPerPixel,
+            final int[] bitsPerSample, final int predictor, final int width, final int height) {
+        super(samplesPerPixel, bitsPerSample, predictor, width, height);
 
         // this.yOnly = yonly;
     }
@@ -38,7 +38,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     // private float function_f(float value, )
 
     @Override
-    public void interpretPixel(final ImageBuilder imageBuilder, final int samples[], final int x,
+    public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImageReadException, IOException {
         float X, Y, Z;
 

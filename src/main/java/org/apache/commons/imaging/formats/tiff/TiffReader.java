@@ -162,8 +162,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                 final int tag = read2Bytes("Tag", is, "Not a Valid TIFF File");
                 final int type = read2Bytes("Type", is, "Not a Valid TIFF File");
                 final long count = 0xFFFFffffL & read4Bytes("Count", is, "Not a Valid TIFF File");
-                final byte offsetBytes[] = readBytes("Offset", is, 4,
-                        "Not a Valid TIFF File");
+                final byte[] offsetBytes = readBytes("Offset", is, 4, "Not a Valid TIFF File");
                 final long offset = 0xFFFFffffL & toInt(offsetBytes);
 
                 if (tag == 0) {
@@ -434,7 +433,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 
         final List<ImageDataElement> elements = directory
                 .getTiffRawImageDataElements();
-        final TiffImageData.Data data[] = new TiffImageData.Data[elements.size()];
+        final TiffImageData.Data[] data = new TiffImageData.Data[elements.size()];
 
         if (byteSource instanceof ByteSourceFile) {
             final ByteSourceFile bsf = (ByteSourceFile) byteSource;
@@ -446,10 +445,8 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         } else {
             for (int i = 0; i < elements.size(); i++) {
                 final TiffDirectory.ImageDataElement element = elements.get(i);
-                final byte bytes[] = byteSource.getBlock(element.offset,
-                        element.length);
-                data[i] = new TiffImageData.Data(element.offset,
-                        element.length, bytes);
+                final byte[] bytes = byteSource.getBlock(element.offset, element.length);
+                data[i] = new TiffImageData.Data(element.offset, element.length, bytes);
             }
         }
 
@@ -506,7 +503,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         if (offset + length > byteSource.getLength()) {
             length = (int) (byteSource.getLength() - offset);
         }
-        final byte data[] = byteSource.getBlock(offset, length);
+        final byte[] data = byteSource.getBlock(offset, length);
         // check if the last read byte is actually the end of the image data
         if (strict &&
                 (length < 2 ||

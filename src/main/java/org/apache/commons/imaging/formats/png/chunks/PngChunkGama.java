@@ -20,18 +20,18 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class PngChunkGama extends PngChunk {
-    public final int Gamma;
+    public final int gamma;
 
-    public PngChunkGama(final int Length, final int ChunkType, final int CRC, final byte bytes[])
+    public PngChunkGama(final int length, final int chunkType, final int CRC, final byte[] bytes)
             throws IOException {
-        super(Length, ChunkType, CRC, bytes);
+        super(length, chunkType, CRC, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        Gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt");
+        gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt");
     }
 
     public double getGamma() {
-        return 1.0 / (Gamma / 100000.0);
+        return 1.0 / (gamma / 100000.0);
     }
 
 }

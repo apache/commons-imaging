@@ -25,7 +25,7 @@ public class UnknownSegment extends GenericSegment {
         super(marker, marker_length, is);
     }
 
-    public UnknownSegment(final int marker, final byte bytes[]) {
+    public UnknownSegment(final int marker, final byte[] bytes) {
         super(marker, bytes);
     }
 

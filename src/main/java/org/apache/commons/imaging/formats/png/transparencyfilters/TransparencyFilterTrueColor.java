@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImageReadException;
 public class TransparencyFilterTrueColor extends TransparencyFilter {
     private final int transparent_color;
 
-    public TransparencyFilterTrueColor(final byte bytes[]) throws IOException {
+    public TransparencyFilterTrueColor(final byte[] bytes) throws IOException {
         super(bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);

@@ -22,13 +22,13 @@ import org.apache.commons.imaging.util.Debug;
 
 class ImageResourceBlock {
     protected final int id;
-    protected final byte nameData[];
-    protected final byte data[];
+    protected final byte[] nameData;
+    protected final byte[] data;
 
-    public ImageResourceBlock(final int ID, final byte NameData[], final byte Data[]) {
-        this.id = ID;
-        this.nameData = NameData;
-        this.data = Data;
+    public ImageResourceBlock(final int id, final byte[] nameData, final byte[] data) {
+        this.id = id;
+        this.nameData = nameData;
+        this.data = data;
     }
 
     public String getName() throws UnsupportedEncodingException {

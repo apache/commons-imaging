@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.png;
 public class GammaCorrection {
     private static final boolean DEBUG = false;
 
-    private final int lookupTable[];
+    private final int[] lookupTable;
 
     public GammaCorrection(final double src_gamma, final double dst_gamma) {
 

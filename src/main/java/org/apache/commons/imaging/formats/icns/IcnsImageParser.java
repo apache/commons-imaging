@@ -43,7 +43,7 @@ import org.apache.commons.imaging.util.IoUtils;
 public class IcnsImageParser extends ImageParser {
     public static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
     private static final String DEFAULT_EXTENSION = ".icns";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".icns", };
+    private static final String[] ACCEPTED_EXTENSIONS = { ".icns", };
 
     public IcnsImageParser() {
         super.setByteOrder(ByteOrder.BIG_ENDIAN);
@@ -70,7 +70,7 @@ public class IcnsImageParser extends ImageParser {
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 
@@ -220,10 +220,9 @@ public class IcnsImageParser extends ImageParser {
 
     private static class IcnsContents {
         public final IcnsHeader icnsHeader;
-        public final IcnsElement icnsElements[];
+        public final IcnsElement[] icnsElements;
 
-        public IcnsContents(final IcnsHeader icnsHeader,
-                final IcnsElement[] icnsElements) {
+        public IcnsContents(final IcnsHeader icnsHeader, final IcnsElement[] icnsElements) {
             super();
             this.icnsHeader = icnsHeader;
             this.icnsElements = icnsElements;

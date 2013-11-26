@@ -21,7 +21,7 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 
 public class DataParserCmyk extends DataParser {
     @Override
-    protected int getRGB(final int data[][][], final int x, final int y,
+    protected int getRGB(final int[][][] data, final int x, final int y,
             final ImageContents imageContents) {
         int sc = 0xff & data[0][y][x];
         int sm = 0xff & data[1][y][x];

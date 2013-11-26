@@ -62,7 +62,7 @@ public class PngTextTest extends PngBaseTest {
 
         writeParams.put(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS, writeTexts);
 
-        final byte bytes[] = Imaging.writeImageToBytes(srcImage,
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage,
                 ImageFormats.PNG, writeParams);
 
         final File tempFile = createTempFile("temp", ".png");

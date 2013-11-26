@@ -24,7 +24,7 @@ import java.io.OutputStream;
  * because it's not thread safe.
  */
 class FastByteArrayOutputStream extends OutputStream {
-    private final byte bytes[];
+    private final byte[] bytes;
     private int count = 0;
 
     public FastByteArrayOutputStream(final int length) {
@@ -43,7 +43,7 @@ class FastByteArrayOutputStream extends OutputStream {
 
     public byte[] toByteArray() {
         if (count < bytes.length) {
-            final byte result[] = new byte[count];
+            final byte[] result = new byte[count];
             System.arraycopy(bytes, 0, result, 0, count);
             return result;
         }

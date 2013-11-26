@@ -39,10 +39,10 @@ public class ScanExpediterSimple extends ScanExpediter {
     public void drive() throws ImageReadException, IOException {
         final int bitsPerScanLine = bitsPerPixel * width;
         final int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
-        byte prev[] = null;
+        byte[] prev = null;
 
         for (int y = 0; y < height; y++) {
-            final byte unfiltered[] = getNextScanline(is, pixelBytesPerScanLine,
+            final byte[] unfiltered = getNextScanline(is, pixelBytesPerScanLine,
                     prev, bytesPerPixel);
 
             prev = unfiltered;

@@ -32,11 +32,11 @@ public class IccTag {
     public final int signature;
     public final int offset, length;
     public final IccTagType fIccTagType;
-    public byte data[] = null;
-    private IccTagDataType itdt = null;
+    public byte[] data;
+    private IccTagDataType itdt;
     private int data_type_signature;
 
-    // public final byte data[];
+    // public final byte[] data;
 
     public IccTag(final int signature, final int offset, final int length, final IccTagType fIccTagType) {
         this.signature = signature;
@@ -45,7 +45,7 @@ public class IccTag {
         this.fIccTagType = fIccTagType;
     }
 
-    public void setData(final byte bytes[]) throws IOException {
+    public void setData(final byte[] bytes) throws IOException {
         data = bytes;
 
         BinaryInputStream bis = null;

@@ -49,7 +49,7 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class IcoImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".ico";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".ico", ".cur", };
+    private static final String[] ACCEPTED_EXTENSIONS = { ".ico", ".cur", };
 
     public IcoImageParser() {
         super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -77,7 +77,7 @@ public class IcoImageParser extends ImageParser {
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 
@@ -543,7 +543,7 @@ public class IcoImageParser extends ImageParser {
 
     private static class ImageContents {
         public final FileHeader fileHeader;
-        public final IconData iconDatas[];
+        public final IconData[] iconDatas;
 
         public ImageContents(final FileHeader fileHeader,
                 final IconData[] iconDatas) {
@@ -561,12 +561,12 @@ public class IcoImageParser extends ImageParser {
             is = byteSource.getInputStream();
             final FileHeader fileHeader = readFileHeader(is);
 
-            final IconInfo fIconInfos[] = new IconInfo[fileHeader.iconCount];
+            final IconInfo[] fIconInfos = new IconInfo[fileHeader.iconCount];
             for (int i = 0; i < fileHeader.iconCount; i++) {
                 fIconInfos[i] = readIconInfo(is);
             }
 
-            final IconData fIconDatas[] = new IconData[fileHeader.iconCount];
+            final IconData[] fIconDatas = new IconData[fileHeader.iconCount];
             for (int i = 0; i < fileHeader.iconCount; i++) {
                 final byte[] iconData = byteSource.getBlock(
                         fIconInfos[i].ImageOffset, fIconInfos[i].ImageSize);

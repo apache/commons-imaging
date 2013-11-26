@@ -32,15 +32,15 @@ public class App13Segment extends AppnSegment {
     // public final List elements = new ArrayList();
     // public final boolean isIPTCJpegSegment;
 
-    public App13Segment(final JpegImageParser parser, final int marker, final byte segmentData[])
+    public App13Segment(final JpegImageParser parser, final int marker, final byte[] segmentData)
             throws IOException {
         this(parser, marker, segmentData.length, new ByteArrayInputStream(
                 segmentData));
     }
 
-    public App13Segment(final JpegImageParser parser, final int marker, final int marker_length,
+    public App13Segment(final JpegImageParser parser, final int marker, final int markerLength,
             final InputStream is) throws IOException {
-        super(marker, marker_length, is);
+        super(marker, markerLength, is);
         this.parser = parser;
 
         // isIPTCJpegSegment = new IptcParser().isIPTCJpegSegment(bytes);

@@ -58,7 +58,7 @@ package org.apache.commons.imaging.formats.tga;
 //
 //    private static final String DEFAULT_EXTENSION = ".tga";
 //
-//    private static final String ACCEPTED_EXTENSIONS[] = {
+//    private static final String[] ACCEPTED_EXTENSIONS = {
 //            ".tga", ".tpic",
 //    };
 //

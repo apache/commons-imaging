@@ -39,7 +39,7 @@ public class MedianCutQuantizer {
         final int width = image.getWidth();
         final int height = image.getHeight();
 
-        final int row[] = new int[width];
+        final int[] row = new int[width];
         for (int y = 0; y < height; y++) {
             image.getRGB(0, y, width, 1, row, 0, width);
             for (int x = 0; x < width; x++) {
@@ -94,7 +94,7 @@ public class MedianCutQuantizer {
                 Debug.debug("lossless palette: " + discrete_colors);
             }
 
-            final int palette[] = new int[discrete_colors];
+            final int[] palette = new int[discrete_colors];
             final List<ColorCount> color_counts = new ArrayList<ColorCount>(
                     color_map.values());
 
@@ -129,7 +129,7 @@ public class MedianCutQuantizer {
             Debug.debug("palette size: " + palette_size);
         }
 
-        final int palette[] = new int[palette_size];
+        final int[] palette = new int[palette_size];
 
         for (int i = 0; i < color_groups.size(); i++) {
             final ColorGroup color_group = color_groups.get(i);

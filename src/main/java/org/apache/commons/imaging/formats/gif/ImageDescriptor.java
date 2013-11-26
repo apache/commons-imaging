@@ -28,28 +28,28 @@ public class ImageDescriptor extends GifBlock {
     public final boolean sortFlag;
     public final byte sizeOfLocalColorTable;
 
-    public final byte localColorTable[];
-    public final byte imageData[];
+    public final byte[] localColorTable;
+    public final byte[] imageData;
 
-    public ImageDescriptor(final int blockCode, final int ImageLeftPosition,
-            final int ImageTopPosition, final int ImageWidth, final int ImageHeight,
-            final byte PackedFields, final boolean LocalColorTableFlag,
-            final boolean InterlaceFlag, final boolean SortFlag,
-            final byte SizeofLocalColorTable, final byte LocalColorTable[],
-            final byte ImageData[]) {
+    public ImageDescriptor(final int blockCode, final int imageLeftPosition,
+            final int imageTopPosition, final int imageWidth, final int imageHeight,
+            final byte packedFields, final boolean localColorTableFlag,
+            final boolean interlaceFlag, final boolean sortFlag,
+            final byte sizeofLocalColorTable, final byte[] localColorTable,
+            final byte[] imageData) {
         super(blockCode);
 
-        this.imageLeftPosition = ImageLeftPosition;
-        this.imageTopPosition = ImageTopPosition;
-        this.imageWidth = ImageWidth;
-        this.imageHeight = ImageHeight;
-        this.packedFields = PackedFields;
-        this.localColorTableFlag = LocalColorTableFlag;
-        this.interlaceFlag = InterlaceFlag;
-        this.sortFlag = SortFlag;
-        this.sizeOfLocalColorTable = SizeofLocalColorTable;
+        this.imageLeftPosition = imageLeftPosition;
+        this.imageTopPosition = imageTopPosition;
+        this.imageWidth = imageWidth;
+        this.imageHeight = imageHeight;
+        this.packedFields = packedFields;
+        this.localColorTableFlag = localColorTableFlag;
+        this.interlaceFlag = interlaceFlag;
+        this.sortFlag = sortFlag;
+        this.sizeOfLocalColorTable = sizeofLocalColorTable;
 
-        this.localColorTable = LocalColorTable;
-        this.imageData = ImageData;
+        this.localColorTable = localColorTable;
+        this.imageData = imageData;
     }
 }

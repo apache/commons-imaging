@@ -153,7 +153,7 @@ public class TiffImageMetadata extends ImageMetadata implements
 
                     // Debug.debug("value", Debug.getType(value));
 
-                    final byte bytes[] = tagInfo.encodeValue(fieldType, value,
+                    final byte[] bytes = tagInfo.encodeValue(fieldType, value,
                             byteOrder);
 
                     // if (tagInfo.isUnknown())
@@ -489,14 +489,12 @@ public class TiffImageMetadata extends ImageMetadata implements
 
         // all of these values are strings.
         final String latitudeRef = latitudeRefField.getStringValue();
-        final RationalNumber latitude[] = (RationalNumber[]) latitudeField.getValue();
+        final RationalNumber[] latitude = (RationalNumber[]) latitudeField.getValue();
         final String longitudeRef = longitudeRefField.getStringValue();
-        final RationalNumber longitude[] = (RationalNumber[]) longitudeField
-                .getValue();
+        final RationalNumber[] longitude = (RationalNumber[]) longitudeField.getValue();
 
         if (latitude.length != 3 || longitude.length != 3) {
-            throw new ImageReadException(
-                    "Expected three values for latitude and longitude.");
+            throw new ImageReadException("Expected three values for latitude and longitude.");
         }
 
         final RationalNumber latitudeDegrees = latitude[0];

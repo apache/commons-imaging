@@ -28,22 +28,17 @@ public class PngChunkIhdr extends PngChunk {
     public final int filterMethod;
     public final int interlaceMethod;
 
-    public PngChunkIhdr(final int Length, final int ChunkType, final int CRC, final byte bytes[])
+    public PngChunkIhdr(final int length, final int chunkType, final int CRC, final byte[] bytes)
             throws IOException {
-        super(Length, ChunkType, CRC, bytes);
+        super(length, chunkType, CRC, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
         width = read4Bytes("Width", is, "Not a Valid Png File: IHDR Corrupt");
         height = read4Bytes("Height", is, "Not a Valid Png File: IHDR Corrupt");
-        bitDepth = readByte("BitDepth", is,
-                "Not a Valid Png File: IHDR Corrupt");
-        colorType = readByte("ColorType", is,
-                "Not a Valid Png File: IHDR Corrupt");
-        compressionMethod = readByte("CompressionMethod", is,
-                "Not a Valid Png File: IHDR Corrupt");
-        filterMethod = readByte("FilterMethod", is,
-                "Not a Valid Png File: IHDR Corrupt");
-        interlaceMethod = readByte("InterlaceMethod", is,
-                "Not a Valid Png File: IHDR Corrupt");
+        bitDepth = readByte("BitDepth", is, "Not a Valid Png File: IHDR Corrupt");
+        colorType = readByte("ColorType", is, "Not a Valid Png File: IHDR Corrupt");
+        compressionMethod = readByte("CompressionMethod", is, "Not a Valid Png File: IHDR Corrupt");
+        filterMethod = readByte("FilterMethod", is, "Not a Valid Png File: IHDR Corrupt");
+        interlaceMethod = readByte("InterlaceMethod", is, "Not a Valid Png File: IHDR Corrupt");
     }
 }

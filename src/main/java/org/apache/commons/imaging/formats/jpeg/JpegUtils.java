@@ -35,12 +35,12 @@ public class JpegUtils extends BinaryFileParser {
         // return false to exit before reading image data.
         boolean beginSOS();
 
-        void visitSOS(int marker, byte markerBytes[], byte imageData[]);
+        void visitSOS(int marker, byte[] markerBytes, byte[] imageData);
 
         // return false to exit traversal.
-        boolean visitSegment(int marker, byte markerBytes[],
-                int segmentLength, byte segmentLengthBytes[],
-                byte segmentData[]) throws ImageReadException,
+        boolean visitSegment(int marker, byte[] markerBytes,
+                int segmentLength, byte[] segmentLengthBytes,
+                byte[] segmentData) throws ImageReadException,
                 IOException;
     }
 
@@ -73,21 +73,19 @@ public class JpegUtils extends BinaryFileParser {
                         return;
                     }
 
-                    final byte imageData[] = getStreamBytes(is);
+                    final byte[] imageData = getStreamBytes(is);
                     visitor.visitSOS(marker, markerBytes, imageData);
                     break;
                 }
 
-                final byte segmentLengthBytes[] = readBytes("segmentLengthBytes",
-                        is, 2, "segmentLengthBytes");
+                final byte[] segmentLengthBytes = readBytes("segmentLengthBytes", is, 2, "segmentLengthBytes");
                 final int segmentLength = toUInt16(segmentLengthBytes);
 
-                final byte segmentData[] = readBytes("Segment Data",
+                final byte[] segmentData = readBytes("Segment Data", 
                         is, segmentLength - 2,
                         "Invalid Segment: insufficient data");
 
-                if (!visitor.visitSegment(marker, markerBytes, segmentLength,
-                        segmentLengthBytes, segmentData)) {
+                if (!visitor.visitSegment(marker, markerBytes, segmentLength, segmentLengthBytes, segmentData)) {
                     canThrow = true;
                     return;
                 }
@@ -167,17 +165,15 @@ public class JpegUtils extends BinaryFileParser {
                 return true;
             }
 
-            public void visitSOS(final int marker, final byte markerBytes[],
-                    final byte imageData[]) {
-                Debug.debug("SOS marker.  " + imageData.length
-                        + " bytes of image data.");
+            public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
+                Debug.debug("SOS marker.  " + imageData.length + " bytes of image data.");
                 Debug.debug("");
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(final int marker, final byte markerBytes[],
-                    final int segmentLength, final byte segmentLengthBytes[],
-                    final byte segmentData[]) {
+            public boolean visitSegment(final int marker, final byte[] markerBytes,
+                    final int segmentLength, final byte[] segmentLengthBytes,
+                    final byte[] segmentData) {
                 Debug.debug("Segment marker: " + Integer.toHexString(marker)
                         + " (" + getMarkerName(marker) + "), "
                         + segmentData.length + " bytes of segment data.");

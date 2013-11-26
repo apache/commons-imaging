@@ -25,45 +25,42 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class PngChunkIccp extends PngChunk {
     // private final PngImageParser parser;
-    public final String ProfileName;
-    public final int CompressionMethod;
-    public final byte CompressedProfile[];
-    public final byte UncompressedProfile[];
+    public final String profileName;
+    public final int compressionMethod;
+    public final byte[] compressedProfile;
+    public final byte[] uncompressedProfile;
 
     public PngChunkIccp(
     // PngImageParser parser,
-            final int Length, final int ChunkType, final int CRC, final byte bytes[])
+            final int length, final int chunkType, final int CRC, final byte[] bytes)
             throws ImageReadException, IOException {
-        super(Length, ChunkType, CRC, bytes);
+        super(length, chunkType, CRC, bytes);
         // this.parser = parser;
 
         final int index = findNull(bytes);
         if (index < 0) {
             throw new ImageReadException("PngChunkIccp: No Profile Name");
         }
-        final byte name_bytes[] = new byte[index];
+        final byte[] name_bytes = new byte[index];
         System.arraycopy(bytes, 0, name_bytes, 0, index);
-        ProfileName = new String(name_bytes, "ISO-8859-1");
+        profileName = new String(name_bytes, "ISO-8859-1");
 
-        CompressionMethod = bytes[index + 1];
+        compressionMethod = bytes[index + 1];
 
         final int CompressedProfileLength = bytes.length - (index + 1 + 1);
-        CompressedProfile = new byte[CompressedProfileLength];
-        System.arraycopy(bytes, index + 1 + 1, CompressedProfile, 0,
-                CompressedProfileLength);
+        compressedProfile = new byte[CompressedProfileLength];
+        System.arraycopy(bytes, index + 1 + 1, compressedProfile, 0, CompressedProfileLength);
 
         if (getDebug()) {
-            System.out.println("ProfileName: " + ProfileName);
-            System.out.println("ProfileName.length(): "
-                    + ProfileName.length());
-            System.out.println("CompressionMethod: " + CompressionMethod);
-            System.out.println("CompressedProfileLength: "
-                    + CompressedProfileLength);
+            System.out.println("ProfileName: " + profileName);
+            System.out.println("ProfileName.length(): " + profileName.length());
+            System.out.println("CompressionMethod: " + compressionMethod);
+            System.out.println("CompressedProfileLength: " + CompressedProfileLength);
             System.out.println("bytes.length: " + bytes.length);
         }
 
-        UncompressedProfile = BinaryFunctions.getStreamBytes(
-                new InflaterInputStream(new ByteArrayInputStream(CompressedProfile)));
+        uncompressedProfile = BinaryFunctions.getStreamBytes(
+                new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
 
         if (getDebug()) {
             System.out.println("UncompressedProfile: " + Integer.toString(bytes.length));

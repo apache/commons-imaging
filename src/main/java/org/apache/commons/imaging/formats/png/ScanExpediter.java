@@ -205,24 +205,23 @@ public abstract class ScanExpediter extends BinaryFileParser {
         return filter;
     }
 
-    protected byte[] unfilterScanline(final int filter_type, final byte src[], final byte prev[],
+    protected byte[] unfilterScanline(final int filter_type, final byte[] src, final byte[] prev,
             final int BytesPerPixel) throws ImageReadException, IOException {
         final ScanlineFilter filter = getScanlineFilter(filter_type, BytesPerPixel);
 
-        final byte dst[] = new byte[src.length];
+        final byte[] dst = new byte[src.length];
         filter.unfilter(src, dst, prev);
         return dst;
     }
 
-    protected byte[] getNextScanline(final InputStream is, final int length, final byte prev[],
+    protected byte[] getNextScanline(final InputStream is, final int length, final byte[] prev,
             final int BytesPerPixel) throws ImageReadException, IOException {
         final int filterType = is.read();
         if (filterType < 0) {
             throw new ImageReadException("PNG: missing filter type");
         }
 
-        final byte scanline[] = this.readBytes("scanline", is, length,
-                "PNG: missing image data");
+        byte[] scanline = this.readBytes("scanline", is, length, "PNG: missing image data");
 
         return unfilterScanline(filterType, scanline, prev, BytesPerPixel);
     }

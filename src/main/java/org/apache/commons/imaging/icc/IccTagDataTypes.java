@@ -27,7 +27,7 @@ import org.apache.commons.imaging.util.IoUtils;
 public enum IccTagDataTypes implements IccTagDataType {
     DESC_TYPE(
             "descType", 0x64657363) {
-        public void dump(final String prefix, final byte bytes[])
+        public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;
@@ -56,7 +56,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     DATA_TYPE(
             "dataType", 0x64617461) {
-        public void dump(final String prefix, final byte bytes[])
+        public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;
@@ -76,7 +76,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     MULTI_LOCALIZED_UNICODE_TYPE(
             "multiLocalizedUnicodeType", (0x6D6C7563)) {
-        public void dump(final String prefix, final byte bytes[])
+        public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;
@@ -96,7 +96,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     SIGNATURE_TYPE(
             "signatureType", ((0x73696720))) {
-        public void dump(final String prefix, final byte bytes[])
+        public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;
@@ -129,7 +129,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     TEXT_TYPE(
             "textType", 0x74657874) {
-        public void dump(final String prefix, final byte bytes[])
+        public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
             BinaryInputStream bis = null;

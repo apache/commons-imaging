@@ -60,7 +60,7 @@ import org.apache.commons.imaging.util.Debug;
 
 public class JpegImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".jpg";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".jpg", ".jpeg", };
+    private static final String[] ACCEPTED_EXTENSIONS = { ".jpg", ".jpeg", };
     
     public JpegImageParser() {
         setByteOrder(ByteOrder.BIG_ENDIAN);
@@ -96,7 +96,7 @@ public class JpegImageParser extends ImageParser {
         return jpegDecoder.decode(byteSource);
     }
 
-    private boolean keepMarker(final int marker, final int markers[]) {
+    private boolean keepMarker(final int marker, final int[] markers) {
         if (markers == null) {
             return true;
         }
@@ -111,7 +111,7 @@ public class JpegImageParser extends ImageParser {
     }
 
     public List<Segment> readSegments(final ByteSource byteSource,
-            final int markers[], final boolean returnAfterFirst,
+            final int[] markers, final boolean returnAfterFirst,
             final boolean readEverything) throws ImageReadException, IOException {
         final List<Segment> result = new ArrayList<Segment>();
         final JpegImageParser parser = this;
@@ -138,15 +138,15 @@ public class JpegImageParser extends ImageParser {
                 return false;
             }
 
-            public void visitSOS(final int marker, final byte markerBytes[],
-                    final byte imageData[]) {
+            public void visitSOS(final int marker, final byte[] markerBytes,
+                    final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(final int marker, final byte markerBytes[],
-                    final int markerLength, final byte markerLengthBytes[],
-                    final byte segmentData[]) throws ImageReadException, IOException {
+            public boolean visitSegment(final int marker, final byte[] markerBytes,
+                    final int markerLength, final byte[] markerLengthBytes,
+                    final byte[] segmentData) throws ImageReadException, IOException {
                 if (marker == JpegConstants.EOIMarker) {
                     return false;
                 }
@@ -243,7 +243,7 @@ public class JpegImageParser extends ImageParser {
             total += segment.icc_bytes.length;
         }
 
-        final byte result[] = new byte[total];
+        final byte[] result = new byte[total];
         int progress = 0;
 
         for (App2Segment segment : segments) {
@@ -266,7 +266,7 @@ public class JpegImageParser extends ImageParser {
         Debug.debug();
     }
 
-    public List<Segment> readSegments(final ByteSource byteSource, final int markers[],
+    public List<Segment> readSegments(final ByteSource byteSource, final int[] markers,
             final boolean returnAfterFirst) throws ImageReadException, IOException {
         return readSegments(byteSource, markers, returnAfterFirst, false);
     }
@@ -292,7 +292,7 @@ public class JpegImageParser extends ImageParser {
             return null;
         }
 
-        final byte bytes[] = assembleSegments(filtered);
+        final byte[] bytes = assembleSegments(filtered);
 
         if (getDebug()) {
             System.out.println("bytes" + ": " + bytes.length);
@@ -339,7 +339,7 @@ public class JpegImageParser extends ImageParser {
 
     public TiffImageMetadata getExifMetadata(final ByteSource byteSource, Map<String,Object> params)
             throws ImageReadException, IOException {
-        final byte bytes[] = getExifRawData(byteSource);
+        final byte[] bytes = getExifRawData(byteSource);
         if (null == bytes) {
             return null;
         }
@@ -384,7 +384,7 @@ public class JpegImageParser extends ImageParser {
         }
 
         final GenericSegment segment = (GenericSegment) exifSegments.get(0);
-        final byte bytes[] = segment.getSegmentData();
+        final byte[] bytes = segment.getSegmentData();
 
         // byte head[] = readBytearray("exif head", bytes, 0, 6);
         //
@@ -395,7 +395,7 @@ public class JpegImageParser extends ImageParser {
 
     public boolean hasExifSegment(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final boolean result[] = { false, };
+        final boolean[] result = { false, };
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
@@ -403,15 +403,15 @@ public class JpegImageParser extends ImageParser {
                 return false;
             }
 
-            public void visitSOS(final int marker, final byte markerBytes[],
-                    final byte imageData[]) {
+            public void visitSOS(final int marker, final byte[] markerBytes,
+                    final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(final int marker, final byte markerBytes[],
-                    final int markerLength, final byte markerLengthBytes[],
-                    final byte segmentData[]) throws ImageReadException, IOException {
+            public boolean visitSegment(final int marker, final byte[] markerBytes,
+                    final int markerLength, final byte[] markerLengthBytes,
+                    final byte[] segmentData) throws ImageReadException, IOException {
                 if (marker == 0xffd9) {
                     return false;
                 }
@@ -434,7 +434,7 @@ public class JpegImageParser extends ImageParser {
 
     public boolean hasIptcSegment(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final boolean result[] = { false, };
+        final boolean[] result = { false, };
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
@@ -442,15 +442,15 @@ public class JpegImageParser extends ImageParser {
                 return false;
             }
 
-            public void visitSOS(final int marker, final byte markerBytes[],
-                    final byte imageData[]) {
+            public void visitSOS(final int marker, final byte[] markerBytes,
+                    final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(final int marker, final byte markerBytes[],
-                    final int markerLength, final byte markerLengthBytes[],
-                    final byte segmentData[]) throws ImageReadException, IOException {
+            public boolean visitSegment(final int marker, final byte[] markerBytes,
+                    final int markerLength, final byte[] markerLengthBytes,
+                    final byte[] segmentData) throws ImageReadException, IOException {
                 if (marker == 0xffd9) {
                     return false;
                 }
@@ -473,7 +473,7 @@ public class JpegImageParser extends ImageParser {
 
     public boolean hasXmpSegment(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final boolean result[] = { false, };
+        final boolean[] result = { false, };
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
@@ -481,15 +481,15 @@ public class JpegImageParser extends ImageParser {
                 return false;
             }
 
-            public void visitSOS(final int marker, final byte markerBytes[],
-                    final byte imageData[]) {
+            public void visitSOS(final int marker, final byte[] markerBytes,
+                    final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(final int marker, final byte markerBytes[],
-                    final int markerLength, final byte markerLengthBytes[],
-                    final byte segmentData[]) throws ImageReadException, IOException {
+            public boolean visitSegment(final int marker, final byte[] markerBytes,
+                    final int markerLength, final byte[] markerLengthBytes,
+                    final byte[] segmentData) throws ImageReadException, IOException {
                 if (marker == 0xffd9) {
                     return false;
                 }
@@ -531,15 +531,15 @@ public class JpegImageParser extends ImageParser {
                 return false;
             }
 
-            public void visitSOS(final int marker, final byte markerBytes[],
-                    final byte imageData[]) {
+            public void visitSOS(final int marker, final byte[] markerBytes,
+                    final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(final int marker, final byte markerBytes[],
-                    final int markerLength, final byte markerLengthBytes[],
-                    final byte segmentData[]) throws ImageReadException, IOException {
+            public boolean visitSegment(final int marker, final byte[] markerBytes,
+                    final int markerLength, final byte[] markerLengthBytes,
+                    final byte[] segmentData) throws ImageReadException, IOException {
                 if (marker == 0xffd9) {
                     return false;
                 }
@@ -630,12 +630,12 @@ public class JpegImageParser extends ImageParser {
         return new Dimension(fSOFNSegment.width, fSOFNSegment.height);
     }
 
-    public byte[] embedICCProfile(final byte image[], final byte profile[]) {
+    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 

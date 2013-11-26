@@ -23,9 +23,8 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
 public abstract class PixelParserSimple extends PixelParser {
-    public PixelParserSimple(final BmpHeaderInfo bhi, final byte ColorTable[],
-            final byte ImageData[]) {
-        super(bhi, ColorTable, ImageData);
+    public PixelParserSimple(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
+        super(bhi, colorTable, imageData);
     }
 
     public abstract int getNextRGB() throws ImageReadException, IOException;

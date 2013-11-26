@@ -33,7 +33,7 @@ public final class BinaryFunctions {
     private BinaryFunctions() {
     }
     
-    public static boolean startsWith(final byte haystack[], final byte needle[]) {
+    public static boolean startsWith(final byte[] haystack, final byte[] needle) {
         if (needle == null) {
             return false;
         }
@@ -70,7 +70,7 @@ public final class BinaryFunctions {
 
     public static byte[] readBytes(final String name, final InputStream is, final int length,
             final String exception) throws IOException {
-        final byte result[] = new byte[length];
+        final byte[] result = new byte[length];
         int read = 0;
         while (read < length) {
             final int count = is.read(result, read, length - read);
@@ -89,7 +89,7 @@ public final class BinaryFunctions {
         return readBytes("", is, count, "Unexpected EOF");
     }
 
-    public static void readAndVerifyBytes(final InputStream is, final byte expected[],
+    public static void readAndVerifyBytes(final InputStream is, final byte[] expected,
             final String exception) throws ImageReadException, IOException {
         for (final byte element : expected) {
             final int data = is.read();
@@ -123,9 +123,9 @@ public final class BinaryFunctions {
     }
 
     public static void readAndVerifyBytes(final String name, final InputStream is,
-            final byte expected[], final String exception) throws ImageReadException,
+            final byte[] expected, final String exception) throws ImageReadException,
             IOException {
-        final byte bytes[] = readBytes(name, is, expected.length, exception);
+        final byte[] bytes = readBytes(name, is, expected.length, exception);
 
         for (int i = 0; i < expected.length; i++) {
             if (bytes[i] != expected[i]) {
@@ -161,31 +161,31 @@ public final class BinaryFunctions {
         }
     }
 
-    public static byte[] remainingBytes(final String name, final byte bytes[], final int count) {
+    public static byte[] remainingBytes(final String name, final byte[] bytes, final int count) {
         return slice(bytes, count, bytes.length - count);
     }
 
-    public static byte[] slice(final byte bytes[], final int start, final int count) {
-        final byte result[] = new byte[count];
+    public static byte[] slice(final byte[] bytes, final int start, final int count) {
+        final byte[] result = new byte[count];
         System.arraycopy(bytes, start, result, 0, count);
         return result;
     }
 
-    public static byte[] tail(final byte bytes[], int count) {
+    public static byte[] tail(final byte[] bytes, int count) {
         if (count > bytes.length) {
             count = bytes.length;
         }
         return slice(bytes, bytes.length - count, count);
     }
 
-    public static byte[] head(final byte bytes[], int count) {
+    public static byte[] head(final byte[] bytes, int count) {
         if (count > bytes.length) {
             count = bytes.length;
         }
         return slice(bytes, 0, count);
     }
 
-    public static boolean compareBytes(final byte a[], final int aStart, final byte b[],
+    public static boolean compareBytes(final byte[] a, final int aStart, final byte[] b,
             final int bStart, final int length) {
         if (a.length < (aStart + length)) {
             return false;
@@ -286,11 +286,11 @@ public final class BinaryFunctions {
         return (((0xff & c1) << 24) | ((0xff & c2) << 16) | ((0xff & c3) << 8) | ((0xff & c4) << 0));
     }
 
-    public static int findNull(final byte src[]) {
+    public static int findNull(final byte[] src) {
         return findNull(src, 0);
     }
 
-    public static int findNull(final byte src[], final int start) {
+    public static int findNull(final byte[] src, final int start) {
         for (int i = start; i < src.length; i++) {
             if (src[i] == 0) {
                 return i;
@@ -301,7 +301,7 @@ public final class BinaryFunctions {
 
     public static byte[] getRAFBytes(final RandomAccessFile raf, final long pos,
             final int length, final String exception) throws IOException {
-        final byte result[] = new byte[length];
+        final byte[] result = new byte[length];
 
         raf.seek(pos);
 
@@ -325,7 +325,7 @@ public final class BinaryFunctions {
 
     public static void copyStreamToStream(final InputStream is, final OutputStream os)
             throws IOException {
-        final byte buffer[] = new byte[1024];
+        final byte[] buffer = new byte[1024];
         int read;
         while ((read = is.read(buffer)) > 0) {
             os.write(buffer, 0, read);

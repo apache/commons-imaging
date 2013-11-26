@@ -46,7 +46,7 @@ public final class Debug {
         }
     }
 
-    private static String getDebug(final String message, final int v[]) {
+    private static String getDebug(final String message, final int[] v) {
         final StringBuilder result = new StringBuilder();
 
         if (v == null) {
@@ -61,12 +61,12 @@ public final class Debug {
         return result.toString();
     }
 
-    private static String getDebug(final String message, final byte v[]) {
+    private static String getDebug(final String message, final byte[] v) {
         final int max = 250;
         return getDebug(message, v, max);
     }
 
-    private static String getDebug(final String message, final byte v[], final int max) {
+    private static String getDebug(final String message, final byte[] v, final int max) {
 
         final StringBuilder result = new StringBuilder();
 
@@ -96,7 +96,7 @@ public final class Debug {
         return result.toString();
     }
 
-    private static String getDebug(final String message, final char v[]) {
+    private static String getDebug(final String message, final char[] v) {
         final StringBuilder result = new StringBuilder();
 
         if (v == null) {
@@ -190,11 +190,11 @@ public final class Debug {
         }
     }
 
-    private static void debug(final String message, final byte v[]) {
+    private static void debug(final String message, final byte[] v) {
         debug(getDebug(message, v));
     }
 
-    private static void debug(final String message, final char v[]) {
+    private static void debug(final String message, final char[] v) {
         debug(getDebug(message, v));
     }
 
@@ -221,7 +221,7 @@ public final class Debug {
         }
     }
 
-    private static void debug(final String message, final int v[]) {
+    private static void debug(final String message, final int[] v) {
         debug(getDebug(message, v));
     }
 
@@ -282,7 +282,7 @@ public final class Debug {
         final StringBuilder result = new StringBuilder();
 
         if (e != null) {
-            final StackTraceElement stes[] = e.getStackTrace();
+            final StackTraceElement[] stes = e.getStackTrace();
             if (stes != null) {
                 for (int i = skip; i < stes.length && (limit < 0 || i < limit); i++) {
                     final StackTraceElement ste = stes[i];

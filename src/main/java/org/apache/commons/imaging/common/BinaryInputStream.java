@@ -42,7 +42,7 @@ public class BinaryInputStream extends InputStream {
         return BinaryFunctions.read4Bytes(name, is, exception, byteOrder);
     }
 
-    public final void readAndVerifyBytes(final byte expected[], final String exception)
+    public final void readAndVerifyBytes(final byte[] expected, final String exception)
             throws ImageReadException, IOException {
         BinaryFunctions.readAndVerifyBytes(is, expected, exception);
     }

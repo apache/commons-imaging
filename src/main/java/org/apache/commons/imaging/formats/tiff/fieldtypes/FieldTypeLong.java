@@ -42,11 +42,11 @@ public class FieldTypeLong extends FieldType {
         if (o instanceof Integer) {
             return ByteConversions.toBytes((Integer)o, byteOrder);
         } else if (o instanceof int[]) {
-            final int numbers[] = (int[]) o;
+            final int[] numbers = (int[]) o;
             return ByteConversions.toBytes(numbers, byteOrder);
         } else if (o instanceof Integer[]) {
-            final Integer numbers[] = (Integer[]) o;
-            final int values[] = new int[numbers.length];
+            final Integer[] numbers = (Integer[]) o;
+            final int[] values = new int[numbers.length];
             for (int i = 0; i < values.length; i++) {
                 values[i] = numbers[i];
             }

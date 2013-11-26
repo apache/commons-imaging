@@ -45,7 +45,7 @@ public class PaletteFactory {
     public Palette makeExactRgbPaletteFancy(final BufferedImage src) {
         // map what rgb values have been used
 
-        final byte rgbmap[] = new byte[256 * 256 * 32];
+        final byte[] rgbmap = new byte[256 * 256 * 32];
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -70,7 +70,7 @@ public class PaletteFactory {
             System.out.println("Used colors: " + count);
         }
 
-        final int colormap[] = new int[count];
+        final int[] colormap = new int[count];
         int mapsize = 0;
         for (int i = 0; i < rgbmap.length; i++) {
             final int eight = 0xff & rgbmap[i];
@@ -106,7 +106,7 @@ public class PaletteFactory {
         return result;
     }
 
-    private int getFrequencyTotal(final int table[], final int mins[], final int maxs[],
+    private int getFrequencyTotal(final int[] table, final int[] mins, final int[] maxs,
             final int precision) {
         int sum = 0;
 
@@ -147,9 +147,9 @@ public class PaletteFactory {
             return null;
         }
 
-        final int slice_mins[] = new int[subset.mins.length];
+        final int[] slice_mins = new int[subset.mins.length];
         System.arraycopy(subset.mins, 0, slice_mins, 0, subset.mins.length);
-        final int slice_maxs[] = new int[subset.maxs.length];
+        final int[] slice_maxs = new int[subset.maxs.length];
         System.arraycopy(subset.maxs, 0, slice_maxs, 0, subset.maxs.length);
 
         slice_maxs[component] = slice;
@@ -174,7 +174,7 @@ public class PaletteFactory {
 
     }
 
-    private List<DivisionCandidate> divideSubset2(final int table[],
+    private List<DivisionCandidate> divideSubset2(final int[] table,
             final ColorSpaceSubset subset, final int component, final int precision) {
         if (DEBUG) {
             subset.dump("trying (" + component + "): ");
@@ -182,9 +182,9 @@ public class PaletteFactory {
 
         final int total = subset.total;
 
-        final int slice_mins[] = new int[subset.mins.length];
+        final int[] slice_mins = new int[subset.mins.length];
         System.arraycopy(subset.mins, 0, slice_mins, 0, subset.mins.length);
-        final int slice_maxs[] = new int[subset.maxs.length];
+        final int[] slice_maxs = new int[subset.maxs.length];
         System.arraycopy(subset.maxs, 0, slice_maxs, 0, subset.maxs.length);
 
         int sum1 = 0, sum2;
@@ -226,7 +226,7 @@ public class PaletteFactory {
         return result;
     }
 
-    private DivisionCandidate divideSubset2(final int table[],
+    private DivisionCandidate divideSubset2(final int[] table,
             final ColorSpaceSubset subset, final int precision) {
         final List<DivisionCandidate> dcs = new ArrayList<DivisionCandidate>();
 
@@ -271,7 +271,7 @@ public class PaletteFactory {
     }
 
     private List<ColorSpaceSubset> divide(final List<ColorSpaceSubset> v,
-            final int desired_count, final int table[], final int precision) {
+            final int desired_count, final int[] table, final int precision) {
         final List<ColorSpaceSubset> ignore = new ArrayList<ColorSpaceSubset>();
 
         while (true) {
@@ -330,7 +330,7 @@ public class PaletteFactory {
 
         final int table_scale = precision * COMPONENTS;
         final int table_size = 1 << table_scale;
-        final int table[] = new int[table_size];
+        final int[] table = new int[table_size];
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -423,7 +423,7 @@ public class PaletteFactory {
             }
         }
         
-        final int result[] = new int[rgbs.size()];
+        final int[] result = new int[rgbs.size()];
         int next = 0;
         for (final int rgb : rgbs) {
             result[next++] = rgb;
@@ -482,7 +482,7 @@ public class PaletteFactory {
         return false;
     }
 
-    public int countTrasparentColors(final int rgbs[]) {
+    public int countTrasparentColors(final int[] rgbs) {
         int first = -1;
 
         for (final int rgb : rgbs) {

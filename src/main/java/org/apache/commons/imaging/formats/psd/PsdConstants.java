@@ -19,19 +19,19 @@ package org.apache.commons.imaging.formats.psd;
 import org.apache.commons.imaging.util.Debug;
 
 public class PsdConstants {
-    static final ImageResourceType fImageResourceTypes[];
+    static final ImageResourceType[] IMAGE_RESOURCE_TYPES;
 
     public String getDescription(final int id) {
-        for (final ImageResourceType fImageResourceType : fImageResourceTypes) {
-            if (fImageResourceType.ID == id) {
-                return fImageResourceType.Description;
+        for (final ImageResourceType imageResourceType : IMAGE_RESOURCE_TYPES) {
+            if (imageResourceType.id == id) {
+                return imageResourceType.description;
             }
         }
         return "Unknown";
     }
 
     static {
-        ImageResourceType temp[] = null;
+        ImageResourceType[] temp = null;
 
         try {
             temp = new ImageResourceType[] {
@@ -192,6 +192,6 @@ public class PsdConstants {
         } catch (final Exception e) {
             Debug.debug(PsdConstants.class.getName(), e);
         }
-        fImageResourceTypes = temp;
+        IMAGE_RESOURCE_TYPES = temp;
     }
 }

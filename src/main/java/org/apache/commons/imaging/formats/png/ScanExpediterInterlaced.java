@@ -25,10 +25,10 @@ import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
 public class ScanExpediterInterlaced extends ScanExpediter {
-    private static final int STARTING_ROW[] = { 0, 0, 4, 0, 2, 0, 1 };
-    private static final int STARTING_COL[] = { 0, 4, 0, 2, 0, 1, 0 };
-    private static final int ROW_INCREMENT[] = { 8, 8, 8, 4, 4, 2, 2 };
-    private static final int COL_INCREMENT[] = { 8, 8, 4, 4, 2, 2, 1 };
+    private static final int[] STARTING_ROW = { 0, 0, 4, 0, 2, 0, 1 };
+    private static final int[] STARTING_COL = { 0, 4, 0, 2, 0, 1, 0 };
+    private static final int[] ROW_INCREMENT = { 8, 8, 8, 4, 4, 2, 2 };
+    private static final int[] COL_INCREMENT = { 8, 8, 4, 4, 2, 2, 1 };
 //    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
 //    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
 
@@ -54,7 +54,7 @@ public class ScanExpediterInterlaced extends ScanExpediter {
 
         int pass = 1;
         while (pass <= 7) {
-            byte prev[] = null;
+            byte[] prev = null;
 
             int y = STARTING_ROW[pass - 1];
             // int y_stride = ROW_INCREMENT[pass - 1];
@@ -69,7 +69,7 @@ public class ScanExpediterInterlaced extends ScanExpediter {
                     final int bitsPerScanLine = bitsPerPixel * ColumnsInRow;
                     final int pixel_bytes_per_scan_line = getBitsToBytesRoundingUp(bitsPerScanLine);
 
-                    final byte unfiltered[] = getNextScanline(is,
+                    final byte[] unfiltered = getNextScanline(is,
                             pixel_bytes_per_scan_line, prev, bytesPerPixel);
 
                     prev = unfiltered;

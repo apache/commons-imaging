@@ -87,9 +87,9 @@ public class ExifRewriter extends BinaryFileParser {
 
     private static class JFIFPieceSegment extends JFIFPiece {
         public final int marker;
-        public final byte markerBytes[];
-        public final byte markerLengthBytes[];
-        public final byte segmentData[];
+        public final byte[] markerBytes;
+        public final byte[] markerLengthBytes;
+        public final byte[] segmentData;
 
         public JFIFPieceSegment(final int marker, final byte[] markerBytes,
                 final byte[] markerLengthBytes, final byte[] segmentData) {
@@ -116,11 +116,10 @@ public class ExifRewriter extends BinaryFileParser {
     }
 
     private static class JFIFPieceImageData extends JFIFPiece {
-        public final byte markerBytes[];
-        public final byte imageData[];
+        public final byte[] markerBytes;
+        public final byte[] imageData;
 
-        public JFIFPieceImageData(final byte[] markerBytes,
-                final byte[] imageData) {
+        public JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
             super();
             this.markerBytes = markerBytes;
             this.imageData = imageData;
@@ -146,15 +145,14 @@ public class ExifRewriter extends BinaryFileParser {
                 return true;
             }
 
-            public void visitSOS(final int marker, final byte markerBytes[],
-                    final byte imageData[]) {
+            public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
                 pieces.add(new JFIFPieceImageData(markerBytes, imageData));
             }
 
             // return false to exit traversal.
-            public boolean visitSegment(final int marker, final byte markerBytes[],
-                    final int markerLength, final byte markerLengthBytes[],
-                    final byte segmentData[]) throws
+            public boolean visitSegment(final int marker, final byte[] markerBytes,
+                    final int markerLength, final byte[] markerLengthBytes,
+                    final byte[] segmentData) throws
             // ImageWriteException,
                     ImageReadException, IOException {
                 if (marker != JpegConstants.JPEG_APP1_Marker) {
@@ -221,7 +219,7 @@ public class ExifRewriter extends BinaryFileParser {
      * @param os
      *            OutputStream to write the image to.
      */
-    public void removeExifMetadata(final byte src[], final OutputStream os)
+    public void removeExifMetadata(final byte[] src, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
         final ByteSource byteSource = new ByteSourceArray(src);
         removeExifMetadata(byteSource, os);
@@ -312,7 +310,7 @@ public class ExifRewriter extends BinaryFileParser {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossless(final byte src[], final OutputStream os,
+    public void updateExifMetadataLossless(final byte[] src, final OutputStream os,
             final TiffOutputSet outputSet) throws ImageReadException, IOException,
             ImageWriteException {
         final ByteSource byteSource = new ByteSourceArray(src);
@@ -378,7 +376,7 @@ public class ExifRewriter extends BinaryFileParser {
             JFIFPieceSegment exifPiece = null;
             exifPiece = (JFIFPieceSegment) jfifPieces.exifPieces.get(0);
 
-            byte exifBytes[] = exifPiece.segmentData;
+            byte[] exifBytes = exifPiece.segmentData;
             exifBytes = remainingBytes("trimmed exif bytes", exifBytes, 6);
 
             writer = new TiffImageWriterLossless(outputSet.byteOrder, exifBytes);
@@ -388,7 +386,7 @@ public class ExifRewriter extends BinaryFileParser {
         }
 
         final boolean includeEXIFPrefix = true;
-        final byte newBytes[] = writeExifSegment(writer, outputSet, includeEXIFPrefix);
+        final byte[] newBytes = writeExifSegment(writer, outputSet, includeEXIFPrefix);
 
         writeSegmentsReplacingExif(os, pieces, newBytes);
     }
@@ -409,7 +407,7 @@ public class ExifRewriter extends BinaryFileParser {
      * @param outputSet
      *            TiffOutputSet containing the EXIF data to write.
      */
-    public void updateExifMetadataLossy(final byte src[], final OutputStream os,
+    public void updateExifMetadataLossy(final byte[] src, final OutputStream os,
             final TiffOutputSet outputSet) throws ImageReadException, IOException,
             ImageWriteException {
         final ByteSource byteSource = new ByteSourceArray(src);
@@ -488,13 +486,13 @@ public class ExifRewriter extends BinaryFileParser {
                 outputSet.byteOrder);
 
         final boolean includeEXIFPrefix = true;
-        final byte newBytes[] = writeExifSegment(writer, outputSet, includeEXIFPrefix);
+        final byte[] newBytes = writeExifSegment(writer, outputSet, includeEXIFPrefix);
 
         writeSegmentsReplacingExif(os, pieces, newBytes);
     }
 
     private void writeSegmentsReplacingExif(final OutputStream os,
-            final List<JFIFPiece> segments, final byte newBytes[])
+            final List<JFIFPiece> segments, final byte[] newBytes)
             throws ImageWriteException, IOException {
 
         boolean canThrow = false;
@@ -510,13 +508,13 @@ public class ExifRewriter extends BinaryFileParser {
             }
 
             if (!hasExif && newBytes != null) {
-                final byte markerBytes[] = toBytes((short)JpegConstants.JPEG_APP1_Marker);
+                final byte[] markerBytes = toBytes((short)JpegConstants.JPEG_APP1_Marker);
                 if (newBytes.length > 0xffff) {
                     throw new ExifOverflowException(
                             "APP1 Segment is too long: " + newBytes.length);
                 }
                 final int markerLength = newBytes.length + 2;
-                final byte markerLengthBytes[] = toBytes((short)markerLength);
+                final byte[] markerLengthBytes = toBytes((short)markerLength);
 
                 int index = 0;
                 final JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments
@@ -542,13 +540,13 @@ public class ExifRewriter extends BinaryFileParser {
                         continue;
                     }
 
-                    final byte markerBytes[] = toBytes((short) JpegConstants.JPEG_APP1_Marker);
+                    final byte[] markerBytes = toBytes((short) JpegConstants.JPEG_APP1_Marker);
                     if (newBytes.length > 0xffff) {
                         throw new ExifOverflowException(
                                 "APP1 Segment is too long: " + newBytes.length);
                     }
                     final int markerLength = newBytes.length + 2;
-                    final byte markerLengthBytes[] = toBytes((short) markerLength);
+                    final byte[] markerLengthBytes = toBytes((short) markerLength);
 
                     os.write(markerBytes);
                     os.write(markerLengthBytes);

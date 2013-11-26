@@ -19,19 +19,19 @@ package org.apache.commons.imaging.formats.psd;
 import org.apache.commons.imaging.ImageReadException;
 
 public class ImageResourceType {
-    public final int ID;
-    public final String Description;
+    public final int id;
+    public final String description;
 
-    public ImageResourceType(final int ID, final String Description) {
-        this.ID = ID;
-        this.Description = Description;
+    public ImageResourceType(final int id, final String Description) {
+        this.id = id;
+        this.description = Description;
     }
 
-    public ImageResourceType(final int ID, final int ID2, final String Description)
+    public ImageResourceType(final int id, final int id2, final String Description)
             throws ImageReadException {
-        this(ID, Description);
-        if (ID != ID2) {
-            throw new ImageReadException("Mismatch ID: " + ID + " ID2: " + ID2);
+        this(id, Description);
+        if (id != id2) {
+            throw new ImageReadException("Mismatch ID: " + id + " ID2: " + id2);
         }
 
     }

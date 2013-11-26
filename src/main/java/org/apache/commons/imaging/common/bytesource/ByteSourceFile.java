@@ -79,7 +79,7 @@ public class ByteSourceFile extends ByteSource {
         try {
             is = new FileInputStream(file);
             is = new BufferedInputStream(is);
-            final byte buffer[] = new byte[1024];
+            final byte[] buffer = new byte[1024];
             int read;
             while ((read = is.read(buffer)) > 0) {
                 baos.write(buffer, 0, read);

@@ -39,7 +39,7 @@ public class JfifSegment extends Segment {
         return "JFIF (" + getSegmentType() + ")";
     }
 
-    public JfifSegment(final int marker, final byte segmentData[])
+    public JfifSegment(final int marker, final byte[] segmentData)
             throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
@@ -48,7 +48,7 @@ public class JfifSegment extends Segment {
             throws ImageReadException, IOException {
         super(marker, marker_length);
 
-        final byte signature[] = readBytes(is, JpegConstants.JFIF0_SIGNATURE.size());
+        final byte[] signature = readBytes(is, JpegConstants.JFIF0_SIGNATURE.size());
         if (!JpegConstants.JFIF0_SIGNATURE.equals(signature)
                 && !JpegConstants.JFIF0_SIGNATURE_ALTERNATIVE.equals(signature)) {
             throw new ImageReadException(

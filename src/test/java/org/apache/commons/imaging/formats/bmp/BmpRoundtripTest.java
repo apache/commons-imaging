@@ -136,7 +136,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
         // writeParams.put(PngConstants.PARAM_KEY_BMP_FORCE_TRUE_COLOR,
         // Boolean.TRUE);
 
-        final byte bytes[] = Imaging.writeImageToBytes(srcImage,
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage,
                 ImageFormats.BMP, writeParams);
 
         // Debug.debug("bytes", bytes);

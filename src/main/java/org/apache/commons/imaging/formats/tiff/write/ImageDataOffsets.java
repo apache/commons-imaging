@@ -19,11 +19,11 @@ package org.apache.commons.imaging.formats.tiff.write;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 
 class ImageDataOffsets {
-    final int imageDataOffsets[];
+    final int[] imageDataOffsets;
     final TiffOutputField imageDataOffsetsField;
-    final TiffOutputItem outputItems[];
+    final TiffOutputItem[] outputItems;
     
-    ImageDataOffsets(final TiffElement.DataElement imageData[],
+    ImageDataOffsets(final TiffElement.DataElement[] imageData,
             final int[] imageDataOffsets,
             final TiffOutputField imageDataOffsetsField) {
         this.imageDataOffsets = imageDataOffsets;

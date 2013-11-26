@@ -23,7 +23,7 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 
 public abstract class DataParser {
-    public final void parseData(final int data[][][], final BufferedImage bi,
+    public final void parseData(final int[][][] data, final BufferedImage bi,
             final ImageContents imageContents) {
         final DataBuffer buffer = bi.getRaster().getDataBuffer();
 
@@ -39,8 +39,7 @@ public abstract class DataParser {
         }
     }
 
-    protected abstract int getRGB(int data[][][], int x, int y,
-            ImageContents imageContents);
+    protected abstract int getRGB(int[][][] data, int x, int y, ImageContents imageContents);
 
     public abstract int getBasicChannelsCount();
 }

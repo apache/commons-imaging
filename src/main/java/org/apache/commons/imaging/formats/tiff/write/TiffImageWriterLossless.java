@@ -42,7 +42,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 
 public class TiffImageWriterLossless extends TiffImageWriterBase {
-    private final byte exifBytes[];
+    private final byte[] exifBytes;
     private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = new Comparator<TiffElement>() {
         public int compare(final TiffElement e1, final TiffElement e2) {
             return e1.length - e2.length;
@@ -54,11 +54,11 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         }
     };
 
-    public TiffImageWriterLossless(final byte exifBytes[]) {
+    public TiffImageWriterLossless(final byte[] exifBytes) {
         this.exifBytes = exifBytes;
     }
 
-    public TiffImageWriterLossless(final ByteOrder byteOrder, final byte exifBytes[]) {
+    public TiffImageWriterLossless(final ByteOrder byteOrder, final byte[] exifBytes) {
         super(byteOrder);
         this.exifBytes = exifBytes;
     }
@@ -101,7 +101,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
                 final TiffImageData tiffImageData = directory.getTiffImageData();
                 if (tiffImageData != null) {
-                    final DataElement data[] = tiffImageData.getImageData();
+                    final DataElement[] data = tiffImageData.getImageData();
                     Collections.addAll(elements, data);
                 }
             }
@@ -268,7 +268,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
     }
 
     private static class BufferOutputStream extends OutputStream {
-        private final byte buffer[];
+        private final byte[] buffer;
         private int index;
 
         public BufferOutputStream(final byte[] buffer, final int index) {
@@ -286,7 +286,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         }
 
         @Override
-        public void write(final byte b[], final int off, final int len) throws IOException {
+        public void write(final byte[] b, final int off, final int len) throws IOException {
             if (index + len > buffer.length) {
                 throw new IOException("Buffer overflow.");
             }
@@ -300,7 +300,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             final long outputLength) throws IOException, ImageWriteException {
         final TiffOutputDirectory rootDirectory = outputSet.getRootDirectory();
 
-        final byte output[] = new byte[(int)outputLength];
+        final byte[] output = new byte[(int)outputLength];
 
         // copy old data (including maker notes, etc.)
         System.arraycopy(exifBytes, 0, output, 0,

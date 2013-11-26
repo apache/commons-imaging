@@ -31,13 +31,13 @@ import org.apache.commons.imaging.util.Debug;
 public class TiffLzwTest extends TiffBaseTest {
 
     public void testTrivial() throws Exception {
-        final byte bytes[] = { 0, };
+        final byte[] bytes = { 0, };
         compressRoundtripAndValidate(bytes);
     }
 
     public void testMedium() throws Exception {
         final int LENGTH = 1024 * 32;
-        final byte bytes[] = new byte[LENGTH];
+        final byte[] bytes = new byte[LENGTH];
         for (int modulator = 1; modulator < 255; modulator += 3) {
             for (int i = 0; i < LENGTH; i++) {
                 bytes[i] = (byte) (0xff & (i % modulator));

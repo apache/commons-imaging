@@ -65,7 +65,7 @@ public class BinaryFileParser {
         return ByteConversions.toBytes(value, byteOrder);
     }
 
-    protected final int toInt(final byte bytes[]) {
+    protected final int toInt(final byte[] bytes) {
         return ByteConversions.toInt(bytes, byteOrder);
     }
     
@@ -73,7 +73,7 @@ public class BinaryFileParser {
         return ByteConversions.toUInt16(bytes, byteOrder);
     }
 
-    protected final int toUInt16(final byte bytes[], final int start) {
+    protected final int toUInt16(final byte[] bytes, final int start) {
         return ByteConversions.toUInt16(bytes, start, byteOrder);
     }
 
@@ -121,7 +121,7 @@ public class BinaryFileParser {
         BinaryFunctions.readAndVerifyBytes(is, expected, exception);
     }
     
-    protected final void readAndVerifyBytes(final InputStream is, final byte expected[],
+    protected final void readAndVerifyBytes(final InputStream is, final byte[] expected,
             final String exception) throws ImageReadException, IOException {
         BinaryFunctions.readAndVerifyBytes(is, expected, exception);
     }
@@ -141,19 +141,19 @@ public class BinaryFileParser {
         BinaryFunctions.skipBytes(is, length, exception);
     }
     
-    protected final byte[] remainingBytes(final String name, final byte bytes[], final int count) {
+    protected final byte[] remainingBytes(final String name, final byte[] bytes, final int count) {
         return BinaryFunctions.remainingBytes(name, bytes, count);
     }
     
-    protected final byte[] slice(final byte bytes[], final int start, final int count) {
+    protected final byte[] slice(final byte[] bytes, final int start, final int count) {
         return BinaryFunctions.slice(bytes, start, count);
     }
     
-    protected final int findNull(final byte src[]) {
+    protected final int findNull(final byte[] src) {
         return BinaryFunctions.findNull(src);
     }
     
-    protected final int findNull(final byte src[], final int start) {
+    protected final int findNull(final byte[] src, final int start) {
         return BinaryFunctions.findNull(src, start);
     }
     
@@ -200,12 +200,12 @@ public class BinaryFileParser {
         pw.flush();
     }
 
-    protected final boolean compareBytes(final byte a[], final int aStart, final byte b[],
+    protected final boolean compareBytes(final byte[] a, final int aStart, final byte[] b,
             final int bStart, final int length) {
         return BinaryFunctions.compareBytes(a, aStart, b, bStart, length);
     }
     
-    protected static boolean startsWith(final byte haystack[], final BinaryConstant needle) {
+    protected static boolean startsWith(final byte[] haystack, final BinaryConstant needle) {
         if ((haystack == null) || (haystack.length < needle.size())) {
             return false;
         }
@@ -219,7 +219,7 @@ public class BinaryFileParser {
         return true;
     }
 
-    protected static boolean startsWith(final byte haystack[], final byte needle[]) {
+    protected static boolean startsWith(final byte[] haystack, final byte[] needle) {
         return BinaryFunctions.startsWith(haystack, needle);
     }
 }

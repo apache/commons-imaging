@@ -43,7 +43,7 @@ abstract class TiffOutputItem implements AllTagConstants {
             ImageWriteException;
 
     public static class Value extends TiffOutputItem {
-        private final byte bytes[];
+        private final byte[] bytes;
         private final String name;
 
         public Value(final String name, final byte[] bytes) {
@@ -61,7 +61,7 @@ abstract class TiffOutputItem implements AllTagConstants {
             return name;
         }
 
-        public void updateValue(final byte bytes[]) throws ImageWriteException {
+        public void updateValue(final byte[] bytes) throws ImageWriteException {
             if (this.bytes.length != bytes.length) {
                 throw new ImageWriteException("Updated data size mismatch: "
                         + this.bytes.length + " vs. " + bytes.length);

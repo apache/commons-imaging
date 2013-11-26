@@ -42,7 +42,7 @@ public class IccProfileParser extends BinaryFileParser {
         return getICCProfileInfo(new ByteSourceArray(icc_profile.getData()));
     }
 
-    public IccProfileInfo getICCProfileInfo(final byte bytes[]) {
+    public IccProfileInfo getICCProfileInfo(final byte[] bytes) {
         if (bytes == null) {
             return null;
         }
@@ -77,7 +77,7 @@ public class IccProfileParser extends BinaryFileParser {
             is = null;
 
             for (final IccTag tag : result.getTags()) {
-                final byte bytes[] = byteSource.getBlock(tag.offset, tag.length);
+                final byte[] bytes = byteSource.getBlock(tag.offset, tag.length);
                 // Debug.debug("bytes: " + bytes.length);
                 tag.setData(bytes);
                 // tag.dump("\t" + i + ": ");
@@ -213,7 +213,7 @@ public class IccProfileParser extends BinaryFileParser {
                         ProfileCreatorSignature);
             }
 
-            final byte ProfileID[] = null;
+            final byte[] ProfileID = null;
             skipBytes(is, 16, "Not a Valid ICC Profile");
             // readByteArray("ProfileID", 16, is,
             // "Not a Valid ICC Profile");
@@ -228,7 +228,7 @@ public class IccProfileParser extends BinaryFileParser {
             final int TagCount = read4Bytes("TagCount", is, "Not a Valid ICC Profile");
 
             // List tags = new ArrayList();
-            final IccTag tags[] = new IccTag[TagCount];
+            final IccTag[] tags = new IccTag[TagCount];
 
             for (int i = 0; i < TagCount; i++) {
                 final int TagSignature = read4Bytes("TagSignature[" + i + "]", is,
@@ -268,7 +268,7 @@ public class IccProfileParser extends BinaryFileParser {
                 }
             }
 
-            final byte data[] = cis.getCache();
+            final byte[] data = cis.getCache();
 
             if (data.length < ProfileSize) {
                 throw new IOException("Couldn't read ICC Profile.");
@@ -308,7 +308,7 @@ public class IccProfileParser extends BinaryFileParser {
         return issRGB(new ByteSourceArray(icc_profile.getData()));
     }
 
-    public boolean issRGB(final byte bytes[]) throws IOException {
+    public boolean issRGB(final byte[] bytes) throws IOException {
         return issRGB(new ByteSourceArray(bytes));
     }
 

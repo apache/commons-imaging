@@ -27,7 +27,7 @@ public class ByteSourceInputStream extends ByteSource {
     private final InputStream is;
     private CacheBlock cacheHead = null;
     private static final int BLOCK_SIZE = 1024;
-    private byte readBuffer[] = null;
+    private byte[] readBuffer = null;
     private long streamLength = -1;
 
     public ByteSourceInputStream(final InputStream is, final String filename) {
@@ -36,7 +36,7 @@ public class ByteSourceInputStream extends ByteSource {
     }
 
     private class CacheBlock {
-        public final byte bytes[];
+        public final byte[] bytes;
         private CacheBlock next = null;
         private boolean triedNext = false;
 
@@ -68,12 +68,12 @@ public class ByteSourceInputStream extends ByteSource {
             return null;
         } else if (read < BLOCK_SIZE) {
             // return a copy.
-            final byte result[] = new byte[read];
+            final byte[] result = new byte[read];
             System.arraycopy(readBuffer, 0, result, 0, read);
             return new CacheBlock(result);
         } else {
             // return current buffer.
-            final byte result[] = readBuffer;
+            final byte[] result = readBuffer;
             readBuffer = null;
             return new CacheBlock(result);
         }
@@ -118,7 +118,7 @@ public class ByteSourceInputStream extends ByteSource {
         }
 
         @Override
-        public int read(final byte b[], final int off, final int len) throws IOException {
+        public int read(final byte[] b, final int off, final int len) throws IOException {
             // first section copied verbatim from InputStream
             if (b == null) {
                 throw new NullPointerException();
@@ -221,7 +221,7 @@ public class ByteSourceInputStream extends ByteSource {
         final InputStream cis = getInputStream();
         BinaryFunctions.skipBytes(cis, blockStart);
 
-        final byte bytes[] = new byte[blockLength];
+        final byte[] bytes = new byte[blockLength];
         int total = 0;
         while (true) {
             final int read = cis.read(bytes, total, bytes.length - total);

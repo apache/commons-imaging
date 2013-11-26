@@ -20,7 +20,7 @@ import org.apache.commons.imaging.formats.psd.ImageContents;
 
 public class DataParserRgb extends DataParser {
     @Override
-    protected int getRGB(final int data[][][], final int x, final int y,
+    protected int getRGB(final int[][][] data, final int x, final int y,
             final ImageContents imageContents) {
         final int red = 0xff & data[0][y][x];
         final int green = 0xff & data[1][y][x];

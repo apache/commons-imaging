@@ -21,14 +21,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ByteSourceArray extends ByteSource {
-    private final byte bytes[];
+    private final byte[] bytes;
 
-    public ByteSourceArray(final String filename, final byte bytes[]) {
+    public ByteSourceArray(final String filename, final byte[] bytes) {
         super(filename);
         this.bytes = bytes;
     }
 
-    public ByteSourceArray(final byte bytes[]) {
+    public ByteSourceArray(final byte[] bytes) {
         super(null);
         this.bytes = bytes;
     }
@@ -49,7 +49,7 @@ public class ByteSourceArray extends ByteSource {
                     + bytes.length + ").");
         }
 
-        final byte result[] = new byte[length];
+        final byte[] result = new byte[length];
         System.arraycopy(bytes, start, result, 0, length);
         return result;
     }

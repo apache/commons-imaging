@@ -21,20 +21,20 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 
 public class ScanlineFilterAverage extends ScanlineFilter {
-    private final int BytesPerPixel;
+    private final int bytesPerPixel;
 
-    public ScanlineFilterAverage(final int BytesPerPixel) {
-        this.BytesPerPixel = BytesPerPixel;
+    public ScanlineFilterAverage(final int bytesPerPixel) {
+        this.bytesPerPixel = bytesPerPixel;
     }
 
     @Override
-    public void unfilter(final byte src[], final byte dst[], final byte up[])
+    public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
-            int Raw = 0;
-            final int prev_index = i - BytesPerPixel;
+            int raw = 0;
+            final int prev_index = i - bytesPerPixel;
             if (prev_index >= 0) {
-                Raw = dst[prev_index];
+                raw = dst[prev_index];
             }
 
             int Prior = 0;
@@ -42,7 +42,7 @@ public class ScanlineFilterAverage extends ScanlineFilter {
                 Prior = up[i];
             }
 
-            final int Average = ((0xff & Raw) + (0xff & Prior)) / 2;
+            final int Average = ((0xff & raw) + (0xff & Prior)) / 2;
 
             dst[i] = (byte) ((src[i] + Average) % 256);
             // dst[i] = src[i];

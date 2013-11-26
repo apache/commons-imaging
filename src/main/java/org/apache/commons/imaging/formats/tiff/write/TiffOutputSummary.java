@@ -59,7 +59,7 @@ class TiffOutputSummary implements TiffConstants {
 
     public void updateOffsets(final ByteOrder byteOrder) throws ImageWriteException {
         for (OffsetItem offset : offsetItems) {
-            final byte value[] = FieldType.LONG.writeData(
+            final byte[] value = FieldType.LONG.writeData(
                     (int) offset.item.getOffset(), byteOrder);
             offset.itemOffsetField.setData(value);
         }

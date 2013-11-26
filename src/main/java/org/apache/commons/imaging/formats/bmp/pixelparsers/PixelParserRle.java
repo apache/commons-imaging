@@ -24,9 +24,9 @@ import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
 public class PixelParserRle extends PixelParser {
 
-    public PixelParserRle(final BmpHeaderInfo bhi, final byte ColorTable[],
-            final byte ImageData[]) {
-        super(bhi, ColorTable, ImageData);
+    public PixelParserRle(final BmpHeaderInfo bhi, final byte[] colorTable,
+            final byte[] imageData) {
+        super(bhi, colorTable, imageData);
 
     }
 
@@ -42,7 +42,7 @@ public class PixelParserRle extends PixelParser {
     }
 
     private int[] convertDataToSamples(final int data) throws ImageReadException {
-        int rgbs[];
+        int[] rgbs;
         if (bhi.bitsPerPixel == 8) {
             rgbs = new int[1];
             rgbs[0] = getColorTableRGB(data);
@@ -62,7 +62,7 @@ public class PixelParserRle extends PixelParser {
         return rgbs;
     }
 
-    private int processByteOfData(final int rgbs[], final int repeat, int x, final int y,
+    private int processByteOfData(final int[] rgbs, final int repeat, int x, final int y,
             final int width, final int height, final ImageBuilder imageBuilder) {
         // int rbg
         int pixels_written = 0;
@@ -133,14 +133,14 @@ public class PixelParserRle extends PixelParser {
                     // System.out.println("size: " + size);
                     // System.out.println("SamplesPerByte: " + SamplesPerByte);
 
-                    final byte bytes[] = is.readBytes("bytes", size,
+                    final byte[] bytes = is.readBytes("bytes", size,
                             "RLE: Absolute Mode");
 
                     int remaining = b;
 
                     for (int i = 0; remaining > 0; i++) {
                     // for (int i = 0; i < bytes.length; i++)
-                        final int samples[] = convertDataToSamples(0xff & bytes[i]);
+                        final int[] samples = convertDataToSamples(0xff & bytes[i]);
                         final int towrite = Math.min(remaining, SamplesPerByte);
                         // System.out.println("remaining: " + remaining);
                         // System.out.println("SamplesPerByte: "
@@ -157,7 +157,7 @@ public class PixelParserRle extends PixelParser {
                 }
                 }
             } else {
-                final int rgbs[] = convertDataToSamples(b);
+                final int[] rgbs = convertDataToSamples(b);
 
                 x += processByteOfData(rgbs, a, x, y, width, height,
                         imageBuilder);

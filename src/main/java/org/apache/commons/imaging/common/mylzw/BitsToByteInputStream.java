@@ -45,7 +45,7 @@ public class BitsToByteInputStream extends InputStream {
     }
 
     public int[] readBitsArray(final int sampleBits, final int length) throws IOException {
-        final int result[] = new int[length];
+        final int[] result = new int[length];
 
         for (int i = 0; i < length; i++) {
             result[i] = readBits(sampleBits);

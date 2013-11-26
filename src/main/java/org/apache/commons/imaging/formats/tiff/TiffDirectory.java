@@ -629,8 +629,8 @@ public class TiffDirectory extends TiffElement {
     private List<ImageDataElement> getRawImageDataElements(
             final TiffField offsetsField, final TiffField byteCountsField)
             throws ImageReadException {
-        final int offsets[] = offsetsField.getIntArrayValue();
-        final int byteCounts[] = byteCountsField.getIntArrayValue();
+        final int[] offsets = offsetsField.getIntArrayValue();
+        final int[] byteCounts = byteCountsField.getIntArrayValue();
 
         if (offsets.length != byteCounts.length) {
             throw new ImageReadException("offsets.length(" + offsets.length

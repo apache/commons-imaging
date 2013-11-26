@@ -31,7 +31,7 @@ public class FieldTypeAscii extends FieldType {
     public Object getValue(final TiffField entry) {
         // According to EXIF specification
         // "2 = ASCII An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL."
-        final byte bytes[] = entry.getByteArrayValue();
+        final byte[] bytes = entry.getByteArrayValue();
         int nullCount = 1;
         for (int i = 0; i < bytes.length - 1; i++) {
             if (bytes[i] == 0) {
@@ -74,19 +74,19 @@ public class FieldTypeAscii extends FieldType {
     @Override
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof byte[]) {
-            final byte bytes[] = (byte[]) o;
-            final byte result[] = new byte[bytes.length + 1];
+            final byte[] bytes = (byte[]) o;
+            final byte[] result = new byte[bytes.length + 1];
             System.arraycopy(bytes, 0, result, 0, bytes.length);
             result[result.length - 1] = 0;
             return result;
         } else if (o instanceof String) {
-            byte[] bytes = null;
+            byte[] bytes;
             try {
                 bytes = ((String) o).getBytes("UTF-8");
             } catch (final UnsupportedEncodingException cannotHappen) {
                 throw new IllegalArgumentException("Your Java doesn't support UTF-8", cannotHappen);
             }
-            final byte result[] = new byte[bytes.length + 1];
+            final byte[] result = new byte[bytes.length + 1];
             System.arraycopy(bytes, 0, result, 0, bytes.length);
             result[result.length - 1] = 0;
             return result;
@@ -94,7 +94,7 @@ public class FieldTypeAscii extends FieldType {
             final String[] strings = (String[]) o;
             int totalLength = 0;
             for (final String string : strings) {
-                byte[] bytes = null;
+                byte[] bytes;
                 try {
                     bytes = string.getBytes("UTF-8");
                 } catch (final UnsupportedEncodingException cannotHappen) {
@@ -105,7 +105,7 @@ public class FieldTypeAscii extends FieldType {
             final byte[] result = new byte[totalLength];
             int position = 0;
             for (final String string : strings) {
-                byte[] bytes = null;
+                byte[] bytes;
                 try {
                     bytes = string.getBytes("UTF-8");
                 } catch (final UnsupportedEncodingException cannotHappen) {

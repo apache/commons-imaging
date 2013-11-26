@@ -55,9 +55,9 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class XpmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".xpm";
-    private static final String ACCEPTED_EXTENSIONS[] = { ".xpm", };
+    private static final String[] ACCEPTED_EXTENSIONS = { ".xpm", };
     private static Map<String, Integer> colorNames = null;
-    private static final char WRITE_PALETTE[] = { ' ', '.', 'X', 'o', 'O', '+',
+    private static final char[] WRITE_PALETTE = { ' ', '.', 'X', 'o', 'O', '+',
         '@', '#', '$', '%', '&', '*', '=', '-', ';', ':', '>', ',', '<',
         '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'q', 'w', 'e',
         'r', 't', 'y', 'u', 'i', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j',
@@ -133,7 +133,7 @@ public class XpmImageParser extends ImageParser {
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 
@@ -647,7 +647,7 @@ public class XpmImageParser extends ImageParser {
     private String toColor(final int color) {
         final String hex = Integer.toHexString(color);
         if (hex.length() < 6) {
-            final char zeroes[] = new char[6 - hex.length()];
+            final char[] zeroes = new char[6 - hex.length()];
             Arrays.fill(zeroes, '0');
             return "#" + new String(zeroes) + hex;
         }

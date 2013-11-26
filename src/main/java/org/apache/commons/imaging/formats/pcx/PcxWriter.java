@@ -199,8 +199,8 @@ public class PcxWriter {
         bos.write2Bytes(0); // vScreenSize
         bos.write(new byte[54]);
 
-        final int rgbs[] = new int[src.getWidth()];
-        final byte rgbBytes[] = new byte[4 * bytesPerLine];
+        final int[] rgbs = new int[src.getWidth()];
+        final byte[] rgbBytes = new byte[4 * bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {
             src.getRGB(0, y, src.getWidth(), 1, rgbs, 0, src.getWidth());
             for (int x = 0; x < rgbs.length; x++) {
@@ -239,8 +239,8 @@ public class PcxWriter {
         bos.write2Bytes(0); // vScreenSize
         bos.write(new byte[54]);
 
-        final int rgbs[] = new int[src.getWidth()];
-        final byte rgbBytes[] = new byte[3 * bytesPerLine];
+        final int[] rgbs = new int[src.getWidth()];
+        final byte[] rgbBytes = new byte[3 * bytesPerLine];
         for (int y = 0; y < src.getHeight(); y++) {
             src.getRGB(0, y, src.getWidth(), 1, rgbs, 0, src.getWidth());
             for (int x = 0; x < rgbs.length; x++) {

@@ -100,11 +100,11 @@ public final class MyLzwDecompressor {
         return Code < codes;
     }
 
-    private byte firstChar(final byte bytes[]) {
+    private byte firstChar(final byte[] bytes) {
         return bytes[0];
     }
 
-    private void addStringToTable(final byte bytes[]) throws IOException {
+    private void addStringToTable(final byte[] bytes) throws IOException {
         if (codes < (1 << codeSize)) {
             table[codes] = bytes;
             codes++;
@@ -115,15 +115,15 @@ public final class MyLzwDecompressor {
         checkCodeSize();
     }
 
-    private byte[] appendBytes(final byte bytes[], final byte b) {
-        final byte result[] = new byte[bytes.length + 1];
+    private byte[] appendBytes(final byte[] bytes, final byte b) {
+        final byte[] result = new byte[bytes.length + 1];
 
         System.arraycopy(bytes, 0, result, 0, bytes.length);
         result[result.length - 1] = b;
         return result;
     }
 
-    private void writeToResult(final OutputStream os, final byte bytes[])
+    private void writeToResult(final OutputStream os, final byte[] bytes)
             throws IOException {
         os.write(bytes);
         written += bytes.length;
@@ -169,10 +169,10 @@ public final class MyLzwDecompressor {
                             firstChar(stringFromCode(code))));
                     oldCode = code;
                 } else {
-                    final byte OutString[] = appendBytes(stringFromCode(oldCode),
+                    final byte[] outString = appendBytes(stringFromCode(oldCode),
                             firstChar(stringFromCode(oldCode)));
-                    writeToResult(baos, OutString);
-                    addStringToTable(OutString);
+                    writeToResult(baos, outString);
+                    addStringToTable(outString);
                     oldCode = code;
                 }
             } // end of not-ClearCode case

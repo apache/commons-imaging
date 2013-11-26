@@ -49,7 +49,7 @@ public class CompressedDataReader extends DataReader {
 
         // this.setDebug(true);
         final int scanline_count = height * header.Channels;
-        final int scanline_bytecounts[] = new int[scanline_count];
+        final int[] scanline_bytecounts = new int[scanline_count];
         for (int i = 0; i < scanline_count; i++) {
             scanline_bytecounts[i] = BinaryFunctions.read2Bytes("scanline_bytecount[" + i
                     + "]", is, "PSD: bad Image Data", bfp.getByteOrder());
@@ -61,23 +61,23 @@ public class CompressedDataReader extends DataReader {
         final int depth = header.Depth;
 
         final int channel_count = dataParser.getBasicChannelsCount();
-        final int data[][][] = new int[channel_count][height][];
+        final int[][][] data = new int[channel_count][height][];
         // channels[0] =
         for (int channel = 0; channel < channel_count; channel++) {
             for (int y = 0; y < height; y++) {
                 final int index = channel * height + y;
-                final byte packed[] = BinaryFunctions.readBytes("scanline",
+                final byte[] packed = BinaryFunctions.readBytes("scanline",
                         is, scanline_bytecounts[index],
                         "PSD: Missing Image Data");
 
-                final byte unpacked[] = new PackBits().decompress(packed, width);
+                final byte[] unpacked = new PackBits().decompress(packed, width);
                 final InputStream bais = new ByteArrayInputStream(unpacked);
                 final MyBitInputStream mbis = new MyBitInputStream(bais, ByteOrder.BIG_ENDIAN);
                 BitsToByteInputStream bbis = null;
                 boolean canThrow = false;
                 try {
                     bbis = new BitsToByteInputStream(mbis, 8); // we want all samples to be bytes
-                    final int scanline[] = bbis.readBitsArray(depth, width);
+                    final int[] scanline = bbis.readBitsArray(depth, width);
                     data[channel][y] = scanline;
                     canThrow = true;
                 } finally {

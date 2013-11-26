@@ -64,7 +64,7 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class PngImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".png";
-    private static final String ACCEPTED_EXTENSIONS[] = { DEFAULT_EXTENSION, };
+    private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
 
     @Override
     public String getName() {
@@ -127,7 +127,7 @@ public class PngImageParser extends ImageParser {
         }
     }
 
-    private boolean keepChunk(final int ChunkType, final int chunkTypes[]) {
+    private boolean keepChunk(final int ChunkType, final int[] chunkTypes) {
         // System.out.println("keepChunk: ");
         if (chunkTypes == null) {
             return true;
@@ -141,7 +141,7 @@ public class PngImageParser extends ImageParser {
         return false;
     }
 
-    private List<PngChunk> readChunks(final InputStream is, final int chunkTypes[],
+    private List<PngChunk> readChunks(final InputStream is, final int[] chunkTypes,
             final boolean returnAfterFirst) throws ImageReadException, IOException {
         final List<PngChunk> result = new ArrayList<PngChunk>();
 
@@ -159,7 +159,7 @@ public class PngImageParser extends ImageParser {
             }
             final boolean keep = keepChunk(chunkType, chunkTypes);
 
-            byte bytes[] = null;
+            byte[] bytes = null;
             if (keep) {
                 bytes = readBytes("Chunk Data", is, length,
                         "Not a Valid PNG File: Couldn't read Chunk Data.");
@@ -220,7 +220,7 @@ public class PngImageParser extends ImageParser {
 
     }
 
-    private List<PngChunk> readChunks(final ByteSource byteSource, final int chunkTypes[],
+    private List<PngChunk> readChunks(final ByteSource byteSource, final int[] chunkTypes,
             final boolean returnAfterFirst) throws ImageReadException, IOException {
         InputStream is = null;
         boolean canThrow = false;
@@ -254,7 +254,7 @@ public class PngImageParser extends ImageParser {
         }
 
         final PngChunkIccp pngChunkiCCP = (PngChunkIccp) chunks.get(0);
-        final byte bytes[] = pngChunkiCCP.UncompressedProfile;
+        final byte[] bytes = pngChunkiCCP.uncompressedProfile;
 
         return (bytes);
     }
@@ -278,12 +278,12 @@ public class PngImageParser extends ImageParser {
         return new Dimension(pngChunkIHDR.width, pngChunkIHDR.height);
     }
 
-    public byte[] embedICCProfile(final byte image[], final byte profile[]) {
+    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
     }
 
     @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte profile[]) {
+    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
         return false;
     }
 
@@ -577,17 +577,17 @@ public class PngImageParser extends ImageParser {
         // System.out.println("\t" + "pngChunkpHYs.PixelsPerUnitXAxis: " +
         // pngChunkpHYs.PixelsPerUnitXAxis );
         // }
-        if ((pngChunkpHYs != null) && (pngChunkpHYs.UnitSpecifier == 1)) { // meters
+        if ((pngChunkpHYs != null) && (pngChunkpHYs.unitSpecifier == 1)) { // meters
             final double meters_per_inch = 0.0254;
 
             PhysicalWidthDpi = (int) Math
-                    .round(pngChunkpHYs.PixelsPerUnitXAxis
+                    .round(pngChunkpHYs.pixelsPerUnitXAxis
                             * meters_per_inch);
-            PhysicalWidthInch = (float) (Width / (pngChunkpHYs.PixelsPerUnitXAxis * meters_per_inch));
+            PhysicalWidthInch = (float) (Width / (pngChunkpHYs.pixelsPerUnitXAxis * meters_per_inch));
             PhysicalHeightDpi = (int) Math
-                    .round(pngChunkpHYs.PixelsPerUnitYAxis
+                    .round(pngChunkpHYs.pixelsPerUnitYAxis
                             * meters_per_inch);
-            PhysicalHeightInch = (float) (Height / (pngChunkpHYs.PixelsPerUnitYAxis * meters_per_inch));
+            PhysicalHeightInch = (float) (Height / (pngChunkpHYs.pixelsPerUnitYAxis * meters_per_inch));
         }
 
         final String FormatDetails = "Png";
@@ -684,12 +684,12 @@ public class PngImageParser extends ImageParser {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (PngChunk IDAT : IDATs) {
             final PngChunkIdat pngChunkIDAT = (PngChunkIdat) IDAT;
-            final byte bytes[] = pngChunkIDAT.getBytes();
+            final byte[] bytes = pngChunkIDAT.getBytes();
             // System.out.println(i + ": bytes: " + bytes.length);
             baos.write(bytes);
         }
 
-        final byte compressed[] = baos.toByteArray();
+        final byte[] compressed = baos.toByteArray();
 
         baos = null;
 
@@ -729,7 +729,7 @@ public class PngImageParser extends ImageParser {
                 }
 
                 final PngChunkIccp pngChunkiCCP = (PngChunkIccp) iCCPs.get(0);
-                final byte bytes[] = pngChunkiCCP.UncompressedProfile;
+                final byte[] bytes = pngChunkiCCP.uncompressedProfile;
 
                 icc_profile = ICC_Profile.getInstance(bytes);
             } else if (gAMAs.size() == 1) {

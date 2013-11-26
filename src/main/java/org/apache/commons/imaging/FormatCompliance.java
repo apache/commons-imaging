@@ -89,7 +89,7 @@ public class FormatCompliance {
         return value + " (" + Integer.toHexString(value) + ")";
     }
 
-    public boolean compare_bytes(final String name, final byte expected[], final byte actual[])
+    public boolean compare_bytes(final String name, final byte[] expected, final byte[] actual)
             throws ImageReadException {
         if (expected.length != actual.length) {
             addComment(name + ": " + "Unexpected length: (expected: "
@@ -127,7 +127,7 @@ public class FormatCompliance {
         return compare(name, new int[] { valid, }, actual);
     }
 
-    public boolean compare(final String name, final int valid[], final int actual)
+    public boolean compare(final String name, final int[] valid, final int actual)
             throws ImageReadException {
         for (final int element : valid) {
             if (actual == element) {

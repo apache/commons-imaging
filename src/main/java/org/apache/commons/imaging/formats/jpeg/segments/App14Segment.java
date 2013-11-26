@@ -41,7 +41,7 @@ public class App14Segment extends AppnSegment {
         ADOBE_PREFIX = adobe;
     }
 
-    public App14Segment(final int marker, final byte segmentData[])
+    public App14Segment(final int marker, final byte[] segmentData)
             throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(
                 segmentData));

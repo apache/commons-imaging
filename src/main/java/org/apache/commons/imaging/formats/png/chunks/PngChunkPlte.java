@@ -23,9 +23,9 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.GammaCorrection;
 
 public class PngChunkPlte extends PngChunk {
-    private final int rgb[];
+    private final int[] rgb;
 
-    public PngChunkPlte(final int length, final int ChunkType, final int CRC, final byte bytes[])
+    public PngChunkPlte(final int length, final int ChunkType, final int CRC, final byte[] bytes)
             throws ImageReadException, IOException {
         super(length, ChunkType, CRC, bytes);
 

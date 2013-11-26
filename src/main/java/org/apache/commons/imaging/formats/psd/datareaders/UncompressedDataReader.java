@@ -54,7 +54,7 @@ public class UncompressedDataReader extends DataReader {
         try {
             bbis = new BitsToByteInputStream(mbis, 8);
 
-            final int data[][][] = new int[channel_count][height][width];
+            final int[][][] data = new int[channel_count][height][width];
             for (int channel = 0; channel < channel_count; channel++) {
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++) {

@@ -80,7 +80,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
-                final byte bytes[] = baos.toByteArray();
+                final byte[] bytes = baos.toByteArray();
                 final File tempFile = createTempFile("test", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
@@ -123,7 +123,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
-                final byte bytes[] = baos.toByteArray();
+                final byte[] bytes = baos.toByteArray();
                 final File tempFile = createTempFile("removed", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
@@ -144,7 +144,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 new ExifRewriter().updateExifMetadataLossy(stripped, baos,
                         outputSet);
 
-                final byte bytes[] = baos.toByteArray();
+                final byte[] bytes = baos.toByteArray();
                 final File tempFile = createTempFile("inserted" + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
@@ -218,7 +218,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
 
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 rewriter.rewrite(byteSource, baos, outputSet);
-                final byte bytes[] = baos.toByteArray();
+                final byte[] bytes = baos.toByteArray();
                 final File tempFile = createTempFile(name + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);

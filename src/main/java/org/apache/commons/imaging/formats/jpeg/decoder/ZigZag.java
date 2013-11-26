@@ -16,7 +16,7 @@
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
 final class ZigZag {
-    private static final int zigZag[] = {
+    private static final int[] ZIG_ZAG = {
          0,  1,  5,  6, 14, 15, 27, 28,
          2,  4,  7, 13, 16, 26, 29, 42,
          3,  8, 12, 17, 25, 30, 41, 43,
@@ -32,13 +32,13 @@ final class ZigZag {
     
     public static void zigZagToBlock(final int[] zz, final int[] block) {
         for (int i = 0; i < 64; i++) {
-            block[i] = zz[zigZag[i]];
+            block[i] = zz[ZIG_ZAG[i]];
         }
     }
 
     public static void blockToZigZag(final int[] block, final int[] zz) {
         for (int i = 0; i < 64; i++) {
-            zz[zigZag[i]] = block[i];
+            zz[ZIG_ZAG[i]] = block[i];
         }
     }
 }
