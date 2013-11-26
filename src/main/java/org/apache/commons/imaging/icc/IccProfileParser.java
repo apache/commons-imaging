@@ -20,9 +20,9 @@ import java.awt.color.ICC_Profile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;

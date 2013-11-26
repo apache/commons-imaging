@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.common.ByteOrder;
+import java.nio.ByteOrder;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.util.Debug;
@@ -101,7 +101,7 @@ public class TiffLzwTest extends TiffBaseTest {
         };
 
         final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
-                ByteOrder.MOTOROLA, true, compressionListener);
+                ByteOrder.BIG_ENDIAN, true, compressionListener);
         final byte compressed[] = compressor.compress(src);
 
         final MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
@@ -148,7 +148,7 @@ public class TiffLzwTest extends TiffBaseTest {
         };
         final InputStream is = new ByteArrayInputStream(compressed);
         final MyLzwDecompressor decompressor = new MyLzwDecompressor(
-                LZW_MINIMUM_CODE_SIZE, ByteOrder.NETWORK,
+                LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN,
                 decompressionListener);
         decompressor.setTiffLZWMode();
         final byte decompressed[] = decompressor.decompress(is, src.length);
@@ -183,7 +183,7 @@ public class TiffLzwTest extends TiffBaseTest {
         };
         final InputStream is = new ByteArrayInputStream(src);
         final MyLzwDecompressor decompressor = new MyLzwDecompressor(
-                LZW_MINIMUM_CODE_SIZE, ByteOrder.NETWORK,
+                LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN,
                 decompressionListener);
         decompressor.setTiffLZWMode();
         final byte decompressed[] = decompressor.decompress(is, src.length);
@@ -244,7 +244,7 @@ public class TiffLzwTest extends TiffBaseTest {
         };
 
         final MyLzwCompressor compressor = new MyLzwCompressor(LZW_MINIMUM_CODE_SIZE,
-                ByteOrder.MOTOROLA, true, compressionListener);
+                ByteOrder.BIG_ENDIAN, true, compressionListener);
         final byte compressed[] = compressor.compress(decompressed);
 
         assertEquals(src.length, compressed.length);

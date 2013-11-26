@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,6 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
@@ -63,7 +63,7 @@ public class PsdImageParser extends ImageParser {
     public static final String BLOCK_NAME_XMP = "XMP";
 
     public PsdImageParser() {
-        super.setByteOrder(ByteOrder.MOTOROLA);
+        super.setByteOrder(ByteOrder.BIG_ENDIAN);
         // setDebug(true);
     }
 

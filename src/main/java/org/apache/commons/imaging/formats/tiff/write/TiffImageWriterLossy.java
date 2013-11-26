@@ -18,11 +18,11 @@ package org.apache.commons.imaging.formats.tiff.write;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteOrder;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 
 public class TiffImageWriterLossy extends TiffImageWriterBase {
 

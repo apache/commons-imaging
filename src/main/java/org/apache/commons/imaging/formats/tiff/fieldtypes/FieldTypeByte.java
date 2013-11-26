@@ -16,8 +16,9 @@
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
+import java.nio.ByteOrder;
+
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 

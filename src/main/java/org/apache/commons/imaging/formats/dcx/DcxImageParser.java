@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,6 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
@@ -50,7 +50,7 @@ public class DcxImageParser extends ImageParser {
     private static final String ACCEPTED_EXTENSIONS[] = { ".dcx", };
 
     public DcxImageParser() {
-        super.setByteOrder(ByteOrder.INTEL);
+        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
     }
 
     @Override
@@ -243,7 +243,7 @@ public class DcxImageParser extends ImageParser {
         final int headerSize = 4 + 1024 * 4;
 
         final BinaryOutputStream bos = new BinaryOutputStream(os,
-                ByteOrder.INTEL);
+                ByteOrder.LITTLE_ENDIAN);
         bos.write4Bytes(DcxHeader.DCX_ID);
         // Some apps may need a full 1024 entry table
         bos.write4Bytes(headerSize);

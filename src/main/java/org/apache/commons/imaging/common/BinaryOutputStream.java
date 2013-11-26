@@ -18,6 +18,7 @@ package org.apache.commons.imaging.common;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteOrder;
 
 public class BinaryOutputStream extends OutputStream {
     private final OutputStream os;
@@ -84,7 +85,7 @@ public class BinaryOutputStream extends OutputStream {
     }
 
     public final void write4Bytes(final int value) throws IOException {
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             write(0xff & (value >> 24));
             write(0xff & (value >> 16));
             write(0xff & (value >> 8));
@@ -98,7 +99,7 @@ public class BinaryOutputStream extends OutputStream {
     }
 
     public final void write3Bytes(final int value) throws IOException {
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             write(0xff & (value >> 16));
             write(0xff & (value >> 8));
             write(0xff & value);
@@ -110,7 +111,7 @@ public class BinaryOutputStream extends OutputStream {
     }
 
     public final void write2Bytes(final int value) throws IOException {
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             write(0xff & (value >> 8));
             write(0xff & value);
         } else {

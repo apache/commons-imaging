@@ -18,17 +18,17 @@ package org.apache.commons.imaging.formats.jpeg;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class JpegUtils extends BinaryFileParser {
     public JpegUtils() {
-        setByteOrder(ByteOrder.NETWORK);
+        setByteOrder(ByteOrder.BIG_ENDIAN);
     }
 
     public interface Visitor {

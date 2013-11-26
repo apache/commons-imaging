@@ -19,10 +19,10 @@ package org.apache.commons.imaging.formats.psd.datareaders;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
 import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
 import org.apache.commons.imaging.formats.psd.ImageContents;
@@ -47,7 +47,7 @@ public class UncompressedDataReader extends DataReader {
 
         final int channel_count = dataParser.getBasicChannelsCount();
         final int depth = header.Depth;
-        final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.MOTOROLA);
+        final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.BIG_ENDIAN);
         // we want all samples to be bytes
         BitsToByteInputStream bbis = null;
         boolean canThrow = false;

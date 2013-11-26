@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 
 import org.apache.commons.imaging.ImageReadException;

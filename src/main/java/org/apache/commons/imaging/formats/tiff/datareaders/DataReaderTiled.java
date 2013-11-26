@@ -20,10 +20,10 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BitInputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;

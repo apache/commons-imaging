@@ -17,11 +17,11 @@
 package org.apache.commons.imaging.formats.tiff.write;
 
 import java.io.IOException;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;

@@ -21,13 +21,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -55,7 +55,7 @@ public class ExifRewriter extends BinaryFileParser {
      * extension.
      */
     public ExifRewriter() {
-        this(ByteOrder.NETWORK);
+        this(ByteOrder.BIG_ENDIAN);
     }
 
     /**

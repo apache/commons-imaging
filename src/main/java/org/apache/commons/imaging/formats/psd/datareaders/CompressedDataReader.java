@@ -20,11 +20,11 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryFunctions;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.mylzw.BitsToByteInputStream;
 import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
@@ -72,8 +72,7 @@ public class CompressedDataReader extends DataReader {
 
                 final byte unpacked[] = new PackBits().decompress(packed, width);
                 final InputStream bais = new ByteArrayInputStream(unpacked);
-                final MyBitInputStream mbis = new MyBitInputStream(bais,
-                        ByteOrder.MOTOROLA);
+                final MyBitInputStream mbis = new MyBitInputStream(bais, ByteOrder.BIG_ENDIAN);
                 BitsToByteInputStream bbis = null;
                 boolean canThrow = false;
                 try {

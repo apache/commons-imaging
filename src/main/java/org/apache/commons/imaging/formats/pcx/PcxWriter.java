@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.pcx;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
@@ -140,7 +140,7 @@ public class PcxWriter {
         final SimplePalette palette = paletteFactory
                 .makeExactRgbPaletteSimple(src, 256);
         final BinaryOutputStream bos = new BinaryOutputStream(os,
-                ByteOrder.INTEL);
+                ByteOrder.LITTLE_ENDIAN);
         if (palette == null || bitDepth == 24 || bitDepth == 32) {
             if (bitDepth == 32) {
                 write32BppPCX(src, bos);

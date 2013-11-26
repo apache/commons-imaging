@@ -18,9 +18,9 @@
 package org.apache.commons.imaging.formats.tiff;
 
 import java.io.IOException;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReader;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;

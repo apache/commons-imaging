@@ -18,10 +18,10 @@ package org.apache.commons.imaging.formats.bmp.pixelparsers;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryInputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 

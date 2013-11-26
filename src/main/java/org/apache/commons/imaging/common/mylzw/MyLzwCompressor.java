@@ -18,10 +18,9 @@ package org.apache.commons.imaging.common.mylzw;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.imaging.common.ByteOrder;
 
 public class MyLzwCompressor {
     private int codeSize;

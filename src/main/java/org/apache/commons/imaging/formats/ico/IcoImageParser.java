@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +40,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.bmp.BmpImageParser;
@@ -682,7 +682,7 @@ public class IcoImageParser extends ImageParser {
             bitCount = 8;
         }
 
-        final BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.INTEL);
+        final BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.LITTLE_ENDIAN);
 
         int scanline_size = (bitCount * src.getWidth() + 7) / 8;
         if ((scanline_size % 4) != 0) {

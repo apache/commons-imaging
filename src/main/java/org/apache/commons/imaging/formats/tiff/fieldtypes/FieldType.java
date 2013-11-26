@@ -16,13 +16,13 @@
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
+import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
 /**

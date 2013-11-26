@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.tiff.write;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,7 +30,6 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
@@ -374,7 +374,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
                 final int LZW_MINIMUM_CODE_SIZE = 8;
 
                 final MyLzwCompressor compressor = new MyLzwCompressor(
-                        LZW_MINIMUM_CODE_SIZE, ByteOrder.MOTOROLA, true);
+                        LZW_MINIMUM_CODE_SIZE, ByteOrder.BIG_ENDIAN, true);
                 final byte compressed[] = compressor.compress(uncompressed);
 
                 strips[i] = compressed;
@@ -580,7 +580,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
 
     protected void writeImageFileHeader(final BinaryOutputStream bos,
             final long offsetToFirstIFD) throws IOException {
-        if (byteOrder == ByteOrder.INTEL) {
+        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
             bos.write('I');
             bos.write('I');
         } else {

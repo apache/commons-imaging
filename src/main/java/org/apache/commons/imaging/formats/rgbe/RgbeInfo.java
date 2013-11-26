@@ -19,13 +19,13 @@ package org.apache.commons.imaging.formats.rgbe;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.ByteConversions;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;

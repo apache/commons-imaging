@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.write;
 
 import java.io.IOException;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,7 +25,6 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;

@@ -18,6 +18,7 @@ package org.apache.commons.imaging.common;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 
 /**
  * Input stream reading 1-8, 16, 24 or 32 bits, starting from the most

@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,6 @@ import java.util.Map;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
@@ -61,9 +61,9 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
     
     private ByteOrder getTiffByteOrder(final int byteOrderByte) throws ImageReadException {
         if (byteOrderByte == 'I') {
-            return ByteOrder.INTEL;
+            return ByteOrder.LITTLE_ENDIAN; // Intel
         } else if (byteOrderByte == 'M') {
-            return ByteOrder.MOTOROLA;
+            return ByteOrder.BIG_ENDIAN; // Motorola
         } else {
             throw new ImageReadException("Invalid TIFF byte order " + (0xff & byteOrderByte));
         }

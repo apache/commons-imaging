@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -25,7 +26,6 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;

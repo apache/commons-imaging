@@ -17,11 +17,11 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryFunctions;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;

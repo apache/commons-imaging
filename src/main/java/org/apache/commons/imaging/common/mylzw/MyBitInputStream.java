@@ -18,8 +18,7 @@ package org.apache.commons.imaging.common.mylzw;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.commons.imaging.common.ByteOrder;
+import java.nio.ByteOrder;
 
 public class MyBitInputStream extends InputStream {
     private final InputStream is;
@@ -57,7 +56,7 @@ public class MyBitInputStream extends InputStream {
 
             final int newByte = (0xff & next);
 
-            if (byteOrder == ByteOrder.NETWORK) {
+            if (byteOrder == ByteOrder.BIG_ENDIAN) {
                 bitCache = (bitCache << 8) | newByte;
             } else {
                 bitCache = (newByte << bitsInCache) | bitCache;
@@ -70,7 +69,7 @@ public class MyBitInputStream extends InputStream {
 
         int sample;
 
-        if (byteOrder == ByteOrder.NETWORK) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             sample = sampleMask & (bitCache >> (bitsInCache - SampleBits));
         } else {
             sample = sampleMask & bitCache;

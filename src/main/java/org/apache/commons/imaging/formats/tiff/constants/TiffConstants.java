@@ -16,15 +16,16 @@
  */
 package org.apache.commons.imaging.formats.tiff.constants;
 
+import java.nio.ByteOrder;
+
 import org.apache.commons.imaging.ImagingConstants;
-import org.apache.commons.imaging.common.ByteOrder;
 
 public interface TiffConstants
         extends
             ImagingConstants,
             TiffDirectoryConstants,
             AllTagConstants {
-    ByteOrder DEFAULT_TIFF_BYTE_ORDER = ByteOrder.INTEL;
+    ByteOrder DEFAULT_TIFF_BYTE_ORDER = ByteOrder.LITTLE_ENDIAN;
 
     int TIFF_HEADER_SIZE = 8;
     int TIFF_DIRECTORY_HEADER_LENGTH = 2;

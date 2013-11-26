@@ -18,8 +18,7 @@ package org.apache.commons.imaging.common.mylzw;
 
 import java.io.IOException;
 import java.io.OutputStream;
-
-import org.apache.commons.imaging.common.ByteOrder;
+import java.nio.ByteOrder;
 
 public class MyBitOutputStream extends OutputStream {
     private final OutputStream os;
@@ -44,7 +43,7 @@ public class MyBitOutputStream extends OutputStream {
         final int sampleMask = (1 << SampleBits) - 1;
         value &= sampleMask;
 
-        if (byteOrder == ByteOrder.NETWORK) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             // MSB, so add to right
             bitCache = (bitCache << SampleBits) | value;
         } else {
@@ -54,7 +53,7 @@ public class MyBitOutputStream extends OutputStream {
         bitsInCache += SampleBits;
 
         while (bitsInCache >= 8) {
-            if (byteOrder == ByteOrder.NETWORK) {
+            if (byteOrder == ByteOrder.BIG_ENDIAN) {
                 // MSB, so write from left
                 final int b = 0xff & (bitCache >> (bitsInCache - 8));
                 actualWrite(b);
@@ -84,7 +83,7 @@ public class MyBitOutputStream extends OutputStream {
             final int bitMask = (1 << bitsInCache) - 1;
             int b = bitMask & bitCache;
 
-            if (byteOrder == ByteOrder.NETWORK) { 
+            if (byteOrder == ByteOrder.BIG_ENDIAN) { 
                 // MSB, so write from left
                 b <<= 8 - bitsInCache; // left align fragment.
                 os.write(b);

@@ -20,6 +20,7 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,17 +34,16 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteConversions;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.imaging.util.ParamMap;
 
 public class IptcParser extends BinaryFileParser {
-    private static final ByteOrder APP13_BYTE_ORDER = ByteOrder.NETWORK;
+    private static final ByteOrder APP13_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
 
     public IptcParser() {
-        setByteOrder(ByteOrder.NETWORK);
+        setByteOrder(ByteOrder.BIG_ENDIAN);
     }
 
     public boolean isPhotoshopJpegSegment(final byte segmentData[]) {

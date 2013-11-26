@@ -17,9 +17,9 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 
 public class FieldTypeAscii extends FieldType {

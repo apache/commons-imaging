@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 
@@ -213,7 +214,7 @@ public final class BinaryFunctions {
         }
 
         final int result;
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = (byte0 << 24) | (byte1 << 16)
                     | (byte2 << 8) | (byte3 << 0);
         } else {
@@ -234,7 +235,7 @@ public final class BinaryFunctions {
         }
 
         final int result;
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = (byte0 << 16) | (byte1 << 8)
                     | (byte2 << 0);
         } else {
@@ -254,7 +255,7 @@ public final class BinaryFunctions {
         }
         
         final int result;
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = (byte0 << 8) | byte1;
         } else {
             result = (byte1 << 8) | byte0;

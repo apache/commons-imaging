@@ -18,6 +18,7 @@ package org.apache.commons.imaging.common;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 

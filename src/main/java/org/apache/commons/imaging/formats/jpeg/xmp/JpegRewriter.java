@@ -18,14 +18,14 @@ package org.apache.commons.imaging.formats.jpeg.xmp;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.ByteOrder;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
@@ -36,7 +36,7 @@ import org.apache.commons.imaging.util.IoUtils;
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
  */
 public class JpegRewriter extends BinaryFileParser {
-    private static final ByteOrder JPEG_BYTE_ORDER = ByteOrder.NETWORK;
+    private static final ByteOrder JPEG_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
     private static final SegmentFilter EXIF_SEGMENT_FILTER = new SegmentFilter() {
         public boolean filter(final JFIFPieceSegment segment) {
             return segment.isExifSegment();

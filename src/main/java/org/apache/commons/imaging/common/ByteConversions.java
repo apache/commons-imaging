@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.common;
 
+import java.nio.ByteOrder;
+
 /**
  * Convenience methods for converting data types to and from
  * byte arrays.
@@ -233,7 +235,7 @@ public final class ByteConversions {
     public static void toBytes(final double value, final ByteOrder byteOrder,
             final byte[] result, final int offset) {
         final long bits = Double.doubleToRawLongBits(value);
-        if (byteOrder == ByteOrder.INTEL) {
+        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
             result[offset + 0] = (byte) (0xff & (bits >> 0));
             result[offset + 1] = (byte) (0xff & (bits >> 8));
             result[offset + 2] = (byte) (0xff & (bits >> 16));
@@ -297,7 +299,7 @@ public final class ByteConversions {
     
     public static void toBytes(final RationalNumber value, final ByteOrder byteOrder,
             final byte[] result, final int offset) {
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result[offset + 0] = (byte) (value.numerator >> 24);
             result[offset + 1] = (byte) (value.numerator >> 16);
             result[offset + 2] = (byte) (value.numerator >> 8);
@@ -351,7 +353,7 @@ public final class ByteConversions {
     public static int toUInt16(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
         final int byte0 = 0xff & bytes[offset + 0];
         final int byte1 = 0xff & bytes[offset + 1];
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             return ((byte0 << 8) | byte1);
         } else {
             return ((byte1 << 8) | byte0);
@@ -385,7 +387,7 @@ public final class ByteConversions {
         final int byte1 = 0xff & bytes[offset + 1];
         final int byte2 = 0xff & bytes[offset + 2];
         final int byte3 = 0xff & bytes[offset + 3];
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             return (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3;
         } else {
             return (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
@@ -420,7 +422,7 @@ public final class ByteConversions {
         final int byte2 = 0xff & bytes[offset + 2];
         final int byte3 = 0xff & bytes[offset + 3];
         final int bits;
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             bits = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | (byte3 << 0);
         } else {
             bits = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | (byte0 << 0);
@@ -460,7 +462,7 @@ public final class ByteConversions {
         final long byte6 = 0xffL & bytes[offset + 6];
         final long byte7 = 0xffL & bytes[offset + 7];
         final long bits;
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             bits = (byte0 << 56) | (byte1 << 48) | (byte2 << 40)
                     | (byte3 << 32) | (byte4 << 24) | (byte5 << 16)
                     | (byte6 << 8) | (byte7 << 0);
@@ -506,7 +508,7 @@ public final class ByteConversions {
         final int byte7 = 0xff & bytes[offset + 7];
         final int numerator;
         final int divisor;
-        if (byteOrder == ByteOrder.MOTOROLA) {
+        if (byteOrder == ByteOrder.BIG_ENDIAN) {
             numerator = (byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3;
             divisor = (byte4 << 24) | (byte5 << 16) | (byte6 << 8) | byte7;
         } else {

@@ -28,6 +28,7 @@ import java.awt.image.DataBufferFloat;
 import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -36,7 +37,6 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;

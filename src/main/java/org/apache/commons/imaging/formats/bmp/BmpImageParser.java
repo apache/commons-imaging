@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,6 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -66,7 +66,7 @@ public class BmpImageParser extends ImageParser {
     private static final int BITMAP_INFO_HEADER_SIZE = 40;
 
     public BmpImageParser() {
-        super.setByteOrder(ByteOrder.INTEL);
+        super.setByteOrder(ByteOrder.LITTLE_ENDIAN);
     }
 
     @Override
@@ -794,7 +794,7 @@ public class BmpImageParser extends ImageParser {
         }
 
         final byte imagedata[] = writer.getImageData(src);
-        final BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.INTEL);
+        final BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.LITTLE_ENDIAN);
 
         // write BitmapFileHeader
         os.write(0x42); // B, Windows 3.1x, 95, NT, Bitmap

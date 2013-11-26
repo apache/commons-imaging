@@ -21,10 +21,10 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BitInputStream;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
@@ -185,7 +185,7 @@ public abstract class DataReader implements TiffConstants {
             final int LZWMinimumCodeSize = 8;
 
             final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
-                    LZWMinimumCodeSize, ByteOrder.NETWORK);
+                    LZWMinimumCodeSize, ByteOrder.BIG_ENDIAN);
 
             myLzwDecompressor.setTiffLZWMode();
 

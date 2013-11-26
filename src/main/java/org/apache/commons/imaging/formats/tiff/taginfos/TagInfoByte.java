@@ -16,9 +16,9 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
+import java.nio.ByteOrder;
 import java.util.List;
 
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 

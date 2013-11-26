@@ -16,11 +16,11 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;

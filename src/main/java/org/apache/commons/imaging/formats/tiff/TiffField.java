@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,6 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
-import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;

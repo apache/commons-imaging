@@ -15,32 +15,24 @@
 
 package org.apache.commons.imaging.common;
 
+import java.nio.ByteOrder;
+
 import org.apache.commons.imaging.ImagingTest;
 
 public class BinaryFileFunctionsTest extends ImagingTest {
     public void testFloatToByteConversion() {
-        final byte[] bytesLE = ByteConversions.toBytes(1.0f,
-                ByteOrder.LITTLE_ENDIAN);
-        assertEquals(
-                ByteConversions.toFloat(bytesLE, ByteOrder.LITTLE_ENDIAN),
-                1.0f, 0f);
+        final byte[] bytesLE = ByteConversions.toBytes(1.0f, ByteOrder.LITTLE_ENDIAN);
+        assertEquals(ByteConversions.toFloat(bytesLE, ByteOrder.LITTLE_ENDIAN), 1.0f, 0f);
 
-        final byte[] bytesBE = ByteConversions.toBytes(1.0f,
-                ByteOrder.BIG_ENDIAN);
-        assertEquals(ByteConversions.toFloat(bytesBE, ByteOrder.BIG_ENDIAN),
-                1.0f, 0f);
+        final byte[] bytesBE = ByteConversions.toBytes(1.0f, ByteOrder.BIG_ENDIAN);
+        assertEquals(ByteConversions.toFloat(bytesBE, ByteOrder.BIG_ENDIAN), 1.0f, 0f);
     }
 
     public void testDoubleToByteConversion() {
-        final byte[] bytesLE = ByteConversions.toBytes(1.0,
-                ByteOrder.LITTLE_ENDIAN);
-        assertEquals(
-                ByteConversions.toDouble(bytesLE, ByteOrder.LITTLE_ENDIAN),
-                1.0, 0);
+        final byte[] bytesLE = ByteConversions.toBytes(1.0, ByteOrder.LITTLE_ENDIAN);
+        assertEquals(ByteConversions.toDouble(bytesLE, ByteOrder.LITTLE_ENDIAN), 1.0, 0);
 
-        final byte[] bytesBE = ByteConversions.toBytes(1.0,
-                ByteOrder.BIG_ENDIAN);
-        assertEquals(ByteConversions.toDouble(bytesBE, ByteOrder.BIG_ENDIAN),
-                1.0, 0);
+        final byte[] bytesBE = ByteConversions.toBytes(1.0, ByteOrder.BIG_ENDIAN);
+        assertEquals(ByteConversions.toDouble(bytesBE, ByteOrder.BIG_ENDIAN), 1.0, 0);
     }
 }
