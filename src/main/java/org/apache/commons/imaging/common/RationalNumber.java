@@ -36,7 +36,7 @@ public class RationalNumber extends Number {
         this.divisor = divisor;
     }
 
-    public static RationalNumber factoryMethod(long n, long d) {
+    static RationalNumber factoryMethod(long n, long d) {
         // safer than constructor - handles values outside min/max range.
         // also does some simple finding of common denominators.
 
@@ -67,7 +67,6 @@ public class RationalNumber extends Number {
      * Return the greatest common divisor
      */
     private static long gcd(final long a, final long b) {
-
         if (b == 0) {
             return a;
         } else {
@@ -97,10 +96,6 @@ public class RationalNumber extends Number {
     @Override
     public long longValue() {
         return (long) numerator / (long) divisor;
-    }
-
-    public boolean isValid() {
-        return divisor != 0;
     }
 
     @Override
@@ -135,10 +130,8 @@ public class RationalNumber extends Number {
             this.error = error;
         }
 
-        public static Option factory(final RationalNumber rationalNumber,
-                final double value) {
-            return new Option(rationalNumber, Math.abs(rationalNumber
-                    .doubleValue() - value));
+        public static Option factory(final RationalNumber rationalNumber, final double value) {
+            return new Option(rationalNumber, Math.abs(rationalNumber .doubleValue() - value));
         }
 
         @Override
@@ -147,9 +140,9 @@ public class RationalNumber extends Number {
         }
     }
 
-    //
-    // calculate rational number using successive approximations.
-    //
+    /**
+     * Calculate rational number using successive approximations.
+     */
     public static RationalNumber valueOf(double value) {
         if (value >= Integer.MAX_VALUE) {
             return new RationalNumber(Integer.MAX_VALUE, 1);
