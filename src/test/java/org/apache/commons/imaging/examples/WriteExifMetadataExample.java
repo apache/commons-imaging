@@ -120,7 +120,7 @@ public class WriteExifMetadataExample {
                 exifDirectory
                         .removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
                 exifDirectory.add(ExifTagConstants.EXIF_TAG_APERTURE_VALUE,
-                        RationalNumber.factoryMethod(3, 10));
+                        new RationalNumber(3, 10));
             }
 
             {
