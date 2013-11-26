@@ -261,7 +261,7 @@
         <configuration>
           <targetJdk>${maven.compile.target}</targetJdk>
           <rulesets>
-            <ruleset>${basedir}/pmd-ruleset.xml</ruleset>
+            <ruleset>${basedir}/src/conf/pmd-ruleset.xml</ruleset>
           </rulesets>
         </configuration>
       </plugin>

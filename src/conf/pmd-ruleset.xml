@@ -65,6 +65,8 @@
   <rule ref="rulesets/java/migrating.xml"/>
   <rule ref="rulesets/java/optimizations.xml">
     <exclude name="AvoidInstantiatingObjectsInLoops"/>
+    <exclude name="LocalVariableCouldBeFinal"/>
+    <exclude name="MethodArgumentCouldBeFinal"/>
     <exclude name="RedundantFieldInitializer"/>
     <exclude name="PrematureDeclaration"/>
   </rule>
