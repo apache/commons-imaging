@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -262,7 +263,7 @@ public class IptcParser extends BinaryFileParser {
         BinaryInputStream bis = null;
         boolean canThrow = false;
         try {
-            bis = new BinaryInputStream(bytes, APP13_BYTE_ORDER);
+            bis = new BinaryInputStream(new ByteArrayInputStream(bytes), APP13_BYTE_ORDER);
 
             // Note that these are unsigned quantities. Name is always an even
             // number of bytes (including the 1st byte, which is the size.)
