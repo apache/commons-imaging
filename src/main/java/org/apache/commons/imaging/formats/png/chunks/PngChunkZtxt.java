@@ -16,10 +16,12 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.ZLibUtils;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
 
@@ -49,11 +51,9 @@ public class PngChunkZtxt extends PngTextChunk {
 
         final int compressedTextLength = bytes.length - index;
         final byte compressedText[] = new byte[compressedTextLength];
-        System.arraycopy(bytes, index, compressedText, 0,
-                compressedTextLength);
+        System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
-        text = new String(new ZLibUtils().inflate(compressedText),
-                "ISO-8859-1");
+        text = new String(BinaryFunctions.getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedText))), "ISO-8859-1");
     }
 
     /**

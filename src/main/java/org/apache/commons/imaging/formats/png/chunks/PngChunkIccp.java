@@ -16,10 +16,12 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.ZLibUtils;
+import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class PngChunkIccp extends PngChunk {
     // private final PngImageParser parser;
@@ -60,7 +62,8 @@ public class PngChunkIccp extends PngChunk {
             System.out.println("bytes.length: " + bytes.length);
         }
 
-        UncompressedProfile = new ZLibUtils().inflate(CompressedProfile);
+        UncompressedProfile = BinaryFunctions.getStreamBytes(
+                new InflaterInputStream(new ByteArrayInputStream(CompressedProfile)));
 
         if (getDebug()) {
             System.out.println("UncompressedProfile: " + Integer.toString(bytes.length));

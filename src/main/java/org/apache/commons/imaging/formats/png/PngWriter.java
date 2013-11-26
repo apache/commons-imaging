@@ -29,11 +29,11 @@ import java.util.zip.DeflaterOutputStream;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
-import org.apache.commons.imaging.common.ZLibUtils;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.util.IoUtils;
 
 public class PngWriter {
     private final boolean verbose;
@@ -152,7 +152,7 @@ public class PngWriter {
         baos.write(text.translatedKeyword.getBytes("utf-8"));
         baos.write(0);
 
-        baos.write(new ZLibUtils().deflate(text.text.getBytes("utf-8")));
+        baos.write(deflate(text.text.getBytes("utf-8")));
 
         writeChunk(os, PngConstants.iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
@@ -176,7 +176,7 @@ public class PngWriter {
         baos.write(PngConstants.COMPRESSION_DEFLATE_INFLATE);
 
         // text
-        baos.write(new ZLibUtils().deflate(text.text.getBytes("ISO-8859-1")));
+        baos.write(deflate(text.text.getBytes("ISO-8859-1")));
 
         writeChunk(os, PngConstants.zTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
@@ -202,6 +202,19 @@ public class PngWriter {
         writeChunk(os, PngConstants.tEXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
+    public final byte[] deflate(final byte bytes[]) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+        boolean canThrow = false;
+        try {
+            dos.write(bytes);
+            canThrow = true;
+        } finally {
+            IoUtils.closeQuietly(canThrow, dos);
+        }
+        return baos.toByteArray();
+    }
+    
     private boolean isValidISO_8859_1(final String s) {
         try {
             final String roundtrip = new String(s.getBytes("ISO-8859-1"), "ISO-8859-1");
@@ -230,7 +243,7 @@ public class PngWriter {
         baos.write(PngConstants.XMP_KEYWORD.getBytes("utf-8"));
         baos.write(0);
 
-        baos.write(new ZLibUtils().deflate(xmpXml.getBytes("utf-8")));
+        baos.write(deflate(xmpXml.getBytes("utf-8")));
 
         writeChunk(os, PngConstants.iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }

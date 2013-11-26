@@ -16,10 +16,12 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.ZLibUtils;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
 
@@ -92,7 +94,7 @@ public class PngChunkItxt extends PngTextChunk {
             System.arraycopy(bytes, index, compressedText, 0,
                     compressedTextLength);
 
-            text = new String(new ZLibUtils().inflate(compressedText),
+            text = new String(BinaryFunctions.getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(bytes))),
                     "utf-8");
 
         } else {
