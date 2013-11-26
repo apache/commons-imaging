@@ -13,9 +13,9 @@
  *  under the License.
  */
 
-package org.apache.commons.imaging.formats.jpeg;
+package org.apache.commons.imaging.formats.jpeg.decoder;
 
-public final class ZigZag {
+final class ZigZag {
     private static final int zigZag[] = {
          0,  1,  5,  6, 14, 15, 27, 28,
          2,  4,  7, 13, 16, 26, 29, 42,
