@@ -21,15 +21,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.common.RationalNumber;
-import org.apache.commons.imaging.common.RationalNumberUtilities;
 import org.apache.commons.imaging.util.Debug;
 
 public class RationalNumberTest extends ImagingTest {
-    //    public RationalNumberTest()
-    //    {
-    //        super("Rational Number Test");
-    //    }
 
     public void test() {
         final double testValues[] = {
@@ -106,8 +100,7 @@ public class RationalNumberTest extends ImagingTest {
         };
 
         for (final double value : testValues) {
-            final RationalNumber rational = RationalNumberUtilities
-                    .getRationalNumber(value);
+            final RationalNumber rational = RationalNumber.getRationalNumber(value);
             final double difference = Math.abs(value - rational.doubleValue());
 
             final NumberFormat nf = DecimalFormat.getInstance();

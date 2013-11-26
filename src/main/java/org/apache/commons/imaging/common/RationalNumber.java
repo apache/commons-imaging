@@ -22,7 +22,11 @@ import java.text.NumberFormat;
  * Rational number, as used by the TIFF image format.
  */
 public class RationalNumber extends Number {
-    private static final long serialVersionUID = -1;
+
+    private static final long serialVersionUID = -8412262656468158691L;    
+
+    // int-precision tolerance
+    private static final double TOLERANCE = 1E-8;
 
     public final int numerator;
     public final int divisor;
@@ -48,8 +52,7 @@ public class RationalNumber extends Number {
             }
 
             if (d == 0) {
-                throw new NumberFormatException("Invalid value, numerator: "
-                        + n + ", divisor: " + d);
+                throw new NumberFormatException("Invalid value, numerator: " + n + ", divisor: " + d);
             }
         }
 
@@ -110,8 +113,7 @@ public class RationalNumber extends Number {
         if ((numerator % divisor) == 0) {
             return nf.format(numerator / divisor);
         }
-        return numerator + "/" + divisor + " ("
-                + nf.format((double) numerator / divisor) + ")";
+        return numerator + "/" + divisor + " (" + nf.format((double) numerator / divisor) + ")";
     }
 
     public String toDisplayString() {
@@ -122,4 +124,106 @@ public class RationalNumber extends Number {
         nf.setMaximumFractionDigits(3);
         return nf.format((double) numerator / (double) divisor);
     }
+    
+
+    private static class Option {
+        public final RationalNumber rationalNumber;
+        public final double error;
+
+        private Option(final RationalNumber rationalNumber, final double error) {
+            this.rationalNumber = rationalNumber;
+            this.error = error;
+        }
+
+        public static Option factory(final RationalNumber rationalNumber,
+                final double value) {
+            return new Option(rationalNumber, Math.abs(rationalNumber
+                    .doubleValue() - value));
+        }
+
+        @Override
+        public String toString() {
+            return rationalNumber.toString();
+        }
+    }
+
+    //
+    // calculate rational number using successive approximations.
+    //
+    public static RationalNumber getRationalNumber(double value) {
+        if (value >= Integer.MAX_VALUE) {
+            return new RationalNumber(Integer.MAX_VALUE, 1);
+        } else if (value <= -Integer.MAX_VALUE) {
+            return new RationalNumber(-Integer.MAX_VALUE, 1);
+        }
+
+        boolean negative = false;
+        if (value < 0) {
+            negative = true;
+            value = Math.abs(value);
+        }
+
+        RationalNumber l;
+        RationalNumber h;
+
+        if (value == 0) {
+            return new RationalNumber(0, 1);
+        } else if (value >= 1) {
+            final int approx = (int) value;
+            if (approx < value) {
+                l = new RationalNumber(approx, 1);
+                h = new RationalNumber(approx + 1, 1);
+            } else {
+                l = new RationalNumber(approx - 1, 1);
+                h = new RationalNumber(approx, 1);
+            }
+        } else {
+            final int approx = (int) (1.0 / value);
+            if ((1.0 / approx) < value) {
+                l = new RationalNumber(1, approx);
+                h = new RationalNumber(1, approx - 1);
+            } else {
+                l = new RationalNumber(1, approx + 1);
+                h = new RationalNumber(1, approx);
+            }
+        }
+        Option low = Option.factory(l, value);
+        Option high = Option.factory(h, value);
+
+        Option bestOption = (low.error < high.error) ? low : high;
+
+        final int MAX_ITERATIONS = 100; // value is quite high, actually.
+                                        // shouldn't matter.
+        for (int count = 0; bestOption.error > TOLERANCE
+                && count < MAX_ITERATIONS; count++) {
+            final RationalNumber mediant = RationalNumber.factoryMethod(
+                    (long) low.rationalNumber.numerator
+                            + (long) high.rationalNumber.numerator,
+                    (long) low.rationalNumber.divisor
+                            + (long) high.rationalNumber.divisor);
+            final Option mediantOption = Option.factory(mediant, value);
+
+            if (value < mediant.doubleValue()) {
+                if (high.error <= mediantOption.error) {
+                    break;
+                }
+
+                high = mediantOption;
+            } else {
+                if (low.error <= mediantOption.error) {
+                    break;
+                }
+
+                low = mediantOption;
+            }
+
+            if (mediantOption.error < bestOption.error) {
+                bestOption = mediantOption;
+            }
+        }
+
+        return negative ? bestOption.rationalNumber.negate()
+                : bestOption.rationalNumber;
+    }
+
 }

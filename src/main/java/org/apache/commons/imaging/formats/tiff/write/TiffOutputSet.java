@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteOrder;
-import org.apache.commons.imaging.common.RationalNumberUtilities;
+import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
@@ -162,12 +162,9 @@ public final class TiffOutputSet implements TiffConstants {
             gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
             gpsDirectory
                     .add(GpsTagConstants.GPS_TAG_GPS_LONGITUDE,
-                            RationalNumberUtilities
-                                    .getRationalNumber(longitudeDegrees),
-                            RationalNumberUtilities
-                                    .getRationalNumber(longitudeMinutes),
-                            RationalNumberUtilities
-                                    .getRationalNumber(longitudeSeconds));
+                            RationalNumber.getRationalNumber(longitudeDegrees),
+                            RationalNumber.getRationalNumber(longitudeMinutes),
+                            RationalNumber.getRationalNumber(longitudeSeconds));
         }
 
         {
@@ -182,9 +179,9 @@ public final class TiffOutputSet implements TiffConstants {
 
             gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LATITUDE);
             gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_LATITUDE,
-                    RationalNumberUtilities.getRationalNumber(latitudeDegrees),
-                    RationalNumberUtilities.getRationalNumber(latitudeMinutes),
-                    RationalNumberUtilities.getRationalNumber(latitudeSeconds));
+                    RationalNumber.getRationalNumber(latitudeDegrees),
+                    RationalNumber.getRationalNumber(latitudeMinutes),
+                    RationalNumber.getRationalNumber(latitudeSeconds));
         }
 
     }

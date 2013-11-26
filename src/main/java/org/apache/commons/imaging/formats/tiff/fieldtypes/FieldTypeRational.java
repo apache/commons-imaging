@@ -20,7 +20,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.RationalNumber;
-import org.apache.commons.imaging.common.RationalNumberUtilities;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.util.Debug;
 
@@ -48,16 +47,14 @@ public class FieldTypeRational extends FieldType {
                     byteOrder);
         } else if (o instanceof Number) {
             final Number number = (Number) o;
-            final RationalNumber rationalNumber = RationalNumberUtilities
-                    .getRationalNumber(number.doubleValue());
+            final RationalNumber rationalNumber = RationalNumber.getRationalNumber(number.doubleValue());
             return ByteConversions.toBytes(rationalNumber, byteOrder);
         } else if (o instanceof Number[]) {
             final Number numbers[] = (Number[]) o;
             final RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 final Number number = numbers[i];
-                rationalNumbers[i] = RationalNumberUtilities
-                        .getRationalNumber(number.doubleValue());
+                rationalNumbers[i] = RationalNumber.getRationalNumber(number.doubleValue());
             }
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         } else if (o instanceof double[]) {
@@ -65,8 +62,7 @@ public class FieldTypeRational extends FieldType {
             final RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 final double number = numbers[i];
-                rationalNumbers[i] = RationalNumberUtilities
-                        .getRationalNumber(number);
+                rationalNumbers[i] = RationalNumber.getRationalNumber(number);
             }
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         } else {

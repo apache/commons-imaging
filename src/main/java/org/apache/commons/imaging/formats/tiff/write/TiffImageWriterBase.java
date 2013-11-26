@@ -31,7 +31,7 @@ import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteOrder;
 import org.apache.commons.imaging.common.PackBits;
-import org.apache.commons.imaging.common.RationalNumberUtilities;
+import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
@@ -435,29 +435,23 @@ public abstract class TiffImageWriterBase implements TiffConstants {
                 directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,
                         (short) 0);
                 directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
-                        RationalNumberUtilities.getRationalNumber(pixelDensity
-                                .getRawHorizontalDensity()));
-                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
-                        RationalNumberUtilities.getRationalNumber(pixelDensity
-                                .getRawVerticalDensity()));
+                        RationalNumber.getRationalNumber(pixelDensity.getRawHorizontalDensity()));
+                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, 
+                        RationalNumber.getRationalNumber(pixelDensity.getRawVerticalDensity()));
             } else if (pixelDensity.isInInches()) {
                 directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,
                         (short) 2);
                 directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
-                        RationalNumberUtilities.getRationalNumber(pixelDensity
-                                .horizontalDensityInches()));
+                        RationalNumber.getRationalNumber(pixelDensity.horizontalDensityInches()));
                 directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
-                        RationalNumberUtilities.getRationalNumber(pixelDensity
-                                .verticalDensityInches()));
+                        RationalNumber.getRationalNumber(pixelDensity.verticalDensityInches()));
             } else {
                 directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,
                         (short) 1);
                 directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
-                        RationalNumberUtilities.getRationalNumber(pixelDensity
-                                .horizontalDensityCentimetres()));
+                        RationalNumber.getRationalNumber(pixelDensity.horizontalDensityCentimetres()));
                 directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
-                        RationalNumberUtilities.getRationalNumber(pixelDensity
-                                .verticalDensityCentimetres()));
+                        RationalNumber.getRationalNumber(pixelDensity.verticalDensityCentimetres()));
             }
             if (t4Options != 0) {
                 directory.add(TiffTagConstants.TIFF_TAG_T4_OPTIONS, t4Options);
