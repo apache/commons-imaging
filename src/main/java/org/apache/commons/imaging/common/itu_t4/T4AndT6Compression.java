@@ -21,7 +21,6 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.BitArrayOutputStream;
 import org.apache.commons.imaging.common.BitInputStreamFlexible;
 import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
 import org.apache.commons.imaging.util.Debug;

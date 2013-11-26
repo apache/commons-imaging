@@ -16,8 +16,6 @@
  */
 package org.apache.commons.imaging.common.itu_t4;
 
-import org.apache.commons.imaging.common.BitArrayOutputStream;
-
 class T4_T6_Tables {
     public static final Entry[] WHITE_TERMINATING_CODES = {
             new Entry("00110101", 0),

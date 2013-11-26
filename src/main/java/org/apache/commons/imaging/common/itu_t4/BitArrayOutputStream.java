@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.common;
+package org.apache.commons.imaging.common.itu_t4;
 
 import java.io.OutputStream;
 
@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * Output stream writing to a byte array, and capable
  * of writing 1 bit at a time, starting from the most significant bit.
  */
-public class BitArrayOutputStream extends OutputStream {
+class BitArrayOutputStream extends OutputStream {
     private byte[] buffer;
     private int bytesWritten = 0;
     private int cache = 0;
