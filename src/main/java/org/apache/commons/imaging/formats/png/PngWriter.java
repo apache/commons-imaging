@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,6 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.ParamMap;
-import org.apache.commons.imaging.util.UnicodeUtils;
 
 public class PngWriter {
     private final boolean verbose;
@@ -130,14 +130,11 @@ public class PngWriter {
 
     private void writeChunkiTXt(final OutputStream os, final PngText.Itxt text)
             throws IOException, ImageWriteException {
-        if (!UnicodeUtils.isValidISO_8859_1(text.keyword)) {
-            throw new ImageWriteException(
-                    "Png tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
+        if (!isValidISO_8859_1(text.keyword)) {
+            throw new ImageWriteException("Png tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
-        if (!UnicodeUtils.isValidISO_8859_1(text.languageTag)) {
-            throw new ImageWriteException(
-                    "Png tEXt chunk language tag is not ISO-8859-1: "
-                            + text.languageTag);
+        if (!isValidISO_8859_1(text.languageTag)) {
+            throw new ImageWriteException("Png tEXt chunk language tag is not ISO-8859-1: " + text.languageTag);
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -162,15 +159,13 @@ public class PngWriter {
         writeChunk(os, PngConstants.iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
-    private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text)
+    private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text) 
             throws IOException, ImageWriteException {
-        if (!UnicodeUtils.isValidISO_8859_1(text.keyword)) {
-            throw new ImageWriteException(
-                    "Png zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
+        if (!isValidISO_8859_1(text.keyword)) {
+            throw new ImageWriteException("Png zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
-        if (!UnicodeUtils.isValidISO_8859_1(text.text)) {
-            throw new ImageWriteException(
-                    "Png zTXt chunk text is not ISO-8859-1: " + text.text);
+        if (!isValidISO_8859_1(text.text)) {
+            throw new ImageWriteException("Png zTXt chunk text is not ISO-8859-1: " + text.text);
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -190,13 +185,11 @@ public class PngWriter {
 
     private void writeChunktEXt(final OutputStream os, final PngText.Text text)
             throws IOException, ImageWriteException {
-        if (!UnicodeUtils.isValidISO_8859_1(text.keyword)) {
-            throw new ImageWriteException(
-                    "Png tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
+        if (!isValidISO_8859_1(text.keyword)) {
+            throw new ImageWriteException("Png tEXt chunk keyword is not ISO-8859-1: " + text.keyword);
         }
-        if (!UnicodeUtils.isValidISO_8859_1(text.text)) {
-            throw new ImageWriteException(
-                    "Png tEXt chunk text is not ISO-8859-1: " + text.text);
+        if (!isValidISO_8859_1(text.text)) {
+            throw new ImageWriteException("Png tEXt chunk text is not ISO-8859-1: " + text.text);
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -211,6 +204,16 @@ public class PngWriter {
         writeChunk(os, PngConstants.tEXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
     }
 
+    private boolean isValidISO_8859_1(final String s) {
+        try {
+            final String roundtrip = new String(s.getBytes("ISO-8859-1"), "ISO-8859-1");
+            return s.equals(roundtrip);
+        } catch (final UnsupportedEncodingException e) {
+            // should never be thrown.
+            throw new RuntimeException("Error parsing string.", e);
+        }
+    }
+    
     private void writeChunkXmpiTXt(final OutputStream os, final String xmpXml)
             throws IOException {
 
