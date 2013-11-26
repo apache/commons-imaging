@@ -21,7 +21,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
-public class JpegInputStream {
+class JpegInputStream {
     // Figure F.18, F.2.2.5, page 111 of ITU-T T.81
     private final InputStream is;
     private int cnt = 0;

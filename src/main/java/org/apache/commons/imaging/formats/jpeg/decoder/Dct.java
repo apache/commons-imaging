@@ -15,7 +15,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
-public final class Dct {
+final class Dct {
     /*
      * The book "JPEG still image data compression standard", by Pennebaker and
      * Mitchell, Chapter 4, discusses a number of approaches to the fast DCT.

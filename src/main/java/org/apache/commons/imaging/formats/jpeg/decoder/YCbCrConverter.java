@@ -15,7 +15,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
-public final class YCbCrConverter {
+final class YCbCrConverter {
     private static final int[] REDS = new int[256 * 256];
     private static final int[] BLUES = new int[256 * 256];
     private static final int[] GREENS1 = new int[256 * 256];
