@@ -200,22 +200,6 @@ public class BinaryFileParser {
         pw.flush();
     }
 
-    protected final void debugByteArray(final String name, final byte bytes[]) {
-        System.out.println(name + ": " + bytes.length);
-
-        for (int i = 0; ((i < bytes.length) && (i < 50)); i++) {
-            debugNumber("\t" + " (" + i + ")", 0xff & bytes[i]);
-        }
-    }
-
-    protected final void debugNumberArray(final String name, final int numbers[], final int length) {
-        System.out.println(name + ": " + numbers.length);
-
-        for (int i = 0; ((i < numbers.length) && (i < 50)); i++) {
-            debugNumber(name + " (" + i + ")", numbers[i], length);
-        }
-    }
-
     protected final boolean compareBytes(final byte a[], final int aStart, final byte b[],
             final int bStart, final int length) {
         return BinaryFunctions.compareBytes(a, aStart, b, bStart, length);
