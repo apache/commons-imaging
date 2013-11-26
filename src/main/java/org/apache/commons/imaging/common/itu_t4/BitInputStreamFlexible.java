@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.common;
+package org.apache.commons.imaging.common.itu_t4;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ import java.io.InputStream;
  * across byte boundaries in most significant
  * bit first order.
  */
-public class BitInputStreamFlexible extends InputStream {
+class BitInputStreamFlexible extends InputStream {
     // TODO should be byte order conscious, ie TIFF for reading
     // samples size<8 - shuoldn't that effect their order within byte?
     private final InputStream is;

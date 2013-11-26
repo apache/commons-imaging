@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.imaging.common.BitInputStreamFlexible;
-
 /**
  * A Huffman tree implemented as 1 array for high locality of reference.
  */
