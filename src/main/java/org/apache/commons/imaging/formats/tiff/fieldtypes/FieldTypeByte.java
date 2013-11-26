@@ -20,7 +20,6 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeByte extends FieldType {
     public FieldTypeByte(final int type, final String name) {
@@ -43,8 +42,7 @@ public class FieldTypeByte extends FieldType {
         } else if (o instanceof byte[]) {
             return (byte[]) o;
         } else {
-            throw new ImageWriteException("Invalid data: " + o + " ("
-                    + Debug.getType(o) + ")");
+            throw new ImageWriteException("Invalid data", o);
         }
     }
 

@@ -82,8 +82,7 @@ public final class TagInfoGpsText extends TagInfo {
     public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
             throws ImageWriteException {
         if (!(value instanceof String)) {
-            throw new ImageWriteException("GPS text value not String: " + value
-                    + " (" + Debug.getType(value) + ")");
+            throw new ImageWriteException("GPS text value not String", value);
         }
         final String s = (String) value;
 
@@ -142,10 +141,10 @@ public final class TagInfoGpsText extends TagInfo {
         } else if (entry.getFieldType() == FieldType.BYTE) {
             /* later */
         } else {
-            Debug.debug("entry.type", entry.getFieldType());
-            Debug.debug("entry.directoryType", entry.getDirectoryType());
-            Debug.debug("entry.type", entry.getDescriptionWithoutValue());
-            Debug.debug("entry.type", entry.getFieldType());
+            Debug.debug("entry.type: " + entry.getFieldType());
+            Debug.debug("entry.directoryType: " + entry.getDirectoryType());
+            Debug.debug("entry.type: " + entry.getDescriptionWithoutValue());
+            Debug.debug("entry.type: " + entry.getFieldType());
             throw new ImageReadException("GPS text field not encoded as bytes.");
         }
 
@@ -155,8 +154,7 @@ public final class TagInfoGpsText extends TagInfo {
                 // try ASCII, with NO prefix.
                 return new String(bytes, "US-ASCII");
             } catch (final UnsupportedEncodingException e) {
-                throw new ImageReadException(
-                        "GPS text field missing encoding prefix.", e);
+                throw new ImageReadException("GPS text field missing encoding prefix.", e);
             }
         }
 

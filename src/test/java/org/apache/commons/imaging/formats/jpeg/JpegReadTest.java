@@ -26,6 +26,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
@@ -35,7 +36,7 @@ public class JpegReadTest extends JpegBaseTest {
         final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);

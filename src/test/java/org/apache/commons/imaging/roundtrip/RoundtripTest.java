@@ -217,16 +217,13 @@ public class RoundtripTest extends ImagingTest {
                     }
                 }
                 if (a_argb != b_argb) {
-                    Debug.debug("width", a.getWidth());
-                    Debug.debug("height", a.getHeight());
-                    Debug.debug("distance",
-                            calculateARGBDistance(a_argb, b_argb));
-                    Debug.debug("x", x);
-                    Debug.debug("y", y);
-                    Debug.debug("a_argb",
-                            a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
-                    Debug.debug("b_argb",
-                            b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
+                    Debug.debug("width: " + a.getWidth());
+                    Debug.debug("height: " + a.getHeight());
+                    Debug.debug("distance: " + calculateARGBDistance(a_argb, b_argb));
+                    Debug.debug("x: " + x);
+                    Debug.debug("y: " + y);
+                    Debug.debug("a_argb: " + a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
+                    Debug.debug("b_argb: " + b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
                 }
                 assertEquals(a_argb, b_argb);
             }
@@ -261,13 +258,11 @@ public class RoundtripTest extends ImagingTest {
             final int bByte = 0xff & bData[i];
 
             if (aByte != bByte) {
-                Debug.debug("a", a);
-                Debug.debug("b", b);
-                Debug.debug("i", i);
-                Debug.debug("aByte",
-                        aByte + " (0x" + Integer.toHexString(aByte) + ")");
-                Debug.debug("bByte",
-                        bByte + " (0x" + Integer.toHexString(bByte) + ")");
+                Debug.debug("a: " + a);
+                Debug.debug("b: " + b);
+                Debug.debug("i: " + i);
+                Debug.debug("aByte: " + aByte + " (0x" + Integer.toHexString(aByte) + ")");
+                Debug.debug("bByte: " + bByte + " (0x" + Integer.toHexString(bByte) + ")");
             }
             assertEquals(aByte, bByte);
         }

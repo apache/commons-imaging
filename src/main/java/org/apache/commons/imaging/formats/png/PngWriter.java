@@ -448,13 +448,13 @@ public class PngWriter {
 
         final boolean hasAlpha = new PaletteFactory().hasTransparency(src);
         if (verbose) {
-            Debug.debug("hasAlpha", hasAlpha);
+            Debug.debug("hasAlpha: " + hasAlpha);
         }
         // int transparency = new PaletteFactory().getTransparency(src);
 
         boolean isGrayscale = new PaletteFactory().isGrayscale(src);
         if (verbose) {
-            Debug.debug("isGrayscale", isGrayscale);
+            Debug.debug("isGrayscale: " + isGrayscale);
         }
 
         byte colorType;
@@ -475,13 +475,13 @@ public class PngWriter {
                 colorType = getColourType(hasAlpha, isGrayscale);
             }
             if (verbose) {
-                Debug.debug("colorType", colorType);
+                Debug.debug("colorType: " + colorType);
             }
         }
 
         final byte bitDepth = getBitDepth(colorType, params);
         if (verbose) {
-            Debug.debug("bit_depth", bitDepth);
+            Debug.debug("bit_depth: " + bitDepth);
         }
 
         int sampleDepth;
@@ -491,7 +491,7 @@ public class PngWriter {
             sampleDepth = bitDepth;
         }
         if (verbose) {
-            Debug.debug("sample_depth", sampleDepth);
+            Debug.debug("sample_depth: " + sampleDepth);
         }
 
         {

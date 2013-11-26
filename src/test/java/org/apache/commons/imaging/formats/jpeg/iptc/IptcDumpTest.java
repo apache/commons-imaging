@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
-import org.apache.commons.imaging.formats.jpeg.iptc.IptcRecord;
 import org.apache.commons.imaging.util.Debug;
 
 public class IptcDumpTest extends IptcBaseTest {
@@ -34,7 +34,7 @@ public class IptcDumpTest extends IptcBaseTest {
         final List<File> images = getImagesWithIptcData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);

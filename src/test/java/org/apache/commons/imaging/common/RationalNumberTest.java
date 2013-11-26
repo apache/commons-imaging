@@ -106,9 +106,9 @@ public class RationalNumberTest extends ImagingTest {
             final NumberFormat nf = DecimalFormat.getInstance();
             nf.setMaximumFractionDigits(15);
 
-            Debug.debug("value", nf.format(value));
-            Debug.debug("rational", rational);
-            Debug.debug("difference", difference);
+            Debug.debug("value: " + nf.format(value));
+            Debug.debug("rational: " + rational);
+            Debug.debug("difference: " + difference);
             Debug.debug();
         }
     }

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.util.Debug;
@@ -35,7 +36,7 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
         final List<File> images = getImagesWithExifData(300);
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);
@@ -70,17 +71,14 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
                     continue;
                 }
 
-                Debug.debug("imageFile", imageFile);
-                Debug.debug("gpsInfo", gpsInfo);
-                Debug.debug("gpsInfo longitude as degrees east",
-                        gpsInfo.getLongitudeAsDegreesEast());
-                Debug.debug("gpsInfo latitude as degrees north",
-                        gpsInfo.getLatitudeAsDegreesNorth());
-
+                Debug.debug("imageFile " + imageFile);
+                Debug.debug("gpsInfo " + gpsInfo);
+                Debug.debug("gpsInfo longitude as degrees east " + gpsInfo.getLongitudeAsDegreesEast());
+                Debug.debug("gpsInfo latitude as degrees north " + gpsInfo.getLatitudeAsDegreesNorth());
                 Debug.debug();
             } catch (final Exception e) {
-                Debug.debug("imageFile", imageFile.getAbsoluteFile());
-                Debug.debug("imageFile", imageFile.length());
+                Debug.debug("imageFile " + imageFile.getAbsoluteFile());
+                Debug.debug("imageFile " + imageFile.length());
                 Debug.debug(e, 13);
 
                 // File brokenFolder = new File(imageFile.getParentFile(),

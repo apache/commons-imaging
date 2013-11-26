@@ -190,7 +190,7 @@ public class PsdConstants {
                             10000,
                             "Print flags information. 2 bytes version (=1), 1 byte center crop marks, 1 byte (=0), 4 bytes bleed width value, 2 bytes bleed width scale."), };
         } catch (final Exception e) {
-            Debug.debug(PsdConstants.class, e);
+            Debug.debug(PsdConstants.class.getName(), e);
         }
         fImageResourceTypes = temp;
     }

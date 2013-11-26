@@ -32,12 +32,10 @@ public class ColorConversionsTest extends TestCase {
             final ColorCmy cmyk_cmy = ColorConversions.convertCMYKtoCMY(cmyk);
             final int cmyk_cmy_rgb = ColorConversions.convertCMYtoRGB(cmyk_cmy);
 
-            Debug.debug("cmy", cmy);
-            Debug.debug("cmyk", cmyk);
-            Debug.debug("cmyk_cmy", cmyk_cmy);
-            Debug.debug("cmyk_cmy_rgb",
-                    cmyk_cmy_rgb + " (" + Integer.toHexString(cmyk_cmy_rgb)
-                            + ")");
+            Debug.debug("cmy: " + cmy);
+            Debug.debug("cmyk: " + cmyk);
+            Debug.debug("cmyk_cmy: " + cmyk_cmy);
+            Debug.debug("cmyk_cmy_rgb: " + cmyk_cmy_rgb + " (" + Integer.toHexString(cmyk_cmy_rgb) + ")");
 
             assertEquals((0xffffff & cmyk_cmy_rgb), (0xffffff & rgb));
         }
@@ -48,9 +46,8 @@ public class ColorConversionsTest extends TestCase {
             final ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
             final int hsl_rgb = ColorConversions.convertHSLtoRGB(hsl);
 
-            Debug.debug("hsl", hsl);
-            Debug.debug("hsl_rgb",
-                    hsl_rgb + " (" + Integer.toHexString(hsl_rgb) + ")");
+            Debug.debug("hsl: " + hsl);
+            Debug.debug("hsl_rgb: " + hsl_rgb + " (" + Integer.toHexString(hsl_rgb) + ")");
 
             assertEquals((0xffffff & hsl_rgb), (0xffffff & rgb));
         }
@@ -61,9 +58,8 @@ public class ColorConversionsTest extends TestCase {
             final ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
             final int hsv_rgb = ColorConversions.convertHSVtoRGB(hsv);
 
-            Debug.debug("hsv", hsv);
-            Debug.debug("hsv_rgb",
-                    hsv_rgb + " (" + Integer.toHexString(hsv_rgb) + ")");
+            Debug.debug("hsv: " + hsv);
+            Debug.debug("hsv_rgb: " + hsv_rgb + " (" + Integer.toHexString(hsv_rgb) + ")");
 
             assertEquals((0xffffff & hsv_rgb), (0xffffff & rgb));
         }
@@ -75,10 +71,9 @@ public class ColorConversionsTest extends TestCase {
             final int xyz_rgb = ColorConversions.convertXYZtoRGB(xyz);
 
             Debug.debug();
-            Debug.debug("rgb", rgb + " (" + Integer.toHexString(rgb) + ")");
-            Debug.debug("xyz", xyz);
-            Debug.debug("xyz_rgb",
-                    xyz_rgb + " (" + Integer.toHexString(xyz_rgb) + ")");
+            Debug.debug("rgb: " + rgb + " (" + Integer.toHexString(rgb) + ")");
+            Debug.debug("xyz: " + xyz);
+            Debug.debug("xyz_rgb: " + xyz_rgb + " (" + Integer.toHexString(xyz_rgb) + ")");
 
             assertEquals((0xffffff & xyz_rgb), (0xffffff & rgb));
 
@@ -86,26 +81,19 @@ public class ColorConversionsTest extends TestCase {
             final ColorXyz cielab_xyz = ColorConversions.convertCIELabtoXYZ(cielab);
             final int cielab_xyz_rgb = ColorConversions.convertXYZtoRGB(cielab_xyz);
 
-            Debug.debug("cielab", cielab);
-            Debug.debug("cielab_xyz", cielab_xyz);
-            Debug.debug("cielab_xyz_rgb",
-                    cielab_xyz_rgb + " (" + Integer.toHexString(cielab_xyz_rgb)
-                            + ")");
+            Debug.debug("cielab: " + cielab);
+            Debug.debug("cielab_xyz: " + cielab_xyz);
+            Debug.debug("cielab_xyz_rgb: " + cielab_xyz_rgb + " (" + Integer.toHexString(cielab_xyz_rgb) + ")");
 
             assertEquals((0xffffff & cielab_xyz_rgb), (0xffffff & rgb));
 
-            final ColorHunterLab hunterlab = ColorConversions
-                    .convertXYZtoHunterLab(xyz);
-            final ColorXyz hunterlab_xyz = ColorConversions
-                    .convertHunterLabtoXYZ(hunterlab);
-            final int hunterlab_xyz_rgb = ColorConversions
-                    .convertXYZtoRGB(hunterlab_xyz);
+            final ColorHunterLab hunterlab = ColorConversions.convertXYZtoHunterLab(xyz);
+            final ColorXyz hunterlab_xyz = ColorConversions.convertHunterLabtoXYZ(hunterlab);
+            final int hunterlab_xyz_rgb = ColorConversions.convertXYZtoRGB(hunterlab_xyz);
 
-            Debug.debug("hunterlab", hunterlab);
-            Debug.debug("hunterlab_xyz", hunterlab_xyz);
-            Debug.debug(
-                    "hunterlab_xyz_rgb",
-                    hunterlab_xyz_rgb + " ("
+            Debug.debug("hunterlab: " + hunterlab);
+            Debug.debug("hunterlab_xyz: " + hunterlab_xyz);
+            Debug.debug("hunterlab_xyz_rgb: " + hunterlab_xyz_rgb + " ("
                             + Integer.toHexString(hunterlab_xyz_rgb) + ")");
 
             assertEquals((0xffffff & hunterlab_xyz_rgb), (0xffffff & rgb));

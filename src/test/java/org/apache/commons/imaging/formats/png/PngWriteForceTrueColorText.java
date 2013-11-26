@@ -25,7 +25,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.formats.png.PngConstants;
+import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.util.Debug;
 
 public class PngWriteForceTrueColorText extends PngBaseTest {
@@ -35,7 +35,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
         final List<File> images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);

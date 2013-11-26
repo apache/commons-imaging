@@ -42,14 +42,14 @@ public class MakerNoteFieldTest extends SpecificExifTagTest {
             return;
         }
 
-        Debug.debug("imageFile", imageFile);
-        Debug.debug("field", field);
-        Debug.debug("field", Debug.getType(field));
+        Debug.debug("imageFile: " + imageFile);
+        Debug.debug("field: " + field);
+        Debug.debug("type: " + field.getClass().getSimpleName());
 
-        Debug.debug("field", field.getTag());
-        Debug.debug("field", field.getTagInfo());
-        Debug.debug("length", field.getCount());
-        Debug.debug("fieldType", field.getFieldType());
+        Debug.debug("field: " + field.getTag());
+        Debug.debug("field: " + field.getTagInfo());
+        Debug.debug("length: " + field.getCount());
+        Debug.debug("fieldType: " + field.getFieldType());
         // Debug.debug("field", Debug.getType(field));
         Debug.debug();
 

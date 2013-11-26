@@ -31,4 +31,34 @@ public class ImageWriteException extends ImagingException {
     public ImageWriteException(final String message, final Throwable cause) {
         super(message, cause);
     }
+
+    public ImageWriteException(final String message, final Object data) {
+        super(message + ": " + data + " (" + getType(data) + ")");
+    }
+
+    private static String getType(final Object value) {
+        if (value == null) {
+            return "null";
+        } else if (value instanceof Object[]) {
+            return "[Object[]: " + ((Object[]) value).length + "]";
+        } else if (value instanceof char[]) {
+            return "[char[]: " + ((char[]) value).length + "]";
+        } else if (value instanceof byte[]) {
+            return "[byte[]: " + ((byte[]) value).length + "]";
+        } else if (value instanceof short[]) {
+            return "[short[]: " + ((short[]) value).length + "]";
+        } else if (value instanceof int[]) {
+            return "[int[]: " + ((int[]) value).length + "]";
+        } else if (value instanceof long[]) {
+            return "[long[]: " + ((long[]) value).length + "]";
+        } else if (value instanceof float[]) {
+            return "[float[]: " + ((float[]) value).length + "]";
+        } else if (value instanceof double[]) {
+            return "[double[]: " + ((double[]) value).length + "]";
+        } else if (value instanceof boolean[]) {
+            return "[boolean[]: " + ((boolean[]) value).length + "]";
+        } else {
+            return value.getClass().getName();
+        }
+    }
 }

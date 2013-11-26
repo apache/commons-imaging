@@ -129,9 +129,7 @@ public class IptcParser extends BinaryFileParser {
         while (index + 1 < bytes.length) {
             final int tagMarker = 0xff & bytes[index++];
             if (verbose) {
-                Debug.debug("tagMarker",
-                        tagMarker + " (0x" + Integer.toHexString(tagMarker)
-                                + ")");
+                Debug.debug("tagMarker: " + tagMarker + " (0x" + Integer.toHexString(tagMarker) + ")");
             }
 
             if (tagMarker != IptcConstants.IPTC_RECORD_TAG_MARKER) {
@@ -143,10 +141,7 @@ public class IptcParser extends BinaryFileParser {
 
             final int recordNumber = 0xff & bytes[index++];
             if (verbose) {
-                Debug.debug(
-                        "recordNumber",
-                        recordNumber + " (0x"
-                                + Integer.toHexString(recordNumber) + ")");
+                Debug.debug("recordNumber: " + recordNumber + " (0x" + Integer.toHexString(recordNumber) + ")");
             }
 
             // int recordPrefix = convertByteArrayToShort("recordPrefix", index,
@@ -169,9 +164,7 @@ public class IptcParser extends BinaryFileParser {
 
             final int recordType = 0xff & bytes[index];
             if (verbose) {
-                Debug.debug("recordType",
-                        recordType + " (0x" + Integer.toHexString(recordType)
-                                + ")");
+                Debug.debug("recordType: " + recordType + " (0x" + Integer.toHexString(recordType) + ")");
             }
             index++;
 
@@ -287,18 +280,14 @@ public class IptcParser extends BinaryFileParser {
                             "Invalid Image Resource Block Signature");
                 }
     
-                final int blockType = bis
-                        .read2Bytes("Image Resource Block missing type");
+                final int blockType = bis.read2Bytes("Image Resource Block missing type");
                 if (verbose) {
-                    Debug.debug("blockType",
-                            blockType + " (0x" + Integer.toHexString(blockType)
-                                    + ")");
+                    Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
                 }
     
-                final int blockNameLength = bis.readByte("Name length",
-                        "Image Resource Block missing name length");
+                final int blockNameLength = bis.readByte("Name length", "Image Resource Block missing name length");
                 if (verbose && blockNameLength > 0) {
-                    Debug.debug("blockNameLength", blockNameLength + " (0x"
+                    Debug.debug("blockNameLength: " + blockNameLength + " (0x" 
                             + Integer.toHexString(blockNameLength) + ")");
                 }
                 byte[] blockNameBytes;
@@ -321,12 +310,9 @@ public class IptcParser extends BinaryFileParser {
                     }
                 }
     
-                final int blockSize = bis
-                        .read4Bytes("Image Resource Block missing size");
+                final int blockSize = bis.read4Bytes("Image Resource Block missing size");
                 if (verbose) {
-                    Debug.debug("blockSize",
-                            blockSize + " (0x" + Integer.toHexString(blockSize)
-                                    + ")");
+                    Debug.debug("blockSize: " + blockSize + " (0x" + Integer.toHexString(blockSize) + ")");
                 }
     
                 /*
@@ -334,8 +320,7 @@ public class IptcParser extends BinaryFileParser {
                  * than bytes.length but will at least prevent OutOfMemory errors
                  */
                 if (blockSize > bytes.length) {
-                    throw new ImageReadException("Invalid Block Size : "
-                            + blockSize + " > " + bytes.length);
+                    throw new ImageReadException("Invalid Block Size : " + blockSize + " > " + bytes.length);
                 }
     
                 final byte[] blockData;

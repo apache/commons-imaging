@@ -24,9 +24,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.test.util.FileSystemTraversal;
 import org.apache.commons.imaging.util.Debug;
 
@@ -151,7 +148,7 @@ public abstract class ImagingTest extends TestCase implements
             }
 
             if (counter++ % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             if (file.getParentFile().getName().toLowerCase().equals("@broken")) {

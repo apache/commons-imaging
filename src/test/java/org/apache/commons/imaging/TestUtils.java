@@ -14,25 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.psd;
+package org.apache.commons.imaging;
 
-import java.io.UnsupportedEncodingException;
+public class TestUtils {
 
-import org.apache.commons.imaging.util.Debug;
-
-class ImageResourceBlock {
-    protected final int id;
-    protected final byte nameData[];
-    protected final byte data[];
-
-    public ImageResourceBlock(final int ID, final byte NameData[], final byte Data[]) {
-        this.id = ID;
-        this.nameData = NameData;
-        this.data = Data;
-    }
-
-    public String getName() throws UnsupportedEncodingException {
-        Debug.debug("getName: " + nameData.length);
-        return new String(nameData, "ISO-8859-1");
+    public static void purgeMemory() {
+        // try
+        // {
+        // // Thread.sleep(50);
+        // System.runFinalization();
+        // Thread.sleep(50);
+        // System.gc();
+        // Thread.sleep(50);
+        // }
+        // catch (Throwable e)
+        // {
+        // Debug.debug(e);
+        // }
     }
 }

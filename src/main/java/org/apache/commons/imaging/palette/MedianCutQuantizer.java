@@ -73,8 +73,7 @@ public class MedianCutQuantizer {
             int mask = 0xff & (0xff << i);
             mask = mask | (mask << 8) | (mask << 16) | (mask << 24);
 
-            Debug.debug("mask(" + i + ")",
-                    mask + " (" + Integer.toHexString(mask) + ")");
+            Debug.debug("mask(" + i + "): " + mask + " (" + Integer.toHexString(mask) + ")");
 
             final Map<Integer, ColorCount> result = groupColors1(image, max, mask);
             if (result != null) {

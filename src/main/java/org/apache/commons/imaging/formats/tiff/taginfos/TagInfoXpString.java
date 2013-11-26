@@ -24,7 +24,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
-import org.apache.commons.imaging.util.Debug;
 
 /**
  * Windows XP onwards store some tags using UTF-16LE, but the field type is byte
@@ -40,8 +39,7 @@ public class TagInfoXpString extends TagInfo {
     public byte[] encodeValue(final FieldType fieldType, final Object value, final ByteOrder byteOrder)
             throws ImageWriteException {
         if (!(value instanceof String)) {
-            throw new ImageWriteException("Text value not String: " + value
-                    + " (" + Debug.getType(value) + ")");
+            throw new ImageWriteException("Text value not String", value);
         }
         final String s = (String) value;
         try {

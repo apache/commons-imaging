@@ -23,7 +23,6 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BitInputStreamFlexible;
 import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
-import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
 public final class T4AndT6Compression {
@@ -70,7 +69,7 @@ public final class T4AndT6Compression {
             CONTROL_CODES.insert(T4_T6_Tables.VR2.bitString, T4_T6_Tables.VR2);
             CONTROL_CODES.insert(T4_T6_Tables.VR3.bitString, T4_T6_Tables.VR3);
         } catch (final HuffmanTreeException cannotHappen) {
-            Debug.debug(cannotHappen);
+            throw new Error(cannotHappen);
         }
     }
 

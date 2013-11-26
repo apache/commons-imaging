@@ -256,13 +256,12 @@ public class JpegImageParser extends ImageParser {
 
     private void dumpSegments(final List<? extends Segment> v) {
         Debug.debug();
-        Debug.debug("dumpSegments", v.size());
+        Debug.debug("dumpSegments: " + v.size());
 
         for (int i = 0; i < v.size(); i++) {
             final App2Segment segment = (App2Segment) v.get(i);
 
-            Debug.debug((i) + ": " + segment.cur_marker + " / "
-                    + segment.num_markers);
+            Debug.debug((i) + ": " + segment.cur_marker + " / " + segment.num_markers);
         }
         Debug.debug();
     }

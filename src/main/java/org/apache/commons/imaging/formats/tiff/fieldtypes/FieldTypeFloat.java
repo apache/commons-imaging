@@ -21,7 +21,6 @@ import java.nio.ByteOrder;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeFloat extends FieldType {
     public FieldTypeFloat(final int type, final String name) {
@@ -53,8 +52,7 @@ public class FieldTypeFloat extends FieldType {
             }
             return ByteConversions.toBytes(values, byteOrder);
         } else {
-            throw new ImageWriteException("Invalid data: " + o + " ("
-                    + Debug.getType(o) + ")");
+            throw new ImageWriteException("Invalid data", o);
         }
     }
 

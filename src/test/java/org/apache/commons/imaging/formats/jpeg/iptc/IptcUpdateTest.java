@@ -26,13 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
-import org.apache.commons.imaging.formats.jpeg.iptc.IptcRecord;
-import org.apache.commons.imaging.formats.jpeg.iptc.JpegIptcRewriter;
-import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
@@ -60,7 +58,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         final List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);
@@ -108,7 +106,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         final List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);
@@ -301,7 +299,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);

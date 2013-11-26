@@ -324,14 +324,12 @@ public class TiffCcittTest extends TiffBaseTest {
                 final int a_argb = a.getRGB(x, y);
                 final int b_argb = b.getRGB(x, y);
                 if (a_argb != b_argb) {
-                    Debug.debug("width", a.getWidth());
-                    Debug.debug("height", a.getHeight());
-                    Debug.debug("x", x);
-                    Debug.debug("y", y);
-                    Debug.debug("a_argb",
-                            a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
-                    Debug.debug("b_argb",
-                            b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
+                    Debug.debug("width: " + a.getWidth());
+                    Debug.debug("height: " + a.getHeight());
+                    Debug.debug("x: " + x);
+                    Debug.debug("y: " + y);
+                    Debug.debug("a_argb: " + a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
+                    Debug.debug("b_argb: " + b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
                 }
                 assertEquals(a_argb, b_argb);
             }

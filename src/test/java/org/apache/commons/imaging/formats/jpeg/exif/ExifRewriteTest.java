@@ -31,6 +31,7 @@ import java.util.Set;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.common.IImageMetadata.IImageMetadataItem;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
@@ -55,7 +56,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);
@@ -96,7 +97,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);
@@ -177,7 +178,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);

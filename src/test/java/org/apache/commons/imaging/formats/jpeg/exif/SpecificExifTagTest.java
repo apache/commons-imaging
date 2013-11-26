@@ -26,12 +26,12 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
-import org.apache.commons.imaging.util.Debug;
 
 public abstract class SpecificExifTagTest extends ExifBaseTest implements
         AllTagConstants {
@@ -49,7 +49,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);

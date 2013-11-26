@@ -26,6 +26,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.util.Debug;
@@ -36,7 +37,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
         final List<File> images = getTiffImages();
         for (int i = 0; i < images.size(); i++) {
             if (i % 10 == 0) {
-                Debug.purgeMemory();
+                TestUtils.purgeMemory();
             }
 
             final File imageFile = images.get(i);

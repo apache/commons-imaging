@@ -22,7 +22,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.util.Debug;
 
 public class FieldTypeRational extends FieldType {
     public FieldTypeRational(final int type, final String name) {
@@ -67,8 +66,7 @@ public class FieldTypeRational extends FieldType {
             }
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         } else {
-            throw new ImageWriteException("Invalid data: " + o + " ("
-                    + Debug.getType(o) + ")");
+            throw new ImageWriteException("Invalid data", o);
         }
     }
 }

@@ -47,8 +47,7 @@ public abstract class Palette {
 
     public void dump() {
         for (int i = 0; i < length(); i++) {
-            Debug.debug("\t" + "palette[" + i + "]", getEntry(i) + " (0x"
-                    + Integer.toHexString(getEntry(i)) + ")");
+            Debug.debug("\t" + "palette[" + i + "]: " + getEntry(i) + " (0x" + Integer.toHexString(getEntry(i)) + ")");
         }
     }
 }
