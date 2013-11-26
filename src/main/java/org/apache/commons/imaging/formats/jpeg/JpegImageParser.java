@@ -61,7 +61,6 @@ import org.apache.commons.imaging.util.Debug;
 public class JpegImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".jpg";
     private static final String ACCEPTED_EXTENSIONS[] = { ".jpg", ".jpeg", };
-    public static final boolean PERMISSIVE = true;
     
     public JpegImageParser() {
         setByteOrder(ByteOrder.BIG_ENDIAN);
@@ -211,9 +210,6 @@ public class JpegImageParser extends ImageParser {
         }
 
         final int markerCount = segments.get(0).num_markers;
-
-        // if (permissive && (markerCount == 0))
-        // markerCount = v.size();
 
         if (segments.size() != markerCount) {
             throw new ImageReadException("App2 Segments Missing.  Found: "

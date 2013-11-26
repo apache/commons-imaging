@@ -51,9 +51,7 @@ public class TiffField {
     private final byte[] value;
     private final ByteOrder byteOrder;
     private final int sortHint;
-    public static final String ATTRIBUTE_TAG = "Tag";
-    private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(
-            AllTagConstants.ALL_TAGS);
+    private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(AllTagConstants.ALL_TAGS);
 
     public TiffField(final int tag, final int directoryType, final FieldType fieldType,
             final long count, final long offset, final byte[] value,
