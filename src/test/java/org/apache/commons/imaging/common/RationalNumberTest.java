@@ -100,7 +100,7 @@ public class RationalNumberTest extends ImagingTest {
         };
 
         for (final double value : testValues) {
-            final RationalNumber rational = RationalNumber.getRationalNumber(value);
+            final RationalNumber rational = RationalNumber.valueOf(value);
             final double difference = Math.abs(value - rational.doubleValue());
 
             final NumberFormat nf = DecimalFormat.getInstance();

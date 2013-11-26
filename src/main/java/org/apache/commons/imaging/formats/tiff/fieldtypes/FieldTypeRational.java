@@ -47,14 +47,14 @@ public class FieldTypeRational extends FieldType {
                     byteOrder);
         } else if (o instanceof Number) {
             final Number number = (Number) o;
-            final RationalNumber rationalNumber = RationalNumber.getRationalNumber(number.doubleValue());
+            final RationalNumber rationalNumber = RationalNumber.valueOf(number.doubleValue());
             return ByteConversions.toBytes(rationalNumber, byteOrder);
         } else if (o instanceof Number[]) {
             final Number numbers[] = (Number[]) o;
             final RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 final Number number = numbers[i];
-                rationalNumbers[i] = RationalNumber.getRationalNumber(number.doubleValue());
+                rationalNumbers[i] = RationalNumber.valueOf(number.doubleValue());
             }
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         } else if (o instanceof double[]) {
@@ -62,7 +62,7 @@ public class FieldTypeRational extends FieldType {
             final RationalNumber rationalNumbers[] = new RationalNumber[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 final double number = numbers[i];
-                rationalNumbers[i] = RationalNumber.getRationalNumber(number);
+                rationalNumbers[i] = RationalNumber.valueOf(number);
             }
             return ByteConversions.toBytes(rationalNumbers, byteOrder);
         } else {

@@ -150,7 +150,7 @@ public class RationalNumber extends Number {
     //
     // calculate rational number using successive approximations.
     //
-    public static RationalNumber getRationalNumber(double value) {
+    public static RationalNumber valueOf(double value) {
         if (value >= Integer.MAX_VALUE) {
             return new RationalNumber(Integer.MAX_VALUE, 1);
         } else if (value <= -Integer.MAX_VALUE) {

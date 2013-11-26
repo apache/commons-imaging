@@ -435,23 +435,23 @@ public abstract class TiffImageWriterBase implements TiffConstants {
                 directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,
                         (short) 0);
                 directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
-                        RationalNumber.getRationalNumber(pixelDensity.getRawHorizontalDensity()));
+                        RationalNumber.valueOf(pixelDensity.getRawHorizontalDensity()));
                 directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, 
-                        RationalNumber.getRationalNumber(pixelDensity.getRawVerticalDensity()));
+                        RationalNumber.valueOf(pixelDensity.getRawVerticalDensity()));
             } else if (pixelDensity.isInInches()) {
                 directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,
                         (short) 2);
                 directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
-                        RationalNumber.getRationalNumber(pixelDensity.horizontalDensityInches()));
+                        RationalNumber.valueOf(pixelDensity.horizontalDensityInches()));
                 directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
-                        RationalNumber.getRationalNumber(pixelDensity.verticalDensityInches()));
+                        RationalNumber.valueOf(pixelDensity.verticalDensityInches()));
             } else {
                 directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,
                         (short) 1);
                 directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
-                        RationalNumber.getRationalNumber(pixelDensity.horizontalDensityCentimetres()));
+                        RationalNumber.valueOf(pixelDensity.horizontalDensityCentimetres()));
                 directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
-                        RationalNumber.getRationalNumber(pixelDensity.verticalDensityCentimetres()));
+                        RationalNumber.valueOf(pixelDensity.verticalDensityCentimetres()));
             }
             if (t4Options != 0) {
                 directory.add(TiffTagConstants.TIFF_TAG_T4_OPTIONS, t4Options);
