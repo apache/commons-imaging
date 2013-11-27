@@ -32,11 +32,10 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 class RgbeInfo implements Closeable {
     // #?RADIANCE
-    private static byte[] HEADER = new byte[] {
+    private static final byte[] HEADER = new byte[] {
         0x23, 0x3F, 0x52, 0x41, 0x44, 0x49, 0x41, 0x4E, 0x43, 0x45
     };
-    private static final Pattern RESOLUTION_STRING = Pattern
-            .compile("-Y (\\d+) \\+X (\\d+)");
+    private static final Pattern RESOLUTION_STRING = Pattern.compile("-Y (\\d+) \\+X (\\d+)");
 
     private final BinaryInputStream in;
     private ImageMetadata metadata;
@@ -95,8 +94,7 @@ class RgbeInfo implements Closeable {
     }
 
     private void readMetadata() throws IOException, ImageReadException {
-        in.readAndVerifyBytes(HEADER,
-                "Not a valid HDR: Incorrect Header");
+        in.readAndVerifyBytes(HEADER, "Not a valid HDR: Incorrect Header");
 
         final InfoHeaderReader reader = new InfoHeaderReader(in);
 
@@ -137,8 +135,7 @@ class RgbeInfo implements Closeable {
         final int wd = getWidth();
 
         if (wd >= 32768) {
-            throw new ImageReadException(
-                    "Scan lines must be less than 32768 bytes long");
+            throw new ImageReadException("Scan lines must be less than 32768 bytes long");
         }
 
         final byte[] scanLineBytes = ByteConversions.toBytes((short) wd,
@@ -147,10 +144,8 @@ class RgbeInfo implements Closeable {
         final float[][] out = new float[3][wd * ht];
 
         for (int i = 0; i < ht; i++) {
-            in.readAndVerifyBytes(TWO_TWO, "Scan line " + i
-                    + " expected to start with 0x2 0x2");
-            in.readAndVerifyBytes(scanLineBytes, "Scan line " + i
-                    + " length expected");
+            in.readAndVerifyBytes(TWO_TWO, "Scan line " + i + " expected to start with 0x2 0x2");
+            in.readAndVerifyBytes(scanLineBytes, "Scan line " + i + " length expected");
 
             decompress(in, rgbe);
 
@@ -166,8 +161,7 @@ class RgbeInfo implements Closeable {
                         out[channel][pos] = 0;
                     } else {
                         final float mult = (float) Math.pow(2, mantissa - (128 + 8));
-                        out[channel][pos] = ((rgbe[p + channelOffset] & 0xff) + 0.5f)
-                                * mult;
+                        out[channel][pos] = ((rgbe[p + channelOffset] & 0xff) + 0.5f) * mult;
                     }
                 }
             }

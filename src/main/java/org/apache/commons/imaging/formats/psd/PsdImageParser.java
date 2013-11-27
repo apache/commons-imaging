@@ -103,23 +103,18 @@ public class PsdImageParser extends ImageParser {
         }
     }
 
-    private PsdHeaderInfo readHeader(final InputStream is) throws ImageReadException,
-            IOException {
-        readAndVerifyBytes(is, new byte[] { 56, 66, 80, 83 },
-                "Not a Valid PSD File");
+    private PsdHeaderInfo readHeader(final InputStream is) throws ImageReadException, IOException {
+        readAndVerifyBytes(is, new byte[] { 56, 66, 80, 83 }, "Not a Valid PSD File");
 
-        final int Version = read2Bytes("Version", is, "Not a Valid PSD File");
+        final int version = read2Bytes("Version", is, "Not a Valid PSD File");
+        final byte[] reserved = readBytes("Reserved", is, 6, "Not a Valid PSD File");
+        final int channels = read2Bytes("Channels", is, "Not a Valid PSD File");
+        final int rows = read4Bytes("Rows", is, "Not a Valid PSD File");
+        final int columns = read4Bytes("Columns", is, "Not a Valid PSD File");
+        final int depth = read2Bytes("Depth", is, "Not a Valid PSD File");
+        final int mode = read2Bytes("Mode", is, "Not a Valid PSD File");
 
-        final byte[] Reserved = readBytes("Reserved", is, 6,
-                "Not a Valid PSD File");
-
-        final int Channels = read2Bytes("Channels", is, "Not a Valid PSD File");
-        final int Rows = read4Bytes("Rows", is, "Not a Valid PSD File");
-        final int Columns = read4Bytes("Columns", is, "Not a Valid PSD File");
-        final int Depth = read2Bytes("Depth", is, "Not a Valid PSD File");
-        final int Mode = read2Bytes("Mode", is, "Not a Valid PSD File");
-
-        return new PsdHeaderInfo(Version, Reserved, Channels, Rows, Columns, Depth, Mode);
+        return new PsdHeaderInfo(version, reserved, channels, rows, columns, depth, mode);
     }
 
     private ImageContents readImageContents(final InputStream is)
@@ -280,36 +275,33 @@ public class PsdImageParser extends ImageParser {
             skipBytes(is, PSD_HEADER_LENGTH);
             // is.skip(kHeaderLength);
 
-            final int ColorModeDataLength = read4Bytes("ColorModeDataLength", is,
-                    "Not a Valid PSD File");
+            final int colorModeDataLength = read4Bytes("ColorModeDataLength", is, "Not a Valid PSD File");
 
             if (section == PSD_SECTION_COLOR_MODE) {
                 return is;
             }
 
-            skipBytes(is, ColorModeDataLength);
+            skipBytes(is, colorModeDataLength);
             // byte ColorModeData[] = readByteArray("ColorModeData",
             // ColorModeDataLength, is, "Not a Valid PSD File");
 
-            final int ImageResourcesLength = read4Bytes("ImageResourcesLength", is,
-                    "Not a Valid PSD File");
+            final int imageResourcesLength = read4Bytes("ImageResourcesLength", is, "Not a Valid PSD File");
 
             if (section == PSD_SECTION_IMAGE_RESOURCES) {
                 return is;
             }
 
-            skipBytes(is, ImageResourcesLength);
+            skipBytes(is, imageResourcesLength);
             // byte ImageResources[] = readByteArray("ImageResources",
             // ImageResourcesLength, is, "Not a Valid PSD File");
 
-            final int LayerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength",
-                    is, "Not a Valid PSD File");
+            final int layerAndMaskDataLength = read4Bytes("LayerAndMaskDataLength", is, "Not a Valid PSD File");
 
             if (section == PSD_SECTION_LAYER_AND_MASK_DATA) {
                 return is;
             }
 
-            skipBytes(is, LayerAndMaskDataLength);
+            skipBytes(is, layerAndMaskDataLength);
             // byte LayerAndMaskData[] = readByteArray("LayerAndMaskData",
             // LayerAndMaskDataLength, is, "Not a Valid PSD File");
 
@@ -444,7 +436,7 @@ public class PsdImageParser extends ImageParser {
             throw new ImageReadException("PSD: couldn't read header");
         }
 
-        return new Dimension(bhi.Columns, bhi.Rows);
+        return new Dimension(bhi.columns, bhi.rows);
 
     }
 
@@ -502,13 +494,13 @@ public class PsdImageParser extends ImageParser {
             throw new ImageReadException("PSD: Couldn't read Header");
         }
 
-        final int Width = header.Columns;
-        final int Height = header.Rows;
+        final int width = header.columns;
+        final int height = header.rows;
 
-        final List<String> Comments = new ArrayList<String>();
+        final List<String> comments = new ArrayList<String>();
         // TODO: comments...
 
-        int BitsPerPixel = header.Depth * getChannelsPerMode(header.Mode);
+        int BitsPerPixel = header.depth * getChannelsPerMode(header.mode);
         // System.out.println("header.Depth: " + header.Depth);
         // System.out.println("header.Mode: " + header.Mode);
         // System.out.println("getChannelsPerMode(header.Mode): " +
@@ -516,24 +508,24 @@ public class PsdImageParser extends ImageParser {
         if (BitsPerPixel < 0) {
             BitsPerPixel = 0;
         }
-        final ImageFormat Format = ImageFormats.PSD;
-        final String FormatName = "Photoshop";
-        final String MimeType = "image/x-photoshop";
+        final ImageFormat format = ImageFormats.PSD;
+        final String formatName = "Photoshop";
+        final String mimeType = "image/x-photoshop";
         // we ought to count images, but don't yet.
-        final int NumberOfImages = -1;
+        final int numberOfImages = -1;
         // not accurate ... only reflects first
         final boolean isProgressive = false;
 
-        final int PhysicalWidthDpi = 72;
-        final float PhysicalWidthInch = (float) ((double) Width / (double) PhysicalWidthDpi);
-        final int PhysicalHeightDpi = 72;
-        final float PhysicalHeightInch = (float) ((double) Height / (double) PhysicalHeightDpi);
+        final int physicalWidthDpi = 72;
+        final float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
+        final int physicalHeightDpi = 72;
+        final float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
 
-        final String FormatDetails = "Psd";
+        final String formatDetails = "Psd";
 
         final boolean isTransparent = false; // TODO: inaccurate.
-        final boolean usesPalette = header.Mode == COLOR_MODE_INDEXED;
-        final int ColorType = ImageInfo.COLOR_TYPE_UNKNOWN;
+        final boolean usesPalette = header.mode == COLOR_MODE_INDEXED;
+        final int colorType = ImageInfo.COLOR_TYPE_UNKNOWN;
 
         String compressionAlgorithm;
         switch (imageContents.Compression) {
@@ -547,11 +539,11 @@ public class PsdImageParser extends ImageParser {
             compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN;
         }
 
-        return new ImageInfo(FormatDetails, BitsPerPixel, Comments,
-                Format, FormatName, Height, MimeType, NumberOfImages,
-                PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
-                PhysicalWidthInch, Width, isProgressive, isTransparent,
-                usesPalette, ColorType, compressionAlgorithm);
+        return new ImageInfo(formatDetails, BitsPerPixel, comments,
+                format, formatName, height, mimeType, numberOfImages,
+                physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
+                physicalWidthInch, width, isProgressive, isTransparent,
+                usesPalette, colorType, compressionAlgorithm);
     }
 
 //    // TODO not used
@@ -639,8 +631,8 @@ public class PsdImageParser extends ImageParser {
         // fImageContents.ImageResources,
                 null, -1);
 
-        final int width = header.Columns;
-        final int height = header.Rows;
+        final int width = header.columns;
+        final int height = header.rows;
         // int height = header.Columns;
 
         // int transfer_type;
@@ -652,7 +644,7 @@ public class PsdImageParser extends ImageParser {
                 .getColorBufferedImage(width, height, hasAlpha);
 
         DataParser dataParser;
-        switch (imageContents.header.Mode) {
+        switch (imageContents.header.mode) {
         case 0: // bitmap
             dataParser = new DataParserBitmap();
             break;
@@ -693,7 +685,7 @@ public class PsdImageParser extends ImageParser {
             // break;
         default:
             throw new ImageReadException("Unknown Mode: "
-                    + imageContents.header.Mode);
+                    + imageContents.header.mode);
         }
         DataReader fDataReader;
         switch (imageContents.Compression) {

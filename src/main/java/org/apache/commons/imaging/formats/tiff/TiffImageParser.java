@@ -208,19 +208,19 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         if (unitsPerInch > 0) {
             if ((xResolutionField != null)
                     && (xResolutionField.getValue() != null)) {
-                final double XResolutionPixelsPerUnit = xResolutionField
+                final double xResolutionPixelsPerUnit = xResolutionField
                         .getDoubleValue();
                 physicalWidthDpi = (int) Math
-                        .round((XResolutionPixelsPerUnit * unitsPerInch));
-                physicalWidthInch = (float) (width / (XResolutionPixelsPerUnit * unitsPerInch));
+                        .round((xResolutionPixelsPerUnit * unitsPerInch));
+                physicalWidthInch = (float) (width / (xResolutionPixelsPerUnit * unitsPerInch));
             }
             if ((yResolutionField != null)
                     && (yResolutionField.getValue() != null)) {
-                final double YResolutionPixelsPerUnit = yResolutionField
+                final double yResolutionPixelsPerUnit = yResolutionField
                         .getDoubleValue();
                 physicalHeightDpi = (int) Math
-                        .round((YResolutionPixelsPerUnit * unitsPerInch));
-                physicalHeightInch = (float) (height / (YResolutionPixelsPerUnit * unitsPerInch));
+                        .round((yResolutionPixelsPerUnit * unitsPerInch));
+                physicalHeightInch = (float) (height / (yResolutionPixelsPerUnit * unitsPerInch));
             }
         }
 
@@ -687,12 +687,12 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
                     TiffTagConstants.TIFF_TAG_COLOR_MAP, true)
                     .getIntArrayValue();
 
-            final int expected_colormap_size = 3 * (1 << bitsPerPixel);
+            final int expectedColormapSize = 3 * (1 << bitsPerPixel);
 
-            if (colorMap.length != expected_colormap_size) {
+            if (colorMap.length != expectedColormapSize) {
                 throw new ImageReadException("Tiff: fColorMap.length ("
-                        + colorMap.length + ")!=expected_colormap_size ("
-                        + expected_colormap_size + ")");
+                        + colorMap.length + ")!=expectedColormapSize ("
+                        + expectedColormapSize + ")");
             }
 
             return new PhotometricInterpreterPalette(samplesPerPixel,

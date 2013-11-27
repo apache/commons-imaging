@@ -22,10 +22,10 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
 public class PixelParserRgb extends PixelParserSimple {
-    private int bytecount = 0;
-    private int cached_bit_count = 0;
-    private int cached_byte = 0;
-    int pixelCount = 0;
+    private int bytecount;
+    private int cachedBitCount;
+    private int cachedByte;
+    private int pixelCount;
 
     public PixelParserRgb(final BmpHeaderInfo bhi, final byte[] colorTable,
             final byte[] imageData) {
@@ -39,20 +39,20 @@ public class PixelParserRgb extends PixelParserSimple {
 
         if ((bhi.bitsPerPixel == 1) 
                 || (bhi.bitsPerPixel == 4)) { // always grayscale?
-            if (cached_bit_count < bhi.bitsPerPixel) {
-                if (cached_bit_count != 0) {
+            if (cachedBitCount < bhi.bitsPerPixel) {
+                if (cachedBitCount != 0) {
                     throw new ImageReadException("Unexpected leftover bits: "
-                            + cached_bit_count + "/" + bhi.bitsPerPixel);
+                            + cachedBitCount + "/" + bhi.bitsPerPixel);
                 }
 
-                cached_bit_count += 8;
-                cached_byte = (0xff & imageData[bytecount]);
+                cachedBitCount += 8;
+                cachedByte = (0xff & imageData[bytecount]);
                 bytecount++;
             }
-            final int cache_mask = (1 << bhi.bitsPerPixel) - 1;
-            final int sample = cache_mask & (cached_byte >> (8 - bhi.bitsPerPixel));
-            cached_byte = 0xff & (cached_byte << bhi.bitsPerPixel);
-            cached_bit_count -= bhi.bitsPerPixel;
+            final int cacheMask = (1 << bhi.bitsPerPixel) - 1;
+            final int sample = cacheMask & (cachedByte >> (8 - bhi.bitsPerPixel));
+            cachedByte = 0xff & (cachedByte << bhi.bitsPerPixel);
+            cachedBitCount -= bhi.bitsPerPixel;
 
             return getColorTableRGB(sample);
         } else if (bhi.bitsPerPixel == 8) { // always grayscale?
@@ -106,7 +106,7 @@ public class PixelParserRgb extends PixelParserSimple {
 
     @Override
     public void newline() throws ImageReadException, IOException {
-        cached_bit_count = 0;
+        cachedBitCount = 0;
 
         while (((bytecount) % 4) != 0) {
             is.readByte("Pixel", "BMP Image Data");

@@ -69,15 +69,14 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         }
     }
 
-    private TiffHeader readTiffHeader(final InputStream is) throws ImageReadException,
-            IOException {
-        final int BYTE_ORDER_1 = readByte("BYTE_ORDER_1", is, "Not a Valid TIFF File");
-        final int BYTE_ORDER_2 = readByte("BYTE_ORDER_2", is, "Not a Valid TIFF File");
-        if (BYTE_ORDER_1 != BYTE_ORDER_2) {
-            throw new ImageReadException("Byte Order bytes don't match (" + BYTE_ORDER_1
-                    + ", " + BYTE_ORDER_2 + ").");
+    private TiffHeader readTiffHeader(final InputStream is) throws ImageReadException, IOException {
+        final int byteOrder1 = readByte("BYTE_ORDER_1", is, "Not a Valid TIFF File");
+        final int byteOrder2 = readByte("BYTE_ORDER_2", is, "Not a Valid TIFF File");
+        if (byteOrder1 != byteOrder2) {
+            throw new ImageReadException("Byte Order bytes don't match (" + byteOrder1 + ", " + byteOrder2 + ").");
         }
-        final ByteOrder byteOrder = getTiffByteOrder(BYTE_ORDER_1);
+
+        final ByteOrder byteOrder = getTiffByteOrder(byteOrder1);
         setByteOrder(byteOrder);
 
         final int tiffVersion = read2Bytes("tiffVersion", is, "Not a Valid TIFF File");
@@ -85,11 +84,9 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
             throw new ImageReadException("Unknown Tiff Version: " + tiffVersion);
         }
 
-        final long offsetToFirstIFD = 0xFFFFffffL & read4Bytes("offsetToFirstIFD", is,
-                "Not a Valid TIFF File");
+        final long offsetToFirstIFD = 0xFFFFffffL & read4Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File");
 
-        skipBytes(is, offsetToFirstIFD - 8,
-                "Not a Valid TIFF File: couldn't find IFDs");
+        skipBytes(is, offsetToFirstIFD - 8, "Not a Valid TIFF File: couldn't find IFDs");
 
         if (getDebug()) {
             System.out.println("");
@@ -147,8 +144,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 
             int entryCount;
             try {
-                entryCount = read2Bytes("DirectoryEntryCount", is,
-                        "Not a Valid TIFF File");
+                entryCount = read2Bytes("DirectoryEntryCount", is, "Not a Valid TIFF File");
             } catch (final IOException e) {
                 if (strict) {
                     throw e;
@@ -507,7 +503,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         // check if the last read byte is actually the end of the image data
         if (strict &&
                 (length < 2 ||
-                (((data[data.length - 2] & 0xff) << 8) | (data[data.length - 1] & 0xff)) != JpegConstants.EOIMarker)) {
+                (((data[data.length - 2] & 0xff) << 8) | (data[data.length - 1] & 0xff)) != JpegConstants.EOI_MARKER)) {
             throw new ImageReadException("JPEG EOI marker could not be found at expected location");
         }
         return new JpegImageData(offset, length, data);

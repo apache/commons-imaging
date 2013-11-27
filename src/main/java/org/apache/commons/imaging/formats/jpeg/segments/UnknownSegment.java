@@ -20,9 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class UnknownSegment extends GenericSegment {
-    public UnknownSegment(final int marker, final int marker_length, final InputStream is)
-            throws IOException {
-        super(marker, marker_length, is);
+    public UnknownSegment(int marker, int markerLength, InputStream is) throws IOException {
+        super(marker, markerLength, is);
     }
 
     public UnknownSegment(final int marker, final byte[] bytes) {

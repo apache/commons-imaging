@@ -56,7 +56,7 @@ public final class DataReaderStrips extends DataReader {
     private void interpretStrip(
             final ImageBuilder imageBuilder, 
             final byte[] bytes,
-            final int pixels_per_strip,
+            final int pixelsPerStrip,
             final int yLimit) throws ImageReadException, IOException {
         if (y >= yLimit) {
             return;
@@ -114,7 +114,7 @@ public final class DataReaderStrips extends DataReader {
 
         if (predictor != 2 && bitsPerPixel == 8 && allSamplesAreOneByte) {
             int k = 0;
-            int nRows = pixels_per_strip / width;
+            int nRows = pixelsPerStrip / width;
             if (y + nRows > yLimit) {
                 nRows = yLimit - y;
             }
@@ -133,7 +133,7 @@ public final class DataReaderStrips extends DataReader {
             return;
         } else if (predictor != 2 && bitsPerPixel == 24 && allSamplesAreOneByte) {
             int k = 0;
-            int nRows = pixels_per_strip / width;
+            int nRows = pixelsPerStrip / width;
             if (y + nRows > yLimit) {
                 nRows = yLimit - y;
             }
@@ -176,7 +176,7 @@ public final class DataReaderStrips extends DataReader {
 
         int[] samples = new int[bitsPerSample.length];
         resetPredictor();
-        for (int i = 0; i < pixels_per_strip; i++) {
+        for (int i = 0; i < pixelsPerStrip; i++) {
             getSamplesAsBytes(bis, samples);
 
             if (x < width) {

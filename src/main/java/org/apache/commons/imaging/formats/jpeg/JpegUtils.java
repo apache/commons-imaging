@@ -67,7 +67,7 @@ public class JpegUtils extends BinaryFileParser {
                 final int marker = ((0xff & markerBytes[0]) << 8)
                         | (0xff & markerBytes[1]);
 
-                if (marker == JpegConstants.EOIMarker || marker == JpegConstants.SOS_Marker) {
+                if (marker == JpegConstants.EOI_MARKER || marker == JpegConstants.SOS_MARKER) {
                     if (!visitor.beginSOS()) {
                         canThrow = true;
                         return;
@@ -100,58 +100,58 @@ public class JpegUtils extends BinaryFileParser {
 
     public static String getMarkerName(final int marker) {
         switch (marker) {
-        case JpegConstants.SOS_Marker:
-            return "SOS_Marker";
+        case JpegConstants.SOS_MARKER:
+            return "SOS_MARKER";
             // case JPEG_APP0 :
             // return "JPEG_APP0";
-            // case JPEG_APP0_Marker :
-            // return "JPEG_APP0_Marker";
-        case JpegConstants.JPEG_APP1_Marker:
-            return "JPEG_APP1_Marker";
-        case JpegConstants.JPEG_APP2_Marker:
-            return "JPEG_APP2_Marker";
-        case JpegConstants.JPEG_APP13_Marker:
-            return "JPEG_APP13_Marker";
-        case JpegConstants.JPEG_APP14_Marker:
-            return "JPEG_APP14_Marker";
-        case JpegConstants.JPEG_APP15_Marker:
-            return "JPEG_APP15_Marker";
-        case JpegConstants.JFIFMarker:
-            return "JFIFMarker";
-        case JpegConstants.SOF0Marker:
-            return "SOF0Marker";
-        case JpegConstants.SOF1Marker:
-            return "SOF1Marker";
-        case JpegConstants.SOF2Marker:
-            return "SOF2Marker";
-        case JpegConstants.SOF3Marker:
-            return "SOF3Marker";
-        case JpegConstants.DHTMarker:
-            return "SOF4Marker";
-        case JpegConstants.SOF5Marker:
-            return "SOF5Marker";
-        case JpegConstants.SOF6Marker:
-            return "SOF6Marker";
-        case JpegConstants.SOF7Marker:
-            return "SOF7Marker";
-        case JpegConstants.SOF8Marker:
-            return "SOF8Marker";
-        case JpegConstants.SOF9Marker:
-            return "SOF9Marker";
-        case JpegConstants.SOF10Marker:
-            return "SOF10Marker";
-        case JpegConstants.SOF11Marker:
-            return "SOF11Marker";
-        case JpegConstants.DACMarker:
-            return "DACMarker";
-        case JpegConstants.SOF13Marker:
-            return "SOF13Marker";
-        case JpegConstants.SOF14Marker:
-            return "SOF14Marker";
-        case JpegConstants.SOF15Marker:
-            return "SOF15Marker";
-        case JpegConstants.DQTMarker:
-            return "DQTMarker";
+            // case JPEG_APP0_MARKER :
+            // return "JPEG_APP0_MARKER";
+        case JpegConstants.JPEG_APP1_MARKER:
+            return "JPEG_APP1_MARKER";
+        case JpegConstants.JPEG_APP2_MARKER:
+            return "JPEG_APP2_MARKER";
+        case JpegConstants.JPEG_APP13_MARKER:
+            return "JPEG_APP13_MARKER";
+        case JpegConstants.JPEG_APP14_MARKER:
+            return "JPEG_APP14_MARKER";
+        case JpegConstants.JPEG_APP15_MARKER:
+            return "JPEG_APP15_MARKER";
+        case JpegConstants.JFIF_MARKER:
+            return "JFIF_MARKER";
+        case JpegConstants.SOF0_MARKER:
+            return "SOF0_MARKER";
+        case JpegConstants.SOF1_MARKER:
+            return "SOF1_MARKER";
+        case JpegConstants.SOF2_MARKER:
+            return "SOF2_MARKER";
+        case JpegConstants.SOF3_MARKER:
+            return "SOF3_MARKER";
+        case JpegConstants.DHT_MARKER:
+            return "SOF4_MARKER";
+        case JpegConstants.SOF5_MARKER:
+            return "SOF5_MARKER";
+        case JpegConstants.SOF6_MARKER:
+            return "SOF6_MARKER";
+        case JpegConstants.SOF7_MARKER:
+            return "SOF7_MARKER";
+        case JpegConstants.SOF8_MARKER:
+            return "SOF8_MARKER";
+        case JpegConstants.SOF9_MARKER:
+            return "SOF9_MARKER";
+        case JpegConstants.SOF10_MARKER:
+            return "SOF10_MARKER";
+        case JpegConstants.SOF11_MARKER:
+            return "SOF11_MARKER";
+        case JpegConstants.DAC_MARKER:
+            return "DAC_MARKER";
+        case JpegConstants.SOF13_MARKER:
+            return "SOF13_MARKER";
+        case JpegConstants.SOF14_MARKER:
+            return "SOF14_MARKER";
+        case JpegConstants.SOF15_MARKER:
+            return "SOF15_MARKER";
+        case JpegConstants.DQT_MARKER:
+            return "DQT_MARKER";
         default:
             return "Unknown";
         }

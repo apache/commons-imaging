@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageMetadata implements IImageMetadata {
-    protected static final String newline = System.getProperty("line.separator");
+    private static final String NEWLINE = System.getProperty("line.separator");
     private final List<IImageMetadataItem> items = new ArrayList<IImageMetadataItem>();
 
     public void add(final String keyword, final String text) {
@@ -48,7 +48,7 @@ public class ImageMetadata implements IImageMetadata {
         final StringBuilder result = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
             if (i > 0) {
-                result.append(newline);
+                result.append(NEWLINE);
             }
             // if (null != prefix)
             // result.append(prefix);

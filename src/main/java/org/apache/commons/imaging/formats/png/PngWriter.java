@@ -90,18 +90,18 @@ public class PngWriter {
     private static class ImageHeader {
         public final int width;
         public final int height;
-        public final byte bit_depth;
+        public final byte bitDepth;
         public final byte colorType;
         public final byte compressionMethod;
         public final byte filterMethod;
         public final byte interlaceMethod;
 
-        public ImageHeader(final int width, final int height, final byte bit_depth,
+        public ImageHeader(final int width, final int height, final byte bitDepth,
                 final byte colorType, final byte compressionMethod, final byte filterMethod,
                 final byte interlaceMethod) {
             this.width = width;
             this.height = height;
-            this.bit_depth = bit_depth;
+            this.bitDepth = bitDepth;
             this.colorType = colorType;
             this.compressionMethod = compressionMethod;
             this.filterMethod = filterMethod;
@@ -115,7 +115,7 @@ public class PngWriter {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         writeInt(baos, value.width);
         writeInt(baos, value.height);
-        baos.write(0xff & value.bit_depth);
+        baos.write(0xff & value.bitDepth);
         baos.write(0xff & value.colorType);
         baos.write(0xff & value.compressionMethod);
         baos.write(0xff & value.filterMethod);
@@ -494,7 +494,7 @@ public class PngWriter {
 
         final byte bitDepth = getBitDepth(colorType, params);
         if (verbose) {
-            Debug.debug("bit_depth: " + bitDepth);
+            Debug.debug("bitDepth: " + bitDepth);
         }
 
         int sampleDepth;
@@ -504,7 +504,7 @@ public class PngWriter {
             sampleDepth = bitDepth;
         }
         if (verbose) {
-            Debug.debug("sample_depth: " + sampleDepth);
+            Debug.debug("sampleDepth: " + sampleDepth);
         }
 
         {
@@ -534,12 +534,12 @@ public class PngWriter {
         if (colorType == PngConstants.COLOR_TYPE_INDEXED_COLOR) {
             // PLTE No Before first IDAT
 
-            final int max_colors = hasAlpha ? 255 : 256;
+            final int maxColors = hasAlpha ? 255 : 256;
 
             final PaletteFactory paletteFactory = new PaletteFactory();
-            palette = paletteFactory.makeQuantizedRgbPalette(src, max_colors);
+            palette = paletteFactory.makeQuantizedRgbPalette(src, maxColors);
             // Palette palette2 = new PaletteFactory().makePaletteSimple(src,
-            // max_colors);
+            // maxColors);
 
             // palette.dump();
 
@@ -607,8 +607,8 @@ public class PngWriter {
                     // Debug.debug("y", y + "/" + height);
                     src.getRGB(0, y, width, 1, row, 0, width);
 
-                    final byte filter_type = PngConstants.FILTER_TYPE_NONE;
-                    baos.write(filter_type);
+                    final byte filterType = PngConstants.FILTER_TYPE_NONE;
+                    baos.write(filterType);
                     for (int x = 0; x < width; x++) {
                         final int argb = row[x];
 
@@ -658,9 +658,9 @@ public class PngWriter {
 
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
-            final int chunk_size = 256 * 1024;
-            for (int index = 0; index < uncompressed.length; index += chunk_size) {
-                final int end = Math.min(uncompressed.length, index + chunk_size);
+            final int chunkSize = 256 * 1024;
+            for (int index = 0; index < uncompressed.length; index += chunkSize) {
+                final int end = Math.min(uncompressed.length, index + chunkSize);
                 final int length = end - index;
 
                 dos.write(uncompressed, index, length);

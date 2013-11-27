@@ -161,15 +161,14 @@ public class IcnsImageParser extends ImageParser {
 
     private IcnsHeader readIcnsHeader(final InputStream is)
             throws ImageReadException, IOException {
-        final int Magic = read4Bytes("Magic", is, "Not a Valid ICNS File");
-        final int FileSize = read4Bytes("FileSize", is, "Not a Valid ICNS File");
+        final int magic = read4Bytes("Magic", is, "Not a Valid ICNS File");
+        final int fileSize = read4Bytes("FileSize", is, "Not a Valid ICNS File");
 
-        if (Magic != ICNS_MAGIC) {
-            throw new ImageReadException("Not a Valid ICNS File: "
-                    + "magic is 0x" + Integer.toHexString(Magic));
+        if (magic != ICNS_MAGIC) {
+            throw new ImageReadException("Not a Valid ICNS File: " + "magic is 0x" + Integer.toHexString(magic));
         }
 
-        return new IcnsHeader(Magic, FileSize);
+        return new IcnsHeader(magic, fileSize);
     }
 
     public static class IcnsElement {

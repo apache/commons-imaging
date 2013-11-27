@@ -30,7 +30,7 @@ class BitInputStream extends InputStream {
     private final ByteOrder byteOrder;
     private int cache;
     private int cacheBitsRemaining = 0;
-    private long bytes_read = 0;
+    private long bytesRead = 0;
 
     public BitInputStream(final InputStream is, final ByteOrder byteOrder) {
         this.is = is;
@@ -51,7 +51,7 @@ class BitInputStream extends InputStream {
                 // fill cache
                 cache = is.read();
                 cacheBitsRemaining = 8;
-                bytes_read++;
+                bytesRead++;
             }
             if (count > cacheBitsRemaining) {
                 throw new IOException(
@@ -85,7 +85,7 @@ class BitInputStream extends InputStream {
         }
 
         if (count == 8) {
-            bytes_read++;
+            bytesRead++;
             return is.read();
         }
 
@@ -96,33 +96,33 @@ class BitInputStream extends InputStream {
          */
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             if (count == 16) {
-                bytes_read += 2;
+                bytesRead += 2;
                 return (is.read() << 8) | (is.read() << 0);
             }
 
             if (count == 24) {
-                bytes_read += 3;
+                bytesRead += 3;
                 return (is.read() << 16) | (is.read() << 8) | (is.read() << 0);
             }
 
             if (count == 32) {
-                bytes_read += 4;
+                bytesRead += 4;
                 return (is.read() << 24) | (is.read() << 16) | (is.read() << 8)
                         | (is.read() << 0);
             }
         } else {
             if (count == 16) {
-                bytes_read += 2;
+                bytesRead += 2;
                 return ((is.read() << 0) | (is.read() << 8));
             }
 
             if (count == 24) {
-                bytes_read += 3;
+                bytesRead += 3;
                 return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16));
             }
 
             if (count == 32) {
-                bytes_read += 4;
+                bytesRead += 4;
                 return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16) | (is
                         .read() << 24));
             }
@@ -136,6 +136,6 @@ class BitInputStream extends InputStream {
     }
 
     public long getBytesRead() {
-        return bytes_read;
+        return bytesRead;
     }
 }

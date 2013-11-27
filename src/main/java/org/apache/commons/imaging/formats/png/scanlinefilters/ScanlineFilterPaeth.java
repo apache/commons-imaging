@@ -27,7 +27,7 @@ public class ScanlineFilterPaeth extends ScanlineFilter {
         this.bytesPerPixel = bytesPerPixel;
     }
 
-    private int PaethPredictor(final int a, final int b, final int c) {
+    private int paethPredictor(final int a, final int b, final int c) {
         // ; a = left, b = above, c = upper left
         final int p = a + b - c; // ; initial estimate
         final int pa = Math.abs(p - a); // ; distances to a, b, c
@@ -49,9 +49,9 @@ public class ScanlineFilterPaeth extends ScanlineFilter {
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
             int left = 0;
-            final int prev_index = i - bytesPerPixel;
-            if (prev_index >= 0) {
-                left = dst[prev_index];
+            final int prevIndex = i - bytesPerPixel;
+            if (prevIndex >= 0) {
+                left = dst[prevIndex];
             }
 
             int above = 0;
@@ -61,16 +61,15 @@ public class ScanlineFilterPaeth extends ScanlineFilter {
             // above = 255;
 
             int upperleft = 0;
-            if ((prev_index >= 0) && (up != null)) {
-                upperleft = up[prev_index];
+            if ((prevIndex >= 0) && (up != null)) {
+                upperleft = up[prevIndex];
             }
             // upperleft = 255;
 
-            final int PaethPredictor = PaethPredictor(0xff & left, 0xff & above,
-                    0xff & upperleft);
+            int paethPredictor = paethPredictor(0xff & left, 0xff & above, 0xff & upperleft);
 
-            dst[i] = (byte) ((src[i] + PaethPredictor) % 256);
-            // dst[i] = (byte) ((src[i] + PaethPredictor) );
+            dst[i] = (byte) ((src[i] + paethPredictor) % 256);
+            // dst[i] = (byte) ((src[i] + paethPredictor) );
             // dst[i] = src[i];
 
             // dst[i] = (byte) 0;

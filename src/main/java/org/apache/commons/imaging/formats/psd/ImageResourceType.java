@@ -22,14 +22,13 @@ public class ImageResourceType {
     public final int id;
     public final String description;
 
-    public ImageResourceType(final int id, final String Description) {
+    public ImageResourceType(int id, String description) {
         this.id = id;
-        this.description = Description;
+        this.description = description;
     }
 
-    public ImageResourceType(final int id, final int id2, final String Description)
-            throws ImageReadException {
-        this(id, Description);
+    public ImageResourceType(int id, int id2, String description) throws ImageReadException {
+        this(id, description);
         if (id != id2) {
             throw new ImageReadException("Mismatch ID: " + id + " ID2: " + id2);
         }

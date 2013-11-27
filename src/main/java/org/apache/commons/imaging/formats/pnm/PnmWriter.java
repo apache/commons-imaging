@@ -24,10 +24,10 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageWriteException;
 
 public abstract class PnmWriter {
-    protected final boolean RAWBITS;
+    protected final boolean rawbits;
 
-    public PnmWriter(final boolean RAWBITS) {
-        this.RAWBITS = RAWBITS;
+    public PnmWriter(final boolean rawbits) {
+        this.rawbits = rawbits;
     }
 
     public abstract void writeImage(BufferedImage src, OutputStream os,

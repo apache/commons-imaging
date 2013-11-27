@@ -86,46 +86,46 @@ public final class JpegConstants {
             (byte) 0xff, (byte) 0xd9 });
 
     public static final int JPEG_APP0 = 0xE0;
-    public static final int JPEG_APP0_Marker = (0xff00) | (JPEG_APP0);
-    public static final int JPEG_APP1_Marker = (0xff00) | (JPEG_APP0 + 1);
-    public static final int JPEG_APP2_Marker = (0xff00) | (JPEG_APP0 + 2);
-    public static final int JPEG_APP13_Marker = (0xff00) | (JPEG_APP0 + 13);
-    public static final int JPEG_APP14_Marker = (0xff00) | (JPEG_APP0 + 14);
-    public static final int JPEG_APP15_Marker = (0xff00) | (JPEG_APP0 + 15);
+    public static final int JPEG_APP0_MARKER = (0xff00) | (JPEG_APP0);
+    public static final int JPEG_APP1_MARKER = (0xff00) | (JPEG_APP0 + 1);
+    public static final int JPEG_APP2_MARKER = (0xff00) | (JPEG_APP0 + 2);
+    public static final int JPEG_APP13_MARKER = (0xff00) | (JPEG_APP0 + 13);
+    public static final int JPEG_APP14_MARKER = (0xff00) | (JPEG_APP0 + 14);
+    public static final int JPEG_APP15_MARKER = (0xff00) | (JPEG_APP0 + 15);
 
-    public static final int JFIFMarker = 0xFFE0;
-    public static final int SOF0Marker = 0xFFc0;
-    public static final int SOF1Marker = 0xFFc0 + 0x1;
-    public static final int SOF2Marker = 0xFFc0 + 0x2;
-    public static final int SOF3Marker = 0xFFc0 + 0x3;
-    public static final int DHTMarker = 0xFFc0 + 0x4;
-    public static final int SOF5Marker = 0xFFc0 + 0x5;
-    public static final int SOF6Marker = 0xFFc0 + 0x6;
-    public static final int SOF7Marker = 0xFFc0 + 0x7;
-    public static final int SOF8Marker = 0xFFc0 + 0x8;
-    public static final int SOF9Marker = 0xFFc0 + 0x9;
-    public static final int SOF10Marker = 0xFFc0 + 0xa;
-    public static final int SOF11Marker = 0xFFc0 + 0xb;
-    public static final int DACMarker = 0xFFc0 + 0xc;
-    public static final int SOF13Marker = 0xFFc0 + 0xd;
-    public static final int SOF14Marker = 0xFFc0 + 0xe;
-    public static final int SOF15Marker = 0xFFc0 + 0xf;
+    public static final int JFIF_MARKER = 0xFFE0;
+    public static final int SOF0_MARKER = 0xFFc0;
+    public static final int SOF1_MARKER = 0xFFc0 + 0x1;
+    public static final int SOF2_MARKER = 0xFFc0 + 0x2;
+    public static final int SOF3_MARKER = 0xFFc0 + 0x3;
+    public static final int DHT_MARKER = 0xFFc0 + 0x4;
+    public static final int SOF5_MARKER = 0xFFc0 + 0x5;
+    public static final int SOF6_MARKER = 0xFFc0 + 0x6;
+    public static final int SOF7_MARKER = 0xFFc0 + 0x7;
+    public static final int SOF8_MARKER = 0xFFc0 + 0x8;
+    public static final int SOF9_MARKER = 0xFFc0 + 0x9;
+    public static final int SOF10_MARKER = 0xFFc0 + 0xa;
+    public static final int SOF11_MARKER = 0xFFc0 + 0xb;
+    public static final int DAC_MARKER = 0xFFc0 + 0xc;
+    public static final int SOF13_MARKER = 0xFFc0 + 0xd;
+    public static final int SOF14_MARKER = 0xFFc0 + 0xe;
+    public static final int SOF15_MARKER = 0xFFc0 + 0xf;
 
-    public static final int EOIMarker = 0xFFd9;
-    public static final int SOS_Marker = 0xFFda;
-    public static final int DQTMarker = 0xFFdb;
-    public static final int DNLMarker = 0xFFdc;
-    public static final int COMMarker = 0xFFfe;
+    public static final int EOI_MARKER = 0xFFd9;
+    public static final int SOS_MARKER = 0xFFda;
+    public static final int DQT_MARKER = 0xFFdb;
+    public static final int DNL_MARKER = 0xFFdc;
+    public static final int COM_MARKER = 0xFFfe;
 
     public static final List<Integer> MARKERS = Collections
-            .unmodifiableList(Arrays.asList(JPEG_APP0, JPEG_APP0_Marker,
-                    JPEG_APP1_Marker, JPEG_APP2_Marker, JPEG_APP13_Marker,
-                    JPEG_APP14_Marker, JPEG_APP15_Marker, JFIFMarker,
-                    SOF0Marker, SOF1Marker, SOF2Marker, SOF3Marker, DHTMarker,
-                    SOF5Marker, SOF6Marker, SOF7Marker, SOF8Marker, SOF9Marker,
-                    SOF10Marker, SOF11Marker, DACMarker, SOF13Marker,
-                    SOF14Marker, SOF15Marker, EOIMarker, SOS_Marker, DQTMarker,
-                    DNLMarker, COMMarker));
+            .unmodifiableList(Arrays.asList(JPEG_APP0, JPEG_APP0_MARKER,
+                    JPEG_APP1_MARKER, JPEG_APP2_MARKER, JPEG_APP13_MARKER,
+                    JPEG_APP14_MARKER, JPEG_APP15_MARKER, JFIF_MARKER,
+                    SOF0_MARKER, SOF1_MARKER, SOF2_MARKER, SOF3_MARKER, DHT_MARKER,
+                    SOF5_MARKER, SOF6_MARKER, SOF7_MARKER, SOF8_MARKER, SOF9_MARKER,
+                    SOF10_MARKER, SOF11_MARKER, DAC_MARKER, SOF13_MARKER,
+                    SOF14_MARKER, SOF15_MARKER, EOI_MARKER, SOS_MARKER, DQT_MARKER,
+                    DNL_MARKER, COM_MARKER));
 
     public static final BinaryConstant ICC_PROFILE_LABEL = new BinaryConstant(
             new byte[] { 0x49, 0x43, 0x43, 0x5F, 0x50, 0x52, 0x4F, 0x46, 0x49,

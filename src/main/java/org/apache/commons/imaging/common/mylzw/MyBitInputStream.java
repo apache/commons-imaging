@@ -42,8 +42,8 @@ public class MyBitInputStream extends InputStream {
         tiffLZWMode = true;
     }
 
-    public int readBits(final int SampleBits) throws IOException {
-        while (bitsInCache < SampleBits) {
+    public int readBits(final int sampleBits) throws IOException {
+        while (bitsInCache < sampleBits) {
             final int next = is.read();
 
             if (next < 0) {
@@ -65,20 +65,20 @@ public class MyBitInputStream extends InputStream {
             bytesRead++;
             bitsInCache += 8;
         }
-        final int sampleMask = (1 << SampleBits) - 1;
+        final int sampleMask = (1 << sampleBits) - 1;
 
         int sample;
 
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            sample = sampleMask & (bitCache >> (bitsInCache - SampleBits));
+            sample = sampleMask & (bitCache >> (bitsInCache - sampleBits));
         } else {
             sample = sampleMask & bitCache;
-            bitCache >>= SampleBits;
+            bitCache >>= sampleBits;
         }
 
         final int result = sample;
 
-        bitsInCache -= SampleBits;
+        bitsInCache -= sampleBits;
         final int remainderMask = (1 << bitsInCache) - 1;
         bitCache &= remainderMask;
 

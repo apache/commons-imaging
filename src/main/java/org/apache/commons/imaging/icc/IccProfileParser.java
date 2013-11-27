@@ -34,12 +34,12 @@ public class IccProfileParser extends BinaryFileParser {
         this.setByteOrder(ByteOrder.BIG_ENDIAN);
     }
 
-    public IccProfileInfo getICCProfileInfo(final ICC_Profile icc_profile) {
-        if (icc_profile == null) {
+    public IccProfileInfo getICCProfileInfo(final ICC_Profile iccProfile) {
+        if (iccProfile == null) {
             return null;
         }
 
-        return getICCProfileInfo(new ByteSourceArray(icc_profile.getData()));
+        return getICCProfileInfo(new ByteSourceArray(iccProfile.getData()));
     }
 
     public IccProfileInfo getICCProfileInfo(final byte[] bytes) {
@@ -120,8 +120,7 @@ public class IccProfileParser extends BinaryFileParser {
         // Debug.debug("length: " + length);
 
         try {
-            final int ProfileSize = read4Bytes("ProfileSize", is,
-                    "Not a Valid ICC Profile");
+            final int profileSize = read4Bytes("ProfileSize", is, "Not a Valid ICC Profile");
 
             // if (length != ProfileSize)
             // {
@@ -134,86 +133,71 @@ public class IccProfileParser extends BinaryFileParser {
             // return null;
             // }
 
-            final int CMMTypeSignature = read4Bytes("Signature", is,
-                    "Not a Valid ICC Profile");
+            final int cmmTypeSignature = read4Bytes("Signature", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("CMMTypeSignature", CMMTypeSignature);
+                printCharQuad("CMMTypeSignature", cmmTypeSignature);
             }
 
-            final int ProfileVersion = read4Bytes("ProfileVersion", is,
-                    "Not a Valid ICC Profile");
+            final int profileVersion = read4Bytes("ProfileVersion", is, "Not a Valid ICC Profile");
 
-            final int ProfileDeviceClassSignature = read4Bytes(
-                    "ProfileDeviceClassSignature", is,
+            final int profileDeviceClassSignature = read4Bytes("ProfileDeviceClassSignature", is, 
                     "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("ProfileDeviceClassSignature",
-                        ProfileDeviceClassSignature);
+                printCharQuad("ProfileDeviceClassSignature", profileDeviceClassSignature);
             }
 
-            final int ColorSpace = read4Bytes("ColorSpace", is,
-                    "Not a Valid ICC Profile");
+            final int colorSpace = read4Bytes("ColorSpace", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("ColorSpace", ColorSpace);
+                printCharQuad("ColorSpace", colorSpace);
             }
 
-            final int ProfileConnectionSpace = read4Bytes("ProfileConnectionSpace",
-                    is, "Not a Valid ICC Profile");
+            final int profileConnectionSpace = read4Bytes("ProfileConnectionSpace", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("ProfileConnectionSpace", ProfileConnectionSpace);
+                printCharQuad("ProfileConnectionSpace", profileConnectionSpace);
             }
 
             skipBytes(is, 12, "Not a Valid ICC Profile");
 
-            final int ProfileFileSignature = read4Bytes("ProfileFileSignature", is,
-                    "Not a Valid ICC Profile");
+            final int profileFileSignature = read4Bytes("ProfileFileSignature", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("ProfileFileSignature", ProfileFileSignature);
+                printCharQuad("ProfileFileSignature", profileFileSignature);
             }
 
-            final int PrimaryPlatformSignature = read4Bytes(
-                    "PrimaryPlatformSignature", is, "Not a Valid ICC Profile");
+            final int primaryPlatformSignature = read4Bytes( "PrimaryPlatformSignature", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("PrimaryPlatformSignature",
-                        PrimaryPlatformSignature);
+                printCharQuad("PrimaryPlatformSignature", primaryPlatformSignature);
             }
 
-            final int VariousFlags = read4Bytes("ProfileFileSignature", is,
-                    "Not a Valid ICC Profile");
+            final int variousFlags = read4Bytes("VariousFlags", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("ProfileFileSignature", ProfileFileSignature);
+                printCharQuad("VariousFlags", profileFileSignature);
             }
 
-            final int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
-                    "Not a Valid ICC Profile");
+            final int deviceManufacturer = read4Bytes("DeviceManufacturer", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("DeviceManufacturer", DeviceManufacturer);
+                printCharQuad("DeviceManufacturer", deviceManufacturer);
             }
 
-            final int DeviceModel = read4Bytes("DeviceModel", is,
-                    "Not a Valid ICC Profile");
+            final int deviceModel = read4Bytes("DeviceModel", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("DeviceModel", DeviceModel);
+                printCharQuad("DeviceModel", deviceModel);
             }
 
             skipBytes(is, 8, "Not a Valid ICC Profile");
 
-            final int RenderingIntent = read4Bytes("RenderingIntent", is,
-                    "Not a Valid ICC Profile");
+            final int renderingIntent = read4Bytes("RenderingIntent", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("RenderingIntent", RenderingIntent);
+                printCharQuad("RenderingIntent", renderingIntent);
             }
 
             skipBytes(is, 12, "Not a Valid ICC Profile");
 
-            final int ProfileCreatorSignature = read4Bytes("ProfileCreatorSignature",
-                    is, "Not a Valid ICC Profile");
+            final int profileCreatorSignature = read4Bytes("ProfileCreatorSignature", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("ProfileCreatorSignature",
-                        ProfileCreatorSignature);
+                printCharQuad("ProfileCreatorSignature", profileCreatorSignature);
             }
 
-            final byte[] ProfileID = null;
+            final byte[] profileId = null;
             skipBytes(is, 16, "Not a Valid ICC Profile");
             // readByteArray("ProfileID", 16, is,
             // "Not a Valid ICC Profile");
@@ -225,24 +209,21 @@ public class IccProfileParser extends BinaryFileParser {
 
             // this.setDebug(true);
 
-            final int TagCount = read4Bytes("TagCount", is, "Not a Valid ICC Profile");
+            final int tagCount = read4Bytes("TagCount", is, "Not a Valid ICC Profile");
 
             // List tags = new ArrayList();
-            final IccTag[] tags = new IccTag[TagCount];
+            final IccTag[] tags = new IccTag[tagCount];
 
-            for (int i = 0; i < TagCount; i++) {
-                final int TagSignature = read4Bytes("TagSignature[" + i + "]", is,
-                        "Not a Valid ICC Profile");
+            for (int i = 0; i < tagCount; i++) {
+                final int tagSignature = read4Bytes("TagSignature[" + i + "]", is, "Not a Valid ICC Profile");
                 // Debug.debug("TagSignature t "
                 // + Integer.toHexString(TagSignature));
 
                 // this.printCharQuad("TagSignature", TagSignature);
-                final int OffsetToData = read4Bytes("OffsetToData[" + i + "]", is,
-                        "Not a Valid ICC Profile");
-                final int ElementSize = read4Bytes("ElementSize[" + i + "]", is,
-                        "Not a Valid ICC Profile");
+                final int offsetToData = read4Bytes("OffsetToData[" + i + "]", is, "Not a Valid ICC Profile");
+                final int elementSize = read4Bytes("ElementSize[" + i + "]", is, "Not a Valid ICC Profile");
 
-                final IccTagType fIccTagType = getIccTagType(TagSignature);
+                final IccTagType fIccTagType = getIccTagType(tagSignature);
                 // if (fIccTagType == null)
                 // throw new Error("oops.");
 
@@ -255,8 +236,8 @@ public class IccProfileParser extends BinaryFileParser {
                 // : fIccTagType.name));
                 // Debug.debug();
 
-                final IccTag tag = new IccTag(TagSignature, OffsetToData,
-                        ElementSize, fIccTagType);
+                final IccTag tag = new IccTag(tagSignature, offsetToData,
+                        elementSize, fIccTagType);
                 // tag.dump("\t" + i + ": ");
                 tags[i] = tag;
                 // tags .add(tag);
@@ -270,17 +251,17 @@ public class IccProfileParser extends BinaryFileParser {
 
             final byte[] data = cis.getCache();
 
-            if (data.length < ProfileSize) {
+            if (data.length < profileSize) {
                 throw new IOException("Couldn't read ICC Profile.");
             }
 
-            final IccProfileInfo result = new IccProfileInfo(data, ProfileSize,
-                    CMMTypeSignature, ProfileVersion,
-                    ProfileDeviceClassSignature, ColorSpace,
-                    ProfileConnectionSpace, ProfileFileSignature,
-                    PrimaryPlatformSignature, VariousFlags, DeviceManufacturer,
-                    DeviceModel, RenderingIntent, ProfileCreatorSignature,
-                    ProfileID, tags);
+            final IccProfileInfo result = new IccProfileInfo(data, profileSize,
+                    cmmTypeSignature, profileVersion,
+                    profileDeviceClassSignature, colorSpace,
+                    profileConnectionSpace, profileFileSignature,
+                    primaryPlatformSignature, variousFlags, deviceManufacturer,
+                    deviceModel, renderingIntent, profileCreatorSignature,
+                    profileId, tags);
 
             if (getDebug()) {
                 Debug.debug("issRGB: " + result.issRGB());
@@ -304,8 +285,8 @@ public class IccProfileParser extends BinaryFileParser {
         return null;
     }
 
-    public boolean issRGB(final ICC_Profile icc_profile) throws IOException {
-        return issRGB(new ByteSourceArray(icc_profile.getData()));
+    public boolean issRGB(final ICC_Profile iccProfile) throws IOException {
+        return issRGB(new ByteSourceArray(iccProfile.getData()));
     }
 
     public boolean issRGB(final byte[] bytes) throws IOException {
@@ -344,19 +325,17 @@ public class IccProfileParser extends BinaryFileParser {
 
             this.skipBytes(is, 4 * 3);
 
-            final int DeviceManufacturer = read4Bytes("ProfileFileSignature", is,
-                    "Not a Valid ICC Profile");
+            final int deviceManufacturer = read4Bytes("ProfileFileSignature", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("DeviceManufacturer", DeviceManufacturer);
+                printCharQuad("DeviceManufacturer", deviceManufacturer);
             }
 
-            final int DeviceModel = read4Bytes("DeviceModel", is,
-                    "Not a Valid ICC Profile");
+            final int deviceModel = read4Bytes("DeviceModel", is, "Not a Valid ICC Profile");
             if (getDebug()) {
-                printCharQuad("DeviceModel", DeviceModel);
+                printCharQuad("DeviceModel", deviceModel);
             }
 
-            final boolean result = ((DeviceManufacturer == IccConstants.IEC) && (DeviceModel == IccConstants.sRGB));
+            boolean result = deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
             canThrow = true;
             return result;
         } finally {

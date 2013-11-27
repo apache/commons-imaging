@@ -93,14 +93,14 @@ public class PaletteFactory {
 
     private int pixelToQuantizationTableIndex(int argb, final int precision) {
         int result = 0;
-        final int precision_mask = (1 << precision) - 1;
+        final int precisionMask = (1 << precision) - 1;
 
         for (int i = 0; i < COMPONENTS; i++) {
             int sample = argb & 0xff;
             argb >>= 8;
 
             sample >>= (8 - precision);
-            result = (result << precision) | (sample & precision_mask);
+            result = (result << precision) | (sample & precisionMask);
         }
 
         return result;
@@ -147,13 +147,13 @@ public class PaletteFactory {
             return null;
         }
 
-        final int[] slice_mins = new int[subset.mins.length];
-        System.arraycopy(subset.mins, 0, slice_mins, 0, subset.mins.length);
-        final int[] slice_maxs = new int[subset.maxs.length];
-        System.arraycopy(subset.maxs, 0, slice_maxs, 0, subset.maxs.length);
+        final int[] sliceMins = new int[subset.mins.length];
+        System.arraycopy(subset.mins, 0, sliceMins, 0, subset.mins.length);
+        final int[] sliceMaxs = new int[subset.maxs.length];
+        System.arraycopy(subset.maxs, 0, sliceMaxs, 0, subset.maxs.length);
 
-        slice_maxs[component] = slice;
-        slice_mins[component] = slice + 1;
+        sliceMaxs[component] = slice;
+        sliceMins[component] = slice + 1;
 
         if (DEBUG) {
             System.out.println("total: " + total);
@@ -165,10 +165,8 @@ public class PaletteFactory {
 
         }
 
-        final ColorSpaceSubset first = new ColorSpaceSubset(sum, precision,
-                subset.mins, slice_maxs);
-        final ColorSpaceSubset second = new ColorSpaceSubset(total - sum, precision,
-                slice_mins, subset.maxs);
+        final ColorSpaceSubset first = new ColorSpaceSubset(sum, precision, subset.mins, sliceMaxs);
+        final ColorSpaceSubset second = new ColorSpaceSubset(total - sum, precision, sliceMins, subset.maxs);
 
         return new DivisionCandidate(first, second);
 
@@ -182,10 +180,10 @@ public class PaletteFactory {
 
         final int total = subset.total;
 
-        final int[] slice_mins = new int[subset.mins.length];
-        System.arraycopy(subset.mins, 0, slice_mins, 0, subset.mins.length);
-        final int[] slice_maxs = new int[subset.maxs.length];
-        System.arraycopy(subset.maxs, 0, slice_maxs, 0, subset.maxs.length);
+        final int[] sliceMins = new int[subset.mins.length];
+        System.arraycopy(subset.mins, 0, sliceMins, 0, subset.mins.length);
+        final int[] sliceMaxs = new int[subset.maxs.length];
+        System.arraycopy(subset.maxs, 0, sliceMaxs, 0, subset.maxs.length);
 
         int sum1 = 0, sum2;
         int slice1, slice2;
@@ -193,10 +191,10 @@ public class PaletteFactory {
 
         for (slice1 = subset.mins[component]; slice1 != subset.maxs[component] + 1; slice1++) {
 
-            slice_mins[component] = slice1;
-            slice_maxs[component] = slice1;
+            sliceMins[component] = slice1;
+            sliceMaxs[component] = slice1;
 
-            last = getFrequencyTotal(table, slice_mins, slice_maxs,
+            last = getFrequencyTotal(table, sliceMins, sliceMaxs,
                     precision);
 
             sum1 += last;
@@ -234,8 +232,8 @@ public class PaletteFactory {
         dcs.addAll(divideSubset2(table, subset, 1, precision));
         dcs.addAll(divideSubset2(table, subset, 2, precision));
 
-        DivisionCandidate best_v = null;
-        double best_score = Double.MAX_VALUE;
+        DivisionCandidate bestV = null;
+        double bestScore = Double.MAX_VALUE;
 
         for (DivisionCandidate dc : dcs) {
             final ColorSpaceSubset first = dc.dst_a;
@@ -246,17 +244,17 @@ public class PaletteFactory {
             final int diff = Math.abs(area1 - area2);
             final double score = ((double) diff) / ((double) Math.max(area1, area2));
 
-            if (best_v == null) {
-                best_v = dc;
-                best_score = score;
-            } else if (score < best_score) {
-                best_v = dc;
-                best_score = score;
+            if (bestV == null) {
+                bestV = dc;
+                bestScore = score;
+            } else if (score < bestScore) {
+                bestV = dc;
+                bestScore = score;
             }
 
         }
 
-        return best_v;
+        return bestV;
     }
 
     private static class DivisionCandidate {
@@ -271,12 +269,12 @@ public class PaletteFactory {
     }
 
     private List<ColorSpaceSubset> divide(final List<ColorSpaceSubset> v,
-            final int desired_count, final int[] table, final int precision) {
+            final int desiredCount, final int[] table, final int precision) {
         final List<ColorSpaceSubset> ignore = new ArrayList<ColorSpaceSubset>();
 
         while (true) {
-            int max_area = -1;
-            ColorSpaceSubset max_subset = null;
+            int maxArea = -1;
+            ColorSpaceSubset maxSubset = null;
 
             for (ColorSpaceSubset subset : v) {
                 if (ignore.contains(subset)) {
@@ -284,33 +282,33 @@ public class PaletteFactory {
                 }
                 final int area = subset.total;
 
-                if (max_subset == null) {
-                    max_subset = subset;
-                    max_area = area;
-                } else if (area > max_area) {
-                    max_subset = subset;
-                    max_area = area;
+                if (maxSubset == null) {
+                    maxSubset = subset;
+                    maxArea = area;
+                } else if (area > maxArea) {
+                    maxSubset = subset;
+                    maxArea = area;
                 }
             }
 
-            if (max_subset == null) {
+            if (maxSubset == null) {
                 return v;
             }
             if (DEBUG) {
-                System.out.println("\t" + "area: " + max_area);
+                System.out.println("\t" + "area: " + maxArea);
             }
 
-            final DivisionCandidate dc = divideSubset2(table, max_subset,
+            final DivisionCandidate dc = divideSubset2(table, maxSubset,
                     precision);
             if (dc != null) {
-                v.remove(max_subset);
+                v.remove(maxSubset);
                 v.add(dc.dst_a);
                 v.add(dc.dst_b);
             } else {
-                ignore.add(max_subset);
+                ignore.add(maxSubset);
             }
 
-            if (v.size() == desired_count) {
+            if (v.size() == desiredCount) {
                 return v;
             }
         }
@@ -328,9 +326,9 @@ public class PaletteFactory {
     public Palette makeQuantizedRgbPalette(final BufferedImage src, final int max) {
         final int precision = 6; // in bits
 
-        final int table_scale = precision * COMPONENTS;
-        final int table_size = 1 << table_scale;
-        final int[] table = new int[table_size];
+        final int tableScale = precision * COMPONENTS;
+        final int tableSize = 1 << tableScale;
+        final int[] table = new int[tableSize];
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -340,8 +338,8 @@ public class PaletteFactory {
         subsets.add(all);
 
         if (DEBUG) {
-            final int pre_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
-            System.out.println("pre total: " + pre_total);
+            final int preTotal = getFrequencyTotal(table, all.mins, all.maxs, precision);
+            System.out.println("pre total: " + preTotal);
         }
 
         // step 1: count frequency of colors
@@ -356,8 +354,8 @@ public class PaletteFactory {
         }
 
         if (DEBUG) {
-            final int all_total = getFrequencyTotal(table, all.mins, all.maxs, precision);
-            System.out.println("all total: " + all_total);
+            final int allTotal = getFrequencyTotal(table, all.mins, all.maxs, precision);
+            System.out.println("all total: " + allTotal);
             System.out.println("width * height: " + (width * height));
         }
 
@@ -378,7 +376,7 @@ public class PaletteFactory {
             }
         }
 
-        Collections.sort(subsets, ColorSpaceSubset.rgbComparator);
+        Collections.sort(subsets, ColorSpaceSubset.RGB_COMPARATOR);
 
         return new QuantizedPalette(subsets, precision);
     }

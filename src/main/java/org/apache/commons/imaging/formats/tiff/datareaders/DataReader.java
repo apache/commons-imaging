@@ -114,7 +114,7 @@ public abstract class DataReader implements TiffConstants {
     }
 
     protected byte[] decompress(final byte[] compressed, final int compression,
-            final int expected_size, final int tileWidth, final int tileHeight)
+            final int expectedSize, final int tileWidth, final int tileHeight)
             throws ImageReadException, IOException {
         final TiffField fillOrderField = directory
                 .findField(TiffTagConstants.TIFF_TAG_FILL_ORDER);
@@ -180,19 +180,19 @@ public abstract class DataReader implements TiffConstants {
         {
             final InputStream is = new ByteArrayInputStream(compressed);
 
-            final int LZWMinimumCodeSize = 8;
+            final int lzwMinimumCodeSize = 8;
 
             final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
-                    LZWMinimumCodeSize, ByteOrder.BIG_ENDIAN);
+                    lzwMinimumCodeSize, ByteOrder.BIG_ENDIAN);
 
             myLzwDecompressor.setTiffLZWMode();
 
-            return myLzwDecompressor.decompress(is, expected_size);
+            return myLzwDecompressor.decompress(is, expectedSize);
         }
 
         case TIFF_COMPRESSION_PACKBITS: // Packbits
         {
-            return new PackBits().decompress(compressed, expected_size);
+            return new PackBits().decompress(compressed, expectedSize);
         }
 
         default:

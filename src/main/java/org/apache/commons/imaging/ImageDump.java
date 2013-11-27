@@ -63,10 +63,10 @@ public class ImageDump {
             return;
         }
 
-        final ICC_ColorSpace fICC_ColorSpace = (ICC_ColorSpace) cs;
-        final ICC_Profile fICC_Profile = fICC_ColorSpace.getProfile();
+        final ICC_ColorSpace iccColorSpace = (ICC_ColorSpace) cs;
+        final ICC_Profile iccProfile = iccColorSpace.getProfile();
 
-        final byte[] bytes = fICC_Profile.getData();
+        final byte[] bytes = iccProfile.getData();
 
         final IccProfileParser parser = new IccProfileParser();
 

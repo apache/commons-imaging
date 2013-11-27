@@ -23,23 +23,23 @@ class ColorSpaceSubset {
     final int[] mins;
     final int[] maxs;
     final int precision;
-    final int precision_mask;
+    final int precisionMask;
     final int total;
     int rgb; // median
     // the index in the palette.
     private int index;
-    public static final RgbComparator rgbComparator = new RgbComparator();
+    public static final RgbComparator RGB_COMPARATOR = new RgbComparator();
 
     ColorSpaceSubset(final int total, final int precision) {
         this.total = total;
         this.precision = precision;
-        precision_mask = (1 << precision) - 1;
+        precisionMask = (1 << precision) - 1;
 
         mins = new int[PaletteFactory.COMPONENTS];
         maxs = new int[PaletteFactory.COMPONENTS];
         for (int i = 0; i < PaletteFactory.COMPONENTS; i++) {
             mins[i] = 0;
-            maxs[i] = precision_mask;
+            maxs[i] = precisionMask;
         }
 
         rgb = -1;
@@ -50,7 +50,7 @@ class ColorSpaceSubset {
         this.precision = precision;
         this.mins = mins;
         this.maxs = maxs;
-        precision_mask = (1 << precision) - 1;
+        precisionMask = (1 << precision) - 1;
 
         rgb = -1;
     }
@@ -87,7 +87,7 @@ class ColorSpaceSubset {
         final int rdiff = maxs[0] - mins[0] + 1;
         final int gdiff = maxs[1] - mins[1] + 1;
         final int bdiff = maxs[2] - mins[2] + 1;
-        final int color_area = rdiff * gdiff * bdiff;
+        final int colorArea = rdiff * gdiff * bdiff;
 
         System.out.println(prefix + ": [" + Integer.toHexString(rgb)
                 + "] total : " + total
@@ -107,8 +107,8 @@ class ColorSpaceSubset {
                 + mins[2] + ", " + maxs[2]);
         System.out
                 .println("\t" + "rdiff: " + rdiff + ", " + "gdiff: " + gdiff
-                        + ", " + "bdiff: " + bdiff + ", " + "color_area: "
-                        + color_area);
+                        + ", " + "bdiff: " + bdiff + ", " + "colorArea: "
+                        + colorArea);
     }
 
     public void dumpJustRGB(final String prefix) {
@@ -125,9 +125,9 @@ class ColorSpaceSubset {
         final int rdiff = maxs[0] - mins[0] + 1;
         final int gdiff = maxs[1] - mins[1] + 1;
         final int bdiff = maxs[2] - mins[2] + 1;
-        final int color_area = rdiff * gdiff * bdiff;
+        final int colorArea = rdiff * gdiff * bdiff;
 
-        return color_area;
+        return colorArea;
 
     }
 

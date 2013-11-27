@@ -21,28 +21,27 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 
 public class PsdHeaderInfo {
-    public final int Version;
-    private final byte[] Reserved;
-    public final int Channels;
-    public final int Rows;
-    public final int Columns;
-    public final int Depth;
-    public final int Mode;
+    public final int version;
+    private final byte[] reserved;
+    public final int channels;
+    public final int rows;
+    public final int columns;
+    public final int depth;
+    public final int mode;
 
-    public PsdHeaderInfo(final int Version, final byte[] Reserved, final int Channels, final int Rows,
-            final int Columns, final int Depth, final int Mode) {
-        this.Version = Version;
-        this.Reserved = Reserved;
-        this.Channels = Channels;
-        this.Rows = Rows;
-        this.Columns = Columns;
-        this.Depth = Depth;
-        this.Mode = Mode;
+    public PsdHeaderInfo(int version, byte[] reserved, int channels, int rows, int columns, int depth, int mode) {
+        this.version = version;
+        this.reserved = reserved;
+        this.channels = channels;
+        this.rows = rows;
+        this.columns = columns;
+        this.depth = depth;
+        this.mode = mode;
 
     }
 
     public byte[] getReserved() {
-        return Reserved.clone();
+        return reserved.clone();
     }
 
     public void dump() {
@@ -54,16 +53,13 @@ public class PsdHeaderInfo {
     public void dump(final PrintWriter pw) {
         pw.println("");
         pw.println("Header");
-        pw.println("Version: " + Version + " (" + Integer.toHexString(Version)
-                + ")");
-        pw.println("Channels: " + Channels + " ("
-                + Integer.toHexString(Channels) + ")");
-        pw.println("Rows: " + Rows + " (" + Integer.toHexString(Rows) + ")");
-        pw.println("Columns: " + Columns + " (" + Integer.toHexString(Columns)
-                + ")");
-        pw.println("Depth: " + Depth + " (" + Integer.toHexString(Depth) + ")");
-        pw.println("Mode: " + Mode + " (" + Integer.toHexString(Mode) + ")");
-        pw.println("Reserved: " + Reserved.length);
+        pw.println("Version: " + version + " (" + Integer.toHexString(version) + ")");
+        pw.println("Channels: " + channels + " (" + Integer.toHexString(channels) + ")");
+        pw.println("Rows: " + rows + " (" + Integer.toHexString(rows) + ")");
+        pw.println("Columns: " + columns + " (" + Integer.toHexString(columns) + ")");
+        pw.println("Depth: " + depth + " (" + Integer.toHexString(depth) + ")");
+        pw.println("Mode: " + mode + " (" + Integer.toHexString(mode) + ")");
+        pw.println("Reserved: " + reserved.length);
         pw.println("");
         pw.flush();
 

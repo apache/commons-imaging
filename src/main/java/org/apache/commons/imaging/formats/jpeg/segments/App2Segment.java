@@ -25,17 +25,17 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class App2Segment extends AppnSegment implements Comparable<App2Segment> {
-    public final byte[] icc_bytes;
-    public final int cur_marker, num_markers;
+    public final byte[] iccBytes;
+    public final int curMarker, numMarkers;
 
     public App2Segment(final int marker, final byte[] segmentData)
             throws ImageReadException, IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public App2Segment(final int marker, int marker_length, final InputStream is2)
+    public App2Segment(final int marker, int markerLength, final InputStream is2)
             throws ImageReadException, IOException {
-        super(marker, marker_length, is2);
+        super(marker, markerLength, is2);
 
         if (BinaryFileParser.startsWith(getSegmentData(),
                 JpegConstants.ICC_PROFILE_LABEL)) {
@@ -44,19 +44,18 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
             readAndVerifyBytes(is, JpegConstants.ICC_PROFILE_LABEL,
                     "Not a Valid App2 Segment: missing ICC Profile label");
 
-            cur_marker = readByte("cur_marker", is, "Not a valid App2 Marker");
-            num_markers = readByte("num_markers", is, "Not a valid App2 Marker");
+            curMarker = readByte("curMarker", is, "Not a valid App2 Marker");
+            numMarkers = readByte("numMarkers", is, "Not a valid App2 Marker");
 
-            marker_length -= JpegConstants.ICC_PROFILE_LABEL.size();
-            marker_length -= (1 + 1);
+            markerLength -= JpegConstants.ICC_PROFILE_LABEL.size();
+            markerLength -= (1 + 1);
 
-            icc_bytes = readBytes("App2 Data", is, marker_length,
-                    "Invalid App2 Segment: insufficient data");
+            iccBytes = readBytes("App2 Data", is, markerLength, "Invalid App2 Segment: insufficient data");
         } else {
             // debugByteArray("Unknown APP2 Segment Type", bytes);
-            cur_marker = -1;
-            num_markers = -1;
-            icc_bytes = null;
+            curMarker = -1;
+            numMarkers = -1;
+            iccBytes = null;
         }
     }
 
@@ -64,18 +63,18 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
     public boolean equals(final Object obj) {
         if (obj instanceof App2Segment) {
             final App2Segment other = (App2Segment) obj;
-            return cur_marker == other.cur_marker;
+            return curMarker == other.curMarker;
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return cur_marker;
+        return curMarker;
     }
 
     public int compareTo(final App2Segment other) {
-        return cur_marker - other.cur_marker;
+        return curMarker - other.curMarker;
     }
 
     // public String getDescription()

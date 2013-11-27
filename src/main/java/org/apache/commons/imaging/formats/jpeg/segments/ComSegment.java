@@ -25,9 +25,8 @@ public class ComSegment extends GenericSegment {
         super(marker, segmentData);
     }
 
-    public ComSegment(final int marker, final int marker_length, final InputStream is)
-            throws IOException {
-        super(marker, marker_length, is);
+    public ComSegment(int marker, int markerLength, InputStream is) throws IOException {
+        super(marker, markerLength, is);
     }
     
     /**

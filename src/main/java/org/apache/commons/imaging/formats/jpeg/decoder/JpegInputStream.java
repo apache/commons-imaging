@@ -44,7 +44,7 @@ class JpegInputStream {
                     throw new ImageReadException("Premature End of File");
                 }
                 if (b2 != 0) {
-                    if (b2 == (0xff & JpegConstants.DNLMarker)) {
+                    if (b2 == (0xff & JpegConstants.DNL_MARKER)) {
                         throw new ImageReadException("DNL not yet supported");
                     }
                     throw new ImageReadException("Invalid marker found "

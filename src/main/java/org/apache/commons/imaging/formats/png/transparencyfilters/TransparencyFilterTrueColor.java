@@ -22,29 +22,26 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 
 public class TransparencyFilterTrueColor extends TransparencyFilter {
-    private final int transparent_color;
+    private final int transparentColor;
 
-    public TransparencyFilterTrueColor(final byte[] bytes) throws IOException {
+    public TransparencyFilterTrueColor(byte[] bytes) throws IOException {
         super(bytes);
 
-        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        final int transparent_red = read2Bytes("transparent_red", is,
-                "tRNS: Missing transparent_color");
-        final int transparent_green = read2Bytes("transparent_green", is,
-                "tRNS: Missing transparent_color");
-        final int transparent_blue = read2Bytes("transparent_blue", is,
-                "tRNS: Missing transparent_color");
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        int transparentRed = read2Bytes("transparentRed", is, "tRNS: Missing transparentColor");
+        int transparentGreen = read2Bytes("transparentGreen", is, "tRNS: Missing transparentColor");
+        int transparentBlue = read2Bytes("transparentBlue", is, "tRNS: Missing transparentColor");
 
-        transparent_color = ((0xff & transparent_red) << 16)
-                | ((0xff & transparent_green) << 8)
-                | ((0xff & transparent_blue) << 0);
+        transparentColor = ((0xff & transparentRed) << 16)
+                | ((0xff & transparentGreen) << 8)
+                | ((0xff & transparentBlue) << 0);
 
     }
 
     @Override
     public int filter(final int rgb, final int sample) throws ImageReadException,
             IOException {
-        if ((0x00ffffff & rgb) == transparent_color) {
+        if ((0x00ffffff & rgb) == transparentColor) {
             return 0x00;
         }
 

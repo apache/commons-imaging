@@ -24,8 +24,9 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageWriteException;
 
 public class PgmWriter extends PnmWriter {
-    public PgmWriter(final boolean RAWBITS) {
-        super(RAWBITS);
+
+    public PgmWriter(boolean rawbits) {
+        super(rawbits);
     }
 
     @Override
@@ -34,7 +35,7 @@ public class PgmWriter extends PnmWriter {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);
-        os.write(RAWBITS ? 0x35 : 0x32);
+        os.write(rawbits ? 0x35 : 0x32);
         os.write(PnmConstants.PNM_SEPARATOR);
 
         final int width = src.getWidth();
@@ -57,7 +58,7 @@ public class PgmWriter extends PnmWriter {
                 final int blue = 0xff & (argb >> 0);
                 final int sample = (red + green + blue) / 3;
 
-                if (RAWBITS) {
+                if (rawbits) {
                     os.write((byte) sample);
                 } else {
                     os.write(Integer.toString(sample).getBytes("US-ASCII")); // max component value

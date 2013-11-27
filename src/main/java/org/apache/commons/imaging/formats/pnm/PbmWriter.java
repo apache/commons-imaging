@@ -24,15 +24,15 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageWriteException;
 
 public class PbmWriter extends PnmWriter {
-    public PbmWriter(final boolean RAWBITS) {
-        super(RAWBITS);
+    public PbmWriter(final boolean rawbits) {
+        super(rawbits);
     }
 
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         os.write(PnmConstants.PNM_PREFIX_BYTE);
-        os.write(RAWBITS ? PnmConstants.PBM_RAW_CODE : PnmConstants.PBM_TEXT_CODE);
+        os.write(rawbits ? PnmConstants.PBM_RAW_CODE : PnmConstants.PBM_TEXT_CODE);
         os.write(PnmConstants.PNM_SEPARATOR);
 
         final int width = src.getWidth();
@@ -45,7 +45,7 @@ public class PbmWriter extends PnmWriter {
         os.write(PnmConstants.PNM_NEWLINE);
 
         int bitcache = 0;
-        int bits_in_cache = 0;
+        int bitsInCache = 0;
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -60,14 +60,14 @@ public class PbmWriter extends PnmWriter {
                     sample = 1;
                 }
 
-                if (RAWBITS) {
+                if (rawbits) {
                     bitcache = (bitcache << 1) | (0x1 & sample);
-                    bits_in_cache++;
+                    bitsInCache++;
 
-                    if (bits_in_cache >= 8) {
+                    if (bitsInCache >= 8) {
                         os.write((byte) bitcache);
                         bitcache = 0;
-                        bits_in_cache = 0;
+                        bitsInCache = 0;
                     }
                 } else {
                     os.write(Integer.toString(sample).getBytes("US-ASCII")); // max
@@ -77,11 +77,11 @@ public class PbmWriter extends PnmWriter {
                 }
             }
 
-            if ((RAWBITS) && (bits_in_cache > 0)) {
-                bitcache = bitcache << (8 - bits_in_cache);
+            if (rawbits && (bitsInCache > 0)) {
+                bitcache = bitcache << (8 - bitsInCache);
                 os.write((byte) bitcache);
                 bitcache = 0;
-                bits_in_cache = 0;
+                bitsInCache = 0;
             }
         }
     }

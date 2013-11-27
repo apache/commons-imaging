@@ -34,7 +34,7 @@ public class IccTag {
     public final IccTagType fIccTagType;
     public byte[] data;
     private IccTagDataType itdt;
-    private int data_type_signature;
+    private int dataTypeSignature;
 
     // public final byte[] data;
 
@@ -53,10 +53,10 @@ public class IccTag {
         try {
             bis = new BinaryInputStream(new ByteArrayInputStream(
                 bytes), ByteOrder.BIG_ENDIAN);
-            data_type_signature = bis.read4Bytes("data type signature",
+            dataTypeSignature = bis.read4Bytes("data type signature",
                     "ICC: corrupt tag data");
     
-            itdt = getIccTagDataType(data_type_signature);
+            itdt = getIccTagDataType(dataTypeSignature);
             // if (itdt != null)
             // {
             // System.out.println("\t\t\t" + "itdt: " + itdt.name);
@@ -105,13 +105,13 @@ public class IccTag {
 
             pw.println(prefix
                     + "data type signature: "
-                    + Integer.toHexString(data_type_signature)
+                    + Integer.toHexString(dataTypeSignature)
                     + " ("
                     + new String(new byte[] {
-                            (byte) (0xff & (data_type_signature >> 24)),
-                            (byte) (0xff & (data_type_signature >> 16)),
-                            (byte) (0xff & (data_type_signature >> 8)),
-                            (byte) (0xff & (data_type_signature >> 0)), }, "US-ASCII")
+                            (byte) (0xff & (dataTypeSignature >> 24)),
+                            (byte) (0xff & (dataTypeSignature >> 16)),
+                            (byte) (0xff & (dataTypeSignature >> 8)),
+                            (byte) (0xff & (dataTypeSignature >> 0)), }, "US-ASCII")
                     + ")");
 
             if (itdt == null) {

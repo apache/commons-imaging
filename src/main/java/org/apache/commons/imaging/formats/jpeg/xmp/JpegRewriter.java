@@ -117,15 +117,15 @@ public class JpegRewriter extends BinaryFileParser {
         }
 
         public boolean isApp1Segment() {
-            return marker == JpegConstants.JPEG_APP1_Marker;
+            return marker == JpegConstants.JPEG_APP1_MARKER;
         }
 
         public boolean isAppSegment() {
-            return marker >= JpegConstants.JPEG_APP0_Marker && marker <= JpegConstants.JPEG_APP15_Marker;
+            return marker >= JpegConstants.JPEG_APP0_MARKER && marker <= JpegConstants.JPEG_APP15_MARKER;
         }
 
         public boolean isExifSegment() {
-            if (marker != JpegConstants.JPEG_APP1_Marker) {
+            if (marker != JpegConstants.JPEG_APP1_MARKER) {
                 return false;
             }
             if (!startsWith(segmentData, JpegConstants.EXIF_IDENTIFIER_CODE)) {
@@ -135,7 +135,7 @@ public class JpegRewriter extends BinaryFileParser {
         }
 
         public boolean isPhotoshopApp13Segment() {
-            if (marker != JpegConstants.JPEG_APP13_Marker) {
+            if (marker != JpegConstants.JPEG_APP13_MARKER) {
                 return false;
             }
             if (!new IptcParser().isPhotoshopJpegSegment(segmentData)) {
@@ -145,7 +145,7 @@ public class JpegRewriter extends BinaryFileParser {
         }
 
         public boolean isXmpSegment() {
-            if (marker != JpegConstants.JPEG_APP1_Marker) {
+            if (marker != JpegConstants.JPEG_APP1_MARKER) {
                 return false;
             }
             if (!startsWith(segmentData, JpegConstants.XMP_IDENTIFIER)) {
@@ -323,7 +323,7 @@ public class JpegRewriter extends BinaryFileParser {
     // private void writeSegment(OutputStream os, JFIFPieceSegment piece)
     // throws ImageWriteException, IOException
     // {
-    // byte markerBytes[] = convertShortToByteArray(JPEG_APP1_Marker,
+    // byte markerBytes[] = convertShortToByteArray(JPEG_APP1_MARKER,
     // JPEG_BYTE_ORDER);
     // if (piece.segmentData.length > 0xffff)
     // throw new JpegSegmentOverflowException("Jpeg segment is too long: "

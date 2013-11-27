@@ -32,20 +32,22 @@ public class ScanExpediterInterlaced extends ScanExpediter {
 //    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
 //    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
 
-    public ScanExpediterInterlaced(final int width, final int height, final InputStream is,
-            final BufferedImage bi, final int color_type, final int BitDepth, final int bits_per_pixel,
-            final PngChunkPlte fPNGChunkPLTE, final GammaCorrection fGammaCorrection,
-            final TransparencyFilter fTransparencyFilter)
+    public ScanExpediterInterlaced(int width, int height, InputStream is,
+            BufferedImage bi,
+            int colorType, int bitDepth, int bitsPerPixel,
+            PngChunkPlte fPNGChunkPLTE,
+            GammaCorrection gammaCorrection,
+            TransparencyFilter transparencyFilter)
 
     {
-        super(width, height, is, bi, color_type, BitDepth, bits_per_pixel,
-                fPNGChunkPLTE, fGammaCorrection, fTransparencyFilter);
+        super(width, height, is, bi, colorType, bitDepth, bitsPerPixel, 
+                fPNGChunkPLTE, gammaCorrection, transparencyFilter);
     }
 
     private void visit(final int x, final int y, final BufferedImage bi, final BitParser fBitParser,
-            final int pixel_index_in_scanline)
+            final int pixelIndexInScanline)
             throws ImageReadException, IOException {
-        final int rgb = getRGB(fBitParser, pixel_index_in_scanline);
+        final int rgb = getRGB(fBitParser, pixelIndexInScanline);
         bi.setRGB(x, y, rgb);
     }
 
@@ -61,27 +63,25 @@ public class ScanExpediterInterlaced extends ScanExpediter {
             //final boolean rows_in_pass = (y < height);
             while (y < height) {
                 int x = STARTING_COL[pass - 1];
-                int pixel_index_in_scanline = 0;
+                int pixelIndexInScanline = 0;
 
                 if (x < width) {
                     // only get data if there are pixels in this scanline/pass
-                    final int ColumnsInRow = 1 + ((width - STARTING_COL[pass - 1] - 1) / COL_INCREMENT[pass - 1]);
-                    final int bitsPerScanLine = bitsPerPixel * ColumnsInRow;
-                    final int pixel_bytes_per_scan_line = getBitsToBytesRoundingUp(bitsPerScanLine);
+                    final int columnsInRow = 1 + ((width - STARTING_COL[pass - 1] - 1) / COL_INCREMENT[pass - 1]);
+                    final int bitsPerScanLine = bitsPerPixel * columnsInRow;
+                    final int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
 
-                    final byte[] unfiltered = getNextScanline(is,
-                            pixel_bytes_per_scan_line, prev, bytesPerPixel);
+                    final byte[] unfiltered = getNextScanline(is, pixelBytesPerScanLine, prev, bytesPerPixel);
 
                     prev = unfiltered;
 
-                    final BitParser fBitParser = new BitParser(unfiltered,
-                            bitsPerPixel, bitDepth);
+                    final BitParser fBitParser = new BitParser(unfiltered, bitsPerPixel, bitDepth);
 
                     while (x < width) {
-                        visit(x, y, bi, fBitParser, pixel_index_in_scanline);
+                        visit(x, y, bi, fBitParser, pixelIndexInScanline);
 
                         x = x + COL_INCREMENT[pass - 1];
-                        pixel_index_in_scanline++;
+                        pixelIndexInScanline++;
                     }
                 }
                 y = y + ROW_INCREMENT[pass - 1];

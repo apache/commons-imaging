@@ -127,14 +127,14 @@ public class PngImageParser extends ImageParser {
         }
     }
 
-    private boolean keepChunk(final int ChunkType, final int[] chunkTypes) {
+    private boolean keepChunk(final int chunkType, final int[] chunkTypes) {
         // System.out.println("keepChunk: ");
         if (chunkTypes == null) {
             return true;
         }
 
         for (final int chunkType2 : chunkTypes) {
-            if (chunkType2 == ChunkType) {
+            if (chunkType2 == chunkType) {
                 return true;
             }
         }
@@ -173,29 +173,29 @@ public class PngImageParser extends ImageParser {
                 }
             }
 
-            final int CRC = read4Bytes("CRC", is, "Not a Valid PNG File");
+            final int crc = read4Bytes("CRC", is, "Not a Valid PNG File");
 
             if (keep) {
                 if (chunkType == PngConstants.iCCP) {
-                    result.add(new PngChunkIccp(length, chunkType, CRC, bytes));
+                    result.add(new PngChunkIccp(length, chunkType, crc, bytes));
                 } else if (chunkType == PngConstants.tEXt) {
-                    result.add(new PngChunkText(length, chunkType, CRC, bytes));
+                    result.add(new PngChunkText(length, chunkType, crc, bytes));
                 } else if (chunkType == PngConstants.zTXt) {
-                    result.add(new PngChunkZtxt(length, chunkType, CRC, bytes));
+                    result.add(new PngChunkZtxt(length, chunkType, crc, bytes));
                 } else if (chunkType == PngConstants.IHDR) {
-                    result.add(new PngChunkIhdr(length, chunkType, CRC, bytes));
+                    result.add(new PngChunkIhdr(length, chunkType, crc, bytes));
                 } else if (chunkType == PngConstants.PLTE) {
-                    result.add(new PngChunkPlte(length, chunkType, CRC, bytes));
+                    result.add(new PngChunkPlte(length, chunkType, crc, bytes));
                 } else if (chunkType == PngConstants.pHYs) {
-                    result.add(new PngChunkPhys(length, chunkType, CRC, bytes));
+                    result.add(new PngChunkPhys(length, chunkType, crc, bytes));
                 } else if (chunkType == PngConstants.IDAT) {
-                    result.add(new PngChunkIdat(length, chunkType, CRC, bytes));
+                    result.add(new PngChunkIdat(length, chunkType, crc, bytes));
                 } else if (chunkType == PngConstants.gAMA) {
-                    result.add(new PngChunkGama(length, chunkType, CRC, bytes));
+                    result.add(new PngChunkGama(length, chunkType, crc, bytes));
                 } else if (chunkType == PngConstants.iTXt) {
-                    result.add(new PngChunkItxt(length, chunkType, CRC, bytes));
+                    result.add(new PngChunkItxt(length, chunkType, crc, bytes));
                 } else { 
-                    result.add(new PngChunk(length, chunkType, CRC, bytes));
+                    result.add(new PngChunk(length, chunkType, crc, bytes));
                 }
 
                 if (returnAfterFirst) {
@@ -412,45 +412,44 @@ public class PngImageParser extends ImageParser {
         return result;
     }
 
-    private boolean hasAlphaChannel(final int ColorType) throws ImageReadException {
-        switch (ColorType) {
-        case PngConstants.COLOR_TYPE_GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale
-            // sample.
-        case PngConstants.COLOR_TYPE_TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
-        case PngConstants.COLOR_TYPE_INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette index;
-            return false;
-        case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale
-            // sample,
-            // followed by an alpha sample.
-        case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B
-            // triple,
-            // followed by an alpha sample.
-            return true;
-        default:
-            throw new ImageReadException("PNG: unknown color type: "
-                    + ColorType);
+    private boolean hasAlphaChannel(final int colorType) throws ImageReadException {
+        switch (colorType) {
+            case PngConstants.COLOR_TYPE_GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale
+                // sample.
+            case PngConstants.COLOR_TYPE_TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
+            case PngConstants.COLOR_TYPE_INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette index;
+                return false;
+            case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale
+                // sample,
+                // followed by an alpha sample.
+            case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B
+                // triple,
+                // followed by an alpha sample.
+                return true;
+            default:
+                throw new ImageReadException("PNG: unknown color type: " + colorType);
         }
     }
 
-    private String getColorTypeDescription(final int ColorType) {
-        switch (ColorType) {
-        case PngConstants.COLOR_TYPE_GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale
-            // sample.
-            return "grayscale";
-        case PngConstants.COLOR_TYPE_TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
-            return "rgb";
-        case PngConstants.COLOR_TYPE_INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette index;
-            return "indexed rgb";
-        case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale
-            // sample,
-            // followed by an alpha sample.
-            return "grayscale w/ alpha";
-        case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B
-            // triple,
-            // followed by an alpha sample.
-            return "RGB w/ alpha";
-        default:
-            return "Unknown Color Type";
+    private String getColorTypeDescription(final int colorType) {
+        switch (colorType) {
+            case PngConstants.COLOR_TYPE_GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale
+                // sample.
+                return "grayscale";
+            case PngConstants.COLOR_TYPE_TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
+                return "rgb";
+            case PngConstants.COLOR_TYPE_INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette index;
+                return "indexed rgb";
+            case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale
+                // sample,
+                // followed by an alpha sample.
+                return "grayscale w/ alpha";
+            case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B
+                // triple,
+                // followed by an alpha sample.
+                return "RGB w/ alpha";
+            default:
+                return "Unknown Color Type";
         }
     }
 
@@ -458,27 +457,22 @@ public class PngImageParser extends ImageParser {
     // BinaryFileParser
     // I may not have always preserved byte order correctly.
 
-    private TransparencyFilter getTransparencyFilter(final int ColorType,
-            final PngChunk pngChunktRNS) throws ImageReadException, IOException {
-        // this.printCharQuad("pngChunktRNS.ChunkType", pngChunktRNS.ChunkType);
-        // this.debugNumber("pngChunktRNS.Length", pngChunktRNS.Length);
-
-        switch (ColorType) {
-        case PngConstants.COLOR_TYPE_GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale
-            // sample.
-            return new TransparencyFilterGrayscale(pngChunktRNS.getBytes());
-        case PngConstants.COLOR_TYPE_TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
-            return new TransparencyFilterTrueColor(pngChunktRNS.getBytes());
-        case PngConstants.COLOR_TYPE_INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette index;
-            return new TransparencyFilterIndexedColor(pngChunktRNS.getBytes());
-        case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale
-            // sample,
-        case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B
-            // triple,
-        default:
-            throw new ImageReadException(
-                    "Simple Transparency not compatible with ColorType: "
-                            + ColorType);
+    private TransparencyFilter getTransparencyFilter(int colorType,
+                                                     PngChunk pngChunktRNS) throws ImageReadException, IOException {
+        switch (colorType) {
+            case PngConstants.COLOR_TYPE_GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale
+                // sample.
+                return new TransparencyFilterGrayscale(pngChunktRNS.getBytes());
+            case PngConstants.COLOR_TYPE_TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
+                return new TransparencyFilterTrueColor(pngChunktRNS.getBytes());
+            case PngConstants.COLOR_TYPE_INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette index;
+                return new TransparencyFilterIndexedColor(pngChunktRNS.getBytes());
+            case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale
+                // sample,
+            case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B
+                // triple,
+            default:
+                throw new ImageReadException("Simple Transparency not compatible with ColorType: " + colorType);
         }
     }
 
@@ -509,14 +503,14 @@ public class PngImageParser extends ImageParser {
 
         final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) IHDRs.get(0);
 
-        boolean isTransparent = false;
+        boolean transparent = false;
 
         final List<PngChunk> tRNSs = filterChunks(chunks, PngConstants.tRNS);
         if (!tRNSs.isEmpty()) {
-            isTransparent = true;
+            transparent = true;
         } else {
             // CE - Fix Alpha.
-            isTransparent = hasAlphaChannel(pngChunkIHDR.colorType);
+            transparent = hasAlphaChannel(pngChunkIHDR.colorType);
             // END FIX
         }
 
@@ -553,20 +547,19 @@ public class PngImageParser extends ImageParser {
             textChunks.add(pngChunkiTXt.getContents());
         }
 
-        final int BitsPerPixel = pngChunkIHDR.bitDepth
-                * samplesPerPixel(pngChunkIHDR.colorType);
-        final ImageFormat Format = ImageFormats.PNG;
-        final String FormatName = "PNG Portable Network Graphics";
-        final int Height = pngChunkIHDR.height;
-        final String MimeType = "image/png";
-        final int NumberOfImages = 1;
-        final int Width = pngChunkIHDR.width;
-        final boolean isProgressive = (pngChunkIHDR.interlaceMethod != 0);
+        final int bitsPerPixel = pngChunkIHDR.bitDepth * samplesPerPixel(pngChunkIHDR.colorType);
+        final ImageFormat format = ImageFormats.PNG;
+        final String formatName = "PNG Portable Network Graphics";
+        final int height = pngChunkIHDR.height;
+        final String mimeType = "image/png";
+        final int numberOfImages = 1;
+        final int width = pngChunkIHDR.width;
+        final boolean progressive = (pngChunkIHDR.interlaceMethod != 0);
 
-        int PhysicalHeightDpi = -1;
-        float PhysicalHeightInch = -1;
-        int PhysicalWidthDpi = -1;
-        float PhysicalWidthInch = -1;
+        int physicalHeightDpi = -1;
+        float physicalHeightInch = -1;
+        int physicalWidthDpi = -1;
+        float physicalWidthInch = -1;
 
         // if (pngChunkpHYs != null)
         // {
@@ -578,19 +571,15 @@ public class PngImageParser extends ImageParser {
         // pngChunkpHYs.PixelsPerUnitXAxis );
         // }
         if ((pngChunkpHYs != null) && (pngChunkpHYs.unitSpecifier == 1)) { // meters
-            final double meters_per_inch = 0.0254;
+            final double metersPerInch = 0.0254;
 
-            PhysicalWidthDpi = (int) Math
-                    .round(pngChunkpHYs.pixelsPerUnitXAxis
-                            * meters_per_inch);
-            PhysicalWidthInch = (float) (Width / (pngChunkpHYs.pixelsPerUnitXAxis * meters_per_inch));
-            PhysicalHeightDpi = (int) Math
-                    .round(pngChunkpHYs.pixelsPerUnitYAxis
-                            * meters_per_inch);
-            PhysicalHeightInch = (float) (Height / (pngChunkpHYs.pixelsPerUnitYAxis * meters_per_inch));
+            physicalWidthDpi = (int) Math.round(pngChunkpHYs.pixelsPerUnitXAxis * metersPerInch);
+            physicalWidthInch = (float) (width / (pngChunkpHYs.pixelsPerUnitXAxis * metersPerInch));
+            physicalHeightDpi = (int) Math.round(pngChunkpHYs.pixelsPerUnitYAxis * metersPerInch);
+            physicalHeightInch = (float) (height / (pngChunkpHYs.pixelsPerUnitYAxis * metersPerInch));
         }
 
-        final String FormatDetails = "Png";
+        final String formatDetails = "Png";
 
         boolean usesPalette = false;
 
@@ -599,35 +588,34 @@ public class PngImageParser extends ImageParser {
             usesPalette = true;
         }
 
-        int ColorType;
+        int colorType;
         switch (pngChunkIHDR.colorType) {
-        case PngConstants.COLOR_TYPE_GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale
-            // sample.
-        case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a
-            // grayscale sample,
-            // followed by an alpha sample.
-            ColorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
-            break;
-        case PngConstants.COLOR_TYPE_TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
-        case PngConstants.COLOR_TYPE_INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette
-            // index;
-        case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an
-            // R,G,B triple,
-            // followed by an alpha sample.
-            ColorType = ImageInfo.COLOR_TYPE_RGB;
-            break;
-        default:
-            throw new ImageReadException("Png: Unknown ColorType: "
-                    + pngChunkIHDR.colorType);
+            case PngConstants.COLOR_TYPE_GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale
+                // sample.
+            case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a
+                // grayscale sample,
+                // followed by an alpha sample.
+                colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+                break;
+            case PngConstants.COLOR_TYPE_TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
+            case PngConstants.COLOR_TYPE_INDEXED_COLOR: // 1,2,4,8 Each pixel is a palette
+                // index;
+            case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an
+                // R,G,B triple,
+                // followed by an alpha sample.
+                colorType = ImageInfo.COLOR_TYPE_RGB;
+                break;
+            default:
+                throw new ImageReadException("Png: Unknown ColorType: " + pngChunkIHDR.colorType);
         }
 
         final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_PNG_FILTER;
 
-        return new PngImageInfo(FormatDetails, BitsPerPixel, comments,
-                Format, FormatName, Height, MimeType, NumberOfImages,
-                PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
-                PhysicalWidthInch, Width, isProgressive, isTransparent,
-                usesPalette, ColorType, compressionAlgorithm, textChunks);
+        return new PngImageInfo(formatDetails, bitsPerPixel, comments,
+                format, formatName, height, mimeType, numberOfImages,
+                physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
+                physicalWidthInch, width, progressive, transparent,
+                usesPalette, colorType, compressionAlgorithm, textChunks);
     }
 
     @Override
@@ -702,7 +690,7 @@ public class PngImageParser extends ImageParser {
                     pngChunktRNS);
         }
 
-        ICC_Profile icc_profile = null;
+        ICC_Profile iccProfile = null;
         GammaCorrection gammaCorrection = null;
         {
             final List<PngChunk> sRGBs = filterChunks(chunks, PngConstants.sRGB);
@@ -731,7 +719,7 @@ public class PngImageParser extends ImageParser {
                 final PngChunkIccp pngChunkiCCP = (PngChunkIccp) iCCPs.get(0);
                 final byte[] bytes = pngChunkiCCP.uncompressedProfile;
 
-                icc_profile = ICC_Profile.getInstance(bytes);
+                iccProfile = ICC_Profile.getInstance(bytes);
             } else if (gAMAs.size() == 1) {
                 final PngChunkGama pngChunkgAMA = (PngChunkGama) gAMAs.get(0);
                 final double gamma = pngChunkgAMA.getGamma();
@@ -804,10 +792,10 @@ public class PngImageParser extends ImageParser {
 
             scanExpediter.drive();
 
-            if (icc_profile != null) {
-                final Boolean is_srgb = new IccProfileParser().issRGB(icc_profile);
+            if (iccProfile != null) {
+                final Boolean is_srgb = new IccProfileParser().issRGB(iccProfile);
                 if (is_srgb == null || !is_srgb.booleanValue()) {
-                    final ICC_ColorSpace cs = new ICC_ColorSpace(icc_profile);
+                    final ICC_ColorSpace cs = new ICC_ColorSpace(iccProfile);
 
                     final ColorModel srgbCM = ColorModel.getRGBdefault();
                     final ColorSpace cs_sRGB = srgbCM.getColorSpace();

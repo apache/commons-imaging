@@ -60,15 +60,15 @@ public final class MyLzwDecompressor {
             listener.init(clearCode, eoiCode);
         }
 
-        InitializeTable();
+        initializeTable();
     }
 
-    private void InitializeTable() {
+    private void initializeTable() {
         codeSize = initialCodeSize;
 
-        final int intial_entries_count = 1 << codeSize + 2;
+        final int intialEntriesCount = 1 << codeSize + 2;
 
-        for (int i = 0; i < intial_entries_count; i++) {
+        for (int i = 0; i < intialEntriesCount; i++) {
             table[i] = new byte[] { (byte) i, };
         }
     }
@@ -96,8 +96,8 @@ public final class MyLzwDecompressor {
         return table[code];
     }
 
-    private boolean isInTable(final int Code) {
-        return Code < codes;
+    private boolean isInTable(final int code) {
+        return code < codes;
     }
 
     private byte firstChar(final byte[] bytes) {

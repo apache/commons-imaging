@@ -40,11 +40,10 @@ public enum IccTagDataTypes implements IccTagDataType {
     
                 //            bis.setDebug(true);
                 bis.read4Bytes("ignore", "ICC: corrupt tag data");
-                final int string_length = bis.read4Bytes("string_length",
-                        "ICC: corrupt tag data");
+                final int stringLength = bis.read4Bytes("stringLength", "ICC: corrupt tag data");
     
                 //            bis.readByteArray("ignore", bytes.length -12, "none");
-                final String s = new String(bytes, 12, string_length - 1, "US-ASCII");
+                final String s = new String(bytes, 12, stringLength - 1, "US-ASCII");
                 System.out.println(prefix + "s: '" + s + "'");
                 canThrow = true;
             } finally {

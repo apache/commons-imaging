@@ -20,9 +20,8 @@ import org.apache.commons.imaging.formats.png.PngText;
 
 public abstract class PngTextChunk extends PngChunk {
 
-    public PngTextChunk(final int Length, final int chunkType, final int CRC, final byte[] bytes) {
-        super(Length, chunkType, CRC, bytes);
-
+    public PngTextChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
+        super(length, chunkType, crc, bytes);
     }
 
     public abstract String getKeyword();

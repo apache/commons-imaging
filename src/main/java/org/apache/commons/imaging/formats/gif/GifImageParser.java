@@ -116,8 +116,8 @@ public class GifImageParser extends ImageParser {
         final byte version3 = readByte("version3", is, "Not a Valid GIF File");
 
         if (formatCompliance != null) {
-            formatCompliance.compare_bytes("Signature", GIF_HEADER_SIGNATURE,
-                    new byte[] { identifier1, identifier2, identifier3, });
+            formatCompliance.compareBytes("Signature", GIF_HEADER_SIGNATURE,
+                    new byte[]{identifier1, identifier2, identifier3,});
             formatCompliance.compare("version", 56, version1);
             formatCompliance
                     .compare("version", new int[] { 55, 57, }, version2);
@@ -207,9 +207,9 @@ public class GifImageParser extends ImageParser {
     }
 
     private byte[] readSubBlock(final InputStream is) throws IOException {
-        final int block_size = 0xff & readByte("block_size", is, "GIF: corrupt block");
+        final int blockSize = 0xff & readByte("block_size", is, "GIF: corrupt block");
 
-        return readBytes("block", is, block_size, "GIF: corrupt block");
+        return readBytes("block", is, blockSize, "GIF: corrupt block");
     }
 
     protected GenericGifBlock readGenericGIFBlock(final InputStream is, final int code)
@@ -335,57 +335,49 @@ public class GifImageParser extends ImageParser {
             final int blockCode, final InputStream is, final boolean stopBeforeImageData,
             final FormatCompliance formatCompliance) throws ImageReadException,
             IOException {
-        final int ImageLeftPosition = read2Bytes("Image Left Position", is,
-                "Not a Valid GIF File");
-        final int ImageTopPosition = read2Bytes("Image Top Position", is,
-                "Not a Valid GIF File");
+        final int imageLeftPosition = read2Bytes("Image Left Position", is, "Not a Valid GIF File");
+        final int imageTopPosition = read2Bytes("Image Top Position", is, "Not a Valid GIF File");
         final int imageWidth = read2Bytes("Image Width", is, "Not a Valid GIF File");
         final int imageHeight = read2Bytes("Image Height", is, "Not a Valid GIF File");
-        final byte PackedFields = readByte("Packed Fields", is,
-                "Not a Valid GIF File");
+        final byte packedFields = readByte("Packed Fields", is, "Not a Valid GIF File");
 
         if (formatCompliance != null) {
-            formatCompliance.checkBounds("Width", 1, ghi.logicalScreenWidth,
-                    imageWidth);
-            formatCompliance.checkBounds("Height", 1, ghi.logicalScreenHeight,
-                    imageHeight);
-            formatCompliance.checkBounds("Left Position", 0,
-                    ghi.logicalScreenWidth - imageWidth, ImageLeftPosition);
-            formatCompliance.checkBounds("Top Position", 0,
-                    ghi.logicalScreenHeight - imageHeight, ImageTopPosition);
+            formatCompliance.checkBounds("Width", 1, ghi.logicalScreenWidth, imageWidth);
+            formatCompliance.checkBounds("Height", 1, ghi.logicalScreenHeight, imageHeight);
+            formatCompliance.checkBounds("Left Position", 0, ghi.logicalScreenWidth - imageWidth, imageLeftPosition);
+            formatCompliance.checkBounds("Top Position", 0, ghi.logicalScreenHeight - imageHeight, imageTopPosition);
         }
 
         if (getDebug()) {
-            printByteBits("PackedFields bits", PackedFields);
+            printByteBits("PackedFields bits", packedFields);
         }
 
-        final boolean LocalColorTableFlag = (((PackedFields >> 7) & 1) > 0);
+        final boolean localColorTableFlag = (((packedFields >> 7) & 1) > 0);
         if (getDebug()) {
-            System.out.println("LocalColorTableFlag: " + LocalColorTableFlag);
+            System.out.println("LocalColorTableFlag: " + localColorTableFlag);
         }
-        final boolean InterlaceFlag = (((PackedFields >> 6) & 1) > 0);
+        final boolean interlaceFlag = (((packedFields >> 6) & 1) > 0);
         if (getDebug()) {
-            System.out.println("Interlace Flag: " + InterlaceFlag);
+            System.out.println("Interlace Flag: " + interlaceFlag);
         }
-        final boolean SortFlag = (((PackedFields >> 5) & 1) > 0);
+        final boolean sortFlag = (((packedFields >> 5) & 1) > 0);
         if (getDebug()) {
-            System.out.println("Sort  Flag: " + SortFlag);
+            System.out.println("Sort Flag: " + sortFlag);
         }
 
-        final byte SizeofLocalColorTable = (byte) (PackedFields & 7);
+        final byte sizeOfLocalColorTable = (byte) (packedFields & 7);
         if (getDebug()) {
-            System.out.println("SizeofLocalColorTable: "
-                    + SizeofLocalColorTable);
+            System.out.println("SizeofLocalColorTable: " + sizeOfLocalColorTable);
         }
 
         byte[] localColorTable = null;
-        if (LocalColorTableFlag) {
-            localColorTable = readColorTable(is, SizeofLocalColorTable);
+        if (localColorTableFlag) {
+            localColorTable = readColorTable(is, sizeOfLocalColorTable);
         }
 
         byte[] imageData = null;
         if (!stopBeforeImageData) {
-            final int LZWMinimumCodeSize = is.read();
+            final int lzwMinimumCodeSize = is.read();
 
             final GenericGifBlock block = readGenericGIFBlock(is, -1);
             final byte[] bytes = block.appendSubBlocks();
@@ -393,7 +385,7 @@ public class GifImageParser extends ImageParser {
 
             final int size = imageWidth * imageHeight;
             final MyLzwDecompressor myLzwDecompressor = new MyLzwDecompressor(
-                    LZWMinimumCodeSize, ByteOrder.LITTLE_ENDIAN);
+                    lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN);
             imageData = myLzwDecompressor.decompress(bais, size);
         } else {
             final int LZWMinimumCodeSize = is.read();
@@ -405,12 +397,12 @@ public class GifImageParser extends ImageParser {
         }
 
         return new ImageDescriptor(blockCode,
-                ImageLeftPosition, ImageTopPosition, imageWidth, imageHeight,
-                PackedFields, LocalColorTableFlag, InterlaceFlag, SortFlag,
-                SizeofLocalColorTable, localColorTable, imageData);
+                imageLeftPosition, imageTopPosition, imageWidth, imageHeight,
+                packedFields, localColorTableFlag, interlaceFlag, sortFlag,
+                sizeOfLocalColorTable, localColorTable, imageData);
     }
 
-    private int simple_pow(final int base, final int power) {
+    private int simplePow(final int base, final int power) {
         int result = 1;
 
         for (int i = 0; i < power; i++) {
@@ -420,14 +412,14 @@ public class GifImageParser extends ImageParser {
         return result;
     }
 
-    private int convertColorTableSize(final int ct_size) {
-        return 3 * simple_pow(2, ct_size + 1);
+    private int convertColorTableSize(final int tableSize) {
+        return 3 * simplePow(2, tableSize + 1);
     }
 
-    private byte[] readColorTable(final InputStream is, final int ct_size) throws IOException {
-        final int actual_size = convertColorTableSize(ct_size);
+    private byte[] readColorTable(final InputStream is, final int tableSize) throws IOException {
+        final int actualSize = convertColorTableSize(tableSize);
 
-        return readBytes("block", is, actual_size, "GIF: corrupt Color Table");
+        return readBytes("block", is, actualSize, "GIF: corrupt Color Table");
     }
 
     private GifBlock findBlock(final List<GifBlock> blocks, final int code) {
@@ -717,24 +709,23 @@ public class GifImageParser extends ImageParser {
         for (int row = 0; row < height; row++) {
             int y;
             if (id.interlaceFlag) {
-                int the_row = row;
-                if (the_row < rowsInPass1) {
-                    y = the_row * 8;
+                int theRow = row;
+                if (theRow < rowsInPass1) {
+                    y = theRow * 8;
                 } else {
-                    the_row -= rowsInPass1;
-                    if (the_row < (rowsInPass2)) {
-                        y = 4 + (the_row * 8);
+                    theRow -= rowsInPass1;
+                    if (theRow < (rowsInPass2)) {
+                        y = 4 + (theRow * 8);
                     } else {
-                        the_row -= rowsInPass2;
-                        if (the_row < (rowsInPass3)) {
-                            y = 2 + (the_row * 4);
+                        theRow -= rowsInPass2;
+                        if (theRow < (rowsInPass3)) {
+                            y = 2 + (theRow * 4);
                         } else {
-                            the_row -= rowsInPass3;
-                            if (the_row < (rowsInPass4)) {
-                                y = 1 + (the_row * 2);
+                            theRow -= rowsInPass3;
+                            if (theRow < (rowsInPass4)) {
+                                y = 1 + (theRow * 2);
                             } else {
-                                throw new ImageReadException(
-                                        "Gif: Strange Row");
+                                throw new ImageReadException("Gif: Strange Row");
                             }
                         }
                     }
@@ -760,15 +751,14 @@ public class GifImageParser extends ImageParser {
 
     }
 
-    private void writeAsSubBlocks(final OutputStream os, final byte[] bytes)
-            throws IOException {
+    private void writeAsSubBlocks(final OutputStream os, final byte[] bytes) throws IOException {
         int index = 0;
 
         while (index < bytes.length) {
-            final int block_size = Math.min(bytes.length - index, 255);
-            os.write(block_size);
-            os.write(bytes, index, block_size);
-            index += block_size;
+            final int blockSize = Math.min(bytes.length - index, 255);
+            os.write(blockSize);
+            os.write(bytes, index, blockSize);
+            index += blockSize;
         }
         os.write(0); // last block
     }
@@ -805,16 +795,14 @@ public class GifImageParser extends ImageParser {
 
         final boolean hasAlpha = new PaletteFactory().hasTransparency(src);
 
-        final int max_colors = hasAlpha ? 255 : 256;
+        final int maxColors = hasAlpha ? 255 : 256;
 
-        Palette palette2 = new PaletteFactory().makeExactRgbPaletteSimple(src,
-                max_colors);
+        Palette palette2 = new PaletteFactory().makeExactRgbPaletteSimple(src, maxColors);
         // int palette[] = new PaletteFactory().makePaletteSimple(src, 256);
         // Map palette_map = paletteToMap(palette);
 
         if (palette2 == null) {
-            palette2 = new PaletteFactory().makeQuantizedRgbPalette(src,
-                    max_colors);
+            palette2 = new PaletteFactory().makeQuantizedRgbPalette(src, maxColors);
             if (verbose) {
                 System.out.println("quantizing");
             }
@@ -823,10 +811,9 @@ public class GifImageParser extends ImageParser {
         }
 
         if (palette2 == null) {
-            throw new ImageWriteException(
-                    "Gif: can't write images with more than 256 colors");
+            throw new ImageWriteException("Gif: can't write images with more than 256 colors");
         }
-        final int palette_size = palette2.length() + (hasAlpha ? 1 : 0);
+        final int paletteSize = palette2.length() + (hasAlpha ? 1 : 0);
 
         final BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.LITTLE_ENDIAN);
 
@@ -844,11 +831,11 @@ public class GifImageParser extends ImageParser {
         bos.write2Bytes(width);
         bos.write2Bytes(height);
 
-        final int colorTableScaleLessOne = (palette_size > 128) ? 7
-                : (palette_size > 64) ? 6 : (palette_size > 32) ? 5
-                        : (palette_size > 16) ? 4 : (palette_size > 8) ? 3
-                                : (palette_size > 4) ? 2
-                                        : (palette_size > 2) ? 1 : 0;
+        final int colorTableScaleLessOne = (paletteSize > 128) ? 7
+                : (paletteSize > 64) ? 6 : (paletteSize > 32) ? 5
+                        : (paletteSize > 16) ? 4 : (paletteSize > 8) ? 3
+                                : (paletteSize > 4) ? 2
+                                        : (paletteSize > 2) ? 1 : 0;
 
         final int colorTableSizeInFormat = 1 << (colorTableScaleLessOne + 1);
         {
@@ -867,12 +854,12 @@ public class GifImageParser extends ImageParser {
             bos.write(packedFields); // one byte
         }
         {
-            final byte BackgroundColorIndex = 0;
-            bos.write(BackgroundColorIndex);
+            final byte backgroundColorIndex = 0;
+            bos.write(backgroundColorIndex);
         }
         {
-            final byte PixelAspectRatio = 0;
-            bos.write(PixelAspectRatio);
+            final byte pixelAspectRatio = 0;
+            bos.write(pixelAspectRatio);
         }
 
         //{
@@ -924,19 +911,27 @@ public class GifImageParser extends ImageParser {
             bos.write2Bytes(height); // Image Height
 
             {
-                final boolean LocalColorTableFlag = true;
+                final boolean localColorTableFlag = true;
                 // boolean LocalColorTableFlag = false;
-                final boolean InterlaceFlag = false;
-                final boolean SortFlag = false;
-                final int SizeOfLocalColorTable = colorTableScaleLessOne;
+                final boolean interlaceFlag = false;
+                final boolean sortFlag = false;
+                final int sizeOfLocalColorTable = colorTableScaleLessOne;
 
                 // int SizeOfLocalColorTable = 0;
 
-                final int PackedFields = ((LocalColorTableFlag ? LOCAL_COLOR_TABLE_FLAG_MASK
-                        : 0)
-                        | (InterlaceFlag ? INTERLACE_FLAG_MASK : 0)
-                        | (SortFlag ? SORT_FLAG_MASK : 0) | (7 & SizeOfLocalColorTable));
-                bos.write(PackedFields); // one byte
+                final int packedFields;
+                if (localColorTableFlag) {
+                    packedFields = (LOCAL_COLOR_TABLE_FLAG_MASK
+                            | (interlaceFlag ? INTERLACE_FLAG_MASK : 0)
+                            | (sortFlag ? SORT_FLAG_MASK : 0)
+                            | (7 & sizeOfLocalColorTable));
+                } else {
+                    packedFields = (0
+                            | (interlaceFlag ? INTERLACE_FLAG_MASK : 0)
+                            | (sortFlag ? SORT_FLAG_MASK : 0)
+                            | (7 & sizeOfLocalColorTable));
+                }
+                bos.write(packedFields); // one byte
             }
         }
 
@@ -963,10 +958,10 @@ public class GifImageParser extends ImageParser {
         { // get Image Data.
 //            int image_data_total = 0;
 
-            int LZWMinimumCodeSize = colorTableScaleLessOne + 1;
+            int lzwMinimumCodeSize = colorTableScaleLessOne + 1;
             // LZWMinimumCodeSize = Math.max(8, LZWMinimumCodeSize);
-            if (LZWMinimumCodeSize < 2) {
-                LZWMinimumCodeSize = 2;
+            if (lzwMinimumCodeSize < 2) {
+                lzwMinimumCodeSize = 2;
             }
 
             // TODO:
@@ -974,10 +969,10 @@ public class GifImageParser extends ImageParser {
             // better
             // choice
             // here.
-            bos.write(LZWMinimumCodeSize);
+            bos.write(lzwMinimumCodeSize);
 
             final MyLzwCompressor compressor = new MyLzwCompressor(
-                    LZWMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false); // GIF
+                    lzwMinimumCodeSize, ByteOrder.LITTLE_ENDIAN, false); // GIF
             // Mode);
 
             final byte[] imagedata = new byte[width * height];

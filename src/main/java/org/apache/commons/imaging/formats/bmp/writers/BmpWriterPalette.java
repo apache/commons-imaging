@@ -72,8 +72,8 @@ public class BmpWriterPalette extends BmpWriter {
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        int bit_cache = 0;
-        int bits_in_cache = 0;
+        int bitCache = 0;
+        int bitsInCache = 0;
 
         int bytecount = 0;
         for (int y = height - 1; y >= 0; y--) {
@@ -88,24 +88,24 @@ public class BmpWriterPalette extends BmpWriter {
                     bytecount++;
                 } else {
                     // 4 or 1
-                    bit_cache = (bit_cache << bitsPerSample) | index;
-                    bits_in_cache += bitsPerSample;
-                    if (bits_in_cache >= 8) {
-                        baos.write(0xff & bit_cache);
+                    bitCache = (bitCache << bitsPerSample) | index;
+                    bitsInCache += bitsPerSample;
+                    if (bitsInCache >= 8) {
+                        baos.write(0xff & bitCache);
                         bytecount++;
-                        bit_cache = 0;
-                        bits_in_cache = 0;
+                        bitCache = 0;
+                        bitsInCache = 0;
                     }
                 }
             }
 
-            if (bits_in_cache > 0) {
-                bit_cache = (bit_cache << (8 - bits_in_cache));
+            if (bitsInCache > 0) {
+                bitCache = (bitCache << (8 - bitsInCache));
 
-                baos.write(0xff & bit_cache);
+                baos.write(0xff & bitCache);
                 bytecount++;
-                bit_cache = 0;
-                bits_in_cache = 0;
+                bitCache = 0;
+                bitsInCache = 0;
             }
 
             while ((bytecount % 4) != 0) {

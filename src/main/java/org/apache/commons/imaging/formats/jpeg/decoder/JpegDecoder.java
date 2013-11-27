@@ -172,28 +172,28 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int segmentLength, final byte[] segmentLengthBytes, final byte[] segmentData)
             throws ImageReadException, IOException {
         final int[] sofnSegments = {
-                JpegConstants.SOF0Marker,
-                JpegConstants.SOF1Marker,
-                JpegConstants.SOF2Marker,
-                JpegConstants.SOF3Marker,
-                JpegConstants.SOF5Marker,
-                JpegConstants.SOF6Marker,
-                JpegConstants.SOF7Marker,
-                JpegConstants.SOF9Marker,
-                JpegConstants.SOF10Marker,
-                JpegConstants.SOF11Marker,
-                JpegConstants.SOF13Marker,
-                JpegConstants.SOF14Marker,
-                JpegConstants.SOF15Marker,
+                JpegConstants.SOF0_MARKER,
+                JpegConstants.SOF1_MARKER,
+                JpegConstants.SOF2_MARKER,
+                JpegConstants.SOF3_MARKER,
+                JpegConstants.SOF5_MARKER,
+                JpegConstants.SOF6_MARKER,
+                JpegConstants.SOF7_MARKER,
+                JpegConstants.SOF9_MARKER,
+                JpegConstants.SOF10_MARKER,
+                JpegConstants.SOF11_MARKER,
+                JpegConstants.SOF13_MARKER,
+                JpegConstants.SOF14_MARKER,
+                JpegConstants.SOF15_MARKER,
         };
 
         if (Arrays.binarySearch(sofnSegments, marker) >= 0) {
-            if (marker != JpegConstants.SOF0Marker) {
+            if (marker != JpegConstants.SOF0_MARKER) {
                 throw new ImageReadException("Only sequential, baseline JPEGs "
                         + "are supported at the moment");
             }
             sofnSegment = new SofnSegment(marker, segmentData);
-        } else if (marker == JpegConstants.DQTMarker) {
+        } else if (marker == JpegConstants.DQT_MARKER) {
             final DqtSegment dqtSegment = new DqtSegment(marker, segmentData);
             for (int i = 0; i < dqtSegment.quantizationTables.size(); i++) {
                 final DqtSegment.QuantizationTable table = dqtSegment.quantizationTables
@@ -214,7 +214,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 Dct.scaleDequantizationMatrix(quantizationMatrixFloat);
                 scaledQuantizationTables[table.destinationIdentifier] = quantizationMatrixFloat;
             }
-        } else if (marker == JpegConstants.DHTMarker) {
+        } else if (marker == JpegConstants.DHT_MARKER) {
             final DhtSegment dhtSegment = new DhtSegment(marker, segmentData);
             for (int i = 0; i < dhtSegment.huffmanTables.size(); i++) {
                 final DhtSegment.HuffmanTable table = dhtSegment.huffmanTables.get(i);

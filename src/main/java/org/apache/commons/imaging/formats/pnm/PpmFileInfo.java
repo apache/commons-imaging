@@ -29,11 +29,10 @@ public class PpmFileInfo extends FileInfo {
     private final float scale;
     private final int bytesPerSample; 
 
-    public PpmFileInfo(final int width, final int height, final boolean RAWBITS, final int max) throws ImageReadException {
-        super(width, height, RAWBITS);
+    public PpmFileInfo(final int width, final int height, final boolean rawbits, final int max) throws ImageReadException {
+        super(width, height, rawbits);
         if (max <= 0) {
-            throw new ImageReadException("PPM maxVal " + max
-                    + " is out of range [1;65535]");
+            throw new ImageReadException("PPM maxVal " + max + " is out of range [1;65535]");
         } else if (max <= 255) {
             scale = 255f;
             bytesPerSample = 1;
@@ -41,8 +40,7 @@ public class PpmFileInfo extends FileInfo {
             scale = 65535f;
             bytesPerSample = 2;
         } else {
-            throw new ImageReadException("PPM maxVal " + max
-                    + " is out of range [1;65535]");
+            throw new ImageReadException("PPM maxVal " + max + " is out of range [1;65535]");
         }
         this.max = max;
     }

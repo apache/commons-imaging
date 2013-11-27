@@ -34,26 +34,26 @@ class GifHeaderInfo {
     public final boolean sortFlag;
     public final byte sizeOfGlobalColorTable;
 
-    public GifHeaderInfo(final byte Identifier1, final byte Identifier2, final byte Identifier3,
-            final byte Version1, final byte Version2, final byte Version3,
-            final int LogicalScreenWidth, final int LogicalScreenHeight, final byte PackedFields,
-            final byte BackgroundColorIndex, final byte PixelAspectRatio,
-            final boolean GlobalColorTableFlag, final byte ColorResolution,
-            final boolean SortFlag, final byte SizeofGlobalColorTable) {
-        this.identifier1 = Identifier1;
-        this.identifier2 = Identifier2;
-        this.identifier3 = Identifier3;
-        this.version1 = Version1;
-        this.version2 = Version2;
-        this.version3 = Version3;
-        this.logicalScreenWidth = LogicalScreenWidth;
-        this.logicalScreenHeight = LogicalScreenHeight;
-        this.packedFields = PackedFields;
-        this.backgroundColorIndex = BackgroundColorIndex;
-        this.pixelAspectRatio = PixelAspectRatio;
-        this.globalColorTableFlag = GlobalColorTableFlag;
-        this.colorResolution = ColorResolution;
-        this.sortFlag = SortFlag;
-        this.sizeOfGlobalColorTable = SizeofGlobalColorTable;
+    public GifHeaderInfo(final byte identifier1, final byte identifier2, final byte identifier3,
+            final byte version1, final byte version2, final byte version3,
+            final int logicalScreenWidth, final int logicalScreenHeight, final byte packedFields,
+            final byte backgroundColorIndex, final byte pixelAspectRatio,
+            final boolean globalColorTableFlag, final byte colorResolution,
+            final boolean sortFlag, final byte sizeOfGlobalColorTable) {
+        this.identifier1 = identifier1;
+        this.identifier2 = identifier2;
+        this.identifier3 = identifier3;
+        this.version1 = version1;
+        this.version2 = version2;
+        this.version3 = version3;
+        this.logicalScreenWidth = logicalScreenWidth;
+        this.logicalScreenHeight = logicalScreenHeight;
+        this.packedFields = packedFields;
+        this.backgroundColorIndex = backgroundColorIndex;
+        this.pixelAspectRatio = pixelAspectRatio;
+        this.globalColorTableFlag = globalColorTableFlag;
+        this.colorResolution = colorResolution;
+        this.sortFlag = sortFlag;
+        this.sizeOfGlobalColorTable = sizeOfGlobalColorTable;
     }
 }

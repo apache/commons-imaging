@@ -182,7 +182,7 @@ public class JpegXmpRewriter extends JpegRewriter {
             final int segmentSize = Math.min(xmpXmlBytes.length, JpegConstants.MAX_SEGMENT_SIZE);
             final byte[] segmentData = writeXmpSegment(xmpXmlBytes, index,
                     segmentSize);
-            newPieces.add(new JFIFPieceSegment(JpegConstants.JPEG_APP1_Marker, segmentData));
+            newPieces.add(new JFIFPieceSegment(JpegConstants.JPEG_APP1_MARKER, segmentData));
             index += segmentSize;
         }
 

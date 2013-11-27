@@ -45,12 +45,11 @@ public class SosSegment extends Segment {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public SosSegment(final int marker, final int marker_length, final InputStream is)
-            throws IOException {
-        super(marker, marker_length);
+    public SosSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
+        super(marker, markerLength);
 
         if (getDebug()) {
-            System.out.println("SosSegment marker_length: " + marker_length);
+            System.out.println("SosSegment marker_length: " + markerLength);
         }
 
         // Debug.debug("SOS", marker_length);
@@ -62,19 +61,18 @@ public class SosSegment extends Segment {
 
         components = new Component[numberOfComponents];
         for (int i = 0; i < numberOfComponents; i++) {
-            final int scan_component_selector = readByte("scan_component_selector",
-                    is, "Not a Valid JPEG File");
-            // Debug.debug("scan_component_selector", scan_component_selector);
+            final int scanComponentSelector = readByte("scanComponentSelector", is, "Not a Valid JPEG File");
+            // Debug.debug("scanComponentSelector", scanComponentSelector);
 
-            final int ac_dc_entropy_coding_table_selector = readByte(
-                    "ac_dc_entrooy_coding_table_selector", is,
+            final int acDcEntropoyCodingTableSelector = readByte(
+                    "acDcEntropoyCodingTableSelector", is,
                     "Not a Valid JPEG File");
             // Debug.debug("ac_dc_entrooy_coding_table_selector",
-            // ac_dc_entropy_coding_table_selector);
+            // acDcEntropoyCodingTableSelector);
 
-            final int dcCodingTableSelector = (ac_dc_entropy_coding_table_selector >> 4) & 0xf;
-            final int acCodingTableSelector = ac_dc_entropy_coding_table_selector & 0xf;
-            components[i] = new Component(scan_component_selector,
+            final int dcCodingTableSelector = (acDcEntropoyCodingTableSelector >> 4) & 0xf;
+            final int acCodingTableSelector = acDcEntropoyCodingTableSelector & 0xf;
+            components[i] = new Component(scanComponentSelector,
                     dcCodingTableSelector, acCodingTableSelector);
         }
 
@@ -84,13 +82,13 @@ public class SosSegment extends Segment {
         endOfSpectralSelection = readByte("end_of_spectral_selection", is,
                 "Not a Valid JPEG File");
         // Debug.debug("end_of_spectral_selection", endOfSpectralSelection);
-        final int successive_approximation_bit_position = readByte(
+        final int successiveApproximationBitPosition = readByte(
                 "successive_approximation_bit_position", is,
                 "Not a Valid JPEG File");
         // Debug.debug("successive_approximation_bit_position",
         // successive_approximation_bit_position);
-        successiveApproximationBitHigh = (successive_approximation_bit_position >> 4) & 0xf;
-        successiveApproximationBitLow = successive_approximation_bit_position & 0xf;
+        successiveApproximationBitHigh = (successiveApproximationBitPosition >> 4) & 0xf;
+        successiveApproximationBitLow = successiveApproximationBitPosition & 0xf;
 
         if (getDebug()) {
             System.out.println("");

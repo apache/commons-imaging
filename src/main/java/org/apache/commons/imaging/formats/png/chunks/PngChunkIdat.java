@@ -17,7 +17,8 @@
 package org.apache.commons.imaging.formats.png.chunks;
 
 public class PngChunkIdat extends PngChunk {
-    public PngChunkIdat(final int length, final int chunkType, final int CRC, final byte[] bytes) {
-        super(length, chunkType, CRC, bytes);
+
+    public PngChunkIdat(int length, int chunkType, int crc, byte[] bytes) {
+        super(length, chunkType, crc, bytes);
     }
 }

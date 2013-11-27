@@ -48,12 +48,12 @@ public class SofnSegment extends Segment {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public SofnSegment(final int marker, final int marker_length, final InputStream is)
+    public SofnSegment(final int marker, final int markerLength, final InputStream is)
             throws IOException {
-        super(marker, marker_length);
+        super(marker, markerLength);
 
         if (getDebug()) {
-            System.out.println("SOF0Segment marker_length: " + marker_length);
+            System.out.println("SOF0Segment marker_length: " + markerLength);
         }
 
         precision = readByte("Data_precision", is, "Not a Valid JPEG File");
@@ -102,7 +102,7 @@ public class SofnSegment extends Segment {
 
     @Override
     public String getDescription() {
-        return "SOFN (SOF" + (marker - JpegConstants.SOF0Marker) + ") ("
+        return "SOFN (SOF" + (marker - JpegConstants.SOF0_MARKER) + ") ("
                 + getSegmentType() + ")";
     }
 

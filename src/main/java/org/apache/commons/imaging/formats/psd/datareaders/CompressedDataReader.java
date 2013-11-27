@@ -44,30 +44,30 @@ public class CompressedDataReader extends DataReader {
             final ImageContents imageContents, final BinaryFileParser bfp)
             throws ImageReadException, IOException {
         final PsdHeaderInfo header = imageContents.header;
-        final int width = header.Columns;
-        final int height = header.Rows;
+        final int width = header.columns;
+        final int height = header.rows;
 
         // this.setDebug(true);
-        final int scanline_count = height * header.Channels;
-        final int[] scanline_bytecounts = new int[scanline_count];
-        for (int i = 0; i < scanline_count; i++) {
-            scanline_bytecounts[i] = BinaryFunctions.read2Bytes("scanline_bytecount[" + i
+        final int scanlineCount = height * header.channels;
+        final int[] scanlineBytecounts = new int[scanlineCount];
+        for (int i = 0; i < scanlineCount; i++) {
+            scanlineBytecounts[i] = BinaryFunctions.read2Bytes("scanline_bytecount[" + i
                     + "]", is, "PSD: bad Image Data", bfp.getByteOrder());
         }
         bfp.setDebug(false);
         // System.out.println("fImageContents.Compression: "
         // + imageContents.Compression);
 
-        final int depth = header.Depth;
+        final int depth = header.depth;
 
-        final int channel_count = dataParser.getBasicChannelsCount();
-        final int[][][] data = new int[channel_count][height][];
+        final int channelCount = dataParser.getBasicChannelsCount();
+        final int[][][] data = new int[channelCount][height][];
         // channels[0] =
-        for (int channel = 0; channel < channel_count; channel++) {
+        for (int channel = 0; channel < channelCount; channel++) {
             for (int y = 0; y < height; y++) {
                 final int index = channel * height + y;
                 final byte[] packed = BinaryFunctions.readBytes("scanline",
-                        is, scanline_bytecounts[index],
+                        is, scanlineBytecounts[index],
                         "PSD: Missing Image Data");
 
                 final byte[] unpacked = new PackBits().decompress(packed, width);

@@ -24,9 +24,8 @@ public class PngChunkPhys extends PngChunk {
     public final int pixelsPerUnitYAxis;
     public final int unitSpecifier;
 
-    public PngChunkPhys(final int Length, final int ChunkType, final int CRC, final byte[] bytes)
-            throws IOException {
-        super(Length, ChunkType, CRC, bytes);
+    public PngChunkPhys(int length, int chunkType, int crc, byte[] bytes) throws IOException {
+        super(length, chunkType, crc, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 

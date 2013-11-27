@@ -28,8 +28,8 @@ public abstract class DataParser {
         final DataBuffer buffer = bi.getRaster().getDataBuffer();
 
         final PsdHeaderInfo header = imageContents.header;
-        final int width = header.Columns;
-        final int height = header.Rows;
+        final int width = header.columns;
+        final int height = header.rows;
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {

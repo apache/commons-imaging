@@ -21,19 +21,18 @@ public class GammaCorrection {
 
     private final int[] lookupTable;
 
-    public GammaCorrection(final double src_gamma, final double dst_gamma) {
+    public GammaCorrection(final double srcGamma, final double dstGamma) {
 
         if (DEBUG) {
-            System.out.println("src_gamma: " + src_gamma);
-            System.out.println("dst_gamma: " + dst_gamma);
+            System.out.println("src_gamma: " + srcGamma);
+            System.out.println("dst_gamma: " + dstGamma);
         }
 
         lookupTable = new int[256];
         for (int i = 0; i < 256; i++) {
-            lookupTable[i] = correctSample(i, src_gamma, dst_gamma);
+            lookupTable[i] = correctSample(i, srcGamma, dstGamma);
             if (DEBUG) {
-                System.out
-                        .println("lookup_table[" + i + "]: " + lookupTable[i]);
+                System.out.println("lookup_table[" + i + "]: " + lookupTable[i]);
             }
         }
     }
@@ -55,7 +54,7 @@ public class GammaCorrection {
         return alpha | ((0xff & red) << 16) | ((0xff & green) << 8) | ((0xff & blue) << 0);
     }
 
-    private int correctSample(final int sample, final double src_gamma, final double dst_gamma) {
+    private int correctSample(final int sample, final double srcGamma, final double dstGamma) {
         // if (kUseAdobeGammaMethod && val <= 32)
         // {
         // double slope = Math.round(255.0d * Math.pow((32.0 / 255.0d),
@@ -63,8 +62,7 @@ public class GammaCorrection {
         // return (int) (sample * slope);
         // }
 
-        return (int) Math.round(255.0d * Math.pow((sample / 255.0d), src_gamma
-                / dst_gamma));
+        return (int) Math.round(255.0d * Math.pow((sample / 255.0d), srcGamma / dstGamma));
     }
 
 }

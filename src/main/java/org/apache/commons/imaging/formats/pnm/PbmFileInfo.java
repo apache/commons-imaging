@@ -24,11 +24,11 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 
 public class PbmFileInfo extends FileInfo {
-    private int bitcache = 0;
-    private int bits_in_cache = 0;
+    private int bitcache;
+    private int bitsInCache;
 
-    public PbmFileInfo(final int width, final int height, final boolean RAWBITS) {
-        super(width, height, RAWBITS);
+    public PbmFileInfo(final int width, final int height, final boolean rawbits) {
+        super(width, height, rawbits);
     }
     
     @Override
@@ -69,23 +69,23 @@ public class PbmFileInfo extends FileInfo {
     @Override
     protected void newline() {
         bitcache = 0;
-        bits_in_cache = 0;
+        bitsInCache = 0;
     }
 
     @Override
     public int getRGB(final InputStream is) throws IOException {
-        if (bits_in_cache < 1) {
+        if (bitsInCache < 1) {
             final int bits = is.read();
             if (bits < 0) {
                 throw new IOException("PBM: Unexpected EOF");
             }
             bitcache = 0xff & bits;
-            bits_in_cache += 8;
+            bitsInCache += 8;
         }
 
         final int bit = 0x1 & (bitcache >> 7);
         bitcache <<= 1;
-        bits_in_cache--;
+        bitsInCache--;
 
         if (bit == 0) {
             return 0xffffffff;

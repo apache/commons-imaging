@@ -96,8 +96,8 @@ public class BmpImageParser extends ImageParser {
         final byte identifier2 = readByte("Identifier2", is, "Not a Valid BMP File");
 
         if (formatCompliance != null) {
-            formatCompliance.compare_bytes("Signature", BMP_HEADER_SIGNATURE,
-                    new byte[] { identifier1, identifier2, });
+            formatCompliance.compareBytes("Signature", BMP_HEADER_SIGNATURE,
+                    new byte[]{identifier1, identifier2,});
         }
 
         final int fileSize = read4Bytes("File Size", is, "Not a Valid BMP File");
@@ -259,8 +259,7 @@ public class BmpImageParser extends ImageParser {
                 profileSize, reservedV5);
     }
 
-    private byte[] getRLEBytes(final InputStream is, final int RLESamplesPerByte)
-            throws IOException {
+    private byte[] getRLEBytes(final InputStream is, final int rleSamplesPerByte) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // this.setDebug(true);
@@ -292,8 +291,8 @@ public class BmpImageParser extends ImageParser {
                 }
                     break;
                 default: {
-                    int size = b / RLESamplesPerByte;
-                    if ((b % RLESamplesPerByte) > 0) {
+                    int size = b / rleSamplesPerByte;
+                    if ((b % rleSamplesPerByte) > 0) {
                         size++;
                     }
                     if ((size % 2) != 0) {
@@ -415,7 +414,7 @@ public class BmpImageParser extends ImageParser {
 
         final int pixelCount = bhi.width * bhi.height;
 
-        int imageLineLength = ((((bhi.bitsPerPixel) * bhi.width) + 7) / 8);
+        int imageLineLength = (((bhi.bitsPerPixel) * bhi.width) + 7) / 8;
 
         if (verbose) {
             // this.debugNumber("Total BitsPerPixel",
@@ -558,23 +557,23 @@ public class BmpImageParser extends ImageParser {
         return null;
     }
 
-    private String getBmpTypeDescription(final int Identifier1, final int Identifier2) {
-        if ((Identifier1 == 'B') && (Identifier2 == 'M')) {
+    private String getBmpTypeDescription(final int identifier1, final int identifier2) {
+        if ((identifier1 == 'B') && (identifier2 == 'M')) {
             return "Windows 3.1x, 95, NT,";
         }
-        if ((Identifier1 == 'B') && (Identifier2 == 'A')) {
+        if ((identifier1 == 'B') && (identifier2 == 'A')) {
             return "OS/2 Bitmap Array";
         }
-        if ((Identifier1 == 'C') && (Identifier2 == 'I')) {
+        if ((identifier1 == 'C') && (identifier2 == 'I')) {
             return "OS/2 Color Icon";
         }
-        if ((Identifier1 == 'C') && (Identifier2 == 'P')) {
+        if ((identifier1 == 'C') && (identifier2 == 'P')) {
             return "OS/2 Color Pointer";
         }
-        if ((Identifier1 == 'I') && (Identifier2 == 'C')) {
+        if ((identifier1 == 'I') && (identifier2 == 'C')) {
             return "OS/2 Icon";
         }
-        if ((Identifier1 == 'P') && (Identifier2 == 'T')) {
+        if ((identifier1 == 'P') && (identifier2 == 'T')) {
             return "OS/2 Pointer";
         }
 

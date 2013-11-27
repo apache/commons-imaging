@@ -54,16 +54,16 @@ public class MyLzwCompressor {
             listener.init(clearCode, eoiCode);
         }
 
-        InitializeStringTable();
+        initializeStringTable();
     }
 
-    private void InitializeStringTable() {
+    private void initializeStringTable() {
         codeSize = initialCodeSize;
 
-        final int intial_entries_count = (1 << codeSize) + 2;
+        final int intialEntriesCount = (1 << codeSize) + 2;
 
         map.clear();
-        for (codes = 0; codes < intial_entries_count; codes++) {
+        for (codes = 0; codes < intialEntriesCount; codes++) {
             if ((codes != clearCode) && (codes != eoiCode)) {
                 final ByteArray key = arrayToKey((byte) codes);
 
@@ -73,7 +73,7 @@ public class MyLzwCompressor {
     }
 
     private void clearTable() {
-        InitializeStringTable();
+        initializeStringTable();
         incrementCodeSize();
     }
 
@@ -230,27 +230,27 @@ public class MyLzwCompressor {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream(bytes.length);
         final MyBitOutputStream bos = new MyBitOutputStream(baos, byteOrder);
 
-        InitializeStringTable();
+        initializeStringTable();
         clearTable();
         writeClearCode(bos);
 
-        int w_start = 0;
-        int w_length = 0;
+        int wStart = 0;
+        int wLength = 0;
 
         for (int i = 0; i < bytes.length; i++) {
-            if (isInTable(bytes, w_start, w_length + 1)) {
-                w_length++;
+            if (isInTable(bytes, wStart, wLength + 1)) {
+                wLength++;
             } else {
-                final int code = codeFromString(bytes, w_start, w_length);
+                final int code = codeFromString(bytes, wStart, wLength);
                 writeDataCode(bos, code);
-                addTableEntry(bos, bytes, w_start, w_length + 1);
+                addTableEntry(bos, bytes, wStart, wLength + 1);
 
-                w_start = i;
-                w_length = 1;
+                wStart = i;
+                wLength = 1;
             }
         }
 
-        final int code = codeFromString(bytes, w_start, w_length);
+        final int code = codeFromString(bytes, wStart, wLength);
         writeDataCode(bos, code);
 
         writeEoiCode(bos);

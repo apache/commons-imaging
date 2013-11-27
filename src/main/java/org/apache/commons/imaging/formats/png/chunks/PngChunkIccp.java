@@ -32,30 +32,30 @@ public class PngChunkIccp extends PngChunk {
 
     public PngChunkIccp(
     // PngImageParser parser,
-            final int length, final int chunkType, final int CRC, final byte[] bytes)
+            final int length, final int chunkType, final int crc, final byte[] bytes)
             throws ImageReadException, IOException {
-        super(length, chunkType, CRC, bytes);
+        super(length, chunkType, crc, bytes);
         // this.parser = parser;
 
         final int index = findNull(bytes);
         if (index < 0) {
             throw new ImageReadException("PngChunkIccp: No Profile Name");
         }
-        final byte[] name_bytes = new byte[index];
-        System.arraycopy(bytes, 0, name_bytes, 0, index);
-        profileName = new String(name_bytes, "ISO-8859-1");
+        final byte[] nameBytes = new byte[index];
+        System.arraycopy(bytes, 0, nameBytes, 0, index);
+        profileName = new String(nameBytes, "ISO-8859-1");
 
         compressionMethod = bytes[index + 1];
 
-        final int CompressedProfileLength = bytes.length - (index + 1 + 1);
-        compressedProfile = new byte[CompressedProfileLength];
-        System.arraycopy(bytes, index + 1 + 1, compressedProfile, 0, CompressedProfileLength);
+        final int compressedProfileLength = bytes.length - (index + 1 + 1);
+        compressedProfile = new byte[compressedProfileLength];
+        System.arraycopy(bytes, index + 1 + 1, compressedProfile, 0, compressedProfileLength);
 
         if (getDebug()) {
             System.out.println("ProfileName: " + profileName);
             System.out.println("ProfileName.length(): " + profileName.length());
             System.out.println("CompressionMethod: " + compressionMethod);
-            System.out.println("CompressedProfileLength: " + CompressedProfileLength);
+            System.out.println("CompressedProfileLength: " + compressedProfileLength);
             System.out.println("bytes.length: " + bytes.length);
         }
 

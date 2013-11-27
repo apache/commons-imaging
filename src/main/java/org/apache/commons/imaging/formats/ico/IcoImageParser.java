@@ -112,8 +112,7 @@ public class IcoImageParser extends ImageParser {
         public final int iconCount; // IconCount (2 bytes), number of icons in
                                     // this file.
 
-        public FileHeader(final int reserved, final int iconType,
-                final int iconCount) {
+        public FileHeader(final int reserved, final int iconType, final int iconCount) {
             this.reserved = reserved;
             this.iconType = iconType;
             this.iconCount = iconCount;
@@ -128,132 +127,128 @@ public class IcoImageParser extends ImageParser {
         }
     }
 
-    private FileHeader readFileHeader(final InputStream is)
-            throws ImageReadException, IOException {
-        final int Reserved = read2Bytes("Reserved", is, "Not a Valid ICO File");
-        final int IconType = read2Bytes("IconType", is, "Not a Valid ICO File");
-        final int IconCount = read2Bytes("IconCount", is, "Not a Valid ICO File");
+    private FileHeader readFileHeader(final InputStream is) throws ImageReadException, IOException {
+        final int reserved = read2Bytes("Reserved", is, "Not a Valid ICO File");
+        final int iconType = read2Bytes("IconType", is, "Not a Valid ICO File");
+        final int iconCount = read2Bytes("IconCount", is, "Not a Valid ICO File");
 
-        if (Reserved != 0) {
-            throw new ImageReadException("Not a Valid ICO File: reserved is "
-                    + Reserved);
+        if (reserved != 0) {
+            throw new ImageReadException("Not a Valid ICO File: reserved is " + reserved);
         }
-        if (IconType != 1 && IconType != 2) {
-            throw new ImageReadException("Not a Valid ICO File: icon type is "
-                    + IconType);
+        if (iconType != 1 && iconType != 2) {
+            throw new ImageReadException("Not a Valid ICO File: icon type is " + iconType);
         }
 
-        return new FileHeader(Reserved, IconType, IconCount);
+        return new FileHeader(reserved, iconType, iconCount);
 
     }
 
     private static class IconInfo {
-        public final byte Width;
-        public final byte Height;
-        public final byte ColorCount;
-        public final byte Reserved;
-        public final int Planes;
-        public final int BitCount;
-        public final int ImageSize;
-        public final int ImageOffset;
+        public final byte width;
+        public final byte height;
+        public final byte colorCount;
+        public final byte reserved;
+        public final int planes;
+        public final int bitCount;
+        public final int imageSize;
+        public final int imageOffset;
 
         public IconInfo(final byte width, final byte height,
                 final byte colorCount, final byte reserved, final int planes,
                 final int bitCount, final int imageSize, final int imageOffset) {
-            Width = width;
-            Height = height;
-            ColorCount = colorCount;
-            Reserved = reserved;
-            Planes = planes;
-            BitCount = bitCount;
-            ImageSize = imageSize;
-            ImageOffset = imageOffset;
+            this.width = width;
+            this.height = height;
+            this.colorCount = colorCount;
+            this.reserved = reserved;
+            this.planes = planes;
+            this.bitCount = bitCount;
+            this.imageSize = imageSize;
+            this.imageOffset = imageOffset;
         }
 
         public void dump(final PrintWriter pw) {
             pw.println("IconInfo");
-            pw.println("Width: " + Width);
-            pw.println("Height: " + Height);
-            pw.println("ColorCount: " + ColorCount);
-            pw.println("Reserved: " + Reserved);
-            pw.println("Planes: " + Planes);
-            pw.println("BitCount: " + BitCount);
-            pw.println("ImageSize: " + ImageSize);
-            pw.println("ImageOffset: " + ImageOffset);
+            pw.println("Width: " + width);
+            pw.println("Height: " + height);
+            pw.println("ColorCount: " + colorCount);
+            pw.println("Reserved: " + reserved);
+            pw.println("Planes: " + planes);
+            pw.println("BitCount: " + bitCount);
+            pw.println("ImageSize: " + imageSize);
+            pw.println("ImageOffset: " + imageOffset);
         }
     }
 
     private IconInfo readIconInfo(final InputStream is) throws IOException {
         // Width (1 byte), Width of Icon (1 to 255)
-        final byte Width = readByte("Width", is, "Not a Valid ICO File");
+        final byte width = readByte("Width", is, "Not a Valid ICO File");
         // Height (1 byte), Height of Icon (1 to 255)
-        final byte Height = readByte("Height", is, "Not a Valid ICO File");
+        final byte height = readByte("Height", is, "Not a Valid ICO File");
         // ColorCount (1 byte), Number of colors, either
         // 0 for 24 bit or higher,
         // 2 for monochrome or 16 for 16 color images.
-        final byte ColorCount = readByte("ColorCount", is, "Not a Valid ICO File");
+        final byte colorCount = readByte("ColorCount", is, "Not a Valid ICO File");
         // Reserved (1 byte), Not used (always 0)
-        final byte Reserved = readByte("Reserved", is, "Not a Valid ICO File");
+        final byte reserved = readByte("Reserved", is, "Not a Valid ICO File");
         // Planes (2 bytes), always 1
-        final int Planes = read2Bytes("Planes", is, "Not a Valid ICO File");
+        final int planes = read2Bytes("Planes", is, "Not a Valid ICO File");
         // BitCount (2 bytes), number of bits per pixel (1 for monchrome,
         // 4 for 16 colors, 8 for 256 colors, 24 for true colors,
         // 32 for true colors + alpha channel)
-        final int BitCount = read2Bytes("BitCount", is, "Not a Valid ICO File");
+        final int bitCount = read2Bytes("BitCount", is, "Not a Valid ICO File");
         // ImageSize (4 bytes), Length of resource in bytes
-        final int ImageSize = read4Bytes("ImageSize", is, "Not a Valid ICO File");
+        final int imageSize = read4Bytes("ImageSize", is, "Not a Valid ICO File");
         // ImageOffset (4 bytes), start of the image in the file
-        final int ImageOffset = read4Bytes("ImageOffset", is, "Not a Valid ICO File");
+        final int imageOffset = read4Bytes("ImageOffset", is, "Not a Valid ICO File");
 
-        return new IconInfo(Width, Height, ColorCount, Reserved, Planes,
-                BitCount, ImageSize, ImageOffset);
+        return new IconInfo(width, height, colorCount, reserved, planes, bitCount, imageSize, imageOffset);
     }
 
     private static class BitmapHeader {
-        public final int Size;
-        public final int Width;
-        public final int Height;
-        public final int Planes;
-        public final int BitCount;
-        public final int Compression;
-        public final int SizeImage;
-        public final int XPelsPerMeter;
-        public final int YPelsPerMeter;
-        public final int ColorsUsed;
-        public final int ColorsImportant;
+        public final int size;
+        public final int width;
+        public final int height;
+        public final int planes;
+        public final int bitCount;
+        public final int compression;
+        public final int sizeImage;
+        public final int xPelsPerMeter;
+        public final int yPelsPerMeter;
+        public final int colorsUsed;
+        public final int colorsImportant;
 
         public BitmapHeader(final int size, final int width, final int height,
                 final int planes, final int bitCount, final int compression,
                 final int sizeImage, final int pelsPerMeter,
                 final int pelsPerMeter2, final int colorsUsed,
                 final int colorsImportant) {
-            Size = size;
-            Width = width;
-            Height = height;
-            Planes = planes;
-            BitCount = bitCount;
-            Compression = compression;
-            SizeImage = sizeImage;
-            XPelsPerMeter = pelsPerMeter;
-            YPelsPerMeter = pelsPerMeter2;
-            ColorsUsed = colorsUsed;
-            ColorsImportant = colorsImportant;
+            this.size = size;
+            this.width = width;
+            this.height = height;
+            this.planes = planes;
+            this.bitCount = bitCount;
+            this.compression = compression;
+            this.sizeImage = sizeImage;
+            xPelsPerMeter = pelsPerMeter;
+            yPelsPerMeter = pelsPerMeter2;
+            this.colorsUsed = colorsUsed;
+            this.colorsImportant = colorsImportant;
         }
 
         public void dump(final PrintWriter pw) {
             pw.println("BitmapHeader");
 
-            pw.println("Size: " + Size);
-            pw.println("Width: " + Width);
-            pw.println("Height: " + Height);
-            pw.println("Planes: " + Planes);
-            pw.println("BitCount: " + BitCount);
-            pw.println("Compression: " + Compression);
-            pw.println("SizeImage: " + SizeImage);
-            pw.println("XPelsPerMeter: " + XPelsPerMeter);
-            pw.println("YPelsPerMeter: " + YPelsPerMeter);
-            pw.println("ColorsUsed: " + ColorsUsed);
-            pw.println("ColorsImportant: " + ColorsImportant);
+            pw.println("Size: " + size);
+            pw.println("Width: " + width);
+            pw.println("Height: " + height);
+            pw.println("Planes: " + planes);
+            pw.println("BitCount: " + bitCount);
+            pw.println("Compression: " + compression);
+            pw.println("SizeImage: " + sizeImage);
+            pw.println("XPelsPerMeter: " + xPelsPerMeter);
+            pw.println("YPelsPerMeter: " + yPelsPerMeter);
+            pw.println("ColorsUsed: " + colorsUsed);
+            pw.println("ColorsImportant: " + colorsImportant);
         }
     }
 
@@ -324,21 +319,21 @@ public class IcoImageParser extends ImageParser {
     private IconData readBitmapIconData(final byte[] iconData, final IconInfo fIconInfo)
             throws ImageReadException, IOException {
         final ByteArrayInputStream is = new ByteArrayInputStream(iconData);
-        final int Size = read4Bytes("Size", is, "Not a Valid ICO File"); // Size (4
+        final int size = read4Bytes("size", is, "Not a Valid ICO File"); // Size (4
                                                                    // bytes),
                                                                    // size of
                                                                    // this
                                                                    // structure
                                                                    // (always
                                                                    // 40)
-        final int Width = read4Bytes("Width", is, "Not a Valid ICO File"); // Width (4
+        final int width = read4Bytes("width", is, "Not a Valid ICO File"); // Width (4
                                                                      // bytes),
                                                                      // width of
                                                                      // the
                                                                      // image
                                                                      // (same as
                                                                      // iconinfo.width)
-        final int Height = read4Bytes("Height", is, "Not a Valid ICO File"); // Height
+        final int height = read4Bytes("height", is, "Not a Valid ICO File"); // Height
                                                                        // (4
                                                                        // bytes),
                                                                        // scanlines
@@ -349,12 +344,12 @@ public class IcoImageParser extends ImageParser {
                                                                        // map
                                                                        // (iconinfo.height
                                                                        // * 2)
-        final int Planes = read2Bytes("Planes", is, "Not a Valid ICO File"); // Planes
+        final int planes = read2Bytes("planes", is, "Not a Valid ICO File"); // Planes
                                                                        // (2
                                                                        // bytes),
                                                                        // always
                                                                        // 1
-        final int BitCount = read2Bytes("BitCount", is, "Not a Valid ICO File"); // BitCount
+        final int bitCount = read2Bytes("bitCount", is, "Not a Valid ICO File"); // BitCount
                                                                            // (2
                                                                            // bytes),
                                                                            // 1,4,8,16,24,32
@@ -362,7 +357,7 @@ public class IcoImageParser extends ImageParser {
                                                                            // iconinfo
                                                                            // for
                                                                            // details)
-        int Compression = read4Bytes("Compression", is, "Not a Valid ICO File"); // Compression
+        int compression = read4Bytes("compression", is, "Not a Valid ICO File"); // Compression
                                                                                  // (4
                                                                                  // bytes),
                                                                                  // we
@@ -370,7 +365,7 @@ public class IcoImageParser extends ImageParser {
                                                                                  // use
                                                                                  // this
                                                                                  // (0)
-        final int SizeImage = read4Bytes("SizeImage", is, "Not a Valid ICO File"); // SizeImage
+        final int sizeImage = read4Bytes("sizeImage", is, "Not a Valid ICO File"); // SizeImage
                                                                              // (4
                                                                              // bytes),
                                                                              // we
@@ -378,13 +373,13 @@ public class IcoImageParser extends ImageParser {
                                                                              // use
                                                                              // this
                                                                              // (0)
-        final int XPelsPerMeter = read4Bytes("XPelsPerMeter", is,
+        final int xPelsPerMeter = read4Bytes("xPelsPerMeter", is,
                 "Not a Valid ICO File"); // XPelsPerMeter (4 bytes), we don?t
                                          // use this (0)
-        final int YPelsPerMeter = read4Bytes("YPelsPerMeter", is,
+        final int yPelsPerMeter = read4Bytes("yPelsPerMeter", is, 
                 "Not a Valid ICO File"); // YPelsPerMeter (4 bytes), we don?t
                                          // use this (0)
-        final int ColorsUsed = read4Bytes("ColorsUsed", is, "Not a Valid ICO File"); // ColorsUsed
+        final int colorsUsed = read4Bytes("colorsUsed", is, "Not a Valid ICO File"); // ColorsUsed
                                                                                // (4
                                                                                // bytes),
                                                                                // we
@@ -392,46 +387,44 @@ public class IcoImageParser extends ImageParser {
                                                                                // use
                                                                                // this
                                                                                // (0)
-        final int ColorsImportant = read4Bytes("ColorsImportant", is,
+        final int colorsImportant = read4Bytes("ColorsImportant", is,
                 "Not a Valid ICO File"); // ColorsImportant (4 bytes), we don?t
                                          // use this (0)
-        int RedMask = 0;
-        int GreenMask = 0;
-        int BlueMask = 0;
-        int AlphaMask = 0;
-        if (Compression == 3) {
-            RedMask = read4Bytes("RedMask", is, "Not a Valid ICO File");
-            GreenMask = read4Bytes("GreenMask", is, "Not a Valid ICO File");
-            BlueMask = read4Bytes("BlueMask", is, "Not a Valid ICO File");
+        int redMask = 0;
+        int greenMask = 0;
+        int blueMask = 0;
+        int alphaMask = 0;
+        if (compression == 3) {
+            redMask = read4Bytes("redMask", is, "Not a Valid ICO File");
+            greenMask = read4Bytes("greenMask", is, "Not a Valid ICO File");
+            blueMask = read4Bytes("blueMask", is, "Not a Valid ICO File");
         }
-        final byte[] RestOfFile = readBytes("RestOfFile", is, is.available());
+        final byte[] restOfFile = readBytes("RestOfFile", is, is.available());
 
-        if (Size != 40) {
-            throw new ImageReadException(
-                    "Not a Valid ICO File: Wrong bitmap header size " + Size);
+        if (size != 40) {
+            throw new ImageReadException("Not a Valid ICO File: Wrong bitmap header size " + size);
         }
-        if (Planes != 1) {
-            throw new ImageReadException(
-                    "Not a Valid ICO File: Planes can't be " + Planes);
+        if (planes != 1) {
+            throw new ImageReadException("Not a Valid ICO File: Planes can't be " + planes);
         }
 
-        if (Compression == 0 && BitCount == 32) {
+        if (compression == 0 && bitCount == 32) {
             // 32 BPP RGB icons need an alpha channel, but BMP files don't have
             // one unless BI_BITFIELDS is used...
-            Compression = 3;
-            RedMask = 0x00ff0000;
-            GreenMask = 0x0000ff00;
-            BlueMask = 0x000000ff;
-            AlphaMask = 0xff000000;
+            compression = 3;
+            redMask = 0x00ff0000;
+            greenMask = 0x0000ff00;
+            blueMask = 0x000000ff;
+            alphaMask = 0xff000000;
         }
 
-        final BitmapHeader header = new BitmapHeader(Size, Width, Height, Planes,
-                BitCount, Compression, SizeImage, XPelsPerMeter, YPelsPerMeter,
-                ColorsUsed, ColorsImportant);
+        final BitmapHeader header = new BitmapHeader(size, width, height, planes,
+                bitCount, compression, sizeImage, xPelsPerMeter, yPelsPerMeter,
+                colorsUsed, colorsImportant);
 
-        final int bitmapPixelsOffset = 14 + 56 + 4 * ((ColorsUsed == 0 && BitCount <= 8) ? (1 << BitCount)
-                : ColorsUsed);
-        final int bitmapSize = 14 + 56 + RestOfFile.length;
+        final int bitmapPixelsOffset = 14 + 56 + 4 * ((colorsUsed == 0 && bitCount <= 8) ? (1 << bitCount)
+                : colorsUsed);
+        final int bitmapSize = 14 + 56 + restOfFile.length;
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream(bitmapSize);
         BinaryOutputStream bos = null;
@@ -447,31 +440,29 @@ public class IcoImageParser extends ImageParser {
             bos.write4Bytes(bitmapPixelsOffset);
     
             bos.write4Bytes(56);
-            bos.write4Bytes(Width);
-            bos.write4Bytes(Height / 2);
-            bos.write2Bytes(Planes);
-            bos.write2Bytes(BitCount);
-            bos.write4Bytes(Compression);
-            bos.write4Bytes(SizeImage);
-            bos.write4Bytes(XPelsPerMeter);
-            bos.write4Bytes(YPelsPerMeter);
-            bos.write4Bytes(ColorsUsed);
-            bos.write4Bytes(ColorsImportant);
-            bos.write4Bytes(RedMask);
-            bos.write4Bytes(GreenMask);
-            bos.write4Bytes(BlueMask);
-            bos.write4Bytes(AlphaMask);
-            bos.write(RestOfFile);
+            bos.write4Bytes(width);
+            bos.write4Bytes(height / 2);
+            bos.write2Bytes(planes);
+            bos.write2Bytes(bitCount);
+            bos.write4Bytes(compression);
+            bos.write4Bytes(sizeImage);
+            bos.write4Bytes(xPelsPerMeter);
+            bos.write4Bytes(yPelsPerMeter);
+            bos.write4Bytes(colorsUsed);
+            bos.write4Bytes(colorsImportant);
+            bos.write4Bytes(redMask);
+            bos.write4Bytes(greenMask);
+            bos.write4Bytes(blueMask);
+            bos.write4Bytes(alphaMask);
+            bos.write(restOfFile);
             bos.flush();
             canThrow = true;
         } finally {
             IoUtils.closeQuietly(canThrow, bos);
         }
 
-        final ByteArrayInputStream bmpInputStream = new ByteArrayInputStream(
-                baos.toByteArray());
-        final BufferedImage bmpImage = new BmpImageParser().getBufferedImage(
-                bmpInputStream, null);
+        final ByteArrayInputStream bmpInputStream = new ByteArrayInputStream(baos.toByteArray());
+        final BufferedImage bmpImage = new BmpImageParser().getBufferedImage(bmpInputStream, null);
 
         // Transparency map is optional with 32 BPP icons, because they already
         // have
@@ -480,25 +471,25 @@ public class IcoImageParser extends ImageParser {
         // display the icon on a < 32 BPP screen. But it's still used instead of
         // alpha
         // if the image would be completely transparent with alpha...
-        int t_scanline_size = (Width + 7) / 8;
+        int t_scanline_size = (width + 7) / 8;
         if ((t_scanline_size % 4) != 0) {
             t_scanline_size += 4 - (t_scanline_size % 4); // pad scanline to 4
                                                           // byte size.
         }
-        final int tcolor_map_size_bytes = t_scanline_size * (Height / 2);
-        byte[] transparency_map = null;
+        final int colorMapSizeBytes = t_scanline_size * (height / 2);
+        byte[] transparencyMap = null;
         try {
-            transparency_map = this.readBytes("transparency_map",
-                    bmpInputStream, tcolor_map_size_bytes,
+            transparencyMap = this.readBytes("transparency_map",
+                    bmpInputStream, colorMapSizeBytes,
                     "Not a Valid ICO File");
         } catch (final IOException ioEx) {
-            if (BitCount != 32) {
+            if (bitCount != 32) {
                 throw ioEx;
             }
         }
 
         boolean allAlphasZero = true;
-        if (BitCount == 32) {
+        if (bitCount == 32) {
             for (int y = 0; allAlphasZero && y < bmpImage.getHeight(); y++) {
                 for (int x = 0; x < bmpImage.getWidth(); x++) {
                     if ((bmpImage.getRGB(x, y) & 0xff000000) != 0) {
@@ -515,10 +506,10 @@ public class IcoImageParser extends ImageParser {
             for (int y = 0; y < resultImage.getHeight(); y++) {
                 for (int x = 0; x < resultImage.getWidth(); x++) {
                     int alpha = 0xff;
-                    if (transparency_map != null) {
-                        final int alpha_byte = 0xff & transparency_map[t_scanline_size
+                    if (transparencyMap != null) {
+                        final int alphaByte = 0xff & transparencyMap[t_scanline_size
                                 * (bmpImage.getHeight() - y - 1) + (x / 8)];
-                        alpha = 0x01 & (alpha_byte >> (7 - (x % 8)));
+                        alpha = 0x01 & (alphaByte >> (7 - (x % 8)));
                         alpha = (alpha == 0) ? 0xff : 0x00;
                     }
                     resultImage.setRGB(x, y, (alpha << 24)
@@ -569,7 +560,7 @@ public class IcoImageParser extends ImageParser {
             final IconData[] fIconDatas = new IconData[fileHeader.iconCount];
             for (int i = 0; i < fileHeader.iconCount; i++) {
                 final byte[] iconData = byteSource.getBlock(
-                        fIconInfos[i].ImageOffset, fIconInfos[i].ImageSize);
+                        fIconInfos[i].imageOffset, fIconInfos[i].imageSize);
                 fIconDatas[i] = readIconData(iconData, fIconInfos[i]);
             }
 
@@ -749,22 +740,22 @@ public class IcoImageParser extends ImageParser {
             }
         }
 
-        int bit_cache = 0;
-        int bits_in_cache = 0;
-        final int row_padding = scanline_size - (bitCount * src.getWidth() + 7) / 8;
+        int bitCache = 0;
+        int bitsInCache = 0;
+        final int rowPadding = scanline_size - (bitCount * src.getWidth() + 7) / 8;
         for (int y = src.getHeight() - 1; y >= 0; y--) {
             for (int x = 0; x < src.getWidth(); x++) {
                 final int argb = src.getRGB(x, y);
                 if (bitCount < 8) {
                     final int rgb = 0xffffff & argb;
                     final int index = palette.getPaletteIndex(rgb);
-                    bit_cache <<= bitCount;
-                    bit_cache |= index;
-                    bits_in_cache += bitCount;
-                    if (bits_in_cache >= 8) {
-                        bos.write(0xff & bit_cache);
-                        bit_cache = 0;
-                        bits_in_cache = 0;
+                    bitCache <<= bitCount;
+                    bitCache |= index;
+                    bitsInCache += bitCount;
+                    if (bitsInCache >= 8) {
+                        bos.write(0xff & bitCache);
+                        bitCache = 0;
+                        bitsInCache = 0;
                     }
                 } else if (bitCount == 8) {
                     final int rgb = 0xffffff & argb;
@@ -782,14 +773,14 @@ public class IcoImageParser extends ImageParser {
                 }
             }
 
-            if (bits_in_cache > 0) {
-                bit_cache <<= (8 - bits_in_cache);
-                bos.write(0xff & bit_cache);
-                bit_cache = 0;
-                bits_in_cache = 0;
+            if (bitsInCache > 0) {
+                bitCache <<= (8 - bitsInCache);
+                bos.write(0xff & bitCache);
+                bitCache = 0;
+                bitsInCache = 0;
             }
 
-            for (int x = 0; x < row_padding; x++) {
+            for (int x = 0; x < rowPadding; x++) {
                 bos.write(0);
             }
         }
@@ -799,23 +790,23 @@ public class IcoImageParser extends ImageParser {
             for (int x = 0; x < src.getWidth(); x++) {
                 final int argb = src.getRGB(x, y);
                 final int alpha = 0xff & (argb >> 24);
-                bit_cache <<= 1;
+                bitCache <<= 1;
                 if (alpha == 0) {
-                    bit_cache |= 1;
+                    bitCache |= 1;
                 }
-                bits_in_cache++;
-                if (bits_in_cache >= 8) {
-                    bos.write(0xff & bit_cache);
-                    bit_cache = 0;
-                    bits_in_cache = 0;
+                bitsInCache++;
+                if (bitsInCache >= 8) {
+                    bos.write(0xff & bitCache);
+                    bitCache = 0;
+                    bitsInCache = 0;
                 }
             }
 
-            if (bits_in_cache > 0) {
-                bit_cache <<= (8 - bits_in_cache);
-                bos.write(0xff & bit_cache);
-                bit_cache = 0;
-                bits_in_cache = 0;
+            if (bitsInCache > 0) {
+                bitCache <<= (8 - bitsInCache);
+                bos.write(0xff & bitCache);
+                bitCache = 0;
+                bitsInCache = 0;
             }
 
             for (int x = 0; x < t_row_padding; x++) {

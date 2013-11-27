@@ -185,10 +185,10 @@ public class RationalNumber extends Number {
 
         Option bestOption = (low.error < high.error) ? low : high;
 
-        final int MAX_ITERATIONS = 100; // value is quite high, actually.
-                                        // shouldn't matter.
+        final int maxIterations = 100; // value is quite high, actually.
+                                       // shouldn't matter.
         for (int count = 0; bestOption.error > TOLERANCE
-                && count < MAX_ITERATIONS; count++) {
+                && count < maxIterations; count++) {
             final RationalNumber mediant = RationalNumber.factoryMethod(
                     (long) low.rationalNumber.numerator
                             + (long) high.rationalNumber.numerator,

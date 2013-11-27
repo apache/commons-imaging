@@ -39,18 +39,18 @@ public class MyBitOutputStream extends OutputStream {
 
     // TODO: in and out streams CANNOT accurately read/write 32bits at a time,
     // as int will overflow. should have used a long
-    public void writeBits(int value, final int SampleBits) throws IOException {
-        final int sampleMask = (1 << SampleBits) - 1;
+    public void writeBits(int value, final int sampleBits) throws IOException {
+        final int sampleMask = (1 << sampleBits) - 1;
         value &= sampleMask;
 
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             // MSB, so add to right
-            bitCache = (bitCache << SampleBits) | value;
+            bitCache = (bitCache << sampleBits) | value;
         } else {
             // LSB, so add to left
             bitCache = bitCache | (value << bitsInCache);
         }
-        bitsInCache += SampleBits;
+        bitsInCache += sampleBits;
 
         while (bitsInCache >= 8) {
             if (byteOrder == ByteOrder.BIG_ENDIAN) {

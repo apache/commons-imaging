@@ -509,11 +509,11 @@ public abstract class TiffImageWriterBase implements TiffConstants {
         { // Write Strips
             result = new byte[stripCount][];
 
-            int remaining_rows = height;
+            int remainingRows = height;
 
             for (int i = 0; i < stripCount; i++) {
-                final int rowsInStrip = Math.min(rowsPerStrip, remaining_rows);
-                remaining_rows -= rowsInStrip;
+                final int rowsInStrip = Math.min(rowsPerStrip, remainingRows);
+                remainingRows -= rowsInStrip;
 
                 final int bitsInRow = bitsPerSample * samplesPerPixel * width;
                 final int bytesPerRow = (bitsInRow + 7) / 8;

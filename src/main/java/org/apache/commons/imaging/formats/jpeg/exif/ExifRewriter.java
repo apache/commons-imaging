@@ -155,7 +155,7 @@ public class ExifRewriter extends BinaryFileParser {
                     final byte[] segmentData) throws
             // ImageWriteException,
                     ImageReadException, IOException {
-                if (marker != JpegConstants.JPEG_APP1_Marker) {
+                if (marker != JpegConstants.JPEG_APP1_MARKER) {
                     pieces.add(new JFIFPieceSegment(marker, markerBytes,
                             markerLengthBytes, segmentData));
                 } else if (!startsWith(segmentData,
@@ -508,7 +508,7 @@ public class ExifRewriter extends BinaryFileParser {
             }
 
             if (!hasExif && newBytes != null) {
-                final byte[] markerBytes = toBytes((short) JpegConstants.JPEG_APP1_Marker);
+                final byte[] markerBytes = toBytes((short) JpegConstants.JPEG_APP1_MARKER);
                 if (newBytes.length > 0xffff) {
                     throw new ExifOverflowException(
                             "APP1 Segment is too long: " + newBytes.length);
@@ -519,10 +519,10 @@ public class ExifRewriter extends BinaryFileParser {
                 int index = 0;
                 final JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments
                         .get(index);
-                if (firstSegment.marker == JpegConstants.JFIFMarker) {
+                if (firstSegment.marker == JpegConstants.JFIF_MARKER) {
                     index = 1;
                 }
-                segments.add(0, new JFIFPieceSegmentExif(JpegConstants.JPEG_APP1_Marker,
+                segments.add(0, new JFIFPieceSegmentExif(JpegConstants.JPEG_APP1_MARKER,
                         markerBytes, markerLengthBytes, newBytes));
             }
 
@@ -540,7 +540,7 @@ public class ExifRewriter extends BinaryFileParser {
                         continue;
                     }
 
-                    final byte[] markerBytes = toBytes((short) JpegConstants.JPEG_APP1_Marker);
+                    final byte[] markerBytes = toBytes((short) JpegConstants.JPEG_APP1_MARKER);
                     if (newBytes.length > 0xffff) {
                         throw new ExifOverflowException(
                                 "APP1 Segment is too long: " + newBytes.length);

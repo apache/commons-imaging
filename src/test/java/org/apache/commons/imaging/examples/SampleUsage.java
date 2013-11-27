@@ -66,11 +66,11 @@ public class SampleUsage {
             final BufferedImage image = someImage;
             final File dst = someFile;
             final ImageFormat format = ImageFormats.PNG;
-            final Map<String, Object> optional_params = new HashMap<String, Object>();
-            Imaging.writeImage(image, dst, format, optional_params);
+            final Map<String, Object> optionalParams = new HashMap<String, Object>();
+            Imaging.writeImage(image, dst, format, optionalParams);
 
             final OutputStream os = someOutputStream;
-            Imaging.writeImage(image, os, format, optional_params);
+            Imaging.writeImage(image, os, format, optionalParams);
 
             // <b>get the image's embedded ICC Profile, if it has one. </b>
             final byte iccProfileBytes[] = Imaging.getICCProfileBytes(imageBytes);
@@ -92,8 +92,8 @@ public class SampleUsage {
             }
 
             // <b>try to guess the image's format. </b>
-            final ImageFormat image_format = Imaging.guessFormat(imageBytes);
-            image_format.equals(ImageFormats.PNG);
+            final ImageFormat imageFormat = Imaging.guessFormat(imageBytes);
+            imageFormat.equals(ImageFormats.PNG);
 
             // <b>get all metadata stored in EXIF format (ie. from JPEG or
             // TIFF). </b>

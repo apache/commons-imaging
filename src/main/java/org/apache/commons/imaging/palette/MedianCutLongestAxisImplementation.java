@@ -24,42 +24,42 @@ import java.util.List;
 import org.apache.commons.imaging.ImageWriteException;
 
 public class MedianCutLongestAxisImplementation extends MedianCutImplementation {
-    private static final Comparator<ColorGroup> comparator = new Comparator<ColorGroup>() {
+    private static final Comparator<ColorGroup> COMPARATOR = new Comparator<ColorGroup>() {
         public int compare(final ColorGroup cg1, final ColorGroup cg2) {
-            if (cg1.max_diff == cg2.max_diff) {
-                return cg2.diff_total - cg1.diff_total;
+            if (cg1.maxDiff == cg2.maxDiff) {
+                return cg2.diffTotal - cg1.diffTotal;
             }
-            return cg2.max_diff - cg1.max_diff;
+            return cg2.maxDiff - cg1.maxDiff;
         }
     };
 
     @Override
-    public boolean performNextMedianCut(final List<ColorGroup> color_groups, final boolean ignoreAlpha)
+    public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
             throws ImageWriteException {
-        Collections.sort(color_groups, comparator);
-        final ColorGroup color_group = color_groups.get(0);
+        Collections.sort(colorGroups, COMPARATOR);
+        final ColorGroup colorGroup = colorGroups.get(0);
 
-        if (color_group.max_diff == 0) {
+        if (colorGroup.maxDiff == 0) {
             return false;
         }
         if (!ignoreAlpha
-                && color_group.alpha_diff > color_group.red_diff
-                && color_group.alpha_diff > color_group.green_diff
-                && color_group.alpha_diff > color_group.blue_diff) {
-            doCut(color_group, ColorComponent.ALPHA, color_groups, ignoreAlpha);
-        } else if (color_group.red_diff > color_group.green_diff
-                && color_group.red_diff > color_group.blue_diff) {
-            doCut(color_group, ColorComponent.RED, color_groups, ignoreAlpha);
-        } else if (color_group.green_diff > color_group.blue_diff) {
-            doCut(color_group, ColorComponent.GREEN, color_groups, ignoreAlpha);
+                && colorGroup.alphaDiff > colorGroup.redDiff
+                && colorGroup.alphaDiff > colorGroup.greenDiff
+                && colorGroup.alphaDiff > colorGroup.blueDiff) {
+            doCut(colorGroup, ColorComponent.ALPHA, colorGroups, ignoreAlpha);
+        } else if (colorGroup.redDiff > colorGroup.greenDiff
+                && colorGroup.redDiff > colorGroup.blueDiff) {
+            doCut(colorGroup, ColorComponent.RED, colorGroups, ignoreAlpha);
+        } else if (colorGroup.greenDiff > colorGroup.blueDiff) {
+            doCut(colorGroup, ColorComponent.GREEN, colorGroups, ignoreAlpha);
         } else {
-            doCut(color_group, ColorComponent.BLUE, color_groups, ignoreAlpha);
+            doCut(colorGroup, ColorComponent.BLUE, colorGroups, ignoreAlpha);
         }
         return true;
     }
     
-    private void doCut(final ColorGroup color_group, final ColorComponent mode,
-            final List<ColorGroup> color_groups, final boolean ignoreAlpha) throws ImageWriteException {
+    private void doCut(final ColorGroup colorGroup, final ColorComponent mode,
+            final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImageWriteException {
 
         final Comparator<ColorCount> comp = new Comparator<ColorCount>() {
             public int compare(final ColorCount c1, final ColorCount c2) {
@@ -78,64 +78,64 @@ public class MedianCutLongestAxisImplementation extends MedianCutImplementation 
             }
         };
 
-        Collections.sort(color_group.color_counts, comp);
-        final int count_half = (int) Math.round((double) color_group.totalPoints / 2);
-        int old_count = 0, new_count = 0;
-        int median_index;
-        for (median_index = 0; median_index < color_group.color_counts.size(); median_index++) {
-            final ColorCount color_count = color_group.color_counts.get(median_index);
+        Collections.sort(colorGroup.colorCounts, comp);
+        final int countHalf = (int) Math.round((double) colorGroup.totalPoints / 2);
+        int oldCount = 0, newCount = 0;
+        int medianIndex;
+        for (medianIndex = 0; medianIndex < colorGroup.colorCounts.size(); medianIndex++) {
+            final ColorCount colorCount = colorGroup.colorCounts.get(medianIndex);
 
-            new_count += color_count.count;
+            newCount += colorCount.count;
 
-            if (new_count < count_half) {
-                old_count = new_count;
+            if (newCount < countHalf) {
+                oldCount = newCount;
             } else {
                 break;
             }
         }
 
-        if (median_index == color_group.color_counts.size() - 1) {
-            median_index--;
-        } else if (median_index > 0) {
-            final int new_diff = Math.abs(new_count - count_half);
-            final int old_diff = Math.abs(count_half - old_count);
-            if (old_diff < new_diff) {
-                median_index--;
+        if (medianIndex == colorGroup.colorCounts.size() - 1) {
+            medianIndex--;
+        } else if (medianIndex > 0) {
+            final int newDiff = Math.abs(newCount - countHalf);
+            final int oldDiff = Math.abs(countHalf - oldCount);
+            if (oldDiff < newDiff) {
+                medianIndex--;
             }
         }
 
-        color_groups.remove(color_group);
-        final List<ColorCount> color_counts1 = new ArrayList<ColorCount>(
-                color_group.color_counts.subList(0, median_index + 1));
-        final List<ColorCount> color_counts2 = new ArrayList<ColorCount>(
-                color_group.color_counts.subList(median_index + 1,
-                        color_group.color_counts.size()));
+        colorGroups.remove(colorGroup);
+        final List<ColorCount> colorCounts1 = new ArrayList<ColorCount>(
+                colorGroup.colorCounts.subList(0, medianIndex + 1));
+        final List<ColorCount> colorCounts2 = new ArrayList<ColorCount>(
+                colorGroup.colorCounts.subList(medianIndex + 1,
+                        colorGroup.colorCounts.size()));
 
         ColorGroup less, more;
-        less = new ColorGroup(new ArrayList<ColorCount>(color_counts1), ignoreAlpha);
-        color_groups.add(less);
-        more = new ColorGroup(new ArrayList<ColorCount>(color_counts2), ignoreAlpha);
-        color_groups.add(more);
+        less = new ColorGroup(new ArrayList<ColorCount>(colorCounts1), ignoreAlpha);
+        colorGroups.add(less);
+        more = new ColorGroup(new ArrayList<ColorCount>(colorCounts2), ignoreAlpha);
+        colorGroups.add(more);
 
-        final ColorCount median_value = color_group.color_counts
-                .get(median_index);
+        final ColorCount medianValue = colorGroup.colorCounts
+                .get(medianIndex);
         int limit;
         switch (mode) {
         case ALPHA:
-            limit = median_value.alpha;
+            limit = medianValue.alpha;
             break;
         case RED:
-            limit = median_value.red;
+            limit = medianValue.red;
             break;
         case GREEN:
-            limit = median_value.green;
+            limit = medianValue.green;
             break;
         case BLUE:
-            limit = median_value.blue;
+            limit = medianValue.blue;
             break;
         default:
             throw new Error("Bad mode.");
         }
-        color_group.cut = new ColorGroupCut(less, more, mode, limit);
+        colorGroup.cut = new ColorGroupCut(less, more, mode, limit);
     }
 }

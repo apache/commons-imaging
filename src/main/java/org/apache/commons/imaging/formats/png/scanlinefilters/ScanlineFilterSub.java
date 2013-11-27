@@ -31,17 +31,17 @@ public class ScanlineFilterSub extends ScanlineFilter {
     public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
-            final int prev_index = i - bytesPerPixel;
-            if (prev_index >= 0) {
-                dst[i] = (byte) ((src[i] + dst[prev_index]) % 256);
-            // dst[i] = 0xff & (src[i] + src[prev_index]);
+            final int prevIndex = i - bytesPerPixel;
+            if (prevIndex >= 0) {
+                dst[i] = (byte) ((src[i] + dst[prevIndex]) % 256);
+            // dst[i] = 0xff & (src[i] + src[prevIndex]);
             } else {
                 dst[i] = src[i];
             }
 
             // if(i<10)
             // System.out.println("\t" + i + ": " + dst[i] + " (" + src[i] +
-            // ", " + prev_index + ")");
+            // ", " + prevIndex + ")");
 
             // dst[i] = src[i];
         }

@@ -24,8 +24,9 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageWriteException;
 
 public class PpmWriter extends PnmWriter {
-    public PpmWriter(final boolean RAWBITS) {
-        super(RAWBITS);
+
+    public PpmWriter(boolean rawbits) {
+        super(rawbits);
     }
 
     @Override
@@ -34,7 +35,7 @@ public class PpmWriter extends PnmWriter {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
         os.write(0x50);
-        os.write(RAWBITS ? 0x36 : 0x33);
+        os.write(rawbits ? 0x36 : 0x33);
         os.write(PnmConstants.PNM_SEPARATOR);
 
         final int width = src.getWidth();
@@ -56,7 +57,7 @@ public class PpmWriter extends PnmWriter {
                 final int green = 0xff & (argb >> 8);
                 final int blue = 0xff & (argb >> 0);
 
-                if (RAWBITS) {
+                if (rawbits) {
                     os.write((byte) red);
                     os.write((byte) green);
                     os.write((byte) blue);

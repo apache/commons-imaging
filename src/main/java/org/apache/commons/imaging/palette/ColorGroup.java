@@ -24,61 +24,61 @@ class ColorGroup {
     // public final ColorGroup parent;
     public ColorGroupCut cut = null;
     // public final List children = new ArrayList();
-    public int palette_index = -1;
+    public int paletteIndex = -1;
 
-    public final List<ColorCount> color_counts;
+    public final List<ColorCount> colorCounts;
     public final boolean ignoreAlpha;
-    public int min_red = Integer.MAX_VALUE;
-    public int max_red = Integer.MIN_VALUE;
-    public int min_green = Integer.MAX_VALUE;
-    public int max_green = Integer.MIN_VALUE;
-    public int min_blue = Integer.MAX_VALUE;
-    public int max_blue = Integer.MIN_VALUE;
-    public int min_alpha = Integer.MAX_VALUE;
-    public int max_alpha = Integer.MIN_VALUE;
+    public int minRed = Integer.MAX_VALUE;
+    public int maxRed = Integer.MIN_VALUE;
+    public int minGreen = Integer.MAX_VALUE;
+    public int maxGreen = Integer.MIN_VALUE;
+    public int minBlue = Integer.MAX_VALUE;
+    public int maxBlue = Integer.MIN_VALUE;
+    public int minAlpha = Integer.MAX_VALUE;
+    public int maxAlpha = Integer.MIN_VALUE;
 
-    public final int alpha_diff;
-    public final int red_diff;
-    public final int green_diff;
-    public final int blue_diff;
+    public final int alphaDiff;
+    public final int redDiff;
+    public final int greenDiff;
+    public final int blueDiff;
 
-    public final int max_diff;
-    public final int diff_total;
+    public final int maxDiff;
+    public final int diffTotal;
     public final int totalPoints;
 
-    public ColorGroup(final List<ColorCount> color_counts, final boolean ignoreAlpha)
+    public ColorGroup(final List<ColorCount> colorCounts, final boolean ignoreAlpha)
             throws ImageWriteException {
-        this.color_counts = color_counts;
+        this.colorCounts = colorCounts;
         this.ignoreAlpha = ignoreAlpha;
 
-        if (color_counts.size() < 1) {
+        if (colorCounts.size() < 1) {
             throw new ImageWriteException("empty color_group");
         }
 
         int total = 0;
-        for (ColorCount color : color_counts) {
+        for (ColorCount color : colorCounts) {
             total += color.count;
 
-            min_alpha = Math.min(min_alpha, color.alpha);
-            max_alpha = Math.max(max_alpha, color.alpha);
-            min_red = Math.min(min_red, color.red);
-            max_red = Math.max(max_red, color.red);
-            min_green = Math.min(min_green, color.green);
-            max_green = Math.max(max_green, color.green);
-            min_blue = Math.min(min_blue, color.blue);
-            max_blue = Math.max(max_blue, color.blue);
+            minAlpha = Math.min(minAlpha, color.alpha);
+            maxAlpha = Math.max(maxAlpha, color.alpha);
+            minRed = Math.min(minRed, color.red);
+            maxRed = Math.max(maxRed, color.red);
+            minGreen = Math.min(minGreen, color.green);
+            maxGreen = Math.max(maxGreen, color.green);
+            minBlue = Math.min(minBlue, color.blue);
+            maxBlue = Math.max(maxBlue, color.blue);
         }
         this.totalPoints = total;
 
-        alpha_diff = max_alpha - min_alpha;
-        red_diff = max_red - min_red;
-        green_diff = max_green - min_green;
-        blue_diff = max_blue - min_blue;
-        max_diff = Math.max(
-                ignoreAlpha ? red_diff : Math.max(alpha_diff, red_diff),
-                Math.max(green_diff, blue_diff));
-        diff_total = (ignoreAlpha ? 0 : alpha_diff) + red_diff + green_diff
-                + blue_diff;
+        alphaDiff = maxAlpha - minAlpha;
+        redDiff = maxRed - minRed;
+        greenDiff = maxGreen - minGreen;
+        blueDiff = maxBlue - minBlue;
+        maxDiff = Math.max(
+                ignoreAlpha ? redDiff : Math.max(alphaDiff, redDiff),
+                Math.max(greenDiff, blueDiff));
+        diffTotal = (ignoreAlpha ? 0 : alphaDiff) + redDiff + greenDiff
+                + blueDiff;
 
     }
 
@@ -88,54 +88,54 @@ class ColorGroup {
         final int green = 0xff & (argb >> 8);
         final int blue = 0xff & (argb >> 0);
 
-        if (!ignoreAlpha && (alpha < min_alpha || alpha > max_alpha)) {
+        if (!ignoreAlpha && (alpha < minAlpha || alpha > maxAlpha)) {
             return false;
         }
-        if (red < min_red || red > max_red) {
+        if (red < minRed || red > maxRed) {
             return false;
         }
-        if (green < min_green || green > max_green) {
+        if (green < minGreen || green > maxGreen) {
             return false;
         }
-        if (blue < min_blue || blue > max_blue) {
+        if (blue < minBlue || blue > maxBlue) {
             return false;
         }
         return true;
     }
 
     public int getMedianValue() {
-        long count_total = 0;
-        long alpha_total = 0, red_total = 0, green_total = 0, blue_total = 0;
+        long countTotal = 0;
+        long alphaTotal = 0, redTotal = 0, greenTotal = 0, blueTotal = 0;
 
-        for (ColorCount color : color_counts) {
-            count_total += color.count;
-            alpha_total += color.count * color.alpha;
-            red_total += color.count * color.red;
-            green_total += color.count * color.green;
-            blue_total += color.count * color.blue;
+        for (ColorCount color : colorCounts) {
+            countTotal += color.count;
+            alphaTotal += color.count * color.alpha;
+            redTotal += color.count * color.red;
+            greenTotal += color.count * color.green;
+            blueTotal += color.count * color.blue;
         }
 
         final int alpha = ignoreAlpha ? 0xff : (int) Math
-                .round((double) alpha_total / count_total);
-        final int red = (int) Math.round((double) red_total / count_total);
-        final int green = (int) Math.round((double) green_total / count_total);
-        final int blue = (int) Math.round((double) blue_total / count_total);
+                .round((double) alphaTotal / countTotal);
+        final int red = (int) Math.round((double) redTotal / countTotal);
+        final int green = (int) Math.round((double) greenTotal / countTotal);
+        final int blue = (int) Math.round((double) blueTotal / countTotal);
 
         return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 
     @Override
     public String toString() {
-        return "{ColorGroup. min_red: " + Integer.toHexString(min_red)
-                + ", max_red: " + Integer.toHexString(max_red)
-                + ", min_green: " + Integer.toHexString(min_green)
-                + ", max_green: " + Integer.toHexString(max_green)
-                + ", min_blue: " + Integer.toHexString(min_blue)
-                + ", max_blue: " + Integer.toHexString(max_blue)
-                + ", min_alpha: " + Integer.toHexString(min_alpha)
-                + ", max_alpha: " + Integer.toHexString(max_alpha)
-                + ", max_diff: " + Integer.toHexString(max_diff)
-                + ", diff_total: " + diff_total + "}";
+        return "{ColorGroup. minRed: " + Integer.toHexString(minRed)
+                + ", maxRed: " + Integer.toHexString(maxRed)
+                + ", minGreen: " + Integer.toHexString(minGreen)
+                + ", maxGreen: " + Integer.toHexString(maxGreen)
+                + ", minBlue: " + Integer.toHexString(minBlue)
+                + ", maxBlue: " + Integer.toHexString(maxBlue)
+                + ", minAlpha: " + Integer.toHexString(minAlpha)
+                + ", maxAlpha: " + Integer.toHexString(maxAlpha)
+                + ", maxDiff: " + Integer.toHexString(maxDiff)
+                + ", diffTotal: " + diffTotal + "}";
     }
 
 }

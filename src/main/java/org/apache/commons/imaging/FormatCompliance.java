@@ -37,24 +37,24 @@ public class FormatCompliance {
         failOnError = false;
     }
 
-    public FormatCompliance(final String description, final boolean fail_on_error) {
+    public FormatCompliance(final String description, final boolean failOnError) {
         this.description = description;
-        this.failOnError = fail_on_error;
+        this.failOnError = failOnError;
     }
 
     public static FormatCompliance getDefault() {
         return new FormatCompliance("ignore", false);
     }
 
-    public void addComment(final String s) throws ImageReadException {
-        comments.add(s);
+    public void addComment(final String comment) throws ImageReadException {
+        comments.add(comment);
         if (failOnError) {
-            throw new ImageReadException(s);
+            throw new ImageReadException(comment);
         }
     }
 
-    public void addComment(final String s, final int value) throws ImageReadException {
-        addComment(s + ": " + getValueDescription(value));
+    public void addComment(final String comment, final int value) throws ImageReadException {
+        addComment(comment + ": " + getValueDescription(value));
     }
 
     @Override
@@ -89,7 +89,7 @@ public class FormatCompliance {
         return value + " (" + Integer.toHexString(value) + ")";
     }
 
-    public boolean compare_bytes(final String name, final byte[] expected, final byte[] actual)
+    public boolean compareBytes(final String name, final byte[] expected, final byte[] actual)
             throws ImageReadException {
         if (expected.length != actual.length) {
             addComment(name + ": " + "Unexpected length: (expected: "

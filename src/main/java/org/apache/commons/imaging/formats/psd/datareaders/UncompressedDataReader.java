@@ -40,13 +40,13 @@ public class UncompressedDataReader extends DataReader {
             final ImageContents imageContents, final BinaryFileParser bfp)
             throws ImageReadException, IOException {
         final PsdHeaderInfo header = imageContents.header;
-        final int width = header.Columns;
-        final int height = header.Rows;
+        final int width = header.columns;
+        final int height = header.rows;
 
         bfp.setDebug(false);
 
-        final int channel_count = dataParser.getBasicChannelsCount();
-        final int depth = header.Depth;
+        final int channelCount = dataParser.getBasicChannelsCount();
+        final int depth = header.depth;
         final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.BIG_ENDIAN);
         // we want all samples to be bytes
         BitsToByteInputStream bbis = null;
@@ -54,8 +54,8 @@ public class UncompressedDataReader extends DataReader {
         try {
             bbis = new BitsToByteInputStream(mbis, 8);
 
-            final int[][][] data = new int[channel_count][height][width];
-            for (int channel = 0; channel < channel_count; channel++) {
+            final int[][][] data = new int[channelCount][height][width];
+            for (int channel = 0; channel < channelCount; channel++) {
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++) {
                         final int b = bbis.readBits(depth);

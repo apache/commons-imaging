@@ -25,45 +25,45 @@ import org.apache.commons.imaging.ImageReadException;
 public class IccProfileInfo {
 
     private final byte[] data;
-    public final int ProfileSize;
-    public final int CMMTypeSignature;
-    public final int ProfileVersion;
-    public final int ProfileDeviceClassSignature;
-    public final int ColorSpace;
-    public final int ProfileConnectionSpace;
-    public final int ProfileFileSignature;
-    public final int PrimaryPlatformSignature;
-    public final int VariousFlags;
-    public final int DeviceManufacturer;
-    public final int DeviceModel;
-    public final int RenderingIntent;
-    public final int ProfileCreatorSignature;
-    private final byte[] ProfileID;
+    public final int profileSize;
+    public final int cmmTypeSignature;
+    public final int profileVersion;
+    public final int profileDeviceClassSignature;
+    public final int colorSpace;
+    public final int profileConnectionSpace;
+    public final int profileFileSignature;
+    public final int primaryPlatformSignature;
+    public final int variousFlags;
+    public final int deviceManufacturer;
+    public final int deviceModel;
+    public final int renderingIntent;
+    public final int profileCreatorSignature;
+    private final byte[] profileId;
     private final IccTag[] tags;
 
-    public IccProfileInfo(final byte[] data, final int ProfileSize, final int CMMTypeSignature,
-            final int ProfileVersion, final int ProfileDeviceClassSignature,
-            final int ColorSpace, final int ProfileConnectionSpace,
-            final int ProfileFileSignature, final int PrimaryPlatformSignature,
-            final int VariousFlags, final int DeviceManufacturer, final int DeviceModel,
-            final int RenderingIntent, final int ProfileCreatorSignature, final byte[] ProfileID,
+    public IccProfileInfo(final byte[] data, final int profileSize, final int cmmTypeSignature,
+            final int profileVersion, final int profileDeviceClassSignature,
+            final int colorSpace, final int profileConnectionSpace,
+            final int profileFileSignature, final int primaryPlatformSignature,
+            final int variousFlags, final int deviceManufacturer, final int deviceModel,
+            final int renderingIntent, final int profileCreatorSignature, final byte[] profileId,
             final IccTag[] tags) {
         this.data = data;
 
-        this.ProfileSize = ProfileSize;
-        this.CMMTypeSignature = CMMTypeSignature;
-        this.ProfileVersion = ProfileVersion;
-        this.ProfileDeviceClassSignature = ProfileDeviceClassSignature;
-        this.ColorSpace = ColorSpace;
-        this.ProfileConnectionSpace = ProfileConnectionSpace;
-        this.ProfileFileSignature = ProfileFileSignature;
-        this.PrimaryPlatformSignature = PrimaryPlatformSignature;
-        this.VariousFlags = VariousFlags;
-        this.DeviceManufacturer = DeviceManufacturer;
-        this.DeviceModel = DeviceModel;
-        this.RenderingIntent = RenderingIntent;
-        this.ProfileCreatorSignature = ProfileCreatorSignature;
-        this.ProfileID = ProfileID;
+        this.profileSize = profileSize;
+        this.cmmTypeSignature = cmmTypeSignature;
+        this.profileVersion = profileVersion;
+        this.profileDeviceClassSignature = profileDeviceClassSignature;
+        this.colorSpace = colorSpace;
+        this.profileConnectionSpace = profileConnectionSpace;
+        this.profileFileSignature = profileFileSignature;
+        this.primaryPlatformSignature = primaryPlatformSignature;
+        this.variousFlags = variousFlags;
+        this.deviceManufacturer = deviceManufacturer;
+        this.deviceModel = deviceModel;
+        this.renderingIntent = renderingIntent;
+        this.profileCreatorSignature = profileCreatorSignature;
+        this.profileId = profileId;
 
         this.tags = tags;
     }
@@ -72,8 +72,8 @@ public class IccProfileInfo {
         return data;
     }
 
-    public byte[] getProfileID() {
-        return ProfileID;
+    public byte[] getProfileId() {
+        return profileId;
     }
 
     public IccTag[] getTags() {
@@ -81,8 +81,8 @@ public class IccProfileInfo {
     }
 
     public boolean issRGB() {
-        return DeviceManufacturer == IccConstants.IEC 
-                && DeviceModel == IccConstants.sRGB;
+        return deviceManufacturer == IccConstants.IEC 
+                && deviceModel == IccConstants.sRGB;
     }
 
     private void printCharQuad(final PrintWriter pw, final String msg, final int i) {
@@ -111,35 +111,18 @@ public class IccProfileInfo {
 
         pw.println(prefix + ": " + "data length: " + data.length);
 
-        printCharQuad(pw, prefix + ": " + "ProfileDeviceClassSignature",
-                ProfileDeviceClassSignature);
-
-        printCharQuad(pw, prefix + ": " + "CMMTypeSignature", CMMTypeSignature);
-
-        printCharQuad(pw, prefix + ": " + "ProfileDeviceClassSignature",
-                ProfileDeviceClassSignature);
-        printCharQuad(pw, prefix + ": " + "ColorSpace", ColorSpace);
-        printCharQuad(pw, prefix + ": " + "ProfileConnectionSpace",
-                ProfileConnectionSpace);
-
-        printCharQuad(pw, prefix + ": " + "ProfileFileSignature",
-                ProfileFileSignature);
-
-        printCharQuad(pw, prefix + ": " + "PrimaryPlatformSignature",
-                PrimaryPlatformSignature);
-
-        printCharQuad(pw, prefix + ": " + "ProfileFileSignature",
-                ProfileFileSignature);
-
-        printCharQuad(pw, prefix + ": " + "DeviceManufacturer",
-                DeviceManufacturer);
-
-        printCharQuad(pw, prefix + ": " + "DeviceModel", DeviceModel);
-
-        printCharQuad(pw, prefix + ": " + "RenderingIntent", RenderingIntent);
-
-        printCharQuad(pw, prefix + ": " + "ProfileCreatorSignature",
-                ProfileCreatorSignature);
+        printCharQuad(pw, prefix + ": " + "ProfileDeviceClassSignature", profileDeviceClassSignature);
+        printCharQuad(pw, prefix + ": " + "CMMTypeSignature", cmmTypeSignature);
+        printCharQuad(pw, prefix + ": " + "ProfileDeviceClassSignature", profileDeviceClassSignature);
+        printCharQuad(pw, prefix + ": " + "ColorSpace", colorSpace);
+        printCharQuad(pw, prefix + ": " + "ProfileConnectionSpace", profileConnectionSpace);
+        printCharQuad(pw, prefix + ": " + "ProfileFileSignature", profileFileSignature);
+        printCharQuad(pw, prefix + ": " + "PrimaryPlatformSignature", primaryPlatformSignature);
+        printCharQuad(pw, prefix + ": " + "ProfileFileSignature", profileFileSignature);
+        printCharQuad(pw, prefix + ": " + "DeviceManufacturer", deviceManufacturer);
+        printCharQuad(pw, prefix + ": " + "DeviceModel", deviceModel);
+        printCharQuad(pw, prefix + ": " + "RenderingIntent", renderingIntent);
+        printCharQuad(pw, prefix + ": " + "ProfileCreatorSignature", profileCreatorSignature);
 
         for (int i = 0; i < tags.length; i++) {
             final IccTag tag = tags[i];

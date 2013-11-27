@@ -119,10 +119,10 @@ public class PackBits {
                 if (dup == ptr) {
                     // write run length
                     final int len = findRunLength(bytes, dup);
-                    final int actual_len = Math.min(len, 128);
-                    baos.write(-(actual_len - 1));
+                    final int actualLen = Math.min(len, 128);
+                    baos.write(-(actualLen - 1));
                     baos.write(bytes[ptr]);
-                    ptr += actual_len;
+                    ptr += actualLen;
                 } else {
                     // write literals
                     int len = dup - ptr;
@@ -144,10 +144,10 @@ public class PackBits {
                     if (dup < 0) {
                         len = bytes.length - ptr;
                     }
-                    final int actual_len = Math.min(len, 128);
+                    final int actualLen = Math.min(len, 128);
     
-                    baos.write(actual_len - 1);
-                    for (int i = 0; i < actual_len; i++) {
+                    baos.write(actualLen - 1);
+                    for (int i = 0; i < actualLen; i++) {
                         baos.write(bytes[ptr]);
                         ptr++;
                     }

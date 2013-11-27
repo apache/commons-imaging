@@ -32,6 +32,6 @@ class MedianCutPalette extends SimplePalette {
             cg = cg.cut.getColorGroup(rgb);
         }
 
-        return cg.palette_index;
+        return cg.paletteIndex;
     }
 }

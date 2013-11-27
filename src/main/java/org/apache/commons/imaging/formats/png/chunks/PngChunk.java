@@ -32,10 +32,10 @@ public class PngChunk extends BinaryFileParser {
     public final boolean reserved;
     public final boolean safeToCopy;
 
-    public PngChunk(final int length, final int chunkType, final int CRC, final byte[] bytes) {
+    public PngChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
         this.length = length;
         this.chunkType = chunkType;
-        this.crc = CRC;
+        this.crc = crc;
         this.bytes = bytes;
 
         propertyBits = new boolean[4];

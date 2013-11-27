@@ -45,7 +45,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
     protected final TransparencyFilter transparencyFilter;
 
     public ScanExpediter(final int width, final int height, final InputStream is,
-            final BufferedImage bi, final int color_type, final int bitDepth, final int bitsPerPixel,
+            final BufferedImage bi, final int colorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
             final TransparencyFilter transparencyFilter)
 
@@ -54,7 +54,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
         this.height = height;
         this.is = is;
         this.bi = bi;
-        this.colorType = color_type;
+        this.colorType = colorType;
         this.bitDepth = bitDepth;
         this.bytesPerPixel = this.getBitsToBytesRoundingUp(bitsPerPixel);
         this.bitsPerPixel = bitsPerPixel;
@@ -171,43 +171,40 @@ public abstract class ScanExpediter extends BinaryFileParser {
         }
     }
 
-    protected ScanlineFilter getScanlineFilter(final int filter_type,
-            final int BytesPerPixel) throws ImageReadException {
+    protected ScanlineFilter getScanlineFilter(int filterType, int bytesPerPixel) throws ImageReadException {
         ScanlineFilter filter;
 
-        switch (filter_type) {
-        case 0: // None
-            filter = new ScanlineFilterNone();
-            break;
+        switch (filterType) {
+            case 0: // None
+                filter = new ScanlineFilterNone();
+                break;
 
-        case 1: // Sub
-            filter = new ScanlineFilterSub(BytesPerPixel);
-            break;
+            case 1: // Sub
+                filter = new ScanlineFilterSub(bytesPerPixel);
+                break;
 
-        case 2: // Up
-            filter = new ScanlineFilterUp();
-            break;
+            case 2: // Up
+                filter = new ScanlineFilterUp();
+                break;
 
-        case 3: // Average
-            filter = new ScanlineFilterAverage(BytesPerPixel);
-            break;
+            case 3: // Average
+                filter = new ScanlineFilterAverage(bytesPerPixel);
+                break;
 
-        case 4: // Paeth
-            filter = new ScanlineFilterPaeth(BytesPerPixel);
-            break;
+            case 4: // Paeth
+                filter = new ScanlineFilterPaeth(bytesPerPixel);
+                break;
 
-        default:
-            throw new ImageReadException("PNG: unknown filter_type: "
-                    + filter_type);
-
+            default:
+                throw new ImageReadException("PNG: unknown filterType: " + filterType);
         }
 
         return filter;
     }
 
-    protected byte[] unfilterScanline(final int filter_type, final byte[] src, final byte[] prev,
-            final int BytesPerPixel) throws ImageReadException, IOException {
-        final ScanlineFilter filter = getScanlineFilter(filter_type, BytesPerPixel);
+    protected byte[] unfilterScanline(final int filterType, final byte[] src, final byte[] prev,
+            final int bytesPerPixel) throws ImageReadException, IOException {
+        final ScanlineFilter filter = getScanlineFilter(filterType, bytesPerPixel);
 
         final byte[] dst = new byte[src.length];
         filter.unfilter(src, dst, prev);
@@ -215,7 +212,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
     }
 
     protected byte[] getNextScanline(final InputStream is, final int length, final byte[] prev,
-            final int BytesPerPixel) throws ImageReadException, IOException {
+            final int bytesPerPixel) throws ImageReadException, IOException {
         final int filterType = is.read();
         if (filterType < 0) {
             throw new ImageReadException("PNG: missing filter type");
@@ -223,7 +220,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
 
         byte[] scanline = this.readBytes("scanline", is, length, "PNG: missing image data");
 
-        return unfilterScanline(filterType, scanline, prev, BytesPerPixel);
+        return unfilterScanline(filterType, scanline, prev, bytesPerPixel);
     }
 
 }

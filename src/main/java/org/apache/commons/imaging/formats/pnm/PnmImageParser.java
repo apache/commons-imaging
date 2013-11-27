@@ -240,16 +240,16 @@ public class PnmImageParser extends ImageParser {
             throw new ImageReadException("PNM: Couldn't read Header");
         }
 
-        final List<String> Comments = new ArrayList<String>();
+        final List<String> comments = new ArrayList<String>();
 
-        final int BitsPerPixel = info.getBitDepth() * info.getNumComponents();
-        final ImageFormat Format = info.getImageType();
-        final String FormatName = info.getImageTypeDescription();
-        final String MimeType = info.getMIMEType();
-        final int NumberOfImages = 1;
-        final boolean isProgressive = false;
+        final int bitsPerPixel = info.getBitDepth() * info.getNumComponents();
+        final ImageFormat format = info.getImageType();
+        final String formatName = info.getImageTypeDescription();
+        final String mimeType = info.getMIMEType();
+        final int numberOfImages = 1;
+        final boolean progressive = false;
 
-        // boolean isProgressive = (fPNGChunkIHDR.InterlaceMethod != 0);
+        // boolean progressive = (fPNGChunkIHDR.InterlaceMethod != 0);
         //
         final int PhysicalWidthDpi = 72;
         final float PhysicalWidthInch = (float) ((double) info.width / (double) PhysicalWidthDpi);
@@ -264,10 +264,10 @@ public class PnmImageParser extends ImageParser {
         final int ColorType = info.getColorType();
         final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
 
-        return new ImageInfo(FormatDetails, BitsPerPixel, Comments,
-                Format, FormatName, info.height, MimeType, NumberOfImages,
+        return new ImageInfo(FormatDetails, bitsPerPixel, comments,
+                format, formatName, info.height, mimeType, numberOfImages,
                 PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
-                PhysicalWidthInch, info.width, isProgressive, isTransparent,
+                PhysicalWidthInch, info.width, progressive, isTransparent,
                 usesPalette, ColorType, compressionAlgorithm);
     }
 

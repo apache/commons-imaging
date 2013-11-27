@@ -65,7 +65,7 @@ public class PixelParserRle extends PixelParser {
     private int processByteOfData(final int[] rgbs, final int repeat, int x, final int y,
             final int width, final int height, final ImageBuilder imageBuilder) {
         // int rbg
-        int pixels_written = 0;
+        int pixelsWritten = 0;
         for (int i = 0; i < repeat; i++) {
 
             if ((x >= 0) && (x < width) && (y >= 0) && (y < height)) {
@@ -80,10 +80,10 @@ public class PixelParserRle extends PixelParser {
             }
 
             x++;
-            pixels_written++;
+            pixelsWritten++;
         }
 
-        return pixels_written;
+        return pixelsWritten;
     }
 
     @Override
@@ -95,10 +95,8 @@ public class PixelParserRle extends PixelParser {
 
         boolean done = false;
         while (!done) {
-            final int a = 0xff & is.readByte("RLE (" + x + "," + y + ") a",
-                    "BMP: Bad RLE");
-            final int b = 0xff & is.readByte("RLE (" + x + "," + y + ") b",
-                    "BMP: Bad RLE");
+            final int a = 0xff & is.readByte("RLE (" + x + "," + y + ") a", "BMP: Bad RLE");
+            final int b = 0xff & is.readByte("RLE (" + x + "," + y + ") b", "BMP: Bad RLE");
 
             if (a == 0) {
                 switch (b) {
@@ -120,9 +118,9 @@ public class PixelParserRle extends PixelParser {
                     break;
                 }
                 default: {
-                    final int SamplesPerByte = getSamplesPerByte();
-                    int size = b / SamplesPerByte;
-                    if ((b % SamplesPerByte) > 0) {
+                    final int samplesPerByte = getSamplesPerByte();
+                    int size = b / samplesPerByte;
+                    if ((b % samplesPerByte) > 0) {
                         size++;
                     }
                     if ((size % 2) != 0) {
@@ -141,7 +139,7 @@ public class PixelParserRle extends PixelParser {
                     for (int i = 0; remaining > 0; i++) {
                     // for (int i = 0; i < bytes.length; i++)
                         final int[] samples = convertDataToSamples(0xff & bytes[i]);
-                        final int towrite = Math.min(remaining, SamplesPerByte);
+                        final int towrite = Math.min(remaining, samplesPerByte);
                         // System.out.println("remaining: " + remaining);
                         // System.out.println("SamplesPerByte: "
                         // + SamplesPerByte);

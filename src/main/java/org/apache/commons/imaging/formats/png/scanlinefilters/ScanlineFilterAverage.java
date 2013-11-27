@@ -32,19 +32,19 @@ public class ScanlineFilterAverage extends ScanlineFilter {
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
             int raw = 0;
-            final int prev_index = i - bytesPerPixel;
-            if (prev_index >= 0) {
-                raw = dst[prev_index];
+            final int prevIndex = i - bytesPerPixel;
+            if (prevIndex >= 0) {
+                raw = dst[prevIndex];
             }
 
-            int Prior = 0;
+            int prior = 0;
             if (up != null) {
-                Prior = up[i];
+                prior = up[i];
             }
 
-            final int Average = ((0xff & raw) + (0xff & Prior)) / 2;
+            final int average = ((0xff & raw) + (0xff & prior)) / 2;
 
-            dst[i] = (byte) ((src[i] + Average) % 256);
+            dst[i] = (byte) ((src[i] + average) % 256);
             // dst[i] = src[i];
             // dst[i] = (byte) 255;
         }

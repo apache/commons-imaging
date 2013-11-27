@@ -41,15 +41,12 @@ public class App14Segment extends AppnSegment {
         ADOBE_PREFIX = adobe;
     }
 
-    public App14Segment(final int marker, final byte[] segmentData)
-            throws IOException {
-        this(marker, segmentData.length, new ByteArrayInputStream(
-                segmentData));
+    public App14Segment(int marker, byte[] segmentData) throws IOException {
+        this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
     
-    public App14Segment(final int marker, final int marker_length, final InputStream is)
-            throws IOException {
-        super(marker, marker_length, is);
+    public App14Segment(int marker, int markerLength, InputStream is) throws IOException {
+        super(marker, markerLength, is);
     }
 
     public boolean isAdobeJpegSegment() {

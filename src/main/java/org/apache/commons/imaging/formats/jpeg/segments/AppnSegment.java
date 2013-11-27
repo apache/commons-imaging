@@ -22,14 +22,13 @@ import java.io.InputStream;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class AppnSegment extends GenericSegment {
-    public AppnSegment(final int marker, final int marker_length, final InputStream is)
-            throws IOException {
-        super(marker, marker_length, is);
+
+    public AppnSegment(int marker, int markerLength, InputStream is) throws IOException {
+        super(marker, markerLength, is);
     }
 
     @Override
     public String getDescription() {
-        return "APPN (APP" + (marker - JpegConstants.JPEG_APP0_Marker)
-                + ") (" + getSegmentType() + ")";
+        return "APPN (APP" + (marker - JpegConstants.JPEG_APP0_MARKER) + ") (" + getSegmentType() + ")";
     }
 }

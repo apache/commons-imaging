@@ -352,7 +352,7 @@ public class XbmImageParser extends ImageParser {
                 .getBytes("US-ASCII"));
 
         int bitcache = 0;
-        int bits_in_cache = 0;
+        int bitsInCache = 0;
         String separator = "\n  ";
         int written = 0;
         for (int y = 0; y < src.getHeight(); y++) {
@@ -367,9 +367,9 @@ public class XbmImageParser extends ImageParser {
                 } else {
                     sample = 1;
                 }
-                bitcache |= (sample << bits_in_cache);
-                ++bits_in_cache;
-                if (bits_in_cache == 8) {
+                bitcache |= (sample << bitsInCache);
+                ++bitsInCache;
+                if (bitsInCache == 8) {
                     os.write(separator.getBytes("US-ASCII"));
                     separator = ",";
                     if (written == 12) {
@@ -378,11 +378,11 @@ public class XbmImageParser extends ImageParser {
                     }
                     os.write(toPrettyHex(bitcache).getBytes("US-ASCII"));
                     bitcache = 0;
-                    bits_in_cache = 0;
+                    bitsInCache = 0;
                     ++written;
                 }
             }
-            if (bits_in_cache != 0) {
+            if (bitsInCache != 0) {
                 os.write(separator.getBytes("US-ASCII"));
                 separator = ",";
                 if (written == 12) {
@@ -391,7 +391,7 @@ public class XbmImageParser extends ImageParser {
                 }
                 os.write(toPrettyHex(bitcache).getBytes("US-ASCII"));
                 bitcache = 0;
-                bits_in_cache = 0;
+                bitsInCache = 0;
                 ++written;
             }
         }
