@@ -41,7 +41,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class IcnsImageParser extends ImageParser {
-    public static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
+    static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
     private static final String DEFAULT_EXTENSION = ".icns";
     private static final String[] ACCEPTED_EXTENSIONS = { ".icns", };
 
