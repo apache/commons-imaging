@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.icns.IcnsImageParser.IcnsElement;
 
-public final class IcnsDecoder {
+final class IcnsDecoder {
     private static final int[] PALETTE_4BPP = { 0xffffffff, 0xfffcf305,
             0xffff6402, 0xffdd0806, 0xfff20884, 0xff4600a5, 0xff0000d4,
             0xff02abea, 0xff1fb714, 0xff006411, 0xff562c05, 0xff90713a,
@@ -86,8 +86,7 @@ public final class IcnsDecoder {
     private IcnsDecoder() {
     }
 
-    private static void decode1BPPImage(final IcnsType imageType, final byte[] imageData,
-            final ImageBuilder image) {
+    private static void decode1BPPImage(final IcnsType imageType, final byte[] imageData, final ImageBuilder image) {
         int position = 0;
         int bitsLeft = 0;
         int value = 0;
@@ -110,8 +109,7 @@ public final class IcnsDecoder {
         }
     }
 
-    private static void decode4BPPImage(final IcnsType imageType, final byte[] imageData,
-            final ImageBuilder image) {
+    private static void decode4BPPImage(final IcnsType imageType, final byte[] imageData, final ImageBuilder image) {
         int i = 0;
         boolean visited = false;
         for (int y = 0; y < imageType.getHeight(); y++) {
@@ -128,8 +126,7 @@ public final class IcnsDecoder {
         }
     }
 
-    private static void decode8BPPImage(final IcnsType imageType, final byte[] imageData,
-            final ImageBuilder image) {
+    private static void decode8BPPImage(final IcnsType imageType, final byte[] imageData, final ImageBuilder image) {
         for (int y = 0; y < imageType.getHeight(); y++) {
             for (int x = 0; x < imageType.getWidth(); x++) {
                 final int index = 0xff & imageData[y * imageType.getWidth() + x];
@@ -138,8 +135,7 @@ public final class IcnsDecoder {
         }
     }
 
-    private static void decode32BPPImage(final IcnsType imageType, final byte[] imageData,
-            final ImageBuilder image) {
+    private static void decode32BPPImage(final IcnsType imageType, final byte[] imageData, final ImageBuilder image) {
         for (int y = 0; y < imageType.getHeight(); y++) {
             for (int x = 0; x < imageType.getWidth(); x++) {
                 final int argb = 0xff000000 /* the "alpha" is ignored */
@@ -151,8 +147,7 @@ public final class IcnsDecoder {
         }
     }
 
-    private static void apply1BPPMask(final byte[] maskData, final ImageBuilder image)
-            throws ImageReadException {
+    private static void apply1BPPMask(final byte[] maskData, final ImageBuilder image) throws ImageReadException {
         int position = 0;
         int bitsLeft = 0;
         int value = 0;
@@ -163,8 +158,7 @@ public final class IcnsDecoder {
         if (maskData.length >= 2 * totalBytes) {
             position = totalBytes;
         } else {
-            throw new ImageReadException(
-                    "1 BPP mask underrun parsing ICNS file");
+            throw new ImageReadException("1 BPP mask underrun parsing ICNS file");
         }
 
         for (int y = 0; y < image.getHeight(); y++) {
@@ -181,8 +175,7 @@ public final class IcnsDecoder {
                 }
                 value <<= 1;
                 bitsLeft--;
-                image.setRGB(x, y,
-                        (alpha << 24) | (0xffffff & image.getRGB(x, y)));
+                image.setRGB(x, y, (alpha << 24) | (0xffffff & image.getRGB(x, y)));
             }
         }
     }
@@ -197,8 +190,7 @@ public final class IcnsDecoder {
         }
     }
 
-    public static List<BufferedImage> decodeAllImages(
-            final IcnsImageParser.IcnsElement[] icnsElements)
+    public static List<BufferedImage> decodeAllImages(final IcnsImageParser.IcnsElement[] icnsElements)
             throws ImageReadException {
         final List<BufferedImage> result = new ArrayList<BufferedImage>();
         for (final IcnsElement imageElement : icnsElements) {
@@ -207,7 +199,7 @@ public final class IcnsDecoder {
                 continue;
             }
 
-            IcnsType maskType = null;
+            IcnsType maskType;
             IcnsImageParser.IcnsElement maskElement = null;
             if (imageType.hasMask()) {
                 maskType = imageType;
@@ -250,8 +242,7 @@ public final class IcnsDecoder {
                             imageType.getWidth(), imageType.getHeight(),
                             imageElement.data);
                 } else {
-                    throw new ImageReadException(
-                            "Short image data but not a 32 bit compressed type");
+                    throw new ImageReadException("Short image data but not a 32 bit compressed type");
                 }
             } else {
                 imageData = imageElement.data;
@@ -273,8 +264,7 @@ public final class IcnsDecoder {
                 decode32BPPImage(imageType, imageData, imageBuilder);
                 break;
             default:
-                throw new ImageReadException("Unsupported bit depth "
-                        + imageType.getBitsPerPixel());
+                throw new ImageReadException("Unsupported bit depth " + imageType.getBitsPerPixel());
             }
 
             if (maskElement != null) {
@@ -283,8 +273,7 @@ public final class IcnsDecoder {
                 } else if (maskType.getBitsPerPixel() == 8) {
                     apply8BPPMask(maskElement.data, imageBuilder);
                 } else {
-                    throw new ImageReadException("Unsupport mask bit depth "
-                            + maskType.getBitsPerPixel());
+                    throw new ImageReadException("Unsupport mask bit depth " + maskType.getBitsPerPixel());
                 }
             }
 

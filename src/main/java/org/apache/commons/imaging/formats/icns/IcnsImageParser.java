@@ -165,7 +165,7 @@ public class IcnsImageParser extends ImageParser {
         return new IcnsHeader(magic, fileSize);
     }
 
-    public static class IcnsElement {
+    static class IcnsElement {
         public final int type;
         public final int elementSize;
         public final byte[] data;
