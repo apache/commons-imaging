@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.commons.imaging.common.BinaryConstant;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
-public final class TagConstantsUtils implements TiffDirectoryConstants {
+public final class TagConstantsUtils {
     private static final TiffDirectoryType[] TIFF_DIRECTORY_TYPES = TiffDirectoryType
             .values();
 

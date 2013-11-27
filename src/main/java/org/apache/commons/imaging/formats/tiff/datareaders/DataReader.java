@@ -30,11 +30,12 @@ import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
-public abstract class DataReader implements TiffConstants {
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
+
+public abstract class DataReader {
     protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
     protected final int[] bitsPerSample;

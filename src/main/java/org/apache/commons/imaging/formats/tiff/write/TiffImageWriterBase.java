@@ -37,10 +37,11 @@ import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 
-public abstract class TiffImageWriterBase implements TiffConstants {
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
+
+public abstract class TiffImageWriterBase {
 
     protected final ByteOrder byteOrder;
 

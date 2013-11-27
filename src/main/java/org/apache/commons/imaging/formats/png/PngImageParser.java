@@ -61,6 +61,7 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.icc.IccProfileParser;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.ImagingConstants.*;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PngImageParser extends ImageParser {

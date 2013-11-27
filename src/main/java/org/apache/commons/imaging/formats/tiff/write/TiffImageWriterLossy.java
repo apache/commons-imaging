@@ -24,6 +24,8 @@ import java.util.List;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
+
 public class TiffImageWriterLossy extends TiffImageWriterBase {
 
     public TiffImageWriterLossy() {

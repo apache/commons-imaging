@@ -31,7 +31,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
@@ -39,8 +38,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
 import org.apache.commons.imaging.util.IoUtils;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
-public class TiffReader extends BinaryFileParser implements TiffConstants {
+public class TiffReader extends BinaryFileParser {
 
     private final boolean strict;
 

@@ -47,6 +47,7 @@ import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.ImagingConstants.*;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class GifImageParser extends ImageParser {

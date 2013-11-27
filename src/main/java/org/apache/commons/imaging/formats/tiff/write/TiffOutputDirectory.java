@@ -31,7 +31,6 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.constants.TagConstantsUtils;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
@@ -56,8 +55,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLongOrRati
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrRational;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 
-public final class TiffOutputDirectory extends TiffOutputItem implements
-        TiffConstants {
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
+
+public final class TiffOutputDirectory extends TiffOutputItem {
     public final int type;
     private final List<TiffOutputField> fields = new ArrayList<TiffOutputField>();
     private final ByteOrder byteOrder;

@@ -41,6 +41,7 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.ImagingConstants.*;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class WbmpImageParser extends ImageParser {

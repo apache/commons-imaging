@@ -52,6 +52,8 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.ImagingConstants.*;
+
 public class XpmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".xpm";
     private static final String[] ACCEPTED_EXTENSIONS = { ".xpm", };

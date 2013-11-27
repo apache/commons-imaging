@@ -22,10 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
-class TiffOutputSummary implements TiffConstants {
+class TiffOutputSummary {
     public final ByteOrder byteOrder;
     public final TiffOutputDirectory rootDirectory;
     public final Map<Integer, TiffOutputDirectory> directoryTypeMap;

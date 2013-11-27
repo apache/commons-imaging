@@ -51,8 +51,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
-public class TiffImageMetadata extends ImageMetadata implements
-        TiffDirectoryConstants {
+public class TiffImageMetadata extends ImageMetadata {
     public final TiffContents contents;
     private static final Map<Object, Integer> TAG_COUNTS = countTags(AllTagConstants.ALL_TAGS);
 
@@ -467,7 +466,7 @@ public class TiffImageMetadata extends ImageMetadata implements
     }
 
     public GPSInfo getGPS() throws ImageReadException {
-        final TiffDirectory gpsDirectory = findDirectory(DIRECTORY_TYPE_GPS);
+        final TiffDirectory gpsDirectory = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
         if (null == gpsDirectory) {
             return null;
         }

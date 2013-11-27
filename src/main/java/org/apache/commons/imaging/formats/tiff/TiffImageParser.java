@@ -53,7 +53,9 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 
-public class TiffImageParser extends ImageParser implements TiffConstants {
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
+
+public class TiffImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".tif";
     private static final String[] ACCEPTED_EXTENSIONS = { ".tif", ".tiff", };
 

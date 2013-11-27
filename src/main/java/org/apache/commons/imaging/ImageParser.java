@@ -95,7 +95,7 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  * <p>Additionally, developers creating or enhancing classes derived
  * from ImageParser are encouraged to include such checks in their code.
  */
-public abstract class ImageParser extends BinaryFileParser implements ImagingConstants {
+public abstract class ImageParser extends BinaryFileParser {
 
     /**
      * Gets an array of new instances of all image parsers.
@@ -979,9 +979,9 @@ public abstract class ImageParser extends BinaryFileParser implements ImagingCon
      *         otherwise, false.
      */
     public static boolean isStrict(final Map<String, Object> params) {
-        if (params == null || !params.containsKey(PARAM_KEY_STRICT)) {
+        if (params == null || !params.containsKey(ImagingConstants.PARAM_KEY_STRICT)) {
             return false;
         }
-        return ((Boolean) params.get(PARAM_KEY_STRICT)).booleanValue();
+        return ((Boolean) params.get(ImagingConstants.PARAM_KEY_STRICT)).booleanValue();
     }
 }

@@ -20,9 +20,8 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 
-abstract class TiffOutputItem implements AllTagConstants {
+abstract class TiffOutputItem {
     public static final long UNDEFINED_VALUE = -1;
 
     private long offset = UNDEFINED_VALUE;

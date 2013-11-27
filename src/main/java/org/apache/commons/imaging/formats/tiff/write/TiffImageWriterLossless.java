@@ -41,6 +41,8 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
+
 public class TiffImageWriterLossless extends TiffImageWriterBase {
     private final byte[] exifBytes;
     private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = new Comparator<TiffElement>() {

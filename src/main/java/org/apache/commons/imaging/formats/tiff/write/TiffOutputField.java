@@ -22,11 +22,12 @@ import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 
-public class TiffOutputField implements TiffConstants {
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
+
+public class TiffOutputField {
     public final int tag;
     public final TagInfo tagInfo;
     public final FieldType fieldType;

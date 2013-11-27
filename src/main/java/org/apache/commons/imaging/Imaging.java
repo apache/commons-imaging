@@ -40,6 +40,8 @@ import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.ImagingConstants.*;
+
 /**
  * The primary application programming interface (API) to the Imaging library.
  * <p>
@@ -84,7 +86,7 @@ import org.apache.commons.imaging.util.IoUtils;
  *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">org.apache.commons.imaging.examples.SampleUsage</a>
  * @see <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  */
-public abstract class Imaging implements ImagingConstants {
+public abstract class Imaging {
     private static final int[] MAGIC_NUMBERS_GIF = { 0x47, 0x49, };
     private static final int[] MAGIC_NUMBERS_PNG = { 0x89, 0x50, };
     private static final int[] MAGIC_NUMBERS_JPEG = { 0xff, 0xd8, };

@@ -43,6 +43,7 @@ import org.apache.commons.imaging.formats.pcx.PcxConstants;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.ImagingConstants.*;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class DcxImageParser extends ImageParser {
