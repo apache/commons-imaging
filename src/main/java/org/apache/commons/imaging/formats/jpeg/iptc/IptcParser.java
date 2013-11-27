@@ -20,6 +20,7 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +32,6 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.BinaryInputStream;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
@@ -252,15 +252,15 @@ public class IptcParser extends BinaryFileParser {
             final boolean strict) throws ImageReadException, IOException {
         final List<IptcBlock> blocks = new ArrayList<IptcBlock>();
 
-        BinaryInputStream bis = null;
+        InputStream bis = null;
         boolean canThrow = false;
         try {
-            bis = new BinaryInputStream(new ByteArrayInputStream(bytes), APP13_BYTE_ORDER);
+            bis = new ByteArrayInputStream(bytes);
 
             // Note that these are unsigned quantities. Name is always an even
             // number of bytes (including the 1st byte, which is the size.)
     
-            final byte[] idString = bis.readBytes(
+            final byte[] idString = readBytes("", bis, 
                     JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(),
                     "App13 Segment missing identification string");
             if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
@@ -272,8 +272,8 @@ public class IptcParser extends BinaryFileParser {
             while (true) {
                 final int imageResourceBlockSignature;
                 try {
-                    imageResourceBlockSignature = bis.read4Bytes(
-                            "Image Resource Block missing identification string");
+                    imageResourceBlockSignature = read4Bytes("", bis, 
+                            "Image Resource Block missing identification string", APP13_BYTE_ORDER);
                 } catch (final IOException ioEx) {
                     break;
                 }
@@ -282,23 +282,23 @@ public class IptcParser extends BinaryFileParser {
                             "Invalid Image Resource Block Signature");
                 }
     
-                final int blockType = bis.read2Bytes("Image Resource Block missing type");
+                final int blockType = read2Bytes("", bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
                 if (verbose) {
                     Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
                 }
     
-                final int blockNameLength = bis.readByte("Name length", "Image Resource Block missing name length");
+                final int blockNameLength = readByte("Name length", bis, "Image Resource Block missing name length");
                 if (verbose && blockNameLength > 0) {
                     Debug.debug("blockNameLength: " + blockNameLength + " (0x" 
                             + Integer.toHexString(blockNameLength) + ")");
                 }
                 byte[] blockNameBytes;
                 if (blockNameLength == 0) {
-                    bis.readByte("Block name bytes", "Image Resource Block has invalid name");
+                    readByte("Block name bytes", bis, "Image Resource Block has invalid name");
                     blockNameBytes = new byte[0];
                 } else {
                     try {
-                        blockNameBytes = bis.readBytes(blockNameLength,
+                        blockNameBytes = readBytes("", bis, blockNameLength,
                                 "Invalid Image Resource Block name");
                     } catch (final IOException ioEx) {
                         if (strict) {
@@ -308,11 +308,11 @@ public class IptcParser extends BinaryFileParser {
                     }
     
                     if (blockNameLength % 2 == 0) {
-                        bis.readByte("Padding byte", "Image Resource Block missing padding byte");
+                        readByte("Padding byte", bis, "Image Resource Block missing padding byte");
                     }
                 }
     
-                final int blockSize = bis.read4Bytes("Image Resource Block missing size");
+                final int blockSize = read4Bytes("", bis, "Image Resource Block missing size", APP13_BYTE_ORDER);
                 if (verbose) {
                     Debug.debug("blockSize: " + blockSize + " (0x" + Integer.toHexString(blockSize) + ")");
                 }
@@ -327,7 +327,7 @@ public class IptcParser extends BinaryFileParser {
     
                 final byte[] blockData;
                 try {
-                    blockData = bis.readBytes(blockSize, "Invalid Image Resource Block data");
+                    blockData = readBytes("", bis, blockSize, "Invalid Image Resource Block data");
                 } catch (final IOException ioEx) {
                     if (strict) {
                         throw ioEx;
@@ -338,7 +338,7 @@ public class IptcParser extends BinaryFileParser {
                 blocks.add(new IptcBlock(blockType, blockNameBytes, blockData));
     
                 if ((blockSize % 2) != 0) {
-                    bis.readByte("Padding byte", "Image Resource Block missing padding byte");
+                    readByte("Padding byte", bis, "Image Resource Block missing padding byte");
                 }
             }
     

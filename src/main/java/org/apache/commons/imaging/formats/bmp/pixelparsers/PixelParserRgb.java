@@ -17,9 +17,12 @@
 package org.apache.commons.imaging.formats.bmp.pixelparsers;
 
 import java.io.IOException;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
+
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PixelParserRgb extends PixelParserSimple {
     private int bytecount;
@@ -64,7 +67,7 @@ public class PixelParserRgb extends PixelParserSimple {
 
             return rgb;
         } else if (bhi.bitsPerPixel == 16) {
-            final int data = is.read2Bytes("Pixel", "BMP Image Data");
+            final int data = read2Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
 
             final int blue = (0x1f & (data >> 0)) << 3;
             final int green = (0x1f & (data >> 5)) << 3;
@@ -109,7 +112,7 @@ public class PixelParserRgb extends PixelParserSimple {
         cachedBitCount = 0;
 
         while (((bytecount) % 4) != 0) {
-            is.readByte("Pixel", "BMP Image Data");
+            readByte("Pixel", is, "BMP Image Data");
             bytecount++;
         }
     }

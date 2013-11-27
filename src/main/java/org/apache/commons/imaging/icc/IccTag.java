@@ -18,6 +18,7 @@ package org.apache.commons.imaging.icc;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
@@ -25,7 +26,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryInputStream;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.util.IoUtils;
 
 public class IccTag {
@@ -48,13 +49,12 @@ public class IccTag {
     public void setData(final byte[] bytes) throws IOException {
         data = bytes;
 
-        BinaryInputStream bis = null;
+        InputStream bis = null;
         boolean canThrow = false;
         try {
-            bis = new BinaryInputStream(new ByteArrayInputStream(
-                bytes), ByteOrder.BIG_ENDIAN);
-            dataTypeSignature = bis.read4Bytes("data type signature",
-                    "ICC: corrupt tag data");
+            bis = new ByteArrayInputStream(bytes);
+            dataTypeSignature = BinaryFunctions.read4Bytes("data type signature", bis, 
+                    "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
     
             itdt = getIccTagDataType(dataTypeSignature);
             // if (itdt != null)

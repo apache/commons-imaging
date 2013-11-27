@@ -17,9 +17,12 @@
 package org.apache.commons.imaging.formats.bmp.pixelparsers;
 
 import java.io.IOException;
+import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
+
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PixelParserBitFields extends PixelParserSimple {
 
@@ -75,13 +78,13 @@ public class PixelParserBitFields extends PixelParserSimple {
             data = 0xff & imageData[bytecount + 0];
             bytecount += 1;
         } else if (bhi.bitsPerPixel == 24) {
-            data = is.read3Bytes("Pixel", "BMP Image Data");
+            data = read3Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
             bytecount += 3;
         } else if (bhi.bitsPerPixel == 32) {
-            data = is.read4Bytes("Pixel", "BMP Image Data");
+            data = read4Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
             bytecount += 4;
         } else if (bhi.bitsPerPixel == 16) {
-            data = is.read2Bytes("Pixel", "BMP Image Data");
+            data = read2Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
             bytecount += 2;
         } else {
             throw new ImageReadException("Unknown BitsPerPixel: "
@@ -106,7 +109,7 @@ public class PixelParserBitFields extends PixelParserSimple {
     @Override
     public void newline() throws ImageReadException, IOException {
         while (((bytecount) % 4) != 0) {
-            is.readByte("Pixel", "BMP Image Data");
+            readByte("Pixel", is, "BMP Image Data");
             bytecount++;
         }
     }

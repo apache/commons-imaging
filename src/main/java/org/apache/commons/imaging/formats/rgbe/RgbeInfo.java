@@ -24,7 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryInputStream;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
@@ -37,15 +37,14 @@ class RgbeInfo implements Closeable {
     };
     private static final Pattern RESOLUTION_STRING = Pattern.compile("-Y (\\d+) \\+X (\\d+)");
 
-    private final BinaryInputStream in;
+    private final InputStream in;
     private ImageMetadata metadata;
     private int width = -1;
     private int height = -1;
     private static final byte[] TWO_TWO = new byte[] { 0x2, 0x2 };
 
     RgbeInfo(final ByteSource byteSource) throws IOException {
-        this.in = new BinaryInputStream(byteSource.getInputStream(),
-                ByteOrder.BIG_ENDIAN);
+        this.in = byteSource.getInputStream();
     }
 
     IImageMetadata getMetadata() throws IOException, ImageReadException {
@@ -94,7 +93,7 @@ class RgbeInfo implements Closeable {
     }
 
     private void readMetadata() throws IOException, ImageReadException {
-        in.readAndVerifyBytes(HEADER, "Not a valid HDR: Incorrect Header");
+        BinaryFunctions.readAndVerifyBytes(in, HEADER, "Not a valid HDR: Incorrect Header");
 
         final InfoHeaderReader reader = new InfoHeaderReader(in);
 
@@ -144,8 +143,8 @@ class RgbeInfo implements Closeable {
         final float[][] out = new float[3][wd * ht];
 
         for (int i = 0; i < ht; i++) {
-            in.readAndVerifyBytes(TWO_TWO, "Scan line " + i + " expected to start with 0x2 0x2");
-            in.readAndVerifyBytes(scanLineBytes, "Scan line " + i + " length expected");
+            BinaryFunctions.readAndVerifyBytes(in, TWO_TWO, "Scan line " + i + " expected to start with 0x2 0x2");
+            BinaryFunctions.readAndVerifyBytes(in, scanLineBytes, "Scan line " + i + " length expected");
 
             decompress(in, rgbe);
 

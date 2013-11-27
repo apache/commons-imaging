@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.bmp.pixelparsers;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
@@ -95,8 +96,8 @@ public class PixelParserRle extends PixelParser {
 
         boolean done = false;
         while (!done) {
-            final int a = 0xff & is.readByte("RLE (" + x + "," + y + ") a", "BMP: Bad RLE");
-            final int b = 0xff & is.readByte("RLE (" + x + "," + y + ") b", "BMP: Bad RLE");
+            final int a = 0xff & BinaryFunctions.readByte("RLE (" + x + "," + y + ") a", is, "BMP: Bad RLE");
+            final int b = 0xff & BinaryFunctions.readByte("RLE (" + x + "," + y + ") b", is, "BMP: Bad RLE");
 
             if (a == 0) {
                 switch (b) {
@@ -111,8 +112,8 @@ public class PixelParserRle extends PixelParser {
                     done = true;
                     break;
                 case 2: {
-                    final int deltaX = 0xff & is.readByte("RLE deltaX", "BMP: Bad RLE");
-                    final int deltaY = 0xff & is.readByte("RLE deltaY", "BMP: Bad RLE");
+                    final int deltaX = 0xff & BinaryFunctions.readByte("RLE deltaX", is, "BMP: Bad RLE");
+                    final int deltaY = 0xff & BinaryFunctions.readByte("RLE deltaY", is, "BMP: Bad RLE");
                     x += deltaX;
                     y -= deltaY;
                     break;
@@ -131,8 +132,7 @@ public class PixelParserRle extends PixelParser {
                     // System.out.println("size: " + size);
                     // System.out.println("SamplesPerByte: " + SamplesPerByte);
 
-                    final byte[] bytes = is.readBytes("bytes", size,
-                            "RLE: Absolute Mode");
+                    final byte[] bytes = BinaryFunctions.readBytes("bytes", is, size, "RLE: Absolute Mode");
 
                     int remaining = b;
 
