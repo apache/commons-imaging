@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public abstract class GenericSegment extends Segment {
     protected final byte[] segmentData;
 
@@ -42,7 +44,7 @@ public abstract class GenericSegment extends Segment {
 
     public void dump(final PrintWriter pw, final int start) {
         for (int i = 0; (i < 50) && ((i + start) < segmentData.length); i++) {
-            debugNumber(pw, "\t" + (i + start), segmentData[i + start]);
+            debugNumber(pw, "\t" + (i + start), segmentData[i + start], 1);
         }
     }
 

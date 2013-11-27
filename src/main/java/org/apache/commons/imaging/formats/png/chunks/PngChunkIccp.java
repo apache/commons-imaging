@@ -21,7 +21,8 @@ import java.io.IOException;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryFunctions;
+
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PngChunkIccp extends PngChunk {
     // private final PngImageParser parser;
@@ -59,8 +60,7 @@ public class PngChunkIccp extends PngChunk {
             System.out.println("bytes.length: " + bytes.length);
         }
 
-        uncompressedProfile = BinaryFunctions.getStreamBytes(
-                new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
+        uncompressedProfile = getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
 
         if (getDebug()) {
             System.out.println("UncompressedProfile: " + Integer.toString(bytes.length));

@@ -19,6 +19,8 @@ package org.apache.commons.imaging.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class PngChunkGama extends PngChunk {
     public final int gamma;
 
@@ -27,7 +29,7 @@ public class PngChunkGama extends PngChunk {
         super(length, chunkType, crc, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt");
+        gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt", getByteOrder());
     }
 
     public double getGamma() {

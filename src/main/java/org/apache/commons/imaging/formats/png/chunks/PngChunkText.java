@@ -21,6 +21,8 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.PngText;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class PngChunkText extends PngTextChunk {
     public final String keyword;
     public final String text;

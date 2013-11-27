@@ -22,9 +22,12 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
+
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class JpegUtils extends BinaryFileParser {
     public JpegUtils() {
@@ -79,9 +82,9 @@ public class JpegUtils extends BinaryFileParser {
                 }
 
                 final byte[] segmentLengthBytes = readBytes("segmentLengthBytes", is, 2, "segmentLengthBytes");
-                final int segmentLength = toUInt16(segmentLengthBytes);
+                final int segmentLength = ByteConversions.toUInt16(segmentLengthBytes, getByteOrder());
 
-                final byte[] segmentData = readBytes("Segment Data", 
+                final byte[] segmentData = readBytes("Segment Data",
                         is, segmentLength - 2,
                         "Invalid Segment: insufficient data");
 

@@ -47,6 +47,9 @@ import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+import static org.apache.commons.imaging.common.ByteConversions.*;
+
 public class GifImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".gif";
     private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
@@ -130,10 +133,8 @@ public class GifImageParser extends ImageParser {
                     ((version1 << 16) | (version2 << 8) | (version3 << 0)));
         }
 
-        final int logicalScreenWidth = read2Bytes("Logical Screen Width", is,
-                "Not a Valid GIF File");
-        final int logicalScreenHeight = read2Bytes("Logical Screen Height", is,
-                "Not a Valid GIF File");
+        final int logicalScreenWidth = read2Bytes("Logical Screen Width", is, "Not a Valid GIF File", getByteOrder());
+        final int logicalScreenHeight = read2Bytes("Logical Screen Height", is, "Not a Valid GIF File", getByteOrder());
 
         if (formatCompliance != null) {
             formatCompliance.checkBounds("Width", 1, Integer.MAX_VALUE,
@@ -195,8 +196,7 @@ public class GifImageParser extends ImageParser {
         final int dispose = (packed & 0x1c) >> 2; // disposal method
         final boolean transparency = (packed & 1) != 0;
 
-        final int delay = read2Bytes("delay in milliseconds", is,
-                "GIF: corrupt GraphicControlExt");
+        final int delay = read2Bytes("delay in milliseconds", is, "GIF: corrupt GraphicControlExt", getByteOrder());
         final int transparentColorIndex = 0xff & readByte("transparent color index",
                 is, "GIF: corrupt GraphicControlExt");
         readByte("block terminator", is, "GIF: corrupt GraphicControlExt");
@@ -334,10 +334,10 @@ public class GifImageParser extends ImageParser {
             final int blockCode, final InputStream is, final boolean stopBeforeImageData,
             final FormatCompliance formatCompliance) throws ImageReadException,
             IOException {
-        final int imageLeftPosition = read2Bytes("Image Left Position", is, "Not a Valid GIF File");
-        final int imageTopPosition = read2Bytes("Image Top Position", is, "Not a Valid GIF File");
-        final int imageWidth = read2Bytes("Image Width", is, "Not a Valid GIF File");
-        final int imageHeight = read2Bytes("Image Height", is, "Not a Valid GIF File");
+        final int imageLeftPosition = read2Bytes("Image Left Position", is, "Not a Valid GIF File", getByteOrder());
+        final int imageTopPosition = read2Bytes("Image Top Position", is, "Not a Valid GIF File", getByteOrder());
+        final int imageWidth = read2Bytes("Image Width", is, "Not a Valid GIF File", getByteOrder());
+        final int imageHeight = read2Bytes("Image Height", is, "Not a Valid GIF File", getByteOrder());
         final byte packedFields = readByte("Packed Fields", is, "Not a Valid GIF File");
 
         if (formatCompliance != null) {

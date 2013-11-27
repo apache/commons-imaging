@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class DhtSegment extends Segment {
     public final List<HuffmanTable> huffmanTables;
 

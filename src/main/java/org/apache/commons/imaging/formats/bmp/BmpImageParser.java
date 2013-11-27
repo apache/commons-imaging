@@ -52,6 +52,8 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class BmpImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".bmp";
     private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
@@ -99,13 +101,11 @@ public class BmpImageParser extends ImageParser {
                     new byte[]{identifier1, identifier2,});
         }
 
-        final int fileSize = read4Bytes("File Size", is, "Not a Valid BMP File");
-        final int reserved = read4Bytes("Reserved", is, "Not a Valid BMP File");
-        final int bitmapDataOffset = read4Bytes("Bitmap Data Offset", is,
-                "Not a Valid BMP File");
+        final int fileSize = read4Bytes("File Size", is, "Not a Valid BMP File", getByteOrder());
+        final int reserved = read4Bytes("Reserved", is, "Not a Valid BMP File", getByteOrder());
+        final int bitmapDataOffset = read4Bytes("Bitmap Data Offset", is, "Not a Valid BMP File", getByteOrder());
 
-        final int bitmapHeaderSize = read4Bytes("Bitmap Header Size", is,
-                "Not a Valid BMP File");
+        final int bitmapHeaderSize = read4Bytes("Bitmap Header Size", is, "Not a Valid BMP File", getByteOrder());
         int width = 0;
         int height = 0;
         int planes = 0;
@@ -135,67 +135,51 @@ public class BmpImageParser extends ImageParser {
 
         if (bitmapHeaderSize >= 40) {
             // BITMAPINFOHEADER
-            width = read4Bytes("Width", is, "Not a Valid BMP File");
-            height = read4Bytes("Height", is, "Not a Valid BMP File");
-            planes = read2Bytes("Planes", is, "Not a Valid BMP File");
-            bitsPerPixel = read2Bytes("Bits Per Pixel", is,
-                    "Not a Valid BMP File");
-            compression = read4Bytes("Compression", is, "Not a Valid BMP File");
-            bitmapDataSize = read4Bytes("Bitmap Data Size", is,
-                    "Not a Valid BMP File");
-            hResolution = read4Bytes("HResolution", is, "Not a Valid BMP File");
-            vResolution = read4Bytes("VResolution", is, "Not a Valid BMP File");
-            colorsUsed = read4Bytes("ColorsUsed", is, "Not a Valid BMP File");
-            colorsImportant = read4Bytes("ColorsImportant", is,
-                    "Not a Valid BMP File");
+            width = read4Bytes("Width", is, "Not a Valid BMP File", getByteOrder());
+            height = read4Bytes("Height", is, "Not a Valid BMP File", getByteOrder());
+            planes = read2Bytes("Planes", is, "Not a Valid BMP File", getByteOrder());
+            bitsPerPixel = read2Bytes("Bits Per Pixel", is, "Not a Valid BMP File", getByteOrder());
+            compression = read4Bytes("Compression", is, "Not a Valid BMP File", getByteOrder());
+            bitmapDataSize = read4Bytes("Bitmap Data Size", is, "Not a Valid BMP File", getByteOrder());
+            hResolution = read4Bytes("HResolution", is, "Not a Valid BMP File", getByteOrder());
+            vResolution = read4Bytes("VResolution", is, "Not a Valid BMP File", getByteOrder());
+            colorsUsed = read4Bytes("ColorsUsed", is, "Not a Valid BMP File", getByteOrder());
+            colorsImportant = read4Bytes("ColorsImportant", is, "Not a Valid BMP File", getByteOrder());
             if (bitmapHeaderSize >= 52 || compression == BI_BITFIELDS) {
                 // 52 = BITMAPV2INFOHEADER, now undocumented
                 // see http://en.wikipedia.org/wiki/BMP_file_format
-                redMask = read4Bytes("RedMask", is, "Not a Valid BMP File");
-                greenMask = read4Bytes("GreenMask", is, "Not a Valid BMP File");
-                blueMask = read4Bytes("BlueMask", is, "Not a Valid BMP File");
+                redMask = read4Bytes("RedMask", is, "Not a Valid BMP File", getByteOrder());
+                greenMask = read4Bytes("GreenMask", is, "Not a Valid BMP File", getByteOrder());
+                blueMask = read4Bytes("BlueMask", is, "Not a Valid BMP File", getByteOrder());
             }
             if (bitmapHeaderSize >= 56) {
                 // 56 = the now undocumented BITMAPV3HEADER sometimes used by
                 // Photoshop
                 // see http://forums.adobe.com/thread/751592?tstart=1
-                alphaMask = read4Bytes("AlphaMask", is, "Not a Valid BMP File");
+                alphaMask = read4Bytes("AlphaMask", is, "Not a Valid BMP File", getByteOrder());
             }
             if (bitmapHeaderSize >= 108) {
                 // BITMAPV4HEADER
-                colorSpaceType = read4Bytes("ColorSpaceType", is,
-                        "Not a Valid BMP File");
-                colorSpace.red.x = read4Bytes("ColorSpaceRedX", is,
-                        "Not a Valid BMP File");
-                colorSpace.red.y = read4Bytes("ColorSpaceRedY", is,
-                        "Not a Valid BMP File");
-                colorSpace.red.z = read4Bytes("ColorSpaceRedZ", is,
-                        "Not a Valid BMP File");
-                colorSpace.green.x = read4Bytes("ColorSpaceGreenX", is,
-                        "Not a Valid BMP File");
-                colorSpace.green.y = read4Bytes("ColorSpaceGreenY", is,
-                        "Not a Valid BMP File");
-                colorSpace.green.z = read4Bytes("ColorSpaceGreenZ", is,
-                        "Not a Valid BMP File");
-                colorSpace.blue.x = read4Bytes("ColorSpaceBlueX", is,
-                        "Not a Valid BMP File");
-                colorSpace.blue.y = read4Bytes("ColorSpaceBlueY", is,
-                        "Not a Valid BMP File");
-                colorSpace.blue.z = read4Bytes("ColorSpaceBlueZ", is,
-                        "Not a Valid BMP File");
-                gammaRed = read4Bytes("GammaRed", is, "Not a Valid BMP File");
-                gammaGreen = read4Bytes("GammaGreen", is,
-                        "Not a Valid BMP File");
-                gammaBlue = read4Bytes("GammaBlue", is, "Not a Valid BMP File");
+                colorSpaceType = read4Bytes("ColorSpaceType", is, "Not a Valid BMP File", getByteOrder());
+                colorSpace.red.x = read4Bytes("ColorSpaceRedX", is, "Not a Valid BMP File", getByteOrder());
+                colorSpace.red.y = read4Bytes("ColorSpaceRedY", is, "Not a Valid BMP File", getByteOrder());
+                colorSpace.red.z = read4Bytes("ColorSpaceRedZ", is, "Not a Valid BMP File", getByteOrder());
+                colorSpace.green.x = read4Bytes("ColorSpaceGreenX", is, "Not a Valid BMP File", getByteOrder());
+                colorSpace.green.y = read4Bytes("ColorSpaceGreenY", is, "Not a Valid BMP File", getByteOrder());
+                colorSpace.green.z = read4Bytes("ColorSpaceGreenZ", is, "Not a Valid BMP File", getByteOrder());
+                colorSpace.blue.x = read4Bytes("ColorSpaceBlueX", is, "Not a Valid BMP File", getByteOrder());
+                colorSpace.blue.y = read4Bytes("ColorSpaceBlueY", is, "Not a Valid BMP File", getByteOrder());
+                colorSpace.blue.z = read4Bytes("ColorSpaceBlueZ", is, "Not a Valid BMP File", getByteOrder());
+                gammaRed = read4Bytes("GammaRed", is, "Not a Valid BMP File", getByteOrder());
+                gammaGreen = read4Bytes("GammaGreen", is, "Not a Valid BMP File", getByteOrder());
+                gammaBlue = read4Bytes("GammaBlue", is, "Not a Valid BMP File", getByteOrder());
             }
             if (bitmapHeaderSize >= 124) {
                 // BITMAPV5HEADER
-                intent = read4Bytes("Intent", is, "Not a Valid BMP File");
-                profileData = read4Bytes("ProfileData", is,
-                        "Not a Valid BMP File");
-                profileSize = read4Bytes("ProfileSize", is,
-                        "Not a Valid BMP File");
-                reservedV5 = read4Bytes("Reserved", is, "Not a Valid BMP File");
+                intent = read4Bytes("Intent", is, "Not a Valid BMP File", getByteOrder());
+                profileData = read4Bytes("ProfileData", is, "Not a Valid BMP File", getByteOrder());
+                profileSize = read4Bytes("ProfileSize", is, "Not a Valid BMP File", getByteOrder());
+                reservedV5 = read4Bytes("Reserved", is, "Not a Valid BMP File", getByteOrder());
             }
         } else {
             throw new ImageReadException("Invalid/unsupported BMP file");
@@ -228,15 +212,15 @@ public class BmpImageParser extends ImageParser {
             }
             if (bitmapHeaderSize >= 108) {
                 debugNumber("colorSpaceType", colorSpaceType, 4);
-                debugNumber("colorSpace.red.x", colorSpace.red.x);
-                debugNumber("colorSpace.red.y", colorSpace.red.y);
-                debugNumber("colorSpace.red.z", colorSpace.red.z);
-                debugNumber("colorSpace.green.x", colorSpace.green.x);
-                debugNumber("colorSpace.green.y", colorSpace.green.y);
-                debugNumber("colorSpace.green.z", colorSpace.green.z);
-                debugNumber("colorSpace.blue.x", colorSpace.blue.x);
-                debugNumber("colorSpace.blue.y", colorSpace.blue.y);
-                debugNumber("colorSpace.blue.z", colorSpace.blue.z);
+                debugNumber("colorSpace.red.x", colorSpace.red.x, 1);
+                debugNumber("colorSpace.red.y", colorSpace.red.y, 1);
+                debugNumber("colorSpace.red.z", colorSpace.red.z, 1);
+                debugNumber("colorSpace.green.x", colorSpace.green.x, 1);
+                debugNumber("colorSpace.green.y", colorSpace.green.y, 1);
+                debugNumber("colorSpace.green.z", colorSpace.green.z, 1);
+                debugNumber("colorSpace.blue.x", colorSpace.blue.x, 1);
+                debugNumber("colorSpace.blue.y", colorSpace.blue.y, 1);
+                debugNumber("colorSpace.blue.z", colorSpace.blue.z, 1);
                 debugNumber("gammaRed", gammaRed, 4);
                 debugNumber("gammaGreen", gammaGreen, 4);
                 debugNumber("gammaBlue", gammaBlue, 4);
@@ -265,9 +249,9 @@ public class BmpImageParser extends ImageParser {
 
         boolean done = false;
         while (!done) {
-            final int a = 0xff & this.readByte("RLE a", is, "BMP: Bad RLE");
+            final int a = 0xff & readByte("RLE a", is, "BMP: Bad RLE");
             baos.write(a);
-            final int b = 0xff & this.readByte("RLE b", is, "BMP: Bad RLE");
+            final int b = 0xff & readByte("RLE b", is, "BMP: Bad RLE");
             baos.write(b);
 
             if (a == 0) {
@@ -282,9 +266,9 @@ public class BmpImageParser extends ImageParser {
                 case 2: {
                     // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                     // );
-                    final int c = 0xff & this.readByte("RLE c", is, "BMP: Bad RLE");
+                    final int c = 0xff & readByte("RLE c", is, "BMP: Bad RLE");
                     baos.write(c);
-                    final int d = 0xff & this.readByte("RLE d", is, "BMP: Bad RLE");
+                    final int d = 0xff & readByte("RLE d", is, "BMP: Bad RLE");
                     baos.write(d);
 
                 }
@@ -304,7 +288,7 @@ public class BmpImageParser extends ImageParser {
                     // RLESamplesPerByte);
                     // System.out.println("xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                     // );
-                    final byte[] bytes = this.readBytes("bytes", is, size,
+                    final byte[] bytes = readBytes("bytes", is, size,
                             "RLE: Absolute Mode");
                     baos.write(bytes);
                 }
@@ -401,7 +385,7 @@ public class BmpImageParser extends ImageParser {
 
         byte[] colorTable = null;
         if (paletteLength > 0) {
-            colorTable = this.readBytes("ColorTable", is, paletteLength,
+            colorTable = readBytes("ColorTable", is, paletteLength,
                     "Not a Valid BMP File");
         }
 
@@ -449,8 +433,7 @@ public class BmpImageParser extends ImageParser {
                     + expectedDataOffset + ", paletteLength: " + paletteLength
                     + ", headerSize: " + headerSize + ")");
         } else if (extraBytes > 0) {
-            this.readBytes("BitmapDataOffset", is, extraBytes,
-                    "Not a Valid BMP File");
+            readBytes("BitmapDataOffset", is, extraBytes, "Not a Valid BMP File");
         }
 
         final int imageDataSize = bhi.height * imageLineLength;
@@ -463,7 +446,7 @@ public class BmpImageParser extends ImageParser {
         if (rle) {
             imageData = getRLEBytes(is, rleSamplesPerByte);
         } else {
-            imageData = this.readBytes("ImageData", is, imageDataSize,
+            imageData = readBytes("ImageData", is, imageDataSize,
                     "Not a Valid BMP File");
         }
 

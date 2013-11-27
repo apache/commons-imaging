@@ -22,6 +22,7 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class JpegXmpParser extends BinaryFileParser {
@@ -31,7 +32,7 @@ public class JpegXmpParser extends BinaryFileParser {
     }
 
     public boolean isXmpJpegSegment(final byte[] segmentData) {
-        return BinaryFileParser.startsWith(segmentData, JpegConstants.XMP_IDENTIFIER);
+        return BinaryFunctions.startsWith(segmentData, JpegConstants.XMP_IDENTIFIER);
     }
 
     public String parseXmpJpegSegment(final byte[] segmentData)

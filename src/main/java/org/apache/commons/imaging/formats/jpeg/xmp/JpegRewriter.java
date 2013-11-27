@@ -32,6 +32,8 @@ import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
  */

@@ -21,6 +21,8 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class TransparencyFilterTrueColor extends TransparencyFilter {
     private final int transparentColor;
 
@@ -28,9 +30,9 @@ public class TransparencyFilterTrueColor extends TransparencyFilter {
         super(bytes);
 
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        int transparentRed = read2Bytes("transparentRed", is, "tRNS: Missing transparentColor");
-        int transparentGreen = read2Bytes("transparentGreen", is, "tRNS: Missing transparentColor");
-        int transparentBlue = read2Bytes("transparentBlue", is, "tRNS: Missing transparentColor");
+        int transparentRed = read2Bytes("transparentRed", is, "tRNS: Missing transparentColor", getByteOrder());
+        int transparentGreen = read2Bytes("transparentGreen", is, "tRNS: Missing transparentColor", getByteOrder());
+        int transparentBlue = read2Bytes("transparentBlue", is, "tRNS: Missing transparentColor", getByteOrder());
 
         transparentColor = ((0xff & transparentRed) << 16)
                 | ((0xff & transparentGreen) << 8)

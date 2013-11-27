@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilter;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterAverage;
@@ -31,7 +30,9 @@ import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterSub;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterUp;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
-public abstract class ScanExpediter extends BinaryFileParser {
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
+public abstract class ScanExpediter {
     protected final int width;
     protected final int height;
     protected final InputStream is;
@@ -218,7 +219,7 @@ public abstract class ScanExpediter extends BinaryFileParser {
             throw new ImageReadException("PNG: missing filter type");
         }
 
-        byte[] scanline = this.readBytes("scanline", is, length, "PNG: missing image data");
+        byte[] scanline = readBytes("scanline", is, length, "PNG: missing image data");
 
         return unfilterScanline(filterType, scanline, prev, bytesPerPixel);
     }

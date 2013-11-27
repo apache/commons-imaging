@@ -38,6 +38,8 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class IptcParser extends BinaryFileParser {
     private static final ByteOrder APP13_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
 
@@ -46,7 +48,7 @@ public class IptcParser extends BinaryFileParser {
     }
 
     public boolean isPhotoshopJpegSegment(final byte[] segmentData) {
-        if (!BinaryFileParser.startsWith(segmentData,
+        if (!startsWith(segmentData,
                 JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING)) {
             return false;
         }
@@ -168,7 +170,7 @@ public class IptcParser extends BinaryFileParser {
             }
             index++;
 
-            final int recordSize = toUInt16(bytes, index);
+            final int recordSize = ByteConversions.toUInt16(bytes, index, getByteOrder());
             index += 2;
 
             final boolean extendedDataset = recordSize > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE;

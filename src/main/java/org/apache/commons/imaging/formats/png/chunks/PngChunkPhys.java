@@ -19,6 +19,8 @@ package org.apache.commons.imaging.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class PngChunkPhys extends PngChunk {
     public final int pixelsPerUnitXAxis;
     public final int pixelsPerUnitYAxis;
@@ -29,8 +31,8 @@ public class PngChunkPhys extends PngChunk {
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 
-        pixelsPerUnitXAxis = read4Bytes("PixelsPerUnitXAxis", is, "Not a Valid Png File: pHYs Corrupt");
-        pixelsPerUnitYAxis = read4Bytes("PixelsPerUnitYAxis", is, "Not a Valid Png File: pHYs Corrupt");
+        pixelsPerUnitXAxis = read4Bytes("PixelsPerUnitXAxis", is, "Not a Valid Png File: pHYs Corrupt", getByteOrder());
+        pixelsPerUnitYAxis = read4Bytes("PixelsPerUnitYAxis", is, "Not a Valid Png File: pHYs Corrupt", getByteOrder());
         unitSpecifier = readByte("Unit specifier", is, "Not a Valid Png File: pHYs Corrupt");
     }
 

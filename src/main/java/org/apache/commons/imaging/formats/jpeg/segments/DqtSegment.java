@@ -23,6 +23,8 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class DqtSegment extends Segment {
     public final List<QuantizationTable> quantizationTables = new ArrayList<QuantizationTable>();
 
@@ -63,8 +65,7 @@ public class DqtSegment extends Segment {
                             is, "Not a Valid JPEG File");
                     length--;
                 } else if (precision == 1) {
-                    elements[i] = read2Bytes("QuantizationTableElement", is,
-                            "Not a Valid JPEG File");
+                    elements[i] = read2Bytes("QuantizationTableElement", is, "Not a Valid JPEG File", getByteOrder());
                     length -= 2;
                 } else {
                     throw new ImageReadException(

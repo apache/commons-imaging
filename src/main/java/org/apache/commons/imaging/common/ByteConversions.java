@@ -224,11 +224,11 @@ public final class ByteConversions {
         return result;
     }
 
-    static int toUInt16(final byte[] bytes, final ByteOrder byteOrder) {
+    public static int toUInt16(final byte[] bytes, final ByteOrder byteOrder) {
         return toUInt16(bytes, 0, byteOrder);
     }
 
-    static int toUInt16(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
+    public static int toUInt16(final byte[] bytes, final int offset, final ByteOrder byteOrder) {
         final int byte0 = 0xff & bytes[offset + 0];
         final int byte1 = 0xff & bytes[offset + 1];
         if (byteOrder == ByteOrder.BIG_ENDIAN) {

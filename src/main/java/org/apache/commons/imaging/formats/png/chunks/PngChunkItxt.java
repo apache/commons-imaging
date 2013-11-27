@@ -21,9 +21,10 @@ import java.io.IOException;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
+
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PngChunkItxt extends PngTextChunk {
     public final String keyword;
@@ -90,7 +91,7 @@ public class PngChunkItxt extends PngTextChunk {
             final byte[] compressedText = new byte[compressedTextLength];
             System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
-            text = new String(BinaryFunctions.getStreamBytes(
+            text = new String(getStreamBytes(
                     new InflaterInputStream(new ByteArrayInputStream(compressedText))), "utf-8");
 
         } else {

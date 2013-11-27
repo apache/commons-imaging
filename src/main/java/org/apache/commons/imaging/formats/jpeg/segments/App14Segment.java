@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.imaging.common.BinaryFileParser;
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 /**
  * http://www.aiim.org/documents/standards/PDF-Ref/References/Adobe/5116.DCT_Filter.pdf
@@ -50,7 +50,7 @@ public class App14Segment extends AppnSegment {
     }
 
     public boolean isAdobeJpegSegment() {
-        return BinaryFileParser.startsWith(getSegmentData(), ADOBE_PREFIX);
+        return startsWith(getSegmentData(), ADOBE_PREFIX);
     }
 
     public int getAdobeColorTransform() {

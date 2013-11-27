@@ -28,6 +28,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -39,6 +40,8 @@ import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossless;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.IoUtils;
+
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -508,13 +511,13 @@ public class ExifRewriter extends BinaryFileParser {
             }
 
             if (!hasExif && newBytes != null) {
-                final byte[] markerBytes = toBytes((short) JpegConstants.JPEG_APP1_MARKER);
+                final byte[] markerBytes = ByteConversions.toBytes((short) JpegConstants.JPEG_APP1_MARKER, getByteOrder());
                 if (newBytes.length > 0xffff) {
                     throw new ExifOverflowException(
                             "APP1 Segment is too long: " + newBytes.length);
                 }
                 final int markerLength = newBytes.length + 2;
-                final byte[] markerLengthBytes = toBytes((short) markerLength);
+                final byte[] markerLengthBytes = ByteConversions.toBytes((short) markerLength, getByteOrder());
 
                 int index = 0;
                 final JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments
@@ -540,13 +543,13 @@ public class ExifRewriter extends BinaryFileParser {
                         continue;
                     }
 
-                    final byte[] markerBytes = toBytes((short) JpegConstants.JPEG_APP1_MARKER);
+                    final byte[] markerBytes = ByteConversions.toBytes((short) JpegConstants.JPEG_APP1_MARKER, getByteOrder());
                     if (newBytes.length > 0xffff) {
                         throw new ExifOverflowException(
                                 "APP1 Segment is too long: " + newBytes.length);
                     }
                     final int markerLength = newBytes.length + 2;
-                    final byte[] markerLengthBytes = toBytes((short) markerLength);
+                    final byte[] markerLengthBytes = ByteConversions.toBytes((short) markerLength, getByteOrder());
 
                     os.write(markerBytes);
                     os.write(markerLengthBytes);

@@ -21,6 +21,8 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class TransparencyFilterGrayscale extends TransparencyFilter {
     private final int transparentColor;
 
@@ -28,7 +30,7 @@ public class TransparencyFilterGrayscale extends TransparencyFilter {
         super(bytes);
 
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        transparentColor = read2Bytes("transparentColor", is, "tRNS: Missing transparentColor");
+        transparentColor = read2Bytes("transparentColor", is, "tRNS: Missing transparentColor", getByteOrder());
     }
 
     @Override

@@ -21,8 +21,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
+
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class App2Segment extends AppnSegment implements Comparable<App2Segment> {
     public final byte[] iccBytes;
@@ -37,7 +38,7 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
             throws ImageReadException, IOException {
         super(marker, markerLength, is2);
 
-        if (BinaryFileParser.startsWith(getSegmentData(),
+        if (startsWith(getSegmentData(),
                 JpegConstants.ICC_PROFILE_LABEL)) {
             final InputStream is = new ByteArrayInputStream(getSegmentData());
 

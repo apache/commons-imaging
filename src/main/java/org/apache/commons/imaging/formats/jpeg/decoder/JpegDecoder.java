@@ -36,6 +36,8 @@ import org.apache.commons.imaging.formats.jpeg.segments.DqtSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SofnSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SosSegment;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     /*
      * JPEG is an advanced image format that takes significant computation to
@@ -66,8 +68,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
         final ByteArrayInputStream is = new ByteArrayInputStream(imageData);
         try {
-            final int segmentLength = read2Bytes("segmentLength", is,
-                    "Not a Valid JPEG File");
+            final int segmentLength = read2Bytes("segmentLength", is, "Not a Valid JPEG File", getByteOrder());
             final byte[] sosSegmentBytes = readBytes("SosSegment",
                     is, segmentLength - 2, "Not a Valid JPEG File");
             sosSegment = new SosSegment(marker, sosSegmentBytes);

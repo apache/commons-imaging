@@ -57,6 +57,8 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.util.Debug;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class JpegImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".jpg";
     private static final String[] ACCEPTED_EXTENSIONS = { ".jpg", ".jpeg", };

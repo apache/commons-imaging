@@ -48,6 +48,9 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+import static org.apache.commons.imaging.common.ByteConversions.*;
+
 public class PcxImageParser extends ImageParser {
     // ZSoft's official spec is at http://www.qzx.com/pc-gpe/pcx.txt
     // (among other places) but it's pretty thin. The fileformat.info document
@@ -256,12 +259,12 @@ public class PcxImageParser extends ImageParser {
         final int version = 0xff & pcxHeaderBytes[1];
         final int encoding = 0xff & pcxHeaderBytes[2];
         final int bitsPerPixel = 0xff & pcxHeaderBytes[3];
-        final int xMin = toUInt16(pcxHeaderBytes, 4);
-        final int yMin = toUInt16(pcxHeaderBytes, 6);
-        final int xMax = toUInt16(pcxHeaderBytes, 8);
-        final int yMax = toUInt16(pcxHeaderBytes, 10);
-        final int hDpi = toUInt16(pcxHeaderBytes, 12);
-        final int vDpi = toUInt16(pcxHeaderBytes, 14);
+        final int xMin = toUInt16(pcxHeaderBytes, 4, getByteOrder());
+        final int yMin = toUInt16(pcxHeaderBytes, 6, getByteOrder());
+        final int xMax = toUInt16(pcxHeaderBytes, 8, getByteOrder());
+        final int yMax = toUInt16(pcxHeaderBytes, 10, getByteOrder());
+        final int hDpi = toUInt16(pcxHeaderBytes, 12, getByteOrder());
+        final int vDpi = toUInt16(pcxHeaderBytes, 14, getByteOrder());
         final int[] colormap = new int[16];
         for (int i = 0; i < 16; i++) {
             colormap[i] = 0xff000000
@@ -271,10 +274,10 @@ public class PcxImageParser extends ImageParser {
         }
         final int reserved = 0xff & pcxHeaderBytes[64];
         final int nPlanes = 0xff & pcxHeaderBytes[65];
-        final int bytesPerLine = toUInt16(pcxHeaderBytes, 66);
-        final int paletteInfo = toUInt16(pcxHeaderBytes, 68);
-        final int hScreenSize = toUInt16(pcxHeaderBytes, 70);
-        final int vScreenSize = toUInt16(pcxHeaderBytes, 72);
+        final int bytesPerLine = toUInt16(pcxHeaderBytes, 66, getByteOrder());
+        final int paletteInfo = toUInt16(pcxHeaderBytes, 68, getByteOrder());
+        final int hScreenSize = toUInt16(pcxHeaderBytes, 70, getByteOrder());
+        final int vScreenSize = toUInt16(pcxHeaderBytes, 72, getByteOrder());
 
         if (manufacturer != 10) {
             throw new ImageReadException(

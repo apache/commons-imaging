@@ -19,6 +19,8 @@ package org.apache.commons.imaging.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class PngChunkIhdr extends PngChunk {
     public final int width;
     public final int height;
@@ -32,8 +34,8 @@ public class PngChunkIhdr extends PngChunk {
         super(length, chunkType, crc, bytes);
 
         final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        width = read4Bytes("Width", is, "Not a Valid Png File: IHDR Corrupt");
-        height = read4Bytes("Height", is, "Not a Valid Png File: IHDR Corrupt");
+        width = read4Bytes("Width", is, "Not a Valid Png File: IHDR Corrupt", getByteOrder());
+        height = read4Bytes("Height", is, "Not a Valid Png File: IHDR Corrupt", getByteOrder());
         bitDepth = readByte("BitDepth", is, "Not a Valid Png File: IHDR Corrupt");
         colorType = readByte("ColorType", is, "Not a Valid Png File: IHDR Corrupt");
         compressionMethod = readByte("CompressionMethod", is, "Not a Valid Png File: IHDR Corrupt");

@@ -23,6 +23,8 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class JfifSegment extends Segment {
     public final int jfifMajorVersion;
     public final int jfifMinorVersion;
@@ -60,8 +62,8 @@ public class JfifSegment extends Segment {
         jfifMinorVersion = readByte("JFIF_minor_version", is,
                 "Not a Valid JPEG File");
         densityUnits = readByte("density_units", is, "Not a Valid JPEG File");
-        xDensity = read2Bytes("x_density", is, "Not a Valid JPEG File");
-        yDensity = read2Bytes("y_density", is, "Not a Valid JPEG File");
+        xDensity = read2Bytes("x_density", is, "Not a Valid JPEG File", getByteOrder());
+        yDensity = read2Bytes("y_density", is, "Not a Valid JPEG File", getByteOrder());
 
         xThumbnail = readByte("x_thumbnail", is, "Not a Valid JPEG File");
         yThumbnail = readByte("y_thumbnail", is, "Not a Valid JPEG File");

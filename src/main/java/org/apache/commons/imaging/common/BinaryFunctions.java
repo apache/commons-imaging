@@ -53,6 +53,20 @@ public final class BinaryFunctions {
         return true;
     }
 
+    public static boolean startsWith(final byte[] haystack, final BinaryConstant needle) {
+        if ((haystack == null) || (haystack.length < needle.size())) {
+            return false;
+        }
+
+        for (int i = 0; i < needle.size(); i++) {
+            if (haystack[i] != needle.get(i)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static byte readByte(final String name, final InputStream is, final String exception)
             throws IOException {
         final int result = is.read();
@@ -122,18 +136,6 @@ public final class BinaryFunctions {
         }
     }
 
-    public static void readAndVerifyBytes(final String name, final InputStream is,
-            final byte[] expected, final String exception) throws ImageReadException,
-            IOException {
-        final byte[] bytes = readBytes(name, is, expected.length, exception);
-
-        for (int i = 0; i < expected.length; i++) {
-            if (bytes[i] != expected[i]) {
-                throw new ImageReadException(exception);
-            }
-        }
-    }
-
     public static void skipBytes(final InputStream is, final long length, final String exception)
             throws IOException {
         long total = 0;
@@ -146,21 +148,6 @@ public final class BinaryFunctions {
         }
     }
 
-    public static void scanForByte(final InputStream is, final byte value)
-            throws IOException {
-        int count = 0;
-        for (int i = 0; count < 3; i++) {
-            final int b = is.read();
-            if (b < 0) {
-                return;
-            }
-            if ((0xff & b) == value) {
-                System.out.println("\t" + i + ": match.");
-                count++;
-            }
-        }
-    }
-
     public static byte[] remainingBytes(final String name, final byte[] bytes, final int count) {
         return slice(bytes, count, bytes.length - count);
     }
@@ -169,13 +156,6 @@ public final class BinaryFunctions {
         final byte[] result = new byte[count];
         System.arraycopy(bytes, start, result, 0, count);
         return result;
-    }
-
-    public static byte[] tail(final byte[] bytes, int count) {
-        if (count > bytes.length) {
-            count = bytes.length;
-        }
-        return slice(bytes, bytes.length - count, count);
     }
 
     public static byte[] head(final byte[] bytes, int count) {

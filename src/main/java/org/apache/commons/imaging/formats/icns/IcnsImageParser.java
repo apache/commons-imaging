@@ -39,6 +39,8 @@ import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class IcnsImageParser extends ImageParser {
     static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
     private static final String DEFAULT_EXTENSION = ".icns";
@@ -155,8 +157,8 @@ public class IcnsImageParser extends ImageParser {
 
     private IcnsHeader readIcnsHeader(final InputStream is)
             throws ImageReadException, IOException {
-        final int magic = read4Bytes("Magic", is, "Not a Valid ICNS File");
-        final int fileSize = read4Bytes("FileSize", is, "Not a Valid ICNS File");
+        final int magic = read4Bytes("Magic", is, "Not a Valid ICNS File", getByteOrder());
+        final int fileSize = read4Bytes("FileSize", is, "Not a Valid ICNS File", getByteOrder());
 
         if (magic != ICNS_MAGIC) {
             throw new ImageReadException("Not a Valid ICNS File: " + "magic is 0x" + Integer.toHexString(magic));
@@ -193,9 +195,9 @@ public class IcnsImageParser extends ImageParser {
     }
 
     private IcnsElement readIcnsElement(final InputStream is) throws IOException {
-        final int type = read4Bytes("Type", is, "Not a Valid ICNS File"); // Icon type
+        final int type = read4Bytes("Type", is, "Not a Valid ICNS File", getByteOrder()); // Icon type
                                                                     // (4 bytes)
-        final int elementSize = read4Bytes("ElementSize", is, "Not a Valid ICNS File"); // Length
+        final int elementSize = read4Bytes("ElementSize", is, "Not a Valid ICNS File", getByteOrder()); // Length
                                                                                   // of
                                                                                   // data
                                                                                   // (4

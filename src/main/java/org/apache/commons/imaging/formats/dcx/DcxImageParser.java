@@ -43,6 +43,8 @@ import org.apache.commons.imaging.formats.pcx.PcxConstants;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class DcxImageParser extends ImageParser {
     // See http://www.fileformat.info/format/pcx/egff.htm for documentation
     private static final String DEFAULT_EXTENSION = ".dcx";
@@ -123,11 +125,11 @@ public class DcxImageParser extends ImageParser {
         boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
-            final int id = read4Bytes("Id", is, "Not a Valid DCX File");
+            final int id = read4Bytes("Id", is, "Not a Valid DCX File", getByteOrder());
             final List<Long> pageTable = new ArrayList<Long>(1024);
             for (int i = 0; i < 1024; i++) {
                 final long pageOffset = 0xFFFFffffL & read4Bytes("PageTable", is,
-                        "Not a Valid DCX File");
+                        "Not a Valid DCX File", getByteOrder());
                 if (pageOffset == 0) {
                     break;
                 }

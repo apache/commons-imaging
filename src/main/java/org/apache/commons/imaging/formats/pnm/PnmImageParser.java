@@ -41,6 +41,8 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class PnmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".pnm";
     private static final String[] ACCEPTED_EXTENSIONS = { ".pbm", ".pgm",

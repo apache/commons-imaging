@@ -61,6 +61,8 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.icc.IccProfileParser;
 import org.apache.commons.imaging.util.IoUtils;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class PngImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".png";
     private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
@@ -149,8 +151,8 @@ public class PngImageParser extends ImageParser {
                 System.out.println("");
             }
 
-            final int length = read4Bytes("Length", is, "Not a Valid PNG File");
-            final int chunkType = read4Bytes("ChunkType", is, "Not a Valid PNG File");
+            final int length = read4Bytes("Length", is, "Not a Valid PNG File", getByteOrder());
+            final int chunkType = read4Bytes("ChunkType", is, "Not a Valid PNG File", getByteOrder());
 
             if (getDebug()) {
                 printCharQuad("ChunkType", chunkType);
@@ -172,7 +174,7 @@ public class PngImageParser extends ImageParser {
                 }
             }
 
-            final int crc = read4Bytes("CRC", is, "Not a Valid PNG File");
+            final int crc = read4Bytes("CRC", is, "Not a Valid PNG File", getByteOrder());
 
             if (keep) {
                 if (chunkType == PngConstants.iCCP) {

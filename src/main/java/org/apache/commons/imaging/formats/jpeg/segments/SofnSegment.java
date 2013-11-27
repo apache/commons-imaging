@@ -22,6 +22,8 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.*;
+
 public class SofnSegment extends Segment {
     public final int width, height;
     public final int numberOfComponents;
@@ -57,8 +59,8 @@ public class SofnSegment extends Segment {
         }
 
         precision = readByte("Data_precision", is, "Not a Valid JPEG File");
-        height = read2Bytes("Image_height", is, "Not a Valid JPEG File");
-        width = read2Bytes("Image_Width", is, "Not a Valid JPEG File");
+        height = read2Bytes("Image_height", is, "Not a Valid JPEG File", getByteOrder());
+        width = read2Bytes("Image_Width", is, "Not a Valid JPEG File", getByteOrder());
         numberOfComponents = readByte("Number_of_components", is,
                 "Not a Valid JPEG File");
         components = new Component[numberOfComponents];
