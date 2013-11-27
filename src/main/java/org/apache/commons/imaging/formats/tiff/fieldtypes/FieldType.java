@@ -77,7 +77,7 @@ public abstract class FieldType {
     
     public static final List<FieldType> LONG_OR_IFD =
             Collections.unmodifiableList(Arrays.asList(
-                    (FieldType)LONG, IFD));
+                    (FieldType) LONG, IFD));
     
     public static final List<FieldType> ASCII_OR_RATIONAL =
             Collections.unmodifiableList(Arrays.asList(

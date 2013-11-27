@@ -115,7 +115,7 @@ public final class Debug {
         debug(getDebug(message, map));
     }
 
-    private static String getDebug(final String message, final Map<?,?> map) {
+    private static String getDebug(final String message, final Map<?, ?> map) {
         final StringBuilder result = new StringBuilder();
 
         if (map == null) {

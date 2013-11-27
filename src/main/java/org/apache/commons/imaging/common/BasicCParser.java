@@ -125,7 +125,7 @@ public class BasicCParser {
                         seenFirstComment = true;
                     } else {
                         if (!seenFirstComment) {
-                            firstComment.append((char)c);
+                            firstComment.append((char) c);
                         }
                     }
                 } else {

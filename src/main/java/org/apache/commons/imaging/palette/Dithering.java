@@ -31,7 +31,8 @@ public final class Dithering {
      * Changes the given image to only use colors from the given palette,
      * applying Floyd-Steinberg dithering in the process. Ensure that
      * your alpha values in the image and in the palette are consistent.
-     * @param image the image to change
+     *
+     * @param image   the image to change
      * @param palette the palette to use
      * @throws ImageWriteException
      */
@@ -84,12 +85,12 @@ public final class Dithering {
         int r = (argb >> 16) & 0xff;
         int g = (argb >> 8) & 0xff;
         int b = argb & 0xff;
-        
-        a += errA*mul/16;
-        r += errR*mul/16;
-        g += errG*mul/16;
-        b += errB*mul/16;
-        
+
+        a += errA * mul / 16;
+        r += errR * mul / 16;
+        g += errG * mul / 16;
+        b += errB * mul / 16;
+
         if (a < 0) {
             a = 0;
         } else if (a > 0xff) {

@@ -69,7 +69,7 @@ public abstract class TiffImageData {
          * the last column of tiles may extend beyond the image width.
          * @return an integer value greater than zero
          */
-        public int getTileWidth(){
+        public int getTileWidth() {
             return tileWidth;
         }
         
@@ -79,7 +79,7 @@ public abstract class TiffImageData {
          * the last row of tiles may extend beyond the image height.
          * @return an integer value greater than zero
          */
-        public int getTileHeight(){
+        public int getTileHeight() {
             return tileLength;
         }
 

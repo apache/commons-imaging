@@ -511,7 +511,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         if (obj instanceof Integer) {
             return (Integer) obj;
         }
-        throw new ImageReadException("Non-Integer parameter "+key);
+        throw new ImageReadException("Non-Integer parameter " + key);
     }
     
     private Rectangle checkForSubImage(

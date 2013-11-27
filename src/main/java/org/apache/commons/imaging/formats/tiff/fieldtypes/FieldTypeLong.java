@@ -40,7 +40,7 @@ public class FieldTypeLong extends FieldType {
     @Override
     public byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException {
         if (o instanceof Integer) {
-            return ByteConversions.toBytes((Integer)o, byteOrder);
+            return ByteConversions.toBytes((Integer) o, byteOrder);
         } else if (o instanceof int[]) {
             final int[] numbers = (int[]) o;
             return ByteConversions.toBytes(numbers, byteOrder);

@@ -209,15 +209,15 @@ public final class DataReaderTiled extends DataReader {
 
         final int nColumnsOfTiles = (width + tileWidth - 1) / tileWidth;
 
-        final int x0 = col0*tileWidth;
-        final int y0 = row0*tileLength;
+        final int x0 = col0 * tileWidth;
+        final int y0 = row0 * tileLength;
         
         final ImageBuilder workingBuilder =
                 new ImageBuilder(workingWidth, workingHeight, false);
         
         for (int iRow = row0; iRow <= row1; iRow++) {
             for (int iCol = col0; iCol <= col1; iCol++) {
-                final int tile = iRow * nColumnsOfTiles+iCol;
+                final int tile = iRow * nColumnsOfTiles + iCol;
                 final byte[] compressed = imageData.tiles[tile].getData();
                 final byte[] decompressed = decompress(compressed, compression,
                         bytesPerTile, tileWidth, tileLength);

@@ -63,7 +63,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         this.exifBytes = exifBytes;
     }
 
-    private List<TiffElement> analyzeOldTiff(final Map<Integer,TiffOutputField> frozenFields) throws ImageWriteException,
+    private List<TiffElement> analyzeOldTiff(final Map<Integer, TiffOutputField> frozenFields) throws ImageWriteException,
             IOException {
         try {
             final ByteSource byteSource = new ByteSourceArray(exifBytes);
@@ -149,7 +149,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             throws IOException, ImageWriteException {
         // There are some fields whose address in the file must not change,
         // unless of course their value is changed. 
-        final Map<Integer,TiffOutputField> frozenFields = new HashMap<Integer,TiffOutputField>();
+        final Map<Integer, TiffOutputField> frozenFields = new HashMap<Integer, TiffOutputField>();
         final TiffOutputField makerNoteField = outputSet.findField(EXIF_TAG_MAKER_NOTE);
         if (makerNoteField != null && makerNoteField.getSeperateValue() != null) {
             frozenFields.put(EXIF_TAG_MAKER_NOTE.tag, makerNoteField);
@@ -168,8 +168,8 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                 return;
             }
         }
-        final Map<Long,TiffOutputField> frozenFieldOffsets = new HashMap<Long, TiffOutputField>();
-        for (final Map.Entry<Integer,TiffOutputField> entry : frozenFields.entrySet()) {
+        final Map<Long, TiffOutputField> frozenFieldOffsets = new HashMap<Long, TiffOutputField>();
+        for (final Map.Entry<Integer, TiffOutputField> entry : frozenFields.entrySet()) {
             final TiffOutputField frozenField = entry.getValue();
             if (frozenField.getSeperateValue().getOffset() != TiffOutputItem.UNDEFINED_VALUE) {
                 frozenFieldOffsets.put(frozenField.getSeperateValue().getOffset(), frozenField);

@@ -249,7 +249,7 @@ public final class DataReaderStrips extends DataReader {
         // in the full image (the source image) that will be processed.
  
         final int y0 = strip0 * rowsPerStrip;
-        final int yLimit = subImage.y-y0+subImage.height;
+        final int yLimit = subImage.y - y0 + subImage.height;
 
 
         // TO DO: we can probably save some processing by using yLimit instead
