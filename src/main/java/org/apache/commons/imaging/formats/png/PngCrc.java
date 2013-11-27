@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.formats.png;
 
 // should just use ints, not longs
-public class PngCrc {
+class PngCrc {
     /* Table of CRCs of all 8-bit messages. */
     private final long[] crc_table = new long[256];
 

@@ -24,7 +24,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
-public class ScanExpediterSimple extends ScanExpediter {
+class ScanExpediterSimple extends ScanExpediter {
     public ScanExpediterSimple(final int width, final int height, final InputStream is,
             final BufferedImage bi, final int colorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,

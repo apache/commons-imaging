@@ -32,7 +32,7 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
-public abstract class ScanExpediter {
+abstract class ScanExpediter {
     protected final int width;
     protected final int height;
     protected final InputStream is;

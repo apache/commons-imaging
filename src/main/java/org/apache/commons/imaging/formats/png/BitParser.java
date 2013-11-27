@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.png;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class BitParser {
+class BitParser {
     private final byte[] bytes;
     private final int bitsPerPixel;
     private final int bitDepth;
