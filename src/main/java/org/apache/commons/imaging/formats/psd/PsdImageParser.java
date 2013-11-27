@@ -510,7 +510,7 @@ public class PsdImageParser extends ImageParser {
         // we ought to count images, but don't yet.
         final int numberOfImages = -1;
         // not accurate ... only reflects first
-        final boolean isProgressive = false;
+        final boolean progressive = false;
 
         final int physicalWidthDpi = 72;
         final float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
@@ -519,7 +519,7 @@ public class PsdImageParser extends ImageParser {
 
         final String formatDetails = "Psd";
 
-        final boolean isTransparent = false; // TODO: inaccurate.
+        final boolean transparent = false; // TODO: inaccurate.
         final boolean usesPalette = header.mode == COLOR_MODE_INDEXED;
         final int colorType = ImageInfo.COLOR_TYPE_UNKNOWN;
 
@@ -538,7 +538,7 @@ public class PsdImageParser extends ImageParser {
         return new ImageInfo(formatDetails, BitsPerPixel, comments,
                 format, formatName, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-                physicalWidthInch, width, isProgressive, isTransparent,
+                physicalWidthInch, width, progressive, transparent,
                 usesPalette, colorType, compressionAlgorithm);
     }
 

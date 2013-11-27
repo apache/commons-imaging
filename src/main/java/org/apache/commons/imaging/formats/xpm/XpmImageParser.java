@@ -141,13 +141,13 @@ public class XpmImageParser extends ImageParser {
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final XpmHeader xpmHeader = readXpmHeader(byteSource);
-        boolean isTransparent = false;
+        boolean transparent = false;
         int colorType = ImageInfo.COLOR_TYPE_BW;
         for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette
                 .entrySet()) {
          final PaletteEntry paletteEntry = entry.getValue();
          if ((paletteEntry.getBestARGB() & 0xff000000) != 0xff000000) {
-        isTransparent = true;
+        transparent = true;
          }
          if (paletteEntry.haveColor) {
         colorType = ImageInfo.COLOR_TYPE_RGB;
@@ -159,7 +159,7 @@ public class XpmImageParser extends ImageParser {
         return new ImageInfo("XPM version 3", xpmHeader.numCharsPerPixel * 8,
                 new ArrayList<String>(), ImageFormats.XPM,
                 "X PixMap", xpmHeader.height, "image/x-xpixmap", 1, 0, 0, 0, 0,
-                xpmHeader.width, false, isTransparent, true, colorType,
+                xpmHeader.width, false, transparent, true, colorType,
                 ImageInfo.COMPRESSION_ALGORITHM_NONE);
     }
 

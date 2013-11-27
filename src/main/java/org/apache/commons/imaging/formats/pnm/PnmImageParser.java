@@ -254,7 +254,7 @@ public class PnmImageParser extends ImageParser {
 
         final String FormatDetails = info.getImageTypeDescription();
 
-        final boolean isTransparent = info.hasAlpha();
+        final boolean transparent = info.hasAlpha();
         final boolean usesPalette = false;
 
         final int ColorType = info.getColorType();
@@ -263,7 +263,7 @@ public class PnmImageParser extends ImageParser {
         return new ImageInfo(FormatDetails, bitsPerPixel, comments,
                 format, formatName, info.height, mimeType, numberOfImages,
                 PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
-                PhysicalWidthInch, info.width, progressive, isTransparent,
+                PhysicalWidthInch, info.width, progressive, transparent,
                 usesPalette, ColorType, compressionAlgorithm);
     }
 

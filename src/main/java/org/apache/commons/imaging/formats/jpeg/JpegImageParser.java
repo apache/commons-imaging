@@ -1093,9 +1093,9 @@ public class JpegImageParser extends ImageParser {
     // // we ought to count images, but don't yet.
     // int NumberOfImages = -1;
     // // not accurate ... only reflects first
-    // boolean isProgressive = firstSOFNSegment.marker == SOF2_MARKER;
+    // boolean progressive = firstSOFNSegment.marker == SOF2_MARKER;
     //
-    // boolean isTransparent = false; // TODO: inaccurate.
+    // boolean transparent = false; // TODO: inaccurate.
     // boolean usesPalette = false; // TODO: inaccurate.
     // int ColorType;
     // if (Number_of_components == 1)
@@ -1112,7 +1112,7 @@ public class JpegImageParser extends ImageParser {
     // ImageInfo result = new ImageInfo(FormatDetails, BitsPerPixel, Comments,
     // Format, FormatName, Height, MimeType, NumberOfImages,
     // PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
-    // PhysicalWidthInch, Width, isProgressive, isTransparent,
+    // PhysicalWidthInch, Width, progressive, transparent,
     // usesPalette, ColorType, compressionAlgorithm);
     //
     // return result;

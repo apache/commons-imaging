@@ -42,8 +42,8 @@ public class ImageInfo {
     private final int physicalWidthDpi;
     private final float physicalWidthInch;
     private final int width;
-    private final boolean isProgressive;
-    private final boolean isTransparent;
+    private final boolean progressive;
+    private final boolean transparent;
 
     private final boolean usesPalette;
 
@@ -78,7 +78,7 @@ public class ImageInfo {
             final int height, final String mimeType, final int numberOfImages,
             final int physicalHeightDpi, final float physicalHeightInch,
             final int physicalWidthDpi, final float physicalWidthInch, final int width,
-            final boolean isProgressive, final boolean isTransparent, final boolean usesPalette,
+            final boolean progressive, final boolean transparent, final boolean usesPalette,
             final int colorType, final String compressionAlgorithm) {
         this.formatDetails = formatDetails;
 
@@ -96,9 +96,9 @@ public class ImageInfo {
         this.physicalWidthDpi = physicalWidthDpi;
         this.physicalWidthInch = physicalWidthInch;
         this.width = width;
-        this.isProgressive = isProgressive;
+        this.progressive = progressive;
 
-        this.isTransparent = isTransparent;
+        this.transparent = transparent;
         this.usesPalette = usesPalette;
 
         this.colorType = colorType;
@@ -235,7 +235,7 @@ public class ImageInfo {
      * Returns true if the image is progressive or interlaced.
      */
     public boolean isProgressive() {
-        return isProgressive;
+        return progressive;
     }
 
     /**
@@ -320,8 +320,8 @@ public class ImageInfo {
         pw.println("Physical Width Dpi: " + physicalWidthDpi);
         pw.println("Physical Width Inch: " + physicalWidthInch);
         pw.println("Width: " + width);
-        pw.println("Is Progressive: " + isProgressive);
-        pw.println("Is Transparent: " + isTransparent);
+        pw.println("Is Progressive: " + progressive);
+        pw.println("Is Transparent: " + transparent);
 
         pw.println("Color Type: " + getColorTypeDescription());
         pw.println("Uses Palette: " + usesPalette);
@@ -341,7 +341,7 @@ public class ImageInfo {
      * Returns true if the image has transparency.
      */
     public boolean isTransparent() {
-        return isTransparent;
+        return transparent;
     }
 
     /**

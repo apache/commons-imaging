@@ -208,8 +208,8 @@ package org.apache.commons.imaging.formats.tga;
 //        float PhysicalHeightInch;
 //        int PhysicalWidthDpi;
 //        float PhysicalWidthInch;
-//        boolean isProgressive = false;
-//        boolean isTransparent = pixel_depth > 24;
+//        boolean progressive = false;
+//        boolean transparent = pixel_depth > 24;
 //        boolean usesPalette;
 //        int ColorType;
 //
@@ -217,7 +217,7 @@ package org.apache.commons.imaging.formats.tga;
 //        //        return new ImageInfo(FormatDetails, BitsPerPixel, Comments, Format,
 //        //                FormatName, height, MimeType, NumberOfImages,
 //        //                PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
-//        //                PhysicalWidthInch, width, isProgressive, isTransparent,
+//        //                PhysicalWidthInch, width, progressive, transparent,
 //        //                usesPalette, ColorType);
 //
 //        //        boolean is_new_tga_format = isNewTGAFormat(byteSource);

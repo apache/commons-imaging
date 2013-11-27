@@ -30,13 +30,13 @@ public class PngImageInfo extends ImageInfo {
             final int height, final String mimeType, final int numberOfImages,
             final int physicalHeightDpi, final float physicalHeightInch,
             final int physicalWidthDpi, final float physicalWidthInch, final int width,
-            final boolean isProgressive, final boolean isTransparent, final boolean usesPalette,
+            final boolean progressive, final boolean transparent, final boolean usesPalette,
             final int colorType, final String compressionAlgorithm,
             final List<PngText> textChunks) {
         super(formatDetails, bitsPerPixel, comments, format, formatName,
                 height, mimeType, numberOfImages, physicalHeightDpi,
                 physicalHeightInch, physicalWidthDpi, physicalWidthInch, width,
-                isProgressive, isTransparent, usesPalette, colorType,
+                progressive, transparent, usesPalette, colorType,
                 compressionAlgorithm);
 
         this.textChunks = textChunks;

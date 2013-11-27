@@ -609,8 +609,8 @@ public class BmpImageParser extends ImageParser {
         // we ought to count images, but don't yet.
         final int numberOfImages = -1;
         // not accurate ... only reflects first
-        final boolean isProgressive = false;
-        // boolean isProgressive = (fPNGChunkIHDR.InterlaceMethod != 0);
+        final boolean progressive = false;
+        // boolean progressive = (fPNGChunkIHDR.InterlaceMethod != 0);
         //
         // pixels per meter
         final int physicalWidthDpi = (int) (bhi.hResolution * .0254);
@@ -623,7 +623,7 @@ public class BmpImageParser extends ImageParser {
                 + (char) bhi.identifier2 + ": "
                 + getBmpTypeDescription(bhi.identifier1, bhi.identifier2) + ")";
 
-        final boolean isTransparent = false;
+        final boolean transparent = false;
 
         final boolean usesPalette = colorTable != null;
         final int colorType = ImageInfo.COLOR_TYPE_RGB;
@@ -632,7 +632,7 @@ public class BmpImageParser extends ImageParser {
         return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, name, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-                physicalWidthInch, width, isProgressive, isTransparent,
+                physicalWidthInch, width, progressive, transparent,
                 usesPalette, colorType, compressionAlgorithm);
     }
 

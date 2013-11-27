@@ -556,7 +556,7 @@ public class GifImageParser extends ImageParser {
         // we ought to count images, but don't yet.
         final int numberOfImages = -1;
 
-        final boolean isProgressive = id.interlaceFlag;
+        final boolean progressive = id.interlaceFlag;
 
         final int physicalWidthDpi = 72;
         final float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
@@ -567,9 +567,9 @@ public class GifImageParser extends ImageParser {
                 + ((char) blocks.gifHeaderInfo.version2)
                 + ((char) blocks.gifHeaderInfo.version3);
 
-        boolean isTransparent = false;
+        boolean transparent = false;
         if (gce != null && gce.transparency) {
-            isTransparent = true;
+            transparent = true;
         }
 
         final boolean usesPalette = true;
@@ -579,7 +579,7 @@ public class GifImageParser extends ImageParser {
         return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, formatName, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-                physicalWidthInch, width, isProgressive, isTransparent,
+                physicalWidthInch, width, progressive, transparent,
                 usesPalette, colorType, compressionAlgorithm);
     }
 

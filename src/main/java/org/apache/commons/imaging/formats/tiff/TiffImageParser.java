@@ -246,12 +246,12 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         final String mimeType = "image/tiff";
         final int numberOfImages = contents.directories.size();
         // not accurate ... only reflects first
-        final boolean isProgressive = false;
+        final boolean progressive = false;
         // is TIFF ever interlaced/progressive?
 
         final String formatDetails = "Tiff v." + contents.header.tiffVersion;
 
-        final boolean isTransparent = false; // TODO: wrong
+        final boolean transparent = false; // TODO: wrong
         boolean usesPalette = false;
         final TiffField colorMapField = directory
                 .findField(TiffTagConstants.TIFF_TAG_COLOR_MAP);
@@ -298,7 +298,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         final ImageInfo result = new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, formatName, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
-                physicalWidthInch, width, isProgressive, isTransparent,
+                physicalWidthInch, width, progressive, transparent,
                 usesPalette, colorType, compressionAlgorithm);
 
         return result;
