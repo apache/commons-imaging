@@ -35,7 +35,7 @@ import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class PngWriter {
+class PngWriter {
     private final boolean verbose;
 
     public PngWriter(final boolean verbose) {
@@ -202,7 +202,7 @@ public class PngWriter {
         writeChunk(os, ChunkType.tEXt, baos.toByteArray());
     }
 
-    public final byte[] deflate(final byte[] bytes) throws IOException {
+    private byte[] deflate(final byte[] bytes) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
         boolean canThrow = false;
