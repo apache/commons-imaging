@@ -19,9 +19,7 @@ package org.apache.commons.imaging.util;
 import java.io.Closeable;
 import java.io.IOException;
 
-import org.apache.commons.imaging.ImagingConstants;
-
-public final class IoUtils implements ImagingConstants {
+public final class IoUtils {
     public static void closeQuietly(final boolean mayThrow, final Closeable... closeables)
             throws IOException {
         IOException firstException = null;
