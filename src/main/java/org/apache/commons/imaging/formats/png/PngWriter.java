@@ -273,7 +273,7 @@ public class PngWriter {
             bytes[i] = (byte) (0xff & (palette.getEntry(i) >> 24));
         }
         
-        writeChunk(os, PngConstants.TRNS_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, PngConstants.tRNS_CHUNK_TYPE.toByteArray(), bytes);
     }
 
     private void writeChunkIEND(final OutputStream os) throws IOException {
@@ -297,7 +297,7 @@ public class PngWriter {
         bytes[6] = (byte) (0xff & (yPPU >> 8));
         bytes[7] = (byte) (0xff & (yPPU >> 0));
         bytes[8] = units;
-        writeChunk(os, PngConstants.IPHYS_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, PngConstants.pHYs_CHUNK_TYPE.toByteArray(), bytes);
     }
 
     private byte getColourType(final boolean hasAlpha, final boolean isGrayscale) {

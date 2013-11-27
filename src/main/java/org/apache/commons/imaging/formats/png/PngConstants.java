@@ -25,13 +25,13 @@ public interface PngConstants {
 
     public static final BinaryConstant IHDR_CHUNK_TYPE = new BinaryConstant(new byte[] { 'I', 'H', 'D', 'R' });
     public static final BinaryConstant PLTE_CHUNK_TYPE = new BinaryConstant(new byte[] { 'P', 'L', 'T', 'E' });
-    public static final BinaryConstant TRNS_CHUNK_TYPE = new BinaryConstant(new byte[] { 't', 'R', 'N', 'S' });
+    public static final BinaryConstant tRNS_CHUNK_TYPE = new BinaryConstant(new byte[] { 't', 'R', 'N', 'S' });
     public static final BinaryConstant IEND_CHUNK_TYPE = new BinaryConstant(new byte[] { 'I', 'E', 'N', 'D' });
     public static final BinaryConstant IDAT_CHUNK_TYPE = new BinaryConstant(new byte[] { 'I', 'D', 'A', 'T' });
     public static final BinaryConstant iTXt_CHUNK_TYPE = new BinaryConstant(new byte[] { 'i', 'T', 'X', 't' });
     public static final BinaryConstant tEXt_CHUNK_TYPE = new BinaryConstant(new byte[] { 't', 'E', 'X', 't' });
     public static final BinaryConstant zTXt_CHUNK_TYPE = new BinaryConstant(new byte[] { 'z', 'T', 'X', 't' });
-    public static final BinaryConstant IPHYS_CHUNK_TYPE = new BinaryConstant(new byte[] { 'p', 'H', 'Y', 's' });
+    public static final BinaryConstant pHYs_CHUNK_TYPE = new BinaryConstant(new byte[] { 'p', 'H', 'Y', 's' });
 
     public static final int IEND = BinaryFunctions.charsToQuad('I', 'E', 'N', 'D');
     public static final int IHDR = BinaryFunctions.charsToQuad('I', 'H', 'D', 'R');
