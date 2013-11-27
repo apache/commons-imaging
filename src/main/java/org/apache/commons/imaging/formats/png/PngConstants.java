@@ -17,36 +17,10 @@
 package org.apache.commons.imaging.formats.png;
 
 import org.apache.commons.imaging.common.BinaryConstant;
-import org.apache.commons.imaging.common.BinaryFunctions;
 
 public interface PngConstants {
 
     public static final int COMPRESSION_DEFLATE_INFLATE = 0;
-
-    public static final BinaryConstant IHDR_CHUNK_TYPE = new BinaryConstant(new byte[] { 'I', 'H', 'D', 'R' });
-    public static final BinaryConstant PLTE_CHUNK_TYPE = new BinaryConstant(new byte[] { 'P', 'L', 'T', 'E' });
-    public static final BinaryConstant tRNS_CHUNK_TYPE = new BinaryConstant(new byte[] { 't', 'R', 'N', 'S' });
-    public static final BinaryConstant IEND_CHUNK_TYPE = new BinaryConstant(new byte[] { 'I', 'E', 'N', 'D' });
-    public static final BinaryConstant IDAT_CHUNK_TYPE = new BinaryConstant(new byte[] { 'I', 'D', 'A', 'T' });
-    public static final BinaryConstant iTXt_CHUNK_TYPE = new BinaryConstant(new byte[] { 'i', 'T', 'X', 't' });
-    public static final BinaryConstant tEXt_CHUNK_TYPE = new BinaryConstant(new byte[] { 't', 'E', 'X', 't' });
-    public static final BinaryConstant zTXt_CHUNK_TYPE = new BinaryConstant(new byte[] { 'z', 'T', 'X', 't' });
-    public static final BinaryConstant pHYs_CHUNK_TYPE = new BinaryConstant(new byte[] { 'p', 'H', 'Y', 's' });
-
-    public static final int IEND = BinaryFunctions.charsToQuad('I', 'E', 'N', 'D');
-    public static final int IHDR = BinaryFunctions.charsToQuad('I', 'H', 'D', 'R');
-    public static final int iCCP = BinaryFunctions.charsToQuad('i', 'C', 'C', 'P');
-    public static final int tEXt = BinaryFunctions.charsToQuad('t', 'E', 'X', 't');
-    public static final int zTXt = BinaryFunctions.charsToQuad('z', 'T', 'X', 't');
-    public static final int pHYs = BinaryFunctions.charsToQuad('p', 'H', 'Y', 's');
-    public static final int PLTE = BinaryFunctions.charsToQuad('P', 'L', 'T', 'E');
-    public static final int IDAT = BinaryFunctions.charsToQuad('I', 'D', 'A', 'T');
-    public static final int tRNS = BinaryFunctions.charsToQuad('t', 'R', 'N', 'S');
-    public static final int gAMA = BinaryFunctions.charsToQuad('g', 'A', 'M', 'A');
-    public static final int sRGB = BinaryFunctions.charsToQuad('s', 'R', 'G', 'B');
-
-    // XMP chunk type.
-    public static final int iTXt = BinaryFunctions.charsToQuad('i', 'T', 'X', 't');
 
     public static final BinaryConstant PNG_SIGNATURE = new BinaryConstant(
             new byte[] { (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n', });

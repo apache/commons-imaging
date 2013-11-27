@@ -68,18 +68,18 @@ public class PngWriter {
         os.write(0xff & (value >> 0));
     }
 
-    private void writeChunk(final OutputStream os, final byte[] chunkType,
+    private void writeChunk(final OutputStream os, final ChunkType chunkType,
             final byte[] data) throws IOException {
         final int dataLength = data == null ? 0 : data.length;
         writeInt(os, dataLength);
-        os.write(chunkType);
+        os.write(chunkType.array);
         if (data != null) {
             os.write(data);
         }
 
         final PngCrc png_crc = new PngCrc();
 
-        final long crc1 = png_crc.start_partial_crc(chunkType, chunkType.length);
+        final long crc1 = png_crc.start_partial_crc(chunkType.array, chunkType.array.length);
         final long crc2 = data == null ? crc1 : png_crc.continue_partial_crc(
                 crc1, data, data.length);
         final int crc = (int) png_crc.finish_partial_crc(crc2);
@@ -123,7 +123,7 @@ public class PngWriter {
 
         // Debug.debug("baos", baos.toByteArray());
 
-        writeChunk(os, PngConstants.IHDR_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, ChunkType.IHDR, baos.toByteArray());
     }
 
     private void writeChunkiTXt(final OutputStream os, final PngText.Itxt text)
@@ -154,7 +154,7 @@ public class PngWriter {
 
         baos.write(deflate(text.text.getBytes("utf-8")));
 
-        writeChunk(os, PngConstants.iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, ChunkType.iTXt, baos.toByteArray());
     }
 
     private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text) 
@@ -178,7 +178,7 @@ public class PngWriter {
         // text
         baos.write(deflate(text.text.getBytes("ISO-8859-1")));
 
-        writeChunk(os, PngConstants.zTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, ChunkType.zTXt, baos.toByteArray());
     }
 
     private void writeChunktEXt(final OutputStream os, final PngText.Text text)
@@ -199,7 +199,7 @@ public class PngWriter {
         // text
         baos.write(text.text.getBytes("ISO-8859-1"));
 
-        writeChunk(os, PngConstants.tEXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, ChunkType.tEXt, baos.toByteArray());
     }
 
     public final byte[] deflate(final byte[] bytes) throws IOException {
@@ -245,7 +245,7 @@ public class PngWriter {
 
         baos.write(deflate(xmpXml.getBytes("utf-8")));
 
-        writeChunk(os, PngConstants.iTXt_CHUNK_TYPE.toByteArray(), baos.toByteArray());
+        writeChunk(os, ChunkType.iTXt, baos.toByteArray());
     }
 
     private void writeChunkPLTE(final OutputStream os, final Palette palette)
@@ -263,7 +263,7 @@ public class PngWriter {
             bytes[index + 2] = (byte) (0xff & (rgb >> 0));
         }
 
-        writeChunk(os, PngConstants.PLTE_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, ChunkType.PLTE, bytes);
     }
 
     private void writeChunkTRNS(final OutputStream os, final Palette palette) throws IOException {
@@ -273,16 +273,16 @@ public class PngWriter {
             bytes[i] = (byte) (0xff & (palette.getEntry(i) >> 24));
         }
         
-        writeChunk(os, PngConstants.tRNS_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, ChunkType.tRNS, bytes);
     }
 
     private void writeChunkIEND(final OutputStream os) throws IOException {
-        writeChunk(os, PngConstants.IEND_CHUNK_TYPE.toByteArray(), null);
+        writeChunk(os, ChunkType.IEND, null);
     }
 
     private void writeChunkIDAT(final OutputStream os, final byte[] bytes)
             throws IOException {
-        writeChunk(os, PngConstants.IDAT_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, ChunkType.IDAT, bytes);
     }
 
     private void writeChunkPHYS(final OutputStream os, final int xPPU, final int yPPU, final byte units)
@@ -297,7 +297,7 @@ public class PngWriter {
         bytes[6] = (byte) (0xff & (yPPU >> 8));
         bytes[7] = (byte) (0xff & (yPPU >> 0));
         bytes[8] = units;
-        writeChunk(os, PngConstants.pHYs_CHUNK_TYPE.toByteArray(), bytes);
+        writeChunk(os, ChunkType.pHYs, bytes);
     }
 
     private byte getColourType(final boolean hasAlpha, final boolean isGrayscale) {
