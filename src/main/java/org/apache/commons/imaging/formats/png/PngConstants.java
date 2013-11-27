@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.png;
 import org.apache.commons.imaging.common.BinaryConstant;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
-public final class PngConstants {
+public interface PngConstants {
 
     public static final int COMPRESSION_DEFLATE_INFLATE = 0;
 
@@ -110,6 +110,4 @@ public final class PngConstants {
      */
     public static final String PARAM_KEY_PNG_TEXT_CHUNKS = "PNG_TEXT_CHUNKS";
 
-    private PngConstants() {
-    }
 }
