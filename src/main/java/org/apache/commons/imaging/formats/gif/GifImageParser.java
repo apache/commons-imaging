@@ -48,7 +48,6 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.IoUtils;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
-import static org.apache.commons.imaging.common.ByteConversions.*;
 
 public class GifImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".gif";
@@ -211,12 +210,12 @@ public class GifImageParser extends ImageParser {
         return readBytes("block", is, blockSize, "GIF: corrupt block");
     }
 
-    protected GenericGifBlock readGenericGIFBlock(final InputStream is, final int code)
+    private GenericGifBlock readGenericGIFBlock(final InputStream is, final int code)
             throws IOException {
         return readGenericGIFBlock(is, code, null);
     }
 
-    protected GenericGifBlock readGenericGIFBlock(final InputStream is, final int code,
+    private GenericGifBlock readGenericGIFBlock(final InputStream is, final int code,
             final byte[] first) throws IOException {
         final List<byte[]> subblocks = new ArrayList<byte[]>();
 
