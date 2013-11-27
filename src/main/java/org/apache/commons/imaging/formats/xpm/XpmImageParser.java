@@ -26,7 +26,6 @@ import java.awt.image.WritableRaster;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -130,11 +129,6 @@ public class XpmImageParser extends ImageParser {
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] { ImageFormats.XPM, //
         };
-    }
-
-    @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
-        return false;
     }
 
     @Override

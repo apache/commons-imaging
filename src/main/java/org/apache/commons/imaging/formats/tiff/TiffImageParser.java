@@ -19,7 +19,6 @@ package org.apache.commons.imaging.formats.tiff;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -116,11 +115,6 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
 
     public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
-    }
-
-    @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
-        return false;
     }
 
     @Override

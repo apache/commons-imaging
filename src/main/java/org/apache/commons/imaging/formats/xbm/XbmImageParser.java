@@ -25,7 +25,6 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -71,11 +70,6 @@ public class XbmImageParser extends ImageParser {
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] { ImageFormats.XBM, //
         };
-    }
-
-    @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
-        return false;
     }
 
     @Override

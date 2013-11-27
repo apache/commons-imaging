@@ -26,7 +26,6 @@ import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferFloat;
 import java.awt.image.Raster;
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -150,11 +149,6 @@ public class RgbeImageParser extends ImageParser {
     public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
-    }
-
-    @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
-        return false;
     }
 
     @Override

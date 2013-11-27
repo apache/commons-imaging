@@ -19,7 +19,6 @@ package org.apache.commons.imaging.formats.gif;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -499,11 +498,6 @@ public class GifImageParser extends ImageParser {
 
     public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
-    }
-
-    @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
-        return false;
     }
 
     @Override

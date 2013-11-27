@@ -18,7 +18,6 @@ package org.apache.commons.imaging.formats.jpeg;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -632,11 +631,6 @@ public class JpegImageParser extends ImageParser {
 
     public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
         return null;
-    }
-
-    @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
-        return false;
     }
 
     @Override

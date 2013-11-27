@@ -868,18 +868,6 @@ public abstract class ImageParser extends BinaryFileParser implements
         return false;
     }
 
-    
-   /**
-     * This method is not fully implemented in any of the current parsers,
-     * all of which return false when it is called.
-     * Although it was clearly intended to embed an ICC profile in a file,
-     * no description of the intended use of the File arguments is available.
-     * @param src A file reference.
-     * @param dst A file reference.
-     * @param profile An array of bytes describing the ICC profile
-     * @return true if the embedding operation was successful; otherwise, false. 
-     */
-    public abstract boolean embedICCProfile(File src, File dst, byte[] profile);
 
     /**
      * Get a descriptive name for the implementation of an ImageParser.

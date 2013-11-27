@@ -18,7 +18,6 @@ package org.apache.commons.imaging.formats.icns;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -67,11 +66,6 @@ public class IcnsImageParser extends ImageParser {
     @Override
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] { ImageFormats.ICNS };
-    }
-
-    @Override
-    public boolean embedICCProfile(final File src, final File dst, final byte[] profile) {
-        return false;
     }
 
     @Override

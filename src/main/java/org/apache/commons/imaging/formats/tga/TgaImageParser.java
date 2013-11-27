@@ -243,9 +243,4 @@ package org.apache.commons.imaging.formats.tga;
 //    //        return false;
 //    //    }
 //
-//    public boolean embedICCProfile(File src, File dst, byte profile[])
-//    {
-//        return false;
-//    }
-//
 // }
