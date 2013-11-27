@@ -138,7 +138,7 @@ limitations under the License.
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
         <module name="MagicNumber">
-            <property name="ignoreNumbers" value="-1,0,1,2,3,8,16,24,32,255"/>
+            <property name="ignoreNumbers" value="-1,0,1,2,3,4,8,16,24,32,64,128,255,256,1024"/>
         </module>
         <module name="RedundantThrows">
             <property name="allowUnchecked" value="true"/>
