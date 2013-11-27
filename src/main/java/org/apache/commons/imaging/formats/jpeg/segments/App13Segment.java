@@ -62,7 +62,7 @@ public class App13Segment extends AppnSegment {
         return new IptcParser().isPhotoshopJpegSegment(getSegmentData());
     }
 
-    public PhotoshopApp13Data parsePhotoshopSegment(final Map<String,Object> params)
+    public PhotoshopApp13Data parsePhotoshopSegment(final Map<String, Object> params)
             throws ImageReadException, IOException {
         /*
          * In practice, App13 segments are only used for Photoshop/IPTC

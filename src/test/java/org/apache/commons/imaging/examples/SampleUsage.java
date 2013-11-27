@@ -66,7 +66,7 @@ public class SampleUsage {
             final BufferedImage image = someImage;
             final File dst = someFile;
             final ImageFormat format = ImageFormats.PNG;
-            final Map<String,Object> optional_params = new HashMap<String,Object>();
+            final Map<String, Object> optional_params = new HashMap<String, Object>();
             Imaging.writeImage(image, dst, format, optional_params);
 
             final OutputStream os = someOutputStream;

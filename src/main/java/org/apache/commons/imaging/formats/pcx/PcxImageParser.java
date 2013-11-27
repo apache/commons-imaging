@@ -96,13 +96,13 @@ public class PcxImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String,Object> params)
+    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String,Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final PcxHeader pcxHeader = readPcxHeader(byteSource);
         final Dimension size = getImageSize(byteSource, params);
@@ -129,7 +129,7 @@ public class PcxImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String,Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final PcxHeader pcxHeader = readPcxHeader(byteSource);
         final int xSize = pcxHeader.xMax - pcxHeader.xMin + 1;
@@ -144,7 +144,7 @@ public class PcxImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String,Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -516,8 +516,8 @@ public class PcxImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            Map<String,Object> params) throws ImageReadException, IOException {
-        params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
+            Map<String, Object> params) throws ImageReadException, IOException {
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
         boolean isStrict = false;
         final Object strictness = params.get(PARAM_KEY_STRICT);
         if (strictness != null) {
@@ -538,7 +538,7 @@ public class PcxImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         new PcxWriter(params).writeImage(src, os);
     }
@@ -554,7 +554,7 @@ public class PcxImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String,Object> params)
+    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }

@@ -93,7 +93,7 @@ public class IptcParser extends BinaryFileParser {
      * Some IPTC blocks are missing this first "record version" record, so we
      * don't require it.
      */
-    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final Map<String,Object> params)
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final boolean strict =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_STRICT));
         final boolean verbose =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_VERBOSE));

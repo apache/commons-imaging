@@ -157,7 +157,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
     public void checkGetImageInfo(final File imageFile, final byte[] imageFileBytes)
             throws IOException, ImageReadException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException {
-        final Map<String,Object> params = new HashMap<String,Object>();
+        final Map<String, Object> params = new HashMap<String, Object>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         if (imageFormat.equals(ImageFormats.TIFF)

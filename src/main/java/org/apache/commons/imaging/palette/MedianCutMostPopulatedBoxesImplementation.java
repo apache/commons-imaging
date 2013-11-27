@@ -87,7 +87,7 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
             final ColorGroup lowerGroup = new ColorGroup(lowerColors, ignoreAlpha);
             final ColorGroup upperGroup = new ColorGroup(upperColors, ignoreAlpha);
             final int diff = Math.abs(lowerGroup.totalPoints - upperGroup.totalPoints);
-            final double score = diff / (double)Math.max(lowerGroup.totalPoints, upperGroup.totalPoints);
+            final double score = diff / (double) Math.max(lowerGroup.totalPoints, upperGroup.totalPoints);
             if (score < bestScore) {
                 bestScore = score;
                 bestColorComponent = colorComponent;

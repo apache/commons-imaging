@@ -68,10 +68,10 @@ public class ImageBuilder {
      * requirements for the ImageBuilder or resulting BufferedImage.
      */
     public ImageBuilder(final int width, final int height, final boolean hasAlpha) {
-        if(width<=0){
+        if (width <= 0) {
             throw new RasterFormatException("zero or negative width value");
         }
-        if(height<=0){
+        if (height <= 0) {
             throw new RasterFormatException("zero or negative height value");
         }
             

@@ -53,9 +53,9 @@ final class YCbCrConverter {
             }
         }
         // green is the hardest
-        // Math.round((float)(Y - 0.34414*(Cb-128) - 0.71414*(Cr-128)))
+        // Math.round((float) (Y - 0.34414*(Cb-128) - 0.71414*(Cr-128)))
         // but Y is integral
-        // = Y - Math.round((float)(0.34414*(Cb-128) + 0.71414*(Cr-128)))
+        // = Y - Math.round((float) (0.34414*(Cb-128) + 0.71414*(Cr-128)))
         // = Y - Math.round(f(Cb, Cr))
         // where
         // f(Cb, Cr) = 0.34414*(Cb-128) + 0.71414*(Cr-128)

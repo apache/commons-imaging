@@ -240,10 +240,10 @@ public abstract class TiffImageWriterBase implements TiffConstants {
         // Debug.debug();
     }
 
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap<String,Object>(params);
+        params = new HashMap<String, Object>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {
@@ -282,7 +282,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
             }
             params.remove(PARAM_KEY_COMPRESSION);
         }
-        final HashMap<String,Object> rawParams = new HashMap<String,Object>(params);
+        final HashMap<String, Object> rawParams = new HashMap<String, Object>(params);
         params.remove(PARAM_KEY_T4_OPTIONS);
         params.remove(PARAM_KEY_T6_OPTIONS);
         if (!params.isEmpty()) {
@@ -588,7 +588,7 @@ public abstract class TiffImageWriterBase implements TiffConstants {
 
         bos.write2Bytes(42); // tiffVersion
 
-        bos.write4Bytes((int)offsetToFirstIFD);
+        bos.write4Bytes((int) offsetToFirstIFD);
     }
 
 }

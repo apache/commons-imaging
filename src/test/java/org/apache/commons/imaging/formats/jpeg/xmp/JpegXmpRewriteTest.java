@@ -52,7 +52,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             // Debug.debug("Source Segments:");
             // new JpegUtils().dumpJFIF(byteSource);
 
-            final Map<String,Object> params = new HashMap<String,Object>();
+            final Map<String, Object> params = new HashMap<String, Object>();
             final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
             assertNotNull(xmpXml);
 

@@ -60,7 +60,7 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         writer.write(tiff, set);
         
         TiffReader reader = new TiffReader(true);
-        Map<String,Object> params = new TreeMap<String,Object>();
+        Map<String, Object> params = new TreeMap<String, Object>();
         FormatCompliance formatCompliance = new FormatCompliance("");
         TiffContents contents = reader.readFirstDirectory(new ByteSourceArray(tiff.toByteArray()), params, true, formatCompliance);
         TiffDirectory rootDir = contents.directories.get(0);

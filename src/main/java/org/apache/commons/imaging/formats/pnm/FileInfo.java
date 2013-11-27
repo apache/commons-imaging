@@ -75,7 +75,7 @@ public abstract class FileInfo {
             // invalid values -> black
             sample = 0;
         }
-        return (int)((sample * scale / max) + 0.5f);
+        return (int) ((sample * scale / max) + 0.5f);
     }
 
     public void readImage(final ImageBuilder imageBuilder, final InputStream is)

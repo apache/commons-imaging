@@ -508,13 +508,13 @@ public class ExifRewriter extends BinaryFileParser {
             }
 
             if (!hasExif && newBytes != null) {
-                final byte[] markerBytes = toBytes((short)JpegConstants.JPEG_APP1_Marker);
+                final byte[] markerBytes = toBytes((short) JpegConstants.JPEG_APP1_Marker);
                 if (newBytes.length > 0xffff) {
                     throw new ExifOverflowException(
                             "APP1 Segment is too long: " + newBytes.length);
                 }
                 final int markerLength = newBytes.length + 2;
-                final byte[] markerLengthBytes = toBytes((short)markerLength);
+                final byte[] markerLengthBytes = toBytes((short) markerLength);
 
                 int index = 0;
                 final JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments

@@ -42,7 +42,7 @@ public class PngWriter {
         this.verbose = verbose;
     }
 
-    public PngWriter(final Map<String,Object> params) {
+    public PngWriter(final Map<String, Object> params) {
         this.verbose =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_VERBOSE));
     }
 
@@ -322,7 +322,7 @@ public class PngWriter {
         return result;
     }
 
-    private byte getBitDepth(final byte colorType, final Map<String,Object> params) {
+    private byte getBitDepth(final byte colorType, final Map<String, Object> params) {
         byte result = 8;
 
         final Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
@@ -419,10 +419,10 @@ public class PngWriter {
      tEXt   Yes None
      zTXt   Yes None
      */
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap<String,Object>(params);
+        params = new HashMap<String, Object>(params);
 
         // clear format key.
         if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
@@ -433,7 +433,7 @@ public class PngWriter {
             params.remove(ImagingConstants.PARAM_KEY_VERBOSE);
         }
 
-        final Map<String,Object> rawParams = new HashMap<String,Object>(params);
+        final Map<String, Object> rawParams = new HashMap<String, Object>(params);
         if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
             params.remove(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR);
         }
@@ -627,7 +627,7 @@ public class PngWriter {
 
                             if (isGrayscale) {
                                 final int gray = (red + green + blue) / 3;
-                                // if(y==0)
+                                // if (y == 0)
                                 // {
                                 // Debug.debug("gray: " + x + ", " + y +
                                 // " argb: 0x"

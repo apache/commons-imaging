@@ -198,7 +198,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
                             continue;
                         }
                     }
-                    value = byteSource.getBlock(offset, (int)valueLength);
+                    value = byteSource.getBlock(offset, (int) valueLength);
                 } else {
                     value = offsetBytes;
                 }
@@ -310,7 +310,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
             this(null);
         }
 
-        public Collector(final Map<String,Object> params) {
+        public Collector(final Map<String, Object> params) {
             boolean tmpReadThumbnails = true;
             if (params != null && params.containsKey(PARAM_KEY_READ_THUMBNAILS)) {
                 tmpReadThumbnails = Boolean.TRUE.equals(params
@@ -386,7 +386,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
 //        }
 //    }
 
-    public TiffContents readFirstDirectory(final ByteSource byteSource, final Map<String,Object> params,
+    public TiffContents readFirstDirectory(final ByteSource byteSource, final Map<String, Object> params,
             final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
         final Collector collector = new FirstDirectoryCollector(readImageData);
@@ -412,7 +412,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         return contents;
     }
 
-    public TiffContents readContents(final ByteSource byteSource, final Map<String,Object> params,
+    public TiffContents readContents(final ByteSource byteSource, final Map<String, Object> params,
             final FormatCompliance formatCompliance) throws ImageReadException,
             IOException {
 
@@ -421,7 +421,7 @@ public class TiffReader extends BinaryFileParser implements TiffConstants {
         return collector.getContents();
     }
 
-    public void read(final ByteSource byteSource, final Map<String,Object> params,
+    public void read(final ByteSource byteSource, final Map<String, Object> params,
             final FormatCompliance formatCompliance, final Listener listener)
             throws ImageReadException, IOException {
         // TiffContents contents =

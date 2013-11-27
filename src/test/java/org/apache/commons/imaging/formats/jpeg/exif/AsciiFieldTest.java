@@ -37,7 +37,7 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
     public void testSingleImage() throws Exception {
         final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 
-        final Map<String,Object> params = new HashMap<String,Object>();
+        final Map<String, Object> params = new HashMap<String, Object>();
 
         final IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);

@@ -141,7 +141,7 @@ class RgbeInfo implements Closeable {
                     "Scan lines must be less than 32768 bytes long");
         }
 
-        final byte[] scanLineBytes = ByteConversions.toBytes((short)wd,
+        final byte[] scanLineBytes = ByteConversions.toBytes((short) wd,
                 ByteOrder.BIG_ENDIAN);
         final byte[] rgbe = new byte[wd * 4];
         final float[][] out = new float[3][wd * ht];

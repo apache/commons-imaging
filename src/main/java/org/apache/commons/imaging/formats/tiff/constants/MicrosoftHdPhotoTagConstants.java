@@ -40,115 +40,115 @@ public interface MicrosoftHdPhotoTagConstants {
             "PixelFormat", 0xbc01, 16,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     BinaryConstant PIXEL_FORMAT_VALUE_BLACK_AND_WHITE =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x05);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x05);
     BinaryConstant PIXEL_FORMAT_VALUE_8_BIT_GRAY =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x08);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x08);
     BinaryConstant PIXEL_FORMAT_VALUE_16_BIT_BGR555 =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x9);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x9);
     BinaryConstant PIXEL_FORMAT_VALUE_16_BIT_BGR565 =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0xa);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0xa);
     BinaryConstant PIXEL_FORMAT_VALUE_16_BIT_GRAY =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0xb);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0xb);
     BinaryConstant PIXEL_FORMAT_VALUE_24_BIT_BGR =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0xc);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0xc);
     BinaryConstant PIXEL_FORMAT_VALUE_24_BIT_RGB =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0xd);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0xd);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_BGR =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0xe);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0xe);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_BGRA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0xf);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0xf);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_PBGRA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x10);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x10);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_GRAY_FLOAT =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x11);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x11);
     BinaryConstant PIXEL_FORMAT_VALUE_48_BIT_RGB_FIXED_POINT =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x12);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x12);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_BGR101010 =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x13);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x13);
     BinaryConstant PIXEL_FORMAT_VALUE_48_BIT_RGB =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x15);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x15);
     BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_RGBA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x16);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x16);
     BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_PRGBA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x17);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x17);
     BinaryConstant PIXEL_FORMAT_VALUE_96_BIT_RGB_FIXED_POINT =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x18);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x18);
     BinaryConstant PIXEL_FORMAT_VALUE_128_BIT_RGBA_FLOAT =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x19);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x19);
     BinaryConstant PIXEL_FORMAT_VALUE_128_BIT_PRGBA_FLOAT =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x1a);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x1a);
     BinaryConstant PIXEL_FORMAT_VALUE_128_BIT_RGB_FLOAT =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x1b);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x1b);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_CMYK =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x1c);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x1c);
     BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_RGBA_FIXED_POINT =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x1d);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x1d);
     BinaryConstant PIXEL_FORMAT_VALUE_128_BIT_RGBA_FIXED_POINT =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x1e);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x1e);
     BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_CMYK =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x1f);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x1f);
     BinaryConstant PIXEL_FORMAT_VALUE_24_BIT_3_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x20);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x20);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_4_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x21);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x21);
     BinaryConstant PIXEL_FORMAT_VALUE_40_BIT_5_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x22);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x22);
     BinaryConstant PIXEL_FORMAT_VALUE_48_BIT_6_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x23);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x23);
     BinaryConstant PIXEL_FORMAT_VALUE_56_BIT_7_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x24);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x24);
     BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_8_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x25);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x25);
     BinaryConstant PIXEL_FORMAT_VALUE_48_BIT_3_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x26);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x26);
     BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_4_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x27);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x27);
     BinaryConstant PIXEL_FORMAT_VALUE_80_BIT_5_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x28);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x28);
     BinaryConstant PIXEL_FORMAT_VALUE_96_BIT_6_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x29);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x29);
     BinaryConstant PIXEL_FORMAT_VALUE_112_BIT_7_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x2a);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x2a);
     BinaryConstant PIXEL_FORMAT_VALUE_128_BIT_8_CHANNELS =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x2b);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x2b);
     BinaryConstant PIXEL_FORMAT_VALUE_40_BIT_CMYK_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x2c);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x2c);
     BinaryConstant PIXEL_FORMAT_VALUE_80_BIT_CMYK_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x2d);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x2d);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_3_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x2e);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x2e);
     BinaryConstant PIXEL_FORMAT_VALUE_40_BIT_4_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x2f);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x2f);
     BinaryConstant PIXEL_FORMAT_VALUE_48_BIT_5_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x30);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x30);
     BinaryConstant PIXEL_FORMAT_VALUE_56_BIT_6_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x31);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x31);
     BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_7_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x32);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x32);
     BinaryConstant PIXEL_FORMAT_VALUE_72_BIT_8_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x33);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x33);
     BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_3_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x34);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x34);
     BinaryConstant PIXEL_FORMAT_VALUE_80_BIT_4_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x35);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x35);
     BinaryConstant PIXEL_FORMAT_VALUE_96_BIT_5_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x36);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x36);
     BinaryConstant PIXEL_FORMAT_VALUE_112_BIT_6_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x37);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x37);
     BinaryConstant PIXEL_FORMAT_VALUE_128_BIT_7_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x38);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x38);
     BinaryConstant PIXEL_FORMAT_VALUE_144_BIT_8_CHANNELS_ALPHA =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x39);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x39);
     BinaryConstant PIXEL_FORMAT_VALUE_64_BIT_RGBA_HALF =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x3a);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x3a);
     BinaryConstant PIXEL_FORMAT_VALUE_48_BIT_RGB_HALF =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x3b);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x3b);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_RGBE =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x3d);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x3d);
     BinaryConstant PIXEL_FORMAT_VALUE_16_BIT_GRAY_HALF =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x3e);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x3e);
     BinaryConstant PIXEL_FORMAT_VALUE_32_BIT_GRAY_FIXED_POINT =
-            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte)0x3f);
+            TagConstantsUtils.createMicrosoftHdPhotoGuidEndingWith((byte) 0x3f);
 
     TagInfoLong EXIF_TAG_TRANSFOMATION = new TagInfoLong(
             "Transfomation", 0xbc02, 1,

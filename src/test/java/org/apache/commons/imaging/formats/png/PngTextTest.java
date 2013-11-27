@@ -38,7 +38,7 @@ public class PngTextTest extends PngBaseTest {
                 BufferedImage.TYPE_INT_ARGB);
         srcImage.setRGB(0, 0, Color.red.getRGB());
 
-        final Map<String,Object> writeParams = new HashMap<String,Object>();
+        final Map<String, Object> writeParams = new HashMap<String, Object>();
 
         final List<PngText> writeTexts = new ArrayList<PngText>();
         {

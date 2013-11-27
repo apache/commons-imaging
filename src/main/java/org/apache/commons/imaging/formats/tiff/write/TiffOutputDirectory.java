@@ -482,7 +482,7 @@ public final class TiffOutputDirectory extends TiffOutputItem implements
         if (nextDirectoryOffset == UNDEFINED_VALUE) {
             bos.write4Bytes(0);
         } else {
-            bos.write4Bytes((int)nextDirectoryOffset);
+            bos.write4Bytes((int) nextDirectoryOffset);
         }
     }
 

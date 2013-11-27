@@ -68,7 +68,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
             ImageReadException, ImageWriteException {
         // Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-        final Map<String,Object> params = new HashMap<String,Object>();
+        final Map<String, Object> params = new HashMap<String, Object>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 

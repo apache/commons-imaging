@@ -90,8 +90,8 @@ public class JpegRewriter extends BinaryFileParser {
 
         public JFIFPieceSegment(final int marker, final byte[] segmentData) {
             this(marker,
-                    ByteConversions.toBytes((short)marker, JPEG_BYTE_ORDER),
-                    ByteConversions.toBytes((short)(segmentData.length + 2), JPEG_BYTE_ORDER),
+                    ByteConversions.toBytes((short) marker, JPEG_BYTE_ORDER),
+                    ByteConversions.toBytes((short) (segmentData.length + 2), JPEG_BYTE_ORDER),
                     segmentData);
         }
 

@@ -50,7 +50,7 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
             }
 
             try {
-                final Map<String,Object> params = new HashMap<String,Object>();
+                final Map<String, Object> params = new HashMap<String, Object>();
                 final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
                 params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(
                         !ignoreImageData));

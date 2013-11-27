@@ -91,7 +91,7 @@ public class JpegImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final Map<String,Object> params) throws ImageReadException, IOException {
+            final Map<String, Object> params) throws ImageReadException, IOException {
         final JpegDecoder jpegDecoder = new JpegDecoder();
         return jpegDecoder.decode(byteSource);
     }
@@ -272,7 +272,7 @@ public class JpegImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String,Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP2_Marker, }, false);
@@ -306,7 +306,7 @@ public class JpegImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String,Object> params)
+    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final TiffImageMetadata exif = getExifMetadata(byteSource, params);
 
@@ -337,7 +337,7 @@ public class JpegImageParser extends ImageParser {
         return result;
     }
 
-    public TiffImageMetadata getExifMetadata(final ByteSource byteSource, Map<String,Object> params)
+    public TiffImageMetadata getExifMetadata(final ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException {
         final byte[] bytes = getExifRawData(byteSource);
         if (null == bytes) {
@@ -345,7 +345,7 @@ public class JpegImageParser extends ImageParser {
         }
 
         if (params == null) {
-            params = new HashMap<String,Object>();
+            params = new HashMap<String, Object>();
         }
         if (!params.containsKey(PARAM_KEY_READ_THUMBNAILS)) {
             params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.TRUE);
@@ -520,7 +520,7 @@ public class JpegImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String,Object> params)
+    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
 
         final List<String> result = new ArrayList<String>();
@@ -568,7 +568,7 @@ public class JpegImageParser extends ImageParser {
     }
 
     public JpegPhotoshopMetadata getPhotoshopMetadata(final ByteSource byteSource,
-            final Map<String,Object> params) throws ImageReadException, IOException {
+            final Map<String, Object> params) throws ImageReadException, IOException {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP13_Marker, }, false);
 
@@ -597,7 +597,7 @@ public class JpegImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String,Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final List<Segment> segments = readSegments(byteSource, new int[] {
                 // kJFIFMarker,
@@ -640,7 +640,7 @@ public class JpegImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String,Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         // List allSegments = readSegments(byteSource, null, false);
 

@@ -29,7 +29,7 @@ public class PbmWriter extends PnmWriter {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         os.write(PnmConstants.PNM_PREFIX_BYTE);
         os.write(RAWBITS ? PnmConstants.PBM_RAW_CODE : PnmConstants.PBM_TEXT_CODE);

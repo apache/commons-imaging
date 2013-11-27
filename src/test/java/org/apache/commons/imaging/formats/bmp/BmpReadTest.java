@@ -46,7 +46,7 @@ public class BmpReadTest extends BmpBaseTest {
             final IImageMetadata metadata = Imaging.getMetadata(imageFile);
             // assertNotNull(metadata);
 
-            final Map<String,Object> params = new HashMap<String,Object>();
+            final Map<String, Object> params = new HashMap<String, Object>();
             // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);

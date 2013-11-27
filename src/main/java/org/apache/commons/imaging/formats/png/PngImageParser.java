@@ -238,7 +238,7 @@ public class PngImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String,Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new int[] { PngConstants.iCCP, },
                 true);
@@ -260,7 +260,7 @@ public class PngImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String,Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new int[] { PngConstants.IHDR, },
                 true);
@@ -288,7 +288,7 @@ public class PngImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String,Object> params)
+    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource,
                 new int[] { PngConstants.tEXt, PngConstants.zTXt, }, true);
@@ -483,7 +483,7 @@ public class PngImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String,Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new int[] {
                 PngConstants.IHDR,
@@ -631,7 +631,7 @@ public class PngImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
@@ -864,7 +864,7 @@ public class PngImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         new PngWriter(params).writeImage(src, os, params);
     }
@@ -880,7 +880,7 @@ public class PngImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String,Object> params)
+    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
 
         final List<PngChunk> chunks = readChunks(byteSource, new int[] { PngConstants.iTXt, },

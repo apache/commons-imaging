@@ -419,7 +419,7 @@ public class PsdImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String,Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
                 new int[] { IMAGE_RESOURCE_ID_ICC_PROFILE, }, 1);
@@ -437,7 +437,7 @@ public class PsdImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String,Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final PsdHeaderInfo bhi = readHeader(byteSource);
         if (bhi == null) {
@@ -458,7 +458,7 @@ public class PsdImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String,Object> params)
+    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -488,7 +488,7 @@ public class PsdImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String,Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final ImageContents imageContents = readImageContents(byteSource);
         // ImageContents imageContents = readImage(byteSource, false);
@@ -613,7 +613,7 @@ public class PsdImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final ImageContents imageContents = readImageContents(byteSource);
         // ImageContents imageContents = readImage(byteSource, false);
@@ -737,7 +737,7 @@ public class PsdImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String,Object> params)
+    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
 
         final ImageContents imageContents = readImageContents(byteSource);

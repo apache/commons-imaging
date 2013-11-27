@@ -130,7 +130,7 @@ public class PngWriteReadTest extends ImagingTest {
             ImageReadException, ImageWriteException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
-        final Map<String,Object> writeParams = new HashMap<String,Object>();
+        final Map<String, Object> writeParams = new HashMap<String, Object>();
         // writeParams.put(ImagingConstants.PARAM_KEY_FORMAT,
         // ImageFormat.IMAGE_FORMAT_PNG);
         // writeParams.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,

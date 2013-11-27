@@ -67,7 +67,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             IOException {
         try {
             final ByteSource byteSource = new ByteSourceArray(exifBytes);
-            final Map<String,Object> params = null;
+            final Map<String, Object> params = null;
             final FormatCompliance formatCompliance = FormatCompliance.getDefault();
             final TiffContents contents = new TiffReader(false).readContents(
                     byteSource, params, formatCompliance);
@@ -300,7 +300,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             final long outputLength) throws IOException, ImageWriteException {
         final TiffOutputDirectory rootDirectory = outputSet.getRootDirectory();
 
-        final byte[] output = new byte[(int)outputLength];
+        final byte[] output = new byte[(int) outputLength];
 
         // copy old data (including maker notes, etc.)
         System.arraycopy(exifBytes, 0, output, 0,

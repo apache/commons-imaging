@@ -171,7 +171,7 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_1D);
                 final byte[] compressed = Imaging.writeImageToBytes(image,
@@ -190,7 +190,7 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 0);
@@ -210,7 +210,7 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 4);
@@ -230,7 +230,7 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 1);
@@ -250,7 +250,7 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
                 params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 5);
@@ -270,7 +270,7 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String,Object> params = new HashMap<String,Object>();
+                final HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
                         TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
                 final byte[] compressed = Imaging.writeImageToBytes(image,

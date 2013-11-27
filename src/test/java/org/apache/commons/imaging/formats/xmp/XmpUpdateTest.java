@@ -84,7 +84,7 @@ public class XmpUpdateTest extends ImagingTest {
 
             // ----
 
-            final Map<String,Object> params = new HashMap<String,Object>();
+            final Map<String, Object> params = new HashMap<String, Object>();
             params.put(PARAM_KEY_XMP_XML, xmpXml);
             Imaging.writeImage(image, tempFile, imageFormat, params);
 

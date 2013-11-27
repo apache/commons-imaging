@@ -119,7 +119,7 @@ public class JpegIptcRewriter extends JpegRewriter {
         if (photoshopApp13Segments.size() == 1) {
             final JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments
                     .get(0);
-            final Map<String,Object> params = new HashMap<String,Object>();
+            final Map<String, Object> params = new HashMap<String, Object>();
             final PhotoshopApp13Data oldData = new IptcParser()
                     .parsePhotoshopSegment(oldSegment.segmentData, params);
             final List<IptcBlock> newBlocks = oldData.getNonIptcBlocks();
@@ -223,7 +223,7 @@ public class JpegIptcRewriter extends JpegRewriter {
 
             final int blockType = IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
             final byte[] blockNameBytes = new byte[0];
-            final IptcBlock newBlock = new IptcBlock(blockType, blockNameBytes,newBlockBytes);
+            final IptcBlock newBlock = new IptcBlock(blockType, blockNameBytes, newBlockBytes);
             newBlocks.add(newBlock);
 
             newData = new PhotoshopApp13Data(newData.getRecords(), newBlocks);

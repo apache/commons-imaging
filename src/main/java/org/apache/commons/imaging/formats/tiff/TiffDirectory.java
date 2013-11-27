@@ -145,11 +145,11 @@ public class TiffDirectory extends TiffElement {
 
     public BufferedImage getTiffImage(final ByteOrder byteOrder) throws ImageReadException,
             IOException {
-        final Map<String,Object> params = null;
+        final Map<String, Object> params = null;
         return getTiffImage(byteOrder, params);
     }
 
-    public BufferedImage getTiffImage(final ByteOrder byteOrder, final Map<String,Object> params)
+    public BufferedImage getTiffImage(final ByteOrder byteOrder, final Map<String, Object> params)
             throws ImageReadException, IOException {
         if (null == tiffImageData) {
             return null;

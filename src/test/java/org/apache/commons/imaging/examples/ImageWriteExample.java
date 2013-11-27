@@ -37,7 +37,7 @@ public class ImageWriteExample {
         final BufferedImage image = Imaging.getBufferedImage(file);
 
         final ImageFormat format = ImageFormats.TIFF;
-        final Map<String,Object> params = new HashMap<String,Object>();
+        final Map<String, Object> params = new HashMap<String, Object>();
 
         // set optional parameters if you like
         params.put(ImagingConstants.PARAM_KEY_COMPRESSION, new Integer(

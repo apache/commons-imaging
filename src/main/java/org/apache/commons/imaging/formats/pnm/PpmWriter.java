@@ -29,7 +29,7 @@ public class PpmWriter extends PnmWriter {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)

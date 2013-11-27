@@ -81,25 +81,25 @@ public class DcxImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String,Object> params)
+    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String,Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String,Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String,Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
@@ -172,7 +172,7 @@ public class DcxImageParser extends ImageParser {
 
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
-            final Map<String,Object> params) throws ImageReadException, IOException {
+            final Map<String, Object> params) throws ImageReadException, IOException {
         final List<BufferedImage> list = getAllBufferedImages(byteSource);
         if (list.isEmpty()) {
             return null;
@@ -194,7 +194,7 @@ public class DcxImageParser extends ImageParser {
                 final ByteSourceInputStream pcxSource = new ByteSourceInputStream(
                         stream, null);
                 final BufferedImage image = pcxImageParser.getBufferedImage(
-                        pcxSource, new HashMap<String,Object>());
+                        pcxSource, new HashMap<String, Object>());
                 images.add(image);
                 canThrow = true;
             } finally {
@@ -205,12 +205,12 @@ public class DcxImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String,Object>() : new HashMap<String,Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
 
-        final HashMap<String,Object> pcxParams = new HashMap<String,Object>();
+        final HashMap<String, Object> pcxParams = new HashMap<String, Object>();
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {
@@ -265,7 +265,7 @@ public class DcxImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String,Object> params)
+    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }

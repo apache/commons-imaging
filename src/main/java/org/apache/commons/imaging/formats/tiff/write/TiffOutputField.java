@@ -89,7 +89,7 @@ public class TiffOutputField implements TiffConstants {
                 throw new ImageWriteException("Missing separate value item.");
             }
 
-            bos.write4Bytes((int)separateValueItem.getOffset());
+            bos.write4Bytes((int) separateValueItem.getOffset());
         }
     }
 

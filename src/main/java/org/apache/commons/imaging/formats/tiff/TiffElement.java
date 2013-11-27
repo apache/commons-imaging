@@ -25,7 +25,7 @@ public abstract class TiffElement {
         public int compare(final TiffElement e1, final TiffElement e2) {
             if (e1.offset < e2.offset) {
                 return -1;
-            } else if (e1.offset > e2.offset){
+            } else if (e1.offset > e2.offset) {
                 return 1;
             } else {
                 return 0;

@@ -31,5 +31,5 @@ public abstract class PnmWriter {
     }
 
     public abstract void writeImage(BufferedImage src, OutputStream os,
-            Map<String,Object> params) throws ImageWriteException, IOException;
+            Map<String, Object> params) throws ImageWriteException, IOException;
 }

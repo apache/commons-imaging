@@ -46,7 +46,7 @@ public class IcoReadTest extends IcoBaseTest {
             final IImageMetadata metadata = Imaging.getMetadata(imageFile);
             // assertNotNull(metadata);
 
-            final Map<String,Object> params = new HashMap<String,Object>();
+            final Map<String, Object> params = new HashMap<String, Object>();
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             // assertNotNull(imageInfo);
 

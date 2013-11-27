@@ -107,7 +107,7 @@ public class TiffField {
      * or its inlined value <= 4 bytes long encoded in the field's byte order.
      */
     public int getOffset() {
-        return (int)offset;
+        return (int) offset;
     }
 
     /**

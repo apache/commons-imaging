@@ -80,7 +80,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String,Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -92,7 +92,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String,Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -124,7 +124,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String,Object> params)
+    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffReader tiffReader = new TiffReader(isStrict(params));
@@ -152,7 +152,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String,Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -311,7 +311,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String,Object> params)
+    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -354,7 +354,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             {
                 final FormatCompliance formatCompliance = FormatCompliance
                         .getDefault();
-                final Map<String,Object> params = null;
+                final Map<String, Object> params = null;
                 final TiffContents contents = new TiffReader(true).readContents(
                         byteSource, params, formatCompliance);
 
@@ -399,13 +399,13 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     public FormatCompliance getFormatCompliance(final ByteSource byteSource)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final Map<String,Object> params = null;
+        final Map<String, Object> params = null;
         new TiffReader(isStrict(params)).readContents(byteSource, params,
                 formatCompliance);
         return formatCompliance;
     }
 
-    public List<byte[]> collectRawImageData(final ByteSource byteSource, final Map<String,Object> params)
+    public List<byte[]> collectRawImageData(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -460,7 +460,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
      * access operation.
      */
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String,Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffReader reader = new TiffReader(isStrict(params));
@@ -501,18 +501,17 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         if (params == null) {
             return null;
         }
-       
-        if(!params.containsKey(key)) {
+
+        if (!params.containsKey(key)) {
             return null;
         }
-        
+
         final Object obj = params.get(key);
-        
-        if(obj instanceof Integer){
-            return (Integer)obj;
+
+        if (obj instanceof Integer) {
+            return (Integer) obj;
         }
-        throw new ImageReadException(
-                "Non-Integer parameter "+key);
+        throw new ImageReadException("Non-Integer parameter "+key);
     }
     
     private Rectangle checkForSubImage(
@@ -556,7 +555,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
     
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
-            final ByteOrder byteOrder, final Map<String,Object> params) 
+            final ByteOrder byteOrder, final Map<String, Object> params) 
             throws ImageReadException, IOException
     {
         final List<TiffField> entries = directory.entries;
@@ -574,7 +573,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
         final int height = directory.getSingleFieldValue(
                 TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);      
         Rectangle subImage = checkForSubImage(params);
-        if(subImage!=null){
+        if (subImage != null) {
             // Check for valid subimage specification. The following checks
             // are consistent with BufferedImage.getSubimage()
             if (subImage.width <= 0) {
@@ -583,27 +582,25 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
             if (subImage.height <= 0) {
                 throw new ImageReadException("negative or zero subimage height");
             }
-            if(subImage.x<0 || subImage.x>=width){
+            if (subImage.x < 0 || subImage.x >= width) {
                 throw new ImageReadException("subimage x is outside raster");
             }
-            if(subImage.x+subImage.width>width){
-                throw new ImageReadException(
-                        "subimage (x+width) is outside raster");
+            if (subImage.x + subImage.width > width) {
+                throw new ImageReadException("subimage (x+width) is outside raster");
             }
-            if(subImage.y<0 || subImage.y>=height){
+            if (subImage.y < 0 || subImage.y >= height) {
                 throw new ImageReadException("subimage y is outside raster");
             }
-            if(subImage.y+subImage.height>height){
-                throw new ImageReadException(
-                        "subimage (y+height) is outside raster");
-            }            
-            
+            if (subImage.y + subImage.height > height) {
+                throw new ImageReadException("subimage (y+height) is outside raster");
+            }
+
             // if the subimage is just the same thing as the whole
             // image, suppress the subimage processing
-            if(subImage.x==0 
-                    && subImage.y==0 
-                    && subImage.width==width 
-                    && subImage.height==height){
+            if (subImage.x == 0
+                    && subImage.y == 0
+                    && subImage.width == width
+                    && subImage.height == height) {
                 subImage = null;
             }
         }
@@ -748,7 +745,7 @@ public class TiffImageParser extends ImageParser implements TiffConstants {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String,Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         new TiffImageWriterLossy().writeImage(src, os, params);
     }
