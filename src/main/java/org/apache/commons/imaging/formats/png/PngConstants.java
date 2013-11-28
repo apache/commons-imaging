@@ -32,12 +32,6 @@ public interface PngConstants {
     // public static final Object PARAM_KEY_PNG_BIT_DEPTH_YES = "YES";
     // public static final Object PARAM_KEY_PNG_BIT_DEPTH_NO = "NO";
 
-    public static final int COLOR_TYPE_GREYSCALE = 0;
-    public static final int COLOR_TYPE_TRUE_COLOR = 2;
-    public static final int COLOR_TYPE_INDEXED_COLOR = 3;
-    public static final int COLOR_TYPE_GREYSCALE_WITH_ALPHA = 4;
-    public static final int COLOR_TYPE_TRUE_COLOR_WITH_ALPHA = 6;
-
     public static final byte COMPRESSION_TYPE_INFLATE_DEFLATE = 0;
     public static final byte FILTER_METHOD_ADAPTIVE = 0;
 

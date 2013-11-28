@@ -91,13 +91,13 @@ class PngWriter {
         public final int width;
         public final int height;
         public final byte bitDepth;
-        public final byte colorType;
+        public final ColorType colorType;
         public final byte compressionMethod;
         public final byte filterMethod;
         public final byte interlaceMethod;
 
         public ImageHeader(final int width, final int height, final byte bitDepth,
-                final byte colorType, final byte compressionMethod, final byte filterMethod,
+                final ColorType colorType, final byte compressionMethod, final byte filterMethod,
                 final byte interlaceMethod) {
             this.width = width;
             this.height = height;
@@ -110,18 +110,15 @@ class PngWriter {
 
     }
 
-    private void writeChunkIHDR(final OutputStream os, final ImageHeader value)
-            throws IOException {
+    private void writeChunkIHDR(final OutputStream os, final ImageHeader value) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         writeInt(baos, value.width);
         writeInt(baos, value.height);
         baos.write(0xff & value.bitDepth);
-        baos.write(0xff & value.colorType);
+        baos.write(0xff & value.colorType.getValue());
         baos.write(0xff & value.compressionMethod);
         baos.write(0xff & value.filterMethod);
         baos.write(0xff & value.interlaceMethod);
-
-        // Debug.debug("baos", baos.toByteArray());
 
         writeChunk(os, ChunkType.IHDR, baos.toByteArray());
     }
@@ -300,62 +297,15 @@ class PngWriter {
         writeChunk(os, ChunkType.pHYs, bytes);
     }
 
-    private byte getColourType(final boolean hasAlpha, final boolean isGrayscale) {
-        byte result;
+    private byte getBitDepth(final ColorType colorType, final Map<String, Object> params) {
+        byte depth = 8;
 
-        final boolean index = false; // charles
-
-        if (index) {
-            result = PngConstants.COLOR_TYPE_INDEXED_COLOR;
-        } else if (isGrayscale) {
-            if (hasAlpha) {
-                result = PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA;
-            } else {
-                result = PngConstants.COLOR_TYPE_GREYSCALE;
-            }
-        } else if (hasAlpha) {
-            result = PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
-        } else {
-            result = PngConstants.COLOR_TYPE_TRUE_COLOR;
-        }
-
-        return result;
-    }
-
-    private byte getBitDepth(final byte colorType, final Map<String, Object> params) {
-        byte result = 8;
-
-        final Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
+        Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
         if (o instanceof Number) {
-            final int value = ((Number) o).intValue();
-            switch (value) {
-            case 1:
-            case 2:
-            case 4:
-            case 8:
-            case 16:
-                result = (byte) value;
-                break;
-            default:
-                result = 8;
-            }
-            switch (colorType) {
-            case PngConstants.COLOR_TYPE_GREYSCALE:
-                break;
-            case PngConstants.COLOR_TYPE_INDEXED_COLOR:
-                result = (byte) Math.min(8, result);
-                break;
-            case PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA:
-            case PngConstants.COLOR_TYPE_TRUE_COLOR:
-            case PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA:
-                result = (byte) Math.max(8, result);
-                break;
-            default:
-                result = 8;
-            }
+            depth = ((Number) o).byteValue();
         }
 
-        return result;
+        return colorType.isBitDepthAllowed(depth) ? depth : 8;
     }
 
     /// Wraps a palette by adding a single transparent entry at index 0.
@@ -470,7 +420,7 @@ class PngWriter {
             Debug.debug("isGrayscale: " + isGrayscale);
         }
 
-        byte colorType;
+        ColorType colorType;
         {
             final boolean forceIndexedColor =  Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR));
             final boolean forceTrueColor = Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR));
@@ -479,13 +429,12 @@ class PngWriter {
                 throw new ImageWriteException(
                         "Params: Cannot force both indexed and true color modes");
             } else if (forceIndexedColor) {
-                colorType = PngConstants.COLOR_TYPE_INDEXED_COLOR;
+                colorType = ColorType.INDEXED_COLOR;
             } else if (forceTrueColor) {
-                colorType = (byte) (hasAlpha ? PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA
-                        : PngConstants.COLOR_TYPE_TRUE_COLOR);
+                colorType = (hasAlpha ? ColorType.TRUE_COLOR_WITH_ALPHA : ColorType.TRUE_COLOR);
                 isGrayscale = false;
             } else {
-                colorType = getColourType(hasAlpha, isGrayscale);
+                colorType = ColorType.getColorType(hasAlpha, isGrayscale);
             }
             if (verbose) {
                 Debug.debug("colorType: " + colorType);
@@ -498,7 +447,7 @@ class PngWriter {
         }
 
         int sampleDepth;
-        if (colorType == PngConstants.COLOR_TYPE_INDEXED_COLOR) {
+        if (colorType == ColorType.INDEXED_COLOR) {
             sampleDepth = 8;
         } else {
             sampleDepth = bitDepth;
@@ -531,7 +480,7 @@ class PngWriter {
         //}
 
         Palette palette = null;
-        if (colorType == PngConstants.COLOR_TYPE_INDEXED_COLOR) {
+        if (colorType == ColorType.INDEXED_COLOR) {
             // PLTE No Before first IDAT
 
             final int maxColors = hasAlpha ? 255 : 256;
@@ -599,8 +548,8 @@ class PngWriter {
             {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-                final boolean useAlpha = colorType == PngConstants.COLOR_TYPE_GREYSCALE_WITH_ALPHA
-                        || colorType == PngConstants.COLOR_TYPE_TRUE_COLOR_WITH_ALPHA;
+                final boolean useAlpha = colorType == ColorType.GREYSCALE_WITH_ALPHA
+                        || colorType == ColorType.TRUE_COLOR_WITH_ALPHA;
 
                 final int[] row = new int[width];
                 for (int y = 0; y < height; y++) {

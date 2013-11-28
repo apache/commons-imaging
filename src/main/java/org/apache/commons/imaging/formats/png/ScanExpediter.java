@@ -37,7 +37,7 @@ abstract class ScanExpediter {
     protected final int height;
     protected final InputStream is;
     protected final BufferedImage bi;
-    protected final int colorType;
+    protected final ColorType colorType;
     protected final int bitDepth;
     protected final int bytesPerPixel;
     protected final int bitsPerPixel;
@@ -46,7 +46,7 @@ abstract class ScanExpediter {
     protected final TransparencyFilter transparencyFilter;
 
     public ScanExpediter(final int width, final int height, final InputStream is,
-            final BufferedImage bi, final int colorType, final int bitDepth, final int bitsPerPixel,
+            final BufferedImage bi, final ColorType colorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
             final TransparencyFilter transparencyFilter)
 
@@ -81,11 +81,11 @@ abstract class ScanExpediter {
 
     public abstract void drive() throws ImageReadException, IOException;
 
-    protected int getRGB(final BitParser bitParser, final int pixelIndexInScanline)
+    protected int getRGB(final BitParser bitParser, final int pixelIndexInScanline) 
             throws ImageReadException, IOException {
 
         switch (colorType) {
-        case 0: {
+        case GREYSCALE: {
             // 1,2,4,8,16 Each pixel is a grayscale sample.
             int sample = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
 
@@ -102,7 +102,7 @@ abstract class ScanExpediter {
             return rgb;
 
         }
-        case 2: {
+        case TRUE_COLOR: {
             // 8,16 Each pixel is an R,G,B triple.
             int red = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
             int green = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
@@ -126,7 +126,7 @@ abstract class ScanExpediter {
             return rgb;
         }
         //
-        case 3: {
+        case INDEXED_COLOR: {
             // 1,2,4,8 Each pixel is a palette index;
             // a PLTE chunk must appear.
             final int index = bitParser.getSample(pixelIndexInScanline, 0);
@@ -139,7 +139,7 @@ abstract class ScanExpediter {
 
             return rgb;
         }
-        case 4: {
+        case GREYSCALE_WITH_ALPHA: {
             // 8,16 Each pixel is a grayscale sample,
             // followed by an alpha sample.
             int sample = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
@@ -151,7 +151,7 @@ abstract class ScanExpediter {
 
             return getPixelARGB(alpha, sample, sample, sample);
         }
-        case 6: {
+        case TRUE_COLOR_WITH_ALPHA: {
             // 8,16 Each pixel is an R,G,B triple,
             int red = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
             int green = bitParser.getSampleAsByte(pixelIndexInScanline, 1);
