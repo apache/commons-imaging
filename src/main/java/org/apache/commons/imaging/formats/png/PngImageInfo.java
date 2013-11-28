@@ -25,7 +25,7 @@ import org.apache.commons.imaging.ImageInfo;
 public class PngImageInfo extends ImageInfo {
     private final List<PngText> textChunks;
 
-    public PngImageInfo(final String formatDetails, final int bitsPerPixel,
+    PngImageInfo(final String formatDetails, final int bitsPerPixel,
             final List<String> comments, final ImageFormat format, final String formatName,
             final int height, final String mimeType, final int numberOfImages,
             final int physicalHeightDpi, final float physicalHeightInch,
