@@ -22,7 +22,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.common.ImageBuilder;
 
-public abstract class FileInfo {
+abstract class FileInfo {
     protected final int width;
     protected final int height;
     protected final boolean rawbits;

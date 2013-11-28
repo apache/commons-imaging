@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class PgmWriter extends PnmWriter {
+class PgmWriter extends PnmWriter {
 
     public PgmWriter(boolean rawbits) {
         super(rawbits);

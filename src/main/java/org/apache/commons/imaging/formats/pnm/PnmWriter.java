@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public abstract class PnmWriter {
+abstract class PnmWriter {
     protected final boolean rawbits;
 
     public PnmWriter(final boolean rawbits) {

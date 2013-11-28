@@ -25,7 +25,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 
-public class PamFileInfo extends FileInfo {
+class PamFileInfo extends FileInfo {
     private final int depth;
     private final int maxval;
     private final float scale;

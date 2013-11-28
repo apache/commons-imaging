@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class PamWriter extends PnmWriter {
+class PamWriter extends PnmWriter {
     public PamWriter() {
         super(true);
     }
