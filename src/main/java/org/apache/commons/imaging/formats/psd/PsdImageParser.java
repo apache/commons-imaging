@@ -586,9 +586,8 @@ public class PsdImageParser extends ImageParser {
                     // + block.getClass().getName()
                     // + ", "
                     + " data: " + block.data.length + " type: '"
-                    + new PsdConstants().getDescription(block.id) + "' "
+                    + ImageResourceType.getDescription(block.id) + "' "
                     + ")");
-
         }
 
         pw.println("");
