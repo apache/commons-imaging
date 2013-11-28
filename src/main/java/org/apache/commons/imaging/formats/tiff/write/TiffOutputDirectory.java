@@ -61,7 +61,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
     public final int type;
     private final List<TiffOutputField> fields = new ArrayList<TiffOutputField>();
     private final ByteOrder byteOrder;
-    private TiffOutputDirectory nextDirectory = null;
+    private TiffOutputDirectory nextDirectory;
     public static final Comparator<TiffOutputDirectory> COMPARATOR = new Comparator<TiffOutputDirectory>() {
         public int compare(final TiffOutputDirectory o1, final TiffOutputDirectory o2) {
             if (o1.type < o2.type) {
@@ -73,8 +73,8 @@ public final class TiffOutputDirectory extends TiffOutputItem {
             }
         }
     };
-    private JpegImageData jpegImageData = null;
-    private TiffImageData tiffImageData = null;
+    private JpegImageData jpegImageData;
+    private TiffImageData tiffImageData;
 
     public void setNextDirectory(final TiffOutputDirectory nextDirectory) {
         this.nextDirectory = nextDirectory;

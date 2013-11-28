@@ -300,7 +300,7 @@ public class TiffReader extends BinaryFileParser {
     }
 
     private static class Collector implements Listener {
-        private TiffHeader tiffHeader = null;
+        private TiffHeader tiffHeader;
         private final List<TiffDirectory> directories = new ArrayList<TiffDirectory>();
         private final List<TiffField> fields = new ArrayList<TiffField>();
         private final boolean readThumbnails;

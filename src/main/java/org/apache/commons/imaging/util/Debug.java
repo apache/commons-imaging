@@ -32,7 +32,7 @@ public final class Debug {
     private static final boolean DEBUG = false;
     // public static String newline = System.getProperty("line.separator");
     private static final String NEWLINE = "\r\n";
-    private static long counter = 0;
+    private static long counter;
 
     public static void debug(final String message) {
         if (DEBUG) {

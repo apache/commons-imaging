@@ -23,10 +23,10 @@ import java.nio.ByteOrder;
 public class MyBitInputStream extends InputStream {
     private final InputStream is;
     private final ByteOrder byteOrder;
-    private boolean tiffLZWMode = false;
-    private long bytesRead = 0;
-    private int bitsInCache = 0;
-    private int bitCache = 0;
+    private boolean tiffLZWMode;
+    private long bytesRead;
+    private int bitsInCache;
+    private int bitCache;
 
     public MyBitInputStream(final InputStream is, final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;

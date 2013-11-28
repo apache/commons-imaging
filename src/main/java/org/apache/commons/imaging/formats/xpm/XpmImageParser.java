@@ -57,7 +57,7 @@ import static org.apache.commons.imaging.ImagingConstants.*;
 public class XpmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".xpm";
     private static final String[] ACCEPTED_EXTENSIONS = { ".xpm", };
-    private static Map<String, Integer> colorNames = null;
+    private static Map<String, Integer> colorNames;
     private static final char[] WRITE_PALETTE = { ' ', '.', 'X', 'o', 'O', '+',
         '@', '#', '$', '%', '&', '*', '=', '-', ';', ':', '>', ',', '<',
         '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'q', 'w', 'e',

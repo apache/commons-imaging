@@ -54,9 +54,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     private SofnSegment sofnSegment;
     private SosSegment sosSegment;
     private final float[][] scaledQuantizationTables = new float[4][];
-    private BufferedImage image = null;
-    private ImageReadException imageReadException = null;
-    private IOException ioException = null;
+    private BufferedImage image;
+    private ImageReadException imageReadException;
+    private IOException ioException;
     private final int[] zz = new int[64];
     private final int[] blockInt = new int[64];
     private final float[] block = new float[64];

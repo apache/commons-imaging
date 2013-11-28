@@ -24,8 +24,8 @@ import java.io.OutputStream;
  */
 class BitArrayOutputStream extends OutputStream {
     private byte[] buffer;
-    private int bytesWritten = 0;
-    private int cache = 0;
+    private int bytesWritten;
+    private int cache;
     private int cacheMask = 0x80;
 
     public BitArrayOutputStream() {

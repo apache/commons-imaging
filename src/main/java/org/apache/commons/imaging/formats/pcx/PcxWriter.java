@@ -33,7 +33,7 @@ import org.apache.commons.imaging.palette.SimplePalette;
 class PcxWriter {
     private int encoding;
     private int bitDepth = -1;
-    private PixelDensity pixelDensity = null;
+    private PixelDensity pixelDensity;
 
     public PcxWriter(Map<String, Object> params) throws ImageWriteException {
         // make copy of params; we'll clear keys as we consume them.

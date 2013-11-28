@@ -35,7 +35,8 @@ public final class DataReaderStrips extends DataReader {
     private final int compression;
     private final int rowsPerStrip;
     private final ByteOrder byteOrder;
-    private int x = 0, y = 0;
+    private int x;
+    private int y;
     private final TiffImageData.Strips imageData;
 
     public DataReaderStrips(final TiffDirectory directory,

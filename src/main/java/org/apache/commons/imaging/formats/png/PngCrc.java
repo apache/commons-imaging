@@ -22,7 +22,7 @@ class PngCrc {
     private final long[] crc_table = new long[256];
 
     /* Flag: has the table been computed? Initially false. */
-    private boolean crc_table_computed = false;
+    private boolean crc_table_computed;
 
     /* Make the table for a fast CRC. */
     private void make_crc_table() {

@@ -24,7 +24,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 class JpegInputStream {
     // Figure F.18, F.2.2.5, page 111 of ITU-T T.81
     private final InputStream is;
-    private int cnt = 0;
+    private int cnt;
     private int b;
 
     public JpegInputStream(final InputStream is) {

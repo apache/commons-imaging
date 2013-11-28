@@ -25,9 +25,9 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class ByteSourceInputStream extends ByteSource {
     private final InputStream is;
-    private CacheBlock cacheHead = null;
+    private CacheBlock cacheHead;
     private static final int BLOCK_SIZE = 1024;
-    private byte[] readBuffer = null;
+    private byte[] readBuffer;
     private long streamLength = -1;
 
     public ByteSourceInputStream(final InputStream is, final String filename) {
@@ -37,8 +37,8 @@ public class ByteSourceInputStream extends ByteSource {
 
     private class CacheBlock {
         public final byte[] bytes;
-        private CacheBlock next = null;
-        private boolean triedNext = false;
+        private CacheBlock next;
+        private boolean triedNext;
 
         public CacheBlock(final byte[] bytes) {
             this.bytes = bytes;
@@ -87,9 +87,9 @@ public class ByteSourceInputStream extends ByteSource {
     }
 
     private class CacheReadingInputStream extends InputStream {
-        private CacheBlock block = null;
-        private boolean readFirst = false;
-        private int blockIndex = 0;
+        private CacheBlock block;
+        private boolean readFirst;
+        private int blockIndex;
         
         @Override
         public int read() throws IOException {

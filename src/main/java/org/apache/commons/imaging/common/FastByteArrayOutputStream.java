@@ -25,7 +25,7 @@ import java.io.OutputStream;
  */
 class FastByteArrayOutputStream extends OutputStream {
     private final byte[] bytes;
-    private int count = 0;
+    private int count;
 
     public FastByteArrayOutputStream(final int length) {
         bytes = new byte[length];

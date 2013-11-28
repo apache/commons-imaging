@@ -36,7 +36,7 @@ public class PixelParserBitFields extends PixelParserSimple {
     private final int blueMask;
     private final int alphaMask;
 
-    private int bytecount = 0;
+    private int bytecount;
     
     public PixelParserBitFields(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);

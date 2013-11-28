@@ -23,9 +23,9 @@ import java.nio.ByteOrder;
 public class MyBitOutputStream extends OutputStream {
     private final OutputStream os;
     private final ByteOrder byteOrder;
-    private int bitsInCache = 0;
-    private int bitCache = 0;
-    private int bytesWritten = 0;
+    private int bitsInCache;
+    private int bitCache;
+    private int bytesWritten;
 
     public MyBitOutputStream(final OutputStream os, final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;

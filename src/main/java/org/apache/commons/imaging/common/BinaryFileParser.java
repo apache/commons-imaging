@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
 public class BinaryFileParser {
     // default byte order for Java, many file formats.
     private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-    private boolean debug = false;
+    private boolean debug;
 
     public BinaryFileParser(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;

@@ -32,8 +32,8 @@ public final class MyLzwDecompressor {
     private final Listener listener;
     private final int clearCode;
     private final int eoiCode;
-    private int written = 0;
-    private boolean tiffLZWMode = false;
+    private int written;
+    private boolean tiffLZWMode;
 
     public interface Listener {
         void code(int code);

@@ -51,8 +51,8 @@ public class TiffDirectory extends TiffElement {
     public final int type;
     public final List<TiffField> entries;
     public final long nextDirectoryOffset;
-    private TiffImageData tiffImageData = null;
-    private JpegImageData jpegImageData = null;
+    private TiffImageData tiffImageData;
+    private JpegImageData jpegImageData;
     
     public TiffDirectory(final int type, final List<TiffField> entries, final long offset,
             final long nextDirectoryOffset) {

@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImageWriteException;
 
 class ColorGroup {
     // public final ColorGroup parent;
-    public ColorGroupCut cut = null;
+    public ColorGroupCut cut;
     // public final List children = new ArrayList();
     public int paletteIndex = -1;
 
