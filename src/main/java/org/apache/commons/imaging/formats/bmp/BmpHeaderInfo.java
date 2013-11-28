@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
-public class BmpHeaderInfo {
+class BmpHeaderInfo {
     // BM - Windows 3.1x, 95, NT
     // BA - OS/2 Bitmap Array
     // CI - OS/2 Color Icon

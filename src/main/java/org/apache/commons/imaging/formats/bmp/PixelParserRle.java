@@ -14,19 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.bmp.pixelparsers;
+package org.apache.commons.imaging.formats.bmp;
 
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ImageBuilder;
-import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
-public class PixelParserRle extends PixelParser {
+class PixelParserRle extends PixelParser {
 
-    public PixelParserRle(final BmpHeaderInfo bhi, final byte[] colorTable,
-            final byte[] imageData) {
+    public PixelParserRle(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);
 
     }

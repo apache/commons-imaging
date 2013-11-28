@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.bmp.pixelparsers;
+package org.apache.commons.imaging.formats.bmp;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,9 +22,9 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
-import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
-public abstract class PixelParser {
+abstract class PixelParser {
+
     public final BmpHeaderInfo bhi;
     public final byte[] colorTable;
     public final byte[] imageData;
@@ -39,8 +39,7 @@ public abstract class PixelParser {
         is = new ByteArrayInputStream(imageData);
     }
 
-    public abstract void processImage(ImageBuilder imageBuilder)
-            throws ImageReadException, IOException;
+    public abstract void processImage(ImageBuilder imageBuilder) throws ImageReadException, IOException;
 
     protected int getColorTableRGB(int index) {
         index *= 4;

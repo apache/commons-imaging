@@ -14,20 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.bmp.writers;
+package org.apache.commons.imaging.formats.bmp;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-public abstract class BmpWriter {
+abstract class BmpWriter {
+
     public abstract int getPaletteSize();
 
     public abstract int getBitsPerPixel();
 
-    public abstract void writePalette(BinaryOutputStream bos)
-            throws IOException;
+    public abstract void writePalette(BinaryOutputStream bos) throws IOException;
 
     public abstract byte[] getImageData(BufferedImage src);
 }

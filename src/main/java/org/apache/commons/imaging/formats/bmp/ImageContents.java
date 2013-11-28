@@ -16,8 +16,6 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
-import org.apache.commons.imaging.formats.bmp.pixelparsers.PixelParser;
-
 class ImageContents {
 
     public final BmpHeaderInfo bhi;

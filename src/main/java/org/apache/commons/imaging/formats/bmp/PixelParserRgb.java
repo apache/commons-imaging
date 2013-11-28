@@ -14,24 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.bmp.pixelparsers;
+package org.apache.commons.imaging.formats.bmp;
 
 import java.io.IOException;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
-public class PixelParserRgb extends PixelParserSimple {
+class PixelParserRgb extends PixelParserSimple {
     private int bytecount;
     private int cachedBitCount;
     private int cachedByte;
     private int pixelCount;
 
-    public PixelParserRgb(final BmpHeaderInfo bhi, final byte[] colorTable,
-            final byte[] imageData) {
+    public PixelParserRgb(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);
 
     }

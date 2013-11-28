@@ -14,15 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.bmp.pixelparsers;
+package org.apache.commons.imaging.formats.bmp;
 
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
-import org.apache.commons.imaging.formats.bmp.BmpHeaderInfo;
 
-public abstract class PixelParserSimple extends PixelParser {
+abstract class PixelParserSimple extends PixelParser {
     public PixelParserSimple(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);
     }
@@ -32,10 +31,7 @@ public abstract class PixelParserSimple extends PixelParser {
     public abstract void newline() throws ImageReadException, IOException;
 
     @Override
-    public void processImage(final ImageBuilder imageBuilder)
-            throws ImageReadException, IOException {
-        // DataBuffer db = bi.getRaster().getDataBuffer();
-
+    public void processImage(final ImageBuilder imageBuilder) throws ImageReadException, IOException {
         for (int y = bhi.height - 1; y >= 0; y--) {
             for (int x = 0; x < bhi.width; x++) {
                 final int rgb = getNextRGB();

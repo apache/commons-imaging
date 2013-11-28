@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.bmp.writers;
+package org.apache.commons.imaging.formats.bmp;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -23,7 +23,8 @@ import java.io.IOException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-public class BmpWriterPalette extends BmpWriter {
+class BmpWriterPalette extends BmpWriter {
+
     private final SimplePalette palette;
     private final int bitsPerSample;
 
