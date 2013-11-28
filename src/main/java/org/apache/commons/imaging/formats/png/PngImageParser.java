@@ -279,10 +279,6 @@ public class PngImageParser extends ImageParser {
         return new Dimension(pngChunkIHDR.width, pngChunkIHDR.height);
     }
 
-    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
-        return null;
-    }
-
     @Override
     public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {

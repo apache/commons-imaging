@@ -632,10 +632,6 @@ public class JpegImageParser extends ImageParser {
         return new Dimension(fSOFNSegment.width, fSOFNSegment.height);
     }
 
-    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
-        return null;
-    }
-
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {

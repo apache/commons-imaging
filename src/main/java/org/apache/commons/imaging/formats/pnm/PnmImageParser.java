@@ -218,10 +218,6 @@ public class PnmImageParser extends ImageParser {
         return new Dimension(info.width, info.height);
     }
 
-    public byte[] embedICCProfile(final byte[] image, final byte[] profile) {
-        return null;
-    }
-
     @Override
     public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
