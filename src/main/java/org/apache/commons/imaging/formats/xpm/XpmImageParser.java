@@ -397,12 +397,10 @@ public class XpmImageParser extends ImageParser {
             row.setLength(0);
             final boolean hasMore = parseNextString(cParser, row);
             if (!hasMore) {
-                throw new ImageReadException("Parsing XPM file failed, "
-                        + "file ended while reading palette");
+                throw new ImageReadException("Parsing XPM file failed, " + "file ended while reading palette");
             }
             final String name = row.substring(0, xpmHeader.numCharsPerPixel);
-            final String[] tokens = BasicCParser.tokenizeRow(
-                    row.substring(xpmHeader.numCharsPerPixel));
+            final String[] tokens = BasicCParser.tokenizeRow(row.substring(xpmHeader.numCharsPerPixel));
             final PaletteEntry paletteEntry = new PaletteEntry();
             paletteEntry.index = i;
             int previousKeyIndex = Integer.MIN_VALUE;
@@ -410,10 +408,12 @@ public class XpmImageParser extends ImageParser {
             for (int j = 0; j < tokens.length; j++) {
                 final String token = tokens[j];
                 boolean isKey = false;
-                if (previousKeyIndex < (j - 1) && 
-                    "m".equals(token) || "g4".equals(token) ||
-                    "g".equals(token) || "c".equals(token) ||
-                    "s".equals(token)) {
+                if (previousKeyIndex < (j - 1) 
+                        && "m".equals(token)
+                        || "g4".equals(token) 
+                        || "g".equals(token)
+                        || "c".equals(token) 
+                        || "s".equals(token)) {
                     isKey = true;
                 }
                 if (isKey) {

@@ -64,7 +64,8 @@ public class ImageMetadata implements IImageMetadata {
     }
 
     public static class Item implements IImageMetadataItem {
-        private final String keyword, text;
+        private final String keyword;
+        private final String text;
 
         public Item(final String keyword, final String text) {
             this.keyword = keyword;

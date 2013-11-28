@@ -27,7 +27,8 @@ class PngCrc {
     /* Make the table for a fast CRC. */
     private void make_crc_table() {
         long c;
-        int n, k;
+        int n;
+        int k;
 
         for (n = 0; n < 256; n++) {
             c = n;

@@ -27,7 +27,8 @@ import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class App2Segment extends AppnSegment implements Comparable<App2Segment> {
     public final byte[] iccBytes;
-    public final int curMarker, numMarkers;
+    public final int curMarker;
+    public final int numMarkers;
 
     public App2Segment(final int marker, final byte[] segmentData)
             throws ImageReadException, IOException {

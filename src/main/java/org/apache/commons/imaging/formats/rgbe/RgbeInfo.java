@@ -113,9 +113,7 @@ class RgbeInfo implements Closeable {
                 final String value = info.substring(equals + 1);
 
                 if ("FORMAT".equals(value) && !"32-bit_rle_rgbe".equals(value)) {
-                    throw new ImageReadException(
-                            "Only 32-bit_rle_rgbe images are supported, trying to read " +
-                                    value);
+                    throw new ImageReadException("Only 32-bit_rle_rgbe images are supported, trying to read " + value);
                 }
 
                 metadata.add(variable, value);

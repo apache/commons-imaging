@@ -86,9 +86,9 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                     final TiffElement oversizeValue = field.getOversizeValueElement();
                     if (oversizeValue != null) {
                         final TiffOutputField frozenField = frozenFields.get(field.getTag());
-                        if (frozenField != null &&
-                                frozenField.getSeperateValue() != null &&
-                                frozenField.bytesEqual(field.getByteArrayValue())) {
+                        if (frozenField != null
+                                && frozenField.getSeperateValue() != null 
+                                && frozenField.bytesEqual(field.getByteArrayValue())) {
                             frozenField.getSeperateValue().setOffset(field.getOffset());
                         } else {
                             elements.add(oversizeValue);

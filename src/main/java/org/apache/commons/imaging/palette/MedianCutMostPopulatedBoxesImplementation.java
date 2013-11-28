@@ -53,7 +53,8 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
             }
             Collections.sort(colorGroup.colorCounts, new ColorComparer(colorComponent));
             final int countHalf = (int) Math.round((double) colorGroup.totalPoints / 2);
-            int oldCount = 0, newCount = 0;
+            int oldCount = 0;
+            int newCount = 0;
             int medianIndex;
             for (medianIndex = 0; medianIndex < colorGroup.colorCounts.size(); medianIndex++) {
                 final ColorCount colorCount = colorGroup.colorCounts.get(medianIndex);
@@ -111,24 +112,23 @@ public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplemen
         colorGroups.add(lowerGroup);
         colorGroups.add(upperGroup);
         
-        final ColorCount medianValue = colorGroup.colorCounts
-                .get(bestMedianIndex);
+        final ColorCount medianValue = colorGroup.colorCounts.get(bestMedianIndex);
         int limit;
         switch (bestColorComponent) {
-        case ALPHA:
-            limit = medianValue.alpha;
-            break;
-        case RED:
-            limit = medianValue.red;
-            break;
-        case GREEN:
-            limit = medianValue.green;
-            break;
-        case BLUE:
-            limit = medianValue.blue;
-            break;
-        default:
-            throw new Error("Bad mode.");
+            case ALPHA:
+                limit = medianValue.alpha;
+                break;
+            case RED:
+                limit = medianValue.red;
+                break;
+            case GREEN:
+                limit = medianValue.green;
+                break;
+            case BLUE:
+                limit = medianValue.blue;
+                break;
+            default:
+                throw new Error("Bad mode.");
         }
         colorGroup.cut = new ColorGroupCut(lowerGroup, upperGroup, bestColorComponent, limit);
         return true;

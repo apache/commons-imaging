@@ -48,8 +48,7 @@ public class TiffReader extends BinaryFileParser {
         this.strict = strict;
     }
 
-    private TiffHeader readTiffHeader(final ByteSource byteSource) throws ImageReadException,
-            IOException {
+    private TiffHeader readTiffHeader(final ByteSource byteSource) throws ImageReadException, IOException {
         InputStream is = null;
         boolean canThrow = false;
         try {
@@ -87,7 +86,8 @@ public class TiffReader extends BinaryFileParser {
             throw new ImageReadException("Unknown Tiff Version: " + tiffVersion);
         }
 
-        final long offsetToFirstIFD = 0xFFFFffffL & read4Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
+        final long offsetToFirstIFD = 
+                0xFFFFffffL & read4Bytes("offsetToFirstIFD", is, "Not a Valid TIFF File", getByteOrder());
 
         skipBytes(is, offsetToFirstIFD - 8, "Not a Valid TIFF File: couldn't find IFDs");
 
@@ -110,8 +110,7 @@ public class TiffReader extends BinaryFileParser {
         final int dirType = TiffDirectoryConstants.DIRECTORY_TYPE_ROOT;
 
         final List<Number> visited = new ArrayList<Number>();
-        readDirectory(byteSource, offset, dirType, formatCompliance, listener,
-                visited);
+        readDirectory(byteSource, offset, dirType, formatCompliance, listener, visited);
     }
 
     private boolean readDirectory(final ByteSource byteSource, final long offset,
@@ -184,14 +183,13 @@ public class TiffReader extends BinaryFileParser {
                 final long valueLength = count * fieldType.getSize();
                 final byte[] value;
                 if (valueLength > TIFF_ENTRY_MAX_VALUE_LENGTH) {
-                    if ((offset < 0) ||
-                            (offset + valueLength) > byteSource.getLength()) {
+                    if ((offset < 0) || (offset + valueLength) > byteSource.getLength()) {
                         if (strict) {
                             throw new IOException(
-                                    "Attempt to read byte range starting from " + offset + " " +
-                                            "of length " + valueLength + " " +
-                                            "which is outside the file's size of " +
-                                            byteSource.getLength());
+                                    "Attempt to read byte range starting from " + offset + " "
+                                            + "of length " + valueLength + " "
+                                            + "which is outside the file's size of "
+                                            + byteSource.getLength());
                         } else {
                             // corrupt field, ignore it
                             continue;

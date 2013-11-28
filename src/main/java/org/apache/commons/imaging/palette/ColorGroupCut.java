@@ -17,12 +17,12 @@
 package org.apache.commons.imaging.palette;
 
 class ColorGroupCut {
-    public final ColorGroup less, more;
+    public final ColorGroup less;
+    public final ColorGroup more;
     public final ColorComponent mode;
     public final int limit;
 
-    public ColorGroupCut(final ColorGroup less, final ColorGroup more, final ColorComponent mode,
-            final int limit) {
+    public ColorGroupCut(final ColorGroup less, final ColorGroup more, final ColorComponent mode, final int limit) {
         this.less = less;
         this.more = more;
         this.mode = mode;

@@ -64,23 +64,24 @@ public class MedianCutLongestAxisImplementation extends MedianCutImplementation 
         final Comparator<ColorCount> comp = new Comparator<ColorCount>() {
             public int compare(final ColorCount c1, final ColorCount c2) {
                 switch (mode) {
-                case ALPHA:
-                    return c1.alpha - c2.alpha;
-                case RED:
-                    return c1.red - c2.red;
-                case GREEN:
-                    return c1.green - c2.green;
-                case BLUE:
-                    return c1.blue - c2.blue;
-                default:
-                    return 0;
+                    case ALPHA:
+                        return c1.alpha - c2.alpha;
+                    case RED:
+                        return c1.red - c2.red;
+                    case GREEN:
+                        return c1.green - c2.green;
+                    case BLUE:
+                        return c1.blue - c2.blue;
+                    default:
+                        return 0;
                 }
             }
         };
 
         Collections.sort(colorGroup.colorCounts, comp);
         final int countHalf = (int) Math.round((double) colorGroup.totalPoints / 2);
-        int oldCount = 0, newCount = 0;
+        int oldCount = 0;
+        int newCount = 0;
         int medianIndex;
         for (medianIndex = 0; medianIndex < colorGroup.colorCounts.size(); medianIndex++) {
             final ColorCount colorCount = colorGroup.colorCounts.get(medianIndex);
@@ -111,30 +112,28 @@ public class MedianCutLongestAxisImplementation extends MedianCutImplementation 
                 colorGroup.colorCounts.subList(medianIndex + 1,
                         colorGroup.colorCounts.size()));
 
-        ColorGroup less, more;
-        less = new ColorGroup(new ArrayList<ColorCount>(colorCounts1), ignoreAlpha);
+        ColorGroup less = new ColorGroup(new ArrayList<ColorCount>(colorCounts1), ignoreAlpha);
         colorGroups.add(less);
-        more = new ColorGroup(new ArrayList<ColorCount>(colorCounts2), ignoreAlpha);
+        ColorGroup more = new ColorGroup(new ArrayList<ColorCount>(colorCounts2), ignoreAlpha);
         colorGroups.add(more);
 
-        final ColorCount medianValue = colorGroup.colorCounts
-                .get(medianIndex);
+        final ColorCount medianValue = colorGroup.colorCounts.get(medianIndex);
         int limit;
         switch (mode) {
-        case ALPHA:
-            limit = medianValue.alpha;
-            break;
-        case RED:
-            limit = medianValue.red;
-            break;
-        case GREEN:
-            limit = medianValue.green;
-            break;
-        case BLUE:
-            limit = medianValue.blue;
-            break;
-        default:
-            throw new Error("Bad mode.");
+            case ALPHA:
+                limit = medianValue.alpha;
+                break;
+            case RED:
+                limit = medianValue.red;
+                break;
+            case GREEN:
+                limit = medianValue.green;
+                break;
+            case BLUE:
+                limit = medianValue.blue;
+                break;
+            default:
+                throw new Error("Bad mode.");
         }
         colorGroup.cut = new ColorGroupCut(less, more, mode, limit);
     }

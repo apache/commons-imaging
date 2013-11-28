@@ -58,7 +58,9 @@ public class BmpHeaderInfo {
     public final int reservedV5;
 
     public static class ColorSpaceCoordinate {
-        public int x, y, z;
+        public int x;
+        public int y;
+        public int z;
     }
 
     public static class ColorSpace {

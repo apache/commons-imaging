@@ -53,12 +53,11 @@ public class TiffDirectory extends TiffElement {
     public final long nextDirectoryOffset;
     private TiffImageData tiffImageData;
     private JpegImageData jpegImageData;
-    
-    public TiffDirectory(final int type, final List<TiffField> entries, final long offset,
-            final long nextDirectoryOffset) {
-        super(offset, TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH +
-                entries.size() * TiffConstants.TIFF_ENTRY_LENGTH +
-                TiffConstants.TIFF_DIRECTORY_FOOTER_LENGTH);
+
+    public TiffDirectory(int type, List<TiffField> entries, long offset, long nextDirectoryOffset) {
+        super(offset, TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH
+                + entries.size() * TiffConstants.TIFF_ENTRY_LENGTH
+                + TiffConstants.TIFF_DIRECTORY_FOOTER_LENGTH);
 
         this.type = type;
         this.entries = Collections.unmodifiableList(entries);
@@ -675,13 +674,11 @@ public class TiffDirectory extends TiffElement {
         }
     }
 
-    public ImageDataElement getJpegRawImageDataElement()
-            throws ImageReadException {
-        final TiffField jpegInterchangeFormat = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
-        final TiffField jpegInterchangeFormatLength = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
+    public ImageDataElement getJpegRawImageDataElement() throws ImageReadException {
+        TiffField jpegInterchangeFormat = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
+        TiffField jpegInterchangeFormatLength = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
 
-        if ((jpegInterchangeFormat != null)
-                && (jpegInterchangeFormatLength != null)) {
+        if (jpegInterchangeFormat != null && jpegInterchangeFormatLength != null) {
             final int offSet = jpegInterchangeFormat.getIntArrayValue()[0];
             final int byteCount = jpegInterchangeFormatLength.getIntArrayValue()[0];
 

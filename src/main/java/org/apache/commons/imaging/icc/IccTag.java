@@ -31,7 +31,8 @@ import org.apache.commons.imaging.util.IoUtils;
 
 public class IccTag {
     public final int signature;
-    public final int offset, length;
+    public final int offset;
+    public final int length;
     public final IccTagType fIccTagType;
     public byte[] data;
     private IccTagDataType itdt;

@@ -196,12 +196,11 @@ public class JpegImageParser extends ImageParser {
         return result;
     }
 
-    private byte[] assembleSegments(final List<App2Segment> v)
-            throws ImageReadException {
+    private byte[] assembleSegments(List<App2Segment> segments) throws ImageReadException {
         try {
-            return assembleSegments(v, false);
-        } catch (final ImageReadException e) {
-            return assembleSegments(v, true);
+            return assembleSegments(segments, false);
+        } catch (ImageReadException e) {
+            return assembleSegments(segments, true);
         }
     }
 
@@ -263,7 +262,7 @@ public class JpegImageParser extends ImageParser {
         for (int i = 0; i < v.size(); i++) {
             final App2Segment segment = (App2Segment) v.get(i);
 
-            Debug.debug((i) + ": " + segment.curMarker + " / " + segment.numMarkers);
+            Debug.debug(i + ": " + segment.curMarker + " / " + segment.numMarkers);
         }
         Debug.debug();
     }
@@ -304,7 +303,7 @@ public class JpegImageParser extends ImageParser {
             System.out.println("");
         }
 
-        return (bytes);
+        return bytes;
     }
 
     @Override
@@ -917,8 +916,8 @@ public class JpegImageParser extends ImageParser {
                                 maxVerticalSamplingFactor = component.verticalSamplingFactor;
                             }
                         }
-                        final boolean isSubsampled = (minHorizontalSamplingFactor != maxHorizontalSmaplingFactor) ||
-                                (minVerticalSamplingFactor != maxVerticalSamplingFactor);
+                        final boolean isSubsampled = (minHorizontalSamplingFactor != maxHorizontalSmaplingFactor) 
+                                || (minVerticalSamplingFactor != maxVerticalSamplingFactor);
                         if (numberOfComponents == 3) {
                             if (isSubsampled) {
                                 colorType = ImageInfo.COLOR_TYPE_YCbCr;

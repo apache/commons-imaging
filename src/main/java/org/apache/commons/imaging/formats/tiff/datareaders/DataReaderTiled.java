@@ -126,7 +126,8 @@ public final class DataReaderTiled extends DataReader {
 
         final int pixelsPerTile = tileWidth * tileLength;
 
-        int tileX = 0, tileY = 0;
+        int tileX = 0;
+        int tileY = 0;
 
         int[] samples = new int[bitsPerSample.length];
         resetPredictor();
@@ -164,7 +165,8 @@ public final class DataReaderTiled extends DataReader {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
-        int x = 0, y = 0;
+        int x = 0;
+        int y = 0;
 
         for (final DataElement tile2 : imageData.tiles) {
             final byte[] compressed = tile2.getData();
@@ -193,7 +195,8 @@ public final class DataReaderTiled extends DataReader {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
-        int x = 0, y = 0;
+        int x = 0;
+        int y = 0;
 
         // tileWidth is the width of the tile
         // tileLength is the height of the tile 

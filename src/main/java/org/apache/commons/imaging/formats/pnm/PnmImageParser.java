@@ -75,9 +75,9 @@ public class PnmImageParser extends ImageParser {
     @Override
     protected ImageFormat[] getAcceptedTypes() {
         return new ImageFormat[] {
-                ImageFormats.PBM, //
-                ImageFormats.PGM, //
-                ImageFormats.PPM, //
+                ImageFormats.PBM,
+                ImageFormats.PGM,
+                ImageFormats.PPM,
                 ImageFormats.PNM,
                 ImageFormats.PAM
         };
@@ -94,12 +94,12 @@ public class PnmImageParser extends ImageParser {
         
         final WhiteSpaceReader wsr = new WhiteSpaceReader(is);
         
-        if (identifier2 == PnmConstants.PBM_TEXT_CODE ||
-                identifier2 == PnmConstants.PBM_RAW_CODE ||
-                identifier2 == PnmConstants.PGM_TEXT_CODE ||
-                identifier2 == PnmConstants.PGM_RAW_CODE ||
-                identifier2 == PnmConstants.PPM_TEXT_CODE ||
-                identifier2 == PnmConstants.PPM_RAW_CODE) {
+        if (identifier2 == PnmConstants.PBM_TEXT_CODE
+                || identifier2 == PnmConstants.PBM_RAW_CODE
+                || identifier2 == PnmConstants.PGM_TEXT_CODE
+                || identifier2 == PnmConstants.PGM_RAW_CODE
+                || identifier2 == PnmConstants.PPM_TEXT_CODE
+                || identifier2 == PnmConstants.PPM_RAW_CODE) {
             
             final int width = Integer.parseInt(wsr.readtoWhiteSpace());
             final int height = Integer.parseInt(wsr.readtoWhiteSpace());
@@ -244,24 +244,24 @@ public class PnmImageParser extends ImageParser {
 
         // boolean progressive = (fPNGChunkIHDR.InterlaceMethod != 0);
         //
-        final int PhysicalWidthDpi = 72;
-        final float PhysicalWidthInch = (float) ((double) info.width / (double) PhysicalWidthDpi);
-        final int PhysicalHeightDpi = 72;
-        final float PhysicalHeightInch = (float) ((double) info.height / (double) PhysicalHeightDpi);
+        final int physicalWidthDpi = 72;
+        final float physicalWidthInch = (float) ((double) info.width / (double) physicalWidthDpi);
+        final int physicalHeightDpi = 72;
+        final float physicalHeightInch = (float) ((double) info.height / (double) physicalHeightDpi);
 
-        final String FormatDetails = info.getImageTypeDescription();
+        final String formatDetails = info.getImageTypeDescription();
 
         final boolean transparent = info.hasAlpha();
         final boolean usesPalette = false;
 
-        final int ColorType = info.getColorType();
+        final int colorType = info.getColorType();
         final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
 
-        return new ImageInfo(FormatDetails, bitsPerPixel, comments,
+        return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, formatName, info.height, mimeType, numberOfImages,
-                PhysicalHeightDpi, PhysicalHeightInch, PhysicalWidthDpi,
-                PhysicalWidthInch, info.width, progressive, transparent,
-                usesPalette, ColorType, compressionAlgorithm);
+                physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
+                physicalWidthInch, info.width, progressive, transparent,
+                usesPalette, colorType, compressionAlgorithm);
     }
 
     @Override

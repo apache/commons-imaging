@@ -510,15 +510,11 @@ public class TiffImageParser extends ImageParser {
             final Map<String, Object> params)
             throws ImageReadException
     {
-        Integer ix0, iy0, iwidth, iheight;
-        ix0 = getIntegerParameter(
-                TiffConstants.PARAM_KEY_SUBIMAGE_X, params);
-        iy0 = getIntegerParameter(
-                TiffConstants.PARAM_KEY_SUBIMAGE_Y, params);
-        iwidth = getIntegerParameter(
-                TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
-        iheight = getIntegerParameter(
-                TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, params);
+        Integer ix0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_X, params);
+        Integer iy0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_Y, params);
+        Integer iwidth = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
+        Integer iheight = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, params);
+        
         if (ix0 == null && iy0 == null && iwidth == null && iheight == null) {
             return null;
         }
@@ -538,9 +534,7 @@ public class TiffImageParser extends ImageParser {
         }
         if (sb.length() > 0) {
             sb.setLength(sb.length() - 1);
-            throw new ImageReadException(
-                    "Incomplete subimage parameters, missing"
-                    + sb.toString());
+            throw new ImageReadException("Incomplete subimage parameters, missing" + sb.toString());
         }
         
         return new Rectangle(ix0, iy0, iwidth, iheight);
@@ -558,12 +552,10 @@ public class TiffImageParser extends ImageParser {
 
         final int photometricInterpretation = 0xffff & directory.getSingleFieldValue(
                 TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
-        final int compression = 0xffff & directory.getSingleFieldValue(
-                TiffTagConstants.TIFF_TAG_COMPRESSION);
-        final int width = directory.getSingleFieldValue(
-                TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
-        final int height = directory.getSingleFieldValue(
-                TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);      
+        final int compression = 0xffff & directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
+        final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
+        final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);      
+        
         Rectangle subImage = checkForSubImage(params);
         if (subImage != null) {
             // Check for valid subimage specification. The following checks

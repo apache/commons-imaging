@@ -92,7 +92,8 @@ public class PixelParserRle extends PixelParser {
             throws ImageReadException, IOException {
         final int width = bhi.width;
         final int height = bhi.height;
-        int x = 0, y = height - 1;
+        int x = 0;
+        int y = height - 1;
 
         boolean done = false;
         while (!done) {

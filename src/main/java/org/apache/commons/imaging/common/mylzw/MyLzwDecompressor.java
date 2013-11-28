@@ -133,9 +133,9 @@ public final class MyLzwDecompressor {
         tiffLZWMode = true;
     }
 
-    public byte[] decompress(final InputStream is, final int expectedLength)
-            throws IOException {
-        int code, oldCode = -1;
+    public byte[] decompress(final InputStream is, final int expectedLength) throws IOException {
+        int code;
+        int oldCode = -1;
         final MyBitInputStream mbis = new MyBitInputStream(is, byteOrder);
         if (tiffLZWMode) {
             mbis.setTiffLZWMode();

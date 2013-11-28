@@ -109,7 +109,7 @@ public class BasicCParser {
         boolean hadStar = false;
         boolean hadBackSlash = false;
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        boolean seenFirstComment = firstComment == null;
+        boolean seenFirstComment = (firstComment == null);
         final StringBuilder directiveBuffer = new StringBuilder();
         for (int c = is.read(); c != -1; c = is.read()) {
             if (inComment) {
@@ -194,11 +194,10 @@ public class BasicCParser {
                     inDirective = false;
                     final String[] tokens = tokenizeRow(directiveBuffer.toString());
                     if (tokens.length < 2 || tokens.length > 3) {
-                        throw new ImageReadException(
-                                "Bad preprocessor directive");
+                        throw new ImageReadException("Bad preprocessor directive");
                     }
                     if (!tokens[0].equals("define")) {
-                        throw new ImageReadException("Invalid/unsupported "
+                        throw new ImageReadException("Invalid/unsupported " 
                                 + "preprocessor directive '" + tokens[0] + "'");
                     }
                     defines.put(tokens[1], (tokens.length == 3) ? tokens[2]
@@ -236,8 +235,7 @@ public class BasicCParser {
                     inString = true;
                 } else if (c == '#') {
                     if (defines == null) {
-                        throw new ImageReadException(
-                                "Unexpected preprocessor directive");
+                        throw new ImageReadException("Unexpected preprocessor directive");
                     }
                     inDirective = true;
                 } else {
@@ -260,12 +258,10 @@ public class BasicCParser {
             out.write('*');
         }
         if (inString) {
-            throw new ImageReadException(
-                    "Unterminated string at the end of file");
+            throw new ImageReadException("Unterminated string at the end of file");
         }
         if (inComment) {
-            throw new ImageReadException(
-                    "Unterminated comment at the end of file");
+            throw new ImageReadException("Unterminated comment at the end of file");
         }
         return out;
     }

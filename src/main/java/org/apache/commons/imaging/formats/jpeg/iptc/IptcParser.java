@@ -54,8 +54,8 @@ public class IptcParser extends BinaryFileParser {
         }
 
         final int index = JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size();
-        return (index + 4) <= segmentData.length &&
-                ByteConversions.toInt(segmentData, index, APP13_BYTE_ORDER) == JpegConstants.CONST_8BIM;
+        return (index + 4) <= segmentData.length
+                && ByteConversions.toInt(segmentData, index, APP13_BYTE_ORDER) == JpegConstants.CONST_8BIM;
     }
 
     /*

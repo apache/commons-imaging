@@ -67,7 +67,7 @@ public class PixelParserBitFields extends PixelParserSimple {
             maskLength++;
         }
 
-        return (trailingZeroes - (8 - maskLength));
+        return trailingZeroes - (8 - maskLength);
     }
 
     @Override
@@ -87,8 +87,7 @@ public class PixelParserBitFields extends PixelParserSimple {
             data = read2Bytes("Pixel", is, "BMP Image Data", ByteOrder.LITTLE_ENDIAN);
             bytecount += 2;
         } else {
-            throw new ImageReadException("Unknown BitsPerPixel: "
-                    + bhi.bitsPerPixel);
+            throw new ImageReadException("Unknown BitsPerPixel: " + bhi.bitsPerPixel);
         }
 
         int red = (redMask & data);
@@ -101,14 +100,12 @@ public class PixelParserBitFields extends PixelParserSimple {
         blue = (blueShift >= 0) ? blue >> blueShift : blue << -blueShift;
         alpha = (alphaShift >= 0) ? alpha >> alphaShift : alpha << -alphaShift;
 
-        final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
-
-        return rgb;
+        return (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
     }
 
     @Override
     public void newline() throws ImageReadException, IOException {
-        while (((bytecount) % 4) != 0) {
+        while ((bytecount % 4) != 0) {
             readByte("Pixel", is, "BMP Image Data");
             bytecount++;
         }

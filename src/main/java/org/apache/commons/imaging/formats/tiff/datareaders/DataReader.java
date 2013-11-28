@@ -43,7 +43,8 @@ public abstract class DataReader {
 
     protected final int predictor;
     protected final int samplesPerPixel;
-    protected final int width, height;
+    protected final int width;
+    protected final int height;
 
     public DataReader(final TiffDirectory directory,
             final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,

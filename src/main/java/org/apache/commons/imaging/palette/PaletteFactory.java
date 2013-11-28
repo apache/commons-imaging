@@ -185,17 +185,15 @@ public class PaletteFactory {
         final int[] sliceMaxs = new int[subset.maxs.length];
         System.arraycopy(subset.maxs, 0, sliceMaxs, 0, subset.maxs.length);
 
-        int sum1 = 0, sum2;
-        int slice1, slice2;
+        int sum1 = 0;
+        int slice1;
         int last = 0;
 
         for (slice1 = subset.mins[component]; slice1 != subset.maxs[component] + 1; slice1++) {
-
             sliceMins[component] = slice1;
             sliceMaxs[component] = slice1;
 
-            last = getFrequencyTotal(table, sliceMins, sliceMaxs,
-                    precision);
+            last = getFrequencyTotal(table, sliceMins, sliceMaxs, precision);
 
             sum1 += last;
 
@@ -204,13 +202,11 @@ public class PaletteFactory {
             }
         }
 
-        sum2 = sum1 - last;
-        slice2 = slice1 - 1;
+        int sum2 = sum1 - last;
+        int slice2 = slice1 - 1;
 
-        final DivisionCandidate dc1 = finishDivision(subset, component, precision,
-                sum1, slice1);
-        final DivisionCandidate dc2 = finishDivision(subset, component, precision,
-                sum2, slice2);
+        final DivisionCandidate dc1 = finishDivision(subset, component, precision, sum1, slice1);
+        final DivisionCandidate dc2 = finishDivision(subset, component, precision, sum2, slice2);
 
         final List<DivisionCandidate> result = new ArrayList<DivisionCandidate>();
 
@@ -259,7 +255,8 @@ public class PaletteFactory {
 
     private static class DivisionCandidate {
         // private final ColorSpaceSubset src;
-        private final ColorSpaceSubset dst_a, dst_b;
+        private final ColorSpaceSubset dst_a;
+        private final ColorSpaceSubset dst_b;
 
         public DivisionCandidate(final ColorSpaceSubset dst_a, final ColorSpaceSubset dst_b) {
             // this.src = src;

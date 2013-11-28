@@ -25,7 +25,8 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class SofnSegment extends Segment {
-    public final int width, height;
+    public final int width;
+    public final int height;
     public final int numberOfComponents;
     public final int precision;
     private final Component[] components;
@@ -45,8 +46,7 @@ public class SofnSegment extends Segment {
         }
     }
 
-    public SofnSegment(final int marker, final byte[] segmentData)
-            throws IOException {
+    public SofnSegment(final int marker, final byte[] segmentData) throws IOException {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 

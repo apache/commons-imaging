@@ -46,8 +46,7 @@ class ColorGroup {
     public final int diffTotal;
     public final int totalPoints;
 
-    public ColorGroup(final List<ColorCount> colorCounts, final boolean ignoreAlpha)
-            throws ImageWriteException {
+    public ColorGroup(final List<ColorCount> colorCounts, final boolean ignoreAlpha) throws ImageWriteException {
         this.colorCounts = colorCounts;
         this.ignoreAlpha = ignoreAlpha;
 
@@ -77,9 +76,7 @@ class ColorGroup {
         maxDiff = Math.max(
                 ignoreAlpha ? redDiff : Math.max(alphaDiff, redDiff),
                 Math.max(greenDiff, blueDiff));
-        diffTotal = (ignoreAlpha ? 0 : alphaDiff) + redDiff + greenDiff
-                + blueDiff;
-
+        diffTotal = (ignoreAlpha ? 0 : alphaDiff) + redDiff + greenDiff + blueDiff;
     }
 
     public boolean contains(final int argb) {
@@ -105,7 +102,10 @@ class ColorGroup {
 
     public int getMedianValue() {
         long countTotal = 0;
-        long alphaTotal = 0, redTotal = 0, greenTotal = 0, blueTotal = 0;
+        long alphaTotal = 0;
+        long redTotal = 0;
+        long greenTotal = 0;
+        long blueTotal = 0;
 
         for (ColorCount color : colorCounts) {
             countTotal += color.count;
@@ -115,8 +115,7 @@ class ColorGroup {
             blueTotal += color.count * color.blue;
         }
 
-        final int alpha = ignoreAlpha ? 0xff : (int) Math
-                .round((double) alphaTotal / countTotal);
+        final int alpha = ignoreAlpha ? 0xff : (int) Math.round((double) alphaTotal / countTotal);
         final int red = (int) Math.round((double) redTotal / countTotal);
         final int green = (int) Math.round((double) greenTotal / countTotal);
         final int blue = (int) Math.round((double) blueTotal / countTotal);

@@ -108,8 +108,7 @@ public final class TagInfoGpsText extends TagInfo {
                 encoding = TEXT_ENCODING_UNICODE_LE;
             }
             final byte[] unicodeBytes = s.getBytes(encoding.encodingName);
-            final byte[] result = new byte[unicodeBytes.length +
-                                           encoding.prefix.length];
+            final byte[] result = new byte[unicodeBytes.length + encoding.prefix.length];
             System.arraycopy(encoding.prefix, 0, result, 0, encoding.prefix.length);
             System.arraycopy(unicodeBytes, 0, result, encoding.prefix.length, unicodeBytes.length);
             return result;

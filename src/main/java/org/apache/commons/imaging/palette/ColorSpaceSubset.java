@@ -132,7 +132,9 @@ class ColorSpaceSubset {
     }
 
     public void setAverageRGB(final int[] table) {
-        long redsum = 0, greensum = 0, bluesum = 0;
+        long redsum = 0;
+        long greensum = 0;
+        long bluesum = 0;
 
         for (int red = mins[0]; red <= maxs[0]; red++) {
             for (int green = mins[1]; green <= maxs[1]; green++) {
