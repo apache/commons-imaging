@@ -30,7 +30,7 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-public class PcxWriter {
+class PcxWriter {
     private int encoding;
     private int bitDepth = -1;
     private PixelDensity pixelDensity = null;
