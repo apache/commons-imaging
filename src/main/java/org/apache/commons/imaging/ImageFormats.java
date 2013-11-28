@@ -19,7 +19,6 @@ package org.apache.commons.imaging;
 /**
  * Enum of known image formats.
  */
-//@formatter:off
 public enum ImageFormats implements ImageFormat {
     UNKNOWN,
     BMP,
@@ -43,65 +42,12 @@ public enum ImageFormats implements ImageFormat {
     WBMP,
     XBM,
     XPM;
-//@formatter:on
 
-    /**
-     * {@inheritDoc}
-     */
     public String getName() {
         return name();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public String getExtension() {
         return name();
     }
-
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_UNKNOWN = UNKNOWN;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_BMP = BMP;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_DCX = DCX;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_GIF = GIF;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_ICNS = ICNS;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_ICO = ICO;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_JBIG2 = JBIG2;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_JPEG = JPEG;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PAM = PAM;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PSD = PSD;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PBM = PBM;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PGM = PGM;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PNM = PNM;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PPM = PPM;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PCX = PCX;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_PNG = PNG;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_RGBE = RGBE;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_TGA = TGA;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_TIFF = TIFF;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_WBMP = WBMP;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_XBM = XBM;
-    @Deprecated
-    public static final ImageFormat IMAGE_FORMAT_XPM = XPM;
-
 }
