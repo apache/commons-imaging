@@ -35,9 +35,6 @@ public interface PngConstants {
     public static final byte COMPRESSION_TYPE_INFLATE_DEFLATE = 0;
     public static final byte FILTER_METHOD_ADAPTIVE = 0;
 
-    public static final byte INTERLACE_METHOD_NONE = 0;
-    public static final byte INTERLACE_METHOD_ADAM7 = 1;
-
     /*
      * Background colour Solid background colour to be used when presenting the
      * image if no better option is available. Gamma and chromaticity Gamma

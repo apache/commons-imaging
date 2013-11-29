@@ -94,11 +94,11 @@ class PngWriter {
         public final ColorType colorType;
         public final byte compressionMethod;
         public final byte filterMethod;
-        public final byte interlaceMethod;
+        public final InterlaceMethod interlaceMethod;
 
         public ImageHeader(final int width, final int height, final byte bitDepth,
                 final ColorType colorType, final byte compressionMethod, final byte filterMethod,
-                final byte interlaceMethod) {
+                InterlaceMethod interlaceMethod) {
             this.width = width;
             this.height = height;
             this.bitDepth = bitDepth;
@@ -118,7 +118,7 @@ class PngWriter {
         baos.write(0xff & value.colorType.getValue());
         baos.write(0xff & value.compressionMethod);
         baos.write(0xff & value.filterMethod);
-        baos.write(0xff & value.interlaceMethod);
+        baos.write(0xff & value.interlaceMethod.ordinal());
 
         writeChunk(os, ChunkType.IHDR, baos.toByteArray());
     }
@@ -464,7 +464,7 @@ class PngWriter {
 
             final byte compressionMethod = PngConstants.COMPRESSION_TYPE_INFLATE_DEFLATE;
             final byte filterMethod = PngConstants.FILTER_METHOD_ADAPTIVE;
-            final byte interlaceMethod = PngConstants.INTERLACE_METHOD_NONE;
+            final InterlaceMethod interlaceMethod = InterlaceMethod.NONE;
 
             final ImageHeader imageHeader = new ImageHeader(width, height, bitDepth,
                     colorType, compressionMethod, filterMethod, interlaceMethod);

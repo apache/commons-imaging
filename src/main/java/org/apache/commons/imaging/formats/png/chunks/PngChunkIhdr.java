@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.ColorType;
+import org.apache.commons.imaging.formats.png.InterlaceMethod;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
@@ -31,7 +32,7 @@ public class PngChunkIhdr extends PngChunk {
     public final ColorType colorType;
     public final int compressionMethod;
     public final int filterMethod;
-    public final int interlaceMethod;
+    public final InterlaceMethod interlaceMethod;
 
     public PngChunkIhdr(int length, int chunkType, int crc, byte[] bytes) throws ImageReadException, IOException {
         super(length, chunkType, crc, bytes);
@@ -47,6 +48,10 @@ public class PngChunkIhdr extends PngChunk {
         }
         compressionMethod = readByte("CompressionMethod", is, "Not a Valid Png File: IHDR Corrupt");
         filterMethod = readByte("FilterMethod", is, "Not a Valid Png File: IHDR Corrupt");
-        interlaceMethod = readByte("InterlaceMethod", is, "Not a Valid Png File: IHDR Corrupt");
+        int method = readByte("InterlaceMethod", is, "Not a Valid Png File: IHDR Corrupt");
+        if (method < 0 && method >= InterlaceMethod.values().length) {
+            throw new ImageReadException("PNG: unknown interlace method: " + method);
+        }
+        interlaceMethod = InterlaceMethod.values()[method];
     }
 }

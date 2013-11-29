@@ -409,7 +409,7 @@ public class PngImageParser extends ImageParser {
         final String mimeType = "image/png";
         final int numberOfImages = 1;
         final int width = pngChunkIHDR.width;
-        final boolean progressive = (pngChunkIHDR.interlaceMethod != 0);
+        final boolean progressive = pngChunkIHDR.interlaceMethod.isProgressive();
 
         int physicalHeightDpi = -1;
         float physicalHeightInch = -1;
@@ -615,17 +615,19 @@ public class PngImageParser extends ImageParser {
 
             ScanExpediter scanExpediter;
 
-            if (pngChunkIHDR.interlaceMethod == 0) {
-                scanExpediter = new ScanExpediterSimple(width, height, iis,
-                        result, colorType, bitDepth, bitsPerPixel,
-                        pngChunkPLTE, gammaCorrection, transparencyFilter);
-            } else if (pngChunkIHDR.interlaceMethod == 1) {
-                scanExpediter = new ScanExpediterInterlaced(width, height, iis,
-                        result, colorType, bitDepth, bitsPerPixel,
-                        pngChunkPLTE, gammaCorrection, transparencyFilter);
-            } else {
-                throw new ImageReadException("Unknown InterlaceMethod: "
-                        + pngChunkIHDR.interlaceMethod);
+            switch (pngChunkIHDR.interlaceMethod) {
+                case NONE:
+                    scanExpediter = new ScanExpediterSimple(width, height, iis,
+                            result, colorType, bitDepth, bitsPerPixel,
+                            pngChunkPLTE, gammaCorrection, transparencyFilter);
+                    break;
+                case ADAM7:
+                    scanExpediter = new ScanExpediterInterlaced(width, height, iis,
+                            result, colorType, bitDepth, bitsPerPixel,
+                            pngChunkPLTE, gammaCorrection, transparencyFilter);
+                    break;
+                default:
+                    throw new ImageReadException("Unknown InterlaceMethod: " + pngChunkIHDR.interlaceMethod);
             }
 
             scanExpediter.drive();
@@ -638,8 +640,7 @@ public class PngImageParser extends ImageParser {
                     final ColorModel srgbCM = ColorModel.getRGBdefault();
                     final ColorSpace cs_sRGB = srgbCM.getColorSpace();
 
-                    result = new ColorTools().convertBetweenColorSpaces(result,
-                            cs, cs_sRGB);
+                    result = new ColorTools().convertBetweenColorSpaces(result, cs, cs_sRGB);
                 }
             }
 
