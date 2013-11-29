@@ -24,7 +24,7 @@ import org.apache.commons.imaging.common.BinaryFunctions;
  * @see <a href="http://www.w3.org/TR/PNG/#11Chunks">Portable Network Graphics Specification - Chunk specifications</a>
  */
 public enum ChunkType {
-    
+
     /** Image header */
     IHDR,
 
@@ -40,11 +40,17 @@ public enum ChunkType {
     /** Transparency */
     tRNS,
 
+    /** Primary chromaticities and white point */
+    cHRM,
+
     /** Image gamma */
     gAMA,
 
     /** Embedded ICC profile */
     iCCP,
+
+    /** Significant bits*/
+    sBIT,
 
     /** Standard RGB colour space */
     sRGB,
@@ -58,8 +64,20 @@ public enum ChunkType {
     /** International textual data */
     iTXt,
 
+    /** Background colour */
+    bKGD,
+
+    /** Image histogram */
+    hIST,
+
     /** Physical pixel dimensions */
-    pHYs;
+    pHYs,
+
+    /** Suggested palette */
+    sPLT,
+
+    /** Image last-modification time */
+    tIME;
 
     final byte[] array;
     final int value;
