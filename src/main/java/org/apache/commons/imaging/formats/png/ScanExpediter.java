@@ -167,43 +167,28 @@ abstract class ScanExpediter {
             return getPixelARGB(alpha, red, green, blue);
         }
         default:
-            throw new ImageReadException("PNG: unknown color type: "
-                    + colorType);
+            throw new ImageReadException("PNG: unknown color type: " + colorType);
         }
     }
 
-    protected ScanlineFilter getScanlineFilter(int filterType, int bytesPerPixel) throws ImageReadException {
-        ScanlineFilter filter;
-
+    protected ScanlineFilter getScanlineFilter(FilterType filterType, int bytesPerPixel) throws ImageReadException {
         switch (filterType) {
-            case 0: // None
-                filter = new ScanlineFilterNone();
-                break;
-
-            case 1: // Sub
-                filter = new ScanlineFilterSub(bytesPerPixel);
-                break;
-
-            case 2: // Up
-                filter = new ScanlineFilterUp();
-                break;
-
-            case 3: // Average
-                filter = new ScanlineFilterAverage(bytesPerPixel);
-                break;
-
-            case 4: // Paeth
-                filter = new ScanlineFilterPaeth(bytesPerPixel);
-                break;
-
-            default:
-                throw new ImageReadException("PNG: unknown filterType: " + filterType);
+            case NONE:
+                return new ScanlineFilterNone();
+            case SUB:
+                return new ScanlineFilterSub(bytesPerPixel);
+            case UP:
+                return new ScanlineFilterUp();
+            case AVERAGE:
+                return new ScanlineFilterAverage(bytesPerPixel);
+            case PAETH:
+                return new ScanlineFilterPaeth(bytesPerPixel);
         }
-
-        return filter;
+        
+        return null;
     }
 
-    protected byte[] unfilterScanline(final int filterType, final byte[] src, final byte[] prev,
+    protected byte[] unfilterScanline(final FilterType filterType, final byte[] src, final byte[] prev,
             final int bytesPerPixel) throws ImageReadException, IOException {
         final ScanlineFilter filter = getScanlineFilter(filterType, bytesPerPixel);
 
@@ -218,10 +203,13 @@ abstract class ScanExpediter {
         if (filterType < 0) {
             throw new ImageReadException("PNG: missing filter type");
         }
+        if (filterType >= FilterType.values().length) {
+            throw new ImageReadException("PNG: unknown filterType: " + filterType);
+        }
 
         byte[] scanline = readBytes("scanline", is, length, "PNG: missing image data");
 
-        return unfilterScanline(filterType, scanline, prev, bytesPerPixel);
+        return unfilterScanline(FilterType.values()[filterType], scanline, prev, bytesPerPixel);
     }
 
 }

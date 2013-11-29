@@ -38,12 +38,6 @@ public interface PngConstants {
     public static final byte INTERLACE_METHOD_NONE = 0;
     public static final byte INTERLACE_METHOD_ADAM7 = 1;
 
-    public static final byte FILTER_TYPE_NONE = 0;
-    public static final byte FILTER_TYPE_SUB = 1;
-    public static final byte FILTER_TYPE_UP = 2;
-    public static final byte FILTER_TYPE_AVERAGE = 3;
-    public static final byte FILTER_TYPE_PAETH = 4;
-
     /*
      * Background colour Solid background colour to be used when presenting the
      * image if no better option is available. Gamma and chromaticity Gamma

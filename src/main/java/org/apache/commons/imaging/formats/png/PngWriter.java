@@ -556,8 +556,7 @@ class PngWriter {
                     // Debug.debug("y", y + "/" + height);
                     src.getRGB(0, y, width, 1, row, 0, width);
 
-                    final byte filterType = PngConstants.FILTER_TYPE_NONE;
-                    baos.write(filterType);
+                    baos.write(FilterType.NONE.ordinal());
                     for (int x = 0; x < width; x++) {
                         final int argb = row[x];
 
