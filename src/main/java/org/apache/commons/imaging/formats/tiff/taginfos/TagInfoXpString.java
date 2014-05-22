@@ -29,10 +29,11 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
  * Windows XP onwards store some tags using UTF-16LE, but the field type is byte
  * - here we deal with this.
  */
-public class TagInfoXpString extends TagInfo {
+public class TagInfoXpString extends TagInfoAsciiOrByte {
+
     public TagInfoXpString(final String name, final int tag, final int length,
             final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.BYTE, length, directoryType);
+        super(name, tag, length, directoryType);
     }
 
     @Override
@@ -41,23 +42,34 @@ public class TagInfoXpString extends TagInfo {
         if (!(value instanceof String)) {
             throw new ImageWriteException("Text value not String", value);
         }
-        final String s = (String) value;
-        try {
-            return s.getBytes("UTF-16LE");
-        } catch (final UnsupportedEncodingException cannotHappen) {
-            return null;
+
+        if (fieldType == FieldType.ASCII) {
+            return super.encodeValue(fieldType, value, byteOrder);
+        } else if (fieldType == FieldType.BYTE)  {
+            final String s = (String) value;
+            try {
+                return s.getBytes("UTF-16LE");
+            } catch (final UnsupportedEncodingException cannotHappen) {
+                return null;
+            }
+        } else {
+            throw new ImageWriteException("Invalid data", value);
         }
     }
 
     @Override
     public String getValue(final TiffField entry) throws ImageReadException {
-        if (entry.getFieldType() != FieldType.BYTE) {
-            throw new ImageReadException("Text field not encoded as bytes.");
+        if (entry.getFieldType() == FieldType.ASCII) {
+            return (String)super.getValue(entry);
         }
-        try {
-            return new String(entry.getByteArrayValue(), "UTF-16LE");
-        } catch (final UnsupportedEncodingException cannotHappen) {
-            return null;
+        else if (entry.getFieldType() == FieldType.BYTE) {
+            try {
+                return new String(entry.getByteArrayValue(), "UTF-16LE");
+            } catch (final UnsupportedEncodingException cannotHappen) {
+                return null;
+            }
+        } else {
+            throw new ImageReadException("Text field not encoded as ascii or bytes.");
         }
     }
 }
