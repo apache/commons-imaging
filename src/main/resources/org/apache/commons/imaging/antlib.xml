@@ -1,0 +1,3 @@
+<antlib>
+    <taskdef name="convertimage" classname="org.apache.commons.imaging.ImageConverterTask" />
+</antlib>
