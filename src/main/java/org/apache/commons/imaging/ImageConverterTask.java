@@ -33,7 +33,6 @@ public class ImageConverterTask extends Task {
 
 	private String dst;
 
-	@Override
 	public void execute() throws BuildException {
 		if (src == null) {
 			throw new BuildException("The src attribute cannot be null");
@@ -55,7 +54,7 @@ public class ImageConverterTask extends Task {
 		} else {
 			srcFileExt = null;
 		}
-		if (srcFileExt == null || srcFileExt.isEmpty()) {
+		if (srcFileExt == null || srcFileExt.length() == 0) {
 			throw new BuildException("The source file "
 					+ srcFile.getAbsolutePath() + " has no extension");
 		}
@@ -72,7 +71,7 @@ public class ImageConverterTask extends Task {
 		} else {
 			dstFileExt = null;
 		}
-		if (dstFileExt == null || dstFileExt.isEmpty()) {
+		if (dstFileExt == null || dstFileExt.length() == 0) {
 			throw new BuildException("The destination file "
 					+ dstFile.getAbsolutePath() + " has no extension");
 		}
