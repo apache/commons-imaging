@@ -27,12 +27,17 @@ import java.util.Locale;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
+/**
+ * Ant task of image conversion
+ * 
+ */
 public class ImageConverterTask extends Task {
 
 	private String src;
 
 	private String dst;
 
+	@Override
 	public void execute() throws BuildException {
 		if (src == null) {
 			throw new BuildException("The src attribute cannot be null");
@@ -40,12 +45,12 @@ public class ImageConverterTask extends Task {
 		if (dst == null) {
 			throw new BuildException("The dst attribute cannot be null");
 		}
-		final File srcFile = new File(src);
+		final File srcFile = new File(getProject().getBaseDir(), src);
 		if (!srcFile.exists()) {
 			throw new BuildException("The source file "
 					+ srcFile.getAbsolutePath() + " does not exist");
 		}
-		final File dstFile = new File(dst);
+		final File dstFile = new File(getProject().getBaseDir(), dst);
 		final int srcFileExtIndex = srcFile.getName().lastIndexOf('.');
 		final String srcFileExt;
 		if (srcFileExtIndex != -1
@@ -75,7 +80,7 @@ public class ImageConverterTask extends Task {
 			throw new BuildException("The destination file "
 					+ dstFile.getAbsolutePath() + " has no extension");
 		}
-		if (!Imaging.hasImageFileExtension(dstFile)) {
+		if (!Imaging.hasImageFileExtension(dstFile.getName())) {
 			throw new BuildException("The destination file "
 					+ dstFile.getAbsolutePath()
 					+ " has no image file extension");
