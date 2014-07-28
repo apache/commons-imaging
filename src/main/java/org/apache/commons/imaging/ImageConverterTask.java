@@ -37,7 +37,6 @@ public class ImageConverterTask extends Task {
 
 	private String dst;
 
-	@Override
 	public void execute() throws BuildException {
 		if (src == null) {
 			throw new BuildException("The src attribute cannot be null");
@@ -116,13 +115,13 @@ public class ImageConverterTask extends Task {
 				dstParser.writeImage(srcImg, bos, null);
 			} catch (ImageWriteException e) {
 				throw new BuildException(
-						"The destination image cannot be written", e);
+						"The destination image cannot be written, cause: " + e.getMessage(), e);
 			} catch (FileNotFoundException e) {
 				throw new BuildException(
-						"The destination image cannot be written", e);
+						"The destination image cannot be written, cause: " + e.getMessage(), e);
 			} catch (IOException e) {
 				throw new BuildException(
-						"The destination image cannot be written", e);
+						"The destination image cannot be written, cause: " + e.getMessage(), e);
 			} finally {
 				try {
 					if (bos != null) {
