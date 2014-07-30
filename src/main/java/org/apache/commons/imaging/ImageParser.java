@@ -581,6 +581,48 @@ public abstract class ImageParser extends BinaryFileParser {
         throw new ImageWriteException("This image format (" + getName()
                 + ") cannot be written.");
     }
+    
+	/**
+	 * Writes the content of several images to the specified output stream.
+	 * 
+	 * <p>
+	 * The params argument provides a mechanism for individual implementations
+	 * to pass optional information into the parser. Not all formats will
+	 * support this capability. Currently, some of the parsers do not check for
+	 * null arguments. So in cases where no optional specifications are
+	 * supported, application code should pass in an empty instance of an
+	 * implementation of the map interface (i.e. an empty HashMap).
+	 * 
+	 * @param srcs
+	 *            Some images giving the source content for output
+	 * @param os
+	 *            A valid output stream for storing the formatted image
+	 * @param params
+	 *            A non-null Map implementation supplying optional,
+	 *            format-specific instructions for output (such as selections
+	 *            for data compression, color models, etc.)
+	 * @throws ImageWriteException
+	 *             In the event that the output format cannot handle the input
+	 *             image or invalid params are specified.
+	 * @throws IOException
+	 *             In the event of an write error from the output stream.
+	 */
+	public void writeImages(final List<BufferedImage> srcs,
+			final OutputStream os, final Map<String, Object> params)
+			throws ImageWriteException, IOException {
+		if (!srcs.isEmpty()) {
+			if (srcs.size() == 1) {
+				writeImage(srcs.get(0), os, params);
+			} else {
+				os.close(); // we are obligated to close stream.
+
+				throw new ImageWriteException(
+						"This image format ("
+								+ getName()
+								+ ") does not support writing multiple images to the same data source.");
+			}
+		}
+	}
 
     /**
      * Get the size of the image described by the specified byte array.

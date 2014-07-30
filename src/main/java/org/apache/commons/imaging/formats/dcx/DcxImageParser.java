@@ -250,6 +250,14 @@ public class DcxImageParser extends ImageParser {
         final PcxImageParser pcxImageParser = new PcxImageParser();
         pcxImageParser.writeImage(src, bos, pcxParams);
     }
+    
+    @Override
+	public void writeImages(final List<BufferedImage> srcs,
+			final OutputStream os, final Map<String, Object> params)
+			throws ImageWriteException, IOException {
+		// TODO it should be implemented
+		super.writeImages(srcs, os, params);
+	}
 
     /**
      * Extracts embedded XML metadata as XML string.

@@ -57,7 +57,8 @@ public class ImageConverterTask extends Task {
 		try {
 			this.delegate.convertImage(srcFile, dstFile);
 		} catch (Exception e) {
-			throw new BuildException("The conversion of the image file " + src + " failed", e);
+			throw new BuildException("The conversion of the image file " + src
+					+ " failed", e);
 		}
 	}
 	
@@ -77,5 +78,24 @@ public class ImageConverterTask extends Task {
 	 */
 	public void setSrc(String src) {
 		this.src = src;
+	}
+	
+	public void setSourceImageIndex(final int sourceImageIndex) {
+		this.delegate.setSourceImageIndex(sourceImageIndex);
+	}
+	
+	public void setIndexOfSmallestSourceImageComputationEnabled(
+			boolean indexOfSmallestSourceImageComputationEnabled) {
+		this.delegate.setIndexOfSmallestSourceImageComputationEnabled(indexOfSmallestSourceImageComputationEnabled);
+	}
+	
+	public void setIndexOfBiggestSourceImageComputationEnabled(
+			boolean indexOfBiggestSourceImageComputationEnabled) {
+		this.delegate.setIndexOfBiggestSourceImageComputationEnabled(indexOfBiggestSourceImageComputationEnabled);
+	}
+	
+	public void setSourceImageDuplicationAndRescaleEnabled(
+			boolean sourceImageDuplicationAndRescaleEnabled) {
+		this.delegate.setSourceImageDuplicationAndRescaleEnabled(sourceImageDuplicationAndRescaleEnabled);
 	}
 }

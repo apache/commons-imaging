@@ -283,7 +283,25 @@ public class IcnsImageParser extends ImageParser {
         return IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
     }
 
-    @Override
+    private IcnsType getIcnsTypeFromBufferedImage(BufferedImage src) throws ImageWriteException {
+    	IcnsType imageType;
+        if (src.getWidth() == 16 && src.getHeight() == 16) {
+            imageType = IcnsType.ICNS_16x16_32BIT_IMAGE;
+        } else if (src.getWidth() == 32 && src.getHeight() == 32) {
+            imageType = IcnsType.ICNS_32x32_32BIT_IMAGE;
+        } else if (src.getWidth() == 48 && src.getHeight() == 48) {
+            imageType = IcnsType.ICNS_48x48_32BIT_IMAGE;
+        } else if (src.getWidth() == 128 && src.getHeight() == 128) {
+            imageType = IcnsType.ICNS_128x128_32BIT_IMAGE;
+        } else {
+            throw new ImageWriteException("Invalid/unsupported source width "
+                    + src.getWidth() + " and height " + src.getHeight());
+        }
+        return imageType;
+    }
+    
+    @SuppressWarnings("resource")
+	@Override
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
@@ -299,19 +317,7 @@ public class IcnsImageParser extends ImageParser {
             throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
 
-        IcnsType imageType;
-        if (src.getWidth() == 16 && src.getHeight() == 16) {
-            imageType = IcnsType.ICNS_16x16_32BIT_IMAGE;
-        } else if (src.getWidth() == 32 && src.getHeight() == 32) {
-            imageType = IcnsType.ICNS_32x32_32BIT_IMAGE;
-        } else if (src.getWidth() == 48 && src.getHeight() == 48) {
-            imageType = IcnsType.ICNS_48x48_32BIT_IMAGE;
-        } else if (src.getWidth() == 128 && src.getHeight() == 128) {
-            imageType = IcnsType.ICNS_128x128_32BIT_IMAGE;
-        } else {
-            throw new ImageWriteException("Invalid/unsupported source width "
-                    + src.getWidth() + " and height " + src.getHeight());
-        }
+        IcnsType imageType = getIcnsTypeFromBufferedImage(src);
 
         final BinaryOutputStream bos = new BinaryOutputStream(os,
                 ByteOrder.BIG_ENDIAN);
@@ -343,6 +349,78 @@ public class IcnsImageParser extends ImageParser {
             }
         }
     }
+    
+    @SuppressWarnings("resource")
+	@Override
+	public void writeImages(final List<BufferedImage> srcs,
+			final OutputStream os, Map<String, Object> params)
+			throws ImageWriteException, IOException {
+		if (!srcs.isEmpty()) {
+			if (srcs.size() == 1) {
+				writeImage(srcs.get(0), os, params);
+			} else {
+				// make copy of params; we'll clear keys as we consume them.
+		        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+
+		        // clear format key.
+		        if (params.containsKey(PARAM_KEY_FORMAT)) {
+		            params.remove(PARAM_KEY_FORMAT);
+		        }
+
+		        if (!params.isEmpty()) {
+		            final Object firstKey = params.keySet().iterator().next();
+		            throw new ImageWriteException("Unknown parameter: " + firstKey);
+		        }
+		        
+		        List<IcnsType> imageTypeList = new ArrayList<IcnsType>();
+		        List<int[]> lengthOfIconsDataList = new ArrayList<int[]>();
+		        int lengthOfFile = 4 + 4;// magic literal + length of file
+		        for (BufferedImage src : srcs) {
+		        	IcnsType imageType = getIcnsTypeFromBufferedImage(src);
+		        	imageTypeList.add(imageType);
+		        	int lengthOfIconData = 4 + 4 + 4 * imageType.getWidth()
+		                    * imageType.getHeight();// icon type + length of data + icon data
+		        	int lengthOfMaskData = 4 + 4 + imageType.getWidth()
+		                    * imageType.getHeight();// icon type + length of data + "mask" data
+		        	lengthOfFile += lengthOfIconData + lengthOfMaskData;
+		        	lengthOfIconsDataList.add(new int[]{lengthOfIconData, lengthOfMaskData});
+		        }
+		        final BinaryOutputStream bos = new BinaryOutputStream(os,
+		                ByteOrder.BIG_ENDIAN);
+		        bos.write4Bytes(ICNS_MAGIC);
+		        bos.write4Bytes(lengthOfFile);
+		        int srcIndex = 0;
+		        for (BufferedImage src : srcs) {
+		        	IcnsType imageType = imageTypeList.get(srcIndex);
+		        	bos.write4Bytes(imageType.getType());
+		        	int lengthOfIconData = lengthOfIconsDataList.get(srcIndex)[0];
+		        	bos.write4Bytes(lengthOfIconData);
+		        	for (int y = 0; y < src.getHeight(); y++) {
+		                for (int x = 0; x < src.getWidth(); x++) {
+		                    final int argb = src.getRGB(x, y);
+		                    bos.write(0);
+		                    bos.write(argb >> 16);
+		                    bos.write(argb >> 8);
+		                    bos.write(argb);
+		                }
+		            }
+		        	
+		        	final IcnsType maskType = IcnsType.find8BPPMaskType(imageType);
+		            bos.write4Bytes(maskType.getType());
+		            int lengthOfMaskData = lengthOfIconsDataList.get(srcIndex)[1];
+		            bos.write4Bytes(lengthOfMaskData);
+		            for (int y = 0; y < src.getHeight(); y++) {
+		                for (int x = 0; x < src.getWidth(); x++) {
+		                    final int argb = src.getRGB(x, y);
+		                    bos.write(argb >> 24);
+		                }
+		            }
+		            
+		        	srcIndex++;
+		        }
+			}
+		}
+	}
 
     /**
      * Extracts embedded XML metadata as XML string.
