@@ -115,7 +115,7 @@ public class ImageConverter {
 		final String srcFileExt;
 		if (srcFileExtIndex != -1
 				&& srcFileExtIndex + 1 < srcFile.getName().length()) {
-			srcFileExt = srcFile.getName().substring(srcFileExtIndex + 1);
+			srcFileExt = srcFile.getName().substring(srcFileExtIndex);
 		} else {
 			srcFileExt = null;
 		}
@@ -123,7 +123,7 @@ public class ImageConverter {
 		final String dstFileExt;
 		if (dstFileExtIndex != -1
 				&& dstFileExtIndex + 1 < dstFile.getName().length()) {
-			dstFileExt = dstFile.getName().substring(dstFileExtIndex + 1);
+			dstFileExt = dstFile.getName().substring(dstFileExtIndex);
 		} else {
 			dstFileExt = null;
 		}
