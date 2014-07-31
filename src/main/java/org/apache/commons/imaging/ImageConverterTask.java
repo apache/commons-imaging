@@ -56,9 +56,9 @@ public class ImageConverterTask extends Task {
 		final File dstFile = new File(getProject().getBaseDir(), dst);
 		try {
 			this.delegate.convertImage(srcFile, dstFile);
-		} catch (Exception e) {
+		} catch (Throwable t) {
 			throw new BuildException("The conversion of the image file " + src
-					+ " failed", e);
+					+ " failed", t, getLocation());
 		}
 	}
 	

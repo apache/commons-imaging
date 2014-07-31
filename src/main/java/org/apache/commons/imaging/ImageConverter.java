@@ -306,10 +306,10 @@ public class ImageConverter {
 	private boolean supportsMultipleImagesWithinSingleDataSource(
 			final ImageParser imageParser) {
 		final Class imageParserClass = imageParser.getClass();
-		return imageParserClass == DcxImageParser.class
-				|| imageParserClass == IcnsImageParser.class
+		return /*imageParserClass == DcxImageParser.class
+				|| */imageParserClass == IcnsImageParser.class/*
 				|| imageParserClass == IcoImageParser.class
-				|| imageParserClass == TiffImageParser.class;
+				|| imageParserClass == TiffImageParser.class*/;
 	}
 
 	/**
