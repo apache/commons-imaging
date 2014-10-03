@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<rdf:RDF xmlns="http://usefulinc.com/ns/doap#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:asfext="http://projects.apache.org/ns/asfext#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:doap="http://usefulinc.com/ns/doap#" xml:lang="en">
+  <Project rdf:about="http://commons.apache.org/imaging/">
+    <name>Apache Commons Imaging</name>
+    <homepage rdf:resource="http://commons.apache.org/imaging/"/>
+    <programming-language>Java</programming-language>
+    <category rdf:resource="http://projects.apache.org/category/library"/>
+    <license rdf:resource="http://usefulinc.com/doap/licenses/asl20"/>
+    <bug-database rdf:resource="http://issues.apache.org/jira/browse/IMAGING"/>
+    <download-page rdf:resource="http://commons.apache.org/imaging/download_imaging.cgi"/>
+    <asfext:pmc rdf:resource="http://commons.apache.org/"/>
+    <shortdesc xml:lang="en">Java Common Components</shortdesc>
+    <description xml:lang="en">
+      The Apache Commons Imaging library
+      reads and writes a variety of image formats,
+      including fast parsing of image info (size, color space, ICC profile, etc.) and metadata.
+      Previously known as Apache Commons Sanselan. 
+    </description>
+    <repository>
+      <SVNRepository>
+        <browse rdf:resource="http://svn.apache.org/viewvc/commons/proper/imaging/trunk"/>
+        <location rdf:resource="http://svn.apache.org/repos/asf/commons/proper/imaging"/>
+      </SVNRepository>
+    </repository>
+    <release>
+      <Version>
+        <name>commons-sanselan</name>
+        <created>2009-02-20</created>
+        <revision>0.97-incubator</revision>
+      </Version>
+    </release>
+    <mailing-list rdf:resource="http://commons.apache.org/mail-lists.html"/>
+  </Project>
+</rdf:RDF>
