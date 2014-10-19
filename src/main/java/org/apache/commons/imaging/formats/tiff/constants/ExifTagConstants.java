@@ -219,7 +219,7 @@ public interface ExifTagConstants {
             "LeafSubIFD", 0x888a, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     TagInfoUndefined EXIF_TAG_EXIF_VERSION = new TagInfoUndefined(
-            "ExifVersion", 0x9000, 1,
+            "ExifVersion", 0x9000, 4,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     TagInfoAscii EXIF_TAG_DATE_TIME_ORIGINAL = new TagInfoAscii(
             "DateTimeOriginal", 0x9003, 20,
@@ -227,7 +227,7 @@ public interface ExifTagConstants {
     TagInfoAscii EXIF_TAG_DATE_TIME_DIGITIZED = new TagInfoAscii(
             "DateTimeDigitized", 0x9004, 20, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     TagInfoUndefined EXIF_TAG_COMPONENTS_CONFIGURATION = new TagInfoUndefined(
-            "ComponentsConfiguration", 0x9101, 1,
+            "ComponentsConfiguration", 0x9101, 4,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     TagInfoRational EXIF_TAG_COMPRESSED_BITS_PER_PIXEL = new TagInfoRational(
             "CompressedBitsPerPixel", 0x9102, 1,
@@ -323,7 +323,7 @@ public interface ExifTagConstants {
             "StoNits", 0x923f, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     TagInfoUndefined EXIF_TAG_MAKER_NOTE = new TagInfoUndefined(
-            "MakerNote", 0x927c, 1,
+            "MakerNote", 0x927c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     TagInfoGpsText EXIF_TAG_USER_COMMENT = new TagInfoGpsText(
             "UserComment", 0x9286, 1,
@@ -338,7 +338,7 @@ public interface ExifTagConstants {
             "SubSecTimeDigitized", 0x9292, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     TagInfoUndefined EXIF_TAG_FLASHPIX_VERSION = new TagInfoUndefined(
-            "FlashpixVersion", 0xa000, 1,
+            "FlashpixVersion", 0xa000, 4,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     TagInfoShort EXIF_TAG_EXIF_IMAGE_WIDTH = new TagInfoShort(
             "ExifImageWidth", 0xa002, 1,
@@ -413,7 +413,7 @@ public interface ExifTagConstants {
             "SceneType", 0xa301, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     TagInfoUndefined EXIF_TAG_CFAPATTERN = new TagInfoUndefined(
-            "CFAPattern", 0xa302, 1,
+            "CFAPattern", 0xa302, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     TagInfoShort EXIF_TAG_CUSTOM_RENDERED = new TagInfoShort(
             "CustomRendered", 0xa401, 1,
