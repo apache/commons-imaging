@@ -46,7 +46,10 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="TBA">
-      <action issue="IMAGING_121" dev="damjan" type="fix" due-to="Piyush Kapoor">
+      <action issue="IMAGING-131" dev="damjan" type="fix">
+        Allow null parameters in PngImageParser.getBufferedImage(), and add some tests for null parameters.
+      </action>
+      <action issue="IMAGING-121" dev="damjan" type="fix" due-to="Piyush Kapoor">
         Null Pointer exception while extracting metadata for CR2 image.
       </action>
       <action issue="IMAGING-115" dev="damjan" type="fix">

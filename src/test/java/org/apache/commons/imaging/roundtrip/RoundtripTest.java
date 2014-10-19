@@ -430,6 +430,25 @@ public class RoundtripTest extends ImagingTest {
         }
     }
 
+    public void testNullParametersRoundtrip() throws IOException,
+    		ImageReadException, ImageWriteException {
+    	final BufferedImage testImage = createFullColorImage(1, 1);
+        for (final FormatInfo formatInfo : FORMAT_INFOS) {
+            if (!formatInfo.canRead || !formatInfo.canWrite) {
+                continue;
+            }
+            final File temp1 = createTempFile("nullParameters.", "."
+                    + formatInfo.format.getExtension());
+            Imaging.writeImage(testImage, temp1, formatInfo.format, null);
+            Imaging.getImageInfo(temp1, null);
+            Imaging.getImageSize(temp1, null);
+            Imaging.getMetadata(temp1, null);
+            Imaging.getICCProfile(temp1, null);
+            BufferedImage imageRead = Imaging.getBufferedImage(temp1, null);
+            assertNotNull(imageRead);
+        }
+    }
+    
     private void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage,
             final String tempPrefix, final boolean imageExact) throws IOException,
             ImageReadException, ImageWriteException {

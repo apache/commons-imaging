@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.InflaterInputStream;
@@ -468,8 +469,9 @@ public class PngImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException {
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
