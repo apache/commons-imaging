@@ -525,7 +525,7 @@ public class ExifRewriter extends BinaryFileParser {
                 if (firstSegment.marker == JpegConstants.JFIF_MARKER) {
                     index = 1;
                 }
-                segments.add(0, new JFIFPieceSegmentExif(JpegConstants.JPEG_APP1_MARKER,
+                segments.add(index, new JFIFPieceSegmentExif(JpegConstants.JPEG_APP1_MARKER,
                         markerBytes, markerLengthBytes, newBytes));
             }
 

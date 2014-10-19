@@ -46,6 +46,9 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="TBA">
+      <action issue="IMAGING-140" dev="damjan" type="fix" due-to="Gavin Shiels">
+        ExifReWriter always writes EXIF segment before JFIF segment.
+      </action>
       <action issue="IMAGING-131" dev="damjan" type="fix">
         Allow null parameters in PngImageParser.getBufferedImage(), and add some tests for null parameters.
       </action>
