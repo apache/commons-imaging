@@ -685,7 +685,7 @@ public class GifImageParser extends ImageParser {
         }
 
         int transparentIndex = -1;
-        if (hasAlpha) {
+        if (gce != null && hasAlpha) {
             transparentIndex = gce.transparentColorIndex;
         }
 
