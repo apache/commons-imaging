@@ -1117,7 +1117,7 @@ public class JpegImageParser extends ImageParser {
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)
             throws ImageReadException, IOException {
-        pw.println("tiff.dumpImageFile");
+        pw.println("jpeg.dumpImageFile");
 
         {
             final ImageInfo imageInfo = getImageInfo(byteSource);
