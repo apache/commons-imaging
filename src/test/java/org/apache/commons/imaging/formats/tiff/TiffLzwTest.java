@@ -20,15 +20,24 @@ package org.apache.commons.imaging.formats.tiff;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.bytesource.ByteSource;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TiffLzwTest extends TiffBaseTest {
@@ -52,30 +61,24 @@ public class TiffLzwTest extends TiffBaseTest {
         }
     }
 
-    // public void testTiffImageData() throws IOException, ImageReadException,
-    // ImageWriteException
-    // {
-    // List images = getTiffImages();
-    // for (int i = 0; i < images.size(); i++)
-    // {
-    // if (i % 10 == 0)
-    // Debug.purgeMemory();
-    //
-    // File imageFile = (File) images.get(i);
-    // Debug.debug("imageFile", imageFile);
-    //
-    // ByteSource byteSource = new ByteSourceFile(imageFile);
-    // Map params = new HashMap();
-    // List data = new TiffImageParser().collectRawImageData(byteSource,
-    // params);
-    //
-    // for (int j = 0; j < data.size(); j++)
-    // {
-    // byte bytes[] = (byte[]) data.get(j);
-    // decompressRoundtripAndValidate(bytes);
-    // }
-    // }
-    // }
+    @Ignore // FIXME fails with java.io.IOException: Bad Code: -1 codes: 258 code_size: 9, table: 4096
+    @Test
+    public void testTiffImageData() throws IOException, ImageReadException,
+            ImageWriteException {
+        List<File> images = getTiffImages();
+        for (File image : images) {
+
+            Debug.debug("imageFile", image);
+
+            ByteSource byteSource = new ByteSourceFile(image);
+            List<byte[]> data = new TiffImageParser().collectRawImageData(byteSource,
+                    Collections.<String, Object>emptyMap());
+
+            for (byte[] bytes : data) {
+                decompressRoundtripAndValidate(bytes);
+            }
+        }
+    }
 
     private void compressRoundtripAndValidate(final byte src[]) throws IOException {
         final boolean DEBUG = false;
