@@ -35,7 +35,6 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
 
@@ -44,9 +43,6 @@ public class ByteSourceImageTest extends ByteSourceTest {
     public void test() throws Exception {
         final List<File> imageFiles = getTestImages();
         for (int i = 0; i < imageFiles.size(); i++) {
-            if (i % 1 == 0) {
-                TestUtils.purgeMemory();
-            }
 
             final File imageFile = imageFiles.get(i);
             Debug.debug("imageFile", imageFile);

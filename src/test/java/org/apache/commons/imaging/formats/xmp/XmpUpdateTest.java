@@ -27,7 +27,6 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.util.Debug;
 
 public class XmpUpdateTest extends ImagingTest {
@@ -35,9 +34,6 @@ public class XmpUpdateTest extends ImagingTest {
     public void test() throws Exception {
         final List<File> images = getTestImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0) {
-                TestUtils.purgeMemory();
-            }
 
             final File imageFile = images.get(i);
 

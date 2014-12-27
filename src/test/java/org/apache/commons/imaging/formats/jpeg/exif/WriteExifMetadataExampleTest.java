@@ -20,7 +20,6 @@ package org.apache.commons.imaging.formats.jpeg.exif;
 import java.io.File;
 import java.util.List;
 
-import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.examples.WriteExifMetadataExample;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.util.Debug;
@@ -35,9 +34,6 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
     public void test() throws Exception {
         final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0) {
-                TestUtils.purgeMemory();
-            }
 
             final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile.getAbsoluteFile());
@@ -62,9 +58,6 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
     public void testInsert() throws Exception {
         final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0) {
-                TestUtils.purgeMemory();
-            }
 
             final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile.getAbsoluteFile());

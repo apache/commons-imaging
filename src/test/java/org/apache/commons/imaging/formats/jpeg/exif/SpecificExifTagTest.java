@@ -26,7 +26,6 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -48,9 +47,6 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
     public void testAllImages() throws Exception {
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0) {
-                TestUtils.purgeMemory();
-            }
 
             final File imageFile = images.get(i);
             if (imageFile.getParentFile().getName().toLowerCase()

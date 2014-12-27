@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
@@ -33,9 +32,6 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest {
     public void test() throws Exception {
         final List<File> images = getImagesWithXmpData();
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0) {
-                TestUtils.purgeMemory();
-            }
 
             final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);

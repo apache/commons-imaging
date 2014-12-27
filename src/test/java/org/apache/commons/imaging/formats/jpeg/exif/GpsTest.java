@@ -24,7 +24,6 @@ import java.util.Map;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
-import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.util.Debug;
@@ -35,9 +34,6 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
 
         final List<File> images = getImagesWithExifData(300);
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0) {
-                TestUtils.purgeMemory();
-            }
 
             final File imageFile = images.get(i);
 

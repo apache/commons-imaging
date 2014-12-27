@@ -24,7 +24,6 @@ import java.util.List;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.TestUtils;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 
@@ -35,9 +34,6 @@ public class RgbeReadTest extends RgbeBaseTest {
         final List<File> images = getRgbeImages();
 
         for (int i = 0; i < images.size(); i++) {
-            if (i % 10 == 0) {
-                TestUtils.purgeMemory();
-            }
 
             final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
