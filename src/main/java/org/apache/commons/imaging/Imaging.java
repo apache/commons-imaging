@@ -110,7 +110,8 @@ import static org.apache.commons.imaging.ImagingConstants.*;
  *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">org.apache.commons.imaging.examples.SampleUsage</a>
  * @see <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  */
-public abstract class Imaging {
+public final class Imaging {
+
     private static final int[] MAGIC_NUMBERS_GIF = { 0x47, 0x49, };
     private static final int[] MAGIC_NUMBERS_PNG = { 0x89, 0x50, };
     private static final int[] MAGIC_NUMBERS_JPEG = { 0xff, 0xd8, };
@@ -130,6 +131,10 @@ public abstract class Imaging {
     private static final int[] MAGIC_NUMBERS_ICNS = { 0x69, 0x63, };
     private static final int[] MAGIC_NUMBERS_DCX = { 0xB1, 0x68, };
     private static final int[] MAGIC_NUMBERS_RGBE = { 0x23, 0x3F, };
+
+    private Imaging() {
+        // Instances can not be created
+    }
 
     /**
      * Attempts to determine if a file contains an image recorded in 
