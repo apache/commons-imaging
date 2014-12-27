@@ -254,7 +254,7 @@ public class PnmImageParser extends ImageParser {
         final boolean transparent = info.hasAlpha();
         final boolean usesPalette = false;
 
-        final int colorType = info.getColorType();
+        final ImageInfo.ColorType colorType = info.getColorType();
         final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
 
         return new ImageInfo(formatDetails, bitsPerPixel, comments,

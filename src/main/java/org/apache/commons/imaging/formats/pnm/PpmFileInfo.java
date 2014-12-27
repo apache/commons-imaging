@@ -76,8 +76,8 @@ class PpmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getColorType() {
-        return ImageInfo.COLOR_TYPE_RGB;
+    public ImageInfo.ColorType getColorType() {
+        return ImageInfo.ColorType.RGB;
     }
 
     @Override

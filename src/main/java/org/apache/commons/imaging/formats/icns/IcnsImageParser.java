@@ -103,7 +103,7 @@ public class IcnsImageParser extends ImageParser {
                 ImageFormats.ICNS, "ICNS Apple Icon Image",
                 image0.getHeight(), "image/x-icns", images.size(), 0, 0, 0, 0,
                 image0.getWidth(), false, true, false,
-                ImageInfo.COLOR_TYPE_RGB,
+                ImageInfo.ColorType.RGB,
                 ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN);
     }
 

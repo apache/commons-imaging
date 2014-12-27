@@ -78,8 +78,8 @@ class PgmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getColorType() {
-        return ImageInfo.COLOR_TYPE_GRAYSCALE;
+    public ImageInfo.ColorType getColorType() {
+        return ImageInfo.ColorType.GRAYSCALE;
     }
 
     @Override

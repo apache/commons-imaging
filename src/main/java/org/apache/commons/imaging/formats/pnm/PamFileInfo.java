@@ -53,9 +53,9 @@ class PamFileInfo extends FileInfo {
 
         hasAlpha = tupleType.endsWith("_ALPHA");
         if ("BLACKANDWHITE".equals(tupleType) || "BLACKANDWHITE_ALPHA".equals(tupleType)) {
-            tupleReader = new GrayscaleTupleReader(ImageInfo.COLOR_TYPE_BW);
+            tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.BW);
         } else if ("GRAYSCALE".equals(tupleType) || "GRAYSCALE_ALPHA".equals(tupleType)) {
-            tupleReader = new GrayscaleTupleReader(ImageInfo.COLOR_TYPE_GRAYSCALE);
+            tupleReader = new GrayscaleTupleReader(ImageInfo.ColorType.GRAYSCALE);
         } else if ("RGB".equals(tupleType) || "RGB_ALPHA".equals(tupleType)) {
             tupleReader = new ColorTupleReader();
         } else {
@@ -94,7 +94,7 @@ class PamFileInfo extends FileInfo {
     }
 
     @Override
-    public int getColorType() {
+    public ImageInfo.ColorType getColorType() {
         return tupleReader.getColorType();
     }
     
@@ -109,19 +109,19 @@ class PamFileInfo extends FileInfo {
     }
 
     private abstract class TupleReader {
-        public abstract int getColorType();
+        public abstract ImageInfo.ColorType getColorType();
         public abstract int getRGB(InputStream is) throws IOException;
     }
     
     private class GrayscaleTupleReader extends TupleReader {
-        private final int colorType;
+        private final ImageInfo.ColorType colorType;
         
-        public GrayscaleTupleReader(final int colorType) {
+        public GrayscaleTupleReader(final ImageInfo.ColorType colorType) {
             this.colorType = colorType;
         }
         
         @Override
-        public int getColorType() {
+        public ImageInfo.ColorType getColorType() {
             return colorType;
         }
         
@@ -145,8 +145,8 @@ class PamFileInfo extends FileInfo {
 
     private class ColorTupleReader extends TupleReader {
         @Override
-        public int getColorType() {
-            return ImageInfo.COLOR_TYPE_RGB;
+        public ImageInfo.ColorType getColorType() {
+            return ImageInfo.ColorType.RGB;
         }
         
         @Override

@@ -144,7 +144,7 @@ public class XpmImageParser extends ImageParser {
             throws ImageReadException, IOException {
         final XpmHeader xpmHeader = readXpmHeader(byteSource);
         boolean transparent = false;
-        int colorType = ImageInfo.COLOR_TYPE_BW;
+        ImageInfo.ColorType colorType = ImageInfo.ColorType.BW;
         for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette
                 .entrySet()) {
          final PaletteEntry paletteEntry = entry.getValue();
@@ -152,10 +152,10 @@ public class XpmImageParser extends ImageParser {
         transparent = true;
          }
          if (paletteEntry.haveColor) {
-        colorType = ImageInfo.COLOR_TYPE_RGB;
-         } else if (colorType != ImageInfo.COLOR_TYPE_RGB
+        colorType = ImageInfo.ColorType.RGB;
+         } else if (colorType != ImageInfo.ColorType.RGB
             && (paletteEntry.haveGray || paletteEntry.haveGray4Level)) {
-        colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+        colorType = ImageInfo.ColorType.GRAYSCALE;
          }
       }
         return new ImageInfo("XPM version 3", xpmHeader.numCharsPerPixel * 8,

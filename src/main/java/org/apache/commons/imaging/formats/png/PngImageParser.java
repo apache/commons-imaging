@@ -316,9 +316,9 @@ public class PngImageParser extends ImageParser {
     // BinaryFileParser
     // I may not have always preserved byte order correctly.
 
-    private TransparencyFilter getTransparencyFilter(ColorType colorType, PngChunk pngChunktRNS)
+    private TransparencyFilter getTransparencyFilter(PngColorType pngColorType, PngChunk pngChunktRNS)
             throws ImageReadException, IOException {
-        switch (colorType) {
+        switch (pngColorType) {
             case GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale sample.
                 return new TransparencyFilterGrayscale(pngChunktRNS.getBytes());
             case TRUE_COLOR: // 8,16 Each pixel is an R,G,B triple.
@@ -328,7 +328,7 @@ public class PngImageParser extends ImageParser {
             case GREYSCALE_WITH_ALPHA: // 8,16 Each pixel is a grayscale sample,
             case TRUE_COLOR_WITH_ALPHA: // 8,16 Each pixel is an R,G,B triple,
             default:
-                throw new ImageReadException("Simple Transparency not compatible with ColorType: " + colorType);
+                throw new ImageReadException("Simple Transparency not compatible with ColorType: " + pngColorType);
         }
     }
 
@@ -366,7 +366,7 @@ public class PngImageParser extends ImageParser {
             transparent = true;
         } else {
             // CE - Fix Alpha.
-            transparent = pngChunkIHDR.colorType.hasAlpha();
+            transparent = pngChunkIHDR.pngColorType.hasAlpha();
             // END FIX
         }
 
@@ -403,7 +403,7 @@ public class PngImageParser extends ImageParser {
             textChunks.add(pngChunkiTXt.getContents());
         }
 
-        final int bitsPerPixel = pngChunkIHDR.bitDepth * pngChunkIHDR.colorType.getSamplesPerPixel();
+        final int bitsPerPixel = pngChunkIHDR.bitDepth * pngChunkIHDR.pngColorType.getSamplesPerPixel();
         final ImageFormat format = ImageFormats.PNG;
         final String formatName = "PNG Portable Network Graphics";
         final int height = pngChunkIHDR.height;
@@ -444,19 +444,19 @@ public class PngImageParser extends ImageParser {
             usesPalette = true;
         }
 
-        int colorType;
-        switch (pngChunkIHDR.colorType) {
+        ImageInfo.ColorType colorType;
+        switch (pngChunkIHDR.pngColorType) {
             case GREYSCALE:
             case GREYSCALE_WITH_ALPHA:
-                colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+                colorType = ImageInfo.ColorType.GRAYSCALE;
                 break;
             case TRUE_COLOR:
             case INDEXED_COLOR:
             case TRUE_COLOR_WITH_ALPHA:
-                colorType = ImageInfo.COLOR_TYPE_RGB;
+                colorType = ImageInfo.ColorType.RGB;
                 break;
             default:
-                throw new ImageReadException("Png: Unknown ColorType: " + pngChunkIHDR.colorType);
+                throw new ImageReadException("Png: Unknown ColorType: " + pngChunkIHDR.pngColorType);
         }
 
         final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_PNG_FILTER;
@@ -537,7 +537,7 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> tRNSs = filterChunks(chunks, ChunkType.tRNS);
         if (!tRNSs.isEmpty()) {
             final PngChunk pngChunktRNS = tRNSs.get(0);
-            transparencyFilter = getTransparencyFilter(pngChunkIHDR.colorType, pngChunktRNS);
+            transparencyFilter = getTransparencyFilter(pngChunkIHDR.pngColorType, pngChunktRNS);
         }
 
         ICC_Profile iccProfile = null;
@@ -594,19 +594,19 @@ public class PngImageParser extends ImageParser {
         {
             final int width = pngChunkIHDR.width;
             final int height = pngChunkIHDR.height;
-            final ColorType colorType = pngChunkIHDR.colorType;
+            final PngColorType pngColorType = pngChunkIHDR.pngColorType;
             final int bitDepth = pngChunkIHDR.bitDepth;
 
             if (pngChunkIHDR.filterMethod != 0) {
                 throw new ImageReadException("PNG: unknown FilterMethod: " + pngChunkIHDR.filterMethod);
             }
 
-            final int bitsPerPixel = bitDepth * colorType.getSamplesPerPixel();
+            final int bitsPerPixel = bitDepth * pngColorType.getSamplesPerPixel();
 
-            final boolean hasAlpha = colorType.hasAlpha() || transparencyFilter != null;
+            final boolean hasAlpha = pngColorType.hasAlpha() || transparencyFilter != null;
 
             BufferedImage result;
-            if (colorType.isGreyscale()) {
+            if (pngColorType.isGreyscale()) {
                 result = getBufferedImageFactory(params).getGrayscaleBufferedImage(width, height, hasAlpha);
             } else {
                 result = getBufferedImageFactory(params).getColorBufferedImage(width, height, hasAlpha);
@@ -620,12 +620,12 @@ public class PngImageParser extends ImageParser {
             switch (pngChunkIHDR.interlaceMethod) {
                 case NONE:
                     scanExpediter = new ScanExpediterSimple(width, height, iis,
-                            result, colorType, bitDepth, bitsPerPixel,
+                            result, pngColorType, bitDepth, bitsPerPixel,
                             pngChunkPLTE, gammaCorrection, transparencyFilter);
                     break;
                 case ADAM7:
                     scanExpediter = new ScanExpediterInterlaced(width, height, iis,
-                            result, colorType, bitDepth, bitsPerPixel,
+                            result, pngColorType, bitDepth, bitsPerPixel,
                             pngChunkPLTE, gammaCorrection, transparencyFilter);
                     break;
                 default:
@@ -671,7 +671,7 @@ public class PngImageParser extends ImageParser {
             return false;
         }
         final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) IHDRs.get(0);
-        pw.println("Color: " + pngChunkIHDR.colorType.name());
+        pw.println("Color: " + pngChunkIHDR.pngColorType.name());
 
         pw.println("chunks: " + chunks.size());
 

@@ -87,7 +87,7 @@ public class XbmImageParser extends ImageParser {
         return new ImageInfo("XBM", 1, new ArrayList<String>(),
                 ImageFormats.XBM, "X BitMap", xbmHeader.height,
                 "image/x-xbitmap", 1, 0, 0, 0, 0, xbmHeader.width, false,
-                false, false, ImageInfo.COLOR_TYPE_BW,
+                false, false, ImageInfo.ColorType.BW,
                 ImageInfo.COMPRESSION_ALGORITHM_NONE);
     }
 

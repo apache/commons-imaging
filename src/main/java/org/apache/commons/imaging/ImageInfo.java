@@ -26,6 +26,30 @@ import java.util.List;
  * width, height, format, bit depth, etc.
  */
 public class ImageInfo {
+
+    public static enum ColorType {
+        BW("Black and White"),
+        GRAYSCALE("Grayscale"),
+        RGB("RGB"),
+        CMYK("CMYK"),
+        YCbCr("YCbCr"),
+        YCCK("YCCK"),
+        YCC("YCC"),
+        OTHER("Other"),
+        UNKNOWN("Unknown");
+
+        private String description;
+
+        ColorType(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public String toString() {
+            return description;
+        }
+    }
+
     private final String formatDetails; // ie version
 
     private final int bitsPerPixel;
@@ -47,17 +71,7 @@ public class ImageInfo {
 
     private final boolean usesPalette;
 
-    public static final int COLOR_TYPE_BW = 0;
-    public static final int COLOR_TYPE_GRAYSCALE = 1;
-    public static final int COLOR_TYPE_RGB = 2;
-    public static final int COLOR_TYPE_CMYK = 3;
-    public static final int COLOR_TYPE_YCbCr = 4;
-    public static final int COLOR_TYPE_YCCK = 5;
-    public static final int COLOR_TYPE_YCC = 6;
-    public static final int COLOR_TYPE_OTHER = -1;
-    public static final int COLOR_TYPE_UNKNOWN = -2;
-
-    private final int colorType;
+    private final ColorType colorType;
 
     public static final String COMPRESSION_ALGORITHM_UNKNOWN = "Unknown";
     public static final String COMPRESSION_ALGORITHM_NONE = "None";
@@ -79,7 +93,7 @@ public class ImageInfo {
             final int physicalHeightDpi, final float physicalHeightInch,
             final int physicalWidthDpi, final float physicalWidthInch, final int width,
             final boolean progressive, final boolean transparent, final boolean usesPalette,
-            final int colorType, final String compressionAlgorithm) {
+            final ColorType colorType, final String compressionAlgorithm) {
         this.formatDetails = formatDetails;
 
         this.bitsPerPixel = bitsPerPixel;
@@ -239,45 +253,10 @@ public class ImageInfo {
     }
 
     /**
-     * Returns the color type of the image, as a constant (ie.
-     * ImageFormat.COLOR_TYPE_CMYK).
-     * 
-     * @see #getColorTypeDescription()
+     * Returns the {@link org.apache.commons.imaging.ImageInfo.ColorType} of the image.
      */
-    public int getColorType() {
+    public ColorType getColorType() {
         return colorType;
-    }
-
-    /**
-     * Returns a description of the color type of the image.
-     * 
-     * @see #getColorType()
-     */
-    public String getColorTypeDescription() {
-        switch (colorType) {
-        case COLOR_TYPE_BW:
-            return "Black and White";
-        case COLOR_TYPE_GRAYSCALE:
-            return "Grayscale";
-        case COLOR_TYPE_RGB:
-            return "RGB";
-        case COLOR_TYPE_CMYK:
-            return "CMYK";
-        case COLOR_TYPE_YCbCr:
-            return "YCbCr";
-        case COLOR_TYPE_YCCK:
-            return "YCCK";
-        case COLOR_TYPE_YCC:
-            return "YCC";
-        case COLOR_TYPE_OTHER:
-            return "Other";
-        case COLOR_TYPE_UNKNOWN:
-            return "Unknown";
-
-        default:
-            return "Unknown";
-        }
-
     }
 
     public void dump() {
@@ -323,7 +302,7 @@ public class ImageInfo {
         pw.println("Is Progressive: " + progressive);
         pw.println("Is Transparent: " + transparent);
 
-        pw.println("Color Type: " + getColorTypeDescription());
+        pw.println("Color Type: " + colorType.toString());
         pw.println("Uses Palette: " + usesPalette);
 
         pw.flush();

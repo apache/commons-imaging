@@ -31,7 +31,7 @@ public class PngImageInfo extends ImageInfo {
             final int physicalHeightDpi, final float physicalHeightInch,
             final int physicalWidthDpi, final float physicalWidthInch, final int width,
             final boolean progressive, final boolean transparent, final boolean usesPalette,
-            final int colorType, final String compressionAlgorithm,
+            final ImageInfo.ColorType colorType, final String compressionAlgorithm,
             final List<PngText> textChunks) {
         super(formatDetails, bitsPerPixel, comments, format, formatName,
                 height, mimeType, numberOfImages, physicalHeightDpi,

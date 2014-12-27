@@ -20,7 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.formats.png.ColorType;
+import org.apache.commons.imaging.formats.png.PngColorType;
 import org.apache.commons.imaging.formats.png.InterlaceMethod;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
@@ -29,7 +29,7 @@ public class PngChunkIhdr extends PngChunk {
     public final int width;
     public final int height;
     public final int bitDepth;
-    public final ColorType colorType;
+    public final PngColorType pngColorType;
     public final int compressionMethod;
     public final int filterMethod;
     public final InterlaceMethod interlaceMethod;
@@ -42,8 +42,8 @@ public class PngChunkIhdr extends PngChunk {
         height = read4Bytes("Height", is, "Not a Valid Png File: IHDR Corrupt", getByteOrder());
         bitDepth = readByte("BitDepth", is, "Not a Valid Png File: IHDR Corrupt");
         int type = readByte("ColorType", is, "Not a Valid Png File: IHDR Corrupt");
-        colorType = ColorType.getColorType(type);
-        if (colorType == null) {
+        pngColorType = PngColorType.getColorType(type);
+        if (pngColorType == null) {
             throw new ImageReadException("PNG: unknown color type: " + type);
         }
         compressionMethod = readByte("CompressionMethod", is, "Not a Valid Png File: IHDR Corrupt");

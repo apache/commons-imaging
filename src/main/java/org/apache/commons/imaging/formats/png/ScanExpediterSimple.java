@@ -26,12 +26,12 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 
 class ScanExpediterSimple extends ScanExpediter {
     public ScanExpediterSimple(final int width, final int height, final InputStream is,
-            final BufferedImage bi, final ColorType colorType, final int bitDepth, final int bitsPerPixel,
+            final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
             final TransparencyFilter transparencyFilter)
 
     {
-        super(width, height, is, bi, colorType, bitDepth, bitsPerPixel, 
+        super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel,
                 pngChunkPLTE, gammaCorrection, transparencyFilter);
     }
 

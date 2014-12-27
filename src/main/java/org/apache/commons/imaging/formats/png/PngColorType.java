@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.png;
 
 import java.util.Arrays;
 
-public enum ColorType {
+public enum PngColorType {
 
     GREYSCALE(0, true, false, 1, new int[]{1, 2, 4, 8, 16}),
     TRUE_COLOR(2, false, false, 3, new int[]{8, 16}),
@@ -33,7 +33,7 @@ public enum ColorType {
     private final int samplesPerPixel;
     private final int[] allowedBitDepths;
 
-    ColorType(int value, boolean greyscale, boolean alpha, int samplesPerPixel, int[] allowedBitDepths) {
+    PngColorType(int value, boolean greyscale, boolean alpha, int samplesPerPixel, int[] allowedBitDepths) {
         this.value = value;
         this.greyscale = greyscale;
         this.alpha = alpha;
@@ -61,8 +61,8 @@ public enum ColorType {
         return Arrays.binarySearch(allowedBitDepths, bitDepth) >= 0;
     }
 
-    public static ColorType getColorType(int value) {
-        for (ColorType type : values()) {
+    public static PngColorType getColorType(int value) {
+        for (PngColorType type : values()) {
             if (type.value == value) {
                 return type;
             }
@@ -71,17 +71,17 @@ public enum ColorType {
         return null;
     }
 
-    static ColorType getColorType(boolean alpha, boolean grayscale) {
+    static PngColorType getColorType(boolean alpha, boolean grayscale) {
         if (grayscale) {
             if (alpha) {
-                return ColorType.GREYSCALE_WITH_ALPHA;
+                return PngColorType.GREYSCALE_WITH_ALPHA;
             } else {
-                return ColorType.GREYSCALE;
+                return PngColorType.GREYSCALE;
             }
         } else if (alpha) {
-            return ColorType.TRUE_COLOR_WITH_ALPHA;
+            return PngColorType.TRUE_COLOR_WITH_ALPHA;
         } else {
-            return ColorType.TRUE_COLOR;
+            return PngColorType.TRUE_COLOR;
         }
     }
 }

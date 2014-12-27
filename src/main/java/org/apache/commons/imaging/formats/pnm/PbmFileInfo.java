@@ -52,8 +52,8 @@ class PbmFileInfo extends FileInfo {
     }
 
     @Override
-    public int getColorType() {
-        return ImageInfo.COLOR_TYPE_BW;
+    public ImageInfo.ColorType getColorType() {
+        return ImageInfo.ColorType.BW;
     }
 
     @Override

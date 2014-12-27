@@ -257,7 +257,7 @@ public class TiffImageParser extends ImageParser {
             usesPalette = true;
         }
 
-        final int colorType = ImageInfo.COLOR_TYPE_RGB;
+        final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
 
         final int compression = 0xffff & directory
                 .getSingleFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);

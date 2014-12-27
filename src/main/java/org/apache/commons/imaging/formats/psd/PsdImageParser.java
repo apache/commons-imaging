@@ -517,7 +517,7 @@ public class PsdImageParser extends ImageParser {
 
         final boolean transparent = false; // TODO: inaccurate.
         final boolean usesPalette = header.mode == COLOR_MODE_INDEXED;
-        final int colorType = ImageInfo.COLOR_TYPE_UNKNOWN;
+        final ImageInfo.ColorType colorType = ImageInfo.ColorType.UNKNOWN;
 
         String compressionAlgorithm;
         switch (imageContents.Compression) {

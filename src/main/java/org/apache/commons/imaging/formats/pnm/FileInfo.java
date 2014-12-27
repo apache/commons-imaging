@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 abstract class FileInfo {
@@ -45,7 +46,7 @@ abstract class FileInfo {
 
     public abstract String getMIMEType();
 
-    public abstract int getColorType();
+    public abstract ImageInfo.ColorType getColorType();
 
     public abstract int getRGB(WhiteSpaceReader wsr) throws IOException;
 

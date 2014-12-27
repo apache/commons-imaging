@@ -97,7 +97,7 @@ public class RgbeImageParser extends ImageParser {
                     new ArrayList<String>(), ImageFormats.RGBE, getName(),
                     info.getHeight(), "image/vnd.radiance", 1, -1, -1, -1, -1,
                     info.getWidth(), false, false, false,
-                    ImageInfo.COLOR_TYPE_RGB, "Adaptive RLE");
+                    ImageInfo.ColorType.RGB, "Adaptive RLE");
             canThrow = true;
             return ret;
         } finally {

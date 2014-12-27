@@ -34,13 +34,13 @@ class ScanExpediterInterlaced extends ScanExpediter {
 
     public ScanExpediterInterlaced(int width, int height, InputStream is,
             BufferedImage bi,
-            ColorType colorType, int bitDepth, int bitsPerPixel,
+            PngColorType pngColorType, int bitDepth, int bitsPerPixel,
             PngChunkPlte fPNGChunkPLTE,
             GammaCorrection gammaCorrection,
             TransparencyFilter transparencyFilter)
 
     {
-        super(width, height, is, bi, colorType, bitDepth, bitsPerPixel, 
+        super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel,
                 fPNGChunkPLTE, gammaCorrection, transparencyFilter);
     }
 

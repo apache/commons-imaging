@@ -84,7 +84,7 @@ public class SampleUsage {
             // transparency, etc.) </b>
             final ImageInfo imageInfo = Imaging.getImageInfo(imageBytes);
 
-            if (imageInfo.getColorType() == ImageInfo.COLOR_TYPE_GRAYSCALE) {
+            if (imageInfo.getColorType() == ImageInfo.ColorType.GRAYSCALE) {
                 System.out.println("Grayscale image.");
             }
             if (imageInfo.getHeight() > 1000) {

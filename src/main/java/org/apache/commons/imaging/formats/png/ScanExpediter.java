@@ -37,7 +37,7 @@ abstract class ScanExpediter {
     protected final int height;
     protected final InputStream is;
     protected final BufferedImage bi;
-    protected final ColorType colorType;
+    protected final PngColorType pngColorType;
     protected final int bitDepth;
     protected final int bytesPerPixel;
     protected final int bitsPerPixel;
@@ -46,7 +46,7 @@ abstract class ScanExpediter {
     protected final TransparencyFilter transparencyFilter;
 
     public ScanExpediter(final int width, final int height, final InputStream is,
-            final BufferedImage bi, final ColorType colorType, final int bitDepth, final int bitsPerPixel,
+            final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
             final TransparencyFilter transparencyFilter)
 
@@ -55,7 +55,7 @@ abstract class ScanExpediter {
         this.height = height;
         this.is = is;
         this.bi = bi;
-        this.colorType = colorType;
+        this.pngColorType = pngColorType;
         this.bitDepth = bitDepth;
         this.bytesPerPixel = this.getBitsToBytesRoundingUp(bitsPerPixel);
         this.bitsPerPixel = bitsPerPixel;
@@ -84,7 +84,7 @@ abstract class ScanExpediter {
     protected int getRGB(final BitParser bitParser, final int pixelIndexInScanline) 
             throws ImageReadException, IOException {
 
-        switch (colorType) {
+        switch (pngColorType) {
         case GREYSCALE: {
             // 1,2,4,8,16 Each pixel is a grayscale sample.
             int sample = bitParser.getSampleAsByte(pixelIndexInScanline, 0);
@@ -167,7 +167,7 @@ abstract class ScanExpediter {
             return getPixelARGB(alpha, red, green, blue);
         }
         default:
-            throw new ImageReadException("PNG: unknown color type: " + colorType);
+            throw new ImageReadException("PNG: unknown color type: " + pngColorType);
         }
     }
 

@@ -808,33 +808,33 @@ public class JpegImageParser extends ImageParser {
         final boolean usesPalette = false; // TODO: inaccurate.
         
         // See http://docs.oracle.com/javase/6/docs/api/javax/imageio/metadata/doc-files/jpeg_metadata.html#color
-        int colorType = ImageInfo.COLOR_TYPE_UNKNOWN;
+        ImageInfo.ColorType colorType = ImageInfo.ColorType.UNKNOWN;
         // Some images have both JFIF/APP0 and APP14.
         // JFIF is meant to win but in them APP14 is clearly right, so make it win.
         if (app14Segment != null && app14Segment.isAdobeJpegSegment()) {
             final int colorTransform = app14Segment.getAdobeColorTransform();
             if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_UNKNOWN) { 
                 if (numberOfComponents == 3) {
-                    colorType = ImageInfo.COLOR_TYPE_RGB;
+                    colorType = ImageInfo.ColorType.RGB;
                 } else if (numberOfComponents == 4) {
-                    colorType = ImageInfo.COLOR_TYPE_CMYK;
+                    colorType = ImageInfo.ColorType.CMYK;
                 }
             } else if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_YCbCr) {
-                colorType = ImageInfo.COLOR_TYPE_YCbCr;
+                colorType = ImageInfo.ColorType.YCbCr;
             } else if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_YCCK) {
-                colorType = ImageInfo.COLOR_TYPE_YCCK;
+                colorType = ImageInfo.ColorType.YCCK;
             }
         } else if (jfifSegment != null) {
             if (numberOfComponents == 1) {
-                colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+                colorType = ImageInfo.ColorType.GRAYSCALE;
             } else if (numberOfComponents == 3) {
-                colorType = ImageInfo.COLOR_TYPE_YCbCr;
+                colorType = ImageInfo.ColorType.YCbCr;
             }
         } else {
             if (numberOfComponents == 1) {
-                colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+                colorType = ImageInfo.ColorType.GRAYSCALE;
             } else if (numberOfComponents == 2) {
-                colorType = ImageInfo.COLOR_TYPE_GRAYSCALE;
+                colorType = ImageInfo.ColorType.GRAYSCALE;
                 transparent = true;
             } else if (numberOfComponents == 3 || numberOfComponents == 4) {
                 boolean have1 = false;
@@ -857,9 +857,9 @@ public class JpegImageParser extends ImageParser {
                     }
                 }
                 if (numberOfComponents == 3 && have1 && have2 && have3 && !have4 && !haveOther) {
-                    colorType = ImageInfo.COLOR_TYPE_YCbCr;
+                    colorType = ImageInfo.ColorType.YCbCr;
                 } else if (numberOfComponents == 4 && have1 && have2 && have3 && have4 && !haveOther) {
-                    colorType = ImageInfo.COLOR_TYPE_YCbCr;
+                    colorType = ImageInfo.ColorType.YCbCr;
                     transparent = true;
                 } else {
                     boolean haveR = false;
@@ -888,14 +888,14 @@ public class JpegImageParser extends ImageParser {
                         }
                     }
                     if (haveR && haveG && haveB && !haveA && !haveC && !havec && !haveY) {
-                        colorType = ImageInfo.COLOR_TYPE_RGB;
+                        colorType = ImageInfo.ColorType.RGB;
                     } else if (haveR && haveG && haveB && haveA && !haveC && !havec && !haveY) {
-                        colorType = ImageInfo.COLOR_TYPE_RGB;
+                        colorType = ImageInfo.ColorType.RGB;
                         transparent = true;
                     } else if (haveY && haveC && havec && !haveR && !haveG && !haveB && !haveA) {
-                        colorType = ImageInfo.COLOR_TYPE_YCC;
+                        colorType = ImageInfo.ColorType.YCC;
                     } else if (haveY && haveC && havec && haveA && !haveR && !haveG && !haveB) {
-                        colorType = ImageInfo.COLOR_TYPE_YCC;
+                        colorType = ImageInfo.ColorType.YCC;
                         transparent = true;
                     } else {
                         int minHorizontalSamplingFactor = Integer.MAX_VALUE;
@@ -920,15 +920,15 @@ public class JpegImageParser extends ImageParser {
                                 || (minVerticalSamplingFactor != maxVerticalSamplingFactor);
                         if (numberOfComponents == 3) {
                             if (isSubsampled) {
-                                colorType = ImageInfo.COLOR_TYPE_YCbCr;
+                                colorType = ImageInfo.ColorType.YCbCr;
                             } else {
-                                colorType = ImageInfo.COLOR_TYPE_RGB;
+                                colorType = ImageInfo.ColorType.RGB;
                             }
                         } else if (numberOfComponents == 4) {
                             if (isSubsampled) {
-                                colorType = ImageInfo.COLOR_TYPE_YCCK;
+                                colorType = ImageInfo.ColorType.YCCK;
                             } else {
-                                colorType = ImageInfo.COLOR_TYPE_CMYK;
+                                colorType = ImageInfo.ColorType.CMYK;
                             }
                         }
                     }
@@ -1095,13 +1095,13 @@ public class JpegImageParser extends ImageParser {
     // boolean usesPalette = false; // TODO: inaccurate.
     // int ColorType;
     // if (Number_of_components == 1)
-    // ColorType = ImageInfo.COLOR_TYPE_BW;
+    // ColorType = ImageInfo.ColorType.BW;
     // else if (Number_of_components == 3)
-    // ColorType = ImageInfo.COLOR_TYPE_RGB;
+    // ColorType = ImageInfo.ColorType.RGB;
     // else if (Number_of_components == 4)
-    // ColorType = ImageInfo.COLOR_TYPE_CMYK;
+    // ColorType = ImageInfo.ColorType.CMYK;
     // else
-    // ColorType = ImageInfo.COLOR_TYPE_UNKNOWN;
+    // ColorType = ImageInfo.ColorType.UNKNOWN;
     //
     // String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_JPEG;
     //

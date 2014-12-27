@@ -91,18 +91,18 @@ class PngWriter {
         public final int width;
         public final int height;
         public final byte bitDepth;
-        public final ColorType colorType;
+        public final PngColorType pngColorType;
         public final byte compressionMethod;
         public final byte filterMethod;
         public final InterlaceMethod interlaceMethod;
 
         public ImageHeader(final int width, final int height, final byte bitDepth,
-                final ColorType colorType, final byte compressionMethod, final byte filterMethod,
+                final PngColorType pngColorType, final byte compressionMethod, final byte filterMethod,
                 InterlaceMethod interlaceMethod) {
             this.width = width;
             this.height = height;
             this.bitDepth = bitDepth;
-            this.colorType = colorType;
+            this.pngColorType = pngColorType;
             this.compressionMethod = compressionMethod;
             this.filterMethod = filterMethod;
             this.interlaceMethod = interlaceMethod;
@@ -115,7 +115,7 @@ class PngWriter {
         writeInt(baos, value.width);
         writeInt(baos, value.height);
         baos.write(0xff & value.bitDepth);
-        baos.write(0xff & value.colorType.getValue());
+        baos.write(0xff & value.pngColorType.getValue());
         baos.write(0xff & value.compressionMethod);
         baos.write(0xff & value.filterMethod);
         baos.write(0xff & value.interlaceMethod.ordinal());
@@ -297,7 +297,7 @@ class PngWriter {
         writeChunk(os, ChunkType.pHYs, bytes);
     }
 
-    private byte getBitDepth(final ColorType colorType, final Map<String, Object> params) {
+    private byte getBitDepth(final PngColorType pngColorType, final Map<String, Object> params) {
         byte depth = 8;
 
         Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
@@ -305,7 +305,7 @@ class PngWriter {
             depth = ((Number) o).byteValue();
         }
 
-        return colorType.isBitDepthAllowed(depth) ? depth : 8;
+        return pngColorType.isBitDepthAllowed(depth) ? depth : 8;
     }
 
     /// Wraps a palette by adding a single transparent entry at index 0.
@@ -420,7 +420,7 @@ class PngWriter {
             Debug.debug("isGrayscale: " + isGrayscale);
         }
 
-        ColorType colorType;
+        PngColorType pngColorType;
         {
             final boolean forceIndexedColor =  Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR));
             final boolean forceTrueColor = Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR));
@@ -429,25 +429,25 @@ class PngWriter {
                 throw new ImageWriteException(
                         "Params: Cannot force both indexed and true color modes");
             } else if (forceIndexedColor) {
-                colorType = ColorType.INDEXED_COLOR;
+                pngColorType = PngColorType.INDEXED_COLOR;
             } else if (forceTrueColor) {
-                colorType = (hasAlpha ? ColorType.TRUE_COLOR_WITH_ALPHA : ColorType.TRUE_COLOR);
+                pngColorType = (hasAlpha ? PngColorType.TRUE_COLOR_WITH_ALPHA : PngColorType.TRUE_COLOR);
                 isGrayscale = false;
             } else {
-                colorType = ColorType.getColorType(hasAlpha, isGrayscale);
+                pngColorType = PngColorType.getColorType(hasAlpha, isGrayscale);
             }
             if (verbose) {
-                Debug.debug("colorType: " + colorType);
+                Debug.debug("colorType: " + pngColorType);
             }
         }
 
-        final byte bitDepth = getBitDepth(colorType, params);
+        final byte bitDepth = getBitDepth(pngColorType, params);
         if (verbose) {
             Debug.debug("bitDepth: " + bitDepth);
         }
 
         int sampleDepth;
-        if (colorType == ColorType.INDEXED_COLOR) {
+        if (pngColorType == PngColorType.INDEXED_COLOR) {
             sampleDepth = 8;
         } else {
             sampleDepth = bitDepth;
@@ -467,7 +467,7 @@ class PngWriter {
             final InterlaceMethod interlaceMethod = InterlaceMethod.NONE;
 
             final ImageHeader imageHeader = new ImageHeader(width, height, bitDepth,
-                    colorType, compressionMethod, filterMethod, interlaceMethod);
+                    pngColorType, compressionMethod, filterMethod, interlaceMethod);
 
             writeChunkIHDR(os, imageHeader);
         }
@@ -480,7 +480,7 @@ class PngWriter {
         //}
 
         Palette palette = null;
-        if (colorType == ColorType.INDEXED_COLOR) {
+        if (pngColorType == PngColorType.INDEXED_COLOR) {
             // PLTE No Before first IDAT
 
             final int maxColors = hasAlpha ? 255 : 256;
@@ -548,8 +548,8 @@ class PngWriter {
             {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-                final boolean useAlpha = colorType == ColorType.GREYSCALE_WITH_ALPHA
-                        || colorType == ColorType.TRUE_COLOR_WITH_ALPHA;
+                final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA
+                        || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
 
                 final int[] row = new int[width];
                 for (int y = 0; y < height; y++) {
