@@ -47,9 +47,6 @@ public abstract class ImagingTest extends TestCase implements
     }
 
     protected boolean isPhilHarveyTestImage(final File file) {
-        // Debug.debug("isPhilHarveyTestImage file", file.getAbsolutePath());
-        // Debug.debug("isPhilHarveyTestImage folder",
-        // PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
         return file.getAbsolutePath().startsWith(
                 PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
     }
@@ -94,9 +91,6 @@ public abstract class ImagingTest extends TestCase implements
 
     static {
         File imagesFolder = TEST_IMAGE_FOLDER;
-
-        // imagesFolder = new File(
-        // "C:\\personal\\apache\\imaging\\src\\test\\data\\images\\bmp\\2");
 
         imagesFolder = imagesFolder.getAbsoluteFile();
 
