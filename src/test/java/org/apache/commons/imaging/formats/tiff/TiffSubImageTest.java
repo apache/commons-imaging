@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
@@ -26,8 +28,11 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
+import org.junit.Test;
 
 public class TiffSubImageTest extends TiffBaseTest {
+
+    @Test
     public void testSubImage() throws ImageReadException, ImageWriteException, IOException {
         BufferedImage src = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         byte[] imageBytes = Imaging.writeImageToBytes(src, ImageFormats.TIFF, null);

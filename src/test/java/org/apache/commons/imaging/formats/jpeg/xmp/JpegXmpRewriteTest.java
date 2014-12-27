@@ -17,6 +17,10 @@
 
 package org.apache.commons.imaging.formats.jpeg.xmp;
 
+import static junit.framework.TestCase.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,9 +34,11 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
+import org.junit.Test;
 
 public class JpegXmpRewriteTest extends JpegXmpBaseTest {
 
+    @Test
     public void testRemoveInsertUpdate() throws Exception {
         final List<File> images = getImagesWithXmpData();
         for (int i = 0; i < images.size(); i++) {

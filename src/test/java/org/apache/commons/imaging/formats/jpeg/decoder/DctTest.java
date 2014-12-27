@@ -17,9 +17,13 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class DctTest extends TestCase {
+import org.junit.Test;
+
+public class DctTest {
+
+    @Test
     public void testVectors() throws Exception {
         final float[] originalData = new float[8];
         for (int i = 0; i < 8; i++) {
@@ -49,6 +53,7 @@ public class DctTest extends TestCase {
         }
     }
 
+    @Test
     public void testMatrices() throws Exception {
         final float[] originalData = new float[8 * 8];
         final float[][] originalData8x8 = new float[8][8];

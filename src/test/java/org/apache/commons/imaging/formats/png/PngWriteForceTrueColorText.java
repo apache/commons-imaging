@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -26,9 +28,11 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class PngWriteForceTrueColorText extends PngBaseTest {
 
+    @Test
     public void test() throws Exception {
 
         final List<File> images = getPngImages();

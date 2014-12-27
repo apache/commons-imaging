@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,14 +29,17 @@ import java.util.List;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class TiffLzwTest extends TiffBaseTest {
 
+    @Test
     public void testTrivial() throws Exception {
         final byte[] bytes = { 0, };
         compressRoundtripAndValidate(bytes);
     }
 
+    @Test
     public void testMedium() throws Exception {
         final int LENGTH = 1024 * 32;
         final byte[] bytes = new byte[LENGTH];

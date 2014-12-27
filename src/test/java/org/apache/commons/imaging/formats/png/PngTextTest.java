@@ -17,6 +17,10 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,9 +32,11 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 public class PngTextTest extends PngBaseTest {
 
+    @Test
     public void test() throws Exception {
         final int width = 1;
         final int height = 1;

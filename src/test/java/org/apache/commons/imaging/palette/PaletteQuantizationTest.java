@@ -16,12 +16,17 @@
  */
 package org.apache.commons.imaging.palette;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.image.BufferedImage;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingTest;
+import org.junit.Test;
 
 public class PaletteQuantizationTest extends ImagingTest {
+
+    @Test
     public void testPaletteQuantization() throws ImageWriteException {
         BufferedImage whiteImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < whiteImage.getHeight(); y++) {

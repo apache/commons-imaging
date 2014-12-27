@@ -17,6 +17,10 @@
 
 package org.apache.commons.imaging.roundtrip;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +39,7 @@ import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 public class RoundtripTest extends ImagingTest {
     private static final int COLOR_FULL_RGB = 0;
@@ -267,6 +272,7 @@ public class RoundtripTest extends ImagingTest {
         }
     }
 
+    @Test
     public void testBitmapRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 
@@ -295,6 +301,7 @@ public class RoundtripTest extends ImagingTest {
         }
     }
 
+    @Test
     public void testGrayscaleRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 
@@ -328,6 +335,7 @@ public class RoundtripTest extends ImagingTest {
         }
     }
 
+    @Test
     public void testLimitedColorRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 
@@ -359,6 +367,7 @@ public class RoundtripTest extends ImagingTest {
         }
     }
 
+    @Test
     public void testFullColorRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 
@@ -392,7 +401,8 @@ public class RoundtripTest extends ImagingTest {
             }
         }
     }
-    
+
+    @Test
     public void testPixelDensityRoundtrip() throws IOException,
             ImageReadException, ImageWriteException {
         final BufferedImage testImage = createFullColorImage(2, 2);
@@ -429,9 +439,9 @@ public class RoundtripTest extends ImagingTest {
         }
     }
 
-    public void testNullParametersRoundtrip() throws IOException,
-    		ImageReadException, ImageWriteException {
-    	final BufferedImage testImage = createFullColorImage(1, 1);
+    @Test
+    public void testNullParametersRoundtrip() throws IOException, ImageReadException, ImageWriteException {
+        final BufferedImage testImage = createFullColorImage(1, 1);
         for (final FormatInfo formatInfo : FORMAT_INFOS) {
             if (!formatInfo.canRead || !formatInfo.canWrite) {
                 continue;

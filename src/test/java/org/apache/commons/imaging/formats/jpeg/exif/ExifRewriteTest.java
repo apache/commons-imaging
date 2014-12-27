@@ -17,6 +17,10 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +48,7 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     // public ExifRewriteTest(String name)
@@ -51,6 +56,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
     // super(name);
     // }
 
+    @Test
     public void testRemove() throws Exception {
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
@@ -89,6 +95,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         }
     }
 
+    @Test
     public void testInsert() throws Exception {
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
@@ -242,6 +249,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         }
     }
 
+    @Test
     public void testRewriteLossy() throws Exception {
         final Rewriter rewriter = new Rewriter() {
             public void rewrite(final ByteSource byteSource, final OutputStream os,
@@ -255,6 +263,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         rewrite(rewriter, "lossy");
     }
 
+    @Test
     public void testRewriteLossless() throws Exception {
         final Rewriter rewriter = new Rewriter() {
             public void rewrite(final ByteSource byteSource, final OutputStream os,

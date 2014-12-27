@@ -17,6 +17,10 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -31,9 +35,11 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.junit.Test;
 
 public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 
+    @Test
     public void testSingleImage() throws Exception {
         final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 

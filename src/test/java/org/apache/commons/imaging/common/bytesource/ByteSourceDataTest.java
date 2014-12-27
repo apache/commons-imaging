@@ -18,6 +18,7 @@
 package org.apache.commons.imaging.common.bytesource;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -27,6 +28,7 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 
 public class ByteSourceDataTest extends ByteSourceTest {
 
@@ -128,6 +130,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
     }
 
+    @Test
     public void test() throws Exception {
         final ByteSourceFactory byteSourceFactories[] = {
                 new ByteSourceFileFactory(),

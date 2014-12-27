@@ -16,14 +16,17 @@
  */
 package org.apache.commons.imaging.color;
 
-import junit.framework.TestCase;
-import org.apache.commons.imaging.util.Debug;
+import static org.junit.Assert.assertEquals;
 
-public class ColorConversionsTest extends TestCase {
+import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
+
+public class ColorConversionsTest {
     private static final int SAMPLE_RGBS[] = { 0xffffffff, 0xff000000,
             0xffff0000, 0xff00ff00, 0xff0000ff, 0xffff00ff, 0xfff0ff00,
             0xff00ffff, 0x00000000, 0xff7f7f7f, };
 
+    @Test
     public void testRGBtoCMYK() throws Exception {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorCmy cmy = ColorConversions.convertRGBtoCMY(rgb);
@@ -40,6 +43,7 @@ public class ColorConversionsTest extends TestCase {
         }
     }
 
+    @Test
     public void testRGBtoHSL() throws Exception {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsl hsl = ColorConversions.convertRGBtoHSL(rgb);
@@ -52,6 +56,7 @@ public class ColorConversionsTest extends TestCase {
         }
     }
 
+    @Test
     public void testRGBtoHSV() throws Exception {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorHsv hsv = ColorConversions.convertRGBtoHSV(rgb);
@@ -64,6 +69,7 @@ public class ColorConversionsTest extends TestCase {
         }
     }
 
+    @Test
     public void testXYZ() throws Exception {
         for (final int rgb : SAMPLE_RGBS) {
             final ColorXyz xyz = ColorConversions.convertRGBtoXYZ(rgb);

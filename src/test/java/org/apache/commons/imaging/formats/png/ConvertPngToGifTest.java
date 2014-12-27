@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Hashtable;
@@ -25,9 +27,11 @@ import java.util.List;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class ConvertPngToGifTest extends PngBaseTest {
 
+    @Test
     public void test() throws Exception {
 
         final List<File> images = getPngImages();

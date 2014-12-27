@@ -28,6 +28,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class ExifDumpTest extends ExifBaseTest {
     // public ExifDumpTest(String name)
@@ -35,6 +36,7 @@ public class ExifDumpTest extends ExifBaseTest {
     // super(name);
     // }
 
+    @Test
     public void test() throws Exception {
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {

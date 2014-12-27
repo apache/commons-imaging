@@ -17,6 +17,9 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,27 +35,27 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class IptcUpdateTest extends IptcBaseTest {
     private List<File> imagesWithIptcData;
 
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-
         imagesWithIptcData = getImagesWithIptcData();
     }
 
-    @Override
+    @After
     public void tearDown() throws Exception {
-        super.tearDown();
-
         imagesWithIptcData = null;
     }
 
     /*
      * Remove all Photoshop IPTC data from a JPEG file.
      */
+    @Test
     public void testRemove() throws Exception {
         final List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
@@ -98,6 +101,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         }
     }
 
+    @Test
     public void testRemoveInsertUpdate() throws Exception {
         final List<File> images = imagesWithIptcData;
         for (int i = 0; i < images.size(); i++) {
@@ -288,6 +292,7 @@ public class IptcUpdateTest extends IptcBaseTest {
      * Add a few IPTC values to JPEG images, whether or not they have existing
      * IPTC data.
      */
+    @Test
     public void testAddIptcData() throws Exception {
         final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {

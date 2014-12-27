@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.Assert.assertEquals;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -39,8 +41,11 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.WangTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
+import org.junit.Test;
 
 public class TiffTagIntegrityTest extends ImagingTest {
+
+    @Test
     public void testTagIntegrity() {
         verifyFields(AdobePageMaker6TagConstants.class,
                 AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);

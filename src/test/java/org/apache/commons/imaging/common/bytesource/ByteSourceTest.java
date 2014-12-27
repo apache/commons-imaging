@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.common.bytesource;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;

@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.imaging.examples.WriteExifMetadataExample;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class WriteExifMetadataExampleTest extends ExifBaseTest implements
         AllTagConstants {
@@ -31,6 +32,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
     // super(name);
     // }
 
+    @Test
     public void test() throws Exception {
         final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {
@@ -55,6 +57,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
         }
     }
 
+    @Test
     public void testInsert() throws Exception {
         final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {

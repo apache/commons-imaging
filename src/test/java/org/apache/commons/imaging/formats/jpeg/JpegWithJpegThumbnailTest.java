@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -25,9 +27,11 @@ import java.util.Map;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.IImageMetadata;
+import org.junit.Test;
 
 public class JpegWithJpegThumbnailTest extends ImagingTest {
 
+    @Test
     public void testSingleImage() throws Exception {
         final File imageFile = getTestImageByName("img_F028c_small.jpg");
 

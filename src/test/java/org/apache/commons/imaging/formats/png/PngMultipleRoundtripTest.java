@@ -17,6 +17,9 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -26,9 +29,11 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FilenameUtils;
+import org.junit.Test;
 
 public class PngMultipleRoundtripTest extends PngBaseTest {
 
+    @Test
     public void test() throws Exception {
         final String imagesFolderPath = FilenameUtils
                 .separatorsToSystem("src\\test\\data\\images\\png\\3");

@@ -17,9 +17,14 @@
 
 package org.apache.commons.imaging;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
 import org.apache.commons.io.FilenameUtils;
+import org.junit.Test;
 
 public class ImagingGuessFormatTest extends ImagingTest {
 
@@ -36,6 +41,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
     public static final String PPM_IMAGE_FILE = "pbm\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ppm";
     public static final String TGA_IMAGE_FILE = "tga\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tga";
 
+    @Test
     public void testGuess_all() throws Exception {
         testGuess(ImageFormats.PNG, PNG_IMAGE_FILE);
         testGuess(ImageFormats.GIF, GIF_IMAGE_FILE);
@@ -58,6 +64,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
 
     public static final String UNKNOWN_IMAGE_FILE = "info.txt";
 
+    @Test
     public void testGuess_unknown() throws Exception {
         testGuess(ImageFormats.UNKNOWN, UNKNOWN_IMAGE_FILE);
     }

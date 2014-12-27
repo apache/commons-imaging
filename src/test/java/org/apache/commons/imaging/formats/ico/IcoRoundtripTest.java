@@ -17,6 +17,9 @@
 
 package org.apache.commons.imaging.formats.ico;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,6 +34,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 public class IcoRoundtripTest extends IcoBaseTest {
     // 16x16 test image
@@ -327,6 +331,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         bos.write4Bytes(colorsImportant); // colors important
     }
 
+    @Test
     public void testNormalIcons() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -350,6 +355,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
+    @Test
     public void testBadICONDIRENTRYIcons() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -393,6 +399,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
+    @Test
     public void testColorsUsed() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -415,6 +422,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
+    @Test
     public void testZeroColorPlanes() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -447,6 +455,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
+    @Test
     public void testBitfieldCompression() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final BinaryOutputStream bos = new BinaryOutputStream(baos,
@@ -466,6 +475,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 baos.toByteArray(), 0xFF0000FF, 0xFFFFFFFF);
     }
 
+    @Test
     public void test32bitMask() throws Exception {
         final int foreground = 0xFFF000E0;
         final int background = 0xFF102030;
@@ -484,6 +494,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 foreground, background);
     }
 
+    @Test
     public void testAlphaVersusANDMask() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final BinaryOutputStream bos = new BinaryOutputStream(baos,
@@ -501,6 +512,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 0xFF000000, 0x00000000);
     }
 
+    @Test
     public void testFullyTransparent32bitRGBA() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final BinaryOutputStream bos = new BinaryOutputStream(baos,

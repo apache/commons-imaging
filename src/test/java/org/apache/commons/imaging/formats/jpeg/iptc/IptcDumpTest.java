@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +28,11 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class IptcDumpTest extends IptcBaseTest {
 
+    @Test
     public void test() throws Exception {
         final List<File> images = getImagesWithIptcData();
         for (int i = 0; i < images.size(); i++) {

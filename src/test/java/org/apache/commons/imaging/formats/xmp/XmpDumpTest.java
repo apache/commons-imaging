@@ -17,15 +17,19 @@
 
 package org.apache.commons.imaging.formats.xmp;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.util.List;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class XmpDumpTest extends ImagingTest {
 
+    @Test
     public void test() throws Exception {
         final List<File> images = getTestImages();
         for (final File imageFile : images) {

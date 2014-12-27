@@ -17,6 +17,9 @@
 
 package org.apache.commons.imaging.formats.icns;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,6 +31,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 public class IcnsRoundTripTest extends IcnsBaseTest {
     // 16x16 test image
@@ -50,6 +54,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
+    @Test
     public void test1BPPIconMaskVersus8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff000000;
@@ -87,6 +92,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 baos.toByteArray(), foreground, background);
     }
 
+    @Test
     public void test8BPPIcon8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
@@ -124,6 +130,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 foreground, background);
     }
 
+    @Test
     public void test8BPPIcon8BPPMaskVersus1BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
@@ -182,6 +189,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 baos.toByteArray(), foreground, background);
     }
 
+    @Test
     public void test8BPPIcon1BPPMaskVersus8BPPMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x00cccccc;
@@ -240,6 +248,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 baos.toByteArray(), foreground, background);
     }
 
+    @Test
     public void test8BPPIconNoMask() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xffcccccc;
@@ -265,6 +274,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 foreground, background);
     }
 
+    @Test
     public void test32BPPMaskedIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0x000000ff;
@@ -321,6 +331,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 foreground, background);
     }
 
+    @Test
     public void test32BPPHalfMaskedIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;
@@ -373,6 +384,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         assertTrue("ICNS file with corrupt mask didn't fail to parse", threw);
     }
 
+    @Test
     public void test32BPPMaskMissingIcon() throws Exception {
         final int foreground = 0xff000000;
         final int background = 0xff0000ff;

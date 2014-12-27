@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.rgbe;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,8 +28,11 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class RgbeReadTest extends RgbeBaseTest {
+
+    @Test
     public void test() throws IOException, ImageReadException {
         Debug.debug("start");
 

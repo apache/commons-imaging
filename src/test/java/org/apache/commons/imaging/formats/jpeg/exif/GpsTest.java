@@ -27,9 +27,11 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class GpsTest extends ExifBaseTest implements ImagingConstants {
 
+    @Test
     public void test() throws Exception {
 
         final List<File> images = getImagesWithExifData(300);

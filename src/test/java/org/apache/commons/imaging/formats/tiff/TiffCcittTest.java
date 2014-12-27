@@ -17,6 +17,9 @@
 
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,8 +32,11 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class TiffCcittTest extends TiffBaseTest {
+
+    @Test
     public void testAll5x2Compressions() {
         final byte[] uncompressed = new byte[2];
         final int[] combinations = new int[10];
@@ -150,6 +156,7 @@ public class TiffCcittTest extends TiffBaseTest {
         } while (nextCombination(combinations, 1));
     }
 
+    @Test
     public void testAll5x2Images() {
         final int[] combinations = new int[10];
         final BufferedImage image = new BufferedImage(5, 2,

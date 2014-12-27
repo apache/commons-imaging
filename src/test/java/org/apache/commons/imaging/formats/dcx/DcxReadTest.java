@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.dcx;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -27,9 +29,11 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class DcxReadTest extends DcxBaseTest {
 
+    @Test
     public void test() throws Exception {
         Debug.debug("start");
 

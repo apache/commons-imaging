@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.jpeg.xmp;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +28,11 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class JpegXmpDumpTest extends JpegXmpBaseTest {
 
+    @Test
     public void test() throws Exception {
         final List<File> images = getImagesWithXmpData();
         for (int i = 0; i < images.size(); i++) {

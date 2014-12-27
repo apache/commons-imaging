@@ -31,6 +31,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
+import org.junit.Test;
 
 public abstract class SpecificExifTagTest extends ExifBaseTest implements
         AllTagConstants {
@@ -39,11 +40,13 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
     // super(name);
     // }
 
+    @Test
     public void testSingleImage() throws Exception {
         final File imageFile = getImageWithExifData();
         checkImage(imageFile);
     }
 
+    @Test
     public void testAllImages() throws Exception {
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {

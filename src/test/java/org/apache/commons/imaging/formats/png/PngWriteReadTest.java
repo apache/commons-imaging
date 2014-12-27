@@ -17,6 +17,9 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +33,7 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 public class PngWriteReadTest extends ImagingTest {
     // public PngWriteReadTest(String name)
@@ -74,6 +78,7 @@ public class PngWriteReadTest extends ImagingTest {
         return result;
     }
 
+    @Test
     public void test() throws Exception {
         final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
         final int[][] singleBlackPixel = getSimpleRawData(1, 1, 0);
@@ -91,6 +96,7 @@ public class PngWriteReadTest extends ImagingTest {
         }
     }
 
+    @Test
     public void testTransparency() throws Exception {
         // Test for https://issues.apache.org/jira/browse/SANSELAN-52
         final int[][] smallAscendingPixels = getAscendingRawData(256, 256);

@@ -17,6 +17,9 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -28,9 +31,11 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class JpegReadTest extends JpegBaseTest {
 
+    @Test
     public void test() throws Exception {
         final List<File> images = getJpegImages();
         for (int i = 0; i < images.size(); i++) {

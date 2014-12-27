@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,6 +33,7 @@ import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.junit.Test;
 
 public class MicrosoftTagTest extends ExifBaseTest {
     private static final String AUTHOR = "author";
@@ -38,6 +41,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
     private static final String SUBJECT = "subject";
     private static final String TITLE = "title";
 
+    @Test
     public void testWrite() throws Exception {
         final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
         final TiffOutputSet exifSet = new TiffOutputSet();
@@ -61,7 +65,8 @@ public class MicrosoftTagTest extends ExifBaseTest {
             throw new Exception("bad metadata format");
         }
     }
-    
+
+    @Test
     public void testRewrite() throws Exception {
         final File imageWithExif = getImageWithExifData();
         final TiffImageMetadata metadata = toTiffMetadata(Imaging.getMetadata(imageWithExif));

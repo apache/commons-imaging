@@ -22,9 +22,11 @@ import java.text.NumberFormat;
 
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class RationalNumberTest extends ImagingTest {
 
+    @Test
     public void test() {
         final double testValues[] = {
                 0, //

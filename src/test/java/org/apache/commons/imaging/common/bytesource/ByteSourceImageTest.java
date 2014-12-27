@@ -18,6 +18,8 @@
 package org.apache.commons.imaging.common.bytesource;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -37,9 +39,11 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 public class ByteSourceImageTest extends ByteSourceTest {
 
+    @Test
     public void test() throws Exception {
         final List<File> imageFiles = getTestImages();
         for (int i = 0; i < imageFiles.size(); i++) {

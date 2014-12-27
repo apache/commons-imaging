@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -30,8 +32,11 @@ import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
+import org.junit.Test;
 
 public class TiffReadWriteTagsTest extends TiffBaseTest {
+
+    @Test
     public void testReadWriteTags() throws ImageWriteException, ImageReadException, IOException {
         String description = "A pretty picture";
         short page = 1;
@@ -73,7 +78,7 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         assertEquals(width, rootDir.getSingleFieldValue(AllTagConstants.TIFF_TAG_IMAGE_WIDTH));
         assertEquals(width, rootDir.getSingleFieldValue(AllTagConstants.TIFF_TAG_IMAGE_LENGTH));
         assertEquals(area, rootDir.getFieldValue(AllTagConstants.GPS_TAG_GPS_AREA_INFORMATION, true));
-        assertEquals(widthRes, rootDir.getSingleFieldValue(AllTagConstants.EXIF_TAG_WIDTH_RESOLUTION));
-        assertEquals(geoDoubleParams, rootDir.getSingleFieldValue(AllTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG));
+        assertEquals(widthRes, rootDir.getSingleFieldValue(AllTagConstants.EXIF_TAG_WIDTH_RESOLUTION), 0.0);
+        assertEquals(geoDoubleParams, rootDir.getSingleFieldValue(AllTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG), 0.0);
     }
 }

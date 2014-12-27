@@ -15,11 +15,16 @@
 
 package org.apache.commons.imaging.common;
 
+import static org.junit.Assert.assertEquals;
+
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingTest;
+import org.junit.Test;
 
 public class BinaryFileFunctionsTest extends ImagingTest {
+
+    @Test
     public void testFloatToByteConversion() {
         final byte[] bytesLE = ByteConversions.toBytes(1.0f, ByteOrder.LITTLE_ENDIAN);
         assertEquals(ByteConversions.toFloat(bytesLE, ByteOrder.LITTLE_ENDIAN), 1.0f, 0f);
@@ -28,6 +33,7 @@ public class BinaryFileFunctionsTest extends ImagingTest {
         assertEquals(ByteConversions.toFloat(bytesBE, ByteOrder.BIG_ENDIAN), 1.0f, 0f);
     }
 
+    @Test
     public void testDoubleToByteConversion() {
         final byte[] bytesLE = ByteConversions.toBytes(1.0, ByteOrder.LITTLE_ENDIAN);
         assertEquals(ByteConversions.toDouble(bytesLE, ByteOrder.LITTLE_ENDIAN), 1.0, 0);

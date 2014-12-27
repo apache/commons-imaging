@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
@@ -25,9 +27,11 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Test;
 
 public class TiffReadTest extends TiffBaseTest {
 
+    @Test
     public void test() throws Exception {
         final List<File> images = getTiffImages();
         for (final File imageFile : images) {
