@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -448,12 +449,10 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                                 + "]=" + dirType + ", fieldTag[" + j + "]="
                                 + fieldTag;
                         if (oldField.getTag() == 0x116 || oldField.getTag() == 0x117) {
-                            compare(label, oldField, newField);
+                            assertEquals(label, oldField.getValue(), newField.getValue());
                         } else {
-                            compare(label, oldField.getByteArrayValue(),
-                                    newField.getByteArrayValue(),
-                                    oldField.getBytesLength(),
-                                    newField.getBytesLength());
+                            assertEquals(oldField.getBytesLength(), newField.getBytesLength());
+                            assertArrayEquals(oldField.getByteArrayValue(), newField.getByteArrayValue());
                         }
                     } else {
                         // Debug.debug("oldField.tagInfo", oldField.tagInfo);
@@ -471,7 +470,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                         // Debug.debug("newField.oversizeValue",
                         // newField.oversizeValue);
 
-                        compare(oldField.getByteArrayValue(), newField.getByteArrayValue());
+                        assertArrayEquals(oldField.getByteArrayValue(), newField.getByteArrayValue());
                     }
                 }
 
@@ -481,53 +480,4 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         }
     }
 
-    private void compare(final String label, final byte a[], final byte b[], final int aLength,
-            final int bLength) {
-        // Debug.debug("c0 a", a);
-        // Debug.debug("c0 b", b);
-        assertEquals(aLength, bLength);
-        assertTrue(a.length >= aLength);
-        assertTrue(b.length >= bLength);
-        assertNotNull(a);
-        assertNotNull(b);
-        assertEquals(a.length, b.length);
-        final int length = aLength;
-        for (int i = 0; i < length; i++) {
-            // byte ba = a[i];
-            // byte bb = b[i];
-            // boolean eq = ba == bb;
-            // Debug.debug("i: " + i + ", a[i]: " + ba + ", b[i]: " + bb + " = "
-            // + (ba == bb) + " " + eq);
-            // if(ba != bb)
-            // assertFalse(true);
-            //
-            // Debug.debug("i: " + i + ", a[i]: " + ba + ", b[i]: " + bb + " = "
-            // + (ba == bb) + " " + eq);
-            // assertTrue(eq == true);
-            assertEquals(label + ", byte[" + i + "]", a[i], b[i]);
-            // Debug.debug("c");
-            // assertTrue((0xff & a[i]) == (0xff & b[i]));
-        }
-    }
-
-    private void compare(final String label, final TiffField a, final TiffField b)
-            throws ImageReadException {
-        final Object v1 = a.getValue();
-        final Object v2 = b.getValue();
-
-        // Debug.debug("v1", v1 + " (" + Debug.getType(v1) + ")");
-        // Debug.debug("v2", v2 + " (" + Debug.getType(v2) + ")");
-        assertEquals(label, v1, v2);
-    }
-
-    private void compare(final byte a[], final byte b[]) {
-        // Debug.debug("c1 a", a);
-        // Debug.debug("c1 b", b);
-        assertNotNull(a);
-        assertNotNull(b);
-        assertEquals(a.length, b.length);
-        for (int i = 0; i < a.length; i++) {
-            assertEquals(a[i], b[i]);
-        }
-    }
 }
