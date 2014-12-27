@@ -17,6 +17,7 @@
 
 package org.apache.commons.imaging.formats.png;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -157,22 +158,7 @@ public class PngWriteReadTest extends ImagingTest {
         assertTrue(srcImage.getHeight() == dstImage.getHeight());
 
         final int dstData[][] = bufferedImageToImageData(dstImage);
-        compare(rawData, dstData);
-    }
-
-    private void compare(final int[][] a, final int[][] b) {
-        assertNotNull(a);
-        assertNotNull(b);
-        assertTrue(a.length == b.length);
-
-        for (int y = 0; y < a.length; y++) {
-            assertTrue(a[y].length == b[y].length);
-            // make sure row lengths consistent.
-            assertTrue(a[0].length == b[y].length);
-            for (int x = 0; x < a[y].length; x++) {
-                assertTrue(a[y][x] == b[y][x]);
-            }
-        }
+        assertArrayEquals(rawData, dstData);
     }
 
 }
