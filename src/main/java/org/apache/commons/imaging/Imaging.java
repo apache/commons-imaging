@@ -44,44 +44,68 @@ import static org.apache.commons.imaging.ImagingConstants.*;
 
 /**
  * The primary application programming interface (API) to the Imaging library.
- * <p>
-
+ *
  * <h3>Application Notes</h3>
+ *
  * <h4>Using this class</h4>
- * Almost all of the Apache Commons Imaging library's core functionality can 
+ *
+ * <p>
+ * Almost all of the Apache Commons Imaging library's core functionality can
  * be accessed through the methods provided by this class.
  * The use of the Imaging class is similar to the Java API's ImageIO class,
  * though Imaging supports formats and options not included in the standard 
- * Java API. 
- * <p>All of methods provided by the Imaging class are declared static.
- * <p>The Apache Commons Imaging package is a pure Java implementation.
+ * Java API.
+ * </p>
+ *
+ * <p>
+ * All of methods provided by the Imaging class are declared static.
+ * </p>
+ *
+ * <p>
+ * The Apache Commons Imaging package is a pure Java implementation.
+ * </p>
+ *
  * <h4>Format support</h4>
- * While the Apache Commons Imaging package handles a number of different 
+ *
+ * <p>
+ * While the Apache Commons Imaging package handles a number of different
  * graphics formats, support for some formats is not yet complete.
  * For the most recent information on support for specific formats, refer to
  * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  * at the main project development web site.
+ * </p>
+ *
  * <h4>Optional parameters for image reading and writing</h4>
- * Some of the methods provided by this class accept an optional 
+ *
+ * <p>
+ * Some of the methods provided by this class accept an optional
  * <strong>params</strong> argument that permits the application to specify
  * elements for special handling.  If these specifications are not required by
  * the application, the params argument may be omitted (as appropriate) or
- * a null argument may be provided. In image-writing operations, the option 
- * parameters may include options such as data-compression type (if any), 
- * color model, or other format-specific data representations.   The parameters 
+ * a null argument may be provided. In image-writing operations, the option
+ * parameters may include options such as data-compression type (if any),
+ * color model, or other format-specific data representations.   The parameters
  * map may also be used to provide EXIF Tags and other metadata to those
  * formats that support them. In image-reading operations,
  * the parameters may include information about special handling in reading
  * the image data.
- * <p>Optional parameters are specified using a Map object (typically, 
+ * </p>
+ *
+ * <p>
+ * Optional parameters are specified using a Map object (typically,
  * a Java HashMap) to specify a set of keys and values for input.  
  * The specification for support keys is provided by the ImagingConstants 
  * interface as well as by format-specific interfaces such as 
  * JpegContants or TiffConstants.
+ * </p>
+ *
  * <h4>Example code</h4>
+ *
+ * <p>
  * See the source of the SampleUsage class and other classes in the
  * org.apache.commons.imaging.examples package for examples.
- * 
+ * </p>
+ *
  * @see <a
  *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">org.apache.commons.imaging.examples.SampleUsage</a>
  * @see <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
