@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.common.bytesource;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -151,7 +153,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
             return;
         }
 
-        compareByteArrays(iccBytesFile, iccBytesBytes);
+        assertArrayEquals(iccBytesFile, iccBytesBytes);
     }
 
     public void checkGetImageInfo(final File imageFile, final byte[] imageFileBytes)

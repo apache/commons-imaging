@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging.common.bytesource;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -94,13 +96,13 @@ public class ByteSourceDataTest extends ByteSourceTest {
             final InputStream is = byteSource.getInputStream();
             final byte dst[] = IOUtils.toByteArray(is);
 
-            compareByteArrays(src, dst);
+            assertArrayEquals(src, dst);
         }
 
         {
             // test getAll() method.
             final byte all[] = byteSource.getAll();
-            compareByteArrays(src, all);
+            assertArrayEquals(src, all);
         }
 
         if (src.length > 2) {

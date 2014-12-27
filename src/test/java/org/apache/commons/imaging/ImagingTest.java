@@ -17,6 +17,8 @@
 
 package org.apache.commons.imaging;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,13 +47,6 @@ public abstract class ImagingTest extends TestCase implements
         final File result = File.createTempFile(prefix, suffix, tempFolder);
         result.deleteOnExit();
         return result;
-    }
-
-    public void compareByteArrays(final byte a[], final byte b[]) {
-        assertTrue(a.length == b.length);
-        for (int i = 0; i < b.length; i++) {
-            assertTrue(b[i] == a[i]);
-        }
     }
 
     protected void purgeMemory() {
