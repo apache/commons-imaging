@@ -104,7 +104,7 @@ public class IcnsImageParser extends ImageParser {
                 image0.getHeight(), "image/x-icns", images.size(), 0, 0, 0, 0,
                 image0.getWidth(), false, true, false,
                 ImageInfo.ColorType.RGB,
-                ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN);
+                ImageInfo.CompressionAlgorithm.UNKNOWN);
     }
 
     @Override

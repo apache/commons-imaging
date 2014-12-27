@@ -936,7 +936,7 @@ public class JpegImageParser extends ImageParser {
             }
         }
 
-        final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_JPEG;
+        final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.JPEG;
 
         return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, formatName, height, mimeType, numberOfImages,

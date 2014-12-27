@@ -617,7 +617,7 @@ public class BmpImageParser extends ImageParser {
 
         final boolean usesPalette = colorTable != null;
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
-        final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_RLE;
+        final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.RLE;
 
         return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, name, height, mimeType, numberOfImages,

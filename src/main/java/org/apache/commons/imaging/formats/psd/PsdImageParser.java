@@ -519,16 +519,16 @@ public class PsdImageParser extends ImageParser {
         final boolean usesPalette = header.mode == COLOR_MODE_INDEXED;
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.UNKNOWN;
 
-        String compressionAlgorithm;
+        ImageInfo.CompressionAlgorithm compressionAlgorithm;
         switch (imageContents.Compression) {
         case 0:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
             break;
         case 1:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_PSD;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.PSD;
             break;
         default:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.UNKNOWN;
         }
 
         return new ImageInfo(formatDetails, BitsPerPixel, comments,

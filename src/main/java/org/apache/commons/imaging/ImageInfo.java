@@ -50,6 +50,32 @@ public class ImageInfo {
         }
     }
 
+    public static enum CompressionAlgorithm {
+        UNKNOWN("Unknown"),
+        NONE("None"),
+        LZW("LZW"),
+        PACKBITS("PackBits"),
+        JPEG("JPEG"),
+        RLE("RLE: Run-Length Encoding"),
+        ADAPTIVE_RLE("Adaptive RLE"),
+        PSD("Photoshop"),
+        PNG_FILTER("PNG Filter"),
+        CCITT_GROUP_3("CCITT Group 3 1-Dimensional Modified Huffman run-length encoding."),
+        CCITT_GROUP_4("CCITT Group 4"),
+        CCITT_1D("CCITT 1D");
+
+        private String description;
+
+        CompressionAlgorithm(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public String toString() {
+            return description;
+        }
+    }
+
     private final String formatDetails; // ie version
 
     private final int bitsPerPixel;
@@ -73,19 +99,7 @@ public class ImageInfo {
 
     private final ColorType colorType;
 
-    public static final String COMPRESSION_ALGORITHM_UNKNOWN = "Unknown";
-    public static final String COMPRESSION_ALGORITHM_NONE = "None";
-    public static final String COMPRESSION_ALGORITHM_LZW = "LZW";
-    public static final String COMPRESSION_ALGORITHM_PACKBITS = "PackBits";
-    public static final String COMPRESSION_ALGORITHM_JPEG = "JPEG";
-    public static final String COMPRESSION_ALGORITHM_RLE = "RLE: Run-Length Encoding";
-    public static final String COMPRESSION_ALGORITHM_PSD = "Photoshop";
-    public static final String COMPRESSION_ALGORITHM_PNG_FILTER = "PNG Filter";
-    public static final String COMPRESSION_ALGORITHM_CCITT_GROUP_3 = "CCITT Group 3 1-Dimensional Modified Huffman run-length encoding.";
-    public static final String COMPRESSION_ALGORITHM_CCITT_GROUP_4 = "CCITT Group 4";
-    public static final String COMPRESSION_ALGORITHM_CCITT_1D = "CCITT 1D";
-
-    private final String compressionAlgorithm;
+    private final CompressionAlgorithm compressionAlgorithm;
 
     public ImageInfo(final String formatDetails, final int bitsPerPixel,
             final List<String> comments, final ImageFormat format, final String formatName,
@@ -93,7 +107,7 @@ public class ImageInfo {
             final int physicalHeightDpi, final float physicalHeightInch,
             final int physicalWidthDpi, final float physicalWidthInch, final int width,
             final boolean progressive, final boolean transparent, final boolean usesPalette,
-            final ColorType colorType, final String compressionAlgorithm) {
+            final ColorType colorType, final CompressionAlgorithm compressionAlgorithm) {
         this.formatDetails = formatDetails;
 
         this.bitsPerPixel = bitsPerPixel;
@@ -333,7 +347,7 @@ public class ImageInfo {
     /**
      * Returns a description of the compression algorithm, if any.
      */
-    public String getCompressionAlgorithm() {
+    public CompressionAlgorithm getCompressionAlgorithm() {
         return compressionAlgorithm;
     }
 

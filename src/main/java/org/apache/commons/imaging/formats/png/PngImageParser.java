@@ -459,7 +459,7 @@ public class PngImageParser extends ImageParser {
                 throw new ImageReadException("Png: Unknown ColorType: " + pngChunkIHDR.pngColorType);
         }
 
-        final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_PNG_FILTER;
+        final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.PNG_FILTER;
 
         return new PngImageInfo(formatDetails, bitsPerPixel, comments,
                 format, formatName, height, mimeType, numberOfImages,

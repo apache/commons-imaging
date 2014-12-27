@@ -122,8 +122,8 @@ public class PcxImageParser extends ImageParser {
                 false,
                 !(pcxHeader.nPlanes == 3 && pcxHeader.bitsPerPixel == 8),
                 ImageInfo.ColorType.RGB,
-                pcxHeader.encoding == PcxHeader.ENCODING_RLE ? ImageInfo.COMPRESSION_ALGORITHM_RLE
-                        : ImageInfo.COMPRESSION_ALGORITHM_NONE);
+                pcxHeader.encoding == PcxHeader.ENCODING_RLE ? ImageInfo.CompressionAlgorithm.RLE
+                        : ImageInfo.CompressionAlgorithm.NONE);
     }
 
     @Override

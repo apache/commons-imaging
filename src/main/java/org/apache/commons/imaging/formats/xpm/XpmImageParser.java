@@ -162,7 +162,7 @@ public class XpmImageParser extends ImageParser {
                 new ArrayList<String>(), ImageFormats.XPM,
                 "X PixMap", xpmHeader.height, "image/x-xpixmap", 1, 0, 0, 0, 0,
                 xpmHeader.width, false, transparent, true, colorType,
-                ImageInfo.COMPRESSION_ALGORITHM_NONE);
+                ImageInfo.CompressionAlgorithm.NONE);
     }
 
     @Override

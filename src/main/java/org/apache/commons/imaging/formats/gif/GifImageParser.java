@@ -570,7 +570,7 @@ public class GifImageParser extends ImageParser {
 
         final boolean usesPalette = true;
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
-        final String compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_LZW;
+        final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.LZW;
 
         return new ImageInfo(formatDetails, bitsPerPixel, comments,
                 format, formatName, height, mimeType, numberOfImages,

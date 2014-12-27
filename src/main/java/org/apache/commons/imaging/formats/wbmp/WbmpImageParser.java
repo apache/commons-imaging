@@ -84,7 +84,7 @@ public class WbmpImageParser extends ImageParser {
                 "Wireless Application Protocol Bitmap", wbmpHeader.height,
                 "image/vnd.wap.wbmp", 1, 0, 0, 0, 0, wbmpHeader.width, false,
                 false, false, ImageInfo.ColorType.BW,
-                ImageInfo.COMPRESSION_ALGORITHM_NONE);
+                ImageInfo.CompressionAlgorithm.NONE);
     }
 
     @Override

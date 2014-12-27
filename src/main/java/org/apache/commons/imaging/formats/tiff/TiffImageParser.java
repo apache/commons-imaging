@@ -261,35 +261,35 @@ public class TiffImageParser extends ImageParser {
 
         final int compression = 0xffff & directory
                 .getSingleFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
-        String compressionAlgorithm;
+        ImageInfo.CompressionAlgorithm compressionAlgorithm;
 
         switch (compression) {
         case TIFF_COMPRESSION_UNCOMPRESSED_1:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
             break;
         case TIFF_COMPRESSION_CCITT_1D:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_CCITT_1D;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.CCITT_1D;
             break;
         case TIFF_COMPRESSION_CCITT_GROUP_3:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_CCITT_GROUP_3;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.CCITT_GROUP_3;
             break;
         case TIFF_COMPRESSION_CCITT_GROUP_4:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_CCITT_GROUP_4;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.CCITT_GROUP_4;
             break;
         case TIFF_COMPRESSION_LZW:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_LZW;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.LZW;
             break;
         case TIFF_COMPRESSION_JPEG:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_JPEG;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.JPEG;
             break;
         case TIFF_COMPRESSION_UNCOMPRESSED_2:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_NONE;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.NONE;
             break;
         case TIFF_COMPRESSION_PACKBITS:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_PACKBITS;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.PACKBITS;
             break;
         default:
-            compressionAlgorithm = ImageInfo.COMPRESSION_ALGORITHM_UNKNOWN;
+            compressionAlgorithm = ImageInfo.CompressionAlgorithm.UNKNOWN;
             break;
         }
 
