@@ -335,19 +335,6 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             final List<? extends IImageMetadataItem> oldItems = oldDirectory.getItems();
             final List<? extends IImageMetadataItem> newItems = newDirectory.getItems();
 
-            // Debug.debug("oldItems.size()", oldItems.size());
-            // Debug.debug("newItems.size()", newItems.size());
-            // dump("oldItems", oldItems);
-            // dump("newItems", newItems);
-
-            // if (oldItems.size() != newItems.size())
-            // ;
-            // {
-            // dump("oldItems", oldItems);
-            // dump("newItems", newItems);
-            // }
-            // assertTrue(oldItems.size() == newItems.size());
-
             final Hashtable<Integer,TiffField> oldFieldMap = makeFieldMap(oldItems);
             final Hashtable<Integer,TiffField> newFieldMap = makeFieldMap(newItems);
 
@@ -357,21 +344,12 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             final Set<Integer> missingInOld = new HashSet<Integer>(newFieldMap.keySet());
             missingInOld.removeAll(oldFieldMap.keySet());
 
-            // dump("missingInNew", missingInNew);
-            // dump("missingInOld", missingInOld);
-            // dump("newFieldMap.keySet()", newFieldMap.keySet());
-            // dump("oldFieldMap.keySet()", oldFieldMap.keySet());
-
             assertTrue(missingInNew.size() == 0);
             assertTrue(missingInOld.size() == 0);
 
-            // Debug.debug("oldItems.size()", oldItems.size());
-            // Debug.debug("oldFieldMap.keySet().size()",
-            // oldFieldMap.keySet().size());
-
-            // assertEquals(oldItems.size(), oldFieldMap.keySet().size());
-            // assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
-            // assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
+            assertEquals(oldItems.size(), oldFieldMap.keySet().size());
+            assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
+            assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
 
             final List<Integer> oldFieldTags = new ArrayList<Integer>(oldFieldMap.keySet());
             Collections.sort(oldFieldTags);
@@ -384,10 +362,6 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
 
                 final TiffField oldField = oldFieldMap.get(fieldTag);
                 final TiffField newField = newFieldMap.get(fieldTag);
-
-                // Debug.debug("fieldTag", fieldTag);
-                // Debug.debug("oldField", oldField);
-                // Debug.debug("newField", newField);
 
                 // fieldTag.
                 assertNotNull(oldField);
@@ -427,24 +401,6 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                 if (!oldField.getTagInfo().isOffset()) {
                     if (oldField.getTagInfo().isText()) { /* do nothing */
                     } else if (oldField.isLocalValue()) {
-                        // Debug.debug("oldField.tag", oldField.tag);
-                        // Debug.debug("newField.tag", newField.tag);
-                        // Debug.debug("oldField.tagInfo", oldField.tagInfo);
-                        // Debug.debug("newField.tagInfo", newField.tagInfo);
-                        // Debug.debug("oldField.fieldType",
-                        // oldField.fieldType);
-                        // Debug.debug("newField.fieldType",
-                        // newField.fieldType);
-                        // Debug.debug("oldField.getBytesLength", oldField
-                        // .getBytesLength());
-                        // Debug.debug("newField.getBytesLength", newField
-                        // .getBytesLength());
-                        //
-                        // Debug.debug("oldField.valueOffsetBytes",
-                        // oldField.valueOffsetBytes);
-                        // Debug.debug("newField.valueOffsetBytes",
-                        // newField.valueOffsetBytes);
-
                         final String label = imageFile.getName() + ", dirType[" + i
                                 + "]=" + dirType + ", fieldTag[" + j + "]="
                                 + fieldTag;
@@ -455,28 +411,10 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
                             assertArrayEquals(oldField.getByteArrayValue(), newField.getByteArrayValue());
                         }
                     } else {
-                        // Debug.debug("oldField.tagInfo", oldField.tagInfo);
-                        // Debug.debug("oldField.fieldType",
-                        // oldField.fieldType);
-                        // Debug.debug("newField.fieldType",
-                        // newField.fieldType);
-                        // Debug.debug("oldField.getBytesLength", oldField
-                        // .getBytesLength());
-                        // Debug.debug("newField.getBytesLength", newField
-                        // .getBytesLength());
-
-                        // Debug.debug("oldField.oversizeValue",
-                        // oldField.oversizeValue);
-                        // Debug.debug("newField.oversizeValue",
-                        // newField.oversizeValue);
-
                         assertArrayEquals(oldField.getByteArrayValue(), newField.getByteArrayValue());
                     }
                 }
-
             }
-
-            // Debug.debug();
         }
     }
 
