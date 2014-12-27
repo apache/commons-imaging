@@ -17,15 +17,12 @@
 
 package org.apache.commons.imaging;
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
-
 import org.apache.commons.imaging.test.util.FileSystemTraversal;
 import org.apache.commons.imaging.util.Debug;
 
@@ -140,10 +137,6 @@ public abstract class ImagingTest extends TestCase implements
 
             if (!Imaging.hasImageFileExtension(file)) {
                 continue;
-            }
-
-            if (counter++ % 10 == 0) {
-                TestUtils.purgeMemory();
             }
 
             if (file.getParentFile().getName().toLowerCase().equals("@broken")) {
