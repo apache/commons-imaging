@@ -46,17 +46,6 @@ public abstract class ImagingTest extends TestCase implements
         return result;
     }
 
-    protected void purgeMemory() {
-        try {
-            System.gc();
-            Thread.sleep(50);
-            System.runFinalization();
-            Thread.sleep(50);
-        } catch (final Exception e) {
-            Debug.debug(e);
-        }
-    }
-
     protected boolean isPhilHarveyTestImage(final File file) {
         // Debug.debug("isPhilHarveyTestImage file", file.getAbsolutePath());
         // Debug.debug("isPhilHarveyTestImage folder",
