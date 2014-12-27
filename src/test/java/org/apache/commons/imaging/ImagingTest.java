@@ -119,11 +119,8 @@ public abstract class ImagingTest extends TestCase implements
     protected List<File> getTestImages(final ImageFilter filter, final int max)
             throws IOException, ImageReadException {
         final List<File> images = new ArrayList<File>();
-        int counter = 0;
 
-        for (int i = 0; i < ALL_IMAGES.size(); i++) {
-            final File file = ALL_IMAGES.get(i);
-
+        for (final File file : ALL_IMAGES) {
             if (!Imaging.hasImageFileExtension(file)) {
                 continue;
             }
