@@ -418,8 +418,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
     private void writeAndReadImageData(final String description, final byte[] rawData,
             final int foreground, final int background) throws IOException,
             ImageReadException {
-        final File exportFile = new File(createTempDirectory(), description + ".icns");
-        exportFile.deleteOnExit();
+        final File exportFile = createTempFile(description, ".icns");
         FileUtils.writeByteArrayToFile(exportFile, rawData);
         final BufferedImage dstImage = Imaging.getBufferedImage(exportFile);
 
