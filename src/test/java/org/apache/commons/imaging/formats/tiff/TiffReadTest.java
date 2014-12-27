@@ -30,16 +30,15 @@ public class TiffReadTest extends TiffBaseTest {
 
     public void test() throws Exception {
         final List<File> images = getTiffImages();
-        for (int i = 0; i < images.size(); i++) {
+        for (final File imageFile : images) {
 
-            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             final IImageMetadata metadata = Imaging.getMetadata(imageFile);
             assertNotNull(metadata);
 
             Debug.debug("ICC profile", Imaging.getICCProfile(imageFile));
-            
+
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
 

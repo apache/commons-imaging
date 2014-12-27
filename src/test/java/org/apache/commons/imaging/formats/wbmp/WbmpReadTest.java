@@ -32,9 +32,8 @@ public class WbmpReadTest extends WbmpBaseTest {
         Debug.debug("start");
 
         final List<File> images = getWbmpImages();
-        for (int i = 0; i < images.size(); i++) {
+        for (final File imageFile : images) {
 
-            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             final IImageMetadata metadata = Imaging.getMetadata(imageFile);

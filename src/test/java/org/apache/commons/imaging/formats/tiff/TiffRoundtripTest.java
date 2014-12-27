@@ -34,9 +34,8 @@ public class TiffRoundtripTest extends TiffBaseTest {
 
     public void test() throws Exception {
         final List<File> images = getTiffImages();
-        for (int i = 0; i < images.size(); i++) {
+        for (final File imageFile : images) {
 
-            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             final IImageMetadata metadata = Imaging.getMetadata(imageFile);
@@ -48,7 +47,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
             BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
 
-            final int[] compressions = new int[] {
+            final int[] compressions = new int[]{
                     TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
                     TiffConstants.TIFF_COMPRESSION_LZW,
                     TiffConstants.TIFF_COMPRESSION_PACKBITS

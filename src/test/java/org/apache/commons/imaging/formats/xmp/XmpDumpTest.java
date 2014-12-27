@@ -28,9 +28,7 @@ public class XmpDumpTest extends ImagingTest {
 
     public void test() throws Exception {
         final List<File> images = getTestImages();
-        for (int i = 0; i < images.size(); i++) {
-
-            final File imageFile = images.get(i);
+        for (final File imageFile : images) {
 
             if (imageFile.getName().toLowerCase().endsWith(".png")
                     && isInvalidPNGTestFile(imageFile)) {

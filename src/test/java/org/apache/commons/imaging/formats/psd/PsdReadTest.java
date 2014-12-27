@@ -32,9 +32,8 @@ public class PsdReadTest extends PsdBaseTest {
         Debug.debug("start");
 
         final List<File> images = getPsdImages();
-        for (int i = 0; i < images.size(); i++) {
+        for (final File imageFile : images) {
 
-            final File imageFile = images.get(i);
             Debug.debug("imageFile", imageFile);
 
             final IImageMetadata metadata = Imaging.getMetadata(imageFile);
@@ -43,7 +42,7 @@ public class PsdReadTest extends PsdBaseTest {
             final Map<String, Object> params = new HashMap<String, Object>();
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
-            
+
             Imaging.getICCProfile(imageFile, params);
 
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
