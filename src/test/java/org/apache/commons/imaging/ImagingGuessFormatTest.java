@@ -18,9 +18,8 @@
 package org.apache.commons.imaging;
 
 import java.io.File;
+
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.imaging.ImageFormats;
-import org.apache.commons.imaging.Imaging;
 
 public class ImagingGuessFormatTest extends ImagingTest {
 

@@ -18,6 +18,7 @@
 package org.apache.commons.imaging;
 
 import java.io.File;
+
 import org.apache.commons.io.FilenameUtils;
 
 public interface ImagingTestConstants {

@@ -22,10 +22,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.io.FilenameUtils;
 
 public class PngMultipleRoundtripTest extends PngBaseTest {
 

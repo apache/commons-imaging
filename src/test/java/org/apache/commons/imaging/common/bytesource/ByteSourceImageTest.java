@@ -19,7 +19,7 @@ package org.apache.commons.imaging.common.bytesource;
 
 import static org.junit.Assert.assertArrayEquals;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

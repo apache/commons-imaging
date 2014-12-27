@@ -16,9 +16,8 @@
  */
 package org.apache.commons.imaging.color;
 
-import org.apache.commons.imaging.util.Debug;
-
 import junit.framework.TestCase;
+import org.apache.commons.imaging.util.Debug;
 
 public class ColorConversionsTest extends TestCase {
     private static final int SAMPLE_RGBS[] = { 0xffffffff, 0xff000000,

@@ -34,7 +34,6 @@ import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.io.FileUtils;
 
 public class RoundtripTest extends ImagingTest {

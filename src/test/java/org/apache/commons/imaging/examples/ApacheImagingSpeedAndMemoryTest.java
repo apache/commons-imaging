@@ -160,6 +160,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Formatter;
 import java.util.HashMap;
+
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;

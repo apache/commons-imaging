@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.examples;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
 import java.io.File;

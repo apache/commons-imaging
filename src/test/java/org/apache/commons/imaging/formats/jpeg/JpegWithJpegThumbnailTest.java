@@ -25,7 +25,6 @@ import java.util.Map;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.IImageMetadata;
-import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 
 public class JpegWithJpegThumbnailTest extends ImagingTest {
 
