@@ -17,33 +17,42 @@
 
 package org.apache.commons.imaging.common;
 
+import static org.junit.Assert.assertEquals;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class RationalNumberTest extends ImagingTest {
 
-    @Test
-    public void test() {
-        final double testValues[] = {
-                0, //
-                0.1, //
-                0.01, //
-                0.001, //
-                0.0001, //
-                0.00001, //
-                0.000001, //
-                0.0000001, //
-                0.123456789, //
-                1, //
-                0.9, //
-                1.1, //
-                2.0, //
-                123.123, //
-                123123123.123, //
+    private double testValue;
+
+    @Parameterized.Parameters
+    public static Collection<Double> data() {
+        return Arrays.<Double> asList(
+                0d, //
+                0.1d, //
+                0.01d, //
+                0.001d, //
+                0.0001d, //
+                0.00001d, //
+                0.000001d, //
+                0.0000001d, //
+                0.123456789d, //
+                1d, //
+                0.9d, //
+                1.1d, //
+                2.0d, //
+                123.123d, //
+                123123123.123d, //
 
                 (double) 123 / 45678, //
                 (double) 12 / 34, //
@@ -69,49 +78,57 @@ public class RationalNumberTest extends ImagingTest {
                 (double) 3 / 8, //
                 (double) 3 / 9, //
 
-                -0.1, //
-                -0.01, //
-                -0.001, //
-                -0.0001, //
-                -0.00001, //
-                -0.000001, //
-                -0.0000001, //
-                -0.123456789, //
-                -1, //
-                -0.9, //
-                -1.1, //
-                -2.0, //
-                -123.123, //
-                -123123123.123, //
+                -0.1d, //
+                -0.01d, //
+                -0.001d, //
+                -0.0001d, //
+                -0.00001d, //
+                -0.000001d, //
+                -0.0000001d, //
+                -0.123456789d, //
+                -1d, //
+                -0.9d, //
+                -1.1d, //
+                -2.0d, //
+                -123.123d, //
+                -123123123.123d, //
 
-                34, //
+                34d, //
 
-                Integer.MAX_VALUE, //
-                Integer.MAX_VALUE + 0.1, //
-                Integer.MAX_VALUE - 0.1, //
-                -(Integer.MAX_VALUE ), //
+                (double) Integer.MAX_VALUE, //
+                (double) Integer.MAX_VALUE + 0.1, //
+                (double) Integer.MAX_VALUE - 0.1, //
+                (double) -(Integer.MAX_VALUE), //
                 -(Integer.MAX_VALUE + 0.1), //
                 -(Integer.MAX_VALUE - 0.1), //
 
-                Long.MAX_VALUE, //
-                Long.MAX_VALUE + 0.1, //
-                Long.MAX_VALUE - 0.1, //
-                -(Long.MAX_VALUE ), //
+                (double) Long.MAX_VALUE, //
+                (double) Long.MAX_VALUE + 0.1, //
+                (double) Long.MAX_VALUE - 0.1, //
+                (double) -(Long.MAX_VALUE), //
                 -(Long.MAX_VALUE + 0.1), //
-                -(Long.MAX_VALUE - 0.1), //
-        };
-
-        for (final double value : testValues) {
-            final RationalNumber rational = RationalNumber.valueOf(value);
-            final double difference = Math.abs(value - rational.doubleValue());
-
-            final NumberFormat nf = DecimalFormat.getInstance();
-            nf.setMaximumFractionDigits(15);
-
-            Debug.debug("value: " + nf.format(value));
-            Debug.debug("rational: " + rational);
-            Debug.debug("difference: " + difference);
-            Debug.debug();
-        }
+                -(Long.MAX_VALUE - 0.1) //
+        );
     }
+
+    public RationalNumberTest(double testValue) {
+        this.testValue = testValue;
+    }
+
+    @Test
+    public void testRationalNumber() {
+        final RationalNumber rational = RationalNumber.valueOf(testValue);
+        final double difference = Math.abs(testValue - rational.doubleValue());
+
+        final NumberFormat nf = DecimalFormat.getInstance();
+        nf.setMaximumFractionDigits(15);
+
+        // TODO assert something here, the following will fail for some values. Do we have a bug?
+        // assertEquals(0.0, difference, 0.0d);
+        Debug.debug("value: " + nf.format(testValue));
+        Debug.debug("rational: " + rational);
+        Debug.debug("difference: " + difference);
+        Debug.debug();
+    }
+
 }
