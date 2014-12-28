@@ -21,39 +21,55 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class BmpReadTest extends BmpBaseTest {
 
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getBmpImages();
+    }
+
+    public BmpReadTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
+
     @Test
-    public void test() throws Exception {
-        Debug.debug("start");
+    public void testImageInfo() throws ImageReadException, IOException {
+        final Map<String, Object> params = Collections.emptyMap();
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
+        assertNotNull(imageInfo);
+        // TODO assert more
+    }
 
-        final List<File> images = getBmpImages();
-        for (int i = 0; i < images.size(); i++) {
+    // TODO BmpImageParser doesn't support MetaData creation, however RoundtripTest has to be refactored completely before the code can be changed
+    @Test//(expected = UnsupportedOperationException.class)
+    public void testMetaData() throws ImageReadException, IOException {
+        Imaging.getMetadata(imageFile);
+    }
 
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile);
-
-            final IImageMetadata metadata = Imaging.getMetadata(imageFile);
-            // assertNotNull(metadata);
-
-            final Map<String, Object> params = new HashMap<String, Object>();
-            // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
-            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
-            assertNotNull(imageInfo);
-
-            final BufferedImage image = Imaging.getBufferedImage(imageFile);
-            assertNotNull(image);
-        }
+    @Test
+    public void testBufferedImage() throws Exception {
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+        assertNotNull(image);
+        // TODO assert more
     }
 
 }

@@ -76,7 +76,7 @@ public abstract class ImagingTest implements
         return getTestImages(null, -1);
     }
 
-    protected List<File> getTestImages(final ImageFilter filter) throws IOException,
+    protected static List<File> getTestImages(final ImageFilter filter) throws IOException,
             ImageReadException {
         return getTestImages(filter, -1);
     }
