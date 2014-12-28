@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,59 +41,68 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class ByteSourceImageTest extends ByteSourceTest {
+
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getTestImages();
+    }
+
+    public ByteSourceImageTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
 
     @Test
     public void test() throws Exception {
-        final List<File> imageFiles = getTestImages();
-        for (int i = 0; i < imageFiles.size(); i++) {
+        Debug.debug("imageFile", imageFile);
+        assertNotNull(imageFile);
 
-            final File imageFile = imageFiles.get(i);
-            Debug.debug("imageFile", imageFile);
-            assertNotNull(imageFile);
+        final byte imageFileBytes[] = FileUtils.readFileToByteArray(imageFile);
+        assertNotNull(imageFileBytes);
+        assertTrue(imageFileBytes.length == imageFile.length());
 
-            final byte imageFileBytes[] = FileUtils.readFileToByteArray(imageFile);
-            assertNotNull(imageFileBytes);
-            assertTrue(imageFileBytes.length == imageFile.length());
+        if (imageFile.getName().toLowerCase().endsWith(".ico")
+                || imageFile.getName().toLowerCase().endsWith(".tga")
+                || imageFile.getName().toLowerCase().endsWith(".jb2")
+                || imageFile.getName().toLowerCase().endsWith(".pcx")
+                || imageFile.getName().toLowerCase().endsWith(".dcx")
+                || imageFile.getName().toLowerCase().endsWith(".psd")
+                || imageFile.getName().toLowerCase().endsWith(".wbmp")
+                || imageFile.getName().toLowerCase().endsWith(".xbm")
+                || imageFile.getName().toLowerCase().endsWith(".xpm")) {
+            // these formats can't be parsed without a filename hint.
+            // they have ambiguous "magic number" signatures.
+            return;
+        }
 
-            if (imageFile.getName().toLowerCase().endsWith(".ico")
-                    || imageFile.getName().toLowerCase().endsWith(".tga")
-                    || imageFile.getName().toLowerCase().endsWith(".jb2")
-                    || imageFile.getName().toLowerCase().endsWith(".pcx")
-                    || imageFile.getName().toLowerCase().endsWith(".dcx")
-                    || imageFile.getName().toLowerCase().endsWith(".psd")
-                    || imageFile.getName().toLowerCase().endsWith(".wbmp")
-                    || imageFile.getName().toLowerCase().endsWith(".xbm")
-                    || imageFile.getName().toLowerCase().endsWith(".xpm")) {
-                // these formats can't be parsed without a filename hint.
-                // they have ambiguous "magic number" signatures.
-                continue;
-            }
+        checkGuessFormat(imageFile, imageFileBytes);
 
-            checkGuessFormat(imageFile, imageFileBytes);
+        if (imageFile.getName().toLowerCase().endsWith(".png")
+                && imageFile.getParentFile().getName()
+                        .equalsIgnoreCase("pngsuite")
+                && imageFile.getName().toLowerCase().startsWith("x")) {
+            return;
+        }
 
-            if (imageFile.getName().toLowerCase().endsWith(".png")
-                    && imageFile.getParentFile().getName()
-                            .equalsIgnoreCase("pngsuite")
-                    && imageFile.getName().toLowerCase().startsWith("x")) {
-                continue;
-            }
+        checkGetICCProfileBytes(imageFile, imageFileBytes);
 
-            checkGetICCProfileBytes(imageFile, imageFileBytes);
+        if (!imageFile.getParentFile().getName().toLowerCase()
+                .equals("@broken")) {
+            checkGetImageInfo(imageFile, imageFileBytes);
+        }
 
-            if (!imageFile.getParentFile().getName().toLowerCase()
-                    .equals("@broken")) {
-                checkGetImageInfo(imageFile, imageFileBytes);
-            }
+        checkGetImageSize(imageFile, imageFileBytes);
 
-            checkGetImageSize(imageFile, imageFileBytes);
-
-            final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-            if (ImageFormats.JPEG != imageFormat
-                    && ImageFormats.UNKNOWN != imageFormat) {
-                checkGetBufferedImage(imageFile, imageFileBytes);
-            }
+        final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
+        if (ImageFormats.JPEG != imageFormat
+                && ImageFormats.UNKNOWN != imageFormat) {
+            checkGetBufferedImage(imageFile, imageFileBytes);
         }
     }
 

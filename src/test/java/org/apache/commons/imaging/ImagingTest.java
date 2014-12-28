@@ -72,7 +72,7 @@ public abstract class ImagingTest implements
         return images.get(0);
     }
 
-    protected List<File> getTestImages() throws IOException, ImageReadException {
+    protected static List<File> getTestImages() throws IOException, ImageReadException {
         return getTestImages(null, -1);
     }
 
@@ -104,7 +104,7 @@ public abstract class ImagingTest implements
         new FileSystemTraversal().traverseFiles(imagesFolder, visitor);
     }
 
-    protected List<File> getTestImages(final ImageFilter filter, final int max)
+    protected static List<File> getTestImages(final ImageFilter filter, final int max)
             throws IOException, ImageReadException {
         final List<File> images = new ArrayList<File>();
 

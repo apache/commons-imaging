@@ -51,7 +51,7 @@ public abstract class ByteSourceTest extends ImagingTest {
         return file;
     }
 
-    protected byte[][] getTestByteArrays() {
+    protected static byte[][] getTestByteArrays() {
         final byte emptyArray[] = (new byte[0]);
 
         final byte single[] = new byte[1];

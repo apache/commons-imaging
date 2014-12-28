@@ -25,12 +25,28 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class ByteSourceDataTest extends ByteSourceTest {
+
+    private byte[] testByteArray;
+
+    @Parameterized.Parameters
+    public static Collection<byte[]> data() {
+        return Arrays.asList(getTestByteArrays());
+    }
+
+    public ByteSourceDataTest(byte[] testByteArray) {
+        this.testByteArray = testByteArray;
+    }
 
     private interface ByteSourceFactory {
         public ByteSource getByteSource(byte src[]) throws IOException;
@@ -131,18 +147,15 @@ public class ByteSourceDataTest extends ByteSourceTest {
     }
 
     @Test
-    public void test() throws Exception {
-        final ByteSourceFactory byteSourceFactories[] = {
-                new ByteSourceFileFactory(),
-                new ByteSourceInputStreamFileFactory(),
-                new ByteSourceInputStreamRawFactory(), };
-
-        final byte testByteArrays[][] = getTestByteArrays();
-
-        for (final byte[] testByteArray : testByteArrays) {
-            for (final ByteSourceFactory byteSourceFactory : byteSourceFactories) {
-                writeAndReadBytes(byteSourceFactory, testByteArray);
-            }
-        }
+    public void testByteSourceFileFactory() throws Exception {
+        writeAndReadBytes(new ByteSourceFileFactory(), testByteArray);
+    }
+    @Test
+    public void testByteSourceInputStreamFileFactory() throws Exception {
+        writeAndReadBytes(new ByteSourceInputStreamFileFactory(), testByteArray);
+    }
+    @Test
+    public void testByteSourceInputStreamRawFactory() throws Exception {
+        writeAndReadBytes(new ByteSourceInputStreamRawFactory(), testByteArray);
     }
 }
