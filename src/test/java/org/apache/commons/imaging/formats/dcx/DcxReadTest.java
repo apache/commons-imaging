@@ -21,38 +21,49 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
-import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class DcxReadTest extends DcxBaseTest {
 
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getDcxImages();
+    }
+
+    public DcxReadTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    // TODO this should throw USO, but Roundtrip test has to be refactored completely before this can be changed
+    @Test//(expected = UnsupportedOperationException.class)
+    public void testImageMetadata() throws Exception {
+        final IImageMetadata metadata = Imaging.getMetadata(imageFile);
+        // assertNotNull(metadata);
+    }
+
+    // TODO this should throw USO, but Roundtrip test has to be refactored completely before this can be changed
+    @Test//(expected = UnsupportedOperationException.class)
+    public void testImageInfo() throws Exception {
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
+        // assertNotNull(imageInfo);
+    }
+
     @Test
-    public void test() throws Exception {
-        Debug.debug("start");
-
-        final List<File> images = getDcxImages();
-        for (int i = 0; i < images.size(); i++) {
-
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile);
-
-            final IImageMetadata metadata = Imaging.getMetadata(imageFile);
-            // assertNotNull(metadata);
-
-            final Map<String, Object> params = new HashMap<String, Object>();
-            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
-            // assertNotNull(imageInfo);
-
-            final BufferedImage image = Imaging.getBufferedImage(imageFile);
-            assertNotNull(image);
-        }
+    public void testBufferedImage() throws Exception {
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+        assertNotNull(image);
+        // TODO assert more
     }
 
 }

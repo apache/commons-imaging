@@ -77,24 +77,28 @@ public class DcxImageParser extends ImageParser {
         };
     }
 
+    // FIXME should throw UOE
     @Override
     public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
+    // FIXME should throw UOE
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
+    // FIXME should throw UOE
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }
 
+    // FIXME should throw UOE
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
