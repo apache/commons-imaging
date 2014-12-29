@@ -16,83 +16,16 @@
  */
 package org.apache.commons.imaging.common;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ImageMetadata implements IImageMetadata {
-    private static final String NEWLINE = System.getProperty("line.separator");
-    private final List<IImageMetadataItem> items = new ArrayList<IImageMetadataItem>();
+public interface ImageMetadata {
+    String toString(String prefix);
 
-    public void add(final String keyword, final String text) {
-        add(new Item(keyword, text));
+    List<? extends ImageMetadataItem> getItems();
+
+    interface ImageMetadataItem {
+        String toString(String prefix);
+
+        String toString();
     }
-
-    public void add(final IImageMetadataItem item) {
-        items.add(item);
-    }
-
-    public List<? extends IImageMetadataItem> getItems() {
-        return new ArrayList<IImageMetadataItem>(items);
-    }
-
-    @Override
-    public String toString() {
-        return toString(null);
-    }
-
-    public String toString(String prefix) {
-        if (null == prefix) {
-            prefix = "";
-        }
-
-        final StringBuilder result = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            if (i > 0) {
-                result.append(NEWLINE);
-            }
-            // if (null != prefix)
-            // result.append(prefix);
-
-            final ImageMetadata.IImageMetadataItem item = items.get(i);
-            result.append(item.toString(prefix + "\t"));
-
-            // Debug.debug("prefix", prefix);
-            // Debug.debug("item", items.get(i));
-            // Debug.debug();
-        }
-        return result.toString();
-    }
-
-    public static class Item implements IImageMetadataItem {
-        private final String keyword;
-        private final String text;
-
-        public Item(final String keyword, final String text) {
-            this.keyword = keyword;
-            this.text = text;
-        }
-
-        public String getKeyword() {
-            return keyword;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        @Override
-        public String toString() {
-            return toString(null);
-        }
-
-        public String toString(final String prefix) {
-            final String result = keyword + ": " + text;
-            if (null != prefix) {
-                return prefix + result;
-            } else {
-                return result;
-            }
-        }
-    }
-
 }

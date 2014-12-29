@@ -26,7 +26,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
@@ -51,7 +51,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
-public class TiffImageMetadata extends ImageMetadata {
+public class TiffImageMetadata extends GenericImageMetadata {
     public final TiffContents contents;
     private static final Map<Object, Integer> TAG_COUNTS = countTags(AllTagConstants.ALL_TAGS);
 
@@ -74,8 +74,8 @@ public class TiffImageMetadata extends ImageMetadata {
         return map;
     }
 
-    public static class Directory extends ImageMetadata implements
-            ImageMetadata.IImageMetadataItem {
+    public static class Directory extends GenericImageMetadata implements
+            ImageMetadataItem {
         // private BufferedImage thumbnail = null;
 
         public final int type;
@@ -90,7 +90,7 @@ public class TiffImageMetadata extends ImageMetadata {
         }
 
         public void add(final TiffField entry) {
-            add(new TiffImageMetadata.Item(entry));
+            add(new TiffMetadataItem(entry));
         }
 
         public BufferedImage getThumbnail() throws ImageReadException,
@@ -129,9 +129,9 @@ public class TiffImageMetadata extends ImageMetadata {
                 final TiffOutputDirectory dstDir = new TiffOutputDirectory(type,
                         byteOrder);
 
-                final List<? extends IImageMetadataItem> entries = getItems();
-                for (IImageMetadataItem entry : entries) {
-                    final TiffImageMetadata.Item item = (TiffImageMetadata.Item) entry;
+                final List<? extends ImageMetadataItem> entries = getItems();
+                for (ImageMetadataItem entry : entries) {
+                    final TiffMetadataItem item = (TiffMetadataItem) entry;
                     final TiffField srcField = item.getTiffField();
 
                     if (null != dstDir.findField(srcField.getTag())) {
@@ -179,16 +179,16 @@ public class TiffImageMetadata extends ImageMetadata {
 
     }
 
-    public List<? extends IImageMetadataItem> getDirectories() {
+    public List<? extends ImageMetadataItem> getDirectories() {
         return super.getItems();
     }
 
     @Override
-    public List<? extends IImageMetadataItem> getItems() {
-        final List<IImageMetadataItem> result = new ArrayList<IImageMetadataItem>();
+    public List<? extends ImageMetadataItem> getItems() {
+        final List<ImageMetadataItem> result = new ArrayList<ImageMetadataItem>();
 
-        final List<? extends IImageMetadataItem> items = super.getItems();
-        for (IImageMetadataItem item : items) {
+        final List<? extends ImageMetadataItem> items = super.getItems();
+        for (ImageMetadataItem item : items) {
             final Directory dir = (Directory) item;
             result.addAll(dir.getItems());
         }
@@ -196,10 +196,10 @@ public class TiffImageMetadata extends ImageMetadata {
         return result;
     }
 
-    public static class Item extends ImageMetadata.Item {
+    public static class TiffMetadataItem extends GenericImageMetadataItem {
         private final TiffField entry;
 
-        public Item(final TiffField entry) {
+        public TiffMetadataItem(final TiffField entry) {
             // super(entry.getTagName() + " (" + entry.getFieldTypeName() + ")",
             super(entry.getTagName(), entry.getValueDescription());
             this.entry = entry;
@@ -215,8 +215,8 @@ public class TiffImageMetadata extends ImageMetadata {
         final ByteOrder byteOrder = contents.header.byteOrder;
         final TiffOutputSet result = new TiffOutputSet(byteOrder);
 
-        final List<? extends IImageMetadataItem> srcDirs = getDirectories();
-        for (IImageMetadataItem srcDir1 : srcDirs) {
+        final List<? extends ImageMetadataItem> srcDirs = getDirectories();
+        for (ImageMetadataItem srcDir1 : srcDirs) {
             final Directory srcDir = (Directory) srcDir1;
 
             if (null != result.findDirectory(srcDir.type)) {
@@ -244,10 +244,10 @@ public class TiffImageMetadata extends ImageMetadata {
         final Integer tagCount = TAG_COUNTS.get(tagInfo.tag);
         final int tagsMatching = tagCount == null ? 0 : tagCount;
 
-        final List<? extends IImageMetadataItem> directories = getDirectories();
+        final List<? extends ImageMetadataItem> directories = getDirectories();
         if (exactDirectoryMatch
                 || tagInfo.directoryType != TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
-            for (IImageMetadataItem directory1 : directories) {
+            for (ImageMetadataItem directory1 : directories) {
                 final Directory directory = (Directory) directory1;
                 if (directory.type == tagInfo.directoryType.directoryType) {
                     final TiffField field = directory.findField(tagInfo);
@@ -259,7 +259,7 @@ public class TiffImageMetadata extends ImageMetadata {
             if (exactDirectoryMatch || tagsMatching > 1) {
                 return null;
             }
-            for (IImageMetadataItem directory1 : directories) {
+            for (ImageMetadataItem directory1 : directories) {
                 final Directory directory = (Directory) directory1;
                 if (tagInfo.directoryType.isImageDirectory()
                         && directory.type >= 0) {
@@ -277,7 +277,7 @@ public class TiffImageMetadata extends ImageMetadata {
             }
         }
 
-        for (IImageMetadataItem directory1 : directories) {
+        for (ImageMetadataItem directory1 : directories) {
             final Directory directory = (Directory) directory1;
             final TiffField field = directory.findField(tagInfo);
             if (field != null) {
@@ -445,8 +445,8 @@ public class TiffImageMetadata extends ImageMetadata {
     }
 
     public TiffDirectory findDirectory(final int directoryType) {
-        final List<? extends IImageMetadataItem> directories = getDirectories();
-        for (IImageMetadataItem directory1 : directories) {
+        final List<? extends ImageMetadataItem> directories = getDirectories();
+        for (ImageMetadataItem directory1 : directories) {
             final Directory directory = (Directory) directory1;
             if (directory.type == directoryType) {
                 return directory.directory;
@@ -457,8 +457,8 @@ public class TiffImageMetadata extends ImageMetadata {
 
     public List<TiffField> getAllFields() {
         final List<TiffField> result = new ArrayList<TiffField>();
-        final List<? extends IImageMetadataItem> directories = getDirectories();
-        for (IImageMetadataItem directory1 : directories) {
+        final List<? extends ImageMetadataItem> directories = getDirectories();
+        for (ImageMetadataItem directory1 : directories) {
             final Directory directory = (Directory) directory1;
             result.addAll(directory.getAllFields());
         }

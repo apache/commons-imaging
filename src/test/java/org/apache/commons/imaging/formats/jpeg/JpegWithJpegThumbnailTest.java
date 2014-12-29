@@ -26,7 +26,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.junit.Test;
 
 public class JpegWithJpegThumbnailTest extends ImagingTest {
@@ -36,7 +36,7 @@ public class JpegWithJpegThumbnailTest extends ImagingTest {
         final File imageFile = getTestImageByName("img_F028c_small.jpg");
 
         final Map<String, Object> params = new HashMap<String, Object>();
-        final IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
+        final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
         final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
         final BufferedImage image = jpegMetadata.getEXIFThumbnail();

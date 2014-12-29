@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ByteConversions;
-import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 class RgbeInfo implements Closeable {
@@ -38,7 +38,7 @@ class RgbeInfo implements Closeable {
     private static final Pattern RESOLUTION_STRING = Pattern.compile("-Y (\\d+) \\+X (\\d+)");
 
     private final InputStream in;
-    private ImageMetadata metadata;
+    private GenericImageMetadata metadata;
     private int width = -1;
     private int height = -1;
     private static final byte[] TWO_TWO = new byte[] { 0x2, 0x2 };
@@ -47,7 +47,7 @@ class RgbeInfo implements Closeable {
         this.in = byteSource.getInputStream();
     }
 
-    IImageMetadata getMetadata() throws IOException, ImageReadException {
+    ImageMetadata getMetadata() throws IOException, ImageReadException {
         if (null == metadata) {
             readMetadata();
         }
@@ -101,7 +101,7 @@ class RgbeInfo implements Closeable {
             throw new ImageReadException("Not a valid HDR: Incorrect Header");
         }
 
-        metadata = new ImageMetadata();
+        metadata = new GenericImageMetadata();
 
         String info = reader.readNextLine();
 

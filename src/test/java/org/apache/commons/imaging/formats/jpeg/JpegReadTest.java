@@ -29,7 +29,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
 
@@ -50,7 +50,7 @@ public class JpegReadTest extends JpegBaseTest {
             final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
             params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
-            final IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
+            final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
             // assertNotNull(metadata);
             Debug.debug("metadata", metadata);
             

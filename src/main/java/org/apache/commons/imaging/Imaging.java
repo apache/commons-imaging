@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -977,9 +977,9 @@ public final class Imaging {
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of IImageMetadata.
-     * @see IImageMetadata
+     * @see org.apache.commons.imaging.common.ImageMetadata
      */
-    public static IImageMetadata getMetadata(final byte[] bytes)
+    public static ImageMetadata getMetadata(final byte[] bytes)
             throws ImageReadException, IOException {
         return getMetadata(bytes, null);
     }
@@ -1002,9 +1002,9 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of IImageMetadata.
-     * @see IImageMetadata
+     * @see org.apache.commons.imaging.common.ImageMetadata
      */
-    public static IImageMetadata getMetadata(final byte[] bytes, final Map<String, Object> params)
+    public static ImageMetadata getMetadata(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return getMetadata(new ByteSourceArray(bytes), params);
     }
@@ -1027,9 +1027,9 @@ public final class Imaging {
      * @param filename
      *            Filename associated with image data (optional).
      * @return An instance of IImageMetadata.
-     * @see IImageMetadata
+     * @see org.apache.commons.imaging.common.ImageMetadata
      */
-    public static IImageMetadata getMetadata(final InputStream is, final String filename)
+    public static ImageMetadata getMetadata(final InputStream is, final String filename)
             throws ImageReadException, IOException {
         return getMetadata(is, filename, null);
     }
@@ -1054,9 +1054,9 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of IImageMetadata.
-     * @see IImageMetadata
+     * @see org.apache.commons.imaging.common.ImageMetadata
      */
-    public static IImageMetadata getMetadata(final InputStream is, final String filename,
+    public static ImageMetadata getMetadata(final InputStream is, final String filename,
             final Map<String, Object> params) throws ImageReadException, IOException {
         return getMetadata(new ByteSourceInputStream(is, filename), params);
     }
@@ -1077,9 +1077,9 @@ public final class Imaging {
      * @param file
      *            File containing image data.
      * @return An instance of IImageMetadata.
-     * @see IImageMetadata
+     * @see org.apache.commons.imaging.common.ImageMetadata
      */
-    public static IImageMetadata getMetadata(final File file)
+    public static ImageMetadata getMetadata(final File file)
             throws ImageReadException, IOException {
         return getMetadata(file, null);
     }
@@ -1102,14 +1102,14 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of IImageMetadata.
-     * @see IImageMetadata
+     * @see org.apache.commons.imaging.common.ImageMetadata
      */
-    public static IImageMetadata getMetadata(final File file, final Map<String, Object> params)
+    public static ImageMetadata getMetadata(final File file, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return getMetadata(new ByteSourceFile(file), params);
     }
 
-    private static IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    private static ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final ImageParser imageParser = getImageParser(byteSource);
 

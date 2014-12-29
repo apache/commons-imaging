@@ -24,15 +24,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
-import org.apache.commons.imaging.util.Debug;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;

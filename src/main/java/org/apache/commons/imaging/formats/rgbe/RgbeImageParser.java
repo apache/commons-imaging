@@ -36,7 +36,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
 
@@ -72,12 +72,12 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final RgbeInfo info = new RgbeInfo(byteSource);
         boolean canThrow = false;
         try {
-            final IImageMetadata ret = info.getMetadata();
+            final ImageMetadata ret = info.getMetadata();
             canThrow = true;
             return ret;
         } finally {

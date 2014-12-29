@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
 
@@ -38,7 +38,7 @@ public class TiffReadTest extends TiffBaseTest {
 
             Debug.debug("imageFile", imageFile);
 
-            final IImageMetadata metadata = Imaging.getMetadata(imageFile);
+            final ImageMetadata metadata = Imaging.getMetadata(imageFile);
             assertNotNull(metadata);
 
             Debug.debug("ICC profile", Imaging.getICCProfile(imageFile));

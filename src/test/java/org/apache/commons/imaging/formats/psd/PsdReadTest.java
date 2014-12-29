@@ -26,7 +26,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
 
@@ -41,7 +41,7 @@ public class PsdReadTest extends PsdBaseTest {
 
             Debug.debug("imageFile", imageFile);
 
-            final IImageMetadata metadata = Imaging.getMetadata(imageFile);
+            final ImageMetadata metadata = Imaging.getMetadata(imageFile);
             // assertNotNull(metadata);
 
             final Map<String, Object> params = new HashMap<String, Object>();

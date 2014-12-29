@@ -24,9 +24,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;

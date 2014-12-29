@@ -36,7 +36,7 @@ import java.util.Set;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata.IImageMetadataItem;
+import org.apache.commons.imaging.common.ImageMetadata.ImageMetadataItem;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -278,7 +278,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         rewrite(rewriter, "lossless");
     }
 
-    private Hashtable<Integer,TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends IImageMetadataItem> directories) {
+    private Hashtable<Integer,TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends ImageMetadataItem> directories) {
         final Hashtable<Integer,TiffImageMetadata.Directory> directoryMap = new Hashtable<Integer,TiffImageMetadata.Directory>();
         for (int i = 0; i < directories.size(); i++) {
             final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories
@@ -288,10 +288,10 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         return directoryMap;
     }
 
-    private Hashtable<Integer,TiffField> makeFieldMap(final List<? extends IImageMetadataItem> items) {
+    private Hashtable<Integer,TiffField> makeFieldMap(final List<? extends ImageMetadataItem> items) {
         final Hashtable<Integer,TiffField> fieldMap = new Hashtable<Integer,TiffField>();
         for (int i = 0; i < items.size(); i++) {
-            final TiffImageMetadata.Item item = (TiffImageMetadata.Item) items.get(i);
+            final TiffImageMetadata.TiffMetadataItem item = (TiffImageMetadata.TiffMetadataItem) items.get(i);
             final TiffField field = item.getTiffField();
             if (!fieldMap.containsKey(field.getTag())) {
                 fieldMap.put(field.getTag(), field);
@@ -305,8 +305,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
         assertNotNull(oldExifMetadata);
         assertNotNull(newExifMetadata);
 
-        final List<? extends IImageMetadataItem> oldDirectories = oldExifMetadata.getDirectories();
-        final List<? extends IImageMetadataItem> newDirectories = newExifMetadata.getDirectories();
+        final List<? extends ImageMetadataItem> oldDirectories = oldExifMetadata.getDirectories();
+        final List<? extends ImageMetadataItem> newDirectories = newExifMetadata.getDirectories();
 
         assertTrue(oldDirectories.size() == newDirectories.size());
 
@@ -332,8 +332,8 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             assertNotNull(oldDirectory);
             assertNotNull(newDirectory);
 
-            final List<? extends IImageMetadataItem> oldItems = oldDirectory.getItems();
-            final List<? extends IImageMetadataItem> newItems = newDirectory.getItems();
+            final List<? extends ImageMetadataItem> oldItems = oldDirectory.getItems();
+            final List<? extends ImageMetadataItem> newItems = newDirectory.getItems();
 
             final Hashtable<Integer,TiffField> oldFieldMap = makeFieldMap(oldItems);
             final Hashtable<Integer,TiffField> newFieldMap = makeFieldMap(newItems);

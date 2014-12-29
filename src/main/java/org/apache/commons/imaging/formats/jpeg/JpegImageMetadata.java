@@ -28,7 +28,7 @@ import javax.imageio.ImageIO;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingException;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
@@ -36,7 +36,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.util.Debug;
 
-public class JpegImageMetadata implements IImageMetadata {
+public class JpegImageMetadata implements ImageMetadata {
     private final JpegPhotoshopMetadata photoshop;
     private final TiffImageMetadata exif;
     private static final String NEWLINE = System.getProperty("line.separator");
@@ -99,8 +99,8 @@ public class JpegImageMetadata implements IImageMetadata {
         if (exif == null) {
             return null;
         }
-        final List<? extends IImageMetadataItem> dirs = exif.getDirectories();
-        for (IImageMetadataItem d : dirs) {
+        final List<? extends ImageMetadataItem> dirs = exif.getDirectories();
+        for (ImageMetadataItem d : dirs) {
             final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) d;
 
             byte[] data = null;
@@ -131,8 +131,8 @@ public class JpegImageMetadata implements IImageMetadata {
             return null;
         }
 
-        final List<? extends IImageMetadataItem> dirs = exif.getDirectories();
-        for (IImageMetadataItem d : dirs) {
+        final List<? extends ImageMetadataItem> dirs = exif.getDirectories();
+        for (ImageMetadataItem d : dirs) {
             final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) d;
             // Debug.debug("dir", dir);
             BufferedImage image = dir.getThumbnail();
@@ -171,8 +171,8 @@ public class JpegImageMetadata implements IImageMetadata {
         if (exif == null) {
             return null;
         }
-        final List<? extends IImageMetadataItem> dirs = exif.getDirectories();
-        for (IImageMetadataItem d : dirs) {
+        final List<? extends ImageMetadataItem> dirs = exif.getDirectories();
+        for (ImageMetadataItem d : dirs) {
             final TiffImageMetadata.Directory dir = (TiffImageMetadata.Directory) d;
             // Debug.debug("dir", dir);
             final TiffImageData rawImageData = dir.getTiffImageData();
@@ -184,8 +184,8 @@ public class JpegImageMetadata implements IImageMetadata {
         return null;
     }
 
-    public List<IImageMetadataItem> getItems() {
-        final List<IImageMetadataItem> result = new ArrayList<IImageMetadataItem>();
+    public List<ImageMetadataItem> getItems() {
+        final List<ImageMetadataItem> result = new ArrayList<ImageMetadataItem>();
 
         if (null != exif) {
             result.addAll(exif.getItems());

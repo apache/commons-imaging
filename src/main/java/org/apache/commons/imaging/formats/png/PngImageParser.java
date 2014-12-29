@@ -41,8 +41,8 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.png.chunks.PngChunk;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkGama;
@@ -281,7 +281,7 @@ public class PngImageParser extends ImageParser {
     }
 
     @Override
-    public IImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.tEXt, ChunkType.zTXt, }, true);
 
@@ -289,7 +289,7 @@ public class PngImageParser extends ImageParser {
             return null;
         }
 
-        final ImageMetadata result = new ImageMetadata();
+        final GenericImageMetadata result = new GenericImageMetadata();
 
         for (PngChunk chunk : chunks) {
             final PngTextChunk textChunk = (PngTextChunk) chunk;

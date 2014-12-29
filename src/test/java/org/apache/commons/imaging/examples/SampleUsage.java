@@ -30,7 +30,7 @@ import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 
 public class SampleUsage {
 
@@ -97,7 +97,7 @@ public class SampleUsage {
 
             // <b>get all metadata stored in EXIF format (ie. from JPEG or
             // TIFF). </b>
-            final IImageMetadata metadata = Imaging.getMetadata(imageBytes);
+            final ImageMetadata metadata = Imaging.getMetadata(imageBytes);
 
             // <b>print a dump of information about an image to stdout. </b>
             Imaging.dumpImageFile(imageBytes);

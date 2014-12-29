@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
-import org.apache.commons.imaging.common.IImageMetadata.IImageMetadataItem;
+import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata.ImageMetadataItem;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -37,7 +37,7 @@ public class MetadataExample {
     public static void metadataExample(final File file) throws ImageReadException,
             IOException {
         // get all metadata stored in EXIF format (ie. from JPEG or TIFF).
-        final IImageMetadata metadata = Imaging.getMetadata(file);
+        final ImageMetadata metadata = Imaging.getMetadata(file);
 
         // System.out.println(metadata);
 
@@ -142,9 +142,9 @@ public class MetadataExample {
 
             System.out.println();
 
-            final List<IImageMetadataItem> items = jpegMetadata.getItems();
+            final List<ImageMetadataItem> items = jpegMetadata.getItems();
             for (int i = 0; i < items.size(); i++) {
-                final IImageMetadataItem item = items.get(i);
+                final ImageMetadataItem item = items.get(i);
                 System.out.println("    " + "item: " + item);
             }
 

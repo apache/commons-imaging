@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
@@ -45,7 +45,7 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 
         final Map<String, Object> params = new HashMap<String, Object>();
 
-        final IImageMetadata metadata = Imaging.getMetadata(imageFile, params);
+        final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
         final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
 

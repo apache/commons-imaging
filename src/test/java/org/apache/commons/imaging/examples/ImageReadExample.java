@@ -26,7 +26,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
-import org.apache.commons.imaging.common.IBufferedImageFactory;
+import org.apache.commons.imaging.common.BufferedImageFactory;
 
 public class ImageReadExample {
     public static BufferedImage imageReadExample(final File file)
@@ -46,7 +46,7 @@ public class ImageReadExample {
     }
 
     public static class ManagedImageBufferedImageFactory implements
-            IBufferedImageFactory {
+            BufferedImageFactory {
 
         public BufferedImage getColorBufferedImage(final int width, final int height,
                 final boolean hasAlpha) {

@@ -25,7 +25,7 @@ import java.io.OutputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter;
@@ -71,7 +71,7 @@ public class WriteExifMetadataExample {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
-            final IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
+            final ImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
             if (null != jpegMetadata) {
                 // note that exif might be null if no Exif metadata is found.
@@ -172,7 +172,7 @@ public class WriteExifMetadataExample {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
-            final IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
+            final ImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
             if (null != jpegMetadata) {
                 // note that exif might be null if no Exif metadata is found.
@@ -254,7 +254,7 @@ public class WriteExifMetadataExample {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
-            final IImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
+            final ImageMetadata metadata = Imaging.getMetadata(jpegImageFile);
             final JpegImageMetadata jpegMetadata = (JpegImageMetadata) metadata;
             if (null != jpegMetadata) {
                 // note that exif might be null if no Exif metadata is found.

@@ -29,8 +29,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.common.IBufferedImageFactory;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.BufferedImageFactory;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.SimpleBufferedImageFactory;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
@@ -140,7 +140,7 @@ public abstract class ImageParser extends BinaryFileParser {
      *                            implementation.
      * @throws IOException        In the event of unsuccessful data read operation.
      */
-    public final IImageMetadata getMetadata(final ByteSource byteSource) throws ImageReadException, IOException {
+    public final ImageMetadata getMetadata(final ByteSource byteSource) throws ImageReadException, IOException {
         return getMetadata(byteSource, null);
     }
 
@@ -169,7 +169,7 @@ public abstract class ImageParser extends BinaryFileParser {
      *                            implementation.
      * @throws IOException        In the event of unsuccessful data read operation.
      */
-    public abstract IImageMetadata getMetadata(ByteSource byteSource, Map<String, Object> params)
+    public abstract ImageMetadata getMetadata(ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException;
 
     /**
@@ -187,7 +187,7 @@ public abstract class ImageParser extends BinaryFileParser {
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful data read operation.
      */
-    public final IImageMetadata getMetadata(final byte[] bytes) throws ImageReadException, IOException {
+    public final ImageMetadata getMetadata(final byte[] bytes) throws ImageReadException, IOException {
         return getMetadata(bytes, null);
     }
 
@@ -215,7 +215,7 @@ public abstract class ImageParser extends BinaryFileParser {
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful data read operation.
      */
-    public final IImageMetadata getMetadata(final byte[] bytes, final Map<String, Object> params)
+    public final ImageMetadata getMetadata(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return getMetadata(new ByteSourceArray(bytes), params);
     }
@@ -235,7 +235,7 @@ public abstract class ImageParser extends BinaryFileParser {
      * @throws IOException        In the event of unsuccessful file read or
      *                            access operation.
      */
-    public final IImageMetadata getMetadata(final File file) throws ImageReadException, IOException {
+    public final ImageMetadata getMetadata(final File file) throws ImageReadException, IOException {
         return getMetadata(file, null);
     }
 
@@ -264,7 +264,7 @@ public abstract class ImageParser extends BinaryFileParser {
      * @throws IOException        In the event of unsuccessful file read or
      *                            access operation.
      */
-    public final IImageMetadata getMetadata(final File file, final Map<String, Object> params)
+    public final ImageMetadata getMetadata(final File file, final Map<String, Object> params)
             throws ImageReadException, IOException {
         if (getDebug()) {
             System.out.println(getName() + ".getMetadata" + ": "
@@ -953,12 +953,12 @@ public abstract class ImageParser extends BinaryFileParser {
      * @param params A valid Map object, or a null.
      * @return A valid instance of an implementation of a IBufferedImageFactory.
      */
-    protected IBufferedImageFactory getBufferedImageFactory(final Map<String, Object> params) {
+    protected BufferedImageFactory getBufferedImageFactory(final Map<String, Object> params) {
         if (params == null) {
             return new SimpleBufferedImageFactory();
         }
 
-        final IBufferedImageFactory result = (IBufferedImageFactory) params
+        final BufferedImageFactory result = (BufferedImageFactory) params
                 .get(ImagingConstants.BUFFERED_IMAGE_FACTORY);
 
         if (null != result) {

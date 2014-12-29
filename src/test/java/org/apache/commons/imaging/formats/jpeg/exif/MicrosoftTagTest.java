@@ -26,7 +26,7 @@ import java.util.TreeMap;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.common.IImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
@@ -56,7 +56,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         checkFields(bytes);
     }
     
-    private TiffImageMetadata toTiffMetadata(final IImageMetadata metadata) throws Exception {
+    private TiffImageMetadata toTiffMetadata(final ImageMetadata metadata) throws Exception {
         if (metadata instanceof JpegImageMetadata) {
             return ((JpegImageMetadata)metadata).getExif();
         } else if (metadata instanceof TiffImageMetadata) {
