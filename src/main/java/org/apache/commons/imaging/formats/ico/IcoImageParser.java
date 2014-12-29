@@ -810,6 +810,7 @@ public class IcoImageParser extends ImageParser {
                 bos.write(0);
             }
         }
+        bos.close();
     }
 
     /**

@@ -264,6 +264,8 @@ public class ApacheImagingSpeedAndMemoryTest {
             } catch (final IOException ioex) {
                 ioex.printStackTrace();
                 System.exit(-1);
+            } finally {
+                fmt.close();
             }
 
             try {

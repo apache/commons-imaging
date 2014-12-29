@@ -112,6 +112,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 bos.write(0);
             }
             bos.flush();
+            bos.close();
             return byteArrayStream.toByteArray();
         }
     }
@@ -146,6 +147,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 bos.write(0);
             }
             bos.flush();
+            bos.close();
             return byteArrayStream.toByteArray();
         }
     }
@@ -179,6 +181,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 bos.write(0);
             }
             bos.flush();
+            bos.close();
             return byteArrayStream.toByteArray();
         }
     }
@@ -216,6 +219,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 bos.write(0);
             }
             bos.flush();
+            bos.close();
             return byteArrayStream.toByteArray();
         }
     }
@@ -249,6 +253,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 bos.write(0);
             }
             bos.flush();
+            bos.close();
             return byteArrayStream.toByteArray();
         }
     }
@@ -290,6 +295,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 }
             }
             bos.flush();
+            bos.close();
             return byteArrayStream.toByteArray();
         }
     }

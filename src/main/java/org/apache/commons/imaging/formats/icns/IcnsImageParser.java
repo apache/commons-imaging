@@ -342,6 +342,7 @@ public class IcnsImageParser extends ImageParser {
                 bos.write(argb >> 24);
             }
         }
+        bos.close();
     }
 
     /**
