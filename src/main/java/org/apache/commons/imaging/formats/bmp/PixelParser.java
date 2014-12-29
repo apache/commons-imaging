@@ -25,11 +25,11 @@ import org.apache.commons.imaging.common.ImageBuilder;
 
 abstract class PixelParser {
 
-    public final BmpHeaderInfo bhi;
-    public final byte[] colorTable;
-    public final byte[] imageData;
+    final BmpHeaderInfo bhi;
+    final byte[] colorTable;
+    final byte[] imageData;
 
-    protected final InputStream is;
+    final InputStream is;
 
     public PixelParser(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         this.bhi = bhi;
@@ -41,7 +41,7 @@ abstract class PixelParser {
 
     public abstract void processImage(ImageBuilder imageBuilder) throws ImageReadException, IOException;
 
-    protected int getColorTableRGB(int index) {
+    int getColorTableRGB(int index) {
         index *= 4;
         final int blue = 0xff & colorTable[index + 0];
         final int green = 0xff & colorTable[index + 1];
