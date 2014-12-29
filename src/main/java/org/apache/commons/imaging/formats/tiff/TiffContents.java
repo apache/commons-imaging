@@ -30,7 +30,7 @@ public class TiffContents {
 
     public TiffContents(final TiffHeader tiffHeader, final List<TiffDirectory> directories) {
         this.header = tiffHeader;
-        this.directories = directories;
+        this.directories = Collections.unmodifiableList(directories);
     }
 
     public List<TiffElement> getElements() throws ImageReadException {
