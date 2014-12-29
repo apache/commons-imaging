@@ -31,13 +31,20 @@ public class DqtSegment extends Segment {
     public static class QuantizationTable {
         public final int precision;
         public final int destinationIdentifier;
-        public final int[] elements;
+        private final int[] elements;
 
         public QuantizationTable(final int precision, final int destinationIdentifier,
                 final int[] elements) {
             this.precision = precision;
             this.destinationIdentifier = destinationIdentifier;
             this.elements = elements;
+        }
+
+        /**
+         * @return the elements
+         */
+        public int[] getElements() {
+            return elements;
         }
     }
 

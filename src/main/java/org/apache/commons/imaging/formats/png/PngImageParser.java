@@ -257,7 +257,7 @@ public class PngImageParser extends ImageParser {
         }
 
         final PngChunkIccp pngChunkiCCP = (PngChunkIccp) chunks.get(0);
-        final byte[] bytes = pngChunkiCCP.uncompressedProfile;
+        final byte[] bytes = pngChunkiCCP.getUncompressedProfile(); // TODO should this be a clone?
 
         return (bytes);
     }
@@ -567,7 +567,7 @@ public class PngImageParser extends ImageParser {
                 }
 
                 final PngChunkIccp pngChunkiCCP = (PngChunkIccp) iCCPs.get(0);
-                final byte[] bytes = pngChunkiCCP.uncompressedProfile;
+                final byte[] bytes = pngChunkiCCP.getUncompressedProfile();
 
                 iccProfile = ICC_Profile.getInstance(bytes);
             } else if (gAMAs.size() == 1) {

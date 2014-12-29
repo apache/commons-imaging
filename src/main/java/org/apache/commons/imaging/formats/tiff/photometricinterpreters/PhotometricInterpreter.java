@@ -23,7 +23,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
 
 public abstract class PhotometricInterpreter {
     protected final int samplesPerPixel;
-    protected final int[] bitsPerSample;
+    private final int[] bitsPerSample;
     protected final int predictor;
     protected final int width;
     protected final int height;
@@ -39,4 +39,8 @@ public abstract class PhotometricInterpreter {
 
     public abstract void interpretPixel(ImageBuilder imageBuilder,
             int[] samples, int x, int y) throws ImageReadException, IOException;
+    
+    protected int getBitsPerSample(int offset) {
+        return bitsPerSample[offset];
+    }
 }

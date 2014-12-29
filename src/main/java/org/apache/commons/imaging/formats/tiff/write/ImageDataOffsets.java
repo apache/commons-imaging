@@ -32,7 +32,7 @@ class ImageDataOffsets {
         outputItems = new TiffOutputItem[imageData.length];
         for (int i = 0; i < imageData.length; i++) {
             final TiffOutputItem item = new TiffOutputItem.Value("TIFF image data",
-                    imageData[i].data);
+                    imageData[i].getData());
             outputItems[i] = item;
         }
 

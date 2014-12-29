@@ -28,8 +28,12 @@ public class PngChunkIccp extends PngChunk {
     // private final PngImageParser parser;
     public final String profileName;
     public final int compressionMethod;
-    public final byte[] compressedProfile;
-    public final byte[] uncompressedProfile;
+    private final byte[] compressedProfile;
+    private final byte[] uncompressedProfile;
+
+    public byte[] getUncompressedProfile() {
+        return uncompressedProfile;
+    }
 
     public PngChunkIccp(
     // PngImageParser parser,

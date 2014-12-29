@@ -627,7 +627,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
         if (null != jpegImageData) {
             final TiffOutputItem item = new TiffOutputItem.Value("JPEG image data",
-                    jpegImageData.data);
+                    jpegImageData.getData());
             result.add(item);
             outputSummary.add(item, jpegOffsetField);
         }

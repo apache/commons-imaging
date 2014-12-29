@@ -19,11 +19,12 @@ package org.apache.commons.imaging.formats.jpeg.segments;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public abstract class GenericSegment extends Segment {
-    protected final byte[] segmentData;
+    private final byte[] segmentData;
 
     public GenericSegment(int marker, int markerLength, InputStream is) throws IOException {
         super(marker, markerLength);
@@ -56,6 +57,27 @@ public abstract class GenericSegment extends Segment {
      */
     public byte[] getSegmentData() {
         return segmentData.clone();
+    }
+
+    /**
+     * Returns a specific byte of the segment's contents,
+     * excluding the marker and length bytes at
+     * the beginning. 
+     * @see GenericSegment#getSegmentData()
+     * @return the bye in the segment's contents
+     */
+    protected byte getSegmentData(int offset) {
+        return segmentData[offset];
+    }
+
+    /**
+     * Convert the bytes to a String
+     * @param encoding
+     * @return the encoded bytes
+     * @throws UnsupportedEncodingException
+     */
+    public String getSegmentDataAsString(String encoding) throws UnsupportedEncodingException {
+        return new String(segmentData, encoding);
     }
 
     // public String getDescription()

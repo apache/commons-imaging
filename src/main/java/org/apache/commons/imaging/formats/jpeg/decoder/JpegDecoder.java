@@ -207,7 +207,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 }
                 quantizationTables[table.destinationIdentifier] = table;
                 final int[] quantizationMatrixInt = new int[64];
-                ZigZag.zigZagToBlock(table.elements, quantizationMatrixInt);
+                ZigZag.zigZagToBlock(table.getElements(), quantizationMatrixInt);
                 final float[] quantizationMatrixFloat = new float[64];
                 for (int j = 0; j < 64; j++) {
                     quantizationMatrixFloat[j] = quantizationMatrixInt[j];

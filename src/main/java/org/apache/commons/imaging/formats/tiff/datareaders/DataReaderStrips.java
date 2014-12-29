@@ -105,13 +105,7 @@ public final class DataReaderStrips extends DataReader {
         // in the 8 bits/pixel case.
 
         // verify that all samples are one byte in size
-        boolean allSamplesAreOneByte = true;
-        for (final int element : bitsPerSample) {
-            if (element != 8) {
-                allSamplesAreOneByte = false;
-                break;
-            }
-        }
+        final boolean allSamplesAreOneByte = isHomogenous(8);
 
         if (predictor != 2 && bitsPerPixel == 8 && allSamplesAreOneByte) {
             int k = 0;
@@ -175,7 +169,7 @@ public final class DataReaderStrips extends DataReader {
         final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         final BitInputStream bis = new BitInputStream(bais, byteOrder);
 
-        int[] samples = new int[bitsPerSample.length];
+        int[] samples = new int[bitsPerSampleLength];
         resetPredictor();
         for (int i = 0; i < pixelsPerStrip; i++) {
             getSamplesAsBytes(bis, samples);

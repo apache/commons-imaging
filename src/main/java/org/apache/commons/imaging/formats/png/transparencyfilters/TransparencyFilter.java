@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 
 public abstract class TransparencyFilter extends BinaryFileParser {
-    protected final byte[] bytes;
+    private final byte[] bytes;
 
     public TransparencyFilter(final byte[] bytes) {
         this.bytes = bytes;
@@ -31,4 +31,18 @@ public abstract class TransparencyFilter extends BinaryFileParser {
 
     public abstract int filter(int rgb, int index) throws ImageReadException,
             IOException;
+
+    /**
+     * @return a byte
+     */
+    public byte getByte(int offset) {
+        return bytes[offset];
+    }
+
+    /**
+     * @return the length
+     */
+    public int getLength() {
+        return bytes.length;
+    }
 }

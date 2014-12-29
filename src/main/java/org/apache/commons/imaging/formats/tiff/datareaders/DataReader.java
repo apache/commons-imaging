@@ -38,8 +38,9 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 public abstract class DataReader {
     protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
-    protected final int[] bitsPerSample;
-    protected final int[] last;
+    private final int[] bitsPerSample;
+    protected final int bitsPerSampleLength;
+    private final int[] last;
 
     protected final int predictor;
     protected final int samplesPerPixel;
@@ -52,6 +53,7 @@ public abstract class DataReader {
         this.directory = directory;
         this.photometricInterpreter = photometricInterpreter;
         this.bitsPerSample = bitsPerSample;
+        this.bitsPerSampleLength = bitsPerSample.length;
         this.samplesPerPixel = samplesPerPixel;
         this.predictor = predictor;
         this.width = width;
@@ -68,8 +70,20 @@ public abstract class DataReader {
     public abstract BufferedImage readImageData(Rectangle subImage)
             throws ImageReadException, IOException;
 
-    
-    
+    /**
+     * Checks if all the bits per sample entries are the same size
+     * @param size the size to check
+     * @return true if all the bits per sample entries are the same
+     */
+    protected boolean isHomogenous(int size) {
+        for (final int element : bitsPerSample) {
+            if (element != size) {
+                return false;
+            }
+        }
+        return true;
+    }
+ 
     /**
      * Reads samples and returns them in an int array.
      * 

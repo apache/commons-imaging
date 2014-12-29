@@ -34,7 +34,7 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
             final int[] colorMap) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
 
-        final int bitsPerPixel = this.bitsPerSample[0];
+        final int bitsPerPixel = getBitsPerSample(0);
         final int colormapScale = (1 << bitsPerPixel);
         indexColorMap = new int[colormapScale];
         for (int index = 0; index < colormapScale; index++) {

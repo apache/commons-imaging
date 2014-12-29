@@ -71,13 +71,7 @@ public final class DataReaderTiled extends DataReader {
         //
 
         // verify that all samples are one byte in size
-        boolean allSamplesAreOneByte = true;
-        for (final int element : bitsPerSample) {
-            if (element != 8) {
-                allSamplesAreOneByte = false;
-                break;
-            }
-        }
+        final boolean allSamplesAreOneByte = isHomogenous(8);
 
         if (predictor != 2 && bitsPerPixel == 24 && allSamplesAreOneByte) {
             int k = 0;
@@ -129,7 +123,7 @@ public final class DataReaderTiled extends DataReader {
         int tileX = 0;
         int tileY = 0;
 
-        int[] samples = new int[bitsPerSample.length];
+        int[] samples = new int[bitsPerSampleLength];
         resetPredictor();
         for (int i = 0; i < pixelsPerTile; i++) {
 

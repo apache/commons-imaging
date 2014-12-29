@@ -105,7 +105,7 @@ public class JpegImageMetadata implements ImageMetadata {
 
             byte[] data = null;
             if (dir.getJpegImageData() != null) {
-                data = dir.getJpegImageData().data;
+                data = dir.getJpegImageData().getData(); // TODO clone?
             }
             // Support other image formats here.
 
@@ -145,7 +145,7 @@ public class JpegImageMetadata implements ImageMetadata {
                 // JPEG thumbnail as JPEG or other format; try to parse.
                 boolean imageSucceeded = false;
                 try {
-                    image = Imaging.getBufferedImage(jpegImageData.data);
+                    image = Imaging.getBufferedImage(jpegImageData.getData());
                     imageSucceeded = true;
                 } catch (final ImagingException imagingException) { // NOPMD
                 } catch (final IOException ioException) { // NOPMD
@@ -154,7 +154,7 @@ public class JpegImageMetadata implements ImageMetadata {
                     // fall back to ImageIO on error
                     if (!imageSucceeded) {
                         final ByteArrayInputStream input = new ByteArrayInputStream(
-                                jpegImageData.data);
+                                jpegImageData.getData());
                         image = ImageIO.read(input);
                     }
                 }

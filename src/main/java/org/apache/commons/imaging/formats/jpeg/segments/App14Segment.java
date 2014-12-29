@@ -54,6 +54,6 @@ public class App14Segment extends AppnSegment {
     }
 
     public int getAdobeColorTransform() {
-        return 0xff & segmentData[11];
+        return 0xff & getSegmentData(11);
     }
 }
