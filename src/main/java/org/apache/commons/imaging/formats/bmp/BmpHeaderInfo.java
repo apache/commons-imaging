@@ -57,16 +57,16 @@ class BmpHeaderInfo {
     public final int profileSize;
     public final int reservedV5;
 
-    public static class ColorSpaceCoordinate {
-        public int x;
-        public int y;
-        public int z;
+    static class ColorSpaceCoordinate {
+        int x;
+        int y;
+        int z;
     }
 
-    public static class ColorSpace {
-        public ColorSpaceCoordinate red;
-        public ColorSpaceCoordinate green;
-        public ColorSpaceCoordinate blue;
+    static class ColorSpace {
+        ColorSpaceCoordinate red;
+        ColorSpaceCoordinate green;
+        ColorSpaceCoordinate blue;
     }
 
     public BmpHeaderInfo(final byte identifier1, final byte identifier2, final int fileSize,
