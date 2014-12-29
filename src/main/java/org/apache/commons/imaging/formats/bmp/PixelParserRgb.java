@@ -27,7 +27,6 @@ class PixelParserRgb extends PixelParserSimple {
     private int bytecount;
     private int cachedBitCount;
     private int cachedByte;
-    private int pixelCount;
 
     public PixelParserRgb(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);
@@ -36,7 +35,6 @@ class PixelParserRgb extends PixelParserSimple {
 
     @Override
     public int getNextRGB() throws ImageReadException, IOException {
-        pixelCount++;
 
         if ((bhi.bitsPerPixel == 1) 
                 || (bhi.bitsPerPixel == 4)) { // always grayscale?
