@@ -21,8 +21,9 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
  */
 public class IptcBlock {
     public final int blockType;
-    public final byte[] blockNameBytes;
-    public final byte[] blockData;
+    //  Only currently used by classes in the package
+    final byte[] blockNameBytes; // TODO make private and provide getter?
+    final byte[] blockData; // TODO make private and provide getter?
 
     public IptcBlock(final int blockType, final byte[] blockNameBytes, final byte[] blockData) {
         this.blockData = blockData;
