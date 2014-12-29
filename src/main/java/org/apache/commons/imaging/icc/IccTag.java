@@ -34,7 +34,7 @@ public class IccTag {
     public final int offset;
     public final int length;
     public final IccTagType fIccTagType;
-    public byte[] data;
+    private byte[] data;
     private IccTagDataType itdt;
     private int dataTypeSignature;
 
