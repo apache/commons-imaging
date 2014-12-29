@@ -90,6 +90,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.flush();
         writeAndReadImageData("1bpp-image-mask-versus-8bpp-mask",
                 baos.toByteArray(), foreground, background);
+        bos.close();
     }
 
     @Test
@@ -128,6 +129,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.flush();
         writeAndReadImageData("8bpp-image-8bpp-mask", baos.toByteArray(),
                 foreground, background);
+        bos.close();
     }
 
     @Test
@@ -187,6 +189,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.flush();
         writeAndReadImageData("8bpp-image-8bpp-mask-vs-1bpp-mask",
                 baos.toByteArray(), foreground, background);
+        bos.close();
     }
 
     @Test
@@ -246,6 +249,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.flush();
         writeAndReadImageData("8bpp-image-1bpp-mask-vs-8bpp-mask",
                 baos.toByteArray(), foreground, background);
+        bos.close();
     }
 
     @Test
@@ -272,6 +276,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.flush();
         writeAndReadImageData("8bpp-image-no-mask", baos.toByteArray(),
                 foreground, background);
+        bos.close();
     }
 
     @Test
@@ -329,6 +334,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.flush();
         writeAndReadImageData("32bpp-image-1bpp-mask", baos.toByteArray(),
                 foreground, background);
+        bos.close();
     }
 
     @Test
@@ -382,6 +388,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             threw = true;
         }
         assertTrue("ICNS file with corrupt mask didn't fail to parse", threw);
+        bos.close();
     }
 
     @Test
@@ -413,6 +420,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
         bos.flush();
         writeAndReadImageData("32bpp-mask-missing", baos.toByteArray(),
                 foreground, background);
+        bos.close();
     }
 
     private void writeAndReadImageData(final String description, final byte[] rawData,
