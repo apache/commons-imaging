@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 class GenericGifBlock extends GifBlock {
-    public final List<byte[]> subblocks;
+    final List<byte[]> subblocks;
 
     public GenericGifBlock(final int blockCode, final List<byte[]> subblocks) {
         super(blockCode);
