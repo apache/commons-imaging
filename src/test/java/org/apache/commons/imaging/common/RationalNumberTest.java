@@ -17,8 +17,6 @@
 
 package org.apache.commons.imaging.common;
 
-import static org.junit.Assert.assertEquals;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;

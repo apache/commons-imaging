@@ -26,9 +26,7 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
