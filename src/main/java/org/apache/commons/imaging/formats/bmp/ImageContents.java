@@ -18,10 +18,10 @@ package org.apache.commons.imaging.formats.bmp;
 
 class ImageContents {
 
-    public final BmpHeaderInfo bhi;
-    public final byte[] colorTable;
-    public final byte[] imageData;
-    public final PixelParser pixelParser;
+    final BmpHeaderInfo bhi;
+    final byte[] colorTable;
+    final byte[] imageData;
+    final PixelParser pixelParser;
 
     public ImageContents(BmpHeaderInfo bhi, byte[] colorTable, byte[] imageData, PixelParser pixelParser) {
         this.bhi = bhi;
