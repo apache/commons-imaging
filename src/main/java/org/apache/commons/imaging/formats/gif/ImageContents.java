@@ -19,12 +19,12 @@ package org.apache.commons.imaging.formats.gif;
 import java.util.List;
 
 class ImageContents {
-    public final GifHeaderInfo gifHeaderInfo;
+    final GifHeaderInfo gifHeaderInfo;
 
-    public final List<GifBlock> blocks;
-    public final byte[] globalColorTable;
+    final List<GifBlock> blocks;
+    final byte[] globalColorTable;
 
-    public ImageContents(final GifHeaderInfo gifHeaderInfo, final byte[] globalColorTable,
+    ImageContents(final GifHeaderInfo gifHeaderInfo, final byte[] globalColorTable,
             final List<GifBlock> blocks) {
         this.gifHeaderInfo = gifHeaderInfo;
         this.globalColorTable = globalColorTable;

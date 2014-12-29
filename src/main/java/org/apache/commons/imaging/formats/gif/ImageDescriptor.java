@@ -18,20 +18,20 @@ package org.apache.commons.imaging.formats.gif;
 
 class ImageDescriptor extends GifBlock {
 
-    public final int imageLeftPosition;
-    public final int imageTopPosition;
-    public final int imageWidth;
-    public final int imageHeight;
-    public final byte packedFields;
-    public final boolean localColorTableFlag;
-    public final boolean interlaceFlag;
-    public final boolean sortFlag;
-    public final byte sizeOfLocalColorTable;
+    final int imageLeftPosition;
+    final int imageTopPosition;
+    final int imageWidth;
+    final int imageHeight;
+    final byte packedFields;
+    final boolean localColorTableFlag;
+    final boolean interlaceFlag;
+    final boolean sortFlag;
+    final byte sizeOfLocalColorTable;
 
-    public final byte[] localColorTable;
-    public final byte[] imageData;
+    final byte[] localColorTable;
+    final byte[] imageData;
 
-    public ImageDescriptor(final int blockCode, final int imageLeftPosition,
+    ImageDescriptor(final int blockCode, final int imageLeftPosition,
             final int imageTopPosition, final int imageWidth, final int imageHeight,
             final byte packedFields, final boolean localColorTableFlag,
             final boolean interlaceFlag, final boolean sortFlag,
