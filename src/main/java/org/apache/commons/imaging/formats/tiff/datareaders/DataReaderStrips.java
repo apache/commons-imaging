@@ -197,7 +197,7 @@ public final class DataReaderStrips extends DataReader {
     @Override
     public void readImageData(final ImageBuilder imageBuilder)
             throws ImageReadException, IOException {
-        for (int strip = 0; strip < imageData.strips.length; strip++) {
+        for (int strip = 0; strip < imageData.getImageDataLength(); strip++) {
             final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
             final long rowsRemaining = height - (strip * rowsPerStripLong);
             final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
@@ -205,7 +205,7 @@ public final class DataReaderStrips extends DataReader {
             final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
             final long pixelsPerStrip = rowsInThisStrip * width;
 
-            final byte[] compressed = imageData.strips[strip].getData();
+            final byte[] compressed = imageData.getImageData(strip).getData();
 
             final byte[] decompressed = decompress(compressed, compression,
                     (int) bytesPerStrip, width, (int) rowsInThisStrip);
@@ -260,7 +260,7 @@ public final class DataReaderStrips extends DataReader {
             final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
             final long pixelsPerStrip = rowsInThisStrip * width;
 
-            final byte[] compressed = imageData.strips[strip].getData();
+            final byte[] compressed = imageData.getImageData(strip).getData();
 
             final byte[] decompressed = decompress(compressed, compression,
                     (int) bytesPerStrip, width, (int) rowsInThisStrip);

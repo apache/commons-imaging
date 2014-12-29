@@ -90,7 +90,7 @@ public abstract class TiffImageData {
     }
 
     public static class Strips extends TiffImageData {
-        public final TiffElement.DataElement[] strips;
+        private final TiffElement.DataElement[] strips;
         // public final byte strips[][];
         public final int rowsPerStrip;
 
@@ -102,6 +102,14 @@ public abstract class TiffImageData {
         @Override
         public TiffElement.DataElement[] getImageData() {
             return strips;
+        }
+
+        public TiffElement.DataElement getImageData(int offset) {
+            return strips[offset];
+        }
+
+        public int getImageDataLength() {
+            return strips.length;
         }
 
         @Override
@@ -119,11 +127,6 @@ public abstract class TiffImageData {
                     bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
                     width, height, compression, byteorder, rowsPerStrip, this);
         }
-
-        // public TiffElement[] getElements()
-        // {
-        // return strips;
-        // }
 
     }
 
