@@ -17,12 +17,13 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCieLab {
+
     public final double L;
     public final double a;
     public final double b;
 
-    public ColorCieLab(final double l, final double a, final double b) {
-        L = l;
+    public ColorCieLab(final double L, final double a, final double b) {
+        this.L = L;
         this.a = a;
         this.b = b;
     }
