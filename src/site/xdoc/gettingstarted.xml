@@ -24,6 +24,9 @@ limitations under the License.
 <!-- ================================================== -->
 <section name="Requirements">
 
+  <strong>Outdated:</strong> This page contains information which is not up to date. Help making this page more useful
+  by contributing a patch.
+
 <p>
   <ul>
       <li>Commons Imaging requires Java 1.5 or higher.</li>
