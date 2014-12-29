@@ -33,7 +33,7 @@ class HuffmanTree<T> {
 
     public final void insert(final String pattern, final T value) throws HuffmanTreeException {
         int position = 0;
-        Node node = growAndGetNode(position);
+        Node<T> node = growAndGetNode(position);
         if (node.value != null) {
             throw new HuffmanTreeException("Can't add child to a leaf");
         }
