@@ -27,6 +27,7 @@ import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Assert;
 
 public class TextFieldTest extends SpecificExifTagTest {
     // public TextFieldTest(String name)
@@ -64,6 +65,7 @@ public class TextFieldTest extends SpecificExifTagTest {
 
         try {
             final Object textFieldValue = field.getValue();
+            Assert.assertNotNull(textFieldValue);
             // Debug.debug("imageFile", imageFile.getAbsoluteFile());
             // Debug.debug("Text field value(" + field.tagInfo.name + ")",
             // textFieldValue);

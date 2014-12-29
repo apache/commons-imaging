@@ -29,6 +29,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class IcoReadTest extends IcoBaseTest {
@@ -44,11 +45,11 @@ public class IcoReadTest extends IcoBaseTest {
             Debug.debug("imageFile", imageFile);
 
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-            // assertNotNull(metadata);
+            Assert.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
             final Map<String, Object> params = new HashMap<String, Object>();
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
-            // assertNotNull(imageInfo);
+            Assert.assertFalse(params.equals(imageInfo)); // Dummy check to avoid unused warning (it may be null)
 
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);

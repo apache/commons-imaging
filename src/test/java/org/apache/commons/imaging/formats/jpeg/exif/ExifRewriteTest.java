@@ -49,6 +49,7 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
@@ -77,7 +78,7 @@ public class ExifRewriteTest extends ExifBaseTest implements AllTagConstants {
             {
                 final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                         .getMetadata(imageFile);
-                // assertNotNull(metadata.getExif());
+                Assert.assertNotNull(metadata);
             }
 
             {

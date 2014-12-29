@@ -64,6 +64,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
 
                 final BufferedImage image2 = Imaging.getBufferedImage(outFile,
                         new HashMap<String, Object>());
+                assertNotNull(image2);
             } catch (final Exception e) {
                 Debug.debug("imageFile", imageFile);
                 throw e;

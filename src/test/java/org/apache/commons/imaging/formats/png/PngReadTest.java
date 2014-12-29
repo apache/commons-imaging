@@ -28,6 +28,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class PngReadTest extends PngBaseTest {
@@ -61,7 +62,7 @@ public class PngReadTest extends PngBaseTest {
                 }
             } else {
                 final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-                // assertNotNull(metadata);
+                Assert.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
                 final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
                 assertNotNull(imageInfo);

@@ -27,6 +27,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class WbmpReadTest extends WbmpBaseTest {
@@ -41,7 +42,7 @@ public class WbmpReadTest extends WbmpBaseTest {
             Debug.debug("imageFile", imageFile);
 
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-            // assertNotNull(metadata);
+            Assert.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
             final Map<String, Object> params = new HashMap<String, Object>();
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);

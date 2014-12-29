@@ -34,6 +34,7 @@ import org.apache.commons.imaging.common.ImageMetadata;
 
 public class SampleUsage {
 
+    @SuppressWarnings("unused")
     public SampleUsage() {
 
         try {
