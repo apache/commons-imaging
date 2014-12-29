@@ -241,15 +241,15 @@ public class JpegImageParser extends ImageParser {
                                 + "].numMarkers: " + segment.numMarkers + ".");
             }
 
-            total += segment.iccBytes.length;
+            total += segment.getIccBytes().length;
         }
 
         final byte[] result = new byte[total];
         int progress = 0;
 
         for (App2Segment segment : segments) {
-            System.arraycopy(segment.iccBytes, 0, result, progress, segment.iccBytes.length);
-            progress += segment.iccBytes.length;
+            System.arraycopy(segment.getIccBytes(), 0, result, progress, segment.getIccBytes().length);
+            progress += segment.getIccBytes().length;
         }
 
         return result;
@@ -283,7 +283,7 @@ public class JpegImageParser extends ImageParser {
             // throw away non-icc profile app2 segments.
             for (Segment s : segments) {
                 final App2Segment segment = (App2Segment) s;
-                if (segment.iccBytes != null) {
+                if (segment.getIccBytes() != null) {
                     filtered.add(segment);
                 }
             }

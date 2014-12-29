@@ -26,7 +26,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class App2Segment extends AppnSegment implements Comparable<App2Segment> {
-    public final byte[] iccBytes;
+    private final byte[] iccBytes;
     public final int curMarker;
     public final int numMarkers;
 
@@ -77,6 +77,13 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
 
     public int compareTo(final App2Segment other) {
         return curMarker - other.curMarker;
+    }
+
+    /**
+     * @return the iccBytes
+     */
+    public byte[] getIccBytes() {
+        return iccBytes;
     }
 
     // public String getDescription()
