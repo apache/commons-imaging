@@ -27,6 +27,7 @@ import java.util.Collections;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -45,18 +46,16 @@ public class DcxReadTest extends DcxBaseTest {
         this.imageFile = imageFile;
     }
 
-    // TODO this should throw USO, but Roundtrip test has to be refactored completely before this can be changed
-    @Test//(expected = UnsupportedOperationException.class)
+    @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @Test(expected = UnsupportedOperationException.class)
     public void testImageMetadata() throws Exception {
-        final IImageMetadata metadata = Imaging.getMetadata(imageFile);
-        // assertNotNull(metadata);
+        Imaging.getMetadata(imageFile);
     }
 
-    // TODO this should throw USO, but Roundtrip test has to be refactored completely before this can be changed
-    @Test//(expected = UnsupportedOperationException.class)
+    @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @Test(expected = UnsupportedOperationException.class)
     public void testImageInfo() throws Exception {
-        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
-        // assertNotNull(imageInfo);
+        Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
     }
 
     @Test

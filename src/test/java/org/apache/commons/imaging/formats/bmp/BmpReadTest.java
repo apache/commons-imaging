@@ -33,6 +33,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.IImageMetadata;
 import org.apache.commons.imaging.util.Debug;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -59,8 +60,8 @@ public class BmpReadTest extends BmpBaseTest {
         // TODO assert more
     }
 
-    // TODO BmpImageParser doesn't support MetaData creation, however RoundtripTest has to be refactored completely before the code can be changed
-    @Test//(expected = UnsupportedOperationException.class)
+    @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @Test(expected = UnsupportedOperationException.class)
     public void testMetaData() throws ImageReadException, IOException {
         Imaging.getMetadata(imageFile);
     }
