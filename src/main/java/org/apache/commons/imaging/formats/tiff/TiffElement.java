@@ -45,7 +45,7 @@ public abstract class TiffElement {
     public abstract String getElementDescription(boolean verbose);
 
     public static abstract class DataElement extends TiffElement {
-        public final byte[] data;
+        private final byte[] data;
 
         public DataElement(final long offset, final int length, final byte[] data) {
             super(offset, length);
@@ -57,6 +57,9 @@ public abstract class TiffElement {
             return data;
         }
 
+        public int getDataLength() {
+            return data.length;
+        }
     }
 
     public static final class Stub extends TiffElement {
