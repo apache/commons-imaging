@@ -30,7 +30,7 @@ limitations under the License.
       <li>The questions of porting to J2ME and Android have been raised, but not yet pursued.</li>
       <li>Commons Imaging has no dependencies.</li>
       <li>AWT is required. ImageIO is only required to compile and used optionally
-      	as a fallback when reading JPEG thumbnails.</li>
+        as a fallback when reading JPEG thumbnails.</li>
   </ul>
 </p>
 
