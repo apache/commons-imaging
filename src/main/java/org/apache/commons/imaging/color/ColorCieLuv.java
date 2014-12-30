@@ -17,6 +17,12 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCieLuv {
+    public static final ColorCieLuv RED = new ColorCieLuv(53.2329, 175.0530, 37.7501);
+    public static final ColorCieLuv GREEN = new ColorCieLuv(87.7370, -83.0798, 107.4014);
+    public static final ColorCieLuv BLUE = new ColorCieLuv(32.3026, -9.3999, -130.3584);
+    public static final ColorCieLuv BLACK = new ColorCieLuv(0, 0, 0);
+    public static final ColorCieLuv WHITE = new ColorCieLuv(100, 0, 0);
+
     public final double L;
     public final double u;
     public final double v;

@@ -17,6 +17,12 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorHsv {
+    public static final ColorHsv RED = new ColorHsv(0, 100, 100);
+    public static final ColorHsv GREEN = new ColorHsv(120, 100, 100);
+    public static final ColorHsv BLUE = new ColorHsv(240, 100, 100);
+    public static final ColorHsv BLACK = new ColorHsv(0, 0, 0);
+    public static final ColorHsv WHITE = new ColorHsv(0, 0, 100);
+
     public final double H;
     public final double S;
     public final double V;

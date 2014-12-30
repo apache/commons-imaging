@@ -17,6 +17,12 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCmy {
+    public static final ColorCmy CYAN = new ColorCmy(100, 0, 0);
+    public static final ColorCmy MAGENTA = new ColorCmy(0, 100, 0);
+    public static final ColorCmy YELLOW = new ColorCmy(0, 0, 100);
+    public static final ColorCmy BLACK = new ColorCmy(100, 100, 100);
+    public static final ColorCmy WHITE = new ColorCmy(0, 0, 0);
+
     public final double C;
     public final double M;
     public final double Y;

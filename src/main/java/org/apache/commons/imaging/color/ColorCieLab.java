@@ -17,6 +17,12 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCieLab {
+    public static final ColorCieLab RED = new ColorCieLab(53, 80, 67);
+    public static final ColorCieLab GREEN = new ColorCieLab(88, -86, 83);
+    public static final ColorCieLab BLUE = new ColorCieLab(32, 79, -108);
+    public static final ColorCieLab BLACK = new ColorCieLab(0, 0, 0);
+    public static final ColorCieLab WHITE = new ColorCieLab(100, 0, 0);
+
     public final double L;
     public final double a;
     public final double b;

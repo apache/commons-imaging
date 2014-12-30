@@ -17,6 +17,12 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorHunterLab {
+    public static final ColorHunterLab RED = new ColorHunterLab(46.109, 78.962, 29.794);
+    public static final ColorHunterLab GREEN = new ColorHunterLab(84.569, -72.518, 50.842);
+    public static final ColorHunterLab BLUE = new ColorHunterLab(26.870, 72.885, -190.923);
+    public static final ColorHunterLab BLACK = new ColorHunterLab(0, 0, 0);
+    public static final ColorHunterLab WHITE = new ColorHunterLab(100, -5.336, 5.433);
+
     public final double L;
     public final double a;
     public final double b;
