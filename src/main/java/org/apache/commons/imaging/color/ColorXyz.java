@@ -21,10 +21,10 @@ public final class ColorXyz {
     public final double Y;
     public final double Z;
 
-    public ColorXyz(final double x, final double y, final double z) {
-        X = x;
-        Y = y;
-        Z = z;
+    public ColorXyz(final double X, final double Y, final double Z) {
+        this.X = X;
+        this.Y = Y;
+        this.Z = Z;
     }
 
     @Override

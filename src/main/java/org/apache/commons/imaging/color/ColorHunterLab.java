@@ -21,8 +21,8 @@ public final class ColorHunterLab {
     public final double a;
     public final double b;
 
-    public ColorHunterLab(final double l, final double a, final double b) {
-        L = l;
+    public ColorHunterLab(final double L, final double a, final double b) {
+        this.L = L;
         this.a = a;
         this.b = b;
     }

@@ -21,8 +21,8 @@ public final class ColorCieLuv {
     public final double u;
     public final double v;
 
-    public ColorCieLuv(final double l, final double u, final double v) {
-        L = l;
+    public ColorCieLuv(final double L, final double u, final double v) {
+        this.L = L;
         this.u = u;
         this.v = v;
     }

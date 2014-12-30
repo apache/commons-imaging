@@ -21,8 +21,8 @@ public final class ColorCieLch {
     public final double C;
     public final double H;
 
-    public ColorCieLch(final double l, final double C, final double H) {
-        L = l;
+    public ColorCieLch(final double L, final double C, final double H) {
+        this.L = L;
         this.C = C;
         this.H = H;
     }

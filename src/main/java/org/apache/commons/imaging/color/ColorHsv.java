@@ -21,10 +21,10 @@ public final class ColorHsv {
     public final double S;
     public final double V;
 
-    public ColorHsv(final double h, final double s, final double v) {
-        H = h;
-        S = s;
-        V = v;
+    public ColorHsv(final double H, final double S, final double V) {
+        this.H = H;
+        this.S = S;
+        this.V = V;
     }
 
     @Override
