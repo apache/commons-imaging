@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorHunterLab {
+
     public final double L;
     public final double a;
     public final double b;

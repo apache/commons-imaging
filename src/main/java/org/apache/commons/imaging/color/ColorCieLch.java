@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCieLch {
+
     public final double L;
     public final double C;
     public final double H;

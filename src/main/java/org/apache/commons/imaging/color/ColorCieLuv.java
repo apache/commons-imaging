@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCieLuv {
+
     public final double L;
     public final double u;
     public final double v;
