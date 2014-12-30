@@ -25,7 +25,6 @@ public final class ColorCmy {
 
     public final double C;
     public final double M;
-
     public final double Y;
 
     public ColorCmy(final double C, final double M, final double Y) {
