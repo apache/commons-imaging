@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorXyz {
-    
+
     public final double X;
     public final double Y;
     public final double Z;

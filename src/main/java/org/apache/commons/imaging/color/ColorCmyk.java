@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCmyk {
-    
+
     public final double C;
     public final double M;
     public final double Y;
