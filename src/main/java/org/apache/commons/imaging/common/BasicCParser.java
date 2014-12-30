@@ -26,7 +26,9 @@ import org.apache.commons.imaging.ImageReadException;
 
 /**
  * A rudimentary preprocessor and parser for the C programming
- * language. 
+ * language.
+ *
+ * FIXME replace this by a paraser generated via ANTLR (if we really need it?!)
  */
 public class BasicCParser {
     private final PushbackInputStream is;
