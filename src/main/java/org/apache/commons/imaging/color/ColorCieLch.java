@@ -17,6 +17,12 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCieLch {
+    public static final ColorCieLch RED = new ColorCieLch(53, 80, 67);
+    public static final ColorCieLch GREEN = new ColorCieLch(88, -86, 83);
+    public static final ColorCieLch BLUE = new ColorCieLch(32, 79, -108);
+    public static final ColorCieLch BLACK = new ColorCieLch(0, 0, 0);
+    public static final ColorCieLch WHITE = new ColorCieLch(100, 0, 297);
+
     public final double L;
     public final double C;
     public final double H;

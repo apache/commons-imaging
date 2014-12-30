@@ -17,8 +17,15 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorHsl {
+    public static final ColorHsl RED = new ColorHsl(0, 100, 100);
+    public static final ColorHsl GREEN = new ColorHsl(120, 100, 100);
+    public static final ColorHsl BLUE = new ColorHsl(240, 100, 100);
+    public static final ColorHsl BLACK = new ColorHsl(0, 0, 0);
+    public static final ColorHsl WHITE = new ColorHsl(0, 0, 100);
+
     public final double H;
     public final double S;
+
     public final double L;
 
     public ColorHsl(final double h, final double s, final double v) {

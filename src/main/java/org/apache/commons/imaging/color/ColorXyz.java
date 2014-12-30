@@ -17,6 +17,12 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorXyz {
+    public static final ColorXyz RED = new ColorXyz(41.24, 21.26, 1.93);
+    public static final ColorXyz GREEN = new ColorXyz(35.76, 71.52, 11.92);
+    public static final ColorXyz BLUE = new ColorXyz(18.05, 7.22, 95.05);
+    public static final ColorXyz BLACK = new ColorXyz(0, 0, 0);
+    public static final ColorXyz WHITE = new ColorXyz(95.05, 100, 108.9);
+
     public final double X;
     public final double Y;
     public final double Z;

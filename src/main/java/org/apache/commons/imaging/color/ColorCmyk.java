@@ -17,9 +17,16 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCmyk {
+    public static final ColorCmyk CYAN = new ColorCmyk(100, 0, 0, 0);
+    public static final ColorCmyk MAGENTA = new ColorCmyk(0, 100, 0, 0);
+    public static final ColorCmyk YELLOW = new ColorCmyk(0, 0, 100, 0);
+    public static final ColorCmyk BLACK = new ColorCmyk(0, 0, 0, 100);
+    public static final ColorCmyk WHITE = new ColorCmyk(0, 0, 0, 0);
+
     public final double C;
     public final double M;
     public final double Y;
+
     public final double K;
 
     public ColorCmyk(final double C, final double M, final double Y, final double K) {
