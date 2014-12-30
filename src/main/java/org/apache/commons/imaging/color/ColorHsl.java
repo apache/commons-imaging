@@ -25,7 +25,6 @@ public final class ColorHsl {
 
     public final double H;
     public final double S;
-
     public final double L;
 
     public ColorHsl(final double h, final double s, final double v) {
