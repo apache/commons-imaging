@@ -14,13 +14,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-
-<!--
-I've called this assembly description "src" which is misleading; its actually based on the standard "project" descriptor.
-
-http://maven.apache.org/plugins/maven-assembly-plugin/descriptor-refs.html
-
--->
 <assembly>
   <id>src</id>
   <formats>
