@@ -27,7 +27,8 @@
         <include>LICENSE*</include>
         <include>NOTICE*</include>
         <include>RELEASE-NOTES*</include>
-        <include>README*</include>
+        <include>README.md</include>
+        <include>CONTRIBUTING.md</include>
       </includes>
     </fileSet>
     <fileSet>
