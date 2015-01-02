@@ -51,8 +51,7 @@ public class GifReadTest extends GifBaseTest {
     @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
     @Test(expected = UnsupportedOperationException.class)
     public void testMetadata() throws Exception {
-        final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-        assertNotNull(metadata);
+        Imaging.getMetadata(imageFile);
     }
 
     @Test

@@ -54,7 +54,7 @@ public class IcnsReadTest extends IcnsBaseTest {
     @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
     @Test(expected = UnsupportedOperationException.class)
     public void testImageMetadata() throws Exception {
-        final ImageMetadata metadata = Imaging.getMetadata(imageFile);
+        Imaging.getMetadata(imageFile);
     }
 
     @Test
