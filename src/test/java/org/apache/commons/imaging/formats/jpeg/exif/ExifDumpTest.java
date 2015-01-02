@@ -17,7 +17,10 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,40 +32,39 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class ExifDumpTest extends ExifBaseTest {
-    // public ExifDumpTest(String name)
-    // {
-    // super(name);
-    // }
 
-    @Test
-    public void test() throws Exception {
-        final List<File> images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++) {
+    private File imageFile;
 
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile);
-            Debug.debug();
-
-            final ByteSource byteSource = new ByteSourceFile(imageFile);
-            Debug.debug("Segments:");
-            new JpegUtils().dumpJFIF(byteSource);
-
-            final Map<String, Object> params = new HashMap<String, Object>();
-            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
-
-            final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
-                    .getMetadata(imageFile, params);
-            if (null == metadata)
-             {
-                continue;
-            // assertNotNull(metadata.getExif());
-            }
-
-            metadata.dump();
-        }
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getImagesWithExifData();
     }
 
+    public ExifDumpTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    @Test
+    public void testDumpJFIF() throws Exception {
+        final ByteSource byteSource = new ByteSourceFile(imageFile);
+        Debug.debug("Segments:");
+        new JpegUtils().dumpJFIF(byteSource);
+        // TODO assert someting
+    }
+
+    @Test
+    public void testMetadata() throws Exception {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+        params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
+
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
+        assertNotNull(metadata);
+        // TODO assert more
+    }
 }
