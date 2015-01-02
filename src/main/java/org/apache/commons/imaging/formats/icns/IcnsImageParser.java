@@ -71,6 +71,7 @@ public class IcnsImageParser extends ImageParser {
         return new ImageFormat[] { ImageFormats.ICNS };
     }
 
+    // FIXME should throw UOE
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
