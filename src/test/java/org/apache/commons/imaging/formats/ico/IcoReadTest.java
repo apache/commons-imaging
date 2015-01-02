@@ -21,6 +21,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,30 +32,41 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class IcoReadTest extends IcoBaseTest {
 
-    @Test
-    public void test() throws Exception {
-        Debug.debug("start");
+    private File imageFile;
 
-        final List<File> images = getIcoImages();
-        for (int i = 0; i < images.size(); i++) {
-
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile);
-
-            final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-            Assert.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
-
-            final Map<String, Object> params = new HashMap<String, Object>();
-            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
-            Assert.assertFalse(params.equals(imageInfo)); // Dummy check to avoid unused warning (it may be null)
-
-            final BufferedImage image = Imaging.getBufferedImage(imageFile);
-            assertNotNull(image);
-        }
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getIcoImages();
     }
 
+    public IcoReadTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @Test(expected = UnsupportedOperationException.class)
+    public void testMetadata() throws Exception {
+        Imaging.getMetadata(imageFile);
+    }
+
+    @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @Test(expected = UnsupportedOperationException.class)
+    public void testImageInfo() throws Exception {
+        Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
+    }
+
+    @Test
+    public void testBufferedImage() throws Exception {
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+        assertNotNull(image);
+        // TODO assert more
+    }
 }
