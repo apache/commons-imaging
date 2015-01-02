@@ -28,30 +28,16 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 
 public abstract class ExifBaseTest extends ImagingTest {
-    // public ExifBaseTest(String name)
-    // {
-    // super(name);
-    // }
 
     protected static boolean hasExifData(final File file) {
-        // Debug.debug("hasExifData file", file.getAbsoluteFile());
-
-        if (!file.getName().toLowerCase().endsWith(".jpg"))
-         {
+        if (!file.getName().toLowerCase().endsWith(".jpg")) {
             return false;
-        // ImageFormat format = Imaging.guessFormat(file);
-        // if (format != ImageFormat.IMAGE_FORMAT_JPEG)
-        // return false;
         }
-
-        // Debug.debug("possible file", file);
 
         try {
             final ByteSource byteSource = new ByteSourceFile(file);
             return new JpegImageParser().hasExifSegment(byteSource);
         } catch (final Exception e) {
-            // Debug.debug("Error file", file.getAbsoluteFile());
-            // Debug.debug(e, 4);
             return false;
         }
     }
