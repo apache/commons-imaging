@@ -50,10 +50,6 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
 
         // note that exif might be null if no Exif metadata is found.
         final TiffImageMetadata exif = jpegMetadata.getExif();
-        if (null == exif) {
-            return;
-        }
-
         final List<TiffField> fields = exif.getAllFields();
         final Map<Integer,TiffField> fieldMap = new Hashtable<Integer,TiffField>();
         // Build a simplified field tag -> field map, ignoring directory
