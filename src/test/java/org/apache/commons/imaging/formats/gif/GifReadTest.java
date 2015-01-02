@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
@@ -28,29 +29,43 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class GifReadTest extends GifBaseTest {
 
-    @Test
-    public void test() throws Exception {
-        Debug.debug("start");
+    private File imageFile;
 
-        final List<File> images = getGifImages();
-        for (int i = 0; i < images.size(); i++) {
-
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile);
-
-            final ImageMetadata metadata = Imaging.getMetadata(imageFile);
-            Assert.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
-
-            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
-            assertNotNull(imageInfo);
-
-            final BufferedImage image = Imaging.getBufferedImage(imageFile);
-            assertNotNull(image);
-        }
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getGifImages();
     }
 
+    public GifReadTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @Test(expected = UnsupportedOperationException.class)
+    public void testMetadata() throws Exception {
+        final ImageMetadata metadata = Imaging.getMetadata(imageFile);
+        assertNotNull(metadata);
+    }
+
+    @Test
+    public void testImageInfo() throws Exception {
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
+        assertNotNull(imageInfo);
+        // TODO assert more
+    }
+
+    @Test
+    public void testBufferedImage() throws Exception {
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+        assertNotNull(image);
+        // TODO assert more
+    }
 }

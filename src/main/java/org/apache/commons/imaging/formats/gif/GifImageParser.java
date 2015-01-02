@@ -496,6 +496,7 @@ public class GifImageParser extends ImageParser {
         return new Dimension(id.imageWidth, id.imageHeight);
     }
 
+    // FIXME should throw UOE
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
