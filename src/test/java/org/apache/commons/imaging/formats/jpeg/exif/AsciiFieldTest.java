@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -60,8 +59,7 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
         // Build a simplified field tag -> field map, ignoring directory
         // structures.
         // Good enough for our purposes, since the image in question is known.
-        for (int i = 0; i < fields.size(); i++) {
-            final TiffField field = fields.get(i);
+        for (final TiffField field : fields) {
             fieldMap.put(field.getTag(), field);
         }
 
@@ -74,17 +72,14 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
         expectedFieldValues.put(
                 TiffTagConstants.TIFF_TAG_DATE_TIME.tag,
                 "2007:12:25 13:34:39");
-        final Iterator<Integer> expectedTags = expectedFieldValues.keySet().iterator();
-        while (expectedTags.hasNext()) {
-            final Integer tag = expectedTags.next();
-            final Object expectedValue = expectedFieldValues.get(tag);
 
-            assertTrue(fieldMap.containsKey(tag));
-            final TiffField field = fieldMap.get(tag);
+        for (Map.Entry<Integer, Object> tag : expectedFieldValues.entrySet()) {
+            assertTrue(fieldMap.containsKey(tag.getKey()));
+            final TiffField field = fieldMap.get(tag.getKey());
             assertNotNull(field);
             final Object value = field.getValue();
             assertNotNull(value);
-            assertEquals(value, expectedValue);
+            assertEquals(value, tag.getValue());
         }
     }
 }
