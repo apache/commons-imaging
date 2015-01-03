@@ -51,7 +51,7 @@ public class TiffField {
     private final byte[] value;
     private final ByteOrder byteOrder;
     private final int sortHint;
-    private static final Map<Object, List<TagInfo>> ALL_TAG_MAP = makeTagMap(AllTagConstants.ALL_TAGS);
+    private static final Map<Integer, List<TagInfo>> ALL_TAG_MAP = makeTagMap(AllTagConstants.ALL_TAGS);
 
     public TiffField(final int tag, final int directoryType, final FieldType fieldType,
             final long count, final long offset, final byte[] value,
@@ -559,10 +559,10 @@ public class TiffField {
         return (String) o;
     }
 
-    private static Map<Object, List<TagInfo>> makeTagMap(
+    private static Map<Integer, List<TagInfo>> makeTagMap(
             final List<TagInfo> tags) {
         // make sure to use the thread-safe version; this is shared state.
-        final Map<Object, List<TagInfo>> map = new HashMap<Object, List<TagInfo>>();
+        final Map<Integer, List<TagInfo>> map = new HashMap<Integer, List<TagInfo>>();
 
         for (TagInfo tag : tags) {
             List<TagInfo> tagList = map.get(tag.tag);

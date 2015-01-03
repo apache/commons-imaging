@@ -53,14 +53,14 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 public class TiffImageMetadata extends GenericImageMetadata {
     public final TiffContents contents;
-    private static final Map<Object, Integer> TAG_COUNTS = countTags(AllTagConstants.ALL_TAGS);
+    private static final Map<Integer, Integer> TAG_COUNTS = countTags(AllTagConstants.ALL_TAGS);
 
     public TiffImageMetadata(final TiffContents contents) {
         this.contents = contents;
     }
 
-    private static Map<Object, Integer> countTags(final List<TagInfo> tags) {
-        final Map<Object, Integer> map = new HashMap<Object, Integer>();
+    private static Map<Integer, Integer> countTags(final List<TagInfo> tags) {
+        final Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
         for (TagInfo tag : tags) {
             final Integer count = map.get(tag.tag);
