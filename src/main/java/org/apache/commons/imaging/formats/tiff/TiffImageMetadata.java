@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +60,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     }
 
     private static Map<Object, Integer> countTags(final List<TagInfo> tags) {
-        final Map<Object, Integer> map = new Hashtable<Object, Integer>();
+        final Map<Object, Integer> map = new HashMap<Object, Integer>();
 
         for (TagInfo tag : tags) {
             final Integer count = map.get(tag.tag);

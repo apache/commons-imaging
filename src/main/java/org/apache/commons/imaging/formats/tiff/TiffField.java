@@ -24,7 +24,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -562,7 +562,7 @@ public class TiffField {
     private static Map<Object, List<TagInfo>> makeTagMap(
             final List<TagInfo> tags) {
         // make sure to use the thread-safe version; this is shared state.
-        final Map<Object, List<TagInfo>> map = new Hashtable<Object, List<TagInfo>>();
+        final Map<Object, List<TagInfo>> map = new HashMap<Object, List<TagInfo>>();
 
         for (TagInfo tag : tags) {
             List<TagInfo> tagList = map.get(tag.tag);

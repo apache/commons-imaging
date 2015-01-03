@@ -23,7 +23,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +50,7 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
         // note that exif might be null if no Exif metadata is found.
         final TiffImageMetadata exif = jpegMetadata.getExif();
         final List<TiffField> fields = exif.getAllFields();
-        final Map<Integer,TiffField> fieldMap = new Hashtable<Integer,TiffField>();
+        final Map<Integer,TiffField> fieldMap = new HashMap<Integer, TiffField>();
         // Build a simplified field tag -> field map, ignoring directory
         // structures.
         // Good enough for our purposes, since the image in question is known.
@@ -59,7 +58,7 @@ public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
             fieldMap.put(field.getTag(), field);
         }
 
-        final Map<Integer,Object> expectedFieldValues = new Hashtable<Integer,Object>();
+        final Map<Integer,Object> expectedFieldValues = new HashMap<Integer, Object>();
         expectedFieldValues.put(
                 TiffTagConstants.TIFF_TAG_MAKE.tag, "Canon");
         expectedFieldValues.put(
