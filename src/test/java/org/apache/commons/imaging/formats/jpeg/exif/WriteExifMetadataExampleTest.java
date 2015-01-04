@@ -44,28 +44,6 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
     }
 
     @Test
-    public void test() throws Exception {
-        Debug.debug("imageFile", imageFile.getAbsoluteFile());
-
-        final File tempFile = createTempFile("test", ".jpg");
-        Debug.debug("tempFile", tempFile.getAbsoluteFile());
-
-        try {
-            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            if (ignoreImageData) {
-                return;
-            }
-            new WriteExifMetadataExample().changeExifMetadata(imageFile,
-                    tempFile);
-
-            // TODO assert that ExifMetadata has been changed
-        } catch (final ExifRewriter.ExifOverflowException e) {
-            Debug.debug("Error image", imageFile.getAbsoluteFile());
-            Debug.debug(e, 4);
-        }
-    }
-
-    @Test
     public void testInsert() throws Exception {
         Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
@@ -82,7 +60,6 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest implements
         } catch (final ExifRewriter.ExifOverflowException e) {
             Debug.debug("Ignoring unavoidable ExifOverflowException: " + e.getMessage());
             Debug.debug("Error image: " + imageFile.getAbsoluteFile());
-            // Debug.debug(e, 4);
         }
     }
 
