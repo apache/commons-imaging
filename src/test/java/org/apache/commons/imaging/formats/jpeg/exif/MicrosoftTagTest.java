@@ -88,6 +88,5 @@ public class MicrosoftTagTest extends ExifBaseTest {
         assertEquals(COMMENT, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT));
         assertEquals(SUBJECT, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT));
         assertEquals(TITLE, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPTITLE));
-       
     }
 }
