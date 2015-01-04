@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class MedianCutMostPopulatedBoxesImplementation extends MedianCutImplementation {
+public class MedianCutMostPopulatedBoxesImplementation extends MedianCut {
     @Override
     public boolean performNextMedianCut(final List<ColorGroup> colorGroups,
             final boolean ignoreAlpha) throws ImageWriteException {

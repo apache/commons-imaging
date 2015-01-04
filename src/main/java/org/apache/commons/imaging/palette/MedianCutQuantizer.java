@@ -83,7 +83,7 @@ public class MedianCutQuantizer {
     }
     
     public Palette process(final BufferedImage image, final int maxColors,
-            final MedianCutImplementation medianCutImplementation, final boolean verbose)
+            final MedianCut medianCut, final boolean verbose)
             throws ImageWriteException {
         final Map<Integer, ColorCount> colorMap = groupColors(image, maxColors);
 
@@ -117,7 +117,7 @@ public class MedianCutQuantizer {
         colorGroups.add(root);
 
         while (colorGroups.size() < maxColors) {
-            if (!medianCutImplementation.performNextMedianCut(colorGroups, ignoreAlpha)) {
+            if (!medianCut.performNextMedianCut(colorGroups, ignoreAlpha)) {
                 break;
             }
         }
