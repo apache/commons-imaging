@@ -31,6 +31,10 @@ import org.junit.Assert;
 
 public class TextFieldTest extends SpecificExifTagTest {
 
+    public TextFieldTest(File imageFile) {
+        super(imageFile);
+    }
+
     @Override
     protected void checkField(final File imageFile, final TiffField field)
             throws IOException, ImageReadException, ImageWriteException {

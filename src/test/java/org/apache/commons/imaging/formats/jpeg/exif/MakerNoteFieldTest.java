@@ -28,6 +28,10 @@ import org.apache.commons.imaging.util.Debug;
 
 public class MakerNoteFieldTest extends SpecificExifTagTest {
 
+    public MakerNoteFieldTest(File imageFile) {
+        super(imageFile);
+    }
+
     @Override
     protected void checkField(final File imageFile, final TiffField field)
             throws IOException, ImageReadException, ImageWriteException {

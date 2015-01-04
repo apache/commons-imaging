@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.jpeg.exif;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,32 +33,31 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public abstract class SpecificExifTagTest extends ExifBaseTest implements
         AllTagConstants {
-    // public SpecificExifTagTest(String name)
-    // {
-    // super(name);
-    // }
 
-    @Test
-    public void testSingleImage() throws Exception {
-        final File imageFile = getImageWithExifData();
-        checkImage(imageFile);
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getImagesWithExifData();
+    }
+
+    public SpecificExifTagTest(File imageFile) {
+        this.imageFile = imageFile;
     }
 
     @Test
     public void testAllImages() throws Exception {
-        final List<File> images = getImagesWithExifData();
-        for (int i = 0; i < images.size(); i++) {
-
-            final File imageFile = images.get(i);
-            if (imageFile.getParentFile().getName().toLowerCase()
-                    .equals("@broken")) {
-                continue;
-            }
-            checkImage(imageFile);
+        if (imageFile.getParentFile().getName().toLowerCase()
+                .equals("@broken")) {
+            return;
         }
+        checkImage(imageFile);
     }
 
     protected abstract void checkField(File imageFile, TiffField field)
@@ -69,7 +69,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
 
         final Map<String, Object> params = new HashMap<String, Object>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
+        params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
         // note that metadata might be null if no metadata is found.
         final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
@@ -85,8 +85,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
         }
 
         final List<TiffField> fields = exif.getAllFields();
-        for (int i = 0; i < fields.size(); i++) {
-            final TiffField field = fields.get(i);
+        for (final TiffField field : fields) {
             checkField(imageFile, field);
         }
 
