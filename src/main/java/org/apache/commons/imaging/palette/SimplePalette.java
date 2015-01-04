@@ -24,21 +24,17 @@ public class SimplePalette implements Palette {
     }
 
     public int getPaletteIndex(final int rgb) {
-        return getPaletteIndex(palette, rgb);
-    }
-
-    public int getEntry(final int index) {
-        return palette[index];
-    }
-
-    private int getPaletteIndex(final int[] palette, final int argb) {
         for (int i = 0; i < palette.length; i++) {
-            if (palette[i] == argb) {
+            if (palette[i] == rgb) {
                 return i;
             }
         }
 
         return -1;
+    }
+
+    public int getEntry(final int index) {
+        return palette[index];
     }
 
     public int length() {
