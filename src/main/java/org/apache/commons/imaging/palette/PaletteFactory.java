@@ -390,7 +390,7 @@ public class PaletteFactory {
      */
     public Palette makeQuantizedRgbaPalette(final BufferedImage src, final boolean transparent, final int max) throws ImageWriteException {
         return new MedianCutQuantizer(!transparent).process(src, max,
-                new MedianCutLongestAxisImplementation(), false);
+                new LongestAxisMedianCut(), false);
     }
 
     /**

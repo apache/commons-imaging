@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class MedianCutLongestAxisImplementation implements MedianCut {
+public class LongestAxisMedianCut implements MedianCut {
     private static final Comparator<ColorGroup> COMPARATOR = new Comparator<ColorGroup>() {
         public int compare(final ColorGroup cg1, final ColorGroup cg2) {
             if (cg1.maxDiff == cg2.maxDiff) {
