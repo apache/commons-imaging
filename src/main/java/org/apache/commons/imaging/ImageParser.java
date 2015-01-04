@@ -449,6 +449,7 @@ public abstract class ImageParser extends BinaryFileParser {
 
         final List<BufferedImage> result = new ArrayList<BufferedImage>();
 
+        // FIXME this doesn't look like we're actually getting all images contained in the given ByteSource...
         result.add(bi);
 
         return result;
