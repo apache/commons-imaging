@@ -19,7 +19,7 @@ package org.apache.commons.imaging.palette;
 import java.util.List;
 import org.apache.commons.imaging.ImageWriteException;
 
-public class QuantizedPalette extends Palette {
+public class QuantizedPalette implements Palette {
     private final int precision;
     private final List<ColorSpaceSubset> subsets;
     private final ColorSpaceSubset[] straight;
@@ -47,7 +47,6 @@ public class QuantizedPalette extends Palette {
         }
     }
 
-    @Override
     public int getPaletteIndex(final int rgb) throws ImageWriteException {
         final int precisionMask = (1 << precision) - 1;
 
@@ -58,15 +57,12 @@ public class QuantizedPalette extends Palette {
         return straight[index].getIndex();
     }
 
-    @Override
     public int getEntry(final int index) {
         final ColorSpaceSubset subset = subsets.get(index);
         return subset.rgb;
     }
 
-    @Override
     public int length() {
         return subsets.size();
-
     }
 }

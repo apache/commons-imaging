@@ -16,19 +16,17 @@
  */
 package org.apache.commons.imaging.palette;
 
-public class SimplePalette extends Palette {
+public class SimplePalette implements Palette {
     private final int[] palette;
 
     public SimplePalette(final int[] palette) {
         this.palette = palette;
     }
 
-    @Override
     public int getPaletteIndex(final int rgb) {
         return getPaletteIndex(palette, rgb);
     }
 
-    @Override
     public int getEntry(final int index) {
         return palette[index];
     }
@@ -43,7 +41,6 @@ public class SimplePalette extends Palette {
         return -1;
     }
 
-    @Override
     public int length() {
         return palette.length;
     }

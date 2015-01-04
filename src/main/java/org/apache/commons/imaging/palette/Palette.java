@@ -22,7 +22,7 @@ import org.apache.commons.imaging.util.Debug;
 /**
  * Color palette.
  */
-public abstract class Palette {
+public interface Palette {
 
     /**
      * Looks up the palette index for a given color.
@@ -30,24 +30,19 @@ public abstract class Palette {
      * @return the palette index
      * @throws ImageWriteException
      */
-    public abstract int getPaletteIndex(int rgb) throws ImageWriteException;
+    int getPaletteIndex(int rgb) throws ImageWriteException;
 
     /**
      * Looks up the color for a given palette index.
      * @param index the palette index to look up
      * @return the color in ARGB format
      */
-    public abstract int getEntry(int index);
+    int getEntry(int index);
 
     /**
      * The number of entries in the palette.
      * @return the number of palette entries
      */
-    public abstract int length();
+    int length();
 
-    public void dump() {
-        for (int i = 0; i < length(); i++) {
-            Debug.debug("\t" + "palette[" + i + "]: " + getEntry(i) + " (0x" + Integer.toHexString(getEntry(i)) + ")");
-        }
-    }
 }
