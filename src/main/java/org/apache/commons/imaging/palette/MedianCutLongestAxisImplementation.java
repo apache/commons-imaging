@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public class MedianCutLongestAxisImplementation extends MedianCut {
+public class MedianCutLongestAxisImplementation implements MedianCut {
     private static final Comparator<ColorGroup> COMPARATOR = new Comparator<ColorGroup>() {
         public int compare(final ColorGroup cg1, final ColorGroup cg2) {
             if (cg1.maxDiff == cg2.maxDiff) {
@@ -33,7 +33,6 @@ public class MedianCutLongestAxisImplementation extends MedianCut {
         }
     };
 
-    @Override
     public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
             throws ImageWriteException {
         Collections.sort(colorGroups, COMPARATOR);

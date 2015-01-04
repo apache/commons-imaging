@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-public abstract class MedianCut {
-    public abstract boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
+public interface MedianCut {
+    boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
             throws ImageWriteException;
 }
