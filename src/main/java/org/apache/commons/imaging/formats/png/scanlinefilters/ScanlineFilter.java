@@ -20,7 +20,9 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public abstract class ScanlineFilter {
-    public abstract void unfilter(byte[] src, byte[] dst, byte[] up)
+public interface ScanlineFilter {
+
+    void unfilter(byte[] src, byte[] dst, byte[] up)
             throws ImageReadException, IOException;
+
 }

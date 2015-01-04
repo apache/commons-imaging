@@ -20,14 +20,13 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class ScanlineFilterSub extends ScanlineFilter {
+public class ScanlineFilterSub implements ScanlineFilter {
     private final int bytesPerPixel;
 
     public ScanlineFilterSub(final int bytesPerPixel) {
         this.bytesPerPixel = bytesPerPixel;
     }
 
-    @Override
     public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {

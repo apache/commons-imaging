@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class ScanlineFilterPaeth extends ScanlineFilter {
+public class ScanlineFilterPaeth implements ScanlineFilter {
     private final int bytesPerPixel;
 
     public ScanlineFilterPaeth(final int bytesPerPixel) {
@@ -44,7 +44,6 @@ public class ScanlineFilterPaeth extends ScanlineFilter {
         }
     }
 
-    @Override
     public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {

@@ -20,8 +20,8 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 
-public class ScanlineFilterUp extends ScanlineFilter {
-    @Override
+public class ScanlineFilterUp implements ScanlineFilter {
+
     public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {
