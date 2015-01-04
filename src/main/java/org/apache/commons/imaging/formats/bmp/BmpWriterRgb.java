@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-class BmpWriterRgb extends BmpWriter {
+class BmpWriterRgb implements BmpWriter {
     // private final boolean alpha;
     //
     // public BmpWriterRgb(boolean alpha)
@@ -30,23 +30,19 @@ class BmpWriterRgb extends BmpWriter {
     // this.alpha = alpha;
     // }
 
-    @Override
     public int getPaletteSize() {
         return 0;
     }
 
-    @Override
     public int getBitsPerPixel() {
         // return alpha ? 32 : 24;
         return 24;
     }
 
-    @Override
     public void writePalette(final BinaryOutputStream bos) throws IOException {
         // no palette
     }
 
-    @Override
     public byte[] getImageData(final BufferedImage src) {
         final int width = src.getWidth();
         final int height = src.getHeight();

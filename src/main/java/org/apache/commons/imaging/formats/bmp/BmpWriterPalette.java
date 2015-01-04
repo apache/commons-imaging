@@ -23,7 +23,7 @@ import java.io.IOException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.SimplePalette;
 
-class BmpWriterPalette extends BmpWriter {
+class BmpWriterPalette implements BmpWriter {
 
     private final SimplePalette palette;
     private final int bitsPerSample;
@@ -40,17 +40,14 @@ class BmpWriterPalette extends BmpWriter {
         }
     }
 
-    @Override
     public int getPaletteSize() {
         return palette.length();
     }
 
-    @Override
     public int getBitsPerPixel() {
         return bitsPerSample;
     }
 
-    @Override
     public void writePalette(final BinaryOutputStream bos) throws IOException {
         for (int i = 0; i < palette.length(); i++) {
             final int rgb = palette.getEntry(i);
@@ -66,7 +63,6 @@ class BmpWriterPalette extends BmpWriter {
         }
     }
 
-    @Override
     public byte[] getImageData(final BufferedImage src) {
         final int width = src.getWidth();
         final int height = src.getHeight();

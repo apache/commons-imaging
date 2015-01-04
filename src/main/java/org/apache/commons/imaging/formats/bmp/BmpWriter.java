@@ -21,13 +21,13 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.common.BinaryOutputStream;
 
-abstract class BmpWriter {
+interface BmpWriter {
 
-    public abstract int getPaletteSize();
+    int getPaletteSize();
 
-    public abstract int getBitsPerPixel();
+    int getBitsPerPixel();
 
-    public abstract void writePalette(BinaryOutputStream bos) throws IOException;
+    void writePalette(BinaryOutputStream bos) throws IOException;
 
-    public abstract byte[] getImageData(BufferedImage src);
+    byte[] getImageData(BufferedImage src);
 }
