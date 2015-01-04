@@ -18,6 +18,7 @@
 package org.apache.commons.imaging.formats.jpeg.exif;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,66 +29,56 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class GpsTest extends ExifBaseTest implements ImagingConstants {
+
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getImagesWithExifData();
+    }
+
+    public GpsTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
 
     @Test
     public void test() throws Exception {
-
-        final List<File> images = getImagesWithExifData(300);
-        for (int i = 0; i < images.size(); i++) {
-
-            final File imageFile = images.get(i);
-
-            // Debug.debug();
-            // Debug.debug("imageFile", imageFile);
-
-            if (imageFile.getParentFile().getName().toLowerCase()
-                    .equals("@broken")) {
-                continue;
-            }
-
-            try {
-                final Map<String, Object> params = new HashMap<String, Object>();
-                final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-                params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
-
-                final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
-                        .getMetadata(imageFile, params);
-                if (null == metadata) {
-                    continue;
-                }
-
-                final TiffImageMetadata exifMetadata = metadata.getExif();
-                if (null == exifMetadata) {
-                    continue;
-                }
-
-                final TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
-                if (null == gpsInfo) {
-                    continue;
-                }
-
-                Debug.debug("imageFile " + imageFile);
-                Debug.debug("gpsInfo " + gpsInfo);
-                Debug.debug("gpsInfo longitude as degrees east " + gpsInfo.getLongitudeAsDegreesEast());
-                Debug.debug("gpsInfo latitude as degrees north " + gpsInfo.getLatitudeAsDegreesNorth());
-                Debug.debug();
-            } catch (final Exception e) {
-                Debug.debug("imageFile " + imageFile.getAbsoluteFile());
-                Debug.debug("imageFile " + imageFile.length());
-                Debug.debug(e, 13);
-
-                // File brokenFolder = new File(imageFile.getParentFile(),
-                // "@Broken");
-                // if(!brokenFolder.exists())
-                // brokenFolder.mkdirs();
-                // File movedFile = new File(brokenFolder, imageFile.getName());
-                // imageFile.renameTo(movedFile);
-
-                throw e;
-            }
+        if (imageFile.getParentFile().getName().toLowerCase()
+                .equals("@broken")) {
+            return;
         }
+
+        final Map<String, Object> params = new HashMap<String, Object>();
+        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+        params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
+
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
+                .getMetadata(imageFile, params);
+        if (null == metadata) {
+            return;
+        }
+
+        final TiffImageMetadata exifMetadata = metadata.getExif();
+        if (null == exifMetadata) {
+            return;
+        }
+
+        final TiffImageMetadata.GPSInfo gpsInfo = exifMetadata.getGPS();
+        if (null == gpsInfo) {
+            return;
+        }
+
+        // TODO we should assert something here.
+        Debug.debug("imageFile " + imageFile);
+        Debug.debug("gpsInfo " + gpsInfo);
+        Debug.debug("gpsInfo longitude as degrees east " + gpsInfo.getLongitudeAsDegreesEast());
+        Debug.debug("gpsInfo latitude as degrees north " + gpsInfo.getLatitudeAsDegreesNorth());
+        Debug.debug();
 
     }
 }

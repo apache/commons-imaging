@@ -64,7 +64,7 @@ public abstract class ExifBaseTest extends ImagingTest {
         return getTestImages(HAS_EXIF_IMAGE_FILTER);
     }
 
-    protected List<File> getImagesWithExifData(final int max) throws IOException,
+    protected static List<File> getImagesWithExifData(final int max) throws IOException,
             ImageReadException {
         return getTestImages(HAS_EXIF_IMAGE_FILTER, max);
     }
