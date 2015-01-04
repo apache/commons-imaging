@@ -18,67 +18,71 @@
 package org.apache.commons.imaging.formats.jpeg.exif;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.imaging.examples.WriteExifMetadataExample;
 import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class WriteExifMetadataExampleTest extends ExifBaseTest implements
         AllTagConstants {
-    // public WriteExifMetadataExampleTest(String name)
-    // {
-    // super(name);
-    // }
+
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getJpegImages();
+    }
+
+    public WriteExifMetadataExampleTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
 
     @Test
     public void test() throws Exception {
-        final List<File> images = getJpegImages();
-        for (int i = 0; i < images.size(); i++) {
+        Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile.getAbsoluteFile());
+        final File tempFile = createTempFile("test", ".jpg");
+        Debug.debug("tempFile", tempFile.getAbsoluteFile());
 
-            final File tempFile = createTempFile("test", ".jpg");
-            Debug.debug("tempFile", tempFile.getAbsoluteFile());
-
-            try {
-                final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-                if (ignoreImageData) {
-                    continue;
-                }
-                new WriteExifMetadataExample().changeExifMetadata(imageFile,
-                        tempFile);
-            } catch (final ExifRewriter.ExifOverflowException e) {
-                Debug.debug("Error image", imageFile.getAbsoluteFile());
-                Debug.debug(e, 4);
+        try {
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            if (ignoreImageData) {
+                return;
             }
+            new WriteExifMetadataExample().changeExifMetadata(imageFile,
+                    tempFile);
+
+            // TODO assert that ExifMetadata has been changed
+        } catch (final ExifRewriter.ExifOverflowException e) {
+            Debug.debug("Error image", imageFile.getAbsoluteFile());
+            Debug.debug(e, 4);
         }
     }
 
     @Test
     public void testInsert() throws Exception {
-        final List<File> images = getJpegImages();
-        for (int i = 0; i < images.size(); i++) {
+        Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile.getAbsoluteFile());
+        final File tempFile = createTempFile("test", ".jpg");
+        Debug.debug("tempFile", tempFile.getAbsoluteFile());
 
-            final File tempFile = createTempFile("test", ".jpg");
-            Debug.debug("tempFile", tempFile.getAbsoluteFile());
-
-            try {
-                final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-                if (ignoreImageData) {
-                    continue;
-                }
-                new WriteExifMetadataExample().changeExifMetadata(imageFile, tempFile);
-            } catch (final ExifRewriter.ExifOverflowException e) {
-                Debug.debug("Ignoring unavoidable ExifOverflowException: " + e.getMessage());
-                Debug.debug("Error image: " + imageFile.getAbsoluteFile());
-                // Debug.debug(e, 4);
+        try {
+            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+            if (ignoreImageData) {
+                return;
             }
+            new WriteExifMetadataExample().changeExifMetadata(imageFile, tempFile);
+            // TODO assert that ExifMetadata has been changed
+        } catch (final ExifRewriter.ExifOverflowException e) {
+            Debug.debug("Ignoring unavoidable ExifOverflowException: " + e.getMessage());
+            Debug.debug("Error image: " + imageFile.getAbsoluteFile());
+            // Debug.debug(e, 4);
         }
     }
 

@@ -73,7 +73,7 @@ public abstract class ExifBaseTest extends ImagingTest {
         return getTestImage(JPEG_IMAGE_FILTER);
     }
 
-    protected List<File> getJpegImages() throws IOException, ImageReadException {
+    protected static List<File> getJpegImages() throws IOException, ImageReadException {
         return getTestImages(JPEG_IMAGE_FILTER);
     }
 
