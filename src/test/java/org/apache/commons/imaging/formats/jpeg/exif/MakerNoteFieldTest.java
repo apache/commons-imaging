@@ -27,18 +27,11 @@ import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.util.Debug;
 
 public class MakerNoteFieldTest extends SpecificExifTagTest {
-    // public MakerNoteFieldTest(String name)
-    // {
-    // super(name);
-    // }
 
     @Override
     protected void checkField(final File imageFile, final TiffField field)
             throws IOException, ImageReadException, ImageWriteException {
         if (field.getTag() != ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag) {
-            // if (field.tag == EXIF_TAG_EXIF_OFFSET.tag)
-            // ;
-            // else
             return;
         }
 
@@ -53,18 +46,7 @@ public class MakerNoteFieldTest extends SpecificExifTagTest {
         // Debug.debug("field", Debug.getType(field));
         Debug.debug();
 
-        // try
-        // {
-        // Object userCommentValue = field.getValue();
-        // Debug.debug("Text field value(" + field.tagInfo.name + ")",
-        // userCommentValue);
-        // // Debug.debug("userCommentValue", Debug.getType(userCommentValue));
-        // }
-        // catch (ImageReadException e)
-        // {
-        // Debug.debug("imageFile", imageFile);
-        // Debug.debug(e);
-        // }
+        // TODO assert something
 
     }
 

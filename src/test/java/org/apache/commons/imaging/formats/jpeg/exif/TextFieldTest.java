@@ -30,46 +30,26 @@ import org.apache.commons.imaging.util.Debug;
 import org.junit.Assert;
 
 public class TextFieldTest extends SpecificExifTagTest {
-    // public TextFieldTest(String name)
-    // {
-    // super(name);
-    // }
 
     @Override
     protected void checkField(final File imageFile, final TiffField field)
             throws IOException, ImageReadException, ImageWriteException {
-        if (field.getTag() == ExifTagConstants.EXIF_TAG_USER_COMMENT.tag) { /*
-                                                                        * do
-                                                                        * nothing
-                                                                        */
+        if (field.getTag() == ExifTagConstants.EXIF_TAG_USER_COMMENT.tag) {
+            // do nothing
         } else if (field.getTag() == GpsTagConstants.GPS_TAG_GPS_PROCESSING_METHOD.tag
-                && field.getDirectoryType() == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType) { /*
-                                                                                                 * do
-                                                                                                 * nothing
-                                                                                                 */
+                && field.getDirectoryType() == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType) {
+                // do nothing
         } else if (field.getTag() == GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION.tag
-                && field.getDirectoryType() == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType) { /*
-                                                                                                 * do
-                                                                                                 * nothing
-                                                                                                 */
+                && field.getDirectoryType() == TiffDirectoryType.EXIF_DIRECTORY_GPS.directoryType) {
+                // do nothing
         } else {
             return;
         }
 
-        // Debug.debug("field", field);
-        // Debug.debug("field", Debug.getType(field));
-        //
-        // Debug.debug("field", field.tag);
-        // Debug.debug("field", field.tagInfo);
-        // Debug.debug("field", Debug.getType(field));
-
         try {
             final Object textFieldValue = field.getValue();
             Assert.assertNotNull(textFieldValue);
-            // Debug.debug("imageFile", imageFile.getAbsoluteFile());
-            // Debug.debug("Text field value(" + field.tagInfo.name + ")",
-            // textFieldValue);
-            // Debug.debug("userCommentValue", Debug.getType(userCommentValue));
+            // TODO what else to assert?
         } catch (final ImageReadException e) {
             Debug.debug("imageFile", imageFile.getAbsoluteFile());
             Debug.debug(e);
