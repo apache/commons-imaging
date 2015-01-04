@@ -23,13 +23,9 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-abstract class PnmWriter {
-    protected final boolean rawbits;
+interface PnmWriter {
 
-    public PnmWriter(final boolean rawbits) {
-        this.rawbits = rawbits;
-    }
-
-    public abstract void writeImage(BufferedImage src, OutputStream os,
+    void writeImage(BufferedImage src, OutputStream os,
             Map<String, Object> params) throws ImageWriteException, IOException;
+
 }

@@ -23,10 +23,12 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-class PpmWriter extends PnmWriter {
+class PpmWriter implements PnmWriter {
+
+    private boolean rawbits;
 
     public PpmWriter(boolean rawbits) {
-        super(rawbits);
+        this.rawbits = rawbits;
     }
 
     @Override

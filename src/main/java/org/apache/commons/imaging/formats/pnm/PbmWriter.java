@@ -23,12 +23,14 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-class PbmWriter extends PnmWriter {
+class PbmWriter implements PnmWriter {
+
+    private boolean rawbits;
+
     public PbmWriter(final boolean rawbits) {
-        super(rawbits);
+        this.rawbits = rawbits;
     }
 
-    @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         os.write(PnmConstants.PNM_PREFIX_BYTE);

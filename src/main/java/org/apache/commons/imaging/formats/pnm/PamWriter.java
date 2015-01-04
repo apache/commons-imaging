@@ -24,12 +24,8 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
 
-class PamWriter extends PnmWriter {
-    public PamWriter() {
-        super(true);
-    }
-    
-    @Override
+class PamWriter implements PnmWriter {
+
     public void writeImage(final BufferedImage src, final OutputStream os,
             final Map<String, Object> params) throws ImageWriteException, IOException {
 
