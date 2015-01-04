@@ -33,13 +33,14 @@ import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 import org.apache.commons.imaging.util.IoUtils;
 
-public class CompressedDataReader extends DataReader {
+public class CompressedDataReader implements DataReader {
 
-    public CompressedDataReader(final DataParser fDataParser) {
-        super(fDataParser);
+    private DataParser dataParser;
+
+    public CompressedDataReader(final DataParser dataParser) {
+        this.dataParser = dataParser;
     }
 
-    @Override
     public void readData(final InputStream is, final BufferedImage bi,
             final ImageContents imageContents, final BinaryFileParser bfp)
             throws ImageReadException, IOException {

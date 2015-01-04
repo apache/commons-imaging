@@ -25,14 +25,10 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
-public abstract class DataReader {
-    protected final DataParser dataParser;
+public interface  DataReader {
 
-    public DataReader(final DataParser fDataParser) {
-        this.dataParser = fDataParser;
-    }
-
-    public abstract void readData(InputStream is, BufferedImage bi,
+    void readData(InputStream is, BufferedImage bi,
             ImageContents imageContents, BinaryFileParser bfp)
             throws ImageReadException, IOException;
+
 }
