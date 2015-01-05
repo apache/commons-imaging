@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.png;
 
+import java.io.UnsupportedEncodingException;
+
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 /**
@@ -84,7 +86,12 @@ public enum ChunkType {
 
     private ChunkType() {
         char[] chars = name().toCharArray();
-        array = name().getBytes();
+        try {
+            array = name().getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // will not happen since UTF-8 is one of the StandardCharsets of the Java plattform
+            throw new RuntimeException(e);
+        }
         value = BinaryFunctions.charsToQuad(chars[0], chars[1], chars[2], chars[3]);
     }
 }
