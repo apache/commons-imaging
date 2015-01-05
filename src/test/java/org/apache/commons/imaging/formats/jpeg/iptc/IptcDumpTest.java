@@ -17,9 +17,12 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,51 +32,47 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class IptcDumpTest extends IptcBaseTest {
+
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getImagesWithIptcData();
+    }
+
+    public IptcDumpTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
 
     @Test
     public void test() throws Exception {
-        final List<File> images = getImagesWithIptcData();
-        for (int i = 0; i < images.size(); i++) {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+        params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile);
-            Debug.debug();
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
+        assertNotNull(metadata);
+        assertNotNull(metadata.getPhotoshop());
 
-            // ByteSource byteSource = new ByteSourceFile(imageFile);
-            // Debug.debug("Segments:");
-            // new JpegUtils().dumpJFIF(byteSource);
+        metadata.getPhotoshop().dump();
 
-            final Map<String, Object> params = new HashMap<String, Object>();
-            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
-            // params.put(PARAM_KEY_VERBOSE, Boolean.TRUE);
+        final JpegPhotoshopMetadata psMetadata = metadata.getPhotoshop();
+        final List<IptcRecord> oldRecords = psMetadata.photoshopApp13Data.getRecords();
 
-            final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
-                    .getMetadata(imageFile, params);
-            assertNotNull(metadata);
-            assertNotNull(metadata.getPhotoshop());
-
-            metadata.getPhotoshop().dump();
-            // if(metadata.getPhotoshop().getItems().size()>0)
-            // Debug.debug("iptc size",
-            // metadata.getPhotoshop().getItems().size());
-
-            final JpegPhotoshopMetadata psMetadata = metadata.getPhotoshop();
-            final List<IptcRecord> oldRecords = psMetadata.photoshopApp13Data.getRecords();
-
-            Debug.debug();
-            for (int j = 0; j < oldRecords.size(); j++) {
-                final IptcRecord record = oldRecords.get(j);
-                if (record.iptcType != IptcTypes.CITY) {
-                    Debug.debug("Key: " + record.iptcType.getName() + " (0x"
-                            + Integer.toHexString(record.iptcType.getType())
-                            + "), value: " + record.value);
-                }
+        Debug.debug();
+        for (final IptcRecord record : oldRecords) {
+            if (record.iptcType != IptcTypes.CITY) {
+                Debug.debug("Key: " + record.iptcType.getName() + " (0x"
+                        + Integer.toHexString(record.iptcType.getType())
+                        + "), value: " + record.value);
             }
-            Debug.debug();
         }
+        Debug.debug();
     }
 
 }

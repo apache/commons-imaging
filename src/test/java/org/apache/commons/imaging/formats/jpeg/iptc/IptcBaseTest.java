@@ -66,7 +66,7 @@ public abstract class IptcBaseTest extends ImagingTest {
         return getTestImage(HAS_IPTC_IMAGE_FILTER);
     }
 
-    protected List<File> getImagesWithIptcData() throws IOException,
+    protected static List<File> getImagesWithIptcData() throws IOException,
             ImageReadException {
         return getTestImages(HAS_IPTC_IMAGE_FILTER);
     }
