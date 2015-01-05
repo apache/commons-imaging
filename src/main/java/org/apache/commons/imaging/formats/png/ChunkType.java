@@ -89,7 +89,7 @@ public enum ChunkType {
         try {
             array = name().getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            // will not happen since UTF-8 is one of the StandardCharsets of the Java plattform
+            // will not happen since UTF-8 is one of the StandardCharsets of the Java platform
             throw new RuntimeException(e);
         }
         value = BinaryFunctions.charsToQuad(chars[0], chars[1], chars[2], chars[3]);
