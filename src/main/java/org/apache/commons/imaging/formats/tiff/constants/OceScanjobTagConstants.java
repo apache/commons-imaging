@@ -46,9 +46,9 @@ public interface OceScanjobTagConstants {
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     List<TagInfo> ALL_OCE_SCANJOB_TAGS =
-            Collections.unmodifiableList(Arrays.asList(new TagInfo[] {
+            Collections.unmodifiableList(Arrays.<TagInfo> asList(
                     EXIF_TAG_OCE_SCANJOB_DESCRIPTION,
                     EXIF_TAG_OCE_APPLICATION_SELECTOR,
                     EXIF_TAG_OCE_IDENTIFICATION_NUMBER,
-                    EXIF_TAG_OCE_IMAGE_LOGIC_CHARACTERISTICS}));
+                    EXIF_TAG_OCE_IMAGE_LOGIC_CHARACTERISTICS));
 }

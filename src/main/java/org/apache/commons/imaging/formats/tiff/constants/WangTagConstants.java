@@ -33,6 +33,6 @@ public interface WangTagConstants {
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     List<TagInfo> ALL_WANG_TAGS =
-            Collections.unmodifiableList(Arrays.asList(new TagInfo[] {
-                    EXIF_TAG_WANG_ANNOTATION }));
+            Collections.unmodifiableList(Arrays.<TagInfo> asList(
+                    EXIF_TAG_WANG_ANNOTATION ));
 }

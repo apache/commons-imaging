@@ -39,6 +39,6 @@ public interface Tiff4TagConstants {
     int COLOR_RESPONSE_UNIT_VALUE_0_00001 = 5;
     
     List<TagInfo> ALL_TIFF_4_TAGS =
-            Collections.unmodifiableList(Arrays.asList(
-                    new TagInfo[] {TIFF_TAG_COLOR_RESPONSE_UNIT}));
+            Collections.unmodifiableList(Arrays.<TagInfo> asList(
+                    TIFF_TAG_COLOR_RESPONSE_UNIT));
 }

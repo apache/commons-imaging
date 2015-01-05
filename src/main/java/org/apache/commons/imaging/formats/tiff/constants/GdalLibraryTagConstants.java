@@ -40,7 +40,7 @@ public interface GdalLibraryTagConstants {
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     List<TagInfo> ALL_GDAL_LIBRARY_TAGS =
-            Collections.unmodifiableList(Arrays.asList(new TagInfo[] {
+            Collections.unmodifiableList(Arrays.<TagInfo> asList(
                     EXIF_TAG_GDAL_METADATA,
-                    EXIF_TAG_GDAL_NO_DATA}));
+                    EXIF_TAG_GDAL_NO_DATA));
 }
