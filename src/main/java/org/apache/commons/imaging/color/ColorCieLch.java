@@ -18,6 +18,56 @@ package org.apache.commons.imaging.color;
 
 public final class ColorCieLch {
 
+    /**
+     * A constant for color black. Color components are:
+     * <pre>
+     *     L: 0
+     *     c: 0
+     *     h: 0
+     * </pre>
+     */
+    public static final ColorCieLch BLACK = new ColorCieLch(0, 0, 0);
+
+    /**
+     * A constant for color white. Color components are:
+     * <pre>
+     *     L: 100
+     *     c:   0
+     *     h: 297
+     * </pre>
+     */
+    public static final ColorCieLch WHITE = new ColorCieLch(100, 0, 297);
+
+    /**
+     * A constant for color red. Color components are:
+     * <pre>
+     *     L: 53
+     *     c: 80
+     *     h: 67
+     * </pre>
+     */
+    public static final ColorCieLch RED = new ColorCieLch(53, 80, 67);
+
+    /**
+     * A constant for color green. Color components are:
+     * <pre>
+     *     L:  88
+     *     c: -86
+     *     h:  83
+     * </pre>
+     */
+    public static final ColorCieLch GREEN = new ColorCieLch(88, -86, 83);
+
+    /**
+     * A constant for color blue. Color components are:
+     * <pre>
+     *     L:   32
+     *     c:   79
+     *     h: -108
+     * </pre>
+     */
+    public static final ColorCieLch BLUE = new ColorCieLch(32, 79, -108);
+
     public final double L;
     public final double C;
     public final double H;

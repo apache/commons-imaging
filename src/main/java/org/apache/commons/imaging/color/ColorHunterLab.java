@@ -18,6 +18,56 @@ package org.apache.commons.imaging.color;
 
 public final class ColorHunterLab {
 
+    /**
+     * A constant for color black. Color components are:
+     * <pre>
+     *     L: 0
+     *     a: 0
+     *     b: 0
+     * </pre>
+     */
+    public static final ColorHunterLab BLACK = new ColorHunterLab(0, 0, 0);
+
+    /**
+     * A constant for color white. Color components are:
+     * <pre>
+     *     L: 100.000
+     *     a:  -5.336
+     *     b:   5.433
+     * </pre>
+     */
+    public static final ColorHunterLab WHITE = new ColorHunterLab(100, -5.336, 5.433);
+
+    /**
+     * A constant for color red. Color components are:
+     * <pre>
+     *     L: 46.109
+     *     a: 78.962
+     *     b: 29.794
+     * </pre>
+     */
+    public static final ColorHunterLab RED = new ColorHunterLab(46.109, 78.962, 29.794);
+
+    /**
+     * A constant for color green. Color components are:
+     * <pre>
+     *     L:  84.569
+     *     a: -72.518
+     *     b:  50.842
+     * </pre>
+     */
+    public static final ColorHunterLab GREEN = new ColorHunterLab(84.569, -72.518, 50.842);
+
+    /**
+     * A constant for color blue. Color components are:
+     * <pre>
+     *     L:   26.870
+     *     a:   72.885
+     *     b: -190.923
+     * </pre>
+     */
+    public static final ColorHunterLab BLUE = new ColorHunterLab(26.870, 72.885, -190.923);
+
     public final double L;
     public final double a;
     public final double b;

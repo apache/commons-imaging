@@ -17,6 +17,86 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCmy {
+    
+    /**
+     * A constant for color cyan. Color components are:
+     * <pre>
+     *     cyan:    100
+     *     magenta: 0
+     *     yellow:  0
+     * </pre>
+     */
+    public static final ColorCmy CYAN = new ColorCmy(100, 0, 0);
+
+    /**
+     * A constant for color magenta. Color components are:
+     * <pre>
+     *     cyan:    0
+     *     magenta: 100
+     *     yellow:  0
+     * </pre>
+     */
+    public static final ColorCmy MAGENTA = new ColorCmy(0, 100, 0);
+
+    /**
+     * A constant for color yellow. Color components are:
+     * <pre>
+     *     cyan:    0
+     *     magenta: 0
+     *     yellow:  100
+     * </pre>
+     */
+    public static final ColorCmy YELLOW = new ColorCmy(0, 0, 100);
+
+    /**
+     * A constant for color black. Color components are:
+     * <pre>
+     *     cyan:    100
+     *     magenta: 100
+     *     yellow:  100
+     * </pre>
+     */
+    public static final ColorCmy BLACK = new ColorCmy(100, 100, 100);
+
+    /**
+     * A constant for color white. Color components are:
+     * <pre>
+     *     cyan:    0
+     *     magenta: 0
+     *     yellow:  0
+     * </pre>
+     */
+    public static final ColorCmy WHITE = new ColorCmy(0, 0, 0);
+
+    /**
+     * A constant for color red. Color components are:
+     * <pre>
+     *     cyan:    0
+     *     magenta: 100
+     *     yellow:  100
+     * </pre>
+     */
+    public static final ColorCmy RED = new ColorCmy(0, 100, 100);
+
+    /**
+     * A constant for color green. Color components are:
+     * <pre>
+     *     cyan:    100
+     *     magenta: 0
+     *     yellow:  100
+     * </pre>
+     */
+    public static final ColorCmy GREEN = new ColorCmy(100, 0, 100);
+
+    /**
+     * A constant for color blue. Color components are:
+     * <pre>
+     *     cyan:    100
+     *     magenta: 100
+     *     yellow:  0
+     * </pre>
+     */
+    public static final ColorCmy BLUE = new ColorCmy(100, 100, 0);
 
     public final double C;
     public final double M;

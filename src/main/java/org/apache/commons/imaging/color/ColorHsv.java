@@ -18,6 +18,56 @@ package org.apache.commons.imaging.color;
 
 public final class ColorHsv {
 
+    /**
+     * A constant for color black. Color components are:
+     * <pre>
+     *     Hue:        0
+     *     Saturation: 0
+     *     Value:      0
+     * </pre>
+     */
+    public static final ColorHsv BLACK = new ColorHsv(0, 0, 0);
+
+    /**
+     * A constant for color white. Color components are:
+     * <pre>
+     *     Hue:        0
+     *     Saturation: 0
+     *     Value:      100
+     * </pre>
+     */
+    public static final ColorHsv WHITE = new ColorHsv(0, 0, 100);
+
+    /**
+     * A constant for color red. Color components are:
+     * <pre>
+     *     Hue:        0
+     *     Saturation: 100
+     *     Value:      100
+     * </pre>
+     */
+    public static final ColorHsv RED = new ColorHsv(0, 100, 100);
+
+    /**
+     * A constant for color green. Color components are:
+     * <pre>
+     *     Hue:        120
+     *     Saturation: 100
+     *     Value:      100
+     * </pre>
+     */
+    public static final ColorHsv GREEN = new ColorHsv(120, 100, 100);
+
+    /**
+     * A constant for color blue. Color components are:
+     * <pre>
+     *     Hue:        240
+     *     Saturation: 100
+     *     Value:      100
+     * </pre>
+     */
+    public static final ColorHsv BLUE = new ColorHsv(240, 100, 100);
+
     public final double H;
     public final double S;
     public final double V;

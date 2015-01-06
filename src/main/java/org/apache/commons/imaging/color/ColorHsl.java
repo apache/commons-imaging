@@ -18,6 +18,56 @@ package org.apache.commons.imaging.color;
 
 public final class ColorHsl {
 
+    /**
+     * A constant for color black. Color components are:
+     * <pre>
+     *     Hue:        0
+     *     Saturation: 0
+     *     Lightness:  0
+     * </pre>
+     */
+    public static final ColorHsl BLACK = new ColorHsl(0, 0, 0);
+
+    /**
+     * A constant for color white. Color components are:
+     * <pre>
+     *     Hue:        0
+     *     Saturation: 0
+     *     Lightness:  100
+     * </pre>
+     */
+    public static final ColorHsl WHITE = new ColorHsl(0, 0, 100);
+
+    /**
+     * A constant for color red. Color components are:
+     * <pre>
+     *     Hue:        0
+     *     Saturation: 100
+     *     Lightness:  100
+     * </pre>
+     */
+    public static final ColorHsl RED = new ColorHsl(0, 100, 100);
+
+    /**
+     * A constant for color green. Color components are:
+     * <pre>
+     *     Hue:        120
+     *     Saturation: 100
+     *     Lightness:  100
+     * </pre>
+     */
+    public static final ColorHsl GREEN = new ColorHsl(120, 100, 100);
+
+    /**
+     * A constant for color blue. Color components are:
+     * <pre>
+     *     Hue:        240
+     *     Saturation: 100
+     *     Lightness:  100
+     * </pre>
+     */
+    public static final ColorHsl BLUE = new ColorHsl(240, 100, 100);
+
     public final double H;
     public final double S;
     public final double L;

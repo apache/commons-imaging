@@ -18,6 +18,94 @@ package org.apache.commons.imaging.color;
 
 public final class ColorCmyk {
 
+    /**
+     * A constant for color cyan. Color components are:
+     * <pre>
+     *     cyan:    100
+     *     magenta: 0
+     *     yellow:  0
+     *     key:     0
+     * </pre>
+     */
+    public static final ColorCmyk CYAN = new ColorCmyk(100, 0, 0, 0);
+
+    /**
+     * A constant for color magenta. Color components are:
+     * <pre>
+     *     cyan:    0
+     *     magenta: 100
+     *     yellow:  0
+     *     key:     0
+     * </pre>
+     */
+    public static final ColorCmyk MAGENTA = new ColorCmyk(0, 100, 0, 0);
+
+    /**
+     * A constant for color yellow. Color components are:
+     * <pre>
+     *     cyan:    0
+     *     magenta: 0
+     *     yellow:  100
+     *     key:     0
+     * </pre>
+     */
+    public static final ColorCmyk YELLOW = new ColorCmyk(0, 0, 100, 0);
+
+    /**
+     * A constant for color black. Color components are:
+     * <pre>
+     *     cyan:    0
+     *     magenta: 0
+     *     yellow:  0
+     *     key:     100
+     * </pre>
+     */
+    public static final ColorCmyk BLACK = new ColorCmyk(0, 0, 0, 100);
+
+    /**
+     * A constant for color white. Color components are:
+     * <pre>
+     *     cyan:    0
+     *     magenta: 0
+     *     yellow:  0
+     *     key:     0
+     * </pre>
+     */
+    public static final ColorCmyk WHITE = new ColorCmyk(0, 0, 0, 0);
+
+    /**
+     * A constant for color red. Color components are:
+     * <pre>
+     *     cyan:    0
+     *     magenta: 100
+     *     yellow:  100
+     *     key:     0
+     * </pre>
+     */
+    public static final ColorCmyk RED = new ColorCmyk(0, 100, 100, 0);
+
+    /**
+     * A constant for color green. Color components are:
+     * <pre>
+     *     cyan:    100
+     *     magenta: 0
+     *     yellow:  100
+     *     key:     0
+     * </pre>
+     */
+    public static final ColorCmyk GREEN = new ColorCmyk(100, 0, 100, 0);
+
+    /**
+     * A constant for color blue. Color components are:
+     * <pre>
+     *     cyan:    100
+     *     magenta: 100
+     *     yellow:  0
+     *     key:     0
+     * </pre>
+     */
+    public static final ColorCmyk BLUE = new ColorCmyk(100, 100, 0, 0);
+
     public final double C;
     public final double M;
     public final double Y;
