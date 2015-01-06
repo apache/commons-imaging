@@ -32,4 +32,40 @@ public final class ColorHsv {
     public String toString() {
         return "{H: " + H + ", S: " + S + ", V: " + V + "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ColorHsv colorHsv = (ColorHsv) o;
+        if (Double.compare(colorHsv.H, H) != 0) {
+            return false;
+        }
+        if (Double.compare(colorHsv.S, S) != 0) {
+            return false;
+        }
+        if (Double.compare(colorHsv.V, V) != 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(H);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(S);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(V);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }

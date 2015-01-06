@@ -34,4 +34,43 @@ public final class ColorCmyk {
     public String toString() {
         return "{C: " + C + ", M: " + M + ", Y: " + Y + ", K: " + K + "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ColorCmyk colorCmyk = (ColorCmyk) o;
+        if (Double.compare(colorCmyk.C, C) != 0) {
+            return false;
+        }
+        if (Double.compare(colorCmyk.K, K) != 0) {
+            return false;
+        }
+        if (Double.compare(colorCmyk.M, M) != 0) {
+            return false;
+        }
+        if (Double.compare(colorCmyk.Y, Y) != 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(C);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(M);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(Y);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(K);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }

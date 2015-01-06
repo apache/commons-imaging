@@ -32,4 +32,40 @@ public final class ColorCieLch {
     public String toString() {
         return "{L: " + L + ", C: " + C + ", H: " + H + "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ColorCieLch that = (ColorCieLch) o;
+        if (Double.compare(that.C, C) != 0) {
+            return false;
+        }
+        if (Double.compare(that.H, H) != 0) {
+            return false;
+        }
+        if (Double.compare(that.L, L) != 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(L);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(C);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(H);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }

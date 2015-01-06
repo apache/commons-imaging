@@ -32,4 +32,40 @@ public final class ColorXyz {
     public String toString() {
         return "{X: " + X + ", Y: " + Y + ", Z: " + Z + "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ColorXyz colorXyz = (ColorXyz) o;
+        if (Double.compare(colorXyz.X, X) != 0) {
+            return false;
+        }
+        if (Double.compare(colorXyz.Y, Y) != 0) {
+            return false;
+        }
+        if (Double.compare(colorXyz.Z, Z) != 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(X);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(Y);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(Z);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }
