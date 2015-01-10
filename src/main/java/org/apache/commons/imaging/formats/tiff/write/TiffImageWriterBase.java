@@ -272,16 +272,34 @@ public abstract class TiffImageWriterBase {
         final int height = src.getHeight();
 
         int compression = TIFF_COMPRESSION_LZW; // LZW is default
+        int stripSizeInBits = 64000; // the default from legacy implementation
         if (params.containsKey(PARAM_KEY_COMPRESSION)) {
             final Object value = params.get(PARAM_KEY_COMPRESSION);
             if (value != null) {
                 if (!(value instanceof Number)) {
                     throw new ImageWriteException(
-                            "Invalid compression parameter: " + value);
+                            "Invalid compression parameter, must be numeric: "
+                                    + value);
                 }
                 compression = ((Number) value).intValue();
             }
             params.remove(PARAM_KEY_COMPRESSION);
+            if (params.containsKey(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE)) {
+                final Object bValue =
+                    params.get(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE);
+                if (!(bValue instanceof Number)) {
+                    throw new ImageWriteException(
+                            "Invalid compression block-size parameter: " + value);
+                }
+                final int stripSizeInBytes = ((Number) bValue).intValue();
+                if (stripSizeInBytes < 8000) {
+                    throw new ImageWriteException(
+                            "Block size parameter " + stripSizeInBytes
+                            + " is less than 8000 minimum");
+                }
+                stripSizeInBits = stripSizeInBytes*8;
+                params.remove(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE);
+            }
         }
         final HashMap<String, Object> rawParams = new HashMap<String, Object>(params);
         params.remove(PARAM_KEY_T4_OPTIONS);
@@ -306,7 +324,7 @@ public abstract class TiffImageWriterBase {
             photometricInterpretation = 2;
         }
 
-        int rowsPerStrip = 64000 / (width * bitsPerSample * samplesPerPixel); // TODO:
+        int rowsPerStrip = stripSizeInBits / (width * bitsPerSample * samplesPerPixel);
         rowsPerStrip = Math.max(1, rowsPerStrip); // must have at least one.
 
         final byte[][] strips = getStrips(src, samplesPerPixel, bitsPerSample, rowsPerStrip);

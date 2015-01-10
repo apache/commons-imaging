@@ -72,4 +72,28 @@ public interface TiffConstants
     String PARAM_KEY_SUBIMAGE_Y = "SUBIMAGE_Y";
     String PARAM_KEY_SUBIMAGE_WIDTH = "SUBIMAGE_WIDTH";
     String PARAM_KEY_SUBIMAGE_HEIGHT = "SUBIMAGE_HEIGHT";
+
+    /**
+     * Specifies the amount of memory in bytes to be used for a strip
+     * or tile size when employing LZW compression.  The default is
+     * 8000 (roughly 8K). Minimum value is 8000.
+     */
+    String PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE =
+            "PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE";
+
+    /**
+     * Specifies a larger strip-size to be used for compression. This setting
+     * generally produces smaller output files, but requires a slightly longer
+     * processing time. Used in conjunction with the
+     * PARAM_KEY_LZW_COMPRESSION_STRIP_SIZE
+     */
+    int TIFF_LZW_COMPRESSION_BLOCK_SIZE_MEDIUM = 32768;
+
+    /**
+     * Specifies a larger strip-size to be used for compression. This setting
+     * generally produces smaller output files, but requires a slightly longer
+     * processing time. Used in conjunction with the
+     * PARAM_KEY_LZW_COMPRESSION_STRIP_SIZE
+     */
+    int TIFF_LZW_COMPRESSION_BLOCK_SIZE_LARGE = 65536;
 }
