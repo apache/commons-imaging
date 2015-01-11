@@ -32,6 +32,8 @@ public interface GpsTagConstants {
             "GPSVersionID", 0x0000, 4,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
+    byte[] GPS_VERSION = new byte[] { (byte)2, (byte)3, (byte)0, (byte)0 };
+    
     // ************************************************************
     TagInfoAscii GPS_TAG_GPS_LATITUDE_REF = new TagInfoAscii(
             "GPSLatitudeRef", 0x0001, 2,
