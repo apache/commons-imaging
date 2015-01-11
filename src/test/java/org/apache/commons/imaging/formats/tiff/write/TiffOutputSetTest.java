@@ -44,19 +44,10 @@ public class TiffOutputSetTest {
         tiffOutputSet.setGPSInDegrees(1.0, 1.0);
 
         TiffOutputDirectory gpsDirectory = tiffOutputSet.getGPSDirectory();
-        TiffOutputField gpsVersionId = getGpsVersionId(gpsDirectory);
-        
+        TiffOutputField gpsVersionId = gpsDirectory.findField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);
+
         assertNotNull(gpsVersionId);
         assertTrue(gpsVersionId.bytesEqual(GpsTagConstants.GPS_VERSION));
     }
 
-    private static TiffOutputField getGpsVersionId(TiffOutputDirectory gpsDirectory) {
-        List<TiffOutputField> fields = gpsDirectory.getFields();
-        for (TiffOutputField field : fields) {
-            if (field.tagInfo.equals(GpsTagConstants.GPS_TAG_GPS_VERSION_ID)) {
-                return field;
-            }
-        }
-        return null;
-    }
 }
