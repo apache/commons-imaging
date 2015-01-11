@@ -428,10 +428,32 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         fields.removeAll(matches);
     }
 
+    /**
+     * Finds the TiffOutputField for the given TagInfo from this TiffOutputDirectory.
+     *
+     * <p>
+     * If there is no field matching the given TagInfo, null will be returned.
+     * </p>
+     *
+     * @param tagInfo the TagInfo specifying the field 
+     * @return the field matching tagInfo or null, if the field isn't present
+     * @see #findField(int)
+     */
     public TiffOutputField findField(final TagInfo tagInfo) {
         return findField(tagInfo.tag);
     }
 
+    /**
+     * Finds the TiffOutputField for the given tag from this TiffOutputDirectory.
+     *
+     * <p>
+     * If there is no field matching the given tag, null will be returned.
+     * </p>
+     *
+     * @param tag the tag specifying the field 
+     * @return the field matching tagInfo or null, if the field isn't present
+     * @see #findField(TagInfo)
+     */
     public TiffOutputField findField(final int tag) {
         for (TiffOutputField field : fields) {
             if (field.tag == tag) {
