@@ -43,8 +43,7 @@ public class TiffOutputSetTest {
     public void testImaging144() throws Exception {
         tiffOutputSet.setGPSInDegrees(1.0, 1.0);
 
-        TiffOutputDirectory gpsDirectory = tiffOutputSet.getGPSDirectory();
-        TiffOutputField gpsVersionId = gpsDirectory.findField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);
+        TiffOutputField gpsVersionId = tiffOutputSet.findField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);
 
         assertNotNull(gpsVersionId);
         assertTrue(gpsVersionId.bytesEqual(GpsTagConstants.GPS_VERSION));
