@@ -137,6 +137,9 @@ public final class TiffOutputSet {
             throws ImageWriteException {
         final TiffOutputDirectory gpsDirectory = getOrCreateGPSDirectory();
 
+        gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);
+        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_VERSION_ID, (byte)2, (byte)3, (byte)0, (byte)0);
+
         final String longitudeRef = longitude < 0 ? "W" : "E";
         longitude = Math.abs(longitude);
         final String latitudeRef = latitude < 0 ? "S" : "N";
