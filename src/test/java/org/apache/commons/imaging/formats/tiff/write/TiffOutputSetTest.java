@@ -19,8 +19,6 @@ package org.apache.commons.imaging.formats.tiff.write;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
-
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.junit.Before;
 import org.junit.Test;
