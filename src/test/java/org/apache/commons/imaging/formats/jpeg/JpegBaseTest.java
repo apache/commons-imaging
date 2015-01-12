@@ -41,7 +41,7 @@ public abstract class JpegBaseTest extends ImagingTest {
         }
     };
 
-    protected List<File> getJpegImages() throws IOException, ImageReadException {
+    protected static List<File> getJpegImages() throws IOException, ImageReadException {
         return getTestImages(imageFilter);
     }
 

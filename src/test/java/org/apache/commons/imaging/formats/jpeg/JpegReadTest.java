@@ -22,8 +22,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
@@ -32,40 +32,45 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class JpegReadTest extends JpegBaseTest {
+
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception{
+        return getJpegImages();
+    }
+
+    public JpegReadTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
 
     @Test
     public void test() throws Exception {
-        final List<File> images = getJpegImages();
-        for (int i = 0; i < images.size(); i++) {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
+        params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
 
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile.getAbsoluteFile());
+        final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
+        // TODO only run this tests with images that have metadata...
+        //assertNotNull(metadata);
+        Debug.debug("metadata", metadata);
+        
+        Debug.debug("ICC profile", Imaging.getICCProfile(imageFile, params));
 
-            // ByteSource byteSource = new ByteSourceFile(imageFile);
-            // new JpegUtils().dumpJFIF(byteSource);
-
-            final Map<String, Object> params = new HashMap<String, Object>();
-            final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
-
-            final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
-            // assertNotNull(metadata);
-            Debug.debug("metadata", metadata);
-            
-            Debug.debug("ICC profile", Imaging.getICCProfile(imageFile, params));
-
-            final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
-            assertNotNull(imageInfo);
-            
-            try {
-                final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
-                assertNotNull(image);
-            } catch (final ImageReadException imageReadException) {
-                assertEquals("Only sequential, baseline JPEGs are supported at the moment",
-                        imageReadException.getMessage());
-            }
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
+        assertNotNull(imageInfo);
+        
+        try {
+            final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
+            assertNotNull(image);
+        } catch (final ImageReadException imageReadException) {
+            assertEquals("Only sequential, baseline JPEGs are supported at the moment",
+                    imageReadException.getMessage());
         }
     }
 
