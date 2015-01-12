@@ -149,8 +149,7 @@ public class ImageBuilder {
      * @throws RasterFormatException f the specified area is not contained 
      *         within this ImageBuilder
      */
-    public BufferedImage getSubimage(final int x, final int y, final int w, final int h)
-    {
+    public BufferedImage getSubimage(final int x, final int y, final int w, final int h) {
         if (w <= 0) {
             throw new RasterFormatException("negative or zero subimage width");
         }
@@ -188,8 +187,7 @@ public class ImageBuilder {
     }
 
     private BufferedImage makeBufferedImage(
-            final int[] argb, final int w, final int h, final boolean useAlpha)
-    {
+            final int[] argb, final int w, final int h, final boolean useAlpha) {
         ColorModel colorModel;
         WritableRaster raster;
         final DataBufferInt buffer = new DataBufferInt(argb, w * h);
@@ -197,13 +195,13 @@ public class ImageBuilder {
             colorModel = new DirectColorModel(32, 0x00ff0000, 0x0000ff00,
                     0x000000ff, 0xff000000);
             raster = Raster.createPackedRaster(buffer, w, h,
-                    w, new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff,
-                            0xff000000 }, null);
+                    w, new int[]{0x00ff0000, 0x0000ff00, 0x000000ff,
+                            0xff000000}, null);
         } else {
             colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
                     0x000000ff);
             raster = Raster.createPackedRaster(buffer, w, h,
-                    w, new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff },
+                    w, new int[]{0x00ff0000, 0x0000ff00, 0x000000ff},
                     null);
         }
         return new BufferedImage(colorModel, raster,
