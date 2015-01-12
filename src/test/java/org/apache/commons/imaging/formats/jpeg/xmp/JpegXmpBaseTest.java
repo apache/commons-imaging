@@ -68,7 +68,7 @@ public abstract class JpegXmpBaseTest extends ImagingTest {
         return getTestImage(HAS_JPEG_XMP_IMAGE_FILTER);
     }
 
-    protected List<File> getImagesWithXmpData() throws IOException,
+    protected static List<File> getImagesWithXmpData() throws IOException,
             ImageReadException {
         return getTestImages(HAS_JPEG_XMP_IMAGE_FILTER);
     }

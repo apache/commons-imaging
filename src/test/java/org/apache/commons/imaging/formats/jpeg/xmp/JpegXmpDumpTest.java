@@ -20,35 +20,39 @@ package org.apache.commons.imaging.formats.jpeg.xmp;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
-import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class JpegXmpDumpTest extends JpegXmpBaseTest {
+
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getImagesWithXmpData();
+    }
+
+    public JpegXmpDumpTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
 
     @Test
     public void test() throws Exception {
-        final List<File> images = getImagesWithXmpData();
-        for (int i = 0; i < images.size(); i++) {
+        final ByteSource byteSource = new ByteSourceFile(imageFile);
+        final Map<String, Object> params = new HashMap<String, Object>();
+        final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
 
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile);
-            Debug.debug();
-
-            final ByteSource byteSource = new ByteSourceFile(imageFile);
-            final Map<String, Object> params = new HashMap<String, Object>();
-            final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
-            assertNotNull(xmpXml);
-
-            Debug.debug("xmpXml: " + xmpXml);
-            Debug.debug();
-        }
+        // TODO assert more
+        assertNotNull(xmpXml);
     }
 
 }

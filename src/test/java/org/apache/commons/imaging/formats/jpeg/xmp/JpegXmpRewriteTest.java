@@ -25,116 +25,112 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
-import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.imaging.util.IoUtils;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class JpegXmpRewriteTest extends JpegXmpBaseTest {
+
+    private File imageFile;
+
+    @Parameterized.Parameters
+    public static Collection<File> data() throws Exception {
+        return getImagesWithXmpData();
+    }
+
+    public JpegXmpRewriteTest(File imageFile) {
+        this.imageFile = imageFile;
+    }
 
     @Test
     public void testRemoveInsertUpdate() throws Exception {
-        final List<File> images = getImagesWithXmpData();
-        for (int i = 0; i < images.size(); i++) {
+        final ByteSource byteSource = new ByteSourceFile(imageFile);
+        final Map<String, Object> params = new HashMap<String, Object>();
+        final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
+        assertNotNull(xmpXml);
 
-            final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile);
+        final File noXmpFile = createTempFile(imageFile.getName() + ".", ".jpg");
+        {
+            // test remove
 
-            // boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-            // if (ignoreImageData)
-            // continue;
+            OutputStream os = null;
+            boolean canThrow = false;
+            try {
+                os = new FileOutputStream(noXmpFile);
+                os = new BufferedOutputStream(os);
+                new JpegXmpRewriter().removeXmpXml(byteSource, os);
+                canThrow = true;
+            } finally {
+                IoUtils.closeQuietly(canThrow, os);
+            }
 
-            final ByteSource byteSource = new ByteSourceFile(imageFile);
             // Debug.debug("Source Segments:");
-            // new JpegUtils().dumpJFIF(byteSource);
+            // new JpegUtils().dumpJFIF(new ByteSourceFile(noXmpFile));
 
-            final Map<String, Object> params = new HashMap<String, Object>();
-            final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
-            assertNotNull(xmpXml);
+            final String outXmp = new JpegImageParser().getXmpXml(
+                    new ByteSourceFile(noXmpFile), params);
+            assertNull(outXmp);
+        }
 
-            // Debug.debug("xmpXml", xmpXml.length());
-            // Debug.debug();
+        {
+            // test update
 
-            final File noXmpFile = createTempFile(imageFile.getName() + ".", ".jpg");
-            {
-                // test remove
-
-                OutputStream os = null;
-                boolean canThrow = false;
-                try {
-                    os = new FileOutputStream(noXmpFile);
-                    os = new BufferedOutputStream(os);
-                    new JpegXmpRewriter().removeXmpXml(byteSource, os);
-                    canThrow = true;
-                } finally {
-                    IoUtils.closeQuietly(canThrow, os);
-                }
-
-                // Debug.debug("Source Segments:");
-                // new JpegUtils().dumpJFIF(new ByteSourceFile(noXmpFile));
-
-                final String outXmp = new JpegImageParser().getXmpXml(
-                        new ByteSourceFile(noXmpFile), params);
-                assertNull(outXmp);
+            final String newXmpXml = "test";
+            final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
+            OutputStream os = null;
+            boolean canThrow = false;
+            try {
+                os = new FileOutputStream(updated);
+                os = new BufferedOutputStream(os);
+                new JpegXmpRewriter().updateXmpXml(byteSource, os,
+                        newXmpXml);
+                canThrow = true;
+            } finally {
+                IoUtils.closeQuietly(canThrow, os);
             }
 
-            {
-                // test update
+            // Debug.debug("Source Segments:");
+            // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
-                final String newXmpXml = "test";
-                final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
-                OutputStream os = null;
-                boolean canThrow = false;
-                try {
-                    os = new FileOutputStream(updated);
-                    os = new BufferedOutputStream(os);
-                    new JpegXmpRewriter().updateXmpXml(byteSource, os,
-                            newXmpXml);
-                    canThrow = true;
-                } finally {
-                    IoUtils.closeQuietly(canThrow, os);
-                }
+            final String outXmp = new JpegImageParser().getXmpXml(
+                    new ByteSourceFile(updated), params);
+            assertNotNull(outXmp);
+            assertEquals(outXmp, newXmpXml);
+        }
 
-                // Debug.debug("Source Segments:");
-                // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
+        {
+            // test insert
 
-                final String outXmp = new JpegImageParser().getXmpXml(
-                        new ByteSourceFile(updated), params);
-                assertNotNull(outXmp);
-                assertEquals(outXmp, newXmpXml);
+            final String newXmpXml = "test";
+            final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
+            OutputStream os = null;
+            boolean canThrow = false;
+            try {
+                os = new FileOutputStream(updated);
+                os = new BufferedOutputStream(os);
+                new JpegXmpRewriter().updateXmpXml(new ByteSourceFile(
+                        noXmpFile), os, newXmpXml);
+                canThrow = true;
+            } finally {
+                IoUtils.closeQuietly(canThrow, os);
             }
 
-            {
-                // test insert
+            // Debug.debug("Source Segments:");
+            // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
 
-                final String newXmpXml = "test";
-                final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
-                OutputStream os = null;
-                boolean canThrow = false;
-                try {
-                    os = new FileOutputStream(updated);
-                    os = new BufferedOutputStream(os);
-                    new JpegXmpRewriter().updateXmpXml(new ByteSourceFile(
-                            noXmpFile), os, newXmpXml);
-                    canThrow = true;
-                } finally {
-                    IoUtils.closeQuietly(canThrow, os);
-                }
-
-                // Debug.debug("Source Segments:");
-                // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
-
-                final String outXmp = new JpegImageParser().getXmpXml(
-                        new ByteSourceFile(updated), params);
-                assertNotNull(outXmp);
-                assertEquals(outXmp, newXmpXml);
-            }
+            final String outXmp = new JpegImageParser().getXmpXml(
+                    new ByteSourceFile(updated), params);
+            assertNotNull(outXmp);
+            assertEquals(outXmp, newXmpXml);
         }
     }
 
