@@ -66,67 +66,45 @@ public class IptcAddTest extends IptcBaseTest {
         params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
         final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(byteSource, params);
-
-        {
-            final List<IptcBlock> newBlocks = new ArrayList<IptcBlock>();
-            List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
-
-            if (null != metadata) {
-                final boolean keepOldIptcNonTextValues = true;
-                if (keepOldIptcNonTextValues) {
-                    newBlocks.addAll(metadata.photoshopApp13Data
-                            .getNonIptcBlocks());
-                }
-                final boolean keepOldIptcTextValues = true;
-                if (keepOldIptcTextValues) {
-                    final List<IptcRecord> oldRecords = metadata.photoshopApp13Data
-                            .getRecords();
-
-                    newRecords = new ArrayList<IptcRecord>();
-                    for (int j = 0; j < oldRecords.size(); j++) {
-                        final IptcRecord record = oldRecords.get(j);
-                        if (record.iptcType != IptcTypes.CITY
-                                && record.iptcType != IptcTypes.CREDIT) {
-                            newRecords.add(record);
-                        }
-                    }
-                }
-            }
-
-            newRecords.add(new IptcRecord(IptcTypes.CITY, "Albany, NY"));
-            newRecords.add(new IptcRecord(IptcTypes.CREDIT,
-                    "William Sorensen"));
-
-            final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
-                    newBlocks);
-
-            final File updated = createTempFile(imageFile.getName()
-                    + ".iptc.add.", ".jpg");
-            OutputStream os = null;
-            boolean canThrow = false;
-            try {
-                os = new FileOutputStream(updated);
-                os = new BufferedOutputStream(os);
-                new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
-                canThrow = true;
-            } finally {
-                IoUtils.closeQuietly(canThrow, os);
-            }
-
-            // Debug.debug("Destination Segments:");
-            // new JpegUtils().dumpJFIF(new ByteSourceFile(updated));
-
-            final ByteSource updateByteSource = new ByteSourceFile(updated);
-            final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
-                    .getPhotoshopMetadata(updateByteSource, params);
-
-            // Debug.debug("outMetadata", outMetadata.toString());
-            // Debug.debug("hasIptcSegment", new JpegImageParser()
-            // .hasIptcSegment(updateByteSource));
-
-            assertNotNull(outMetadata);
-            assertTrue(outMetadata.getItems().size() == newRecords.size());
-            // assertEquals(metadata.toString(), outMetadata.toString());
+        if (metadata == null) {
+            // FIXME select only files with meta for this test
+            return;
         }
+
+        final List<IptcBlock> newBlocks = new ArrayList<IptcBlock>();
+        newBlocks.addAll(metadata.photoshopApp13Data.getNonIptcBlocks());
+        final List<IptcRecord> oldRecords = metadata.photoshopApp13Data.getRecords();
+
+        List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
+        for (final IptcRecord record : oldRecords) {
+            if (record.iptcType != IptcTypes.CITY
+                    && record.iptcType != IptcTypes.CREDIT) {
+                newRecords.add(record);
+            }
+        }
+
+        newRecords.add(new IptcRecord(IptcTypes.CITY, "Albany, NY"));
+        newRecords.add(new IptcRecord(IptcTypes.CREDIT, "William Sorensen"));
+
+        final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords, newBlocks);
+
+        final File updated = createTempFile(imageFile.getName() + ".iptc.add.", ".jpg");
+        OutputStream os = null;
+        boolean canThrow = false;
+        try {
+            os = new FileOutputStream(updated);
+            os = new BufferedOutputStream(os);
+            new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
+            canThrow = true;
+        } finally {
+            IoUtils.closeQuietly(canThrow, os);
+        }
+
+        final ByteSource updateByteSource = new ByteSourceFile(updated);
+        final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
+                .getPhotoshopMetadata(updateByteSource, params);
+
+        assertNotNull(outMetadata);
+        assertTrue(outMetadata.getItems().size() == newRecords.size());
     }
 }
