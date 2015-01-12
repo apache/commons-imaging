@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
-/*
+/**
  * Represents an IPTC block, a set of key-value pairs of Photoshop IPTC data.
  */
 public class IptcBlock {
