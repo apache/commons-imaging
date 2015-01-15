@@ -444,7 +444,7 @@ public class IptcParser extends BinaryFileParser {
                  */
                 final byte[] recordData;
                 if( element.getRawBytes() != null && element.getRawBytes().length > 0 ) {
-                    recordData = element.value.getBytes();
+                    recordData = element.getRawBytes();
                 }
                 else {
                     recordData = element.value.getBytes("ISO-8859-1");
