@@ -25,12 +25,14 @@ import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
+import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
@@ -237,9 +239,9 @@ public class TiffReader extends BinaryFileParser {
 
             if (listener.readOffsetDirectories()) {
                 final TagInfoLong[] offsetFields = {
-                        EXIF_TAG_EXIF_OFFSET,
-                        EXIF_TAG_GPSINFO,
-                        EXIF_TAG_INTEROP_OFFSET
+                        ExifTagConstants.EXIF_TAG_EXIF_OFFSET,
+                        ExifTagConstants.EXIF_TAG_GPSINFO,
+                        ExifTagConstants.EXIF_TAG_INTEROP_OFFSET
                 };
                 final int[] directoryTypes = {
                         TiffDirectoryConstants.DIRECTORY_TYPE_EXIF,
@@ -309,9 +311,9 @@ public class TiffReader extends BinaryFileParser {
 
         public Collector(final Map<String, Object> params) {
             boolean tmpReadThumbnails = true;
-            if (params != null && params.containsKey(PARAM_KEY_READ_THUMBNAILS)) {
+            if (params != null && params.containsKey(ImagingConstants.PARAM_KEY_READ_THUMBNAILS)) {
                 tmpReadThumbnails = Boolean.TRUE.equals(params
-                        .get(PARAM_KEY_READ_THUMBNAILS));
+                        .get(ImagingConstants.PARAM_KEY_READ_THUMBNAILS));
             }
             this.readThumbnails = tmpReadThumbnails;
         }

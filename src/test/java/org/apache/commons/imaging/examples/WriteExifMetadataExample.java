@@ -111,9 +111,6 @@ public class WriteExifMetadataExample {
                 // TagInfo constants often contain a description of what
                 // directories are associated with a given tag.
                 //
-                // see
-                // org.apache.commons.imaging.formats.tiff.constants.AllTagConstants
-                //
                 final TiffOutputDirectory exifDirectory = outputSet
                         .getOrCreateExifDirectory();
                 // make sure to remove old value if present (this method will

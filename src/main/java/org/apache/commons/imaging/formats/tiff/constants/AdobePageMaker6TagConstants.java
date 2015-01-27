@@ -34,40 +34,42 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  * <BR>
  * http://partners.adobe.com/public/developer/en/tiff/TIFFPM6.pdf
  */
-public interface AdobePageMaker6TagConstants {
-    TagInfoLongOrIFD TIFF_TAG_SUB_IFD = new TagInfoLongOrIFD(
+public final class AdobePageMaker6TagConstants {
+    
+    public static final TagInfoLongOrIFD TIFF_TAG_SUB_IFD = new TagInfoLongOrIFD(
             "SubIFDs",  0x014a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
 
-    TagInfoByte TIFF_TAG_CLIP_PATH = new TagInfoByte(
+    public static final TagInfoByte TIFF_TAG_CLIP_PATH = new TagInfoByte(
             "ClipPath",  0x0157, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    
-    TagInfoLong TIFF_TAG_XCLIP_PATH_UNITS = new TagInfoLong(
+
+    public static final TagInfoLong TIFF_TAG_XCLIP_PATH_UNITS = new TagInfoLong(
             "XClipPathUnits", 0x0158, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    
-    TagInfoLong TIFF_TAG_YCLIP_PATH_UNITS = new TagInfoLong(
+
+    public static final TagInfoLong TIFF_TAG_YCLIP_PATH_UNITS = new TagInfoLong(
             "YClipPathUnits", 0x0159, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    TagInfoShort TIFF_TAG_INDEXED = new TagInfoShort(
+    public static final TagInfoShort TIFF_TAG_INDEXED = new TagInfoShort(
             "Indexed", 0x015a, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    int INDEXED_VALUE_NOT_INDEXED = 0;
-    int INDEXED_VALUE_INDEXED = 1;
 
-    TagInfoShort TIFF_TAG_OPIPROXY = new TagInfoShort(
+    public static final int INDEXED_VALUE_NOT_INDEXED = 0;
+    public static final int INDEXED_VALUE_INDEXED = 1;
+
+    public static final TagInfoShort TIFF_TAG_OPIPROXY = new TagInfoShort(
             "OPIProxy", 0x015f, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_DOES_NOT_EXIST = 0;
-    int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_EXISTS = 1;
+    public static final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_DOES_NOT_EXIST = 0;
+    public static final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_EXISTS = 1;
 
-    TagInfoAscii TIFF_TAG_IMAGE_ID = new TagInfoAscii(
+    public static final TagInfoAscii TIFF_TAG_IMAGE_ID = new TagInfoAscii(
             "ImageID", 0x800d, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    
-    List<TagInfo> ALL_ADOBE_PAGEMAKER_6_TAGS =
+
+    public static final List<TagInfo> ALL_ADOBE_PAGEMAKER_6_TAGS =
             Collections.unmodifiableList(Arrays.asList(
                     TIFF_TAG_SUB_IFD,
                     TIFF_TAG_CLIP_PATH,
@@ -76,4 +78,7 @@ public interface AdobePageMaker6TagConstants {
                     TIFF_TAG_INDEXED,
                     TIFF_TAG_OPIPROXY,
                     TIFF_TAG_IMAGE_ID));
+    
+    private AdobePageMaker6TagConstants() {
+    }
 }

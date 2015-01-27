@@ -28,7 +28,10 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
-import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.GeoTiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.MicrosoftHdPhotoTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
@@ -50,15 +53,15 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         
         TiffOutputSet set = new TiffOutputSet();
         TiffOutputDirectory dir = set.getOrCreateRootDirectory();
-        dir.add(AllTagConstants.TIFF_TAG_IMAGE_DESCRIPTION, description);
-        dir.add(AllTagConstants.TIFF_TAG_PAGE_NUMBER, page, page);
-        dir.add(AllTagConstants.TIFF_TAG_YRESOLUTION, twoThirds);
-        dir.add(AllTagConstants.TIFF_TAG_T4_OPTIONS, t4Options);
-        dir.add(AllTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
-        dir.add(AllTagConstants.TIFF_TAG_IMAGE_LENGTH, new short[] { height });
-        dir.add(AllTagConstants.GPS_TAG_GPS_AREA_INFORMATION, area);
-        dir.add(AllTagConstants.EXIF_TAG_WIDTH_RESOLUTION, widthRes);
-        dir.add(AllTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG, geoDoubleParams);
+        dir.add(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION, description);
+        dir.add(TiffTagConstants.TIFF_TAG_PAGE_NUMBER, page, page);
+        dir.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, twoThirds);
+        dir.add(TiffTagConstants.TIFF_TAG_T4_OPTIONS, t4Options);
+        dir.add(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH, width);
+        dir.add(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH, height);
+        dir.add(GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION, area);
+        dir.add(MicrosoftHdPhotoTagConstants.EXIF_TAG_WIDTH_RESOLUTION, widthRes);
+        dir.add(GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG, geoDoubleParams);
         
         TiffImageWriterLossy writer = new TiffImageWriterLossy();
         ByteArrayOutputStream tiff = new ByteArrayOutputStream();
@@ -69,16 +72,16 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         FormatCompliance formatCompliance = new FormatCompliance("");
         TiffContents contents = reader.readFirstDirectory(new ByteSourceArray(tiff.toByteArray()), params, true, formatCompliance);
         TiffDirectory rootDir = contents.directories.get(0);
-        assertEquals(description, rootDir.getSingleFieldValue(AllTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
-        assertEquals(page, rootDir.getFieldValue(AllTagConstants.TIFF_TAG_PAGE_NUMBER, true)[0]);
-        RationalNumber yRes = rootDir.getSingleFieldValue(AllTagConstants.TIFF_TAG_YRESOLUTION);
+        assertEquals(description, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
+        assertEquals(page, rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_PAGE_NUMBER, true)[0]);
+        RationalNumber yRes = rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
         assertEquals(twoThirds.numerator, yRes.numerator);
         assertEquals(twoThirds.divisor, yRes.divisor);
-        assertEquals(t4Options, rootDir.getSingleFieldValue(AllTagConstants.TIFF_TAG_T4_OPTIONS));
-        assertEquals(width, rootDir.getSingleFieldValue(AllTagConstants.TIFF_TAG_IMAGE_WIDTH));
-        assertEquals(width, rootDir.getSingleFieldValue(AllTagConstants.TIFF_TAG_IMAGE_LENGTH));
-        assertEquals(area, rootDir.getFieldValue(AllTagConstants.GPS_TAG_GPS_AREA_INFORMATION, true));
-        assertEquals(widthRes, rootDir.getSingleFieldValue(AllTagConstants.EXIF_TAG_WIDTH_RESOLUTION), 0.0);
-        assertEquals(geoDoubleParams, rootDir.getSingleFieldValue(AllTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG), 0.0);
+        assertEquals(t4Options, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_T4_OPTIONS));
+        assertEquals(width, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH));
+        assertEquals(width, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH));
+        assertEquals(area, rootDir.getFieldValue(GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION, true));
+        assertEquals(widthRes, rootDir.getSingleFieldValue(MicrosoftHdPhotoTagConstants.EXIF_TAG_WIDTH_RESOLUTION), 0.0);
+        assertEquals(geoDoubleParams, rootDir.getSingleFieldValue(GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG), 0.0);
     }
 }

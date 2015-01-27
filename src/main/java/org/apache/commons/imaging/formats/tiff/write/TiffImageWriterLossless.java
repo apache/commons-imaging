@@ -40,6 +40,7 @@ import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
+import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
@@ -152,9 +153,9 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         // There are some fields whose address in the file must not change,
         // unless of course their value is changed. 
         final Map<Integer, TiffOutputField> frozenFields = new HashMap<Integer, TiffOutputField>();
-        final TiffOutputField makerNoteField = outputSet.findField(EXIF_TAG_MAKER_NOTE);
+        final TiffOutputField makerNoteField = outputSet.findField(ExifTagConstants.EXIF_TAG_MAKER_NOTE);
         if (makerNoteField != null && makerNoteField.getSeperateValue() != null) {
-            frozenFields.put(EXIF_TAG_MAKER_NOTE.tag, makerNoteField);
+            frozenFields.put(ExifTagConstants.EXIF_TAG_MAKER_NOTE.tag, makerNoteField);
         }
         final List<TiffElement> analysis = analyzeOldTiff(frozenFields);
         final int oldLength = exifBytes.length;

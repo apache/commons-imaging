@@ -30,7 +30,6 @@ import org.apache.commons.imaging.formats.tiff.JpegImageData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
-import org.apache.commons.imaging.formats.tiff.constants.TagConstantsUtils;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
@@ -532,8 +531,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
     @Override
     public String getItemDescription() {
-        final TiffDirectoryType dirType = TagConstantsUtils
-                .getExifDirectoryType(type);
+        final TiffDirectoryType dirType = TiffDirectoryType.getExifDirectoryType(type);
         return "Directory: " + dirType.name + " (" + type + ")";
     }
 

@@ -30,18 +30,22 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefined;
  * <BR>
  * http://partners.adobe.com/public/developer/en/tiff/TIFFphotoshop.pdf
  */
-public interface AdobePhotoshopTagConstants {
-    TagInfoUndefined EXIF_TAG_JPEGTABLES = new TagInfoUndefined(
+public final class AdobePhotoshopTagConstants {
+
+    public final static TagInfoUndefined EXIF_TAG_JPEGTABLES = new TagInfoUndefined(
             "JPEGTables", 0x015b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    TagInfoUndefined EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefined(
+    public final static TagInfoUndefined EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefined(
             "ImageSourceData", 0x935c, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    List<TagInfo> ALL_ADOBE_PHOTOSHOP_TAGS =
+    public final static List<TagInfo> ALL_ADOBE_PHOTOSHOP_TAGS =
             Collections.unmodifiableList(Arrays.<TagInfo> asList(
                     EXIF_TAG_JPEGTABLES,
                     EXIF_TAG_IMAGE_SOURCE_DATA
             ));
+    
+    private AdobePhotoshopTagConstants() {
+    }
 }

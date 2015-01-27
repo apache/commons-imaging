@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
@@ -61,7 +62,7 @@ public class ExifDumpTest extends ExifBaseTest {
     public void testMetadata() throws Exception {
         final Map<String, Object> params = new HashMap<String, Object>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
+        params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);

@@ -28,7 +28,6 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.RationalNumber;
-import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
@@ -53,25 +52,9 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 public class TiffImageMetadata extends GenericImageMetadata {
     public final TiffContents contents;
-    private static final Map<Integer, Integer> TAG_COUNTS = countTags(AllTagConstants.ALL_TAGS);
 
     public TiffImageMetadata(final TiffContents contents) {
         this.contents = contents;
-    }
-
-    private static Map<Integer, Integer> countTags(final List<TagInfo> tags) {
-        final Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-
-        for (TagInfo tag : tags) {
-            final Integer count = map.get(tag.tag);
-            if (count == null) {
-                map.put(tag.tag, 1);
-            } else {
-                map.put(tag.tag, count + 1);
-            }
-        }
-
-        return map;
     }
 
     public static class Directory extends GenericImageMetadata implements
@@ -241,7 +224,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     public TiffField findField(final TagInfo tagInfo, final boolean exactDirectoryMatch)
             throws ImageReadException {
         // Please keep this method in sync with TiffField's getTag()
-        final Integer tagCount = TAG_COUNTS.get(tagInfo.tag);
+        final Integer tagCount = TiffTags.getTagCount(tagInfo.tag);
         final int tagsMatching = tagCount == null ? 0 : tagCount;
 
         final List<? extends ImageMetadataItem> directories = getDirectories();

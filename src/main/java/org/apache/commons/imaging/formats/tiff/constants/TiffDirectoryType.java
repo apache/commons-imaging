@@ -52,6 +52,16 @@ public enum TiffDirectoryType {
         return isImageDirectory;
     }
 
+    public static TiffDirectoryType getExifDirectoryType(final int type) {
+
+        for (final TiffDirectoryType tiffDirectoryType : values()) {
+            if (tiffDirectoryType.directoryType == type) {
+                return tiffDirectoryType;
+            }
+        }
+        return TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN;
+    }
+    
     public static final TiffDirectoryType EXIF_DIRECTORY_IFD0 = TIFF_DIRECTORY_IFD0;
     public static final TiffDirectoryType TIFF_DIRECTORY_ROOT = TIFF_DIRECTORY_IFD0;
     public static final TiffDirectoryType EXIF_DIRECTORY_IFD1 = TIFF_DIRECTORY_IFD1;

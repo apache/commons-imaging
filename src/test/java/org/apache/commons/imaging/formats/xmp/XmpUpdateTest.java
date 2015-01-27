@@ -29,6 +29,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
@@ -84,7 +85,7 @@ public class XmpUpdateTest extends ImagingTest {
             // ----
 
             final Map<String, Object> params = new HashMap<String, Object>();
-            params.put(PARAM_KEY_XMP_XML, xmpXml);
+            params.put(ImagingConstants.PARAM_KEY_XMP_XML, xmpXml);
             Imaging.writeImage(image, tempFile, imageFormat, params);
 
             final String xmpXmlOut = Imaging.getXmpXml(tempFile);

@@ -16,18 +16,21 @@
  */
 package org.apache.commons.imaging.formats.pnm;
 
-interface PnmConstants {
-    byte PNM_PREFIX_BYTE = 0x50; // P
+final class PnmConstants {
+    public static final byte PNM_PREFIX_BYTE = 0x50; // P
 
-    byte PBM_TEXT_CODE = 0x31; // Textual Bitmap
-    byte PGM_TEXT_CODE = 0x32; // Textual GrayMap
-    byte PPM_TEXT_CODE = 0x33; // Textual Pixmap
-    byte PGM_RAW_CODE = 0x35; // RAW GrayMap
-    byte PBM_RAW_CODE = 0x34; // RAW Bitmap
-    byte PPM_RAW_CODE = 0x36; // RAW Pixmap
-    byte PAM_RAW_CODE = 0x37; // PAM Pixmap
+    public static final byte PBM_TEXT_CODE = 0x31; // Textual Bitmap
+    public static final byte PGM_TEXT_CODE = 0x32; // Textual GrayMap
+    public static final byte PPM_TEXT_CODE = 0x33; // Textual Pixmap
+    public static final byte PGM_RAW_CODE = 0x35; // RAW GrayMap
+    public static final byte PBM_RAW_CODE = 0x34; // RAW Bitmap
+    public static final byte PPM_RAW_CODE = 0x36; // RAW Pixmap
+    public static final byte PAM_RAW_CODE = 0x37; // PAM Pixmap
 
-    byte PNM_SEPARATOR = 0x20; // Space
-    byte PNM_NEWLINE = 0x0A; // "usually a newline"
+    public static final byte PNM_SEPARATOR = 0x20; // Space
+    public static final byte PNM_NEWLINE = 0x0A; // "usually a newline"
                              // (http://netpbm.sourceforge.net/doc/pbm.html)
+
+    private PnmConstants() {
+    }
 }

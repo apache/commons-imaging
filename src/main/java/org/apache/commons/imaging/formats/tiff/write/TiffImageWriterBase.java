@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.PackBits;
@@ -37,6 +38,7 @@ import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
@@ -85,7 +87,7 @@ public abstract class TiffImageWriterBase {
 
             if (dirType < 0) {
                 switch (dirType) {
-                    case DIRECTORY_TYPE_EXIF:
+                    case TiffDirectoryConstants.DIRECTORY_TYPE_EXIF:
                         if (exifDirectory != null) {
                             throw new ImageWriteException(
                                     "More than one EXIF directory.");
@@ -93,7 +95,7 @@ public abstract class TiffImageWriterBase {
                         exifDirectory = directory;
                         break;
 
-                    case DIRECTORY_TYPE_GPS:
+                    case TiffDirectoryConstants.DIRECTORY_TYPE_GPS:
                         if (gpsDirectory != null) {
                             throw new ImageWriteException(
                                     "More than one GPS directory.");
@@ -101,7 +103,7 @@ public abstract class TiffImageWriterBase {
                         gpsDirectory = directory;
                         break;
 
-                    case DIRECTORY_TYPE_INTEROPERABILITY:
+                    case TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY:
                         if (interoperabilityDirectory != null) {
                             throw new ImageWriteException(
                                     "More than one Interoperability directory.");
@@ -179,7 +181,7 @@ public abstract class TiffImageWriterBase {
         }
 
         final TiffOutputDirectory rootDirectory = directoryTypeMap
-                .get(DIRECTORY_TYPE_ROOT);
+                .get(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
 
         // prepare results
         final TiffOutputSummary result = new TiffOutputSummary(byteOrder,
@@ -247,23 +249,23 @@ public abstract class TiffImageWriterBase {
         params = new HashMap<String, Object>(params);
 
         // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
+            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
         }
 
         TiffOutputSet userExif = null;
-        if (params.containsKey(PARAM_KEY_EXIF)) {
-            userExif = (TiffOutputSet) params.remove(PARAM_KEY_EXIF);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_EXIF)) {
+            userExif = (TiffOutputSet) params.remove(ImagingConstants.PARAM_KEY_EXIF);
         }
 
         String xmpXml = null;
-        if (params.containsKey(PARAM_KEY_XMP_XML)) {
-            xmpXml = (String) params.get(PARAM_KEY_XMP_XML);
-            params.remove(PARAM_KEY_XMP_XML);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
+            xmpXml = (String) params.get(ImagingConstants.PARAM_KEY_XMP_XML);
+            params.remove(ImagingConstants.PARAM_KEY_XMP_XML);
         }
 
         PixelDensity pixelDensity = (PixelDensity) params
-                .remove(PARAM_KEY_PIXEL_DENSITY);
+                .remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
         if (pixelDensity == null) {
             pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
         }
@@ -273,8 +275,8 @@ public abstract class TiffImageWriterBase {
 
         int compression = TIFF_COMPRESSION_LZW; // LZW is default
         int stripSizeInBits = 64000; // the default from legacy implementation
-        if (params.containsKey(PARAM_KEY_COMPRESSION)) {
-            final Object value = params.get(PARAM_KEY_COMPRESSION);
+        if (params.containsKey(ImagingConstants.PARAM_KEY_COMPRESSION)) {
+            final Object value = params.get(ImagingConstants.PARAM_KEY_COMPRESSION);
             if (value != null) {
                 if (!(value instanceof Number)) {
                     throw new ImageWriteException(
@@ -283,7 +285,7 @@ public abstract class TiffImageWriterBase {
                 }
                 compression = ((Number) value).intValue();
             }
-            params.remove(PARAM_KEY_COMPRESSION);
+            params.remove(ImagingConstants.PARAM_KEY_COMPRESSION);
             if (params.containsKey(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE)) {
                 final Object bValue =
                     params.get(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE);

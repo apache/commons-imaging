@@ -19,18 +19,15 @@ package org.apache.commons.imaging.formats.jpeg.exif;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 
 import org.apache.commons.imaging.examples.WriteExifMetadataExample;
-import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
-public class WriteExifMetadataExampleTest extends ExifBaseTest implements
-        AllTagConstants {
+public class WriteExifMetadataExampleTest extends ExifBaseTest {
 
     private File imageFile;
 

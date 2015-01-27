@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
-public class GpsTest extends ExifBaseTest implements ImagingConstants {
+public class GpsTest extends ExifBaseTest {
 
     private File imageFile;
 
@@ -55,7 +55,7 @@ public class GpsTest extends ExifBaseTest implements ImagingConstants {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
+        params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
                 .getMetadata(imageFile, params);

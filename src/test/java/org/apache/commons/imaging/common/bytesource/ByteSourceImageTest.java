@@ -37,6 +37,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -173,7 +174,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         if (imageFormat.equals(ImageFormats.TIFF)
                 || imageFormat.equals(ImageFormats.JPEG)) {
-            params.put(PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
+            params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
         }
 
         final ImageInfo imageInfoFile = Imaging.getImageInfo(imageFile, params);

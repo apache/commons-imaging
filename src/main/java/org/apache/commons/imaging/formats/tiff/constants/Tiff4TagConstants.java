@@ -28,17 +28,21 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  * <BR>
  * http://cool.conservation-us.org/bytopic/imaging/std/tiff4.html
  */
-public interface Tiff4TagConstants {
-    TagInfoShort TIFF_TAG_COLOR_RESPONSE_UNIT = new TagInfoShort(
+public final class Tiff4TagConstants {
+
+    public static final TagInfoShort TIFF_TAG_COLOR_RESPONSE_UNIT = new TagInfoShort(
             "ColorResponseUnit", 0x12C, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
-    int COLOR_RESPONSE_UNIT_VALUE_0_1 = 1;
-    int COLOR_RESPONSE_UNIT_VALUE_0_01 = 2;
-    int COLOR_RESPONSE_UNIT_VALUE_0_001 = 3;
-    int COLOR_RESPONSE_UNIT_VALUE_0_0001 = 4;
-    int COLOR_RESPONSE_UNIT_VALUE_0_00001 = 5;
-    
-    List<TagInfo> ALL_TIFF_4_TAGS =
+    public static final int COLOR_RESPONSE_UNIT_VALUE_0_1 = 1;
+    public static final int COLOR_RESPONSE_UNIT_VALUE_0_01 = 2;
+    public static final int COLOR_RESPONSE_UNIT_VALUE_0_001 = 3;
+    public static final int COLOR_RESPONSE_UNIT_VALUE_0_0001 = 4;
+    public static final int COLOR_RESPONSE_UNIT_VALUE_0_00001 = 5;
+
+    public static final List<TagInfo> ALL_TIFF_4_TAGS =
             Collections.unmodifiableList(Arrays.<TagInfo> asList(
                     TIFF_TAG_COLOR_RESPONSE_UNIT));
+
+    private Tiff4TagConstants() {
+    }
 }

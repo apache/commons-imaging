@@ -30,7 +30,7 @@ import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 
 public abstract class ImagingTest implements
-        ImagingTestConstants, ImagingConstants {
+        ImagingTestConstants {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();

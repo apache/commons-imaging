@@ -27,18 +27,17 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
-import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
-public abstract class SpecificExifTagTest extends ExifBaseTest implements
-        AllTagConstants {
+public abstract class SpecificExifTagTest extends ExifBaseTest {
 
     private File imageFile;
 
@@ -69,7 +68,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest implements
 
         final Map<String, Object> params = new HashMap<String, Object>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
+        params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
         // note that metadata might be null if no metadata is found.
         final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);

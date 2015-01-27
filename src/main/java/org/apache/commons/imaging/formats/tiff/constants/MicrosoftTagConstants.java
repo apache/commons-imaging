@@ -27,36 +27,37 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 /**
  * Largely undocumented and derived by experimentation.
  */
-public interface MicrosoftTagConstants {
-    TagInfoShort EXIF_TAG_RATING = new TagInfoShort(
+public final class MicrosoftTagConstants {
+
+    public static final TagInfoShort EXIF_TAG_RATING = new TagInfoShort(
             "Rating", 0x4746, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
-    
-    TagInfoShort EXIF_TAG_RATING_PERCENT = new TagInfoShort(
+
+    public static final TagInfoShort EXIF_TAG_RATING_PERCENT = new TagInfoShort(
             "RatingPercent", 0x4749, 1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    TagInfoXpString EXIF_TAG_XPTITLE = new TagInfoXpString(
+    public static final TagInfoXpString EXIF_TAG_XPTITLE = new TagInfoXpString(
             "XPTitle", 0x9c9b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    TagInfoXpString EXIF_TAG_XPCOMMENT = new TagInfoXpString(
+    public static final TagInfoXpString EXIF_TAG_XPCOMMENT = new TagInfoXpString(
             "XPComment", 0x9c9c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    TagInfoXpString EXIF_TAG_XPAUTHOR = new TagInfoXpString(
+    public static final TagInfoXpString EXIF_TAG_XPAUTHOR = new TagInfoXpString(
             "XPAuthor", 0x9c9d, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    TagInfoXpString EXIF_TAG_XPKEYWORDS = new TagInfoXpString(
+    public static final TagInfoXpString EXIF_TAG_XPKEYWORDS = new TagInfoXpString(
             "XPKeywords", 0x9c9e, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    TagInfoXpString EXIF_TAG_XPSUBJECT = new TagInfoXpString(
+    public static final TagInfoXpString EXIF_TAG_XPSUBJECT = new TagInfoXpString(
             "XPSubject",  0x9c9f, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    List<TagInfo> ALL_MICROSOFT_TAGS =
+    public static final List<TagInfo> ALL_MICROSOFT_TAGS =
             Collections.unmodifiableList(Arrays.asList(
                     EXIF_TAG_RATING,
                     EXIF_TAG_RATING_PERCENT,
@@ -65,4 +66,7 @@ public interface MicrosoftTagConstants {
                     EXIF_TAG_XPAUTHOR,
                     EXIF_TAG_XPKEYWORDS,
                     EXIF_TAG_XPSUBJECT));
+
+    private MicrosoftTagConstants() {
+    }
 }

@@ -31,11 +31,10 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
-import org.apache.commons.imaging.formats.tiff.constants.AllTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.junit.Test;
 
-public class AsciiFieldTest extends ExifBaseTest implements AllTagConstants {
+public class AsciiFieldTest extends ExifBaseTest {
 
     @Test
     public void testSingleImage() throws Exception {

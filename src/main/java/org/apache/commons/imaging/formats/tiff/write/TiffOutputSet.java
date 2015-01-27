@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.util.Debug;
 
@@ -67,16 +68,16 @@ public final class TiffOutputSet {
     }
 
     public TiffOutputDirectory getRootDirectory() {
-        return findDirectory(DIRECTORY_TYPE_ROOT);
+        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
     }
 
     public TiffOutputDirectory getExifDirectory() {
-        return findDirectory(DIRECTORY_TYPE_EXIF);
+        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_EXIF);
     }
 
     public TiffOutputDirectory getOrCreateRootDirectory()
             throws ImageWriteException {
-        final TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_ROOT);
+        final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
         if (null != result) {
             return result;
         }
@@ -88,7 +89,7 @@ public final class TiffOutputSet {
         // EXIF directory requires root directory.
         getOrCreateRootDirectory();
 
-        final TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_EXIF);
+        final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_EXIF);
         if (null != result) {
             return result;
         }
@@ -100,7 +101,7 @@ public final class TiffOutputSet {
         // GPS directory requires EXIF directory
         getOrCreateExifDirectory();
 
-        final TiffOutputDirectory result = findDirectory(DIRECTORY_TYPE_GPS);
+        final TiffOutputDirectory result = findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
         if (null != result) {
             return result;
         }
@@ -108,11 +109,11 @@ public final class TiffOutputSet {
     }
 
     public TiffOutputDirectory getGPSDirectory() {
-        return findDirectory(DIRECTORY_TYPE_GPS);
+        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_GPS);
     }
 
     public TiffOutputDirectory getInteroperabilityDirectory() {
-        return findDirectory(DIRECTORY_TYPE_INTEROPERABILITY);
+        return findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY);
     }
 
     public TiffOutputDirectory findDirectory(final int directoryType) {
@@ -216,21 +217,21 @@ public final class TiffOutputSet {
 
     public TiffOutputDirectory addRootDirectory() throws ImageWriteException {
         final TiffOutputDirectory result = new TiffOutputDirectory(
-                DIRECTORY_TYPE_ROOT, byteOrder);
+                TiffDirectoryConstants.DIRECTORY_TYPE_ROOT, byteOrder);
         addDirectory(result);
         return result;
     }
 
     public TiffOutputDirectory addExifDirectory() throws ImageWriteException {
         final TiffOutputDirectory result = new TiffOutputDirectory(
-                DIRECTORY_TYPE_EXIF, byteOrder);
+                TiffDirectoryConstants.DIRECTORY_TYPE_EXIF, byteOrder);
         addDirectory(result);
         return result;
     }
 
     public TiffOutputDirectory addGPSDirectory() throws ImageWriteException {
         final TiffOutputDirectory result = new TiffOutputDirectory(
-                DIRECTORY_TYPE_GPS, byteOrder);
+                TiffDirectoryConstants.DIRECTORY_TYPE_GPS, byteOrder);
         addDirectory(result);
         return result;
     }
@@ -240,7 +241,7 @@ public final class TiffOutputSet {
         getOrCreateExifDirectory();
 
         final TiffOutputDirectory result = new TiffOutputDirectory(
-                DIRECTORY_TYPE_INTEROPERABILITY, byteOrder);
+                TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY, byteOrder);
         addDirectory(result);
         return result;
     }

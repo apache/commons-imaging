@@ -24,27 +24,31 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
 
-public interface HylaFaxTagConstants {
-    TagInfoLong EXIF_TAG_FAX_RECV_PARAMS = new TagInfoLong(
+public final class HylaFaxTagConstants {
+
+    public static final TagInfoLong EXIF_TAG_FAX_RECV_PARAMS = new TagInfoLong(
             "FaxRecvParams", 0x885c, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    TagInfoAscii EXIF_TAG_FAX_SUB_ADDRESS = new TagInfoAscii(
+    public static final TagInfoAscii EXIF_TAG_FAX_SUB_ADDRESS = new TagInfoAscii(
             "FaxSubAddress", 0x885d, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    TagInfoLong EXIF_TAG_FAX_RECV_TIME = new TagInfoLong(
+    public static final TagInfoLong EXIF_TAG_FAX_RECV_TIME = new TagInfoLong(
             "FaxRecvTime", 0x885e, 1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    TagInfoAscii EXIF_TAG_FAX_DCS = new TagInfoAscii(
+    public static final TagInfoAscii EXIF_TAG_FAX_DCS = new TagInfoAscii(
             "FaxDCS", 0x885f, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    List<TagInfo> ALL_HYLAFAX_TAGS =
+    public static final List<TagInfo> ALL_HYLAFAX_TAGS =
             Collections.unmodifiableList(Arrays.asList(
                 EXIF_TAG_FAX_RECV_PARAMS,
                 EXIF_TAG_FAX_SUB_ADDRESS,
                 EXIF_TAG_FAX_RECV_TIME,
                 EXIF_TAG_FAX_DCS));
+
+    private HylaFaxTagConstants() {
+    }
 }

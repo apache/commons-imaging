@@ -27,12 +27,16 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
  * Wang/Eastman Software/Kodac/eiStream/Imaging for Windows tags,
  * undocumented and in need of more work.
  */
-public interface WangTagConstants {
-    TagInfoByte EXIF_TAG_WANG_ANNOTATION = new TagInfoByte(
+public final class WangTagConstants {
+
+    public static final TagInfoByte EXIF_TAG_WANG_ANNOTATION = new TagInfoByte(
             "WangAnnotation", 0x80a4, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    List<TagInfo> ALL_WANG_TAGS =
+    public static final List<TagInfo> ALL_WANG_TAGS =
             Collections.unmodifiableList(Arrays.<TagInfo> asList(
                     EXIF_TAG_WANG_ANNOTATION ));
+
+    private WangTagConstants() {
+    }
 }
