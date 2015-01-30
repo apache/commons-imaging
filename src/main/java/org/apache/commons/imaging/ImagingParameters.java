@@ -178,12 +178,58 @@ public class ImagingParameters {
      * image format.
      * <p>
      * Applies to read operations.
-     * <p>Resets the parameter to the default state (value not present)
+     * <p>
+     * Resets the parameter to the default state (value not present)
      */
     public void resetFileNameForReading() {
         this.fileNameForReading = null;
     }
     
+    //****** xmpXmlAsString ******
+    
+    /**
+     * Parameter key.
+     * 
+     * Only used when writing images. Valid values: String of XMP XML.
+     * @return {@code true} if there is a value present, {@false} else.
+     */
+    public boolean isXmpXmlAsStringPresent() {
+        return this.xmpXmlAsString == null;
+    }
+    
+    /**
+     * Parameter key.
+     * 
+     * Only used when writing images.
+     * @return Valid values: String of XMP XML.
+     */
+    public String getXmpXmlAsString() {
+        String value = this.xmpXmlAsString;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter key.
+     * 
+     * Only used when writing images.
+     * @param value Valid values: String of XMP XML.
+     */
+    public void setXmpXmlAsString(final String value) {
+        checkIfValueIsNull(value);
+        this.xmpXmlAsString = value;
+    }
+    
+    /**
+     * Parameter key.
+     * 
+     * Only used when writing images. Valid values: String of XMP XML.
+     * <p>
+     * Resets the parameter to the default state (value not present)
+     */
+    public void resetXmpXmlAsString() {
+        this.xmpXmlAsString = null;
+    }
     
     /**
      * Throws a RuntimeException if a given value is {code null}.
