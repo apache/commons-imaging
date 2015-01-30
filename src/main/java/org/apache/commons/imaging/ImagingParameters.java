@@ -271,6 +271,44 @@ public class ImagingParameters {
         this.imageFormat = null;
     }
     
+    //****** bufferedImageFactory ******
+    
+    /**
+     * 
+     * @return {@code true} if there is a value present, {@false} else.
+     */
+    public boolean isBufferedImageFactoryPresent() {
+        return this.bufferedImageFactory == null;
+    }
+    
+    /**
+     * 
+     * @return A BufferedImageFactory
+     */
+    public BufferedImageFactory getBufferedImageFactory() {
+        BufferedImageFactory value = this.bufferedImageFactory;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * 
+     * @param value A BufferedImageFactory
+     */
+    public void setBufferedImageFactory(final BufferedImageFactory value) {
+        checkIfValueIsNull(value);
+        this.bufferedImageFactory = value;
+    }
+    
+    /**
+     * 
+     * <p>
+     * Resets the parameter to the default state (value not present)
+     */
+    public void resetBufferedImageFactory() {
+        this.bufferedImageFactory = null;
+    }
+    
     //****** check methods ******
     
     /**
