@@ -24,6 +24,9 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 
 /**
  * This class is a POJO holding data for parameters as requested in IMAGING-159.
+ * It holds data needed for all image formats. For data needed only by one
+ * particular format there are inherited classes.
+ * <p>
  * It implements lazy initialization for some values: <br>
  * After getting an instance there is no value present until you set one using
  * one the setter methods. Until a value is set, isPresentX() will return
@@ -52,10 +55,7 @@ public class ImagingParameters {
     private PixelDensity pixelDensity;
     
     /**
-     * This gives you a parameter object without values.
-     * <p>
-     * Some values got default values:<br>
-     * verbose (Boolean.FALSE), strict
+     * This gives you a parameter object with default values.
      */
     public ImagingParameters() {
         this.verbose = Boolean.FALSE;
