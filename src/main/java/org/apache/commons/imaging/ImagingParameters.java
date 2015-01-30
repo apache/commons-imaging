@@ -231,6 +231,48 @@ public class ImagingParameters {
         this.xmpXmlAsString = null;
     }
     
+    //****** imageFormat ******
+    
+    /**
+     * Parameter used in write operations to indicate desired image format.
+     * @return {@code true} if there is a value present, {@false} else.
+     */
+    public boolean isImageFormatPresent() {
+        return this.imageFormat == null;
+    }
+    
+    /**
+     * Parameter used in write operations to indicate desired image format.
+     * @return Valid values: Any format defined in ImageFormat, such as
+     * ImageFormat.IMAGE_FORMAT_PNG.
+     */
+    public ImageFormat getImageFormat() {
+        ImageFormat value = this.imageFormat;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter used in write operations to indicate desired image format.
+     * @param value Valid values: Any format defined in ImageFormat, such as
+     * ImageFormat.IMAGE_FORMAT_PNG.
+     */
+    public void setImageFormat(final ImageFormat value) {
+        checkIfValueIsNull(value);
+        this.imageFormat = value;
+    }
+    
+    /**
+     * Parameter used in write operations to indicate desired image format.
+     * <p>
+     * Resets the parameter to the default state (value not present)
+     */
+    public void resetImageFormat() {
+        this.imageFormat = null;
+    }
+    
+    //****** check methods ******
+    
     /**
      * Throws a RuntimeException if a given value is {code null}.
      * @param value 
