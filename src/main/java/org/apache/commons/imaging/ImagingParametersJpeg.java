@@ -29,10 +29,7 @@ public final class ImagingParametersJpeg extends ImagingParameters {
     private Boolean readThumbnailsValue;
     
     /**
-     * This gives you a parameter object without values.
-     * <p>
-     * Some values got default values:<br>
-     * verbose (Boolean.FALSE), strict
+     * This gives you a parameter object with default values.
      */
     public ImagingParametersJpeg() {
         this.readThumbnailsValue = Boolean.FALSE;
