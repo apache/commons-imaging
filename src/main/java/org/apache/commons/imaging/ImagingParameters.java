@@ -62,8 +62,50 @@ public class ImagingParameters {
         this.pixelDensity = null;
     }
     
+     /**
+     * Parameter key. Applies to read and write operations.
+     * @return {@code true} if there is a value present, {@false} else.
+     */
+    public boolean isVerboseIsPresent() {
+        return this.verbose == null;
+    }
+    
+    /**
+     * Parameter key. Applies to read and write operations.
+     * @return Valid values: Boolean.TRUE and Boolean.FALSE.
+     */
+    public Boolean isVerbose() {
+        Boolean value = this.verbose;
+        checkIfParameterWasSet(value);
+        return value;
+    }
+    
+    /**
+     * Parameter key. Applies to read and write operations.
+     * @param value Valid values: Boolean.TRUE and Boolean.FALSE.
+     */
+    public void setVerbose(final Boolean value) {
+        checkIfValueIsNull(value);
+        this.verbose = value;
+    }
+    
+    /**
+     * Parameter key. Applies to read and write operations.
+     */
+    public void unsetVerbose() {
+        this.verbose = null;
+    }
     
     
+    /**
+     * Throws a RuntimeException if a given value is {code null}.
+     * @param value 
+     */
+    private void checkIfValueIsNull(final Object value) {
+        if (value == null) {
+            throw new IllegalArgumentException("The value for any parameter must not null.");
+        }
+    }
     
     /**
      * Throws a RuntimeException if the value for this parameter isn't set yet.
