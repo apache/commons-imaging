@@ -40,7 +40,7 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  */
 public class ImagingParameters {
     
-    private Boolean verbose;
+    private Boolean readThumbnails;
     
     private Boolean strict;
     
@@ -58,7 +58,7 @@ public class ImagingParameters {
      * This gives you a parameter object with default values.
      */
     public ImagingParameters() {
-        this.verbose = Boolean.FALSE;
+        this.readThumbnails = Boolean.FALSE;
         this.strict = Boolean.FALSE;
         this.fileNameForReading = null;
         this.xmpXmlAsString = null;
@@ -67,7 +67,7 @@ public class ImagingParameters {
         this.pixelDensity = null;
     }
     
-    //****** verbose ******
+    //****** readThumbnails ******
     /**
      * Parameter applies to read and write operations.
      * <p>
@@ -75,7 +75,7 @@ public class ImagingParameters {
      * @return Valid values: Boolean.TRUE and Boolean.FALSE.
      */
     public Boolean isVerbose() {
-        return this.verbose;
+        return this.readThumbnails;
     }
     
     /**
@@ -84,7 +84,7 @@ public class ImagingParameters {
      */
     public void setVerbose(final Boolean value) {
         checkIfValueIsNull(value);
-        this.verbose = value;
+        this.readThumbnails = value;
     }
     
     /**
@@ -92,7 +92,7 @@ public class ImagingParameters {
      * Reset this parameter to it's default value (Boolean.FALSE).
      */
     public void resetVerbose() {
-        this.verbose = Boolean.FALSE;
+        this.readThumbnails = Boolean.FALSE;
     }
     
     //****** strict ******
@@ -361,7 +361,7 @@ public class ImagingParameters {
      * Throws a RuntimeException if a given value is {code null}.
      * @param value 
      */
-    private void checkIfValueIsNull(final Object value) {
+    final void checkIfValueIsNull(final Object value) {
         if (value == null) {
             throw new IllegalArgumentException("The value for any parameter must not null.");
         }
@@ -371,7 +371,7 @@ public class ImagingParameters {
      * Throws a RuntimeException if the value for this parameter isn't set yet.
      * @param value 
      */
-    private void checkIfParameterIsPresent(final Object value) {
+    final void checkIfParameterIsPresent(final Object value) {
         if (value == null) {
             throw new IllegalStateException("You tried to get a value which is not present.");
         }
