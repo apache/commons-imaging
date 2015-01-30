@@ -30,10 +30,10 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  * {@code false}. If you try to access the value you will get an RuntimeException.
  * <p>
  * After a value is set isPresentX() will return true and you may access the value.
- * You can unset any value using unsetX(). Then you got the same state as before
+ * You can reset any value using resetX(). Then you got the same state as before
  * a value for this parameter was set.
  * <p>Other values have a default value, see the particular javadoc.
- * For these values there is a resetX() method which restores the default value.
+ * For these values the resetX() method restores the default value.
  */
 public class ImagingParameters {
     
@@ -89,6 +89,7 @@ public class ImagingParameters {
     
     /**
      * Parameter key. Applies to read and write operations.
+     * Reset this parameter to it's default value (Boolean.FALSE).
      */
     public void resetVerbose() {
         this.verbose = Boolean.FALSE;
@@ -110,7 +111,8 @@ public class ImagingParameters {
     }
     
     /**
-     * Parameter key. Applies to read and write operations.
+     * Parameter key. Indicates whether to throw exceptions when parsing invalid
+     * files, or whether to tolerate small problems.
      * @param value Valid values: Boolean.TRUE and Boolean.FALSE.
      */
     public void setStrict(final Boolean value) {
@@ -119,10 +121,67 @@ public class ImagingParameters {
     }
     
     /**
-     * Parameter key. Applies to read and write operations.
+     * Parameter key. Indicates whether to throw exceptions when parsing invalid
+     * files, or whether to tolerate small problems.
+     * Reset this parameter to it's default value (Boolean.FALSE).
      */
     public void resetStrict() {
         this.strict = Boolean.FALSE;
+    }
+    
+    //****** fileNameForReading ******
+    
+    /**
+     * Parameter key. Used to hint the filename when reading from a byte array
+     * or InputStream. The filename hint can help disambiguate what file the
+     * image format.
+     * <p>
+     * Applies to read operations.
+     * @return {@code true} if there is a value present, {@false} else.
+     */
+    public boolean isFileNameForReadingPresent() {
+        return this.fileNameForReading == null;
+    }
+    
+    /**
+     * Parameter key. Used to hint the filename when reading from a byte array
+     * or InputStream. The filename hint can help disambiguate what file the
+     * image format.
+     * <p>
+     * Applies to read operations.
+     * @return Valid values: filename as string
+     * @see java.io.InputStream
+     */
+    public String getFileNameForReading() {
+        String value = this.fileNameForReading;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter key. Used to hint the filename when reading from a byte array
+     * or InputStream. The filename hint can help disambiguate what file the
+     * image format.
+     * <p>
+     * Applies to read operations.
+     * @param value Valid values: filename as string
+     * @see java.io.InputStream
+     */
+    public void setFileNameForReading(final String value) {
+        checkIfValueIsNull(value);
+        this.fileNameForReading = value;
+    }
+    
+    /**
+     * Parameter key. Used to hint the filename when reading from a byte array
+     * or InputStream. The filename hint can help disambiguate what file the
+     * image format.
+     * <p>
+     * Applies to read operations.
+     * <p>Resets the parameter to the default state (value not present)
+     */
+    public void resetFileNameForReading() {
+        this.fileNameForReading = null;
     }
     
     
@@ -140,7 +199,7 @@ public class ImagingParameters {
      * Throws a RuntimeException if the value for this parameter isn't set yet.
      * @param value 
      */
-    private void checkIfParameterWasSet(final Object value) {
+    private void checkIfParameterIsPresent(final Object value) {
         if (value == null) {
             throw new IllegalStateException("You tried to get a value which is not present.");
         }
