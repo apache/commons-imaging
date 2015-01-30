@@ -35,7 +35,7 @@ public final class ImagingParametersJpeg extends ImagingParameters {
         this.readThumbnailsValue = Boolean.FALSE;
     }
     
-    //****** verbose ******
+    //****** readThumbnails ******
     /**
      * Parameter key. Indicates whether to read embedded thumbnails.
      * <p>
