@@ -309,6 +309,52 @@ public class ImagingParameters {
         this.bufferedImageFactory = null;
     }
     
+    //****** pixelDensity ******
+    
+    /**
+     * Parameter key. Used in write operations to indicate the desired pixel
+     * density (DPI), and/or aspect ratio.
+     * @return {@code true} if there is a value present, {@false} else.
+     * @see org.apache.commons.imaging.PixelDensity
+     */
+    public boolean isPixelDensityPresent() {
+        return this.pixelDensity == null;
+    }
+    
+    /**
+     * Parameter key. Used in write operations to indicate the desired pixel
+     * density (DPI), and/or aspect ratio.
+     * @return Valid values: PixelDensity
+     * @see org.apache.commons.imaging.PixelDensity
+     */
+    public PixelDensity getPixelDensity() {
+        PixelDensity value = this.pixelDensity;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter key. Used in write operations to indicate the desired pixel
+     * density (DPI), and/or aspect ratio.
+     * @param value Valid values: PixelDensity
+     * @see org.apache.commons.imaging.PixelDensity
+     */
+    public void setPixelDensity(final PixelDensity value) {
+        checkIfValueIsNull(value);
+        this.pixelDensity = value;
+    }
+    
+    /**
+     * Parameter key. Used in write operations to indicate the desired pixel
+     * density (DPI), and/or aspect ratio.
+     * <p>
+     * Resets the parameter to the default state (value not present)
+     * @see org.apache.commons.imaging.PixelDensity
+     */
+    public void resetPixelDensity() {
+        this.pixelDensity = null;
+    }
+    
     //****** check methods ******
     
     /**
