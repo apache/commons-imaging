@@ -69,7 +69,7 @@ public class ImagingParameters {
     
     //****** verbose ******
     /**
-     * Parameter key. Applies to read and write operations.
+     * Parameter applies to read and write operations.
      * <p>
      * This one comes with a default value: Boolean.FALSE.
      * @return Valid values: Boolean.TRUE and Boolean.FALSE.
@@ -79,7 +79,7 @@ public class ImagingParameters {
     }
     
     /**
-     * Parameter key. Applies to read and write operations.
+     * Parameter applies to read and write operations.
      * @param value Valid values: Boolean.TRUE and Boolean.FALSE.
      */
     public void setVerbose(final Boolean value) {
@@ -88,7 +88,7 @@ public class ImagingParameters {
     }
     
     /**
-     * Parameter key. Applies to read and write operations.
+     * Parameter applies to read and write operations.
      * Reset this parameter to it's default value (Boolean.FALSE).
      */
     public void resetVerbose() {
@@ -98,7 +98,7 @@ public class ImagingParameters {
     //****** strict ******
     
     /**
-     * Parameter key. Indicates whether to throw exceptions when parsing invalid
+     * Parameter indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.
      * <p>
      * This one comes with a default value: Boolean.FALSE.
@@ -111,7 +111,7 @@ public class ImagingParameters {
     }
     
     /**
-     * Parameter key. Indicates whether to throw exceptions when parsing invalid
+     * Parameter indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.
      * @param value Valid values: Boolean.TRUE and Boolean.FALSE.
      */
@@ -121,7 +121,7 @@ public class ImagingParameters {
     }
     
     /**
-     * Parameter key. Indicates whether to throw exceptions when parsing invalid
+     * Parameter indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.
      * Reset this parameter to it's default value (Boolean.FALSE).
      */
@@ -132,7 +132,7 @@ public class ImagingParameters {
     //****** fileNameForReading ******
     
     /**
-     * Parameter key. Used to hint the filename when reading from a byte array
+     * Parameter used to hint the filename when reading from a byte array
      * or InputStream. The filename hint can help disambiguate what file the
      * image format.
      * <p>
@@ -144,7 +144,7 @@ public class ImagingParameters {
     }
     
     /**
-     * Parameter key. Used to hint the filename when reading from a byte array
+     * Parameter used to hint the filename when reading from a byte array
      * or InputStream. The filename hint can help disambiguate what file the
      * image format.
      * <p>
@@ -159,7 +159,7 @@ public class ImagingParameters {
     }
     
     /**
-     * Parameter key. Used to hint the filename when reading from a byte array
+     * Parameter used to hint the filename when reading from a byte array
      * or InputStream. The filename hint can help disambiguate what file the
      * image format.
      * <p>
@@ -173,7 +173,7 @@ public class ImagingParameters {
     }
     
     /**
-     * Parameter key. Used to hint the filename when reading from a byte array
+     * Parameter used to hint the filename when reading from a byte array
      * or InputStream. The filename hint can help disambiguate what file the
      * image format.
      * <p>
