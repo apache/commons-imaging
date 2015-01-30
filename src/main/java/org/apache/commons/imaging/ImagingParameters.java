@@ -67,7 +67,7 @@ public class ImagingParameters {
         this.pixelDensity = null;
     }
     
-    //****** readThumbnails ******
+    //****** verbose ******
     /**
      * Parameter applies to read and write operations.
      * <p>
