@@ -24,7 +24,7 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 
 /**
  * This class is a POJO holding data for parameters as requested in IMAGING-159.
- * It implements lazy initialization: <br>
+ * It implements lazy initialization for some values: <br>
  * After getting an instance there is no value present until you set one using
  * one the setter methods. Until a value is set, isPresentX() will return
  * {@code false}. If you try to access the value you will get an RuntimeException.
@@ -32,6 +32,8 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  * After a value is set isPresentX() will return true and you may access the value.
  * You can unset any value using unsetX(). Then you got the same state as before
  * a value for this parameter was set.
+ * <p>Other values have a default value, see the particular javadoc.
+ * For these values there is a resetX() method which restores the default value.
  */
 public class ImagingParameters {
     
@@ -51,10 +53,13 @@ public class ImagingParameters {
     
     /**
      * This gives you a parameter object without values.
+     * <p>
+     * Some values got default values:<br>
+     * verbose (Boolean.FALSE), strict
      */
     public ImagingParameters() {
-        this.verbose = null;
-        this.strict = null;
+        this.verbose = Boolean.FALSE;
+        this.strict = Boolean.FALSE;
         this.fileNameForReading = null;
         this.xmpXmlAsString = null;
         this.imageFormat = null;
@@ -62,22 +67,15 @@ public class ImagingParameters {
         this.pixelDensity = null;
     }
     
-     /**
-     * Parameter key. Applies to read and write operations.
-     * @return {@code true} if there is a value present, {@false} else.
-     */
-    public boolean isVerboseIsPresent() {
-        return this.verbose == null;
-    }
-    
+    //****** verbose ******
     /**
      * Parameter key. Applies to read and write operations.
+     * <p>
+     * This one comes with a default value: Boolean.FALSE.
      * @return Valid values: Boolean.TRUE and Boolean.FALSE.
      */
     public Boolean isVerbose() {
-        Boolean value = this.verbose;
-        checkIfParameterWasSet(value);
-        return value;
+        return this.verbose;
     }
     
     /**
@@ -92,8 +90,39 @@ public class ImagingParameters {
     /**
      * Parameter key. Applies to read and write operations.
      */
-    public void unsetVerbose() {
-        this.verbose = null;
+    public void resetVerbose() {
+        this.verbose = Boolean.FALSE;
+    }
+    
+    //****** strict ******
+    
+    /**
+     * Parameter key. Indicates whether to throw exceptions when parsing invalid
+     * files, or whether to tolerate small problems.
+     * <p>
+     * This one comes with a default value: Boolean.FALSE.
+     * @return Valid values: Boolean.TRUE and Boolean.FALSE. Default value:
+     * Boolean.FALSE.
+     * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
+     */
+    public Boolean isStrict() {
+        return this.strict;
+    }
+    
+    /**
+     * Parameter key. Applies to read and write operations.
+     * @param value Valid values: Boolean.TRUE and Boolean.FALSE.
+     */
+    public void setStrict(final Boolean value) {
+        checkIfValueIsNull(value);
+        this.strict = value;
+    }
+    
+    /**
+     * Parameter key. Applies to read and write operations.
+     */
+    public void resetStrict() {
+        this.strict = Boolean.FALSE;
     }
     
     
