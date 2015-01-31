@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.common.itu_t4;
+package org.apache.commons.imaging.formats.tiff.itu_t4;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
+import org.apache.commons.imaging.formats.tiff.itu_t4.T4_T6_Tables.Entry;
 import org.apache.commons.imaging.util.IoUtils;
 
 public final class T4AndT6Compression {
