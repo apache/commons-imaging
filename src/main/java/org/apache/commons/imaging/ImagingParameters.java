@@ -40,7 +40,7 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  */
 public class ImagingParameters {
     
-    private Boolean readThumbnails;
+    private Boolean verbose;
     
     private Boolean strict;
     
@@ -58,7 +58,7 @@ public class ImagingParameters {
      * This gives you a parameter object with default values.
      */
     public ImagingParameters() {
-        this.readThumbnails = Boolean.FALSE;
+        this.verbose = Boolean.FALSE;
         this.strict = Boolean.FALSE;
         this.fileNameForReading = null;
         this.xmpXmlAsString = null;
@@ -75,7 +75,7 @@ public class ImagingParameters {
      * @return Valid values: Boolean.TRUE and Boolean.FALSE.
      */
     public Boolean isVerbose() {
-        return this.readThumbnails;
+        return this.verbose;
     }
     
     /**
@@ -84,7 +84,7 @@ public class ImagingParameters {
      */
     public void setVerbose(final Boolean value) {
         checkIfValueIsNull(value);
-        this.readThumbnails = value;
+        this.verbose = value;
     }
     
     /**
@@ -92,7 +92,7 @@ public class ImagingParameters {
      * Reset this parameter to it's default value (Boolean.FALSE).
      */
     public void resetVerbose() {
-        this.readThumbnails = Boolean.FALSE;
+        this.verbose = Boolean.FALSE;
     }
     
     //****** strict ******
