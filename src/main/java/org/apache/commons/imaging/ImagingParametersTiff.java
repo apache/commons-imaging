@@ -30,6 +30,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 public final class ImagingParametersTiff extends ImagingParameters {
     
     private Integer tiffCompressionLevel; // PARAM_KEY_COMPRESSION
+    private final Integer tiffCompressionLevelDefault = TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
     
     private TiffOutputSet tiffOutputSetForMetaData; // PARAM_KEY_EXIF
     
@@ -37,7 +38,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * This gives you a parameter object with default values.
      */
     public ImagingParametersTiff() {
-        this.tiffCompressionLevel = TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
+        this.tiffCompressionLevel = tiffCompressionLevelDefault;
         this.tiffOutputSetForMetaData = null;
     }
     
@@ -85,7 +86,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Resets the parameter to the default state (value not present)
      */
     public void resetTiffCompressionLevel() {
-        this.tiffCompressionLevel = TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
+        this.tiffCompressionLevel = tiffCompressionLevelDefault;
     }
     
     //****** tiffOutputSetForMetaData ******

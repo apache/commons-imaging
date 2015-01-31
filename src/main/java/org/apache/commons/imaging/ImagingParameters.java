@@ -41,8 +41,11 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 public class ImagingParameters {
     
     private Boolean verbose;
+    // default value for vebose - is set after initialization and resetVerbose()
+    private final Boolean verboseDefault = Boolean.FALSE;
     
     private Boolean strict;
+    private final Boolean strictDefault = Boolean.FALSE;
     
     private String fileNameForReading;
     
@@ -58,8 +61,8 @@ public class ImagingParameters {
      * This gives you a parameter object with default values.
      */
     public ImagingParameters() {
-        this.verbose = Boolean.FALSE;
-        this.strict = Boolean.FALSE;
+        this.verbose = verboseDefault;
+        this.strict = strictDefault;
         this.fileNameForReading = null;
         this.xmpXmlAsString = null;
         this.imageFormat = null;
@@ -92,7 +95,7 @@ public class ImagingParameters {
      * Reset this parameter to it's default value (Boolean.FALSE).
      */
     public void resetVerbose() {
-        this.verbose = Boolean.FALSE;
+        this.verbose = verboseDefault;
     }
     
     //****** strict ******
@@ -126,7 +129,7 @@ public class ImagingParameters {
      * Reset this parameter to it's default value (Boolean.FALSE).
      */
     public void resetStrict() {
-        this.strict = Boolean.FALSE;
+        this.strict = strictDefault;
     }
     
     //****** fileNameForReading ******
