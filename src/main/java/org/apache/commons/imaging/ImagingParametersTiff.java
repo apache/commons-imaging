@@ -20,6 +20,7 @@
 
 package org.apache.commons.imaging;
 
+import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 /**
@@ -36,22 +37,11 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * This gives you a parameter object with default values.
      */
     public ImagingParametersTiff() {
-        this.tiffCompressionLevel = null;
+        this.tiffCompressionLevel = TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
         this.tiffOutputSetForMetaData = null;
     }
     
     //****** tiffCompressionLevel ******
-    
-    /**
-     * Parameter used in write operations to indicate desired compression
-     * algorithm.
-     * <p>
-     * Currently only applies to writing TIFF image files.
-     * @return {@code true} if there is a value present, {@false} else.
-     */
-    public boolean isTiffCompressionLevelPresent() {
-        return this.tiffCompressionLevel == null;
-    }
     
     /**
      * Parameter used in write operations to indicate desired compression
@@ -95,7 +85,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Resets the parameter to the default state (value not present)
      */
     public void resetTiffCompressionLevel() {
-        this.tiffCompressionLevel = null;
+        this.tiffCompressionLevel = TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
     }
     
     //****** tiffOutputSetForMetaData ******
