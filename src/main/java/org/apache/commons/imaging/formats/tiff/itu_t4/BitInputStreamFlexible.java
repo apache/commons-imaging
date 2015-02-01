@@ -24,7 +24,7 @@ import java.io.InputStream;
  * across byte boundaries in most significant
  * bit first order.
  */
-class BitInputStreamFlexible extends InputStream {
+final class BitInputStreamFlexible extends InputStream {
     // TODO should be byte order conscious, ie TIFF for reading
     // samples size<8 - shuoldn't that effect their order within byte?
     private final InputStream is;
@@ -32,7 +32,7 @@ class BitInputStreamFlexible extends InputStream {
     private int cacheBitsRemaining;
     private long bytesRead;
 
-    public BitInputStreamFlexible(final InputStream is) {
+    BitInputStreamFlexible(final InputStream is) {
         this.is = is;
         // super(is);
     }
@@ -45,7 +45,7 @@ class BitInputStreamFlexible extends InputStream {
         return is.read();
     }
 
-    public final int readBits(int count) throws IOException {
+    final int readBits(int count) throws IOException {
 
         if (count <= 32)  {
             // catch-all
@@ -98,11 +98,11 @@ class BitInputStreamFlexible extends InputStream {
 
     }
 
-    public void flushCache() {
+    void flushCache() {
         cacheBitsRemaining = 0;
     }
 
-    public long getBytesRead() {
+    long getBytesRead() {
         return bytesRead;
     }
 }

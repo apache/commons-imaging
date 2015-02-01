@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * A Huffman tree implemented as 1 array for high locality of reference.
  */
-class HuffmanTree<T> {
+final class HuffmanTree<T> {
     private final List<Node<T>> nodes = new ArrayList<Node<T>>();
     
     private static final class Node<T> {
@@ -31,7 +31,7 @@ class HuffmanTree<T> {
         T value;
     }
 
-    public final void insert(final String pattern, final T value) throws HuffmanTreeException {
+    final void insert(final String pattern, final T value) throws HuffmanTreeException {
         int position = 0;
         Node<T> node = growAndGetNode(position);
         if (node.value != null) {
@@ -61,7 +61,7 @@ class HuffmanTree<T> {
         return node;
     }
 
-    public final T decode(final BitInputStreamFlexible bitStream) throws HuffmanTreeException {
+    final T decode(final BitInputStreamFlexible bitStream) throws HuffmanTreeException {
         int position = 0;
         Node<T> node = nodes.get(0);
         while (node.value == null) {
