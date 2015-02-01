@@ -83,16 +83,15 @@ public class ImagingParameters {
     
     /**
      * Parameter applies to read and write operations.
-     * @param value Valid values: Boolean.TRUE and Boolean.FALSE.
+     * This method sets the verbose mode.
      */
-    public void setVerbose(final Boolean value) {
-        checkIfValueIsNull(value);
-        this.verbose = value;
+    public void setVerbose() {
+        this.verbose = Boolean.TRUE;
     }
     
     /**
      * Parameter applies to read and write operations.
-     * Reset this parameter to it's default value (Boolean.FALSE).
+     * This method removes the verbose mode.
      */
     public void resetVerbose() {
         this.verbose = verboseDefault;
@@ -116,17 +115,17 @@ public class ImagingParameters {
     /**
      * Parameter indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.
-     * @param value Valid values: Boolean.TRUE and Boolean.FALSE.
+     * This method switches the behavior so that it tolerates small problems.
      */
-    public void setStrict(final Boolean value) {
-        checkIfValueIsNull(value);
-        this.strict = value;
+    public void setStrict() {
+        this.strict = Boolean.TRUE;
     }
     
     /**
      * Parameter indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.
-     * Reset this parameter to it's default value (Boolean.FALSE).
+     * This method switches the behavior so that it throws exceptions when
+     * parsing invalid files.
      */
     public void resetStrict() {
         this.strict = strictDefault;
