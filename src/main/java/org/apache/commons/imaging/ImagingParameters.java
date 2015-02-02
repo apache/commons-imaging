@@ -42,20 +42,20 @@ public class ImagingParameters {
     
     private Boolean verbose;
     // default value for verbose - is set after initialization and resetVerbose()
-    private final Boolean verboseDefault = Boolean.FALSE;
+    private final Boolean verboseDefault = Boolean.FALSE; //PARAM_KEY_VERBOSE
     
     private Boolean strict;
-    private final Boolean strictDefault = Boolean.FALSE;
+    private final Boolean strictDefault = Boolean.FALSE; // PARAM_KEY_STRICT
     
-    private String fileNameForReading;
+    private String fileNameForReading; // PARAM_KEY_FILENAME
     
-    private String xmpXmlAsString;
+    private String xmpXmlAsString; // PARAM_KEY_XMP_XML
     
-    private ImageFormat imageFormat;
+    private ImageFormat imageFormat; // PARAM_KEY_FORMAT
     
-    private BufferedImageFactory bufferedImageFactory;
+    private BufferedImageFactory bufferedImageFactory; // BUFFERED_IMAGE_FACTORY
     
-    private PixelDensity pixelDensity;
+    private PixelDensity pixelDensity; // PARAM_KEY_PIXEL_DENSITY
     
     /**
      * This gives you a parameter object with default values.
