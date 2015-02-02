@@ -41,7 +41,7 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 public class ImagingParameters {
     
     private Boolean verbose;
-    // default value for vebose - is set after initialization and resetVerbose()
+    // default value for verbose - is set after initialization and resetVerbose()
     private final Boolean verboseDefault = Boolean.FALSE;
     
     private Boolean strict;
