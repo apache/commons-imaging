@@ -30,6 +30,9 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 public final class ImagingParametersTiff extends ImagingParameters {
     
     private Integer tiffCompressionLevel; // PARAM_KEY_COMPRESSION
+    // This is the default value used for the parameter above.
+    // If you need to change the default value for this parameter, do it here.
+    // Please remember to change the javadoc also.
     private final Integer tiffCompressionLevelDefault = TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
     
     private TiffOutputSet tiffOutputSetForMetaData; // PARAM_KEY_EXIF
@@ -49,6 +52,8 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * algorithm.
      * <p>
      * Currently only applies to writing TIFF image files.
+     * <p>
+     * Default value: TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED
      * @return Valid values:
      * TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
      * TiffConstants.TIFF_COMPRESSION_CCITT_1D,
