@@ -40,31 +40,30 @@ public final class ImagingParametersJpeg extends ImagingParameters {
      * Parameter key. Indicates whether to read embedded thumbnails.
      * <p>
      * Only applies to read EXIF metadata from JPEG/JFIF files.
-     * @return Valid values: Boolean.TRUE and Boolean.FALSE.
+     * <p>
+     * Default value: don't read embedded thumbnails
+     * @return Valid values:{@code Boolean.TRUE} (causes it to read embedded thumbnails
+     * and {@code Boolean.FALSE} (don't read embedded thumbnails).
      */
     public Boolean readThumbnails() {
         return this.readThumbnailsValue;
     }
     
     /**
-     * Parameter key. Indicates whether to read embedded thumbnails.
+     * Parameter key. Indicates to read embedded thumbnails.
      * <p>
      * Only applies to read EXIF metadata from JPEG/JFIF files.
-     * @param value Valid values: Boolean.TRUE and Boolean.FALSE.
      */
-    public void setReadThumbnails(final Boolean value) {
-        checkIfValueIsNull(value);
-        this.readThumbnailsValue = value;
+    public void enableReadThumbnails() {
+        this.readThumbnailsValue = Boolean.TRUE;
     }
     
     /**
-     * Parameter key. Indicates whether to read embedded thumbnails.
+     * Parameter key. Indicates not to read embedded thumbnails.
      * <p>
      * Only applies to read EXIF metadata from JPEG/JFIF files.
-     * <p>
-     * Reset this parameter to it's default value (Boolean.FALSE).
      */
-    public void resetReadThumbnails() {
+    public void disableReadThumbnails() {
         this.readThumbnailsValue = Boolean.FALSE;
     }
 }

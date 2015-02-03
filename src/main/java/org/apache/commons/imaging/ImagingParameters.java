@@ -27,25 +27,22 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  * It holds data needed for all image formats. For data needed only by one
  * particular format there are inherited classes.
  * <p>
- * It implements lazy initialization for some values: <br>
+ * There are two kinds of parameters: with and without default value. For
+ * parameters without default value it implements lazy initialization:
+ * <br>
  * After getting an instance there is no value present until you set one using
- * one the setter methods. Until a value is set, isPresentX() will return
- * {@code false}. If you try to access the value you will get an RuntimeException.
+ * one the setter methods. Until a value is set, isXPresent() will return
+ * {@code false}. Accessing the value with getX() in this state will cause a RuntimeException.
+ * After a value is set with setX() isXPresent() will return {@code true} and you may access the value.
  * <p>
- * After a value is set isPresentX() will return true and you may access the value.
- * You can reset any value using resetX(). Then you got the same state as before
- * a value for this parameter was set.
- * <p>Other values have a default value, see the particular javadoc.
- * For these values the resetX() method restores the default value.
+ * Other parameters have a default value. This is told in the javadoc for their
+ * getX() method. They don't have a isXPresent() method. You may access them any time.
  */
 public class ImagingParameters {
     
-    private Boolean verbose;
-    // default value for verbose - is set after initialization and resetVerbose()
-    private final Boolean verboseDefault = Boolean.FALSE; //PARAM_KEY_VERBOSE
+    private Boolean verbose; //PARAM_KEY_VERBOSE
     
-    private Boolean strict;
-    private final Boolean strictDefault = Boolean.FALSE; // PARAM_KEY_STRICT
+    private Boolean strict; // PARAM_KEY_STRICT
     
     private String fileNameForReading; // PARAM_KEY_FILENAME
     
@@ -61,8 +58,8 @@ public class ImagingParameters {
      * This gives you a parameter object with default values.
      */
     public ImagingParameters() {
-        this.verbose = verboseDefault;
-        this.strict = strictDefault;
+        this.verbose = Boolean.FALSE;
+        this.strict = Boolean.FALSE;
         this.fileNameForReading = null;
         this.xmpXmlAsString = null;
         this.imageFormat = null;
@@ -72,29 +69,32 @@ public class ImagingParameters {
     
     //****** verbose ******
     /**
+     * Turns the verbose mode on/off.
+     * <p>
      * Parameter applies to read and write operations.
      * <p>
-     * This one comes with a default value: Boolean.FALSE.
-     * @return Valid values: Boolean.TRUE and Boolean.FALSE.
+     * Default value: verbose mode disabled.
+     * @return Valid values: {@code Boolean.TRUE} means {@literal "verbose mode enabled"}
+     * and {@code Boolean.FALSE} means {@literal "verbose mode disabled"}.
      */
     public Boolean isVerbose() {
         return this.verbose;
     }
     
     /**
+     * Turns the verbose mode on.
      * Parameter applies to read and write operations.
-     * This method sets the verbose mode.
      */
-    public void setVerbose() {
+    public void enableVerbose() {
         this.verbose = Boolean.TRUE;
     }
     
     /**
+     * Turns the verbose mode off.
      * Parameter applies to read and write operations.
-     * This method removes the verbose mode.
      */
-    public void resetVerbose() {
-        this.verbose = verboseDefault;
+    public void disableVerbose() {
+        this.verbose = Boolean.FALSE;
     }
     
     //****** strict ******
@@ -103,9 +103,9 @@ public class ImagingParameters {
      * Parameter indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.
      * <p>
-     * This one comes with a default value: Boolean.FALSE.
-     * @return Valid values: Boolean.TRUE and Boolean.FALSE. Default value:
-     * Boolean.FALSE.
+     * Default value: tolerate small problems.
+     * @return Valid values: {@code Boolean.TRUE} causes it to throw exceptions
+     * when parsing invalid files and {@code Boolean.FALSE} let it tolerate small problems.
      * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
     public Boolean isStrict() {
@@ -115,20 +115,21 @@ public class ImagingParameters {
     /**
      * Parameter indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.
-     * This method switches the behavior so that it tolerates small problems.
+     * This method switches the behavior so that it throws exceptions when
+     * parsing invalid files.
      */
-    public void setStrict() {
+    public void enableStrict() {
         this.strict = Boolean.TRUE;
     }
     
     /**
      * Parameter indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.
-     * This method switches the behavior so that it throws exceptions when
-     * parsing invalid files.
+     * This method switches the behavior so that it tolerates small problems.
+     * 
      */
-    public void resetStrict() {
-        this.strict = strictDefault;
+    public void disableStrict() {
+        this.strict = Boolean.FALSE;
     }
     
     //****** fileNameForReading ******
