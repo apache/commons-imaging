@@ -77,18 +77,6 @@ public final class ImagingParametersTiff extends ImagingParameters {
         this.tiffCompressionLevel = value;
     }
     
-    /**
-     * Parameter used in write operations to indicate desired compression
-     * algorithm.
-     * <p>
-     * Currently only applies to writing TIFF image files.
-     * <p>
-     * Resets the parameter to the default state (value not present)
-     */
-    public void resetTiffCompressionLevel() {
-        this.tiffCompressionLevel = tiffCompressionLevelDefault;
-    }
-    
     //****** tiffOutputSetForMetaData ******
     
     /**
@@ -125,17 +113,4 @@ public final class ImagingParametersTiff extends ImagingParameters {
         checkIfValueIsNull(value);
         this.tiffOutputSetForMetaData = value;
     }
-    
-    /**
-     * Parameter key.
-     * 
-     * Only used when writing images.
-     * <p>
-     * Valid values: TiffOutputSet to write into the image's EXIF metadata.
-     * <p>
-     * Resets the parameter to the default state (value not present)
-     */
-    public void resetTiffOutputSet() {
-        this.tiffOutputSetForMetaData = null;
-     }
 }

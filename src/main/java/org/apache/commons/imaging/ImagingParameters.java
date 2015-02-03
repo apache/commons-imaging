@@ -174,20 +174,7 @@ public class ImagingParameters {
         checkIfValueIsNull(value);
         this.fileNameForReading = value;
     }
-    
-    /**
-     * Parameter used to hint the filename when reading from a byte array
-     * or InputStream. The filename hint can help disambiguate what file the
-     * image format.
-     * <p>
-     * Applies to read operations.
-     * <p>
-     * Resets the parameter to the default state (value not present)
-     */
-    public void resetFileNameForReading() {
-        this.fileNameForReading = null;
-    }
-    
+        
     //****** xmpXmlAsString ******
     
     /**
@@ -223,17 +210,6 @@ public class ImagingParameters {
         this.xmpXmlAsString = value;
     }
     
-    /**
-     * Parameter key.
-     * 
-     * Only used when writing images. Valid values: String of XMP XML.
-     * <p>
-     * Resets the parameter to the default state (value not present)
-     */
-    public void resetXmpXmlAsString() {
-        this.xmpXmlAsString = null;
-    }
-    
     //****** imageFormat ******
     
     /**
@@ -265,15 +241,6 @@ public class ImagingParameters {
         this.imageFormat = value;
     }
     
-    /**
-     * Parameter used in write operations to indicate desired image format.
-     * <p>
-     * Resets the parameter to the default state (value not present)
-     */
-    public void resetImageFormat() {
-        this.imageFormat = null;
-    }
-    
     //****** bufferedImageFactory ******
     
     /**
@@ -301,15 +268,6 @@ public class ImagingParameters {
     public void setBufferedImageFactory(final BufferedImageFactory value) {
         checkIfValueIsNull(value);
         this.bufferedImageFactory = value;
-    }
-    
-    /**
-     * 
-     * <p>
-     * Resets the parameter to the default state (value not present)
-     */
-    public void resetBufferedImageFactory() {
-        this.bufferedImageFactory = null;
     }
     
     //****** pixelDensity ******
@@ -345,17 +303,6 @@ public class ImagingParameters {
     public void setPixelDensity(final PixelDensity value) {
         checkIfValueIsNull(value);
         this.pixelDensity = value;
-    }
-    
-    /**
-     * Parameter key. Used in write operations to indicate the desired pixel
-     * density (DPI), and/or aspect ratio.
-     * <p>
-     * Resets the parameter to the default state (value not present)
-     * @see org.apache.commons.imaging.PixelDensity
-     */
-    public void resetPixelDensity() {
-        this.pixelDensity = null;
     }
     
     //****** check methods ******
