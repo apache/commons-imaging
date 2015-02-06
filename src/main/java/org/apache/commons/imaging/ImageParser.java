@@ -26,7 +26,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BufferedImageFactory;
