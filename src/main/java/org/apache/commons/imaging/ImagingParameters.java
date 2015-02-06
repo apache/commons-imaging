@@ -44,7 +44,7 @@ public class ImagingParameters {
     
     private Boolean strict; // PARAM_KEY_STRICT
     
-    private String fileNameForReading; // PARAM_KEY_FILENAME
+    private String fileNameHint; // PARAM_KEY_FILENAME
     
     private String xmpXmlAsString; // PARAM_KEY_XMP_XML
     
@@ -60,7 +60,7 @@ public class ImagingParameters {
     public ImagingParameters() {
         this.verbose = Boolean.FALSE;
         this.strict = Boolean.FALSE;
-        this.fileNameForReading = null;
+        this.fileNameHint = null;
         this.xmpXmlAsString = null;
         this.imageFormat = null;
         this.bufferedImageFactory = null;
@@ -132,7 +132,7 @@ public class ImagingParameters {
         this.strict = Boolean.FALSE;
     }
     
-    //****** fileNameForReading ******
+    //****** fileNameHint ******
     
     /**
      * Parameter used to hint the filename when reading from a byte array
@@ -142,8 +142,8 @@ public class ImagingParameters {
      * Applies to read operations.
      * @return {@code true} if there is a value present, {@false} else.
      */
-    public boolean isFileNameForReadingPresent() {
-        return this.fileNameForReading == null;
+    public boolean isFileNameHintPresent() {
+        return this.fileNameHint == null;
     }
     
     /**
@@ -155,8 +155,8 @@ public class ImagingParameters {
      * @return Valid values: filename as string
      * @see java.io.InputStream
      */
-    public String getFileNameForReading() {
-        String value = this.fileNameForReading;
+    public String getFileNameHint() {
+        String value = this.fileNameHint;
         checkIfParameterIsPresent(value);
         return value;
     }
@@ -170,9 +170,9 @@ public class ImagingParameters {
      * @param value Valid values: filename as string
      * @see java.io.InputStream
      */
-    public void setFileNameForReading(final String value) {
+    public void setFileNameHint(final String value) {
         checkIfValueIsNull(value);
-        this.fileNameForReading = value;
+        this.fileNameHint = value;
     }
         
     //****** xmpXmlAsString ******
