@@ -191,6 +191,8 @@ public final class Imaging {
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
      *         determined.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static ImageFormat guessFormat(final byte[] bytes)
             throws ImageReadException, IOException {
@@ -211,6 +213,8 @@ public final class Imaging {
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
      *         determined.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static ImageFormat guessFormat(final File file) throws ImageReadException,
             IOException {
@@ -355,6 +359,8 @@ public final class Imaging {
      *            Byte array containing an image file.
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static ICC_Profile getICCProfile(final byte[] bytes)
             throws ImageReadException, IOException {
@@ -372,6 +378,8 @@ public final class Imaging {
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static ICC_Profile getICCProfile(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
@@ -389,6 +397,8 @@ public final class Imaging {
      *            Filename associated with image data (optional).
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static ICC_Profile getICCProfile(final InputStream is, final String filename)
             throws ImageReadException, IOException {
@@ -408,6 +418,8 @@ public final class Imaging {
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static ICC_Profile getICCProfile(final InputStream is, final String filename,
             final ImagingParameters params) throws ImageReadException, IOException {
@@ -423,6 +435,8 @@ public final class Imaging {
      *            File containing image data.
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static ICC_Profile getICCProfile(final File file)
             throws ImageReadException, IOException {
@@ -440,6 +454,8 @@ public final class Imaging {
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile..
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static ICC_Profile getICCProfile(final File file, final ImagingParameters params)
             throws ImageReadException, IOException {
@@ -476,6 +492,8 @@ public final class Imaging {
      * @param bytes
      *            Byte array containing an image file.
      * @return A byte array.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see IccProfileParser
      * @see ICC_Profile
      */
@@ -497,6 +515,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return A byte array.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see IccProfileParser
      * @see ICC_Profile
      */
@@ -516,6 +536,8 @@ public final class Imaging {
      * @param file
      *            File containing image data.
      * @return A byte array.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see IccProfileParser
      * @see ICC_Profile
      */
@@ -537,6 +559,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return A byte array.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see IccProfileParser
      * @see ICC_Profile
      */
@@ -568,6 +592,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of ImageInfo.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(final String filename, final byte[] bytes,
@@ -589,6 +615,8 @@ public final class Imaging {
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of ImageInfo.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(final String filename, final byte[] bytes)
@@ -610,6 +638,8 @@ public final class Imaging {
      * @param filename
      *            Filename associated with image data (optional).
      * @return An instance of ImageInfo.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(final InputStream is, final String filename)
@@ -633,6 +663,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of ImageInfo.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(final InputStream is, final String filename,
@@ -652,6 +684,8 @@ public final class Imaging {
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of ImageInfo.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(final byte[] bytes)
@@ -673,6 +707,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of ImageInfo.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(final byte[] bytes, final ImagingParameters params)
@@ -694,6 +730,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of ImageInfo.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(final File file, final ImagingParameters params)
@@ -713,6 +751,8 @@ public final class Imaging {
      * @param file
      *            File containing image data.
      * @return An instance of ImageInfo.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see ImageInfo
      */
     public static ImageInfo getImageInfo(final File file) throws ImageReadException,
@@ -764,6 +804,8 @@ public final class Imaging {
      * @param filename
      *            Filename associated with image data (optional).
      * @return The width and height of the image.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static Dimension getImageSize(final InputStream is, final String filename)
             throws ImageReadException, IOException {
@@ -781,6 +823,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return The width and height of the image.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static Dimension getImageSize(final InputStream is, final String filename,
             final ImagingParameters params) throws ImageReadException, IOException {
@@ -794,6 +838,8 @@ public final class Imaging {
      * @param bytes
      *            Byte array containing an image file.
      * @return The width and height of the image.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static Dimension getImageSize(final byte[] bytes)
             throws ImageReadException, IOException {
@@ -809,6 +855,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return The width and height of the image.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static Dimension getImageSize(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
@@ -822,6 +870,8 @@ public final class Imaging {
      * @param file
      *            File containing image data.
      * @return The width and height of the image.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static Dimension getImageSize(final File file) throws ImageReadException,
             IOException {
@@ -837,6 +887,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return The width and height of the image.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static Dimension getImageSize(final File file, final ImagingParameters params)
             throws ImageReadException, IOException {
@@ -859,6 +911,8 @@ public final class Imaging {
      * @param filename
      *            Filename associated with image data (optional).
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static String getXmpXml(final InputStream is, final String filename)
             throws ImageReadException, IOException {
@@ -876,6 +930,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static String getXmpXml(final InputStream is, final String filename, final ImagingParameters params)
             throws ImageReadException, IOException {
@@ -889,6 +945,8 @@ public final class Imaging {
      * @param bytes
      *            Byte array containing an image file.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static String getXmpXml(final byte[] bytes) throws ImageReadException,
             IOException {
@@ -904,6 +962,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static String getXmpXml(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
@@ -917,6 +977,8 @@ public final class Imaging {
      * @param file
      *            File containing image data.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static String getXmpXml(final File file) throws ImageReadException,
             IOException {
@@ -932,6 +994,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static String getXmpXml(final File file, final ImagingParameters params)
             throws ImageReadException, IOException {
@@ -947,6 +1011,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public static String getXmpXml(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
@@ -971,6 +1037,8 @@ public final class Imaging {
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of IImageMetadata.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see org.apache.commons.imaging.common.ImageMetadata
      */
     public static ImageMetadata getMetadata(final byte[] bytes)
@@ -996,6 +1064,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of IImageMetadata.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see org.apache.commons.imaging.common.ImageMetadata
      */
     public static ImageMetadata getMetadata(final byte[] bytes, final ImagingParameters params)
@@ -1021,6 +1091,8 @@ public final class Imaging {
      * @param filename
      *            Filename associated with image data (optional).
      * @return An instance of IImageMetadata.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see org.apache.commons.imaging.common.ImageMetadata
      */
     public static ImageMetadata getMetadata(final InputStream is, final String filename)
@@ -1048,6 +1120,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of IImageMetadata.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see org.apache.commons.imaging.common.ImageMetadata
      */
     public static ImageMetadata getMetadata(final InputStream is, final String filename,
@@ -1071,6 +1145,8 @@ public final class Imaging {
      * @param file
      *            File containing image data.
      * @return An instance of IImageMetadata.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see org.apache.commons.imaging.common.ImageMetadata
      */
     public static ImageMetadata getMetadata(final File file)
@@ -1096,6 +1172,8 @@ public final class Imaging {
      * @param params
      *            Optional parameters, defined in ImagingParameters.
      * @return An instance of IImageMetadata.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      * @see org.apache.commons.imaging.common.ImageMetadata
      */
     public static ImageMetadata getMetadata(final File file, final ImagingParameters params)
