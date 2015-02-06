@@ -1190,6 +1190,9 @@ public final class Imaging {
      * Gets all images specified by the InputStream  (some 
      * formats may include multiple images within a single data source).
      * @param is A valid InputStream
+     * @param filename used to hint the filename when reading from a byte array
+     * or InputStream. The filename hint can help disambiguate what file the
+     * image format.
      * @return A valid (potentially empty) list of BufferedImage objects.
      * @throws ImageReadException In the event that the the specified 
      * content does not conform to the format of the specific parser
