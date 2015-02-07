@@ -26,7 +26,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageFormat;
@@ -194,7 +193,7 @@ public class DcxImageParser extends ImageParser {
                 final ByteSourceInputStream pcxSource = new ByteSourceInputStream(
                         stream, null);
                 final BufferedImage image = pcxImageParser.getBufferedImage(
-                        pcxSource, new HashMap<String, Object>());
+                        pcxSource, new ImagingParameters());
                 images.add(image);
                 canThrow = true;
             } finally {
