@@ -35,6 +35,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -42,7 +43,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 import org.apache.commons.imaging.util.IoUtils;
 
-import org.apache.commons.imaging.ImagingParameters;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class DcxImageParser extends ImageParser {
