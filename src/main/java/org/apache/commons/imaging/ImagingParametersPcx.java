@@ -20,31 +20,32 @@
 
 package org.apache.commons.imaging;
 
-import org.apache.commons.imaging.formats.pcx.PcxConstants;
-
 /**
  * This class is a POJO holding data for parameters as requested in IMAGING-159.
  * It holds additional data needed for the PCX format only.
  */
 public final class ImagingParametersPcx extends ImagingParameters {
     
-    private Integer compressionLevel; // PARAM_KEY_COMPRESSION
-    // This is the default value used for the parameter above.
-    // If you need to change the default value for this parameter, do it here.
-    // Please remember to change the javadoc also.
-    private final Integer compressionLevelDefault = PcxConstants.PCX_COMPRESSION_UNCOMPRESSED;
-    
+    private Integer compressionLevel;
     private Integer bitDepth;
     
     /**
      * This gives you a parameter object with default values.
      */
     public ImagingParametersPcx() {
-        this.compressionLevel = compressionLevelDefault;
+        this.compressionLevel = null;
         this.bitDepth = null;
     }
     
     //****** compressionLevel ******
+    
+    /**
+     * Returns {@code true} if the parameter compression level was set, {@code false} else.
+     * @return 
+     */
+    public boolean isCompressionLevelPresent() {
+        return this.compressionLevel == null;
+    }
     
     /**
      * Parameter used in write operations to indicate desired compression
