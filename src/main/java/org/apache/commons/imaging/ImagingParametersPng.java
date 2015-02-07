@@ -27,12 +27,16 @@ package org.apache.commons.imaging;
 public final class ImagingParametersPng extends ImagingParameters {
     
     private Byte bitDepth;
+    private boolean forceIndexedColor;
+    private boolean forceTrueColor;
     
     /**
      * This gives you a parameter object with default values.
      */
     public ImagingParametersPng() {
         this.bitDepth = null;
+        this.forceIndexedColor = false;
+        this.forceTrueColor = false;
     }
     
     //****** bitDepth ******
@@ -62,5 +66,53 @@ public final class ImagingParametersPng extends ImagingParameters {
     public void setBitDepth(final Byte value) {
         checkIfValueIsNull(value);
         this.bitDepth = value;
+    }
+    
+    // ****** forceIndexedColor ******
+    
+    /**
+     * force indexed color
+     */
+    public void enableForceIndexedColor() {
+        this.forceIndexedColor = true;
+    }
+    
+    /**
+     * don't force indexed color
+     */
+    public void disableForceIndexedColor() {
+        this.forceIndexedColor = false;
+    }
+    
+    /**
+     * {@code true} = force indexed color; {@code false} = don't force indexed color
+     * @return 
+     */
+    public boolean forceIndexedColor() {
+        return this.forceIndexedColor;
+    }
+    
+    // ****** forceTrueColor ******
+    
+    /**
+     * force indexed color
+     */
+    public void enableForceTrueColor() {
+        this.forceTrueColor = true;
+    }
+    
+    /**
+     * don't force indexed color
+     */
+    public void disableForceTrueColor() {
+        this.forceTrueColor = false;
+    }
+    
+    /**
+     * {@code true} = force true color; {@code false} = don't force true color
+     * @return 
+     */
+    public boolean forceTrueColor() {
+        return this.forceTrueColor;
     }
 }
