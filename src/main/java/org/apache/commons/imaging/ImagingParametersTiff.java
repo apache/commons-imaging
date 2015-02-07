@@ -20,7 +20,6 @@
 
 package org.apache.commons.imaging;
 
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 /**
@@ -30,10 +29,6 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 public final class ImagingParametersTiff extends ImagingParameters {
     
     private Integer compressionLevel; // PARAM_KEY_COMPRESSION
-    // This is the default value used for the parameter above.
-    // If you need to change the default value for this parameter, do it here.
-    // Please remember to change the javadoc also.
-    private final Integer compressionLevelDefault = TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
     
     private TiffOutputSet outputSetForMetaData; // PARAM_KEY_EXIF
     
@@ -41,11 +36,19 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * This gives you a parameter object with default values.
      */
     public ImagingParametersTiff() {
-        this.compressionLevel = compressionLevelDefault;
+        this.compressionLevel = null;
         this.outputSetForMetaData = null;
     }
     
     //****** compressionLevel ******
+    
+    /**
+     * Returns {@code true} if there is a value present, {@false} else.
+     * @return 
+     */
+    public boolean isCompressionLevelPresent() {
+        return this.compressionLevel == null;
+    }
     
     /**
      * Parameter used in write operations to indicate desired compression
