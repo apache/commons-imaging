@@ -1477,10 +1477,8 @@ public final class Imaging {
             final ImagingParameters params) throws ImageReadException, IOException {
         final ImageParser imageParser = getImageParser(byteSource);
         
-        ImagingParameters parameters = params;
-        if (null == parameters) {
-            parameters = new ImagingParameters();
-        }
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
 
         return imageParser.getBufferedImage(byteSource, parameters);
     }
@@ -1587,12 +1585,9 @@ public final class Imaging {
             IOException {
         final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
 
-        // make sure parameters are non-null
-        ImagingParameters parameters = params;
-        if (parameters == null) {
-            parameters = new ImagingParameters();
-        }
-
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
+        // add format parameter
         parameters.setImageFormat(format);
 
         ImageParser imageParser = null;
