@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
@@ -22,12 +24,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -50,6 +51,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *            Image file.
      * @param os
      *            OutputStream to write the image to.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     * @throws org.apache.commons.imaging.ImageWriteException
      * 
      * @see java.io.File
      * @see java.io.OutputStream
@@ -70,6 +74,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *            Byte array containing Jpeg image data.
      * @param os
      *            OutputStream to write the image to.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     * @throws org.apache.commons.imaging.ImageWriteException
      */
     public void removeIPTC(final byte[] src, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
@@ -87,6 +94,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *            InputStream containing Jpeg image data.
      * @param os
      *            OutputStream to write the image to.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     * @throws org.apache.commons.imaging.ImageWriteException
      */
     public void removeIPTC(final InputStream src, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
@@ -104,6 +114,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *            ByteSource containing Jpeg image data.
      * @param os
      *            OutputStream to write the image to.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     * @throws org.apache.commons.imaging.ImageWriteException
      */
     public void removeIPTC(final ByteSource byteSource, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
@@ -119,7 +132,7 @@ public class JpegIptcRewriter extends JpegRewriter {
         if (photoshopApp13Segments.size() == 1) {
             final JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments
                     .get(0);
-            final Map<String, Object> params = new HashMap<String, Object>();
+            final ImagingParameters params = new ImagingParameters();
             final PhotoshopApp13Data oldData = new IptcParser()
                     .parsePhotoshopSegment(oldSegment.segmentData, params);
             final List<IptcBlock> newBlocks = oldData.getNonIptcBlocks();
@@ -146,6 +159,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *            OutputStream to write the image to.
      * @param newData
      *            structure containing IPTC data.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     * @throws org.apache.commons.imaging.ImageWriteException
      */
     public void writeIPTC(final byte[] src, final OutputStream os,
             final PhotoshopApp13Data newData) throws ImageReadException, IOException,
@@ -165,6 +181,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *            OutputStream to write the image to.
      * @param newData
      *            structure containing IPTC data.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     * @throws org.apache.commons.imaging.ImageWriteException
      */
     public void writeIPTC(final InputStream src, final OutputStream os,
             final PhotoshopApp13Data newData) throws ImageReadException, IOException,
@@ -184,6 +203,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *            OutputStream to write the image to.
      * @param newData
      *            structure containing IPTC data.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     * @throws org.apache.commons.imaging.ImageWriteException
      */
     public void writeIPTC(final File src, final OutputStream os, final PhotoshopApp13Data newData)
             throws ImageReadException, IOException, ImageWriteException {
@@ -202,6 +224,9 @@ public class JpegIptcRewriter extends JpegRewriter {
      *            OutputStream to write the image to.
      * @param newData
      *            structure containing IPTC data.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     * @throws org.apache.commons.imaging.ImageWriteException
      */
     public void writeIPTC(final ByteSource byteSource, final OutputStream os,
             PhotoshopApp13Data newData) throws ImageReadException, IOException,
