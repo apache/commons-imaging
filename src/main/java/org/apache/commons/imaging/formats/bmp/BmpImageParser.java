@@ -25,9 +25,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
@@ -45,7 +43,7 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.IoUtils;
 
-import static org.apache.commons.imaging.ImagingConstants.*;
+import org.apache.commons.imaging.ImagingParameters;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class BmpImageParser extends ImageParser {
@@ -486,27 +484,17 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
-
-        final boolean verbose =  Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
-
-        if (params.containsKey(PARAM_KEY_VERBOSE)) {
-            params.remove(PARAM_KEY_VERBOSE);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageReadException("Unknown parameter: " + firstKey);
-        }
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
+        final boolean verbose = parameters.isVerbose();
 
         final BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource, verbose);
 
@@ -519,7 +507,7 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         // TODO this should throw UnsupportedOperationException, but RoundtripTest has to be refactored completely before this can be changed
         return null;
@@ -549,21 +537,13 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
-
-        final boolean verbose =  Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
-
-        if (params.containsKey(PARAM_KEY_VERBOSE)) {
-            params.remove(PARAM_KEY_VERBOSE);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageReadException("Unknown parameter: " + firstKey);
-        }
+        
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
+        
+        final boolean verbose = parameters.isVerbose();
 
         InputStream is = null;
         ImageContents ic = null;
@@ -663,7 +643,7 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         InputStream is = null;
         boolean canThrow = false;
@@ -677,25 +657,14 @@ public class BmpImageParser extends ImageParser {
         }
     }
 
-    public BufferedImage getBufferedImage(final InputStream inputStream, Map<String, Object> params)
+    public BufferedImage getBufferedImage(final InputStream inputStream, final ImagingParameters params)
             throws ImageReadException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
-
-        final boolean verbose = Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
-
-        if (params.containsKey(PARAM_KEY_VERBOSE)) {
-            params.remove(PARAM_KEY_VERBOSE);
-        }
-        if (params.containsKey(BUFFERED_IMAGE_FACTORY)) {
-            params.remove(BUFFERED_IMAGE_FACTORY);
-        }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageReadException("Unknown parameter: " + firstKey);
-        }
-
+        
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
+        
+        final boolean verbose = parameters.isVerbose();
+        
         final ImageContents ic = readImageContents(inputStream,
                 FormatCompliance.getDefault(), verbose);
         if (ic == null) {
@@ -725,26 +694,13 @@ public class BmpImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final ImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
 
-        PixelDensity pixelDensity = null;
-
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-        if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
-            pixelDensity = (PixelDensity) params
-                    .remove(PARAM_KEY_PIXEL_DENSITY);
-        }
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-
+        final PixelDensity pixelDensity = (parameters.isPixelDensityPresent()) ? parameters.getPixelDensity() : null;
+        
         final SimplePalette palette = new PaletteFactory().makeExactRgbPaletteSimple(
                 src, 256);
 
@@ -813,7 +769,7 @@ public class BmpImageParser extends ImageParser {
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+    public String getXmpXml(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
