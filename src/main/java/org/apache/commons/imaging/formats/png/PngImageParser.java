@@ -102,7 +102,10 @@ public class PngImageParser extends ImageParser {
     }
 
     /**
+     * @param is
      * @return List of String-formatted chunk types, ie. "tRNs".
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     public List<String> getChuckTypes(final InputStream is)
             throws ImageReadException, IOException {
