@@ -60,7 +60,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * TiffConstants.TIFF_COMPRESSION_LZW,
      * TiffConstants.TIFF_COMPRESSION_PACKBITS
      */
-    public Integer getCompressionLevel() {
+    public int getCompressionLevel() {
         Integer value = this.compressionLevel;
         checkIfParameterIsPresent(value);
         return value;
@@ -77,8 +77,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * TiffConstants.TIFF_COMPRESSION_LZW,
      * TiffConstants.TIFF_COMPRESSION_PACKBITS
      */
-    public void setCompressionLevel(final Integer value) {
-        checkIfValueIsNull(value);
+    public void setCompressionLevel(final int value) {
         this.compressionLevel = value;
     }
     
