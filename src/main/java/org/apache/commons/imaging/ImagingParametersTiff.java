@@ -29,23 +29,23 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
  */
 public final class ImagingParametersTiff extends ImagingParameters {
     
-    private Integer tiffCompressionLevel; // PARAM_KEY_COMPRESSION
+    private Integer compressionLevel; // PARAM_KEY_COMPRESSION
     // This is the default value used for the parameter above.
     // If you need to change the default value for this parameter, do it here.
     // Please remember to change the javadoc also.
-    private final Integer tiffCompressionLevelDefault = TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
+    private final Integer compressionLevelDefault = TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
     
-    private TiffOutputSet tiffOutputSetForMetaData; // PARAM_KEY_EXIF
+    private TiffOutputSet outputSetForMetaData; // PARAM_KEY_EXIF
     
     /**
      * This gives you a parameter object with default values.
      */
     public ImagingParametersTiff() {
-        this.tiffCompressionLevel = tiffCompressionLevelDefault;
-        this.tiffOutputSetForMetaData = null;
+        this.compressionLevel = compressionLevelDefault;
+        this.outputSetForMetaData = null;
     }
     
-    //****** tiffCompressionLevel ******
+    //****** compressionLevel ******
     
     /**
      * Parameter used in write operations to indicate desired compression
@@ -60,8 +60,8 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * TiffConstants.TIFF_COMPRESSION_LZW,
      * TiffConstants.TIFF_COMPRESSION_PACKBITS
      */
-    public Integer getTiffCompressionLevel() {
-        Integer value = this.tiffCompressionLevel;
+    public Integer getCompressionLevel() {
+        Integer value = this.compressionLevel;
         checkIfParameterIsPresent(value);
         return value;
     }
@@ -77,9 +77,9 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * TiffConstants.TIFF_COMPRESSION_LZW,
      * TiffConstants.TIFF_COMPRESSION_PACKBITS
      */
-    public void setTiffCompressionLevel(final Integer value) {
+    public void setCompressionLevel(final Integer value) {
         checkIfValueIsNull(value);
-        this.tiffCompressionLevel = value;
+        this.compressionLevel = value;
     }
     
     //****** tiffOutputSetForMetaData ******
@@ -92,8 +92,8 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Valid values: TiffOutputSet to write into the image's EXIF metadata.
      * @return {@code true} if there is a value present, {@false} else.
      */
-    public boolean isTiffOutputSetPresent() {
-        return this.tiffOutputSetForMetaData == null;
+    public boolean isOutputSetPresent() {
+        return this.outputSetForMetaData == null;
     }
     
     /**
@@ -102,8 +102,8 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Only used when writing images.
      * @return Valid values: TiffOutputSet to write into the image's EXIF metadata.
      */
-    public TiffOutputSet getTiffOutputSet() {
-        TiffOutputSet value = this.tiffOutputSetForMetaData;
+    public TiffOutputSet getOutputSet() {
+        TiffOutputSet value = this.outputSetForMetaData;
         checkIfParameterIsPresent(value);
         return value;
     }
@@ -114,8 +114,8 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Only used when writing images.
      * @param value Valid values: TiffOutputSet to write into the image's EXIF metadata.
      */
-    public void setTiffOutputSet(final TiffOutputSet value) {
+    public void setOutputSet(final TiffOutputSet value) {
         checkIfValueIsNull(value);
-        this.tiffOutputSetForMetaData = value;
+        this.outputSetForMetaData = value;
     }
 }
