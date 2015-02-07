@@ -20,6 +20,9 @@
 
 package org.apache.commons.imaging;
 
+import java.util.List;
+import org.apache.commons.imaging.formats.png.PngText;
+
 /**
  * This class is a POJO holding data for parameters as requested in IMAGING-159.
  * It holds additional data needed for the PNG format only.
@@ -29,7 +32,7 @@ public final class ImagingParametersPng extends ImagingParameters {
     private Byte bitDepth;
     private boolean forceIndexedColor;
     private boolean forceTrueColor;
-    private String textChunks;
+    private List<PngText> textChunks;
     
     /**
      * This gives you a parameter object with default values.
@@ -123,7 +126,7 @@ public final class ImagingParametersPng extends ImagingParameters {
      * Returns {@code true} if text chunks are present, {@code false} else.
      * @return 
      */
-    public boolean areTextChunksPresent() {
+    public boolean hasTextChunks() {
         return this.textChunks == null;
     }
     
@@ -131,18 +134,18 @@ public final class ImagingParametersPng extends ImagingParameters {
      * Returns the text chunks for a PNG image.
      * @return the text chunks
      */
-    public String getTextChunks() {
-        String value = this.textChunks;
+    public List<PngText> getTextChunks() {
+        List<PngText> value = this.textChunks;
         checkIfParameterIsPresent(value);
         return value;
     }
     
     /**
      * Sets the text chunks for a PNG image.
-     * @param value the text chunks
+     * @param textChunks the text chunks
      */
-    public void setTextChunks(final String value) {
-        checkIfValueIsNull(value);
-        this.textChunks = value;
+    public void setTextChunks(final List<PngText> textChunks) {
+        checkIfValueIsNull(textChunks);
+        this.textChunks = textChunks;
     }
 }
