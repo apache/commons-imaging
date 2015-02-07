@@ -40,9 +40,9 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  */
 public class ImagingParameters {
     
-    private Boolean verbose; //PARAM_KEY_VERBOSE
+    private boolean verbose; //PARAM_KEY_VERBOSE
     
-    private Boolean strict; // PARAM_KEY_STRICT
+    private boolean strict; // PARAM_KEY_STRICT
     
     private String fileNameHint; // PARAM_KEY_FILENAME
     
@@ -58,8 +58,8 @@ public class ImagingParameters {
      * This gives you a parameter object with default values.
      */
     public ImagingParameters() {
-        this.verbose = Boolean.FALSE;
-        this.strict = Boolean.FALSE;
+        this.verbose = false;
+        this.strict = false;
         this.fileNameHint = null;
         this.xmpXmlAsString = null;
         this.imageFormat = null;
@@ -74,10 +74,10 @@ public class ImagingParameters {
      * Parameter applies to read and write operations.
      * <p>
      * Default value: verbose mode disabled.
-     * @return Valid values: {@code Boolean.TRUE} means {@literal "verbose mode enabled"}
+     * @return Valid values: {@code true} means {@literal "verbose mode enabled"}
      * and {@code Boolean.FALSE} means {@literal "verbose mode disabled"}.
      */
-    public Boolean isVerbose() {
+    public boolean isVerbose() {
         return this.verbose;
     }
     
@@ -86,7 +86,7 @@ public class ImagingParameters {
      * Parameter applies to read and write operations.
      */
     public void enableVerbose() {
-        this.verbose = Boolean.TRUE;
+        this.verbose = true;
     }
     
     /**
@@ -94,7 +94,7 @@ public class ImagingParameters {
      * Parameter applies to read and write operations.
      */
     public void disableVerbose() {
-        this.verbose = Boolean.FALSE;
+        this.verbose = false;
     }
     
     //****** strict ******
@@ -104,11 +104,11 @@ public class ImagingParameters {
      * files, or whether to tolerate small problems.
      * <p>
      * Default value: tolerate small problems.
-     * @return Valid values: {@code Boolean.TRUE} causes it to throw exceptions
-     * when parsing invalid files and {@code Boolean.FALSE} let it tolerate small problems.
+     * @return Valid values: {@code true} causes it to throw exceptions
+     * when parsing invalid files and {@code false} let it tolerate small problems.
      * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
-    public Boolean isStrict() {
+    public boolean isStrict() {
         return this.strict;
     }
     
@@ -119,7 +119,7 @@ public class ImagingParameters {
      * parsing invalid files.
      */
     public void enableStrict() {
-        this.strict = Boolean.TRUE;
+        this.strict = true;
     }
     
     /**
@@ -129,7 +129,7 @@ public class ImagingParameters {
      * 
      */
     public void disableStrict() {
-        this.strict = Boolean.FALSE;
+        this.strict = false;
     }
     
     //****** fileNameHint ******
