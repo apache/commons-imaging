@@ -58,7 +58,7 @@ public final class ImagingParametersPcx extends ImagingParameters {
      * PcxConstants.PCX_COMPRESSION_UNCOMPRESSED,
      * PcxConstants.PCX_COMPRESSION_RLE
      */
-    public Integer getCompressionLevel() {
+    public int getCompressionLevel() {
         Integer value = this.compressionLevel;
         checkIfParameterIsPresent(value);
         return value;
@@ -73,8 +73,7 @@ public final class ImagingParametersPcx extends ImagingParameters {
      * PcxConstants.PCX_COMPRESSION_UNCOMPRESSED,
      * PcxConstants.PCX_COMPRESSION_RLE
      */
-    public void setCompressionLevel(final Integer value) {
-        checkIfValueIsNull(value);
+    public void setCompressionLevel(final int value) {
         this.compressionLevel = value;
     }
     
@@ -89,10 +88,10 @@ public final class ImagingParametersPcx extends ImagingParameters {
     }
     
     /**
-     * Returns a Integer for the bit depth of a PCX image.
+     * Returns a value for the bit depth of a PCX image.
      * @return 
      */
-    public Integer getBitDepth() {
+    public int getBitDepth() {
         Integer value = this.bitDepth;
         checkIfParameterIsPresent(value);
         return value;
@@ -102,8 +101,7 @@ public final class ImagingParametersPcx extends ImagingParameters {
      * Sets the bit depth of a PCX image.
      * @param value
      */
-    public void setBitDepth(final Integer value) {
-        checkIfValueIsNull(value);
+    public void setBitDepth(final int value) {
         this.bitDepth = value;
     }
 }
