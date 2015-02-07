@@ -29,6 +29,7 @@ public final class ImagingParametersPng extends ImagingParameters {
     private Byte bitDepth;
     private boolean forceIndexedColor;
     private boolean forceTrueColor;
+    private String textChunks;
     
     /**
      * This gives you a parameter object with default values.
@@ -37,6 +38,7 @@ public final class ImagingParametersPng extends ImagingParameters {
         this.bitDepth = null;
         this.forceIndexedColor = false;
         this.forceTrueColor = false;
+        this.textChunks = null;
     }
     
     //****** bitDepth ******
@@ -51,7 +53,7 @@ public final class ImagingParametersPng extends ImagingParameters {
     
     /**
      * Returns the bit depth of a PNG image.
-     * @return 
+     * @return the bit depth
      */
     public byte getBitDepth() {
         Byte value = this.bitDepth;
@@ -61,10 +63,9 @@ public final class ImagingParametersPng extends ImagingParameters {
     
     /**
      * Sets the bit depth of a PNG image.
-     * @param value
+     * @param value the bit depth
      */
     public void setBitDepth(final byte value) {
-        checkIfValueIsNull(value);
         this.bitDepth = value;
     }
     
@@ -114,5 +115,34 @@ public final class ImagingParametersPng extends ImagingParameters {
      */
     public boolean forceTrueColor() {
         return this.forceTrueColor;
+    }
+    
+    //****** textChunks ******
+    
+    /**
+     * Returns {@code true} if text chunks are present, {@code false} else.
+     * @return 
+     */
+    public boolean areTextChunksPresent() {
+        return this.textChunks == null;
+    }
+    
+    /**
+     * Returns the text chunks for a PNG image.
+     * @return the text chunks
+     */
+    public String getTextChunks() {
+        String value = this.textChunks;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Sets the text chunks for a PNG image.
+     * @param value the text chunks
+     */
+    public void setTextChunks(final String value) {
+        checkIfValueIsNull(value);
+        this.textChunks = value;
     }
 }
