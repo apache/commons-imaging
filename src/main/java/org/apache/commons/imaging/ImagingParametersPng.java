@@ -50,10 +50,10 @@ public final class ImagingParametersPng extends ImagingParameters {
     }
     
     /**
-     * Returns a Byte for the bit depth of a PNG image.
+     * Returns the bit depth of a PNG image.
      * @return 
      */
-    public Byte getBitDepth() {
+    public byte getBitDepth() {
         Byte value = this.bitDepth;
         checkIfParameterIsPresent(value);
         return value;
@@ -63,7 +63,7 @@ public final class ImagingParametersPng extends ImagingParameters {
      * Sets the bit depth of a PNG image.
      * @param value
      */
-    public void setBitDepth(final Byte value) {
+    public void setBitDepth(final byte value) {
         checkIfValueIsNull(value);
         this.bitDepth = value;
     }
