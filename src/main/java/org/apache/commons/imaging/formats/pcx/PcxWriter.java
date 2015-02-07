@@ -31,11 +31,15 @@ import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 
 class PcxWriter {
-    private int encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
-    private int bitDepth = -1;
+    private int encoding;
+    private int bitDepth;
     private final PixelDensity pixelDensity;
 
     public PcxWriter(final ImagingParameters params) throws ImageWriteException {
+        // set default values
+        this.encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
+        this.bitDepth = -1;
+        
         // ensure that the parameter object is not null
         final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
         
