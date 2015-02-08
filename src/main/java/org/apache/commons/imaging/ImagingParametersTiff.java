@@ -30,6 +30,8 @@ public final class ImagingParametersTiff extends ImagingParameters {
     
     private Integer compressionLevel; // PARAM_KEY_COMPRESSION
     
+    private Integer compressionBlockSize; // PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE
+
     private TiffOutputSet outputSetForMetaData; // PARAM_KEY_EXIF
     
     private boolean readThumbnailsValue; // PARAM_KEY_READ_THUMBNAILS
@@ -39,6 +41,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      */
     public ImagingParametersTiff() {
         this.compressionLevel = null;
+        this.compressionBlockSize = null;
         this.outputSetForMetaData = null;
     }
     
@@ -84,6 +87,50 @@ public final class ImagingParametersTiff extends ImagingParameters {
      */
     public void setCompressionLevel(final int value) {
         this.compressionLevel = value;
+    }
+    
+    //****** compressionBlockSize ******
+    
+    /**
+     * Returns {@code true} if there is a value present, {@false} else.
+     * @return 
+     */
+    public boolean isCompressionBlockSizePresent() {
+        return this.compressionBlockSize == null;
+    }
+    
+    /**
+     * Parameter used in write operations to indicate desired compression
+     * block size.
+     * <p>
+     * Currently only applies to writing TIFF image files.
+     * <p>
+     * Default value: TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED
+     * @return Valid values:
+     * TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
+     * TiffConstants.TIFF_COMPRESSION_CCITT_1D,
+     * TiffConstants.TIFF_COMPRESSION_LZW,
+     * TiffConstants.TIFF_COMPRESSION_PACKBITS
+     */
+    public int getCompressionBlockSize() {
+        Integer value = this.compressionBlockSize;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter used in write operations to indicate desired compression
+     * block size.
+     * <p>
+     * Currently only applies to writing TIFF image files.
+     * @param value Valid values:
+     * TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
+     * TiffConstants.TIFF_COMPRESSION_CCITT_1D,
+     * TiffConstants.TIFF_COMPRESSION_LZW,
+     * TiffConstants.TIFF_COMPRESSION_PACKBITS
+     */
+    public void setCompressionBlockSize(final int value) {
+        this.compressionBlockSize = value;
     }
     
     //****** tiffOutputSetForMetaData ******
