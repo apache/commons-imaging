@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.rgbe;
 
@@ -29,13 +31,13 @@ import java.awt.image.Raster;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.IoUtils;
@@ -72,7 +74,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final RgbeInfo info = new RgbeInfo(byteSource);
         boolean canThrow = false;
@@ -86,7 +88,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final RgbeInfo info = new RgbeInfo(byteSource);
         boolean canThrow = false;
@@ -106,7 +108,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final RgbeInfo info = new RgbeInfo(byteSource);
         boolean canThrow = false;
@@ -132,7 +134,7 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final RgbeInfo info = new RgbeInfo(byteSource);
         boolean canThrow = false;
@@ -146,13 +148,13 @@ public class RgbeImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+    public String getXmpXml(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
