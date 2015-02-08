@@ -40,6 +40,15 @@ public final class ImagingParametersTiff extends ImagingParameters {
     
     private Integer t6options; // PARAM_KEY_T6_OPTIONS
     
+    private Integer subImageX; // PARAM_KEY_SUBIMAGE_X
+    
+    private Integer subImageY; // PARAM_KEY_SUBIMAGE_Y
+    
+    private Integer subImageWidth; // PARAM_KEY_SUBIMAGE_WIDTH
+    
+    private Integer subImageHeight; // PARAM_KEY_SUBIMAGE_HEIGHT
+    
+    
     /**
      * This gives you a parameter object with default values.
      */
@@ -262,5 +271,133 @@ public final class ImagingParametersTiff extends ImagingParameters {
      */
     public void setT6options(final int value) {
         this.t6options = value;
+    }
+    
+    //****** subImageX ******
+    
+    /**
+     * Returns {@code true} if there is a value present, {@false} else.
+     * @return 
+     */
+    public boolean isSubImageX_Present() {
+        return this.subImageX == null;
+    }
+    
+    /**
+     * Parameter used in read operations to indicate the X coordinate of the sub-image.
+     * <p>
+     * Currently only applies to read TIFF image files.
+     * @return the x coordinate of the sub-image
+     */
+    public int getSubImageX() {
+        Integer value = this.subImageX;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter used in read operations to indicate the X coordinate of the sub-image.
+     * <p>
+     * Currently only applies to read TIFF image files.
+     * @param value the x coordinate of the sub-image
+     */
+    public void setSubImageX(final int value) {
+        this.subImageX = value;
+    }
+    
+    //****** subImageY ******
+    
+    /**
+     * Returns {@code true} if there is a value present, {@false} else.
+     * @return 
+     */
+    public boolean isSubImageY_Present() {
+        return this.subImageY == null;
+    }
+    
+    /**
+     * Parameter used in read operations to indicate the Y coordinate of the sub-image.
+     * <p>
+     * Currently only applies to read TIFF image files.
+     * @return the y coordinate of the sub-image
+     */
+    public int getSubImageY() {
+        Integer value = this.subImageY;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter used in read operations to indicate the Y coordinate of the sub-image.
+     * <p>
+     * Currently only applies to read TIFF image files.
+     * @param value the y coordinate of the sub-image
+     */
+    public void setSubImageY(final int value) {
+        this.subImageY = value;
+    }
+    
+    //****** subImageWidth ******
+    
+    /**
+     * Returns {@code true} if there is a value present, {@false} else.
+     * @return 
+     */
+    public boolean isSubImageWidth_Present() {
+        return this.subImageWidth == null;
+    }
+    
+    /**
+     * Parameter used in read operations to indicate the width of the sub-image.
+     * <p>
+     * Currently only applies to read TIFF image files.
+     * @return the width of the sub-image
+     */
+    public int getSubImageWidth() {
+        Integer value = this.subImageWidth;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter used in read operations to indicate the width of the sub-image.
+     * <p>
+     * Currently only applies to read TIFF image files.
+     * @param value the width of the sub-image
+     */
+    public void setSubImageWidth(final int value) {
+        this.subImageWidth = value;
+    }
+    
+    //****** subImageHeight ******
+    
+    /**
+     * Returns {@code true} if there is a value present, {@false} else.
+     * @return 
+     */
+    public boolean isSubImageHeight_Present() {
+        return this.subImageHeight == null;
+    }
+    
+    /**
+     * Parameter used in read operations to indicate the height of the sub-image.
+     * <p>
+     * Currently only applies to read TIFF image files.
+     * @return the height of the sub-image
+     */
+    public int getSubImageHeight() {
+        Integer value = this.subImageHeight;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter used in read operations to indicate the height of the sub-image.
+     * <p>
+     * Currently only applies to read TIFF image files.
+     * @param value the height of the sub-image
+     */
+    public void setSubImageHeight(final int value) {
+        this.subImageHeight = value;
     }
 }
