@@ -206,7 +206,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Returns {@code true} if there is a value present, {@false} else.
      * @return 
      */
-    public boolean isT4OptionsPresent() {
+    public boolean isT4optionsPresent() {
         return this.t4options == null;
     }
     
@@ -216,7 +216,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Currently only applies to writing TIFF image files.
      * @return desired t4 options
      */
-    public int getT4Options() {
+    public int getT4options() {
         Integer value = this.t4options;
         checkIfParameterIsPresent(value);
         return value;
@@ -228,7 +228,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Currently only applies to writing TIFF image files.
      * @param value desired t4 options
      */
-    public void setT4Options(final int value) {
+    public void setT4options(final int value) {
         this.t4options = value;
     }
     
@@ -238,7 +238,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Returns {@code true} if there is a value present, {@false} else.
      * @return 
      */
-    public boolean isT6OptionsPresent() {
+    public boolean isT6optionsPresent() {
         return this.t6options == null;
     }
     
@@ -248,7 +248,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Currently only applies to writing TIFF image files.
      * @return desired t6 options
      */
-    public int getT6Options() {
+    public int getT6options() {
         Integer value = this.t6options;
         checkIfParameterIsPresent(value);
         return value;
@@ -260,7 +260,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Currently only applies to writing TIFF image files.
      * @param value desired t6 options
      */
-    public void setT6Options(final int value) {
+    public void setT6options(final int value) {
         this.t6options = value;
     }
 }
