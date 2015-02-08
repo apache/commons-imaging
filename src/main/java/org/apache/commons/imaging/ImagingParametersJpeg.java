@@ -35,7 +35,8 @@ public final class ImagingParametersJpeg extends ImagingParameters {
         this.readThumbnailsValue = false;
     }
     
-    //****** getReadThumbnails ******
+    //****** readThumbnails ******
+    
     /**
      * Parameter key. Indicates whether to read embedded thumbnails.
      * <p>
