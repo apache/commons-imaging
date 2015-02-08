@@ -36,6 +36,10 @@ public final class ImagingParametersTiff extends ImagingParameters {
     
     private boolean readThumbnailsValue; // PARAM_KEY_READ_THUMBNAILS
     
+    private Integer t4options; // PARAM_KEY_T4_OPTIONS
+    
+    private Integer t6options; // PARAM_KEY_T6_OPTIONS
+    
     /**
      * This gives you a parameter object with default values.
      */
@@ -194,5 +198,69 @@ public final class ImagingParametersTiff extends ImagingParameters {
      */
     public void disableReadThumbnails() {
         this.readThumbnailsValue = false;
+    }
+    
+    //****** t4 options ******
+    
+    /**
+     * Returns {@code true} if there is a value present, {@false} else.
+     * @return 
+     */
+    public boolean isT4OptionsPresent() {
+        return this.t4options == null;
+    }
+    
+    /**
+     * Parameter used in write operations to indicate desired t4 options.
+     * <p>
+     * Currently only applies to writing TIFF image files.
+     * @return desired t4 options
+     */
+    public int getT4Options() {
+        Integer value = this.t4options;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter used in write operations to indicate desired t4 options.
+     * <p>
+     * Currently only applies to writing TIFF image files.
+     * @param value desired t4 options
+     */
+    public void setT4Options(final int value) {
+        this.t4options = value;
+    }
+    
+    //****** t6 options ******
+    
+    /**
+     * Returns {@code true} if there is a value present, {@false} else.
+     * @return 
+     */
+    public boolean isT6OptionsPresent() {
+        return this.t6options == null;
+    }
+    
+    /**
+     * Parameter used in write operations to indicate desired t6 options.
+     * <p>
+     * Currently only applies to writing TIFF image files.
+     * @return desired t6 options
+     */
+    public int getT6Options() {
+        Integer value = this.t6options;
+        checkIfParameterIsPresent(value);
+        return value;
+    }
+    
+    /**
+     * Parameter used in write operations to indicate desired t6 options.
+     * <p>
+     * Currently only applies to writing TIFF image files.
+     * @param value desired t6 options
+     */
+    public void setT6Options(final int value) {
+        this.t6options = value;
     }
 }
