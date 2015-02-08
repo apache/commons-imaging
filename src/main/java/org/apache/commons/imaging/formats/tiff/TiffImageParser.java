@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.tiff;
 
@@ -26,7 +28,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
@@ -35,11 +36,12 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.ImagingParametersTiff;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReader;
@@ -81,7 +83,7 @@ public class TiffImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -93,7 +95,7 @@ public class TiffImageParser extends ImageParser {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -116,7 +118,7 @@ public class TiffImageParser extends ImageParser {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffReader tiffReader = new TiffReader(isStrict(params));
@@ -144,7 +146,7 @@ public class TiffImageParser extends ImageParser {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -303,7 +305,7 @@ public class TiffImageParser extends ImageParser {
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+    public String getXmpXml(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -346,7 +348,7 @@ public class TiffImageParser extends ImageParser {
             {
                 final FormatCompliance formatCompliance = FormatCompliance
                         .getDefault();
-                final Map<String, Object> params = null;
+                final ImagingParameters params = null;
                 final TiffContents contents = new TiffReader(true).readContents(
                         byteSource, params, formatCompliance);
 
@@ -391,13 +393,13 @@ public class TiffImageParser extends ImageParser {
     public FormatCompliance getFormatCompliance(final ByteSource byteSource)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final Map<String, Object> params = null;
+        final ImagingParameters params = null;
         new TiffReader(isStrict(params)).readContents(byteSource, params,
                 formatCompliance);
         return formatCompliance;
     }
 
-    public List<byte[]> collectRawImageData(final ByteSource byteSource, final Map<String, Object> params)
+    public List<byte[]> collectRawImageData(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffContents contents = new TiffReader(isStrict(params))
@@ -431,7 +433,7 @@ public class TiffImageParser extends ImageParser {
      * very large TIFF file.  The specifications for partial images are
      * as follows:
      * <code><pre>
-     *   HashMap<String, Object> params = new HashMap<String, Object>();
+     *   Hashfinal ImagingParameters params = new HashMap<String, Object>();
      *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, new Integer(x));
      *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, new Integer(y));
      *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, new Integer(width));
@@ -452,7 +454,7 @@ public class TiffImageParser extends ImageParser {
      * access operation.
      */
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
         final TiffReader reader = new TiffReader(isStrict(params));
@@ -485,40 +487,45 @@ public class TiffImageParser extends ImageParser {
         }
         return results;
     }
-
-    private Integer getIntegerParameter(
-            final String key, final Map<String, Object>params)
-            throws ImageReadException
-    {
-        if (params == null) {
-            return null;
-        }
-
-        if (!params.containsKey(key)) {
-            return null;
-        }
-
-        final Object obj = params.get(key);
-
-        if (obj instanceof Integer) {
-            return (Integer) obj;
-        }
-        throw new ImageReadException("Non-Integer parameter " + key);
-    }
     
-    private Rectangle checkForSubImage(
-            final Map<String, Object> params)
-            throws ImageReadException
-    {
-        Integer ix0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_X, params);
-        Integer iy0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_Y, params);
-        Integer iwidth = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
-        Integer iheight = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, params);
+    private Rectangle checkForSubImage(final ImagingParameters params) throws ImageReadException {
+        Integer ix0 = null;
+        Integer iy0 = null;
+        Integer iwidth = null;
+        Integer iheight = null;
         
+        // we got parameters
+        if (params != null) {
+            // we got even TIFF specific parameters
+            if (params instanceof ImagingParametersTiff) {
+                final ImagingParametersTiff parametersTiff = (ImagingParametersTiff) params;
+                
+                if (parametersTiff.isSubImageX_Present()) {
+                    ix0 = parametersTiff.getSubImageX();
+                }
+                
+                if (parametersTiff.isSubImageY_Present()) {
+                    iy0 = parametersTiff.getSubImageY();
+                }
+                
+                if (parametersTiff.isSubImageWidth_Present()) {
+                    iwidth = parametersTiff.getSubImageWidth();
+                }
+                
+                if (parametersTiff.isSubImageHeight_Present()) {
+                    iheight = parametersTiff.getSubImageHeight();
+                }
+            }
+        }
+        
+        // we either got no parameters, got parameters but these are not TIFF specific
+        // or if neither x, y, width nor height was set
         if (ix0 == null && iy0 == null && iwidth == null && iheight == null) {
             return null;
         }
-
+        
+        // if we got at lease one of theseparameters: x, y, width or height
+        // at least one of these is missing
         final StringBuilder sb = new StringBuilder(32);
         if (ix0 == null) {
             sb.append(" x0,");
@@ -541,7 +548,7 @@ public class TiffImageParser extends ImageParser {
     }
     
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
-            final ByteOrder byteOrder, final Map<String, Object> params) 
+            final ByteOrder byteOrder, final ImagingParameters params) 
             throws ImageReadException, IOException
     {
         final List<TiffField> entries = directory.entries;
@@ -729,7 +736,7 @@ public class TiffImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final ImagingParameters params)
             throws ImageWriteException, IOException {
         new TiffImageWriterLossy().writeImage(src, os, params);
     }
