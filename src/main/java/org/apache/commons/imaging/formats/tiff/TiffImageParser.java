@@ -647,7 +647,7 @@ public class TiffImageParser extends ImageParser {
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
                 samplesPerPixel, width, height, compression, byteOrder);
 
-        BufferedImage result = null;
+        BufferedImage result;
         if (subImage != null) {
             result = dataReader.readImageData(subImage);
         } else {
