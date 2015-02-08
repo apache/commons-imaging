@@ -26,7 +26,7 @@ package org.apache.commons.imaging;
  */
 public final class ImagingParametersJpeg extends ImagingParameters {
     
-    private Boolean readThumbnailsValue; // PARAM_KEY_READ_THUMBNAILS
+    private boolean readThumbnailsValue; // PARAM_KEY_READ_THUMBNAILS
     
     /**
      * This gives you a parameter object with default values.
