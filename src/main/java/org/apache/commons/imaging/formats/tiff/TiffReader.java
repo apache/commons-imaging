@@ -13,8 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.tiff;
 
@@ -23,10 +21,11 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
@@ -310,7 +309,7 @@ public class TiffReader extends BinaryFileParser {
             this(null);
         }
 
-        public Collector(final ImagingParameters params) {
+        public Collector(final Map<String, Object> params) {
             boolean tmpReadThumbnails = true;
             if (params != null && params.containsKey(ImagingConstants.PARAM_KEY_READ_THUMBNAILS)) {
                 tmpReadThumbnails = Boolean.TRUE.equals(params
@@ -386,7 +385,7 @@ public class TiffReader extends BinaryFileParser {
 //        }
 //    }
 
-    public TiffContents readFirstDirectory(final ByteSource byteSource, final ImagingParameters params,
+    public TiffContents readFirstDirectory(final ByteSource byteSource, final Map<String, Object> params,
             final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
         final Collector collector = new FirstDirectoryCollector(readImageData);
@@ -412,7 +411,7 @@ public class TiffReader extends BinaryFileParser {
         return contents;
     }
 
-    public TiffContents readContents(final ByteSource byteSource, final ImagingParameters params,
+    public TiffContents readContents(final ByteSource byteSource, final Map<String, Object> params,
             final FormatCompliance formatCompliance) throws ImageReadException,
             IOException {
 
@@ -421,7 +420,7 @@ public class TiffReader extends BinaryFileParser {
         return collector.getContents();
     }
 
-    public void read(final ByteSource byteSource, final ImagingParameters params,
+    public void read(final ByteSource byteSource, final Map<String, Object> params,
             final FormatCompliance formatCompliance, final Listener listener)
             throws ImageReadException, IOException {
         // TiffContents contents =
