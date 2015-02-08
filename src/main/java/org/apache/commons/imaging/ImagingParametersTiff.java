@@ -32,6 +32,8 @@ public final class ImagingParametersTiff extends ImagingParameters {
     
     private TiffOutputSet outputSetForMetaData; // PARAM_KEY_EXIF
     
+    private boolean readThumbnailsValue; // PARAM_KEY_READ_THUMBNAILS
+    
     /**
      * This gives you a parameter object with default values.
      */
@@ -119,5 +121,31 @@ public final class ImagingParametersTiff extends ImagingParameters {
     public void setOutputSet(final TiffOutputSet value) {
         checkIfValueIsNull(value);
         this.outputSetForMetaData = value;
+    }
+    
+    //****** getReadThumbnails ******
+    /**
+     * Parameter key. Indicates whether to read embedded thumbnails.
+     * <p>
+     * Default value: don't read embedded thumbnails
+     * @return Valid values:{@code true} (causes it to read embedded thumbnails
+     * and {@code false} (don't read embedded thumbnails).
+     */
+    public boolean getReadThumbnails() {
+        return this.readThumbnailsValue;
+    }
+    
+    /**
+     * Call this method to indicate to read embedded thumbnails.
+     */
+    public void enableReadThumbnails() {
+        this.readThumbnailsValue = true;
+    }
+    
+    /**
+     * Call this method to indicate not to read embedded thumbnails.
+     */
+    public void disableReadThumbnails() {
+        this.readThumbnailsValue = false;
     }
 }
