@@ -18,8 +18,6 @@ package org.apache.commons.imaging.formats.tiff.constants;
 
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.ImagingConstants;
-
 public final class TiffConstants {
 
     public static final ByteOrder DEFAULT_TIFF_BYTE_ORDER = ByteOrder.LITTLE_ENDIAN;
