@@ -35,7 +35,7 @@ public final class ImagingParametersJpeg extends ImagingParameters {
         this.readThumbnailsValue = false;
     }
     
-    //****** readThumbnails ******
+    //****** getReadThumbnails ******
     /**
      * Parameter key. Indicates whether to read embedded thumbnails.
      * <p>
@@ -45,12 +45,12 @@ public final class ImagingParametersJpeg extends ImagingParameters {
      * @return Valid values:{@code true} (causes it to read embedded thumbnails
      * and {@code false} (don't read embedded thumbnails).
      */
-    public boolean readThumbnails() {
+    public boolean getReadThumbnails() {
         return this.readThumbnailsValue;
     }
     
     /**
-     * Parameter key. Indicates to read embedded thumbnails.
+     * Call this method to indicate to read embedded thumbnails.
      * <p>
      * Only applies to read EXIF metadata from JPEG/JFIF files.
      */
@@ -59,7 +59,7 @@ public final class ImagingParametersJpeg extends ImagingParameters {
     }
     
     /**
-     * Parameter key. Indicates not to read embedded thumbnails.
+     * Call this method to indicate not to read embedded thumbnails.
      * <p>
      * Only applies to read EXIF metadata from JPEG/JFIF files.
      */
