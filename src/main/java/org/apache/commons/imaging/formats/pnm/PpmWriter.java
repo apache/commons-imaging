@@ -13,25 +13,27 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.pnm;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
 
 class PpmWriter implements PnmWriter {
 
-    private boolean rawbits;
+    private final boolean rawbits;
 
     public PpmWriter(boolean rawbits) {
         this.rawbits = rawbits;
     }
 
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final ImagingParameters params)
             throws ImageWriteException, IOException {
         // System.out.println
         // (b1 == 0x50 && b2 == 0x36)
