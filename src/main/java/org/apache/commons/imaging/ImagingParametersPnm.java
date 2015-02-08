@@ -35,7 +35,7 @@ public final class ImagingParametersPnm extends ImagingParameters {
         this.useRawbits = true;
     }
     
-    // ****** useRawbits ******
+    // ****** getUseRawbits ******
     
     /**
      * use raw bits
@@ -55,7 +55,7 @@ public final class ImagingParametersPnm extends ImagingParameters {
      * {@code true} = use raw bits; {@code false} = don't use raw bits
      * @return 
      */
-    public boolean useRawbits() {
+    public boolean getUseRawbits() {
         return this.useRawbits;
     }
 }
