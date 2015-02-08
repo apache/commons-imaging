@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.tiff;
 
@@ -22,9 +24,9 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
@@ -144,11 +146,11 @@ public class TiffDirectory extends TiffElement {
 
     public BufferedImage getTiffImage(final ByteOrder byteOrder) throws ImageReadException,
             IOException {
-        final Map<String, Object> params = null;
+        final ImagingParameters params = null;
         return getTiffImage(byteOrder, params);
     }
 
-    public BufferedImage getTiffImage(final ByteOrder byteOrder, final Map<String, Object> params)
+    public BufferedImage getTiffImage(final ByteOrder byteOrder, final ImagingParameters params)
             throws ImageReadException, IOException {
         if (null == tiffImageData) {
             return null;
