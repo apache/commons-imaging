@@ -19,13 +19,13 @@ package org.apache.commons.imaging.formats.pnm;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
 
 interface PnmWriter {
 
     void writeImage(BufferedImage src, OutputStream os,
-            Map<String, Object> params) throws ImageWriteException, IOException;
+            final ImagingParameters params) throws ImageWriteException, IOException;
 
 }
