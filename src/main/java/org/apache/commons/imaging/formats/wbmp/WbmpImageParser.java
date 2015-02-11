@@ -273,6 +273,8 @@ public class WbmpImageParser extends ImageParser {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     @Override
     public String getXmpXml(final ByteSource byteSource, final ImagingParameters params)
