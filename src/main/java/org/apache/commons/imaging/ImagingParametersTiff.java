@@ -34,7 +34,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
 
     private TiffOutputSet outputSetForMetaData; // PARAM_KEY_EXIF
     
-    private boolean readThumbnailsValue; // PARAM_KEY_READ_THUMBNAILS
+    private boolean readThumbnails; // PARAM_KEY_READ_THUMBNAILS
     
     private Integer t4options; // PARAM_KEY_T4_OPTIONS
     
@@ -192,21 +192,21 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * and {@code false} (don't read embedded thumbnails).
      */
     public boolean getReadThumbnails() {
-        return this.readThumbnailsValue;
+        return this.readThumbnails;
     }
     
     /**
      * Call this method to indicate to read embedded thumbnails.
      */
     public void enableReadThumbnails() {
-        this.readThumbnailsValue = true;
+        this.readThumbnails = true;
     }
     
     /**
      * Call this method to indicate not to read embedded thumbnails.
      */
     public void disableReadThumbnails() {
-        this.readThumbnailsValue = false;
+        this.readThumbnails = false;
     }
     
     //****** t4 options ******
