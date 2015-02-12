@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.bmp;
@@ -23,12 +25,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +51,7 @@ public class BmpReadTest extends BmpBaseTest {
 
     @Test
     public void testImageInfo() throws ImageReadException, IOException {
-        final Map<String, Object> params = Collections.emptyMap();
+        final ImagingParameters params = new ImagingParameters();
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
         assertNotNull(imageInfo);
         // TODO assert more
