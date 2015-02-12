@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 /****************************************************************
@@ -159,9 +161,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Formatter;
-import java.util.HashMap;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 
@@ -213,7 +215,7 @@ public class ApacheImagingSpeedAndMemoryTest {
 
                 // ready the parser (you may modify this code block
                 // to use your parser of choice)
-                HashMap<String, Object> params = new HashMap<String, Object>();
+                ImagingParameters params = new ImagingParameters();
                 TiffImageParser tiffImageParser = new TiffImageParser();
 
                 // load the file and record time needed to do so
