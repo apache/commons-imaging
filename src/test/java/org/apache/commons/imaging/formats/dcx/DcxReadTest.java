@@ -36,7 +36,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class DcxReadTest extends DcxBaseTest {
 
-    private File imageFile;
+    private final File imageFile;
 
     @Parameterized.Parameters
     public static Collection<File> data() throws Exception {
