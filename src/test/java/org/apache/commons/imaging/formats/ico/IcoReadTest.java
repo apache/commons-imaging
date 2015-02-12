@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.ico;
@@ -22,13 +24,10 @@ import static org.junit.Assert.assertNotNull;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Assert;
@@ -40,7 +39,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class IcoReadTest extends IcoBaseTest {
 
-    private File imageFile;
+    private final File imageFile;
 
     @Parameterized.Parameters
     public static Collection<File> data() throws Exception {
@@ -60,7 +59,7 @@ public class IcoReadTest extends IcoBaseTest {
     @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
     @Test(expected = UnsupportedOperationException.class)
     public void testImageInfo() throws Exception {
-        Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
+        Imaging.getImageInfo(imageFile, new ImagingParameters());
     }
 
     @Test
