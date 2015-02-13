@@ -47,9 +47,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PnmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".pnm";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".pbm", ".pgm",
-            ".ppm", ".pnm", ".pam" };
-    public static final String PARAM_KEY_PNM_RAWBITS = "PNM_RAWBITS";
+    private static final String[] ACCEPTED_EXTENSIONS = { ".pbm", ".pgm", ".ppm", ".pnm", ".pam" };
     public static final String PARAM_VALUE_PNM_RAWBITS_YES = "YES";
     public static final String PARAM_VALUE_PNM_RAWBITS_NO = "NO";
 
