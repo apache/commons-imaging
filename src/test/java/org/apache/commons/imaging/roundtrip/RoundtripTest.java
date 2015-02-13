@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.roundtrip;
@@ -24,8 +26,6 @@ import static org.junit.Assert.assertTrue;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
@@ -33,7 +33,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
@@ -416,9 +416,10 @@ public class RoundtripTest extends ImagingTest {
             final File temp1 = createTempFile("pixeldensity.", "."
                     + formatInfo.format.getExtension());
             
-            final Map<String, Object> params = new HashMap<String, Object>();
+            final ImagingParameters params = new ImagingParameters();
             final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
-            params.put(ImagingConstants.PARAM_KEY_PIXEL_DENSITY, pixelDensity);
+            params.setPixelDensity(pixelDensity);
+            
             Imaging.writeImage(testImage, temp1, formatInfo.format, params);
             
             final ImageInfo imageInfo = Imaging.getImageInfo(temp1);
@@ -465,12 +466,11 @@ public class RoundtripTest extends ImagingTest {
                 + formatInfo.format.getExtension());
         Debug.debug("tempFile: " + temp1.getName());
 
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final ImagingParameters params = new ImagingParameters();
         Imaging.writeImage(testImage, temp1, formatInfo.format, params);
 
-        final Map<String, Object> readParams = new HashMap<String, Object>();
-        readParams.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
-                new RgbBufferedImageFactory());
+        final ImagingParameters readParams = new ImagingParameters();
+        readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
         final BufferedImage image2 = Imaging.getBufferedImage(temp1, readParams);
         assertNotNull(image2);
 

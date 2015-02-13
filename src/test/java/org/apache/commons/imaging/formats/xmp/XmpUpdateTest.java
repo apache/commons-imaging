@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.xmp;
@@ -22,14 +24,12 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
@@ -84,8 +84,8 @@ public class XmpUpdateTest extends ImagingTest {
 
             // ----
 
-            final Map<String, Object> params = new HashMap<String, Object>();
-            params.put(ImagingConstants.PARAM_KEY_XMP_XML, xmpXml);
+            final ImagingParameters params = new ImagingParameters();
+            params.setXmpXmlAsString(xmpXml);
             Imaging.writeImage(image, tempFile, imageFormat, params);
 
             final String xmpXmlOut = Imaging.getXmpXml(tempFile);
