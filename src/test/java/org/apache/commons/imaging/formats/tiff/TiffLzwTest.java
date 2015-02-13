@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.tiff;
@@ -25,11 +27,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
@@ -69,8 +71,7 @@ public class TiffLzwTest extends TiffBaseTest {
             Debug.debug("imageFile", image);
 
             ByteSource byteSource = new ByteSourceFile(image);
-            List<byte[]> data = new TiffImageParser().collectRawImageData(byteSource,
-                    Collections.<String, Object>emptyMap());
+            List<byte[]> data = new TiffImageParser().collectRawImageData(byteSource, new ImagingParameters());
 
             for (byte[] bytes : data) {
                 decompressRoundtripAndValidate(bytes);
