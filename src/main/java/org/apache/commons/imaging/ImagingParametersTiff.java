@@ -220,9 +220,12 @@ public final class ImagingParametersTiff extends ImagingParameters {
     }
     
     /**
-     * Parameter used in write operations to indicate desired t4 options.
+     * Used in write operations to indicate the desired
+     * T.4 options to use when using TIFF_COMPRESSION_CCITT_GROUP_3.
      * <p>
-     * Currently only applies to writing TIFF image files.
+     * Valid values: any Integer containing a mixture of the
+     * TIFF_FLAG_T4_OPTIONS_2D, TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE,
+     * and TIFF_FLAG_T4_OPTIONS_FILL flags.
      * @return desired t4 options
      */
     public int getT4options() {
@@ -232,9 +235,12 @@ public final class ImagingParametersTiff extends ImagingParameters {
     }
     
     /**
-     * Parameter used in write operations to indicate desired t4 options.
+     * Used in write operations to indicate the desired
+     * T.4 options to use when using TIFF_COMPRESSION_CCITT_GROUP_3.
      * <p>
-     * Currently only applies to writing TIFF image files.
+     * Valid values: any Integer containing a mixture of the
+     * TIFF_FLAG_T4_OPTIONS_2D, TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE,
+     * and TIFF_FLAG_T4_OPTIONS_FILL flags.
      * @param value desired t4 options
      */
     public void setT4options(final int value) {
@@ -252,9 +258,11 @@ public final class ImagingParametersTiff extends ImagingParameters {
     }
     
     /**
-     * Parameter used in write operations to indicate desired t6 options.
+     * Used in write operations to indicate the desired
+     * T.6 options to use when using TIFF_COMPRESSION_CCITT_GROUP_4.
      * <p>
-     * Currently only applies to writing TIFF image files.
+     * Valid values: any Integer containing either zero or
+     * TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE.
      * @return desired t6 options
      */
     public int getT6options() {
@@ -264,9 +272,11 @@ public final class ImagingParametersTiff extends ImagingParameters {
     }
     
     /**
-     * Parameter used in write operations to indicate desired t6 options.
+     * Used in write operations to indicate the desired
+     * T.6 options to use when using TIFF_COMPRESSION_CCITT_GROUP_4.
      * <p>
-     * Currently only applies to writing TIFF image files.
+     * Valid values: any Integer containing either zero or
+     * TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE.
      * @param value desired t6 options
      */
     public void setT6options(final int value) {
