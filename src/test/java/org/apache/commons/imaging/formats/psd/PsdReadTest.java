@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.psd;
 
@@ -26,6 +28,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Assert;
@@ -45,7 +48,7 @@ public class PsdReadTest extends PsdBaseTest {
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
             Assert.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
-            final Map<String, Object> params = new HashMap<String, Object>();
+            final ImagingParameters params = new ImagingParameters();
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
 
