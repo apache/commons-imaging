@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.png;
@@ -25,12 +27,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParametersPng;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
@@ -40,11 +41,10 @@ public class PngTextTest extends PngBaseTest {
     public void test() throws Exception {
         final int width = 1;
         final int height = 1;
-        final BufferedImage srcImage = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage srcImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         srcImage.setRGB(0, 0, Color.red.getRGB());
 
-        final Map<String, Object> writeParams = new HashMap<String, Object>();
+        final ImagingParametersPng writeParams = new ImagingParametersPng();
 
         final List<PngText> writeTexts = new ArrayList<PngText>();
         {
@@ -65,11 +65,10 @@ public class PngTextTest extends PngBaseTest {
             writeTexts.add(new PngText.Itxt(keyword, text, languageTag,
                     translatedKeyword));
         }
-
-        writeParams.put(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS, writeTexts);
-
-        final byte[] bytes = Imaging.writeImageToBytes(srcImage,
-                ImageFormats.PNG, writeParams);
+        
+        writeParams.setTextChunks(writeTexts);
+        
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage, ImageFormats.PNG, writeParams);
 
         final File tempFile = createTempFile("temp", ".png");
         FileUtils.writeByteArrayToFile(tempFile, bytes);
