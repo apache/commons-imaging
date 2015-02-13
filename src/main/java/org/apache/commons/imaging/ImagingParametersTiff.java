@@ -113,17 +113,10 @@ public final class ImagingParametersTiff extends ImagingParameters {
     }
     
     /**
-     * Parameter used in write operations to indicate desired compression
-     * block size.
-     * <p>
-     * Currently only applies to writing TIFF image files.
-     * <p>
-     * Default value: TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED
-     * @return Valid values:
-     * TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
-     * TiffConstants.TIFF_COMPRESSION_CCITT_1D,
-     * TiffConstants.TIFF_COMPRESSION_LZW,
-     * TiffConstants.TIFF_COMPRESSION_PACKBITS
+     * Specifies the amount of memory in bytes to be used for a strip
+     * or tile size when employing LZW compression.  The default is
+     * 8000 (roughly 8K). Minimum value is 8000.
+     * @return the compression block size
      */
     public int getCompressionBlockSize() {
         Integer value = this.compressionBlockSize;
@@ -132,15 +125,10 @@ public final class ImagingParametersTiff extends ImagingParameters {
     }
     
     /**
-     * Parameter used in write operations to indicate desired compression
-     * block size.
-     * <p>
-     * Currently only applies to writing TIFF image files.
-     * @param value Valid values:
-     * TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
-     * TiffConstants.TIFF_COMPRESSION_CCITT_1D,
-     * TiffConstants.TIFF_COMPRESSION_LZW,
-     * TiffConstants.TIFF_COMPRESSION_PACKBITS
+     * Specifies the amount of memory in bytes to be used for a strip
+     * or tile size when employing LZW compression.  The default is
+     * 8000 (roughly 8K). Minimum value is 8000.
+     * @param value the compression block size
      */
     public void setCompressionBlockSize(final int value) {
         this.compressionBlockSize = value;
