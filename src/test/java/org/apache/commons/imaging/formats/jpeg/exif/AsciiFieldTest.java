@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.jpeg.exif;
@@ -27,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -40,7 +43,7 @@ public class AsciiFieldTest extends ExifBaseTest {
     public void testSingleImage() throws Exception {
         final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final ImagingParameters params = new ImagingParameters();
 
         final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
