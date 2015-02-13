@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.jpeg.exif;
@@ -20,14 +22,12 @@ package org.apache.commons.imaging.formats.jpeg.exif;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParametersJpeg;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -66,9 +66,14 @@ public abstract class SpecificExifTagTest extends ExifBaseTest {
             ImageReadException, ImageWriteException {
         // Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final ImagingParametersJpeg params = new ImagingParametersJpeg();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
+        if (ignoreImageData) {
+            params.disableReadThumbnails();
+        }
+        else {
+            params.enableReadThumbnails();
+        }
 
         // note that metadata might be null if no metadata is found.
         final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
