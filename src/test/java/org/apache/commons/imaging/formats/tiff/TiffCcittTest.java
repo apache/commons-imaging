@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.tiff;
@@ -22,13 +24,12 @@ import static org.junit.Assert.assertFalse;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParametersTiff;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.util.Debug;
@@ -178,9 +179,9 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String, Object> params = new HashMap<String, Object>();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
-                        TiffConstants.TIFF_COMPRESSION_CCITT_1D);
+                final ImagingParametersTiff params = new ImagingParametersTiff();
+                params.setCompressionLevel(TiffConstants.TIFF_COMPRESSION_CCITT_1D);
+                
                 final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormats.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
@@ -197,10 +198,10 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String, Object> params = new HashMap<String, Object>();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
-                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
-                params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 0);
+                final ImagingParametersTiff params = new ImagingParametersTiff();
+                params.setCompressionLevel(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.setT4options(0);
+                
                 final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormats.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
@@ -217,10 +218,10 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String, Object> params = new HashMap<String, Object>();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
-                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
-                params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 4);
+                final ImagingParametersTiff params = new ImagingParametersTiff();
+                params.setCompressionLevel(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.setT4options(4);
+                
                 final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormats.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
@@ -237,10 +238,10 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String, Object> params = new HashMap<String, Object>();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
-                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
-                params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 1);
+                final ImagingParametersTiff params = new ImagingParametersTiff();
+                params.setCompressionLevel(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.setT4options(1);
+                
                 final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormats.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
@@ -257,10 +258,10 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String, Object> params = new HashMap<String, Object>();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
-                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
-                params.put(TiffConstants.PARAM_KEY_T4_OPTIONS, 5);
+                final ImagingParametersTiff params = new ImagingParametersTiff();
+                params.setCompressionLevel(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3);
+                params.setT4options(5);
+                
                 final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormats.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
@@ -277,9 +278,9 @@ public class TiffCcittTest extends TiffBaseTest {
             }
 
             try {
-                final HashMap<String, Object> params = new HashMap<String, Object>();
-                params.put(ImagingConstants.PARAM_KEY_COMPRESSION,
-                        TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
+                final ImagingParametersTiff params = new ImagingParametersTiff();
+                params.setCompressionLevel(TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4);
+                
                 final byte[] compressed = Imaging.writeImageToBytes(image,
                         ImageFormats.TIFF, params);
                 final BufferedImage result = Imaging.getBufferedImage(compressed);
