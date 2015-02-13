@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.jpeg.xmp;
@@ -26,8 +28,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import org.apache.commons.imaging.ImagingParameters;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -54,7 +55,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
     @Test
     public void testRemoveInsertUpdate() throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final ImagingParameters params = new ImagingParameters();
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
         assertNotNull(xmpXml);
 
