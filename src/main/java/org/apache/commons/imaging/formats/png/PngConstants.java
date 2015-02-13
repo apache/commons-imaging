@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.png;
 
@@ -24,13 +26,6 @@ public final class PngConstants {
 
     public static final BinaryConstant PNG_SIGNATURE = new BinaryConstant(
             new byte[] { (byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n', });
-
-    public static final String PARAM_KEY_PNG_BIT_DEPTH = "PNG_BIT_DEPTH";
-    public static final String PARAM_KEY_PNG_FORCE_INDEXED_COLOR = "PNG_FORCE_INDEXED_COLOR";
-    public static final String PARAM_KEY_PNG_FORCE_TRUE_COLOR = "PNG_FORCE_TRUE_COLOR";
-
-    // public static final Object PARAM_KEY_PNG_BIT_DEPTH_YES = "YES";
-    // public static final Object PARAM_KEY_PNG_BIT_DEPTH_NO = "NO";
 
     public static final byte COMPRESSION_TYPE_INFLATE_DEFLATE = 0;
     public static final byte FILTER_METHOD_ADAPTIVE = 0;
@@ -58,16 +53,6 @@ public final class PngConstants {
      */
 
     public static final String XMP_KEYWORD = "XML:com.adobe.xmp";
-
-    /**
-     * Parameter key.
-     * 
-     * Only used when writing Png images.
-     * <p>
-     * Valid values: a list of WriteTexts.
-     * <p>
-     */
-    public static final String PARAM_KEY_PNG_TEXT_CHUNKS = "PNG_TEXT_CHUNKS";
 
     private PngConstants() {
     }
