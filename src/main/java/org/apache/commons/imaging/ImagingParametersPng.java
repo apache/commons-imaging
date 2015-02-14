@@ -72,7 +72,17 @@ public final class ImagingParametersPng extends ImagingParameters {
         this.bitDepth = value;
     }
     
-    // ****** forceIndexedColor ******
+    // ****** isForceIndexedColorEnabled ******
+    
+    /**
+     * {@code true} = force indexed color; {@code false} = don't force indexed color
+     * <p>
+     * Default value: {@code false}
+     * @return 
+     */
+    public boolean isForceIndexedColorEnabled() {
+        return this.forceIndexedColor;
+    }
     
     /**
      * force indexed color
@@ -88,15 +98,17 @@ public final class ImagingParametersPng extends ImagingParameters {
         this.forceIndexedColor = false;
     }
     
+    // ****** isForceTrueColorEnabled ******
+    
     /**
-     * {@code true} = force indexed color; {@code false} = don't force indexed color
+     * {@code true} = force true color; {@code false} = don't force true color
+     * <p>
+     * Default value: {@code false}
      * @return 
      */
-    public boolean forceIndexedColor() {
-        return this.forceIndexedColor;
+    public boolean isForceTrueColorEnabled() {
+        return this.forceTrueColor;
     }
-    
-    // ****** forceTrueColor ******
     
     /**
      * force indexed color
@@ -110,14 +122,6 @@ public final class ImagingParametersPng extends ImagingParameters {
      */
     public void disableForceTrueColor() {
         this.forceTrueColor = false;
-    }
-    
-    /**
-     * {@code true} = force true color; {@code false} = don't force true color
-     * @return 
-     */
-    public boolean forceTrueColor() {
-        return this.forceTrueColor;
     }
     
     //****** textChunks ******

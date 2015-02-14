@@ -331,7 +331,7 @@ public class PnmImageParser extends ImageParser {
             // read parameters specific for the PNM format
             if (params instanceof ImagingParametersPnm) {
                 final ImagingParametersPnm paramsPnm = (ImagingParametersPnm) params;
-                useRawbits = paramsPnm.getUseRawbits();
+                useRawbits = paramsPnm.isUseRawbitsEnabled();
             }
         }
 

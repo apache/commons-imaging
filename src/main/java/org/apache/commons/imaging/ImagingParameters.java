@@ -30,13 +30,20 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  * There are two kinds of parameters: with and without default value. For
  * parameters without default value it implements lazy initialization:
  * <br>
- * After getting an instance there is no value present until you set one using
- * one the setter methods. Until a value is set, isXPresent() will return
- * {@code false}. Accessing the value with getX() in this state will cause a RuntimeException.
- * After a value is set with setX() isXPresent() will return {@code true} and you may access the value.
+ * After getting an instance there is no value present. In this state accessing
+ * the value with getX() in this state will cause a RuntimeException.
+ * There is always a isXPresent() method for this parameter which returns
+ * {@code false} in this state.
+ * <br>
+ * Once you provided a value using setX() you may access this value with getX().
+ * The isXPresent() method will return {@code true} now.
  * <p>
  * Other parameters have a default value. This is told in the javadoc for their
  * getX() method. They don't have a isXPresent() method. You may access them any time.
+ * <p>
+ * All boolean parameters have default parameters. Their setter and getter have a different
+ * naming scheme: enableX() causes isXEnabled() to return {@code true} while 
+ * disableX() causes isXEnabled() to return {@code false}.
  */
 public class ImagingParameters {
     
@@ -69,15 +76,13 @@ public class ImagingParameters {
     
     //****** verbose ******
     /**
-     * Turns the verbose mode on/off.
+     * Tells if the verbose mode is turned on/off.
      * <p>
      * Parameter applies to read and write operations.
-     * <p>
-     * Default value: verbose mode disabled.
      * @return Valid values: {@code true} means {@literal "verbose mode enabled"}
-     * and {@code Boolean.FALSE} means {@literal "verbose mode disabled"}.
+     * and {@code false} means {@literal "verbose mode disabled"} (default value).
      */
-    public boolean isVerbose() {
+    public boolean isVerboseEnabled() {
         return this.verbose;
     }
     
@@ -102,13 +107,12 @@ public class ImagingParameters {
     /**
      * Parameter indicates whether to throw exceptions when parsing invalid
      * files, or whether to tolerate small problems.
-     * <p>
-     * Default value: tolerate small problems.
      * @return Valid values: {@code true} causes it to throw exceptions
-     * when parsing invalid files and {@code false} let it tolerate small problems.
+     * when parsing invalid files and {@code false} let it tolerate small problems
+     * (default value)
      * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
-    public boolean isStrict() {
+    public boolean isStrictEnabled() {
         return this.strict;
     }
     
