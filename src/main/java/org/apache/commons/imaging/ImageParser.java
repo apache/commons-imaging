@@ -77,24 +77,6 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  * the intentions of the original. Therefore, you should not assume
  * that the documentation is perfect, especially in the more obscure
  * and specialized areas of implementation.
- * 
- * <h4>The "Map params" argument</h4>
- * 
- * Many of the methods specified by this class accept an argument of
- * type Map giving a list of parameters to be used when processing an
- * image. For example, some of the output formats permit the specification
- * of different kinds of image compression or color models. Some of the
- * reading methods permit the calling application to require strict
- * format compliance.   In many cases, however, an application will not
- * require the use of this argument.  While some of the ImageParser
- * implementations check for (and ignore) null arguments for this parameter,
- * not all of them do (at least not at the time these notes were written).
- * Therefore, a prudent programmer will always supply an valid, though
- * empty instance of a Map implementation when calling such methods.
- * Generally, the java HashMap class is useful for this purpose.
- * 
- * <p>Additionally, developers creating or enhancing classes derived
- * from ImageParser are encouraged to include such checks in their code.
  */
 public abstract class ImageParser extends BinaryFileParser {
 
