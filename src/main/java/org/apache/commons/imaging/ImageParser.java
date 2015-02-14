@@ -957,7 +957,7 @@ public abstract class ImageParser extends BinaryFileParser {
      * @return A valid instance of an implementation of a IBufferedImageFactory.
      */
     protected BufferedImageFactory getBufferedImageFactory(final ImagingParameters params) {
-        if (params == null) {
+        if (params == null || params.isBufferedImageFactoryPresent() == false) {
             return new SimpleBufferedImageFactory();
         }
 
