@@ -51,7 +51,7 @@ public final class ImagingParametersPng extends ImagingParameters {
      * @return 
      */
     public boolean isBitDepthPresent() {
-        return this.bitDepth == null;
+        return this.bitDepth != null;
     }
     
     /**
@@ -127,7 +127,7 @@ public final class ImagingParametersPng extends ImagingParameters {
      * @return 
      */
     public boolean hasTextChunks() {
-        return this.textChunks == null;
+        return this.textChunks != null;
     }
     
     /**

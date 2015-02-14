@@ -65,7 +65,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return 
      */
     public boolean isCompressionLevelPresent() {
-        return this.compressionLevel == null;
+        return this.compressionLevel != null;
     }
     
     /**
@@ -109,7 +109,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return 
      */
     public boolean isCompressionBlockSizePresent() {
-        return this.compressionBlockSize == null;
+        return this.compressionBlockSize != null;
     }
     
     /**
@@ -145,7 +145,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return {@code true} if there is a value present, {@false} else.
      */
     public boolean isOutputSetPresent() {
-        return this.outputSetForMetaData == null;
+        return this.outputSetForMetaData != null;
     }
     
     /**
@@ -204,7 +204,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return 
      */
     public boolean isT4optionsPresent() {
-        return this.t4options == null;
+        return this.t4options != null;
     }
     
     /**
@@ -242,7 +242,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return 
      */
     public boolean isT6optionsPresent() {
-        return this.t6options == null;
+        return this.t6options != null;
     }
     
     /**
@@ -278,7 +278,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return 
      */
     public boolean isSubImageX_Present() {
-        return this.subImageX == null;
+        return this.subImageX != null;
     }
     
     /**
@@ -310,7 +310,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return 
      */
     public boolean isSubImageY_Present() {
-        return this.subImageY == null;
+        return this.subImageY != null;
     }
     
     /**
@@ -342,7 +342,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return 
      */
     public boolean isSubImageWidth_Present() {
-        return this.subImageWidth == null;
+        return this.subImageWidth != null;
     }
     
     /**
@@ -374,7 +374,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return 
      */
     public boolean isSubImageHeight_Present() {
-        return this.subImageHeight == null;
+        return this.subImageHeight != null;
     }
     
     /**

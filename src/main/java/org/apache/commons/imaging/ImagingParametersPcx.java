@@ -44,7 +44,7 @@ public final class ImagingParametersPcx extends ImagingParameters {
      * @return 
      */
     public boolean isCompressionLevelPresent() {
-        return this.compressionLevel == null;
+        return this.compressionLevel != null;
     }
     
     /**
@@ -84,7 +84,7 @@ public final class ImagingParametersPcx extends ImagingParameters {
      * @return 
      */
     public boolean isBitDepthPresent() {
-        return this.bitDepth == null;
+        return this.bitDepth != null;
     }
     
     /**

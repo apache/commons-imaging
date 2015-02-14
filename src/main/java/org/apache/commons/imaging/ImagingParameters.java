@@ -143,7 +143,7 @@ public class ImagingParameters {
      * @return {@code true} if there is a value present, {@false} else.
      */
     public boolean isFileNameHintPresent() {
-        return this.fileNameHint == null;
+        return this.fileNameHint != null;
     }
     
     /**
@@ -184,7 +184,7 @@ public class ImagingParameters {
      * @return {@code true} if there is a value present, {@false} else.
      */
     public boolean isXmpXmlAsStringPresent() {
-        return this.xmpXmlAsString == null;
+        return this.xmpXmlAsString != null;
     }
     
     /**
@@ -217,7 +217,7 @@ public class ImagingParameters {
      * @return {@code true} if there is a value present, {@false} else.
      */
     public boolean isImageFormatPresent() {
-        return this.imageFormat == null;
+        return this.imageFormat != null;
     }
     
     /**
@@ -248,7 +248,7 @@ public class ImagingParameters {
      * @return {@code true} if there is a value present, {@false} else.
      */
     public boolean isBufferedImageFactoryPresent() {
-        return this.bufferedImageFactory == null;
+        return this.bufferedImageFactory != null;
     }
     
     /**
@@ -279,7 +279,7 @@ public class ImagingParameters {
      * @see org.apache.commons.imaging.PixelDensity
      */
     public boolean isPixelDensityPresent() {
-        return this.pixelDensity == null;
+        return this.pixelDensity != null;
     }
     
     /**
