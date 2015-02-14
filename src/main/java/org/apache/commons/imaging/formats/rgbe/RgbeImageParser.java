@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.rgbe;
 
@@ -147,12 +149,6 @@ public class RgbeImageParser extends ImageParser {
 
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
-            throws ImageReadException, IOException {
-        return null;
-    }
-
-    @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         return null;
     }

@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.dcx;
 
@@ -253,21 +255,5 @@ public class DcxImageParser extends ImageParser {
         }
         final PcxImageParser pcxImageParser = new PcxImageParser();
         pcxImageParser.writeImage(src, bos, pcxParams);
-    }
-
-    /**
-     * Extracts embedded XML metadata as XML string.
-     * <p>
-     * 
-     * @param byteSource
-     *            File containing image data.
-     * @param params
-     *            Map of optional parameters, defined in ImagingConstants.
-     * @return Xmp Xml as String, if present. Otherwise, returns null.
-     */
-    @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
-            throws ImageReadException, IOException {
-        return null;
     }
 }

@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging;
 
@@ -671,7 +673,11 @@ public abstract class ImageParser extends BinaryFileParser {
      * image content.  Not all image formats support EXP infomation and
      * even for those that do, there is no guarantee that such information
      * will be present in an image.
-     *
+     * <p>
+     * This is just a default implementation. It merely returns {@code null}.
+     * If an implementation can return something else than {@code null} please
+     * feel free to override this method. Vice versa, returning {@code null} 
+     * is the default behavior for implementing classes. See issue IMAGING-163.
      * @param byteSource A valid reference to a ByteSource.
      * @param params     Optional instructions for special-handling or
      *                   interpretation of the input data.
@@ -682,8 +688,10 @@ public abstract class ImageParser extends BinaryFileParser {
      *                            parser implementation.
      * @throws IOException        In the event of unsuccessful read or access operation.
      */
-    public abstract String getXmpXml(ByteSource byteSource, Map<String, Object> params)
-            throws ImageReadException, IOException;
+    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+            throws ImageReadException, IOException {
+        return null;
+    }
 
     /**
      * Get an array of bytes describing the International Color Consortium (ICC)

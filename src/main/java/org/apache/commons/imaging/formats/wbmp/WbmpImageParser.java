@@ -11,6 +11,8 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *  under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.wbmp;
@@ -274,21 +276,5 @@ public class WbmpImageParser extends ImageParser {
                 os.write(pixel);
             }
         }
-    }
-
-    /**
-     * Extracts embedded XML metadata as XML string.
-     * <p>
-     * 
-     * @param byteSource
-     *            File containing image data.
-     * @param params
-     *            Map of optional parameters, defined in ImagingConstants.
-     * @return Xmp Xml as String, if present. Otherwise, returns null.
-     */
-    @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
-            throws ImageReadException, IOException {
-        return null;
     }
 }
