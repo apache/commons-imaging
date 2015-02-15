@@ -34,6 +34,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -63,13 +64,43 @@ public class BmpReadSpecificTest extends BmpBaseTest {
     }
     
     /**
-     * Get a buffered image for a bmp with negative height
+     * Get a buffered image for a bmp with negative height.
+     * 
+     * THIS TESTS THE HOTFIX EMPLOYED UNTIL READING BITMAPS WITH NEGATIVE HEIGTH IS IMPLEMENTED.
+     * 
      * @throws ImageReadException
      * @throws IOException 
      */
     @Test(expected=ImageReadException.class)
-    public void testBufferedImageNegativeHeight() throws Exception {
+    public void testBufferedImageNegativeHeightException() throws Exception {
         final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-negative-height.bmp");
         Imaging.getBufferedImage(imageFile);
+    }
+    
+    /**
+     * Get a buffered image for a bmp with negative height.
+     * Expected: The test image has white pixels in each corner except bottom left
+     * (there is a black one).
+     * @throws ImageReadException
+     * @throws IOException 
+     */
+    @Ignore(value = "Reading bitmaps with negative height has to be implemented before one can execute this test successfully.")
+    @Test//(expected=ImageReadException.class)
+    public void testBufferedImageNegativeHeight() throws Exception {
+        final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-negative-height.bmp");
+        final BufferedImage bufImage = Imaging.getBufferedImage(imageFile);
+        assertEquals(8, bufImage.getHeight());
+        assertEquals(4, bufImage.getWidth());
+        // the image is monochrome and has 4 black pixels, the remaning pixel are white
+        // the black pixels a placed such that we can make sure the picture is read
+        // as expected
+        // top left - white
+        assertEquals(1, bufImage.getRGB(0, 0));
+        // top right - white
+        assertEquals(1, bufImage.getRGB(3, 0));
+        // bottom left - black
+        assertEquals(0, bufImage.getRGB(0, 7));
+        // bottom right - white
+        assertEquals(1, bufImage.getRGB(3, 7));
     }
 }
