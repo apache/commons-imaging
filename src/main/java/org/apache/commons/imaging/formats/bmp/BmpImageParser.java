@@ -732,8 +732,7 @@ public class BmpImageParser extends ImageParser {
         // TODO support it
         if (heightRaw < 0) {
             throw new ImageReadException(
-                "Reading image data from bitmaps with negative header\n" +
-                " is yet not supported."
+                "Reading image data from bitmaps with negative header is yet not supported."
             );
         }
         
