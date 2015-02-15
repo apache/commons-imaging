@@ -1,3 +1,0 @@
-This is a monochrome 4x8 bitmap with negative height value. This image was taken from http://issues.apache.org/jira/browse/IMAGING-162. The original name was monochrome-negative-height.bmp.
-
-Added 2015 by Michael Grosss, mgmechanics@mgmechanics.de
