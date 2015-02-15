@@ -737,8 +737,9 @@ public class BmpImageParser extends ImageParser {
         }
         
         final PixelParser pixelParser = ic.pixelParser;
-        // the ImageBuilder need the raw height to get the correct imgae data
-        final ImageBuilder imageBuilder = new ImageBuilder(width, heightRaw, true);
+        // the ImageBuilder need the absolute height to calculate the correct
+        // size of an array to store the image data
+        final ImageBuilder imageBuilder = new ImageBuilder(width, heightAbsolute, true);
         pixelParser.processImage(imageBuilder);
 
         return imageBuilder.getBufferedImage();
