@@ -712,17 +712,34 @@ public class BmpImageParser extends ImageParser {
         // byte imageData[] = ic.imageData;
 
         final int width = bhi.width;
-        final int height = bhi.height;
+        // since image height as read from file header can be negative for bitmaps
+        // distinct between the value from header ("raw height", needed for correct
+        // reading of image data) and the absolute height (needed for correct 
+        // calculation of image size)
+        final int heightRaw = bhi.height;
+        final int heightAbsolute = bhi.heightAbsolute;
 
         if (verbose) {
             System.out.println("width: " + width);
-            System.out.println("height: " + height);
-            System.out.println("width*height: " + width * height);
-            System.out.println("width*height*4: " + width * height * 4);
+            System.out.println("height raw: " + heightRaw);
+            System.out.println("height absolute: " + heightAbsolute);
+            System.out.println("width*absolute_height: " + width * heightAbsolute);
+            System.out.println("width*absolute_height*4: " + width * heightAbsolute * 4);
         }
-
+        
+        // at this time reading image data from bitmaps with negative header
+        // is not supported
+        // TODO support it
+        if (heightRaw < 0) {
+            throw new ImageReadException(
+                "Reading image data from bitmaps with negative header\n" +
+                " is yet not supported."
+            );
+        }
+        
         final PixelParser pixelParser = ic.pixelParser;
-        final ImageBuilder imageBuilder = new ImageBuilder(width, height, true);
+        // the ImageBuilder need the raw height to get the correct imgae data
+        final ImageBuilder imageBuilder = new ImageBuilder(width, heightRaw, true);
         pixelParser.processImage(imageBuilder);
 
         return imageBuilder.getBufferedImage();
