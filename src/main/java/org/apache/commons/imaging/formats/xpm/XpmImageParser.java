@@ -679,7 +679,7 @@ public class XpmImageParser extends ImageParser {
                     hasTransparency ? maxColors - 1 : maxColors);
             
             // leave the loop if numbers would go beyond Integer.MAX_VALUE to avoind infinite loops
-            // test every operation from below if it would increase ant int value beyond Integer.MAX_VALUE
+            // test every operation from below if it would increase an int value beyond Integer.MAX_VALUE
             long nextMaxColors = maxColors * WRITE_PALETTE.length;
             long nextCharsPerPixel = charsPerPixel + 1;
             if (nextMaxColors > Integer.MAX_VALUE) {
