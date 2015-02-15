@@ -646,6 +646,8 @@ public class IcoImageParser extends ImageParser {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
         final int bitCount;
+        // If we can't obtain an exact rgb palette, we set the bit count to either 24 or 32
+        // so there is a relation between having a palette and the bit count.
         if (palette == null) {
             final boolean hasTransparency = paletteFactory.hasTransparency(src);
             if (hasTransparency) {
@@ -729,25 +731,30 @@ public class IcoImageParser extends ImageParser {
         for (int y = src.getHeight() - 1; y >= 0; y--) {
             for (int x = 0; x < src.getWidth(); x++) {
                 final int argb = src.getRGB(x, y);
-                if (bitCount < 8) {
-                    final int rgb = 0xffffff & argb;
-                    final int index = palette.getPaletteIndex(rgb);
-                    bitCache <<= bitCount;
-                    bitCache |= index;
-                    bitsInCache += bitCount;
-                    if (bitsInCache >= 8) {
-                        bos.write(0xff & bitCache);
-                        bitCache = 0;
-                        bitsInCache = 0;
+                // Remember there is a relation between having a rgb palette and the bit count, see above comment
+                if (palette == null) {
+                    if (bitCount == 24) {
+                        bos.write3Bytes(argb);
+                    } else if (bitCount == 32) {
+                        bos.write4Bytes(argb);
                     }
-                } else if (bitCount == 8) {
-                    final int rgb = 0xffffff & argb;
-                    final int index = palette.getPaletteIndex(rgb);
-                    bos.write(0xff & index);
-                } else if (bitCount == 24) {
-                    bos.write3Bytes(argb);
-                } else if (bitCount == 32) {
-                    bos.write4Bytes(argb);
+                } else {
+                    if (bitCount < 8) {
+                        final int rgb = 0xffffff & argb;
+                        final int index = palette.getPaletteIndex(rgb);
+                        bitCache <<= bitCount;
+                        bitCache |= index;
+                        bitsInCache += bitCount;
+                        if (bitsInCache >= 8) {
+                            bos.write(0xff & bitCache);
+                            bitCache = 0;
+                            bitsInCache = 0;
+                        }
+                    } else if (bitCount == 8) {
+                        final int rgb = 0xffffff & argb;
+                        final int index = palette.getPaletteIndex(rgb);
+                        bos.write(0xff & index);
+                    }
                 }
             }
 
