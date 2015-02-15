@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.bmp;
 
@@ -32,7 +34,14 @@ class BmpHeaderInfo {
 
     public final int bitmapHeaderSize;
     public final int width;
+    /**
+     * raw image height, may be negative
+     */
     public final int height;
+    /**
+     * absolute image height
+     */
+    public final int heightAbsolute;
     public final int planes;
     public final int bitsPerPixel;
     public final int compression;
@@ -86,6 +95,8 @@ class BmpHeaderInfo {
         this.bitmapHeaderSize = bitmapHeaderSize;
         this.width = width;
         this.height = height;
+        this.heightAbsolute = (this.height < 0) ? this.height * -1 : this.height;
+        
         this.planes = planes;
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;

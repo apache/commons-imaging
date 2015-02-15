@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.bmp;
 
@@ -388,8 +390,9 @@ public class BmpImageParser extends ImageParser {
             System.out.println("ColorTable: "
                     + ((colorTable == null) ? "null" : Integer.toString(colorTable.length)));
         }
-
-        final int pixelCount = bhi.width * bhi.height;
+        
+        // since image height can be negative use the absolute height here
+        final int pixelCount = bhi.width * bhi.heightAbsolute;
 
         int imageLineLength = (((bhi.bitsPerPixel) * bhi.width) + 7) / 8;
 
@@ -401,6 +404,7 @@ public class BmpImageParser extends ImageParser {
             // this.debugNumber("ExtraBitsPerPixel", ExtraBitsPerPixel, 4);
             debugNumber("bhi.Width", bhi.width, 4);
             debugNumber("bhi.Height", bhi.height, 4);
+            debugNumber("bhi.HeightAbsolute", bhi.heightAbsolute, 4);
             debugNumber("ImageLineLength", imageLineLength, 4);
             // this.debugNumber("imageDataSize", imageDataSize, 4);
             debugNumber("PixelCount", pixelCount, 4);
@@ -429,8 +433,9 @@ public class BmpImageParser extends ImageParser {
         } else if (extraBytes > 0) {
             readBytes("BitmapDataOffset", is, extraBytes, "Not a Valid BMP File");
         }
-
-        final int imageDataSize = bhi.height * imageLineLength;
+        
+        // since image height can be negative use the absolute height here
+        final int imageDataSize = bhi.heightAbsolute * imageLineLength;
 
         if (verbose) {
             debugNumber("imageDataSize", imageDataSize, 4);
@@ -513,8 +518,8 @@ public class BmpImageParser extends ImageParser {
         if (bhi == null) {
             throw new ImageReadException("BMP: couldn't read header");
         }
-
-        return new Dimension(bhi.width, bhi.height);
+        // since image height can be negative use the absolute height here
+        return new Dimension(bhi.width, bhi.heightAbsolute);
 
     }
 
@@ -586,8 +591,8 @@ public class BmpImageParser extends ImageParser {
         if (bhi == null) {
             throw new ImageReadException("BMP: couldn't read header");
         }
-
-        final int height = bhi.height;
+        // since image height can be negative use the absolute height here
+        final int heightAbsolute = bhi.heightAbsolute;
         final int width = bhi.width;
 
         final List<String> comments = new ArrayList<String>();
@@ -608,7 +613,7 @@ public class BmpImageParser extends ImageParser {
         final float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
         // int physicalHeightDpi = 72;
         final int physicalHeightDpi = (int) (bhi.vResolution * .0254);
-        final float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
+        final float physicalHeightInch = (float) ((double) heightAbsolute / (double) physicalHeightDpi);
 
         final String formatDetails = "Bmp (" + (char) bhi.identifier1
                 + (char) bhi.identifier2 + ": "
@@ -621,7 +626,7 @@ public class BmpImageParser extends ImageParser {
         final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.RLE;
 
         return new ImageInfo(formatDetails, bitsPerPixel, comments,
-                format, name, height, mimeType, numberOfImages,
+                format, name, heightAbsolute, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
                 physicalWidthInch, width, progressive, transparent,
                 usesPalette, colorType, compressionAlgorithm);

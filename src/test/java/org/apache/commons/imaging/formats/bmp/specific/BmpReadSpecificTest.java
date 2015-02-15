@@ -22,16 +22,18 @@ package org.apache.commons.imaging.formats.bmp.specific;
 
 import org.apache.commons.imaging.formats.bmp.*;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
 import org.junit.Test;
 
 /**
@@ -39,17 +41,25 @@ import org.junit.Test;
  */
 public class BmpReadSpecificTest extends BmpBaseTest {
     /**
-     * Get image info for a bmp with negative height
+     * Get image info for a bmp with negative height.
+     * Expected result: Even if the height of bitmap a negative number all information about
+     * the size of the image shall be positive. The original negative height shall be used only
+     * to get the image data.
      * @throws ImageReadException
      * @throws IOException 
      */
     @Test
     public void testImageInfoNegativeHeight() throws ImageReadException, IOException {
         final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-negative-height.bmp");
-        final Map<String, Object> params = Collections.emptyMap();
+        
+        final Map<String, Object> params = new HashMap<String, Object>();
+        params.put(ImagingConstants.PARAM_KEY_VERBOSE, false);
+        
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
         assertNotNull(imageInfo);
-        // TODO assert more
+        assertEquals(8, imageInfo.getHeight());
+        assertEquals(72, imageInfo.getPhysicalHeightDpi());
+        assertEquals(0.11111111f, imageInfo.getPhysicalHeightInch(), 0.1f);
     }
     
     /**
@@ -57,12 +67,9 @@ public class BmpReadSpecificTest extends BmpBaseTest {
      * @throws ImageReadException
      * @throws IOException 
      */
-    @Test
+    @Test(expected=ImageReadException.class)
     public void testBufferedImageNegativeHeight() throws Exception {
         final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-negative-height.bmp");
-        final BufferedImage image = Imaging.getBufferedImage(imageFile);
-        assertNotNull(image);
-        // TODO assert more
+        Imaging.getBufferedImage(imageFile);
     }
-
 }
