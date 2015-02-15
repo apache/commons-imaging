@@ -103,7 +103,7 @@ public class BmpImageParser extends ImageParser {
 
         final int bitmapHeaderSize = read4Bytes("Bitmap Header Size", is, "Not a Valid BMP File", getByteOrder());
         int width = 0;
-        int height = 0;
+        int heightRaw = 0;
         int planes = 0;
         int bitsPerPixel = 0;
         int compression = 0;
@@ -132,7 +132,7 @@ public class BmpImageParser extends ImageParser {
         if (bitmapHeaderSize >= 40) {
             // BITMAPINFOHEADER
             width = read4Bytes("Width", is, "Not a Valid BMP File", getByteOrder());
-            height = read4Bytes("Height", is, "Not a Valid BMP File", getByteOrder());
+            heightRaw = read4Bytes("HeightRaw", is, "Not a Valid BMP File", getByteOrder());
             planes = read2Bytes("Planes", is, "Not a Valid BMP File", getByteOrder());
             bitsPerPixel = read2Bytes("Bits Per Pixel", is, "Not a Valid BMP File", getByteOrder());
             compression = read4Bytes("Compression", is, "Not a Valid BMP File", getByteOrder());
@@ -189,7 +189,7 @@ public class BmpImageParser extends ImageParser {
             debugNumber("bitmapDataOffset", bitmapDataOffset, 4);
             debugNumber("bitmapHeaderSize", bitmapHeaderSize, 4);
             debugNumber("width", width, 4);
-            debugNumber("height", height, 4);
+            debugNumber("heightRaw", heightRaw, 4);
             debugNumber("planes", planes, 2);
             debugNumber("bitsPerPixel", bitsPerPixel, 2);
             debugNumber("compression", compression, 4);
@@ -231,7 +231,7 @@ public class BmpImageParser extends ImageParser {
 
         return new BmpHeaderInfo(identifier1, identifier2,
                 fileSize, reserved, bitmapDataOffset, bitmapHeaderSize, width,
-                height, planes, bitsPerPixel, compression, bitmapDataSize,
+                heightRaw, planes, bitsPerPixel, compression, bitmapDataSize,
                 hResolution, vResolution, colorsUsed, colorsImportant, redMask,
                 greenMask, blueMask, alphaMask, colorSpaceType, colorSpace,
                 gammaRed, gammaGreen, gammaBlue, intent, profileData,
@@ -391,7 +391,7 @@ public class BmpImageParser extends ImageParser {
                     + ((colorTable == null) ? "null" : Integer.toString(colorTable.length)));
         }
         
-        // since image height can be negative use the absolute height here
+        // since image heightRaw can be negative use the absolute heightRaw here
         final int pixelCount = bhi.width * bhi.heightAbsolute;
 
         int imageLineLength = (((bhi.bitsPerPixel) * bhi.width) + 7) / 8;
@@ -403,7 +403,7 @@ public class BmpImageParser extends ImageParser {
             // ((ExtraBitsPerPixel + bhi.BitsPerPixel) * bhi.Width), 4);
             // this.debugNumber("ExtraBitsPerPixel", ExtraBitsPerPixel, 4);
             debugNumber("bhi.Width", bhi.width, 4);
-            debugNumber("bhi.Height", bhi.height, 4);
+            debugNumber("bhi.HeightRaw", bhi.heightRaw, 4);
             debugNumber("bhi.HeightAbsolute", bhi.heightAbsolute, 4);
             debugNumber("ImageLineLength", imageLineLength, 4);
             // this.debugNumber("imageDataSize", imageDataSize, 4);
@@ -434,7 +434,7 @@ public class BmpImageParser extends ImageParser {
             readBytes("BitmapDataOffset", is, extraBytes, "Not a Valid BMP File");
         }
         
-        // since image height can be negative use the absolute height here
+        // since image heightRaw can be negative use the absolute heightRaw here
         final int imageDataSize = bhi.heightAbsolute * imageLineLength;
 
         if (verbose) {
@@ -518,7 +518,7 @@ public class BmpImageParser extends ImageParser {
         if (bhi == null) {
             throw new ImageReadException("BMP: couldn't read header");
         }
-        // since image height can be negative use the absolute height here
+        // since image heightRaw can be negative use the absolute heightRaw here
         return new Dimension(bhi.width, bhi.heightAbsolute);
 
     }
@@ -591,7 +591,7 @@ public class BmpImageParser extends ImageParser {
         if (bhi == null) {
             throw new ImageReadException("BMP: couldn't read header");
         }
-        // since image height can be negative use the absolute height here
+        // since image heightRaw can be negative use the absolute heightRaw here
         final int heightAbsolute = bhi.heightAbsolute;
         final int width = bhi.width;
 
@@ -712,11 +712,11 @@ public class BmpImageParser extends ImageParser {
         // byte imageData[] = ic.imageData;
 
         final int width = bhi.width;
-        // since image height as read from file header can be negative for bitmaps
-        // distinct between the value from header ("raw height", needed for correct
-        // reading of image data) and the absolute height (needed for correct 
+        // since image heightRaw as read from file header can be negative for bitmaps
+        // distinct between the value from header ("raw heightRaw", needed for correct
+        // reading of image data) and the absolute heightRaw (needed for correct 
         // calculation of image size)
-        final int heightRaw = bhi.height;
+        final int heightRaw = bhi.heightRaw;
         final int heightAbsolute = bhi.heightAbsolute;
 
         if (verbose) {
@@ -737,7 +737,7 @@ public class BmpImageParser extends ImageParser {
         }
         
         final PixelParser pixelParser = ic.pixelParser;
-        // the ImageBuilder need the absolute height to calculate the correct
+        // the ImageBuilder need the absolute heightRaw to calculate the correct
         // size of an array to store the image data
         final ImageBuilder imageBuilder = new ImageBuilder(width, heightAbsolute, true);
         pixelParser.processImage(imageBuilder);
