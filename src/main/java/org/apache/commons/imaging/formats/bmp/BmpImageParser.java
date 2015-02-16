@@ -13,8 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.bmp;
 
@@ -103,7 +101,7 @@ public class BmpImageParser extends ImageParser {
 
         final int bitmapHeaderSize = read4Bytes("Bitmap Header Size", is, "Not a Valid BMP File", getByteOrder());
         int width = 0;
-        int heightRaw = 0;
+        int height = 0;
         int planes = 0;
         int bitsPerPixel = 0;
         int compression = 0;
@@ -132,7 +130,7 @@ public class BmpImageParser extends ImageParser {
         if (bitmapHeaderSize >= 40) {
             // BITMAPINFOHEADER
             width = read4Bytes("Width", is, "Not a Valid BMP File", getByteOrder());
-            heightRaw = read4Bytes("HeightRaw", is, "Not a Valid BMP File", getByteOrder());
+            height = read4Bytes("Height", is, "Not a Valid BMP File", getByteOrder());
             planes = read2Bytes("Planes", is, "Not a Valid BMP File", getByteOrder());
             bitsPerPixel = read2Bytes("Bits Per Pixel", is, "Not a Valid BMP File", getByteOrder());
             compression = read4Bytes("Compression", is, "Not a Valid BMP File", getByteOrder());
@@ -189,7 +187,7 @@ public class BmpImageParser extends ImageParser {
             debugNumber("bitmapDataOffset", bitmapDataOffset, 4);
             debugNumber("bitmapHeaderSize", bitmapHeaderSize, 4);
             debugNumber("width", width, 4);
-            debugNumber("heightRaw", heightRaw, 4);
+            debugNumber("height", height, 4);
             debugNumber("planes", planes, 2);
             debugNumber("bitsPerPixel", bitsPerPixel, 2);
             debugNumber("compression", compression, 4);
@@ -231,7 +229,7 @@ public class BmpImageParser extends ImageParser {
 
         return new BmpHeaderInfo(identifier1, identifier2,
                 fileSize, reserved, bitmapDataOffset, bitmapHeaderSize, width,
-                heightRaw, planes, bitsPerPixel, compression, bitmapDataSize,
+                height, planes, bitsPerPixel, compression, bitmapDataSize,
                 hResolution, vResolution, colorsUsed, colorsImportant, redMask,
                 greenMask, blueMask, alphaMask, colorSpaceType, colorSpace,
                 gammaRed, gammaGreen, gammaBlue, intent, profileData,
@@ -390,9 +388,8 @@ public class BmpImageParser extends ImageParser {
             System.out.println("ColorTable: "
                     + ((colorTable == null) ? "null" : Integer.toString(colorTable.length)));
         }
-        
-        // since image heightRaw can be negative use the absolute heightRaw here
-        final int pixelCount = bhi.width * bhi.heightAbsolute;
+
+        final int pixelCount = bhi.width * bhi.height;
 
         int imageLineLength = (((bhi.bitsPerPixel) * bhi.width) + 7) / 8;
 
@@ -403,8 +400,7 @@ public class BmpImageParser extends ImageParser {
             // ((ExtraBitsPerPixel + bhi.BitsPerPixel) * bhi.Width), 4);
             // this.debugNumber("ExtraBitsPerPixel", ExtraBitsPerPixel, 4);
             debugNumber("bhi.Width", bhi.width, 4);
-            debugNumber("bhi.HeightRaw", bhi.heightRaw, 4);
-            debugNumber("bhi.HeightAbsolute", bhi.heightAbsolute, 4);
+            debugNumber("bhi.Height", bhi.height, 4);
             debugNumber("ImageLineLength", imageLineLength, 4);
             // this.debugNumber("imageDataSize", imageDataSize, 4);
             debugNumber("PixelCount", pixelCount, 4);
@@ -433,9 +429,8 @@ public class BmpImageParser extends ImageParser {
         } else if (extraBytes > 0) {
             readBytes("BitmapDataOffset", is, extraBytes, "Not a Valid BMP File");
         }
-        
-        // since image heightRaw can be negative use the absolute heightRaw here
-        final int imageDataSize = bhi.heightAbsolute * imageLineLength;
+
+        final int imageDataSize = bhi.height * imageLineLength;
 
         if (verbose) {
             debugNumber("imageDataSize", imageDataSize, 4);
@@ -518,8 +513,8 @@ public class BmpImageParser extends ImageParser {
         if (bhi == null) {
             throw new ImageReadException("BMP: couldn't read header");
         }
-        // since image heightRaw can be negative use the absolute heightRaw here
-        return new Dimension(bhi.width, bhi.heightAbsolute);
+
+        return new Dimension(bhi.width, bhi.height);
 
     }
 
@@ -591,8 +586,8 @@ public class BmpImageParser extends ImageParser {
         if (bhi == null) {
             throw new ImageReadException("BMP: couldn't read header");
         }
-        // since image heightRaw can be negative use the absolute heightRaw here
-        final int heightAbsolute = bhi.heightAbsolute;
+
+        final int height = bhi.height;
         final int width = bhi.width;
 
         final List<String> comments = new ArrayList<String>();
@@ -613,7 +608,7 @@ public class BmpImageParser extends ImageParser {
         final float physicalWidthInch = (float) ((double) width / (double) physicalWidthDpi);
         // int physicalHeightDpi = 72;
         final int physicalHeightDpi = (int) (bhi.vResolution * .0254);
-        final float physicalHeightInch = (float) ((double) heightAbsolute / (double) physicalHeightDpi);
+        final float physicalHeightInch = (float) ((double) height / (double) physicalHeightDpi);
 
         final String formatDetails = "Bmp (" + (char) bhi.identifier1
                 + (char) bhi.identifier2 + ": "
@@ -626,7 +621,7 @@ public class BmpImageParser extends ImageParser {
         final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.RLE;
 
         return new ImageInfo(formatDetails, bitsPerPixel, comments,
-                format, name, heightAbsolute, mimeType, numberOfImages,
+                format, name, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
                 physicalWidthInch, width, progressive, transparent,
                 usesPalette, colorType, compressionAlgorithm);
@@ -712,34 +707,17 @@ public class BmpImageParser extends ImageParser {
         // byte imageData[] = ic.imageData;
 
         final int width = bhi.width;
-        // since image heightRaw as read from file header can be negative for bitmaps
-        // distinct between the value from header ("raw heightRaw", needed for correct
-        // reading of image data) and the absolute heightRaw (needed for correct 
-        // calculation of image size)
-        final int heightRaw = bhi.heightRaw;
-        final int heightAbsolute = bhi.heightAbsolute;
+        final int height = bhi.height;
 
         if (verbose) {
             System.out.println("width: " + width);
-            System.out.println("height raw: " + heightRaw);
-            System.out.println("height absolute: " + heightAbsolute);
-            System.out.println("width*absolute_height: " + width * heightAbsolute);
-            System.out.println("width*absolute_height*4: " + width * heightAbsolute * 4);
+            System.out.println("height: " + height);
+            System.out.println("width*height: " + width * height);
+            System.out.println("width*height*4: " + width * height * 4);
         }
-        
-        // at this time reading image data from bitmaps with negative header
-        // is not supported
-        // TODO support it, test the solution and then remove this block
-        if (heightRaw < 0) {
-            throw new ImageReadException(
-                "Reading image data from bitmaps with negative header is yet not supported."
-            );
-        }
-        
+
         final PixelParser pixelParser = ic.pixelParser;
-        // the ImageBuilder need the absolute heightRaw to calculate the correct
-        // size of an array to store the image data
-        final ImageBuilder imageBuilder = new ImageBuilder(width, heightAbsolute, true);
+        final ImageBuilder imageBuilder = new ImageBuilder(width, height, true);
         pixelParser.processImage(imageBuilder);
 
         return imageBuilder.getBufferedImage();

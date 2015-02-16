@@ -32,7 +32,7 @@ abstract class PixelParserSimple extends PixelParser {
 
     @Override
     public void processImage(final ImageBuilder imageBuilder) throws ImageReadException, IOException {
-        for (int y = bhi.heightRaw - 1; y >= 0; y--) {
+        for (int y = bhi.height - 1; y >= 0; y--) {
             for (int x = 0; x < bhi.width; x++) {
                 final int rgb = getNextRGB();
 

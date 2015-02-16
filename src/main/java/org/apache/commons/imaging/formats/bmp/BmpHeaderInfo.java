@@ -13,8 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.bmp;
 
@@ -34,16 +32,7 @@ class BmpHeaderInfo {
 
     public final int bitmapHeaderSize;
     public final int width;
-    /**
-     * Image height as read from image file header (therefore called 
-     * {@literal "raw height"}, may be negative i.e. for BMP files
-     */
-    public final int heightRaw;
-    /**
-     * Absolute image height, is never negative.
-     * Use this to calculate the correct size of the image.
-     */
-    public final int heightAbsolute;
+    public final int height;
     public final int planes;
     public final int bitsPerPixel;
     public final int compression;
@@ -79,45 +68,10 @@ class BmpHeaderInfo {
         ColorSpaceCoordinate green;
         ColorSpaceCoordinate blue;
     }
-    
-    /**
-     * Constructor
-     * @param identifier1
-     * @param identifier2
-     * @param fileSize
-     * @param reserved
-     * @param bitmapDataOffset
-     * @param bitmapHeaderSize
-     * @param width
-     * @param heightRaw The height as read from image file header.
-     * For some file formats, for example BMP, the image file header may provide
-     * a negative number for height (for BMP it means that image data are ordered
-     * top-down instead bottom-up).
-     * @param planes
-     * @param bitsPerPixel
-     * @param compression
-     * @param bitmapDataSize
-     * @param hResolution
-     * @param vResolution
-     * @param colorsUsed
-     * @param colorsImportant
-     * @param redMask
-     * @param greenMask
-     * @param blueMask
-     * @param alphaMask
-     * @param colorSpaceType
-     * @param colorSpace
-     * @param gammaRed
-     * @param gammaGreen
-     * @param gammaBlue
-     * @param intent
-     * @param profileData
-     * @param profileSize
-     * @param reservedV5 
-     */
+
     public BmpHeaderInfo(final byte identifier1, final byte identifier2, final int fileSize,
             final int reserved, final int bitmapDataOffset, final int bitmapHeaderSize,
-            final int width, final int heightRaw, final int planes, final int bitsPerPixel,
+            final int width, final int height, final int planes, final int bitsPerPixel,
             final int compression, final int bitmapDataSize, final int hResolution,
             final int vResolution, final int colorsUsed, final int colorsImportant, final int redMask,
             final int greenMask, final int blueMask, final int alphaMask, final int colorSpaceType,
@@ -131,9 +85,7 @@ class BmpHeaderInfo {
 
         this.bitmapHeaderSize = bitmapHeaderSize;
         this.width = width;
-        this.heightRaw = heightRaw;
-        this.heightAbsolute = (this.heightRaw < 0) ? this.heightRaw * -1 : this.heightRaw;
-        
+        this.height = height;
         this.planes = planes;
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;
