@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 package org.apache.commons.imaging.formats.bmp;
 
@@ -714,6 +716,10 @@ public class BmpImageParser extends ImageParser {
             System.out.println("height: " + height);
             System.out.println("width*height: " + width * height);
             System.out.println("width*height*4: " + width * height * 4);
+        }
+        
+        if (bhi.isBottomUpBitmap == false) {
+            throw new ImageReadException("Reading of images with negative height is not supported yet.");
         }
 
         final PixelParser pixelParser = ic.pixelParser;
