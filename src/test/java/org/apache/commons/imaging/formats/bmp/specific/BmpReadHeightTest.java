@@ -81,17 +81,54 @@ public class BmpReadHeightTest extends BmpBaseTest {
     
     /**
      * Get a buffered image for a bmp with negative height.
-     * Expected: The test image has white pixels in each corner except bottom left
-     * (there is a black one).
+     * Expected: The test image has white pixels in each corner except bottom left (there is a black one).
      * @throws ImageReadException
      * @throws IOException 
      */
     @Ignore(value = "Reading bitmaps with negative height has to be implemented before one can execute this test successfully.")
-    @Test//(expected=ImageReadException.class)
+    @Test
     public void testBufferedImageNegativeHeight() throws Exception {
+        // set to true to print image data to STDOUT
+        final boolean debugMode = false;
         final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-negative-height.bmp");
         final BufferedImage bufImage = Imaging.getBufferedImage(imageFile);
-        //debugBufferedImageAsTable(bufImage);
+        
+        if (debugMode) debugBufferedImageAsTable(bufImage, "negative height");
+        assertEquals(8, bufImage.getHeight());
+        assertEquals(4, bufImage.getWidth());
+        // the image is monochrome and has 4 black pixels, the remaning pixel are white
+        // the black pixels a placed such that we can make sure the picture is read as expected
+        // -16777216 => -2^24 => black (4 pixels); -1 => white (other pixels)
+        // top left - white
+        assertEquals(-1, bufImage.getRGB(0, 0));
+        // top right - white
+        assertEquals(-1, bufImage.getRGB(3, 0));
+        // bottom left - black
+        assertEquals(-16777216, bufImage.getRGB(0, 7));
+        // bottom right - white
+        assertEquals(-1, bufImage.getRGB(3, 7));
+        //other black pixels - just for fun
+        assertEquals(-16777216, bufImage.getRGB(1, 6));
+        assertEquals(-16777216, bufImage.getRGB(2, 5));
+        assertEquals(-16777216, bufImage.getRGB(3, 4));
+    }
+    
+    /**
+     * Get a buffered image for a bmp with positive height.
+     * Expected: The test image has white pixels in each corner except bottom left (there is a black one).
+     * This test is to prove that changes to enable reading bmp images with negative height doesn't break
+     * the ability to read bmp images with positive height.
+     * @throws ImageReadException
+     * @throws IOException 
+     */
+    @Test
+    public void testBufferedImagePositiveHeight() throws Exception {
+        // set to true to print image data to STDOUT
+        final boolean debugMode = false;
+        final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-positive-height.bmp");
+        final BufferedImage bufImage = Imaging.getBufferedImage(imageFile);
+        
+        if (debugMode) debugBufferedImageAsTable(bufImage, "positive height");
         assertEquals(8, bufImage.getHeight());
         assertEquals(4, bufImage.getWidth());
         // the image is monochrome and has 4 black pixels, the remaning pixel are white
@@ -134,10 +171,13 @@ public class BmpReadHeightTest extends BmpBaseTest {
      * Prints the RGB colors of the given image as table with x, y = 0, 0 on top left.
      * @param bufImage 
      */
-    private void debugBufferedImageAsTable(final BufferedImage bufImage) {
+    private void debugBufferedImageAsTable(final BufferedImage bufImage, final String comment) {
+        System.out.println();
+        System.out.println(comment);
         List<List<Integer>> table = getBufferedImageAsTable(bufImage);
         for (List<Integer> row : table) {
             System.out.println(row);
         }
+        System.out.println();
     }
 }

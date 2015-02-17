@@ -25,4 +25,8 @@ bmp/1/monochrome-negative-height.bmp
     This image was taken from http://issues.apache.org/jira/browse/IMAGING-162.
     It was attached there by Myroslav Golub.
 	
-
+bmp/1/monochrome-positive-height.bmp
+    Monochrome 4x8 bitmap with negative height value.
+    monochrome-positive-height.xfc is the original file created with "The Gimp 2.8.10".
+    monochrome-positive-height.bmp itself was created by exporting the xfc image to bmp
+    using the options shown in monochrome-positive-heightBmp_theGimpOptions.png.
