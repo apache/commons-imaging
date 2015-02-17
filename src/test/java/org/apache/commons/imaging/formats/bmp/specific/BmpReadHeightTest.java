@@ -27,7 +27,9 @@ import static org.junit.Assert.assertEquals;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
@@ -89,18 +91,53 @@ public class BmpReadHeightTest extends BmpBaseTest {
     public void testBufferedImageNegativeHeight() throws Exception {
         final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-negative-height.bmp");
         final BufferedImage bufImage = Imaging.getBufferedImage(imageFile);
+        //debugBufferedImageAsTable(bufImage);
         assertEquals(8, bufImage.getHeight());
         assertEquals(4, bufImage.getWidth());
         // the image is monochrome and has 4 black pixels, the remaning pixel are white
-        // the black pixels a placed such that we can make sure the picture is read
-        // as expected
+        // the black pixels a placed such that we can make sure the picture is read as expected
+        // -16777216 => -2^24 => black (4 pixels); -1 => white (other pixels)
         // top left - white
-        assertEquals(1, bufImage.getRGB(0, 0));
+        assertEquals(-1, bufImage.getRGB(0, 0));
         // top right - white
-        assertEquals(1, bufImage.getRGB(3, 0));
+        assertEquals(-1, bufImage.getRGB(3, 0));
         // bottom left - black
-        assertEquals(0, bufImage.getRGB(0, 7));
+        assertEquals(-16777216, bufImage.getRGB(0, 7));
         // bottom right - white
-        assertEquals(1, bufImage.getRGB(3, 7));
+        assertEquals(-1, bufImage.getRGB(3, 7));
+        //other black pixels - just for fun
+        assertEquals(-16777216, bufImage.getRGB(1, 6));
+        assertEquals(-16777216, bufImage.getRGB(2, 5));
+        assertEquals(-16777216, bufImage.getRGB(3, 4));
+    }
+    
+    /**
+     * Returns a table which contains the RGB colors of the given image.
+     * @param bufImage
+     * @return 
+     */
+    private List<List<Integer>> getBufferedImageAsTable(final BufferedImage bufImage) {
+        final int height = bufImage.getHeight(); // y
+        final int width = bufImage.getWidth(); // x
+        final List<List<Integer>> table = new ArrayList<List<Integer>>();
+        
+        for (int y = 0; y < height; y++) {
+            final List<Integer> row = new ArrayList<Integer>();
+            for(int x = 0; x < width; x++) {
+                row.add(bufImage.getRGB(x, y));
+            } 
+            table.add(row);
+        }
+        return table;
+    }
+    /**
+     * Prints the RGB colors of the given image as table with x, y = 0, 0 on top left.
+     * @param bufImage 
+     */
+    private void debugBufferedImageAsTable(final BufferedImage bufImage) {
+        List<List<Integer>> table = getBufferedImageAsTable(bufImage);
+        for (List<Integer> row : table) {
+            System.out.println(row);
+        }
     }
 }
