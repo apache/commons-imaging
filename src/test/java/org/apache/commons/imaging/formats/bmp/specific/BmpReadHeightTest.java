@@ -40,7 +40,7 @@ import org.junit.Test;
 /**
  * This test class contains some specific tests i.e. reading an image with negative height.
  */
-public class BmpReadSpecificTest extends BmpBaseTest {
+public class BmpReadHeightTest extends BmpBaseTest {
     /**
      * Get image info for a bmp with negative height.
      * Expected result: Even if the height of bitmap a negative number all information about
