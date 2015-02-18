@@ -40,25 +40,47 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * This test class contains some specific tests i.e. reading an image with negative height.
+ * This test class contains tests specific for reading an image with
+ * negative and positive height.
  */
 public class BmpReadHeightTest extends BmpBaseTest {
     /**
      * Get image info for a bmp with negative height.
-     * Expected result: Even if the height of bitmap a negative number all information about
-     * the size of the image shall be positive. The original negative height shall be used only
-     * to get the image data.
+     * Expected result: Even if the height of bitmap a negative number all
+     * information about the size of the image are positive numbers.
      * @throws ImageReadException
      * @throws IOException 
      */
     @Test
     public void testImageInfoNegativeHeight() throws ImageReadException, IOException {
+        // set to true to print image data to STDOUT
+        final boolean debugMode = false;
         final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-negative-height.bmp");
-        
         final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(ImagingConstants.PARAM_KEY_VERBOSE, false);
-        
+        if (debugMode) params.put(ImagingConstants.PARAM_KEY_VERBOSE, true);
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
+        
+        assertNotNull(imageInfo);
+        assertEquals(8, imageInfo.getHeight());
+        assertEquals(72, imageInfo.getPhysicalHeightDpi());
+        assertEquals(0.11111111f, imageInfo.getPhysicalHeightInch(), 0.1f);
+    }
+    
+    /**
+     * Get image info for a bmp with positive height.
+     * Expected result: All information about the size of the image are positive numbers.
+     * @throws ImageReadException
+     * @throws IOException 
+     */
+    @Test
+    public void testImageInfoPositiveHeight() throws ImageReadException, IOException {
+        // set to true to print image data to STDOUT
+        final boolean debugMode = false;
+        final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-positive-height.bmp");
+        final Map<String, Object> params = new HashMap<String, Object>();
+        if (debugMode) params.put(ImagingConstants.PARAM_KEY_VERBOSE, true);
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
+        
         assertNotNull(imageInfo);
         assertEquals(8, imageInfo.getHeight());
         assertEquals(72, imageInfo.getPhysicalHeightDpi());
