@@ -403,6 +403,7 @@ public class BmpImageParser extends ImageParser {
             // this.debugNumber("ExtraBitsPerPixel", ExtraBitsPerPixel, 4);
             debugNumber("bhi.Width", bhi.width, 4);
             debugNumber("bhi.Height", bhi.height, 4);
+            debugNumber("bhi.isBottomUpBitmap: " + bhi.isBottomUpBitmap, 0, 0);
             debugNumber("ImageLineLength", imageLineLength, 4);
             // this.debugNumber("imageDataSize", imageDataSize, 4);
             debugNumber("PixelCount", pixelCount, 4);
