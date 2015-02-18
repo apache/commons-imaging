@@ -58,6 +58,7 @@ public class ImageBuilder {
     private final int width;
     private final int height;
     private final boolean hasAlpha;
+    private final boolean readBottomUp;
 
     /**
      * Construct an ImageBuilder instance
@@ -68,6 +69,26 @@ public class ImageBuilder {
      * requirements for the ImageBuilder or resulting BufferedImage.
      */
     public ImageBuilder(final int width, final int height, final boolean hasAlpha) {
+        this(true, width, height, hasAlpha);
+    }
+    
+    /**
+     * Construct an ImageBuilder instance.
+     * <p>
+     * Usually image data is stored bottom-up, that means that the last row in the
+     * image data is the first row of pixels in the image as displayed.
+     * Sometimes image data are stored top-down: The first row in the image data
+     * is also the first row of pixels in the image as displayed.
+     * With this constructor you can define the direction.
+     * @param readBottomUp {@code true}: the image data are stored bottom-up,
+     * {@code false} the image data are stored top-down
+     * @param width the width of the image to be built
+     * @param height the height of the image to be built
+     * @param hasAlpha indicates whether the image has an alpha channel
+     * (the selection of alpha channel does not change the memory
+     * requirements for the ImageBuilder or resulting BufferedImage.
+     */
+    public ImageBuilder(final boolean readBottomUp, final int width, final int height, final boolean hasAlpha) {
         if (width <= 0) {
             throw new RasterFormatException("zero or negative width value");
         }
@@ -79,8 +100,18 @@ public class ImageBuilder {
         this.width = width;
         this.height = height;
         this.hasAlpha = hasAlpha;
+        this.readBottomUp = readBottomUp;
     }
-
+    
+    /**
+     * {@code true}: the image data are stored bottom-up,
+     * {@code false} the image data are stored top-down
+     * @return 
+     */
+    public boolean readBottomUp() {
+        return this.readBottomUp;
+    }
+    
     /**
      * Get the width of the ImageBuilder pixel field
      * @return a positive integer

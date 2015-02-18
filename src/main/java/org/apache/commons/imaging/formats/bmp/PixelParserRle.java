@@ -84,7 +84,13 @@ class PixelParserRle extends PixelParser {
 
         return pixelsWritten;
     }
-
+    
+    // TODO: Reading RLE-encoded bitmaps where a negative height is given in the
+    // bitmap header won't work as expected. You'll get always a positive height
+    // from class BitmapHeaderInfo but the image data will appear bottom -> top
+    // when displayed.
+    // See PixelParserSimple.processImage() where we fixed this for non-RLE-encoded
+    // bitmaps.
     @Override
     public void processImage(final ImageBuilder imageBuilder)
             throws ImageReadException, IOException {

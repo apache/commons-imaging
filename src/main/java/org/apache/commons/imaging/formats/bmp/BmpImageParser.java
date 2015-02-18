@@ -717,14 +717,11 @@ public class BmpImageParser extends ImageParser {
             System.out.println("height: " + height);
             System.out.println("width*height: " + width * height);
             System.out.println("width*height*4: " + width * height * 4);
-        }
-        
-        if (bhi.isBottomUpBitmap == false) {
-            throw new ImageReadException("Reading of images with negative height is not supported yet.");
+            System.out.println("image data are stored bottom-up (true) or top-down (false): " + bhi.isBottomUpBitmap);
         }
 
         final PixelParser pixelParser = ic.pixelParser;
-        final ImageBuilder imageBuilder = new ImageBuilder(width, height, true);
+        final ImageBuilder imageBuilder = new ImageBuilder(bhi.isBottomUpBitmap, width, height, true);
         pixelParser.processImage(imageBuilder);
 
         return imageBuilder.getBufferedImage();

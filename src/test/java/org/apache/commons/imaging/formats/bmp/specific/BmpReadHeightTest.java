@@ -89,25 +89,10 @@ public class BmpReadHeightTest extends BmpBaseTest {
     
     /**
      * Get a buffered image for a bmp with negative height.
-     * 
-     * THIS TESTS THE HOTFIX EMPLOYED UNTIL READING BITMAPS WITH NEGATIVE HEIGTH IS IMPLEMENTED.
-     * 
-     * @throws ImageReadException
-     * @throws IOException 
-     */
-    @Test(expected=ImageReadException.class)
-    public void testBufferedImageNegativeHeightException() throws Exception {
-        final File imageFile = new File(TEST_SPECIFIC_FOLDER, "bmp/1/monochrome-negative-height.bmp");
-        Imaging.getBufferedImage(imageFile);
-    }
-    
-    /**
-     * Get a buffered image for a bmp with negative height.
      * Expected: The test image has white pixels in each corner except bottom left (there is a black one).
      * @throws ImageReadException
      * @throws IOException 
      */
-    @Ignore(value = "Reading bitmaps with negative height has to be implemented before one can execute this test successfully.")
     @Test
     public void testBufferedImageNegativeHeight() throws Exception {
         // set to true to print image data to STDOUT
