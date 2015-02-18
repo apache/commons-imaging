@@ -54,13 +54,7 @@ public class JpegReadTest extends JpegBaseTest {
     public void test() throws Exception {
         final ImagingParametersJpeg params = new ImagingParametersJpeg();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        
-        if (ignoreImageData) {
-            params.disableReadThumbnails();
-        }
-        else {
-            params.enableReadThumbnails();
-        }
+        if (ignoreImageData == false) params.enableReadThumbnails();
 
         final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         // TODO only run this tests with images that have metadata...

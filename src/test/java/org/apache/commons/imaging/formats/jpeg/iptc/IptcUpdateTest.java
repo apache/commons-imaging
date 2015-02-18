@@ -65,12 +65,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         final ImagingParametersJpeg params = new ImagingParametersJpeg();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        if (ignoreImageData) {
-            params.disableReadThumbnails();
-        }
-        else {
-            params.enableReadThumbnails();
-        }
+        if (ignoreImageData == false) params.enableReadThumbnails();
 
         final JpegPhotoshopMetadata metadata = new JpegImageParser()
                 .getPhotoshopMetadata(byteSource, params);
@@ -103,12 +98,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         final ImagingParametersJpeg params = new ImagingParametersJpeg();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        if (ignoreImageData) {
-            params.disableReadThumbnails();
-        }
-        else {
-            params.enableReadThumbnails();
-        }
+        if (ignoreImageData == false) params.enableReadThumbnails();
 
         final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(byteSource, params);
         assertNotNull(metadata);
@@ -153,12 +143,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         final ImagingParametersJpeg params = new ImagingParametersJpeg();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        if (ignoreImageData) {
-            params.disableReadThumbnails();
-        }
-        else {
-            params.enableReadThumbnails();
-        }
+        if (ignoreImageData == false) params.enableReadThumbnails();
 
         final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(byteSource, params);
         assertNotNull(metadata);
@@ -205,12 +190,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         final ImagingParametersJpeg params = new ImagingParametersJpeg();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        if (ignoreImageData) {
-            params.disableReadThumbnails();
-        }
-        else {
-            params.enableReadThumbnails();
-        }
+        if (ignoreImageData == false) params.enableReadThumbnails();
 
         final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(byteSource, params);
         assertNotNull(metadata);

@@ -61,12 +61,7 @@ public class ExifDumpTest extends ExifBaseTest {
     public void testMetadata() throws Exception {
         final ImagingParametersJpeg params = new ImagingParametersJpeg();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        if (ignoreImageData) {
-            params.disableReadThumbnails();
-        }
-        else {
-            params.enableReadThumbnails();
-        }
+        if (ignoreImageData == false) params.enableReadThumbnails();
         
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
