@@ -37,8 +37,8 @@ class BmpHeaderInfo {
     public final int height;
     /**
      * According to specification the height can be negative.
-     * <br>Positive height: Bitmap is stored bottom-up (0, 0 is in the bottom left corner)
-     * <br>Negative height: Bitmap is stored top-down (0, 0 is in the top left corner)
+     * <br>Positive height: Bitmap is stored bottom-up (0, 0 is in the bottom left corner), then this field is true
+     * <br>Negative height: Bitmap is stored top-down (0, 0 is in the top left corner), then this field is false
      */
     public final boolean isBottomUpBitmap;
     public final int planes;
