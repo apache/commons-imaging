@@ -13,6 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging;
@@ -29,8 +31,7 @@ public interface ImagingTestConstants {
 
     static final File SOURCE_FOLDER = new File("src");
     static final File TEST_SOURCE_FOLDER = new File(SOURCE_FOLDER, "test");
-    static final File TEST_DATA_SOURCE_FOLDER = new File(TEST_SOURCE_FOLDER,
-            "data");
-    static final File TEST_IMAGE_FOLDER = new File(TEST_DATA_SOURCE_FOLDER,
-            "images");
+    static final File TEST_DATA_SOURCE_FOLDER = new File(TEST_SOURCE_FOLDER, "data");
+    static final File TEST_IMAGE_FOLDER = new File(TEST_DATA_SOURCE_FOLDER, "images");
+    static final File SPECIFIC_TEST_DATA_FOLDER = new File(TEST_DATA_SOURCE_FOLDER, "specificTests");
 }
