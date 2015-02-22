@@ -18,6 +18,11 @@
 
 package org.apache.commons.imaging.formats.tiff.specific;
 
+import java.io.File;
+import java.io.IOException;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTestConstants;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -26,8 +31,26 @@ import static org.junit.Assert.*;
  * @author Michael Groﬂ, mgmechanics@mgmechanics.de, http://sourceforge.net/users/mgmechanics
  */
 public final class Imaging134Test {
-
-    public Imaging134Test() {
+    /**
+     * The purpose of this test is to reproduce the exception described in issue IMAGING-134.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     */
+    @Test(expected=ImageReadException.class)
+    public void testGetBufferedImage134() throws ImageReadException, IOException {
+        final File imageFile = new File (ImagingTestConstants.TEST_SPECIFIC_FOLDER, "jpg/1/image.jpeg");
+        Imaging.getBufferedImage(imageFile);
     }
-
+    
+    /**
+     * The purpose of this test is to reproduce the exception described in issue IMAGING-97
+     * to see if it has the same cause as IMAGING-134.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     */
+    @Test(expected=ImageReadException.class)
+    public void testGetBufferedImage097() throws ImageReadException, IOException {
+        final File imageFile = new File (ImagingTestConstants.TEST_SPECIFIC_FOLDER, "jpg/2/_DSC6099.jpg");
+        Imaging.getBufferedImage(imageFile);
+    }
 }
