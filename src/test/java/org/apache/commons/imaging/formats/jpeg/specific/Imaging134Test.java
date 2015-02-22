@@ -16,7 +16,7 @@
  * Added 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
-package org.apache.commons.imaging.formats.tiff.specific;
+package org.apache.commons.imaging.formats.jpeg.specific;
 
 import java.io.File;
 import java.io.IOException;
