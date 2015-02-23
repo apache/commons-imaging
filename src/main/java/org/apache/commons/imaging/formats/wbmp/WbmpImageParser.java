@@ -11,8 +11,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  *  under the License.
- *
- * Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.wbmp;
