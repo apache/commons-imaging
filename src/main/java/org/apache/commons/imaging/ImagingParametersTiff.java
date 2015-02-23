@@ -53,6 +53,13 @@ public final class ImagingParametersTiff extends ImagingParameters {
         this.compressionLevel = null;
         this.compressionBlockSize = null;
         this.outputSetForMetaData = null;
+        this.readThumbnails = false;
+        this.t4options = null;
+        this.t6options = null;
+        this.subImageX = null;
+        this.subImageY = null;
+        this.subImageWidth = null;
+        this.subImageHeight = null;
     }
     
     //****** compressionLevel ******
@@ -176,7 +183,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return Valid values:{@code true} (causes it to read embedded thumbnails
      * and {@code false} (don't read embedded thumbnails).
      */
-    public boolean getReadThumbnails() {
+    public boolean isReadThumbnailsEnabled() {
         return this.readThumbnails;
     }
     
