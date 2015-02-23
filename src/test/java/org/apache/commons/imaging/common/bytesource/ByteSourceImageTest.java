@@ -113,7 +113,6 @@ public class ByteSourceImageTest extends ByteSourceTest {
         assertTrue(bufferedImage.getHeight() > 0);
         final int imageFileWidth = bufferedImage.getWidth();
         final int imageFileHeight = bufferedImage.getHeight();
-        bufferedImage = null;
 
         final BufferedImage imageBytes = Imaging.getBufferedImage(bytes);
         assertNotNull(imageBytes);
