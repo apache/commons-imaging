@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Added 2015 by Michael Gross, mgmechanics@mgmechanics.de
  */
 
 package org.apache.commons.imaging.formats.jpeg.specific;
@@ -27,8 +25,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Michael Groﬂ, mgmechanics@mgmechanics.de, http://sourceforge.net/users/mgmechanics
+ * Tests to reproduce the issue IMAGING-134
  */
 public final class Imaging134Test {
     /**
