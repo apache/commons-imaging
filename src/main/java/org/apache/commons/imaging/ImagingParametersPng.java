@@ -146,7 +146,7 @@ public final class ImagingParametersPng extends ImagingParameters {
      * @param textChunks the text chunks
      */
     public void setTextChunks(final List<PngText> textChunks) {
-        checkIfValueIsNull(textChunks);
+        checkIfValueIsNull(textChunks, "textChunks");
         this.textChunks = textChunks;
     }
 }

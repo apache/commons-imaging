@@ -172,7 +172,7 @@ public class ImagingParameters {
      * @see java.io.InputStream
      */
     public void setFileNameHint(final String value) {
-        checkIfValueIsNull(value);
+        checkIfValueIsNull(value, "fileNameHint");
         this.fileNameHint = value;
     }
         
@@ -207,7 +207,7 @@ public class ImagingParameters {
      * @param value Valid values: String of XMP XML.
      */
     public void setXmpXmlAsString(final String value) {
-        checkIfValueIsNull(value);
+        checkIfValueIsNull(value, "xmpXmlAsString");
         this.xmpXmlAsString = value;
     }
     
@@ -238,7 +238,7 @@ public class ImagingParameters {
      * ImageFormat.IMAGE_FORMAT_PNG.
      */
     public void setImageFormat(final ImageFormat value) {
-        checkIfValueIsNull(value);
+        checkIfValueIsNull(value, "imageFormat");
         this.imageFormat = value;
     }
     
@@ -267,7 +267,7 @@ public class ImagingParameters {
      * @param value A BufferedImageFactory
      */
     public void setBufferedImageFactory(final BufferedImageFactory value) {
-        checkIfValueIsNull(value);
+        checkIfValueIsNull(value, "bufferedImageFactory");
         this.bufferedImageFactory = value;
     }
     
@@ -302,7 +302,7 @@ public class ImagingParameters {
      * @see org.apache.commons.imaging.PixelDensity
      */
     public void setPixelDensity(final PixelDensity value) {
-        checkIfValueIsNull(value);
+        checkIfValueIsNull(value, "pixelDensity");
         this.pixelDensity = value;
     }
     
@@ -312,9 +312,9 @@ public class ImagingParameters {
      * Throws a RuntimeException if a given value is {code null}.
      * @param value 
      */
-    final void checkIfValueIsNull(final Object value) {
+    final void checkIfValueIsNull(final Object value, final String parameterName) {
         if (value == null) {
-            throw new IllegalArgumentException("The value for any parameter must not null.");
+            throw new IllegalArgumentException("The value for the parameter " + parameterName + " must not null.");
         }
     }
     
