@@ -13,15 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Changed 2015 by Michael Gross, mgmechanics@mgmechanics.de
-
-Adding any image file to this folder means that this file will used immediately
-in various tests. These tests use certain functions of this library for all
-image files in this folder.
-For example, consider an bmp image file which shall bring up an exception.
-Adding this file here will cause some existing tests to fail while the same tests
-pass for all other bmp images in this folder.
-
 
 bmp/1/Oregon Scientific DS6639 - DSC_0307 - small.bmp
     Contributed by Charles Matthew Chen.

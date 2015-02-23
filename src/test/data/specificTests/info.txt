@@ -13,8 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Added 2015 by Michael Gross, mgmechanics@mgmechanics.de
-
 Adding a file to this folder has no effect to any existing test. If you want to
 use a just added file you need to add test which uses this file.
 
