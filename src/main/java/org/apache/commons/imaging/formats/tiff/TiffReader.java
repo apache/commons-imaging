@@ -314,7 +314,7 @@ public class TiffReader extends BinaryFileParser {
             if (params != null) {
                 if (params instanceof ImagingParametersTiff) {
                     final ImagingParametersTiff paramsTiff = (ImagingParametersTiff) params;
-                    tmpReadThumbnails = paramsTiff.getReadThumbnails();
+                    tmpReadThumbnails = paramsTiff.isReadThumbnailsEnabled();
                 }
             }
             this.readThumbnails = tmpReadThumbnails;
