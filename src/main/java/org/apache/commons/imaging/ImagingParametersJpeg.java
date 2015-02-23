@@ -23,13 +23,13 @@ package org.apache.commons.imaging;
  */
 public final class ImagingParametersJpeg extends ImagingParameters {
     
-    private boolean readThumbnailsValue;
+    private boolean readThumbnails;
     
     /**
      * This gives you a parameter object with default values.
      */
     public ImagingParametersJpeg() {
-        this.readThumbnailsValue = false;
+        this.readThumbnails = false;
     }
     
     //****** readThumbnails ******
@@ -44,7 +44,7 @@ public final class ImagingParametersJpeg extends ImagingParameters {
      * and {@code false} (don't read embedded thumbnails, default value).
      */
     public boolean isReadThumbnailsEnabled() {
-        return this.readThumbnailsValue;
+        return this.readThumbnails;
     }
     
     /**
@@ -53,7 +53,7 @@ public final class ImagingParametersJpeg extends ImagingParameters {
      * Only applies to read EXIF metadata from JPEG/JFIF files.
      */
     public void enableReadThumbnails() {
-        this.readThumbnailsValue = true;
+        this.readThumbnails = true;
     }
     
     /**
@@ -62,6 +62,6 @@ public final class ImagingParametersJpeg extends ImagingParameters {
      * Only applies to read EXIF metadata from JPEG/JFIF files.
      */
     public void disableReadThumbnails() {
-        this.readThumbnailsValue = false;
+        this.readThumbnails = false;
     }
 }
