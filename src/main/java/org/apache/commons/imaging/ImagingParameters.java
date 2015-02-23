@@ -20,9 +20,27 @@ package org.apache.commons.imaging;
 import org.apache.commons.imaging.common.BufferedImageFactory;
 
 /**
- * This class is a POJO holding data for parameters.
+ * This class is a POJO holding data for parameters as requested in IMAGING-159.
  * It holds data needed for all image formats. For data needed only by one
  * particular format there are inherited classes.
+ * <p>
+ * There are two kinds of parameters: with and without default value. For
+ * parameters without default value it implements lazy initialization:
+ * <br>
+ * After getting an instance there is no value present. Accessing
+ * the value with getX() in this state will cause a RuntimeException.
+ * There is always a isXPresent() method for this parameter which returns
+ * {@code false} in this state.
+ * <br>
+ * Once you provided a value using setX() you may access this value with getX().
+ * The isXPresent() method will return {@code true} now.
+ * <p>
+ * Other parameters have a default value. This is told in the javadoc for their
+ * getX() method. They don't have a isXPresent() method. You may access them any time.
+ * <p>
+ * All boolean parameters have default values. Their setter and getter have a different
+ * naming scheme: enableX() causes isXEnabled() to return {@code true} while 
+ * disableX() causes isXEnabled() to return {@code false}.
  */
 public class ImagingParameters {
     
