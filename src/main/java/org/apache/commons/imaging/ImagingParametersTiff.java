@@ -25,25 +25,25 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
  */
 public final class ImagingParametersTiff extends ImagingParameters {
     
-    private Integer compressionLevel; // PARAM_KEY_COMPRESSION
+    private Integer compressionLevel;
     
-    private Integer compressionBlockSize; // PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE
+    private Integer compressionBlockSize;
 
-    private TiffOutputSet outputSetForMetaData; // PARAM_KEY_EXIF
+    private TiffOutputSet outputSetForMetaData;
     
-    private boolean readThumbnails; // PARAM_KEY_READ_THUMBNAILS
+    private boolean readThumbnails;
     
-    private Integer t4options; // PARAM_KEY_T4_OPTIONS
+    private Integer t4options;
     
-    private Integer t6options; // PARAM_KEY_T6_OPTIONS
+    private Integer t6options;
     
-    private Integer subImageX; // PARAM_KEY_SUBIMAGE_X
+    private Integer subImageX;
     
-    private Integer subImageY; // PARAM_KEY_SUBIMAGE_Y
+    private Integer subImageY;
     
-    private Integer subImageWidth; // PARAM_KEY_SUBIMAGE_WIDTH
+    private Integer subImageWidth;
     
-    private Integer subImageHeight; // PARAM_KEY_SUBIMAGE_HEIGHT
+    private Integer subImageHeight;
     
     
     /**

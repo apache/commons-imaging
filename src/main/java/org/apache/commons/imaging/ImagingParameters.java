@@ -44,19 +44,19 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  */
 public class ImagingParameters {
     
-    private boolean verbose; //PARAM_KEY_VERBOSE
+    private boolean verbose;
     
-    private boolean strict; // PARAM_KEY_STRICT
+    private boolean strict;
     
-    private String fileNameHint; // PARAM_KEY_FILENAME
+    private String fileNameHint;
     
-    private String xmpXmlAsString; // PARAM_KEY_XMP_XML
+    private String xmpXmlAsString;
     
-    private ImageFormat imageFormat; // PARAM_KEY_FORMAT
+    private ImageFormat imageFormat;
     
-    private BufferedImageFactory bufferedImageFactory; // BUFFERED_IMAGE_FACTORY
+    private BufferedImageFactory bufferedImageFactory;
     
-    private PixelDensity pixelDensity; // PARAM_KEY_PIXEL_DENSITY
+    private PixelDensity pixelDensity;
     
     /**
      * This gives you a parameter object with default values.
