@@ -719,7 +719,7 @@ public class BmpImageParser extends ImageParser {
         }
 
         final PixelParser pixelParser = ic.pixelParser;
-        final ImageBuilder imageBuilder = new ImageBuilder(bhi.isBottomUpBitmap, width, height, true);
+        final ImageBuilder imageBuilder = new ImageBuilder(width, height, true);
         pixelParser.processImage(imageBuilder);
 
         return imageBuilder.getBufferedImage();

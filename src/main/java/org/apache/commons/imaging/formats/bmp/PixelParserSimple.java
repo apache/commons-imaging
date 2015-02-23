@@ -33,7 +33,7 @@ abstract class PixelParserSimple extends PixelParser {
     @Override
     public void processImage(final ImageBuilder imageBuilder) throws ImageReadException, IOException {
         // image data are stored bottom-up
-        if (imageBuilder.readBottomUp() == true) {
+        if (bhi.isBottomUpBitmap == true) {
             for (int y = bhi.height - 1; y >= 0; y--) {
                 for (int x = 0; x < bhi.width; x++) {
                     final int rgb = getNextRGB();
