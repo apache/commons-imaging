@@ -20,7 +20,7 @@ package org.apache.commons.imaging;
 import org.apache.commons.imaging.common.BufferedImageFactory;
 
 /**
- * This class is a POJO holding data for parameters as requested in IMAGING-159.
+ * This class is a POJO holding data for parameters.
  * It holds data needed for all image formats. For data needed only by one
  * particular format there are inherited classes.
  * <p>
