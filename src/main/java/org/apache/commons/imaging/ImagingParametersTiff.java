@@ -171,7 +171,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @param value Valid values: TiffOutputSet to write into the image's EXIF metadata.
      */
     public void setOutputSet(final TiffOutputSet value) {
-        checkIfValueIsNull(value);
+        checkIfValueIsNull(value, "outputSet");
         this.outputSetForMetaData = value;
     }
     
