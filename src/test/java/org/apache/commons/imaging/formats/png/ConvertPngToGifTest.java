@@ -46,7 +46,7 @@ public class ConvertPngToGifTest extends PngBaseTest {
             }
 
             final ImagingParameters params = new ImagingParameters();
-            // params.enableVerbose();
+            // params.setVerbose();
 
             final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
             assertNotNull(image);

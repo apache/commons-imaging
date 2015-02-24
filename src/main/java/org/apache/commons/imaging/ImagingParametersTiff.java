@@ -183,22 +183,17 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * @return Valid values:{@code true} (causes it to read embedded thumbnails
      * and {@code false} (don't read embedded thumbnails).
      */
-    public boolean isReadThumbnailsEnabled() {
+    public boolean getReadThumbnails() {
         return this.readThumbnails;
     }
     
     /**
      * Call this method to indicate to read embedded thumbnails.
+     * @param value {@code true} = read embedded thumbnails;
+     * {@code false} = don't read embedded thumbnails
      */
-    public void enableReadThumbnails() {
-        this.readThumbnails = true;
-    }
-    
-    /**
-     * Call this method to indicate not to read embedded thumbnails.
-     */
-    public void disableReadThumbnails() {
-        this.readThumbnails = false;
+    public void setReadThumbnails(final boolean value) {
+        this.readThumbnails = value;
     }
     
     //****** t4 options ******

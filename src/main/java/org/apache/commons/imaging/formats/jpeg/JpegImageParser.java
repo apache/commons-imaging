@@ -350,7 +350,7 @@ public class JpegImageParser extends ImageParser {
         if (params == null) {
             ImagingParametersJpeg jpegParameters;
             jpegParameters = new ImagingParametersJpeg();
-            jpegParameters.enableReadThumbnails();
+            jpegParameters.setReadThumbnails(true);
             parameters = jpegParameters;
         }
         else {

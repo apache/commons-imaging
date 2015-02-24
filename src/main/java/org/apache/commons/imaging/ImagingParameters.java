@@ -79,24 +79,17 @@ public class ImagingParameters {
      * @return Valid values: {@code true} means {@literal "verbose mode enabled"}
      * and {@code false} means {@literal "verbose mode disabled"} (default value).
      */
-    public boolean isVerboseEnabled() {
+    public boolean getVerbose() {
         return this.verbose;
     }
     
     /**
      * Turns the verbose mode on.
      * Parameter applies to read and write operations.
+     * @param value {@code true} = verbose mode on; {@code false} = verbose mode off
      */
-    public void enableVerbose() {
-        this.verbose = true;
-    }
-    
-    /**
-     * Turns the verbose mode off.
-     * Parameter applies to read and write operations.
-     */
-    public void disableVerbose() {
-        this.verbose = false;
+    public void setVerbose(final boolean value) {
+        this.verbose = value;
     }
     
     //****** strict ******
@@ -109,7 +102,7 @@ public class ImagingParameters {
      * (default value)
      * @see org.apache.commons.imaging.formats.tiff.constants.TiffConstants
      */
-    public boolean isStrictEnabled() {
+    public boolean getStrict() {
         return this.strict;
     }
     
@@ -118,19 +111,10 @@ public class ImagingParameters {
      * files, or whether to tolerate small problems.
      * This method switches the behavior so that it throws exceptions when
      * parsing invalid files.
+     * @param value {@code true} = strict mode on; {@code false} = strict mode off
      */
-    public void enableStrict() {
-        this.strict = true;
-    }
-    
-    /**
-     * Parameter indicates whether to throw exceptions when parsing invalid
-     * files, or whether to tolerate small problems.
-     * This method switches the behavior so that it tolerates small problems.
-     * 
-     */
-    public void disableStrict() {
-        this.strict = false;
+    public void setStrict(final boolean value) {
+        this.strict = value;
     }
     
     //****** fileNameHint ******

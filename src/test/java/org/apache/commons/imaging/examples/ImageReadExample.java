@@ -34,7 +34,7 @@ public class ImageReadExample {
         // set optional parameters if you like
         params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
 
-        // params.enableVerbose();
+        // params.setVerbose();
 
         // read image
         final BufferedImage image = Imaging.getBufferedImage(file, params);

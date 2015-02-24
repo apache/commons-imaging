@@ -759,7 +759,7 @@ public class GifImageParser extends ImageParser {
         // ensure that the parameter object is not null
         final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
 
-        final boolean verbose = parameters.isVerboseEnabled();
+        final boolean verbose = parameters.getVerbose();
         final String xmpXml = (parameters.isXmpXmlAsStringPresent()) ? parameters.getXmpXmlAsString(): null;
         
         final int width = src.getWidth();

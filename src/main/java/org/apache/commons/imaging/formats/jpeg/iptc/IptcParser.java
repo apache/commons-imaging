@@ -100,8 +100,8 @@ public class IptcParser extends BinaryFileParser {
         // ensure that the parameter object is not null
         final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
         
-        final boolean strict = parameters.isStrictEnabled();
-        final boolean verbose = parameters.isVerboseEnabled();
+        final boolean strict = parameters.getStrict();
+        final boolean verbose = parameters.getVerbose();
 
         return parsePhotoshopSegment(bytes, verbose, strict);
     }

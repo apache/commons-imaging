@@ -516,7 +516,7 @@ public class PcxImageParser extends ImageParser {
         
         // ensure that the parameter object is not null
         final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
-        boolean isStrict = parameters.isStrictEnabled();
+        boolean isStrict = parameters.getStrict();
 
         InputStream is = null;
         boolean canThrow = false;

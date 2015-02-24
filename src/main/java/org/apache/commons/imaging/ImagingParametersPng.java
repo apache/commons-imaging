@@ -69,7 +69,7 @@ public final class ImagingParametersPng extends ImagingParameters {
         this.bitDepth = value;
     }
     
-    // ****** isForceIndexedColorEnabled ******
+    // ****** getForceIndexedColor ******
     
     /**
      * {@code true} = force indexed color; {@code false} = don't force indexed color
@@ -77,25 +77,20 @@ public final class ImagingParametersPng extends ImagingParameters {
      * Default value: {@code false}
      * @return 
      */
-    public boolean isForceIndexedColorEnabled() {
+    public boolean getForceIndexedColor() {
         return this.forceIndexedColor;
     }
     
     /**
      * force indexed color
+     * @param value {@code true} = force indexed color;
+     * {@code false} = don't force indexed color
      */
-    public void enableForceIndexedColor() {
-        this.forceIndexedColor = true;
+    public void setForceIndexedColor(final boolean value) {
+        this.forceIndexedColor = value;
     }
     
-    /**
-     * don't force indexed color
-     */
-    public void disableForceIndexedColor() {
-        this.forceIndexedColor = false;
-    }
-    
-    // ****** isForceTrueColorEnabled ******
+    // ****** getForceTrueColor ******
     
     /**
      * {@code true} = force true color; {@code false} = don't force true color
@@ -103,22 +98,17 @@ public final class ImagingParametersPng extends ImagingParameters {
      * Default value: {@code false}
      * @return 
      */
-    public boolean isForceTrueColorEnabled() {
+    public boolean getForceTrueColor() {
         return this.forceTrueColor;
     }
     
     /**
-     * force indexed color
+     * force true color
+     * @param value {@code true} = force true color;
+     * {@code false} = don't force true color
      */
-    public void enableForceTrueColor() {
-        this.forceTrueColor = true;
-    }
-    
-    /**
-     * don't force indexed color
-     */
-    public void disableForceTrueColor() {
-        this.forceTrueColor = false;
+    public void setForceTrueColor(final boolean value) {
+        this.forceTrueColor = value;
     }
     
     //****** textChunks ******

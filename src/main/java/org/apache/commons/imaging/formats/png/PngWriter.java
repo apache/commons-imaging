@@ -42,7 +42,7 @@ class PngWriter {
     }
 
     public PngWriter(final ImagingParameters params) {
-        this.verbose = params != null && Boolean.TRUE.equals(params.isVerboseEnabled());
+        this.verbose = params != null && Boolean.TRUE.equals(params.getVerbose());
     }
 
     /*
@@ -395,8 +395,8 @@ class PngWriter {
             if (parameters instanceof ImagingParametersPng) {
                 final ImagingParametersPng parametersPng = (ImagingParametersPng) parameters;
                 
-                forceIndexedColor = parametersPng.isForceIndexedColorEnabled();
-                forceTrueColor = parametersPng.isForceTrueColorEnabled();
+                forceIndexedColor = parametersPng.getForceIndexedColor();
+                forceTrueColor = parametersPng.getForceTrueColor();
             }
             // only generic parameters are provided so we need to use default values
             // for PNG format specific parameters

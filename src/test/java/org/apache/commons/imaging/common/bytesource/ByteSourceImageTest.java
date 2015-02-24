@@ -175,12 +175,12 @@ public class ByteSourceImageTest extends ByteSourceTest {
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         if (imageFormat.equals(ImageFormats.TIFF)) {
             final ImagingParametersTiff paramsTiff = new ImagingParametersTiff();
-            if (ignoreImageData == false) paramsTiff.enableReadThumbnails();
+            if (ignoreImageData == false) paramsTiff.setReadThumbnails(true);
             params = paramsTiff;
         }
         else if (imageFormat.equals(ImageFormats.JPEG)) {
             final ImagingParametersJpeg paramsJpeg = new ImagingParametersJpeg();
-            if (ignoreImageData == false) paramsJpeg.enableReadThumbnails();
+            if (ignoreImageData == false) paramsJpeg.setReadThumbnails(true);
             params = paramsJpeg;
         }
         else {

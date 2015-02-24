@@ -138,7 +138,7 @@ public class PngWriteReadTest extends ImagingTest {
 
         final ImagingParametersPng writeParams = new ImagingParametersPng();
         // writeParams.setImageFormat(ImageFormats.PNG);
-        // writeParams.enableForceTrueColor();
+        // writeParams.setForceTrueColor();
 
         final byte[] bytes = Imaging.writeImageToBytes(srcImage,
                 ImageFormats.PNG, writeParams);

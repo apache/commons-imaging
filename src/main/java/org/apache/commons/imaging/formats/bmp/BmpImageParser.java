@@ -494,7 +494,7 @@ public class BmpImageParser extends ImageParser {
             throws ImageReadException, IOException {
         // ensure that the parameter object is not null
         final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
-        final boolean verbose = parameters.isVerboseEnabled();
+        final boolean verbose = parameters.getVerbose();
 
         final BmpHeaderInfo bhi = readBmpHeaderInfo(byteSource, verbose);
 
@@ -543,7 +543,7 @@ public class BmpImageParser extends ImageParser {
         // ensure that the parameter object is not null
         final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
         
-        final boolean verbose = parameters.isVerboseEnabled();
+        final boolean verbose = parameters.getVerbose();
 
         InputStream is = null;
         ImageContents ic = null;
@@ -663,7 +663,7 @@ public class BmpImageParser extends ImageParser {
         // ensure that the parameter object is not null
         final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
         
-        final boolean verbose = parameters.isVerboseEnabled();
+        final boolean verbose = parameters.getVerbose();
         
         final ImageContents ic = readImageContents(inputStream,
                 FormatCompliance.getDefault(), verbose);

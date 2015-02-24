@@ -963,6 +963,6 @@ public abstract class ImageParser extends BinaryFileParser {
         if (params == null) {
             return false;
         }
-        return params.isStrictEnabled();
+        return params.getStrict();
     }
 }

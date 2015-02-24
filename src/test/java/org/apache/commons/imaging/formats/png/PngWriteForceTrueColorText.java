@@ -56,7 +56,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 // Debug.debug("outFile", outFile);
 
                 final ImagingParametersPng params = new ImagingParametersPng();
-                params.enableForceTrueColor();
+                params.setForceTrueColor(true);
                 Imaging.writeImage(image, outFile, ImageFormats.PNG, params);
 
                 final BufferedImage image2 = Imaging.getBufferedImage(outFile, new ImagingParameters());
