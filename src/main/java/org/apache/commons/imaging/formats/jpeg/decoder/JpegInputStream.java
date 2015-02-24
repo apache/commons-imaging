@@ -47,8 +47,20 @@ class JpegInputStream {
                     if (b2 == (0xff & JpegConstants.DNL_MARKER)) {
                         throw new ImageReadException("DNL not yet supported");
                     }
-                    throw new ImageReadException("Invalid marker found "
-                            + "in entropy data");
+                    // found one of the RST markers (RST0..RST7)
+                    else if (b2 >= (0xff & JpegConstants.RST0_MARKER)
+                            && b2 <= (0xff & JpegConstants.RST7_MARKER)) {
+                        // TODO: Replace throw... by handling of restart markers
+                        throw new ImageReadException(
+                                "Image files using Restart Markers are not supported yet. "
+                                + "Found RST marker in entropy data: " + String.format("0xFF %X", b2)
+                        );
+                    }
+                    else {
+                        throw new ImageReadException(
+                                "Invalid marker found in entropy data: " + String.format("0xFF %X", b2)
+                        );
+                    }
                 }
             }
         }

@@ -33,10 +33,17 @@ public final class Imaging134Test {
      * @throws org.apache.commons.imaging.ImageReadException
      * @throws java.io.IOException
      */
-    @Test(expected=ImageReadException.class)
+    @Test
     public void testGetBufferedImage134() throws ImageReadException, IOException {
         final File imageFile = new File (ImagingTestConstants.TEST_SPECIFIC_FOLDER, "jpg/1/image.jpeg");
-        Imaging.getBufferedImage(imageFile);
+        // manual check of exception to make sure we got the ImageReadException from expected place
+        try {
+            Imaging.getBufferedImage(imageFile);
+            fail("Expected an ImageReadException here but didn't get one.");
+        }
+        catch (ImageReadException ex) {
+            assertTrue(ex.getLocalizedMessage().matches(".*Found RST marker in entropy data.*"));
+        }
     }
     
     /**
@@ -45,9 +52,16 @@ public final class Imaging134Test {
      * @throws org.apache.commons.imaging.ImageReadException
      * @throws java.io.IOException
      */
-    @Test(expected=ImageReadException.class)
+    @Test
     public void testGetBufferedImage097() throws ImageReadException, IOException {
         final File imageFile = new File (ImagingTestConstants.TEST_SPECIFIC_FOLDER, "jpg/2/_DSC6099.jpg");
-        Imaging.getBufferedImage(imageFile);
+        // manual check of exception to make sure we got the ImageReadException from expected place
+        try {
+            Imaging.getBufferedImage(imageFile);
+            fail("Expected an ImageReadException here but didn't get one.");
+        }
+        catch (ImageReadException ex) {
+            assertTrue(ex.getLocalizedMessage().matches(".*Found RST marker in entropy data.*"));
+        }
     }
 }
