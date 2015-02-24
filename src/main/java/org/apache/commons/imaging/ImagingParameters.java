@@ -37,10 +37,6 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
  * <p>
  * Other parameters have a default value. This is told in the javadoc for their
  * getX() method. They don't have a isXPresent() method. You may access them any time.
- * <p>
- * All boolean parameters have default values. Their setter and getter have a different
- * naming scheme: enableX() causes isXEnabled() to return {@code true} while 
- * disableX() causes isXEnabled() to return {@code false}.
  */
 public class ImagingParameters {
     
