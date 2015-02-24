@@ -25,20 +25,20 @@ import static org.junit.Assert.*;
  */
 public final class ImagingParametersTest {
     /**
-     * Test if an exception is thrown if the provided value is null.
+     * Asserts that an exception is thrown if the provided value is null.
      */
     @Test(expected=IllegalArgumentException.class)
-    public void testCheckIfValueIsNull() {
+    public void testCheckIfValueIsNull01() {
         ImagingParameters ip = new ImagingParameters();
         ip.setFileNameHint(null);
     }
     
     /**
-     * Test the exception thrown if the provided value is null
+     * Test if the exception thrown if the provided value is null
      * provides the parameter name.
      */
     @Test
-    public void testCheckIfValueIsNullMsg() {
+    public void testCheckIfValueIsNull02() {
         ImagingParameters ip = new ImagingParameters();
         try {
             ip.setFileNameHint(null);
@@ -49,11 +49,31 @@ public final class ImagingParametersTest {
     }
     
     /**
-     * Test if an exception is thrown if the parameter is accessed before a value was provided.
+     * Asserts that no exception is thrown if the provided value is not null.
+     */
+    @Test
+    public void testCheckIfValueIsNull03() {
+        ImagingParameters ip = new ImagingParameters();
+        ip.setFileNameHint("Teststring");
+        assertEquals("Teststring", ip.getFileNameHint());
+    }
+    
+    /**
+     * Asserts that an exception is thrown if the parameter is accessed before a value was provided.
      */
     @Test(expected=IllegalStateException.class)
-    public void testCheckIfParameterIsPresent() {
+    public void testCheckIfParameterIsPresent01() {
         ImagingParameters ip = new ImagingParameters();
         ip.getFileNameHint();
+    }
+    
+    /**
+     * Asserts that no exception is thrown if the parameter is accessed after a value was provided.
+     */
+    @Test
+    public void testCheckIfParameterIsPresent02() {
+        ImagingParameters ip = new ImagingParameters();
+        ip.setFileNameHint("Teststring");
+        assertEquals("Teststring", ip.getFileNameHint());
     }
 }
