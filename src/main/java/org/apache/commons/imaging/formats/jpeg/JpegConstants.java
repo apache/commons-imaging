@@ -136,7 +136,9 @@ public final class JpegConstants {
                     SOF5_MARKER, SOF6_MARKER, SOF7_MARKER, SOF8_MARKER, SOF9_MARKER,
                     SOF10_MARKER, SOF11_MARKER, DAC_MARKER, SOF13_MARKER,
                     SOF14_MARKER, SOF15_MARKER, EOI_MARKER, SOS_MARKER, DQT_MARKER,
-                    DNL_MARKER, COM_MARKER));
+                    DNL_MARKER, COM_MARKER,
+                    DRI_MARKER, RST0_MARKER, RST1_MARKER, RST2_MARKER, RST3_MARKER,
+                    RST4_MARKER, RST5_MARKER, RST6_MARKER, RST7_MARKER));
 
     public static final BinaryConstant ICC_PROFILE_LABEL = new BinaryConstant(
             new byte[] { 0x49, 0x43, 0x43, 0x5F, 0x50, 0x52, 0x4F, 0x46, 0x49,

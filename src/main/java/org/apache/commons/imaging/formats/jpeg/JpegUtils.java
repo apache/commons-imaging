@@ -155,6 +155,24 @@ public class JpegUtils extends BinaryFileParser {
             return "SOF15_MARKER";
         case JpegConstants.DQT_MARKER:
             return "DQT_MARKER";
+        case JpegConstants.DRI_MARKER:
+            return "DRI_MARKER";
+        case JpegConstants.RST0_MARKER:
+            return "RST0_MARKER";
+        case JpegConstants.RST1_MARKER:
+            return "RST1_MARKER";
+        case JpegConstants.RST2_MARKER:
+            return "RST2_MARKER";
+        case JpegConstants.RST3_MARKER:
+            return "RST3_MARKER";
+        case JpegConstants.RST4_MARKER:
+            return "RST4_MARKER";
+        case JpegConstants.RST5_MARKER:
+            return "RST5_MARKER";
+        case JpegConstants.RST6_MARKER:
+            return "RST6_MARKER";
+        case JpegConstants.RST7_MARKER:
+            return "RST7_MARKER";
         default:
             return "Unknown";
         }
