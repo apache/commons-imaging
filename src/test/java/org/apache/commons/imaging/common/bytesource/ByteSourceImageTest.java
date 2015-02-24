@@ -107,13 +107,12 @@ public class ByteSourceImageTest extends ByteSourceTest {
     }
 
     public void checkGetBufferedImage(final File file, final byte[] bytes) throws Exception {
-        BufferedImage imageFile = Imaging.getBufferedImage(file);
-        assertNotNull(imageFile);
-        assertTrue(imageFile.getWidth() > 0);
-        assertTrue(imageFile.getHeight() > 0);
-        final int imageFileWidth = imageFile.getWidth();
-        final int imageFileHeight = imageFile.getHeight();
-        imageFile = null;
+        BufferedImage bufferedImage = Imaging.getBufferedImage(file);
+        assertNotNull(bufferedImage);
+        assertTrue(bufferedImage.getWidth() > 0);
+        assertTrue(bufferedImage.getHeight() > 0);
+        final int imageFileWidth = bufferedImage.getWidth();
+        final int imageFileHeight = bufferedImage.getHeight();
 
         final BufferedImage imageBytes = Imaging.getBufferedImage(bytes);
         assertNotNull(imageBytes);
