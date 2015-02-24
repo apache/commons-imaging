@@ -116,6 +116,17 @@ public final class JpegConstants {
     public static final int DQT_MARKER = 0xFFdb;
     public static final int DNL_MARKER = 0xFFdc;
     public static final int COM_MARKER = 0xFFfe;
+    
+    // marker for restart intervals
+    public static final int DRI_MARKER = 0xFFdd;
+    public static final int RST0_MARKER = 0xFFd0;
+    public static final int RST1_MARKER = 0xFFd0 + 0x1;
+    public static final int RST2_MARKER = 0xFFd0 + 0x2;
+    public static final int RST3_MARKER = 0xFFd0 + 0x3;
+    public static final int RST4_MARKER = 0xFFd0 + 0x4;
+    public static final int RST5_MARKER = 0xFFd0 + 0x5;
+    public static final int RST6_MARKER = 0xFFd0 + 0x6;
+    public static final int RST7_MARKER = 0xFFd0 + 0x7;
 
     public static final List<Integer> MARKERS = Collections
             .unmodifiableList(Arrays.asList(JPEG_APP0, JPEG_APP0_MARKER,
