@@ -25,36 +25,17 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests to reproduce the issue IMAGING-134
+ * Tests for image files with restart marker.
  */
-public final class Imaging134Test {
+public final class RestartMarkerTest {
     /**
-     * The purpose of this test is to reproduce the exception described in issue IMAGING-134.
+     * Assert that image files with restart marker cause a proper exception.
      * @throws org.apache.commons.imaging.ImageReadException
      * @throws java.io.IOException
      */
     @Test
-    public void testGetBufferedImage134() throws ImageReadException, IOException {
+    public void testGetBufferedImageRst() throws ImageReadException, IOException {
         final File imageFile = new File (ImagingTestConstants.TEST_SPECIFIC_FOLDER, "jpg/1/image.jpeg");
-        // manual check of exception to make sure we got the ImageReadException from expected place
-        try {
-            Imaging.getBufferedImage(imageFile);
-            fail("Expected an ImageReadException here but didn't get one.");
-        }
-        catch (ImageReadException ex) {
-            assertTrue(ex.getLocalizedMessage().matches(".*Found RST marker in entropy data.*"));
-        }
-    }
-    
-    /**
-     * The purpose of this test is to reproduce the exception described in issue IMAGING-97
-     * to see if it has the same cause as IMAGING-134.
-     * @throws org.apache.commons.imaging.ImageReadException
-     * @throws java.io.IOException
-     */
-    @Test
-    public void testGetBufferedImage097() throws ImageReadException, IOException {
-        final File imageFile = new File (ImagingTestConstants.TEST_SPECIFIC_FOLDER, "jpg/2/_DSC6099.jpg");
         // manual check of exception to make sure we got the ImageReadException from expected place
         try {
             Imaging.getBufferedImage(imageFile);

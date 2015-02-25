@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
-jpg/1/image.jpeg downloaded from http://issues.apache.org/jira/browse/IMAGING-134,
-    was uploaded there 2014 by John Hewson
+jpg/1/image.jpeg Image file with restart markers,
+    downloaded from http://issues.apache.org/jira/browse/IMAGING-134, was uploaded there 2014 by John Hewson
 
-jpg/2/_DSC6099.jpg downloaded from http://issues.apache.org/jira/browse/IMAGING-97,
-    was uploaded there 2012 by William Saar
+jpg/2/_DSC6099.jpg Image file with restart markers,
+    downloaded from http://issues.apache.org/jira/browse/IMAGING-97, was uploaded there 2012 by William Saar
