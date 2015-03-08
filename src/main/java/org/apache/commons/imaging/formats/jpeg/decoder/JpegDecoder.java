@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
@@ -77,7 +78,6 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int segmentLength = read2Bytes("segmentLength", is,"Not a Valid JPEG File", getByteOrder());
             final byte[] sosSegmentBytes = readBytes("SosSegment", is, segmentLength - 2, "Not a Valid JPEG File");
             sosSegment = new SosSegment(marker, sosSegmentBytes);
-
             // read the payload of the scan, this is the remainder of image data after the header
             // the payload contains the entropy-encoded segments (or ECS) divided by RST markers
             // or only one ECS if the entropy-encoded data is not divided by RST markers
@@ -99,6 +99,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             }
             final int hSize = 8 * hMax;
             final int vSize = 8 * vMax;
+
             final int xMCUs = (sofnSegment.width + hSize - 1) / hSize;
             final int yMCUs = (sofnSegment.height + vSize - 1) / vSize;
             final Block[] mcu = allocateMCUMemory();
@@ -109,7 +110,11 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int[] preds = new int[sofnSegment.numberOfComponents];
             ColorModel colorModel;
             WritableRaster raster;
-            if (sofnSegment.numberOfComponents == 3) {
+            if (sofnSegment.numberOfComponents == 4) {
+                colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
+                int bandMasks[] = new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff };
+                raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
+            } else if (sofnSegment.numberOfComponents == 3) {
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
                         0x000000ff);
                 raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
@@ -155,7 +160,14 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                     for (int y2 = 0; y2 < vSize && y1 + y2 < sofnSegment.height; y2++) {
                         for (int x2 = 0; x2 < hSize
                                 && x1 + x2 < sofnSegment.width; x2++) {
-                            if (scaledMCU.length == 3) {
+                            if (scaledMCU.length == 4) {
+                                final int C = scaledMCU[0].samples[srcRowOffset + x2];
+                                final int M = scaledMCU[1].samples[srcRowOffset + x2];
+                                final int Y = scaledMCU[2].samples[srcRowOffset + x2];
+                                final int K = scaledMCU[3].samples[srcRowOffset + x2];
+                                final int rgb = ColorConversions.convertCMYKtoRGB(C, M, Y, K);
+                                dataBuffer.setElem(dstRowOffset + x2, rgb);
+                            } else if (scaledMCU.length == 3) {
                                 final int Y = scaledMCU[0].samples[srcRowOffset + x2];
                                 final int Cb = scaledMCU[1].samples[srcRowOffset + x2];
                                 final int Cr = scaledMCU[2].samples[srcRowOffset + x2];
@@ -480,7 +492,6 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                 intervalStarts.add(pos + 1);
                 foundFF = foundD0toD7 = false;
             }
-
             pos++;
         }
         return intervalStarts;
