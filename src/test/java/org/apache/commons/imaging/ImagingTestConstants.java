@@ -29,8 +29,7 @@ public interface ImagingTestConstants {
 
     static final File SOURCE_FOLDER = new File("src");
     static final File TEST_SOURCE_FOLDER = new File(SOURCE_FOLDER, "test");
-    static final File TEST_DATA_SOURCE_FOLDER = new File(TEST_SOURCE_FOLDER,
-            "data");
-    static final File TEST_IMAGE_FOLDER = new File(TEST_DATA_SOURCE_FOLDER,
-            "images");
+    static final File TEST_DATA_SOURCE_FOLDER = new File(TEST_SOURCE_FOLDER, "data");
+    static final File TEST_IMAGE_FOLDER = new File(TEST_DATA_SOURCE_FOLDER, "images");
+    static final File TEST_SPECIFIC_FOLDER = new File(TEST_DATA_SOURCE_FOLDER, "specificTests");
 }
