@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.color.ColorConversions;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
@@ -95,7 +96,11 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             final int[] preds = new int[sofnSegment.numberOfComponents];
             ColorModel colorModel;
             WritableRaster raster;
-            if (sofnSegment.numberOfComponents == 3) {
+            if (sofnSegment.numberOfComponents == 4) {
+                colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00, 0x000000ff);
+                int bandMasks[] = new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff };
+                raster = Raster.createPackedRaster(DataBuffer.TYPE_INT, sofnSegment.width, sofnSegment.height, bandMasks, null);
+            } else if (sofnSegment.numberOfComponents == 3) {
                 colorModel = new DirectColorModel(24, 0x00ff0000, 0x0000ff00,
                         0x000000ff);
                 raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
@@ -128,7 +133,15 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
                     for (int y2 = 0; y2 < vSize && y1 + y2 < sofnSegment.height; y2++) {
                         for (int x2 = 0; x2 < hSize
                                 && x1 + x2 < sofnSegment.width; x2++) {
-                            if (scaledMCU.length == 3) {
+                            if (scaledMCU.length == 4) {
+                                final int C = scaledMCU[0].samples[srcRowOffset + x2];
+                                final int M = scaledMCU[1].samples[srcRowOffset + x2];
+                                final int Y = scaledMCU[2].samples[srcRowOffset + x2];
+                                final int K = scaledMCU[3].samples[srcRowOffset + x2];
+                                final int rgb = ColorConversions.convertCMYKtoRGB(C, M, Y, K);
+                                dataBuffer.setElem(dstRowOffset + x2, rgb);
+                            }
+                            else if (scaledMCU.length == 3) {
                                 final int Y = scaledMCU[0].samples[srcRowOffset + x2];
                                 final int Cb = scaledMCU[1].samples[srcRowOffset + x2];
                                 final int Cr = scaledMCU[2].samples[srcRowOffset + x2];
