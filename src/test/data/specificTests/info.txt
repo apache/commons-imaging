@@ -13,9 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-
 jpg/1/image.jpeg Image file with restart markers,
     downloaded from http://issues.apache.org/jira/browse/IMAGING-134, was uploaded there 2014 by John Hewson
 
 jpg/2/_DSC6099.jpg Image file with restart markers,
     downloaded from http://issues.apache.org/jira/browse/IMAGING-97, was uploaded there 2012 by William Saar
+
+jpg/3/rgb.jpg Colorful image mage with The Gimp 2.8.
+    rgb_TheGimp2-8-Options.png shows the options used to export rgb.jpg from rgb.xcf
+    rgb.xcf original file, rgb.jpg is an export of this file
+
+jpg/4/DSC00727.JPG Image created with Sony Cybershot DSC-P93 (of 2004)
+    Picture taken 2011 by Michael Groß, mgmechanics@mgmechanics.de
+    Licensed 2015 to the Apache Software Foundation (ASF).
+
+jpg/5/H1060001.JPG Image created with Panasonic Camcorder HDC-HS700 (of 2010)
+    Picture taken 2010 Michael Groß, mgmechanics@mgmechanics.de
+    Licensed 2015 to the Apache Software Foundation (ASF).

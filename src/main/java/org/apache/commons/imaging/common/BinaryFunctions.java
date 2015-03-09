@@ -317,4 +317,23 @@ public final class BinaryFunctions {
         copyStreamToStream(is, os);
         return os.toByteArray();
     }
+        
+    /**
+     * This method shall behave exactly the same as int[] java.util.Arrays.copyOfRange(int[], int, int)
+     * which is not available for Java 1.5.
+     * <p>
+     * <b>Please use int[] java.util.Arrays.copyOfRange(int[], int, int) after shift to Java 1.6 or better!</b>
+     * @param originalArray
+     * @param fromPosition
+     * @param toPosition
+     * @return 
+     */
+    public static int[] copyArray(int[] originalArray, int fromPosition, int toPosition) {
+        if (toPosition < fromPosition) {
+            throw new IllegalArgumentException(toPosition + " < " + fromPosition);
+        }
+        int[] copy = new int[toPosition - fromPosition];
+        System.arraycopy(originalArray, fromPosition, copy, 0, Math.min(originalArray.length - fromPosition, copy.length));
+        return copy;
+    }
 }

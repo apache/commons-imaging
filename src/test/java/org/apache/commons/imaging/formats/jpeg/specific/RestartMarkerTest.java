@@ -16,6 +16,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.specific;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
@@ -29,20 +30,49 @@ import static org.junit.Assert.*;
  */
 public final class RestartMarkerTest {
     /**
-     * Assert that image files with restart marker cause a proper exception.
+     * Assert that image files with restart marker can be read.
      * @throws org.apache.commons.imaging.ImageReadException
      * @throws java.io.IOException
      */
     @Test
-    public void testGetBufferedImageRst() throws ImageReadException, IOException {
+    public void testGetBufferedImageRst01() throws ImageReadException, IOException {
         final File imageFile = new File (ImagingTestConstants.TEST_SPECIFIC_FOLDER, "jpg/1/image.jpeg");
-        // manual check of exception to make sure we got the ImageReadException from expected place
-        try {
-            Imaging.getBufferedImage(imageFile);
-            fail("Expected an ImageReadException here but didn't get one.");
-        }
-        catch (ImageReadException ex) {
-            assertTrue(ex.getLocalizedMessage().matches(".*Found RST marker in entropy data.*"));
-        }
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+        assertEquals(508, image.getWidth());
+        assertEquals(349, image.getHeight());
+        // check at least the pixels on all 4 edges to prove
+        // top left
+        assertEquals(-1, image.getRGB(0, 0));
+        // top right
+        assertEquals(-1, image.getRGB(507, 0));
+        // bottom left
+        assertEquals(-1, image.getRGB(0, 348));
+        // bottom right
+        assertEquals(-1, image.getRGB(507, 348));
+        // some pixels where rgb != -1
+        assertEquals(-197380, image.getRGB(120, 9));
+        assertEquals(-8553091, image.getRGB(135, 7));
+    }
+    
+    /**
+     * Assert that image files with restart marker can be read.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
+     */
+    @Test
+    public void testGetBufferedImageRst02() throws ImageReadException, IOException {
+        final File imageFile = new File (ImagingTestConstants.TEST_SPECIFIC_FOLDER, "jpg/2/_DSC6099.jpg");
+        final BufferedImage image = Imaging.getBufferedImage(imageFile);
+        assertEquals(400, image.getWidth());
+        assertEquals(600, image.getHeight());
+        // check at least the pixels on all 4 edges to prove
+        // top left
+        assertEquals(-13882324, image.getRGB(0, 0));
+        // top right
+        assertEquals(-6052957, image.getRGB(399, 0));
+        // bottom left
+        assertEquals(-1, image.getRGB(0, 599));
+        // bottom right
+        assertEquals(-1, image.getRGB(399, 599));
     }
 }
