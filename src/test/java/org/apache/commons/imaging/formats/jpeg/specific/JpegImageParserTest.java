@@ -51,8 +51,8 @@ public final class JpegImageParserTest {
         
         assertEquals(-16711426, image.getRGB(0, 2));
         // This pixel is expected to be white but isn't. Checked it with KolourPaint 4.13.1:
-        // Other white pixel: hue=0°, saturation=0, value=255; red=255, green=255, blue=255, alpha=255; html=#FFFFFF
-        // This pixel      : hue=60°, saturation=2, value=255; red=255, green=255, blue=253, alpha=255; html=#FFFFFD
+        // Other white pixel: hue=0Â°, saturation=0, value=255; red=255, green=255, blue=255, alpha=255; html=#FFFFFF
+        // This pixel      : hue=60Â°, saturation=2, value=255; red=255, green=255, blue=253, alpha=255; html=#FFFFFD
         // => So it is true: This pixel is not exactly white!
         assertEquals(-65794, image.getRGB(1, 2));
     }
