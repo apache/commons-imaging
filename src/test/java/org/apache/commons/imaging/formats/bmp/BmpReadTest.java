@@ -23,12 +23,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +36,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class BmpReadTest extends BmpBaseTest {
 
-    private File imageFile;
+    private final File imageFile;
 
     @Parameterized.Parameters
     public static Collection<File> data() throws Exception {
@@ -50,7 +49,7 @@ public class BmpReadTest extends BmpBaseTest {
 
     @Test
     public void testImageInfo() throws ImageReadException, IOException {
-        final Map<String, Object> params = Collections.emptyMap();
+        final ImagingParameters params = new ImagingParameters();
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
         assertNotNull(imageInfo);
         // TODO assert more

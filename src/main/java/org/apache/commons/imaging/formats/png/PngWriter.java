@@ -21,13 +21,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.ImagingParametersPng;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
@@ -42,8 +41,8 @@ class PngWriter {
         this.verbose = verbose;
     }
 
-    public PngWriter(final Map<String, Object> params) {
-        this.verbose =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_VERBOSE));
+    public PngWriter(final ImagingParameters params) {
+        this.verbose = params != null && Boolean.TRUE.equals(params.getVerbose());
     }
 
     /*
@@ -297,12 +296,14 @@ class PngWriter {
         writeChunk(os, ChunkType.pHYs, bytes);
     }
 
-    private byte getBitDepth(final PngColorType pngColorType, final Map<String, Object> params) {
+    private byte getBitDepth(final PngColorType pngColorType, final ImagingParameters params) {
         byte depth = 8;
-
-        Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
-        if (o instanceof Number) {
-            depth = ((Number) o).byteValue();
+        
+        if (params instanceof ImagingParametersPng) {
+            final ImagingParametersPng parameters = (ImagingParametersPng) params;
+            if (parameters.isBitDepthPresent()) {
+                depth = parameters.getBitDepth();
+            }
         }
 
         return pngColorType.isBitDepthAllowed(depth) ? depth : 8;
@@ -366,42 +367,10 @@ class PngWriter {
      tEXt   Yes None
      zTXt   Yes None
      */
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final ImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap<String, Object>(params);
-
-        // clear format key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
-            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
-        }
-        // clear verbose key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_VERBOSE)) {
-            params.remove(ImagingConstants.PARAM_KEY_VERBOSE);
-        }
-
-        final Map<String, Object> rawParams = new HashMap<String, Object>(params);
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_BIT_DEPTH)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
-        }
-        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
-            params.remove(ImagingConstants.PARAM_KEY_XMP_XML);
-        }
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
-            params.remove(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
-        }
-        params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-        params = rawParams;
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
 
         final int width = src.getWidth();
         final int height = src.getHeight();
@@ -419,8 +388,22 @@ class PngWriter {
 
         PngColorType pngColorType;
         {
-            final boolean forceIndexedColor =  Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_INDEXED_COLOR));
-            final boolean forceTrueColor = Boolean.TRUE.equals(params.get(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR));
+            final boolean forceIndexedColor;
+            final boolean forceTrueColor;
+            
+            // parameters specific for PNG images were provided
+            if (parameters instanceof ImagingParametersPng) {
+                final ImagingParametersPng parametersPng = (ImagingParametersPng) parameters;
+                
+                forceIndexedColor = parametersPng.getForceIndexedColor();
+                forceTrueColor = parametersPng.getForceTrueColor();
+            }
+            // only generic parameters are provided so we need to use default values
+            // for PNG format specific parameters
+            else {
+                forceIndexedColor = false;
+                forceTrueColor = false;
+            }
 
             if (forceIndexedColor && forceTrueColor) {
                 throw new ImageWriteException(
@@ -497,10 +480,11 @@ class PngWriter {
                 writeChunkPLTE(os, palette);
             }
         }
-
-        final Object pixelDensityObj = params.get(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
-        if (pixelDensityObj instanceof PixelDensity) {
-            final PixelDensity pixelDensity = (PixelDensity) pixelDensityObj;
+        
+        // care about pixel density if provided by parameter
+        if (parameters.isPixelDensityPresent()) {
+            final PixelDensity pixelDensity = parameters.getPixelDensity();
+            
             if (pixelDensity.isUnitless()) {
                 writeChunkPHYS(os, (int) Math.round(pixelDensity
                         .getRawHorizontalDensity()),
@@ -513,25 +497,36 @@ class PngWriter {
                         (byte) 1);
             }
         }
-
-        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
-            final String xmpXml = (String) params.get(ImagingConstants.PARAM_KEY_XMP_XML);
+        
+        // care about XMP XML if provided by parameter 
+        if (parameters.isXmpXmlAsStringPresent()) {
+            final String xmpXml = parameters.getXmpXmlAsString();
             writeChunkXmpiTXt(os, xmpXml);
         }
-
-        if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
-            final List<?> outputTexts = (List<?>) params.get(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
-            for (Object outputText : outputTexts) {
-                final PngText text = (PngText) outputText;
-                if (text instanceof PngText.Text) {
-                    writeChunktEXt(os, (PngText.Text) text);
-                } else if (text instanceof PngText.Ztxt) {
-                    writeChunkzTXt(os, (PngText.Ztxt) text);
-                } else if (text instanceof PngText.Itxt) {
-                    writeChunkiTXt(os, (PngText.Itxt) text);
-                } else {
-                    throw new ImageWriteException(
-                            "Unknown text to embed in PNG: " + text);
+        
+        // text chunks are parameters specific for PNG images
+        // so we need to ask first if parameters specific for PNG images are provided
+        // than ask for text chunks
+        if (parameters instanceof ImagingParametersPng) {
+            final ImagingParametersPng parametersPng = (ImagingParametersPng) parameters;
+            if (parametersPng.hasTextChunks()) {
+                final List<PngText> outputTexts = parametersPng.getTextChunks();
+                for (PngText text : outputTexts) {
+                    // there are different kind of png texts
+                    // each one requires a different action
+                    if (text instanceof PngText.Text) {
+                        writeChunktEXt(os, (PngText.Text) text);
+                    }
+                    else if (text instanceof PngText.Ztxt) {
+                        writeChunkzTXt(os, (PngText.Ztxt) text);
+                    }
+                    else if (text instanceof PngText.Itxt) {
+                        writeChunkiTXt(os, (PngText.Itxt) text);
+                    }
+                    else {
+                        throw new ImageWriteException(
+                                "Unknown text to embed in PNG: " + text);
+                    }
                 }
             }
         }

@@ -26,11 +26,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteConversions;
@@ -95,10 +94,14 @@ public class IptcParser extends BinaryFileParser {
      * Some IPTC blocks are missing this first "record version" record, so we
      * don't require it.
      */
-    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final Map<String, Object> params)
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final ImagingParameters params)
             throws ImageReadException, IOException {
-        final boolean strict =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_STRICT));
-        final boolean verbose =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_VERBOSE));
+        
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
+        
+        final boolean strict = parameters.getStrict();
+        final boolean verbose = parameters.getVerbose();
 
         return parsePhotoshopSegment(bytes, verbose, strict);
     }

@@ -28,7 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.ImagingParametersTiff;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.PackBits;
@@ -243,74 +244,67 @@ public abstract class TiffImageWriterBase {
         // Debug.debug();
     }
 
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final ImagingParameters params)
             throws ImageWriteException, IOException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap<String, Object>(params);
-
-        // clear format key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
-            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
-        }
-
-        TiffOutputSet userExif = null;
-        if (params.containsKey(ImagingConstants.PARAM_KEY_EXIF)) {
-            userExif = (TiffOutputSet) params.remove(ImagingConstants.PARAM_KEY_EXIF);
-        }
-
+        
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
+        
+        // get generic options
         String xmpXml = null;
-        if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
-            xmpXml = (String) params.get(ImagingConstants.PARAM_KEY_XMP_XML);
-            params.remove(ImagingConstants.PARAM_KEY_XMP_XML);
+        if (parameters.isXmpXmlAsStringPresent()) {
+            xmpXml = parameters.getXmpXmlAsString();
         }
 
-        PixelDensity pixelDensity = (PixelDensity) params
-                .remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
-        if (pixelDensity == null) {
+        PixelDensity pixelDensity;
+        if (parameters.isPixelDensityPresent()) {
+            pixelDensity = parameters.getPixelDensity();
+        }
+        else {
             pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
         }
-
-        final int width = src.getWidth();
-        final int height = src.getHeight();
-
+        
+        // get TIFF specific options
+        TiffOutputSet userExif = null;
         int compression = TIFF_COMPRESSION_LZW; // LZW is default
         int stripSizeInBits = 64000; // the default from legacy implementation
-        if (params.containsKey(ImagingConstants.PARAM_KEY_COMPRESSION)) {
-            final Object value = params.get(ImagingConstants.PARAM_KEY_COMPRESSION);
-            if (value != null) {
-                if (!(value instanceof Number)) {
-                    throw new ImageWriteException(
-                            "Invalid compression parameter, must be numeric: "
-                                    + value);
-                }
-                compression = ((Number) value).intValue();
+        // t4 and t6 options are only used for some kinds of compression
+        // we try to get them in case they are set regardless of the kind of compression
+        // just because we get all other TIFF specific parameters here
+        // so we have everything in one place
+        Integer t4Parameter = null;
+        Integer t6Parameter = null;
+        
+        if (parameters instanceof ImagingParametersTiff) {
+            final ImagingParametersTiff parametersTiff = (ImagingParametersTiff) parameters;
+            
+            if (parametersTiff.isOutputSetPresent()) {
+                userExif = parametersTiff.getOutputSet();
             }
-            params.remove(ImagingConstants.PARAM_KEY_COMPRESSION);
-            if (params.containsKey(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE)) {
-                final Object bValue =
-                    params.get(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE);
-                if (!(bValue instanceof Number)) {
-                    throw new ImageWriteException(
-                            "Invalid compression block-size parameter: " + value);
+            
+            if (parametersTiff.isCompressionLevelPresent()) {
+                compression = parametersTiff.getCompressionLevel();
+                
+                if (parametersTiff.isCompressionBlockSizePresent()) {
+                    final int stripSizeInBytes = parametersTiff.getCompressionBlockSize();
+                    if (stripSizeInBytes < 8000) {
+                        throw new ImageWriteException(
+                                "Block size parameter " + stripSizeInBytes
+                                + " is less than 8000 minimum");
+                    }
+                    stripSizeInBits = stripSizeInBytes*8;
                 }
-                final int stripSizeInBytes = ((Number) bValue).intValue();
-                if (stripSizeInBytes < 8000) {
-                    throw new ImageWriteException(
-                            "Block size parameter " + stripSizeInBytes
-                            + " is less than 8000 minimum");
-                }
-                stripSizeInBits = stripSizeInBytes*8;
-                params.remove(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE);
+            }
+            
+            if (parametersTiff.isT4optionsPresent()) {
+                t4Parameter = parametersTiff.getT4options();
+            }
+            
+            if (parametersTiff.isT6optionsPresent()) {
+                t6Parameter = parametersTiff.getT6options();
             }
         }
-        final HashMap<String, Object> rawParams = new HashMap<String, Object>(params);
-        params.remove(PARAM_KEY_T4_OPTIONS);
-        params.remove(PARAM_KEY_T6_OPTIONS);
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-
+        
         int samplesPerPixel;
         int bitsPerSample;
         int photometricInterpretation;
@@ -325,6 +319,9 @@ public abstract class TiffImageWriterBase {
             bitsPerSample = 8;
             photometricInterpretation = 2;
         }
+        
+        final int width = src.getWidth();
+        final int height = src.getHeight();
 
         int rowsPerStrip = stripSizeInBits / (width * bitsPerSample * samplesPerPixel);
         rowsPerStrip = Math.max(1, rowsPerStrip); // must have at least one.
@@ -345,9 +342,8 @@ public abstract class TiffImageWriterBase {
                         strips[i], width, strips[i].length / ((width + 7) / 8));
             }
         } else if (compression == TIFF_COMPRESSION_CCITT_GROUP_3) {
-            final Integer t4Parameter = (Integer) rawParams.get(PARAM_KEY_T4_OPTIONS);
             if (t4Parameter != null) {
-                t4Options = t4Parameter.intValue();
+                t4Options = t4Parameter;
             }
             t4Options &= 0x7;
             final boolean is2D = (t4Options & 1) != 0;
@@ -369,9 +365,8 @@ public abstract class TiffImageWriterBase {
                 }
             }
         } else if (compression == TIFF_COMPRESSION_CCITT_GROUP_4) {
-            final Integer t6Parameter = (Integer) rawParams.get(PARAM_KEY_T6_OPTIONS);
             if (t6Parameter != null) {
-                t6Options = t6Parameter.intValue();
+                t6Options = t6Parameter;
             }
             t6Options &= 0x4;
             final boolean usesUncompressedMode = (t6Options & TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE) != 0;

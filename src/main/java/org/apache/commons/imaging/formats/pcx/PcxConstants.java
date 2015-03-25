@@ -10,17 +10,13 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *  under the License.
  */
 package org.apache.commons.imaging.formats.pcx;
 
 
 public final class PcxConstants {
-    public static final String PARAM_KEY_PCX_COMPRESSION = "PCX_COMPRESSION";
     public static final int PCX_COMPRESSION_UNCOMPRESSED = 0;
     public static final int PCX_COMPRESSION_RLE = 1;
-
-    public static final String PARAM_KEY_PCX_BIT_DEPTH = "PCX_BIT_DEPTH";
 
     private PcxConstants() {
     }

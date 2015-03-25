@@ -20,24 +20,21 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.BufferedImageFactory;
 
 public class ImageReadExample {
     public static BufferedImage imageReadExample(final File file)
             throws ImageReadException, IOException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final ImagingParameters params = new ImagingParameters();
 
         // set optional parameters if you like
-        params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
-                new ManagedImageBufferedImageFactory());
+        params.setBufferedImageFactory(new ManagedImageBufferedImageFactory());
 
-        // params.put(ImagingConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
+        // params.setVerbose();
 
         // read image
         final BufferedImage image = Imaging.getBufferedImage(file, params);

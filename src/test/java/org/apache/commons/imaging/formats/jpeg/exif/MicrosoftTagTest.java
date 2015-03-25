@@ -21,17 +21,14 @@ import static org.junit.Assert.assertEquals;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParametersTiff;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.junit.Test;
@@ -51,8 +48,10 @@ public class MicrosoftTagTest extends ExifBaseTest {
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, COMMENT);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, SUBJECT);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, TITLE);
-        final Map<String, Object> params = new TreeMap<String, Object>();
-        params.put(ImagingConstants.PARAM_KEY_EXIF, exifSet);
+        
+        final ImagingParametersTiff params = new ImagingParametersTiff();
+        params.setOutputSet(exifSet);
+        
         final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormats.TIFF, params);
         checkFields(bytes);
     }

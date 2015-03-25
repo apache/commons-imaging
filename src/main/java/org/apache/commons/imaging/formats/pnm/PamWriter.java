@@ -20,14 +20,14 @@ package org.apache.commons.imaging.formats.pnm;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
 
 class PamWriter implements PnmWriter {
 
-    public void writeImage(final BufferedImage src, final OutputStream os,
-            final Map<String, Object> params) throws ImageWriteException, IOException {
+    public void writeImage(final BufferedImage src, final OutputStream os, final ImagingParameters params)
+            throws ImageWriteException, IOException {
 
         os.write(PnmConstants.PNM_PREFIX_BYTE);
         os.write(PnmConstants.PAM_RAW_CODE);

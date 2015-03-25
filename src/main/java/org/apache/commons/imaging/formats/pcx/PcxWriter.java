@@ -10,7 +10,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *  under the License.
  */
 
 package org.apache.commons.imaging.formats.pcx;
@@ -20,11 +19,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.ImagingParametersPcx;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.palette.PaletteFactory;
@@ -32,64 +30,44 @@ import org.apache.commons.imaging.palette.SimplePalette;
 
 class PcxWriter {
     private int encoding;
-    private int bitDepth = -1;
-    private PixelDensity pixelDensity;
+    private int bitDepth;
+    private final PixelDensity pixelDensity;
 
-    public PcxWriter(Map<String, Object> params) throws ImageWriteException {
-        // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
-
-        // clear format key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
-            params.remove(ImagingConstants.PARAM_KEY_FORMAT);
+    public PcxWriter(final ImagingParameters params) throws ImageWriteException {
+        // set default values
+        this.encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
+        this.bitDepth = -1;
+        
+        // ensure that the parameter object is not null
+        final ImagingParameters parameters = (params == null) ? new ImagingParameters() : params;
+        
+        // getting properties which are not specific for PCF format
+        if (parameters.isPixelDensityPresent()) {
+            this.pixelDensity = parameters.getPixelDensity();
         }
-
-        // uncompressed PCX files are not even documented in ZSoft's spec,
-        // let alone supported by most image viewers
-        encoding = PcxImageParser.PcxHeader.ENCODING_RLE;
-        if (params.containsKey(PcxConstants.PARAM_KEY_PCX_COMPRESSION)) {
-            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_COMPRESSION);
-            if (value != null) {
-                if (!(value instanceof Number)) {
-                    throw new ImageWriteException(
-                            "Invalid compression parameter: " + value);
-                }
-                final int compression = ((Number) value).intValue();
-                if (compression == PcxConstants.PCX_COMPRESSION_UNCOMPRESSED) {
-                    encoding = PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED;
-                }
-            }
-        }
-
-        if (params.containsKey(PcxConstants.PARAM_KEY_PCX_BIT_DEPTH)) {
-            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_BIT_DEPTH);
-            if (value != null) {
-                if (!(value instanceof Number)) {
-                    throw new ImageWriteException(
-                            "Invalid bit depth parameter: " + value);
-                }
-                bitDepth = ((Number) value).intValue();
-            }
-        }
-
-        if (params.containsKey(ImagingConstants.PARAM_KEY_PIXEL_DENSITY)) {
-            final Object value = params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
-            if (value != null) {
-                if (!(value instanceof PixelDensity)) {
-                    throw new ImageWriteException(
-                            "Invalid pixel density parameter");
-                }
-                pixelDensity = (PixelDensity) value;
-            }
-        }
-        if (pixelDensity == null) {
+        else {
             // DPI is mandatory, so we have to invent something
-            pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
+            this.pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
         }
-
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
+        
+        // getting properties which are specific for PCF format if provided
+        // if we can cast the generic parameter object to a PCX-specific one they are
+        if (parameters instanceof ImagingParametersPcx) {
+            final ImagingParametersPcx parametersPcx = (ImagingParametersPcx) parameters;
+            
+            // get the compression level for PCX
+            // uncompressed PCX files are not even documented in ZSoft's spec,
+            // let alone supported by most image viewers
+            if (parametersPcx.isCompressionLevelPresent()) {
+                if (parametersPcx.getCompressionLevel() == PcxConstants.PCX_COMPRESSION_UNCOMPRESSED) {
+                    this.encoding = PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED;
+                }
+            }
+            
+            // get the bit depth for PCX
+            if (parametersPcx.isCompressionLevelPresent()) {
+                this.bitDepth = parametersPcx.getBitDepth();
+            }
         }
     }
 

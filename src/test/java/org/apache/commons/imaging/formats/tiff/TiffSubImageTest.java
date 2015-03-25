@@ -20,14 +20,12 @@ import static org.junit.Assert.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
+import org.apache.commons.imaging.ImagingParametersTiff;
 import org.junit.Test;
 
 public class TiffSubImageTest extends TiffBaseTest {
@@ -37,11 +35,11 @@ public class TiffSubImageTest extends TiffBaseTest {
         BufferedImage src = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         byte[] imageBytes = Imaging.writeImageToBytes(src, ImageFormats.TIFF, null);
         
-        Map<String, Object> params = new TreeMap<String, Object>();
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 0);
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 0);
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, 2);
-        params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, 3);
+        final ImagingParametersTiff params = new ImagingParametersTiff();
+        params.setSubImageX(0);
+        params.setSubImageY(0);
+        params.setSubImageWidth(2);
+        params.setSubImageHeight(3);
         BufferedImage image = Imaging.getBufferedImage(imageBytes, params);
         assertEquals(image.getWidth(), 2);
         assertEquals(image.getHeight(), 3);

@@ -159,9 +159,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Formatter;
-import java.util.HashMap;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 
@@ -213,7 +213,7 @@ public class ApacheImagingSpeedAndMemoryTest {
 
                 // ready the parser (you may modify this code block
                 // to use your parser of choice)
-                HashMap<String, Object> params = new HashMap<String, Object>();
+                ImagingParameters params = new ImagingParameters();
                 TiffImageParser tiffImageParser = new TiffImageParser();
 
                 // load the file and record time needed to do so

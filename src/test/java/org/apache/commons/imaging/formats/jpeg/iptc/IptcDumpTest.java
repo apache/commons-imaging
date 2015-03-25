@@ -21,12 +21,10 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParametersJpeg;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
 import org.apache.commons.imaging.util.Debug;
@@ -37,7 +35,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class IptcDumpTest extends IptcBaseTest {
 
-    private File imageFile;
+    private final File imageFile;
 
     @Parameterized.Parameters
     public static Collection<File> data() throws Exception {
@@ -50,9 +48,9 @@ public class IptcDumpTest extends IptcBaseTest {
 
     @Test
     public void test() throws Exception {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final ImagingParametersJpeg params = new ImagingParametersJpeg();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
+        if (ignoreImageData == false) params.setReadThumbnails(true);
 
         final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);

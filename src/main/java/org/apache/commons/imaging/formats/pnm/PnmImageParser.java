@@ -24,9 +24,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.apache.commons.imaging.ImageFormat;
@@ -35,20 +33,19 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.ImagingParametersPnm;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.util.IoUtils;
 
-import static org.apache.commons.imaging.ImagingConstants.*;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PnmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".pnm";
-    private static final String[] ACCEPTED_EXTENSIONS = { ".pbm", ".pgm",
-            ".ppm", ".pnm", ".pam" };
-    public static final String PARAM_KEY_PNM_RAWBITS = "PNM_RAWBITS";
+    private static final String[] ACCEPTED_EXTENSIONS = { ".pbm", ".pgm", ".ppm", ".pnm", ".pam" };
     public static final String PARAM_VALUE_PNM_RAWBITS_YES = "YES";
     public static final String PARAM_VALUE_PNM_RAWBITS_NO = "NO";
 
@@ -201,13 +198,13 @@ public class PnmImageParser extends ImageParser {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final FileInfo info = readHeader(byteSource);
 
@@ -219,13 +216,13 @@ public class PnmImageParser extends ImageParser {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         final FileInfo info = readHeader(byteSource);
 
@@ -282,7 +279,7 @@ public class PnmImageParser extends ImageParser {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         InputStream is = null;
         boolean canThrow = false;
@@ -308,22 +305,16 @@ public class PnmImageParser extends ImageParser {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final ImagingParameters params)
             throws ImageWriteException, IOException {
         PnmWriter writer = null;
         boolean useRawbits = true;
         final boolean hasAlpha = new PaletteFactory().hasTransparency(src);
 
         if (params != null) {
-            final Object useRawbitsParam = params.get(PARAM_KEY_PNM_RAWBITS);
-            if (useRawbitsParam != null) {
-                if (useRawbitsParam.equals(PARAM_VALUE_PNM_RAWBITS_NO)) {
-                    useRawbits = false;
-                }
-            }
-
-            final Object subtype = params.get(PARAM_KEY_FORMAT);
-            if (subtype != null) {
+            // read generic parameters
+            if (params.isImageFormatPresent()) {
+                final ImageFormat subtype = params.getImageFormat();
                 if (subtype.equals(ImageFormats.PBM)) {
                     writer = new PbmWriter(useRawbits);
                 } else if (subtype.equals(ImageFormats.PGM)) {
@@ -334,6 +325,12 @@ public class PnmImageParser extends ImageParser {
                     writer = new PamWriter();
                 }
             }
+            
+            // read parameters specific for the PNM format
+            if (params instanceof ImagingParametersPnm) {
+                final ImagingParametersPnm paramsPnm = (ImagingParametersPnm) params;
+                useRawbits = paramsPnm.getUseRawbits();
+            }
         }
 
         if (writer == null) {
@@ -342,23 +339,6 @@ public class PnmImageParser extends ImageParser {
             } else {   
                 writer = new PpmWriter(useRawbits);
             }
-        }
-
-        // make copy of params; we'll clear keys as we consume them.
-        if (params != null) {
-            params = new HashMap<String, Object>(params);
-        } else {
-            params = new HashMap<String, Object>();
-        }
-
-        // clear format key.
-        if (params.containsKey(PARAM_KEY_FORMAT)) {
-            params.remove(PARAM_KEY_FORMAT);
-        }
-        
-        if (!params.isEmpty()) {
-            final Object firstKey = params.keySet().iterator().next();
-            throw new ImageWriteException("Unknown parameter: " + firstKey);
         }
 
         writer.writeImage(src, os, params);
@@ -373,9 +353,11 @@ public class PnmImageParser extends ImageParser {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws org.apache.commons.imaging.ImageReadException
+     * @throws java.io.IOException
      */
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+    public String getXmpXml(final ByteSource byteSource, final ImagingParameters params)
             throws ImageReadException, IOException {
         return null;
     }

@@ -22,11 +22,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.Test;
@@ -55,20 +54,18 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
 
             File lastFile = imageFile;
             for (int j = 0; j < 10; j++) {
-                final Map<String, Object> readParams = new HashMap<String, Object>();
-                // readParams.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
-                // new RgbBufferedImageFactory());
-                final BufferedImage image = Imaging.getBufferedImage(lastFile,
-                        readParams);
+                final ImagingParameters readParams = new ImagingParameters();
+                // readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
+                
+                final BufferedImage image = Imaging.getBufferedImage(lastFile, readParams);
                 assertNotNull(image);
 
                 final File tempFile = createTempFile(imageFile.getName() + "." + j
                         + ".", ".png");
                 Debug.debug("tempFile", tempFile);
-
-                final Map<String, Object> writeParams = new HashMap<String, Object>();
-                Imaging.writeImage(image, tempFile,
-                        ImageFormats.PNG, writeParams);
+                
+                final ImagingParameters writeParams = new ImagingParameters();
+                Imaging.writeImage(image, tempFile, ImageFormats.PNG, writeParams);
 
                 lastFile = tempFile;
             }

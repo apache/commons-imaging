@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +34,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class DcxReadTest extends DcxBaseTest {
 
-    private File imageFile;
+    private final File imageFile;
 
     @Parameterized.Parameters
     public static Collection<File> data() throws Exception {
@@ -53,7 +54,7 @@ public class DcxReadTest extends DcxBaseTest {
     @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
     @Test(expected = UnsupportedOperationException.class)
     public void testImageInfo() throws Exception {
-        Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
+        Imaging.getImageInfo(imageFile, new ImagingParameters());
     }
 
     @Test

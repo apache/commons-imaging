@@ -21,8 +21,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import org.apache.commons.imaging.ImagingParameters;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -34,7 +33,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class JpegXmpDumpTest extends JpegXmpBaseTest {
 
-    private File imageFile;
+    private final File imageFile;
 
     @Parameterized.Parameters
     public static Collection<File> data() throws Exception {
@@ -48,7 +47,7 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest {
     @Test
     public void test() throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final ImagingParameters params = new ImagingParameters();
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
 
         // TODO assert more

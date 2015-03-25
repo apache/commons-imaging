@@ -21,12 +21,11 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
 
@@ -46,8 +45,8 @@ public class ConvertPngToGifTest extends PngBaseTest {
             // Debug.debug();
             }
 
-            final Map<String, Object> params = new HashMap<String, Object>();
-            // params.put(ImagingConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
+            final ImagingParameters params = new ImagingParameters();
+            // params.setVerbose();
 
             final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
             assertNotNull(image);

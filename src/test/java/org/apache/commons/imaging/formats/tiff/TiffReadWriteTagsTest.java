@@ -26,6 +26,7 @@ import java.util.TreeMap;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.formats.tiff.constants.GeoTiffTagConstants;
@@ -68,7 +69,7 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         writer.write(tiff, set);
         
         TiffReader reader = new TiffReader(true);
-        Map<String, Object> params = new TreeMap<String, Object>();
+        final ImagingParameters params = new ImagingParameters();
         FormatCompliance formatCompliance = new FormatCompliance("");
         TiffContents contents = reader.readFirstDirectory(new ByteSourceArray(tiff.toByteArray()), params, true, formatCompliance);
         TiffDirectory rootDir = contents.directories.get(0);

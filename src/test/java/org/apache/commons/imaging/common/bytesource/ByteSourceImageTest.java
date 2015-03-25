@@ -29,15 +29,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
+import org.apache.commons.imaging.ImagingParametersJpeg;
+import org.apache.commons.imaging.ImagingParametersTiff;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -168,12 +168,22 @@ public class ByteSourceImageTest extends ByteSourceTest {
     public void checkGetImageInfo(final File imageFile, final byte[] imageFileBytes)
             throws IOException, ImageReadException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        
+        final ImagingParameters params;
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
-        if (imageFormat.equals(ImageFormats.TIFF)
-                || imageFormat.equals(ImageFormats.JPEG)) {
-            params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
+        if (imageFormat.equals(ImageFormats.TIFF)) {
+            final ImagingParametersTiff paramsTiff = new ImagingParametersTiff();
+            if (ignoreImageData == false) paramsTiff.setReadThumbnails(true);
+            params = paramsTiff;
+        }
+        else if (imageFormat.equals(ImageFormats.JPEG)) {
+            final ImagingParametersJpeg paramsJpeg = new ImagingParametersJpeg();
+            if (ignoreImageData == false) paramsJpeg.setReadThumbnails(true);
+            params = paramsJpeg;
+        }
+        else {
+            params = new ImagingParameters();
         }
 
         final ImageInfo imageInfoFile = Imaging.getImageInfo(imageFile, params);
