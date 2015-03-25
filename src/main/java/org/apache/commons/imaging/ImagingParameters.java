@@ -121,7 +121,7 @@ public class ImagingParameters {
      * image format.
      * <p>
      * Applies to read operations.
-     * @return {@code true} if there is a value present, {@false} else.
+     * @return {@code true} if there is a value present, {@code false} else.
      */
     public boolean isFileNameHintPresent() {
         return this.fileNameHint != null;
@@ -162,7 +162,7 @@ public class ImagingParameters {
      * Parameter key.
      * 
      * Only used when writing images. Valid values: String of XMP XML.
-     * @return {@code true} if there is a value present, {@false} else.
+     * @return {@code true} if there is a value present, {@code false} else.
      */
     public boolean isXmpXmlAsStringPresent() {
         return this.xmpXmlAsString != null;
@@ -195,7 +195,7 @@ public class ImagingParameters {
     
     /**
      * Parameter used in write operations to indicate desired image format.
-     * @return {@code true} if there is a value present, {@false} else.
+     * @return {@code true} if there is a value present, {@code false} else.
      */
     public boolean isImageFormatPresent() {
         return this.imageFormat != null;
@@ -226,7 +226,7 @@ public class ImagingParameters {
     
     /**
      * 
-     * @return {@code true} if there is a value present, {@false} else.
+     * @return {@code true} if there is a value present, {@code false} else.
      */
     public boolean isBufferedImageFactoryPresent() {
         return this.bufferedImageFactory != null;
@@ -256,7 +256,7 @@ public class ImagingParameters {
     /**
      * Parameter key. Used in write operations to indicate the desired pixel
      * density (DPI), and/or aspect ratio.
-     * @return {@code true} if there is a value present, {@false} else.
+     * @return {@code true} if there is a value present, {@code false} else.
      * @see org.apache.commons.imaging.PixelDensity
      */
     public boolean isPixelDensityPresent() {

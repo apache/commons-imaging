@@ -65,7 +65,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
     //****** compressionLevel ******
     
     /**
-     * Returns {@code true} if there is a value present, {@false} else.
+     * Returns {@code true} if there is a value present, {@code false} else.
      * @return 
      */
     public boolean isCompressionLevelPresent() {
@@ -109,7 +109,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
     //****** compressionBlockSize ******
     
     /**
-     * Returns {@code true} if there is a value present, {@false} else.
+     * Returns {@code true} if there is a value present, {@code false} else.
      * @return 
      */
     public boolean isCompressionBlockSizePresent() {
@@ -146,7 +146,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
      * Only used when writing images.
      * <p>
      * Valid values: TiffOutputSet to write into the image's EXIF metadata.
-     * @return {@code true} if there is a value present, {@false} else.
+     * @return {@code true} if there is a value present, {@code false} else.
      */
     public boolean isOutputSetPresent() {
         return this.outputSetForMetaData != null;
@@ -199,7 +199,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
     //****** t4 options ******
     
     /**
-     * Returns {@code true} if there is a value present, {@false} else.
+     * Returns {@code true} if there is a value present, {@code false} else.
      * @return 
      */
     public boolean isT4optionsPresent() {
@@ -237,7 +237,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
     //****** t6 options ******
     
     /**
-     * Returns {@code true} if there is a value present, {@false} else.
+     * Returns {@code true} if there is a value present, {@code false} else.
      * @return 
      */
     public boolean isT6optionsPresent() {
@@ -273,7 +273,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
     //****** subImageX ******
     
     /**
-     * Returns {@code true} if there is a value present, {@false} else.
+     * Returns {@code true} if there is a value present, {@code false} else.
      * @return 
      */
     public boolean isSubImageX_Present() {
@@ -305,7 +305,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
     //****** subImageY ******
     
     /**
-     * Returns {@code true} if there is a value present, {@false} else.
+     * Returns {@code true} if there is a value present, {@code false} else.
      * @return 
      */
     public boolean isSubImageY_Present() {
@@ -337,7 +337,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
     //****** subImageWidth ******
     
     /**
-     * Returns {@code true} if there is a value present, {@false} else.
+     * Returns {@code true} if there is a value present, {@code false} else.
      * @return 
      */
     public boolean isSubImageWidth_Present() {
@@ -369,7 +369,7 @@ public final class ImagingParametersTiff extends ImagingParameters {
     //****** subImageHeight ******
     
     /**
-     * Returns {@code true} if there is a value present, {@false} else.
+     * Returns {@code true} if there is a value present, {@code false} else.
      * @return 
      */
     public boolean isSubImageHeight_Present() {
