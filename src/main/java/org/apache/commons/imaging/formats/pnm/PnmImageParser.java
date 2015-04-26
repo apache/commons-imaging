@@ -101,8 +101,18 @@ public class PnmImageParser extends ImageParser {
                 || identifier2 == PnmConstants.PPM_TEXT_CODE
                 || identifier2 == PnmConstants.PPM_RAW_CODE) {
             
-            final int width = Integer.parseInt(wsr.readtoWhiteSpace());
-            final int height = Integer.parseInt(wsr.readtoWhiteSpace());
+            final int width;
+            try {
+              width = Integer.parseInt(wsr.readtoWhiteSpace());
+            } catch (NumberFormatException e) {
+              throw new ImageReadException("Invalid width specified." , e);
+            }
+            final int height;
+            try {
+              height = Integer.parseInt(wsr.readtoWhiteSpace());
+            } catch (NumberFormatException e) {
+              throw new ImageReadException("Invalid height specified." , e);
+            }
     
             if (identifier2 == PnmConstants.PBM_TEXT_CODE) {
                 return new PbmFileInfo(width, height, false);

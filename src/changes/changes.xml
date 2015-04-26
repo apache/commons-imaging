@@ -46,6 +46,9 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="TBA">
+      <action issue="IMAGING-169" dev="britter" type="fix" due-to="Nebu Pookins">
+        PnmImageParser throws NumberFormatException instead of ImageReadException when parsing invalid images
+      </action>
       <action issue="IMAGING-166" dev="britter" type="update" due-to="Michael Groß">
         ByteSourceImageTest: Local variable hides a field
       </action>
