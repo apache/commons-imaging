@@ -3,6 +3,7 @@ package org.apache.commons.imaging.formats.pnm;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
@@ -13,9 +14,11 @@ import org.junit.Test;
 
 public class PnmImageParserTest {
 
+  private static final Charset US_ASCII = Charset.forName("US-ASCII");
+
   @Test
   public void testGetImageInfo_happyCase() throws ImageReadException, IOException {
-    byte[] bytes = "P1\n3 2\n0 1 0\n1 0 1\n".getBytes(StandardCharsets.US_ASCII);
+    byte[] bytes = "P1\n3 2\n0 1 0\n1 0 1\n".getBytes(US_ASCII);
     Map<String, Object> params = Collections.emptyMap();
     PnmImageParser underTest = new PnmImageParser();
     ImageInfo results = underTest.getImageInfo(bytes, params);
@@ -31,7 +34,7 @@ public class PnmImageParserTest {
    */
   @Test(expected = ImageReadException.class)
   public void testGetImageInfo_invalidWidth() throws ImageReadException, IOException {
-    byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(StandardCharsets.US_ASCII);
+    byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(US_ASCII);
     Map<String, Object> params = Collections.emptyMap();
     PnmImageParser underTest = new PnmImageParser();
     underTest.getImageInfo(bytes, params);
@@ -39,7 +42,7 @@ public class PnmImageParserTest {
 
   @Test(expected = ImageReadException.class)
   public void testGetImageInfo_invalidHeight() throws ImageReadException, IOException {
-    byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(StandardCharsets.US_ASCII);
+    byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(US_ASCII);
     Map<String, Object> params = Collections.emptyMap();
     PnmImageParser underTest = new PnmImageParser();
     underTest.getImageInfo(bytes, params);
