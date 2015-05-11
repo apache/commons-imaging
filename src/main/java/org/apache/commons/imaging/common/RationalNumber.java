@@ -121,7 +121,7 @@ public class RationalNumber extends Number {
     }
     
 
-    private static class Option {
+    private final static class Option {
         public final RationalNumber rationalNumber;
         public final double error;
 
