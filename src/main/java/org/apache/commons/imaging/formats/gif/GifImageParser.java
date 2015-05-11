@@ -831,17 +831,7 @@ public class GifImageParser extends ImageParser {
         final int colorTableSizeInFormat = 1 << (colorTableScaleLessOne + 1);
         {
             final byte colorResolution = (byte) colorTableScaleLessOne; // TODO:
-
-            final boolean globalColorTableFlag = false;
-            final boolean sortFlag = false;
-            final int globalColorTableFlagMask = 1 << 7;
-            final int sortFlagMask = 8;
-            final int sizeOfGlobalColorTable = 0;
-
-            final int packedFields = ((globalColorTableFlag ? globalColorTableFlagMask
-                    : 0)
-                    | (sortFlag ? sortFlagMask : 0)
-                    | ((7 & colorResolution) << 4) | (7 & sizeOfGlobalColorTable));
+            final int packedFields = (7 & colorResolution) * 16;
             bos.write(packedFields); // one byte
         }
         {
