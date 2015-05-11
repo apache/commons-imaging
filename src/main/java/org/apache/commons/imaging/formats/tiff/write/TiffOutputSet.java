@@ -139,7 +139,7 @@ public final class TiffOutputSet {
         final TiffOutputDirectory gpsDirectory = getOrCreateGPSDirectory();
 
         gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);
-        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_VERSION_ID, GpsTagConstants.GPS_VERSION);
+        gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_VERSION_ID, GpsTagConstants.gpsVersion());
 
         final String longitudeRef = longitude < 0 ? "W" : "E";
         longitude = Math.abs(longitude);

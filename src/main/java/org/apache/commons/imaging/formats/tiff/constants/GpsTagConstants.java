@@ -33,7 +33,11 @@ public final class GpsTagConstants {
             "GPSVersionID", 0x0000, 4,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final byte[] GPS_VERSION = new byte[] { (byte)2, (byte)3, (byte)0, (byte)0 };
+    private static final byte[] GPS_VERSION = new byte[] { (byte)2, (byte)3, (byte)0, (byte)0 };
+    
+    public static byte[] gpsVersion() {
+        return GPS_VERSION.clone();
+    }
     
     // ************************************************************
     public static final TagInfoAscii GPS_TAG_GPS_LATITUDE_REF = new TagInfoAscii(

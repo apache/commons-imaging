@@ -44,7 +44,7 @@ public class TiffOutputSetTest {
         TiffOutputField gpsVersionId = tiffOutputSet.findField(GpsTagConstants.GPS_TAG_GPS_VERSION_ID);
 
         assertNotNull(gpsVersionId);
-        assertTrue(gpsVersionId.bytesEqual(GpsTagConstants.GPS_VERSION));
+        assertTrue(gpsVersionId.bytesEqual(GpsTagConstants.gpsVersion()));
     }
 
 }
