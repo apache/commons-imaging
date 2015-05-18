@@ -16,11 +16,13 @@
  */
 package org.apache.commons.imaging.formats.jpeg.exif;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -29,9 +31,9 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
+import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.junit.Test;
@@ -85,9 +87,22 @@ public class MicrosoftTagTest extends ExifBaseTest {
     
     private void checkFields(final byte[] file) throws Exception {
         final TiffImageMetadata metadata = toTiffMetadata(Imaging.getMetadata(file));
-        assertEquals(AUTHOR, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR));
-        assertEquals(COMMENT, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT));
-        assertEquals(SUBJECT, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT));
-        assertEquals(TITLE, metadata.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPTITLE));
+        
+        // field values may be duplicated between directories, we have to check all
+        List<Object> authorValues = new ArrayList<Object>();
+        List<Object> commentValues = new ArrayList<Object>();
+        List<Object> subjectValues = new ArrayList<Object>();
+        List<Object> titleValues = new ArrayList<Object>();
+        for (TiffDirectory d : metadata.contents.directories) {
+            titleValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPTITLE, false));
+            authorValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR, false));
+            commentValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, false));
+            subjectValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, false));
+        }
+        
+        assertTrue(authorValues.contains(AUTHOR));
+        assertTrue(commentValues.contains(COMMENT));
+        assertTrue(subjectValues.contains(SUBJECT));
+        assertTrue(titleValues.contains(TITLE));
     }
 }
