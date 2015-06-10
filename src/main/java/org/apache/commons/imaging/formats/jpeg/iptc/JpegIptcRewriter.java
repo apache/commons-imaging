@@ -56,8 +56,29 @@ public class JpegIptcRewriter extends JpegRewriter {
      */
     public void removeIPTC(final File src, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
+        removeIPTC(src, os, false);
+    }
+    
+    /**
+     * Reads a Jpeg image, removes all IPTC data from the App13 segment but
+     * leaves the other data in that segment (if present) unchanged (unless
+     * removeSegment is true) and writes the result to a stream.
+     * <p>
+     * 
+     * @param src
+     *            Image file.
+     * @param os
+     *            OutputStream to write the image to.
+     * @param removeSegment
+     *            Remove the App13 segment.
+     * 
+     * @see java.io.File
+     * @see java.io.OutputStream
+     */
+    public void removeIPTC(final File src, final OutputStream os, final boolean removeSegment)
+            throws ImageReadException, IOException, ImageWriteException {
         final ByteSource byteSource = new ByteSourceFile(src);
-        removeIPTC(byteSource, os);
+        removeIPTC(byteSource, os, removeSegment);
     }
 
     /**
@@ -73,8 +94,26 @@ public class JpegIptcRewriter extends JpegRewriter {
      */
     public void removeIPTC(final byte[] src, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
+        removeIPTC(src, os, false);
+    }
+    
+    /**
+     * Reads a Jpeg image, removes all IPTC data from the App13 segment but
+     * leaves the other data in that segment (if present) unchanged (unless
+     * removeSegment is true) and writes the result to a stream.
+     * <p>
+     * 
+     * @param src
+     *            Byte array containing Jpeg image data.
+     * @param os
+     *            OutputStream to write the image to.
+     * @param removeSegment
+     *            Remove the App13 segment.
+     */
+    public void removeIPTC(final byte[] src, final OutputStream os, final boolean removeSegment)
+            throws ImageReadException, IOException, ImageWriteException {
         final ByteSource byteSource = new ByteSourceArray(src);
-        removeIPTC(byteSource, os);
+        removeIPTC(byteSource, os, removeSegment);
     }
 
     /**
@@ -90,8 +129,26 @@ public class JpegIptcRewriter extends JpegRewriter {
      */
     public void removeIPTC(final InputStream src, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
+        removeIPTC(src, os, false);
+    }
+    
+    /**
+     * Reads a Jpeg image, removes all IPTC data from the App13 segment but
+     * leaves the other data in that segment (if present) unchanged (unless
+     * removeSegment is true) and writes the result to a stream.
+     * <p>
+     * 
+     * @param src
+     *            InputStream containing Jpeg image data.
+     * @param os
+     *            OutputStream to write the image to.
+     * @param removeSegment
+     *            Remove the App13 segment.
+     */
+    public void removeIPTC(final InputStream src, final OutputStream os, final boolean removeSegment)
+            throws ImageReadException, IOException, ImageWriteException {
         final ByteSource byteSource = new ByteSourceInputStream(src, null);
-        removeIPTC(byteSource, os);
+        removeIPTC(byteSource, os, removeSegment);
     }
 
     /**
@@ -107,6 +164,24 @@ public class JpegIptcRewriter extends JpegRewriter {
      */
     public void removeIPTC(final ByteSource byteSource, final OutputStream os)
             throws ImageReadException, IOException, ImageWriteException {
+        removeIPTC(byteSource, os, false);
+    }
+    
+    /**
+     * Reads a Jpeg image, removes all IPTC data from the App13 segment but
+     * leaves the other data in that segment (if present) unchanged (unless
+     * removeSegment is true) and writes the result to a stream.
+     * <p>
+     * 
+     * @param byteSource
+     *            ByteSource containing Jpeg image data.
+     * @param os
+     *            OutputStream to write the image to.
+     * @param removeSegment
+     *            Remove the App13 segment.
+     */
+    public void removeIPTC(final ByteSource byteSource, final OutputStream os, final boolean removeSegment)
+            throws ImageReadException, IOException, ImageWriteException {
         final JFIFPieces jfifPieces = analyzeJFIF(byteSource);
         final List<JFIFPiece> oldPieces = jfifPieces.pieces;
         final List<JFIFPiece> photoshopApp13Segments = findPhotoshopApp13Segments(oldPieces);
@@ -116,7 +191,7 @@ public class JpegIptcRewriter extends JpegRewriter {
                     "Image contains more than one Photoshop App13 segment.");
         }
         final List<JFIFPiece> newPieces = removePhotoshopApp13Segments(oldPieces);
-        if (photoshopApp13Segments.size() == 1) {
+        if (!removeSegment && photoshopApp13Segments.size() == 1) {
             final JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments
                     .get(0);
             final Map<String, Object> params = new HashMap<String, Object>();

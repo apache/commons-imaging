@@ -46,6 +46,9 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="TBA">
+      <action issue="IMAGING-112" dev="britter" type="update" due-to="Xavier Dury">
+        JpegIptcRewriter.removeIPTC() does not remove all metadata
+      </action>
       <action issue="IMAGING-171" dev="britter" type="fix" due-to="Jan Helbich">
         MicrosoftTagTest rewrite image exif fails in some environments
       </action>
