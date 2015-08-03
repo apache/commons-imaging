@@ -22,6 +22,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
+import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -125,6 +127,9 @@ public class IptcParser extends BinaryFileParser {
     protected List<IptcRecord> parseIPTCBlock(final byte[] bytes, final boolean verbose)
             throws IOException {
         final List<IptcRecord> elements = new ArrayList<IptcRecord>();
+        final String DEFAULT_ENCODING = "ISO-8859-1";
+        final int ENV_TAG_CODED_CHARACTER_SET = 90;
+        String characterName = DEFAULT_ENCODING;
 
         int index = 0;
         // Integer recordVersion = null;
@@ -190,6 +195,11 @@ public class IptcParser extends BinaryFileParser {
             // Debug.debug("recordSize", recordSize + " (0x"
             // + Integer.toHexString(recordSize) + ")");
 
+            if(recordNumber == IptcConstants.IPTC_ENVELOPE_RECORD_NUMBER && recordType == ENV_TAG_CODED_CHARACTER_SET){
+                characterName = getEncodingCharsetName(recordData);
+                continue;
+            }
+
             if (recordNumber != IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER) {
                 continue;
             }
@@ -226,7 +236,7 @@ public class IptcParser extends BinaryFileParser {
             // continue;
             // }
 
-            final String value = new String(recordData, "ISO-8859-1");
+            final String value = new String(recordData, characterName);
 
             final IptcType iptcType = IptcTypeLookup.getIptcType(recordType);
 
@@ -246,6 +256,43 @@ public class IptcParser extends BinaryFileParser {
         }
 
         return elements;
+    }
+
+    private String getEncodingCharsetName(byte[] codedCharacterSet){
+        String codedCharacterSetString = new String(codedCharacterSet);
+        //byte[][] = getListOfEncoding
+        try {
+            if (Charset.isSupported(codedCharacterSetString)) {
+                return codedCharacterSetString;
+            }
+        }catch (IllegalCharsetNameException e){
+
+        }catch (IllegalArgumentException e){
+
+        }
+        //check if encoding is a escape sequence
+        //normalize encoding byte sequence
+        byte[] codedCharacterSetNormalized = new byte[codedCharacterSet.length];
+        int j=0;
+        for(int i=0; i< codedCharacterSet.length; i++){
+            if(codedCharacterSet[i] != ' ') {
+                codedCharacterSetNormalized[j++] = codedCharacterSet[i];
+            }
+        }
+        for(CharsetEscapeSequence escapeSeq : CharsetEscapeSequence.getSupportedEscapeSeqList()){
+            if(j != escapeSeq.escapeSequence.length) continue;
+            boolean match = true;
+            for(int i=0; i < j; i++ ){
+                if(codedCharacterSetNormalized[i] != escapeSeq.escapeSequence[i]){
+                    match = false;
+                    break;
+                }
+            }
+            if(match){
+                return escapeSeq.charsetName;
+            }
+        }
+        return "ISO-8859-1";
     }
 
     protected List<IptcBlock> parseAllBlocks(final byte[] bytes, final boolean verbose,
@@ -455,6 +502,22 @@ public class IptcParser extends BinaryFileParser {
         blockData = baos.toByteArray();
 
         return blockData;
+    }
+
+    private static class CharsetEscapeSequence{
+        byte[] escapeSequence;
+        String charsetName;
+
+        CharsetEscapeSequence(byte[] escapeSequence, String charsetName){
+            this.escapeSequence = escapeSequence;
+            this.charsetName = charsetName;
+        }
+
+        static CharsetEscapeSequence[] getSupportedEscapeSeqList(){
+            return new CharsetEscapeSequence[]{
+                    new CharsetEscapeSequence(new byte[]{'\u001B','%','G'}, "utf8")
+            };
+        }
     }
 
 }
