@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.palette;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.util.Debug;
 
 /**
  * Color palette.

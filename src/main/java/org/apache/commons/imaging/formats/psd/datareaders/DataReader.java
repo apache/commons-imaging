@@ -23,7 +23,6 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.formats.psd.ImageContents;
-import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
 public interface  DataReader {
 
