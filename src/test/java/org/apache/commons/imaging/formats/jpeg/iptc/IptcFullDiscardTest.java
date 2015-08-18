@@ -38,7 +38,7 @@ public class IptcFullDiscardTest {
     }
     
     private byte[] generateImage() throws Exception {
-        BufferedImage image = new BufferedImage(100, 50, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(100, 50, BufferedImage.TYPE_3BYTE_BGR); // was TYPE_INT_ARGB but that fails on Continuum
         Graphics2D graphics2D = image.createGraphics();
         graphics2D.drawString("Hello World!", 10, 10);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
