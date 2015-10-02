@@ -43,6 +43,9 @@
 Apache Commons Imaging
 ===================
 
+[![Build Status](https://travis-ci.org/apache/commons-imaging.svg?branch=master)](https://travis-ci.org/apache/commons-imaging)
+[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
 Apache Commons Imaging (previously Sanselan) is a pure-Java image library.
 
 Documentation
