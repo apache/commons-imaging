@@ -46,4 +46,12 @@ public class PnmImageParserTest {
     PnmImageParser underTest = new PnmImageParser();
     underTest.getImageInfo(bytes, params);
   }
+
+  @Test(expected = ImageReadException.class)
+  public void testGetImageInfo_missingWidthValue() throws ImageReadException, IOException {
+    byte[] bytes = "P7\nWIDTH \n".getBytes(US_ASCII);
+    Map<String, Object> params = Collections.emptyMap();
+    PnmImageParser underTest = new PnmImageParser();
+    underTest.getImageInfo(bytes, params);
+  }
 }
