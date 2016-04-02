@@ -80,7 +80,7 @@ Then you can use the SNAPSHOT version of Commons Imaging in your pom.xml:
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-imaging</artifactId>
   <version>1.0-SNAPSHOT</version>
-<dependency>
+</dependency>
 ``` 
 
 The last stable release of Sanselan, before it was renamed to Imaging, was 0.97. You may:
