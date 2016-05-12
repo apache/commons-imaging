@@ -38,16 +38,20 @@ public class IptcRecord {
         this.value = value;
     }
 
-    public IptcRecord(final IptcType iptcType, final String value) {
+    public IptcRecord(final IptcType iptcType, final String value, final String charsetName) {
         this.iptcType = iptcType;
         byte[] tempBytes;
         try {
-            tempBytes = value.getBytes("ISO-8859-1");
+            tempBytes = value.getBytes(charsetName);
         } catch (final UnsupportedEncodingException cannotHappen) {
             tempBytes = null;
         }
         this.bytes = tempBytes;
         this.value = value;
+    }
+
+    public IptcRecord(final IptcType iptcType, final String value) {
+        this(iptcType, value, "ISO-8859-1");
     }
 
     public byte[] getRawBytes() {
