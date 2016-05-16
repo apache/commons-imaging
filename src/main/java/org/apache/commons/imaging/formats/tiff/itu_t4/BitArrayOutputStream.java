@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.common.itu_t4;
+package org.apache.commons.imaging.formats.tiff.itu_t4;
 
 import java.io.OutputStream;
 
@@ -22,25 +22,25 @@ import java.io.OutputStream;
  * Output stream writing to a byte array, and capable
  * of writing 1 bit at a time, starting from the most significant bit.
  */
-class BitArrayOutputStream extends OutputStream {
+final class BitArrayOutputStream extends OutputStream {
     private byte[] buffer;
     private int bytesWritten;
     private int cache;
     private int cacheMask = 0x80;
 
-    public BitArrayOutputStream() {
+    BitArrayOutputStream() {
         buffer = new byte[16];
     }
 
-    public BitArrayOutputStream(final int size) {
+    BitArrayOutputStream(final int size) {
         buffer = new byte[size];
     }
 
-    public int size() {
+    int size() {
         return bytesWritten;
     }
 
-    public byte[] toByteArray() {
+    byte[] toByteArray() {
         flush();
         if (bytesWritten == buffer.length) {
             return buffer;
@@ -70,7 +70,7 @@ class BitArrayOutputStream extends OutputStream {
         writeByte(b);
     }
 
-    public void writeBit(final int bit) {
+    void writeBit(final int bit) {
         if (bit != 0) {
             cache |= cacheMask;
         }
@@ -80,7 +80,7 @@ class BitArrayOutputStream extends OutputStream {
         }
     }
 
-    public int getBitsAvailableInCurrentByte() {
+    int getBitsAvailableInCurrentByte() {
         int count = 0;
         for (int mask = cacheMask; mask != 0; mask >>>= 1) {
             ++count;

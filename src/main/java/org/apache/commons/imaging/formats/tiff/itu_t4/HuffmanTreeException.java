@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.common.itu_t4;
+package org.apache.commons.imaging.formats.tiff.itu_t4;
 
-class HuffmanTreeException extends Exception {
+final class HuffmanTreeException extends Exception {
     private static final long serialVersionUID = 1L;
 
-    public HuffmanTreeException(final String message) {
+    HuffmanTreeException(final String message) {
         super(message);
     }
 
-    public HuffmanTreeException(final String message, final Throwable cause) {
+    HuffmanTreeException(final String message, final Throwable cause) {
         super(message, cause);
     }
 }
