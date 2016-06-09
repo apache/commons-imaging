@@ -118,7 +118,7 @@ public class RationalNumberTest extends ImagingTest {
         final RationalNumber rational = RationalNumber.valueOf(testValue);
         final double difference = Math.abs(testValue - rational.doubleValue());
 
-        final NumberFormat nf = DecimalFormat.getInstance();
+        final NumberFormat nf = NumberFormat.getInstance();
         nf.setMaximumFractionDigits(15);
 
         // TODO assert something here, the following will fail for some values. Do we have a bug?
