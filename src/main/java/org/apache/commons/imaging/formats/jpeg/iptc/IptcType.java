@@ -21,5 +21,6 @@ public interface IptcType {
 
     String getName();
 
+    @Override
     String toString();
 }

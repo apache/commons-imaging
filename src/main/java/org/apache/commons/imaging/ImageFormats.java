@@ -43,10 +43,12 @@ public enum ImageFormats implements ImageFormat {
     XBM,
     XPM;
 
+    @Override
     public String getName() {
         return name();
     }
 
+    @Override
     public String getExtension() {
         return name();
     }

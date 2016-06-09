@@ -31,6 +31,7 @@ class PbmWriter implements PnmWriter {
         this.rawbits = rawbits;
     }
 
+    @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         os.write(PnmConstants.PNM_PREFIX_BYTE);

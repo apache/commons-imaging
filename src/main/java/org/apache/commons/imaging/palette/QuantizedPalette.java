@@ -47,6 +47,7 @@ public class QuantizedPalette implements Palette {
         }
     }
 
+    @Override
     public int getPaletteIndex(final int rgb) throws ImageWriteException {
         final int precisionMask = (1 << precision) - 1;
 
@@ -57,11 +58,13 @@ public class QuantizedPalette implements Palette {
         return straight[index].getIndex();
     }
 
+    @Override
     public int getEntry(final int index) {
         final ColorSpaceSubset subset = subsets.get(index);
         return subset.rgb;
     }
 
+    @Override
     public int length() {
         return subsets.size();
     }

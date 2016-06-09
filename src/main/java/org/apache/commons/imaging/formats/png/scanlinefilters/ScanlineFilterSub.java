@@ -27,6 +27,7 @@ public class ScanlineFilterSub implements ScanlineFilter {
         this.bytesPerPixel = bytesPerPixel;
     }
 
+    @Override
     public void unfilter(final byte[] src, final byte[] dst, final byte[] up)
             throws ImageReadException, IOException {
         for (int i = 0; i < src.length; i++) {

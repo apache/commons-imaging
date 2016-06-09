@@ -74,6 +74,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor1BitBitmaps implements BitmapGenerator {
+        @Override
         public byte[] generateBitmap(final int foreground, final int background,
                 final int paletteSize) throws IOException, ImageWriteException {
             final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
@@ -118,6 +119,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor4BitBitmaps implements BitmapGenerator {
+        @Override
         public byte[] generateBitmap(final int foreground, final int background,
                 final int paletteSize) throws IOException, ImageWriteException {
             final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
@@ -153,6 +155,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor8BitBitmaps implements BitmapGenerator {
+        @Override
         public byte[] generateBitmap(final int foreground, final int background,
                 final int paletteSize) throws IOException, ImageWriteException {
             final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
@@ -187,6 +190,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor16BitBitmaps implements BitmapGenerator {
+        @Override
         public byte[] generateBitmap(final int foreground, final int background,
                 final int paletteSize) throws IOException, ImageWriteException {
             final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
@@ -225,6 +229,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor24BitBitmaps implements BitmapGenerator {
+        @Override
         public byte[] generateBitmap(final int foreground, final int background,
                 final int paletteSize) throws IOException, ImageWriteException {
             final ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
@@ -259,6 +264,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
     }
 
     private class GeneratorFor32BitBitmaps implements BitmapGenerator {
+        @Override
         public byte[] generateBitmap(final int foreground, final int background,
                 final int paletteSize) throws IOException, ImageWriteException {
             return generate32bitRGBABitmap(foreground, background, paletteSize,

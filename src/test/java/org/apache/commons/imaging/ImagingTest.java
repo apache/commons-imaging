@@ -56,6 +56,7 @@ public abstract class ImagingTest implements
     protected File getTestImageByName(final String filename)
             throws IOException, ImageReadException {
         return getTestImage(new ImageFilter() {
+            @Override
             public boolean accept(final File file) throws IOException,
                     ImageReadException {
                 return file.getName().equals(filename);
@@ -93,6 +94,7 @@ public abstract class ImagingTest implements
 
         final FileSystemTraversal.Visitor visitor = new FileSystemTraversal.Visitor() {
 
+            @Override
             public boolean visit(final File file, final double progressEstimate) {
                 if (!Imaging.hasImageFileExtension(file)) {
                     return true;

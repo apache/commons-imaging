@@ -26,6 +26,7 @@ import org.apache.commons.imaging.ImageWriteException;
 
 class PamWriter implements PnmWriter {
 
+    @Override
     public void writeImage(final BufferedImage src, final OutputStream os,
             final Map<String, Object> params) throws ImageWriteException, IOException {
 

@@ -53,6 +53,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
     }
 
     private class ByteSourceFileFactory implements ByteSourceFactory {
+        @Override
         public ByteSource getByteSource(final byte src[]) throws IOException {
             final File file = createTempFile(src);
 
@@ -65,6 +66,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
     }
 
     private class ByteSourceInputStreamFileFactory implements ByteSourceFactory {
+        @Override
         public ByteSource getByteSource(final byte src[]) throws IOException {
             final File file = createTempFile(src);
 
@@ -76,6 +78,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
     }
 
     private class ByteSourceInputStreamRawFactory implements ByteSourceFactory {
+        @Override
         public ByteSource getByteSource(final byte src[]) throws IOException {
             final ByteArrayInputStream is = new ByteArrayInputStream(src);
 

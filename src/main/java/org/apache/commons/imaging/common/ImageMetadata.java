@@ -26,6 +26,7 @@ public interface ImageMetadata {
     interface ImageMetadataItem {
         String toString(String prefix);
 
+        @Override
         String toString();
     }
 }

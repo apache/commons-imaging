@@ -38,6 +38,7 @@ public class UncompressedDataReader implements DataReader {
         this.dataParser = dataParser;
     }
 
+    @Override
     public void readData(final InputStream is, final BufferedImage bi,
             final ImageContents imageContents, final BinaryFileParser bfp)
             throws ImageReadException, IOException {

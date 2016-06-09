@@ -29,6 +29,7 @@ public abstract class XpmBaseTest extends ImagingTest {
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
+        @Override
         public boolean accept(final File file) throws IOException, ImageReadException {
             return isXpm(file);
         }

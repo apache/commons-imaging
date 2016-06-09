@@ -71,6 +71,7 @@ class RgbeInfo implements Closeable {
         return height;
     }
 
+    @Override
     public void close() throws IOException {
         in.close();
     }

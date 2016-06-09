@@ -25,6 +25,7 @@ import org.apache.commons.imaging.ImageWriteException;
 
 public class LongestAxisMedianCut implements MedianCut {
     private static final Comparator<ColorGroup> COMPARATOR = new Comparator<ColorGroup>() {
+        @Override
         public int compare(final ColorGroup cg1, final ColorGroup cg2) {
             if (cg1.maxDiff == cg2.maxDiff) {
                 return cg2.diffTotal - cg1.diffTotal;
@@ -33,6 +34,7 @@ public class LongestAxisMedianCut implements MedianCut {
         }
     };
 
+    @Override
     public boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
             throws ImageWriteException {
         Collections.sort(colorGroups, COMPARATOR);
@@ -61,6 +63,7 @@ public class LongestAxisMedianCut implements MedianCut {
             final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImageWriteException {
 
         final Comparator<ColorCount> comp = new Comparator<ColorCount>() {
+            @Override
             public int compare(final ColorCount c1, final ColorCount c2) {
                 switch (mode) {
                     case ALPHA:

@@ -26,6 +26,7 @@ import org.apache.commons.imaging.ImageWriteException;
 
 public class MostPopulatedBoxesMedianCut implements MedianCut {
 
+    @Override
     public boolean performNextMedianCut(final List<ColorGroup> colorGroups,
             final boolean ignoreAlpha) throws ImageWriteException {
         int maxPoints = 0;
@@ -143,6 +144,7 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
             this.colorComponent = colorComponent;
         }
         
+        @Override
         public int compare(final ColorCount c1, final ColorCount c2) {
             switch (colorComponent) {
                 case ALPHA:

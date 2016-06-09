@@ -29,6 +29,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.*;
 public enum IccTagDataTypes implements IccTagDataType {
     DESC_TYPE(
             "descType", 0x64657363) {
+        @Override
         public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
@@ -55,6 +56,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     DATA_TYPE(
             "dataType", 0x64617461) {
+        @Override
         public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
@@ -73,6 +75,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     MULTI_LOCALIZED_UNICODE_TYPE(
             "multiLocalizedUnicodeType", (0x6D6C7563)) {
+        @Override
         public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
@@ -91,6 +94,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     SIGNATURE_TYPE(
             "signatureType", ((0x73696720))) {
+        @Override
         public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
@@ -121,6 +125,7 @@ public enum IccTagDataTypes implements IccTagDataType {
 
     TEXT_TYPE(
             "textType", 0x74657874) {
+        @Override
         public void dump(final String prefix, final byte[] bytes)
                 throws ImageReadException, IOException
         {
@@ -148,10 +153,12 @@ public enum IccTagDataTypes implements IccTagDataType {
         this.signature = signature;
     }
     
+    @Override
     public String getName() {
         return name;
     }
     
+    @Override
     public int getSignature() {
         return signature;
     }

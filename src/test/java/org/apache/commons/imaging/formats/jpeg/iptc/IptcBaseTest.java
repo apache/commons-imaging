@@ -50,12 +50,14 @@ public abstract class IptcBaseTest extends ImagingTest {
     }
 
     private static final ImageFilter HAS_IPTC_IMAGE_FILTER = new ImageFilter() {
+        @Override
         public boolean accept(final File file) throws IOException, ImageReadException {
             return hasIptcData(file);
         }
     };
 
     private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter() {
+        @Override
         public boolean accept(final File file) throws IOException, ImageReadException {
             return file.getName().toLowerCase().endsWith(".jpg");
         }

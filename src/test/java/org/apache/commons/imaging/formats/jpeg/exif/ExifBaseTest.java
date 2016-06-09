@@ -43,12 +43,14 @@ public abstract class ExifBaseTest extends ImagingTest {
     }
 
     private static final ImageFilter HAS_EXIF_IMAGE_FILTER = new ImageFilter() {
+        @Override
         public boolean accept(final File file) throws IOException, ImageReadException {
             return hasExifData(file);
         }
     };
 
     private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter() {
+        @Override
         public boolean accept(final File file) throws IOException, ImageReadException {
             return file.getName().toLowerCase().endsWith(".jpg");
         }

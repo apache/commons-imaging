@@ -184,6 +184,7 @@ public class JpegImageMetadata implements ImageMetadata {
         return null;
     }
 
+    @Override
     public List<ImageMetadataItem> getItems() {
         final List<ImageMetadataItem> result = new ArrayList<>();
 
@@ -203,6 +204,7 @@ public class JpegImageMetadata implements ImageMetadata {
         return toString(null);
     }
 
+    @Override
     public String toString(String prefix) {
         if (prefix == null) {
             prefix = "";

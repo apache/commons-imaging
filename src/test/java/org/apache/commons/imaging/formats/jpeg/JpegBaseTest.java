@@ -36,6 +36,7 @@ public abstract class JpegBaseTest extends ImagingTest {
     }
 
     public static final ImageFilter imageFilter = new ImageFilter() {
+        @Override
         public boolean accept(final File file) throws IOException, ImageReadException {
             return isJpeg(file);
         }

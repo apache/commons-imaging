@@ -168,6 +168,7 @@ class ColorSpaceSubset {
     public static class RgbComparator implements Comparator<ColorSpaceSubset>, Serializable {
         private static final long serialVersionUID = 509214838111679029L;
 
+        @Override
         public int compare(final ColorSpaceSubset c1, final ColorSpaceSubset c2) {
             return c1.rgb - c2.rgb;
         }

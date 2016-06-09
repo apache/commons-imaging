@@ -324,14 +324,17 @@ public enum IccTagTypes implements IccTagType {
         this.signature = signature;
     }
 
+    @Override
     public String getName() {
         return name;
     }
     
+    @Override
     public String getTypeDescription() {
         return typeDescription;
     }
     
+    @Override
     public int getSignature() {
         return signature;
     }

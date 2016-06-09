@@ -34,6 +34,7 @@ public abstract class RgbeBaseTest extends ImagingTest {
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
+        @Override
         public boolean accept(final File file) throws IOException, ImageReadException {
             return isRgbe(file);
         }

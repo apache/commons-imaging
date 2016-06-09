@@ -48,6 +48,7 @@ public class ImageReadExample {
     public static class ManagedImageBufferedImageFactory implements
             BufferedImageFactory {
 
+        @Override
         public BufferedImage getColorBufferedImage(final int width, final int height,
                 final boolean hasAlpha) {
             final GraphicsEnvironment ge = GraphicsEnvironment
@@ -58,6 +59,7 @@ public class ImageReadExample {
                     Transparency.TRANSLUCENT);
         }
 
+        @Override
         public BufferedImage getGrayscaleBufferedImage(final int width, final int height,
                 final boolean hasAlpha) {
             return getColorBufferedImage(width, height, hasAlpha);

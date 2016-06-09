@@ -36,6 +36,7 @@ public abstract class TiffBaseTest extends ImagingTest {
     }
 
     private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
+        @Override
         public boolean accept(final File file) throws IOException, ImageReadException {
             return isTiff(file);
         }

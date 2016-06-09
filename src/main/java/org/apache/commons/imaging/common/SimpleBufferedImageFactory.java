@@ -20,6 +20,7 @@ package org.apache.commons.imaging.common;
 import java.awt.image.BufferedImage;
 
 public class SimpleBufferedImageFactory implements BufferedImageFactory {
+    @Override
     public BufferedImage getColorBufferedImage(final int width, final int height,
             final boolean hasAlpha) {
         if (hasAlpha) {
@@ -28,6 +29,7 @@ public class SimpleBufferedImageFactory implements BufferedImageFactory {
         return new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     }
 
+    @Override
     public BufferedImage getGrayscaleBufferedImage(final int width, final int height,
             final boolean hasAlpha) {
         if (hasAlpha) {

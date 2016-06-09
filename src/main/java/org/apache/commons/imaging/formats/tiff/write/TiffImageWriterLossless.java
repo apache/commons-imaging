@@ -47,11 +47,13 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 public class TiffImageWriterLossless extends TiffImageWriterBase {
     private final byte[] exifBytes;
     private static final Comparator<TiffElement> ELEMENT_SIZE_COMPARATOR = new Comparator<TiffElement>() {
+        @Override
         public int compare(final TiffElement e1, final TiffElement e2) {
             return e1.length - e2.length;
         }
     };
     private static final Comparator<TiffOutputItem> ITEM_SIZE_COMPARATOR = new Comparator<TiffOutputItem>() {
+        @Override
         public int compare(final TiffOutputItem e1, final TiffOutputItem e2) {
             return e1.getItemLength() - e2.getItemLength();
         }

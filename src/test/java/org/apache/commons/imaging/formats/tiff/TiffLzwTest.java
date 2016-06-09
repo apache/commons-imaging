@@ -90,18 +90,22 @@ public class TiffLzwTest extends TiffBaseTest {
         final int LZW_MINIMUM_CODE_SIZE = 8;
         final List<Integer> codes = new ArrayList<>();
         final MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
+            @Override
             public void dataCode(final int code) {
                 codes.add(code);
             }
 
+            @Override
             public void eoiCode(final int code) {
                 codes.add(code);
             }
 
+            @Override
             public void clearCode(final int code) {
                 codes.add(code);
             }
 
+            @Override
             public void init(final int clearCode, final int eoiCode) {
             }
         };
@@ -115,6 +119,7 @@ public class TiffLzwTest extends TiffBaseTest {
             int index = 0;
             int clearCode, eoiCode;
 
+            @Override
             public void code(final int code) {
                 if (DEBUG) {
                     if (code == clearCode) {
@@ -146,6 +151,7 @@ public class TiffLzwTest extends TiffBaseTest {
                 }
             }
 
+            @Override
             public void init(final int clearCode, final int eoiCode) {
                 this.clearCode = clearCode;
                 this.eoiCode = eoiCode;
@@ -175,6 +181,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
         final MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
 
+            @Override
             public void code(final int code) {
                 Debug.debug("listener code: " + code + " (0x"
                         + Integer.toHexString(code) + ") "
@@ -183,6 +190,7 @@ public class TiffLzwTest extends TiffBaseTest {
                 codes.add(code);
             }
 
+            @Override
             public void init(final int clearCode, final int eoiCode) {
             }
 
@@ -198,6 +206,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
             int clearCode, eoiCode;
 
+            @Override
             public void init(final int clearCode, final int eoiCode) {
                 this.clearCode = clearCode;
                 this.eoiCode = eoiCode;
@@ -235,14 +244,17 @@ public class TiffLzwTest extends TiffBaseTest {
                 }
             }
 
+            @Override
             public void dataCode(final int code) {
                 code(code);
             }
 
+            @Override
             public void eoiCode(final int code) {
                 code(code);
             }
 
+            @Override
             public void clearCode(final int code) {
                 code(code);
             }

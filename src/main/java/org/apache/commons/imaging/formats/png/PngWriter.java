@@ -316,6 +316,7 @@ class PngWriter {
             this.palette = palette;
         }
         
+        @Override
         public int getEntry(final int index) {
             if (index == 0) {
                 return 0x00000000;
@@ -323,10 +324,12 @@ class PngWriter {
             return palette.getEntry(index - 1);
         }
         
+        @Override
         public int length() {
             return 1 + palette.length();
         }
         
+        @Override
         public int getPaletteIndex(final int rgb) throws ImageWriteException {
             if (rgb == 0x00000000) {
                 return 0;

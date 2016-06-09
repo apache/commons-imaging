@@ -31,6 +31,7 @@ class PgmWriter implements PnmWriter {
         this.rawbits = rawbits;
     }
 
+    @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
         // System.out.println

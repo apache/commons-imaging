@@ -61,10 +61,12 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     private final int[] blockInt = new int[64];
     private final float[] block = new float[64];
 
+    @Override
     public boolean beginSOS() {
         return true;
     }
 
+    @Override
     public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
         final ByteArrayInputStream is = new ByteArrayInputStream(imageData);
         try {
@@ -169,6 +171,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         }
     }
 
+    @Override
     public boolean visitSegment(final int marker, final byte[] markerBytes,
             final int segmentLength, final byte[] segmentLengthBytes, final byte[] segmentData)
             throws ImageReadException, IOException {

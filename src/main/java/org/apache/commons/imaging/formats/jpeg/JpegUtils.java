@@ -164,16 +164,19 @@ public class JpegUtils extends BinaryFileParser {
             IOException {
         final Visitor visitor = new Visitor() {
             // return false to exit before reading image data.
+            @Override
             public boolean beginSOS() {
                 return true;
             }
 
+            @Override
             public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
                 Debug.debug("SOS marker.  " + imageData.length + " bytes of image data.");
                 Debug.debug("");
             }
 
             // return false to exit traversal.
+            @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int segmentLength, final byte[] segmentLengthBytes,
                     final byte[] segmentData) {

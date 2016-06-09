@@ -31,6 +31,7 @@ public class GenericImageMetadata implements ImageMetadata {
         items.add(item);
     }
 
+    @Override
     public List<? extends ImageMetadataItem> getItems() {
         return new ArrayList<>(items);
     }
@@ -40,6 +41,7 @@ public class GenericImageMetadata implements ImageMetadata {
         return toString(null);
     }
 
+    @Override
     public String toString(String prefix) {
         if (null == prefix) {
             prefix = "";
@@ -85,6 +87,7 @@ public class GenericImageMetadata implements ImageMetadata {
             return toString(null);
         }
 
+        @Override
         public String toString(final String prefix) {
             final String result = keyword + ": " + text;
             if (null != prefix) {

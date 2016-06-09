@@ -318,25 +318,30 @@ public class TiffReader extends BinaryFileParser {
             this.readThumbnails = tmpReadThumbnails;
         }
 
+        @Override
         public boolean setTiffHeader(final TiffHeader tiffHeader) {
             this.tiffHeader = tiffHeader;
             return true;
         }
 
+        @Override
         public boolean addDirectory(final TiffDirectory directory) {
             directories.add(directory);
             return true;
         }
 
+        @Override
         public boolean addField(final TiffField field) {
             fields.add(field);
             return true;
         }
 
+        @Override
         public boolean readImageData() {
             return readThumbnails;
         }
 
+        @Override
         public boolean readOffsetDirectories() {
             return true;
         }

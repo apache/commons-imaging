@@ -27,6 +27,7 @@ public class IptcRecord {
     private final byte[] bytes;
     public final String value;
     public static final Comparator<IptcRecord> COMPARATOR = new Comparator<IptcRecord>() {
+        @Override
         public int compare(final IptcRecord e1, final IptcRecord e2) {
             return e1.iptcType.getType() - e2.iptcType.getType();
         }

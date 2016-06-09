@@ -40,16 +40,19 @@ import static org.apache.commons.imaging.common.BinaryFunctions.*;
 public class JpegRewriter extends BinaryFileParser {
     private static final ByteOrder JPEG_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
     private static final SegmentFilter EXIF_SEGMENT_FILTER = new SegmentFilter() {
+        @Override
         public boolean filter(final JFIFPieceSegment segment) {
             return segment.isExifSegment();
         }
     };
     private static final SegmentFilter XMP_SEGMENT_FILTER = new SegmentFilter() {
+        @Override
         public boolean filter(final JFIFPieceSegment segment) {
             return segment.isXmpSegment();
         }
     };
     private static final SegmentFilter PHOTOSHOP_APP13_SEGMENT_FILTER = new SegmentFilter() {
+        @Override
         public boolean filter(final JFIFPieceSegment segment) {
             return segment.isPhotoshopApp13Segment();
         }
@@ -184,15 +187,18 @@ public class JpegRewriter extends BinaryFileParser {
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
+            @Override
             public boolean beginSOS() {
                 return true;
             }
 
+            @Override
             public void visitSOS(final int marker, final byte[] markerBytes, final byte[] imageData) {
                 pieces.add(new JFIFPieceImageData(markerBytes, imageData));
             }
 
             // return false to exit traversal.
+            @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int segmentLength, final byte[] segmentLengthBytes,
                     final byte[] segmentData) throws ImageReadException, IOException {

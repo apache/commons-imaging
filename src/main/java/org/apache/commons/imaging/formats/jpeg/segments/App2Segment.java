@@ -75,6 +75,7 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
         return curMarker;
     }
 
+    @Override
     public int compareTo(final App2Segment other) {
         return curMarker - other.curMarker;
     }

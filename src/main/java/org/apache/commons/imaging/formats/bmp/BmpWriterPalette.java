@@ -40,14 +40,17 @@ class BmpWriterPalette implements BmpWriter {
         }
     }
 
+    @Override
     public int getPaletteSize() {
         return palette.length();
     }
 
+    @Override
     public int getBitsPerPixel() {
         return bitsPerSample;
     }
 
+    @Override
     public void writePalette(final BinaryOutputStream bos) throws IOException {
         for (int i = 0; i < palette.length(); i++) {
             final int rgb = palette.getEntry(i);
@@ -63,6 +66,7 @@ class BmpWriterPalette implements BmpWriter {
         }
     }
 
+    @Override
     public byte[] getImageData(final BufferedImage src) {
         final int width = src.getWidth();
         final int height = src.getHeight();

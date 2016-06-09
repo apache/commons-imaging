@@ -136,16 +136,19 @@ public class JpegImageParser extends ImageParser {
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
+            @Override
             public boolean beginSOS() {
                 return false;
             }
 
+            @Override
             public void visitSOS(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
+            @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
                     final byte[] segmentData) throws ImageReadException, IOException {
@@ -400,16 +403,19 @@ public class JpegImageParser extends ImageParser {
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
+            @Override
             public boolean beginSOS() {
                 return false;
             }
 
+            @Override
             public void visitSOS(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
+            @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
                     final byte[] segmentData) throws ImageReadException, IOException {
@@ -439,16 +445,19 @@ public class JpegImageParser extends ImageParser {
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
+            @Override
             public boolean beginSOS() {
                 return false;
             }
 
+            @Override
             public void visitSOS(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
+            @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
                     final byte[] segmentData) throws ImageReadException, IOException {
@@ -478,16 +487,19 @@ public class JpegImageParser extends ImageParser {
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
+            @Override
             public boolean beginSOS() {
                 return false;
             }
 
+            @Override
             public void visitSOS(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
+            @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
                     final byte[] segmentData) throws ImageReadException, IOException {
@@ -528,16 +540,19 @@ public class JpegImageParser extends ImageParser {
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
+            @Override
             public boolean beginSOS() {
                 return false;
             }
 
+            @Override
             public void visitSOS(final int marker, final byte[] markerBytes,
                     final byte[] imageData) {
                 // don't need image data
             }
 
             // return false to exit traversal.
+            @Override
             public boolean visitSegment(final int marker, final byte[] markerBytes,
                     final int markerLength, final byte[] markerLengthBytes,
                     final byte[] segmentData) throws ImageReadException, IOException {

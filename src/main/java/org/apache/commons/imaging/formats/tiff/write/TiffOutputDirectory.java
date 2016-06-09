@@ -62,6 +62,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
     private final ByteOrder byteOrder;
     private TiffOutputDirectory nextDirectory;
     public static final Comparator<TiffOutputDirectory> COMPARATOR = new Comparator<TiffOutputDirectory>() {
+        @Override
         public int compare(final TiffOutputDirectory o1, final TiffOutputDirectory o2) {
             if (o1.type < o2.type) {
                 return -1;
@@ -464,6 +465,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
     public void sortFields() {
         final Comparator<TiffOutputField> comparator = new Comparator<TiffOutputField>() {
+            @Override
             public int compare(final TiffOutputField e1, final TiffOutputField e2) {
                 if (e1.tag != e2.tag) {
                     return e1.tag - e2.tag;

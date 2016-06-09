@@ -140,10 +140,12 @@ public enum IptcTypes implements IptcType {
         this.name = name;
     }
     
+    @Override
     public String getName() {
         return name;
     }
     
+    @Override
     public int getType() {
         return type;
     }
@@ -155,10 +157,12 @@ public enum IptcTypes implements IptcType {
     
     public static IptcType getUnknown(final int type) {
         return new IptcType() {
+            @Override
             public String getName() {
                 return "Unknown";
             }
             
+            @Override
             public int getType() {
                 return type;
             }
