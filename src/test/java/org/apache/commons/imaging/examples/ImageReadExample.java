@@ -31,7 +31,7 @@ import org.apache.commons.imaging.common.BufferedImageFactory;
 public class ImageReadExample {
     public static BufferedImage imageReadExample(final File file)
             throws ImageReadException, IOException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, Object> params = new HashMap<>();
 
         // set optional parameters if you like
         params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,

@@ -30,7 +30,7 @@ import java.util.List;
 public class FormatCompliance {
     private final boolean failOnError;
     private final String description;
-    private final List<String> comments = new ArrayList<String>();
+    private final List<String> comments = new ArrayList<>();
 
     public FormatCompliance(final String description) {
         this.description = description;

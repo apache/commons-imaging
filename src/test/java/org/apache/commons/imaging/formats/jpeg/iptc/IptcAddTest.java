@@ -62,7 +62,7 @@ public class IptcAddTest extends IptcBaseTest {
     public void testAddIptcData() throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, Object> params = new HashMap<>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
@@ -72,11 +72,11 @@ public class IptcAddTest extends IptcBaseTest {
             return;
         }
 
-        final List<IptcBlock> newBlocks = new ArrayList<IptcBlock>();
+        final List<IptcBlock> newBlocks = new ArrayList<>();
         newBlocks.addAll(metadata.photoshopApp13Data.getNonIptcBlocks());
         final List<IptcRecord> oldRecords = metadata.photoshopApp13Data.getRecords();
 
-        List<IptcRecord> newRecords = new ArrayList<IptcRecord>();
+        List<IptcRecord> newRecords = new ArrayList<>();
         for (final IptcRecord record : oldRecords) {
             if (record.iptcType != IptcTypes.CITY
                     && record.iptcType != IptcTypes.CREDIT) {

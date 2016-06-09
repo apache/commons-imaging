@@ -106,7 +106,7 @@ public class IptcParser extends BinaryFileParser {
     public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes,
             final boolean verbose, final boolean strict) throws ImageReadException,
             IOException {
-        final List<IptcRecord> records = new ArrayList<IptcRecord>();
+        final List<IptcRecord> records = new ArrayList<>();
 
         final List<IptcBlock> blocks = parseAllBlocks(bytes, verbose, strict);
 
@@ -124,7 +124,7 @@ public class IptcParser extends BinaryFileParser {
 
     protected List<IptcRecord> parseIPTCBlock(final byte[] bytes, final boolean verbose)
             throws IOException {
-        final List<IptcRecord> elements = new ArrayList<IptcRecord>();
+        final List<IptcRecord> elements = new ArrayList<>();
 
         int index = 0;
         // Integer recordVersion = null;
@@ -250,7 +250,7 @@ public class IptcParser extends BinaryFileParser {
 
     protected List<IptcBlock> parseAllBlocks(final byte[] bytes, final boolean verbose,
             final boolean strict) throws ImageReadException, IOException {
-        final List<IptcBlock> blocks = new ArrayList<IptcBlock>();
+        final List<IptcBlock> blocks = new ArrayList<>();
 
         InputStream bis = null;
         boolean canThrow = false;
@@ -412,7 +412,7 @@ public class IptcParser extends BinaryFileParser {
             bos.write2Bytes(2); // record version value
     
             // make a copy of the list.
-            elements = new ArrayList<IptcRecord>(elements);
+            elements = new ArrayList<>(elements);
     
             // sort the list. Records must be in numerical order.
             final Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {

@@ -280,7 +280,7 @@ public class ExifRewriteTest extends ExifBaseTest {
     }
 
     private Map<Integer,TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends ImageMetadataItem> directories) {
-        final Map<Integer,TiffImageMetadata.Directory> directoryMap = new HashMap<Integer,TiffImageMetadata.Directory>();
+        final Map<Integer,TiffImageMetadata.Directory> directoryMap = new HashMap<>();
         for (int i = 0; i < directories.size(); i++) {
             final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories
                     .get(i);
@@ -290,7 +290,7 @@ public class ExifRewriteTest extends ExifBaseTest {
     }
 
     private Map<Integer,TiffField> makeFieldMap(final List<? extends ImageMetadataItem> items) {
-        final Map<Integer,TiffField> fieldMap = new HashMap<Integer,TiffField>();
+        final Map<Integer,TiffField> fieldMap = new HashMap<>();
         for (int i = 0; i < items.size(); i++) {
             final TiffImageMetadata.TiffMetadataItem item = (TiffImageMetadata.TiffMetadataItem) items.get(i);
             final TiffField field = item.getTiffField();
@@ -315,9 +315,9 @@ public class ExifRewriteTest extends ExifBaseTest {
         final Map<Integer,TiffImageMetadata.Directory> newDirectoryMap = makeDirectoryMap(newDirectories);
 
         assertEquals(oldDirectories.size(), oldDirectoryMap.keySet().size());
-        final List<Integer> oldDirectoryTypes = new ArrayList<Integer>(oldDirectoryMap.keySet());
+        final List<Integer> oldDirectoryTypes = new ArrayList<>(oldDirectoryMap.keySet());
         Collections.sort(oldDirectoryTypes);
-        final List<Integer> newDirectoryTypes = new ArrayList<Integer>(newDirectoryMap.keySet());
+        final List<Integer> newDirectoryTypes = new ArrayList<>(newDirectoryMap.keySet());
         Collections.sort(newDirectoryTypes);
         assertEquals(oldDirectoryTypes, newDirectoryTypes);
 
@@ -339,10 +339,10 @@ public class ExifRewriteTest extends ExifBaseTest {
             final Map<Integer,TiffField> oldFieldMap = makeFieldMap(oldItems);
             final Map<Integer,TiffField> newFieldMap = makeFieldMap(newItems);
 
-            final Set<Integer> missingInNew = new HashSet<Integer>(oldFieldMap.keySet());
+            final Set<Integer> missingInNew = new HashSet<>(oldFieldMap.keySet());
             missingInNew.removeAll(newFieldMap.keySet());
 
-            final Set<Integer> missingInOld = new HashSet<Integer>(newFieldMap.keySet());
+            final Set<Integer> missingInOld = new HashSet<>(newFieldMap.keySet());
             missingInOld.removeAll(oldFieldMap.keySet());
 
             assertTrue(missingInNew.size() == 0);
@@ -352,9 +352,9 @@ public class ExifRewriteTest extends ExifBaseTest {
             assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
             assertEquals(oldFieldMap.keySet(), newFieldMap.keySet());
 
-            final List<Integer> oldFieldTags = new ArrayList<Integer>(oldFieldMap.keySet());
+            final List<Integer> oldFieldTags = new ArrayList<>(oldFieldMap.keySet());
             Collections.sort(oldFieldTags);
-            final List<Integer> newFieldTags = new ArrayList<Integer>(newFieldMap.keySet());
+            final List<Integer> newFieldTags = new ArrayList<>(newFieldMap.keySet());
             Collections.sort(newFieldTags);
             assertEquals(oldFieldTags, newFieldTags);
 

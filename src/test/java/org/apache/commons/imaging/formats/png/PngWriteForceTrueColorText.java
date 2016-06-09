@@ -56,7 +56,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                 final File outFile = createTempFile(imageFile.getName() + ".", ".gif");
                 // Debug.debug("outFile", outFile);
 
-                final Map<String, Object> params = new HashMap<String, Object>();
+                final Map<String, Object> params = new HashMap<>();
                 params.put(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR,
                         Boolean.TRUE);
                 Imaging.writeImage(image, outFile,

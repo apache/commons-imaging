@@ -21,7 +21,7 @@ import java.util.List;
 
 public class GenericImageMetadata implements ImageMetadata {
     private static final String NEWLINE = System.getProperty("line.separator");
-    private final List<ImageMetadataItem> items = new ArrayList<ImageMetadataItem>();
+    private final List<ImageMetadataItem> items = new ArrayList<>();
 
     public void add(final String keyword, final String text) {
         add(new GenericImageMetadataItem(keyword, text));
@@ -32,7 +32,7 @@ public class GenericImageMetadata implements ImageMetadata {
     }
 
     public List<? extends ImageMetadataItem> getItems() {
-        return new ArrayList<ImageMetadataItem>(items);
+        return new ArrayList<>(items);
     }
 
     @Override

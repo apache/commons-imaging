@@ -192,7 +192,7 @@ final class IcnsDecoder {
 
     public static List<BufferedImage> decodeAllImages(final IcnsImageParser.IcnsElement[] icnsElements)
             throws ImageReadException {
-        final List<BufferedImage> result = new ArrayList<BufferedImage>();
+        final List<BufferedImage> result = new ArrayList<>();
         for (final IcnsElement imageElement : icnsElements) {
             final IcnsType imageType = IcnsType.findImageType(imageElement.type);
             if (imageType == null) {

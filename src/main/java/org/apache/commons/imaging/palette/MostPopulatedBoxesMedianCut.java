@@ -77,9 +77,9 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
                 }
             }
 
-            final List<ColorCount> lowerColors = new ArrayList<ColorCount>(
+            final List<ColorCount> lowerColors = new ArrayList<>(
                     colorGroup.colorCounts.subList(0, medianIndex + 1));
-            final List<ColorCount> upperColors = new ArrayList<ColorCount>(
+            final List<ColorCount> upperColors = new ArrayList<>(
                     colorGroup.colorCounts.subList(medianIndex + 1,
                             colorGroup.colorCounts.size()));
             if (lowerColors.isEmpty() || upperColors.isEmpty()) {
@@ -101,9 +101,9 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
         }
         
         Collections.sort(colorGroup.colorCounts, new ColorComparer(bestColorComponent));
-        final List<ColorCount> lowerColors = new ArrayList<ColorCount>(
+        final List<ColorCount> lowerColors = new ArrayList<>(
                 colorGroup.colorCounts.subList(0, bestMedianIndex + 1));
-        final List<ColorCount> upperColors = new ArrayList<ColorCount>(
+        final List<ColorCount> upperColors = new ArrayList<>(
                 colorGroup.colorCounts.subList(bestMedianIndex + 1,
                         colorGroup.colorCounts.size()));
         final ColorGroup lowerGroup = new ColorGroup(lowerColors, ignoreAlpha);

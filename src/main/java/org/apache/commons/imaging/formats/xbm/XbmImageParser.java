@@ -145,7 +145,7 @@ public class XbmImageParser extends ImageParser {
         boolean canThrow = false;
         try {
             is = byteSource.getInputStream();
-            final Map<String, String> defines = new HashMap<String, String>();
+            final Map<String, String> defines = new HashMap<>();
             final ByteArrayOutputStream preprocessedFile = BasicCParser.preprocess(
                     is, null, defines);
             int width = -1;
@@ -326,7 +326,7 @@ public class XbmImageParser extends ImageParser {
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {

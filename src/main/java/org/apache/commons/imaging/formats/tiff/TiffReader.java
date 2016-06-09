@@ -111,7 +111,7 @@ public class TiffReader extends BinaryFileParser {
         final long offset = tiffHeader.offsetToFirstIFD;
         final int dirType = TiffDirectoryConstants.DIRECTORY_TYPE_ROOT;
 
-        final List<Number> visited = new ArrayList<Number>();
+        final List<Number> visited = new ArrayList<>();
         readDirectory(byteSource, offset, dirType, formatCompliance, listener, visited);
     }
 
@@ -144,7 +144,7 @@ public class TiffReader extends BinaryFileParser {
             is = byteSource.getInputStream();
             skipBytes(is, directoryOffset);
 
-            final List<TiffField> fields = new ArrayList<TiffField>();
+            final List<TiffField> fields = new ArrayList<>();
 
             int entryCount;
             try {
@@ -301,8 +301,8 @@ public class TiffReader extends BinaryFileParser {
 
     private static class Collector implements Listener {
         private TiffHeader tiffHeader;
-        private final List<TiffDirectory> directories = new ArrayList<TiffDirectory>();
-        private final List<TiffField> fields = new ArrayList<TiffField>();
+        private final List<TiffDirectory> directories = new ArrayList<>();
+        private final List<TiffField> fields = new ArrayList<>();
         private final boolean readThumbnails;
 
         public Collector() {

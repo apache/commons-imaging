@@ -146,7 +146,7 @@ public class ImageInfo {
      * This is mostly obsolete.
      */
     public List<String> getComments() {
-        return new ArrayList<String>(comments);
+        return new ArrayList<>(comments);
     }
 
     /**

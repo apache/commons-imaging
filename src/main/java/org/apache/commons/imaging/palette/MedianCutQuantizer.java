@@ -34,7 +34,7 @@ public class MedianCutQuantizer {
 
     private Map<Integer, ColorCount> groupColors1(final BufferedImage image, final int max,
             final int mask) {
-        final Map<Integer, ColorCount> colorMap = new HashMap<Integer, ColorCount>();
+        final Map<Integer, ColorCount> colorMap = new HashMap<>();
 
         final int width = image.getWidth();
         final int height = image.getHeight();
@@ -94,7 +94,7 @@ public class MedianCutQuantizer {
             }
 
             final int[] palette = new int[discreteColors];
-            final List<ColorCount> colorCounts = new ArrayList<ColorCount>(
+            final List<ColorCount> colorCounts = new ArrayList<>(
                     colorMap.values());
 
             for (int i = 0; i < colorCounts.size(); i++) {
@@ -112,8 +112,8 @@ public class MedianCutQuantizer {
             Debug.debug("discrete colors: " + discreteColors);
         }
 
-        final List<ColorGroup> colorGroups = new ArrayList<ColorGroup>();
-        final ColorGroup root = new ColorGroup(new ArrayList<ColorCount>(colorMap.values()), ignoreAlpha);
+        final List<ColorGroup> colorGroups = new ArrayList<>();
+        final ColorGroup root = new ColorGroup(new ArrayList<>(colorMap.values()), ignoreAlpha);
         colorGroups.add(root);
 
         while (colorGroups.size() < maxColors) {

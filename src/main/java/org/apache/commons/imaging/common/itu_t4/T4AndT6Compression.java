@@ -25,9 +25,9 @@ import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
 import org.apache.commons.imaging.util.IoUtils;
 
 public final class T4AndT6Compression {
-    private static final HuffmanTree<Integer> WHITE_RUN_LENGTHS = new HuffmanTree<Integer>();
-    private static final HuffmanTree<Integer> BLACK_RUN_LENGTHS = new HuffmanTree<Integer>();
-    private static final HuffmanTree<Entry> CONTROL_CODES = new HuffmanTree<Entry>();
+    private static final HuffmanTree<Integer> WHITE_RUN_LENGTHS = new HuffmanTree<>();
+    private static final HuffmanTree<Integer> BLACK_RUN_LENGTHS = new HuffmanTree<>();
+    private static final HuffmanTree<Entry> CONTROL_CODES = new HuffmanTree<>();
 
     public static final int WHITE = 0;
     public static final int BLACK = 1;

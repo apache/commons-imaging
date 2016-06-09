@@ -79,7 +79,7 @@ public class XpmImageParser extends ImageParser {
                 if (rgbTxtStream == null) {
                     throw new ImageReadException("Couldn't find rgb.txt in our resources");
                 }
-                final Map<String, Integer> colors = new HashMap<String, Integer>();
+                final Map<String, Integer> colors = new HashMap<>();
                 BufferedReader reader = null;
                 boolean canThrow = false;
                 try {
@@ -187,7 +187,7 @@ public class XpmImageParser extends ImageParser {
         int yHotSpot = -1;
         boolean xpmExt;
 
-        Map<Object, PaletteEntry> palette = new HashMap<Object, PaletteEntry>();
+        Map<Object, PaletteEntry> palette = new HashMap<>();
 
         public XpmHeader(final int width, final int height, final int numColors,
                 final int numCharsPerPixel, final int xHotSpot, final int yHotSpot, final boolean xpmExt) {
@@ -654,7 +654,7 @@ public class XpmImageParser extends ImageParser {
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {

@@ -81,7 +81,7 @@ public abstract class ImagingTest implements
         return getTestImages(filter, -1);
     }
 
-    private static final List<File> ALL_IMAGES = new ArrayList<File>();
+    private static final List<File> ALL_IMAGES = new ArrayList<>();
 
     static {
         File imagesFolder = TEST_IMAGE_FOLDER;
@@ -106,7 +106,7 @@ public abstract class ImagingTest implements
 
     protected static List<File> getTestImages(final ImageFilter filter, final int max)
             throws IOException, ImageReadException {
-        final List<File> images = new ArrayList<File>();
+        final List<File> images = new ArrayList<>();
 
         for (final File file : ALL_IMAGES) {
             if (!Imaging.hasImageFileExtension(file)) {

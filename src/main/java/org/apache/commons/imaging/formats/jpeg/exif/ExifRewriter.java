@@ -139,8 +139,8 @@ public class ExifRewriter extends BinaryFileParser {
             throws ImageReadException, IOException
     // , ImageWriteException
     {
-        final List<JFIFPiece> pieces = new ArrayList<JFIFPiece>();
-        final List<JFIFPiece> exifPieces = new ArrayList<JFIFPiece>();
+        final List<JFIFPiece> pieces = new ArrayList<>();
+        final List<JFIFPiece> exifPieces = new ArrayList<>();
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.

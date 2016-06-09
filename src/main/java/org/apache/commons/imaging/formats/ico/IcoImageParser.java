@@ -598,7 +598,7 @@ public class IcoImageParser extends ImageParser {
     @Override
     public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final List<BufferedImage> result = new ArrayList<BufferedImage>();
+        final List<BufferedImage> result = new ArrayList<>();
         final ImageContents contents = readImage(byteSource);
 
         final FileHeader fileHeader = contents.fileHeader;
@@ -641,7 +641,7 @@ public class IcoImageParser extends ImageParser {
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {

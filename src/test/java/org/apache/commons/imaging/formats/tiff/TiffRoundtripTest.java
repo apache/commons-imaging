@@ -59,7 +59,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
             };
             for (final int compression : compressions) {
                 final File tempFile = createTempFile(imageFile.getName() + "-" + compression + ".", ".tif");
-                final Map<String, Object> params = new HashMap<String, Object>();
+                final Map<String, Object> params = new HashMap<>();
                 params.put(ImagingConstants.PARAM_KEY_COMPRESSION, compression);
                 Imaging.writeImage(image, tempFile, ImageFormats.TIFF,
                         params);

@@ -59,7 +59,7 @@ public class ExifDumpTest extends ExifBaseTest {
 
     @Test
     public void testMetadata() throws Exception {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, Object> params = new HashMap<>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 

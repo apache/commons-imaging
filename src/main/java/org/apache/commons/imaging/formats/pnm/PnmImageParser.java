@@ -243,7 +243,7 @@ public class PnmImageParser extends ImageParser {
             throw new ImageReadException("PNM: Couldn't read Header");
         }
 
-        final List<String> comments = new ArrayList<String>();
+        final List<String> comments = new ArrayList<>();
 
         final int bitsPerPixel = info.getBitDepth() * info.getNumComponents();
         final ImageFormat format = info.getImageType();
@@ -356,9 +356,9 @@ public class PnmImageParser extends ImageParser {
 
         // make copy of params; we'll clear keys as we consume them.
         if (params != null) {
-            params = new HashMap<String, Object>(params);
+            params = new HashMap<>(params);
         } else {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
 
         // clear format key.

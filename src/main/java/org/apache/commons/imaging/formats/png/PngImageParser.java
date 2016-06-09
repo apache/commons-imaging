@@ -107,7 +107,7 @@ public class PngImageParser extends ImageParser {
     public List<String> getChuckTypes(final InputStream is)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(is, null, false);
-        final List<String> chunkTypes = new ArrayList<String>();
+        final List<String> chunkTypes = new ArrayList<>();
         for (PngChunk chunk : chunks) {
             chunkTypes.add(getChunkTypeName(chunk.chunkType));
         }
@@ -146,7 +146,7 @@ public class PngImageParser extends ImageParser {
 
     private List<PngChunk> readChunks(final InputStream is, final ChunkType[] chunkTypes,
             final boolean returnAfterFirst) throws ImageReadException, IOException {
-        final List<PngChunk> result = new ArrayList<PngChunk>();
+        final List<PngChunk> result = new ArrayList<>();
 
         while (true) {
             if (getDebug()) {
@@ -301,7 +301,7 @@ public class PngImageParser extends ImageParser {
     }
 
     private List<PngChunk> filterChunks(final List<PngChunk> chunks, final ChunkType type) {
-        final List<PngChunk> result = new ArrayList<PngChunk>();
+        final List<PngChunk> result = new ArrayList<>();
 
         for (PngChunk chunk : chunks) {
             if (chunk.chunkType == type.value) {
@@ -384,8 +384,8 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> zTXts = filterChunks(chunks, ChunkType.zTXt);
         final List<PngChunk> iTXts = filterChunks(chunks, ChunkType.iTXt);
 
-        final List<String> comments = new ArrayList<String>();
-        final List<PngText> textChunks = new ArrayList<PngText>();
+        final List<String> comments = new ArrayList<>();
+        final List<PngText> textChunks = new ArrayList<>();
 
         for (PngChunk tEXt : tEXts) {
             final PngChunkText pngChunktEXt = (PngChunkText) tEXt;
@@ -471,7 +471,7 @@ public class PngImageParser extends ImageParser {
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException {
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
@@ -707,7 +707,7 @@ public class PngImageParser extends ImageParser {
             return null;
         }
 
-        final List<PngChunkItxt> xmpChunks = new ArrayList<PngChunkItxt>();
+        final List<PngChunkItxt> xmpChunks = new ArrayList<>();
         for (PngChunk chunk : chunks) {
             final PngChunkItxt itxtChunk = (PngChunkItxt) chunk;
             if (!itxtChunk.getKeyword().equals(PngConstants.XMP_KEYWORD)) {

@@ -208,7 +208,7 @@ public class PaletteFactory {
         final DivisionCandidate dc1 = finishDivision(subset, component, precision, sum1, slice1);
         final DivisionCandidate dc2 = finishDivision(subset, component, precision, sum2, slice2);
 
-        final List<DivisionCandidate> result = new ArrayList<DivisionCandidate>();
+        final List<DivisionCandidate> result = new ArrayList<>();
 
         if (dc1 != null) {
             result.add(dc1);
@@ -222,7 +222,7 @@ public class PaletteFactory {
 
     private DivisionCandidate divideSubset2(final int[] table,
             final ColorSpaceSubset subset, final int precision) {
-        final List<DivisionCandidate> dcs = new ArrayList<DivisionCandidate>();
+        final List<DivisionCandidate> dcs = new ArrayList<>();
 
         dcs.addAll(divideSubset2(table, subset, 0, precision));
         dcs.addAll(divideSubset2(table, subset, 1, precision));
@@ -267,7 +267,7 @@ public class PaletteFactory {
 
     private List<ColorSpaceSubset> divide(final List<ColorSpaceSubset> v,
             final int desiredCount, final int[] table, final int precision) {
-        final List<ColorSpaceSubset> ignore = new ArrayList<ColorSpaceSubset>();
+        final List<ColorSpaceSubset> ignore = new ArrayList<>();
 
         while (true) {
             int maxArea = -1;
@@ -330,7 +330,7 @@ public class PaletteFactory {
         final int width = src.getWidth();
         final int height = src.getHeight();
 
-        List<ColorSpaceSubset> subsets = new ArrayList<ColorSpaceSubset>();
+        List<ColorSpaceSubset> subsets = new ArrayList<>();
         final ColorSpaceSubset all = new ColorSpaceSubset(width * height, precision);
         subsets.add(all);
 
@@ -402,7 +402,7 @@ public class PaletteFactory {
      */
     public SimplePalette makeExactRgbPaletteSimple(final BufferedImage src, final int max) {
         // This is not efficient for large values of max, say, max > 256;
-        final Set<Integer> rgbs = new HashSet<Integer>();
+        final Set<Integer> rgbs = new HashSet<>();
 
         final int width = src.getWidth();
         final int height = src.getHeight();

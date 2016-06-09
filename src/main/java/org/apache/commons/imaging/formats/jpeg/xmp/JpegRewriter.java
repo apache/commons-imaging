@@ -179,8 +179,8 @@ public class JpegRewriter extends BinaryFileParser {
             throws ImageReadException, IOException
     // , ImageWriteException
     {
-        final List<JFIFPiece> pieces = new ArrayList<JFIFPiece>();
-        final List<JFIFPiece> segmentPieces = new ArrayList<JFIFPiece>();
+        final List<JFIFPiece> pieces = new ArrayList<>();
+        final List<JFIFPiece> segmentPieces = new ArrayList<>();
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
@@ -239,7 +239,7 @@ public class JpegRewriter extends BinaryFileParser {
 
     protected <T extends JFIFPiece> List<T> filterSegments(final List<T> segments,
             final SegmentFilter filter, final boolean reverse) {
-        final List<T> result = new ArrayList<T>();
+        final List<T> result = new ArrayList<>();
 
         for (T piece : segments) {
             if (piece instanceof JFIFPieceSegment) {

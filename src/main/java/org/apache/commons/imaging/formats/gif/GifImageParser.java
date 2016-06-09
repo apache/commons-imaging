@@ -218,7 +218,7 @@ public class GifImageParser extends ImageParser {
 
     private GenericGifBlock readGenericGIFBlock(final InputStream is, final int code,
             final byte[] first) throws IOException {
-        final List<byte[]> subblocks = new ArrayList<byte[]>();
+        final List<byte[]> subblocks = new ArrayList<>();
 
         if (first != null) {
             subblocks.add(first);
@@ -238,7 +238,7 @@ public class GifImageParser extends ImageParser {
     private List<GifBlock> readBlocks(final GifHeaderInfo ghi, final InputStream is,
             final boolean stopBeforeImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
-        final List<GifBlock> result = new ArrayList<GifBlock>();
+        final List<GifBlock> result = new ArrayList<>();
 
         while (true) {
             final int code = is.read();
@@ -504,7 +504,7 @@ public class GifImageParser extends ImageParser {
     }
 
     private List<String> getComments(final List<GifBlock> blocks) throws IOException {
-        final List<String> result = new ArrayList<String>();
+        final List<String> result = new ArrayList<>();
         final int code = 0x21fe;
 
         for (GifBlock block : blocks) {
@@ -758,7 +758,7 @@ public class GifImageParser extends ImageParser {
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap<String, Object>(params);
+        params = new HashMap<>(params);
 
         final boolean verbose =  Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
 
@@ -1020,7 +1020,7 @@ public class GifImageParser extends ImageParser {
 
             final List<GifBlock> blocks = readBlocks(ghi, is, true, formatCompliance);
 
-            final List<String> result = new ArrayList<String>();
+            final List<String> result = new ArrayList<>();
             for (GifBlock block : blocks) {
                 if (block.blockCode != XMP_COMPLETE_CODE) {
                     continue;

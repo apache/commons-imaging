@@ -140,7 +140,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
             ImageReadException, ImageWriteException {
         final BufferedImage srcImage = imageDataToBufferedImage(rawData);
 
-        final Map<String, Object> writeParams = new HashMap<String, Object>();
+        final Map<String, Object> writeParams = new HashMap<>();
         // writeParams.put(ImagingConstants.PARAM_KEY_FORMAT,
         // ImageFormat.IMAGE_FORMAT_BMP);
         // writeParams.put(PngConstants.PARAM_KEY_BMP_FORCE_TRUE_COLOR,

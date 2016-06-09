@@ -88,7 +88,7 @@ public class TiffLzwTest extends TiffBaseTest {
         }
 
         final int LZW_MINIMUM_CODE_SIZE = 8;
-        final List<Integer> codes = new ArrayList<Integer>();
+        final List<Integer> codes = new ArrayList<>();
         final MyLzwCompressor.Listener compressionListener = new MyLzwCompressor.Listener() {
             public void dataCode(final int code) {
                 codes.add(code);
@@ -171,7 +171,7 @@ public class TiffLzwTest extends TiffBaseTest {
         Debug.debug();
 
         final int LZW_MINIMUM_CODE_SIZE = 8;
-        final List<Integer> codes = new ArrayList<Integer>();
+        final List<Integer> codes = new ArrayList<>();
 
         final MyLzwDecompressor.Listener decompressionListener = new MyLzwDecompressor.Listener() {
 

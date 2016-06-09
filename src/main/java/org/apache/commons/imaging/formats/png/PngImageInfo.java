@@ -43,7 +43,7 @@ public class PngImageInfo extends ImageInfo {
     }
 
     public List<PngText> getTextChunks() {
-        return new ArrayList<PngText>(textChunks);
+        return new ArrayList<>(textChunks);
     }
 
 }

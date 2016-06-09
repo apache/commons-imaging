@@ -112,7 +112,7 @@ public class TiffDirectory extends TiffElement {
 
 
     public List<TiffField> getDirectoryEntries() {
-        return new ArrayList<TiffField>(entries);
+        return new ArrayList<>(entries);
     }
 
     public void dump() {
@@ -636,7 +636,7 @@ public class TiffDirectory extends TiffElement {
                     + ") != byteCounts.length(" + byteCounts.length + ")");
         }
 
-        final List<ImageDataElement> result = new ArrayList<ImageDataElement>();
+        final List<ImageDataElement> result = new ArrayList<>();
         for (int i = 0; i < offsets.length; i++) {
             result.add(new ImageDataElement(offsets[i], byteCounts[i]));
         }

@@ -54,7 +54,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
     @Test
     public void testRemoveInsertUpdate() throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, Object> params = new HashMap<>();
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
         assertNotNull(xmpXml);
 

@@ -131,7 +131,7 @@ public class DcxImageParser extends ImageParser {
         try {
             is = byteSource.getInputStream();
             final int id = read4Bytes("Id", is, "Not a Valid DCX File", getByteOrder());
-            final List<Long> pageTable = new ArrayList<Long>(1024);
+            final List<Long> pageTable = new ArrayList<>(1024);
             for (int i = 0; i < 1024; i++) {
                 final long pageOffset = 0xFFFFffffL & read4Bytes("PageTable", is,
                         "Not a Valid DCX File", getByteOrder());
@@ -185,7 +185,7 @@ public class DcxImageParser extends ImageParser {
     public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
             throws ImageReadException, IOException {
         final DcxHeader dcxHeader = readDcxHeader(byteSource);
-        final List<BufferedImage> images = new ArrayList<BufferedImage>();
+        final List<BufferedImage> images = new ArrayList<>();
         final PcxImageParser pcxImageParser = new PcxImageParser();
         for (final long element : dcxHeader.pageTable) {
             InputStream stream = null;
@@ -209,9 +209,9 @@ public class DcxImageParser extends ImageParser {
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
-        final HashMap<String, Object> pcxParams = new HashMap<String, Object>();
+        final HashMap<String, Object> pcxParams = new HashMap<>();
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {

@@ -175,7 +175,7 @@ public class JpegXmpRewriter extends JpegRewriter {
         List<JFIFPiece> pieces = jfifPieces.pieces;
         pieces = removeXmpSegments(pieces);
 
-        final List<JFIFPieceSegment> newPieces = new ArrayList<JFIFPieceSegment>();
+        final List<JFIFPieceSegment> newPieces = new ArrayList<>();
         final byte[] xmpXmlBytes = xmpXml.getBytes("utf-8");
         int index = 0;
         while (index < xmpXmlBytes.length) {

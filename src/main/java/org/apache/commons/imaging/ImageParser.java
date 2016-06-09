@@ -447,7 +447,7 @@ public abstract class ImageParser extends BinaryFileParser {
             throws ImageReadException, IOException {
         final BufferedImage bi = getBufferedImage(byteSource, null);
 
-        final List<BufferedImage> result = new ArrayList<BufferedImage>();
+        final List<BufferedImage> result = new ArrayList<>();
 
         // FIXME this doesn't look like we're actually getting all images contained in the given ByteSource...
         result.add(bi);

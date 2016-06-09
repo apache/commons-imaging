@@ -32,7 +32,7 @@ public class MyLzwCompressor {
     private final int clearCode;
     private final int eoiCode;
     private final Listener listener;
-    private final Map<ByteArray, Integer> map = new HashMap<ByteArray, Integer>();
+    private final Map<ByteArray, Integer> map = new HashMap<>();
 
     public MyLzwCompressor(final int initialCodeSize, final ByteOrder byteOrder,
             final boolean earlyLimit) {

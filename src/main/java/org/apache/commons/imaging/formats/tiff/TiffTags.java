@@ -54,7 +54,7 @@ final class TiffTags {
     private static final Map<Integer, Integer> TAG_COUNTS = countTags(TiffTags.ALL_TAGS);
 
     private static List<TagInfo> makeMergedTagList() {
-        final ArrayList<TagInfo> result = new ArrayList<TagInfo>();
+        final ArrayList<TagInfo> result = new ArrayList<>();
         result.addAll(AdobePageMaker6TagConstants.ALL_ADOBE_PAGEMAKER_6_TAGS);
         result.addAll(AdobePhotoshopTagConstants.ALL_ADOBE_PHOTOSHOP_TAGS);
         result.addAll(AliasSketchbookProTagConstants.ALL_ALIAS_SKETCHBOOK_PRO_TAGS);
@@ -81,12 +81,12 @@ final class TiffTags {
     private static Map<Integer, List<TagInfo>> makeTagMap(
             final List<TagInfo> tags) {
         // make sure to use the thread-safe version; this is shared state.
-        final Map<Integer, List<TagInfo>> map = new HashMap<Integer, List<TagInfo>>();
+        final Map<Integer, List<TagInfo>> map = new HashMap<>();
 
         for (TagInfo tag : tags) {
             List<TagInfo> tagList = map.get(tag.tag);
             if (tagList == null) {
-                tagList = new ArrayList<TagInfo>();
+                tagList = new ArrayList<>();
                 map.put(tag.tag, tagList);
             }
             tagList.add(tag);
@@ -96,7 +96,7 @@ final class TiffTags {
     }
 
     private static Map<Integer, Integer> countTags(final List<TagInfo> tags) {
-        final Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        final Map<Integer, Integer> map = new HashMap<>();
 
         for (TagInfo tag : tags) {
             final Integer count = map.get(tag.tag);

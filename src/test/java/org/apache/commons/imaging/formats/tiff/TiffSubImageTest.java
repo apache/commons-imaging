@@ -37,7 +37,7 @@ public class TiffSubImageTest extends TiffBaseTest {
         BufferedImage src = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         byte[] imageBytes = Imaging.writeImageToBytes(src, ImageFormats.TIFF, null);
         
-        Map<String, Object> params = new TreeMap<String, Object>();
+        Map<String, Object> params = new TreeMap<>();
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 0);
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 0);
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, 2);

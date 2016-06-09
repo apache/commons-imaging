@@ -82,7 +82,7 @@ public class IcnsImageParser extends ImageParser {
     public ImageInfo getImageInfo(final ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
@@ -112,7 +112,7 @@ public class IcnsImageParser extends ImageParser {
     public Dimension getImageSize(final ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
@@ -234,7 +234,7 @@ public class IcnsImageParser extends ImageParser {
             is = byteSource.getInputStream();
             final IcnsHeader icnsHeader = readIcnsHeader(is);
 
-            final List<IcnsElement> icnsElementList = new ArrayList<IcnsElement>();
+            final List<IcnsElement> icnsElementList = new ArrayList<>();
             for (int remainingSize = icnsHeader.fileSize - 8; remainingSize > 0;) {
                 final IcnsElement icnsElement = readIcnsElement(is);
                 icnsElementList.add(icnsElement);
@@ -288,7 +288,7 @@ public class IcnsImageParser extends ImageParser {
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {

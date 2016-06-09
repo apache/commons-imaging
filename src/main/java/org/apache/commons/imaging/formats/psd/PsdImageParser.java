@@ -184,7 +184,7 @@ public class PsdImageParser extends ImageParser {
     private List<ImageResourceBlock> readImageResourceBlocks(final InputStream is,
             final int[] imageResourceIDs, final int maxBlocksToRead, int available)
             throws ImageReadException, IOException {
-        final List<ImageResourceBlock> result = new ArrayList<ImageResourceBlock>();
+        final List<ImageResourceBlock> result = new ArrayList<>();
 
         while (available > 0) {
             readAndVerifyBytes(is, new byte[] { 56, 66, 73, 77 },
@@ -489,7 +489,7 @@ public class PsdImageParser extends ImageParser {
         final int width = header.columns;
         final int height = header.rows;
 
-        final List<String> comments = new ArrayList<String>();
+        final List<String> comments = new ArrayList<>();
         // TODO: comments...
 
         int BitsPerPixel = header.depth * getChannelsPerMode(header.mode);
@@ -741,7 +741,7 @@ public class PsdImageParser extends ImageParser {
             return null;
         }
 
-        final List<ImageResourceBlock> xmpBlocks = new ArrayList<ImageResourceBlock>();
+        final List<ImageResourceBlock> xmpBlocks = new ArrayList<>();
 //        if (false) {
 //            // TODO: for PSD 7 and later, verify "XMP" name.
 //            for (int i = 0; i < blocks.size(); i++) {

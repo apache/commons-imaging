@@ -28,8 +28,8 @@ class TiffOutputSummary {
     public final ByteOrder byteOrder;
     public final TiffOutputDirectory rootDirectory;
     public final Map<Integer, TiffOutputDirectory> directoryTypeMap;
-    private final List<OffsetItem> offsetItems = new ArrayList<OffsetItem>();
-    private final List<ImageDataOffsets> imageDataItems = new ArrayList<ImageDataOffsets>();
+    private final List<OffsetItem> offsetItems = new ArrayList<>();
+    private final List<ImageDataOffsets> imageDataItems = new ArrayList<>();
     
     public TiffOutputSummary(final ByteOrder byteOrder,
             final TiffOutputDirectory rootDirectory,

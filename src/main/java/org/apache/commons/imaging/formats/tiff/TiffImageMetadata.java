@@ -166,7 +166,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
 
     @Override
     public List<? extends ImageMetadataItem> getItems() {
-        final List<ImageMetadataItem> result = new ArrayList<ImageMetadataItem>();
+        final List<ImageMetadataItem> result = new ArrayList<>();
 
         final List<? extends ImageMetadataItem> items = super.getItems();
         for (ImageMetadataItem item : items) {
@@ -437,7 +437,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
     }
 
     public List<TiffField> getAllFields() {
-        final List<TiffField> result = new ArrayList<TiffField>();
+        final List<TiffField> result = new ArrayList<>();
         final List<? extends ImageMetadataItem> directories = getDirectories();
         for (ImageMetadataItem directory1 : directories) {
             final Directory directory = (Directory) directory1;

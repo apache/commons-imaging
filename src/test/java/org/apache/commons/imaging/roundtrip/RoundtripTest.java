@@ -416,7 +416,7 @@ public class RoundtripTest extends ImagingTest {
             final File temp1 = createTempFile("pixeldensity.", "."
                     + formatInfo.format.getExtension());
             
-            final Map<String, Object> params = new HashMap<String, Object>();
+            final Map<String, Object> params = new HashMap<>();
             final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
             params.put(ImagingConstants.PARAM_KEY_PIXEL_DENSITY, pixelDensity);
             Imaging.writeImage(testImage, temp1, formatInfo.format, params);
@@ -465,10 +465,10 @@ public class RoundtripTest extends ImagingTest {
                 + formatInfo.format.getExtension());
         Debug.debug("tempFile: " + temp1.getName());
 
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, Object> params = new HashMap<>();
         Imaging.writeImage(testImage, temp1, formatInfo.format, params);
 
-        final Map<String, Object> readParams = new HashMap<String, Object>();
+        final Map<String, Object> readParams = new HashMap<>();
         readParams.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
                 new RgbBufferedImageFactory());
         final BufferedImage image2 = Imaging.getBufferedImage(temp1, readParams);

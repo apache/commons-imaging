@@ -34,7 +34,7 @@ public class TiffContents {
     }
 
     public List<TiffElement> getElements() throws ImageReadException {
-        final List<TiffElement> result = new ArrayList<TiffElement>();
+        final List<TiffElement> result = new ArrayList<>();
 
         result.add(header);
 

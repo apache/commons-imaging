@@ -24,7 +24,7 @@ import java.util.List;
  * A Huffman tree implemented as 1 array for high locality of reference.
  */
 class HuffmanTree<T> {
-    private final List<Node<T>> nodes = new ArrayList<Node<T>>();
+    private final List<Node<T>> nodes = new ArrayList<>();
     
     private static final class Node<T> {
         boolean empty = true;

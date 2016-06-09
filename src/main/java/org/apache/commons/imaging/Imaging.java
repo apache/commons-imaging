@@ -1401,7 +1401,7 @@ public final class Imaging {
             Map<String, Object> params) throws ImageReadException, IOException {
         final ImageParser imageParser = getImageParser(byteSource);
         if (null == params) {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
 
         return imageParser.getBufferedImage(byteSource, params);
@@ -1511,7 +1511,7 @@ public final class Imaging {
 
         // make sure params are non-null
         if (params == null) {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
 
         params.put(PARAM_KEY_FORMAT, format);

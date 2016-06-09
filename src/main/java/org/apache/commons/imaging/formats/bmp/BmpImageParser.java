@@ -495,7 +495,7 @@ public class BmpImageParser extends ImageParser {
     public Dimension getImageSize(final ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         final boolean verbose =  Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
 
@@ -552,7 +552,7 @@ public class BmpImageParser extends ImageParser {
     public ImageInfo getImageInfo(final ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         final boolean verbose =  Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
 
@@ -590,7 +590,7 @@ public class BmpImageParser extends ImageParser {
         final int height = bhi.height;
         final int width = bhi.width;
 
-        final List<String> comments = new ArrayList<String>();
+        final List<String> comments = new ArrayList<>();
         // TODO: comments...
 
         final int bitsPerPixel = bhi.bitsPerPixel;
@@ -680,7 +680,7 @@ public class BmpImageParser extends ImageParser {
     public BufferedImage getBufferedImage(final InputStream inputStream, Map<String, Object> params)
             throws ImageReadException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         final boolean verbose = Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
 
@@ -728,7 +728,7 @@ public class BmpImageParser extends ImageParser {
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
         PixelDensity pixelDensity = null;
 

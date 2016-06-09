@@ -232,7 +232,7 @@ public class TiffImageParser extends ImageParser {
 
         // -------------------
 
-        final List<String> comments = new ArrayList<String>();
+        final List<String> comments = new ArrayList<>();
         final List<TiffField> entries = directory.entries;
         for (TiffField field : entries) {
             final String comment = field.toString();
@@ -403,7 +403,7 @@ public class TiffImageParser extends ImageParser {
         final TiffContents contents = new TiffReader(isStrict(params))
                 .readDirectories(byteSource, true, formatCompliance);
 
-        final List<byte[]> result = new ArrayList<byte[]>();
+        final List<byte[]> result = new ArrayList<>();
         for (int i = 0; i < contents.directories.size(); i++) {
             final TiffDirectory directory = contents.directories.get(i);
             final List<ImageDataElement> dataElements = directory
@@ -474,7 +474,7 @@ public class TiffImageParser extends ImageParser {
         final TiffReader tiffReader = new TiffReader(true);
         final TiffContents contents = tiffReader.readDirectories(byteSource, true,
                 formatCompliance);
-        final List<BufferedImage> results = new ArrayList<BufferedImage>();
+        final List<BufferedImage> results = new ArrayList<>();
         for (int i = 0; i < contents.directories.size(); i++) {
             final TiffDirectory directory = contents.directories.get(i);
             final BufferedImage result = directory.getTiffImage(

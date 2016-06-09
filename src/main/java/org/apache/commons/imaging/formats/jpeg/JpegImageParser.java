@@ -115,7 +115,7 @@ public class JpegImageParser extends ImageParser {
     public List<Segment> readSegments(final ByteSource byteSource,
             final int[] markers, final boolean returnAfterFirst,
             final boolean readEverything) throws ImageReadException, IOException {
-        final List<Segment> result = new ArrayList<Segment>();
+        final List<Segment> result = new ArrayList<>();
         final JpegImageParser parser = this;
         final int[] sofnSegments = {
                 // kJFIFMarker,
@@ -278,7 +278,7 @@ public class JpegImageParser extends ImageParser {
         final List<Segment> segments = readSegments(byteSource,
                 new int[] { JpegConstants.JPEG_APP2_MARKER, }, false);
 
-        final List<App2Segment> filtered = new ArrayList<App2Segment>();
+        final List<App2Segment> filtered = new ArrayList<>();
         if (segments != null) {
             // throw away non-icc profile app2 segments.
             for (Segment s : segments) {
@@ -326,7 +326,7 @@ public class JpegImageParser extends ImageParser {
     }
 
     private List<Segment> filterAPP1Segments(final List<Segment> segments) {
-        final List<Segment> result = new ArrayList<Segment>();
+        final List<Segment> result = new ArrayList<>();
 
         for (Segment s : segments) {
             final GenericSegment segment = (GenericSegment) s;
@@ -346,7 +346,7 @@ public class JpegImageParser extends ImageParser {
         }
 
         if (params == null) {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
         if (!params.containsKey(PARAM_KEY_READ_THUMBNAILS)) {
             params.put(PARAM_KEY_READ_THUMBNAILS, Boolean.TRUE);
@@ -524,7 +524,7 @@ public class JpegImageParser extends ImageParser {
     public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
 
-        final List<String> result = new ArrayList<String>();
+        final List<String> result = new ArrayList<>();
 
         final JpegUtils.Visitor visitor = new JpegUtils.Visitor() {
             // return false to exit before reading image data.
@@ -779,7 +779,7 @@ public class JpegImageParser extends ImageParser {
             physicalHeightInch = (float) (height / (yDensity * unitsPerInch));
         }
 
-        final List<String> comments = new ArrayList<String>();
+        final List<String> comments = new ArrayList<>();
         final List<Segment> commentSegments = readSegments(byteSource,
                 new int[] { JpegConstants.COM_MARKER}, false);
         for (Segment commentSegment : commentSegments) {

@@ -47,7 +47,7 @@ public class PcxReadTest extends PcxBaseTest {
             final ImageMetadata metadata = Imaging.getMetadata(imageFile);
             Assert.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
-            final Map<String, Object> params = new HashMap<String, Object>();
+            final Map<String, Object> params = new HashMap<>();
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
             assertNotNull(imageInfo);
 

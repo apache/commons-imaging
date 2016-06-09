@@ -152,7 +152,7 @@ public class DhtSegment extends Segment {
             throws IOException {
         super(marker, length);
 
-        final ArrayList<HuffmanTable> huffmanTables = new ArrayList<DhtSegment.HuffmanTable>();
+        final ArrayList<HuffmanTable> huffmanTables = new ArrayList<>();
         while (length > 0) {
             final int tableClassAndDestinationId = 0xff & readByte(
                     "TableClassAndDestinationId", is, "Not a Valid JPEG File");

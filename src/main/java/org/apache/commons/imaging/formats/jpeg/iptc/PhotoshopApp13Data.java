@@ -31,15 +31,15 @@ public class PhotoshopApp13Data {
     }
 
     public List<IptcRecord> getRecords() {
-        return new ArrayList<IptcRecord>(records);
+        return new ArrayList<>(records);
     }
 
     public List<IptcBlock> getRawBlocks() {
-        return new ArrayList<IptcBlock>(rawBlocks);
+        return new ArrayList<>(rawBlocks);
     }
 
     public List<IptcBlock> getNonIptcBlocks() {
-        final List<IptcBlock> result = new ArrayList<IptcBlock>();
+        final List<IptcBlock> result = new ArrayList<>();
         for (IptcBlock block : rawBlocks) {
             if (!block.isIPTCBlock()) {
                 result.add(block);

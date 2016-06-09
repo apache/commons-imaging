@@ -53,7 +53,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, COMMENT);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, SUBJECT);
         exif.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, TITLE);
-        final Map<String, Object> params = new TreeMap<String, Object>();
+        final Map<String, Object> params = new TreeMap<>();
         params.put(ImagingConstants.PARAM_KEY_EXIF, exifSet);
         final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormats.TIFF, params);
         checkFields(bytes);
@@ -89,10 +89,10 @@ public class MicrosoftTagTest extends ExifBaseTest {
         final TiffImageMetadata metadata = toTiffMetadata(Imaging.getMetadata(file));
         
         // field values may be duplicated between directories, we have to check all
-        List<Object> authorValues = new ArrayList<Object>();
-        List<Object> commentValues = new ArrayList<Object>();
-        List<Object> subjectValues = new ArrayList<Object>();
-        List<Object> titleValues = new ArrayList<Object>();
+        List<Object> authorValues = new ArrayList<>();
+        List<Object> commentValues = new ArrayList<>();
+        List<Object> subjectValues = new ArrayList<>();
+        List<Object> titleValues = new ArrayList<>();
         for (TiffDirectory d : metadata.contents.directories) {
             titleValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPTITLE, false));
             authorValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR, false));

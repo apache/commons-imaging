@@ -31,7 +31,7 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
 public final class TiffOutputSet {
     public final ByteOrder byteOrder;
-    private final List<TiffOutputDirectory> directories = new ArrayList<TiffOutputDirectory>();
+    private final List<TiffOutputDirectory> directories = new ArrayList<>();
     private static final String NEWLINE = System.getProperty("line.separator");
 
     public TiffOutputSet() {
@@ -45,7 +45,7 @@ public final class TiffOutputSet {
 
     protected List<TiffOutputItem> getOutputItems(
             final TiffOutputSummary outputSummary) throws ImageWriteException {
-        final List<TiffOutputItem> result = new ArrayList<TiffOutputItem>();
+        final List<TiffOutputItem> result = new ArrayList<>();
 
         for (TiffOutputDirectory directory : directories) {
             result.addAll(directory.getOutputItems(outputSummary));
@@ -64,7 +64,7 @@ public final class TiffOutputSet {
     }
 
     public List<TiffOutputDirectory> getDirectories() {
-        return new ArrayList<TiffOutputDirectory>(directories);
+        return new ArrayList<>(directories);
     }
 
     public TiffOutputDirectory getRootDirectory() {

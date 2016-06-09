@@ -46,7 +46,7 @@ public class ConvertPngToGifTest extends PngBaseTest {
             // Debug.debug();
             }
 
-            final Map<String, Object> params = new HashMap<String, Object>();
+            final Map<String, Object> params = new HashMap<>();
             // params.put(ImagingConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
             final BufferedImage image = Imaging.getBufferedImage(imageFile, params);

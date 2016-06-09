@@ -26,7 +26,7 @@ import org.apache.commons.imaging.ImageReadException;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class DqtSegment extends Segment {
-    public final List<QuantizationTable> quantizationTables = new ArrayList<QuantizationTable>();
+    public final List<QuantizationTable> quantizationTables = new ArrayList<>();
 
     public static class QuantizationTable {
         public final int precision;

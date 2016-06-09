@@ -40,7 +40,7 @@ public class AsciiFieldTest extends ExifBaseTest {
     public void testSingleImage() throws Exception {
         final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
 
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, Object> params = new HashMap<>();
 
         final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         assertNotNull(metadata);
@@ -49,7 +49,7 @@ public class AsciiFieldTest extends ExifBaseTest {
         // note that exif might be null if no Exif metadata is found.
         final TiffImageMetadata exif = jpegMetadata.getExif();
         final List<TiffField> fields = exif.getAllFields();
-        final Map<Integer,TiffField> fieldMap = new HashMap<Integer, TiffField>();
+        final Map<Integer,TiffField> fieldMap = new HashMap<>();
         // Build a simplified field tag -> field map, ignoring directory
         // structures.
         // Good enough for our purposes, since the image in question is known.
@@ -57,7 +57,7 @@ public class AsciiFieldTest extends ExifBaseTest {
             fieldMap.put(field.getTag(), field);
         }
 
-        final Map<Integer,Object> expectedFieldValues = new HashMap<Integer, Object>();
+        final Map<Integer,Object> expectedFieldValues = new HashMap<>();
         expectedFieldValues.put(
                 TiffTagConstants.TIFF_TAG_MAKE.tag, "Canon");
         expectedFieldValues.put(

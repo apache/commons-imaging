@@ -68,7 +68,7 @@ public class TagInfo {
             final TiffDirectoryType exifDirectory, final boolean isOffset) {
         this.name = name;
         this.tag = tag;
-        this.dataTypes = Collections.unmodifiableList(new ArrayList<FieldType>(
+        this.dataTypes = Collections.unmodifiableList(new ArrayList<>(
                 dataTypes));
         this.length = length;
         this.directoryType = exifDirectory;

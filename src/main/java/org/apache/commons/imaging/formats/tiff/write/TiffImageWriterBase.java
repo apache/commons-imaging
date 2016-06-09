@@ -77,8 +77,8 @@ public abstract class TiffImageWriterBase {
         TiffOutputField gpsDirectoryOffsetField = null;
         TiffOutputField interoperabilityDirectoryOffsetField = null;
 
-        final List<Integer> directoryIndices = new ArrayList<Integer>();
-        final Map<Integer, TiffOutputDirectory> directoryTypeMap = new HashMap<Integer, TiffOutputDirectory>();
+        final List<Integer> directoryIndices = new ArrayList<>();
+        final Map<Integer, TiffOutputDirectory> directoryTypeMap = new HashMap<>();
         for (TiffOutputDirectory directory : directories) {
             final int dirType = directory.type;
             directoryTypeMap.put(dirType, directory);
@@ -124,7 +124,7 @@ public abstract class TiffImageWriterBase {
                 // dirMap.put(arg0, arg1)
             }
 
-            final HashSet<Integer> fieldTags = new HashSet<Integer>();
+            final HashSet<Integer> fieldTags = new HashSet<>();
             final List<TiffOutputField> fields = directory.getFields();
             for (TiffOutputField field : fields) {
                 if (fieldTags.contains(field.tag)) {
@@ -246,7 +246,7 @@ public abstract class TiffImageWriterBase {
     public void writeImage(final BufferedImage src, final OutputStream os, Map<String, Object> params)
             throws ImageWriteException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = new HashMap<String, Object>(params);
+        params = new HashMap<>(params);
 
         // clear format key.
         if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
@@ -303,7 +303,7 @@ public abstract class TiffImageWriterBase {
                 params.remove(PARAM_KEY_LZW_COMPRESSION_BLOCK_SIZE);
             }
         }
-        final HashMap<String, Object> rawParams = new HashMap<String, Object>(params);
+        final HashMap<String, Object> rawParams = new HashMap<>(params);
         params.remove(PARAM_KEY_T4_OPTIONS);
         params.remove(PARAM_KEY_T6_OPTIONS);
         if (!params.isEmpty()) {
