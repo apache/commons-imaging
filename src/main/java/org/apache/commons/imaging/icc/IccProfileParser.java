@@ -66,10 +66,8 @@ public class IccProfileParser extends BinaryFileParser {
 
         try {
 
-            IccProfileInfo result;
             is = byteSource.getInputStream();
-
-            result = readICCProfileInfo(is);
+            IccProfileInfo result = readICCProfileInfo(is);
 
             if (result == null) {
                 return null;
