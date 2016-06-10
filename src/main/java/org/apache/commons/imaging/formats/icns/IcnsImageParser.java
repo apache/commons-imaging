@@ -314,36 +314,36 @@ public class IcnsImageParser extends ImageParser {
                     + src.getWidth() + " and height " + src.getHeight());
         }
 
-        final BinaryOutputStream bos = new BinaryOutputStream(os,
-                ByteOrder.BIG_ENDIAN);
-        bos.write4Bytes(ICNS_MAGIC);
-        bos.write4Bytes(4 + 4 + 4 + 4 + 4 * imageType.getWidth()
-                * imageType.getHeight() + 4 + 4 + imageType.getWidth()
-                * imageType.getHeight());
+        try (final BinaryOutputStream bos = new BinaryOutputStream(os,
+                ByteOrder.BIG_ENDIAN)) {
+            bos.write4Bytes(ICNS_MAGIC);
+            bos.write4Bytes(4 + 4 + 4 + 4 + 4 * imageType.getWidth()
+            * imageType.getHeight() + 4 + 4 + imageType.getWidth()
+            * imageType.getHeight());
 
-        bos.write4Bytes(imageType.getType());
-        bos.write4Bytes(4 + 4 + 4 * imageType.getWidth()
-                * imageType.getHeight());
-        for (int y = 0; y < src.getHeight(); y++) {
-            for (int x = 0; x < src.getWidth(); x++) {
-                final int argb = src.getRGB(x, y);
-                bos.write(0);
-                bos.write(argb >> 16);
-                bos.write(argb >> 8);
-                bos.write(argb);
+            bos.write4Bytes(imageType.getType());
+            bos.write4Bytes(4 + 4 + 4 * imageType.getWidth()
+            * imageType.getHeight());
+            for (int y = 0; y < src.getHeight(); y++) {
+                for (int x = 0; x < src.getWidth(); x++) {
+                    final int argb = src.getRGB(x, y);
+                    bos.write(0);
+                    bos.write(argb >> 16);
+                    bos.write(argb >> 8);
+                    bos.write(argb);
+                }
+            }
+
+            final IcnsType maskType = IcnsType.find8BPPMaskType(imageType);
+            bos.write4Bytes(maskType.getType());
+            bos.write4Bytes(4 + 4 + imageType.getWidth() * imageType.getWidth());
+            for (int y = 0; y < src.getHeight(); y++) {
+                for (int x = 0; x < src.getWidth(); x++) {
+                    final int argb = src.getRGB(x, y);
+                    bos.write(argb >> 24);
+                }
             }
         }
-
-        final IcnsType maskType = IcnsType.find8BPPMaskType(imageType);
-        bos.write4Bytes(maskType.getType());
-        bos.write4Bytes(4 + 4 + imageType.getWidth() * imageType.getWidth());
-        for (int y = 0; y < src.getHeight(); y++) {
-            for (int x = 0; x < src.getWidth(); x++) {
-                final int argb = src.getRGB(x, y);
-                bos.write(argb >> 24);
-            }
-        }
-        bos.close();
     }
 
     /**

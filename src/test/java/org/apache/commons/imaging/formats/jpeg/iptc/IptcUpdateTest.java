@@ -85,10 +85,9 @@ public class IptcUpdateTest extends IptcBaseTest {
     public File removeIptc(ByteSource byteSource) throws Exception {
         final File noIptcFile = createTempFile(imageFile.getName() + ".iptc.remove.", ".jpg");
 
-        OutputStream os = new FileOutputStream(noIptcFile);
-        os = new BufferedOutputStream(os);
-        new JpegIptcRewriter().removeIPTC(byteSource, os);
-        os.close();
+        try (OutputStream os = new BufferedOutputStream(new FileOutputStream(noIptcFile))) {
+            new JpegIptcRewriter().removeIPTC(byteSource, os);
+        }
         return noIptcFile;
     }
 
