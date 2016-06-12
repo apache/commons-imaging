@@ -46,6 +46,9 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="First major release">
+      <action issue="IMAGING-178" dev="britter" type="fix" due-to="emopers">
+        PnmImageParser does not check the validity of input PAM header.
+      </action>
       <action issue="IMAGING-184" dev="ggregory" type="update">
         Update platform from Java 5 to 7
       </action>
