@@ -259,8 +259,11 @@ public class TiffImageParser extends ImageParser {
 
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
 
-        final int compression = 0xffff & directory
-                .getSingleFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
+        final short[] compressionFieldValues = directory
+            .getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION, false);
+        final short compressionFieldValue = compressionFieldValues != null ?
+            compressionFieldValues[0] : TIFF_COMPRESSION_UNCOMPRESSED_1;
+        final int compression = 0xffff & compressionFieldValue;
         ImageInfo.CompressionAlgorithm compressionAlgorithm;
 
         switch (compression) {
@@ -552,7 +555,11 @@ public class TiffImageParser extends ImageParser {
 
         final int photometricInterpretation = 0xffff & directory.getSingleFieldValue(
                 TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
-        final int compression = 0xffff & directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
+        final short[] compressionFieldValues = directory
+            .getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION, false);
+        final short compressionFieldValue = compressionFieldValues != null ?
+                compressionFieldValues[0] : TIFF_COMPRESSION_UNCOMPRESSED_1;
+        final int compression = 0xffff & compressionFieldValue;
         final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
         final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);      
         
