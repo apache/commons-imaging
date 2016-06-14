@@ -17,10 +17,6 @@
 
 package org.apache.commons.imaging.roundtrip;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +37,10 @@ import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 public class RoundtripTest extends ImagingTest {
     private static final int COLOR_FULL_RGB = 0;
     private static final int COLOR_LIMITED_INDEX = 1;
@@ -57,9 +57,9 @@ public class RoundtripTest extends ImagingTest {
         public final boolean preservesResolution;
 
         public FormatInfo(final ImageFormat format, final boolean canRead,
-                final boolean canWrite, final int colorSupport,
-                final boolean identicalSecondWrite,
-                final boolean preservesResolution) {
+                          final boolean canWrite, final int colorSupport,
+                          final boolean identicalSecondWrite,
+                          final boolean preservesResolution) {
             this.canRead = canRead;
             this.canWrite = canWrite;
             this.colorSupport = colorSupport;
@@ -167,8 +167,8 @@ public class RoundtripTest extends ImagingTest {
     }
 
     private BufferedImage createLimitedColorImage(final int width, final int height) {
-        final int colors[] = { 0xffffffff, 0xff000000, 0xfff00000, 0xff0000ff,
-                0xff123456, 0xfffefeff, 0xff7f817f, };
+        final int colors[] = {0xffffffff, 0xff000000, 0xfff00000, 0xff0000ff,
+                0xff123456, 0xfffefeff, 0xff7f817f,};
 
         final BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
@@ -210,8 +210,7 @@ public class RoundtripTest extends ImagingTest {
                 final int a_argb = a.getRGB(x, y);
                 final int b_argb = b.getRGB(x, y);
                 if (a_argb != b_argb) {
-                    if (calculateARGBDistance(a_argb, b_argb) <= tolerance)
-                     {
+                    if (calculateARGBDistance(a_argb, b_argb) <= tolerance) {
                         continue; // ignore.
                     }
                 }
@@ -271,7 +270,7 @@ public class RoundtripTest extends ImagingTest {
     public void testBitmapRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 
-        createArgbBitmapImage(1, 1), // minimal
+                createArgbBitmapImage(1, 1), // minimal
                 createArgbBitmapImage(2, 2), //
                 createArgbBitmapImage(10, 10), // larger than 8
                 createArgbBitmapImage(300, 300), // larger than 256
@@ -300,7 +299,7 @@ public class RoundtripTest extends ImagingTest {
     public void testGrayscaleRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 
-        createArgbBitmapImage(1, 1), // minimal
+                createArgbBitmapImage(1, 1), // minimal
                 createArgbGrayscaleImage(2, 2), //
                 createArgbGrayscaleImage(10, 10), // larger than 8
                 createArgbGrayscaleImage(300, 300), // larger than 256
@@ -334,7 +333,7 @@ public class RoundtripTest extends ImagingTest {
     public void testLimitedColorRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 
-        createLimitedColorImage(1, 1), // minimal
+                createLimitedColorImage(1, 1), // minimal
                 createLimitedColorImage(2, 2), //
                 createLimitedColorImage(10, 10), // larger than 8
                 createLimitedColorImage(300, 300), // larger than 256
@@ -366,7 +365,7 @@ public class RoundtripTest extends ImagingTest {
     public void testFullColorRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 
-        createFullColorImage(1, 1), // minimal
+                createFullColorImage(1, 1), // minimal
                 createFullColorImage(2, 2), //
                 createFullColorImage(10, 10), // larger than 8
                 createFullColorImage(300, 300), // larger than 256
@@ -405,17 +404,17 @@ public class RoundtripTest extends ImagingTest {
             if (!formatInfo.canRead || !formatInfo.canWrite || !formatInfo.preservesResolution) {
                 continue;
             }
-            
+
             Debug.debug("pixel density test: " + formatInfo.format.getName());
 
             final File temp1 = createTempFile("pixeldensity.", "."
                     + formatInfo.format.getExtension());
-            
+
             final Map<String, Object> params = new HashMap<>();
             final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
             params.put(ImagingConstants.PARAM_KEY_PIXEL_DENSITY, pixelDensity);
             Imaging.writeImage(testImage, temp1, formatInfo.format, params);
-            
+
             final ImageInfo imageInfo = Imaging.getImageInfo(temp1);
             if (imageInfo == null) {
                 continue;
@@ -424,13 +423,13 @@ public class RoundtripTest extends ImagingTest {
             final int yReadDPI = imageInfo.getPhysicalHeightDpi();
             // allow a 5% margin of error in storage and conversion
             assertTrue("horizontal pixel density stored wrongly for " + formatInfo.format +
-                    " in=" + pixelDensity.horizontalDensityInches() + ", out=" + xReadDPI,
+                            " in=" + pixelDensity.horizontalDensityInches() + ", out=" + xReadDPI,
                     Math.abs((xReadDPI - pixelDensity.horizontalDensityInches()) /
-                    pixelDensity.horizontalDensityInches()) <= 0.05);
+                            pixelDensity.horizontalDensityInches()) <= 0.05);
             assertTrue("vertical pixel density stored wrongly for " + formatInfo.format +
-                    " in=" + pixelDensity.verticalDensityInches() + ", out=" + yReadDPI,
+                            " in=" + pixelDensity.verticalDensityInches() + ", out=" + yReadDPI,
                     Math.abs((yReadDPI - pixelDensity.verticalDensityInches()) /
-                    pixelDensity.verticalDensityInches()) <= 0.05);
+                            pixelDensity.verticalDensityInches()) <= 0.05);
         }
     }
 
@@ -452,9 +451,9 @@ public class RoundtripTest extends ImagingTest {
             assertNotNull(imageRead);
         }
     }
-    
+
     private void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage,
-            final String tempPrefix, final boolean imageExact) throws IOException,
+                           final String tempPrefix, final boolean imageExact) throws IOException,
             ImageReadException, ImageWriteException {
         final File temp1 = createTempFile(tempPrefix + ".", "."
                 + formatInfo.format.getExtension());
