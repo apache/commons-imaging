@@ -35,13 +35,19 @@ import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.util.Debug;
 import org.apache.commons.io.FileUtils;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class RoundtripTest extends ImagingTest {
+public class RoundtripTest {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
     private static final int COLOR_FULL_RGB = 0;
     private static final int COLOR_LIMITED_INDEX = 1;
     private static final int COLOR_GRAYSCALE = 2;
@@ -484,4 +490,8 @@ public class RoundtripTest extends ImagingTest {
         }
     }
 
+    private File createTempFile(final String prefix, final String suffix)
+            throws IOException {
+        return File.createTempFile(prefix, suffix, folder.newFolder());
+    }
 }
