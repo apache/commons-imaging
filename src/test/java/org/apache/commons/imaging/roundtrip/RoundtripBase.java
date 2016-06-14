@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormat;
+import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
@@ -23,6 +24,49 @@ import static org.junit.Assert.assertTrue;
 
 public class RoundtripBase {
 
+    protected static final int COLOR_LIMITED_INDEX = 1;
+    protected static final int COLOR_GRAYSCALE = 2;
+    protected static final int COLOR_BITMAP = 3;
+    protected static final int COLOR_FULL_RGB = 0;
+
+    protected static final FormatInfo[] FORMAT_INFOS = { //
+            new FormatInfo(ImageFormats.PNG, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.GIF, true, true,
+                    COLOR_LIMITED_INDEX, true, false), //
+            new FormatInfo(ImageFormats.ICO, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.TIFF, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.JPEG, true, false,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.BMP, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.PSD, true, false,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.PBM, true, true,
+                    COLOR_BITMAP, true, false), //
+            new FormatInfo(ImageFormats.PGM, true, true,
+                    COLOR_GRAYSCALE, true, false), //
+            new FormatInfo(ImageFormats.PPM, true, true,
+                    COLOR_FULL_RGB, true, false), //
+            new FormatInfo(ImageFormats.PAM, true, true,
+                    COLOR_FULL_RGB, true, false),//
+            // new FormatInfo(ImageFormat.IMAGE_FORMAT_PNM, true, true,
+            // COLOR_FULL_RGB, true), //
+            new FormatInfo(ImageFormats.TGA, false, false,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.WBMP, true, true,
+                    COLOR_BITMAP, true, false), //
+            new FormatInfo(ImageFormats.PCX, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.DCX, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.XBM, true, true,
+                    COLOR_BITMAP, false, false), //
+            new FormatInfo(ImageFormats.XPM, true, true,
+                    COLOR_FULL_RGB, false, false), //
+    };
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -132,7 +176,7 @@ public class RoundtripBase {
         return File.createTempFile(prefix, suffix, folder.newFolder());
     }
 
-    protected BufferedImage createArgbBitmapImage(final int width, final int height) {
+    protected static BufferedImage createArgbBitmapImage(final int width, final int height) {
         final BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int x = 0; x < width; x++) {
@@ -146,7 +190,7 @@ public class RoundtripBase {
         return result;
     }
 
-    protected BufferedImage createBitmapBitmapImage(final int width, final int height) {
+    protected static BufferedImage createBitmapBitmapImage(final int width, final int height) {
         final BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_BYTE_BINARY);
         for (int x = 0; x < width; x++) {
