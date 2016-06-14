@@ -201,11 +201,6 @@ public class RoundtripTest extends ImagingTest {
         compareImages(a, b, 0);
     }
 
-    // private void compareImagesOffByOne(BufferedImage a, BufferedImage b)
-    // {
-    // compareImages(a, b, 3); // one bit of rounding error for each channel
-    // }
-
     private void compareImages(final BufferedImage a, final BufferedImage b, final int tolerance) {
         assertEquals(a.getWidth(), b.getWidth());
         assertEquals(a.getHeight(), b.getHeight());
