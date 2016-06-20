@@ -281,7 +281,7 @@ public class RoundtripBase {
         return result;
     }
 
-    protected BufferedImage createFullColorImage(final int width, final int height) {
+    protected static BufferedImage createFullColorImage(final int width, final int height) {
         final BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int x = 0; x < width; x++) {
