@@ -28,8 +28,11 @@ import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-class ImageAsserts {
+final class ImageAsserts {
 
+    private ImageAsserts() {
+    }
+    
     static void assertEquals(final BufferedImage a, final BufferedImage b) {
         assertEquals(a, b, 0);
     }
