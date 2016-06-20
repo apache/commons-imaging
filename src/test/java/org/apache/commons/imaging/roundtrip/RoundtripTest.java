@@ -39,38 +39,6 @@ import static org.junit.Assert.assertTrue;
 public class RoundtripTest extends RoundtripBase {
 
     @Test
-    public void testLimitedColorRoundtrip() throws Exception {
-        final BufferedImage testImages[] = { //
-
-                createLimitedColorImage(1, 1), // minimal
-                createLimitedColorImage(2, 2), //
-                createLimitedColorImage(10, 10), // larger than 8
-                createLimitedColorImage(300, 300), // larger than 256
-        };
-
-        for (final BufferedImage testImage : testImages) {
-            for (final FormatInfo element : FORMAT_INFOS) {
-                final FormatInfo formatInfo = element;
-                if ((!formatInfo.canRead) || (!formatInfo.canWrite)) {
-                    continue;
-                }
-
-                Debug.debug("indexable test: " + formatInfo.format.getName());
-
-                boolean imageExact = true;
-                if (formatInfo.colorSupport == COLOR_BITMAP) {
-                    imageExact = false;
-                }
-                if (formatInfo.colorSupport == COLOR_GRAYSCALE) {
-                    imageExact = false;
-                }
-
-                roundtrip(formatInfo, testImage, "indexable", imageExact);
-            }
-        }
-    }
-
-    @Test
     public void testFullColorRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 
