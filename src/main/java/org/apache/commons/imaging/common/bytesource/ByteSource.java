@@ -53,7 +53,7 @@ public abstract class ByteSource {
 
     public abstract byte[] getAll() throws IOException;
 
-    /*
+    /**
      * This operation can be VERY expensive; for inputstream byte sources, the
      * entire stream must be drained to determine its length.
      */
