@@ -39,43 +39,6 @@ import static org.junit.Assert.assertTrue;
 public class RoundtripTest extends RoundtripBase {
 
     @Test
-    public void testPixelDensityRoundtrip() throws IOException,
-            ImageReadException, ImageWriteException {
-        final BufferedImage testImage = createFullColorImage(2, 2);
-        for (final FormatInfo formatInfo : FORMAT_INFOS) {
-            if (!formatInfo.canRead || !formatInfo.canWrite || !formatInfo.preservesResolution) {
-                continue;
-            }
-
-            Debug.debug("pixel density test: " + formatInfo.format.getName());
-
-            final File temp1 = createTempFile("pixeldensity.", "."
-                    + formatInfo.format.getExtension());
-
-            final Map<String, Object> params = new HashMap<>();
-            final PixelDensity pixelDensity = PixelDensity.createFromPixelsPerInch(75, 150);
-            params.put(ImagingConstants.PARAM_KEY_PIXEL_DENSITY, pixelDensity);
-            Imaging.writeImage(testImage, temp1, formatInfo.format, params);
-
-            final ImageInfo imageInfo = Imaging.getImageInfo(temp1);
-            if (imageInfo == null) {
-                continue;
-            }
-            final int xReadDPI = imageInfo.getPhysicalWidthDpi();
-            final int yReadDPI = imageInfo.getPhysicalHeightDpi();
-            // allow a 5% margin of error in storage and conversion
-            assertTrue("horizontal pixel density stored wrongly for " + formatInfo.format +
-                            " in=" + pixelDensity.horizontalDensityInches() + ", out=" + xReadDPI,
-                    Math.abs((xReadDPI - pixelDensity.horizontalDensityInches()) /
-                            pixelDensity.horizontalDensityInches()) <= 0.05);
-            assertTrue("vertical pixel density stored wrongly for " + formatInfo.format +
-                            " in=" + pixelDensity.verticalDensityInches() + ", out=" + yReadDPI,
-                    Math.abs((yReadDPI - pixelDensity.verticalDensityInches()) /
-                            pixelDensity.verticalDensityInches()) <= 0.05);
-        }
-    }
-
-    @Test
     public void testNullParametersRoundtrip() throws IOException, ImageReadException, ImageWriteException {
         final BufferedImage testImage = createFullColorImage(1, 1);
         for (final FormatInfo formatInfo : FORMAT_INFOS) {

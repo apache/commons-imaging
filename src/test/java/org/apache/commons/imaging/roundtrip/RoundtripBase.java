@@ -99,6 +99,21 @@ public class RoundtripBase {
                     COLOR_FULL_RGB, false, false), //
     };
 
+    public static FormatInfo[] readableWriteablePreservingResolution  = new FormatInfo[] {
+            new FormatInfo(ImageFormats.PNG, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.ICO, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.TIFF, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.BMP, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.PCX, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.DCX, true, true,
+                    COLOR_FULL_RGB, true, true), //
+    };
+
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
