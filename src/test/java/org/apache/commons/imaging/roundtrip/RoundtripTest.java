@@ -39,40 +39,6 @@ import static org.junit.Assert.assertTrue;
 public class RoundtripTest extends RoundtripBase {
 
     @Test
-    public void testGrayscaleRoundtrip() throws Exception {
-        final BufferedImage testImages[] = { //
-
-                createArgbBitmapImage(1, 1), // minimal
-                createArgbGrayscaleImage(2, 2), //
-                createArgbGrayscaleImage(10, 10), // larger than 8
-                createArgbGrayscaleImage(300, 300), // larger than 256
-
-                createGrayscaleGrayscaleImage(1, 1), // minimal
-                createGrayscaleGrayscaleImage(2, 2), //
-                createGrayscaleGrayscaleImage(10, 10), // larger than 8
-                createGrayscaleGrayscaleImage(300, 300), // larger than 256
-        };
-
-        for (final BufferedImage testImage : testImages) {
-            for (final FormatInfo element : FORMAT_INFOS) {
-                final FormatInfo formatInfo = element;
-                if ((!formatInfo.canRead) || (!formatInfo.canWrite)) {
-                    continue;
-                }
-
-                Debug.debug("grayscale test: " + formatInfo.format.getName());
-
-                boolean imageExact = true;
-                if (formatInfo.colorSupport == COLOR_BITMAP) {
-                    imageExact = false;
-                }
-
-                roundtrip(formatInfo, testImage, "gray", imageExact);
-            }
-        }
-    }
-
-    @Test
     public void testLimitedColorRoundtrip() throws Exception {
         final BufferedImage testImages[] = { //
 

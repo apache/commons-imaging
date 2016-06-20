@@ -67,6 +67,38 @@ public class RoundtripBase {
             new FormatInfo(ImageFormats.XPM, true, true,
                     COLOR_FULL_RGB, false, false), //
     };
+
+    public static FormatInfo[] readableWriteableFormatInfos = new FormatInfo[] {
+            new FormatInfo(ImageFormats.PNG, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.GIF, true, true,
+                    COLOR_LIMITED_INDEX, true, false), //
+            new FormatInfo(ImageFormats.ICO, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.TIFF, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.BMP, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.PBM, true, true,
+                    COLOR_BITMAP, true, false), //
+            new FormatInfo(ImageFormats.PGM, true, true,
+                    COLOR_GRAYSCALE, true, false), //
+            new FormatInfo(ImageFormats.PPM, true, true,
+                    COLOR_FULL_RGB, true, false), //
+            new FormatInfo(ImageFormats.PAM, true, true,
+                    COLOR_FULL_RGB, true, false),//
+            new FormatInfo(ImageFormats.WBMP, true, true,
+                    COLOR_BITMAP, true, false), //
+            new FormatInfo(ImageFormats.PCX, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.DCX, true, true,
+                    COLOR_FULL_RGB, true, true), //
+            new FormatInfo(ImageFormats.XBM, true, true,
+                    COLOR_BITMAP, false, false), //
+            new FormatInfo(ImageFormats.XPM, true, true,
+                    COLOR_FULL_RGB, false, false), //
+    };
+
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -204,7 +236,7 @@ public class RoundtripBase {
         return result;
     }
 
-    protected BufferedImage createArgbGrayscaleImage(final int width, final int height) {
+    protected static BufferedImage createArgbGrayscaleImage(final int width, final int height) {
         final BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB);
         for (int x = 0; x < width; x++) {
@@ -219,7 +251,7 @@ public class RoundtripBase {
         return result;
     }
 
-    protected BufferedImage createGrayscaleGrayscaleImage(final int width, final int height) {
+    protected static BufferedImage createGrayscaleGrayscaleImage(final int width, final int height) {
         final BufferedImage result = new BufferedImage(width, height,
                 BufferedImage.TYPE_BYTE_GRAY);
         for (int x = 0; x < width; x++) {

@@ -2,7 +2,6 @@ package org.apache.commons.imaging.roundtrip;
 
 import java.awt.image.BufferedImage;
 
-import org.apache.commons.imaging.ImageFormats;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
@@ -25,36 +24,7 @@ public class BitmapRoundtripTest extends RoundtripBase {
     };
 
     @DataPoints
-    public static FormatInfo[] formatInfos = new FormatInfo[] {
-            new FormatInfo(ImageFormats.PNG, true, true,
-                    COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormats.GIF, true, true,
-                    COLOR_LIMITED_INDEX, true, false), //
-            new FormatInfo(ImageFormats.ICO, true, true,
-                    COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormats.TIFF, true, true,
-                    COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormats.BMP, true, true,
-                    COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormats.PBM, true, true,
-                    COLOR_BITMAP, true, false), //
-            new FormatInfo(ImageFormats.PGM, true, true,
-                    COLOR_GRAYSCALE, true, false), //
-            new FormatInfo(ImageFormats.PPM, true, true,
-                    COLOR_FULL_RGB, true, false), //
-            new FormatInfo(ImageFormats.PAM, true, true,
-                    COLOR_FULL_RGB, true, false),//
-            new FormatInfo(ImageFormats.WBMP, true, true,
-                    COLOR_BITMAP, true, false), //
-            new FormatInfo(ImageFormats.PCX, true, true,
-                    COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormats.DCX, true, true,
-                    COLOR_FULL_RGB, true, true), //
-            new FormatInfo(ImageFormats.XBM, true, true,
-                    COLOR_BITMAP, false, false), //
-            new FormatInfo(ImageFormats.XPM, true, true,
-                    COLOR_FULL_RGB, false, false), //
-    };
+    public static FormatInfo[] formatInfos = readableWriteableFormatInfos;
 
     @Theory
     public void testBitmapRoundtrip(BufferedImage testImage, FormatInfo formatInfo) throws Exception {
