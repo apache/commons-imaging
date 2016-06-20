@@ -12,15 +12,15 @@ public class BitmapRoundtripTest extends RoundtripBase {
 
     @DataPoints
     public static BufferedImage[] images = new BufferedImage[] {
-            createArgbBitmapImage(1, 1), // minimal
-            createArgbBitmapImage(2, 2), //
-            createArgbBitmapImage(10, 10), // larger than 8
-            createArgbBitmapImage(300, 300), // larger than 256
+            TestImages.createArgbBitmapImage(1, 1), // minimal
+            TestImages.createArgbBitmapImage(2, 2), //
+            TestImages.createArgbBitmapImage(10, 10), // larger than 8
+            TestImages.createArgbBitmapImage(300, 300), // larger than 256
 
-            createBitmapBitmapImage(1, 1), // minimal
-            createBitmapBitmapImage(2, 2), //
-            createBitmapBitmapImage(10, 10), // larger than 8
-            createBitmapBitmapImage(300, 300), // larger than 256
+            TestImages.createBitmapBitmapImage(1, 1), // minimal
+            TestImages.createBitmapBitmapImage(2, 2), //
+            TestImages.createBitmapBitmapImage(10, 10), // larger than 8
+            TestImages.createBitmapBitmapImage(300, 300), // larger than 256
     };
 
     @DataPoints

@@ -12,15 +12,15 @@ public class GrayscaleRountripTest extends RoundtripBase {
 
     @DataPoints
     public static BufferedImage[] images = new BufferedImage[]{
-            createArgbBitmapImage(1, 1), // minimal
-            createArgbGrayscaleImage(2, 2), //
-            createArgbGrayscaleImage(10, 10), // larger than 8
-            createArgbGrayscaleImage(300, 300), // larger than 256
+            TestImages.createArgbBitmapImage(1, 1), // minimal
+            TestImages.createArgbGrayscaleImage(2, 2), //
+            TestImages.createArgbGrayscaleImage(10, 10), // larger than 8
+            TestImages.createArgbGrayscaleImage(300, 300), // larger than 256
 
-            createGrayscaleGrayscaleImage(1, 1), // minimal
-            createGrayscaleGrayscaleImage(2, 2), //
-            createGrayscaleGrayscaleImage(10, 10), // larger than 8
-            createGrayscaleGrayscaleImage(300, 300), // larger than 256
+            TestImages.createGrayscaleGrayscaleImage(1, 1), // minimal
+            TestImages.createGrayscaleGrayscaleImage(2, 2), //
+            TestImages.createGrayscaleGrayscaleImage(10, 10), // larger than 8
+            TestImages.createGrayscaleGrayscaleImage(300, 300), // larger than 256
     };
 
     @DataPoints

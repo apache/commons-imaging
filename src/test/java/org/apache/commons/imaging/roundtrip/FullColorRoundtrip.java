@@ -12,10 +12,10 @@ public class FullColorRoundtrip extends RoundtripBase {
 
     @DataPoints
     public static BufferedImage[] images = new BufferedImage[]{
-            createFullColorImage(1, 1), // minimal
-            createFullColorImage(2, 2), //
-            createFullColorImage(10, 10), // larger than 8
-            createFullColorImage(300, 300), // larger than 256
+            TestImages.createFullColorImage(1, 1), // minimal
+            TestImages.createFullColorImage(2, 2), //
+            TestImages.createFullColorImage(10, 10), // larger than 8
+            TestImages.createFullColorImage(300, 300), // larger than 256
     };
 
     @DataPoints

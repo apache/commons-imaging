@@ -12,10 +12,10 @@ public class LimitedColorRoundtripTest extends RoundtripBase {
 
     @DataPoints
     public static BufferedImage[] images = new BufferedImage[] {
-            createLimitedColorImage(1, 1), // minimal
-            createLimitedColorImage(2, 2), //
-            createLimitedColorImage(10, 10), // larger than 8
-            createLimitedColorImage(300, 300), // larger than 256
+            TestImages.createLimitedColorImage(1, 1), // minimal
+            TestImages.createLimitedColorImage(2, 2), //
+            TestImages.createLimitedColorImage(10, 10), // larger than 8
+            TestImages.createLimitedColorImage(300, 300), // larger than 256
     };
 
     @DataPoints

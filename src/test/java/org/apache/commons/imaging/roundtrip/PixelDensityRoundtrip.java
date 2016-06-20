@@ -24,7 +24,7 @@ public class PixelDensityRoundtrip extends RoundtripBase {
 
     @Theory
     public void testPixelDensityRoundtrip(final FormatInfo formatInfo) throws Exception {
-        final BufferedImage testImage = createFullColorImage(2, 2);
+        final BufferedImage testImage = TestImages.createFullColorImage(2, 2);
 
         final File temp1 = createTempFile("pixeldensity.", "."
                 + formatInfo.format.getExtension());

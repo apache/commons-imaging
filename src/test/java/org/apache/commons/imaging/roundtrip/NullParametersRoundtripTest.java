@@ -36,7 +36,7 @@ public class NullParametersRoundtripTest extends RoundtripBase {
 
     @Theory
     public void testNullParametersRoundtrip(final FormatInfo formatInfo) throws Exception {
-        final BufferedImage testImage = createFullColorImage(1, 1);
+        final BufferedImage testImage = TestImages.createFullColorImage(1, 1);
         final File temp1 = createTempFile("nullParameters.", "." + formatInfo.format.getExtension());
         Imaging.writeImage(testImage, temp1, formatInfo.format, null);
         Imaging.getImageInfo(temp1, null);
