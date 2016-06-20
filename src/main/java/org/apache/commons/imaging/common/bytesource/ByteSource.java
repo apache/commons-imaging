@@ -59,12 +59,6 @@ public abstract class ByteSource {
      */
     public abstract long getLength() throws IOException;
 
-    //
-    // public byte[] getAll() throws IOException
-    // {
-    // return getBlock(0, (int) getLength());
-    // }
-
     public abstract String getDescription();
 
     public final String getFilename() {
