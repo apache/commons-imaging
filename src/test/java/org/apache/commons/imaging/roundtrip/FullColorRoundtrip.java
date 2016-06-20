@@ -19,18 +19,18 @@ public class FullColorRoundtrip extends RoundtripBase {
     };
 
     @DataPoints
-    public static FormatInfo[] formatInfos = readableWriteableFormatInfos;
+    public static FormatInfo[] formatInfos = FormatInfo.readableWriteableFormatInfos;
 
     @Theory
     public void testFullColorRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
         boolean imageExact = true;
-        if (formatInfo.colorSupport == COLOR_BITMAP) {
+        if (formatInfo.colorSupport == FormatInfo.COLOR_BITMAP) {
             imageExact = false;
         }
-        if (formatInfo.colorSupport == COLOR_GRAYSCALE) {
+        if (formatInfo.colorSupport == FormatInfo.COLOR_GRAYSCALE) {
             imageExact = false;
         }
-        if (formatInfo.colorSupport == COLOR_LIMITED_INDEX) {
+        if (formatInfo.colorSupport == FormatInfo.COLOR_LIMITED_INDEX) {
             imageExact = false;
         }
 

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class PixelDensityRoundtrip extends RoundtripBase {
 
     @DataPoints
-    public static FormatInfo[] formatInfos = readableWriteablePreservingResolution;
+    public static FormatInfo[] formatInfos = FormatInfo.readableWriteablePreservingResolution;
 
     @Theory
     public void testPixelDensityRoundtrip(final FormatInfo formatInfo) throws Exception {

@@ -32,7 +32,7 @@ import static org.junit.Assert.assertNotNull;
 public class NullParametersRoundtripTest extends RoundtripBase {
 
     @DataPoints
-    public static FormatInfo[] formatInfos = readableWriteableFormatInfos;
+    public static FormatInfo[] formatInfos = FormatInfo.readableWriteableFormatInfos;
 
     @Theory
     public void testNullParametersRoundtrip(final FormatInfo formatInfo) throws Exception {
