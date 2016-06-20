@@ -24,7 +24,7 @@ public class BitmapRoundtripTest extends RoundtripBase {
     };
 
     @DataPoints
-    public static FormatInfo[] formatInfos = FormatInfo.readableWriteableFormatInfos;
+    public static FormatInfo[] formatInfos = FormatInfo.READ_WRITE_FORMATS;
 
     @Theory
     public void testBitmapRoundtrip(BufferedImage testImage, FormatInfo formatInfo) throws Exception {

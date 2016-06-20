@@ -10,7 +10,7 @@ class FormatInfo {
     static final int COLOR_GRAYSCALE = 2;
     static final int COLOR_BITMAP = 3;
 
-    static FormatInfo[] readableWriteablePreservingResolution  = new FormatInfo[] {
+    static final FormatInfo[] PRESERVING_RESOLUTION_FORMATS = new FormatInfo[] {
             new FormatInfo(ImageFormats.PNG, true, true,
                     COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormats.ICO, true, true,
@@ -25,7 +25,7 @@ class FormatInfo {
                     COLOR_FULL_RGB, true, true), //
     };
 
-    static FormatInfo[] readableWriteableFormatInfos = new FormatInfo[] {
+    static FormatInfo[] READ_WRITE_FORMATS = new FormatInfo[] {
             new FormatInfo(ImageFormats.PNG, true, true,
                     COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormats.GIF, true, true,
@@ -56,7 +56,7 @@ class FormatInfo {
                     COLOR_FULL_RGB, false, false), //
     };
 
-    static final FormatInfo[] FORMAT_INFOS = { //
+    static final FormatInfo[] ALL_FORMATS = { //
             new FormatInfo(ImageFormats.PNG, true, true,
                     COLOR_FULL_RGB, true, true), //
             new FormatInfo(ImageFormats.GIF, true, true,

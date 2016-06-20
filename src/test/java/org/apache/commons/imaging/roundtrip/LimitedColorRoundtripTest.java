@@ -19,7 +19,7 @@ public class LimitedColorRoundtripTest extends RoundtripBase {
     };
 
     @DataPoints
-    public static FormatInfo[] formatInfos = FormatInfo.readableWriteableFormatInfos;
+    public static FormatInfo[] formatInfos = FormatInfo.READ_WRITE_FORMATS;
 
     @Theory
     public void testLimitedColorRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {

@@ -24,7 +24,7 @@ public class GrayscaleRountripTest extends RoundtripBase {
     };
 
     @DataPoints
-    public static FormatInfo[] formatInfos = FormatInfo.readableWriteableFormatInfos;
+    public static FormatInfo[] formatInfos = FormatInfo.READ_WRITE_FORMATS;
 
     @Theory
     public void testGrayscaleRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
