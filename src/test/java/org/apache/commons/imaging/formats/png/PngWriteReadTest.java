@@ -18,6 +18,7 @@
 package org.apache.commons.imaging.formats.png;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -105,6 +106,38 @@ public class PngWriteReadTest extends ImagingTest {
                 imageDataToBufferedImage(smallAscendingPixels),
                 ImageFormats.PNG, null);
         assertTrue(Imaging.getImageInfo(pngBytes).isTransparent());
+    }
+
+    @Test
+    public void testPhysicalScaleMeters() throws Exception {
+        final Map<String, Object> optionalParams = new HashMap<>();
+        optionalParams.put(PngConstants.PARAM_KEY_PHYSICAL_SCALE, PhysicalScale.createFromMeters(0.01, 0.02));
+
+        final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
+        final byte[] pngBytes = Imaging.writeImageToBytes(
+              imageDataToBufferedImage(smallAscendingPixels),
+              ImageFormats.PNG, optionalParams);
+        final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
+        final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
+        assertTrue("Invalid units", physicalScale.isInMeters());
+        assertEquals("Invalid horizontal units", 0.01, physicalScale.getHorizontalUnitsPerPixel(), 0.001);
+        assertEquals("Invalid vertical units", 0.02, physicalScale.getVerticalUnitsPerPixel(), 0.001);
+    }
+
+    @Test
+    public void testPhysicalScaleRadians() throws Exception {
+        final Map<String, Object> optionalParams = new HashMap<>();
+        optionalParams.put(PngConstants.PARAM_KEY_PHYSICAL_SCALE, PhysicalScale.createFromRadians(0.01, 0.02));
+
+        final int[][] smallAscendingPixels = getAscendingRawData(256, 256);
+        final byte[] pngBytes = Imaging.writeImageToBytes(
+              imageDataToBufferedImage(smallAscendingPixels),
+              ImageFormats.PNG, optionalParams);
+        final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
+        final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
+        assertTrue("Invalid units", physicalScale.isInRadians());
+        assertEquals("Invalid horizontal units", 0.01, physicalScale.getHorizontalUnitsPerPixel(), 0.001);
+        assertEquals("Invalid vertical units", 0.02, physicalScale.getVerticalUnitsPerPixel(), 0.001);
     }
 
     private BufferedImage imageDataToBufferedImage(final int[][] rawData) {

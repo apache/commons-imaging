@@ -24,6 +24,7 @@ import org.apache.commons.imaging.ImageInfo;
 
 public class PngImageInfo extends ImageInfo {
     private final List<PngText> textChunks;
+    private final PhysicalScale physicalScale;
 
     PngImageInfo(final String formatDetails, final int bitsPerPixel,
             final List<String> comments, final ImageFormat format, final String formatName,
@@ -32,7 +33,7 @@ public class PngImageInfo extends ImageInfo {
             final int physicalWidthDpi, final float physicalWidthInch, final int width,
             final boolean progressive, final boolean transparent, final boolean usesPalette,
             final ColorType colorType, final CompressionAlgorithm compressionAlgorithm,
-            final List<PngText> textChunks) {
+            final List<PngText> textChunks, final PhysicalScale physicalScale) {
         super(formatDetails, bitsPerPixel, comments, format, formatName,
                 height, mimeType, numberOfImages, physicalHeightDpi,
                 physicalHeightInch, physicalWidthDpi, physicalWidthInch, width,
@@ -40,10 +41,20 @@ public class PngImageInfo extends ImageInfo {
                 compressionAlgorithm);
 
         this.textChunks = textChunks;
+        this.physicalScale = physicalScale;
     }
 
     public List<PngText> getTextChunks() {
         return new ArrayList<>(textChunks);
     }
 
+   /**
+    * Physical scale of Image.
+    *
+    * @return {@link PhysicalScale}. If undefined then {@link PhysicalScale#UNDEFINED}
+    * is returned.
+    */
+    public PhysicalScale getPhysicalScale() {
+        return physicalScale;
+    }
 }

@@ -69,6 +69,16 @@ public final class PngConstants {
      */
     public static final String PARAM_KEY_PNG_TEXT_CHUNKS = "PNG_TEXT_CHUNKS";
 
+    /**
+     * Parameter key. Used in write operations to indicate the Physical Scale - sCAL.
+     * <p>
+     * Valid values: PhysicalScale
+     * <p>
+     *
+     * @see org.apache.commons.imaging.formats.png.PhysicalScale
+     */
+    public static final String PARAM_KEY_PHYSICAL_SCALE = "PHYSICAL_SCALE_CHUNK";
+
     private PngConstants() {
     }
 }

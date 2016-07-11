@@ -52,6 +52,7 @@ import org.apache.commons.imaging.formats.png.chunks.PngChunkIhdr;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkItxt;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPhys;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
+import org.apache.commons.imaging.formats.png.chunks.PngChunkScal;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkText;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkZtxt;
 import org.apache.commons.imaging.formats.png.chunks.PngTextChunk;
@@ -191,6 +192,8 @@ public class PngImageParser extends ImageParser {
                     result.add(new PngChunkPlte(length, chunkType, crc, bytes));
                 } else if (chunkType == ChunkType.pHYs.value) {
                     result.add(new PngChunkPhys(length, chunkType, crc, bytes));
+                } else if (chunkType == ChunkType.sCAL.value) {
+                    result.add(new PngChunkScal(length, chunkType, crc, bytes));
                 } else if (chunkType == ChunkType.IDAT.value) {
                     result.add(new PngChunkIdat(length, chunkType, crc, bytes));
                 } else if (chunkType == ChunkType.gAMA.value) {
@@ -338,6 +341,7 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] {
                 ChunkType.IHDR,
                 ChunkType.pHYs,
+                ChunkType.sCAL,
                 ChunkType.tEXt,
                 ChunkType.zTXt,
                 ChunkType.tRNS,
@@ -378,6 +382,23 @@ public class PngImageParser extends ImageParser {
                     + pHYss.size());
         } else if (pHYss.size() == 1) {
             pngChunkpHYs = (PngChunkPhys) pHYss.get(0);
+        }
+
+        PhysicalScale physicalScale = PhysicalScale.UNDEFINED;
+
+        final List<PngChunk> sCALs = filterChunks(chunks, ChunkType.sCAL);
+        if (sCALs.size() > 1) {
+            throw new ImageReadException("PNG contains more than one sCAL:"
+                    + sCALs.size());
+        } else if (sCALs.size() == 1) {
+            PngChunkScal pngChunkScal = (PngChunkScal) sCALs.get(0);
+            if (pngChunkScal.unitSpecifier == 1) {
+                physicalScale = PhysicalScale.createFromMeters(pngChunkScal.unitsPerPixelXAxis,
+                      pngChunkScal.unitsPerPixelYAxis);
+            } else {
+                physicalScale = PhysicalScale.createFromRadians(pngChunkScal.unitsPerPixelXAxis,
+                      pngChunkScal.unitsPerPixelYAxis);
+            }
         }
 
         final List<PngChunk> tEXts = filterChunks(chunks, ChunkType.tEXt);
@@ -465,7 +486,8 @@ public class PngImageParser extends ImageParser {
                 format, formatName, height, mimeType, numberOfImages,
                 physicalHeightDpi, physicalHeightInch, physicalWidthDpi,
                 physicalWidthInch, width, progressive, transparent,
-                usesPalette, colorType, compressionAlgorithm, textChunks);
+                usesPalette, colorType, compressionAlgorithm, textChunks,
+                physicalScale);
     }
 
     @Override

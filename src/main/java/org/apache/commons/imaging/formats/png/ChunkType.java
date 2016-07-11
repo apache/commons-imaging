@@ -75,6 +75,9 @@ public enum ChunkType {
     /** Physical pixel dimensions */
     pHYs,
 
+    /** Physical scale */
+    sCAL,
+
     /** Suggested palette */
     sPLT,
 
