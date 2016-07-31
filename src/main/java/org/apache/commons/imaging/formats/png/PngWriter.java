@@ -297,6 +297,22 @@ class PngWriter {
         writeChunk(os, ChunkType.pHYs, bytes);
     }
 
+    private void writeChunkSCAL(final OutputStream os, final double xUPP, final double yUPP, final byte units)
+          throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        // unit specifier
+        baos.write(units);
+
+        // units per pixel, x-axis
+        baos.write(String.valueOf(xUPP).getBytes("ISO-8859-1"));
+        baos.write(0);
+
+        baos.write(String.valueOf(yUPP).getBytes("ISO-8859-1"));
+
+        writeChunk(os, ChunkType.sCAL, baos.toByteArray());
+    }
+
     private byte getBitDepth(final PngColorType pngColorType, final Map<String, Object> params) {
         byte depth = 8;
 
@@ -363,6 +379,7 @@ class PngWriter {
      hIST   No  After PLTE; before IDAT
      tRNS   No  After PLTE; before IDAT
      pHYs   No  Before IDAT
+     sCAL   No  Before IDAT
      sPLT   Yes Before IDAT
      tIME   No  None
      iTXt   Yes None
@@ -400,6 +417,7 @@ class PngWriter {
             params.remove(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
         }
         params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
+        params.remove(PngConstants.PARAM_KEY_PHYSICAL_SCALE);
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
@@ -515,6 +533,13 @@ class PngWriter {
                         (int) Math.round(pixelDensity.verticalDensityMetres()),
                         (byte) 1);
             }
+        }
+
+        final Object physcialScaleObj = params.get(PngConstants.PARAM_KEY_PHYSICAL_SCALE);
+        if (physcialScaleObj instanceof PhysicalScale) {
+            final PhysicalScale physicalScale = (PhysicalScale)physcialScaleObj;
+            writeChunkSCAL(os, physicalScale.getHorizontalUnitsPerPixel(), physicalScale.getVerticalUnitsPerPixel(),
+                  physicalScale.isInMeters() ? (byte) 1 : (byte) 2);
         }
 
         if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
@@ -652,6 +677,7 @@ class PngWriter {
          hIST           No                  After PLTE; before IDAT
          tRNS           No                  After PLTE; before IDAT
          pHYs           No                  Before IDAT
+         sCAL           No                  Before IDAT
          sPLT           Yes                 Before IDAT
          tIME           No                  None
          iTXt           Yes                 None
