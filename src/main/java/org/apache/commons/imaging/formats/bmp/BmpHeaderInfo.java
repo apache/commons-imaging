@@ -33,6 +33,12 @@ class BmpHeaderInfo {
     public final int bitmapHeaderSize;
     public final int width;
     public final int height;
+    /**
+     * According to specification the height can be negative.
+     * <br>Positive height: Bitmap is stored bottom-up (0, 0 is in the bottom left corner), then this field is true
+     * <br>Negative height: Bitmap is stored top-down (0, 0 is in the top left corner), then this field is false
+     */
+    public final boolean isBottomUpBitmap;
     public final int planes;
     public final int bitsPerPixel;
     public final int compression;
@@ -85,7 +91,8 @@ class BmpHeaderInfo {
 
         this.bitmapHeaderSize = bitmapHeaderSize;
         this.width = width;
-        this.height = height;
+        this.height = (height >= 0) ? height : height * -1;
+        this.isBottomUpBitmap = height >= 0;
         this.planes = planes;
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;

@@ -401,6 +401,7 @@ public class BmpImageParser extends ImageParser {
             // this.debugNumber("ExtraBitsPerPixel", ExtraBitsPerPixel, 4);
             debugNumber("bhi.Width", bhi.width, 4);
             debugNumber("bhi.Height", bhi.height, 4);
+            debugNumber("bhi.isBottomUpBitmap: " + bhi.isBottomUpBitmap, 0, 0);
             debugNumber("ImageLineLength", imageLineLength, 4);
             // this.debugNumber("imageDataSize", imageDataSize, 4);
             debugNumber("PixelCount", pixelCount, 4);
@@ -714,6 +715,7 @@ public class BmpImageParser extends ImageParser {
             System.out.println("height: " + height);
             System.out.println("width*height: " + width * height);
             System.out.println("width*height*4: " + width * height * 4);
+            System.out.println("image data are stored bottom-up (true) or top-down (false): " + bhi.isBottomUpBitmap);
         }
 
         final PixelParser pixelParser = ic.pixelParser;

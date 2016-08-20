@@ -14,9 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
-
-
-
 bmp/1/Oregon Scientific DS6639 - DSC_0307 - small.bmp
     Contributed by Charles Matthew Chen.
     These photos are from my cameras - a Canon SD 750, a Nikon D50.  
@@ -37,7 +34,7 @@ bmp/4/rle4deltaXY.asm
 bmp/4/rle4deltaXY.bmp
 	Contributed by Damjan Jovanovic.
 	4 bit RLE compression with an encoded-mode delta-Y
-	
+
 dcx/1/Oregon Scientific DS6639 - DSC_0307 - small.dcx
 	Charles Matthew Chen's reference photo, converted by Damjan Jovanovic.
 

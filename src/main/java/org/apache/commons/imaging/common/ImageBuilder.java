@@ -80,7 +80,7 @@ public class ImageBuilder {
         this.height = height;
         this.hasAlpha = hasAlpha;
     }
-
+    
     /**
      * Get the width of the ImageBuilder pixel field
      * @return a positive integer
