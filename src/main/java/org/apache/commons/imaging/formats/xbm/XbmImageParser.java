@@ -149,17 +149,17 @@ public class XbmImageParser extends ImageParser {
             int xHot = -1;
             int yHot = -1;
             for (final Entry<String, String> entry : defines.entrySet()) {
-            final String name = entry.getKey();
-            if (name.endsWith("_width")) {
-            width = Integer.parseInt(entry.getValue());
-            } else if (name.endsWith("_height")) {
-            height = Integer.parseInt(entry.getValue());
-            } else if (name.endsWith("_x_hot")) {
-            xHot = Integer.parseInt(entry.getValue());
-            } else if (name.endsWith("_y_hot")) {
-            yHot = Integer.parseInt(entry.getValue());
-            }
-         }
+                final String name = entry.getKey();
+                if (name.endsWith("_width")) {
+                    width = Integer.parseInt(entry.getValue());
+                } else if (name.endsWith("_height")) {
+                    height = Integer.parseInt(entry.getValue());
+                } else if (name.endsWith("_x_hot")) {
+                    xHot = Integer.parseInt(entry.getValue());
+                } else if (name.endsWith("_y_hot")) {
+                    yHot = Integer.parseInt(entry.getValue());
+                }
+             }
             if (width == -1) {
                 throw new ImageReadException("width not found");
             }
