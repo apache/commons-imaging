@@ -108,7 +108,7 @@ public class PngImageParser extends ImageParser {
     /**
      * @return List of String-formatted chunk types, ie. "tRNs".
      */
-    public List<String> getChuckTypes(final InputStream is)
+    public List<String> getChunkTypes(final InputStream is)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(is, null, false);
         final List<String> chunkTypes = new ArrayList<>();
@@ -118,7 +118,7 @@ public class PngImageParser extends ImageParser {
         return chunkTypes;
     }
 
-    public boolean hasChuckType(final ByteSource byteSource, final ChunkType chunkType) 
+    public boolean hasChunkType(final ByteSource byteSource, final ChunkType chunkType) 
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             readSignature(is);
