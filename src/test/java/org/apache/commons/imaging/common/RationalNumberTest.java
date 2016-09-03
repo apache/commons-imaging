@@ -17,7 +17,6 @@
 
 package org.apache.commons.imaging.common;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Collection;
