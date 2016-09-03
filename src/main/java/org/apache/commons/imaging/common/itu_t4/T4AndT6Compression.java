@@ -22,7 +22,6 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.itu_t4.T4_T6_Tables.Entry;
-import org.apache.commons.imaging.util.IoUtils;
 
 public final class T4AndT6Compression {
     private static final HuffmanTree<Integer> WHITE_RUN_LENGTHS = new HuffmanTree<>();
@@ -138,12 +137,9 @@ public final class T4AndT6Compression {
      */
     public static byte[] decompressModifiedHuffman(final byte[] compressed,
             final int width, final int height) throws ImageReadException {
-        final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(
-                new ByteArrayInputStream(compressed));
-        BitArrayOutputStream outputStream = null;
-        boolean canThrow = false;
-        try {
-            outputStream = new BitArrayOutputStream();
+        try (ByteArrayInputStream baos = new ByteArrayInputStream(compressed);
+                BitInputStreamFlexible inputStream = new BitInputStreamFlexible(baos);
+                BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             for (int y = 0; y < height; y++) {
                 int color = WHITE;
                 int rowLength;
@@ -164,14 +160,9 @@ public final class T4AndT6Compression {
                 }
             }
             final byte[] ret = outputStream.toByteArray();
-            canThrow = true;
             return ret;
-        } finally {
-            try {
-                IoUtils.closeQuietly(canThrow, outputStream);
-            } catch (final IOException ioException) {
-                throw new ImageReadException("I/O error", ioException);
-            }
+        } catch (final IOException ioException) {
+            throw new ImageReadException("Error reading image to decompress", ioException);
         }
     }
 
@@ -218,10 +209,7 @@ public final class T4AndT6Compression {
     public static byte[] decompressT4_1D(final byte[] compressed, final int width,
             final int height, final boolean hasFill) throws ImageReadException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
-        BitArrayOutputStream outputStream = null;
-        boolean canThrow = false;
-        try {
-            outputStream = new BitArrayOutputStream();
+        try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             for (int y = 0; y < height; y++) {
                 int rowLength;
                 try {
@@ -249,14 +237,7 @@ public final class T4AndT6Compression {
                 }
             }
             final byte[] ret = outputStream.toByteArray();
-            canThrow = true;
             return ret;
-        } finally {
-            try {
-                IoUtils.closeQuietly(canThrow, outputStream);
-            } catch (final IOException ioException) {
-                throw new ImageReadException("I/O error", ioException);
-            }
         }
     }
 
@@ -477,10 +458,7 @@ public final class T4AndT6Compression {
 
     public static byte[] compressT6(final byte[] uncompressed, final int width, final int height)
             throws ImageWriteException {
-        BitInputStreamFlexible inputStream = null;
-        boolean canThrow = false;
-        try {
-            inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
+        try (BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed))) {
             final BitArrayOutputStream outputStream = new BitArrayOutputStream();
             int[] referenceLine = new int[width];
             int[] codingLine = new int[width];
@@ -552,14 +530,9 @@ public final class T4AndT6Compression {
             T4_T6_Tables.EOL.writeBits(outputStream);
             T4_T6_Tables.EOL.writeBits(outputStream);
             final byte[] ret = outputStream.toByteArray();
-            canThrow = true;
             return ret;
-        } finally {
-            try {
-                IoUtils.closeQuietly(canThrow, inputStream);
-            } catch (final IOException ioException) {
-                throw new ImageWriteException("I/O error", ioException);
-            }
+        } catch (final IOException ioException) {
+            throw new ImageWriteException("I/O error", ioException);
         }
     }
 

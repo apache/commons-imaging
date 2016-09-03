@@ -27,22 +27,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.util.IoUtils;
 
 public abstract class ByteSourceTest extends ImagingTest {
     protected File createTempFile(final byte src[]) throws IOException {
         final File file = createTempFile("raw_", ".bin");
 
         // write test bytes to file.
-        OutputStream os = null;
-        boolean canThrow = false;
-        try {
-            os = new FileOutputStream(file);
-            os = new BufferedOutputStream(os);
+        try (FileOutputStream fos = new FileOutputStream(file);
+                OutputStream os = new BufferedOutputStream(fos)) {
             os.write(src);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
 
         // test that all bytes written to file.

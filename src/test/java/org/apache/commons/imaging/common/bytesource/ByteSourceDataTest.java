@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -95,10 +94,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
         // test cache during interrupted read cache by reading only first N
         // bytes.
         {
-            InputStream is = null;
-            boolean canThrow = false;
-            try {
-                is = byteSource.getInputStream();
+            try (InputStream is = byteSource.getInputStream()) {
                 final byte prefix[] = new byte[256];
                 final int read = is.read(prefix);
 
@@ -106,9 +102,6 @@ public class ByteSourceDataTest extends ByteSourceTest {
                 for (int i = 0; i < read; i++) {
                     assertTrue(src[i] == prefix[i]);
                 }
-                canThrow = false;
-            } finally {
-                IoUtils.closeQuietly(canThrow, is);
             }
         }
 
@@ -131,19 +124,13 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
             final int start = src.length / 2;
 
-            InputStream is = null;
-            boolean canThrow = false;
-            try {
-                is = byteSource.getInputStream(start);
+            try (InputStream is = byteSource.getInputStream(start)) {
                 final byte dst[] = IOUtils.toByteArray(is);
 
                 assertTrue(src.length == dst.length + start);
                 for (int i = 0; i < dst.length; i++) {
                     assertTrue(dst[i] == src[i + start]);
                 }
-                canThrow = true;
-            } finally {
-                IoUtils.closeQuietly(canThrow, is);
             }
         }
 

@@ -16,6 +16,10 @@
  */
 package org.apache.commons.imaging.icc;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
+
 import java.awt.color.ICC_Profile;
 import java.io.File;
 import java.io.IOException;
@@ -27,9 +31,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class IccProfileParser extends BinaryFileParser {
     public IccProfileParser() {
@@ -309,11 +310,7 @@ public class IccProfileParser extends BinaryFileParser {
         // if (getDebug())
         // Debug.debug("length: " + length);
 
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             read4Bytes("ProfileSize", is, "Not a Valid ICC Profile", getByteOrder());
 
             // if (length != ProfileSize)
@@ -336,10 +333,7 @@ public class IccProfileParser extends BinaryFileParser {
             }
 
             boolean result = deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
-            canThrow = true;
             return result;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.imaging;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FILENAME;
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+
 import java.awt.Dimension;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
@@ -38,9 +41,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
 
 /**
  * The primary application programming interface (API) to the Imaging library.
@@ -257,11 +257,7 @@ public final class Imaging {
             return ImageFormats.UNKNOWN;
         }
         
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             final int i1 = is.read();
             final int i2 = is.read();
             if ((i1 < 0) || (i2 < 0)) {
@@ -274,7 +270,6 @@ public final class Imaging {
             final int[] bytePair = { b1, b2, };
 
             if (compareBytePair(MAGIC_NUMBERS_GIF, bytePair)) {
-                canThrow = true;
                 return ImageFormats.GIF;
             }
             // else if (b1 == 0x00 && b2 == 0x00) // too similar to TGA
@@ -282,43 +277,30 @@ public final class Imaging {
             // return ImageFormat.IMAGE_FORMAT_ICO;
             // }
             else if (compareBytePair(MAGIC_NUMBERS_PNG, bytePair)) {
-                canThrow = true;
                 return ImageFormats.PNG;
             } else if (compareBytePair(MAGIC_NUMBERS_JPEG, bytePair)) {
-                canThrow = true;
                 return ImageFormats.JPEG;
             } else if (compareBytePair(MAGIC_NUMBERS_BMP, bytePair)) {
-                canThrow = true;
                 return ImageFormats.BMP;
             } else if (compareBytePair(MAGIC_NUMBERS_TIFF_MOTOROLA, bytePair)) {
-                canThrow = true;
                 return ImageFormats.TIFF;
             } else if (compareBytePair(MAGIC_NUMBERS_TIFF_INTEL, bytePair)) {
-                canThrow = true;
                 return ImageFormats.TIFF;
             } else if (compareBytePair(MAGIC_NUMBERS_PSD, bytePair)) {
-                canThrow = true;
                 return ImageFormats.PSD;
             } else if (compareBytePair(MAGIC_NUMBERS_PAM, bytePair)) {
-                canThrow = true;
                 return ImageFormats.PAM;
             } else if (compareBytePair(MAGIC_NUMBERS_PBM_A, bytePair)) {
-                canThrow = true;
                 return ImageFormats.PBM;
             } else if (compareBytePair(MAGIC_NUMBERS_PBM_B, bytePair)) {
-                canThrow = true;
                 return ImageFormats.PBM;
             } else if (compareBytePair(MAGIC_NUMBERS_PGM_A, bytePair)) {
-                canThrow = true;
                 return ImageFormats.PGM;
             } else if (compareBytePair(MAGIC_NUMBERS_PGM_B, bytePair)) {
-                canThrow = true;
                 return ImageFormats.PGM;
             } else if (compareBytePair(MAGIC_NUMBERS_PPM_A, bytePair)) {
-                canThrow = true;
                 return ImageFormats.PPM;
             } else if (compareBytePair(MAGIC_NUMBERS_PPM_B, bytePair)) {
-                canThrow = true;
                 return ImageFormats.PPM;
             } else if (compareBytePair(MAGIC_NUMBERS_JBIG2_1, bytePair)) {
                 final int i3 = is.read();
@@ -332,23 +314,16 @@ public final class Imaging {
                 final int b4 = i4 & 0xff;
                 final int[] bytePair2 = { b3, b4, };
                 if (compareBytePair(MAGIC_NUMBERS_JBIG2_2, bytePair2)) {
-                    canThrow = true;
                     return ImageFormats.JBIG2;
                 }
             } else if (compareBytePair(MAGIC_NUMBERS_ICNS, bytePair)) {
-                canThrow = true;
                 return ImageFormats.ICNS;
             } else if (compareBytePair(MAGIC_NUMBERS_DCX, bytePair)) {
-                canThrow = true;
                 return ImageFormats.DCX;
             } else if (compareBytePair(MAGIC_NUMBERS_RGBE, bytePair)) {
-                canThrow = true;
                 return ImageFormats.RGBE;
             }
-            canThrow = true;
             return ImageFormats.UNKNOWN;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -1433,16 +1408,9 @@ public final class Imaging {
     public static void writeImage(final BufferedImage src, final File file,
             final ImageFormat format, final Map<String, Object> params) throws ImageWriteException,
             IOException {
-        OutputStream os = null;
-        boolean canThrow = false;
-        try {
-            os = new FileOutputStream(file);
-            os = new BufferedOutputStream(os);
-
+        try (FileOutputStream fos = new FileOutputStream(file);
+                BufferedOutputStream os = new BufferedOutputStream(fos)) {
             writeImage(src, os, format, params);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
     }
 

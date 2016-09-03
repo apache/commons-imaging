@@ -25,7 +25,6 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
-import org.apache.commons.imaging.util.IoUtils;
 
 public class ByteSourceFile extends ByteSource {
     private final File file;
@@ -42,12 +41,7 @@ public class ByteSourceFile extends ByteSource {
 
     @Override
     public byte[] getBlock(final long start, final int length) throws IOException {
-
-        RandomAccessFile raf = null;
-        boolean canThrow = false;
-        try {
-            raf = new RandomAccessFile(file, "r");
-
+        try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
             // We include a separate check for int overflow.
             if ((start < 0) || (length < 0) || (start + length < 0)
                     || (start + length > raf.length())) {
@@ -58,10 +52,7 @@ public class ByteSourceFile extends ByteSource {
 
             final byte[] ret = BinaryFunctions.getRAFBytes(raf, start, length,
                     "Could not read value from file");
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, raf);
         }
     }
 
@@ -74,21 +65,15 @@ public class ByteSourceFile extends ByteSource {
     public byte[] getAll() throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = new FileInputStream(file);
-            is = new BufferedInputStream(is);
+        try (FileInputStream fis = new FileInputStream(file);
+                InputStream is = new BufferedInputStream(fis)) {
             final byte[] buffer = new byte[1024];
             int read;
             while ((read = is.read(buffer)) > 0) {
                 baos.write(buffer, 0, read);
             }
             final byte[] ret = baos.toByteArray();
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

@@ -33,22 +33,14 @@ import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
-import org.apache.commons.imaging.util.IoUtils;
 import org.apache.commons.io.FileUtils;
 
 public class WriteExifMetadataExample {
     public void removeExifMetadata(final File jpegImageFile, final File dst)
             throws IOException, ImageReadException, ImageWriteException {
-        OutputStream os = null;
-        boolean canThrow = false;
-        try {
-            os = new FileOutputStream(dst);
-            os = new BufferedOutputStream(os);
-
+        try (FileOutputStream fos = new FileOutputStream(dst);
+                OutputStream os = new BufferedOutputStream(fos)) {
             new ExifRewriter().removeExifMetadata(jpegImageFile, os);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
     }
 
@@ -65,9 +57,10 @@ public class WriteExifMetadataExample {
      */
     public void changeExifMetadata(final File jpegImageFile, final File dst)
             throws IOException, ImageReadException, ImageWriteException {
-        OutputStream os = null;
-        boolean canThrow = false;
-        try {
+        
+        try (FileOutputStream fos = new FileOutputStream(dst);
+                OutputStream os = new BufferedOutputStream(fos);) {
+            
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
@@ -134,15 +127,8 @@ public class WriteExifMetadataExample {
 
             // printTagValue(jpegMetadata, TiffConstants.TIFF_TAG_DATE_TIME);
 
-            os = new FileOutputStream(dst);
-            os = new BufferedOutputStream(os);
-
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
                     outputSet);
-
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
     }
 
@@ -163,9 +149,8 @@ public class WriteExifMetadataExample {
      */
     public void removeExifTag(final File jpegImageFile, final File dst) throws IOException,
             ImageReadException, ImageWriteException {
-        OutputStream os = null;
-        boolean canThrow = false;
-        try {
+        try (FileOutputStream fos = new FileOutputStream(dst);
+                OutputStream os = new BufferedOutputStream(fos)) {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
@@ -221,14 +206,8 @@ public class WriteExifMetadataExample {
                 }
             }
 
-            os = new FileOutputStream(dst);
-            os = new BufferedOutputStream(os);
-
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
                     outputSet);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
     }
 
@@ -245,9 +224,8 @@ public class WriteExifMetadataExample {
      */
     public void setExifGPSTag(final File jpegImageFile, final File dst) throws IOException,
             ImageReadException, ImageWriteException {
-        OutputStream os = null;
-        boolean canThrow = false;
-        try {
+        try (FileOutputStream fos = new FileOutputStream(dst);
+                OutputStream os = new BufferedOutputStream(fos)) {
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
@@ -288,14 +266,8 @@ public class WriteExifMetadataExample {
                 outputSet.setGPSInDegrees(longitude, latitude);
             }
 
-            os = new FileOutputStream(dst);
-            os = new BufferedOutputStream(os);
-
             new ExifRewriter().updateExifMetadataLossless(jpegImageFile, os,
                     outputSet);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
     }
 
