@@ -16,6 +16,9 @@
  */
 package org.apache.commons.imaging.formats.jpeg.xmp;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
+
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
@@ -30,9 +33,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -313,18 +313,14 @@ public class JpegRewriter extends BinaryFileParser {
         return result;
     }
 
-    protected void writeSegments(final OutputStream os,
+    protected void writeSegments(final OutputStream outputStream,
             final List<? extends JFIFPiece> segments) throws IOException {
-        boolean canThrow = false;
-        try {
+        try (DataOutputStream os = new DataOutputStream(outputStream)) {
             JpegConstants.SOI.writeTo(os);
 
             for (JFIFPiece piece : segments) {
                 piece.write(os);
             }
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
     }
 

@@ -28,7 +28,6 @@ import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
 import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
-import org.apache.commons.imaging.util.IoUtils;
 
 public class UncompressedDataReader implements DataReader {
 
@@ -52,11 +51,7 @@ public class UncompressedDataReader implements DataReader {
         final int depth = header.depth;
         final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.BIG_ENDIAN);
         // we want all samples to be bytes
-        BitsToByteInputStream bbis = null;
-        boolean canThrow = false;
-        try {
-            bbis = new BitsToByteInputStream(mbis, 8);
-
+        try (BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8)) {
             final int[][][] data = new int[channelCount][height][width];
             for (int channel = 0; channel < channelCount; channel++) {
                 for (int y = 0; y < height; y++) {
@@ -69,9 +64,6 @@ public class UncompressedDataReader implements DataReader {
             }
     
             dataParser.parseData(data, bi, imageContents);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, bbis);
         }
     }
 }

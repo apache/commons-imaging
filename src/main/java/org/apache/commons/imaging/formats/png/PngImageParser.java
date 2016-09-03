@@ -16,6 +16,13 @@
  */
 package org.apache.commons.imaging.formats.png;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_VERBOSE;
+import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
+
 import java.awt.Dimension;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
@@ -41,8 +48,8 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.GenericImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.png.chunks.PngChunk;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkGama;
@@ -61,10 +68,6 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterIndexedColor;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.commons.imaging.icc.IccProfileParser;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PngImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".png";
@@ -117,17 +120,10 @@ public class PngImageParser extends ImageParser {
 
     public boolean hasChuckType(final ByteSource byteSource, final ChunkType chunkType) 
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             readSignature(is);
             final List<PngChunk> chunks = readChunks(is, new ChunkType[] { chunkType }, true);
-            canThrow = true;
             return !chunks.isEmpty();
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -228,18 +224,11 @@ public class PngImageParser extends ImageParser {
 
     private List<PngChunk> readChunks(final ByteSource byteSource, final ChunkType[] chunkTypes,
             final boolean returnAfterFirst) throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             readSignature(is);
 
             final List<PngChunk> ret = readChunks(is, chunkTypes, returnAfterFirst);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

@@ -15,6 +15,8 @@
 
 package org.apache.commons.imaging.formats.xbm;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -45,9 +47,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BasicCParser;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
 
 public class XbmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".xbm";
@@ -141,10 +140,7 @@ public class XbmImageParser extends ImageParser {
 
     private XbmParseResult parseXbmHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final Map<String, String> defines = new HashMap<>();
             final ByteArrayOutputStream preprocessedFile = BasicCParser.preprocess(
                     is, null, defines);
@@ -175,10 +171,7 @@ public class XbmImageParser extends ImageParser {
             xbmParseResult.cParser = new BasicCParser(new ByteArrayInputStream(
                     preprocessedFile.toByteArray()));
             xbmParseResult.xbmHeader = new XbmHeader(width, height, xHot, yHot);
-            canThrow = true;
             return xbmParseResult;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

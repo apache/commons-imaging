@@ -38,7 +38,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
-import org.apache.commons.imaging.util.IoUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -116,16 +115,10 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         final File updated = createTempFile(imageFile.getName()
                 + ".iptc.insert.", ".jpg");
-        OutputStream os = null;
-        boolean canThrow = false;
-        try {
-            os = new FileOutputStream(updated);
-            os = new BufferedOutputStream(os);
+        try (FileOutputStream fos = new FileOutputStream(updated);
+                OutputStream os = new BufferedOutputStream(fos)) {
             new JpegIptcRewriter().writeIPTC(new ByteSourceFile(
                     noIptcFile), os, newData);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
 
         final ByteSource updateByteSource = new ByteSourceFile(updated);
@@ -170,15 +163,9 @@ public class IptcUpdateTest extends IptcBaseTest {
     public File writeIptc(ByteSource byteSource, PhotoshopApp13Data newData) throws IOException, ImageReadException, ImageWriteException {
         final File updated = createTempFile(imageFile.getName()
                 + ".iptc.update.", ".jpg");
-        OutputStream os = null;
-        boolean canThrow = false;
-        try {
-            os = new FileOutputStream(updated);
-            os = new BufferedOutputStream(os);
+        try (FileOutputStream fos = new FileOutputStream(updated);
+                OutputStream os = new BufferedOutputStream(fos)) {
             new JpegIptcRewriter().writeIPTC(byteSource, os, newData);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
         return updated;
     }

@@ -33,7 +33,6 @@ import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.IoUtils;
 
 class PngWriter {
     private final boolean verbose;
@@ -200,16 +199,13 @@ class PngWriter {
     }
 
     private byte[] deflate(final byte[] bytes) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
-        boolean canThrow = false;
-        try {
-            dos.write(bytes);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, dos);
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            try (DeflaterOutputStream dos = new DeflaterOutputStream(baos)) {
+                dos.write(bytes);
+                // dos.flush() doesn't work - we must close it before baos.toByteArray()
+            }
+            return baos.toByteArray();
         }
-        return baos.toByteArray();
     }
     
     private boolean isValidISO_8859_1(final String s) {

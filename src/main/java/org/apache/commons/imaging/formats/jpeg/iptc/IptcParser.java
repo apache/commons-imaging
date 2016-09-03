@@ -17,6 +17,13 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.slice;
+import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -36,9 +43,6 @@ import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class IptcParser extends BinaryFileParser {
     private static final ByteOrder APP13_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
@@ -252,10 +256,7 @@ public class IptcParser extends BinaryFileParser {
             final boolean strict) throws ImageReadException, IOException {
         final List<IptcBlock> blocks = new ArrayList<>();
 
-        InputStream bis = null;
-        boolean canThrow = false;
-        try {
-            bis = new ByteArrayInputStream(bytes);
+        try (InputStream bis = new ByteArrayInputStream(bytes)) {
 
             // Note that these are unsigned quantities. Name is always an even
             // number of bytes (including the 1st byte, which is the size.)
@@ -342,10 +343,7 @@ public class IptcParser extends BinaryFileParser {
                 }
             }
     
-            canThrow = true;
             return blocks;
-        } finally {
-            IoUtils.closeQuietly(canThrow, bis);
         }
     }
 
@@ -397,11 +395,7 @@ public class IptcParser extends BinaryFileParser {
             throws ImageWriteException, IOException {
         byte[] blockData;
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BinaryOutputStream bos = null;
-        boolean canThrow = false;
-        try {
-            bos = new BinaryOutputStream(baos,
-                    getByteOrder());
+        try (BinaryOutputStream bos = new BinaryOutputStream(baos, getByteOrder())) {
     
             // first, right record version record
             bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
@@ -448,9 +442,6 @@ public class IptcParser extends BinaryFileParser {
                 bos.write2Bytes(recordData.length);
                 bos.write(recordData);
             }
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, bos);
         }
 
         blockData = baos.toByteArray();

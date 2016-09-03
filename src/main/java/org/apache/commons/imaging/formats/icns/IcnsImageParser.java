@@ -16,6 +16,11 @@
  */
 package org.apache.commons.imaging.formats.icns;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_VERBOSE;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -37,10 +42,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class IcnsImageParser extends ImageParser {
     static final int ICNS_MAGIC = IcnsType.typeAsInt("icns");
@@ -228,10 +229,7 @@ public class IcnsImageParser extends ImageParser {
 
     private IcnsContents readImage(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final IcnsHeader icnsHeader = readIcnsHeader(is);
 
             final List<IcnsElement> icnsElementList = new ArrayList<>();
@@ -247,10 +245,7 @@ public class IcnsImageParser extends ImageParser {
             }
 
             final IcnsContents ret = new IcnsContents(icnsHeader, icnsElements);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

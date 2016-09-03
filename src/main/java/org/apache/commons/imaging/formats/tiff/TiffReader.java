@@ -16,6 +16,13 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
@@ -37,10 +44,6 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
 public class TiffReader extends BinaryFileParser {
 
@@ -51,15 +54,9 @@ public class TiffReader extends BinaryFileParser {
     }
 
     private TiffHeader readTiffHeader(final ByteSource byteSource) throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final TiffHeader ret = readTiffHeader(is);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
     
@@ -133,15 +130,11 @@ public class TiffReader extends BinaryFileParser {
         }
         visited.add(directoryOffset);
 
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
+        try (InputStream is = byteSource.getInputStream()) {
             if (directoryOffset >= byteSource.getLength()) {
-                canThrow = true;
                 return true;
             }
 
-            is = byteSource.getInputStream();
             skipBytes(is, directoryOffset);
 
             final List<TiffField> fields = new ArrayList<>();
@@ -153,7 +146,6 @@ public class TiffReader extends BinaryFileParser {
                 if (strict) {
                     throw e;
                 } else {
-                    canThrow = true;
                     return true;
                 }
             }
@@ -208,7 +200,6 @@ public class TiffReader extends BinaryFileParser {
                 fields.add(field);
 
                 if (!listener.addField(field)) {
-                    canThrow = true;
                     return true;
                 }
             }
@@ -233,7 +224,6 @@ public class TiffReader extends BinaryFileParser {
             }
 
             if (!listener.addDirectory(directory)) {
-                canThrow = true;
                 return true;
             }
 
@@ -280,10 +270,7 @@ public class TiffReader extends BinaryFileParser {
                         dirType + 1, formatCompliance, listener, visited);
             }
 
-            canThrow = true;
             return true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

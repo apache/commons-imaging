@@ -16,6 +16,9 @@
  */
 package org.apache.commons.imaging.formats.pnm;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -35,14 +38,10 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PnmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".pnm";
@@ -207,16 +206,9 @@ public class PnmImageParser extends ImageParser {
 
     private FileInfo readHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             final FileInfo ret = readHeader(is);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -304,11 +296,7 @@ public class PnmImageParser extends ImageParser {
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             final FileInfo info = readHeader(is);
 
             final int width = info.width;
@@ -320,10 +308,7 @@ public class PnmImageParser extends ImageParser {
             info.readImage(imageBuilder, is);
 
             final BufferedImage ret = imageBuilder.getBufferedImage();
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

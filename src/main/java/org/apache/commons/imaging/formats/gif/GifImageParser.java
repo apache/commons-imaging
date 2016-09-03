@@ -16,6 +16,16 @@
  */
 package org.apache.commons.imaging.formats.gif;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_VERBOSE;
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_XMP_XML;
+import static org.apache.commons.imaging.common.BinaryFunctions.compareBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.printByteBits;
+import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -38,17 +48,13 @@ import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class GifImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".gif";
@@ -439,11 +445,7 @@ public class GifImageParser extends ImageParser {
     private ImageContents readFile(final ByteSource byteSource,
             final boolean stopBeforeImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             final GifHeaderInfo ghi = readHeader(is, formatCompliance);
 
             byte[] globalColorTable = null;
@@ -457,10 +459,7 @@ public class GifImageParser extends ImageParser {
 
             final ImageContents result = new ImageContents(ghi, globalColorTable,
                     blocks);
-            canThrow = true;
             return result;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -1005,12 +1004,7 @@ public class GifImageParser extends ImageParser {
     @Override
     public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             final FormatCompliance formatCompliance = null;
             final GifHeaderInfo ghi = readHeader(is, formatCompliance);
 
@@ -1075,11 +1069,7 @@ public class GifImageParser extends ImageParser {
             if (result.size() > 1) {
                 throw new ImageReadException("More than one XMP Block in GIF.");
             }
-            canThrow = true;
             return result.get(0);
-
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 }

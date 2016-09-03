@@ -15,6 +15,8 @@
 
 package org.apache.commons.imaging.formats.xpm;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -50,9 +52,6 @@ import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
 
 public class XpmImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".xpm";
@@ -80,11 +79,8 @@ public class XpmImageParser extends ImageParser {
                     throw new ImageReadException("Couldn't find rgb.txt in our resources");
                 }
                 final Map<String, Integer> colors = new HashMap<>();
-                BufferedReader reader = null;
-                boolean canThrow = false;
-                try {
-                    reader = new BufferedReader(new InputStreamReader(rgbTxtStream,
-                            "US-ASCII"));
+                try (InputStreamReader isReader = new InputStreamReader(rgbTxtStream, "US-ASCII");
+                        BufferedReader reader = new BufferedReader(isReader)) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         if (line.charAt(0) == '!') {
@@ -101,9 +97,6 @@ public class XpmImageParser extends ImageParser {
                             throw new ImageReadException("Couldn't parse color in rgb.txt", nfe);
                         }
                     }
-                    canThrow = true;
-                } finally {
-                    IoUtils.closeQuietly(canThrow, reader);
                 }
                 colorNames = colors;
             } catch (final IOException ioException) {
@@ -253,10 +246,7 @@ public class XpmImageParser extends ImageParser {
 
     private XpmParseResult parseXpmHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final StringBuilder firstComment = new StringBuilder();
             final ByteArrayOutputStream preprocessedFile = BasicCParser.preprocess(
                     is, firstComment, null);
@@ -269,10 +259,7 @@ public class XpmImageParser extends ImageParser {
             xpmParseResult.cParser = new BasicCParser(new ByteArrayInputStream(
                     preprocessedFile.toByteArray()));
             xpmParseResult.xpmHeader = parseXpmHeader(xpmParseResult.cParser);
-            canThrow = true;
             return xpmParseResult;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

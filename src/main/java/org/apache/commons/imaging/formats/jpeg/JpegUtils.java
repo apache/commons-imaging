@@ -16,6 +16,11 @@
  */
 package org.apache.commons.imaging.formats.jpeg;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.getStreamBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
@@ -25,9 +30,6 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.util.Debug;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class JpegUtils extends BinaryFileParser {
     public JpegUtils() {
@@ -50,11 +52,7 @@ public class JpegUtils extends BinaryFileParser {
     public void traverseJFIF(final ByteSource byteSource, final Visitor visitor)
             throws ImageReadException,
             IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             readAndVerifyBytes(is, JpegConstants.SOI,
                     "Not a Valid JPEG File: doesn't begin with 0xffd8");
 
@@ -72,7 +70,6 @@ public class JpegUtils extends BinaryFileParser {
 
                 if (marker == JpegConstants.EOI_MARKER || marker == JpegConstants.SOS_MARKER) {
                     if (!visitor.beginSOS()) {
-                        canThrow = true;
                         return;
                     }
 
@@ -89,15 +86,11 @@ public class JpegUtils extends BinaryFileParser {
                         "Invalid Segment: insufficient data");
 
                 if (!visitor.visitSegment(marker, markerBytes, segmentLength, segmentLengthBytes, segmentData)) {
-                    canThrow = true;
                     return;
                 }
             }
             
             Debug.debug(Integer.toString(markerCount) + " markers");
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

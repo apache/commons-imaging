@@ -15,6 +15,10 @@
 
 package org.apache.commons.imaging.formats.wbmp;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
@@ -39,10 +43,6 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class WbmpImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".wbmp";
@@ -157,15 +157,9 @@ public class WbmpImageParser extends ImageParser {
 
     private WbmpHeader readWbmpHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final WbmpHeader ret = readWbmpHeader(is);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -217,16 +211,10 @@ public class WbmpImageParser extends ImageParser {
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
             final Map<String, Object> params) throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final WbmpHeader wbmpHeader = readWbmpHeader(is);
             final BufferedImage ret = readImage(wbmpHeader, is);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

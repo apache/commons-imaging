@@ -16,6 +16,13 @@
  */
 package org.apache.commons.imaging.formats.ico;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_PIXEL_DENSITY;
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -44,10 +51,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.bmp.BmpImageParser;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class IcoImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".ico";
@@ -428,12 +431,7 @@ public class IcoImageParser extends ImageParser {
         final int bitmapSize = 14 + 56 + restOfFile.length;
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream(bitmapSize);
-        BinaryOutputStream bos = null;
-        boolean canThrow = false;
-        try {
-            bos = new BinaryOutputStream(baos,
-                    ByteOrder.LITTLE_ENDIAN);
-    
+        try (BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.LITTLE_ENDIAN)) {
             bos.write('B');
             bos.write('M');
             bos.write4Bytes(bitmapSize);
@@ -457,9 +455,6 @@ public class IcoImageParser extends ImageParser {
             bos.write4Bytes(alphaMask);
             bos.write(restOfFile);
             bos.flush();
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, bos);
         }
 
         final ByteArrayInputStream bmpInputStream = new ByteArrayInputStream(baos.toByteArray());
@@ -547,10 +542,7 @@ public class IcoImageParser extends ImageParser {
 
     private ImageContents readImage(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final FileHeader fileHeader = readFileHeader(is);
 
             final IconInfo[] fIconInfos = new IconInfo[fileHeader.iconCount];
@@ -566,10 +558,7 @@ public class IcoImageParser extends ImageParser {
             }
 
             final ImageContents ret = new ImageContents(fileHeader, fIconDatas);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

@@ -16,6 +16,10 @@
  */
 package org.apache.commons.imaging.formats.dcx;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_PIXEL_DENSITY;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -41,10 +45,6 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.pcx.PcxConstants;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class DcxImageParser extends ImageParser {
     // See http://www.fileformat.info/format/pcx/egff.htm for documentation
@@ -126,10 +126,7 @@ public class DcxImageParser extends ImageParser {
 
     private DcxHeader readDcxHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final int id = read4Bytes("Id", is, "Not a Valid DCX File", getByteOrder());
             final List<Long> pageTable = new ArrayList<>(1024);
             for (int i = 0; i < 1024; i++) {
@@ -157,10 +154,7 @@ public class DcxImageParser extends ImageParser {
             }
 
             final DcxHeader ret = new DcxHeader(id, pages);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -188,18 +182,12 @@ public class DcxImageParser extends ImageParser {
         final List<BufferedImage> images = new ArrayList<>();
         final PcxImageParser pcxImageParser = new PcxImageParser();
         for (final long element : dcxHeader.pageTable) {
-            InputStream stream = null;
-            boolean canThrow = false;
-            try {
-                stream = byteSource.getInputStream(element);
+            try (InputStream stream = byteSource.getInputStream(element)) {
                 final ByteSourceInputStream pcxSource = new ByteSourceInputStream(
                         stream, null);
                 final BufferedImage image = pcxImageParser.getBufferedImage(
                         pcxSource, new HashMap<String, Object>());
                 images.add(image);
-                canThrow = true;
-            } finally {
-                IoUtils.closeQuietly(canThrow, stream);
             }
         }
         return images;

@@ -16,6 +16,12 @@
  */
 package org.apache.commons.imaging.formats.pcx;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_STRICT;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
+import static org.apache.commons.imaging.common.ByteConversions.toUInt16;
+
 import java.awt.Dimension;
 import java.awt.Transparency;
 import java.awt.color.ColorSpace;
@@ -46,11 +52,6 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
-import static org.apache.commons.imaging.common.ByteConversions.*;
 
 public class PcxImageParser extends ImageParser {
     // ZSoft's official spec is at http://www.qzx.com/pc-gpe/pcx.txt
@@ -240,15 +241,9 @@ public class PcxImageParser extends ImageParser {
 
     private PcxHeader readPcxHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final PcxHeader ret = readPcxHeader(is, false);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -359,17 +354,11 @@ public class PcxImageParser extends ImageParser {
 
     private int[] read256ColorPaletteFromEndOfFile(final ByteSource byteSource)
             throws IOException {
-        InputStream stream = null;
-        boolean canThrow = false;
-        try {
-            stream = byteSource.getInputStream();
+        try (InputStream stream = byteSource.getInputStream()) {
             final long toSkip = byteSource.getLength() - 769;
             skipBytes(stream, (int) toSkip);
             final int[] ret = read256ColorPalette(stream);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, stream);
         }
     }
 
@@ -522,16 +511,10 @@ public class PcxImageParser extends ImageParser {
             isStrict = ((Boolean) strictness).booleanValue();
         }
 
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final PcxHeader pcxHeader = readPcxHeader(is, isStrict);
             final BufferedImage ret = readImage(pcxHeader, is, byteSource);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 

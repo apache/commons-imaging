@@ -31,7 +31,6 @@ import org.apache.commons.imaging.common.mylzw.MyBitInputStream;
 import org.apache.commons.imaging.formats.psd.ImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
-import org.apache.commons.imaging.util.IoUtils;
 
 public class CompressedDataReader implements DataReader {
 
@@ -75,15 +74,10 @@ public class CompressedDataReader implements DataReader {
                 final byte[] unpacked = new PackBits().decompress(packed, width);
                 final InputStream bais = new ByteArrayInputStream(unpacked);
                 final MyBitInputStream mbis = new MyBitInputStream(bais, ByteOrder.BIG_ENDIAN);
-                BitsToByteInputStream bbis = null;
-                boolean canThrow = false;
-                try {
-                    bbis = new BitsToByteInputStream(mbis, 8); // we want all samples to be bytes
+                // we want all samples to be bytes
+                try (BitsToByteInputStream bbis = new BitsToByteInputStream(mbis, 8)) {
                     final int[] scanline = bbis.readBitsArray(depth, width);
                     data[channel][y] = scanline;
-                    canThrow = true;
-                } finally {
-                    IoUtils.closeQuietly(canThrow, bbis);
                 }
             }
         }

@@ -16,7 +16,11 @@
  */
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.remainingBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
+
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,9 +43,6 @@ import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterBase;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossless;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 /**
  * Interface for Exif write/update/remove functionality for Jpeg/JFIF images.
@@ -497,12 +498,11 @@ public class ExifRewriter extends BinaryFileParser {
         writeSegmentsReplacingExif(os, pieces, newBytes);
     }
 
-    private void writeSegmentsReplacingExif(final OutputStream os,
+    private void writeSegmentsReplacingExif(final OutputStream outputStream,
             final List<JFIFPiece> segments, final byte[] newBytes)
             throws ImageWriteException, IOException {
 
-        boolean canThrow = false;
-        try {
+        try (DataOutputStream os = new DataOutputStream(outputStream)) {
             JpegConstants.SOI.writeTo(os);
 
             boolean hasExif = false;
@@ -561,9 +561,6 @@ public class ExifRewriter extends BinaryFileParser {
                     piece.write(os);
                 }
             }
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, os);
         }
     }
 

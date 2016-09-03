@@ -16,6 +16,15 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
+import static org.apache.commons.imaging.ImagingConstants.BUFFERED_IMAGE_FACTORY;
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_PIXEL_DENSITY;
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_VERBOSE;
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -38,15 +47,11 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
-import org.apache.commons.imaging.util.IoUtils;
-
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class BmpImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".bmp";
@@ -471,17 +476,10 @@ public class BmpImageParser extends ImageParser {
 
     private BmpHeaderInfo readBmpHeaderInfo(final ByteSource byteSource,
             final boolean verbose) throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
-
+        try (InputStream is = byteSource.getInputStream()) {
             // readSignature(is);
             final BmpHeaderInfo ret = readBmpHeaderInfo(is, null, verbose);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
@@ -565,15 +563,9 @@ public class BmpImageParser extends ImageParser {
             throw new ImageReadException("Unknown parameter: " + firstKey);
         }
 
-        InputStream is = null;
         ImageContents ic = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             ic = readImageContents(is, FormatCompliance.getDefault(), verbose);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
 
         if (ic == null) {
@@ -649,14 +641,8 @@ public class BmpImageParser extends ImageParser {
         final FormatCompliance result = new FormatCompliance(
                 byteSource.getDescription());
 
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             readImageContents(is, result, verbose);
-            canThrow = true;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
 
         return result;
@@ -665,15 +651,9 @@ public class BmpImageParser extends ImageParser {
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        InputStream is = null;
-        boolean canThrow = false;
-        try {
-            is = byteSource.getInputStream();
+        try (InputStream is = byteSource.getInputStream()) {
             final BufferedImage ret = getBufferedImage(is, params);
-            canThrow = true;
             return ret;
-        } finally {
-            IoUtils.closeQuietly(canThrow, is);
         }
     }
 
