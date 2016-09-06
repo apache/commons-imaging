@@ -97,10 +97,19 @@ public class MicrosoftTagTest extends ExifBaseTest {
         root.removeField(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION);
         root.removeField(TiffTagConstants.TIFF_TAG_ARTIST);
         
+        // Duplicates can be a problem:
+        root.removeField(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR, AUTHOR);
+        
+        root.removeField(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, COMMENT);
+        
+        root.removeField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, SUBJECT);
+        
+        root.removeField(MicrosoftTagConstants.EXIF_TAG_XPTITLE);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, TITLE);
+        
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         rewriter.updateExifMetadataLossy(imageWithExif, baos, outputSet);
         checkFields(baos.toByteArray());
