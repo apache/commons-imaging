@@ -43,7 +43,10 @@ public class TagInfoXpString extends TagInfo {
         }
         final String s = (String) value;
         try {
-            return s.getBytes("UTF-16LE");
+            final byte[] bytes = s.getBytes("UTF-16LE");
+            final byte[] paddedBytes = new byte[bytes.length + 2];
+            System.arraycopy(bytes, 0, paddedBytes, 0, bytes.length);
+            return paddedBytes;
         } catch (final UnsupportedEncodingException cannotHappen) {
             return null;
         }
@@ -55,7 +58,14 @@ public class TagInfoXpString extends TagInfo {
             throw new ImageReadException("Text field not encoded as bytes.");
         }
         try {
-            return new String(entry.getByteArrayValue(), "UTF-16LE");
+            final byte[] bytes = entry.getByteArrayValue();
+            final int length;
+            if (bytes.length >= 2 && bytes[bytes.length - 1] == 0 && bytes[bytes.length - 2] == 0) {
+                length = bytes.length - 2;
+            } else {
+                length = bytes.length;
+            }
+            return new String(bytes, 0, length, "UTF-16LE");
         } catch (final UnsupportedEncodingException cannotHappen) {
             return null;
         }
