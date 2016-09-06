@@ -483,6 +483,24 @@ public final class ExifTagConstants {
     public static final TagInfoAscii EXIF_TAG_IMAGE_UNIQUE_ID = new TagInfoAscii(
             "ImageUniqueID", 0xa420, 33,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoAscii EXIF_TAG_CAMERA_OWNER_NAME = new TagInfoAscii(
+            "CameraOwnerName", 0xa430, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoAscii EXIF_TAG_BODY_SERIAL_NUMBER = new TagInfoAscii(
+            "BodySerialNumber", 0xa431, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_LENS_SPECIFICATION = new TagInfoRational(
+            "LensSpecification", 0xa432, 4,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoAscii EXIF_TAG_LENS_MAKE = new TagInfoAscii(
+            "LensMake", 0xa433, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoAscii EXIF_TAG_LENS_MODEL = new TagInfoAscii(
+            "LensModel", 0xa434, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoAscii EXIF_TAG_LENS_SERIAL_NUMBER = new TagInfoAscii(
+            "LensSerialNumber", 0xa435, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoRational EXIF_TAG_GAMMA = new TagInfoRational(
             "Gamma", 0xa500, 1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
