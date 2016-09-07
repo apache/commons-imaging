@@ -95,8 +95,7 @@ public class IcnsImageParser extends ImageParser {
         }
 
         final IcnsContents contents = readImage(byteSource);
-        final List<BufferedImage> images = IcnsDecoder
-                .decodeAllImages(contents.icnsElements);
+        final List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty()) {
             throw new ImageReadException("No icons in ICNS file");
         }
@@ -125,8 +124,7 @@ public class IcnsImageParser extends ImageParser {
         }
 
         final IcnsContents contents = readImage(byteSource);
-        final List<BufferedImage> images = IcnsDecoder
-                .decodeAllImages(contents.icnsElements);
+        final List<BufferedImage> images = IcnsDecoder.decodeAllImages(contents.icnsElements);
         if (images.isEmpty()) {
             throw new ImageReadException("No icons in ICNS file");
         }
@@ -264,8 +262,7 @@ public class IcnsImageParser extends ImageParser {
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
             final Map<String, Object> params) throws ImageReadException, IOException {
         final IcnsContents icnsContents = readImage(byteSource);
-        final List<BufferedImage> result = IcnsDecoder
-                .decodeAllImages(icnsContents.icnsElements);
+        final List<BufferedImage> result = IcnsDecoder.decodeAllImages(icnsContents.icnsElements);
         if (!result.isEmpty()) {
             return result.get(0);
         }

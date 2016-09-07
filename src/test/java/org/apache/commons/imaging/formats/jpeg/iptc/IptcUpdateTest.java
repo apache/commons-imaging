@@ -66,15 +66,14 @@ public class IptcUpdateTest extends IptcBaseTest {
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
-        final JpegPhotoshopMetadata metadata = new JpegImageParser()
-                .getPhotoshopMetadata(byteSource, params);
+        final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(
+                byteSource, params);
         assertNotNull(metadata);
 
         final File noIptcFile = removeIptc(byteSource);
         
-        final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
-                .getPhotoshopMetadata(new ByteSourceFile(noIptcFile),
-                        params);
+        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
+                new ByteSourceFile(noIptcFile), params);
         
         // FIXME should either be null or empty
         assertTrue(outMetadata == null
@@ -98,7 +97,8 @@ public class IptcUpdateTest extends IptcBaseTest {
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
-        final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(byteSource, params);
+        final JpegPhotoshopMetadata metadata = new JpegImageParser().getPhotoshopMetadata(
+                byteSource, params);
         assertNotNull(metadata);
 
         final File noIptcFile = removeIptc(byteSource);
@@ -122,8 +122,8 @@ public class IptcUpdateTest extends IptcBaseTest {
         }
 
         final ByteSource updateByteSource = new ByteSourceFile(updated);
-        final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
-                .getPhotoshopMetadata(updateByteSource, params);
+        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
+                updateByteSource, params);
 
         assertNotNull(outMetadata);
         assertTrue(outMetadata.getItems().size() == 2);
@@ -153,8 +153,8 @@ public class IptcUpdateTest extends IptcBaseTest {
         final File updated = writeIptc(byteSource, newData);
 
         final ByteSource updateByteSource = new ByteSourceFile(updated);
-        final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
-                .getPhotoshopMetadata(updateByteSource, params);
+        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
+                updateByteSource, params);
 
         assertNotNull(outMetadata);
         assertTrue(outMetadata.getItems().size() == 2);

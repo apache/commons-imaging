@@ -207,8 +207,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
                 continue;
             }
 
-            final TiffOutputDirectory outputDirectory = srcDir
-                    .getOutputDirectory(byteOrder);
+            final TiffOutputDirectory outputDirectory = srcDir.getOutputDirectory(byteOrder);
             result.addDirectory(outputDirectory);
         }
 
@@ -453,14 +452,10 @@ public class TiffImageMetadata extends GenericImageMetadata {
         }
 
         // more specific example of how to access GPS values.
-        final TiffField latitudeRefField = gpsDirectory
-                .findField(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
-        final TiffField latitudeField = gpsDirectory
-                .findField(GpsTagConstants.GPS_TAG_GPS_LATITUDE);
-        final TiffField longitudeRefField = gpsDirectory
-                .findField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
-        final TiffField longitudeField = gpsDirectory
-                .findField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
+        final TiffField latitudeRefField = gpsDirectory.findField(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
+        final TiffField latitudeField = gpsDirectory.findField(GpsTagConstants.GPS_TAG_GPS_LATITUDE);
+        final TiffField longitudeRefField = gpsDirectory.findField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
+        final TiffField longitudeField = gpsDirectory.findField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
 
         if (latitudeRefField == null || latitudeField == null
                 || longitudeRefField == null || longitudeField == null) {

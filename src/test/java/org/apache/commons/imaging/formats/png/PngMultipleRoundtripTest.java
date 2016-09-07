@@ -35,8 +35,8 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
 
     @Test
     public void test() throws Exception {
-        final String imagesFolderPath = FilenameUtils
-                .separatorsToSystem("src\\test\\data\\images\\png\\3");
+        final String imagesFolderPath = FilenameUtils.separatorsToSystem(
+                "src\\test\\data\\images\\png\\3");
         final File imagesFolder = new File(imagesFolderPath);
         assertTrue(imagesFolder.exists() && imagesFolder.isDirectory());
 

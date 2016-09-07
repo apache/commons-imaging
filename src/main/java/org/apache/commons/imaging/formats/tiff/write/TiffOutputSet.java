@@ -165,8 +165,7 @@ public final class TiffOutputSet {
             final double longitudeSeconds = value;
 
             gpsDirectory.removeField(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
-            gpsDirectory
-                    .add(GpsTagConstants.GPS_TAG_GPS_LONGITUDE,
+            gpsDirectory.add(GpsTagConstants.GPS_TAG_GPS_LONGITUDE,
                             RationalNumber.valueOf(longitudeDegrees),
                             RationalNumber.valueOf(longitudeMinutes),
                             RationalNumber.valueOf(longitudeSeconds));

@@ -180,8 +180,8 @@ public abstract class TiffImageWriterBase {
             previousDirectory = directory;
         }
 
-        final TiffOutputDirectory rootDirectory = directoryTypeMap
-                .get(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
+        final TiffOutputDirectory rootDirectory = directoryTypeMap.get(
+                TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
 
         // prepare results
         final TiffOutputSummary result = new TiffOutputSummary(byteOrder,
@@ -264,8 +264,8 @@ public abstract class TiffImageWriterBase {
             params.remove(ImagingConstants.PARAM_KEY_XMP_XML);
         }
 
-        PixelDensity pixelDensity = (PixelDensity) params
-                .remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
+        PixelDensity pixelDensity = (PixelDensity) params.remove(
+                ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
         if (pixelDensity == null) {
             pixelDensity = PixelDensity.createFromPixelsPerInch(72, 72);
         }
@@ -499,8 +499,7 @@ public abstract class TiffImageWriterBase {
 
     private void combineUserExifIntoFinalExif(final TiffOutputSet userExif,
             final TiffOutputSet outputSet) throws ImageWriteException {
-        final List<TiffOutputDirectory> outputDirectories = outputSet
-                .getDirectories();
+        final List<TiffOutputDirectory> outputDirectories = outputSet.getDirectories();
         Collections.sort(outputDirectories, TiffOutputDirectory.COMPARATOR);
         for (final TiffOutputDirectory userDirectory : userExif.getDirectories()) {
             final int location = Collections.binarySearch(outputDirectories,
@@ -508,8 +507,7 @@ public abstract class TiffImageWriterBase {
             if (location < 0) {
                 outputSet.addDirectory(userDirectory);
             } else {
-                final TiffOutputDirectory outputDirectory = outputDirectories
-                        .get(location);
+                final TiffOutputDirectory outputDirectory = outputDirectories.get(location);
                 for (final TiffOutputField userField : userDirectory.getFields()) {
                     if (outputDirectory.findField(userField.tagInfo) == null) {
                         outputDirectory.add(userField);

@@ -207,8 +207,7 @@ public class DcxImageParser extends ImageParser {
         }
 
         if (params.containsKey(PcxConstants.PARAM_KEY_PCX_COMPRESSION)) {
-            final Object value = params
-                    .remove(PcxConstants.PARAM_KEY_PCX_COMPRESSION);
+            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_COMPRESSION);
             pcxParams.put(PcxConstants.PARAM_KEY_PCX_COMPRESSION, value);
         }
         

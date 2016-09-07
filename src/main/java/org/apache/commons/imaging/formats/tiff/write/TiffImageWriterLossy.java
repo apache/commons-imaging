@@ -41,8 +41,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
             throws IOException, ImageWriteException {
         final TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
-        final List<TiffOutputItem> outputItems = outputSet
-                .getOutputItems(outputSummary);
+        final List<TiffOutputItem> outputItems = outputSet.getOutputItems(outputSummary);
 
         updateOffsetsStep(outputItems);
 

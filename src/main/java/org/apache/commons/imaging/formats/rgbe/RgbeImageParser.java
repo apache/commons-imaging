@@ -108,8 +108,9 @@ public class RgbeImageParser extends ImageParser {
                     ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
                     Transparency.OPAQUE, buffer.getDataType()),
                     Raster.createWritableRaster(
-                            new BandedSampleModel(buffer.getDataType(), info
-                                    .getWidth(), info.getHeight(), 3), buffer,
+                            new BandedSampleModel(buffer.getDataType(),
+                                    info.getWidth(), info.getHeight(), 3),
+                            buffer,
                             new Point()), false, null);
             return ret;
         }

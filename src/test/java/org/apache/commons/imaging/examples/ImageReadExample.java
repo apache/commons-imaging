@@ -51,8 +51,7 @@ public class ImageReadExample {
         @Override
         public BufferedImage getColorBufferedImage(final int width, final int height,
                 final boolean hasAlpha) {
-            final GraphicsEnvironment ge = GraphicsEnvironment
-                    .getLocalGraphicsEnvironment();
+            final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             final GraphicsDevice gd = ge.getDefaultScreenDevice();
             final GraphicsConfiguration gc = gd.getDefaultConfiguration();
             return gc.createCompatibleImage(width, height,

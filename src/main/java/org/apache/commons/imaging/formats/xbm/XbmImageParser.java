@@ -296,13 +296,11 @@ public class XbmImageParser extends ImageParser {
         long bits = uuid.getMostSignificantBits();
         // Long.toHexString() breaks for very big numbers
         for (int i = 64 - 8; i >= 0; i -= 8) {
-            stringBuilder.append(Integer
-                    .toHexString((int) ((bits >> i) & 0xff)));
+            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
         }
         bits = uuid.getLeastSignificantBits();
         for (int i = 64 - 8; i >= 0; i -= 8) {
-            stringBuilder.append(Integer
-                    .toHexString((int) ((bits >> i) & 0xff)));
+            stringBuilder.append(Integer.toHexString((int) ((bits >> i) & 0xff)));
         }
         return stringBuilder.toString();
     }
@@ -333,12 +331,9 @@ public class XbmImageParser extends ImageParser {
 
         final String name = randomName();
 
-        os.write(("#define " + name + "_width " + src.getWidth() + "\n")
-                .getBytes("US-ASCII"));
-        os.write(("#define " + name + "_height " + src.getHeight() + "\n")
-                .getBytes("US-ASCII"));
-        os.write(("static unsigned char " + name + "_bits[] = {")
-                .getBytes("US-ASCII"));
+        os.write(("#define " + name + "_width " + src.getWidth() + "\n").getBytes("US-ASCII"));
+        os.write(("#define " + name + "_height " + src.getHeight() + "\n").getBytes("US-ASCII"));
+        os.write(("static unsigned char " + name + "_bits[] = {").getBytes("US-ASCII"));
 
         int bitcache = 0;
         int bitsInCache = 0;

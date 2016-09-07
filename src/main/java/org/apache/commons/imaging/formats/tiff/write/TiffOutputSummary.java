@@ -69,8 +69,8 @@ class TiffOutputSummary {
                 imageDataInfo.imageDataOffsets[j] = (int) item.getOffset();
             }
 
-            imageDataInfo.imageDataOffsetsField.setData(FieldType.LONG
-                    .writeData(imageDataInfo.imageDataOffsets, byteOrder));
+            imageDataInfo.imageDataOffsetsField.setData(
+                    FieldType.LONG.writeData(imageDataInfo.imageDataOffsets, byteOrder));
         }
     }
 

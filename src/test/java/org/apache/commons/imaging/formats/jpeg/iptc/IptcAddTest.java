@@ -95,8 +95,8 @@ public class IptcAddTest extends IptcBaseTest {
         }
 
         final ByteSource updateByteSource = new ByteSourceFile(updated);
-        final JpegPhotoshopMetadata outMetadata = new JpegImageParser()
-                .getPhotoshopMetadata(updateByteSource, params);
+        final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
+                updateByteSource, params);
 
         assertNotNull(outMetadata);
         assertTrue(outMetadata.getItems().size() == newRecords.size());

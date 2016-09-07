@@ -519,13 +519,11 @@ class PngWriter {
         if (pixelDensityObj instanceof PixelDensity) {
             final PixelDensity pixelDensity = (PixelDensity) pixelDensityObj;
             if (pixelDensity.isUnitless()) {
-                writeChunkPHYS(os, (int) Math.round(pixelDensity
-                        .getRawHorizontalDensity()),
+                writeChunkPHYS(os, (int) Math.round(pixelDensity.getRawHorizontalDensity()),
                         (int) Math.round(pixelDensity.getRawVerticalDensity()),
                         (byte) 0);
             } else {
-                writeChunkPHYS(os, (int) Math.round(pixelDensity
-                        .horizontalDensityMetres()),
+                writeChunkPHYS(os, (int) Math.round(pixelDensity.horizontalDensityMetres()),
                         (int) Math.round(pixelDensity.verticalDensityMetres()),
                         (byte) 1);
             }

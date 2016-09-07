@@ -84,8 +84,8 @@ public class TiffImageParser extends ImageParser {
     public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params))
-                .readFirstDirectory(byteSource, params, false, formatCompliance);
+        final TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(
+                byteSource, params, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
         return directory.getFieldValue(TiffEpTagConstants.EXIF_TAG_INTER_COLOR_PROFILE,
@@ -96,8 +96,8 @@ public class TiffImageParser extends ImageParser {
     public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params))
-                .readFirstDirectory(byteSource, params, false, formatCompliance);
+        final TiffContents contents = new TiffReader(isStrict(params)).readFirstDirectory(
+                byteSource, params, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
         final TiffField widthField = directory.findField(
@@ -147,8 +147,8 @@ public class TiffImageParser extends ImageParser {
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params))
-                .readDirectories(byteSource, false, formatCompliance);
+        final TiffContents contents = new TiffReader(isStrict(params)).readDirectories(
+                byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
         final TiffField widthField = directory.findField(
@@ -165,8 +165,8 @@ public class TiffImageParser extends ImageParser {
 
         // -------------------
 
-        final TiffField resolutionUnitField = directory
-                .findField(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT);
+        final TiffField resolutionUnitField = directory.findField(
+                TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT);
         int resolutionUnit = 2; // Inch
         if ((resolutionUnitField != null)
                 && (resolutionUnitField.getValue() != null)) {
@@ -187,10 +187,10 @@ public class TiffImageParser extends ImageParser {
             break;
 
         }
-        final TiffField xResolutionField = directory
-                .findField(TiffTagConstants.TIFF_TAG_XRESOLUTION);
-        final TiffField yResolutionField = directory
-                .findField(TiffTagConstants.TIFF_TAG_YRESOLUTION);
+        final TiffField xResolutionField = directory.findField(
+                TiffTagConstants.TIFF_TAG_XRESOLUTION);
+        final TiffField yResolutionField = directory.findField(
+                TiffTagConstants.TIFF_TAG_YRESOLUTION);
 
         int physicalWidthDpi = -1;
         float physicalWidthInch = -1;
@@ -200,26 +200,21 @@ public class TiffImageParser extends ImageParser {
         if (unitsPerInch > 0) {
             if ((xResolutionField != null)
                     && (xResolutionField.getValue() != null)) {
-                final double xResolutionPixelsPerUnit = xResolutionField
-                        .getDoubleValue();
-                physicalWidthDpi = (int) Math
-                        .round((xResolutionPixelsPerUnit * unitsPerInch));
+                final double xResolutionPixelsPerUnit = xResolutionField.getDoubleValue();
+                physicalWidthDpi = (int) Math.round((xResolutionPixelsPerUnit * unitsPerInch));
                 physicalWidthInch = (float) (width / (xResolutionPixelsPerUnit * unitsPerInch));
             }
             if ((yResolutionField != null)
                     && (yResolutionField.getValue() != null)) {
-                final double yResolutionPixelsPerUnit = yResolutionField
-                        .getDoubleValue();
-                physicalHeightDpi = (int) Math
-                        .round((yResolutionPixelsPerUnit * unitsPerInch));
+                final double yResolutionPixelsPerUnit = yResolutionField.getDoubleValue();
+                physicalHeightDpi = (int) Math.round((yResolutionPixelsPerUnit * unitsPerInch));
                 physicalHeightInch = (float) (height / (yResolutionPixelsPerUnit * unitsPerInch));
             }
         }
 
         // -------------------
 
-        final TiffField bitsPerSampleField = directory
-                .findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
+        final TiffField bitsPerSampleField = directory.findField(TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
 
         int bitsPerSample = 1;
         if ((bitsPerSampleField != null)
@@ -251,16 +246,14 @@ public class TiffImageParser extends ImageParser {
 
         final boolean transparent = false; // TODO: wrong
         boolean usesPalette = false;
-        final TiffField colorMapField = directory
-                .findField(TiffTagConstants.TIFF_TAG_COLOR_MAP);
+        final TiffField colorMapField = directory.findField(TiffTagConstants.TIFF_TAG_COLOR_MAP);
         if (colorMapField != null) {
             usesPalette = true;
         }
 
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
 
-        final short[] compressionFieldValues = directory
-            .getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION, false);
+        final short[] compressionFieldValues = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION, false);
         final short compressionFieldValue = compressionFieldValues != null ?
             compressionFieldValues[0] : TIFF_COMPRESSION_UNCOMPRESSED_1;
         final int compression = 0xffff & compressionFieldValue;
@@ -309,8 +302,8 @@ public class TiffImageParser extends ImageParser {
     public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params))
-                .readDirectories(byteSource, false, formatCompliance);
+        final TiffContents contents = new TiffReader(isStrict(params)).readDirectories(
+                byteSource, false, formatCompliance);
         final TiffDirectory directory = contents.directories.get(0);
 
         final byte[] bytes = directory.getFieldValue(TiffTagConstants.TIFF_TAG_XMP,
@@ -347,8 +340,7 @@ public class TiffImageParser extends ImageParser {
 
             // try
             {
-                final FormatCompliance formatCompliance = FormatCompliance
-                        .getDefault();
+                final FormatCompliance formatCompliance = FormatCompliance.getDefault();
                 final Map<String, Object> params = null;
                 final TiffContents contents = new TiffReader(true).readContents(
                         byteSource, params, formatCompliance);
@@ -403,14 +395,13 @@ public class TiffImageParser extends ImageParser {
     public List<byte[]> collectRawImageData(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final FormatCompliance formatCompliance = FormatCompliance.getDefault();
-        final TiffContents contents = new TiffReader(isStrict(params))
-                .readDirectories(byteSource, true, formatCompliance);
+        final TiffContents contents = new TiffReader(isStrict(params)).readDirectories(
+                byteSource, true, formatCompliance);
 
         final List<byte[]> result = new ArrayList<>();
         for (int i = 0; i < contents.directories.size(); i++) {
             final TiffDirectory directory = contents.directories.get(i);
-            final List<ImageDataElement> dataElements = directory
-                    .getTiffRawImageDataElements();
+            final List<ImageDataElement> dataElements = directory.getTiffRawImageDataElements();
             for (ImageDataElement element : dataElements) {
                 final byte[] bytes = byteSource.getBlock(element.offset,
                         element.length);
@@ -555,8 +546,8 @@ public class TiffImageParser extends ImageParser {
 
         final int photometricInterpretation = 0xffff & directory.getSingleFieldValue(
                 TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
-        final short[] compressionFieldValues = directory
-            .getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION, false);
+        final short[] compressionFieldValues = directory.getFieldValue(
+                TiffTagConstants.TIFF_TAG_COMPRESSION, false);
         final short compressionFieldValue = compressionFieldValues != null ?
                 compressionFieldValues[0] : TIFF_COMPRESSION_UNCOMPRESSED_1;
         final int compression = 0xffff & compressionFieldValue;
@@ -675,8 +666,7 @@ public class TiffImageParser extends ImageParser {
         case 3: // Palette
         {
             final int[] colorMap = directory.findField(
-                    TiffTagConstants.TIFF_TAG_COLOR_MAP, true)
-                    .getIntArrayValue();
+                    TiffTagConstants.TIFF_TAG_COLOR_MAP, true).getIntArrayValue();
 
             final int expectedColormapSize = 3 * (1 << bitsPerPixel);
 

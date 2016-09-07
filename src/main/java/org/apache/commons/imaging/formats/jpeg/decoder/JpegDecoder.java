@@ -200,8 +200,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         } else if (marker == JpegConstants.DQT_MARKER) {
             final DqtSegment dqtSegment = new DqtSegment(marker, segmentData);
             for (int i = 0; i < dqtSegment.quantizationTables.size(); i++) {
-                final DqtSegment.QuantizationTable table = dqtSegment.quantizationTables
-                        .get(i);
+                final DqtSegment.QuantizationTable table = dqtSegment.quantizationTables.get(i);
                 if (0 > table.destinationIdentifier
                         || table.destinationIdentifier >= quantizationTables.length) {
                     throw new ImageReadException(

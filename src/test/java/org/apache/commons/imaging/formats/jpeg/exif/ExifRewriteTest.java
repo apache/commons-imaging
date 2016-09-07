@@ -76,8 +76,7 @@ public class ExifRewriteTest extends ExifBaseTest {
             new JpegUtils().dumpJFIF(byteSource);
 
             {
-                final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
-                        .getMetadata(imageFile);
+                final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
                 Assert.assertNotNull(metadata);
             }
 
@@ -114,8 +113,7 @@ public class ExifRewriteTest extends ExifBaseTest {
             Debug.debug("Source Segments:");
             new JpegUtils().dumpJFIF(byteSource);
 
-            final JpegImageMetadata originalMetadata = (JpegImageMetadata) Imaging
-                    .getMetadata(imageFile);
+            final JpegImageMetadata originalMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
             assertNotNull(originalMetadata);
 
             final TiffImageMetadata oldExifMetadata = originalMetadata.getExif();
@@ -156,8 +154,7 @@ public class ExifRewriteTest extends ExifBaseTest {
 
                 // assertTrue(!hasExifData(tempFile));
 
-                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
-                        .getMetadata(tempFile);
+                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(tempFile);
                 assertNotNull(newMetadata);
                 final TiffImageMetadata newExifMetadata = newMetadata.getExif();
                 assertNotNull(newExifMetadata);
@@ -195,8 +192,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 Debug.debug("Source Segments:");
                 new JpegUtils().dumpJFIF(byteSource);
 
-                final JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging
-                        .getMetadata(imageFile);
+                final JpegImageMetadata oldMetadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
                 if (null == oldMetadata) {
                     continue;
                 }
@@ -227,8 +223,7 @@ public class ExifRewriteTest extends ExifBaseTest {
 
                 // assertTrue(!hasExifData(tempFile));
 
-                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging
-                        .getMetadata(tempFile);
+                final JpegImageMetadata newMetadata = (JpegImageMetadata) Imaging.getMetadata(tempFile);
                 assertNotNull(newMetadata);
                 final TiffImageMetadata newExifMetadata = newMetadata.getExif();
                 assertNotNull(newExifMetadata);
@@ -284,8 +279,7 @@ public class ExifRewriteTest extends ExifBaseTest {
     private Map<Integer,TiffImageMetadata.Directory> makeDirectoryMap(final List<? extends ImageMetadataItem> directories) {
         final Map<Integer,TiffImageMetadata.Directory> directoryMap = new HashMap<>();
         for (int i = 0; i < directories.size(); i++) {
-            final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories
-                    .get(i);
+            final TiffImageMetadata.Directory directory = (TiffImageMetadata.Directory) directories.get(i);
             directoryMap.put(directory.type, directory);
         }
         return directoryMap;
@@ -328,10 +322,8 @@ public class ExifRewriteTest extends ExifBaseTest {
 
             // Debug.debug("dirType", dirType);
 
-            final TiffImageMetadata.Directory oldDirectory = oldDirectoryMap
-                    .get(dirType);
-            final TiffImageMetadata.Directory newDirectory = newDirectoryMap
-                    .get(dirType);
+            final TiffImageMetadata.Directory oldDirectory = oldDirectoryMap.get(dirType);
+            final TiffImageMetadata.Directory newDirectory = newDirectoryMap.get(dirType);
             assertNotNull(oldDirectory);
             assertNotNull(newDirectory);
 

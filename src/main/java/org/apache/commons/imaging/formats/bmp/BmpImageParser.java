@@ -717,8 +717,7 @@ public class BmpImageParser extends ImageParser {
             params.remove(PARAM_KEY_FORMAT);
         }
         if (params.containsKey(PARAM_KEY_PIXEL_DENSITY)) {
-            pixelDensity = (PixelDensity) params
-                    .remove(PARAM_KEY_PIXEL_DENSITY);
+            pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
         }
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
@@ -742,8 +741,7 @@ public class BmpImageParser extends ImageParser {
         os.write(0x42); // B, Windows 3.1x, 95, NT, Bitmap
         os.write(0x4d); // M
 
-        final int filesize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + // header
-                // size
+        final int filesize = BITMAP_FILE_HEADER_SIZE + BITMAP_INFO_HEADER_SIZE + // header size
                 4 * writer.getPaletteSize() + // palette size in bytes
                 imagedata.length;
         bos.write4Bytes(filesize);
@@ -764,10 +762,8 @@ public class BmpImageParser extends ImageParser {
 
         bos.write4Bytes(BI_RGB); // Compression
         bos.write4Bytes(imagedata.length); // Bitmap Data Size
-        bos.write4Bytes(pixelDensity != null ? (int) Math
-                .round(pixelDensity.horizontalDensityMetres()) : 0); // HResolution
-        bos.write4Bytes(pixelDensity != null ? (int) Math
-                .round(pixelDensity.verticalDensityMetres()) : 0); // VResolution
+        bos.write4Bytes(pixelDensity != null ? (int) Math.round(pixelDensity.horizontalDensityMetres()) : 0); // HResolution
+        bos.write4Bytes(pixelDensity != null ? (int) Math.round(pixelDensity.verticalDensityMetres()) : 0); // VResolution
         if (palette == null) {
             bos.write4Bytes(0); // Colors
         } else {

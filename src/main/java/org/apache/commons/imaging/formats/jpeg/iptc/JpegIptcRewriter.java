@@ -192,17 +192,14 @@ public class JpegIptcRewriter extends JpegRewriter {
         }
         final List<JFIFPiece> newPieces = removePhotoshopApp13Segments(oldPieces);
         if (!removeSegment && photoshopApp13Segments.size() == 1) {
-            final JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments
-                    .get(0);
+            final JFIFPieceSegment oldSegment = (JFIFPieceSegment) photoshopApp13Segments.get(0);
             final Map<String, Object> params = new HashMap<>();
-            final PhotoshopApp13Data oldData = new IptcParser()
-                    .parsePhotoshopSegment(oldSegment.segmentData, params);
+            final PhotoshopApp13Data oldData = new IptcParser().parsePhotoshopSegment(oldSegment.segmentData, params);
             final List<IptcBlock> newBlocks = oldData.getNonIptcBlocks();
             final List<IptcRecord> newRecords = new ArrayList<>();
             final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                     newBlocks);
-            final byte[] segmentBytes = new IptcParser()
-                    .writePhotoshopApp13Segment(newData);
+            final byte[] segmentBytes = new IptcParser().writePhotoshopApp13Segment(newData);
             final JFIFPieceSegment newSegment = new JFIFPieceSegment(
                     oldSegment.marker, segmentBytes);
             newPieces.add(oldPieces.indexOf(oldSegment), newSegment);

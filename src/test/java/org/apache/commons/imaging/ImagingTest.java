@@ -136,7 +136,7 @@ public abstract class ImagingTest implements
     }
 
     protected boolean isInvalidPNGTestFile(final File file) {
-        return (file.getParentFile().getName().equalsIgnoreCase("pngsuite") && file
-                .getName().toLowerCase().startsWith("x"));
+        return (file.getParentFile().getName().equalsIgnoreCase("pngsuite") &&
+                file.getName().toLowerCase().startsWith("x"));
     }
 }

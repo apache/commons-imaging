@@ -94,25 +94,22 @@ public class MetadataExample {
             }
 
             // more specific example of how to manually access GPS values
-            final TiffField gpsLatitudeRefField = jpegMetadata
-                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
-            final TiffField gpsLatitudeField = jpegMetadata
-                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LATITUDE);
-            final TiffField gpsLongitudeRefField = jpegMetadata
-                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
-            final TiffField gpsLongitudeField = jpegMetadata
-                    .findEXIFValueWithExactMatch(GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
-            if (gpsLatitudeRefField != null && gpsLatitudeField != null
-                    && gpsLongitudeRefField != null
-                    && gpsLongitudeField != null) {
+            final TiffField gpsLatitudeRefField = jpegMetadata.findEXIFValueWithExactMatch(
+                    GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF);
+            final TiffField gpsLatitudeField = jpegMetadata.findEXIFValueWithExactMatch(
+                    GpsTagConstants.GPS_TAG_GPS_LATITUDE);
+            final TiffField gpsLongitudeRefField = jpegMetadata.findEXIFValueWithExactMatch(
+                    GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF);
+            final TiffField gpsLongitudeField = jpegMetadata.findEXIFValueWithExactMatch(
+                    GpsTagConstants.GPS_TAG_GPS_LONGITUDE);
+            if (gpsLatitudeRefField != null && gpsLatitudeField != null &&
+                    gpsLongitudeRefField != null &&
+                    gpsLongitudeField != null) {
                 // all of these values are strings.
                 final String gpsLatitudeRef = (String) gpsLatitudeRefField.getValue();
-                final RationalNumber gpsLatitude[] = (RationalNumber[]) (gpsLatitudeField
-                        .getValue());
-                final String gpsLongitudeRef = (String) gpsLongitudeRefField
-                        .getValue();
-                final RationalNumber gpsLongitude[] = (RationalNumber[]) gpsLongitudeField
-                        .getValue();
+                final RationalNumber gpsLatitude[] = (RationalNumber[]) (gpsLatitudeField.getValue());
+                final String gpsLongitudeRef = (String) gpsLongitudeRefField.getValue();
+                final RationalNumber gpsLongitude[] = (RationalNumber[]) gpsLongitudeField.getValue();
 
                 final RationalNumber gpsLatitudeDegrees = gpsLatitude[0];
                 final RationalNumber gpsLatitudeMinutes = gpsLatitude[1];

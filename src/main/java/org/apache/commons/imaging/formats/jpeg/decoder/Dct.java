@@ -85,11 +85,9 @@ final class Dct {
             (float) (4.0 * Math.cos(7.0 * Math.PI / 16.0) * 0.125), };
 
     private static final float A1 = (float) (Math.cos(2.0 * Math.PI / 8.0));
-    private static final float A2 = (float) (Math.cos(Math.PI / 8.0) - Math
-            .cos(3.0 * Math.PI / 8.0));
+    private static final float A2 = (float) (Math.cos(Math.PI / 8.0) - Math.cos(3.0 * Math.PI / 8.0));
     private static final float A3 = A1;
-    private static final float A4 = (float) (Math.cos(Math.PI / 8.0) + Math
-            .cos(3.0 * Math.PI / 8.0));
+    private static final float A4 = (float) (Math.cos(Math.PI / 8.0) + Math.cos(3.0 * Math.PI / 8.0));
     private static final float A5 = (float) (Math.cos(3.0 * Math.PI / 8.0));
 
     private static final float C2 = (float) (2.0 * Math.cos(Math.PI / 8));

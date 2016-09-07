@@ -602,8 +602,8 @@ public class PsdImageParser extends ImageParser {
         // transfer_type = DataBuffer.TYPE_BYTE;
 
         final boolean hasAlpha = false;
-        final BufferedImage result = getBufferedImageFactory(params)
-                .getColorBufferedImage(width, height, hasAlpha);
+        final BufferedImage result = getBufferedImageFactory(params).getColorBufferedImage(
+                width, height, hasAlpha);
 
         DataParser dataParser;
         switch (imageContents.header.mode) {

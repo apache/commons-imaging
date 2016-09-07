@@ -959,8 +959,8 @@ public abstract class ImageParser extends BinaryFileParser {
             return new SimpleBufferedImageFactory();
         }
 
-        final BufferedImageFactory result = (BufferedImageFactory) params
-                .get(ImagingConstants.BUFFERED_IMAGE_FACTORY);
+        final BufferedImageFactory result = (BufferedImageFactory) params.get(
+                ImagingConstants.BUFFERED_IMAGE_FACTORY);
 
         if (null != result) {
             return result;

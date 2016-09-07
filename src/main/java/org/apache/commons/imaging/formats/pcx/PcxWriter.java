@@ -137,8 +137,7 @@ class PcxWriter {
     public void writeImage(final BufferedImage src, final OutputStream os)
             throws ImageWriteException, IOException {
         final PaletteFactory paletteFactory = new PaletteFactory();
-        final SimplePalette palette = paletteFactory
-                .makeExactRgbPaletteSimple(src, 256);
+        final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
         final BinaryOutputStream bos = new BinaryOutputStream(os,
                 ByteOrder.LITTLE_ENDIAN);
         if (palette == null || bitDepth == 24 || bitDepth == 32) {
@@ -175,8 +174,7 @@ class PcxWriter {
 
     private void write32BppPCX(final BufferedImage src, final BinaryOutputStream bos)
             throws ImageWriteException, IOException {
-        final int bytesPerLine = src.getWidth() % 2 == 0 ? src.getWidth() : src
-                .getWidth() + 1;
+        final int bytesPerLine = src.getWidth() % 2 == 0 ? src.getWidth() : src.getWidth() + 1;
 
         // PCX header
         bos.write(10); // manufacturer
@@ -187,8 +185,7 @@ class PcxWriter {
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes((short) Math.round(pixelDensity
-                .horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short) Math.round(pixelDensity.horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.write(new byte[48]); // 16 color palette
         bos.write(0); // reserved
@@ -215,8 +212,7 @@ class PcxWriter {
 
     private void write24BppPCX(final BufferedImage src, final BinaryOutputStream bos)
             throws ImageWriteException, IOException {
-        final int bytesPerLine = src.getWidth() % 2 == 0 ? src.getWidth() : src
-                .getWidth() + 1;
+        final int bytesPerLine = src.getWidth() % 2 == 0 ? src.getWidth() : src.getWidth() + 1;
 
         // PCX header
         bos.write(10); // manufacturer
@@ -227,8 +223,7 @@ class PcxWriter {
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes((short) Math.round(pixelDensity
-                .horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short) Math.round(pixelDensity.horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.write(new byte[48]); // 16 color palette
         bos.write(0); // reserved
@@ -270,8 +265,7 @@ class PcxWriter {
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes((short) Math.round(pixelDensity
-                .horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short) Math.round(pixelDensity.horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.write(new byte[48]); // 16 color palette
         bos.write(0); // reserved
@@ -331,8 +325,7 @@ class PcxWriter {
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes((short) Math.round(pixelDensity
-                .horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short) Math.round(pixelDensity.horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.write(palette16); // 16 color palette
         bos.write(0); // reserved
@@ -357,8 +350,7 @@ class PcxWriter {
 
     private void write256ColorPCX(final BufferedImage src, final SimplePalette palette,
             final BinaryOutputStream bos) throws ImageWriteException, IOException {
-        final int bytesPerLine = src.getWidth() % 2 == 0 ? src.getWidth() : src
-                .getWidth() + 1;
+        final int bytesPerLine = src.getWidth() % 2 == 0 ? src.getWidth() : src.getWidth() + 1;
 
         // PCX header
         bos.write(10); // manufacturer
@@ -369,8 +361,7 @@ class PcxWriter {
         bos.write2Bytes(0); // yMin
         bos.write2Bytes(src.getWidth() - 1); // xMax
         bos.write2Bytes(src.getHeight() - 1); // yMax
-        bos.write2Bytes((short) Math.round(pixelDensity
-                .horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short) Math.round(pixelDensity.horizontalDensityInches())); // hDpi
         bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
         bos.write(new byte[48]); // 16 color palette
         bos.write(0); // reserved

@@ -179,8 +179,7 @@ public final class T4AndT6Compression {
         for (int y = 0; y < height; y++) {
             compress1DLine(inputStream, outputStream, null, width);
             if (hasFill) {
-                int bitsAvailable = outputStream
-                        .getBitsAvailableInCurrentByte();
+                int bitsAvailable = outputStream.getBitsAvailableInCurrentByte();
                 if (bitsAvailable < 4) {
                     outputStream.flush();
                     bitsAvailable = 8;
@@ -326,8 +325,7 @@ public final class T4AndT6Compression {
                 compress1DLine(inputStream, outputStream, referenceLine, width);
             }
             if (hasFill) {
-                int bitsAvailable = outputStream
-                        .getBitsAvailableInCurrentByte();
+                int bitsAvailable = outputStream.getBitsAvailableInCurrentByte();
                 if (bitsAvailable < 4) {
                     outputStream.flush();
                     bitsAvailable = 8;

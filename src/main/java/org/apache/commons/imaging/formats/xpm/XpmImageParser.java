@@ -138,19 +138,18 @@ public class XpmImageParser extends ImageParser {
         final XpmHeader xpmHeader = readXpmHeader(byteSource);
         boolean transparent = false;
         ImageInfo.ColorType colorType = ImageInfo.ColorType.BW;
-        for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette
-                .entrySet()) {
-         final PaletteEntry paletteEntry = entry.getValue();
-         if ((paletteEntry.getBestARGB() & 0xff000000) != 0xff000000) {
-        transparent = true;
-         }
-         if (paletteEntry.haveColor) {
-        colorType = ImageInfo.ColorType.RGB;
-         } else if (colorType != ImageInfo.ColorType.RGB
-            && (paletteEntry.haveGray || paletteEntry.haveGray4Level)) {
-        colorType = ImageInfo.ColorType.GRAYSCALE;
-         }
-      }
+        for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
+            final PaletteEntry paletteEntry = entry.getValue();
+            if ((paletteEntry.getBestARGB() & 0xff000000) != 0xff000000) {
+                transparent = true;
+            }
+            if (paletteEntry.haveColor) {
+                colorType = ImageInfo.ColorType.RGB;
+            } else if (colorType != ImageInfo.ColorType.RGB
+                    && (paletteEntry.haveGray || paletteEntry.haveGray4Level)) {
+                colorType = ImageInfo.ColorType.GRAYSCALE;
+            }
+        }
         return new ImageInfo("XPM version 3", xpmHeader.numCharsPerPixel * 8,
                 new ArrayList<String>(), ImageFormats.XPM,
                 "X PixMap", xpmHeader.height, "image/x-xpixmap", 1, 0, 0, 0, 0,
@@ -272,8 +271,7 @@ public class XpmImageParser extends ImageParser {
                     + "no string found where expected");
         }
         BasicCParser.unescapeString(stringBuilder, token);
-        for (token = cParser.nextToken(); token.charAt(0) == '"'; token = cParser
-                .nextToken()) {
+        for (token = cParser.nextToken(); token.charAt(0) == '"'; token = cParser.nextToken()) {
             BasicCParser.unescapeString(stringBuilder, token);
         }
         if (",".equals(token)) {
@@ -507,8 +505,7 @@ public class XpmImageParser extends ImageParser {
         int bpp;
         if (xpmHeader.palette.size() <= (1 << 8)) {
             final int[] palette = new int[xpmHeader.palette.size()];
-            for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette
-                    .entrySet()) {
+            for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
             final PaletteEntry paletteEntry = entry.getValue();
             palette[paletteEntry.index] = paletteEntry.getBestARGB();
          }
@@ -520,8 +517,7 @@ public class XpmImageParser extends ImageParser {
             bpp = 8;
         } else if (xpmHeader.palette.size() <= (1 << 16)) {
             final int[] palette = new int[xpmHeader.palette.size()];
-            for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette
-                    .entrySet()) {
+            for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
             final PaletteEntry paletteEntry = entry.getValue();
             palette[paletteEntry.index] = paletteEntry.getBestARGB();
          }

@@ -84,16 +84,14 @@ public class ByteSourceImageTest extends ByteSourceTest {
         checkGuessFormat(imageFile, imageFileBytes);
 
         if (imageFile.getName().toLowerCase().endsWith(".png")
-                && imageFile.getParentFile().getName()
-                        .equalsIgnoreCase("pngsuite")
+                && imageFile.getParentFile().getName().equalsIgnoreCase("pngsuite")
                 && imageFile.getName().toLowerCase().startsWith("x")) {
             return;
         }
 
         checkGetICCProfileBytes(imageFile, imageFileBytes);
 
-        if (!imageFile.getParentFile().getName().toLowerCase()
-                .equals("@broken")) {
+        if (!imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
             checkGetImageInfo(imageFile, imageFileBytes);
         }
 

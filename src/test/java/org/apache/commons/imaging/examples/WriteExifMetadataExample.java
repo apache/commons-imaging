@@ -104,12 +104,10 @@ public class WriteExifMetadataExample {
                 // TagInfo constants often contain a description of what
                 // directories are associated with a given tag.
                 //
-                final TiffOutputDirectory exifDirectory = outputSet
-                        .getOrCreateExifDirectory();
+                final TiffOutputDirectory exifDirectory = outputSet.getOrCreateExifDirectory();
                 // make sure to remove old value if present (this method will
                 // not fail if the tag does not exist).
-                exifDirectory
-                        .removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
+                exifDirectory.removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
                 exifDirectory.add(ExifTagConstants.EXIF_TAG_APERTURE_VALUE,
                         new RationalNumber(3, 10));
             }
@@ -198,11 +196,9 @@ public class WriteExifMetadataExample {
                 // To learn which directory a tag appears in, either refer to
                 // the constants in ExifTagConstants.java or go to Phil Harvey's
                 // EXIF website.
-                final TiffOutputDirectory exifDirectory = outputSet
-                        .getExifDirectory();
+                final TiffOutputDirectory exifDirectory = outputSet.getExifDirectory();
                 if (null != exifDirectory) {
-                    exifDirectory
-                            .removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
+                    exifDirectory.removeField(ExifTagConstants.EXIF_TAG_APERTURE_VALUE);
                 }
             }
 

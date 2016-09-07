@@ -104,8 +104,7 @@ public class ColorConversionsTest {
             assertEquals((0xffffff & hunterlab_xyz_rgb), (0xffffff & rgb));
 
             final ColorCieLch cielch = ColorConversions.convertCIELabtoCIELCH(cielab);
-            final ColorCieLab cielch_cielab = ColorConversions
-                    .convertCIELCHtoCIELab(cielch);
+            final ColorCieLab cielch_cielab = ColorConversions.convertCIELCHtoCIELab(cielch);
 
             Debug.debug("cielch", cielch);
             Debug.debug("cielch_cielab", cielch_cielab);

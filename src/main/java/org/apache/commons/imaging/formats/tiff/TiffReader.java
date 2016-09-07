@@ -299,8 +299,7 @@ public class TiffReader extends BinaryFileParser {
         public Collector(final Map<String, Object> params) {
             boolean tmpReadThumbnails = true;
             if (params != null && params.containsKey(ImagingConstants.PARAM_KEY_READ_THUMBNAILS)) {
-                tmpReadThumbnails = Boolean.TRUE.equals(params
-                        .get(ImagingConstants.PARAM_KEY_READ_THUMBNAILS));
+                tmpReadThumbnails = Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_READ_THUMBNAILS));
             }
             this.readThumbnails = tmpReadThumbnails;
         }
@@ -422,8 +421,7 @@ public class TiffReader extends BinaryFileParser {
     private TiffImageData getTiffRawImageData(final ByteSource byteSource,
             final TiffDirectory directory) throws ImageReadException, IOException {
 
-        final List<ImageDataElement> elements = directory
-                .getTiffRawImageDataElements();
+        final List<ImageDataElement> elements = directory.getTiffRawImageDataElements();
         final TiffImageData.Data[] data = new TiffImageData.Data[elements.size()];
 
         if (byteSource instanceof ByteSourceFile) {
@@ -442,8 +440,7 @@ public class TiffReader extends BinaryFileParser {
         }
 
         if (directory.imageDataInStrips()) {
-            final TiffField rowsPerStripField = directory
-                    .findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
+            final TiffField rowsPerStripField = directory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
             /*
              * Default value of rowsperstrip is assumed to be infinity
              * http://www.awaresystems.be/imaging/tiff/tifftags/rowsperstrip.html
@@ -453,8 +450,7 @@ public class TiffReader extends BinaryFileParser {
             if (null != rowsPerStripField) {
                 rowsPerStrip = rowsPerStripField.getIntValue();
             } else {
-                final TiffField imageHeight = directory
-                        .findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
+                final TiffField imageHeight = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
                 /**
                  * if rows per strip not present then rowsPerStrip is equal to
                  * imageLength or an infinity value;
@@ -467,15 +463,13 @@ public class TiffReader extends BinaryFileParser {
 
             return new TiffImageData.Strips(data, rowsPerStrip);
         } else {
-            final TiffField tileWidthField = directory
-                    .findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
+            final TiffField tileWidthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
             if (null == tileWidthField) {
                 throw new ImageReadException("Can't find tile width field.");
             }
             final int tileWidth = tileWidthField.getIntValue();
 
-            final TiffField tileLengthField = directory
-                    .findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
+            final TiffField tileLengthField = directory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
             if (null == tileLengthField) {
                 throw new ImageReadException("Can't find tile length field.");
             }

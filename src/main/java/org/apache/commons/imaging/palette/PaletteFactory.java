@@ -432,8 +432,7 @@ public class PaletteFactory {
         final int width = src.getWidth();
         final int height = src.getHeight();
 
-        if (ColorSpace.TYPE_GRAY == src.getColorModel().getColorSpace()
-                .getType()) {
+        if (ColorSpace.TYPE_GRAY == src.getColorModel().getColorSpace().getType()) {
             return true;
         }
 

@@ -140,8 +140,7 @@ public abstract class DataReader {
     protected byte[] decompress(final byte[] compressed, final int compression,
             final int expectedSize, final int tileWidth, final int tileHeight)
             throws ImageReadException, IOException {
-        final TiffField fillOrderField = directory
-                .findField(TiffTagConstants.TIFF_TAG_FILL_ORDER);
+        final TiffField fillOrderField = directory.findField(TiffTagConstants.TIFF_TAG_FILL_ORDER);
         int fillOrder = TiffTagConstants.FILL_ORDER_VALUE_NORMAL;
         if (fillOrderField != null) {
             fillOrder = fillOrderField.getIntValue();
@@ -166,8 +165,7 @@ public abstract class DataReader {
                     tileWidth, tileHeight);
         case TIFF_COMPRESSION_CCITT_GROUP_3: {
             int t4Options = 0;
-            final TiffField field = directory
-                    .findField(TiffTagConstants.TIFF_TAG_T4_OPTIONS);
+            final TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T4_OPTIONS);
             if (field != null) {
                 t4Options = field.getIntValue();
             }
@@ -187,8 +185,7 @@ public abstract class DataReader {
         }
         case TIFF_COMPRESSION_CCITT_GROUP_4: {
             int t6Options = 0;
-            final TiffField field = directory
-                    .findField(TiffTagConstants.TIFF_TAG_T6_OPTIONS);
+            final TiffField field = directory.findField(TiffTagConstants.TIFF_TAG_T6_OPTIONS);
             if (field != null) {
                 t6Options = field.getIntValue();
             }

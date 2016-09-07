@@ -47,8 +47,7 @@ public class GpsTest extends ExifBaseTest {
 
     @Test
     public void test() throws Exception {
-        if (imageFile.getParentFile().getName().toLowerCase()
-                .equals("@broken")) {
+        if (imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
             return;
         }
 
@@ -56,8 +55,7 @@ public class GpsTest extends ExifBaseTest {
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
-        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging
-                .getMetadata(imageFile, params);
+        final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile, params);
         if (null == metadata) {
             return;
         }

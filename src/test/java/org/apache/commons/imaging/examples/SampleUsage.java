@@ -104,8 +104,7 @@ public class SampleUsage {
             Imaging.dumpImageFile(imageBytes);
 
             // <b>get a summary of format errors. </b>
-            final FormatCompliance formatCompliance = Imaging
-                    .getFormatCompliance(imageBytes);
+            final FormatCompliance formatCompliance = Imaging.getFormatCompliance(imageBytes);
 
         } catch (final Exception e) {
 

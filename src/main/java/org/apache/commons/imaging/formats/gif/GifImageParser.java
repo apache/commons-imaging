@@ -127,8 +127,7 @@ public class GifImageParser extends ImageParser {
             formatCompliance.compareBytes("Signature", GIF_HEADER_SIGNATURE,
                     new byte[]{identifier1, identifier2, identifier3,});
             formatCompliance.compare("version", 56, version1);
-            formatCompliance
-                    .compare("version", new int[] { 55, 57, }, version2);
+            formatCompliance.compare("version", new int[] { 55, 57, }, version2);
             formatCompliance.compare("version", 97, version3);
         }
 

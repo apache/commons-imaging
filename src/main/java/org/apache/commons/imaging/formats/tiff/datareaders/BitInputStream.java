@@ -123,8 +123,7 @@ class BitInputStream extends InputStream {
 
             if (count == 32) {
                 bytesRead += 4;
-                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16) | (is
-                        .read() << 24));
+                return ((is.read() << 0) | (is.read() << 8) | (is.read() << 16) | (is.read() << 24));
             }
         }
 

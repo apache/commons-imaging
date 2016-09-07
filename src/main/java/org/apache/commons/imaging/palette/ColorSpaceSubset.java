@@ -105,8 +105,7 @@ class ColorSpaceSubset {
         System.out.println("\t" + "red: " + mins[0] + ", " + maxs[0] + ", "
                 + "green: " + mins[1] + ", " + maxs[1] + ", " + "blue: "
                 + mins[2] + ", " + maxs[2]);
-        System.out
-                .println("\t" + "rdiff: " + rdiff + ", " + "gdiff: " + gdiff
+        System.out.println("\t" + "rdiff: " + rdiff + ", " + "gdiff: " + gdiff
                         + ", " + "bdiff: " + bdiff + ", " + "colorArea: "
                         + colorArea);
     }

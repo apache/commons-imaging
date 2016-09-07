@@ -52,8 +52,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest {
 
     @Test
     public void testAllImages() throws Exception {
-        if (imageFile.getParentFile().getName().toLowerCase()
-                .equals("@broken")) {
+        if (imageFile.getParentFile().getName().toLowerCase().equals("@broken")) {
             return;
         }
         checkImage(imageFile);

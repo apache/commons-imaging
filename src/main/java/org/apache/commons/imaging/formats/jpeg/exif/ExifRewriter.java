@@ -523,8 +523,7 @@ public class ExifRewriter extends BinaryFileParser {
                 final byte[] markerLengthBytes = ByteConversions.toBytes((short) markerLength, getByteOrder());
 
                 int index = 0;
-                final JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments
-                        .get(index);
+                final JFIFPieceSegment firstSegment = (JFIFPieceSegment) segments.get(index);
                 if (firstSegment.marker == JpegConstants.JFIF_MARKER) {
                     index = 1;
                 }
