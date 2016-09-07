@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -78,14 +79,12 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                     byteSource, params, formatCompliance);
 
             final List<TiffElement> elements = new ArrayList<>();
-            // result.add(contents.header); // ?
 
             final List<TiffDirectory> directories = contents.directories;
-            for (TiffDirectory directory : directories) {
+            for (final TiffDirectory directory : directories) {
                 elements.add(directory);
 
-                final List<TiffField> fields = directory.getDirectoryEntries();
-                for (TiffField field : fields) {
+                for (TiffField field : directory.getDirectoryEntries()) {
                     final TiffElement oversizeValue = field.getOversizeValueElement();
                     if (oversizeValue != null) {
                         final TiffOutputField frozenField = frozenFields.get(field.getTag());
@@ -113,35 +112,28 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
             Collections.sort(elements, TiffElement.COMPARATOR);
 
-            // dumpElements(byteSource, elements);
-
             final List<TiffElement> rewritableElements = new ArrayList<>();
-            {
-                final int TOLERANCE = 3;
-                // int last = TIFF_HEADER_SIZE;
-                TiffElement start = null;
-                long index = -1;
-                for (TiffElement element : elements) {
-                    final long lastElementByte = element.offset + element.length;
-                    if (start == null) {
-                        start = element;
-                        index = lastElementByte;
-                    } else if (element.offset - index > TOLERANCE) {
-                        rewritableElements.add(new TiffElement.Stub(start.offset,
-                                (int) (index - start.offset)));
-                        start = element;
-                        index = lastElementByte;
-                    } else {
-                        index = lastElementByte;
-                    }
-                }
-                if (null != start) {
+            final int TOLERANCE = 3;
+            TiffElement start = null;
+            long index = -1;
+            for (final TiffElement element : elements) {
+                final long lastElementByte = element.offset + element.length;
+                if (start == null) {
+                    start = element;
+                    index = lastElementByte;
+                } else if (element.offset - index > TOLERANCE) {
                     rewritableElements.add(new TiffElement.Stub(start.offset,
                             (int) (index - start.offset)));
+                    start = element;
+                    index = lastElementByte;
+                } else {
+                    index = lastElementByte;
                 }
             }
-
-            // dumpElements(byteSource, result);
+            if (null != start) {
+                rewritableElements.add(new TiffElement.Stub(start.offset,
+                        (int) (index - start.offset)));
+            }
 
             return rewritableElements;
         } catch (final ImageReadException e) {
@@ -183,8 +175,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
         final TiffOutputSummary outputSummary = validateDirectories(outputSet);
 
-        final List<TiffOutputItem> allOutputItems = outputSet
-                .getOutputItems(outputSummary);
+        final List<TiffOutputItem> allOutputItems = outputSet.getOutputItems(outputSummary);
         final List<TiffOutputItem> outputItems = new ArrayList<>();
         for (final TiffOutputItem outputItem : allOutputItems) {
             if (!frozenFieldOffsets.containsKey(outputItem.getOffset())) {
@@ -311,24 +302,15 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         System.arraycopy(exifBytes, 0, output, 0,
                 Math.min(exifBytes.length, output.length));
 
-        // bos.write(exifBytes, TIFF_HEADER_SIZE, exifBytes.length
-        // - TIFF_HEADER_SIZE);
-
-        {
-            final BufferOutputStream tos = new BufferOutputStream(output, 0);
-            final BinaryOutputStream bos = new BinaryOutputStream(tos, byteOrder);
-            writeImageFileHeader(bos, rootDirectory.getOffset());
-        }
+        final BufferOutputStream headerStream = new BufferOutputStream(output, 0);
+        final BinaryOutputStream headerBinaryStream = new BinaryOutputStream(headerStream, byteOrder);
+        writeImageFileHeader(headerBinaryStream, rootDirectory.getOffset());
 
         // zero out the parsed pieces of old exif segment, in case we don't
         // overwrite them.
-        for (TiffElement element : analysis) {
-            for (int j = 0; j < element.length; j++) {
-                final int index = (int) (element.offset + j);
-                if (index < output.length) {
-                    output[index] = 0;
-                }
-            }
+        for (final TiffElement element : analysis) {
+            Arrays.fill(output, (int)element.offset,
+                    (int)Math.min(element.offset + element.length, output.length), (byte)0);
         }
 
         // write in the new items
