@@ -58,9 +58,6 @@ public abstract class ByteSourceTest extends ImagingTest {
         }
 
         final byte zeroes[] = new byte[256];
-        for (int i = 0; i < zeroes.length; i++) {
-            zeroes[i] = 0;
-        }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (int i = 0; i < 256 * 256; i++) {

@@ -16,12 +16,24 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_LZW;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_PACKBITS;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_FLAG_T4_OPTIONS_2D;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_FLAG_T4_OPTIONS_FILL;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE;
+
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
@@ -32,8 +44,6 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
-
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
 public abstract class DataReader {
     protected final TiffDirectory directory;
@@ -112,9 +122,7 @@ public abstract class DataReader {
     }
 
     protected void resetPredictor() {
-        for (int i = 0; i < last.length; i++) {
-            last[i] = 0;
-        }
+        Arrays.fill(last, 0);
     }
 
     protected int[] applyPredictor(final int[] samples) {
