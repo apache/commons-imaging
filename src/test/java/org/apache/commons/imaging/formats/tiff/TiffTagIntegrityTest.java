@@ -16,10 +16,14 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.formats.tiff.constants.AdobePageMaker6TagConstants;
@@ -79,32 +83,36 @@ public class TiffTagIntegrityTest extends ImagingTest {
         verifyFields(WangTagConstants.class, WangTagConstants.ALL_WANG_TAGS);
     }
 
-    private void verifyFields(final Class<?> cls, final List<TagInfo> tags) {
-        final Field[] fields = cls.getFields();
-        int tagCount = 0;
-        int foundCount = 0;
-        for (final Field field : fields) {
+    private void verifyFields(final Class<?> cls, final List<TagInfo> allTags) {
+        ArrayList<Integer> fieldTags = new ArrayList<>();
+        for (final Field field : cls.getFields()) {
             field.setAccessible(true);
-            if (!(field.getType().isInstance(TagInfo.class))) {
-                continue;
-            }
-            ++tagCount;
-            TagInfo src = null;
+            Object obj = null;
             try {
-                src = (TagInfo) field.get(null);
+                obj = field.get(null);
             } catch (final IllegalAccessException illegalAccess) {
             }
-            if (src == null) {
+            if (obj == null) {
                 continue;
             }
-            for (int i = 0; i < tags.size(); i++) {
-                final TagInfo tagInfo = tags.get(i);
-                if (tagInfo.tag == src.tag) {
-                    ++foundCount;
-                    break;
-                }
+            if (!(obj instanceof TagInfo)) {
+                continue;
             }
+            TagInfo src = (TagInfo) obj;
+            if (src.tag == -1) {
+                // Skip TiffTagConstants.TIFF_TAG_UNKNOWN
+                continue;
+            }
+            fieldTags.add(src.tag);
         }
-        assertEquals(tagCount, foundCount);
+        Collections.sort(fieldTags);
+        final Set<Integer> allTagSet = new TreeSet<>();
+        for (final TagInfo tagInfo : allTags) {
+            assertTrue("Missing field " + tagInfo.tag, Collections.binarySearch(fieldTags, tagInfo.tag) >= 0);
+            allTagSet.add(tagInfo.tag);
+        }
+        for (final Integer tag : fieldTags) {
+            assertTrue("Missing tag " + tag, allTagSet.contains(tag));
+        }
     }
 }
