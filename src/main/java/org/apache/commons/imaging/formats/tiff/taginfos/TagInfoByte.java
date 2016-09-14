@@ -23,21 +23,21 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoByte extends TagInfo {
-    public TagInfoByte(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.BYTE, length, directoryType);
+    public TagInfoByte(final String name, final int tag, final TiffDirectoryType directoryType) {
+        super(name, tag, FieldType.BYTE, 1, directoryType);
     }
     
     public TagInfoByte(final String name, final int tag, final List<FieldType> fieldTypes,
-            final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, fieldTypes, length, directoryType);
+            final TiffDirectoryType directoryType) {
+        super(name, tag, fieldTypes, 1, directoryType);
     }
 
     public TagInfoByte(final String name, final int tag, final FieldType fieldType,
-            final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, fieldType, length, directoryType);
+            final TiffDirectoryType directoryType) {
+        super(name, tag, fieldType, 1, directoryType);
     }
 
-    public byte[] encodeValue(final ByteOrder byteOrder, final byte... values) {
-        return values;
+    public byte[] encodeValue(final ByteOrder byteOrder, final byte value) {
+        return new byte[] { value };
     }
 }

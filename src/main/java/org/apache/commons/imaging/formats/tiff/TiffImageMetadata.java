@@ -33,16 +33,16 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDouble;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoFloat;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDoubles;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoFloats;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoGpsText;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSByte;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSLong;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSRational;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSShort;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLongs;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRationals;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSBytes;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSLongs;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSRationals;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoSShorts;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputField;
@@ -299,7 +299,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public short[] getFieldValue(final TagInfoShort tag) throws ImageReadException {
+    public short[] getFieldValue(final TagInfoShorts tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -311,7 +311,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public int[] getFieldValue(final TagInfoLong tag) throws ImageReadException {
+    public int[] getFieldValue(final TagInfoLongs tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -323,7 +323,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public RationalNumber[] getFieldValue(final TagInfoRational tag)
+    public RationalNumber[] getFieldValue(final TagInfoRationals tag)
             throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -336,7 +336,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public byte[] getFieldValue(final TagInfoSByte tag) throws ImageReadException {
+    public byte[] getFieldValue(final TagInfoSBytes tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -347,7 +347,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return field.getByteArrayValue();
     }
 
-    public short[] getFieldValue(final TagInfoSShort tag) throws ImageReadException {
+    public short[] getFieldValue(final TagInfoSShorts tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -359,7 +359,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public int[] getFieldValue(final TagInfoSLong tag) throws ImageReadException {
+    public int[] getFieldValue(final TagInfoSLongs tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -371,7 +371,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public RationalNumber[] getFieldValue(final TagInfoSRational tag)
+    public RationalNumber[] getFieldValue(final TagInfoSRationals tag)
             throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
@@ -384,7 +384,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public float[] getFieldValue(final TagInfoFloat tag) throws ImageReadException {
+    public float[] getFieldValue(final TagInfoFloats tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;
@@ -396,7 +396,7 @@ public class TiffImageMetadata extends GenericImageMetadata {
         return tag.getValue(field.getByteOrder(), bytes);
     }
 
-    public double[] getFieldValue(final TagInfoDouble tag) throws ImageReadException {
+    public double[] getFieldValue(final TagInfoDoubles tag) throws ImageReadException {
         final TiffField field = findField(tag);
         if (field == null) {
             return null;

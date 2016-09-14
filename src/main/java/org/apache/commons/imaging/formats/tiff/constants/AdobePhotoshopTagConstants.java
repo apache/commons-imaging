@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefined;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 
 /**
  * TIFF specification supplement 2
@@ -32,12 +32,12 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefined;
  */
 public final class AdobePhotoshopTagConstants {
 
-    public final static TagInfoUndefined EXIF_TAG_JPEGTABLES = new TagInfoUndefined(
+    public final static TagInfoUndefineds EXIF_TAG_JPEGTABLES = new TagInfoUndefineds(
             "JPEGTables", 0x015b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public final static TagInfoUndefined EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefined(
-            "ImageSourceData", 0x935c, 1,
+    public final static TagInfoUndefineds EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefineds(
+            "ImageSourceData", 0x935c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
     public final static List<TagInfo> ALL_ADOBE_PHOTOSHOP_TAGS =

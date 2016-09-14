@@ -23,15 +23,15 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoFloat extends TagInfo {
-    public TagInfoFloat(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.FLOAT, length, directoryType);
+    public TagInfoFloat(final String name, final int tag, final TiffDirectoryType directoryType) {
+        super(name, tag, FieldType.FLOAT, 1, directoryType);
     }
     
-    public float[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
-        return ByteConversions.toFloats(bytes, byteOrder);
+    public float getValue(final ByteOrder byteOrder, final byte[] bytes) {
+        return ByteConversions.toFloat(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(final ByteOrder byteOrder, final float... values) {
-        return ByteConversions.toBytes(values, byteOrder);
+    public byte[] encodeValue(final ByteOrder byteOrder, final float value) {
+        return ByteConversions.toBytes(value, byteOrder);
     }
 }

@@ -24,7 +24,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 
 /**
  * Molecular Dynamics GEL file format
@@ -34,14 +34,14 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 public final class MolecularDynamicsGelTagConstants {
 
     public static final TagInfoLong EXIF_TAG_MD_FILE_TAG = new TagInfoLong(
-            "MD FileTag", 0x82a5, 1,
+            "MD FileTag", 0x82a5,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoRational EXIF_TAG_MD_SCALE_PIXEL = new TagInfoRational(
-            "MD ScalePixel", 0x82a6, 1,
+            "MD ScalePixel", 0x82a6,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoShort EXIF_TAG_MD_COLOR_TABLE = new TagInfoShort(
+    public static final TagInfoShorts EXIF_TAG_MD_COLOR_TABLE = new TagInfoShorts(
             "MD ColorTable", 0x82a7, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 

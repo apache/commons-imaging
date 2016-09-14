@@ -43,7 +43,7 @@ import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDirectory;
 
 public class TiffReader extends BinaryFileParser {
 
@@ -228,7 +228,7 @@ public class TiffReader extends BinaryFileParser {
             }
 
             if (listener.readOffsetDirectories()) {
-                final TagInfoLong[] offsetFields = {
+                final TagInfoDirectory[] offsetFields = {
                         ExifTagConstants.EXIF_TAG_EXIF_OFFSET,
                         ExifTagConstants.EXIF_TAG_GPSINFO,
                         ExifTagConstants.EXIF_TAG_INTEROP_OFFSET
@@ -239,14 +239,14 @@ public class TiffReader extends BinaryFileParser {
                         TiffDirectoryConstants.DIRECTORY_TYPE_INTEROPERABILITY
                 };
                 for (int i = 0; i < offsetFields.length; i++) {
-                    final TagInfoLong offsetField = offsetFields[i];
+                    final TagInfoDirectory offsetField = offsetFields[i];
                     final TiffField field = directory.findField(offsetField);
                     if (field != null) {
                         long subDirectoryOffset;
                         int subDirectoryType;
                         boolean subDirectoryRead = false;
                         try {
-                            subDirectoryOffset = directory.getSingleFieldValue(offsetField);
+                            subDirectoryOffset = directory.getFieldValue(offsetField);
                             subDirectoryType = directoryTypes[i];
                             subDirectoryRead = readDirectory(byteSource,
                                     subDirectoryOffset, subDirectoryType,

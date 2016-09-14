@@ -30,32 +30,27 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 public final class MicrosoftTagConstants {
 
     public static final TagInfoShort EXIF_TAG_RATING = new TagInfoShort(
-            "Rating", 0x4746, 1,
+            "Rating", 0x4746,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
     public static final TagInfoShort EXIF_TAG_RATING_PERCENT = new TagInfoShort(
-            "RatingPercent", 0x4749, 1,
+            "RatingPercent", 0x4749,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
     public static final TagInfoXpString EXIF_TAG_XPTITLE = new TagInfoXpString(
-            "XPTitle", 0x9c9b, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
+            "XPTitle", 0x9c9b, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
     public static final TagInfoXpString EXIF_TAG_XPCOMMENT = new TagInfoXpString(
-            "XPComment", 0x9c9c, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
+            "XPComment", 0x9c9c, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
     public static final TagInfoXpString EXIF_TAG_XPAUTHOR = new TagInfoXpString(
-            "XPAuthor", 0x9c9d, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
+            "XPAuthor", 0x9c9d, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
     public static final TagInfoXpString EXIF_TAG_XPKEYWORDS = new TagInfoXpString(
-            "XPKeywords", 0x9c9e, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
+            "XPKeywords", 0x9c9e, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
     public static final TagInfoXpString EXIF_TAG_XPSUBJECT = new TagInfoXpString(
-            "XPSubject",  0x9c9f, -1,
-            TiffDirectoryType.EXIF_DIRECTORY_IFD0);
+            "XPSubject",  0x9c9f, TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
     public static final List<TagInfo> ALL_MICROSOFT_TAGS =
             Collections.unmodifiableList(Arrays.asList(

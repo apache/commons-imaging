@@ -18,21 +18,15 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import java.nio.ByteOrder;
 
-import org.apache.commons.imaging.common.ByteConversions;
-import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
-public class TagInfoRational extends TagInfo {
-    public TagInfoRational(final String name, final int tag, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.RATIONAL, 1, directoryType);
+public class TagInfoSBytes extends TagInfo {
+    public TagInfoSBytes(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
+        super(name, tag, FieldType.SBYTE, length, directoryType);
     }
 
-    public RationalNumber getValue(final ByteOrder byteOrder, final byte[] bytes) {
-        return ByteConversions.toRational(bytes, byteOrder);
-    }
-    
-    public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber value) {
-        return ByteConversions.toBytes(value, byteOrder);
+    public byte[] encodeValue(final ByteOrder byteOrder, final byte... values) {
+        return values;
     }
 }

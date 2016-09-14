@@ -20,7 +20,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoUndefined extends TagInfoByte {
-    public TagInfoUndefined(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.UNDEFINED, length, directoryType);
+    public TagInfoUndefined(final String name, final int tag, final TiffDirectoryType directoryType) {
+        super(name, tag, FieldType.UNDEFINED, directoryType);
     }
 }

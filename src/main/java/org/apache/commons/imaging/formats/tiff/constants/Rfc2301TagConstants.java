@@ -22,11 +22,14 @@ import java.util.List;
 
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoBytes;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDirectory;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLongs;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRationals;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 
 /**
  * RFC 2301: File Format for Internet Fax
@@ -44,7 +47,7 @@ public final class Rfc2301TagConstants {
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoShort TIFF_TAG_CLEAN_FAX_DATA = new TagInfoShort(
-            "CleanFaxData", 0x0147, 1,
+            "CleanFaxData", 0x0147,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int CLEAN_FAX_DATA_VALUE_CLEAN = 0;
     public static final int CLEAN_FAX_DATA_VALUE_REGENERATED = 1;
@@ -55,17 +58,17 @@ public final class Rfc2301TagConstants {
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoDirectory TIFF_TAG_GLOBAL_PARAMETERS_IFD = new TagInfoDirectory(
-            "GlobalParametersIFD", 0x0190, 1,
+            "GlobalParametersIFD", 0x0190,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoLong TIFF_TAG_PROFILE_TYPE = new TagInfoLong(
-            "ProfileType", 0x0191, 1,
+            "ProfileType", 0x0191,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int PROFILE_TYPE_VALUE_UNSPECIFIED = 0;
     public static final int PROFILE_TYPE_VALUE_GROUP_3_FAX = 1;
     
     public static final TagInfoByte TIFF_TAG_FAX_PROFILE = new TagInfoByte(
-            "FaxProfile", 0x0192, 1,
+            "FaxProfile", 0x0192,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int FAX_PROFILE_VALUE_UNKNOWN = 0;
     public static final int FAX_PROFILE_VALUE_MINIMAL_B_AND_W_LOSSLESS_S = 1;
@@ -76,7 +79,7 @@ public final class Rfc2301TagConstants {
     public static final int FAX_PROFILE_VALUE_MIXED_RASTER_CONTENT_M = 6;
     
     public static final TagInfoLong TIFF_TAG_CODING_METHODS = new TagInfoLong(
-            "CodingMethods", 0x0193, 1,
+            "CodingMethods", 0x0193,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int CODING_METHODS_VALUE_T4_1D = 2;
     public static final int CODING_METHODS_VALUE_T4_2D = 4;
@@ -85,23 +88,23 @@ public final class Rfc2301TagConstants {
     public static final int CODING_METHODS_VALUE_T81 = 32;
     public static final int CODING_METHODS_VALUE_T82_T43 = 64;
     
-    public static final TagInfoByte TIFF_TAG_VERSION_YEAR = new TagInfoByte(
+    public static final TagInfoBytes TIFF_TAG_VERSION_YEAR = new TagInfoBytes(
             "VersionYear", 0x0194, 4,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoByte TIFF_TAG_MODE_NUMBER = new TagInfoByte(
-            "ModeNumber", 0x0195, 1,
+            "ModeNumber", 0x0195,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoRational TIFF_TAG_DECODE = new TagInfoRational(
+    public static final TagInfoRationals TIFF_TAG_DECODE = new TagInfoRationals(
             "Decode", 0x01b1, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
-    public static final TagInfoShort TIFF_TAG_DEFAULT_IMAGE_COLOR = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_DEFAULT_IMAGE_COLOR = new TagInfoShorts(
             "DefaultImageColor", 0x01b2, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoLong TIFF_TAG_STRIP_ROW_COUNTS = new TagInfoLong(
+    public static final TagInfoLongs TIFF_TAG_STRIP_ROW_COUNTS = new TagInfoLongs(
             "StripRowCounts", 0x022f, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 

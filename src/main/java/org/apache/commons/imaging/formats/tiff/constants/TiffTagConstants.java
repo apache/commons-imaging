@@ -23,13 +23,16 @@ import java.util.List;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAny;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByteOrShort;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoBytes;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLongs;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRationals;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknown;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknowns;
 
 /**
  * Tags from the TIFF6 specification.
@@ -39,7 +42,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknown;
 public final class TiffTagConstants {
 
     public static final TagInfoLong TIFF_TAG_NEW_SUBFILE_TYPE = new TagInfoLong(
-            "NewSubfileType", 0xFE, 1,
+            "NewSubfileType", 0xFE,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int SUBFILE_TYPE_VALUE_FULL_RESOLUTION_IMAGE = 0;
     public static final int SUBFILE_TYPE_VALUE_REDUCED_RESOLUTION_IMAGE = 1;
@@ -51,7 +54,7 @@ public final class TiffTagConstants {
     public static final int SUBFILE_TYPE_VALUE_TRANSPARENCY_MASK_OF_REDUCED_RESOLUTION_MULTI_PAGE_IMAGE = 7;
 
     public static final TagInfoShort TIFF_TAG_SUBFILE_TYPE = new TagInfoShort(
-            "SubfileType", 0xFF, 1,
+            "SubfileType", 0xFF,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int OLD_SUBFILE_TYPE_VALUE_FULL_RESOLUTION_IMAGE = 1;
     public static final int OLD_SUBFILE_TYPE_VALUE_REDUCED_RESOLUTION_IMAGE = 2;
@@ -65,12 +68,12 @@ public final class TiffTagConstants {
             "ImageLength", 0x101, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_BITS_PER_SAMPLE = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_BITS_PER_SAMPLE = new TagInfoShorts(
             "BitsPerSample", 0x102, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_COMPRESSION = new TagInfoShort(
-            "Compression", 0x103, 1,
+            "Compression", 0x103,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int COMPRESSION_VALUE_UNCOMPRESSED = 1;
     public static final int COMPRESSION_VALUE_CCITT_1D = 2;
@@ -104,7 +107,7 @@ public final class TiffTagConstants {
     public static final int COMPRESSION_VALUE_PENTAX_PEF_COMPRESSED = 65535;
 
     public static final TagInfoShort TIFF_TAG_PHOTOMETRIC_INTERPRETATION = new TagInfoShort(
-            "PhotometricInterpretation", 0x106, 1,
+            "PhotometricInterpretation", 0x106,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int PHOTOMETRIC_INTERPRETATION_VALUE_WHITE_IS_ZERO = 0;
     public static final int PHOTOMETRIC_INTERPRETATION_VALUE_BLACK_IS_ZERO = 1;
@@ -122,22 +125,22 @@ public final class TiffTagConstants {
     public static final int PHOTOMETRIC_INTERPRETATION_VALUE_LINEAR_RAW = 34892;
 
     public static final TagInfoShort TIFF_TAG_THRESHHOLDING = new TagInfoShort(
-            "Threshholding", 0x107, 1,
+            "Threshholding", 0x107,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int THRESHOLDING_VALUE_NO_DITHERING_OR_HALFTONING = 1;
     public static final int THRESHOLDING_VALUE_ORDERED_DITHER_OR_HALFTONE = 2;
     public static final int THRESHOLDING_VALUE_RANDOMIZED_DITHER = 3;
 
     public static final TagInfoShort TIFF_TAG_CELL_WIDTH = new TagInfoShort(
-            "CellWidth", 0x108, 1,
+            "CellWidth", 0x108,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_CELL_LENGTH = new TagInfoShort(
-            "CellLength", 0x109, 1,
+            "CellLength", 0x109,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_FILL_ORDER = new TagInfoShort(
-            "FillOrder", 0x10A, 1,
+            "FillOrder", 0x10A,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int FILL_ORDER_VALUE_NORMAL = 1;
     public static final int FILL_ORDER_VALUE_REVERSED = 2;
@@ -163,7 +166,7 @@ public final class TiffTagConstants {
             TiffDirectoryType.TIFF_DIRECTORY_ROOT, true);
 
     public static final TagInfoShort TIFF_TAG_ORIENTATION = new TagInfoShort(
-            "Orientation", 0x112, 1,
+            "Orientation", 0x112,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int ORIENTATION_VALUE_HORIZONTAL_NORMAL = 1;
     public static final int ORIENTATION_VALUE_MIRROR_HORIZONTAL = 2;
@@ -175,7 +178,7 @@ public final class TiffTagConstants {
     public static final int ORIENTATION_VALUE_ROTATE_270_CW = 8;
 
     public static final TagInfoShort TIFF_TAG_SAMPLES_PER_PIXEL = new TagInfoShort(
-            "SamplesPerPixel", 0x115, 1,
+            "SamplesPerPixel", 0x115,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShortOrLong TIFF_TAG_ROWS_PER_STRIP = new TagInfoShortOrLong(
@@ -186,24 +189,24 @@ public final class TiffTagConstants {
             "StripByteCounts", 0x117, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_MIN_SAMPLE_VALUE = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_MIN_SAMPLE_VALUE = new TagInfoShorts(
             "MinSampleValue", 0x118, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_MAX_SAMPLE_VALUE = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_MAX_SAMPLE_VALUE = new TagInfoShorts(
             "MaxSampleValue", 0x119, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoRational TIFF_TAG_XRESOLUTION = new TagInfoRational(
-            "XResolution", 0x11A, 1,
+            "XResolution", 0x11A,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoRational TIFF_TAG_YRESOLUTION = new TagInfoRational(
-            "YResolution", 0x11B, 1,
+            "YResolution", 0x11B,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_PLANAR_CONFIGURATION = new TagInfoShort(
-            "PlanarConfiguration", 0x11C, 1,
+            "PlanarConfiguration", 0x11C,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int PLANAR_CONFIGURATION_VALUE_CHUNKY = 1;
     public static final int PLANAR_CONFIGURATION_VALUE_PLANAR = 2;
@@ -212,24 +215,24 @@ public final class TiffTagConstants {
             "PageName", 0x11D, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoRational TIFF_TAG_XPOSITION = new TagInfoRational(
+    public static final TagInfoRationals TIFF_TAG_XPOSITION = new TagInfoRationals(
             "XPosition", 0x11E, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoRational TIFF_TAG_YPOSITION = new TagInfoRational(
+    public static final TagInfoRationals TIFF_TAG_YPOSITION = new TagInfoRationals(
             "YPosition",  0x11F, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoLong TIFF_TAG_FREE_OFFSETS = new TagInfoLong(
+    public static final TagInfoLongs TIFF_TAG_FREE_OFFSETS = new TagInfoLongs(
             "FreeOffsets", 0x120, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoLong TIFF_TAG_FREE_BYTE_COUNTS = new TagInfoLong(
+    public static final TagInfoLongs TIFF_TAG_FREE_BYTE_COUNTS = new TagInfoLongs(
             "FreeByteCounts", 0x121, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_GRAY_RESPONSE_UNIT = new TagInfoShort(
-            "GrayResponseUnit", 0x122, 1,
+            "GrayResponseUnit", 0x122,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int GRAY_RESPONSE_UNIT_VALUE_0_1 = 1;
     public static final int GRAY_RESPONSE_UNIT_VALUE_0_01 = 2;
@@ -237,30 +240,30 @@ public final class TiffTagConstants {
     public static final int GRAY_RESPONSE_UNIT_VALUE_0_0001 = 4;
     public static final int GRAY_RESPONSE_UNIT_VALUE_0_00001 = 5;
 
-    public static final TagInfoShort TIFF_TAG_GRAY_RESPONSE_CURVE = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_GRAY_RESPONSE_CURVE = new TagInfoShorts(
             "GrayResponseCurve", 0x123, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoLong TIFF_TAG_T4_OPTIONS = new TagInfoLong(
-            "T4Options", 0x124, 1,
+            "T4Options", 0x124,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoLong TIFF_TAG_T6_OPTIONS = new TagInfoLong(
-            "T6Options", 0x125, 1,
+            "T6Options", 0x125,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_RESOLUTION_UNIT = new TagInfoShort(
-            "ResolutionUnit", 0x128, 1,
+            "ResolutionUnit", 0x128,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int RESOLUTION_UNIT_VALUE_NONE = 1;
     public static final int RESOLUTION_UNIT_VALUE_INCHES = 2;
     public static final int RESOLUTION_UNIT_VALUE_CM = 3;
 
-    public static final TagInfoShort TIFF_TAG_PAGE_NUMBER = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_PAGE_NUMBER = new TagInfoShorts(
             "PageNumber", 0x129, 2,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_TRANSFER_FUNCTION = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_TRANSFER_FUNCTION = new TagInfoShorts(
             "TransferFunction", 0x12D, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
@@ -281,24 +284,24 @@ public final class TiffTagConstants {
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_PREDICTOR = new TagInfoShort(
-            "Predictor", 0x13D, 1,
+            "Predictor", 0x13D,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int PREDICTOR_VALUE_NONE = 1;
     public static final int PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING = 2;
 
-    public static final TagInfoRational TIFF_TAG_WHITE_POINT = new TagInfoRational(
+    public static final TagInfoRationals TIFF_TAG_WHITE_POINT = new TagInfoRationals(
             "WhitePoint", 0x13E, 2,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoRational TIFF_TAG_PRIMARY_CHROMATICITIES = new TagInfoRational(
+    public static final TagInfoRationals TIFF_TAG_PRIMARY_CHROMATICITIES = new TagInfoRationals(
             "PrimaryChromaticities", 0x13F, 6,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_COLOR_MAP = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_COLOR_MAP = new TagInfoShorts(
             "ColorMap", 0x140, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_HALFTONE_HINTS = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_HALFTONE_HINTS = new TagInfoShorts(
             "HalftoneHints", 0x141, 2,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
@@ -310,7 +313,7 @@ public final class TiffTagConstants {
             "TileLength", 0x143, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoLong TIFF_TAG_TILE_OFFSETS = new TagInfoLong(
+    public static final TagInfoLongs TIFF_TAG_TILE_OFFSETS = new TagInfoLongs(
             "TileOffsets", 0x144, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT, true);
 
@@ -319,7 +322,7 @@ public final class TiffTagConstants {
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_INK_SET = new TagInfoShort(
-            "InkSet", 0x14C, 1,
+            "InkSet", 0x14C,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int INK_SET_VALUE_CMYK = 1;
     public static final int INK_SET_VALUE_NOT_CMYK = 2;
@@ -329,7 +332,7 @@ public final class TiffTagConstants {
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_NUMBER_OF_INKS = new TagInfoShort(
-            "NumberOfInks", 0x14E, 1,
+            "NumberOfInks", 0x14E,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoByteOrShort TIFF_TAG_DOT_RANGE = new TagInfoByteOrShort(
@@ -340,11 +343,11 @@ public final class TiffTagConstants {
             "TargetPrinter", 0x151, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_EXTRA_SAMPLES = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_EXTRA_SAMPLES = new TagInfoShorts(
             "ExtraSamples", 0x152, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_SAMPLE_FORMAT = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_SAMPLE_FORMAT = new TagInfoShorts(
             "SampleFormat", 0x153, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int SAMPLE_FORMAT_VALUE_UNSIGNED_INTEGER = 1;
@@ -362,63 +365,63 @@ public final class TiffTagConstants {
             "SMaxSampleValue", 0x155, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_TRANSFER_RANGE = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_TRANSFER_RANGE = new TagInfoShorts(
             "TransferRange", 0x156, 6,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_JPEG_PROC = new TagInfoShort(
-            "JPEGProc", 0x200, 1,
+            "JPEGProc", 0x200,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int JPEGPROC_VALUE_BASELINE = 1;
     public static final int JPEGPROC_VALUE_LOSSLESS = 14;
 
     public static final TagInfoLong TIFF_TAG_JPEG_INTERCHANGE_FORMAT = new TagInfoLong(
-            "JPEGInterchangeFormat", 0x201, 1,
+            "JPEGInterchangeFormat", 0x201,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT, true);
 
     public static final TagInfoLong TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH = new TagInfoLong(
             "JPEGInterchangeFormatLength", 0x202,
-            1, TiffDirectoryType.TIFF_DIRECTORY_ROOT);
-
-    public static final TagInfoShort TIFF_TAG_JPEG_RESTART_INTERVAL = new TagInfoShort(
-            "JPEGRestartInterval", 0x203, 1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_JPEG_LOSSLESS_PREDICTORS = new TagInfoShort(
+    public static final TagInfoShort TIFF_TAG_JPEG_RESTART_INTERVAL = new TagInfoShort(
+            "JPEGRestartInterval", 0x203,
+            TiffDirectoryType.TIFF_DIRECTORY_ROOT);
+
+    public static final TagInfoShorts TIFF_TAG_JPEG_LOSSLESS_PREDICTORS = new TagInfoShorts(
             "JPEGLosslessPredictors", 0x205, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_JPEG_POINT_TRANSFORMS = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_JPEG_POINT_TRANSFORMS = new TagInfoShorts(
             "JPEGPointTransforms", 0x206, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoLong TIFF_TAG_JPEG_QTABLES = new TagInfoLong(
+    public static final TagInfoLongs TIFF_TAG_JPEG_QTABLES = new TagInfoLongs(
             "JPEGQTables", 0x207, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoLong TIFF_TAG_JPEG_DCTABLES = new TagInfoLong(
+    public static final TagInfoLongs TIFF_TAG_JPEG_DCTABLES = new TagInfoLongs(
             "JPEGDCTables", 0x208, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoLong TIFF_TAG_JPEG_ACTABLES = new TagInfoLong(
+    public static final TagInfoLongs TIFF_TAG_JPEG_ACTABLES = new TagInfoLongs(
             "JPEGACTables", 0x209, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoRational TIFF_TAG_YCBCR_COEFFICIENTS = new TagInfoRational(
+    public static final TagInfoRationals TIFF_TAG_YCBCR_COEFFICIENTS = new TagInfoRationals(
             "YCbCrCoefficients", 0x211, 3,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoShort TIFF_TAG_YCBCR_SUB_SAMPLING = new TagInfoShort(
+    public static final TagInfoShorts TIFF_TAG_YCBCR_SUB_SAMPLING = new TagInfoShorts(
             "YCbCrSubSampling", 0x212, 2,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     public static final TagInfoShort TIFF_TAG_YCBCR_POSITIONING = new TagInfoShort(
-            "YCbCrPositioning", 0x213, 1,
+            "YCbCrPositioning", 0x213,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int YCB_CR_POSITIONING_VALUE_CENTERED = 1;
     public static final int YCB_CR_POSITIONING_VALUE_CO_SITED = 2;
 
-    public static final TagInfoLong TIFF_TAG_REFERENCE_BLACK_WHITE = new TagInfoLong(
+    public static final TagInfoLongs TIFF_TAG_REFERENCE_BLACK_WHITE = new TagInfoLongs(
             "ReferenceBlackWhite", 0x214, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
@@ -426,13 +429,13 @@ public final class TiffTagConstants {
             "Copyright", 0x8298, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
-    public static final TagInfoByte TIFF_TAG_XMP = new TagInfoByte(
+    public static final TagInfoBytes TIFF_TAG_XMP = new TagInfoBytes(
             "XMP", 0x2BC, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
 
     // TODO:
     //    public static final TagInfo2 TIFF_TAG_UNKNOWN = null;
-    public static final TagInfo TIFF_TAG_UNKNOWN = new TagInfoUnknown(
+    public static final TagInfoUnknowns TIFF_TAG_UNKNOWN = new TagInfoUnknowns(
             "Unknown Tag", -1, TagInfo.LENGTH_UNKNOWN,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 

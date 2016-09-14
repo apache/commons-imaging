@@ -74,14 +74,14 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         TiffDirectory rootDir = contents.directories.get(0);
         assertEquals(description, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
         assertEquals(page, rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_PAGE_NUMBER, true)[0]);
-        RationalNumber yRes = rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
+        RationalNumber yRes = rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
         assertEquals(twoThirds.numerator, yRes.numerator);
         assertEquals(twoThirds.divisor, yRes.divisor);
-        assertEquals(t4Options, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_T4_OPTIONS));
+        assertEquals(t4Options, rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_T4_OPTIONS));
         assertEquals(width, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH));
         assertEquals(width, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH));
         assertEquals(area, rootDir.getFieldValue(GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION, true));
-        assertEquals(widthRes, rootDir.getSingleFieldValue(MicrosoftHdPhotoTagConstants.EXIF_TAG_WIDTH_RESOLUTION), 0.0);
-        assertEquals(geoDoubleParams, rootDir.getSingleFieldValue(GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG), 0.0);
+        assertEquals(widthRes, rootDir.getFieldValue(MicrosoftHdPhotoTagConstants.EXIF_TAG_WIDTH_RESOLUTION), 0.0);
+        assertEquals(geoDoubleParams, rootDir.getFieldValue(GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG, true)[0], 0.0);
     }
 }

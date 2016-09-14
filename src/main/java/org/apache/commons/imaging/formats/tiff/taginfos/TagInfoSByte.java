@@ -22,11 +22,11 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoSByte extends TagInfo {
-    public TagInfoSByte(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.SBYTE, length, directoryType);
+    public TagInfoSByte(final String name, final int tag, final TiffDirectoryType directoryType) {
+        super(name, tag, FieldType.SBYTE, 1, directoryType);
     }
 
-    public byte[] encodeValue(final ByteOrder byteOrder, final byte... values) {
-        return values;
+    public byte[] encodeValue(final ByteOrder byteOrder, final byte value) {
+        return new byte[] { value };
     }
 }

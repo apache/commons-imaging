@@ -253,9 +253,12 @@ public class TiffImageParser extends ImageParser {
 
         final ImageInfo.ColorType colorType = ImageInfo.ColorType.RGB;
 
-        final short[] compressionFieldValues = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION, false);
-        final short compressionFieldValue = compressionFieldValues != null ?
-            compressionFieldValues[0] : TIFF_COMPRESSION_UNCOMPRESSED_1;
+        final short compressionFieldValue;
+        if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
+            compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
+        } else {
+            compressionFieldValue = TIFF_COMPRESSION_UNCOMPRESSED_1;
+        }
         final int compression = 0xffff & compressionFieldValue;
         ImageInfo.CompressionAlgorithm compressionAlgorithm;
 
@@ -544,12 +547,14 @@ public class TiffImageParser extends ImageParser {
             throw new ImageReadException("TIFF missing entries");
         }
 
-        final int photometricInterpretation = 0xffff & directory.getSingleFieldValue(
+        final int photometricInterpretation = 0xffff & directory.getFieldValue(
                 TiffTagConstants.TIFF_TAG_PHOTOMETRIC_INTERPRETATION);
-        final short[] compressionFieldValues = directory.getFieldValue(
-                TiffTagConstants.TIFF_TAG_COMPRESSION, false);
-        final short compressionFieldValue = compressionFieldValues != null ?
-                compressionFieldValues[0] : TIFF_COMPRESSION_UNCOMPRESSED_1;
+        final short compressionFieldValue;
+        if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
+            compressionFieldValue = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
+        } else {
+            compressionFieldValue = TIFF_COMPRESSION_UNCOMPRESSED_1;
+        }
         final int compression = 0xffff & compressionFieldValue;
         final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
         final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);      

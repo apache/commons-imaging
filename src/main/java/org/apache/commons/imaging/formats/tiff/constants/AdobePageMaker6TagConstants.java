@@ -22,9 +22,9 @@ import java.util.List;
 
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLongOrIFD;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoBytes;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLongOrIFD;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 
 /**
@@ -40,27 +40,27 @@ public final class AdobePageMaker6TagConstants {
             "SubIFDs",  0x014a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
 
-    public static final TagInfoByte TIFF_TAG_CLIP_PATH = new TagInfoByte(
+    public static final TagInfoBytes TIFF_TAG_CLIP_PATH = new TagInfoBytes(
             "ClipPath",  0x0157, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoLong TIFF_TAG_XCLIP_PATH_UNITS = new TagInfoLong(
-            "XClipPathUnits", 0x0158, 1,
+            "XClipPathUnits", 0x0158,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoLong TIFF_TAG_YCLIP_PATH_UNITS = new TagInfoLong(
-            "YClipPathUnits", 0x0159, 1,
+            "YClipPathUnits", 0x0159,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoShort TIFF_TAG_INDEXED = new TagInfoShort(
-            "Indexed", 0x015a, 1,
+            "Indexed", 0x015a,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final int INDEXED_VALUE_NOT_INDEXED = 0;
     public static final int INDEXED_VALUE_INDEXED = 1;
 
     public static final TagInfoShort TIFF_TAG_OPIPROXY = new TagInfoShort(
-            "OPIProxy", 0x015f, 1,
+            "OPIProxy", 0x015f,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_DOES_NOT_EXIST = 0;
     public static final int OPIPROXY_VALUE_HIGHER_RESOLUTION_IMAGE_EXISTS = 1;

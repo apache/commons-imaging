@@ -23,15 +23,15 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 public class TagInfoSShort extends TagInfo {
-    public TagInfoSShort(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.SSHORT, length, directoryType);
+    public TagInfoSShort(final String name, final int tag, final TiffDirectoryType directoryType) {
+        super(name, tag, FieldType.SSHORT, 1, directoryType);
     }
     
-    public short[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
-        return ByteConversions.toShorts(bytes, byteOrder);
+    public short getValue(final ByteOrder byteOrder, final byte[] bytes) {
+        return ByteConversions.toShort(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(final ByteOrder byteOrder, final short... values) {
-        return ByteConversions.toBytes(values, byteOrder);
+    public byte[] encodeValue(final ByteOrder byteOrder, final short value) {
+        return ByteConversions.toBytes(value, byteOrder);
     }
 }

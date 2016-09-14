@@ -31,7 +31,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 public final class Tiff4TagConstants {
 
     public static final TagInfoShort TIFF_TAG_COLOR_RESPONSE_UNIT = new TagInfoShort(
-            "ColorResponseUnit", 0x12C, 1,
+            "ColorResponseUnit", 0x12C,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int COLOR_RESPONSE_UNIT_VALUE_0_1 = 1;
     public static final int COLOR_RESPONSE_UNIT_VALUE_0_01 = 2;

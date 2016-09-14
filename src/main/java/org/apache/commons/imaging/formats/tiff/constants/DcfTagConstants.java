@@ -45,7 +45,7 @@ public final class DcfTagConstants {
             TiffDirectoryType.EXIF_DIRECTORY_INTEROP_IFD);
 
     public static final TagInfoShort EXIF_TAG_COLOR_SPACE = new TagInfoShort(
-            "ColorSpace", 0xa001, 1, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+            "ColorSpace", 0xa001, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final int COLOR_SPACE_VALUE_SRGB = 1;
     public static final int COLOR_SPACE_VALUE_ADOBE_RGB = 2;
     public static final int COLOR_SPACE_VALUE_UNCALIBRATED = 65535;

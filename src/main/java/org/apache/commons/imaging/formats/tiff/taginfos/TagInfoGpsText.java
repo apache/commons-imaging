@@ -58,9 +58,9 @@ public final class TagInfoGpsText extends TagInfo {
             TEXT_ENCODING_UNDEFINED, //
     };
 
-    public TagInfoGpsText(final String name, final int tag, final int length,
+    public TagInfoGpsText(final String name, final int tag,
             final TiffDirectoryType exifDirectory) {
-        super(name, tag, FieldType.UNDEFINED, length, exifDirectory);
+        super(name, tag, FieldType.UNDEFINED, LENGTH_UNKNOWN, exifDirectory);
     }
 
     @Override

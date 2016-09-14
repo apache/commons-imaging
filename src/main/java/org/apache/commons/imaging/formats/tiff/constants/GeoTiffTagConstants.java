@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDouble;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoDoubles;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 
 /**
  * Geo Tiff.
@@ -32,27 +32,27 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  */
 public final class GeoTiffTagConstants {
 
-    public static final TagInfoDouble EXIF_TAG_MODEL_PIXEL_SCALE_TAG = new TagInfoDouble(
+    public static final TagInfoDoubles EXIF_TAG_MODEL_PIXEL_SCALE_TAG = new TagInfoDoubles(
             "ModelPixelScaleTag", 0x830e, 3,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoDouble EXIF_TAG_INTERGRAPH_MATRIX_TAG = new TagInfoDouble(
+    public static final TagInfoDoubles EXIF_TAG_INTERGRAPH_MATRIX_TAG = new TagInfoDoubles(
             "IntergraphMatrixTag", 0x8480, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoDouble EXIF_TAG_MODEL_TIEPOINT_TAG = new TagInfoDouble(
+    public static final TagInfoDoubles EXIF_TAG_MODEL_TIEPOINT_TAG = new TagInfoDoubles(
             "ModelTiepointTag", 0x8482, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoDouble EXIF_TAG_MODEL_TRANSFORMATION_TAG = new TagInfoDouble(
+    public static final TagInfoDoubles EXIF_TAG_MODEL_TRANSFORMATION_TAG = new TagInfoDoubles(
             "ModelTransformationTag", 0x85d8, 16,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoShort EXIF_TAG_GEO_KEY_DIRECTORY_TAG = new TagInfoShort(
+    public static final TagInfoShorts EXIF_TAG_GEO_KEY_DIRECTORY_TAG = new TagInfoShorts(
             "GeoKeyDirectoryTag", 0x87af, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public static final TagInfoDouble EXIF_TAG_GEO_DOUBLE_PARAMS_TAG = new TagInfoDouble(
+    public static final TagInfoDoubles EXIF_TAG_GEO_DOUBLE_PARAMS_TAG = new TagInfoDoubles(
             "GeoDoubleParamsTag", 0x87b0, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 

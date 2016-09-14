@@ -27,7 +27,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
 public final class HylaFaxTagConstants {
 
     public static final TagInfoLong EXIF_TAG_FAX_RECV_PARAMS = new TagInfoLong(
-            "FaxRecvParams", 0x885c, 1,
+            "FaxRecvParams", 0x885c,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoAscii EXIF_TAG_FAX_SUB_ADDRESS = new TagInfoAscii(
@@ -35,7 +35,7 @@ public final class HylaFaxTagConstants {
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoLong EXIF_TAG_FAX_RECV_TIME = new TagInfoLong(
-            "FaxRecvTime", 0x885e, 1,
+            "FaxRecvTime", 0x885e,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoAscii EXIF_TAG_FAX_DCS = new TagInfoAscii(

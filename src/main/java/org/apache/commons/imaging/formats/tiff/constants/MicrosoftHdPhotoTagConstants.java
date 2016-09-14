@@ -23,9 +23,10 @@ import java.util.List;
 import org.apache.commons.imaging.common.BinaryConstant;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoBytes;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoFloat;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoLong;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefined;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 
 /**
  * Microsoft's HDP/WDP file format. 
@@ -37,7 +38,7 @@ public final class MicrosoftHdPhotoTagConstants {
      * Data1 (int), Data2 (short), Data3 (short) are little-endian,
      * Data4 (char[8]) is endian-independent.
      */
-    public static final TagInfoByte EXIF_TAG_PIXEL_FORMAT = new TagInfoByte(
+    public static final TagInfoBytes EXIF_TAG_PIXEL_FORMAT = new TagInfoBytes(
             "PixelFormat", 0xbc01, 16,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final BinaryConstant PIXEL_FORMAT_VALUE_BLACK_AND_WHITE =
@@ -152,7 +153,7 @@ public final class MicrosoftHdPhotoTagConstants {
             createMicrosoftHdPhotoGuidEndingWith((byte) 0x3f);
 
     public static final TagInfoLong EXIF_TAG_TRANSFOMATION = new TagInfoLong(
-            "Transfomation", 0xbc02, 1,
+            "Transfomation", 0xbc02,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int TRANSFOMATION_VALUE_HORIZONTAL_NORMAL = 0;
     public static final int TRANSFOMATION_VALUE_MIRROR_VERTICAL = 1;
@@ -164,51 +165,51 @@ public final class MicrosoftHdPhotoTagConstants {
     public static final int TRANSFOMATION_VALUE_ROTATE_270_CW = 7;
     
     public static final TagInfoLong EXIF_TAG_UNCOMPRESSED = new TagInfoLong(
-            "Uncompressed", 0xbc03, 1,
+            "Uncompressed", 0xbc03,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int UNCOMPRESSED_VALUE_NO = 0;
     public static final int UNCOMPRESSED_VALUE_YES = 1;
 
     public static final TagInfoLong EXIF_TAG_IMAGE_TYPE = new TagInfoLong(
-            "ImageType", 0xbc04, 1,
+            "ImageType", 0xbc04,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoLong EXIF_TAG_IMAGE_WIDTH = new TagInfoLong(
-            "ImageWidth", 0xbc80, 1,
+            "ImageWidth", 0xbc80,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoLong EXIF_TAG_IMAGE_HEIGHT = new TagInfoLong(
-            "ImageHeight", 0xbc81, 1,
+            "ImageHeight", 0xbc81,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoFloat EXIF_TAG_WIDTH_RESOLUTION = new TagInfoFloat(
-            "WidthResolution", 0xbc82, 1,
+            "WidthResolution", 0xbc82,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoFloat EXIF_TAG_HEIGHT_RESOLUTION = new TagInfoFloat(
-            "HeightResolution", 0xbc83, 1,
+            "HeightResolution", 0xbc83,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     // FIXME: might be an offset?
     public static final TagInfoLong EXIF_TAG_IMAGE_OFFSET = new TagInfoLong(
-            "ImageOffset", 0xbcc0, 1,
+            "ImageOffset", 0xbcc0,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoLong EXIF_TAG_IMAGE_BYTE_COUNT = new TagInfoLong(
-            "ImageByteCount", 0xbcc1, 1,
+            "ImageByteCount", 0xbcc1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     // FIXME: might be an offset?
     public static final TagInfoLong EXIF_TAG_ALPHA_OFFSET = new TagInfoLong(
-            "AlphaOffset", 0xbcc2, 1,
+            "AlphaOffset", 0xbcc2,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     
     public static final TagInfoLong EXIF_TAG_ALPHA_BYTE_COUNT = new TagInfoLong(
-            "AlphaByteCount", 0xbcc3, 1,
+            "AlphaByteCount", 0xbcc3,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
     public static final TagInfoByte EXIF_TAG_IMAGE_DATA_DISCARD = new TagInfoByte(
-            "ImageDataDiscard", 0xbcc4, 1,
+            "ImageDataDiscard", 0xbcc4,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int IMAGE_DATA_DISCARD_VALUE_FULL_RESOLUTION = 0;
     public static final int IMAGE_DATA_DISCARD_VALUE_FLEXBITS_DISCARDED = 1;
@@ -216,14 +217,14 @@ public final class MicrosoftHdPhotoTagConstants {
     public static final int IMAGE_DATA_DISCARD_VALUE_HIGHPASS_AND_LOW_PASS_FREQUENCY_DATA_DISCARDED = 3;
 
     public static final TagInfoByte EXIF_TAG_ALPHA_DATA_DISCARD = new TagInfoByte(
-            "AlphaDataDiscard", 0xbcc5, 1,
+            "AlphaDataDiscard", 0xbcc5,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final int ALPHA_DATA_DISCARD_VALUE_FULL_RESOLUTION = 0;
     public static final int ALPHA_DATA_DISCARD_VALUE_FLEXBITS_DISCARDED = 1;
     public static final int ALPHA_DATA_DISCARD_VALUE_HIGH_PASS_FREQUENCY_DATA_DISCARDED = 2;
     public static final int ALPHA_DATA_DISCARD_VALUE_HIGHPASS_AND_LOW_PASS_FREQUENCY_DATA_DISCARDED = 3;
 
-    public static final TagInfoUndefined EXIF_TAG_PADDING = new TagInfoUndefined(
+    public static final TagInfoUndefineds EXIF_TAG_PADDING = new TagInfoUndefineds(
             "Padding", 0xea1c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     

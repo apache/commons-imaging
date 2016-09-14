@@ -30,9 +30,8 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
  * - here we deal with this.
  */
 public class TagInfoXpString extends TagInfo {
-    public TagInfoXpString(final String name, final int tag, final int length,
-            final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.BYTE, length, directoryType);
+    public TagInfoXpString(final String name, final int tag, final TiffDirectoryType directoryType) {
+        super(name, tag, FieldType.BYTE, LENGTH_UNKNOWN, directoryType);
     }
 
     @Override

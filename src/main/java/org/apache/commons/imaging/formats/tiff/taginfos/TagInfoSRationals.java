@@ -23,16 +23,16 @@ import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
-public class TagInfoRational extends TagInfo {
-    public TagInfoRational(final String name, final int tag, final TiffDirectoryType directoryType) {
-        super(name, tag, FieldType.RATIONAL, 1, directoryType);
+public class TagInfoSRationals extends TagInfo {
+    public TagInfoSRationals(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
+        super(name, tag, FieldType.SRATIONAL, length, directoryType);
     }
 
-    public RationalNumber getValue(final ByteOrder byteOrder, final byte[] bytes) {
-        return ByteConversions.toRational(bytes, byteOrder);
+    public RationalNumber[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
+        return ByteConversions.toRationals(bytes, byteOrder);
     }
     
-    public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber value) {
-        return ByteConversions.toBytes(value, byteOrder);
+    public byte[] encodeValue(final ByteOrder byteOrder, final RationalNumber... values) {
+        return ByteConversions.toBytes(values, byteOrder);
     }
 }

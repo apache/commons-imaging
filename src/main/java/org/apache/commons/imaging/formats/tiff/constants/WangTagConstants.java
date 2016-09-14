@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
-import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
+import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoBytes;
 
 /**
  * Wang/Eastman Software/Kodac/eiStream/Imaging for Windows tags,
@@ -29,7 +29,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoByte;
  */
 public final class WangTagConstants {
 
-    public static final TagInfoByte EXIF_TAG_WANG_ANNOTATION = new TagInfoByte(
+    public static final TagInfoBytes EXIF_TAG_WANG_ANNOTATION = new TagInfoBytes(
             "WangAnnotation", 0x80a4, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
