@@ -33,17 +33,17 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 abstract class ScanExpediter {
-    protected final int width;
-    protected final int height;
-    protected final InputStream is;
-    protected final BufferedImage bi;
-    protected final PngColorType pngColorType;
-    protected final int bitDepth;
-    protected final int bytesPerPixel;
-    protected final int bitsPerPixel;
-    protected final PngChunkPlte pngChunkPLTE;
-    protected final GammaCorrection gammaCorrection;
-    protected final TransparencyFilter transparencyFilter;
+    final int width;
+    final int height;
+    final InputStream is;
+    final BufferedImage bi;
+    final PngColorType pngColorType;
+    final int bitDepth;
+    final int bytesPerPixel;
+    final int bitsPerPixel;
+    final PngChunkPlte pngChunkPLTE;
+    final GammaCorrection gammaCorrection;
+    final TransparencyFilter transparencyFilter;
 
     public ScanExpediter(final int width, final int height, final InputStream is,
             final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
@@ -64,24 +64,24 @@ abstract class ScanExpediter {
         this.transparencyFilter = transparencyFilter;
     }
 
-    protected final int getBitsToBytesRoundingUp(final int bits) {
+    final int getBitsToBytesRoundingUp(final int bits) {
         return (bits + 7) / 8;
     }
 
-    protected final int getPixelARGB(final int alpha, final int red, final int green, final int blue) {
+    final int getPixelARGB(final int alpha, final int red, final int green, final int blue) {
         return ((0xff & alpha) << 24)
              | ((0xff & red)   << 16)
              | ((0xff & green) << 8)
              | ((0xff & blue)  << 0);
     }
 
-    protected final int getPixelRGB(final int red, final int green, final int blue) {
+    final int getPixelRGB(final int red, final int green, final int blue) {
         return getPixelARGB(0xff, red, green, blue);
     }
 
     public abstract void drive() throws ImageReadException, IOException;
 
-    protected int getRGB(final BitParser bitParser, final int pixelIndexInScanline) 
+    int getRGB(final BitParser bitParser, final int pixelIndexInScanline) 
             throws ImageReadException, IOException {
 
         switch (pngColorType) {
@@ -171,7 +171,7 @@ abstract class ScanExpediter {
         }
     }
 
-    protected ScanlineFilter getScanlineFilter(FilterType filterType, int bytesPerPixel) throws ImageReadException {
+    ScanlineFilter getScanlineFilter(FilterType filterType, int bytesPerPixel) throws ImageReadException {
         switch (filterType) {
             case NONE:
                 return new ScanlineFilterNone();
@@ -188,7 +188,7 @@ abstract class ScanExpediter {
         return null;
     }
 
-    protected byte[] unfilterScanline(final FilterType filterType, final byte[] src, final byte[] prev,
+    byte[] unfilterScanline(final FilterType filterType, final byte[] src, final byte[] prev,
             final int bytesPerPixel) throws ImageReadException, IOException {
         final ScanlineFilter filter = getScanlineFilter(filterType, bytesPerPixel);
 
@@ -197,7 +197,7 @@ abstract class ScanExpediter {
         return dst;
     }
 
-    protected byte[] getNextScanline(final InputStream is, final int length, final byte[] prev,
+    byte[] getNextScanline(final InputStream is, final int length, final byte[] prev,
             final int bytesPerPixel) throws ImageReadException, IOException {
         final int filterType = is.read();
         if (filterType < 0) {
