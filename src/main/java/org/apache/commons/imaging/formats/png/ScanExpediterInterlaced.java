@@ -32,7 +32,7 @@ class ScanExpediterInterlaced extends ScanExpediter {
 //    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
 //    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
 
-    public ScanExpediterInterlaced(int width, int height, InputStream is,
+    ScanExpediterInterlaced(int width, int height, InputStream is,
             BufferedImage bi,
             PngColorType pngColorType, int bitDepth, int bitsPerPixel,
             PngChunkPlte fPNGChunkPLTE,
