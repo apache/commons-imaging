@@ -35,7 +35,7 @@ public class IptcRecord {
 
     public IptcRecord(final IptcType iptcType, final byte[] bytes, final String value) {
         this.iptcType = iptcType;
-        this.bytes = bytes;
+        this.bytes = bytes; // TODO clone? no point cloning in getRawBytes if not also done here
         this.value = value;
     }
 
