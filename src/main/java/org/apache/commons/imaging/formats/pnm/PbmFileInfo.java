@@ -27,7 +27,7 @@ class PbmFileInfo extends FileInfo {
     private int bitcache;
     private int bitsInCache;
 
-    public PbmFileInfo(final int width, final int height, final boolean rawbits) {
+    PbmFileInfo(final int width, final int height, final boolean rawbits) {
         super(width, height, rawbits);
     }
     
