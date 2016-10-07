@@ -35,7 +35,7 @@ public abstract class GenericSegment extends Segment {
     public GenericSegment(final int marker, final byte[] bytes) {
         super(marker, bytes.length);
 
-        this.segmentData = bytes;
+        this.segmentData = bytes.clone();
     }
 
     @Override
