@@ -24,39 +24,39 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 abstract class FileInfo {
-    protected final int width;
-    protected final int height;
-    protected final boolean rawbits;
+    final int width;
+    final int height;
+    final boolean rawbits;
 
-    public FileInfo(final int width, final int height, final boolean rawbits) {
+    FileInfo(final int width, final int height, final boolean rawbits) {
         this.width = width;
         this.height = height;
         this.rawbits = rawbits;
     }
 
-    public abstract boolean hasAlpha();
+    abstract boolean hasAlpha();
     
-    public abstract int getNumComponents();
+    abstract int getNumComponents();
 
-    public abstract int getBitDepth();
+    abstract int getBitDepth();
 
-    public abstract ImageFormat getImageType();
+    abstract ImageFormat getImageType();
 
-    public abstract String getImageTypeDescription();
+    abstract String getImageTypeDescription();
 
-    public abstract String getMIMEType();
+    abstract String getMIMEType();
 
-    public abstract ImageInfo.ColorType getColorType();
+    abstract ImageInfo.ColorType getColorType();
 
-    public abstract int getRGB(WhiteSpaceReader wsr) throws IOException;
+    abstract int getRGB(WhiteSpaceReader wsr) throws IOException;
 
-    public abstract int getRGB(InputStream is) throws IOException;
+    abstract int getRGB(InputStream is) throws IOException;
 
-    protected void newline() {
+    void newline() {
         // do nothing by default.
     }
     
-    protected static int readSample(final InputStream is, final int bytesPerSample) throws IOException {
+    static int readSample(final InputStream is, final int bytesPerSample) throws IOException {
         int sample = 0;
         for (int i = 0; i < bytesPerSample; i++) {
             final int nextByte = is.read();
@@ -69,7 +69,7 @@ abstract class FileInfo {
         return sample;
     }
     
-    protected static int scaleSample(int sample, final float scale, final int max) throws IOException {
+    static int scaleSample(int sample, final float scale, final int max) throws IOException {
         if (sample < 0) {
             // Even netpbm tools break for files like this
             throw new IOException("Negative pixel values are invalid in PNM files");
@@ -80,7 +80,7 @@ abstract class FileInfo {
         return (int) ((sample * scale / max) + 0.5f);
     }
 
-    public void readImage(final ImageBuilder imageBuilder, final InputStream is)
+    void readImage(final ImageBuilder imageBuilder, final InputStream is)
             throws IOException {
         // is = new BufferedInputStream(is);
         // int count = 0;
