@@ -27,7 +27,7 @@ class PbmWriter implements PnmWriter {
 
     private boolean rawbits;
 
-    public PbmWriter(final boolean rawbits) {
+    PbmWriter(final boolean rawbits) {
         this.rawbits = rawbits;
     }
 
