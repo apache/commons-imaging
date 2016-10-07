@@ -27,7 +27,7 @@ import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 
 public class App13Segment extends AppnSegment {
-    protected final JpegImageParser parser;
+    private final JpegImageParser parser; // TODO unused
 
     // public final List elements = new ArrayList();
     // public final boolean isIPTCJpegSegment;
