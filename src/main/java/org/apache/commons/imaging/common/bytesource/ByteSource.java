@@ -22,7 +22,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 public abstract class ByteSource {
-    protected final String filename;
+    private final String filename;
 
     public ByteSource(final String filename) {
         this.filename = filename;

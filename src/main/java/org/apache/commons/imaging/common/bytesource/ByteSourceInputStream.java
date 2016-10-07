@@ -265,7 +265,7 @@ public class ByteSourceInputStream extends ByteSource {
 
     @Override
     public String getDescription() {
-        return "Inputstream: '" + filename + "'";
+        return "Inputstream: '" + getFilename() + "'";
     }
 
 }
