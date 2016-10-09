@@ -31,7 +31,7 @@ public class PsdHeaderInfo {
 
     public PsdHeaderInfo(int version, byte[] reserved, int channels, int rows, int columns, int depth, int mode) {
         this.version = version;
-        this.reserved = reserved;
+        this.reserved = reserved.clone();
         this.channels = channels;
         this.rows = rows;
         this.columns = columns;
