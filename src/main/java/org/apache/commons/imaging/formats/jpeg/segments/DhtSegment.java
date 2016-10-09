@@ -41,7 +41,7 @@ public class DhtSegment extends Segment {
         private final int[] maxCode = new int[1 + 16]; // 1-based
         private final int[] valPtr = new int[1 + 16]; // 1-based
 
-        public HuffmanTable(final int tableClass, final int destinationIdentifier,
+        HuffmanTable(final int tableClass, final int destinationIdentifier,
                 final int[] bits, final int[] huffVal) {
             this.tableClass = tableClass;
             this.destinationIdentifier = destinationIdentifier;
