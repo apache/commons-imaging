@@ -68,7 +68,7 @@ public class IptcDumpTest extends IptcBaseTest {
             if (record.iptcType != IptcTypes.CITY) {
                 Debug.debug("Key: " + record.iptcType.getName() + " (0x"
                         + Integer.toHexString(record.iptcType.getType())
-                        + "), value: " + record.value);
+                        + "), value: " + record.getValue());
             }
         }
         Debug.debug();
