@@ -27,21 +27,16 @@ import org.apache.commons.imaging.formats.jpeg.iptc.IptcParser;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
 
 public class App13Segment extends AppnSegment {
-    private final JpegImageParser parser; // TODO unused
-
-    // public final List elements = new ArrayList();
-    // public final boolean isIPTCJpegSegment;
 
     public App13Segment(final JpegImageParser parser, final int marker, final byte[] segmentData)
             throws IOException {
-        this(parser, marker, segmentData.length, new ByteArrayInputStream(
+        this(marker, segmentData.length, new ByteArrayInputStream(
                 segmentData));
     }
 
-    public App13Segment(final JpegImageParser parser, final int marker, final int markerLength,
+    public App13Segment(final int marker, final int markerLength,
             final InputStream is) throws IOException {
         super(marker, markerLength, is);
-        this.parser = parser;
 
         // isIPTCJpegSegment = new IptcParser().isIPTCJpegSegment(bytes);
         // if (isIPTCJpegSegment)

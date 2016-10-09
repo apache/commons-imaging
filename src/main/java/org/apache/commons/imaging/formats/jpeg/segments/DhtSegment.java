@@ -32,7 +32,6 @@ public class DhtSegment extends Segment {
         // to avoid subtractions by one later when indexing them
         public final int tableClass;
         public final int destinationIdentifier;
-        private final int[] bits; // 1-based TODO UNUSED?
         private final int[] huffVal; // 0-based
 
         // derived properties:
@@ -46,7 +45,7 @@ public class DhtSegment extends Segment {
                 final int[] bits, final int[] huffVal) {
             this.tableClass = tableClass;
             this.destinationIdentifier = destinationIdentifier;
-            this.bits = bits;
+//            this.bits = bits; // 1-based; not used outside the ctor
             this.huffVal = huffVal;
 
             // "generate_size_table", section C.2, figure C.1, page 51 of ITU-T
@@ -115,21 +114,9 @@ public class DhtSegment extends Segment {
 
         }
 
-//        public int[] getBits() { UNUSED
-//            return bits;
-//        }
-
         public int getHuffVal(int i) {
             return huffVal[i];
         }
-
-//        public int[] getHuffSize() { UNUSED
-//            return huffSize;
-//        }
-
-//        public int[] getHuffCode() { UNUSED
-//            return huffCode;
-//        }
 
         public int getMinCode(int i) {
             return minCode[i];
