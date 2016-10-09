@@ -31,13 +31,13 @@ final class ZigZag {
     }
     
     public static void zigZagToBlock(final int[] zz, final int[] block) {
-        for (int i = 0; i < 64; i++) {
+        for (int i = 0; i < ZIG_ZAG.length; i++) {
             block[i] = zz[ZIG_ZAG[i]];
         }
     }
 
     public static void blockToZigZag(final int[] block, final int[] zz) {
-        for (int i = 0; i < 64; i++) {
+        for (int i = 0; i < ZIG_ZAG.length; i++) {
             zz[ZIG_ZAG[i]] = block[i];
         }
     }
