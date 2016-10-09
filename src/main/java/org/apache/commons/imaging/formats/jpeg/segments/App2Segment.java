@@ -84,7 +84,7 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
      * @return the iccBytes
      */
     public byte[] getIccBytes() {
-        return iccBytes;
+        return iccBytes; // TODO clone?
     }
 
     // public String getDescription()

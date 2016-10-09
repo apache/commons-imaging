@@ -24,7 +24,7 @@ class BitParser {
     private final int bitDepth;
 
     public BitParser(final byte[] bytes, final int bitsPerPixel, final int bitDepth) {
-        this.bytes = bytes;
+        this.bytes = bytes; // TODO clone?
         this.bitsPerPixel = bitsPerPixel;
         this.bitDepth = bitDepth;
     }

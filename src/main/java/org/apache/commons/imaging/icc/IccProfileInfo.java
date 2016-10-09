@@ -69,11 +69,11 @@ public class IccProfileInfo {
     }
 
     public byte[] getData() {
-        return data;
+        return data; // TODO clone? does not appear to be used
     }
 
     public byte[] getProfileId() {
-        return profileId;
+        return profileId; // TODO clone? does not appear to be used
     }
 
     public IccTag[] getTags() {

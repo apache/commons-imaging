@@ -397,7 +397,7 @@ public class PsdImageParser extends ImageParser {
         if ((bytes == null) || (bytes.length < 1)) {
             return null;
         }
-        return bytes;
+        return bytes; // TODO clone?
     }
 
     @Override

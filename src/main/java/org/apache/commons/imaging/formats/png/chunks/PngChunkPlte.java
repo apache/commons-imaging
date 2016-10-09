@@ -54,7 +54,7 @@ public class PngChunkPlte extends PngChunk {
     }
 
     public int[] getRgb() {
-        return rgb;
+        return rgb; // TODO clone? Is the method used?
     }
 
     public int getRGB(final int index) throws ImageReadException {
