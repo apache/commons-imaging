@@ -245,7 +245,7 @@ public class IptcParser extends BinaryFileParser {
             // Debug.debug("index", IPTC_TYPE_CREDIT.name);
             // }
 
-            final IptcRecord element = new IptcRecord(iptcType, recordData, value);
+            final IptcRecord element = new IptcRecord(iptcType, value);
             elements.add(element);
         }
 
