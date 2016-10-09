@@ -433,8 +433,8 @@ public class IptcParser extends BinaryFileParser {
                 }
                 bos.write(element.iptcType.getType());
 
-                final byte[] recordData = element.value.getBytes("ISO-8859-1");
-                if (!new String(recordData, "ISO-8859-1").equals(element.value)) {
+                final byte[] recordData = element.getValue().getBytes("ISO-8859-1");
+                if (!new String(recordData, "ISO-8859-1").equals(element.getValue())) {
                     throw new ImageWriteException(
                             "Invalid record value, not ISO-8859-1");
                 }
