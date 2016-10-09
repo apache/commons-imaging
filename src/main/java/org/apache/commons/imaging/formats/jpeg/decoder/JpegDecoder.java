@@ -423,13 +423,13 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         // "DECODE", section F.2.2.3, figure F.16, page 109 of T.81
         int i = 1;
         int code = is.nextBit();
-        while (code > huffmanTable.getMaxCode()[i]) {
+        while (code > huffmanTable.getMaxCode(i)) {
             i++;
             code = (code << 1) | is.nextBit();
         }
-        int j = huffmanTable.getValPtr()[i];
-        j += code - huffmanTable.getMinCode()[i];
-        return huffmanTable.getHuffVal()[j];
+        int j = huffmanTable.getValPtr(i);
+        j += code - huffmanTable.getMinCode(i);
+        return huffmanTable.getHuffVal(j);
     }
 
     public BufferedImage decode(final ByteSource byteSource) throws IOException,

@@ -32,7 +32,7 @@ public class DhtSegment extends Segment {
         // to avoid subtractions by one later when indexing them
         public final int tableClass;
         public final int destinationIdentifier;
-        private final int[] bits; // 1-based
+        private final int[] bits; // 1-based TODO UNUSED?
         private final int[] huffVal; // 0-based
 
         // derived properties:
@@ -115,32 +115,32 @@ public class DhtSegment extends Segment {
 
         }
 
-        public int[] getBits() {
-            return bits;
+//        public int[] getBits() { UNUSED
+//            return bits;
+//        }
+
+        public int getHuffVal(int i) {
+            return huffVal[i];
         }
 
-        public int[] getHuffVal() {
-            return huffVal;
+//        public int[] getHuffSize() { UNUSED
+//            return huffSize;
+//        }
+
+//        public int[] getHuffCode() { UNUSED
+//            return huffCode;
+//        }
+
+        public int getMinCode(int i) {
+            return minCode[i];
         }
 
-        public int[] getHuffSize() {
-            return huffSize;
+        public int getMaxCode(int i) {
+            return maxCode[i];
         }
 
-        public int[] getHuffCode() {
-            return huffCode;
-        }
-
-        public int[] getMinCode() {
-            return minCode;
-        }
-
-        public int[] getMaxCode() {
-            return maxCode;
-        }
-
-        public int[] getValPtr() {
-            return valPtr;
+        public int getValPtr(int i) {
+            return valPtr[i];
         }
     }
 
