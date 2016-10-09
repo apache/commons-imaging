@@ -84,7 +84,7 @@ public class PsdImageParser extends ImageParser {
 
     @Override
     protected String[] getAcceptedExtensions() {
-        return ACCEPTED_EXTENSIONS;
+        return ACCEPTED_EXTENSIONS.clone();
     }
 
     @Override
