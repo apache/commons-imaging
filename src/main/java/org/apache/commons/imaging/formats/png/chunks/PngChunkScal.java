@@ -50,7 +50,7 @@ public class PngChunkScal extends PngChunk {
          throw new ImageReadException("PNG sCAL chunk missing the y axis value.");
       }
 
-      final String yStr = new String(bytes, yIndex, length - yIndex);
+      final String yStr = new String(bytes, yIndex, length - yIndex, "ISO-8859-1");
       unitsPerPixelYAxis = toDouble(yStr);
    }
 
