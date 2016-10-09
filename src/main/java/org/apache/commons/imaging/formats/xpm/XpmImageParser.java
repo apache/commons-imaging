@@ -287,7 +287,7 @@ public class XpmImageParser extends ImageParser {
     private XpmHeader parseXpmValuesSection(final String row)
             throws ImageReadException {
         final String[] tokens = BasicCParser.tokenizeRow(row);
-        if (tokens.length < 4 && tokens.length > 7) {
+        if (tokens.length < 4 || tokens.length > 7) {
             throw new ImageReadException("Parsing XPM file failed, "
                     + "<Values> section has incorrect tokens");
         }
