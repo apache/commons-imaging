@@ -89,9 +89,9 @@ public class JpegRewriter extends BinaryFileParser {
 
     protected static class JFIFPieceSegment extends JFIFPiece {
         public final int marker;
-        public final byte[] markerBytes;
-        public final byte[] segmentLengthBytes;
-        public final byte[] segmentData;
+        private final byte[] markerBytes;
+        private final byte[] segmentLengthBytes;
+        private final byte[] segmentData;
 
         public JFIFPieceSegment(final int marker, final byte[] segmentData) {
             this(marker,
@@ -100,12 +100,12 @@ public class JpegRewriter extends BinaryFileParser {
                     segmentData);
         }
 
-        public JFIFPieceSegment(final int marker, final byte[] markerBytes,
+        JFIFPieceSegment(final int marker, final byte[] markerBytes,
                 final byte[] segmentLengthBytes, final byte[] segmentData) {
             this.marker = marker;
             this.markerBytes = markerBytes;
             this.segmentLengthBytes = segmentLengthBytes;
-            this.segmentData = segmentData;
+            this.segmentData = segmentData; // TODO clone?
         }
 
         @Override
@@ -159,13 +159,17 @@ public class JpegRewriter extends BinaryFileParser {
             return true;
         }
 
+        public byte[] getSegmentData() {
+            return segmentData; // TODO clone?
+        }
+
     }
 
-    protected static class JFIFPieceImageData extends JFIFPiece {
-        public final byte[] markerBytes;
-        public final byte[] imageData;
+    static class JFIFPieceImageData extends JFIFPiece {
+        private final byte[] markerBytes;
+        private final byte[] imageData;
 
-        public JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
+        JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
             super();
             this.markerBytes = markerBytes;
             this.imageData = imageData;
