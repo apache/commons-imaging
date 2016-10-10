@@ -435,13 +435,13 @@ public class GifImageParser extends ImageParser {
         return null;
     }
 
-    private ImageContents readFile(final ByteSource byteSource,
+    private GifImageContents readFile(final ByteSource byteSource,
             final boolean stopBeforeImageData) throws ImageReadException, IOException {
         return readFile(byteSource, stopBeforeImageData,
                 FormatCompliance.getDefault());
     }
 
-    private ImageContents readFile(final ByteSource byteSource,
+    private GifImageContents readFile(final ByteSource byteSource,
             final boolean stopBeforeImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
@@ -456,7 +456,7 @@ public class GifImageParser extends ImageParser {
             final List<GifBlock> blocks = readBlocks(ghi, is, stopBeforeImageData,
                     formatCompliance);
 
-            final ImageContents result = new ImageContents(ghi, globalColorTable,
+            final GifImageContents result = new GifImageContents(ghi, globalColorTable,
                     blocks);
             return result;
         }
@@ -471,7 +471,7 @@ public class GifImageParser extends ImageParser {
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final ImageContents blocks = readFile(byteSource, false);
+        final GifImageContents blocks = readFile(byteSource, false);
 
         if (blocks == null) {
             throw new ImageReadException("GIF: Couldn't read blocks");
@@ -518,7 +518,7 @@ public class GifImageParser extends ImageParser {
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final ImageContents blocks = readFile(byteSource, false);
+        final GifImageContents blocks = readFile(byteSource, false);
 
         if (blocks == null) {
             throw new ImageReadException("GIF: Couldn't read blocks");
@@ -590,7 +590,7 @@ public class GifImageParser extends ImageParser {
 
         imageData.toString(pw, "");
         
-        final ImageContents blocks = readFile(byteSource, false);
+        final GifImageContents blocks = readFile(byteSource, false);
 
         pw.println("gif.blocks: " + blocks.blocks.size());
         for (int i = 0; i < blocks.blocks.size(); i++) {
@@ -642,7 +642,7 @@ public class GifImageParser extends ImageParser {
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final ImageContents imageContents = readFile(byteSource, false);
+        final GifImageContents imageContents = readFile(byteSource, false);
 
         if (imageContents == null) {
             throw new ImageReadException("GIF: Couldn't read blocks");

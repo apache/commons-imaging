@@ -20,7 +20,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 
-public class ImageContents {
+public class PsdImageContents {
     public final PsdHeaderInfo header;
 
     public final int ColorModeDataLength;
@@ -28,7 +28,7 @@ public class ImageContents {
     public final int LayerAndMaskDataLength;
     public final int Compression;
 
-    public ImageContents(final PsdHeaderInfo header,
+    public PsdImageContents(final PsdHeaderInfo header,
 
     final int ColorModeDataLength, final int ImageResourcesLength,
             final int LayerAndMaskDataLength, final int Compression) {

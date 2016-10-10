@@ -115,7 +115,7 @@ public class PsdImageParser extends ImageParser {
         return new PsdHeaderInfo(version, reserved, channels, rows, columns, depth, mode);
     }
 
-    private ImageContents readImageContents(final InputStream is)
+    private PsdImageContents readImageContents(final InputStream is)
             throws ImageReadException, IOException {
         final PsdHeaderInfo header = readHeader(is);
 
@@ -148,7 +148,7 @@ public class PsdImageParser extends ImageParser {
 
         // System.out.println("Compression: " + Compression);
 
-        return new ImageContents(header, ColorModeDataLength,
+        return new PsdImageContents(header, ColorModeDataLength,
         // ColorModeData,
                 ImageResourcesLength,
                 // ImageResources,
@@ -240,7 +240,7 @@ public class PsdImageParser extends ImageParser {
         try (InputStream imageStream = byteSource.getInputStream();
                 InputStream resourceStream = this.getInputStream(byteSource, PSD_SECTION_IMAGE_RESOURCES)) {
 
-            final ImageContents imageContents = readImageContents(imageStream);
+            final PsdImageContents imageContents = readImageContents(imageStream);
 
             final byte[] ImageResources = readBytes("ImageResources",
                     resourceStream, imageContents.ImageResourcesLength,
@@ -374,10 +374,10 @@ public class PsdImageParser extends ImageParser {
                 + section);
     }
 
-    private ImageContents readImageContents(final ByteSource byteSource)
+    private PsdImageContents readImageContents(final ByteSource byteSource)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final ImageContents imageContents = readImageContents(is);
+            final PsdImageContents imageContents = readImageContents(is);
             return imageContents;
         }
     }
@@ -445,7 +445,7 @@ public class PsdImageParser extends ImageParser {
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final ImageContents imageContents = readImageContents(byteSource);
+        final PsdImageContents imageContents = readImageContents(byteSource);
         // ImageContents imageContents = readImage(byteSource, false);
 
         if (imageContents == null) {
@@ -533,7 +533,7 @@ public class PsdImageParser extends ImageParser {
         }
 
         fImageData.toString(pw, "");
-        final ImageContents imageContents = readImageContents(byteSource);
+        final PsdImageContents imageContents = readImageContents(byteSource);
 
         imageContents.dump(pw);
         imageContents.header.dump(pw);
@@ -569,7 +569,7 @@ public class PsdImageParser extends ImageParser {
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final ImageContents imageContents = readImageContents(byteSource);
+        final PsdImageContents imageContents = readImageContents(byteSource);
         // ImageContents imageContents = readImage(byteSource, false);
 
         if (imageContents == null) {
@@ -688,7 +688,7 @@ public class PsdImageParser extends ImageParser {
     public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
 
-        final ImageContents imageContents = readImageContents(byteSource);
+        final PsdImageContents imageContents = readImageContents(byteSource);
 
         if (imageContents == null) {
             throw new ImageReadException("PSD: Couldn't read blocks");

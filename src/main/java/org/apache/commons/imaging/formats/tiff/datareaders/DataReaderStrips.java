@@ -29,7 +29,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 
-public final class DataReaderStrips extends DataReader {
+public final class DataReaderStrips extends ImageDataReader {
 
     private final int bitsPerPixel;
     private final int compression;

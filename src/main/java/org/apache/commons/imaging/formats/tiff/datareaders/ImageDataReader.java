@@ -45,7 +45,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
-public abstract class DataReader {
+public abstract class ImageDataReader {
     protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
     private final int[] bitsPerSample;
@@ -57,7 +57,7 @@ public abstract class DataReader {
     protected final int width;
     protected final int height;
 
-    public DataReader(final TiffDirectory directory,
+    public ImageDataReader(final TiffDirectory directory,
             final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,
             final int predictor, final int samplesPerPixel, final int width, final int height) {
         this.directory = directory;

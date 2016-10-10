@@ -22,12 +22,12 @@ import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
-import org.apache.commons.imaging.formats.psd.ImageContents;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 public interface  DataReader {
 
     void readData(InputStream is, BufferedImage bi,
-            ImageContents imageContents, BinaryFileParser bfp)
+            PsdImageContents imageContents, BinaryFileParser bfp)
             throws ImageReadException, IOException;
 
 }

@@ -19,12 +19,12 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 
-import org.apache.commons.imaging.formats.psd.ImageContents;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
 
 public abstract class DataParser {
     public final void parseData(final int[][][] data, final BufferedImage bi,
-            final ImageContents imageContents) {
+            final PsdImageContents imageContents) {
         final DataBuffer buffer = bi.getRaster().getDataBuffer();
 
         final PsdHeaderInfo header = imageContents.header;
@@ -39,7 +39,7 @@ public abstract class DataParser {
         }
     }
 
-    protected abstract int getRGB(int[][][] data, int x, int y, ImageContents imageContents);
+    protected abstract int getRGB(int[][][] data, int x, int y, PsdImageContents imageContents);
 
     public abstract int getBasicChannelsCount();
 }

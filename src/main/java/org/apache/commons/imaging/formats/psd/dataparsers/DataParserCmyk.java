@@ -17,12 +17,12 @@
 package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import org.apache.commons.imaging.color.ColorConversions;
-import org.apache.commons.imaging.formats.psd.ImageContents;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 public class DataParserCmyk extends DataParser {
     @Override
     protected int getRGB(final int[][][] data, final int x, final int y,
-            final ImageContents imageContents) {
+            final PsdImageContents imageContents) {
         int sc = 0xff & data[0][y][x];
         int sm = 0xff & data[1][y][x];
         int sy = 0xff & data[2][y][x];

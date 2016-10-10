@@ -42,7 +42,7 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.formats.tiff.datareaders.DataReader;
+import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterBiLevel;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterCieLab;
@@ -639,7 +639,7 @@ public class TiffImageParser extends ImageParser {
 
         final TiffImageData imageData = directory.getTiffImageData();
 
-        final DataReader dataReader = imageData.getDataReader(directory,
+        final ImageDataReader dataReader = imageData.getDataReader(directory,
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
                 samplesPerPixel, width, height, compression, byteOrder);
 

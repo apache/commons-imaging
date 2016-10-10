@@ -299,7 +299,7 @@ public class BmpImageParser extends ImageParser {
         return baos.toByteArray();
     }
 
-    private ImageContents readImageContents(final InputStream is,
+    private BmpImageContents readImageContents(final InputStream is,
             final FormatCompliance formatCompliance, final boolean verbose)
             throws ImageReadException, IOException {
         final BmpHeaderInfo bhi = readBmpHeaderInfo(is, formatCompliance, verbose);
@@ -471,7 +471,7 @@ public class BmpImageParser extends ImageParser {
                     + bhi.compression);
         }
 
-        return new ImageContents(bhi, colorTable, imageData, pixelParser);
+        return new BmpImageContents(bhi, colorTable, imageData, pixelParser);
     }
 
     private BmpHeaderInfo readBmpHeaderInfo(final ByteSource byteSource,
@@ -563,7 +563,7 @@ public class BmpImageParser extends ImageParser {
             throw new ImageReadException("Unknown parameter: " + firstKey);
         }
 
-        ImageContents ic = null;
+        BmpImageContents ic = null;
         try (InputStream is = byteSource.getInputStream()) {
             ic = readImageContents(is, FormatCompliance.getDefault(), verbose);
         }
@@ -676,7 +676,7 @@ public class BmpImageParser extends ImageParser {
             throw new ImageReadException("Unknown parameter: " + firstKey);
         }
 
-        final ImageContents ic = readImageContents(inputStream,
+        final BmpImageContents ic = readImageContents(inputStream,
                 FormatCompliance.getDefault(), verbose);
         if (ic == null) {
             throw new ImageReadException("Couldn't read BMP Data");

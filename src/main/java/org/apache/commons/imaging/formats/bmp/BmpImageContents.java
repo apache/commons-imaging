@@ -14,20 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.gif;
+package org.apache.commons.imaging.formats.bmp;
 
-import java.util.List;
+class BmpImageContents {
 
-class ImageContents {
-    final GifHeaderInfo gifHeaderInfo;
+    final BmpHeaderInfo bhi;
+    final byte[] colorTable;
+    final byte[] imageData;
+    final PixelParser pixelParser;
 
-    final List<GifBlock> blocks;
-    final byte[] globalColorTable;
-
-    ImageContents(final GifHeaderInfo gifHeaderInfo, final byte[] globalColorTable,
-            final List<GifBlock> blocks) {
-        this.gifHeaderInfo = gifHeaderInfo;
-        this.globalColorTable = globalColorTable;
-        this.blocks = blocks;
+    public BmpImageContents(BmpHeaderInfo bhi, byte[] colorTable, byte[] imageData, PixelParser pixelParser) {
+        this.bhi = bhi;
+        this.colorTable = colorTable;
+        this.imageData = imageData;
+        this.pixelParser = pixelParser;
     }
+
 }

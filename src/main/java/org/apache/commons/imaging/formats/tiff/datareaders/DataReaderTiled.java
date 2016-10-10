@@ -30,7 +30,7 @@ import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 
-public final class DataReaderTiled extends DataReader {
+public final class DataReaderTiled extends ImageDataReader {
 
     private final int tileWidth;
     private final int tileLength;

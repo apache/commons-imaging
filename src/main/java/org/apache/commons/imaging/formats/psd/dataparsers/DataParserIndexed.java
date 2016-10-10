@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.psd.dataparsers;
 
-import org.apache.commons.imaging.formats.psd.ImageContents;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 public class DataParserIndexed extends DataParser {
     private final int[] colorTable;
@@ -37,7 +37,7 @@ public class DataParserIndexed extends DataParser {
     }
 
     @Override
-    protected int getRGB(final int[][][] data, final int x, final int y, final ImageContents imageContents) {
+    protected int getRGB(final int[][][] data, final int x, final int y, final PsdImageContents imageContents) {
         final int sample = 0xff & data[0][y][x];
         return colorTable[sample];
     }

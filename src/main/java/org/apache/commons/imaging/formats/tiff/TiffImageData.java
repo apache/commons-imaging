@@ -22,7 +22,7 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.tiff.datareaders.DataReader;
+import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderTiled;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -52,7 +52,7 @@ public abstract class TiffImageData {
         }
 
         @Override
-        public DataReader getDataReader(final TiffDirectory directory,
+        public ImageDataReader getDataReader(final TiffDirectory directory,
                 final PhotometricInterpreter photometricInterpreter,
                 final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
                 final int samplesPerPixel, final int width, final int height, final int compression,
@@ -118,7 +118,7 @@ public abstract class TiffImageData {
         }
 
         @Override
-        public DataReader getDataReader(final TiffDirectory directory,
+        public ImageDataReader getDataReader(final TiffDirectory directory,
                 final PhotometricInterpreter photometricInterpreter,
                 final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
                 final int samplesPerPixel, final int width, final int height, final int compression,
@@ -136,7 +136,7 @@ public abstract class TiffImageData {
 
     public abstract boolean stripsNotTiles();
 
-    public abstract DataReader getDataReader(TiffDirectory directory,
+    public abstract ImageDataReader getDataReader(TiffDirectory directory,
             PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
             int[] bitsPerSample, int predictor, int samplesPerPixel, int width,
             int height, int compression, ByteOrder byteOrder) throws IOException,

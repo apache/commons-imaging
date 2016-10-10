@@ -16,13 +16,13 @@
  */
 package org.apache.commons.imaging.formats.psd.dataparsers;
 
-import org.apache.commons.imaging.formats.psd.ImageContents;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 
 public class DataParserBitmap extends DataParser {
 
     @Override
     protected int getRGB(final int[][][] data, final int x, final int y,
-            final ImageContents imageContents) {
+            final PsdImageContents imageContents) {
         int sample = 0xff & data[0][y][x];
         if (sample == 0) {
             sample = 255;
