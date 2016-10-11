@@ -244,14 +244,14 @@ public class ApacheImagingSpeedAndMemoryTest {
 
                 if (i == 0) {
                     // print header info
-                    fmt.format("\n");
-                    fmt.format("Processing file: %s\n", target.getName());
-                    fmt.format(" image size: %d by %d\n\n", bImage.getWidth(),
+                    fmt.format("%n");
+                    fmt.format("Processing file: %s%n", target.getName());
+                    fmt.format(" image size: %d by %d%n%n", bImage.getWidth(),
                             bImage.getHeight());
-                    fmt.format(" time to load image    --         memory\n");
-                    fmt.format(" time ms      avg ms   --    used mb   total mb\n");
+                    fmt.format(" time to load image    --         memory%n");
+                    fmt.format(" time ms      avg ms   --    used mb   total mb%n");
                 }
-                fmt.format("%9.3f %9.3f    --  %9.3f %9.3f \n", testTime,
+                fmt.format("%9.3f %9.3f    --  %9.3f %9.3f %n", testTime,
                         avgTime, usedMemory / (1024.0 * 1024.0), totalMemory
                                 / (1024.0 * 1024.0));
                 bImage = null;
