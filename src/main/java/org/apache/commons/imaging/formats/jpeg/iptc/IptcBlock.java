@@ -19,19 +19,21 @@ package org.apache.commons.imaging.formats.jpeg.iptc;
 /**
  * Represents an IPTC block, a set of key-value pairs of Photoshop IPTC data.
  */
-class IptcBlock {
+public class IptcBlock {
+    // N.B. The class is used in public API parameter types
+
     public final int blockType;
     //  Only currently used by classes in the package
     final byte[] blockNameBytes; // TODO make private and provide getter?
     final byte[] blockData; // TODO make private and provide getter?
 
-    IptcBlock(final int blockType, final byte[] blockNameBytes, final byte[] blockData) {
+    public IptcBlock(final int blockType, final byte[] blockNameBytes, final byte[] blockData) {
         this.blockData = blockData;
         this.blockNameBytes = blockNameBytes;
         this.blockType = blockType;
     }
 
-    boolean isIPTCBlock() {
+    public boolean isIPTCBlock() {
         return blockType == IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
     }
 }
