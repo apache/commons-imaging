@@ -137,7 +137,7 @@ public abstract class ImageDataReader {
         return samples;
     }
 
-    protected byte[] decompress(final byte[] compressed, final int compression,
+    protected byte[] decompress(final byte[] compressedInput, final int compression,
             final int expectedSize, final int tileWidth, final int tileHeight)
             throws ImageReadException, IOException {
         final TiffField fillOrderField = directory.findField(TiffTagConstants.TIFF_TAG_FILL_ORDER);
@@ -145,11 +145,14 @@ public abstract class ImageDataReader {
         if (fillOrderField != null) {
             fillOrder = fillOrderField.getIntValue();
         }
+        final byte[] compressedOrdered; // re-ordered bytes (if necessary)
         if (fillOrder == TiffTagConstants.FILL_ORDER_VALUE_NORMAL) {
+            compressedOrdered = compressedInput;
             // good
         } else if (fillOrder == TiffTagConstants.FILL_ORDER_VALUE_REVERSED) {
-            for (int i = 0; i < compressed.length; i++) {
-                compressed[i] = (byte) (Integer.reverse(0xff & compressed[i]) >>> 24);
+            compressedOrdered = new byte[compressedInput.length];
+            for (int i = 0; i < compressedInput.length; i++) {
+                compressedOrdered[i] = (byte) (Integer.reverse(0xff & compressedInput[i]) >>> 24);
             }
         } else {
             throw new ImageReadException("TIFF FillOrder=" + fillOrder
@@ -158,10 +161,10 @@ public abstract class ImageDataReader {
 
         switch (compression) {
         case TIFF_COMPRESSION_UNCOMPRESSED: // None;
-            return compressed;
+            return compressedOrdered;
         case TIFF_COMPRESSION_CCITT_1D: // CCITT Group 3 1-Dimensional Modified
                                         // Huffman run-length encoding.
-            return T4AndT6Compression.decompressModifiedHuffman(compressed,
+            return T4AndT6Compression.decompressModifiedHuffman(compressedOrdered,
                     tileWidth, tileHeight);
         case TIFF_COMPRESSION_CCITT_GROUP_3: {
             int t4Options = 0;
@@ -177,10 +180,10 @@ public abstract class ImageDataReader {
             }
             final boolean hasFillBitsBeforeEOL = (t4Options & TIFF_FLAG_T4_OPTIONS_FILL) != 0;
             if (is2D) {
-                return T4AndT6Compression.decompressT4_2D(compressed,
+                return T4AndT6Compression.decompressT4_2D(compressedOrdered,
                         tileWidth, tileHeight, hasFillBitsBeforeEOL);
             }
-            return T4AndT6Compression.decompressT4_1D(compressed,
+            return T4AndT6Compression.decompressT4_1D(compressedOrdered,
                     tileWidth, tileHeight, hasFillBitsBeforeEOL);
         }
         case TIFF_COMPRESSION_CCITT_GROUP_4: {
@@ -194,12 +197,12 @@ public abstract class ImageDataReader {
                 throw new ImageReadException(
                         "T.6 compression with the uncompressed mode extension is not yet supported");
             }
-            return T4AndT6Compression.decompressT6(compressed, tileWidth,
+            return T4AndT6Compression.decompressT6(compressedOrdered, tileWidth,
                     tileHeight);
         }
         case TIFF_COMPRESSION_LZW: // LZW
         {
-            final InputStream is = new ByteArrayInputStream(compressed);
+            final InputStream is = new ByteArrayInputStream(compressedOrdered);
 
             final int lzwMinimumCodeSize = 8;
 
@@ -213,7 +216,7 @@ public abstract class ImageDataReader {
 
         case TIFF_COMPRESSION_PACKBITS: // Packbits
         {
-            return new PackBits().decompress(compressed, expectedSize);
+            return new PackBits().decompress(compressedOrdered, expectedSize);
         }
 
         default:
