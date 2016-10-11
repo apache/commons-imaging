@@ -23,7 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class PhysicalScaleTest {
-   private final double delta = 0.01;
+   private static final double delta = 0.01;
 
    @Test
    public void createFromMeters() {

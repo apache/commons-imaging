@@ -24,8 +24,8 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 public class PngChunkScalTest {
-   private final double delta = 0.001;
-   private final int chunkType = 1933787468;
+   private static final double delta = 0.001;
+   private static final int chunkType = 1933787468;
 
    @Test
    public void testConstructMeters() throws IOException, ImageReadException {

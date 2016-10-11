@@ -73,7 +73,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
                 throws IOException, ImageWriteException;
     }
 
-    private class GeneratorFor1BitBitmaps implements BitmapGenerator {
+    private static class GeneratorFor1BitBitmaps implements BitmapGenerator {
         @Override
         public byte[] generateBitmap(final int foreground, final int background,
  final int paletteSize)
@@ -114,7 +114,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
-    private class GeneratorFor4BitBitmaps implements BitmapGenerator {
+    private static class GeneratorFor4BitBitmaps implements BitmapGenerator {
         @Override
         public byte[] generateBitmap(final int foreground, final int background, final int paletteSize)
                 throws IOException, ImageWriteException {
@@ -148,7 +148,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
-    private class GeneratorFor8BitBitmaps implements BitmapGenerator {
+    private static class GeneratorFor8BitBitmaps implements BitmapGenerator {
         @Override
         public byte[] generateBitmap(final int foreground, final int background, final int paletteSize)
                 throws IOException, ImageWriteException {
@@ -182,7 +182,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
-    private class GeneratorFor16BitBitmaps implements BitmapGenerator {
+    private static class GeneratorFor16BitBitmaps implements BitmapGenerator {
         @Override
         public byte[] generateBitmap(final int foreground, final int background,
  final int paletteSize)
@@ -219,7 +219,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
-    private class GeneratorFor24BitBitmaps implements BitmapGenerator {
+    private static class GeneratorFor24BitBitmaps implements BitmapGenerator {
         @Override
         public byte[] generateBitmap(final int foreground, final int background, final int paletteSize)
                 throws IOException, ImageWriteException {
@@ -253,7 +253,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         }
     }
 
-    private class GeneratorFor32BitBitmaps implements BitmapGenerator {
+    private static class GeneratorFor32BitBitmaps implements BitmapGenerator {
         @Override
         public byte[] generateBitmap(final int foreground, final int background,
                 final int paletteSize) throws IOException, ImageWriteException {
