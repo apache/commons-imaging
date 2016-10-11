@@ -40,7 +40,7 @@ public class ImageWriteExample {
         final Map<String, Object> params = new HashMap<>();
 
         // set optional parameters if you like
-        params.put(ImagingConstants.PARAM_KEY_COMPRESSION, new Integer(
+        params.put(ImagingConstants.PARAM_KEY_COMPRESSION, Integer.valueOf(
                 TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED));
 
         final byte[] bytes = Imaging.writeImageToBytes(image, format, params);

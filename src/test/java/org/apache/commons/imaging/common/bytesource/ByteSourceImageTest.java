@@ -171,7 +171,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
         if (imageFormat.equals(ImageFormats.TIFF)
                 || imageFormat.equals(ImageFormats.JPEG)) {
-            params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
+            params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
         }
 
         final ImageInfo imageInfoFile = Imaging.getImageInfo(imageFile, params);

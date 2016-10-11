@@ -54,7 +54,7 @@ public class JpegReadTest extends JpegBaseTest {
     public void test() throws Exception {
         final Map<String, Object> params = new HashMap<>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
-        params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, new Boolean(!ignoreImageData));
+        params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));
 
         final ImageMetadata metadata = Imaging.getMetadata(imageFile, params);
         // TODO only run this tests with images that have metadata...
