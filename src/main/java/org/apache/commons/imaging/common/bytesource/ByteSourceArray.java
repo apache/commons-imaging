@@ -29,8 +29,7 @@ public class ByteSourceArray extends ByteSource {
     }
 
     public ByteSourceArray(final byte[] bytes) {
-        super(null);
-        this.bytes = bytes;
+        this(null, bytes);
     }
 
     @Override
