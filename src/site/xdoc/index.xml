@@ -114,7 +114,7 @@
   &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
   &lt;artifactId&gt;commons-imaging&lt;/artifactId&gt;
   &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-&lt;dependency&gt;
+&lt;/dependency&gt;
          </pre>
        </p>
      </subsection>
@@ -131,7 +131,7 @@
   &lt;groupId&gt;org.apache.sanselan&lt;/groupId&gt;
   &lt;artifactId&gt;sanselan&lt;/artifactId&gt;
   &lt;version&gt;0.97-incubator&lt;/version&gt;
-&lt;dependency&gt;
+&lt;/dependency&gt;
              </pre>
          </p>
      </subsection>

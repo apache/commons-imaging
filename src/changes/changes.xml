@@ -46,6 +46,9 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="First major release">
+      <action issue="IMAGING-195" dev="britter" type="fix" due-to="Keith Strydom">
+        Incorrect Maven coordinates on project website
+      </action>
       <action issue="IMAGING-190" dev="sebb" type="fix">
         ImageDataReader.decompress() overwrites its input
       </action>
