@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-public class BinaryConstant implements Cloneable {
+public class BinaryConstant {
     private final byte[] value;
 
     public BinaryConstant(final byte[] value) {
