@@ -299,8 +299,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         final byte[] output = new byte[(int) outputLength];
 
         // copy old data (including maker notes, etc.)
-        System.arraycopy(exifBytes, 0, output, 0,
-                Math.min(exifBytes.length, output.length));
+        System.arraycopy(exifBytes, 0, output, 0, Math.min(exifBytes.length, output.length));
 
         final BufferOutputStream headerStream = new BufferOutputStream(output, 0);
         final BinaryOutputStream headerBinaryStream = new BinaryOutputStream(headerStream, byteOrder);
@@ -309,14 +308,13 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         // zero out the parsed pieces of old exif segment, in case we don't
         // overwrite them.
         for (final TiffElement element : analysis) {
-            Arrays.fill(output, (int)element.offset,
-                    (int)Math.min(element.offset + element.length, output.length), (byte)0);
+            Arrays.fill(output, (int) element.offset, (int) Math.min(element.offset + element.length, output.length),
+                    (byte) 0);
         }
 
         // write in the new items
         for (final TiffOutputItem outputItem : outputItems) {
-            final BufferOutputStream tos = new BufferOutputStream(output,
-                    (int) outputItem.getOffset());
+            final BufferOutputStream tos = new BufferOutputStream(output, (int) outputItem.getOffset());
             final BinaryOutputStream bos = new BinaryOutputStream(tos, byteOrder);
             outputItem.writeItem(bos);
         }
