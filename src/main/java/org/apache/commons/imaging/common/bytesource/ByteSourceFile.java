@@ -50,9 +50,8 @@ public class ByteSourceFile extends ByteSource {
                         + ", data length: " + raf.length() + ").");
             }
 
-            final byte[] ret = BinaryFunctions.getRAFBytes(raf, start, length,
+            return BinaryFunctions.getRAFBytes(raf, start, length,
                     "Could not read value from file");
-            return ret;
         }
     }
 
