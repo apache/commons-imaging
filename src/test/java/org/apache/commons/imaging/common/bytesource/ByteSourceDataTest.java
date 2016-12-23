@@ -59,8 +59,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
             // test that all bytes written to file.
             assertTrue(src.length == file.length());
 
-            final ByteSource byteSource = new ByteSourceFile(file);
-            return byteSource;
+            return new ByteSourceFile(file);
         }
     }
 
@@ -71,8 +70,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
 
             final FileInputStream is = new FileInputStream(file);
 
-            final ByteSource byteSource = new ByteSourceInputStream(is, null);
-            return byteSource;
+            return new ByteSourceInputStream(is, null);
         }
     }
 
@@ -81,8 +79,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
         public ByteSource getByteSource(final byte src[]) throws IOException {
             final ByteArrayInputStream is = new ByteArrayInputStream(src);
 
-            final ByteSource byteSource = new ByteSourceInputStream(is, null);
-            return byteSource;
+            return new ByteSourceInputStream(is, null);
         }
 
     }
