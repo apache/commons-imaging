@@ -71,8 +71,7 @@ public class ByteSourceFile extends ByteSource {
             while ((read = is.read(buffer)) > 0) {
                 baos.write(buffer, 0, read);
             }
-            final byte[] ret = baos.toByteArray();
-            return ret;
+            return baos.toByteArray();
         }
     }
 
