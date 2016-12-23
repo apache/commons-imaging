@@ -703,9 +703,7 @@ public final class Imaging {
 
     private static ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final ImageParser imageParser = getImageParser(byteSource);
-
-        return imageParser.getImageInfo(byteSource, params);
+        return getImageParser(byteSource).getImageInfo(byteSource, params);
     }
 
     private static ImageParser getImageParser(final ByteSource byteSource)
