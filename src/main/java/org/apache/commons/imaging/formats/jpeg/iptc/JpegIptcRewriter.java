@@ -300,8 +300,8 @@ public class JpegIptcRewriter extends JpegRewriter {
 
             newData = new PhotoshopApp13Data(newData.getRecords(), newBlocks);
 
-            byte[] segmentBytes = new IptcParser().writePhotoshopApp13Segment(newData);
-            JFIFPieceSegment newSegment = new JFIFPieceSegment(JpegConstants.JPEG_APP13_MARKER, segmentBytes);
+            final byte[] segmentBytes = new IptcParser().writePhotoshopApp13Segment(newData);
+            final JFIFPieceSegment newSegment = new JFIFPieceSegment(JpegConstants.JPEG_APP13_MARKER, segmentBytes);
 
             newPieces = insertAfterLastAppSegments(newPieces, Arrays.asList(newSegment));
         }

@@ -87,7 +87,7 @@ public class TiffDirectory extends TiffElement {
         long entryOffset = offset + TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH;
 
         final StringBuilder result = new StringBuilder();
-        for (TiffField entry : entries) {
+        for (final TiffField entry : entries) {
             result.append(String.format("\t[%d]: %s (%d, 0x%x), %s, %d: %s%n",
                     entryOffset, entry.getTagInfo().name,
                     entry.getTag(), entry.getTag(),
@@ -126,7 +126,7 @@ public class TiffDirectory extends TiffElement {
     }
 
     public void dump() {
-        for (TiffField entry : entries) {
+        for (final TiffField entry : entries) {
             entry.dump();
         }
 
@@ -178,7 +178,7 @@ public class TiffDirectory extends TiffElement {
             return null;
         }
 
-        for (TiffField field : entries) {
+        for (final TiffField field : entries) {
             if (field.getTag() == tag.tag) {
                 return field;
             }
@@ -766,8 +766,8 @@ public class TiffDirectory extends TiffElement {
     }
 
     public ImageDataElement getJpegRawImageDataElement() throws ImageReadException {
-        TiffField jpegInterchangeFormat = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
-        TiffField jpegInterchangeFormatLength = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
+        final TiffField jpegInterchangeFormat = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT);
+        final TiffField jpegInterchangeFormatLength = findField(TiffTagConstants.TIFF_TAG_JPEG_INTERCHANGE_FORMAT_LENGTH);
 
         if (jpegInterchangeFormat != null && jpegInterchangeFormatLength != null) {
             final int offSet = jpegInterchangeFormat.getIntArrayValue()[0];

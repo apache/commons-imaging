@@ -122,7 +122,7 @@ public final class ColorCmy {
             return false;
         }
 
-        ColorCmy colorCmy = (ColorCmy) o;
+        final ColorCmy colorCmy = (ColorCmy) o;
         if (Double.compare(colorCmy.C, C) != 0) {
             return false;
         }

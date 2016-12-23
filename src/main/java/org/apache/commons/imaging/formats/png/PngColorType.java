@@ -64,7 +64,7 @@ public enum PngColorType {
     }
 
     public static PngColorType getColorType(final int value) {
-        for (PngColorType type : values()) {
+        for (final PngColorType type : values()) {
             if (type.value == value) {
                 return type;
             }

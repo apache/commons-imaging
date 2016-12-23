@@ -57,7 +57,7 @@ public class PngChunkScal extends PngChunk {
    private double toDouble(final String str) throws ImageReadException {
       try {
          return Double.valueOf(str);
-      } catch (NumberFormatException e) {
+      } catch (final NumberFormatException e) {
          throw new ImageReadException("PNG sCAL error reading axis value - " + str);
       }
    }

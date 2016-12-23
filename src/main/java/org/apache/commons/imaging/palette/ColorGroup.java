@@ -55,7 +55,7 @@ class ColorGroup {
         }
 
         int total = 0;
-        for (ColorCount color : colorCounts) {
+        for (final ColorCount color : colorCounts) {
             total += color.count;
 
             minAlpha = Math.min(minAlpha, color.alpha);
@@ -107,7 +107,7 @@ class ColorGroup {
         long greenTotal = 0;
         long blueTotal = 0;
 
-        for (ColorCount color : colorCounts) {
+        for (final ColorCount color : colorCounts) {
             countTotal += color.count;
             alphaTotal += color.count * color.alpha;
             redTotal += color.count * color.red;

@@ -66,7 +66,7 @@ public class ScanlineFilterPaeth implements ScanlineFilter {
             }
             // upperleft = 255;
 
-            int paethPredictor = paethPredictor(0xff & left, 0xff & above, 0xff & upperleft);
+            final int paethPredictor = paethPredictor(0xff & left, 0xff & above, 0xff & upperleft);
 
             dst[i] = (byte) ((src[i] + paethPredictor) % 256);
             // dst[i] = (byte) ((src[i] + paethPredictor) );

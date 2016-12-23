@@ -63,16 +63,16 @@ public class TiffLzwTest extends TiffBaseTest {
     @Test
     public void testTiffImageData() throws IOException, ImageReadException,
             ImageWriteException {
-        List<File> images = getTiffImages();
-        for (File image : images) {
+        final List<File> images = getTiffImages();
+        for (final File image : images) {
 
             Debug.debug("imageFile", image);
 
-            ByteSource byteSource = new ByteSourceFile(image);
-            List<byte[]> data = new TiffImageParser().collectRawImageData(byteSource,
+            final ByteSource byteSource = new ByteSourceFile(image);
+            final List<byte[]> data = new TiffImageParser().collectRawImageData(byteSource,
                     Collections.<String, Object>emptyMap());
 
-            for (byte[] bytes : data) {
+            for (final byte[] bytes : data) {
                 decompressRoundtripAndValidate(bytes);
             }
         }

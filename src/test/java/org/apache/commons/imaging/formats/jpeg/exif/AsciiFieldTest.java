@@ -67,7 +67,7 @@ public class AsciiFieldTest extends ExifBaseTest {
                 TiffTagConstants.TIFF_TAG_DATE_TIME.tag,
                 "2007:12:25 13:34:39");
 
-        for (Map.Entry<Integer, Object> tag : expectedFieldValues.entrySet()) {
+        for (final Map.Entry<Integer, Object> tag : expectedFieldValues.entrySet()) {
             assertTrue(fieldMap.containsKey(tag.getKey()));
             final TiffField field = fieldMap.get(tag.getKey());
             assertNotNull(field);

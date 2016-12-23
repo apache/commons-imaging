@@ -207,7 +207,7 @@ abstract class ScanExpediter {
             throw new ImageReadException("PNG: unknown filterType: " + filterType);
         }
 
-        byte[] scanline = readBytes("scanline", is, length, "PNG: missing image data");
+        final byte[] scanline = readBytes("scanline", is, length, "PNG: missing image data");
 
         return unfilterScanline(FilterType.values()[filterType], scanline, prev, bytesPerPixel);
     }

@@ -84,7 +84,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             for (final TiffDirectory directory : directories) {
                 elements.add(directory);
 
-                for (TiffField field : directory.getDirectoryEntries()) {
+                for (final TiffField field : directory.getDirectoryEntries()) {
                     final TiffElement oversizeValue = field.getOversizeValueElement();
                     if (oversizeValue != null) {
                         final TiffOutputField frozenField = frozenFields.get(field.getTag());
@@ -232,7 +232,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             // search for the smallest possible element large enough to hold the
             // item.
             TiffElement bestFit = null;
-            for (TiffElement element : unusedElements) {
+            for (final TiffElement element : unusedElements) {
                 if (element.length >= outputItemLength) {
                     bestFit = element;
                 } else {
@@ -314,7 +314,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         }
 
         // write in the new items
-        for (TiffOutputItem outputItem : outputItems) {
+        for (final TiffOutputItem outputItem : outputItems) {
             final BufferOutputStream tos = new BufferOutputStream(output,
                     (int) outputItem.getOffset());
             final BinaryOutputStream bos = new BinaryOutputStream(tos, byteOrder);

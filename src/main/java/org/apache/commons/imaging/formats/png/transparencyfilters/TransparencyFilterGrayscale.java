@@ -29,7 +29,7 @@ public class TransparencyFilterGrayscale extends TransparencyFilter {
     public TransparencyFilterGrayscale(final byte[] bytes) throws IOException {
         super(bytes);
 
-        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
         transparentColor = read2Bytes("transparentColor", is, "tRNS: Missing transparentColor", getByteOrder());
     }
 

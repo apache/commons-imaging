@@ -88,10 +88,10 @@ public enum ChunkType {
     final int value;
 
     private ChunkType() {
-        char[] chars = name().toCharArray();
+        final char[] chars = name().toCharArray();
         try {
             array = name().getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             // will not happen since UTF-8 is one of the StandardCharsets of the Java platform
             throw new RuntimeException(e);
         }

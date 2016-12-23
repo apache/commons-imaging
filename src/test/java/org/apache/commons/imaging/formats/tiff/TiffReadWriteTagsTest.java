@@ -41,18 +41,18 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
 
     @Test
     public void testReadWriteTags() throws ImageWriteException, ImageReadException, IOException {
-        String description = "A pretty picture";
-        short page = 1;
-        RationalNumber twoThirds = new RationalNumber(2, 3);
-        int t4Options = 0;
-        int width = 10;
-        short height = 10;
-        String area = "A good area";
-        float widthRes = 2.2f;
-        double geoDoubleParams = -8.4;
+        final String description = "A pretty picture";
+        final short page = 1;
+        final RationalNumber twoThirds = new RationalNumber(2, 3);
+        final int t4Options = 0;
+        final int width = 10;
+        final short height = 10;
+        final String area = "A good area";
+        final float widthRes = 2.2f;
+        final double geoDoubleParams = -8.4;
         
-        TiffOutputSet set = new TiffOutputSet();
-        TiffOutputDirectory dir = set.getOrCreateRootDirectory();
+        final TiffOutputSet set = new TiffOutputSet();
+        final TiffOutputDirectory dir = set.getOrCreateRootDirectory();
         dir.add(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION, description);
         dir.add(TiffTagConstants.TIFF_TAG_PAGE_NUMBER, page, page);
         dir.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, twoThirds);
@@ -63,18 +63,18 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         dir.add(MicrosoftHdPhotoTagConstants.EXIF_TAG_WIDTH_RESOLUTION, widthRes);
         dir.add(GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG, geoDoubleParams);
         
-        TiffImageWriterLossy writer = new TiffImageWriterLossy();
-        ByteArrayOutputStream tiff = new ByteArrayOutputStream();
+        final TiffImageWriterLossy writer = new TiffImageWriterLossy();
+        final ByteArrayOutputStream tiff = new ByteArrayOutputStream();
         writer.write(tiff, set);
         
-        TiffReader reader = new TiffReader(true);
-        Map<String, Object> params = new TreeMap<>();
-        FormatCompliance formatCompliance = new FormatCompliance("");
-        TiffContents contents = reader.readFirstDirectory(new ByteSourceArray(tiff.toByteArray()), params, true, formatCompliance);
-        TiffDirectory rootDir = contents.directories.get(0);
+        final TiffReader reader = new TiffReader(true);
+        final Map<String, Object> params = new TreeMap<>();
+        final FormatCompliance formatCompliance = new FormatCompliance("");
+        final TiffContents contents = reader.readFirstDirectory(new ByteSourceArray(tiff.toByteArray()), params, true, formatCompliance);
+        final TiffDirectory rootDir = contents.directories.get(0);
         assertEquals(description, rootDir.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION));
         assertEquals(page, rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_PAGE_NUMBER, true)[0]);
-        RationalNumber yRes = rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
+        final RationalNumber yRes = rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_YRESOLUTION);
         assertEquals(twoThirds.numerator, yRes.numerator);
         assertEquals(twoThirds.divisor, yRes.divisor);
         assertEquals(t4Options, rootDir.getFieldValue(TiffTagConstants.TIFF_TAG_T4_OPTIONS));

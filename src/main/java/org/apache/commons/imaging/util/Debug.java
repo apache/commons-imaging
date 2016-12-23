@@ -229,7 +229,7 @@ public final class Debug {
         final String suffix = " [" + counter++ + "]";
 
         debug(message + " (" + v.size() + ")" + suffix);
-        for (Object aV : v) {
+        for (final Object aV : v) {
             debug("\t" + aV.toString() + suffix);
         }
         debug();

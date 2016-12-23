@@ -132,7 +132,7 @@ public final class ColorCmyk {
             return false;
         }
 
-        ColorCmyk colorCmyk = (ColorCmyk) o;
+        final ColorCmyk colorCmyk = (ColorCmyk) o;
         if (Double.compare(colorCmyk.C, C) != 0) {
             return false;
         }

@@ -29,10 +29,10 @@ public class TransparencyFilterTrueColor extends TransparencyFilter {
     public TransparencyFilterTrueColor(final byte[] bytes) throws IOException {
         super(bytes);
 
-        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        int transparentRed = read2Bytes("transparentRed", is, "tRNS: Missing transparentColor", getByteOrder());
-        int transparentGreen = read2Bytes("transparentGreen", is, "tRNS: Missing transparentColor", getByteOrder());
-        int transparentBlue = read2Bytes("transparentBlue", is, "tRNS: Missing transparentColor", getByteOrder());
+        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        final int transparentRed = read2Bytes("transparentRed", is, "tRNS: Missing transparentColor", getByteOrder());
+        final int transparentGreen = read2Bytes("transparentGreen", is, "tRNS: Missing transparentColor", getByteOrder());
+        final int transparentBlue = read2Bytes("transparentBlue", is, "tRNS: Missing transparentColor", getByteOrder());
 
         transparentColor = ((0xff & transparentRed) << 16)
                 | ((0xff & transparentGreen) << 8)

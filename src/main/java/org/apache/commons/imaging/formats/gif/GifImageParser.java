@@ -427,7 +427,7 @@ public class GifImageParser extends ImageParser {
     }
 
     private GifBlock findBlock(final List<GifBlock> blocks, final int code) {
-        for (GifBlock gifBlock : blocks) {
+        for (final GifBlock gifBlock : blocks) {
             if (gifBlock.blockCode == code) {
                 return gifBlock;
             }
@@ -505,7 +505,7 @@ public class GifImageParser extends ImageParser {
         final List<String> result = new ArrayList<>();
         final int code = 0x21fe;
 
-        for (GifBlock block : blocks) {
+        for (final GifBlock block : blocks) {
             if (block.blockCode == code) {
                 final byte[] bytes = ((GenericGifBlock) block).appendSubBlocks();
                 result.add(new String(bytes, "US-ASCII"));
@@ -1014,7 +1014,7 @@ public class GifImageParser extends ImageParser {
             final List<GifBlock> blocks = readBlocks(ghi, is, true, formatCompliance);
 
             final List<String> result = new ArrayList<>();
-            for (GifBlock block : blocks) {
+            for (final GifBlock block : blocks) {
                 if (block.blockCode != XMP_COMPLETE_CODE) {
                     continue;
                 }

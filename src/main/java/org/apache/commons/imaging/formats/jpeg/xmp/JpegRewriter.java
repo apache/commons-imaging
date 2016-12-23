@@ -251,7 +251,7 @@ public class JpegRewriter extends BinaryFileParser {
             final SegmentFilter filter, final boolean reverse) {
         final List<T> result = new ArrayList<>();
 
-        for (T piece : segments) {
+        for (final T piece : segments) {
             if (piece instanceof JFIFPieceSegment) {
                 if (filter.filter((JFIFPieceSegment) piece) ^ !reverse) {
                     result.add(piece);
@@ -322,7 +322,7 @@ public class JpegRewriter extends BinaryFileParser {
         try (DataOutputStream os = new DataOutputStream(outputStream)) {
             JpegConstants.SOI.writeTo(os);
 
-            for (JFIFPiece piece : segments) {
+            for (final JFIFPiece piece : segments) {
                 piece.write(os);
             }
         }

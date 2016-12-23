@@ -127,13 +127,13 @@ public class TiffImageParser extends ImageParser {
 
         final TiffImageMetadata result = new TiffImageMetadata(contents);
 
-        for (TiffDirectory dir : directories) {
+        for (final TiffDirectory dir : directories) {
             final TiffImageMetadata.Directory metadataDirectory = new TiffImageMetadata.Directory(
                     tiffReader.getByteOrder(), dir);
 
             final List<TiffField> entries = dir.getDirectoryEntries();
 
-            for (TiffField entry : entries) {
+            for (final TiffField entry : entries) {
                 metadataDirectory.add(entry);
             }
 
@@ -229,7 +229,7 @@ public class TiffImageParser extends ImageParser {
 
         final List<String> comments = new ArrayList<>();
         final List<TiffField> entries = directory.entries;
-        for (TiffField field : entries) {
+        for (final TiffField field : entries) {
             final String comment = field.toString();
             comments.add(comment);
         }
@@ -365,7 +365,7 @@ public class TiffImageParser extends ImageParser {
 
                     // Debug.debug("directory offset", directory.offset);
 
-                    for (TiffField field : entries) {
+                    for (final TiffField field : entries) {
                         field.dump(pw, Integer.toString(d));
                     }
                 }
@@ -405,7 +405,7 @@ public class TiffImageParser extends ImageParser {
         for (int i = 0; i < contents.directories.size(); i++) {
             final TiffDirectory directory = contents.directories.get(i);
             final List<ImageDataElement> dataElements = directory.getTiffRawImageDataElements();
-            for (ImageDataElement element : dataElements) {
+            for (final ImageDataElement element : dataElements) {
                 final byte[] bytes = byteSource.getBlock(element.offset,
                         element.length);
                 result.add(bytes);
@@ -507,10 +507,10 @@ public class TiffImageParser extends ImageParser {
             final Map<String, Object> params)
             throws ImageReadException
     {
-        Integer ix0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_X, params);
-        Integer iy0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_Y, params);
-        Integer iwidth = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
-        Integer iheight = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, params);
+        final Integer ix0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_X, params);
+        final Integer iy0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_Y, params);
+        final Integer iwidth = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
+        final Integer iheight = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, params);
         
         if (ix0 == null && iy0 == null && iwidth == null && iheight == null) {
             return null;

@@ -312,7 +312,7 @@ class PngWriter {
     private byte getBitDepth(final PngColorType pngColorType, final Map<String, Object> params) {
         byte depth = 8;
 
-        Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
+        final Object o = params.get(PngConstants.PARAM_KEY_PNG_BIT_DEPTH);
         if (o instanceof Number) {
             depth = ((Number) o).byteValue();
         }
@@ -543,7 +543,7 @@ class PngWriter {
 
         if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
             final List<?> outputTexts = (List<?>) params.get(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
-            for (Object outputText : outputTexts) {
+            for (final Object outputText : outputTexts) {
                 final PngText text = (PngText) outputText;
                 if (text instanceof PngText.Text) {
                     writeChunktEXt(os, (PngText.Text) text);

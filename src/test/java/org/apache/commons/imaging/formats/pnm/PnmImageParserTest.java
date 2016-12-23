@@ -17,10 +17,10 @@ public class PnmImageParserTest {
 
     @Test
     public void testGetImageInfo_happyCase() throws ImageReadException, IOException {
-        byte[] bytes = "P1\n3 2\n0 1 0\n1 0 1\n".getBytes(US_ASCII);
-        Map<String, Object> params = Collections.emptyMap();
-        PnmImageParser underTest = new PnmImageParser();
-        ImageInfo results = underTest.getImageInfo(bytes, params);
+        final byte[] bytes = "P1\n3 2\n0 1 0\n1 0 1\n".getBytes(US_ASCII);
+        final Map<String, Object> params = Collections.emptyMap();
+        final PnmImageParser underTest = new PnmImageParser();
+        final ImageInfo results = underTest.getImageInfo(bytes, params);
         assertEquals(results.getBitsPerPixel(), 1);
         assertEquals(results.getWidth(), 3);
         assertEquals(results.getHeight(), 2);
@@ -33,25 +33,25 @@ public class PnmImageParserTest {
      */
     @Test(expected = ImageReadException.class)
     public void testGetImageInfo_invalidWidth() throws ImageReadException, IOException {
-        byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(US_ASCII);
-        Map<String, Object> params = Collections.emptyMap();
-        PnmImageParser underTest = new PnmImageParser();
+        final byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(US_ASCII);
+        final Map<String, Object> params = Collections.emptyMap();
+        final PnmImageParser underTest = new PnmImageParser();
         underTest.getImageInfo(bytes, params);
     }
 
     @Test(expected = ImageReadException.class)
     public void testGetImageInfo_invalidHeight() throws ImageReadException, IOException {
-        byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(US_ASCII);
-        Map<String, Object> params = Collections.emptyMap();
-        PnmImageParser underTest = new PnmImageParser();
+        final byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(US_ASCII);
+        final Map<String, Object> params = Collections.emptyMap();
+        final PnmImageParser underTest = new PnmImageParser();
         underTest.getImageInfo(bytes, params);
     }
 
     @Test(expected = ImageReadException.class)
     public void testGetImageInfo_missingWidthValue() throws ImageReadException, IOException {
-        byte[] bytes = "P7\nWIDTH \n".getBytes(US_ASCII);
-        Map<String, Object> params = Collections.emptyMap();
-        PnmImageParser underTest = new PnmImageParser();
+        final byte[] bytes = "P7\nWIDTH \n".getBytes(US_ASCII);
+        final Map<String, Object> params = Collections.emptyMap();
+        final PnmImageParser underTest = new PnmImageParser();
         underTest.getImageInfo(bytes, params);
     }
 }

@@ -92,7 +92,7 @@ public final class ColorHsl {
             return false;
         }
 
-        ColorHsl colorHsl = (ColorHsl) o;
+        final ColorHsl colorHsl = (ColorHsl) o;
         if (Double.compare(colorHsl.H, H) != 0) {
             return false;
         }

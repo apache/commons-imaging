@@ -103,13 +103,13 @@ public class PnmImageParser extends ImageParser {
             final int width;
             try {
               width = Integer.parseInt(wsr.readtoWhiteSpace());
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
               throw new ImageReadException("Invalid width specified." , e);
             }
             final int height;
             try {
               height = Integer.parseInt(wsr.readtoWhiteSpace());
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
               throw new ImageReadException("Invalid height specified." , e);
             }
     

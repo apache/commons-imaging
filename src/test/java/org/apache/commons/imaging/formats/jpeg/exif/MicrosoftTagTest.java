@@ -119,11 +119,11 @@ public class MicrosoftTagTest extends ExifBaseTest {
         final TiffImageMetadata metadata = toTiffMetadata(Imaging.getMetadata(file));
         
         // field values may be duplicated between directories, we have to check all
-        List<Object> authorValues = new ArrayList<>();
-        List<Object> commentValues = new ArrayList<>();
-        List<Object> subjectValues = new ArrayList<>();
-        List<Object> titleValues = new ArrayList<>();
-        for (TiffDirectory d : metadata.contents.directories) {
+        final List<Object> authorValues = new ArrayList<>();
+        final List<Object> commentValues = new ArrayList<>();
+        final List<Object> subjectValues = new ArrayList<>();
+        final List<Object> titleValues = new ArrayList<>();
+        for (final TiffDirectory d : metadata.contents.directories) {
             titleValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPTITLE, false));
             authorValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR, false));
             commentValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, false));

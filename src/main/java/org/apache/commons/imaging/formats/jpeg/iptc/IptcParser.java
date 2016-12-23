@@ -114,7 +114,7 @@ public class IptcParser extends BinaryFileParser {
 
         final List<IptcBlock> blocks = parseAllBlocks(bytes, verbose, strict);
 
-        for (IptcBlock block : blocks) {
+        for (final IptcBlock block : blocks) {
             // Ignore everything but IPTC data.
             if (!block.isIPTCBlock()) {
                 continue;
@@ -357,7 +357,7 @@ public class IptcParser extends BinaryFileParser {
         JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.writeTo(bos);
 
         final List<IptcBlock> blocks = data.getRawBlocks();
-        for (IptcBlock block : blocks) {
+        for (final IptcBlock block : blocks) {
             bos.write4Bytes(JpegConstants.CONST_8BIM);
 
             if (block.blockType < 0 || block.blockType > 0xffff) {
@@ -419,7 +419,7 @@ public class IptcParser extends BinaryFileParser {
             // TODO: make sure order right
     
             // write the list.
-            for (IptcRecord element : elements) {
+            for (final IptcRecord element : elements) {
                 if (element.iptcType == IptcTypes.RECORD_VERSION) {
                     continue; // ignore
                 }

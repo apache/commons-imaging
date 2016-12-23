@@ -57,13 +57,13 @@ class TiffOutputSummary {
     }
 
     public void updateOffsets(final ByteOrder byteOrder) throws ImageWriteException {
-        for (OffsetItem offset : offsetItems) {
+        for (final OffsetItem offset : offsetItems) {
             final byte[] value = FieldType.LONG.writeData(
                     (int) offset.item.getOffset(), byteOrder);
             offset.itemOffsetField.setData(value);
         }
 
-        for (ImageDataOffsets imageDataInfo : imageDataItems) {
+        for (final ImageDataOffsets imageDataInfo : imageDataItems) {
             for (int j = 0; j < imageDataInfo.outputItems.length; j++) {
                 final TiffOutputItem item = imageDataInfo.outputItems[j];
                 imageDataInfo.imageDataOffsets[j] = (int) item.getOffset();

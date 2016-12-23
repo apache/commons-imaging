@@ -92,7 +92,7 @@ public final class ColorHsv {
             return false;
         }
 
-        ColorHsv colorHsv = (ColorHsv) o;
+        final ColorHsv colorHsv = (ColorHsv) o;
         if (Double.compare(colorHsv.H, H) != 0) {
             return false;
         }

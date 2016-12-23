@@ -92,7 +92,7 @@ public final class ColorXyz {
             return false;
         }
 
-        ColorXyz colorXyz = (ColorXyz) o;
+        final ColorXyz colorXyz = (ColorXyz) o;
         if (Double.compare(colorXyz.X, X) != 0) {
             return false;
         }

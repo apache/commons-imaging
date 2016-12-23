@@ -114,7 +114,7 @@ class ImageResourceType {
     };
 
     public static String getDescription(final int id) {
-        for (ImageResourceType type : TYPES) {
+        for (final ImageResourceType type : TYPES) {
             if (type.from <= id && id <= type.to) {
                 return type.description;
             }

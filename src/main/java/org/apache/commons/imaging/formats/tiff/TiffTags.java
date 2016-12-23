@@ -83,7 +83,7 @@ final class TiffTags {
         // make sure to use the thread-safe version; this is shared state.
         final Map<Integer, List<TagInfo>> map = new HashMap<>();
 
-        for (TagInfo tag : tags) {
+        for (final TagInfo tag : tags) {
             List<TagInfo> tagList = map.get(tag.tag);
             if (tagList == null) {
                 tagList = new ArrayList<>();
@@ -98,7 +98,7 @@ final class TiffTags {
     private static Map<Integer, Integer> countTags(final List<TagInfo> tags) {
         final Map<Integer, Integer> map = new HashMap<>();
 
-        for (TagInfo tag : tags) {
+        for (final TagInfo tag : tags) {
             final Integer count = map.get(tag.tag);
             if (count == null) {
                 map.put(tag.tag, 1);
@@ -132,7 +132,7 @@ final class TiffTags {
         }
 
         // first search for exact match.
-        for (TagInfo tagInfo : possibleMatches) {
+        for (final TagInfo tagInfo : possibleMatches) {
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
                 // pass
                 continue;
@@ -142,7 +142,7 @@ final class TiffTags {
         }
 
         // accept an inexact match.
-        for (TagInfo tagInfo : possibleMatches) {
+        for (final TagInfo tagInfo : possibleMatches) {
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
                 // pass
                 continue;
@@ -156,7 +156,7 @@ final class TiffTags {
         }
 
         // accept a wildcard match.
-        for (TagInfo tagInfo : possibleMatches) {
+        for (final TagInfo tagInfo : possibleMatches) {
             if (tagInfo.directoryType == TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN) {
                 return tagInfo;
             }

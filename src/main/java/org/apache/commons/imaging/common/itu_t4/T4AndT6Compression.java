@@ -212,7 +212,7 @@ public final class T4AndT6Compression {
             for (int y = 0; y < height; y++) {
                 int rowLength;
                 try {
-                    T4_T6_Tables.Entry entry = CONTROL_CODES.decode(inputStream);
+                    final T4_T6_Tables.Entry entry = CONTROL_CODES.decode(inputStream);
                     if (!isEOL(entry, hasFill)) {
                         throw new ImageReadException("Expected EOL not found");
                     }
@@ -560,7 +560,7 @@ public final class T4AndT6Compression {
                 for (int a0 = 0; a0 < width;) {
                     int a1;
                     int a2;
-                    T4_T6_Tables.Entry  entry = CONTROL_CODES.decode(inputStream);
+                    final T4_T6_Tables.Entry  entry = CONTROL_CODES.decode(inputStream);
                     if (entry == T4_T6_Tables.P) {
                         fillRange(outputStream, referenceLine, a0, b2, codingA0Color);
                         a0 = b2;

@@ -84,7 +84,7 @@ public class TiffTagIntegrityTest extends ImagingTest {
     }
 
     private void verifyFields(final Class<?> cls, final List<TagInfo> allTags) {
-        ArrayList<Integer> fieldTags = new ArrayList<>();
+        final ArrayList<Integer> fieldTags = new ArrayList<>();
         for (final Field field : cls.getFields()) {
             field.setAccessible(true);
             Object obj = null;
@@ -98,7 +98,7 @@ public class TiffTagIntegrityTest extends ImagingTest {
             if (!(obj instanceof TagInfo)) {
                 continue;
             }
-            TagInfo src = (TagInfo) obj;
+            final TagInfo src = (TagInfo) obj;
             if (src.tag == -1) {
                 // Skip TiffTagConstants.TIFF_TAG_UNKNOWN
                 continue;

@@ -79,7 +79,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
 
     @Test
     public void testGuessFormat() throws Exception {
-        String imagePath = FilenameUtils.separatorsToSystem(pathToFile);
+        final String imagePath = FilenameUtils.separatorsToSystem(pathToFile);
         final File imageFile = new File(TEST_IMAGE_FOLDER, imagePath);
 
         final ImageFormat guessedFormat = Imaging.guessFormat(imageFile);

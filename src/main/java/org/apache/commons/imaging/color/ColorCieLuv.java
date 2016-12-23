@@ -92,7 +92,7 @@ public final class ColorCieLuv {
             return false;
         }
 
-        ColorCieLuv that = (ColorCieLuv) o;
+        final ColorCieLuv that = (ColorCieLuv) o;
         if (Double.compare(that.L, L) != 0) {
             return false;
         }

@@ -553,7 +553,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
     public void removeField(final int tag) {
         final List<TiffOutputField> matches = new ArrayList<>();
-        for (TiffOutputField field : fields) {
+        for (final TiffOutputField field : fields) {
             if (field.tag == tag) {
                 matches.add(field);
             }
@@ -588,7 +588,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
      * @see #findField(TagInfo)
      */
     public TiffOutputField findField(final int tag) {
-        for (TiffOutputField field : fields) {
+        for (final TiffOutputField field : fields) {
             if (field.tag == tag) {
                 return field;
             }
@@ -620,7 +620,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         bos.write2Bytes(fields.size()); // DirectoryFieldCount
 
         // Write Fields
-        for (TiffOutputField field : fields) {
+        for (final TiffOutputField field : fields) {
             field.writeField(bos);
 
             // Debug.debug("\t" + "writing field (" + field.tag + ", 0x" +
@@ -730,8 +730,8 @@ public final class TiffOutputDirectory extends TiffOutputItem {
 
             // TiffOutputField imageDataOffsetsField = null;
 
-            int[] imageDataOffsets = new int[imageData.length];
-            int[] imageDataByteCounts = new int[imageData.length];
+            final int[] imageDataOffsets = new int[imageData.length];
+            final int[] imageDataByteCounts = new int[imageData.length];
             for (int i = 0; i < imageData.length; i++) {
                 imageDataByteCounts[i] = imageData[i].length;
             }
@@ -764,7 +764,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
         result.add(this);
         sortFields();
 
-        for (TiffOutputField field : fields) {
+        for (final TiffOutputField field : fields) {
             if (field.isLocalValue()) {
                 continue;
             }

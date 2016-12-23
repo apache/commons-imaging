@@ -92,7 +92,7 @@ public final class ColorCieLab {
             return false;
         }
 
-        ColorCieLab that = (ColorCieLab) o;
+        final ColorCieLab that = (ColorCieLab) o;
         if (Double.compare(that.L, L) != 0) {
             return false;
         }

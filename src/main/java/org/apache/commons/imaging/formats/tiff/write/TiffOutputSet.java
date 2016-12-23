@@ -47,7 +47,7 @@ public final class TiffOutputSet {
             final TiffOutputSummary outputSummary) throws ImageWriteException {
         final List<TiffOutputItem> result = new ArrayList<>();
 
-        for (TiffOutputDirectory directory : directories) {
+        for (final TiffOutputDirectory directory : directories) {
             result.addAll(directory.getOutputItems(outputSummary));
         }
 
@@ -117,7 +117,7 @@ public final class TiffOutputSet {
     }
 
     public TiffOutputDirectory findDirectory(final int directoryType) {
-        for (TiffOutputDirectory directory : directories) {
+        for (final TiffOutputDirectory directory : directories) {
             if (directory.type == directoryType) {
                 return directory;
             }
@@ -195,7 +195,7 @@ public final class TiffOutputSet {
     }
 
     public void removeField(final int tag) {
-        for (TiffOutputDirectory directory : directories) {
+        for (final TiffOutputDirectory directory : directories) {
             directory.removeField(tag);
         }
     }
@@ -205,7 +205,7 @@ public final class TiffOutputSet {
     }
 
     public TiffOutputField findField(final int tag) {
-        for (TiffOutputDirectory directory : directories) {
+        for (final TiffOutputDirectory directory : directories) {
             final TiffOutputField field = directory.findField(tag);
             if (null != field) {
                 return field;
@@ -272,7 +272,7 @@ public final class TiffOutputSet {
                     prefix, i, directory.description(), directory.type));
 
             final List<TiffOutputField> fields = directory.getFields();
-            for (TiffOutputField field : fields) {
+            for (final TiffOutputField field : fields) {
                 result.append(prefix);
                 result.append("\t\tfield " + i + ": " + field.tagInfo);
                 result.append(NEWLINE);

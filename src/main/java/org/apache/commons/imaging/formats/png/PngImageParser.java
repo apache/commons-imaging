@@ -112,7 +112,7 @@ public class PngImageParser extends ImageParser {
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(is, null, false);
         final List<String> chunkTypes = new ArrayList<>();
-        for (PngChunk chunk : chunks) {
+        for (final PngChunk chunk : chunks) {
             chunkTypes.add(getChunkTypeName(chunk.chunkType));
         }
         return chunkTypes;
@@ -281,7 +281,7 @@ public class PngImageParser extends ImageParser {
 
         final GenericImageMetadata result = new GenericImageMetadata();
 
-        for (PngChunk chunk : chunks) {
+        for (final PngChunk chunk : chunks) {
             final PngTextChunk textChunk = (PngTextChunk) chunk;
 
             result.add(textChunk.getKeyword(), textChunk.getText());
@@ -293,7 +293,7 @@ public class PngImageParser extends ImageParser {
     private List<PngChunk> filterChunks(final List<PngChunk> chunks, final ChunkType type) {
         final List<PngChunk> result = new ArrayList<>();
 
-        for (PngChunk chunk : chunks) {
+        for (final PngChunk chunk : chunks) {
             if (chunk.chunkType == type.value) {
                 result.add(chunk);
             }
@@ -378,7 +378,7 @@ public class PngImageParser extends ImageParser {
             throw new ImageReadException("PNG contains more than one sCAL:"
                     + sCALs.size());
         } else if (sCALs.size() == 1) {
-            PngChunkScal pngChunkScal = (PngChunkScal) sCALs.get(0);
+            final PngChunkScal pngChunkScal = (PngChunkScal) sCALs.get(0);
             if (pngChunkScal.unitSpecifier == 1) {
                 physicalScale = PhysicalScale.createFromMeters(pngChunkScal.unitsPerPixelXAxis,
                       pngChunkScal.unitsPerPixelYAxis);
@@ -395,17 +395,17 @@ public class PngImageParser extends ImageParser {
         final List<String> comments = new ArrayList<>();
         final List<PngText> textChunks = new ArrayList<>();
 
-        for (PngChunk tEXt : tEXts) {
+        for (final PngChunk tEXt : tEXts) {
             final PngChunkText pngChunktEXt = (PngChunkText) tEXt;
             comments.add(pngChunktEXt.keyword + ": " + pngChunktEXt.text);
             textChunks.add(pngChunktEXt.getContents());
         }
-        for (PngChunk zTXt : zTXts) {
+        for (final PngChunk zTXt : zTXts) {
             final PngChunkZtxt pngChunkzTXt = (PngChunkZtxt) zTXt;
             comments.add(pngChunkzTXt.keyword + ": " + pngChunkzTXt.text);
             textChunks.add(pngChunkzTXt.getContents());
         }
-        for (PngChunk iTXt : iTXts) {
+        for (final PngChunk iTXt : iTXts) {
             final PngChunkItxt pngChunkiTXt = (PngChunkItxt) iTXt;
             comments.add(pngChunkiTXt.keyword + ": " + pngChunkiTXt.text);
             textChunks.add(pngChunkiTXt.getContents());
@@ -530,7 +530,7 @@ public class PngImageParser extends ImageParser {
         }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (PngChunk IDAT : IDATs) {
+        for (final PngChunk IDAT : IDATs) {
             final PngChunkIdat pngChunkIDAT = (PngChunkIdat) IDAT;
             final byte[] bytes = pngChunkIDAT.getBytes();
             // System.out.println(i + ": bytes: " + bytes.length);
@@ -717,7 +717,7 @@ public class PngImageParser extends ImageParser {
         }
 
         final List<PngChunkItxt> xmpChunks = new ArrayList<>();
-        for (PngChunk chunk : chunks) {
+        for (final PngChunk chunk : chunks) {
             final PngChunkItxt itxtChunk = (PngChunkItxt) chunk;
             if (!itxtChunk.getKeyword().equals(PngConstants.XMP_KEYWORD)) {
                 continue;

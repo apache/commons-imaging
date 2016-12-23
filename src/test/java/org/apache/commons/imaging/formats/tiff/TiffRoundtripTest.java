@@ -49,7 +49,7 @@ public class TiffRoundtripTest extends TiffBaseTest {
             final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
             assertNotNull(imageInfo);
 
-            BufferedImage image = Imaging.getBufferedImage(imageFile);
+            final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
 
             final int[] compressions = new int[]{

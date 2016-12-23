@@ -79,7 +79,7 @@ public abstract class TiffImageWriterBase {
 
         final List<Integer> directoryIndices = new ArrayList<>();
         final Map<Integer, TiffOutputDirectory> directoryTypeMap = new HashMap<>();
-        for (TiffOutputDirectory directory : directories) {
+        for (final TiffOutputDirectory directory : directories) {
             final int dirType = directory.type;
             directoryTypeMap.put(dirType, directory);
             // Debug.debug("validating dirType", dirType + " ("
@@ -126,7 +126,7 @@ public abstract class TiffImageWriterBase {
 
             final HashSet<Integer> fieldTags = new HashSet<>();
             final List<TiffOutputField> fields = directory.getFields();
-            for (TiffOutputField field : fields) {
+            for (final TiffOutputField field : fields) {
                 if (fieldTags.contains(field.tag)) {
                     throw new ImageWriteException("Tag ("
                             + field.tagInfo.getDescription()

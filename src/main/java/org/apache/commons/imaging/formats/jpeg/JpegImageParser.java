@@ -202,7 +202,7 @@ public class JpegImageParser extends ImageParser {
     private byte[] assembleSegments(final List<App2Segment> segments) throws ImageReadException {
         try {
             return assembleSegments(segments, false);
-        } catch (ImageReadException e) {
+        } catch (final ImageReadException e) {
             return assembleSegments(segments, true);
         }
     }
@@ -250,7 +250,7 @@ public class JpegImageParser extends ImageParser {
         final byte[] result = new byte[total];
         int progress = 0;
 
-        for (App2Segment segment : segments) {
+        for (final App2Segment segment : segments) {
             System.arraycopy(segment.getIccBytes(), 0, result, progress, segment.getIccBytes().length);
             progress += segment.getIccBytes().length;
         }
@@ -284,7 +284,7 @@ public class JpegImageParser extends ImageParser {
         final List<App2Segment> filtered = new ArrayList<>();
         if (segments != null) {
             // throw away non-icc profile app2 segments.
-            for (Segment s : segments) {
+            for (final Segment s : segments) {
                 final App2Segment segment = (App2Segment) s;
                 if (segment.getIccBytes() != null) {
                     filtered.add(segment);
@@ -331,7 +331,7 @@ public class JpegImageParser extends ImageParser {
     private List<Segment> filterAPP1Segments(final List<Segment> segments) {
         final List<Segment> result = new ArrayList<>();
 
-        for (Segment s : segments) {
+        for (final Segment s : segments) {
             final GenericSegment segment = (GenericSegment) s;
             if (isExifAPP1Segment(segment)) {
                 result.add(segment);
@@ -593,7 +593,7 @@ public class JpegImageParser extends ImageParser {
 
         PhotoshopApp13Data photoshopApp13Data = null;
 
-        for (Segment s : segments) {
+        for (final Segment s : segments) {
             final App13Segment segment = (App13Segment) s;
 
             final PhotoshopApp13Data data = segment.parsePhotoshopSegment(params);
@@ -793,7 +793,7 @@ public class JpegImageParser extends ImageParser {
         final List<String> comments = new ArrayList<>();
         final List<Segment> commentSegments = readSegments(byteSource,
                 new int[] { JpegConstants.COM_MARKER}, false);
-        for (Segment commentSegment : commentSegments) {
+        for (final Segment commentSegment : commentSegments) {
             final ComSegment comSegment = (ComSegment) commentSegment;
             String comment = "";
             try {

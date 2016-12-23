@@ -202,8 +202,8 @@ public class PaletteFactory {
             }
         }
 
-        int sum2 = sum1 - last;
-        int slice2 = slice1 - 1;
+        final int sum2 = sum1 - last;
+        final int slice2 = slice1 - 1;
 
         final DivisionCandidate dc1 = finishDivision(subset, component, precision, sum1, slice1);
         final DivisionCandidate dc2 = finishDivision(subset, component, precision, sum2, slice2);
@@ -231,7 +231,7 @@ public class PaletteFactory {
         DivisionCandidate bestV = null;
         double bestScore = Double.MAX_VALUE;
 
-        for (DivisionCandidate dc : dcs) {
+        for (final DivisionCandidate dc : dcs) {
             final ColorSpaceSubset first = dc.dst_a;
             final ColorSpaceSubset second = dc.dst_b;
             final int area1 = first.total;
@@ -273,7 +273,7 @@ public class PaletteFactory {
             int maxArea = -1;
             ColorSpaceSubset maxSubset = null;
 
-            for (ColorSpaceSubset subset : v) {
+            for (final ColorSpaceSubset subset : v) {
                 if (ignore.contains(subset)) {
                     continue;
                 }

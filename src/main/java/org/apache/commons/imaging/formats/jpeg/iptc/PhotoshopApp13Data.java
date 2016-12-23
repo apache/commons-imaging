@@ -40,7 +40,7 @@ public class PhotoshopApp13Data {
 
     public List<IptcBlock> getNonIptcBlocks() {
         final List<IptcBlock> result = new ArrayList<>();
-        for (IptcBlock block : rawBlocks) {
+        for (final IptcBlock block : rawBlocks) {
             if (!block.isIPTCBlock()) {
                 result.add(block);
             }

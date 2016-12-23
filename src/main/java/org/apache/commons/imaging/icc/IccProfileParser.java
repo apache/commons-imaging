@@ -68,7 +68,7 @@ public class IccProfileParser extends BinaryFileParser {
         try {
 
             is = byteSource.getInputStream();
-            IccProfileInfo result = readICCProfileInfo(is);
+            final IccProfileInfo result = readICCProfileInfo(is);
 
             if (result == null) {
                 return null;
@@ -332,7 +332,7 @@ public class IccProfileParser extends BinaryFileParser {
                 printCharQuad("DeviceModel", deviceModel);
             }
 
-            boolean result = deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
+            final boolean result = deviceManufacturer == IccConstants.IEC && deviceModel == IccConstants.sRGB;
             return result;
         }
     }

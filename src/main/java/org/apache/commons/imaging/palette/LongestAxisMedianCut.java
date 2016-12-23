@@ -114,9 +114,9 @@ public class LongestAxisMedianCut implements MedianCut {
                 colorGroup.colorCounts.subList(medianIndex + 1,
                         colorGroup.colorCounts.size()));
 
-        ColorGroup less = new ColorGroup(new ArrayList<>(colorCounts1), ignoreAlpha);
+        final ColorGroup less = new ColorGroup(new ArrayList<>(colorCounts1), ignoreAlpha);
         colorGroups.add(less);
-        ColorGroup more = new ColorGroup(new ArrayList<>(colorCounts2), ignoreAlpha);
+        final ColorGroup more = new ColorGroup(new ArrayList<>(colorCounts2), ignoreAlpha);
         colorGroups.add(more);
 
         final ColorCount medianValue = colorGroup.colorCounts.get(medianIndex);

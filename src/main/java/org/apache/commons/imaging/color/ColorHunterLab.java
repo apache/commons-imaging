@@ -92,7 +92,7 @@ public final class ColorHunterLab {
             return false;
         }
 
-        ColorHunterLab that = (ColorHunterLab) o;
+        final ColorHunterLab that = (ColorHunterLab) o;
         if (Double.compare(that.L, L) != 0) {
             return false;
         }

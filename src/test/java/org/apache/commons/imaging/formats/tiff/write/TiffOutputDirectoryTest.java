@@ -39,11 +39,11 @@ public class TiffOutputDirectoryTest {
     public void testFindField() throws Exception {
         directory.add(TIFF_TAG_DOCUMENT_NAME, "Test.tiff");
 
-        TiffOutputField field = directory.findField(TIFF_TAG_DOCUMENT_NAME);
+        final TiffOutputField field = directory.findField(TIFF_TAG_DOCUMENT_NAME);
 
         assertNotNull(field);
         assertEquals(TIFF_TAG_DOCUMENT_NAME, field.tagInfo);
-        byte[] documentNameAsBytes = TIFF_TAG_DOCUMENT_NAME.encodeValue(TiffConstants.DEFAULT_TIFF_BYTE_ORDER, "Test.tiff");
+        final byte[] documentNameAsBytes = TIFF_TAG_DOCUMENT_NAME.encodeValue(TiffConstants.DEFAULT_TIFF_BYTE_ORDER, "Test.tiff");
         assertTrue(field.bytesEqual(documentNameAsBytes));
     }
 }

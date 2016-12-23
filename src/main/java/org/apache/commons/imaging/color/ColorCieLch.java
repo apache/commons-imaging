@@ -92,7 +92,7 @@ public final class ColorCieLch {
             return false;
         }
 
-        ColorCieLch that = (ColorCieLch) o;
+        final ColorCieLch that = (ColorCieLch) o;
         if (Double.compare(that.C, C) != 0) {
             return false;
         }
