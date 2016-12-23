@@ -144,9 +144,8 @@ public class TiffReader extends BinaryFileParser {
             } catch (final IOException e) {
                 if (strict) {
                     throw e;
-                } else {
-                    return true;
                 }
+                return true;
             }
 
             for (int i = 0; i < entryCount; i++) {
