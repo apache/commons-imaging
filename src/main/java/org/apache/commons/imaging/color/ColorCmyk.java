@@ -128,7 +128,9 @@ public final class ColorCmyk {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ColorCmyk colorCmyk = (ColorCmyk) o;
         if (Double.compare(colorCmyk.C, C) != 0) {
