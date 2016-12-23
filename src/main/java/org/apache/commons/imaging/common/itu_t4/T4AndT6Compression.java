@@ -112,16 +112,17 @@ public final class T4AndT6Compression {
      * @return the compressed data
      * @throws ImageWriteException
      */
-    public static byte[] compressModifiedHuffman(final byte[] uncompressed,
-            final int width, final int height) throws ImageWriteException {
+    public static byte[] compressModifiedHuffman(final byte[] uncompressed, final int width, final int height)
+            throws ImageWriteException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
-        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
-        for (int y = 0; y < height; y++) {
-            compress1DLine(inputStream, outputStream, null, width);
-            inputStream.flushCache();
-            outputStream.flush();
+        try (final BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
+            for (int y = 0; y < height; y++) {
+                compress1DLine(inputStream, outputStream, null, width);
+                inputStream.flushCache();
+                outputStream.flush();
+            }
+            return outputStream.toByteArray();
         }
-        return outputStream.toByteArray();
     }
 
     /**
