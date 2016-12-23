@@ -83,7 +83,7 @@ public class IcnsImageParser extends ImageParser {
     public ImageInfo getImageInfo(final ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
+        params = params == null ? new HashMap<String, Object>() : new HashMap<>(params);
 
         if (params.containsKey(PARAM_KEY_VERBOSE)) {
             params.remove(PARAM_KEY_VERBOSE);
