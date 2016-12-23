@@ -166,8 +166,7 @@ public final class DataReaderStrips extends ImageDataReader {
         // this logic will handle all cases not conforming to the
         // special case handled above
 
-        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        final BitInputStream bis = new BitInputStream(bais, byteOrder);
+        final BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder);
 
         int[] samples = new int[bitsPerSampleLength];
         resetPredictor();
