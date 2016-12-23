@@ -166,28 +166,28 @@ public final class DataReaderStrips extends ImageDataReader {
         // this logic will handle all cases not conforming to the
         // special case handled above
 
-        final BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder);
+        try (final BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder)) {
 
-        int[] samples = new int[bitsPerSampleLength];
-        resetPredictor();
-        for (int i = 0; i < pixelsPerStrip; i++) {
-            getSamplesAsBytes(bis, samples);
+            int[] samples = new int[bitsPerSampleLength];
+            resetPredictor();
+            for (int i = 0; i < pixelsPerStrip; i++) {
+                getSamplesAsBytes(bis, samples);
 
-            if (x < width) {
-                samples = applyPredictor(samples);
+                if (x < width) {
+                    samples = applyPredictor(samples);
 
-                photometricInterpreter.interpretPixel(
-                        imageBuilder, samples, x,  y);
-            }
+                    photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
+                }
 
-            x++;
-            if (x >= width) {
-                x = 0;
-                resetPredictor();
-                y++;
-                bis.flushCache();
-                if (y >= yLimit) {
-                    break;
+                x++;
+                if (x >= width) {
+                    x = 0;
+                    resetPredictor();
+                    y++;
+                    bis.flushCache();
+                    if (y >= yLimit) {
+                        break;
+                    }
                 }
             }
         }
