@@ -226,9 +226,7 @@ public class PngImageParser extends ImageParser {
             final boolean returnAfterFirst) throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             readSignature(is);
-
-            final List<PngChunk> ret = readChunks(is, chunkTypes, returnAfterFirst);
-            return ret;
+            return readChunks(is, chunkTypes, returnAfterFirst);
         }
     }
 
