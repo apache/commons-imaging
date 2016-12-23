@@ -115,8 +115,7 @@ public final class DataReaderTiled extends ImageDataReader {
 
         // End of May 2012 changes
 
-        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        final BitInputStream bis = new BitInputStream(bais, byteOrder);
+        final BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder);
 
         final int pixelsPerTile = tileWidth * tileLength;
 
