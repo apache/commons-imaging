@@ -239,8 +239,7 @@ public class XpmImageParser extends ImageParser {
 
     private XpmHeader readXpmHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final XpmParseResult result = parseXpmHeader(byteSource);
-        return result.xpmHeader;
+        return parseXpmHeader(byteSource).xpmHeader;
     }
 
     private XpmParseResult parseXpmHeader(final ByteSource byteSource)
