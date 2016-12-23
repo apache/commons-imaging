@@ -134,8 +134,7 @@ public class XbmImageParser extends ImageParser {
 
     private XbmHeader readXbmHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final XbmParseResult result = parseXbmHeader(byteSource);
-        return result.xbmHeader;
+        return parseXbmHeader(byteSource).xbmHeader;
     }
 
     private XbmParseResult parseXbmHeader(final ByteSource byteSource)
