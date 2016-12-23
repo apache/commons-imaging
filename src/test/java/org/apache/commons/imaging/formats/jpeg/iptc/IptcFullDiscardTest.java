@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class IptcFullDiscardTest {
     
-    private byte[] addMetaData(byte[] bytes) throws Exception {
+    private byte[] addMetaData(final byte[] bytes) throws Exception {
         IptcRecord record = new IptcRecord(IptcTypes.KEYWORDS, "meta; data");
         PhotoshopApp13Data data = new PhotoshopApp13Data(Collections.singletonList(record), Collections.<IptcBlock> emptyList());
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -46,7 +46,7 @@ public class IptcFullDiscardTest {
         return byteArrayOutputStream.toByteArray();
     }
     
-    private byte[] removeMetaData(byte[] bytes, boolean removeApp13Segment) throws Exception {
+    private byte[] removeMetaData(final byte[] bytes, final boolean removeApp13Segment) throws Exception {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         new JpegIptcRewriter().removeIPTC(bytes, byteArrayOutputStream, removeApp13Segment);
         return byteArrayOutputStream.toByteArray();

@@ -46,7 +46,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
         return getImagesWithXmpData();
     }
 
-    public JpegXmpRewriteTest(File imageFile) {
+    public JpegXmpRewriteTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

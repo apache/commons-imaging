@@ -49,7 +49,7 @@ public class IptcAddTest extends IptcBaseTest {
         return getJpegImages();
     }
 
-    public IptcAddTest(File imageFile) {
+    public IptcAddTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

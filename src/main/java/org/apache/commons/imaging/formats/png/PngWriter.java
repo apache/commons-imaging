@@ -97,7 +97,7 @@ class PngWriter {
 
         public ImageHeader(final int width, final int height, final byte bitDepth,
                 final PngColorType pngColorType, final byte compressionMethod, final byte filterMethod,
-                InterlaceMethod interlaceMethod) {
+                final InterlaceMethod interlaceMethod) {
             this.width = width;
             this.height = height;
             this.bitDepth = bitDepth;

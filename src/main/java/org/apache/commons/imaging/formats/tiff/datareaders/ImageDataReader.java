@@ -85,7 +85,7 @@ public abstract class ImageDataReader {
      * @param size the size to check
      * @return true if all the bits per sample entries are the same
      */
-    protected boolean isHomogenous(int size) {
+    protected boolean isHomogenous(final int size) {
         for (final int element : bitsPerSample) {
             if (element != size) {
                 return false;

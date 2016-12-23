@@ -46,7 +46,7 @@ public abstract class SpecificExifTagTest extends ExifBaseTest {
         return getImagesWithExifData();
     }
 
-    public SpecificExifTagTest(File imageFile) {
+    public SpecificExifTagTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

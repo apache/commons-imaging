@@ -44,7 +44,7 @@ public class BmpReadTest extends BmpBaseTest {
         return getBmpImages();
     }
 
-    public BmpReadTest(File imageFile) {
+    public BmpReadTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

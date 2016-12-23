@@ -43,7 +43,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
         return Arrays.asList(getTestByteArrays());
     }
 
-    public ByteSourceDataTest(byte[] testByteArray) {
+    public ByteSourceDataTest(final byte[] testByteArray) {
         this.testByteArray = testByteArray;
     }
 

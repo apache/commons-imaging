@@ -23,7 +23,7 @@ import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 public class AppnSegment extends GenericSegment {
 
-    public AppnSegment(int marker, int markerLength, InputStream is) throws IOException {
+    public AppnSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);
     }
 

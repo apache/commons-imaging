@@ -108,7 +108,7 @@ public class RationalNumberTest extends ImagingTest {
         );
     }
 
-    public RationalNumberTest(double testValue) {
+    public RationalNumberTest(final double testValue) {
         this.testValue = testValue;
     }
 

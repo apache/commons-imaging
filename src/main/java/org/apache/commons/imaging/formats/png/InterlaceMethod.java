@@ -28,7 +28,7 @@ public enum InterlaceMethod {
 
     private final boolean progressive;
 
-    private InterlaceMethod(boolean progressive) {
+    private InterlaceMethod(final boolean progressive) {
         this.progressive = progressive;
     }
 

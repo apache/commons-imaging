@@ -306,7 +306,7 @@ public class PngImageParser extends ImageParser {
     // BinaryFileParser
     // I may not have always preserved byte order correctly.
 
-    private TransparencyFilter getTransparencyFilter(PngColorType pngColorType, PngChunk pngChunktRNS)
+    private TransparencyFilter getTransparencyFilter(final PngColorType pngColorType, final PngChunk pngChunktRNS)
             throws ImageReadException, IOException {
         switch (pngColorType) {
             case GREYSCALE: // 1,2,4,8,16 Each pixel is a grayscale sample.

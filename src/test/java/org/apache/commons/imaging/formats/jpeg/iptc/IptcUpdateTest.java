@@ -51,7 +51,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         return getImagesWithIptcData();
     }
 
-    public IptcUpdateTest(File imageFile) {
+    public IptcUpdateTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 
@@ -80,7 +80,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                 || outMetadata.getItems().size() == 0);
     }
 
-    public File removeIptc(ByteSource byteSource) throws Exception {
+    public File removeIptc(final ByteSource byteSource) throws Exception {
         final File noIptcFile = createTempFile(imageFile.getName() + ".iptc.remove.", ".jpg");
 
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(noIptcFile))) {
@@ -160,7 +160,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         assertTrue(outMetadata.getItems().size() == 2);
     }
 
-    public File writeIptc(ByteSource byteSource, PhotoshopApp13Data newData) throws IOException, ImageReadException, ImageWriteException {
+    public File writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData) throws IOException, ImageReadException, ImageWriteException {
         final File updated = createTempFile(imageFile.getName()
                 + ".iptc.update.", ".jpg");
         try (FileOutputStream fos = new FileOutputStream(updated);

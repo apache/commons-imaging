@@ -63,7 +63,7 @@ public class PaletteQuantizationTest extends ImagingTest {
         checkPaletteDetails(rainbowImage, 2, 2);
     }
     
-    private void checkPaletteDetails(BufferedImage image, final int limit, final int expectedSize) throws ImageWriteException {
+    private void checkPaletteDetails(final BufferedImage image, final int limit, final int expectedSize) throws ImageWriteException {
         PaletteFactory paletteFactory = new PaletteFactory();
         Palette palette;
 
@@ -103,7 +103,7 @@ public class PaletteQuantizationTest extends ImagingTest {
         }
     }
     
-    private void checkUniqueColors(BufferedImage src, Palette palette) throws ImageWriteException {
+    private void checkUniqueColors(final BufferedImage src, final Palette palette) throws ImageWriteException {
         BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
         dst.getGraphics().drawImage(src, 0, 0, src.getWidth(), src.getHeight(), null);
         Dithering.applyFloydSteinbergDithering(dst, palette);
@@ -111,7 +111,7 @@ public class PaletteQuantizationTest extends ImagingTest {
         assertEquals(palette.length(), ditheredPalette.length());
     }
     
-    private void checkPixelsAreIdentical(BufferedImage src, Palette palette) throws ImageWriteException {
+    private void checkPixelsAreIdentical(final BufferedImage src, final Palette palette) throws ImageWriteException {
         BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
         dst.getGraphics().drawImage(src, 0, 0, src.getWidth(), src.getHeight(), null);
         Dithering.applyFloydSteinbergDithering(dst, palette);

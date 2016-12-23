@@ -64,7 +64,7 @@ public class TiffDirectory extends TiffElement {
     private TiffImageData tiffImageData;
     private JpegImageData jpegImageData;
 
-    public TiffDirectory(int type, List<TiffField> entries, long offset, long nextDirectoryOffset) {
+    public TiffDirectory(final int type, final List<TiffField> entries, final long offset, final long nextDirectoryOffset) {
         super(offset, TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH
                 + entries.size() * TiffConstants.TIFF_ENTRY_LENGTH
                 + TiffConstants.TIFF_DIRECTORY_FOOTER_LENGTH);

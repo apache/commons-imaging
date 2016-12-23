@@ -104,7 +104,7 @@ public abstract class TiffImageData {
             return strips;
         }
 
-        public TiffElement.DataElement getImageData(int offset) {
+        public TiffElement.DataElement getImageData(final int offset) {
             return strips[offset];
         }
 

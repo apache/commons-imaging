@@ -40,7 +40,7 @@ public class DcxReadTest extends DcxBaseTest {
         return getDcxImages();
     }
 
-    public DcxReadTest(File imageFile) {
+    public DcxReadTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

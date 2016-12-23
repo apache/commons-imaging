@@ -46,7 +46,7 @@ public class JpegReadTest extends JpegBaseTest {
         return getJpegImages();
     }
 
-    public JpegReadTest(File imageFile) {
+    public JpegReadTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

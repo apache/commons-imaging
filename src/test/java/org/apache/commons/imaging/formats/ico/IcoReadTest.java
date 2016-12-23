@@ -40,7 +40,7 @@ public class IcoReadTest extends IcoBaseTest {
         return getIcoImages();
     }
 
-    public IcoReadTest(File imageFile) {
+    public IcoReadTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

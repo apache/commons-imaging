@@ -45,7 +45,7 @@ public class ExifDumpTest extends ExifBaseTest {
         return getImagesWithExifData();
     }
 
-    public ExifDumpTest(File imageFile) {
+    public ExifDumpTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

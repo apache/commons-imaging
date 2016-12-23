@@ -44,7 +44,7 @@ public class IptcDumpTest extends IptcBaseTest {
         return getImagesWithIptcData();
     }
 
-    public IptcDumpTest(File imageFile) {
+    public IptcDumpTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

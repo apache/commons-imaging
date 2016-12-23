@@ -42,7 +42,7 @@ public class IcnsReadTest extends IcnsBaseTest {
         return getIcnsImages();
     }
 
-    public IcnsReadTest(File imageFile) {
+    public IcnsReadTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

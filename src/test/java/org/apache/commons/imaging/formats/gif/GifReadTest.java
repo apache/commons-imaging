@@ -40,7 +40,7 @@ public class GifReadTest extends GifBaseTest {
         return getGifImages();
     }
 
-    public GifReadTest(File imageFile) {
+    public GifReadTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

@@ -199,7 +199,7 @@ public class JpegImageParser extends ImageParser {
         return result;
     }
 
-    private byte[] assembleSegments(List<App2Segment> segments) throws ImageReadException {
+    private byte[] assembleSegments(final List<App2Segment> segments) throws ImageReadException {
         try {
             return assembleSegments(segments, false);
         } catch (ImageReadException e) {

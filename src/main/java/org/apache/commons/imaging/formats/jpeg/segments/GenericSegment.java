@@ -26,7 +26,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.*;
 public abstract class GenericSegment extends Segment {
     private final byte[] segmentData;
 
-    public GenericSegment(int marker, int markerLength, InputStream is) throws IOException {
+    public GenericSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength);
 
         segmentData = readBytes("Segment Data", is, markerLength, "Invalid Segment: insufficient data");
@@ -66,7 +66,7 @@ public abstract class GenericSegment extends Segment {
      * @see GenericSegment#getSegmentData()
      * @return the bye in the segment's contents
      */
-    protected byte getSegmentData(int offset) {
+    protected byte getSegmentData(final int offset) {
         return segmentData[offset];
     }
 
@@ -76,7 +76,7 @@ public abstract class GenericSegment extends Segment {
      * @return the encoded bytes
      * @throws UnsupportedEncodingException
      */
-    public String getSegmentDataAsString(String encoding) throws UnsupportedEncodingException {
+    public String getSegmentDataAsString(final String encoding) throws UnsupportedEncodingException {
         return new String(segmentData, encoding);
     }
 

@@ -40,7 +40,7 @@ public class ImageInfo {
 
         private String description;
 
-        ColorType(String description) {
+        ColorType(final String description) {
             this.description = description;
         }
 
@@ -66,7 +66,7 @@ public class ImageInfo {
 
         private String description;
 
-        CompressionAlgorithm(String description) {
+        CompressionAlgorithm(final String description) {
             this.description = description;
         }
 

@@ -27,7 +27,7 @@ public class PngChunkScal extends PngChunk {
    public final double unitsPerPixelYAxis;
    public final int unitSpecifier;
 
-   public PngChunkScal(int length, int chunkType, int crc, byte[] bytes)
+   public PngChunkScal(final int length, final int chunkType, final int crc, final byte[] bytes)
          throws ImageReadException, IOException {
       super(length, chunkType, crc, bytes);
 

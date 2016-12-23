@@ -185,7 +185,7 @@ public class ColorTools {
         return convertBetweenColorSpaces(bi, from, srgbCM.getColorSpace());
     }
 
-    public BufferedImage convertBetweenICCProfiles(BufferedImage bi, ICC_Profile from, ICC_Profile to) {
+    public BufferedImage convertBetweenICCProfiles(final BufferedImage bi, final ICC_Profile from, final ICC_Profile to) {
         final ICC_ColorSpace csFrom = new ICC_ColorSpace(from);
         final ICC_ColorSpace csTo = new ICC_ColorSpace(to);
 

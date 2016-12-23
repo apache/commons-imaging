@@ -28,7 +28,7 @@ import org.apache.commons.imaging.util.Debug;
 
 public class MakerNoteFieldTest extends SpecificExifTagTest {
 
-    public MakerNoteFieldTest(File imageFile) {
+    public MakerNoteFieldTest(final File imageFile) {
         super(imageFile);
     }
 

@@ -54,7 +54,7 @@ public class ByteSourceImageTest extends ByteSourceTest {
         return getTestImages();
     }
 
-    public ByteSourceImageTest(File imageFile) {
+    public ByteSourceImageTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

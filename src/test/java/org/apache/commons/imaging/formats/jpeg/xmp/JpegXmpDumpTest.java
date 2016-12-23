@@ -41,7 +41,7 @@ public class JpegXmpDumpTest extends JpegXmpBaseTest {
         return getImagesWithXmpData();
     }
 
-    public JpegXmpDumpTest(File imageFile) {
+    public JpegXmpDumpTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

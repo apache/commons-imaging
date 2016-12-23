@@ -31,7 +31,7 @@ import org.junit.Assert;
 
 public class TextFieldTest extends SpecificExifTagTest {
 
-    public TextFieldTest(File imageFile) {
+    public TextFieldTest(final File imageFile) {
         super(imageFile);
     }
 

@@ -75,7 +75,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         }
     }
 
-    private byte[] cleanImage(File imageWithExif) throws ImageReadException, ImageWriteException, IOException {
+    private byte[] cleanImage(final File imageWithExif) throws ImageReadException, ImageWriteException, IOException {
         // Windows doesn't show XP tags if same-meaning tags exist in IPTC or XMP. Remove them: 
         final ByteArrayOutputStream noXmp = new ByteArrayOutputStream();
         new JpegXmpRewriter().removeXmpXml(imageWithExif, noXmp);

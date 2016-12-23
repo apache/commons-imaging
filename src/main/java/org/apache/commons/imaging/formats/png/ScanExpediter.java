@@ -171,7 +171,7 @@ abstract class ScanExpediter {
         }
     }
 
-    ScanlineFilter getScanlineFilter(FilterType filterType, int bytesPerPixel) throws ImageReadException {
+    ScanlineFilter getScanlineFilter(final FilterType filterType, final int bytesPerPixel) throws ImageReadException {
         switch (filterType) {
             case NONE:
                 return new ScanlineFilterNone();

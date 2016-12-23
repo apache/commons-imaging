@@ -41,7 +41,7 @@ public class GpsTest extends ExifBaseTest {
         return getImagesWithExifData();
     }
 
-    public GpsTest(File imageFile) {
+    public GpsTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

@@ -114,19 +114,19 @@ public class DhtSegment extends Segment {
 
         }
 
-        public int getHuffVal(int i) {
+        public int getHuffVal(final int i) {
             return huffVal[i];
         }
 
-        public int getMinCode(int i) {
+        public int getMinCode(final int i) {
             return minCode[i];
         }
 
-        public int getMaxCode(int i) {
+        public int getMaxCode(final int i) {
             return maxCode[i];
         }
 
-        public int getValPtr(int i) {
+        public int getValPtr(final int i) {
             return valPtr[i];
         }
     }

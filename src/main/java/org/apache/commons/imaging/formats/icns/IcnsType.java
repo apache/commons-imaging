@@ -85,7 +85,7 @@ enum IcnsType {
     private final int bitsPerPixel;
     private final boolean hasMask;
 
-    private IcnsType(String type, int width, int height, int bitsPerPixel, boolean hasMask) {
+    private IcnsType(final String type, final int width, final int height, final int bitsPerPixel, final boolean hasMask) {
         this.type = typeAsInt(type);
         this.width = width;
         this.height = height;

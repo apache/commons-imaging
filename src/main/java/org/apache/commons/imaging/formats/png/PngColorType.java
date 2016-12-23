@@ -35,7 +35,7 @@ public enum PngColorType {
     private final int samplesPerPixel;
     private final int[] allowedBitDepths;
 
-    PngColorType(int value, boolean greyscale, boolean alpha, int samplesPerPixel, int[] allowedBitDepths) {
+    PngColorType(final int value, final boolean greyscale, final boolean alpha, final int samplesPerPixel, final int[] allowedBitDepths) {
         this.value = value;
         this.greyscale = greyscale;
         this.alpha = alpha;
@@ -59,11 +59,11 @@ public enum PngColorType {
         return samplesPerPixel;
     }
 
-    boolean isBitDepthAllowed(int bitDepth) {
+    boolean isBitDepthAllowed(final int bitDepth) {
         return Arrays.binarySearch(allowedBitDepths, bitDepth) >= 0;
     }
 
-    public static PngColorType getColorType(int value) {
+    public static PngColorType getColorType(final int value) {
         for (PngColorType type : values()) {
             if (type.value == value) {
                 return type;
@@ -73,7 +73,7 @@ public enum PngColorType {
         return null;
     }
 
-    static PngColorType getColorType(boolean alpha, boolean grayscale) {
+    static PngColorType getColorType(final boolean alpha, final boolean grayscale) {
         if (grayscale) {
             if (alpha) {
                 return PngColorType.GREYSCALE_WITH_ALPHA;

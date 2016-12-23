@@ -72,7 +72,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
         );
     }
 
-    public ImagingGuessFormatTest(ImageFormats expectedFormat, String pathToFile) {
+    public ImagingGuessFormatTest(final ImageFormats expectedFormat, final String pathToFile) {
         this.expectedFormat = expectedFormat;
         this.pathToFile = pathToFile;
     }

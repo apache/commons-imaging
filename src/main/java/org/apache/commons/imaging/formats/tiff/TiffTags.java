@@ -110,7 +110,7 @@ final class TiffTags {
         return map;
     }
 
-    static Integer getTagCount(int tag) {
+    static Integer getTagCount(final int tag) {
         return TAG_COUNTS.get(tag);
     }
 

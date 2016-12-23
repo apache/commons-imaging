@@ -36,7 +36,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest {
         return getJpegImages();
     }
 
-    public WriteExifMetadataExampleTest(File imageFile) {
+    public WriteExifMetadataExampleTest(final File imageFile) {
         this.imageFile = imageFile;
     }
 

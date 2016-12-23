@@ -24,11 +24,11 @@ enum ColorComponent {
     
     private final int shift;
 
-    private ColorComponent(int shift) {
+    private ColorComponent(final int shift) {
         this.shift = shift;
     }
 
-    public int argbComponent(int argb) {
+    public int argbComponent(final int argb) {
         return (argb >> shift) & 0xff;
     }
 }

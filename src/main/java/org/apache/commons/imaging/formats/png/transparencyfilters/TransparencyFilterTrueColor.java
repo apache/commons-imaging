@@ -26,7 +26,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.*;
 public class TransparencyFilterTrueColor extends TransparencyFilter {
     private final int transparentColor;
 
-    public TransparencyFilterTrueColor(byte[] bytes) throws IOException {
+    public TransparencyFilterTrueColor(final byte[] bytes) throws IOException {
         super(bytes);
 
         ByteArrayInputStream is = new ByteArrayInputStream(bytes);
