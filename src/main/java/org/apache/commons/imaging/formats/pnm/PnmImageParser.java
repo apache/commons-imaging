@@ -207,8 +207,7 @@ public class PnmImageParser extends ImageParser {
     private FileInfo readHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final FileInfo ret = readHeader(is);
-            return ret;
+            return readHeader(is);
         }
     }
 
