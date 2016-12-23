@@ -170,30 +170,31 @@ public final class T4AndT6Compression {
     public static byte[] compressT4_1D(final byte[] uncompressed, final int width,
             final int height, final boolean hasFill) throws ImageWriteException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
-        final BitArrayOutputStream outputStream = new BitArrayOutputStream();
-        if (hasFill) {
-            T4_T6_Tables.EOL16.writeBits(outputStream);
-        } else {
-            T4_T6_Tables.EOL.writeBits(outputStream);
-        }
-        
-        for (int y = 0; y < height; y++) {
-            compress1DLine(inputStream, outputStream, null, width);
+        try (final BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             if (hasFill) {
-                int bitsAvailable = outputStream.getBitsAvailableInCurrentByte();
-                if (bitsAvailable < 4) {
-                    outputStream.flush();
-                    bitsAvailable = 8;
-                }
-                for (; bitsAvailable > 4; bitsAvailable--) {
-                    outputStream.writeBit(0);
-                }
+                T4_T6_Tables.EOL16.writeBits(outputStream);
+            } else {
+                T4_T6_Tables.EOL.writeBits(outputStream);
             }
-            T4_T6_Tables.EOL.writeBits(outputStream);
-            inputStream.flushCache();
+
+            for (int y = 0; y < height; y++) {
+                compress1DLine(inputStream, outputStream, null, width);
+                if (hasFill) {
+                    int bitsAvailable = outputStream.getBitsAvailableInCurrentByte();
+                    if (bitsAvailable < 4) {
+                        outputStream.flush();
+                        bitsAvailable = 8;
+                    }
+                    for (; bitsAvailable > 4; bitsAvailable--) {
+                        outputStream.writeBit(0);
+                    }
+                }
+                T4_T6_Tables.EOL.writeBits(outputStream);
+                inputStream.flushCache();
+            }
+
+            return outputStream.toByteArray();
         }
-        
-        return outputStream.toByteArray();
     }
 
     /**
