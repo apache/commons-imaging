@@ -115,40 +115,40 @@ public final class DataReaderTiled extends ImageDataReader {
 
         // End of May 2012 changes
 
-        final BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder);
+        try (final BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder)) {
 
-        final int pixelsPerTile = tileWidth * tileLength;
+            final int pixelsPerTile = tileWidth * tileLength;
 
-        int tileX = 0;
-        int tileY = 0;
+            int tileX = 0;
+            int tileY = 0;
 
-        int[] samples = new int[bitsPerSampleLength];
-        resetPredictor();
-        for (int i = 0; i < pixelsPerTile; i++) {
+            int[] samples = new int[bitsPerSampleLength];
+            resetPredictor();
+            for (int i = 0; i < pixelsPerTile; i++) {
 
-            final int x = tileX + startX;
-            final int y = tileY + startY;
+                final int x = tileX + startX;
+                final int y = tileY + startY;
 
-            getSamplesAsBytes(bis, samples);
+                getSamplesAsBytes(bis, samples);
 
-            if ((x < xLimit) && (y < yLimit)) {
-                samples = applyPredictor(samples);
-                photometricInterpreter.interpretPixel(imageBuilder, samples, x,
-                        y);
-            }
-
-            tileX++;
-
-            if (tileX >= tileWidth) {
-                tileX = 0;
-                resetPredictor();
-                tileY++;
-                bis.flushCache();
-                if (tileY >= tileLength) {
-                    break;
+                if ((x < xLimit) && (y < yLimit)) {
+                    samples = applyPredictor(samples);
+                    photometricInterpreter.interpretPixel(imageBuilder, samples, x, y);
                 }
-            }
 
+                tileX++;
+
+                if (tileX >= tileWidth) {
+                    tileX = 0;
+                    resetPredictor();
+                    tileY++;
+                    bis.flushCache();
+                    if (tileY >= tileLength) {
+                        break;
+                    }
+                }
+
+            }
         }
     }
 
