@@ -377,8 +377,7 @@ public class PsdImageParser extends ImageParser {
     private PsdImageContents readImageContents(final ByteSource byteSource)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final PsdImageContents imageContents = readImageContents(is);
-            return imageContents;
+            return readImageContents(is);
         }
     }
 
