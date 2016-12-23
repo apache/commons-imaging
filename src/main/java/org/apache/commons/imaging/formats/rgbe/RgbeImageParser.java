@@ -83,14 +83,13 @@ public class RgbeImageParser extends ImageParser {
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         try (RgbeInfo info = new RgbeInfo(byteSource)) {
-            final ImageInfo ret = new ImageInfo(
+            return new ImageInfo(
                     getName(),
                     32, // todo may be 64 if double?
                     new ArrayList<String>(), ImageFormats.RGBE, getName(),
                     info.getHeight(), "image/vnd.radiance", 1, -1, -1, -1, -1,
                     info.getWidth(), false, false, false,
                     ImageInfo.ColorType.RGB, ImageInfo.CompressionAlgorithm.ADAPTIVE_RLE);
-            return ret;
         }
     }
 
