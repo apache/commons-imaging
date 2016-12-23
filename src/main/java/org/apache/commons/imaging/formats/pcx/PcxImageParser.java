@@ -242,8 +242,7 @@ public class PcxImageParser extends ImageParser {
     private PcxHeader readPcxHeader(final ByteSource byteSource)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final PcxHeader ret = readPcxHeader(is, false);
-            return ret;
+            return readPcxHeader(is, false);
         }
     }
 
