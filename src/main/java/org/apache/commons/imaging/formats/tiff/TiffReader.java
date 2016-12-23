@@ -55,8 +55,7 @@ public class TiffReader extends BinaryFileParser {
 
     private TiffHeader readTiffHeader(final ByteSource byteSource) throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
-            final TiffHeader ret = readTiffHeader(is);
-            return ret;
+            return readTiffHeader(is);
         }
     }
     
