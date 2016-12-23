@@ -31,7 +31,7 @@ import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
 public class UncompressedDataReader implements DataReader {
 
-    private DataParser dataParser;
+    private final DataParser dataParser;
 
     public UncompressedDataReader(final DataParser dataParser) {
         this.dataParser = dataParser;

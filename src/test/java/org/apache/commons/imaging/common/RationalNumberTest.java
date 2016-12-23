@@ -30,7 +30,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class RationalNumberTest extends ImagingTest {
 
-    private double testValue;
+    private final double testValue;
 
     @Parameterized.Parameters
     public static Collection<Double> data() {

@@ -33,7 +33,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class GifReadTest extends GifBaseTest {
 
-    private File imageFile;
+    private final File imageFile;
 
     @Parameterized.Parameters
     public static Collection<File> data() throws Exception {

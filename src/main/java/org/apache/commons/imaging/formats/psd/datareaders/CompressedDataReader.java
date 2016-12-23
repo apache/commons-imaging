@@ -34,7 +34,7 @@ import org.apache.commons.imaging.formats.psd.dataparsers.DataParser;
 
 public class CompressedDataReader implements DataReader {
 
-    private DataParser dataParser;
+    private final DataParser dataParser;
 
     public CompressedDataReader(final DataParser dataParser) {
         this.dataParser = dataParser;

@@ -36,7 +36,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class ByteSourceDataTest extends ByteSourceTest {
 
-    private byte[] testByteArray;
+    private final byte[] testByteArray;
 
     @Parameterized.Parameters
     public static Collection<byte[]> data() {

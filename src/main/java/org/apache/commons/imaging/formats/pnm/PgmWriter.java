@@ -25,7 +25,7 @@ import org.apache.commons.imaging.ImageWriteException;
 
 class PgmWriter implements PnmWriter {
 
-    private boolean rawbits;
+    private final boolean rawbits;
 
     public PgmWriter(boolean rawbits) {
         this.rawbits = rawbits;
