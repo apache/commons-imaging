@@ -64,8 +64,7 @@ public class ByteSourceFile extends ByteSource {
     public byte[] getAll() throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        try (FileInputStream fis = new FileInputStream(file);
-                InputStream is = new BufferedInputStream(fis)) {
+        try (InputStream is = new BufferedInputStream(new FileInputStream(file))) {
             final byte[] buffer = new byte[1024];
             int read;
             while ((read = is.read(buffer)) > 0) {
