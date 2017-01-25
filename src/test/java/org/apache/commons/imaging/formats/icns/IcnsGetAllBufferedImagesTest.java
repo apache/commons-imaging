@@ -47,7 +47,7 @@ public class IcnsGetAllBufferedImagesTest {
                         final int width = image.getWidth();
                         final int height = image.getHeight();
                         final int pixelSize = image.getColorModel().getPixelSize();
-                        System.out.println(name + " -> [" + type + "]" + pixelSize + " | " + width + "x" + height);
+                        System.out.println(name + " -> [" + type + "] " + pixelSize + " bit | " + width + "x" + height);
                         final File cachedImageFile = new File(DIR_ICONS_CACHE + name + "_[" + type + "]_" + width + "x" + height + "_" + pixelSize + "bit_" + counter + "." + format.getExtension());
                         Imaging.writeImage(image, cachedImageFile, format, params);
                         counter++;
