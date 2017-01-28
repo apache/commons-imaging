@@ -36,6 +36,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -91,7 +92,7 @@ public class XpmImageParser extends ImageParser {
                             final int green = Integer.parseInt(line.substring(4, 7).trim());
                             final int blue = Integer.parseInt(line.substring(8, 11).trim());
                             final String colorName = line.substring(11).trim();
-                            colors.put(colorName, 0xff000000 | (red << 16)
+                            colors.put(colorName.toLowerCase(Locale.ENGLISH), 0xff000000 | (red << 16)
                                     | (green << 8) | blue);
                         } catch (final NumberFormatException nfe) {
                             throw new ImageReadException("Couldn't parse color in rgb.txt", nfe);
@@ -353,8 +354,9 @@ public class XpmImageParser extends ImageParser {
             return 0x00000000;
         } else {
             loadColorNames();
-            if (colorNames.containsKey(color)) {
-                return colorNames.get(color);
+            final String colorLowercase = color.toLowerCase(Locale.ENGLISH);
+            if (colorNames.containsKey(colorLowercase)) {
+                return colorNames.get(colorLowercase);
             }
             return 0x00000000;
         }
