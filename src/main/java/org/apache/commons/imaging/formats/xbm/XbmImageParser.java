@@ -244,32 +244,41 @@ public class XbmImageParser extends ImageParser {
 
         final int rowLength = (xbmHeader.width + 7) / 8;
         final byte[] imageData = new byte[rowLength * xbmHeader.height];
-        for (int i = 0; i < imageData.length; ) {
-            token = cParser.nextToken();
-            if (token == null || !token.startsWith("0x")) {
-                throw new ImageReadException("Parsing XBM file failed, "
-                        + "hex value missing");
-            }
-            if (token.length() > hexWidth) {
-                throw new ImageReadException("Parsing XBM file failed, "
-                        + "hex value too long");
-            }
-            final int value = Integer.parseInt(token.substring(2), 16);
-            final int flipped = Integer.reverse(value) >>> (32 - inputWidth);
-            if (inputWidth == 16 && i < imageData.length) {
-                imageData[i++] = (byte) (flipped >>> 8);
-            }
-            imageData[i++] = (byte) flipped;
+        int i = 0;
+        for (int y = 0; y < xbmHeader.height; y++) {
+            for (int x = 0; x < xbmHeader.width; x += inputWidth) {
+                token = cParser.nextToken();
+                if (token == null || !token.startsWith("0x")) {
+                    throw new ImageReadException("Parsing XBM file failed, "
+                            + "hex value missing");
+                }
+                if (token.length() > hexWidth) {
+                    throw new ImageReadException("Parsing XBM file failed, "
+                            + "hex value too long");
+                }
+                final int value = Integer.parseInt(token.substring(2), 16);
+                final int flipped = Integer.reverse(value) >>> (32 - inputWidth);
+                if (inputWidth == 16) {
+                    if ((x + 8) < xbmHeader.width) {
+                        imageData[i++] = (byte) (flipped >>> 8);
+                        imageData[i++] = (byte) flipped;
+                    } else {
+                        imageData[i++] = (byte) flipped;
+                    }
+                } else {
+                    imageData[i++] = (byte) flipped;
+                }
 
-            token = cParser.nextToken();
-            if (token == null) {
-                throw new ImageReadException("Parsing XBM file failed, "
-                        + "premature end of file");
-            }
-            if (!",".equals(token)
-                    && ((i < imageData.length) || !"}".equals(token))) {
-                throw new ImageReadException("Parsing XBM file failed, "
-                        + "punctuation error");
+                token = cParser.nextToken();
+                if (token == null) {
+                    throw new ImageReadException("Parsing XBM file failed, "
+                            + "premature end of file");
+                }
+                if (!",".equals(token)
+                        && ((i < imageData.length) || !"}".equals(token))) {
+                    throw new ImageReadException("Parsing XBM file failed, "
+                            + "punctuation error");
+                }
             }
         }
 
