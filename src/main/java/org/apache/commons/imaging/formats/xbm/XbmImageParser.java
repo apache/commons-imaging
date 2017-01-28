@@ -259,10 +259,8 @@ public class XbmImageParser extends ImageParser {
                 final int value = Integer.parseInt(token.substring(2), 16);
                 final int flipped = Integer.reverse(value) >>> (32 - inputWidth);
                 if (inputWidth == 16) {
+                    imageData[i++] = (byte) (flipped >>> 8);
                     if ((x + 8) < xbmHeader.width) {
-                        imageData[i++] = (byte) (flipped >>> 8);
-                        imageData[i++] = (byte) flipped;
-                    } else {
                         imageData[i++] = (byte) flipped;
                     }
                 } else {
