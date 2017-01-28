@@ -338,6 +338,11 @@ public class XpmImageParser extends ImageParser {
                 final int green = Integer.parseInt(color.substring(4, 5), 16);
                 final int blue = Integer.parseInt(color.substring(8, 9), 16);
                 return 0xff000000 | (red << 16) | (green << 8) | blue;
+            } else if (color.length() == 24) {
+                final int red = Integer.parseInt(color.substring(0, 1), 16);
+                final int green = Integer.parseInt(color.substring(8, 9), 16);
+                final int blue = Integer.parseInt(color.substring(16, 17), 16);
+                return 0xff000000 | (red << 16) | (green << 8) | blue;
             } else {
                 return 0x00000000;
             }
