@@ -512,9 +512,9 @@ public class XpmImageParser extends ImageParser {
         if (xpmHeader.palette.size() <= (1 << 8)) {
             final int[] palette = new int[xpmHeader.palette.size()];
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
-            final PaletteEntry paletteEntry = entry.getValue();
-            palette[paletteEntry.index] = paletteEntry.getBestARGB();
-         }
+                final PaletteEntry paletteEntry = entry.getValue();
+                palette[paletteEntry.index] = paletteEntry.getBestARGB();
+            }
             colorModel = new IndexColorModel(8, xpmHeader.palette.size(),
                     palette, 0, true, -1, DataBuffer.TYPE_BYTE);
             raster = Raster.createInterleavedRaster(
@@ -524,9 +524,9 @@ public class XpmImageParser extends ImageParser {
         } else if (xpmHeader.palette.size() <= (1 << 16)) {
             final int[] palette = new int[xpmHeader.palette.size()];
             for (final Entry<Object, PaletteEntry> entry : xpmHeader.palette.entrySet()) {
-            final PaletteEntry paletteEntry = entry.getValue();
-            palette[paletteEntry.index] = paletteEntry.getBestARGB();
-         }
+                final PaletteEntry paletteEntry = entry.getValue();
+                palette[paletteEntry.index] = paletteEntry.getBestARGB();
+            }
             colorModel = new IndexColorModel(16, xpmHeader.palette.size(),
                     palette, 0, true, -1, DataBuffer.TYPE_USHORT);
             raster = Raster.createInterleavedRaster(
