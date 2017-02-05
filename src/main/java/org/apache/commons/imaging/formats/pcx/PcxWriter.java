@@ -33,6 +33,7 @@ import org.apache.commons.imaging.palette.SimplePalette;
 class PcxWriter {
     private int encoding;
     private int bitDepth = -1;
+    private int planes = -1;
     private PixelDensity pixelDensity;
     private final RleWriter rleWriter;
 
@@ -77,6 +78,17 @@ class PcxWriter {
                 bitDepth = ((Number) value).intValue();
             }
         }
+        
+        if (params.containsKey(PcxConstants.PARAM_KEY_PCX_PLANES)) {
+            final Object value = params.remove(PcxConstants.PARAM_KEY_PCX_PLANES);
+            if (value != null) {
+                if (!(value instanceof Number)) {
+                    throw new ImageWriteException(
+                            "Invalid planes parameter: " + value);
+                }
+                planes = ((Number) value).intValue();
+            }
+        }
 
         if (params.containsKey(ImagingConstants.PARAM_KEY_PIXEL_DENSITY)) {
             final Object value = params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
@@ -114,7 +126,11 @@ class PcxWriter {
         } else if (palette.length() > 16 || bitDepth == 8) {
             write256ColorPCX(src, palette, bos);
         } else if (palette.length() > 2 || bitDepth == 4) {
-            write16ColorPCX(src, palette, bos);
+            if (planes == 1) {
+                write16ColorPCXIn1Plane(src, palette, bos);
+            } else {
+                write16ColorPCXIn4Planes(src, palette, bos);
+            }
         } else {
             boolean onlyBlackAndWhite = true;
             if (palette.length() >= 1) {
@@ -132,7 +148,11 @@ class PcxWriter {
             if (onlyBlackAndWhite) {
                 writeBlackAndWhitePCX(src, bos);
             } else {
-                write16ColorPCX(src, palette, bos);
+                if (planes == 1) {
+                    write16ColorPCXIn1Plane(src, palette, bos);
+                } else {
+                    write16ColorPCXIn4Planes(src, palette, bos);
+                }
             }
         }
     }
@@ -264,7 +284,7 @@ class PcxWriter {
         rleWriter.flush(bos);
     }
 
-    private void write16ColorPCX(final BufferedImage src, final SimplePalette palette,
+    private void write16ColorPCXIn1Plane(final BufferedImage src, final SimplePalette palette,
             final BinaryOutputStream bos) throws ImageWriteException, IOException {
         int bytesPerLine = (src.getWidth() + 1) / 2;
         if (bytesPerLine % 2 != 0) {
@@ -313,6 +333,71 @@ class PcxWriter {
                 indeces[x / 2] |= (index << 4 * (1 - (x % 2)));
             }
             rleWriter.write(bos, indeces);
+        }
+        rleWriter.flush(bos);
+    }
+
+    private void write16ColorPCXIn4Planes(final BufferedImage src, final SimplePalette palette,
+            final BinaryOutputStream bos) throws ImageWriteException, IOException {
+        int bytesPerLine = (src.getWidth() + 7) / 8;
+        if (bytesPerLine % 2 != 0) {
+            ++bytesPerLine;
+        }
+
+        final byte[] palette16 = new byte[16 * 3];
+        for (int i = 0; i < 16; i++) {
+            int rgb;
+            if (i < palette.length()) {
+                rgb = palette.getEntry(i);
+            } else {
+                rgb = 0;
+            }
+            palette16[3 * i + 0] = (byte) (0xff & (rgb >> 16));
+            palette16[3 * i + 1] = (byte) (0xff & (rgb >> 8));
+            palette16[3 * i + 2] = (byte) (0xff & rgb);
+        }
+
+        // PCX header
+        bos.write(10); // manufacturer
+        bos.write(5); // version
+        bos.write(encoding); // encoding
+        bos.write(1); // bits per pixel
+        bos.write2Bytes(0); // xMin
+        bos.write2Bytes(0); // yMin
+        bos.write2Bytes(src.getWidth() - 1); // xMax
+        bos.write2Bytes(src.getHeight() - 1); // yMax
+        bos.write2Bytes((short) Math.round(pixelDensity.horizontalDensityInches())); // hDpi
+        bos.write2Bytes((short) Math.round(pixelDensity.verticalDensityInches())); // vDpi
+        bos.write(palette16); // 16 color palette
+        bos.write(0); // reserved
+        bos.write(4); // planes
+        bos.write2Bytes(bytesPerLine); // bytes per line
+        bos.write2Bytes(1); // palette info
+        bos.write2Bytes(0); // hScreenSize
+        bos.write2Bytes(0); // vScreenSize
+        bos.write(new byte[54]);
+
+        final byte[] plane0 = new byte[bytesPerLine];
+        final byte[] plane1 = new byte[bytesPerLine];
+        final byte[] plane2 = new byte[bytesPerLine];
+        final byte[] plane3 = new byte[bytesPerLine];
+        for (int y = 0; y < src.getHeight(); y++) {
+            Arrays.fill(plane0, (byte)0);
+            Arrays.fill(plane1, (byte)0);
+            Arrays.fill(plane2, (byte)0);
+            Arrays.fill(plane3, (byte)0);
+            for (int x = 0; x < src.getWidth(); x++) {
+                final int argb = src.getRGB(x, y);
+                final int index = palette.getPaletteIndex(0xffffff & argb);
+                plane0[x >>> 3] |= (index & 1) << (7 - (x & 7));
+                plane1[x >>> 3] |= ((index & 2) >> 1) << (7 - (x & 7));
+                plane2[x >>> 3] |= ((index & 4) >> 2) << (7 - (x & 7));
+                plane3[x >>> 3] |= ((index & 8) >> 3) << (7 - (x & 7));
+            }
+            rleWriter.write(bos, plane0);
+            rleWriter.write(bos, plane1);
+            rleWriter.write(bos, plane2);
+            rleWriter.write(bos, plane3);
         }
         rleWriter.flush(bos);
     }
