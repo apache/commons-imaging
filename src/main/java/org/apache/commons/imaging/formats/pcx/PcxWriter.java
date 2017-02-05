@@ -34,6 +34,7 @@ class PcxWriter {
     private int encoding;
     private int bitDepth = -1;
     private PixelDensity pixelDensity;
+    private final RleWriter rleWriter;
 
     public PcxWriter(Map<String, Object> params) throws ImageWriteException {
         // make copy of params; we'll clear keys as we consume them.
@@ -59,6 +60,11 @@ class PcxWriter {
                     encoding = PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED;
                 }
             }
+        }
+        if (encoding == PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED) {
+            rleWriter = new RleWriter(false);
+        } else {
+            rleWriter = new RleWriter(true);
         }
 
         if (params.containsKey(PcxConstants.PARAM_KEY_PCX_BIT_DEPTH)) {
@@ -90,47 +96,6 @@ class PcxWriter {
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
-        }
-    }
-
-    private void writeScanLine(final BinaryOutputStream bos, final byte[] scanline)
-            throws IOException, ImageWriteException {
-        if (encoding == PcxImageParser.PcxHeader.ENCODING_UNCOMPRESSED) {
-            bos.write(scanline);
-        } else {
-            if (encoding == PcxImageParser.PcxHeader.ENCODING_RLE) {
-                int previousByte = -1;
-                int repeatCount = 0;
-                for (final byte element : scanline) {
-                    if ((element & 0xff) == previousByte
-                            && repeatCount < 63) {
-                        ++repeatCount;
-                    } else {
-                        if (repeatCount > 0) {
-                            if (repeatCount == 1
-                                    && (previousByte & 0xc0) != 0xc0) {
-                                bos.write(previousByte);
-                            } else {
-                                bos.write(0xc0 | repeatCount);
-                                bos.write(previousByte);
-                            }
-                        }
-                        previousByte = 0xff & element;
-                        repeatCount = 1;
-                    }
-                }
-                if (repeatCount > 0) {
-                    if (repeatCount == 1 && (previousByte & 0xc0) != 0xc0) {
-                        bos.write(previousByte);
-                    } else {
-                        bos.write(0xc0 | repeatCount);
-                        bos.write(previousByte);
-                    }
-                }
-            } else {
-                throw new ImageWriteException("Invalid PCX encoding "
-                        + encoding);
-            }
         }
     }
 
@@ -206,8 +171,9 @@ class PcxWriter {
                 rgbBytes[4 * x + 2] = (byte) ((rgbs[x] >> 16) & 0xff);
                 rgbBytes[4 * x + 3] = 0;
             }
-            writeScanLine(bos, rgbBytes);
+            rleWriter.write(bos, rgbBytes);
         }
+        rleWriter.flush(bos);
     }
 
     private void write24BppPCX(final BufferedImage src, final BinaryOutputStream bos)
@@ -243,8 +209,9 @@ class PcxWriter {
                 rgbBytes[bytesPerLine + x] = (byte) ((rgbs[x] >> 8) & 0xff);
                 rgbBytes[2 * bytesPerLine + x] = (byte) (rgbs[x] & 0xff);
             }
-            writeScanLine(bos, rgbBytes);
+            rleWriter.write(bos, rgbBytes);
         }
+        rleWriter.flush(bos);
     }
 
     private void writeBlackAndWhitePCX(final BufferedImage src,
@@ -292,8 +259,9 @@ class PcxWriter {
                 }
                 row[x / 8] |= (bit << (7 - (x % 8)));
             }
-            writeScanLine(bos, row);
+            rleWriter.write(bos, row);
         }
+        rleWriter.flush(bos);
     }
 
     private void write16ColorPCX(final BufferedImage src, final SimplePalette palette,
@@ -344,8 +312,9 @@ class PcxWriter {
                 final int index = palette.getPaletteIndex(0xffffff & argb);
                 indeces[x / 2] |= (index << 4 * (1 - (x % 2)));
             }
-            writeScanLine(bos, indeces);
+            rleWriter.write(bos, indeces);
         }
+        rleWriter.flush(bos);
     }
 
     private void write256ColorPCX(final BufferedImage src, final SimplePalette palette,
@@ -379,8 +348,9 @@ class PcxWriter {
                 final int index = palette.getPaletteIndex(0xffffff & argb);
                 indeces[x] = (byte) index;
             }
-            writeScanLine(bos, indeces);
+            rleWriter.write(bos, indeces);
         }
+        rleWriter.flush(bos);
         // palette
         bos.write(12);
         for (int i = 0; i < 256; i++) {

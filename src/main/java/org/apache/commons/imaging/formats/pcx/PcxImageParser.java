@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.formats.pcx;
 
 import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_STRICT;
-import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 import static org.apache.commons.imaging.common.ByteConversions.toUInt16;
@@ -299,43 +298,6 @@ public class PcxImageParser extends ImageParser {
         return true;
     }
 
-    private void readScanLine(final PcxHeader pcxHeader, final InputStream is,
-            final byte[] samples) throws IOException, ImageReadException {
-        if (pcxHeader.encoding == PcxHeader.ENCODING_UNCOMPRESSED) {
-            int r;
-            for (int bytesRead = 0; bytesRead < samples.length; bytesRead += r) {
-                r = is.read(samples, bytesRead, samples.length - bytesRead);
-                if (r < 0) {
-                    throw new ImageReadException(
-                            "Premature end of file reading image data");
-                }
-            }
-        } else {
-            if (pcxHeader.encoding == PcxHeader.ENCODING_RLE) {
-                for (int bytesRead = 0; bytesRead < samples.length;) {
-                    final byte b = readByte("Pixel", is, "Error reading image data");
-                    int count;
-                    byte sample;
-                    if ((b & 0xc0) == 0xc0) {
-                        count = b & 0x3f;
-                        sample = readByte("Pixel", is,
-                                "Error reading image data");
-                    } else {
-                        count = 1;
-                        sample = b;
-                    }
-                    for (int i = 0; i < count && bytesRead + i < samples.length; i++) {
-                        samples[bytesRead + i] = sample;
-                    }
-                    bytesRead += count;
-                }
-            } else {
-                throw new ImageReadException("Invalid PCX encoding "
-                        + pcxHeader.encoding);
-            }
-        }
-    }
-
     private int[] read256ColorPalette(final InputStream stream) throws IOException {
         final byte[] paletteBytes = readBytes("Palette", stream, 769,
                 "Error reading palette");
@@ -371,7 +333,17 @@ public class PcxImageParser extends ImageParser {
         if (ySize < 0) {
             throw new ImageReadException("Image height is negative");
         }
-
+        if (pcxHeader.nPlanes <= 0 || 4 < pcxHeader.nPlanes) {
+            throw new ImageReadException("Unsupported/invalid image with " + pcxHeader.nPlanes + " planes");
+        }
+        final RleReader rleReader;
+        if (pcxHeader.encoding == PcxHeader.ENCODING_UNCOMPRESSED) {
+            rleReader = new RleReader(false);
+        } else if (pcxHeader.encoding == PcxHeader.ENCODING_RLE) {
+            rleReader = new RleReader(true);
+        } else {
+            throw new ImageReadException("Unsupported/invalid image encoding " + pcxHeader.encoding);
+        }
         final int scanlineLength = pcxHeader.bytesPerLine * pcxHeader.nPlanes;
         final byte[] scanline = new byte[scanlineLength];
         if ((pcxHeader.bitsPerPixel == 1 || pcxHeader.bitsPerPixel == 2
@@ -380,7 +352,7 @@ public class PcxImageParser extends ImageParser {
             final int bytesPerImageRow = (xSize * pcxHeader.bitsPerPixel + 7) / 8;
             final byte[] image = new byte[ySize * bytesPerImageRow];
             for (int y = 0; y < ySize; y++) {
-                readScanLine(pcxHeader, is, scanline);
+                rleReader.read(is, scanline);
                 System.arraycopy(scanline, 0, image, y * bytesPerImageRow,
                         bytesPerImageRow);
             }
@@ -429,7 +401,7 @@ public class PcxImageParser extends ImageParser {
                     BufferedImage.TYPE_BYTE_BINARY, colorModel);
             final byte[] unpacked = new byte[xSize];
             for (int y = 0; y < ySize; y++) {
-                readScanLine(pcxHeader, is, scanline);
+                rleReader.read(is, scanline);
                 int nextByte = 0;
                 Arrays.fill(unpacked, (byte) 0);
                 for (int plane = 0; plane < pcxHeader.nPlanes; plane++) {
@@ -449,7 +421,7 @@ public class PcxImageParser extends ImageParser {
             image[1] = new byte[xSize * ySize];
             image[2] = new byte[xSize * ySize];
             for (int y = 0; y < ySize; y++) {
-                readScanLine(pcxHeader, is, scanline);
+                rleReader.read(is, scanline);
                 System.arraycopy(scanline, 0, image[0], y * xSize, xSize);
                 System.arraycopy(scanline, pcxHeader.bytesPerLine, image[1], y
                         * xSize, xSize);
@@ -471,7 +443,7 @@ public class PcxImageParser extends ImageParser {
             final int rowLength = 3 * xSize;
             final byte[] image = new byte[rowLength * ySize];
             for (int y = 0; y < ySize; y++) {
-                readScanLine(pcxHeader, is, scanline);
+                rleReader.read(is, scanline);
                 if (pcxHeader.bitsPerPixel == 24) {
                     System.arraycopy(scanline, 0, image, y * rowLength,
                             rowLength);
