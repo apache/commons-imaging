@@ -17,400 +17,404 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <!-- ====================================================================== -->
-  <!-- P R O J E C T  D E S C R I P T I O N                                   -->
-  <!-- ====================================================================== -->
+    <!-- ====================================================================== -->
+    <!-- P R O J E C T  D E S C R I P T I O N                                   -->
+    <!-- ====================================================================== -->
 
-  <parent>
+    <parent>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-parent</artifactId>
+        <version>40</version>
+    </parent>
+
     <groupId>org.apache.commons</groupId>
-    <artifactId>commons-parent</artifactId>
-    <version>40</version>
-  </parent>
+    <artifactId>commons-imaging</artifactId>
+    <name>Apache Commons Imaging</name>
 
-  <groupId>org.apache.commons</groupId>
-  <artifactId>commons-imaging</artifactId>
-  <name>Apache Commons Imaging</name>
+    <version>1.0-SNAPSHOT</version>
 
-  <version>1.0-SNAPSHOT</version>
+    <!--
+      Keep the description on a single line. Otherwise Maven might generate
+      a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
+     -->
+    <description>Apache Commons Imaging (previously Sanselan) is a pure-Java image library.</description>
+    <url>http://commons.apache.org/proper/commons-imaging/</url>
 
-  <!--
-    Keep the description on a single line. Otherwise Maven might generate
-    a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
-   -->
-  <description>Apache Commons Imaging (previously Sanselan) is a pure-Java image library.</description>
-  <url>http://commons.apache.org/proper/commons-imaging/</url>
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <commons.componentid>imaging</commons.componentid>
+        <commons.release.version>1.0</commons.release.version>
+        <commons.rc.version>RC5</commons.rc.version>
+        <commons.jira.id>IMAGING</commons.jira.id>
+        <commons.jira.pid>12313421</commons.jira.pid>
+        <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
-  <properties>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <commons.componentid>imaging</commons.componentid>
-    <commons.release.version>1.0</commons.release.version>
-    <commons.rc.version>RC5</commons.rc.version>
-    <commons.jira.id>IMAGING</commons.jira.id>
-    <commons.jira.pid>12313421</commons.jira.pid>
-    <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
+    <scm>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/imaging/trunk</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/imaging/trunk</developerConnection>
+        <url>http://svn.apache.org/viewvc/commons/proper/imaging/trunk</url>
+    </scm>
 
-  <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/imaging/trunk</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/imaging/trunk</developerConnection>
-    <url>http://svn.apache.org/viewvc/commons/proper/imaging/trunk</url>
-  </scm>
+    <distributionManagement>
+        <site>
+            <id>stagingSite</id>
+            <name>Apache Staging Website</name>
+            <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/${commons.componentid}/</url>
+        </site>
+    </distributionManagement>
 
-  <distributionManagement>
-    <site>
-      <id>stagingSite</id>
-      <name>Apache Staging Website</name>
-      <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/${commons.componentid}/</url>
-    </site>
-  </distributionManagement>
+    <issueManagement>
+        <system>Jira</system>
+        <url>http://issues.apache.org/jira/browse/IMAGING</url>
+    </issueManagement>
+    <inceptionYear>2007</inceptionYear>
 
-  <issueManagement>
-    <system>Jira</system>
-    <url>http://issues.apache.org/jira/browse/IMAGING</url>
-  </issueManagement>
-  <inceptionYear>2007</inceptionYear>
+    <prerequisites>
+        <maven>2.0.7</maven>
+    </prerequisites>
 
-  <prerequisites>
-    <maven>2.0.7</maven>
-  </prerequisites>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>src/assembly/bin.xml</descriptor>
-            <descriptor>src/assembly/src.xml</descriptor>
-          </descriptors>
-          <tarLongFileMode>gnu</tarLongFileMode>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Extension-Name>org.apache.commons.imaging</Extension-Name>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <version>1.15</version>
-        <configuration>
-          <signature>
-            <groupId>org.codehaus.mojo.signature</groupId>
-            <artifactId>java17</artifactId>
-            <version>1.0</version>
-          </signature>
-        </configuration>
-        <executions>
-          <execution>
-            <id>check-java-api</id>
-            <phase>test</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-scm-publish-plugin</artifactId>
-          <configuration>
-            <ignorePathsToDelete>
-              <ignorePathToDelete>javadocs**</ignorePathToDelete>
-            </ignorePathsToDelete>
-          </configuration>
-        </plugin>     
-        <!-- This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/assembly/bin.xml</descriptor>
+                        <descriptor>src/assembly/src.xml</descriptor>
+                    </descriptors>
+                    <tarLongFileMode>gnu</tarLongFileMode>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Extension-Name>org.apache.commons.imaging</Extension-Name>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>animal-sniffer-maven-plugin</artifactId>
+                <version>1.15</version>
+                <configuration>
+                    <signature>
+                        <groupId>org.codehaus.mojo.signature</groupId>
+                        <artifactId>java17</artifactId>
+                        <version>1.0</version>
+                    </signature>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>check-java-api</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <versionRange>[1.6,)</versionRange>
-                    <goals>
-                      <goal>run</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <execute>
-                      <runOnIncremental>false</runOnIncremental>
-                    </execute>
-                  </action>
-                </pluginExecution>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <versionRange>[2.3.5,)</versionRange>
-                    <goals>
-                      <goal>manifest</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <execute>
-                      <runOnIncremental>false</runOnIncremental>
-                    </execute>
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <configuration>
-            <excludePackageNames>org.apache.commons.imaging.formats.psd.*:org.apache.commons.imaging.formats.png.*</excludePackageNames>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+                    <artifactId>maven-scm-publish-plugin</artifactId>
+                    <configuration>
+                        <ignorePathsToDelete>
+                            <ignorePathToDelete>javadocs**</ignorePathToDelete>
+                        </ignorePathsToDelete>
+                    </configuration>
+                </plugin>
+                <!-- This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-antrun-plugin</artifactId>
+                                        <versionRange>[1.6,)</versionRange>
+                                        <goals>
+                                            <goal>run</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>false</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.felix</groupId>
+                                        <artifactId>maven-bundle-plugin</artifactId>
+                                        <versionRange>[2.3.5,)</versionRange>
+                                        <goals>
+                                            <goal>manifest</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>false</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <configuration>
+                        <excludePackageNames>org.apache.commons.imaging.formats.psd.*:org.apache.commons.imaging.formats.png.*</excludePackageNames>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.5</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jai-imageio</groupId>
+            <artifactId>jai-imageio-jpeg2000</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+    </dependencies>
 
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>3.0.3</version>
-        <configuration>
-          <threshold>Normal</threshold>
-          <effort>Default</effort>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>javancss-maven-plugin</artifactId>
-        <version>2.1</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>${commons.changes.version}</version>
-        <configuration>
-          <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
-        </configuration>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>changes-report</report>
-              <report>jira-report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.11</version>
-        <inherited>false</inherited>
-        <configuration>
-          <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-          <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
-          <enableRulesSummary>false</enableRulesSummary>
-          <propertyExpansion>basedir=${basedir}</propertyExpansion>
-        </configuration>
-        <!-- Work around CHECKSTYLE-172 -->
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>checkstyle</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.3</version>
-        <configuration>
-          <targetJdk>${maven.compiler.target}</targetJdk>
-          <rulesets>
-            <ruleset>${basedir}/src/conf/pmd-ruleset.xml</ruleset>
-          </rulesets>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>taglist-maven-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <tagListOptions>
-            <tagClasses>
-              <tagClass>
-                <displayName>Needs Work</displayName>
-                <tags>
-                  <tag>
-                    <matchString>TODO</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>FIXME</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>XXX</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                </tags>
-              </tagClass>
-              <tagClass>
-                <displayName>Noteable Markers</displayName>
-                <tags>
-                  <tag>
-                    <matchString>NOTE</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>NOPMD</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>NOSONAR</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                </tags>
-              </tagClass>
-            </tagClasses>
-          </tagListOptions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/test/data/images/xpm/1/symbolic.xpm</exclude>
-            <exclude>src/test/data/images/xpm/1/Oregon Scientific DS6639 - DSC_0307 - small.xpm</exclude>
-            <exclude>src/test/data/images/pbm/2/5x5-grayscale.pam</exclude>
-            <exclude>src/test/data/images/pbm/2/5x5-bw.pam</exclude>
-            <exclude>src/test/data/images/pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.pgm</exclude>
-            <exclude>src/test/data/images/xbm/1/Oregon Scientific DS6639 - DSC_0307 - small.xbm</exclude>
-            <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.3</version>
+                <configuration>
+                    <threshold>Normal</threshold>
+                    <effort>Default</effort>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>javancss-maven-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <version>${commons.changes.version}</version>
+                <configuration>
+                    <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>changes-report</report>
+                            <report>jira-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.11</version>
+                <inherited>false</inherited>
+                <configuration>
+                    <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
+                    <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
+                    <enableRulesSummary>false</enableRulesSummary>
+                    <propertyExpansion>basedir=${basedir}</propertyExpansion>
+                </configuration>
+                <!-- Work around CHECKSTYLE-172 -->
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <targetJdk>${maven.compiler.target}</targetJdk>
+                    <rulesets>
+                        <ruleset>${basedir}/src/conf/pmd-ruleset.xml</ruleset>
+                    </rulesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <tagListOptions>
+                        <tagClasses>
+                            <tagClass>
+                                <displayName>Needs Work</displayName>
+                                <tags>
+                                    <tag>
+                                        <matchString>TODO</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>FIXME</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>XXX</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                            <tagClass>
+                                <displayName>Noteable Markers</displayName>
+                                <tags>
+                                    <tag>
+                                        <matchString>NOTE</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>NOPMD</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>NOSONAR</matchString>
+                                        <matchType>exact</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                        </tagClasses>
+                    </tagListOptions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>src/test/data/images/xpm/1/symbolic.xpm</exclude>
+                        <exclude>src/test/data/images/xpm/1/Oregon Scientific DS6639 - DSC_0307 - small.xpm</exclude>
+                        <exclude>src/test/data/images/pbm/2/5x5-grayscale.pam</exclude>
+                        <exclude>src/test/data/images/pbm/2/5x5-bw.pam</exclude>
+                        <exclude>src/test/data/images/pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.pgm</exclude>
+                        <exclude>src/test/data/images/xbm/1/Oregon Scientific DS6639 - DSC_0307 - small.xbm</exclude>
+                        <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
-  <profiles>
-    <profile>
-      <id>jdk8-javadoc</id>
-      <activation>
-        <jdk>[1.8,)</jdk>
-      </activation>
-      <properties>
-        <additionalparam>-Xdoclint:none</additionalparam>
-      </properties>
-    </profile>
-  </profiles>
+    <profiles>
+        <profile>
+            <id>jdk8-javadoc</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <properties>
+                <additionalparam>-Xdoclint:none</additionalparam>
+            </properties>
+        </profile>
+    </profiles>
 
-  <!-- ====================================================================== -->
-  <!-- P E O P L E                                                            -->
-  <!-- ====================================================================== -->
+    <!-- ====================================================================== -->
+    <!-- P E O P L E                                                            -->
+    <!-- ====================================================================== -->
 
-  <developers>
-    <developer>
-      <name>Charles M. Chen</name>
-      <id>cmchen</id>
-    </developer>
-    <developer>
-      <name>Philipp Koch</name>
-      <id>pkoch</id>
-    </developer>
-    <developer>
-      <name>Jeremias Maerki</name>
-      <id>jeremias</id>
-    </developer>
-    <developer>
-      <name>Craig Russell</name>
-      <id>clr</id>
-    </developer>
-    <developer>
-      <name>Yoav Shapira</name>
-      <id>yoavs</id>
-    </developer>
-    <developer>
-      <name>Carsten Ziegeler</name>
-      <id>cziegeler</id>
-    </developer>
-    <developer>
-      <name>Damjan Jovanovic</name>
-      <id>damjan</id>
-    </developer>
-    <developer>
-      <name>Matt Benson</name>
-      <id>mbenson</id>
-    </developer>
-  </developers>
+    <developers>
+        <developer>
+            <name>Charles M. Chen</name>
+            <id>cmchen</id>
+        </developer>
+        <developer>
+            <name>Philipp Koch</name>
+            <id>pkoch</id>
+        </developer>
+        <developer>
+            <name>Jeremias Maerki</name>
+            <id>jeremias</id>
+        </developer>
+        <developer>
+            <name>Craig Russell</name>
+            <id>clr</id>
+        </developer>
+        <developer>
+            <name>Yoav Shapira</name>
+            <id>yoavs</id>
+        </developer>
+        <developer>
+            <name>Carsten Ziegeler</name>
+            <id>cziegeler</id>
+        </developer>
+        <developer>
+            <name>Damjan Jovanovic</name>
+            <id>damjan</id>
+        </developer>
+        <developer>
+            <name>Matt Benson</name>
+            <id>mbenson</id>
+        </developer>
+    </developers>
 
-  <contributors>
-    <contributor>
-      <name>Adrian Moerchen</name>
-    </contributor>
-    <contributor>
-      <name>Alex Vigdor</name>
-    </contributor>
-    <contributor>
-      <name>Craig Kelly</name>
-    </contributor>
-    <contributor>
-      <name>Gary Lucas</name>
-    </contributor>
-    <contributor>
-      <name>Gavin Shiels</name>
-    </contributor>
-    <contributor>
-      <name>Peter Royal</name>
-    </contributor>
-    <contributor>
-      <name>Piyush Kapoor</name>
-    </contributor>
-    <contributor>
-      <name>Tars Joris</name>
-    </contributor>
-    <contributor>
-      <name>VVD</name>
-    </contributor>
-  </contributors>
+    <contributors>
+        <contributor>
+            <name>Adrian Moerchen</name>
+        </contributor>
+        <contributor>
+            <name>Alex Vigdor</name>
+        </contributor>
+        <contributor>
+            <name>Craig Kelly</name>
+        </contributor>
+        <contributor>
+            <name>Gary Lucas</name>
+        </contributor>
+        <contributor>
+            <name>Gavin Shiels</name>
+        </contributor>
+        <contributor>
+            <name>Peter Royal</name>
+        </contributor>
+        <contributor>
+            <name>Piyush Kapoor</name>
+        </contributor>
+        <contributor>
+            <name>Tars Joris</name>
+        </contributor>
+        <contributor>
+            <name>VVD</name>
+        </contributor>
+    </contributors>
 </project>
