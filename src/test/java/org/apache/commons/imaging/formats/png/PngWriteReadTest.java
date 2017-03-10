@@ -26,6 +26,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -34,6 +36,8 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.common.GenericImageMetadata;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
@@ -96,6 +100,13 @@ public class PngWriteReadTest extends ImagingTest {
         for (final int[][] rawData : testData) {
             writeAndReadImageData(rawData);
         }
+    }
+
+    @Test
+    public void test_withMultipletEXt() throws Exception {
+        final int[][] smallBlackPixels = getSimpleRawData(256, 256, 0);
+
+        writeAndReadMultipletEXt(smallBlackPixels);
     }
 
     @Test
@@ -194,4 +205,43 @@ public class PngWriteReadTest extends ImagingTest {
         assertArrayEquals(rawData, dstData);
     }
 
+    private void writeAndReadMultipletEXt(final int[][] rawData) throws IOException,
+       ImageReadException, ImageWriteException {
+        final BufferedImage srcImage = imageDataToBufferedImage(rawData);
+
+        final List<PngText.Text> textChunks = new LinkedList<>();
+        textChunks.add(new PngText.Text("a", "b"));
+        textChunks.add(new PngText.Text("c", "d"));
+        final Map<String, Object> writeParams = new HashMap<>();
+        writeParams.put(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS,
+           textChunks);
+
+        final byte[] bytes = Imaging.writeImageToBytes(srcImage,
+           ImageFormats.PNG, writeParams);
+
+        // Debug.debug("bytes", bytes);
+
+        final File tempFile = createTempFile("temp", ".png");
+        FileUtils.writeByteArrayToFile(tempFile, bytes);
+
+        final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
+
+        assertNotNull(dstImage);
+        assertTrue(srcImage.getWidth() == dstImage.getWidth());
+        assertTrue(srcImage.getHeight() == dstImage.getHeight());
+
+        final int dstData[][] = bufferedImageToImageData(dstImage);
+        assertArrayEquals(rawData, dstData);
+
+        final ImageMetadata imageMetadata = Imaging.getMetadata(bytes);
+        assertEquals(imageMetadata.getItems().size(), 2);
+        final GenericImageMetadata.GenericImageMetadataItem item0
+           = (GenericImageMetadata.GenericImageMetadataItem)imageMetadata.getItems().get(0);
+        assertEquals(item0.getKeyword(), "a");
+        assertEquals(item0.getText(), "b");
+        final GenericImageMetadata.GenericImageMetadataItem item1
+           = (GenericImageMetadata.GenericImageMetadataItem)imageMetadata.getItems().get(1);
+        assertEquals(item1.getKeyword(), "c");
+        assertEquals(item1.getText(), "d");
+    }
 }
