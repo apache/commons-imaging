@@ -119,9 +119,8 @@ public class RationalNumber extends Number {
         nf.setMaximumFractionDigits(3);
         return nf.format((double) numerator / (double) divisor);
     }
-    
 
-    private final static class Option {
+    private static final class Option {
         public final RationalNumber rationalNumber;
         public final double error;
 
