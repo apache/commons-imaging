@@ -169,8 +169,7 @@ public final class Imaging {
 
         String normalizedFilename = filename.toLowerCase(Locale.ENGLISH);
 
-        final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
-        for (final ImageParser imageParser : imageParsers) {
+        for (final ImageParser imageParser : ImageParser.getAllImageParsers()) {
             final String[] exts = imageParser.getAcceptedExtensions();
 
             for (final String ext : exts) {
