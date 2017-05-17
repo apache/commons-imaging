@@ -162,19 +162,19 @@ public final class Imaging {
      * which may contain an image.
      * @return true if the filename has an image format file extension.
      */
-    public static boolean hasImageFileExtension(String filename) {
+    public static boolean hasImageFileExtension(final String filename) {
         if (filename == null) {
             return false;
         }
-        
-        filename = filename.toLowerCase(Locale.ENGLISH);
+
+        String normalizedFilename = filename.toLowerCase(Locale.ENGLISH);
 
         final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
         for (final ImageParser imageParser : imageParsers) {
             final String[] exts = imageParser.getAcceptedExtensions();
 
             for (final String ext : exts) {
-                if (filename.endsWith(ext.toLowerCase(Locale.ENGLISH))) {
+                if (normalizedFilename.endsWith(ext.toLowerCase(Locale.ENGLISH))) {
                     return true;
                 }
             }
