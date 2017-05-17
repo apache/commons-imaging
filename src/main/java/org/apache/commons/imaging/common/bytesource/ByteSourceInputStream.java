@@ -24,9 +24,10 @@ import java.io.InputStream;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class ByteSourceInputStream extends ByteSource {
+    private static final int BLOCK_SIZE = 1024;
+
     private final InputStream is;
     private CacheBlock cacheHead;
-    private static final int BLOCK_SIZE = 1024;
     private byte[] readBuffer;
     private long streamLength = -1;
 
