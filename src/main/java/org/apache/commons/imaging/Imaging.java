@@ -170,10 +170,8 @@ public final class Imaging {
         String normalizedFilename = filename.toLowerCase(Locale.ENGLISH);
 
         for (final ImageParser imageParser : ImageParser.getAllImageParsers()) {
-            final String[] exts = imageParser.getAcceptedExtensions();
-
-            for (final String ext : exts) {
-                if (normalizedFilename.endsWith(ext.toLowerCase(Locale.ENGLISH))) {
+            for (final String extension : imageParser.getAcceptedExtensions()) {
+                if (normalizedFilename.endsWith(extension.toLowerCase(Locale.ENGLISH))) {
                     return true;
                 }
             }
