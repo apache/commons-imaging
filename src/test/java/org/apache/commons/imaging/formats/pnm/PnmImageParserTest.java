@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.pnm;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 
 public class PnmImageParserTest {
 
-    private static final Charset US_ASCII = Charset.forName("US-ASCII");
+    private static final Charset US_ASCII = StandardCharsets.US_ASCII;
 
     @Test
     public void testGetImageInfo_happyCase() throws ImageReadException, IOException {
