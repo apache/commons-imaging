@@ -60,20 +60,20 @@ public class GifImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".gif";
     private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
     private static final byte[] GIF_HEADER_SIGNATURE = { 71, 73, 70 };
-    private final static int EXTENSION_CODE = 0x21;
-    private final static int IMAGE_SEPARATOR = 0x2C;
-    private final static int GRAPHIC_CONTROL_EXTENSION = (EXTENSION_CODE << 8) | 0xf9;
-    private final static int COMMENT_EXTENSION = 0xfe;
-    private final static int PLAIN_TEXT_EXTENSION = 0x01;
-    private final static int XMP_EXTENSION = 0xff;
-    private final static int TERMINATOR_BYTE = 0x3b;
-    private final static int APPLICATION_EXTENSION_LABEL = 0xff;
-    private final static int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8)
+    private static final int EXTENSION_CODE = 0x21;
+    private static final int IMAGE_SEPARATOR = 0x2C;
+    private static final int GRAPHIC_CONTROL_EXTENSION = (EXTENSION_CODE << 8) | 0xf9;
+    private static final int COMMENT_EXTENSION = 0xfe;
+    private static final int PLAIN_TEXT_EXTENSION = 0x01;
+    private static final int XMP_EXTENSION = 0xff;
+    private static final int TERMINATOR_BYTE = 0x3b;
+    private static final int APPLICATION_EXTENSION_LABEL = 0xff;
+    private static final int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8)
             | XMP_EXTENSION;
-    private static final int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
-    private static final int INTERLACE_FLAG_MASK = 1 << 6;
-    private static final int SORT_FLAG_MASK = 1 << 5;
-    private static final byte[] XMP_APPLICATION_ID_AND_AUTH_CODE = {
+    private final static int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
+    private final static int INTERLACE_FLAG_MASK = 1 << 6;
+    private final static int SORT_FLAG_MASK = 1 << 5;
+    private final static byte[] XMP_APPLICATION_ID_AND_AUTH_CODE = {
         0x58, // X
         0x4D, // M
         0x50, // P
