@@ -326,6 +326,7 @@
             <exclude>src/test/data/images/pbm/2/5x5-bw.pam</exclude>
             <exclude>src/test/data/images/pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.pgm</exclude>
             <exclude>src/test/data/images/xbm/1/Oregon Scientific DS6639 - DSC_0307 - small.xbm</exclude>
+            <exclude>src/test/data/images/xbm/1/Oregon Scientific DS6639 - DSC_0307 - small X10.xbm</exclude>
             <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
           </excludes>
         </configuration>
