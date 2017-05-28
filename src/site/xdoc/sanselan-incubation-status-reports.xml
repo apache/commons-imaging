@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Sanselan Incubation Status Reports</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="Sanselan Incubation Status Reports">
+
+  <subsection name="2009-January Sanselan Incubator status report">
+    <p>
+      Sanselan has been in incubation since September 2007.
+    </p>
+    <p>
+      Sanselan is a pure-java image library for reading and writing
+      a variety of image formats.
+    </p>
+    <p>
+      The community hasn't grown much in the past three months. There
+      continues to be only one active committer. Participation level is low.
+    </p>
+    <p>
+      The first official Apache release occurred on July 30th, 2008. A new
+      release has just been prepared and is current being voted upon.
+    </p>
+    <p>
+      The new release includes significant bug fixes, better documentation, better
+      IPTC and XMP support (metadata) and improvements to the release structure.
+    </p>
+    <p>
+      Barriers to graduation continue to be diversity, size of the community,
+      and overall activity.
+    </p>
+  </subsection>
+  <subsection name="2008-October Sanselan Incubator status report">
+    <p>
+      Sanselan has been in incubation since September 2007.
+    </p>
+    <p>
+      Sanselan is a pure-java image library for reading and writing
+      a variety of image formats.
+    </p>
+    <p>
+      The community hasn't grown much in the past three months. There
+      continues to be only one active committer.
+    </p>
+    <p>
+      The first official Apache release occurred on July 30th, 2008.
+    </p>
+    <p>
+      A second release is being prepared.  It will include significant bug
+      fixes, better documentation, better IPTC and XMP support and
+      improvements to the release structure.
+    </p>
+    <p>
+      Barriers to graduation continue to be diversity, size of the community,
+      and overall activity.
+    </p>
+  </subsection>
+  <subsection name="2008-July Sanselan Incubator status report">
+    <p>
+      Sanselan has been in incubation since September 2007.
+    </p>
+    <p>
+      Sanselan is a pure-java image library for reading and writing
+      a variety of image formats.
+    </p>
+    <p>
+      The community hasn't grown much in the past three months. There
+      continues to be only one active committer.
+    </p>
+    <p>
+      There was work on EXIF metadata read/write support and a bug
+      in the implementation was discussed on the dev aliaas.
+    </p>
+    <p>
+      Builds outside Apache have been made but no official Apache release
+      has been created yet.
+    </p>
+    <p>
+      Barriers to graduation continue to be diversity, size of the community,
+      and overall activity.
+    </p>
+  </subsection>
+  <subsection name="2008-April Sanselan Incubator status report">
+    <p>
+      Sanselan has been in incubation since September 2007.
+    </p>
+    <p>
+      Sanselan is a pure-java image library for reading and writing
+      a variety of image formats.
+    </p>
+    <p>
+      The community hasn't grown in the past three months. There have
+      been commits from only two people. No patches from contributors,
+      yet.
+    </p>
+    <p>
+      There was work on EXIF metadata read/write support and some
+      changes were made to prepare for a first release.
+    </p>
+  </subsection>
+  <subsection name="2008-January Sanselan Incubator status report">
+    <p>
+      Sanselan has been in incubation since September 2007.
+    </p>
+    <p>
+      Sanselan is a pure-java image library for reading and writing
+      a variety of image formats.
+    </p>
+    <p>
+      The community is still small, with a few more members now compared
+      to the beginning.
+    </p>
+    <p>
+      The code base has been imported and the package names have been
+      changed to org.apache.sanselan. Work continues on scrubbing the
+      code and organizing it into maven.
+    </p>
+    <p>
+      A release is being prepared.
+    </p>
+  </subsection>
+  <subsection name="2007-December Sanselan Incubator status report">
+    <p>
+      Sanselan has been in incubation since September 2007.
+    </p>
+    <p>
+      Sanselan is a pure-java image library for reading and writing
+      a variety of image formats.
+    </p>
+    <p>
+      The community is still small, with a few more members now compared
+      to the beginning.
+    </p>
+    <p>
+      The code base has been imported and the package names have been
+      changed to org.apache.sanselan.
+    </p>
+    <p>
+      A release is being prepared.
+    </p>
+  </subsection>
+  <subsection name="2007-November Sanselan Incubator status report">
+    <p>
+      The autoexport from confluence to our site has been set up (see
+      http://incubator.apache.org/sanselan/) so documenation
+      can be added soon.
+    </p>
+    <p>
+      We are looking for images (with no copyright restrictions) that
+      can be used for unit testing. Existing (private) unit tests rely
+      on copyrighted images that cannot be used.
+    </p>
+  </subsection>
+  <subsection name="2007-October Sanselan Incubator status report">
+    <p>
+      The project has kicked off with some basic infrastructure now in place.
+    </p>
+    <p>
+      Mailing lists have been set up. The structure of the project has been
+      discussed; plans are to use maven using Jackrabbit as a model.
+    </p>
+    <p>
+      A site was created using Confluence.
+    </p>
+    <p>
+      The svn repository has had the first code drop. Most of the code from the
+      original base has been committed.
+    </p>
+    <p>
+      The JIRA project is set up and the initial code drop was posted for review.
+    </p>
+    <p>
+      The initial committers have been given access to the repository.
+    </p>
+  </subsection>
+
+
+</section>
+</body>
+</document>
