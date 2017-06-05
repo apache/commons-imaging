@@ -68,8 +68,8 @@
          <li>Older releases - see the <a href="history.html">Release History</a> page</li>
      </ul>
      <p>
-         The <a href="source-repository.html">subversion repository</a> can be
-         <a href="http://svn.apache.org/viewvc/commons/proper/imaging/trunk/">browsed</a>, or you can browse/contribute via <a href="https://github.com/apache/commons-imaging">GitHub</a>.
+         The <a href="source-repository.html">git repository</a> can be
+         <a href="https://git-wip-us.apache.org/repos/asf?p=commons-imaging.git">browsed</a>, or you can browse/contribute via <a href="https://github.com/apache/commons-imaging">GitHub</a>.
      </p>
  </section>
  <!-- ================================================== -->
