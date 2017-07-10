@@ -28,11 +28,11 @@ limitations under the License.
 <p>
   Can be found in the source distribution in org.apache.commons.imaging.examples package
   <ul>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/ImageWriteExample.java">ImageWriteExample.java</a>(illustrates how to write an image)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/ImageReadExample.java">ImageReadExample.java</a>(illustrates how to read an image)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">SampleUsage.java</a>(various examples)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/MetadataExample.java">MetadataExample.java</a>(illustrates how to read JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>
-      <li><a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/WriteExifMetadataExample.java">WriteExifMetadataExample.java</a>(illustrates how to write JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>
+      <li><a href="https://github.com/apache/commons-imaging/blob/master/src/test/java/org/apache/commons/imaging/examples/ImageWriteExample.java">ImageWriteExample.java</a> (illustrates how to write an image)</li>
+      <li><a href="https://github.com/apache/commons-imaging/blob/master/src/test/java/org/apache/commons/imaging/examples/ImageReadExample.java">ImageReadExample.java</a> (illustrates how to read an image)</li>
+      <li><a href="https://github.com/apache/commons-imaging/blob/master/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">SampleUsage.java</a> (various examples)</li>
+      <li><a href="https://github.com/apache/commons-imaging/blob/master/src/test/java/org/apache/commons/imaging/examples/MetadataExample.java">MetadataExample.java</a> (illustrates how to read JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>
+      <li><a href="https://github.com/apache/commons-imaging/blob/master/src/test/java/org/apache/commons/imaging/examples/WriteExifMetadataExample.java">WriteExifMetadataExample.java</a> (illustrates how to write JPEG EXIF metadata such as GPS, date and time photo taken, etc.)</li>
   </ul>
 </p>
 </subsection>
