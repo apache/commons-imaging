@@ -9,3 +9,6 @@ pom.xml.next
 release.properties
 
 
+/.settings/
+/.classpath
+/.project
