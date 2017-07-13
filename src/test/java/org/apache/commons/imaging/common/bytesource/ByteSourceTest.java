@@ -17,16 +17,14 @@
 
 package org.apache.commons.imaging.common.bytesource;
 
-import static org.junit.Assert.assertTrue;
-
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.apache.commons.imaging.ImagingTest;
+import org.junit.Test;
+
+import java.io.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public abstract class ByteSourceTest extends ImagingTest {
     protected File createTempFile(final byte src[]) throws IOException {
@@ -34,7 +32,7 @@ public abstract class ByteSourceTest extends ImagingTest {
 
         // write test bytes to file.
         try (FileOutputStream fos = new FileOutputStream(file);
-                OutputStream os = new BufferedOutputStream(fos)) {
+             OutputStream os = new BufferedOutputStream(fos)) {
             os.write(src);
         }
 
@@ -66,6 +64,22 @@ public abstract class ByteSourceTest extends ImagingTest {
         }
         final byte longArray[] = (baos.toByteArray());
 
-        return new byte[][] { emptyArray, single, simple, zeroes, longArray, };
+        return new byte[][]{emptyArray, single, simple, zeroes, longArray,};
     }
+
+    @Test
+    public void testGetInputStreamThrowsNullPointerException() throws IOException {
+
+        ByteSourceArray byteSourceArray = new ByteSourceArray((byte[]) null);
+
+        try {
+            byteSourceArray.getInputStream(0L);
+            fail("Expecting exception: NullPointerException");
+        } catch (NullPointerException e) {
+            assertEquals(ByteArrayInputStream.class.getName(), e.getStackTrace()[0].getClassName());
+        }
+
+    }
+
 }
+
