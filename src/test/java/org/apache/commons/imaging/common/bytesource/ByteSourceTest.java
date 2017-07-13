@@ -76,7 +76,6 @@ public abstract class ByteSourceTest extends ImagingTest {
             byteSourceArray.getInputStream(0L);
             fail("Expecting exception: NullPointerException");
         } catch (NullPointerException e) {
-            assertEquals("no message in exception (getMessage() returned null)", e.getMessage());
             assertEquals(ByteArrayInputStream.class.getName(), e.getStackTrace()[0].getClassName());
         }
 
