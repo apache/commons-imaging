@@ -15,15 +15,15 @@ import static org.junit.Assert.assertEquals;
 public class TiffTagsTest{
 
 
-  @Test
-  public void testGetTagWithNegativeAndPositive() {
+    @Test
+    public void testGetTagWithNegativeAndPositive() {
 
-      TagInfo tagInfo = TiffTags.getTag((-1), 50933);
+        TagInfo tagInfo = TiffTags.getTag((-1), 50933);
 
-      assertEquals((-1), tagInfo.tag);
-      assertEquals( "Unknown Tag", tagInfo.name );
+        assertEquals((-1), tagInfo.tag);
+        assertEquals( "Unknown Tag", tagInfo.name );
 
-  }
+    }
 
 
 }
