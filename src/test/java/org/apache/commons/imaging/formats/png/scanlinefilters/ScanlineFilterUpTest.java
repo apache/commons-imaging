@@ -10,7 +10,7 @@ import static org.junit.Assert.assertArrayEquals;
 /**
  * Unit tests for class {@link ScanlineFilterUp}.
  *
- * @date 13.07.2017
+ * @date 2017-07-13
  * @see ScanlineFilterUp
  *
  **/

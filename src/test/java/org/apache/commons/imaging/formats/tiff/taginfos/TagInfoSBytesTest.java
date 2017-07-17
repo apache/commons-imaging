@@ -10,7 +10,7 @@ import static org.junit.Assert.assertSame;
 /**
  * Unit tests for class {@link TagInfoSBytes}.
  *
- * @date 13.07.2017
+ * @date 2017-07-13
  * @see TagInfoSBytes
  *
  **/

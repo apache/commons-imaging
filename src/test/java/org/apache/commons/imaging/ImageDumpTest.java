@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Unit tests for class {@link ImageDump}.
  *
- * @date 13.07.2017
+ * @date 2017-07-13
  * @see ImageDump
  *
  **/

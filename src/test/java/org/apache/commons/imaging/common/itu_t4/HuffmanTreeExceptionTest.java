@@ -7,7 +7,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Unit tests for class {@link HuffmanTreeException}.
  *
- * @date 13.07.2017
+ * @date 2017-07-13
  * @see HuffmanTreeException
  *
  **/

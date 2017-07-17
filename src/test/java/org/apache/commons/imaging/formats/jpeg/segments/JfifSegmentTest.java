@@ -8,7 +8,7 @@ import static org.junit.Assert.fail;
 /**
  * Unit tests for class {@link JfifSegment}.
  *
- * @date 13.07.2017
+ * @date 2017-07-13
  * @see JfifSegment
  *
  **/
