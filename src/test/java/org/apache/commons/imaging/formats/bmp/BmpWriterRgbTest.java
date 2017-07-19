@@ -3,8 +3,8 @@ package org.apache.commons.imaging.formats.bmp;
 import org.junit.Test;
 
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -27,7 +27,7 @@ public class BmpWriterRgbTest{
         assertEquals( 24, bmpWriterRgb.getBitsPerPixel() );
         assertEquals( 0, bmpWriterRgb.getPaletteSize() );
         assertEquals( 16, byteArray.length );
-        assertEquals( "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]", Arrays.toString(byteArray) );
+        assertArrayEquals( new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, byteArray );
 
     }
 

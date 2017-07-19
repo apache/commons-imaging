@@ -1,6 +1,9 @@
 package org.apache.commons.imaging.formats.jpeg.segments;
 
+import org.apache.commons.imaging.ImageReadException;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -16,7 +19,7 @@ public class JfifSegmentTest{
 
 
   @Test
-  public void testCreatesJfifSegment() {
+  public void testCreatesJfifSegment() throws IOException {
 
       byte[] byteArray = new byte[25];
       JfifSegment jfifSegment = null;
@@ -24,7 +27,7 @@ public class JfifSegmentTest{
       try {
         jfifSegment = new JfifSegment((-2275), byteArray);
         fail("Expecting exception: Exception");
-      } catch(Throwable e) {
+      } catch(ImageReadException e) {
          assertEquals("Not a Valid JPEG File: missing JFIF string",e.getMessage());
          assertEquals(JfifSegment.class.getName(), e.getStackTrace()[0].getClassName());
       }

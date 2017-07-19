@@ -1,11 +1,9 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
+import org.apache.commons.imaging.ImageWriteException;
 import org.junit.Test;
 
 import java.nio.ByteOrder;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * Unit tests for class {@link FieldTypeByte}.
@@ -17,19 +15,13 @@ import static org.junit.Assert.fail;
 public class FieldTypeByteTest{
 
 
-  @Test
-  public void testWriteDataWithNull() {
+  @Test(expected = ImageWriteException.class)
+  public void testWriteDataWithNull() throws ImageWriteException {
 
       FieldTypeByte fieldTypeByte = FieldType.UNDEFINED;
       ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
-      try { 
-        fieldTypeByte.writeData( null, byteOrder);
-        fail("Expecting exception: Exception");
-      } catch(Exception e) {
-         assertEquals("Invalid data: null (null)",e.getMessage());
-         assertEquals(FieldTypeByte.class.getName(), e.getStackTrace()[0].getClassName());
-      }
+      fieldTypeByte.writeData( null, byteOrder);
 
   }
 
