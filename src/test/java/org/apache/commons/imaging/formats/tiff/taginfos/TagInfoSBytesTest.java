@@ -7,19 +7,10 @@ import java.nio.ByteOrder;
 
 import static org.junit.Assert.assertSame;
 
-/**
- * Unit tests for class {@link TagInfoSBytes}.
- *
- * @date 13.07.2017
- * @see TagInfoSBytes
- *
- **/
 public class TagInfoSBytesTest{
-
 
   @Test
   public void testCreatesTagInfoSBytesAndCallsEncodeValue() {
-
       TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD3;
       TagInfoSBytes tagInfoSBytes = new TagInfoSBytes("", (-198), 10, tiffDirectoryType);
       ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
@@ -27,8 +18,6 @@ public class TagInfoSBytesTest{
       byte[] byteArrayTwo = tagInfoSBytes.encodeValue(byteOrder, byteArray);
 
       assertSame(byteArrayTwo, byteArray);
-
   }
-
 
 }

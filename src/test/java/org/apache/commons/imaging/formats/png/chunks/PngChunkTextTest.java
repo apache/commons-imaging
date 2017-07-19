@@ -5,19 +5,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-/**
- * Unit tests for class {@link PngChunkText}.
- *
- * @date 13.07.2017
- * @see PngChunkText
- *
- **/
 public class PngChunkTextTest{
-
 
     @Test
     public void testCreatesPngChunkText() {
-
         byte[] byteArray = new byte[0];
         PngChunkText pngChunkText = null;
 
@@ -28,8 +19,6 @@ public class PngChunkTextTest{
             assertEquals("PNG tEXt chunk keyword is not terminated.",e.getMessage());
             assertEquals(PngChunkText.class.getName(), e.getStackTrace()[0].getClassName());
         }
-
     }
-
 
 }

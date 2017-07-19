@@ -7,18 +7,10 @@ import java.nio.ByteOrder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-/**
- * Unit tests for class {@link FieldTypeLong}.
- *
- * @date 13.07.2017
- * @see FieldTypeLong
- **/
 public class FieldTypeLongTest {
-
 
     @Test
     public void testWriteDataWithNonNull() {
-
         FieldTypeLong fieldTypeLong = FieldType.IFD;
         ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
@@ -29,8 +21,6 @@ public class FieldTypeLongTest {
             assertEquals("Invalid data: BIG_ENDIAN (java.nio.ByteOrder)", e.getMessage());
             assertEquals(FieldTypeLong.class.getName(), e.getStackTrace()[0].getClassName());
         }
-
     }
-
 
 }

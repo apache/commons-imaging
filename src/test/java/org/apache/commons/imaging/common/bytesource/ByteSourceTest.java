@@ -22,9 +22,7 @@ import org.junit.Test;
 
 import java.io.*;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public abstract class ByteSourceTest extends ImagingTest {
     protected File createTempFile(final byte src[]) throws IOException {
@@ -67,19 +65,11 @@ public abstract class ByteSourceTest extends ImagingTest {
         return new byte[][]{emptyArray, single, simple, zeroes, longArray,};
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testGetInputStreamThrowsNullPointerException() throws IOException {
+        ByteSourceArray byteSourceArray = new ByteSourceArray(null);
 
-        ByteSourceArray byteSourceArray = new ByteSourceArray((byte[]) null);
-
-        try {
-            byteSourceArray.getInputStream(0L);
-            fail("Expecting exception: NullPointerException");
-        } catch (NullPointerException e) {
-            assertEquals(ByteArrayInputStream.class.getName(), e.getStackTrace()[0].getClassName());
-        }
-
+        byteSourceArray.getInputStream(0L);
     }
 
 }
-
