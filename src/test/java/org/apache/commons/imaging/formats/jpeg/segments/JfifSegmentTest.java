@@ -8,19 +8,10 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-/**
- * Unit tests for class {@link JfifSegment}.
- *
- * @date 13.07.2017
- * @see JfifSegment
- *
- **/
 public class JfifSegmentTest{
-
 
   @Test
   public void testCreatesJfifSegment() throws IOException {
-
       byte[] byteArray = new byte[25];
       JfifSegment jfifSegment = null;
 
@@ -33,6 +24,5 @@ public class JfifSegmentTest{
       }
 
   }
-
 
 }

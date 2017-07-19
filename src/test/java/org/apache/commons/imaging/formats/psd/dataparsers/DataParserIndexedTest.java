@@ -5,19 +5,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-/**
- * Unit tests for class {@link DataParserIndexed}.
- *
- * @date 13.07.2017
- * @see DataParserIndexed
- *
- **/
 public class DataParserIndexedTest{
-
 
   @Test
   public void testFailsToCreateDataParserIndexedThrowsArrayIndexOutOfBoundsException() {
-
       byte[] byteArray = new byte[24];
       DataParserIndexed dataParserIndexed = null;
 
@@ -28,8 +19,6 @@ public class DataParserIndexedTest{
          assertEquals("256",e.getMessage());
          assertEquals(DataParserIndexed.class.getName(), e.getStackTrace()[0].getClassName());
       }
-
   }
-
 
 }
