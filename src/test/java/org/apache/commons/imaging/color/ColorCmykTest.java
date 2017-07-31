@@ -21,6 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +63,7 @@ public class ColorCmykTest {
 
     @Test
     public void testHashCodeAndEquals() throws Exception {
-        assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
-        assertThat(color.hashCode(), is(colorCopy.hashCode()));
+        EqualsVerifier.forClass(ColorCmyk.class).verify();
     }
+
 }
