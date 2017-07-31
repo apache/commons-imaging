@@ -20,6 +20,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -60,4 +61,48 @@ public class ColorCmyTest {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }
+
+    @Test
+    public void testEqualsReturningFalse() {
+        ColorCmy colorCmy = ColorCmy.BLUE;
+        ColorCmy colorCmyTwo = ColorCmy.BLACK;
+
+        assertFalse(colorCmyTwo.equals(colorCmy));
+        assertFalse(colorCmy.equals(colorCmyTwo));
+    }
+
+    @Test
+    public void testCreatesColorCmy() {
+        ColorCmy colorCmy = new ColorCmy(0.0, (-1668.733868772), (-1568.733868772));
+        ColorCmy colorCmyTwo = ColorCmy.YELLOW;
+
+        assertFalse(colorCmy.equals(colorCmyTwo));
+        assertEquals((-1568.733868772), colorCmy.Y, 0.01);
+        assertEquals((-1668.733868772), colorCmy.M, 0.01);
+    }
+
+    @Test
+    public void testEqualsWithNonNull() {
+        ColorCmy colorCmy = ColorCmy.RED;
+        ColorCmy colorCmyTwo = ColorCmy.BLACK;
+
+        assertFalse(colorCmyTwo.equals(colorCmy));
+        assertFalse(colorCmy.equals(colorCmyTwo));
+    }
+
+    @Test
+    public void testEqualsWithNull() {
+        ColorCmy colorCmy = ColorCmy.RED;
+
+        assertFalse(colorCmy.equals( null));
+    }
+
+    @Test
+    public void testEquals() {
+        ColorCmy colorCmy = ColorCmy.WHITE;
+        Object object = new Object();
+
+        assertFalse(colorCmy.equals(object));
+    }
+
 }
