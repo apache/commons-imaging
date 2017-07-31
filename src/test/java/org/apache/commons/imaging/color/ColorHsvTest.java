@@ -16,13 +16,11 @@
  */
 package org.apache.commons.imaging.color;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class ColorHsvTest {
 
@@ -56,8 +54,8 @@ public class ColorHsvTest {
     }
 
     @Test
-    public void testHashCodeAndEquals() throws Exception {
-        assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
-        assertThat(color.hashCode(), is(colorCopy.hashCode()));
+    public void testEquals() {
+        EqualsVerifier.forClass(ColorHsv.class).verify();
     }
+
 }

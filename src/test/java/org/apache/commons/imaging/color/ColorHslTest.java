@@ -20,6 +20,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -60,4 +61,48 @@ public class ColorHslTest {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }
+
+    @Test
+    public void testEqualsReturningFalse() {
+        ColorHsl colorHsl = ColorHsl.WHITE;
+        ColorHsl colorHslTwo = ColorHsl.RED;
+
+        assertFalse(colorHsl.equals(colorHslTwo));
+        assertFalse(colorHslTwo.equals(colorHsl));
+    }
+
+    @Test
+    public void testEqualsWithNonNull() {
+        ColorHsl colorHsl = ColorHsl.BLACK;
+        ColorHsl colorHslTwo = ColorHsl.RED;
+
+        assertFalse(colorHsl.equals(colorHslTwo));
+    }
+
+    @Test
+    public void testCreatesColorHslOne() {
+        ColorHsl colorHsl = ColorHsl.BLUE;
+        ColorHsl colorHslTwo = new ColorHsl(100.0, 667.226, (-687.72287636));
+
+        assertEquals(667.226, colorHslTwo.S, 0.01);
+        assertEquals(100.0, colorHslTwo.H, 0.01);
+        assertEquals((-687.72287636), colorHslTwo.L, 0.01);
+        assertFalse(colorHsl.equals(colorHslTwo));
+    }
+
+    @Test
+    public void testEqualsWithNull() {
+        ColorHsl colorHsl = new ColorHsl(0.0, 0.0, 0.0);
+
+        assertFalse(colorHsl.equals( null));
+    }
+
+    @Test
+    public void testCreatesColorHslTwo() {
+        ColorHsl colorHsl = new ColorHsl(0.0, 0.0, 0.0);
+        Object object = new Object();
+
+        assertFalse(colorHsl.equals(object));
+    }
+
 }
