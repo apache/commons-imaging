@@ -12,7 +12,6 @@
  *  limitations under the License.
  *  under the License.
  */
-
 package org.apache.commons.imaging.formats.xpm;
 
 import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
