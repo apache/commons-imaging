@@ -21,12 +21,10 @@ import org.junit.Test;
 
 /**
  * Unit tests for class {@link PpmFileInfo}.
- *
- * @date 2017-08-01
  * @see PpmFileInfo
  *
  **/
-public class PpmFileInfoTest{
+public class PpmFileInfoTest {
 
   @Test(expected = ImageReadException.class)
   public void testCreatesPpmFileInfoOne() throws ImageReadException {

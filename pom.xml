@@ -224,12 +224,6 @@
       <version>2.6</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>nl.jqno.equalsverifier</groupId>
-      <artifactId>equalsverifier</artifactId>
-      <version>2.3.1</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <reporting>

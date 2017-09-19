@@ -16,20 +16,20 @@
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
-import org.apache.commons.imaging.ImageWriteException;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+
 import java.nio.ByteOrder;
+
+import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
+import org.junit.Test;
 
 /**
  * Unit tests for class {@link FieldTypeAscii}.
- *
- * @date 2017-08-01
  * @see FieldTypeAscii
  *
  **/
-public class FieldTypeAsciiTest{
+public class FieldTypeAsciiTest {
 
   @Test(expected = ImageWriteException.class)
   public void testCreatesFieldTypeAsciiAndCallsWriteData() throws ImageWriteException {

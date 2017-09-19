@@ -16,21 +16,19 @@
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
+import static org.junit.Assert.assertArrayEquals;
+
+import java.nio.ByteOrder;
+
 import org.apache.commons.imaging.ImageWriteException;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import java.nio.ByteOrder;
-import org.apache.commons.imaging.common.RationalNumber;
-import org.apache.commons.imaging.formats.tiff.TiffField;
 
 /**
  * Unit tests for class {@link FieldTypeRational}.
- *
- * @date 2017-08-01
  * @see FieldTypeRational
  *
  **/
-public class FieldTypeRationalTest{
+public class FieldTypeRationalTest {
 
   @Test
   public void testWriteDataWithNull() throws ImageWriteException {

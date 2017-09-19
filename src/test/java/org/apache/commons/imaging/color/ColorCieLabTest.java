@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.color;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,6 +57,7 @@ public class ColorCieLabTest {
 
     @Test
     public void testHashCodeAndEquals() throws Exception {
-        EqualsVerifier.forClass(ColorCieLab.class).verify();
+        assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
+        assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }
 }

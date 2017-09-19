@@ -16,10 +16,10 @@
  */
 package org.apache.commons.imaging.formats.pnm;
 
+import static org.junit.Assert.assertEquals;
+
 import org.apache.commons.imaging.ImageReadException;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class PgmFileInfoTest {
 

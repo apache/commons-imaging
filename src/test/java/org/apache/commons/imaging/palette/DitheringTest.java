@@ -16,21 +16,19 @@
  */
 package org.apache.commons.imaging.palette;
 
-import org.apache.commons.imaging.ImageWriteException;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.imaging.ImageWriteException;
+import org.junit.Test;
+
 /**
  * Unit tests for class {@link Dithering}.
- *
- * @date 2017-08-01
- * @see Dithering
- *
  **/
-public class DitheringTest{
+public class DitheringTest {
 
   @Test
   public void testApplyFloydSteinbergDitheringWithNonNullOne() throws ImageWriteException {
@@ -53,7 +51,7 @@ public class DitheringTest{
   public void testApplyFloydSteinbergDitheringWithNonNullTwo() throws ImageWriteException {
       BufferedImage bufferedImage = new BufferedImage(3, 3, 3);
       bufferedImage.setRGB(1, 2, 4);
-      List<ColorSpaceSubset> linkedList = new LinkedList();
+      List<ColorSpaceSubset> linkedList = new LinkedList<>();
       ColorSpaceSubset colorSpaceSubset = new ColorSpaceSubset((-234), (-352));
       linkedList.add(colorSpaceSubset);
       QuantizedPalette quantizedPalette = new QuantizedPalette(linkedList, 3);

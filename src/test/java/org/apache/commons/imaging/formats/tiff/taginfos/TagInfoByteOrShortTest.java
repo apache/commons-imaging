@@ -16,13 +16,13 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
-import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertSame;
 
 import java.nio.ByteOrder;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertSame;
+import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.junit.Test;
 
 public class TagInfoByteOrShortTest {
 

@@ -16,20 +16,20 @@
  */
 package org.apache.commons.imaging.formats.jpeg.segments;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import org.apache.commons.imaging.ImageReadException;
+import org.junit.Test;
+
 /**
  * Unit tests for class {@link App2Segment}.
- *
- * @date 2017-08-01
  * @see App2Segment
- *
  **/
-public class App2SegmentTest{
+public class App2SegmentTest {
 
   @Test
   public void testEqualsReturningTrue()  throws IOException, ImageReadException {
