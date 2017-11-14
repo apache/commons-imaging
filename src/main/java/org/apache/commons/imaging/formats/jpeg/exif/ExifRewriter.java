@@ -510,6 +510,7 @@ public class ExifRewriter extends BinaryFileParser {
             for (final JFIFPiece piece : segments) {
                 if (piece instanceof JFIFPieceSegmentExif) {
                     hasExif = true;
+                    break;
                 }
             }
 
