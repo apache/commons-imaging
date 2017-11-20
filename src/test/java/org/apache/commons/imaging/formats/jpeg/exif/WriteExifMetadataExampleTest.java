@@ -17,10 +17,16 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.Collection;
 
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.examples.WriteExifMetadataExample;
+import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
+import org.apache.commons.imaging.formats.tiff.TiffField;
+import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.util.Debug;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,8 +46,12 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest {
         this.imageFile = imageFile;
     }
 
+    /**
+     * Test that there are no odd offsets in the generated TIFF images.
+     * @throws Exception if the test failed for a unexpected reason
+     */
     @Test
-    public void testInsert() throws Exception {
+    public void testOddOffsets() throws Exception {
         Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
         final File tempFile = createTempFile("test", ".jpg");
@@ -53,7 +63,18 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest {
                 return;
             }
             new WriteExifMetadataExample().changeExifMetadata(imageFile, tempFile);
-            // TODO assert that ExifMetadata has been changed
+            JpegImageParser parser = new JpegImageParser();
+            ByteSourceFile byteSource = new ByteSourceFile(tempFile);
+            TiffImageMetadata tiff = parser.getExifMetadata(byteSource, null);
+            for (TiffField tiffField : tiff.getAllFields()) {
+                if (!tiffField.isLocalValue()) {
+                    int offset = tiffField.getOffset();
+                    String tag = tiffField.getTagName();
+                    String message = String.format("Odd offset %d, field %s", offset, tag);
+                    boolean isOdd = (tiffField.getOffset() & 1l) == 0;
+                    assertTrue(message, isOdd);
+                }
+            }
         } catch (final ExifRewriter.ExifOverflowException e) {
             Debug.debug("Ignoring unavoidable ExifOverflowException: " + e.getMessage());
             Debug.debug("Error image: " + imageFile.getAbsoluteFile());

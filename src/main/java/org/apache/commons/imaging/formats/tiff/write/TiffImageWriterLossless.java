@@ -241,10 +241,17 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             }
             if (null == bestFit) {
                 // we couldn't place this item. overflow.
+                if ((overflowIndex & 1l) != 0) {
+                    overflowIndex += 1;
+                }
                 outputItem.setOffset(overflowIndex);
                 overflowIndex += outputItemLength;
             } else {
-                outputItem.setOffset(bestFit.offset);
+                long offset = bestFit.offset;
+                if ((offset & 1l) != 0) {
+                    offset += 1;
+                }
+                outputItem.setOffset(offset);
                 unusedElements.remove(bestFit);
 
                 if (bestFit.length > outputItemLength) {
