@@ -17,8 +17,13 @@
 package org.apache.commons.imaging.formats.icns;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
@@ -96,7 +101,7 @@ final class IcnsDecoder {
                     value = 0xff & imageData[position++];
                     bitsLeft = 8;
                 }
-                int argb;
+                final int argb;
                 if ((value & 0x80) != 0) {
                     argb = 0xff000000;
                 } else {
@@ -114,7 +119,7 @@ final class IcnsDecoder {
         boolean visited = false;
         for (int y = 0; y < imageType.getHeight(); y++) {
             for (int x = 0; x < imageType.getWidth(); x++) {
-                int index;
+                final int index;
                 if (!visited) {
                     index = 0xf & (imageData[i] >> 4);
                 } else {
@@ -167,7 +172,7 @@ final class IcnsDecoder {
                     value = 0xff & maskData[position++];
                     bitsLeft = 8;
                 }
-                int alpha;
+                final int alpha;
                 if ((value & 0x80) != 0) {
                     alpha = 0xff;
                 } else {
@@ -190,11 +195,10 @@ final class IcnsDecoder {
         }
     }
 
-    public static List<BufferedImage> decodeAllImages(final IcnsImageParser.IcnsElement[] icnsElements)
-            throws ImageReadException {
-        final List<BufferedImage> result = new ArrayList<>();
-        for (final IcnsElement imageElement : icnsElements) {
-            final IcnsType imageType = IcnsType.findImageType(imageElement.type);
+    public static Map<IcnsType, BufferedImage> decodeAllImages(final IcnsImageParser.IcnsElement[] icnsElements) throws ImageReadException {
+        final Map<IcnsType, BufferedImage> result = new HashMap<>();
+        for (final IcnsElement icnsElement : icnsElements) {
+            final IcnsType imageType = IcnsType.findImageType(icnsElement.type);
             if (imageType == null) {
                 continue;
             }
@@ -203,13 +207,13 @@ final class IcnsDecoder {
             IcnsImageParser.IcnsElement maskElement = null;
             if (imageType.hasMask()) {
                 maskType = imageType;
-                maskElement = imageElement;
+                maskElement = icnsElement;
             } else {
                 maskType = IcnsType.find8BPPMaskType(imageType);
                 if (maskType != null) {
-                    for (final IcnsElement icnsElement : icnsElements) {
-                        if (icnsElement.type == maskType.getType()) {
-                            maskElement = icnsElement;
+                    for (final IcnsElement element : icnsElements) {
+                        if (element.type == maskType.getType()) {
+                            maskElement = element;
                             break;
                         }
                     }
@@ -217,9 +221,9 @@ final class IcnsDecoder {
                 if (maskElement == null) {
                     maskType = IcnsType.find1BPPMaskType(imageType);
                     if (maskType != null) {
-                        for (final IcnsElement icnsElement : icnsElements) {
-                            if (icnsElement.type == maskType.getType()) {
-                                maskElement = icnsElement;
+                        for (final IcnsElement element : icnsElements) {
+                            if (element.type == maskType.getType()) {
+                                maskElement = element;
                                 break;
                             }
                         }
@@ -227,29 +231,42 @@ final class IcnsDecoder {
                 }
             }
 
-            // FIXME: don't skip these when JPEG 2000 support is added:
-            if (imageType == IcnsType.ICNS_256x256_32BIT_ARGB_IMAGE
-                    || imageType == IcnsType.ICNS_512x512_32BIT_ARGB_IMAGE) {
+            final boolean pngImage = isPngImage(icnsElement.data);
+            final boolean jpeg2000Image = isJpeg2000Image(icnsElement.data);
+
+            if (pngImage || jpeg2000Image) {
+                try {
+                    final InputStream in = new ByteArrayInputStream(icnsElement.data);
+                    final BufferedImage bufferedImage = ImageIO.read(in);
+                    if (bufferedImage == null) {
+                        if (pngImage) {
+                            System.out.println("Can not read PNG image. [" + imageType.getTypeName() + "]");
+                        }
+                        if (jpeg2000Image) {
+                            System.out.println("Can not read JPEG 2000 image. [" + imageType.getTypeName() + "]");
+                        }
+                    } else {
+                        result.put(imageType, bufferedImage);
+                    }
+                } catch (final IOException e) {
+                    throw new ImageReadException(e.getMessage());
+                }
                 continue;
             }
 
-            final int expectedSize = (imageType.getWidth() * imageType.getHeight()
-                    * imageType.getBitsPerPixel() + 7) / 8;
-            byte[] imageData;
-            if (imageElement.data.length < expectedSize) {
+            final int expectedSize = (imageType.getWidth() * imageType.getHeight() * imageType.getBitsPerPixel() + 7) / 8;
+            final byte[] imageData;
+            if (icnsElement.data.length < expectedSize) {
                 if (imageType.getBitsPerPixel() == 32) {
-                    imageData = Rle24Compression.decompress(
-                            imageType.getWidth(), imageType.getHeight(),
-                            imageElement.data);
+                    imageData = Rle24Compression.decompress(imageType.getWidth(), imageType.getHeight(), icnsElement.data);
                 } else {
                     throw new ImageReadException("Short image data but not a 32 bit compressed type");
                 }
             } else {
-                imageData = imageElement.data;
+                imageData = icnsElement.data;
             }
 
-            final ImageBuilder imageBuilder = new ImageBuilder(imageType.getWidth(),
-                    imageType.getHeight(), true);
+            final ImageBuilder imageBuilder = new ImageBuilder(imageType.getWidth(), imageType.getHeight(), true);
             switch (imageType.getBitsPerPixel()) {
             case 1:
                 decode1BPPImage(imageType, imageData, imageBuilder);
@@ -276,9 +293,31 @@ final class IcnsDecoder {
                     throw new ImageReadException("Unsupport mask bit depth " + maskType.getBitsPerPixel());
                 }
             }
-
-            result.add(imageBuilder.getBufferedImage());
+            result.put(imageType, imageBuilder.getBufferedImage());
         }
         return result;
+    }
+
+    private static boolean isPngImage(final byte[] data) {
+        if (data.length > 4) {
+            if ((char) data[1] == 'P' && (char) data[2] == 'N' && (char) data[3] == 'G') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isJpeg2000Image(final byte[] data) {
+        final String jpeg2000Signature = "0 0 0 12 106 80 32 32 13 10";
+        final StringBuilder stringBuilder = new StringBuilder();
+        if (data.length > 10) {
+            for (int i = 0; i < 10; i++) {
+                stringBuilder.append(String.valueOf(data[i]) + " ");
+            }
+            if (stringBuilder.toString().trim().equals(jpeg2000Signature)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

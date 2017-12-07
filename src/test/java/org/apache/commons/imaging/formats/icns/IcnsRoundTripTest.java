@@ -62,7 +62,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 final BinaryOutputStream bos = new BinaryOutputStream(baos, ByteOrder.BIG_ENDIAN)) {
             bos.write4Bytes(IcnsImageParser.ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 2 * 16 * 16 / 8 + 4 + 4 + 16 * 16);
-            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
+            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_MASK.getType());
             bos.write4Bytes(4 + 4 + 2 * 16 * 16 / 8);
             // 1 BPP image - all black
             for (int y = 0; y < 16; y++) {
@@ -161,7 +161,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 }
             }
             // 1 BPP mask
-            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
+            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_MASK.getType());
             bos.write4Bytes(4 + 4 + 2 * 16 * 16 / 8);
             // 1 bit image
             for (int y = 0; y < 16; y++) {
@@ -206,7 +206,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                 }
             }
             // 1 BPP mask
-            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
+            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_MASK.getType());
             bos.write4Bytes(4 + 4 + 2 * 16 * 16 / 8);
             // 1 bit image
             for (int y = 0; y < 16; y++) {
@@ -291,7 +291,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     bos.write(0xff & pixel);
                 }
             }
-            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
+            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_MASK.getType());
             bos.write4Bytes(4 + 4 + 2 * 16 * 16 / 8);
             // 1 bit image
             for (int y = 0; y < 16; y++) {
@@ -347,7 +347,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
                     bos.write(0xff & pixel);
                 }
             }
-            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_IMAGE_AND_MASK.getType());
+            bos.write4Bytes(IcnsType.ICNS_16x16_1BIT_MASK.getType());
             bos.write4Bytes(4 + 4 + 16 * 16 / 8);
             // 1 bit image
             for (int y = 0; y < 16; y++) {
