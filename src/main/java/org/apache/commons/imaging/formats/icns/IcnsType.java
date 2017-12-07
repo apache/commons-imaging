@@ -24,7 +24,7 @@ enum IcnsType {
     ICNS_16x12_1BIT_IMAGE_AND_MASK("icm#", 16, 12, 1, true, false),
     ICNS_16x12_4BIT_IMAGE("icm4", 16, 12, 4, false, false),
     ICNS_16x12_8BIT_IMAGE("icm8", 16, 12, 8, false, false),
-    ICNS_16x16_1BIT_MASK("ics#", 16, 16, 1, true, false),
+    ICNS_16x16_1BIT_IMAGE_AND_MASK("ics#", 16, 16, 1, true, false),
     ICNS_16x16_4BIT_IMAGE("ics4", 16, 16, 4, false, false),
     ICNS_16x16_8BIT_IMAGE("ics8", 16, 16, 8, false, false),
     ICNS_16x16_32BIT_IMAGE("is32", 16, 16, 32, false, false),
@@ -65,6 +65,7 @@ enum IcnsType {
             ICNS_16x12_1BIT_IMAGE_AND_MASK,
             ICNS_16x12_4BIT_IMAGE,
             ICNS_16x12_8BIT_IMAGE,
+            ICNS_16x16_1BIT_IMAGE_AND_MASK,
             ICNS_16x16_4BIT_IMAGE,
             ICNS_16x16_8BIT_IMAGE,
             ICNS_16x16_32BIT_IMAGE,
@@ -87,17 +88,17 @@ enum IcnsType {
             ICNS_128x128_32BIT_RETINA_IMAGE,
             ICNS_512x512_32BIT_ARGB_IMAGE,
             ICNS_256x256_32BIT_RETINA_IMAGE,
-            ICNS_1024x1024_32BIT_ARGB_IMAGE};
+            ICNS_1024x1024_32BIT_ARGB_IMAGE };
 
     private static final IcnsType[] ALL_MASK_TYPES = {
             ICNS_16x12_1BIT_IMAGE_AND_MASK,
-            ICNS_16x16_1BIT_MASK,
+            ICNS_16x16_1BIT_IMAGE_AND_MASK,
             ICNS_16x16_8BIT_MASK,
             ICNS_32x32_1BIT_IMAGE_AND_MASK,
             ICNS_32x32_8BIT_MASK,
             ICNS_48x48_1BIT_MASK,
             ICNS_48x48_8BIT_MASK,
-            ICNS_128x128_8BIT_MASK};
+            ICNS_128x128_8BIT_MASK };
 
     private final int type;
     private final String typeName;
@@ -170,9 +171,9 @@ enum IcnsType {
     }
 
     public static IcnsType findImageType(final int type) {
-        for (final IcnsType allImageType : ALL_IMAGE_TYPES) {
-            if (allImageType.getType() == type) {
-                return allImageType;
+        for (final IcnsType imageType : ALL_IMAGE_TYPES) {
+            if (imageType.getType() == type) {
+                return imageType;
             }
         }
         return null;
