@@ -290,7 +290,7 @@ final class IcnsDecoder {
                 } else if (maskType.getBitsPerPixel() == 8) {
                     apply8BPPMask(maskElement.data, imageBuilder);
                 } else {
-                    throw new ImageReadException("Unsupport mask bit depth " + maskType.getBitsPerPixel());
+                    throw new ImageReadException("Unsupported mask bit depth " + maskType.getBitsPerPixel());
                 }
             }
             result.put(imageType, imageBuilder.getBufferedImage());
