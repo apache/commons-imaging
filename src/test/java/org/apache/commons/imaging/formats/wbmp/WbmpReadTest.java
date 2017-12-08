@@ -12,7 +12,6 @@
  *  limitations under the License.
  *  under the License.
  */
-
 package org.apache.commons.imaging.formats.wbmp;
 
 import static org.junit.Assert.assertNotNull;
