@@ -46,6 +46,9 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="First major release">
+      <action issue="IMAGING-209" dev="kinow" type="fix" due-to="Isak Wertwein">
+        PnmImageParser throws ImageWriteException when writing if PnmImageParser.PARAM_KEY_PNM_RAWBITS is provided
+      </action>
       <action issue="IMAGING-205" dev="kinow" type="fix">
         Imaging (Apache Sanselan) produces "odd offsets" in (EXIF) metadata
       </action>
