@@ -209,6 +209,12 @@
       <version>2.6</version>
       <scope>test</scope>
     </dependency>
+    <!-- necessary modification of ImageIO for support of JPEG 2000 -->
+    <dependency>
+      <groupId>com.github.jai-imageio</groupId>
+      <artifactId>jai-imageio-jpeg2000</artifactId>
+      <version>1.3.0</version>
+    </dependency>
   </dependencies>
 
   <reporting>
