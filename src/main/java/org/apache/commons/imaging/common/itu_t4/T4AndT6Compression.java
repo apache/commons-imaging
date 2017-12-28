@@ -241,7 +241,39 @@ public final class T4AndT6Compression {
             return ret;
         }
     }
-
+ 
+    private static int compressT(final int a0, final int a1, final int b1, final BitArrayOutputStream outputStream,final  int codingA0Color, final int[] codingLine ){
+          final int a1b1 = a1 - b1;
+          if (-3 <= a1b1 && a1b1 <= 3) {
+              T4_T6_Tables.Entry entry;
+              if (a1b1 == -3) {
+                  entry = T4_T6_Tables.VL3;
+              } else if (a1b1 == -2) {
+                  entry = T4_T6_Tables.VL2;
+              } else if (a1b1 == -1) {
+                  entry = T4_T6_Tables.VL1;
+              } else if (a1b1 == 0) {
+                  entry = T4_T6_Tables.V0;
+              } else if (a1b1 == 1) {
+                  entry = T4_T6_Tables.VR1;
+              } else if (a1b1 == 2) {
+                  entry = T4_T6_Tables.VR2;
+              } else {
+                  entry = T4_T6_Tables.VR3;
+              }
+              entry.writeBits(outputStream);
+              return a1;
+              
+          } else {
+              final int a2 = nextChangingElement(codingLine, 1 - codingA0Color, a1 + 1);
+              final int a0a1 = a1 - a0;
+              final int a1a2 = a2 - a1;
+              T4_T6_Tables.H.writeBits(outputStream);
+              writeRunLength(outputStream, a0a1, codingA0Color);
+              writeRunLength(outputStream, a1a2, 1 - codingA0Color);
+              return a2;
+          }
+    }
     public static byte[] compressT4_2D(final byte[] uncompressed, final int width,
             final int height, final boolean hasFill, final int parameterK)
             throws ImageWriteException {
@@ -277,35 +309,9 @@ public final class T4AndT6Compression {
                         T4_T6_Tables.P.writeBits(outputStream);
                         a0 = b2;
                     } else {
-                        final int a1b1 = a1 - b1;
-                        if (-3 <= a1b1 && a1b1 <= 3) {
-                            T4_T6_Tables.Entry entry;
-                            if (a1b1 == -3) {
-                                entry = T4_T6_Tables.VL3;
-                            } else if (a1b1 == -2) {
-                                entry = T4_T6_Tables.VL2;
-                            } else if (a1b1 == -1) {
-                                entry = T4_T6_Tables.VL1;
-                            } else if (a1b1 == 0) {
-                                entry = T4_T6_Tables.V0;
-                            } else if (a1b1 == 1) {
-                                entry = T4_T6_Tables.VR1;
-                            } else if (a1b1 == 2) {
-                                entry = T4_T6_Tables.VR2;
-                            } else {
-                                entry = T4_T6_Tables.VR3;
-                            }
-                            entry.writeBits(outputStream);
+                        a0 = compressT(a0, a1, b1, outputStream, codingA0Color, codingLine);
+                        if (a0 == a1) {
                             codingA0Color = 1 - codingA0Color;
-                            a0 = a1;
-                        } else {
-                            final int a2 = nextChangingElement(codingLine, 1 - codingA0Color, a1 + 1);
-                            final int a0a1 = a1 - a0;
-                            final int a1a2 = a2 - a1;
-                            T4_T6_Tables.H.writeBits(outputStream);
-                            writeRunLength(outputStream, a0a1, codingA0Color);
-                            writeRunLength(outputStream, a1a2, 1 - codingA0Color);
-                            a0 = a2;
                         }
                     }
                     referenceA0Color = changingElementAt(referenceLine, a0);
@@ -480,35 +486,9 @@ public final class T4AndT6Compression {
                         T4_T6_Tables.P.writeBits(outputStream);
                         a0 = b2;
                     } else {
-                        final int a1b1 = a1 - b1;
-                        if (-3 <= a1b1 && a1b1 <= 3) {
-                            T4_T6_Tables.Entry entry;
-                            if (a1b1 == -3) {
-                                entry = T4_T6_Tables.VL3;
-                            } else if (a1b1 == -2) {
-                                entry = T4_T6_Tables.VL2;
-                            } else if (a1b1 == -1) {
-                                entry = T4_T6_Tables.VL1;
-                            } else if (a1b1 == 0) {
-                                entry = T4_T6_Tables.V0;
-                            } else if (a1b1 == 1) {
-                                entry = T4_T6_Tables.VR1;
-                            } else if (a1b1 == 2) {
-                                entry = T4_T6_Tables.VR2;
-                            } else {
-                                entry = T4_T6_Tables.VR3;
-                            }
-                            entry.writeBits(outputStream);
+                        a0 = compressT(a0, a1, b1, outputStream, codingA0Color, codingLine);
+                        if (a0 == a1) {
                             codingA0Color = 1 - codingA0Color;
-                            a0 = a1;
-                        } else {
-                            final int a2 = nextChangingElement(codingLine, 1 - codingA0Color, a1 + 1);
-                            final int a0a1 = a1 - a0;
-                            final int a1a2 = a2 - a1;
-                            T4_T6_Tables.H.writeBits(outputStream);
-                            writeRunLength(outputStream, a0a1, codingA0Color);
-                            writeRunLength(outputStream, a1a2, 1 - codingA0Color);
-                            a0 = a2;
                         }
                     }
                     referenceA0Color = changingElementAt(referenceLine, a0);
