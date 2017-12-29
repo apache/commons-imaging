@@ -80,6 +80,9 @@ public class JpegUtils extends BinaryFileParser {
 
                 final byte[] segmentLengthBytes = readBytes("segmentLengthBytes", is, 2, "segmentLengthBytes");
                 final int segmentLength = ByteConversions.toUInt16(segmentLengthBytes, getByteOrder());
+                if (segmentLength < 2) {
+                    throw new ImageReadException("Invalid segment size");
+                }
 
                 final byte[] segmentData = readBytes("Segment Data",
                         is, segmentLength - 2,
