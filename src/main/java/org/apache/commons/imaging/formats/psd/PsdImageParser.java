@@ -29,8 +29,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -549,7 +549,7 @@ public class PsdImageParser extends ImageParser {
             final ImageResourceBlock block = blocks.get(i);
             pw.println("\t" + i + " (" + Integer.toHexString(block.id)
                     + ", " + "'"
-                    + new String(block.nameData, "ISO-8859-1")
+                    + new String(block.nameData, StandardCharsets.ISO_8859_1)
                     + "' ("
                     + block.nameData.length
                     + "), "
@@ -729,12 +729,8 @@ public class PsdImageParser extends ImageParser {
 
         final ImageResourceBlock block = xmpBlocks.get(0);
 
-        try {
-            // segment data is UTF-8 encoded xml.
-            return new String(block.data, 0, block.data.length, "utf-8");
-        } catch (final UnsupportedEncodingException e) {
-            throw new ImageReadException("Invalid JPEG XMP Segment.", e);
-        }
+        // segment data is UTF-8 encoded xml.
+        return new String(block.data, 0, block.data.length, StandardCharsets.UTF_8);
     }
 
 }

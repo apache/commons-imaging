@@ -22,6 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImageReadException;
 
@@ -40,7 +41,7 @@ public enum IccTagDataTypes implements IccTagDataType {
                 final int stringLength = read4Bytes("stringLength", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
     
                 //            bis.readByteArray("ignore", bytes.length -12, "none");
-                final String s = new String(bytes, 12, stringLength - 1, "US-ASCII");
+                final String s = new String(bytes, 12, stringLength - 1, StandardCharsets.US_ASCII);
                 System.out.println(prefix + "s: '" + s + "'");
             }
         }
@@ -91,7 +92,7 @@ public enum IccTagDataTypes implements IccTagDataType {
                                 (byte) (0xff & (thesignature >> 24)),
                                 (byte) (0xff & (thesignature >> 16)),
                                 (byte) (0xff & (thesignature >> 8)),
-                                (byte) (0xff & (thesignature >> 0)), }, "US-ASCII")
+                                (byte) (0xff & (thesignature >> 0)), }, StandardCharsets.US_ASCII)
                         + ")");
             }
         }
@@ -107,7 +108,7 @@ public enum IccTagDataTypes implements IccTagDataType {
             try (InputStream bis = new ByteArrayInputStream(bytes)) {
                 read4Bytes("type_signature", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
                 read4Bytes("ignore", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
-                final String s = new String(bytes, 8, bytes.length - 8, "US-ASCII");
+                final String s = new String(bytes, 8, bytes.length - 8, StandardCharsets.US_ASCII);
                 System.out.println(prefix + "s: '" + s + "'");
             }
         }

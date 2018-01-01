@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.png.chunks;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -52,7 +53,7 @@ public class PngChunkItxt extends PngTextChunk {
                     "PNG iTXt chunk keyword is not terminated.");
         }
 
-        keyword = new String(bytes, 0, terminator, "ISO-8859-1");
+        keyword = new String(bytes, 0, terminator, StandardCharsets.ISO_8859_1);
         int index = terminator + 1;
 
         final int compressionFlag = bytes[index++];
@@ -74,7 +75,7 @@ public class PngChunkItxt extends PngTextChunk {
             throw new ImageReadException("PNG iTXt chunk language tag is not terminated.");
         }
 
-        languageTag = new String(bytes, index, terminator - index, "ISO-8859-1");
+        languageTag = new String(bytes, index, terminator - index, StandardCharsets.ISO_8859_1);
         index = terminator + 1;
 
         terminator = findNull(bytes, index);
@@ -82,7 +83,7 @@ public class PngChunkItxt extends PngTextChunk {
             throw new ImageReadException("PNG iTXt chunk translated keyword is not terminated.");
         }
 
-        translatedKeyword = new String(bytes, index, terminator - index, "utf-8");
+        translatedKeyword = new String(bytes, index, terminator - index, StandardCharsets.UTF_8);
         index = terminator + 1;
 
         if (compressed) {
@@ -92,10 +93,10 @@ public class PngChunkItxt extends PngTextChunk {
             System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
             text = new String(getStreamBytes(
-                    new InflaterInputStream(new ByteArrayInputStream(compressedText))), "utf-8");
+                    new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.UTF_8);
 
         } else {
-            text = new String(bytes, index, bytes.length - index, "utf-8");
+            text = new String(bytes, index, bytes.length - index, StandardCharsets.UTF_8);
         }
     }
 

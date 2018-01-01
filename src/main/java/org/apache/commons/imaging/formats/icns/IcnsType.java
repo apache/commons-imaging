@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.icns;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 enum IcnsType {
 
@@ -166,12 +166,7 @@ enum IcnsType {
     }
 
     public static int typeAsInt(final String type) {
-        byte[] bytes;
-        try {
-            bytes = type.getBytes("US-ASCII");
-        } catch (final UnsupportedEncodingException unsupportedEncodingException) {
-            throw new IllegalArgumentException("Your Java doesn't support US-ASCII", unsupportedEncodingException);
-        }
+        byte[] bytes = type.getBytes(StandardCharsets.US_ASCII);
         if (bytes.length != 4) {
             throw new IllegalArgumentException("Invalid ICNS type");
         }
@@ -187,10 +182,6 @@ enum IcnsType {
         bytes[1] = (byte) (0xff & (type >> 16));
         bytes[2] = (byte) (0xff & (type >> 8));
         bytes[3] = (byte) (0xff & type);
-        try {
-            return new String(bytes, "US-ASCII");
-        } catch (final UnsupportedEncodingException unsupportedEncodingException) {
-            throw new IllegalArgumentException("Your Java doesn't support US-ASCII", unsupportedEncodingException);
-        }
+        return new String(bytes, StandardCharsets.US_ASCII);
     }
 }

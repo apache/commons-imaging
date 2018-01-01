@@ -17,8 +17,8 @@
 
 package org.apache.commons.imaging.formats.jpeg.xmp;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
@@ -42,12 +42,8 @@ public class JpegXmpParser extends BinaryFileParser {
         }
         final int index = JpegConstants.XMP_IDENTIFIER.size();
 
-        try {
-            // segment data is UTF-8 encoded xml.
-            return new String(segmentData, index, segmentData.length - index, "utf-8");
-        } catch (final UnsupportedEncodingException e) {
-            throw new ImageReadException("Invalid JPEG XMP Segment.", e);
-        }
+        // segment data is UTF-8 encoded xml.
+        return new String(segmentData, index, segmentData.length - index, StandardCharsets.UTF_8);
     }
 
 }

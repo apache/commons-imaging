@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.png.chunks;
 import org.apache.commons.imaging.ImageReadException;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
 
@@ -42,7 +43,7 @@ public class PngChunkScal extends PngChunk {
       }
 
       final int xIndex = 1;
-      final String xStr = new String(bytes, xIndex, separator - 1, "ISO-8859-1");
+      final String xStr = new String(bytes, xIndex, separator - 1, StandardCharsets.ISO_8859_1);
       unitsPerPixelXAxis = toDouble(xStr);
 
       final int yIndex = separator + 1;
@@ -50,7 +51,7 @@ public class PngChunkScal extends PngChunk {
          throw new ImageReadException("PNG sCAL chunk missing the y axis value.");
       }
 
-      final String yStr = new String(bytes, yIndex, length - yIndex, "ISO-8859-1");
+      final String yStr = new String(bytes, yIndex, length - yIndex, StandardCharsets.ISO_8859_1);
       unitsPerPixelYAxis = toDouble(yStr);
    }
 

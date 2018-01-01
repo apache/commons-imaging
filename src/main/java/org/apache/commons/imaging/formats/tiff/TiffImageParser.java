@@ -22,8 +22,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -315,13 +315,8 @@ public class TiffImageParser extends ImageParser {
             return null;
         }
 
-        try {
-            // segment data is UTF-8 encoded xml.
-            final String xml = new String(bytes, "utf-8");
-            return xml;
-        } catch (final UnsupportedEncodingException e) {
-            throw new ImageReadException("Invalid JPEG XMP Segment.", e);
-        }
+        // segment data is UTF-8 encoded xml.
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 
     @Override

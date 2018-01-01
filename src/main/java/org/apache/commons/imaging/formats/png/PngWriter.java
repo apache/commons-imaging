@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,21 +134,21 @@ class PngWriter {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // keyword
-        baos.write(text.keyword.getBytes("ISO-8859-1"));
+        baos.write(text.keyword.getBytes(StandardCharsets.ISO_8859_1));
         baos.write(0);
 
         baos.write(1); // compressed flag, true
         baos.write(PngConstants.COMPRESSION_DEFLATE_INFLATE); // compression method
 
         // language tag
-        baos.write(text.languageTag.getBytes("ISO-8859-1"));
+        baos.write(text.languageTag.getBytes(StandardCharsets.ISO_8859_1));
         baos.write(0);
 
         // translated keyword
-        baos.write(text.translatedKeyword.getBytes("utf-8"));
+        baos.write(text.translatedKeyword.getBytes(StandardCharsets.UTF_8));
         baos.write(0);
 
-        baos.write(deflate(text.text.getBytes("utf-8")));
+        baos.write(deflate(text.text.getBytes(StandardCharsets.UTF_8)));
 
         writeChunk(os, ChunkType.iTXt, baos.toByteArray());
     }
@@ -165,14 +165,14 @@ class PngWriter {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // keyword
-        baos.write(text.keyword.getBytes("ISO-8859-1"));
+        baos.write(text.keyword.getBytes(StandardCharsets.ISO_8859_1));
         baos.write(0);
 
         // compression method
         baos.write(PngConstants.COMPRESSION_DEFLATE_INFLATE);
 
         // text
-        baos.write(deflate(text.text.getBytes("ISO-8859-1")));
+        baos.write(deflate(text.text.getBytes(StandardCharsets.ISO_8859_1)));
 
         writeChunk(os, ChunkType.zTXt, baos.toByteArray());
     }
@@ -189,11 +189,11 @@ class PngWriter {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // keyword
-        baos.write(text.keyword.getBytes("ISO-8859-1"));
+        baos.write(text.keyword.getBytes(StandardCharsets.ISO_8859_1));
         baos.write(0);
 
         // text
-        baos.write(text.text.getBytes("ISO-8859-1"));
+        baos.write(text.text.getBytes(StandardCharsets.ISO_8859_1));
 
         writeChunk(os, ChunkType.tEXt, baos.toByteArray());
     }
@@ -209,13 +209,8 @@ class PngWriter {
     }
     
     private boolean isValidISO_8859_1(final String s) {
-        try {
-            final String roundtrip = new String(s.getBytes("ISO-8859-1"), "ISO-8859-1");
-            return s.equals(roundtrip);
-        } catch (final UnsupportedEncodingException e) {
-            // should never be thrown.
-            throw new RuntimeException("Error parsing string.", e);
-        }
+        final String roundtrip = new String(s.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.ISO_8859_1);
+        return s.equals(roundtrip);
     }
     
     private void writeChunkXmpiTXt(final OutputStream os, final String xmpXml)
@@ -224,7 +219,7 @@ class PngWriter {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // keyword
-        baos.write(PngConstants.XMP_KEYWORD.getBytes("ISO-8859-1"));
+        baos.write(PngConstants.XMP_KEYWORD.getBytes(StandardCharsets.ISO_8859_1));
         baos.write(0);
 
         baos.write(1); // compressed flag, true
@@ -233,10 +228,10 @@ class PngWriter {
         baos.write(0); // language tag (ignore). TODO
 
         // translated keyword
-        baos.write(PngConstants.XMP_KEYWORD.getBytes("utf-8"));
+        baos.write(PngConstants.XMP_KEYWORD.getBytes(StandardCharsets.UTF_8));
         baos.write(0);
 
-        baos.write(deflate(xmpXml.getBytes("utf-8")));
+        baos.write(deflate(xmpXml.getBytes(StandardCharsets.UTF_8)));
 
         writeChunk(os, ChunkType.iTXt, baos.toByteArray());
     }
@@ -301,10 +296,10 @@ class PngWriter {
         baos.write(units);
 
         // units per pixel, x-axis
-        baos.write(String.valueOf(xUPP).getBytes("ISO-8859-1"));
+        baos.write(String.valueOf(xUPP).getBytes(StandardCharsets.ISO_8859_1));
         baos.write(0);
 
-        baos.write(String.valueOf(yUPP).getBytes("ISO-8859-1"));
+        baos.write(String.valueOf(yUPP).getBytes(StandardCharsets.ISO_8859_1));
 
         writeChunk(os, ChunkType.sCAL, baos.toByteArray());
     }

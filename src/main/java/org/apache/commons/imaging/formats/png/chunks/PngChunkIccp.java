@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.png.chunks;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -48,7 +49,7 @@ public class PngChunkIccp extends PngChunk {
         }
         final byte[] nameBytes = new byte[index];
         System.arraycopy(bytes, 0, nameBytes, 0, index);
-        profileName = new String(nameBytes, "ISO-8859-1");
+        profileName = new String(nameBytes, StandardCharsets.ISO_8859_1);
 
         compressionMethod = bytes[index + 1];
 

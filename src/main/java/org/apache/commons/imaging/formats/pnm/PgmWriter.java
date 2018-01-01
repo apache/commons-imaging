@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.pnm;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
@@ -43,13 +44,13 @@ class PgmWriter implements PnmWriter {
         final int width = src.getWidth();
         final int height = src.getHeight();
 
-        os.write(Integer.toString(width).getBytes("US-ASCII"));
+        os.write(Integer.toString(width).getBytes(StandardCharsets.US_ASCII));
         os.write(PnmConstants.PNM_SEPARATOR);
 
-        os.write(Integer.toString(height).getBytes("US-ASCII"));
+        os.write(Integer.toString(height).getBytes(StandardCharsets.US_ASCII));
         os.write(PnmConstants.PNM_SEPARATOR);
 
-        os.write(Integer.toString(255).getBytes("US-ASCII")); // max component value
+        os.write(Integer.toString(255).getBytes(StandardCharsets.US_ASCII)); // max component value
         os.write(PnmConstants.PNM_NEWLINE);
 
         for (int y = 0; y < height; y++) {
@@ -63,7 +64,7 @@ class PgmWriter implements PnmWriter {
                 if (rawbits) {
                     os.write((byte) sample);
                 } else {
-                    os.write(Integer.toString(sample).getBytes("US-ASCII")); // max component value
+                    os.write(Integer.toString(sample).getBytes(StandardCharsets.US_ASCII)); // max component value
                     os.write(PnmConstants.PNM_SEPARATOR);
                 }
             }

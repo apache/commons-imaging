@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.psd;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.util.Debug;
 
@@ -31,8 +31,8 @@ class ImageResourceBlock {
         this.data = data;
     }
 
-    String getName() throws UnsupportedEncodingException {
+    String getName() {
         Debug.debug("getName: " + nameData.length);
-        return new String(nameData, "ISO-8859-1");
+        return new String(nameData, StandardCharsets.ISO_8859_1);
     }
 }

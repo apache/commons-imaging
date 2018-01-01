@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -147,12 +148,8 @@ public final class TagInfoGpsText extends TagInfo {
 
         final byte[] bytes = entry.getByteArrayValue();
         if (bytes.length < 8) {
-            try {
-                // try ASCII, with NO prefix.
-                return new String(bytes, "US-ASCII");
-            } catch (final UnsupportedEncodingException e) {
-                throw new ImageReadException("GPS text field missing encoding prefix.", e);
-            }
+            // try ASCII, with NO prefix.
+            return new String(bytes, StandardCharsets.US_ASCII);
         }
 
         for (final TextEncoding encoding : TEXT_ENCODINGS) {
@@ -176,12 +173,7 @@ public final class TagInfoGpsText extends TagInfo {
             }
         }
 
-        try {
-            // try ASCII, with NO prefix.
-            return new String(bytes, "US-ASCII");
-        } catch (final UnsupportedEncodingException e) {
-            throw new ImageReadException("Unknown GPS text encoding prefix.", e);
-        }
-
+        // try ASCII, with NO prefix.
+        return new String(bytes, StandardCharsets.US_ASCII);
     }
 }

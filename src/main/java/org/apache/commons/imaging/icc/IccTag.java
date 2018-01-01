@@ -23,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -89,7 +90,7 @@ public class IccTag {
                         (byte) (0xff & (signature >> 24)),
                         (byte) (0xff & (signature >> 16)),
                         (byte) (0xff & (signature >> 8)),
-                        (byte) (0xff & (signature >> 0)), }, "US-ASCII")
+                        (byte) (0xff & (signature >> 0)), }, StandardCharsets.US_ASCII)
                 + ")");
 
         if (data == null) {
@@ -105,7 +106,7 @@ public class IccTag {
                             (byte) (0xff & (dataTypeSignature >> 24)),
                             (byte) (0xff & (dataTypeSignature >> 16)),
                             (byte) (0xff & (dataTypeSignature >> 8)),
-                            (byte) (0xff & (dataTypeSignature >> 0)), }, "US-ASCII")
+                            (byte) (0xff & (dataTypeSignature >> 0)), }, StandardCharsets.US_ASCII)
                     + ")");
 
             if (itdt == null) {

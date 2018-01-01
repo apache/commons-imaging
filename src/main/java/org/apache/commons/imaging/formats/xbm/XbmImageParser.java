@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -342,9 +343,9 @@ public class XbmImageParser extends ImageParser {
 
         final String name = randomName();
 
-        os.write(("#define " + name + "_width " + src.getWidth() + "\n").getBytes("US-ASCII"));
-        os.write(("#define " + name + "_height " + src.getHeight() + "\n").getBytes("US-ASCII"));
-        os.write(("static unsigned char " + name + "_bits[] = {").getBytes("US-ASCII"));
+        os.write(("#define " + name + "_width " + src.getWidth() + "\n").getBytes(StandardCharsets.US_ASCII));
+        os.write(("#define " + name + "_height " + src.getHeight() + "\n").getBytes(StandardCharsets.US_ASCII));
+        os.write(("static unsigned char " + name + "_bits[] = {").getBytes(StandardCharsets.US_ASCII));
 
         int bitcache = 0;
         int bitsInCache = 0;
@@ -365,33 +366,33 @@ public class XbmImageParser extends ImageParser {
                 bitcache |= (sample << bitsInCache);
                 ++bitsInCache;
                 if (bitsInCache == 8) {
-                    os.write(separator.getBytes("US-ASCII"));
+                    os.write(separator.getBytes(StandardCharsets.US_ASCII));
                     separator = ",";
                     if (written == 12) {
-                        os.write("\n  ".getBytes("US-ASCII"));
+                        os.write("\n  ".getBytes(StandardCharsets.US_ASCII));
                         written = 0;
                     }
-                    os.write(toPrettyHex(bitcache).getBytes("US-ASCII"));
+                    os.write(toPrettyHex(bitcache).getBytes(StandardCharsets.US_ASCII));
                     bitcache = 0;
                     bitsInCache = 0;
                     ++written;
                 }
             }
             if (bitsInCache != 0) {
-                os.write(separator.getBytes("US-ASCII"));
+                os.write(separator.getBytes(StandardCharsets.US_ASCII));
                 separator = ",";
                 if (written == 12) {
-                    os.write("\n  ".getBytes("US-ASCII"));
+                    os.write("\n  ".getBytes(StandardCharsets.US_ASCII));
                     written = 0;
                 }
-                os.write(toPrettyHex(bitcache).getBytes("US-ASCII"));
+                os.write(toPrettyHex(bitcache).getBytes(StandardCharsets.US_ASCII));
                 bitcache = 0;
                 bitsInCache = 0;
                 ++written;
             }
         }
 
-        os.write("\n};\n".getBytes("US-ASCII"));
+        os.write("\n};\n".getBytes(StandardCharsets.US_ASCII));
     }
 
     /**

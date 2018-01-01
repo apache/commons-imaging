@@ -18,6 +18,7 @@ package org.apache.commons.imaging.formats.png.chunks;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -41,7 +42,7 @@ public class PngChunkZtxt extends PngTextChunk {
                     "PNG zTXt chunk keyword is unterminated.");
         }
 
-        keyword = new String(bytes, 0, index, "ISO-8859-1");
+        keyword = new String(bytes, 0, index, StandardCharsets.ISO_8859_1);
         index++;
 
         final int compressionMethod = bytes[index++];
@@ -55,7 +56,7 @@ public class PngChunkZtxt extends PngTextChunk {
         final byte[] compressedText = new byte[compressedTextLength];
         System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
-        text = new String(getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedText))), "ISO-8859-1");
+        text = new String(getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.ISO_8859_1);
     }
 
     /**

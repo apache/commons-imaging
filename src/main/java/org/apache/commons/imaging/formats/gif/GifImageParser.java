@@ -33,8 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -290,7 +290,7 @@ public class GifImageParser extends ImageParser {
                     if (formatCompliance != null) {
                         formatCompliance.addComment(
                                 "Unknown Application Extension ("
-                                        + new String(label, "US-ASCII") + ")",
+                                        + new String(label, StandardCharsets.US_ASCII) + ")",
                                 completeCode);
                     }
 
@@ -508,7 +508,7 @@ public class GifImageParser extends ImageParser {
         for (final GifBlock block : blocks) {
             if (block.blockCode == code) {
                 final byte[] bytes = ((GenericGifBlock) block).appendSubBlocks();
-                result.add(new String(bytes, "US-ASCII"));
+                result.add(new String(bytes, StandardCharsets.US_ASCII));
             }
         }
 
@@ -870,7 +870,7 @@ public class GifImageParser extends ImageParser {
             bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE.length); // 0x0B
             bos.write(XMP_APPLICATION_ID_AND_AUTH_CODE);
 
-            final byte[] xmpXmlBytes = xmpXml.getBytes("utf-8");
+            final byte[] xmpXmlBytes = xmpXml.getBytes(StandardCharsets.UTF_8);
             bos.write(xmpXmlBytes);
 
             // write "magic trailer"
@@ -1048,18 +1048,14 @@ public class GifImageParser extends ImageParser {
                             "XMP block in GIF missing magic trailer.");
                 }
 
-                try {
-                    // XMP is UTF-8 encoded xml.
-                    final String xml = new String(
-                            blockBytes,
-                            XMP_APPLICATION_ID_AND_AUTH_CODE.length,
-                            blockBytes.length
-                                    - (XMP_APPLICATION_ID_AND_AUTH_CODE.length + GIF_MAGIC_TRAILER.length),
-                            "utf-8");
-                    result.add(xml);
-                } catch (final UnsupportedEncodingException e) {
-                    throw new ImageReadException("Invalid XMP Block in GIF.", e);
-                }
+                // XMP is UTF-8 encoded xml.
+                final String xml = new String(
+                        blockBytes,
+                        XMP_APPLICATION_ID_AND_AUTH_CODE.length,
+                        blockBytes.length
+                                - (XMP_APPLICATION_ID_AND_AUTH_CODE.length + GIF_MAGIC_TRAILER.length),
+                                StandardCharsets.UTF_8);
+                result.add(xml);
             }
 
             if (result.size() < 1) {

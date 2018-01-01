@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,7 +177,7 @@ public class JpegXmpRewriter extends JpegRewriter {
         pieces = removeXmpSegments(pieces);
 
         final List<JFIFPieceSegment> newPieces = new ArrayList<>();
-        final byte[] xmpXmlBytes = xmpXml.getBytes("utf-8");
+        final byte[] xmpXmlBytes = xmpXml.getBytes(StandardCharsets.UTF_8);
         int index = 0;
         while (index < xmpXmlBytes.length) {
             final int segmentSize = Math.min(xmpXmlBytes.length, JpegConstants.MAX_SEGMENT_SIZE);

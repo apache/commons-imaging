@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -480,7 +481,7 @@ public abstract class TiffImageWriterBase {
             }
 
             if (null != xmpXml) {
-                final byte[] xmpXmlBytes = xmpXml.getBytes("utf-8");
+                final byte[] xmpXmlBytes = xmpXml.getBytes(StandardCharsets.UTF_8);
                 directory.add(TiffTagConstants.TIFF_TAG_XMP, xmpXmlBytes);
             }
 

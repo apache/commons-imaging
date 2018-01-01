@@ -29,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -230,7 +231,7 @@ public class IptcParser extends BinaryFileParser {
             // continue;
             // }
 
-            final String value = new String(recordData, "ISO-8859-1");
+            final String value = new String(recordData, StandardCharsets.ISO_8859_1);
 
             final IptcType iptcType = IptcTypeLookup.getIptcType(recordType);
 
@@ -433,8 +434,8 @@ public class IptcParser extends BinaryFileParser {
                 }
                 bos.write(element.iptcType.getType());
 
-                final byte[] recordData = element.getValue().getBytes("ISO-8859-1");
-                if (!new String(recordData, "ISO-8859-1").equals(element.getValue())) {
+                final byte[] recordData = element.getValue().getBytes(StandardCharsets.ISO_8859_1);
+                if (!new String(recordData, StandardCharsets.ISO_8859_1).equals(element.getValue())) {
                     throw new ImageWriteException(
                             "Invalid record value, not ISO-8859-1");
                 }

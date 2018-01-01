@@ -16,8 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
@@ -47,23 +47,17 @@ public class FieldTypeAscii extends FieldType {
         // Exiftool however allows you to configure the charset used.
         for (int i = 0; i < bytes.length; i++) {
             if (bytes[i] == 0) {
-                try {
-                    final String string = new String(bytes, nextStringPos, i
-                            - nextStringPos, "UTF-8");
-                    strings[stringsAdded++] = string;
-                } catch (final UnsupportedEncodingException unsupportedEncoding) { // NOPMD
-                }
+                final String string = new String(bytes, nextStringPos, i
+                        - nextStringPos, StandardCharsets.UTF_8);
+                strings[stringsAdded++] = string;
                 nextStringPos = i + 1;
             }
         }
         if (nextStringPos < bytes.length) {
             // Buggy file, string wasn't null terminated
-            try {
-                final String string = new String(bytes, nextStringPos, bytes.length
-                        - nextStringPos, "UTF-8");
-                strings[stringsAdded++] = string;
-            } catch (final UnsupportedEncodingException unsupportedEncoding) { // NOPMD
-            }
+            final String string = new String(bytes, nextStringPos, bytes.length
+                    - nextStringPos, StandardCharsets.UTF_8);
+            strings[stringsAdded++] = string;
         }
         if (strings.length == 1) {
             return strings[0];
@@ -80,12 +74,7 @@ public class FieldTypeAscii extends FieldType {
             result[result.length - 1] = 0;
             return result;
         } else if (o instanceof String) {
-            byte[] bytes;
-            try {
-                bytes = ((String) o).getBytes("UTF-8");
-            } catch (final UnsupportedEncodingException cannotHappen) {
-                throw new IllegalArgumentException("Your Java doesn't support UTF-8", cannotHappen);
-            }
+            byte[] bytes = ((String) o).getBytes(StandardCharsets.UTF_8);
             final byte[] result = new byte[bytes.length + 1];
             System.arraycopy(bytes, 0, result, 0, bytes.length);
             result[result.length - 1] = 0;
@@ -94,23 +83,13 @@ public class FieldTypeAscii extends FieldType {
             final String[] strings = (String[]) o;
             int totalLength = 0;
             for (final String string : strings) {
-                byte[] bytes;
-                try {
-                    bytes = string.getBytes("UTF-8");
-                } catch (final UnsupportedEncodingException cannotHappen) {
-                    throw new IllegalArgumentException("Your Java doesn't support UTF-8", cannotHappen);
-                }
+                byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
                 totalLength += (bytes.length + 1);
             }
             final byte[] result = new byte[totalLength];
             int position = 0;
             for (final String string : strings) {
-                byte[] bytes;
-                try {
-                    bytes = string.getBytes("UTF-8");
-                } catch (final UnsupportedEncodingException cannotHappen) {
-                    throw new IllegalArgumentException("Your Java doesn't support UTF-8", cannotHappen);
-                }
+                byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
                 System.arraycopy(bytes, 0, result, position, bytes.length);
                 position += (bytes.length + 1);
             }

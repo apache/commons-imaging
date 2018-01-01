@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.jpeg.segments;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
@@ -33,12 +33,7 @@ public class App14Segment extends AppnSegment {
     public static final int ADOBE_COLOR_TRANSFORM_YCCK = 2;
     
     static {
-        byte[] adobe = null;
-        try {
-            adobe = "Adobe".getBytes("US-ASCII");
-        } catch (final UnsupportedEncodingException cannotHappen) { // NOPMD - can't happen
-        }
-        ADOBE_PREFIX = adobe;
+        ADOBE_PREFIX = "Adobe".getBytes(StandardCharsets.US_ASCII);
     }
 
     public App14Segment(final int marker, final byte[] segmentData) throws IOException {

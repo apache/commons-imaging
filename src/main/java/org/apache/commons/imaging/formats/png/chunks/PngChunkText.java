@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.png.chunks;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.PngText;
@@ -36,10 +37,10 @@ public class PngChunkText extends PngTextChunk {
                     "PNG tEXt chunk keyword is not terminated.");
         }
 
-        keyword = new String(bytes, 0, index, "ISO-8859-1");
+        keyword = new String(bytes, 0, index, StandardCharsets.ISO_8859_1);
 
         final int textLength = bytes.length - (index + 1);
-        text = new String(bytes, index + 1, textLength, "ISO-8859-1");
+        text = new String(bytes, index + 1, textLength, StandardCharsets.ISO_8859_1);
 
         if (getDebug()) {
             System.out.println("Keyword: " + keyword);
