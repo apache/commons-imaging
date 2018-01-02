@@ -187,10 +187,6 @@ public class TiffImageParser extends ImageParser {
             break;
 
         }
-        final TiffField xResolutionField = directory.findField(
-                TiffTagConstants.TIFF_TAG_XRESOLUTION);
-        final TiffField yResolutionField = directory.findField(
-                TiffTagConstants.TIFF_TAG_YRESOLUTION);
 
         int physicalWidthDpi = -1;
         float physicalWidthInch = -1;
@@ -198,6 +194,11 @@ public class TiffImageParser extends ImageParser {
         float physicalHeightInch = -1;
 
         if (unitsPerInch > 0) {
+            final TiffField xResolutionField = directory.findField(
+                    TiffTagConstants.TIFF_TAG_XRESOLUTION);
+            final TiffField yResolutionField = directory.findField(
+                    TiffTagConstants.TIFF_TAG_YRESOLUTION);
+
             if ((xResolutionField != null)
                     && (xResolutionField.getValue() != null)) {
                 final double xResolutionPixelsPerUnit = xResolutionField.getDoubleValue();

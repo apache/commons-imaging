@@ -444,8 +444,6 @@ public class PngImageParser extends ImageParser {
             physicalHeightInch = (float) (height / (pngChunkpHYs.pixelsPerUnitYAxis * metersPerInch));
         }
 
-        final String formatDetails = "Png";
-
         boolean usesPalette = false;
 
         final List<PngChunk> PLTEs = filterChunks(chunks, ChunkType.PLTE);
@@ -468,6 +466,7 @@ public class PngImageParser extends ImageParser {
                 throw new ImageReadException("Png: Unknown ColorType: " + pngChunkIHDR.pngColorType);
         }
 
+        final String formatDetails = "Png";
         final ImageInfo.CompressionAlgorithm compressionAlgorithm = ImageInfo.CompressionAlgorithm.PNG_FILTER;
 
         return new PngImageInfo(formatDetails, bitsPerPixel, comments,

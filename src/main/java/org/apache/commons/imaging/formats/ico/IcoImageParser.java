@@ -647,8 +647,8 @@ public class IcoImageParser extends ImageParser {
         final PaletteFactory paletteFactory = new PaletteFactory();
         final SimplePalette palette = paletteFactory.makeExactRgbPaletteSimple(src, 256);
         final int bitCount;
-        final boolean hasTransparency = paletteFactory.hasTransparency(src);
         if (palette == null) {
+            final boolean hasTransparency = paletteFactory.hasTransparency(src);
             if (hasTransparency) {
                 bitCount = 32;
             } else {

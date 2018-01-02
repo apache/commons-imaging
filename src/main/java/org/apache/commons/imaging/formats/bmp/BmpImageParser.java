@@ -394,11 +394,10 @@ public class BmpImageParser extends ImageParser {
                     + ((colorTable == null) ? "null" : Integer.toString(colorTable.length)));
         }
 
-        final int pixelCount = bhi.width * bhi.height;
-
         int imageLineLength = (((bhi.bitsPerPixel) * bhi.width) + 7) / 8;
 
         if (verbose) {
+            final int pixelCount = bhi.width * bhi.height;
             // this.debugNumber("Total BitsPerPixel",
             // (ExtraBitsPerPixel + bhi.BitsPerPixel), 4);
             // this.debugNumber("Total Bit Per Line",
