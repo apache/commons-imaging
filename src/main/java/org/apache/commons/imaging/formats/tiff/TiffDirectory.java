@@ -727,7 +727,7 @@ public class TiffDirectory extends TiffElement {
                     + ") != byteCounts.length(" + byteCounts.length + ")");
         }
 
-        final List<ImageDataElement> result = new ArrayList<>();
+        final List<ImageDataElement> result = new ArrayList<>(offsets.length);
         for (int i = 0; i < offsets.length; i++) {
             result.add(new ImageDataElement(offsets[i], byteCounts[i]));
         }

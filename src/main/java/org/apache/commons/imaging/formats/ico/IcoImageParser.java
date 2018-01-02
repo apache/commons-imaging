@@ -587,10 +587,10 @@ public class IcoImageParser extends ImageParser {
     @Override
     public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
             throws ImageReadException, IOException {
-        final List<BufferedImage> result = new ArrayList<>();
         final ImageContents contents = readImage(byteSource);
 
         final FileHeader fileHeader = contents.fileHeader;
+        final List<BufferedImage> result = new ArrayList<>(fileHeader.iconCount);
         for (int i = 0; i < fileHeader.iconCount; i++) {
             final IconData iconData = contents.iconDatas[i];
 

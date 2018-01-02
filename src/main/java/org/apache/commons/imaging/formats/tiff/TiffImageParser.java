@@ -227,8 +227,8 @@ public class TiffImageParser extends ImageParser {
 
         // -------------------
 
-        final List<String> comments = new ArrayList<>();
         final List<TiffField> entries = directory.entries;
+        final List<String> comments = new ArrayList<>(entries.size());
         for (final TiffField field : entries) {
             final String comment = field.toString();
             comments.add(comment);

@@ -790,9 +790,9 @@ public class JpegImageParser extends ImageParser {
             physicalHeightInch = (float) (height / (yDensity * unitsPerInch));
         }
 
-        final List<String> comments = new ArrayList<>();
         final List<Segment> commentSegments = readSegments(byteSource,
                 new int[] { JpegConstants.COM_MARKER}, false);
+        final List<String> comments = new ArrayList<>(commentSegments.size());
         for (final Segment commentSegment : commentSegments) {
             final ComSegment comSegment = (ComSegment) commentSegment;
             String comment = "";

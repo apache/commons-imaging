@@ -111,7 +111,7 @@ public class PngImageParser extends ImageParser {
     public List<String> getChunkTypes(final InputStream is)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(is, null, false);
-        final List<String> chunkTypes = new ArrayList<>();
+        final List<String> chunkTypes = new ArrayList<>(chunks.size());
         for (final PngChunk chunk : chunks) {
             chunkTypes.add(getChunkTypeName(chunk.chunkType));
         }
@@ -392,8 +392,9 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> zTXts = filterChunks(chunks, ChunkType.zTXt);
         final List<PngChunk> iTXts = filterChunks(chunks, ChunkType.iTXt);
 
-        final List<String> comments = new ArrayList<>();
-        final List<PngText> textChunks = new ArrayList<>();
+        int chunkCount = tEXts.size() + zTXts.size() + iTXts.size();
+        final List<String> comments = new ArrayList<>(chunkCount);
+        final List<PngText> textChunks = new ArrayList<>(chunkCount);
 
         for (final PngChunk tEXt : tEXts) {
             final PngChunkText pngChunktEXt = (PngChunkText) tEXt;
