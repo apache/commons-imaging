@@ -77,6 +77,9 @@ public class DhtSegment extends Segment {
             int si = huffSize[0];
             huffCode = new int[lastK];
             while (true) {
+                if (k >= lastK) {
+                    break;
+                }
                 huffCode[k] = code;
                 code++;
                 k++;
