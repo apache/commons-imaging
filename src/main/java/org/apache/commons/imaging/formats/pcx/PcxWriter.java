@@ -142,8 +142,13 @@ class PcxWriter {
             bitDepth = 1;
             planes = 3;
         } else if (palette.length() > 2 || bitDepthWanted == 2) {
-            bitDepth = 1;
-            planes = 2;
+            if (planesWanted == 2) {
+                bitDepth = 1;
+                planes = 2;
+            } else {
+                bitDepth = 2;
+                planes = 1;
+            }
         } else {
             boolean onlyBlackAndWhite = true;
             if (palette.length() >= 1) {
@@ -276,6 +281,12 @@ class PcxWriter {
                     plane1[x >>> 3] |= ((index & 2) >> 1) << (7 - (x & 7));
                     plane2[x >>> 3] |= ((index & 4) >> 2) << (7 - (x & 7));
                     plane3[x >>> 3] |= ((index & 8) >> 3) << (7 - (x & 7));
+                }
+            } else if (bitDepth == 2 && planes == 1) {
+                for (int x = 0; x < src.getWidth(); x++) {
+                    final int argb = src.getRGB(x, y);
+                    final int index = palette.getPaletteIndex(0xffffff & argb);
+                    plane0[x >>> 2] |= (index << 2 * (3 - (x & 3)));
                 }
             } else if (bitDepth == 4 && planes == 1) {
                 for (int x = 0; x < src.getWidth(); x++) {
