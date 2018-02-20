@@ -150,13 +150,13 @@ public class XbmImageParser extends ImageParser {
             for (final Entry<String, String> entry : defines.entrySet()) {
                 final String name = entry.getKey();
                 if (name.endsWith("_width")) {
-                    width = Integer.parseInt(entry.getValue());
+                    width = parseCIntegerLiteral(entry.getValue());
                 } else if (name.endsWith("_height")) {
-                    height = Integer.parseInt(entry.getValue());
+                    height = parseCIntegerLiteral(entry.getValue());
                 } else if (name.endsWith("_x_hot")) {
-                    xHot = Integer.parseInt(entry.getValue());
+                    xHot = parseCIntegerLiteral(entry.getValue());
                 } else if (name.endsWith("_y_hot")) {
-                    yHot = Integer.parseInt(entry.getValue());
+                    yHot = parseCIntegerLiteral(entry.getValue());
                 }
              }
             if (width == -1) {
@@ -173,6 +173,22 @@ public class XbmImageParser extends ImageParser {
             return xbmParseResult;
         }
     }
+    
+    private static int parseCIntegerLiteral(String value) {
+        if (value.startsWith("0")) {
+            if (value.length() >= 2) {
+                if (value.charAt(1) == 'x' || value.charAt(1) == 'X') {
+                    return Integer.parseInt(value.substring(2), 16);
+                } else {
+                    return Integer.parseInt(value.substring(1), 8);
+                }
+            } else {
+                return 0;
+            }
+        } else {
+            return Integer.parseInt(value);
+        }
+    }
 
     private BufferedImage readXbmImage(final XbmHeader xbmHeader, final BasicCParser cParser)
             throws ImageReadException, IOException {
@@ -186,7 +202,7 @@ public class XbmImageParser extends ImageParser {
         if (token == null) {
             throw new ImageReadException(
                     "Parsing XBM file failed, no 'unsigned' "
-                            + "or 'char' token");
+                            + "or 'char' or 'short' token");
         }
         if ("unsigned".equals(token)) {
             token = cParser.nextToken();
@@ -302,7 +318,7 @@ public class XbmImageParser extends ImageParser {
         return readXbmImage(result.xbmHeader, result.cParser);
     }
 
-    private String randomName() {
+    private static String randomName() {
         final UUID uuid = UUID.randomUUID();
         final StringBuilder stringBuilder = new StringBuilder("a");
         long bits = uuid.getMostSignificantBits();
@@ -317,7 +333,7 @@ public class XbmImageParser extends ImageParser {
         return stringBuilder.toString();
     }
 
-    private String toPrettyHex(final int value) {
+    private static String toPrettyHex(final int value) {
         final String s = Integer.toHexString(0xff & value);
         if (s.length() == 2) {
             return "0x" + s;
