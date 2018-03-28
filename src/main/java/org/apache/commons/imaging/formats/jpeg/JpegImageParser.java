@@ -312,7 +312,12 @@ public class JpegImageParser extends ImageParser {
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final TiffImageMetadata exif = getExifMetadata(byteSource, params);
+        TiffImageMetadata exif = null;
+        try {
+            exif = getExifMetadata(byteSource, params);
+        } catch (Exception e) {
+            // exif parse failed.
+        }
 
         final JpegPhotoshopMetadata photoshop = getPhotoshopMetadata(byteSource,
                 params);
