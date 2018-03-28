@@ -52,7 +52,8 @@ public class JfifSegment extends Segment {
 
         final byte[] signature = readBytes(is, JpegConstants.JFIF0_SIGNATURE.size());
         if (!JpegConstants.JFIF0_SIGNATURE.equals(signature)
-                && !JpegConstants.JFIF0_SIGNATURE_ALTERNATIVE.equals(signature)) {
+                && !JpegConstants.JFIF0_SIGNATURE_ALTERNATIVE.equals(signature)
+                && !JpegConstants.JFXX0_EXTENSION_SIGNATURE.equals(signature)) {
             throw new ImageReadException(
                     "Not a Valid JPEG File: missing JFIF string");
         }
