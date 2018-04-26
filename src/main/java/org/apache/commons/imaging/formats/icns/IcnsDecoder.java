@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.icns.IcnsImageParser.IcnsElement;
 
@@ -191,66 +192,79 @@ final class IcnsDecoder {
     }
 
     public static List<BufferedImage> decodeAllImages(final IcnsImageParser.IcnsElement[] icnsElements)
-            throws ImageReadException {
+      throws ImageReadException {
         final List<BufferedImage> result = new ArrayList<>();
-        for (final IcnsElement imageElement : icnsElements) {
-            final IcnsType imageType = IcnsType.findImageType(imageElement.type);
-            if (imageType == null) {
-                continue;
-            }
+        for (int i = 0; i < icnsElements.length; i++) {
+            BufferedImage image = decodeImage(icnsElements, i);
+            if (image != null) result.add(image);
+        }
+        return result;
+    }
 
-            IcnsType maskType;
-            IcnsImageParser.IcnsElement maskElement = null;
-            if (imageType.hasMask()) {
-                maskType = imageType;
-                maskElement = imageElement;
-            } else {
-                maskType = IcnsType.find8BPPMaskType(imageType);
-                if (maskType != null) {
-                    for (final IcnsElement icnsElement : icnsElements) {
-                        if (icnsElement.type == maskType.getType()) {
-                            maskElement = icnsElement;
-                            break;
-                        }
+    public static BufferedImage decodeImage(final IcnsImageParser.IcnsElement[] icnsElements, int index)
+            throws ImageReadException {
+        IcnsImageParser.IcnsElement imageElement = icnsElements[index];
+        final IcnsType imageType = IcnsType.findImageType(imageElement.type);
+        if (imageType == null) {
+            return null;
+        }
+
+        // PNG or JPEG 2000
+        if (imageType == IcnsType.ICNS_16x16_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_32x32_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_64x64_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_128x128_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_256x256_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_512x512_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_1024x1024_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_32x32_2x_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_64x64_2x_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_256x256_2x_32BIT_ARGB_IMAGE
+            || imageType == IcnsType.ICNS_512x512_2x_32BIT_ARGB_IMAGE) {
+            BufferedImage image = null;
+            try {
+                image = Imaging.getBufferedImage(imageElement.data);
+            }
+            catch (Exception ex) {
+                if (imageType.getWidth() <= 32) {
+                    try {
+                        image = decodeImageImpl(imageType, imageElement, icnsElements);
                     }
+                    catch (Exception ignored) { }
                 }
-                if (maskElement == null) {
-                    maskType = IcnsType.find1BPPMaskType(imageType);
-                    if (maskType != null) {
-                        for (final IcnsElement icnsElement : icnsElements) {
-                            if (icnsElement.type == maskType.getType()) {
-                                maskElement = icnsElement;
-                                break;
-                            }
-                        }
-                    }
+                if (image == null) {
+                    image = new BufferedImage(imageType.getWidth(), imageType.getHeight(), BufferedImage.TYPE_INT_ARGB);
                 }
             }
+            return image;
+        }
 
-            // FIXME: don't skip these when JPEG 2000 support is added:
-            if (imageType == IcnsType.ICNS_256x256_32BIT_ARGB_IMAGE
-                    || imageType == IcnsType.ICNS_512x512_32BIT_ARGB_IMAGE) {
-                continue;
+        return decodeImageImpl(imageType, imageElement, icnsElements);
+    }
+
+    private static BufferedImage decodeImageImpl(IcnsType imageType,
+                                                 IcnsElement imageElement,
+                                                 IcnsElement[] icnsElements) throws ImageReadException {
+        final int expectedSize = (imageType.getWidth() * imageType.getHeight()
+                                  * imageType.getBitsPerPixel() + 7) / 8;
+        byte[] imageData;
+        if (imageElement.data.length < expectedSize) {
+            if (imageType.getBitsPerPixel() == 32) {
+                imageData = Rle24Compression.decompress(
+                  imageType.getWidth(), imageType.getHeight(),
+                  imageElement.data);
             }
-
-            final int expectedSize = (imageType.getWidth() * imageType.getHeight()
-                    * imageType.getBitsPerPixel() + 7) / 8;
-            byte[] imageData;
-            if (imageElement.data.length < expectedSize) {
-                if (imageType.getBitsPerPixel() == 32) {
-                    imageData = Rle24Compression.decompress(
-                            imageType.getWidth(), imageType.getHeight(),
-                            imageElement.data);
-                } else {
-                    throw new ImageReadException("Short image data but not a 32 bit compressed type");
-                }
-            } else {
-                imageData = imageElement.data;
+            else {
+                throw new ImageReadException("Short image data but not a 32 bit compressed type");
             }
+        }
+        else {
+            imageData = imageElement.data;
+        }
 
-            final ImageBuilder imageBuilder = new ImageBuilder(imageType.getWidth(),
-                    imageType.getHeight(), true);
-            switch (imageType.getBitsPerPixel()) {
+        final ImageBuilder imageBuilder = new ImageBuilder(imageType.getWidth(),
+                                                           imageType.getHeight(), true);
+        switch (imageType.getBitsPerPixel()) {
             case 1:
                 decode1BPPImage(imageType, imageData, imageBuilder);
                 break;
@@ -265,20 +279,49 @@ final class IcnsDecoder {
                 break;
             default:
                 throw new ImageReadException("Unsupported bit depth " + imageType.getBitsPerPixel());
-            }
+        }
 
-            if (maskElement != null) {
-                if (maskType.getBitsPerPixel() == 1) {
-                    apply1BPPMask(maskElement.data, imageBuilder);
-                } else if (maskType.getBitsPerPixel() == 8) {
-                    apply8BPPMask(maskElement.data, imageBuilder);
-                } else {
-                    throw new ImageReadException("Unsupport mask bit depth " + maskType.getBitsPerPixel());
+        IcnsType maskType;
+        IcnsElement maskElement = null;
+        if (imageType.hasMask()) {
+            maskType = imageType;
+            maskElement = imageElement;
+        }
+        else {
+            maskType = IcnsType.find8BPPMaskType(imageType);
+            if (maskType != null) {
+                for (final IcnsElement icnsElement : icnsElements) {
+                    if (icnsElement.type == maskType.getType()) {
+                        maskElement = icnsElement;
+                        break;
+                    }
                 }
             }
-
-            result.add(imageBuilder.getBufferedImage());
+            if (maskElement == null) {
+                maskType = IcnsType.find1BPPMaskType(imageType);
+                if (maskType != null) {
+                    for (final IcnsElement icnsElement : icnsElements) {
+                        if (icnsElement.type == maskType.getType()) {
+                            maskElement = icnsElement;
+                            break;
+                        }
+                    }
+                }
+            }
         }
-        return result;
+
+        if (maskElement != null) {
+            if (maskType.getBitsPerPixel() == 1) {
+                apply1BPPMask(maskElement.data, imageBuilder);
+            }
+            else if (maskType.getBitsPerPixel() == 8) {
+                apply8BPPMask(maskElement.data, imageBuilder);
+            }
+            else {
+                throw new ImageReadException("Unsupport mask bit depth " + maskType.getBitsPerPixel());
+            }
+        }
+
+        return imageBuilder.getBufferedImage();
     }
 }
