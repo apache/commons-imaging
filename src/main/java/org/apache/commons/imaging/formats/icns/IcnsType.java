@@ -31,6 +31,7 @@ enum IcnsType {
     ICNS_16x16_32BIT_IMAGE("is32", 16, 16, 32, false),
 
     ICNS_32x32_8BIT_MASK("l8mk", 32, 32, 8, true),
+    ICNS_32x32_1BIT_IMAGE("ICON", 32, 32, 1, false),
     ICNS_32x32_1BIT_IMAGE_AND_MASK("ICN#", 32, 32, 1, true),
     ICNS_32x32_4BIT_IMAGE("icl4", 32, 32, 4, false),
     ICNS_32x32_8BIT_IMAGE("icl8", 32, 32, 8, false),
@@ -45,9 +46,17 @@ enum IcnsType {
     ICNS_128x128_8BIT_MASK("t8mk", 128, 128, 8, true),
     ICNS_128x128_32BIT_IMAGE("it32", 128, 128, 32, false),
 
+    ICNS_16x16_32BIT_ARGB_IMAGE("icp4", 16, 16, 32, false),
+    ICNS_32x32_32BIT_ARGB_IMAGE("icp5", 32, 32, 32, false),
+    ICNS_64x64_32BIT_ARGB_IMAGE("icp6", 64, 64, 32, false),
+    ICNS_128x128_32BIT_ARGB_IMAGE("ic07", 128, 128, 32, false),
     ICNS_256x256_32BIT_ARGB_IMAGE("ic08", 256, 256, 32, false),
-
-    ICNS_512x512_32BIT_ARGB_IMAGE("ic09", 512, 512, 32, false);
+    ICNS_512x512_32BIT_ARGB_IMAGE("ic09", 512, 512, 32, false),
+    ICNS_1024x1024_32BIT_ARGB_IMAGE("ic10", 1024, 1024, 32, false),
+    ICNS_32x32_2x_32BIT_ARGB_IMAGE("ic11", 32, 32, 32, false),
+    ICNS_64x64_2x_32BIT_ARGB_IMAGE("ic12", 64, 64, 32, false),
+    ICNS_256x256_2x_32BIT_ARGB_IMAGE("ic13", 256, 256, 32, false),
+    ICNS_512x512_2x_32BIT_ARGB_IMAGE("ic14", 512, 512, 32, false);
 
     private static final IcnsType[] ALL_IMAGE_TYPES = {
             ICNS_16x12_1BIT_IMAGE_AND_MASK,
@@ -57,6 +66,7 @@ enum IcnsType {
             ICNS_16x16_4BIT_IMAGE,
             ICNS_16x16_8BIT_IMAGE,
             ICNS_16x16_32BIT_IMAGE,
+            ICNS_32x32_1BIT_IMAGE,
             ICNS_32x32_1BIT_IMAGE_AND_MASK,
             ICNS_32x32_4BIT_IMAGE,
             ICNS_32x32_8BIT_IMAGE,
@@ -66,8 +76,17 @@ enum IcnsType {
             ICNS_48x48_8BIT_IMAGE,
             ICNS_48x48_32BIT_IMAGE,
             ICNS_128x128_32BIT_IMAGE,
+            ICNS_16x16_32BIT_ARGB_IMAGE,
+            ICNS_32x32_32BIT_ARGB_IMAGE,
+            ICNS_64x64_32BIT_ARGB_IMAGE,
+            ICNS_128x128_32BIT_ARGB_IMAGE,
             ICNS_256x256_32BIT_ARGB_IMAGE,
-            ICNS_512x512_32BIT_ARGB_IMAGE};
+            ICNS_512x512_32BIT_ARGB_IMAGE,
+            ICNS_1024x1024_32BIT_ARGB_IMAGE,
+            ICNS_32x32_2x_32BIT_ARGB_IMAGE,
+            ICNS_64x64_2x_32BIT_ARGB_IMAGE,
+            ICNS_256x256_2x_32BIT_ARGB_IMAGE,
+            ICNS_512x512_2x_32BIT_ARGB_IMAGE};
 
     private static final IcnsType[] ALL_MASK_TYPES = {
             ICNS_16x12_1BIT_IMAGE_AND_MASK,
