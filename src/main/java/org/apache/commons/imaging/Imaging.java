@@ -1091,7 +1091,7 @@ public final class Imaging {
      * content of the specified byte array to a string.
      * @param bytes A valid array of bytes.
      * @return A valid string.
-     * @throws ImageReadException In the event that the the specified 
+     * @throws ImageReadException In the event that the specified 
      * content does not conform to the format of the specific parser
      * implementation.
      * @throws IOException In the event of unsuccessful read or
@@ -1107,7 +1107,7 @@ public final class Imaging {
      * content of the specified file to a string.
      * @param file A valid file reference.
      * @return A valid string.
-     * @throws ImageReadException In the event that the the specified 
+     * @throws ImageReadException In the event that the specified 
      * content does not conform to the format of the specific parser
      * implementation.
      * @throws IOException In the event of unsuccessful read or
@@ -1167,7 +1167,7 @@ public final class Imaging {
      * formats may include multiple images within a single data source).
      * @param is A valid InputStream
      * @return A valid (potentially empty) list of BufferedImage objects.
-     * @throws ImageReadException In the event that the the specified 
+     * @throws ImageReadException In the event that the specified 
      * content does not conform to the format of the specific parser
      * implementation.
      * @throws IOException In the event of unsuccessful read or
@@ -1183,7 +1183,7 @@ public final class Imaging {
      * formats may include multiple images within a single data source).
      * @param bytes a valid array of bytes
      * @return A valid (potentially empty) list of BufferedImage objects.
-     * @throws ImageReadException In the event that the the specified 
+     * @throws ImageReadException In the event that the specified 
      * content does not conform to the format of the specific parser
      * implementation.
      * @throws IOException In the event of unsuccessful read or
@@ -1199,7 +1199,7 @@ public final class Imaging {
      * formats may include multiple images within a single data source).
      * @param file A reference to a valid data file.
      * @return A valid (potentially empty) list of BufferedImage objects.
-     * @throws ImageReadException In the event that the the specified 
+     * @throws ImageReadException In the event that the specified 
      * content does not conform to the format of the specific parser
      * implementation.
      * @throws IOException In the event of unsuccessful read or

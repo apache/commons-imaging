@@ -438,7 +438,7 @@ public class TiffImageParser extends ImageParser {
      * interpretation of the input data (null objects are permitted and 
      * must be supported by implementations).
      * @return A valid instance of BufferedImage.
-     * @throws ImageReadException In the event that the the specified 
+     * @throws ImageReadException In the event that the specified 
      * content does not conform to the format of the specific parser
      * implementation.
      * @throws IOException In the event of unsuccessful read or
