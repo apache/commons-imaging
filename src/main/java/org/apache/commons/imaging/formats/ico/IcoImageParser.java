@@ -716,15 +716,10 @@ public class IcoImageParser extends ImageParser {
             for (int i = 0; i < (1 << bitCount); i++) {
                 if (i < palette.length()) {
                     final int argb = palette.getEntry(i);
-                    bos.write(0xff & argb);
-                    bos.write(0xff & (argb >> 8));
-                    bos.write(0xff & (argb >> 16));
+                    bos.write3Bytes(argb);
                     bos.write(0);
                 } else {
-                    bos.write(0);
-                    bos.write(0);
-                    bos.write(0);
-                    bos.write(0);
+                    bos.write4Bytes(0);
                 }
             }
         }
@@ -751,14 +746,9 @@ public class IcoImageParser extends ImageParser {
                     final int index = palette.getPaletteIndex(rgb);
                     bos.write(0xff & index);
                 } else if (bitCount == 24) {
-                    bos.write(0xff & argb);
-                    bos.write(0xff & (argb >> 8));
-                    bos.write(0xff & (argb >> 16));
+                    bos.write3Bytes(argb);
                 } else if (bitCount == 32) {
-                    bos.write(0xff & argb);
-                    bos.write(0xff & (argb >> 8));
-                    bos.write(0xff & (argb >> 16));
-                    bos.write(0xff & (argb >> 24));
+                    bos.write4Bytes(argb);
                 }
             }
 
