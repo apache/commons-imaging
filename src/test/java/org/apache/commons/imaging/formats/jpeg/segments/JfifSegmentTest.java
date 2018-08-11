@@ -29,10 +29,9 @@ public class JfifSegmentTest{
   @Test
   public void testCreatesJfifSegment() throws IOException {
       byte[] byteArray = new byte[25];
-      JfifSegment jfifSegment = null;
 
       try {
-        jfifSegment = new JfifSegment((-2275), byteArray);
+        new JfifSegment((-2275), byteArray);
         fail("Expecting exception: Exception");
       } catch(ImageReadException e) {
          assertEquals("Not a Valid JPEG File: missing JFIF string",e.getMessage());

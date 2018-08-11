@@ -26,10 +26,8 @@ public class PngChunkTextTest{
     @Test
     public void testCreatesPngChunkText() {
         byte[] byteArray = new byte[0];
-        PngChunkText pngChunkText = null;
-
         try {
-            pngChunkText = new PngChunkText(1214, 1214, 0, byteArray);
+            new PngChunkText(1214, 1214, 0, byteArray);
             fail("Expecting exception: Exception");
         } catch(Throwable e) {
             assertEquals("PNG tEXt chunk keyword is not terminated.",e.getMessage());

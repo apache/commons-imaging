@@ -26,7 +26,7 @@ public class TagInfoUnknownTest{
   @Test
   public void testCreatesTagInfoUnknown() {
       TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD;
-      TagInfoUnknown tagInfoUnknown = new TagInfoUnknown("", 2670, tiffDirectoryType);
+      new TagInfoUnknown("", 2670, tiffDirectoryType);
 
       assertEquals((-1), TagInfo.LENGTH_UNKNOWN);
   }

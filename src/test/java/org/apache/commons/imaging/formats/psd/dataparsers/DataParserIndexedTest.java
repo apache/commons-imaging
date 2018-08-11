@@ -26,10 +26,8 @@ public class DataParserIndexedTest{
   @Test
   public void testFailsToCreateDataParserIndexedThrowsArrayIndexOutOfBoundsException() {
       byte[] byteArray = new byte[24];
-      DataParserIndexed dataParserIndexed = null;
-
       try {
-        dataParserIndexed = new DataParserIndexed(byteArray);
+        new DataParserIndexed(byteArray);
         fail("Expecting exception: ArrayIndexOutOfBoundsException");
       } catch(ArrayIndexOutOfBoundsException e) {
          assertEquals("256",e.getMessage());
