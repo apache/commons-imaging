@@ -20,6 +20,7 @@ import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.icc.IccProfileInfo;
 import org.apache.commons.imaging.icc.IccProfileParser;
@@ -29,6 +30,9 @@ import org.apache.commons.imaging.icc.IccProfileParser;
  * image files.
  */
 public class ImageDump {
+
+    private static final Logger LOGGER = Logger.getLogger(ImageDump.class.getName());
+
     private String colorSpaceTypeToName(final ColorSpace cs) {
         // System.out.println(prefix + ": " + "type: "
         // + cs.getType() );
@@ -54,11 +58,11 @@ public class ImageDump {
     }
 
     public void dumpColorSpace(final String prefix, final ColorSpace cs) {
-        System.out.println(prefix + ": " + "type: " + cs.getType() + " ("
+        LOGGER.fine(prefix + ": " + "type: " + cs.getType() + " ("
                 + colorSpaceTypeToName(cs) + ")");
 
         if (!(cs instanceof ICC_ColorSpace)) {
-            System.out.println(prefix + ": " + "Unknown ColorSpace: "
+            LOGGER.fine(prefix + ": " + "Unknown ColorSpace: "
                     + cs.getClass().getName());
             return;
         }
@@ -79,7 +83,7 @@ public class ImageDump {
     }
 
     public void dump(final String prefix, final BufferedImage src) {
-        System.out.println(prefix + ": " + "dump");
+        LOGGER.fine(prefix + ": " + "dump");
         dumpColorSpace(prefix, src.getColorModel().getColorSpace());
         dumpBIProps(prefix, src);
     }
@@ -87,11 +91,11 @@ public class ImageDump {
     public void dumpBIProps(final String prefix, final BufferedImage src) {
         final String[] keys = src.getPropertyNames();
         if (keys == null) {
-            System.out.println(prefix + ": no props");
+            LOGGER.fine(prefix + ": no props");
             return;
         }
         for (final String key : keys) {
-            System.out.println(prefix + ": " + key + ": "
+            LOGGER.fine(prefix + ": " + key + ": "
                     + src.getProperty(key));
         }
     }

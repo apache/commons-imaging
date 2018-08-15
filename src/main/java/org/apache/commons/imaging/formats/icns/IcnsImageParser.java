@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.formats.icns;
 
 import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_VERBOSE;
 import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
 
@@ -85,10 +84,6 @@ public class IcnsImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = params == null ? new HashMap<String, Object>() : new HashMap<>(params);
 
-        if (params.containsKey(PARAM_KEY_VERBOSE)) {
-            params.remove(PARAM_KEY_VERBOSE);
-        }
-
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageReadException("Unknown parameter: " + firstKey);
@@ -113,10 +108,6 @@ public class IcnsImageParser extends ImageParser {
             throws ImageReadException, IOException {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
-
-        if (params.containsKey(PARAM_KEY_VERBOSE)) {
-            params.remove(PARAM_KEY_VERBOSE);
-        }
 
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();

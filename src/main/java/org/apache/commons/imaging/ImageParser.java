@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BufferedImageFactory;
@@ -96,6 +98,8 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  * from ImageParser are encouraged to include such checks in their code.
  */
 public abstract class ImageParser extends BinaryFileParser {
+
+    private static final Logger LOGGER = Logger.getLogger(ImageParser.class.getName());
 
     /**
      * Gets an array of new instances of all image parsers.
@@ -266,9 +270,8 @@ public abstract class ImageParser extends BinaryFileParser {
      */
     public final ImageMetadata getMetadata(final File file, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        if (getDebug()) {
-            System.out.println(getName() + ".getMetadata" + ": "
-                    + file.getName());
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest(getName() + ".getMetadata" + ": " + file.getName());
         }
 
         if (!canAcceptExtension(file)) {
@@ -756,8 +759,8 @@ public abstract class ImageParser extends BinaryFileParser {
             return null;
         }
 
-        if (getDebug()) {
-            System.out.println(getName() + ": " + file.getName());
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest(getName() + ": " + file.getName());
         }
 
         return getICCProfileBytes(new ByteSourceFile(file), params);
@@ -812,8 +815,8 @@ public abstract class ImageParser extends BinaryFileParser {
             return null;
         }
 
-        if (getDebug()) {
-            System.out.println(getName() + ": " + file.getName());
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest(getName() + ": " + file.getName());
         }
 
         return dumpImageFile(new ByteSourceFile(file));

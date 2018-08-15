@@ -16,14 +16,16 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
-import java.io.OutputStreamWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.ByteOrder;
-import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
@@ -36,6 +38,9 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
  * A TIFF field in a TIFF directory. Immutable.
  */
 public class TiffField {
+
+    private static final Logger LOGGER = Logger.getLogger(TiffField.class.getName());
+
     private final TagInfo tagInfo;
     private final int tag;
     private final int directoryType;
@@ -145,11 +150,7 @@ public class TiffField {
         }
 
         @Override
-        public String getElementDescription(final boolean verbose) {
-            if (verbose) {
-                return null;
-            }
-
+        public String getElementDescription() {
             return "OversizeValueElement, tag: " + getTagInfo().name
                     + ", fieldType: " + getFieldType().getName();
         }
@@ -355,9 +356,14 @@ public class TiffField {
     }
 
     public void dump() {
-        final PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
-        dump(pw);
-        pw.flush();
+        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+            dump(pw);
+            pw.flush();
+            sw.flush();
+            LOGGER.fine(sw.toString());
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     public void dump(final PrintWriter pw) {

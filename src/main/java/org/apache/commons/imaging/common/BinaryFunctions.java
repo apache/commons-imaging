@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.nio.ByteOrder;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
 
@@ -30,6 +31,9 @@ import org.apache.commons.imaging.ImageReadException;
  * Convenience methods for various binary and I/O operations.
  */
 public final class BinaryFunctions {
+
+    private static final Logger LOGGER = Logger.getLogger(BinaryFunctions.class.getName());
+
     private BinaryFunctions() {
     }
     
@@ -245,7 +249,7 @@ public final class BinaryFunctions {
     }
 
     public static void printCharQuad(final String msg, final int i) {
-        System.out.println(msg + ": '" + (char) (0xff & (i >> 24))
+        LOGGER.finest(msg + ": '" + (char) (0xff & (i >> 24))
                 + (char) (0xff & (i >> 16)) + (char) (0xff & (i >> 8))
                 + (char) (0xff & (i >> 0)) + "'");
 
@@ -259,7 +263,7 @@ public final class BinaryFunctions {
     }
 
     public static void printByteBits(final String msg, final byte i) {
-        System.out.println(msg + ": '" + Integer.toBinaryString(0xff & i));
+        LOGGER.finest(msg + ": '" + Integer.toBinaryString(0xff & i));
     }
 
     public static int charsToQuad(final char c1, final char c2, final char c3, final char c4) {

@@ -29,21 +29,12 @@ import java.util.zip.DeflaterOutputStream;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
+import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 import org.apache.commons.imaging.palette.SimplePalette;
-import org.apache.commons.imaging.util.Debug;
 
 class PngWriter {
-    private final boolean verbose;
-
-    public PngWriter(final boolean verbose) {
-        this.verbose = verbose;
-    }
-
-    public PngWriter(final Map<String, Object> params) {
-        this.verbose =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_VERBOSE));
-    }
 
     /*
      1. IHDR: image header, which is the first chunk in a PNG datastream.
@@ -386,10 +377,6 @@ class PngWriter {
         if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {
             params.remove(ImagingConstants.PARAM_KEY_FORMAT);
         }
-        // clear verbose key.
-        if (params.containsKey(ImagingConstants.PARAM_KEY_VERBOSE)) {
-            params.remove(ImagingConstants.PARAM_KEY_VERBOSE);
-        }
 
         final Map<String, Object> rawParams = new HashMap<>(params);
         if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
@@ -419,15 +406,11 @@ class PngWriter {
         final int height = src.getHeight();
 
         final boolean hasAlpha = new PaletteFactory().hasTransparency(src);
-        if (verbose) {
-            Debug.debug("hasAlpha: " + hasAlpha);
-        }
+        Debug.debug("hasAlpha: " + hasAlpha);
         // int transparency = new PaletteFactory().getTransparency(src);
 
         boolean isGrayscale = new PaletteFactory().isGrayscale(src);
-        if (verbose) {
-            Debug.debug("isGrayscale: " + isGrayscale);
-        }
+        Debug.debug("isGrayscale: " + isGrayscale);
 
         PngColorType pngColorType;
         {
@@ -445,15 +428,11 @@ class PngWriter {
             } else {
                 pngColorType = PngColorType.getColorType(hasAlpha, isGrayscale);
             }
-            if (verbose) {
-                Debug.debug("colorType: " + pngColorType);
-            }
+            Debug.debug("colorType: " + pngColorType);
         }
 
         final byte bitDepth = getBitDepth(pngColorType, params);
-        if (verbose) {
-            Debug.debug("bitDepth: " + bitDepth);
-        }
+        Debug.debug("bitDepth: " + bitDepth);
 
         int sampleDepth;
         if (pngColorType == PngColorType.INDEXED_COLOR) {
@@ -461,9 +440,7 @@ class PngWriter {
         } else {
             sampleDepth = bitDepth;
         }
-        if (verbose) {
-            Debug.debug("sampleDepth: " + sampleDepth);
-        }
+        Debug.debug("sampleDepth: " + sampleDepth);
 
         {
             PngConstants.PNG_SIGNATURE.writeTo(os);

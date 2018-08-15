@@ -19,10 +19,13 @@ package org.apache.commons.imaging.icc;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
 
 public class IccProfileInfo {
+
+    private static final Logger LOGGER = Logger.getLogger(IccProfileInfo.class.getName());
 
     private final byte[] data;
     public final int profileSize;
@@ -92,7 +95,7 @@ public class IccProfileInfo {
     }
 
     public void dump(final String prefix) {
-        System.out.print(toString());
+        LOGGER.fine(toString());
     }
 
     @Override

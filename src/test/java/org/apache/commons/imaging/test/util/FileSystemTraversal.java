@@ -18,7 +18,7 @@ package org.apache.commons.imaging.test.util;
 
 import java.io.File;
 
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 
 public class FileSystemTraversal {
 

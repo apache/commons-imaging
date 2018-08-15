@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.psd;
 
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 
 class ImageResourceBlock {
     final int id;

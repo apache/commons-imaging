@@ -54,8 +54,8 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 
 public class PcxImageParser extends ImageParser {
     // ZSoft's official spec is at http://www.qzx.com/pc-gpe/pcx.txt
-    // (among other places) but it's pretty thin. The fileformat.info document
-    // at http://www.fileformat.info/format/pcx/egff.htm is a little better
+    // (among other places) but it's pretty thin. The fileformat.fine document
+    // at http://www.fileformat.fine/format/pcx/egff.htm is a little better
     // but their gray sample image seems corrupt. PCX files themselves are
     // the ultimate test but pretty hard to find nowdays, so the best
     // test is against other image viewers (Irfanview is pretty good).

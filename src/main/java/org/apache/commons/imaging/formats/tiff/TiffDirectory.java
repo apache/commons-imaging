@@ -79,11 +79,7 @@ public class TiffDirectory extends TiffElement {
     }
 
     @Override
-    public String getElementDescription(final boolean verbose) {
-        if (!verbose) {
-            return "TIFF Directory (" + description() + ")";
-        }
-
+    public String getElementDescription() {
         long entryOffset = offset + TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH;
 
         final StringBuilder result = new StringBuilder();
@@ -708,10 +704,7 @@ public class TiffDirectory extends TiffElement {
         }
 
         @Override
-        public String getElementDescription(final boolean verbose) {
-            if (verbose) {
-                return null;
-            }
+        public String getElementDescription() {
             return "ImageDataElement";
         }
     }

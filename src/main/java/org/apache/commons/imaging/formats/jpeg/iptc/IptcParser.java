@@ -35,6 +35,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -43,9 +45,12 @@ import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 
 public class IptcParser extends BinaryFileParser {
+
+    private static final Logger LOGGER = Logger.getLogger(IptcParser.class.getName());
+
     private static final ByteOrder APP13_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
 
     public IptcParser() {
@@ -103,17 +108,15 @@ public class IptcParser extends BinaryFileParser {
     public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final boolean strict =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_STRICT));
-        final boolean verbose =  params != null && Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_VERBOSE));
 
-        return parsePhotoshopSegment(bytes, verbose, strict);
+        return parsePhotoshopSegment(bytes, strict);
     }
 
-    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes,
-            final boolean verbose, final boolean strict) throws ImageReadException,
+    public PhotoshopApp13Data parsePhotoshopSegment(final byte[] bytes, final boolean strict) throws ImageReadException,
             IOException {
         final List<IptcRecord> records = new ArrayList<>();
 
-        final List<IptcBlock> blocks = parseAllBlocks(bytes, verbose, strict);
+        final List<IptcBlock> blocks = parseAllBlocks(bytes, strict);
 
         for (final IptcBlock block : blocks) {
             // Ignore everything but IPTC data.
@@ -121,13 +124,13 @@ public class IptcParser extends BinaryFileParser {
                 continue;
             }
 
-            records.addAll(parseIPTCBlock(block.blockData, verbose));
+            records.addAll(parseIPTCBlock(block.blockData));
         }
 
         return new PhotoshopApp13Data(records, blocks);
     }
 
-    protected List<IptcRecord> parseIPTCBlock(final byte[] bytes, final boolean verbose)
+    protected List<IptcRecord> parseIPTCBlock(final byte[] bytes)
             throws IOException {
         final List<IptcRecord> elements = new ArrayList<>();
 
@@ -135,21 +138,17 @@ public class IptcParser extends BinaryFileParser {
         // Integer recordVersion = null;
         while (index + 1 < bytes.length) {
             final int tagMarker = 0xff & bytes[index++];
-            if (verbose) {
-                Debug.debug("tagMarker: " + tagMarker + " (0x" + Integer.toHexString(tagMarker) + ")");
-            }
+            Debug.debug("tagMarker: " + tagMarker + " (0x" + Integer.toHexString(tagMarker) + ")");
 
             if (tagMarker != IptcConstants.IPTC_RECORD_TAG_MARKER) {
-                if (verbose) {
-                    System.out.println("Unexpected record tag marker in IPTC data.");
+                if (LOGGER.isLoggable(Level.FINE)) {
+                    LOGGER.fine("Unexpected record tag marker in IPTC data.");
                 }
                 return elements;
             }
 
             final int recordNumber = 0xff & bytes[index++];
-            if (verbose) {
-                Debug.debug("recordNumber: " + recordNumber + " (0x" + Integer.toHexString(recordNumber) + ")");
-            }
+            Debug.debug("recordNumber: " + recordNumber + " (0x" + Integer.toHexString(recordNumber) + ")");
 
             // int recordPrefix = convertByteArrayToShort("recordPrefix", index,
             // bytes);
@@ -170,9 +169,7 @@ public class IptcParser extends BinaryFileParser {
             // "Unexpected record prefix in IPTC data.");
 
             final int recordType = 0xff & bytes[index];
-            if (verbose) {
-                Debug.debug("recordType: " + recordType + " (0x" + Integer.toHexString(recordType) + ")");
-            }
+            Debug.debug("recordType: " + recordType + " (0x" + Integer.toHexString(recordType) + ")");
             index++;
 
             final int recordSize = ByteConversions.toUInt16(bytes, index, getByteOrder());
@@ -180,9 +177,8 @@ public class IptcParser extends BinaryFileParser {
 
             final boolean extendedDataset = recordSize > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE;
             final int dataFieldCountLength = recordSize & 0x7fff;
-            if (extendedDataset && verbose) {
-                Debug.debug("extendedDataset. dataFieldCountLength: "
-                        + dataFieldCountLength);
+            if (extendedDataset) {
+                Debug.debug("extendedDataset. dataFieldCountLength: " + dataFieldCountLength);
             }
             if (extendedDataset) {
                 // ignore extended dataset and everything after.
@@ -200,9 +196,8 @@ public class IptcParser extends BinaryFileParser {
             }
 
             if (recordType == 0) {
-                if (verbose) {
-                    System.out.println("ignore record version record! "
-                            + elements.size());
+                if (LOGGER.isLoggable(Level.FINE)) {
+                    LOGGER.fine("ignore record version record! " + elements.size());
                 }
                 // ignore "record version" record;
                 continue;
@@ -253,7 +248,7 @@ public class IptcParser extends BinaryFileParser {
         return elements;
     }
 
-    protected List<IptcBlock> parseAllBlocks(final byte[] bytes, final boolean verbose,
+    protected List<IptcBlock> parseAllBlocks(final byte[] bytes,
             final boolean strict) throws ImageReadException, IOException {
         final List<IptcBlock> blocks = new ArrayList<>();
 
@@ -285,12 +280,10 @@ public class IptcParser extends BinaryFileParser {
                 }
     
                 final int blockType = read2Bytes("", bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
-                if (verbose) {
-                    Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
-                }
+                Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
     
                 final int blockNameLength = readByte("Name length", bis, "Image Resource Block missing name length");
-                if (verbose && blockNameLength > 0) {
+                if (blockNameLength > 0) {
                     Debug.debug("blockNameLength: " + blockNameLength + " (0x" 
                             + Integer.toHexString(blockNameLength) + ")");
                 }
@@ -315,9 +308,7 @@ public class IptcParser extends BinaryFileParser {
                 }
     
                 final int blockSize = read4Bytes("", bis, "Image Resource Block missing size", APP13_BYTE_ORDER);
-                if (verbose) {
-                    Debug.debug("blockSize: " + blockSize + " (0x" + Integer.toHexString(blockSize) + ")");
-                }
+                Debug.debug("blockSize: " + blockSize + " (0x" + Integer.toHexString(blockSize) + ")");
     
                 /*
                  * doesn't catch cases where blocksize is invalid but is still less

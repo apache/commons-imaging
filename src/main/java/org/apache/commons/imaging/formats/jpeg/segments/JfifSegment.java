@@ -73,10 +73,6 @@ public class JfifSegment extends Segment {
                     "Not a Valid JPEG File: missing thumbnail");
 
         }
-
-        if (getDebug()) {
-            System.out.println("");
-        }
     }
 
 }

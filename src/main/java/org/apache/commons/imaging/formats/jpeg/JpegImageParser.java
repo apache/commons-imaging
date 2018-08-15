@@ -29,6 +29,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
@@ -55,12 +57,15 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 
 import static org.apache.commons.imaging.ImagingConstants.*;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class JpegImageParser extends ImageParser {
+
+    private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
+
     private static final String DEFAULT_EXTENSION = ".jpg";
     private static final String[] ACCEPTED_EXTENSIONS = { ".jpg", ".jpeg", };
     
@@ -298,12 +303,8 @@ public class JpegImageParser extends ImageParser {
 
         final byte[] bytes = assembleSegments(filtered);
 
-        if (getDebug()) {
-            System.out.println("bytes" + ": " + bytes.length);
-        }
-
-        if (getDebug()) {
-            System.out.println("");
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("bytes" + ": " + bytes.length);
         }
 
         return bytes;
@@ -369,9 +370,8 @@ public class JpegImageParser extends ImageParser {
         }
 
         final List<Segment> exifSegments = filterAPP1Segments(segments);
-        if (getDebug()) {
-            System.out.println("exif_segments.size" + ": "
-                    + exifSegments.size());
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("exif_segments.size" + ": " + exifSegments.size());
         }
 
         // Debug.debug("segments", segments);

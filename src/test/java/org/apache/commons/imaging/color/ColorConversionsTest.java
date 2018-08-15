@@ -18,7 +18,7 @@ package org.apache.commons.imaging.color;
 
 import static org.junit.Assert.assertEquals;
 
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 import org.junit.Test;
 
 public class ColorConversionsTest {

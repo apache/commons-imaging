@@ -16,7 +16,6 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_VERBOSE;
 import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
 import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
@@ -39,6 +38,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ColorTools;
@@ -70,6 +71,9 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.icc.IccProfileParser;
 
 public class PngImageParser extends ImageParser {
+
+    private static final Logger LOGGER = Logger.getLogger(PngImageParser.class.getName());
+
     private static final String DEFAULT_EXTENSION = ".png";
     private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
 
@@ -146,14 +150,10 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> result = new ArrayList<>();
 
         while (true) {
-            if (getDebug()) {
-                System.out.println("");
-            }
-
             final int length = read4Bytes("Length", is, "Not a Valid PNG File", getByteOrder());
             final int chunkType = read4Bytes("ChunkType", is, "Not a Valid PNG File", getByteOrder());
 
-            if (getDebug()) {
+            if (LOGGER.isLoggable(Level.FINEST)) {
                 printCharQuad("ChunkType", chunkType);
                 debugNumber("Length", length, 4);
             }
@@ -167,7 +167,7 @@ public class PngImageParser extends ImageParser {
                 skipBytes(is, length, "Not a Valid PNG File");
             }
 
-            if (getDebug()) {
+            if (LOGGER.isLoggable(Level.FINEST)) {
                 if (bytes != null) {
                     debugNumber("bytes", bytes.length, 4);
                 }
@@ -482,10 +482,6 @@ public class PngImageParser extends ImageParser {
             throws ImageReadException, IOException {
         params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 
-        if (params.containsKey(PARAM_KEY_VERBOSE)) {
-            params.remove(PARAM_KEY_VERBOSE);
-        }
-
         // if (params.size() > 0) {
         // Object firstKey = params.keySet().iterator().next();
         // throw new ImageWriteException("Unknown parameter: " + firstKey);
@@ -567,12 +563,12 @@ public class PngImageParser extends ImageParser {
 
             if (sRGBs.size() == 1) {
                 // no color management neccesary.
-                if (getDebug()) {
-                    System.out.println("sRGB, no color management neccesary.");
+                if (LOGGER.isLoggable(Level.FINEST)) {
+                    LOGGER.finest("sRGB, no color management neccesary.");
                 }
             } else if (iCCPs.size() == 1) {
-                if (getDebug()) {
-                    System.out.println("iCCP.");
+                if (LOGGER.isLoggable(Level.FINEST)) {
+                    LOGGER.finest("iCCP.");
                 }
 
                 final PngChunkIccp pngChunkiCCP = (PngChunkIccp) iCCPs.get(0);
@@ -674,8 +670,8 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> chunks = readChunks(byteSource, null, false);
         final List<PngChunk> IHDRs = filterChunks(chunks, ChunkType.IHDR);
         if (IHDRs.size() != 1) {
-            if (getDebug()) {
-                System.out.println("PNG contains more than one Header");
+            if (LOGGER.isLoggable(Level.FINEST)) {
+                LOGGER.finest("PNG contains more than one Header");
             }
             return false;
         }
@@ -703,7 +699,7 @@ public class PngImageParser extends ImageParser {
     @Override
     public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
             throws ImageWriteException, IOException {
-        new PngWriter(params).writeImage(src, os, params);
+        new PngWriter().writeImage(src, os, params);
     }
 
     @Override

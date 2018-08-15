@@ -16,6 +16,6 @@
  */
 
 /**
- * Utility classes.
+ * Internal utility classes. These classes must not be used by users.
  */
-package org.apache.commons.imaging.util;
+package org.apache.commons.imaging.internal;

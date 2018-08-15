@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 
 public class TiffContents {
     public final TiffHeader header;
@@ -71,7 +71,7 @@ public class TiffContents {
         return null;
     }
 
-    public void dissect(final boolean verbose) throws ImageReadException {
+    public void dissect() throws ImageReadException {
         final List<TiffElement> elements = getElements();
 
         Collections.sort(elements, TiffElement.COMPARATOR);
@@ -88,12 +88,10 @@ public class TiffContents {
             Debug.debug("element, start: " + element.offset + ", length: "
                     + element.length + ", end: "
                     + (element.offset + element.length) + ": "
-                    + element.getElementDescription(false));
-            if (verbose) {
-                final String verbosity = element.getElementDescription(true);
-                if (null != verbosity) {
-                    Debug.debug(verbosity);
-                }
+                    + element.getElementDescription());
+            final String verbosity = element.getElementDescription();
+            if (null != verbosity) {
+                Debug.debug(verbosity);
             }
 
             lastEnd = element.offset + element.length;

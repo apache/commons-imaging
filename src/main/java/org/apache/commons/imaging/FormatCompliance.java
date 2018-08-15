@@ -16,18 +16,22 @@
  */
 package org.apache.commons.imaging;
 
-import java.io.OutputStreamWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Provides information about the compliance of a specified data 
  * source (byte array, file, etc&#46;) to an image format.
  */
 public class FormatCompliance {
+
+    private final static Logger LOGGER = Logger.getLogger(FormatCompliance.class.getName());
+
     private final boolean failOnError;
     private final String description;
     private final List<String> comments = new ArrayList<>();
@@ -68,7 +72,14 @@ public class FormatCompliance {
     }
 
     public void dump() {
-        dump(new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset())));
+        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+            dump(pw);
+            pw.flush();
+            sw.flush();
+            LOGGER.fine(sw.toString());
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     public void dump(final PrintWriter pw) {

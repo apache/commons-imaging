@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 
 public class MedianCutQuantizer {
     private final boolean ignoreAlpha;
@@ -83,15 +83,13 @@ public class MedianCutQuantizer {
     }
     
     public Palette process(final BufferedImage image, final int maxColors,
-            final MedianCut medianCut, final boolean verbose)
+            final MedianCut medianCut)
             throws ImageWriteException {
         final Map<Integer, ColorCount> colorMap = groupColors(image, maxColors);
 
         final int discreteColors = colorMap.keySet().size();
         if (discreteColors <= maxColors) {
-            if (verbose) {
-                Debug.debug("lossless palette: " + discreteColors);
-            }
+            Debug.debug("lossless palette: " + discreteColors);
 
             final int[] palette = new int[discreteColors];
             final List<ColorCount> colorCounts = new ArrayList<>(
@@ -108,9 +106,7 @@ public class MedianCutQuantizer {
             return new SimplePalette(palette);
         }
 
-        if (verbose) {
-            Debug.debug("discrete colors: " + discreteColors);
-        }
+        Debug.debug("discrete colors: " + discreteColors);
 
         final List<ColorGroup> colorGroups = new ArrayList<>();
         final ColorGroup root = new ColorGroup(new ArrayList<>(colorMap.values()), ignoreAlpha);
@@ -123,9 +119,7 @@ public class MedianCutQuantizer {
         }
 
         final int paletteSize = colorGroups.size();
-        if (verbose) {
-            Debug.debug("palette size: " + paletteSize);
-        }
+        Debug.debug("palette size: " + paletteSize);
 
         final int[] palette = new int[paletteSize];
 

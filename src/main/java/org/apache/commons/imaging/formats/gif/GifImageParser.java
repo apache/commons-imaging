@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.formats.gif;
 
 import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_FORMAT;
-import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_VERBOSE;
 import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_XMP_XML;
 import static org.apache.commons.imaging.common.BinaryFunctions.compareBytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.printByteBits;
@@ -39,6 +38,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageFormat;
@@ -57,6 +58,9 @@ import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
 
 public class GifImageParser extends ImageParser {
+
+    private static final Logger LOGGER = Logger.getLogger(GifImageParser.class.getName());
+
     private static final String DEFAULT_EXTENSION = ".gif";
     private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
     private static final byte[] GIF_HEADER_SIGNATURE = { 71, 73, 70 };
@@ -131,7 +135,7 @@ public class GifImageParser extends ImageParser {
             formatCompliance.compare("version", 97, version3);
         }
 
-        if (getDebug()) {
+        if (LOGGER.isLoggable(Level.FINEST)) {
             printCharQuad("identifier: ", ((identifier1 << 16)
                     | (identifier2 << 8) | (identifier3 << 0)));
             printCharQuad("version: ",
@@ -155,25 +159,25 @@ public class GifImageParser extends ImageParser {
         final byte pixelAspectRatio = readByte("Pixel Aspect Ratio", is,
                 "Not a Valid GIF File");
 
-        if (getDebug()) {
+        if (LOGGER.isLoggable(Level.FINEST)) {
             printByteBits("PackedFields bits", packedFields);
         }
 
         final boolean globalColorTableFlag = ((packedFields & 128) > 0);
-        if (getDebug()) {
-            System.out.println("GlobalColorTableFlag: " + globalColorTableFlag);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("GlobalColorTableFlag: " + globalColorTableFlag);
         }
         final byte colorResolution = (byte) ((packedFields >> 4) & 7);
-        if (getDebug()) {
-            System.out.println("ColorResolution: " + colorResolution);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("ColorResolution: " + colorResolution);
         }
         final boolean sortFlag = ((packedFields & 8) > 0);
-        if (getDebug()) {
-            System.out.println("SortFlag: " + sortFlag);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("SortFlag: " + sortFlag);
         }
         final byte sizeofGlobalColorTable = (byte) (packedFields & 7);
-        if (getDebug()) {
-            System.out.println("SizeofGlobalColorTable: "
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("SizeofGlobalColorTable: "
                     + sizeofGlobalColorTable);
         }
 
@@ -352,26 +356,26 @@ public class GifImageParser extends ImageParser {
             formatCompliance.checkBounds("Top Position", 0, ghi.logicalScreenHeight - imageHeight, imageTopPosition);
         }
 
-        if (getDebug()) {
+        if (LOGGER.isLoggable(Level.FINEST)) {
             printByteBits("PackedFields bits", packedFields);
         }
 
         final boolean localColorTableFlag = (((packedFields >> 7) & 1) > 0);
-        if (getDebug()) {
-            System.out.println("LocalColorTableFlag: " + localColorTableFlag);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("LocalColorTableFlag: " + localColorTableFlag);
         }
         final boolean interlaceFlag = (((packedFields >> 6) & 1) > 0);
-        if (getDebug()) {
-            System.out.println("Interlace Flag: " + interlaceFlag);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("Interlace Flag: " + interlaceFlag);
         }
         final boolean sortFlag = (((packedFields >> 5) & 1) > 0);
-        if (getDebug()) {
-            System.out.println("Sort Flag: " + sortFlag);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("Sort Flag: " + sortFlag);
         }
 
         final byte sizeOfLocalColorTable = (byte) (packedFields & 7);
-        if (getDebug()) {
-            System.out.println("SizeofLocalColorTable: " + sizeOfLocalColorTable);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("SizeofLocalColorTable: " + sizeOfLocalColorTable);
         }
 
         byte[] localColorTable = null;
@@ -393,8 +397,8 @@ public class GifImageParser extends ImageParser {
             imageData = myLzwDecompressor.decompress(bais, size);
         } else {
             final int LZWMinimumCodeSize = is.read();
-            if (getDebug()) {
-                System.out.println("LZWMinimumCodeSize: " + LZWMinimumCodeSize);
+            if (LOGGER.isLoggable(Level.FINEST)) {
+                LOGGER.finest("LZWMinimumCodeSize: " + LZWMinimumCodeSize);
             }
 
             readGenericGIFBlock(is, -1);
@@ -758,14 +762,9 @@ public class GifImageParser extends ImageParser {
         // make copy of params; we'll clear keys as we consume them.
         params = new HashMap<>(params);
 
-        final boolean verbose =  Boolean.TRUE.equals(params.get(PARAM_KEY_VERBOSE));
-
         // clear format key.
         if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
-        }
-        if (params.containsKey(PARAM_KEY_VERBOSE)) {
-            params.remove(PARAM_KEY_VERBOSE);
         }
 
         String xmpXml = null;
@@ -792,11 +791,11 @@ public class GifImageParser extends ImageParser {
 
         if (palette2 == null) {
             palette2 = new PaletteFactory().makeQuantizedRgbPalette(src, maxColors);
-            if (verbose) {
-                System.out.println("quantizing");
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.fine("quantizing");
             }
-        } else if (verbose) {
-            System.out.println("exact palette");
+        } else if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.fine("exact palette");
         }
 
         if (palette2 == null) {

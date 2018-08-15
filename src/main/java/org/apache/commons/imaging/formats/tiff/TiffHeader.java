@@ -34,11 +34,7 @@ public class TiffHeader extends TiffElement {
     }
 
     @Override
-    public String getElementDescription(final boolean verbose) {
-        if (verbose) {
-            return null;
-        }
-
+    public String getElementDescription() {
         return "TIFF Header";
     }
 }

@@ -30,7 +30,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 import org.junit.Test;
 
 public class XmpUpdateTest extends ImagingTest {

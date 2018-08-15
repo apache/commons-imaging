@@ -29,7 +29,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFileParser;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 
 public class JpegUtils extends BinaryFileParser {
     public JpegUtils() {

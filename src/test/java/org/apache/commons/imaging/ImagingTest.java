@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.test.util.FileSystemTraversal;
-import org.apache.commons.imaging.util.Debug;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 

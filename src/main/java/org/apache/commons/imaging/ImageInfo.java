@@ -20,6 +20,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * ImageInfo represents a collection of basic properties of an image, such as
@@ -75,6 +76,8 @@ public class ImageInfo {
             return description;
         }
     }
+
+    private static final Logger LOGGER = Logger.getLogger(ImageInfo.class.getName());
 
     private final String formatDetails; // ie version
 
@@ -274,7 +277,7 @@ public class ImageInfo {
     }
 
     public void dump() {
-        System.out.print(toString());
+        LOGGER.fine(toString());
     }
 
     @Override

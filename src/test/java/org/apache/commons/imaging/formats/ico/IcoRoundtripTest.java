@@ -32,7 +32,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 

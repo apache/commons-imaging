@@ -147,7 +147,7 @@ public abstract class TiffImageData {
         }
 
         @Override
-        public String getElementDescription(final boolean verbose) {
+        public String getElementDescription() {
             return "Tiff image data: " + getDataLength() + " bytes";
         }
 
@@ -162,7 +162,7 @@ public abstract class TiffImageData {
         }
 
         @Override
-        public String getElementDescription(final boolean verbose) {
+        public String getElementDescription() {
             return "Tiff image data: " + getDataLength() + " bytes";
         }
 

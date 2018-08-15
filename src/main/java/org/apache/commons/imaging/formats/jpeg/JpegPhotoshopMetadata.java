@@ -23,7 +23,7 @@ import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcRecord;
 import org.apache.commons.imaging.formats.jpeg.iptc.IptcTypes;
 import org.apache.commons.imaging.formats.jpeg.iptc.PhotoshopApp13Data;
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 
 public class JpegPhotoshopMetadata extends GenericImageMetadata {
 

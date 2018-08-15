@@ -18,8 +18,12 @@ package org.apache.commons.imaging.palette;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.logging.Logger;
 
 class ColorSpaceSubset {
+
+    private static final Logger LOGGER = Logger.getLogger(ColorSpaceSubset.class.getName());
+
     final int[] mins;
     final int[] maxs;
     final int precision;
@@ -89,29 +93,29 @@ class ColorSpaceSubset {
         final int bdiff = maxs[2] - mins[2] + 1;
         final int colorArea = rdiff * gdiff * bdiff;
 
-        System.out.println(prefix + ": [" + Integer.toHexString(rgb)
+        LOGGER.fine(prefix + ": [" + Integer.toHexString(rgb)
                 + "] total : " + total
         // + " ("
         // + (100.0 * (double) total / (double) total_area)
         // + " %)"
                 );
-        System.out.println("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
+        LOGGER.fine("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
                 + "red: " + Integer.toHexString(mins[0] << (8 - precision))
                 + ", " + Integer.toHexString(maxs[0] << (8 - precision)) + ", "
                 + "green: " + Integer.toHexString(mins[1] << (8 - precision))
                 + ", " + Integer.toHexString(maxs[1] << (8 - precision)) + ", "
                 + "blue: " + Integer.toHexString(mins[2] << (8 - precision))
                 + ", " + Integer.toHexString(maxs[2] << (8 - precision)));
-        System.out.println("\t" + "red: " + mins[0] + ", " + maxs[0] + ", "
+        LOGGER.fine("\t" + "red: " + mins[0] + ", " + maxs[0] + ", "
                 + "green: " + mins[1] + ", " + maxs[1] + ", " + "blue: "
                 + mins[2] + ", " + maxs[2]);
-        System.out.println("\t" + "rdiff: " + rdiff + ", " + "gdiff: " + gdiff
+        LOGGER.fine("\t" + "rdiff: " + rdiff + ", " + "gdiff: " + gdiff
                         + ", " + "bdiff: " + bdiff + ", " + "colorArea: "
                         + colorArea);
     }
 
     public void dumpJustRGB(final String prefix) {
-        System.out.println("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
+        LOGGER.fine("\t" + "rgb: " + Integer.toHexString(rgb) + ", "
                 + "red: " + Integer.toHexString(mins[0] << (8 - precision))
                 + ", " + Integer.toHexString(maxs[0] << (8 - precision)) + ", "
                 + "green: " + Integer.toHexString(mins[1] << (8 - precision))

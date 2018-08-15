@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.util.Debug;
+import org.apache.commons.imaging.internal.Debug;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
