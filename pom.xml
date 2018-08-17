@@ -152,6 +152,7 @@
         <version>${checkstyle.plugin.version}</version>
         <configuration>
           <configLocation>${basedir}/checkstyle.xml</configLocation>
+          <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <enableRulesSummary>false</enableRulesSummary>
         </configuration>
@@ -189,10 +190,14 @@
           <artifactId>apache-rat-plugin</artifactId>
           <configuration>
             <excludes>
-              <exclude>site-content/**</exclude>
-              <exclude>src/site/resources/.htaccess</exclude>
-              <exclude>src/site/resources/download_lang.cgi</exclude>
-              <exclude>src/site/resources/release-notes/RELEASE-NOTES-*.txt</exclude>
+              <exclude>src/test/data/images/xpm/1/symbolic.xpm</exclude>
+              <exclude>src/test/data/images/xpm/1/Oregon Scientific DS6639 - DSC_0307 - small.xpm</exclude>
+              <exclude>src/test/data/images/pbm/2/5x5-grayscale.pam</exclude>
+              <exclude>src/test/data/images/pbm/2/5x5-bw.pam</exclude>
+              <exclude>src/test/data/images/pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.pgm</exclude>
+              <exclude>src/test/data/images/xbm/1/Oregon Scientific DS6639 - DSC_0307 - small.xbm</exclude>
+              <exclude>src/test/data/images/xbm/1/Oregon Scientific DS6639 - DSC_0307 - small X10.xbm</exclude>
+              <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
             </excludes>
           </configuration>
         </plugin>
@@ -221,9 +226,10 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.plugin.version}</version>
         <configuration>
-          <configLocation>${basedir}/checkstyle.xml</configLocation>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <enableRulesSummary>false</enableRulesSummary>
+          <configLocation>${basedir}/checkstyle.xml</configLocation>
+          <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
         </configuration>
         <reportSets>
           <reportSet>
@@ -260,26 +266,6 @@
             <reports>
               <report>changes-report</report>
               <report>jira-report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.11</version>
-        <inherited>false</inherited>
-        <configuration>
-          <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-          <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
-          <enableRulesSummary>false</enableRulesSummary>
-          <propertyExpansion>basedir=${basedir}</propertyExpansion>
-        </configuration>
-        <!-- Work around CHECKSTYLE-172 -->
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>checkstyle</report>
             </reports>
           </reportSet>
         </reportSets>
