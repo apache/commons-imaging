@@ -286,11 +286,11 @@ public class TiffReader extends BinaryFileParser {
         private final List<TiffField> fields = new ArrayList<>();
         private final boolean readThumbnails;
 
-        public Collector() {
+        Collector() {
             this(null);
         }
 
-        public Collector(final Map<String, Object> params) {
+        Collector(final Map<String, Object> params) {
             boolean tmpReadThumbnails = true;
             if (params != null && params.containsKey(ImagingConstants.PARAM_KEY_READ_THUMBNAILS)) {
                 tmpReadThumbnails = Boolean.TRUE.equals(params.get(ImagingConstants.PARAM_KEY_READ_THUMBNAILS));
@@ -334,7 +334,7 @@ public class TiffReader extends BinaryFileParser {
     private static class FirstDirectoryCollector extends Collector {
         private final boolean readImageData;
 
-        public FirstDirectoryCollector(final boolean readImageData) {
+        FirstDirectoryCollector(final boolean readImageData) {
             this.readImageData = readImageData;
         }
 

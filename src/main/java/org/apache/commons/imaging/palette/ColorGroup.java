@@ -46,7 +46,7 @@ class ColorGroup {
     public final int diffTotal;
     public final int totalPoints;
 
-    public ColorGroup(final List<ColorCount> colorCounts, final boolean ignoreAlpha) throws ImageWriteException {
+    ColorGroup(final List<ColorCount> colorCounts, final boolean ignoreAlpha) throws ImageWriteException {
         this.colorCounts = colorCounts;
         this.ignoreAlpha = ignoreAlpha;
 

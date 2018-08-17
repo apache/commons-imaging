@@ -34,7 +34,7 @@ class GifHeaderInfo {
     public final boolean sortFlag;
     public final byte sizeOfGlobalColorTable;
 
-    public GifHeaderInfo(final byte identifier1, final byte identifier2, final byte identifier3,
+    GifHeaderInfo(final byte identifier1, final byte identifier2, final byte identifier3,
             final byte version1, final byte version2, final byte version3,
             final int logicalScreenWidth, final int logicalScreenHeight, final byte packedFields,
             final byte backgroundColorIndex, final byte pixelAspectRatio,

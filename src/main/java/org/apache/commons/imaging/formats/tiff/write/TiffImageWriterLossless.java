@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_HEADER_SIZE;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
@@ -42,8 +44,6 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
-
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
 public class TiffImageWriterLossless extends TiffImageWriterBase {
     private final byte[] exifBytes;
@@ -241,14 +241,14 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             }
             if (null == bestFit) {
                 // we couldn't place this item. overflow.
-                if ((overflowIndex & 1l) != 0) {
+                if ((overflowIndex & 1L) != 0) {
                     overflowIndex += 1;
                 }
                 outputItem.setOffset(overflowIndex);
                 overflowIndex += outputItemLength;
             } else {
                 long offset = bestFit.offset;
-                if ((offset & 1l) != 0) {
+                if ((offset & 1L) != 0) {
                     offset += 1;
                 }
                 outputItem.setOffset(offset);
@@ -274,7 +274,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         private final byte[] buffer;
         private int index;
 
-        public BufferOutputStream(final byte[] buffer, final int index) {
+        BufferOutputStream(final byte[] buffer, final int index) {
             this.buffer = buffer;
             this.index = index;
         }

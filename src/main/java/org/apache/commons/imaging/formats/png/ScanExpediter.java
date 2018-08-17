@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.png;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,8 +32,6 @@ import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterSub;
 import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterUp;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
-
 abstract class ScanExpediter {
     final int width;
     final int height;
@@ -45,12 +45,10 @@ abstract class ScanExpediter {
     final GammaCorrection gammaCorrection;
     final TransparencyFilter transparencyFilter;
 
-    public ScanExpediter(final int width, final int height, final InputStream is,
+    ScanExpediter(final int width, final int height, final InputStream is,
             final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
-            final TransparencyFilter transparencyFilter)
-
-    {
+            final TransparencyFilter transparencyFilter) {
         this.width = width;
         this.height = height;
         this.is = is;

@@ -31,7 +31,7 @@ class TiffOutputSummary {
     private final List<OffsetItem> offsetItems = new ArrayList<>();
     private final List<ImageDataOffsets> imageDataItems = new ArrayList<>();
 
-    public TiffOutputSummary(final ByteOrder byteOrder,
+    TiffOutputSummary(final ByteOrder byteOrder,
             final TiffOutputDirectory rootDirectory,
             final Map<Integer, TiffOutputDirectory> directoryTypeMap) {
         this.byteOrder = byteOrder;
@@ -43,8 +43,7 @@ class TiffOutputSummary {
         public final TiffOutputItem item;
         public final TiffOutputField itemOffsetField;
 
-        public OffsetItem(final TiffOutputItem item,
-                final TiffOutputField itemOffsetField) {
+        OffsetItem(final TiffOutputItem item, final TiffOutputField itemOffsetField) {
             super();
             this.itemOffsetField = itemOffsetField;
             this.item = item;

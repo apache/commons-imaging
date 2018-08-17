@@ -22,7 +22,7 @@ import java.io.InputStream;
 class InfoHeaderReader {
     private final InputStream is;
 
-    public InfoHeaderReader(final InputStream is) {
+    InfoHeaderReader(final InputStream is) {
         this.is = is;
     }
 

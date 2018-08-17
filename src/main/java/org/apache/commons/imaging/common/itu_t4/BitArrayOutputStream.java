@@ -28,11 +28,11 @@ class BitArrayOutputStream extends OutputStream {
     private int cache;
     private int cacheMask = 0x80;
 
-    public BitArrayOutputStream() {
+    BitArrayOutputStream() {
         buffer = new byte[16];
     }
 
-    public BitArrayOutputStream(final int size) {
+    BitArrayOutputStream(final int size) {
         buffer = new byte[size];
     }
 

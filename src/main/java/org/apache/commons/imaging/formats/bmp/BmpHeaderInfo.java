@@ -69,7 +69,7 @@ class BmpHeaderInfo {
         ColorSpaceCoordinate blue;
     }
 
-    public BmpHeaderInfo(final byte identifier1, final byte identifier2, final int fileSize,
+    BmpHeaderInfo(final byte identifier1, final byte identifier2, final int fileSize,
             final int reserved, final int bitmapDataOffset, final int bitmapHeaderSize,
             final int width, final int height, final int planes, final int bitsPerPixel,
             final int compression, final int bitmapDataSize, final int hResolution,

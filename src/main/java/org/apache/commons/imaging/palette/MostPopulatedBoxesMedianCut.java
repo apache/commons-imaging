@@ -140,7 +140,7 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
 
         private final ColorComponent colorComponent;
 
-        public ColorComparer(final ColorComponent colorComponent) {
+        ColorComparer(final ColorComponent colorComponent) {
             this.colorComponent = colorComponent;
         }
 

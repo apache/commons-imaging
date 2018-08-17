@@ -180,7 +180,7 @@ public class PcxImageParser extends ImageParser {
         public final int vScreenSize; // vertical screen size, in pixels.
                                       // PaintBrush >= IV only.
 
-        public PcxHeader(final int manufacturer, final int version,
+        PcxHeader(final int manufacturer, final int version,
                 final int encoding, final int bitsPerPixel, final int xMin,
                 final int yMin, final int xMax, final int yMax, final int hDpi,
                 final int vDpi, final int[] colormap, final int reserved,

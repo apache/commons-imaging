@@ -244,7 +244,7 @@ class T4_T6_Tables {
         String bitString;
         Integer value;
 
-        public Entry(final String bitString, final int value) {
+        Entry(final String bitString, final int value) {
             this.bitString = bitString;
             this.value = value;
         }

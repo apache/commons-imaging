@@ -41,7 +41,7 @@ public abstract class TiffElement {
 
     public abstract String getElementDescription();
 
-    public static abstract class DataElement extends TiffElement {
+    public abstract static class DataElement extends TiffElement {
         private final byte[] data;
 
         public DataElement(final long offset, final int length, final byte[] data) {

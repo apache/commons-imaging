@@ -73,7 +73,7 @@ public final class TagInfoGpsText extends TagInfo {
         final byte[] prefix;
         public final String encodingName;
 
-        public TextEncoding(final byte[] prefix, final String encodingName) {
+        TextEncoding(final byte[] prefix, final String encodingName) {
             this.prefix = prefix;
             this.encodingName = encodingName;
         }

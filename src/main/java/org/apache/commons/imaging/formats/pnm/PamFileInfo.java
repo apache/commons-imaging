@@ -116,7 +116,7 @@ class PamFileInfo extends FileInfo {
     private class GrayscaleTupleReader extends TupleReader {
         private final ImageInfo.ColorType colorType;
 
-        public GrayscaleTupleReader(final ImageInfo.ColorType colorType) {
+        GrayscaleTupleReader(final ImageInfo.ColorType colorType) {
             this.colorType = colorType;
         }
 

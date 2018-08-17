@@ -24,7 +24,7 @@ class CachingInputStream extends InputStream {
     private final InputStream is;
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-    public CachingInputStream(final InputStream is) {
+    CachingInputStream(final InputStream is) {
         this.is = is;
     }
 

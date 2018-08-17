@@ -109,7 +109,7 @@ public class XbmImageParser extends ImageParser {
         int xHot = -1;
         int yHot = -1;
 
-        public XbmHeader(final int width, final int height, final int xHot, final int yHot) {
+        XbmHeader(final int width, final int height, final int xHot, final int yHot) {
             this.width = width;
             this.height = height;
             this.xHot = xHot;

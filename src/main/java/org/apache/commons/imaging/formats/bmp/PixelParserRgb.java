@@ -16,19 +16,20 @@
  */
 package org.apache.commons.imaging.formats.bmp;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+
 import java.io.IOException;
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 class PixelParserRgb extends PixelParserSimple {
     private int bytecount;
     private int cachedBitCount;
     private int cachedByte;
 
-    public PixelParserRgb(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
+    PixelParserRgb(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);
 
     }

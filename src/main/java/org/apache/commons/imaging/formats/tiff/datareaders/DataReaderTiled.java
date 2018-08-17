@@ -183,8 +183,7 @@ public final class DataReaderTiled extends ImageDataReader {
 
     @Override
     public BufferedImage readImageData(final Rectangle subImage)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;

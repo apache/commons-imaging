@@ -23,7 +23,7 @@ import java.util.List;
 class GenericGifBlock extends GifBlock {
     final List<byte[]> subblocks;
 
-    public GenericGifBlock(final int blockCode, final List<byte[]> subblocks) {
+    GenericGifBlock(final int blockCode, final List<byte[]> subblocks) {
         super(blockCode);
 
         this.subblocks = subblocks;

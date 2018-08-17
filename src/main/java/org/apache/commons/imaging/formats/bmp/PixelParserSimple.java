@@ -22,7 +22,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 abstract class PixelParserSimple extends PixelParser {
-    public PixelParserSimple(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
+    PixelParserSimple(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);
     }
 

@@ -16,6 +16,15 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_4;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_JPEG;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_LZW;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_PACKBITS;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED_1;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED_2;
+
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -35,8 +44,8 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageParser;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
@@ -52,8 +61,6 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterYCbCr;
 import org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossy;
-
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
 public class TiffImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".tif";
@@ -481,8 +488,7 @@ public class TiffImageParser extends ImageParser {
 
     private Integer getIntegerParameter(
             final String key, final Map<String, Object>params)
-            throws ImageReadException
-    {
+            throws ImageReadException {
         if (params == null) {
             return null;
         }
@@ -501,8 +507,7 @@ public class TiffImageParser extends ImageParser {
 
     private Rectangle checkForSubImage(
             final Map<String, Object> params)
-            throws ImageReadException
-    {
+            throws ImageReadException {
         final Integer ix0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_X, params);
         final Integer iy0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_Y, params);
         final Integer iwidth = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
@@ -535,8 +540,7 @@ public class TiffImageParser extends ImageParser {
 
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
             final ByteOrder byteOrder, final Map<String, Object> params)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         final List<TiffField> entries = directory.entries;
 
         if (entries == null) {

@@ -262,7 +262,7 @@ public class PaletteFactory {
         private final ColorSpaceSubset dst_a;
         private final ColorSpaceSubset dst_b;
 
-        public DivisionCandidate(final ColorSpaceSubset dst_a, final ColorSpaceSubset dst_b) {
+        DivisionCandidate(final ColorSpaceSubset dst_a, final ColorSpaceSubset dst_b) {
             // this.src = src;
             this.dst_a = dst_a;
             this.dst_b = dst_b;

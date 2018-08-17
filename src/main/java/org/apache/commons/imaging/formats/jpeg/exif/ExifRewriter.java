@@ -77,7 +77,7 @@ public class ExifRewriter extends BinaryFileParser {
         public final List<JFIFPiece> pieces;
         public final List<JFIFPiece> exifPieces;
 
-        public JFIFPieces(final List<JFIFPiece> pieces,
+        JFIFPieces(final List<JFIFPiece> pieces,
                 final List<JFIFPiece> exifPieces) {
             this.pieces = pieces;
             this.exifPieces = exifPieces;
@@ -95,7 +95,7 @@ public class ExifRewriter extends BinaryFileParser {
         public final byte[] markerLengthBytes;
         public final byte[] segmentData;
 
-        public JFIFPieceSegment(final int marker, final byte[] markerBytes,
+        JFIFPieceSegment(final int marker, final byte[] markerBytes,
                 final byte[] markerLengthBytes, final byte[] segmentData) {
             this.marker = marker;
             this.markerBytes = markerBytes;
@@ -113,7 +113,7 @@ public class ExifRewriter extends BinaryFileParser {
 
     private static class JFIFPieceSegmentExif extends JFIFPieceSegment {
 
-        public JFIFPieceSegmentExif(final int marker, final byte[] markerBytes,
+        JFIFPieceSegmentExif(final int marker, final byte[] markerBytes,
                 final byte[] markerLengthBytes, final byte[] segmentData) {
             super(marker, markerBytes, markerLengthBytes, segmentData);
         }
@@ -123,7 +123,7 @@ public class ExifRewriter extends BinaryFileParser {
         public final byte[] markerBytes;
         public final byte[] imageData;
 
-        public JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
+        JFIFPieceImageData(final byte[] markerBytes, final byte[] imageData) {
             super();
             this.markerBytes = markerBytes;
             this.imageData = imageData;
@@ -136,10 +136,7 @@ public class ExifRewriter extends BinaryFileParser {
         }
     }
 
-    private JFIFPieces analyzeJFIF(final ByteSource byteSource)
-            throws ImageReadException, IOException
-    // , ImageWriteException
-    {
+    private JFIFPieces analyzeJFIF(final ByteSource byteSource) throws ImageReadException, IOException {
         final List<JFIFPiece> pieces = new ArrayList<>();
         final List<JFIFPiece> exifPieces = new ArrayList<>();
 

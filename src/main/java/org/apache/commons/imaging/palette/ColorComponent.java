@@ -24,7 +24,7 @@ enum ColorComponent {
 
     private final int shift;
 
-    private ColorComponent(final int shift) {
+    ColorComponent(final int shift) {
         this.shift = shift;
     }
 

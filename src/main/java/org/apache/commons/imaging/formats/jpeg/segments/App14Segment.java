@@ -16,12 +16,12 @@
  */
 package org.apache.commons.imaging.formats.jpeg.segments;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 /**
  * http://www.aiim.org/documents/standards/PDF-Ref/References/Adobe/5116.DCT_Filter.pdf

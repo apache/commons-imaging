@@ -19,7 +19,7 @@ package org.apache.commons.imaging.palette;
 class MedianCutPalette extends SimplePalette {
     private final ColorGroup root;
 
-    public MedianCutPalette(final ColorGroup root, final int[] palette) {
+    MedianCutPalette(final ColorGroup root, final int[] palette) {
         super(palette);
         this.root = root;
     }

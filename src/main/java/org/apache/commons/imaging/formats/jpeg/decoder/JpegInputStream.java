@@ -27,7 +27,7 @@ class JpegInputStream {
     private int cnt;
     private int b;
 
-    public JpegInputStream(final InputStream is) {
+    JpegInputStream(final InputStream is) {
         this.is = is;
     }
 

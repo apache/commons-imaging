@@ -16,6 +16,10 @@
  */
 package org.apache.commons.imaging.formats.jpeg;
 
+import static org.apache.commons.imaging.ImagingConstants.PARAM_KEY_READ_THUMBNAILS;
+import static org.apache.commons.imaging.common.BinaryFunctions.remainingBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -59,9 +63,6 @@ import org.apache.commons.imaging.formats.tiff.TiffImageParser;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.internal.Debug;
 
-import static org.apache.commons.imaging.ImagingConstants.*;
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
-
 public class JpegImageParser extends ImageParser {
 
     private static final Logger LOGGER = Logger.getLogger(JpegImageParser.class.getName());
@@ -71,7 +72,6 @@ public class JpegImageParser extends ImageParser {
 
     public JpegImageParser() {
         setByteOrder(ByteOrder.BIG_ENDIAN);
-        // setDebug(true);
     }
 
     @Override

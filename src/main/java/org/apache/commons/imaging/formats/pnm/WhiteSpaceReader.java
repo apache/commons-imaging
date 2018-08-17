@@ -22,7 +22,7 @@ import java.io.InputStream;
 class WhiteSpaceReader {
     private final InputStream is;
 
-    public WhiteSpaceReader(final InputStream is) {
+    WhiteSpaceReader(final InputStream is) {
         this.is = is;
     }
 

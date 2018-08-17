@@ -16,10 +16,10 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PngChunkGama extends PngChunk {
     public final int gamma;

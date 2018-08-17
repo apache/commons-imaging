@@ -16,6 +16,9 @@
  */
 package org.apache.commons.imaging.formats.jpeg.segments;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +26,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class SofnSegment extends Segment {
 

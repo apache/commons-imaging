@@ -273,9 +273,7 @@ public final class ColorConversions {
         return new ColorCmy(C, M, Y);
     }
 
-    public static int convertCMYKtoRGB(final int c, final int m, final int y, final int k)
-    // throws ImageReadException, IOException
-    {
+    public static int convertCMYKtoRGB(final int c, final int m, final int y, final int k) {
         final double C = c / 255.0;
         final double M = m / 255.0;
         final double Y = y / 255.0;

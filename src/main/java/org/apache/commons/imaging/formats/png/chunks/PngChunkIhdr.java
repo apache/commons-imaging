@@ -16,14 +16,15 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.formats.png.PngColorType;
 import org.apache.commons.imaging.formats.png.InterlaceMethod;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
+import org.apache.commons.imaging.formats.png.PngColorType;
 
 public class PngChunkIhdr extends PngChunk {
     public final int width;

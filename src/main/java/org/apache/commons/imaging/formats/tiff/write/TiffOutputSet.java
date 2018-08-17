@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.DEFAULT_TIFF_BYTE_ORDER;
+
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +28,6 @@ import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
 import org.apache.commons.imaging.internal.Debug;
-
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
 public final class TiffOutputSet {
     public final ByteOrder byteOrder;

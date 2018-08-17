@@ -22,7 +22,7 @@ class ColorGroupCut {
     public final ColorComponent mode;
     public final int limit;
 
-    public ColorGroupCut(final ColorGroup less, final ColorGroup more, final ColorComponent mode, final int limit) {
+    ColorGroupCut(final ColorGroup less, final ColorGroup more, final ColorComponent mode, final int limit) {
         this.less = less;
         this.more = more;
         this.mode = mode;

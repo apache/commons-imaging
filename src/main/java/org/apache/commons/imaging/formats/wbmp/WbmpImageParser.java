@@ -105,7 +105,7 @@ public class WbmpImageParser extends ImageParser {
         int width;
         int height;
 
-        public WbmpHeader(final int typeField, final byte fixHeaderField, final int width,
+        WbmpHeader(final int typeField, final byte fixHeaderField, final int width,
                 final int height) {
             this.typeField = typeField;
             this.fixHeaderField = fixHeaderField;

@@ -182,10 +182,7 @@ public class JpegRewriter extends BinaryFileParser {
         }
     }
 
-    protected JFIFPieces analyzeJFIF(final ByteSource byteSource)
-            throws ImageReadException, IOException
-    // , ImageWriteException
-    {
+    protected JFIFPieces analyzeJFIF(final ByteSource byteSource) throws ImageReadException, IOException {
         final List<JFIFPiece> pieces = new ArrayList<>();
         final List<JFIFPiece> segmentPieces = new ArrayList<>();
 

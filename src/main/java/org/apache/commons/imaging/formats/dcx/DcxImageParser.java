@@ -111,7 +111,7 @@ public class DcxImageParser extends ImageParser {
         public final int id;
         public final long[] pageTable;
 
-        public DcxHeader(final int id, final long[] pageTable) {
+        DcxHeader(final int id, final long[] pageTable) {
             this.id = id;
             this.pageTable = pageTable;
         }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_HEADER_SIZE;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
@@ -23,8 +25,6 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
-
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
 public class TiffImageWriterLossy extends TiffImageWriterBase {
 

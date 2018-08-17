@@ -24,7 +24,7 @@ class GraphicControlExtension extends GifBlock {
     public final int delay;
     public final int transparentColorIndex;
 
-    public GraphicControlExtension(final int blockCode, final int packed, final int dispose,
+    GraphicControlExtension(final int blockCode, final int packed, final int dispose,
             final boolean transparency, final int delay, final int transparentColorIndex) {
         super(blockCode);
 

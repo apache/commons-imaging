@@ -87,13 +87,13 @@ public class MyLzwCompressor {
         return arrayToKey(new byte[] { b, }, 0, 1);
     }
 
-    private final static class ByteArray {
+    private static final class ByteArray {
         private final byte[] bytes;
         private final int start;
         private final int length;
         private final int hash;
 
-        public ByteArray(final byte[] bytes, final int start, final int length) {
+        ByteArray(final byte[] bytes, final int start, final int length) {
             this.bytes = bytes;
             this.start = start;
             this.length = length;

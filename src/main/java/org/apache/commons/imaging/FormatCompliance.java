@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class FormatCompliance {
 
-    private final static Logger LOGGER = Logger.getLogger(FormatCompliance.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(FormatCompliance.class.getName());
 
     private final boolean failOnError;
     private final String description;

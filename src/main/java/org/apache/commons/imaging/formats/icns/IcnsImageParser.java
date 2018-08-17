@@ -133,7 +133,7 @@ public class IcnsImageParser extends ImageParser {
         public final int magic; // Magic literal (4 bytes), always "icns"
         public final int fileSize; // Length of file (4 bytes), in bytes.
 
-        public IcnsHeader(final int magic, final int fileSize) {
+        IcnsHeader(final int magic, final int fileSize) {
             this.magic = magic;
             this.fileSize = fileSize;
         }
@@ -164,7 +164,7 @@ public class IcnsImageParser extends ImageParser {
         public final int elementSize;
         public final byte[] data;
 
-        public IcnsElement(final int type, final int elementSize, final byte[] data) {
+        IcnsElement(final int type, final int elementSize, final byte[] data) {
             this.type = type;
             this.elementSize = elementSize;
             this.data = data;
@@ -209,7 +209,7 @@ public class IcnsImageParser extends ImageParser {
         public final IcnsHeader icnsHeader;
         public final IcnsElement[] icnsElements;
 
-        public IcnsContents(final IcnsHeader icnsHeader, final IcnsElement[] icnsElements) {
+        IcnsContents(final IcnsHeader icnsHeader, final IcnsElement[] icnsElements) {
             super();
             this.icnsHeader = icnsHeader;
             this.icnsElements = icnsElements;

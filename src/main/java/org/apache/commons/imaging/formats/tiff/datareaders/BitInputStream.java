@@ -32,7 +32,7 @@ class BitInputStream extends InputStream {
     private int cacheBitsRemaining;
     private long bytesRead;
 
-    public BitInputStream(final InputStream is, final ByteOrder byteOrder) {
+    BitInputStream(final InputStream is, final ByteOrder byteOrder) {
         this.is = is;
         this.byteOrder = byteOrder;
     }

@@ -29,7 +29,7 @@ class PgmFileInfo extends FileInfo {
     private final float scale;
     private final int bytesPerSample;
 
-    public PgmFileInfo(final int width, final int height, final boolean rawbits, final int max) throws ImageReadException {
+    PgmFileInfo(final int width, final int height, final boolean rawbits, final int max) throws ImageReadException {
         super(width, height, rawbits);
         if (max <= 0) {
             throw new ImageReadException("PGM maxVal " + max

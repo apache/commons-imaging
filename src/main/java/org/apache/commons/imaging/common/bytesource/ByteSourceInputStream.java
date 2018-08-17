@@ -41,7 +41,7 @@ public class ByteSourceInputStream extends ByteSource {
         private CacheBlock next;
         private boolean triedNext;
 
-        public CacheBlock(final byte[] bytes) {
+        CacheBlock(final byte[] bytes) {
             this.bytes = bytes;
         }
 

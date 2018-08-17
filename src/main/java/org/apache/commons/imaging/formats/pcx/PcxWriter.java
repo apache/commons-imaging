@@ -37,7 +37,7 @@ class PcxWriter {
     private PixelDensity pixelDensity;
     private final RleWriter rleWriter;
 
-    public PcxWriter(Map<String, Object> params) throws ImageWriteException {
+    PcxWriter(Map<String, Object> params) throws ImageWriteException {
         // make copy of params; we'll clear keys as we consume them.
         params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
 

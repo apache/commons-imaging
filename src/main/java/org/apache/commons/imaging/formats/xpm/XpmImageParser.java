@@ -182,7 +182,7 @@ public class XpmImageParser extends ImageParser {
 
         Map<Object, PaletteEntry> palette = new HashMap<>();
 
-        public XpmHeader(final int width, final int height, final int numColors,
+        XpmHeader(final int width, final int height, final int numColors,
                 final int numCharsPerPixel, final int xHotSpot, final int yHotSpot, final boolean xpmExt) {
             this.width = width;
             this.height = height;

@@ -15,6 +15,9 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
@@ -35,8 +38,6 @@ import org.apache.commons.imaging.formats.jpeg.segments.DhtSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.DqtSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SofnSegment;
 import org.apache.commons.imaging.formats.jpeg.segments.SosSegment;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     /*

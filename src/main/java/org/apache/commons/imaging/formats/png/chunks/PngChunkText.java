@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
@@ -23,8 +25,6 @@ import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.PngText;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PngChunkText extends PngTextChunk {
 

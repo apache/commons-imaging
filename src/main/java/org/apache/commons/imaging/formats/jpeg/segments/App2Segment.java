@@ -16,14 +16,17 @@
  */
 package org.apache.commons.imaging.formats.jpeg.segments;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.startsWith;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class App2Segment extends AppnSegment implements Comparable<App2Segment> {
     private final byte[] iccBytes;

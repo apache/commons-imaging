@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_ENTRY_MAX_VALUE_LENGTH;
+
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -24,8 +26,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
-
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
 public class TiffOutputField {
     public final int tag;

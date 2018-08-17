@@ -116,7 +116,7 @@ public class IcoImageParser extends ImageParser {
         public final int iconCount; // IconCount (2 bytes), number of icons in
                                     // this file.
 
-        public FileHeader(final int reserved, final int iconType, final int iconCount) {
+        FileHeader(final int reserved, final int iconType, final int iconCount) {
             this.reserved = reserved;
             this.iconType = iconType;
             this.iconCount = iconCount;
@@ -157,7 +157,7 @@ public class IcoImageParser extends ImageParser {
         public final int imageSize;
         public final int imageOffset;
 
-        public IconInfo(final byte width, final byte height,
+        IconInfo(final byte width, final byte height,
                 final byte colorCount, final byte reserved, final int planes,
                 final int bitCount, final int imageSize, final int imageOffset) {
             this.width = width;
@@ -221,7 +221,7 @@ public class IcoImageParser extends ImageParser {
         public final int colorsUsed;
         public final int colorsImportant;
 
-        public BitmapHeader(final int size, final int width, final int height,
+        BitmapHeader(final int size, final int width, final int height,
                 final int planes, final int bitCount, final int compression,
                 final int sizeImage, final int pelsPerMeter,
                 final int pelsPerMeter2, final int colorsUsed,
@@ -256,10 +256,10 @@ public class IcoImageParser extends ImageParser {
         }
     }
 
-    private static abstract class IconData {
+    private abstract static class IconData {
         public final IconInfo iconInfo;
 
-        public IconData(final IconInfo iconInfo) {
+        IconData(final IconInfo iconInfo) {
             this.iconInfo = iconInfo;
         }
 
@@ -279,7 +279,7 @@ public class IcoImageParser extends ImageParser {
         public final BitmapHeader header;
         public final BufferedImage bufferedImage;
 
-        public BitmapIconData(final IconInfo iconInfo,
+        BitmapIconData(final IconInfo iconInfo,
                 final BitmapHeader header, final BufferedImage bufferedImage) {
             super(iconInfo);
             this.header = header;
@@ -302,7 +302,7 @@ public class IcoImageParser extends ImageParser {
     private static class PNGIconData extends IconData {
         public final BufferedImage bufferedImage;
 
-        public PNGIconData(final IconInfo iconInfo,
+        PNGIconData(final IconInfo iconInfo,
                 final BufferedImage bufferedImage) {
             super(iconInfo);
             this.bufferedImage = bufferedImage;
@@ -532,8 +532,7 @@ public class IcoImageParser extends ImageParser {
         public final FileHeader fileHeader;
         public final IconData[] iconDatas;
 
-        public ImageContents(final FileHeader fileHeader,
-                final IconData[] iconDatas) {
+        ImageContents(final FileHeader fileHeader, final IconData[] iconDatas) {
             super();
             this.fileHeader = fileHeader;
             this.iconDatas = iconDatas;

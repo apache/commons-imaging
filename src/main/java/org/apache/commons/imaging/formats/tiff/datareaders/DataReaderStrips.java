@@ -221,8 +221,7 @@ public final class DataReaderStrips extends ImageDataReader {
 
     @Override
     public BufferedImage readImageData(final Rectangle subImage)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can
         // be a partial).  So create a working image with compatible
