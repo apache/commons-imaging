@@ -153,7 +153,7 @@
         <configuration>
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
-          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <includeTestSourceDirectory>false</includeTestSourceDirectory>
           <enableRulesSummary>false</enableRulesSummary>
         </configuration>
       </plugin>
@@ -226,10 +226,10 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.plugin.version}</version>
         <configuration>
-          <includeTestSourceDirectory>true</includeTestSourceDirectory>
-          <enableRulesSummary>false</enableRulesSummary>
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
+          <includeTestSourceDirectory>false</includeTestSourceDirectory>
+          <enableRulesSummary>false</enableRulesSummary>
         </configuration>
         <reportSets>
           <reportSet>

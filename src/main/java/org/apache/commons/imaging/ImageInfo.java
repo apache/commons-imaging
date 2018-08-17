@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class ImageInfo {
 
-    public static enum ColorType {
+    public enum ColorType {
         BW("Black and White"),
         GRAYSCALE("Grayscale"),
         RGB("RGB"),
@@ -51,7 +51,7 @@ public class ImageInfo {
         }
     }
 
-    public static enum CompressionAlgorithm {
+    public enum CompressionAlgorithm {
         UNKNOWN("Unknown"),
         NONE("None"),
         LZW("LZW"),
