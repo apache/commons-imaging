@@ -45,10 +45,12 @@ limitations under the License.
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
     <module name="NeedBraces"/>
+    <!--
     <module name="JavadocMethod">
       <property name="allowUndeclaredRTE" value="true"/>
       <property name="scope" value="public" />
     </module>
+     -->
     <module name="ModifierOrder"/>
     <module name="RedundantModifier"/>
     <module name="UpperEll" />
