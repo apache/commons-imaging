@@ -160,8 +160,7 @@ public final class MyLzwDecompressor {
                 writeToResult(baos, stringFromCode(code));
 
                 oldCode = code;
-            } // end of ClearCode case
-            else {
+            } else {
                 if (isInTable(code)) {
                     writeToResult(baos, stringFromCode(code));
 
@@ -175,12 +174,12 @@ public final class MyLzwDecompressor {
                     addStringToTable(outString);
                     oldCode = code;
                 }
-            } // end of not-ClearCode case
+            }
 
             if (written >= expectedLength) {
                 break;
             }
-        } // end of while loop
+        }
 
         return baos.toByteArray();
     }

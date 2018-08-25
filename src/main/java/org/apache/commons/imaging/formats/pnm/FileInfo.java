@@ -35,7 +35,7 @@ abstract class FileInfo {
     }
 
     abstract boolean hasAlpha();
-    
+
     abstract int getNumComponents();
 
     abstract int getBitDepth();
@@ -55,7 +55,7 @@ abstract class FileInfo {
     void newline() {
         // do nothing by default.
     }
-    
+
     static int readSample(final InputStream is, final int bytesPerSample) throws IOException {
         int sample = 0;
         for (int i = 0; i < bytesPerSample; i++) {
@@ -68,7 +68,7 @@ abstract class FileInfo {
         }
         return sample;
     }
-    
+
     static int scaleSample(int sample, final float scale, final int max) throws IOException {
         if (sample < 0) {
             // Even netpbm tools break for files like this

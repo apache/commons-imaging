@@ -36,7 +36,7 @@ public final class BinaryFunctions {
 
     private BinaryFunctions() {
     }
-    
+
     public static boolean startsWith(final byte[] haystack, final byte[] needle) {
         if (needle == null) {
             return false;
@@ -237,14 +237,14 @@ public final class BinaryFunctions {
         if ((byte0 | byte1) < 0) {
             throw new IOException(exception);
         }
-        
+
         final int result;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result = (byte0 << 8) | byte1;
         } else {
             result = (byte1 << 8) | byte0;
         }
-        
+
         return result;
     }
 

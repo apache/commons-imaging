@@ -21,10 +21,10 @@ enum ColorComponent {
     RED(16),
     GREEN(8),
     BLUE(0);
-    
+
     private final int shift;
 
-    private ColorComponent(final int shift) {
+    ColorComponent(final int shift) {
         this.shift = shift;
     }
 

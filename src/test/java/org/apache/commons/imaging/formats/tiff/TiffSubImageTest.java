@@ -36,7 +36,7 @@ public class TiffSubImageTest extends TiffBaseTest {
     public void testSubImage() throws ImageReadException, ImageWriteException, IOException {
         final BufferedImage src = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         final byte[] imageBytes = Imaging.writeImageToBytes(src, ImageFormats.TIFF, null);
-        
+
         final Map<String, Object> params = new TreeMap<>();
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 0);
         params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 0);

@@ -72,36 +72,36 @@ public class IptcParser extends BinaryFileParser {
      * In practice, App13 segments are only used for Photoshop/IPTC metadata.
      * However, we should not treat App13 signatures without Photoshop's
      * signature as Photoshop/IPTC segments.
-     * 
+     *
      * A Photoshop/IPTC App13 segment begins with the Photoshop Identification
      * string.
-     * 
+     *
      * There follows 0-N blocks (Photoshop calls them "Image Resource Blocks").
-     * 
+     *
      * Each block has the following structure:
-     * 
+     *
      * 1. 4-byte type. This is always "8BIM" for blocks in a Photoshop App13
      * segment. 2. 2-byte id. IPTC data is stored in blocks with id 0x0404, aka.
      * IPTC_NAA_RECORD_IMAGE_RESOURCE_ID 3. Block name as a Pascal String. This
      * is padded to have an even length. 4. 4-byte size (in bytes). 5. Block
      * data. This is also padded to have an even length.
-     * 
+     *
      * The block data consists of a 0-N records. A record has the following
      * structure:
-     * 
+     *
      * 1. 2-byte prefix. The value is always 0x1C02 2. 1-byte record type. The
      * record types are documented by the IPTC. See IptcConstants. 3. 2-byte
      * record size (in bytes). 4. Record data, "record size" bytes long.
-     * 
+     *
      * Record data (unlike block data) is NOT padded to have an even length.
-     * 
+     *
      * Record data, for IPTC record, should always be ISO-8859-1. But according
      * to SANSELAN-33, this isn't always the case.
-     * 
+     *
      * The exception is the first record in the block, which must always be a
      * record version record, whose value is a two-byte number; the value is
      * 0x02.
-     * 
+     *
      * Some IPTC blocks are missing this first "record version" record, so we
      * don't require it.
      */
@@ -256,20 +256,20 @@ public class IptcParser extends BinaryFileParser {
 
             // Note that these are unsigned quantities. Name is always an even
             // number of bytes (including the 1st byte, which is the size.)
-    
-            final byte[] idString = readBytes("", bis, 
+
+            final byte[] idString = readBytes("", bis,
                     JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.size(),
                     "App13 Segment missing identification string");
             if (!JpegConstants.PHOTOSHOP_IDENTIFICATION_STRING.equals(idString)) {
                 throw new ImageReadException("Not a Photoshop App13 Segment");
             }
-    
+
             // int index = PHOTOSHOP_IDENTIFICATION_STRING.length;
-    
+
             while (true) {
                 final int imageResourceBlockSignature;
                 try {
-                    imageResourceBlockSignature = read4Bytes("", bis, 
+                    imageResourceBlockSignature = read4Bytes("", bis,
                             "Image Resource Block missing identification string", APP13_BYTE_ORDER);
                 } catch (final IOException ioEx) {
                     break;
@@ -278,13 +278,13 @@ public class IptcParser extends BinaryFileParser {
                     throw new ImageReadException(
                             "Invalid Image Resource Block Signature");
                 }
-    
+
                 final int blockType = read2Bytes("", bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
                 Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
-    
+
                 final int blockNameLength = readByte("Name length", bis, "Image Resource Block missing name length");
                 if (blockNameLength > 0) {
-                    Debug.debug("blockNameLength: " + blockNameLength + " (0x" 
+                    Debug.debug("blockNameLength: " + blockNameLength + " (0x"
                             + Integer.toHexString(blockNameLength) + ")");
                 }
                 byte[] blockNameBytes;
@@ -301,15 +301,15 @@ public class IptcParser extends BinaryFileParser {
                         }
                         break;
                     }
-    
+
                     if (blockNameLength % 2 == 0) {
                         readByte("Padding byte", bis, "Image Resource Block missing padding byte");
                     }
                 }
-    
+
                 final int blockSize = read4Bytes("", bis, "Image Resource Block missing size", APP13_BYTE_ORDER);
                 Debug.debug("blockSize: " + blockSize + " (0x" + Integer.toHexString(blockSize) + ")");
-    
+
                 /*
                  * doesn't catch cases where blocksize is invalid but is still less
                  * than bytes.length but will at least prevent OutOfMemory errors
@@ -317,7 +317,7 @@ public class IptcParser extends BinaryFileParser {
                 if (blockSize > bytes.length) {
                     throw new ImageReadException("Invalid Block Size : " + blockSize + " > " + bytes.length);
                 }
-    
+
                 final byte[] blockData;
                 try {
                     blockData = readBytes("", bis, blockSize, "Invalid Image Resource Block data");
@@ -327,14 +327,14 @@ public class IptcParser extends BinaryFileParser {
                     }
                     break;
                 }
-    
+
                 blocks.add(new IptcBlock(blockType, blockNameBytes, blockData));
-    
+
                 if ((blockSize % 2) != 0) {
                     readByte("Padding byte", bis, "Image Resource Block missing padding byte");
                 }
             }
-    
+
             return blocks;
         }
     }
@@ -388,7 +388,7 @@ public class IptcParser extends BinaryFileParser {
         byte[] blockData;
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (BinaryOutputStream bos = new BinaryOutputStream(baos, getByteOrder())) {
-    
+
             // first, right record version record
             bos.write(IptcConstants.IPTC_RECORD_TAG_MARKER);
             bos.write(IptcConstants.IPTC_APPLICATION_2_RECORD_NUMBER);
@@ -396,10 +396,10 @@ public class IptcParser extends BinaryFileParser {
                                                       // type.
             bos.write2Bytes(2); // record version record size
             bos.write2Bytes(2); // record version value
-    
+
             // make a copy of the list.
             elements = new ArrayList<>(elements);
-    
+
             // sort the list. Records must be in numerical order.
             final Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {
                 @Override
@@ -409,7 +409,7 @@ public class IptcParser extends BinaryFileParser {
             };
             Collections.sort(elements, comparator);
             // TODO: make sure order right
-    
+
             // write the list.
             for (final IptcRecord element : elements) {
                 if (element.iptcType == IptcTypes.RECORD_VERSION) {

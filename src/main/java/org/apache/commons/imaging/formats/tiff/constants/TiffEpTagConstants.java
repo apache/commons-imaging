@@ -33,14 +33,14 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 
 /**
- * 
+ *
  */
 public final class TiffEpTagConstants {
 
     public static final TagInfoShorts EXIF_TAG_CFAREPEAT_PATTERN_DIM = new TagInfoShorts(
             "CFARepeatPatternDim", 0x828d, 2,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    
+
     public static final TagInfoBytes EXIF_TAG_CFAPATTERN_2 = new TagInfoBytes(
             "CFAPattern2", 0x828e, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -48,7 +48,7 @@ public final class TiffEpTagConstants {
     public static final TagInfoAsciiOrRational EXIF_TAG_BATTERY_LEVEL = new TagInfoAsciiOrRational(
             "BatteryLevel", 0x828f, -1,
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
-    
+
     public static final TagInfoUndefineds EXIF_TAG_INTER_COLOR_PROFILE = new TagInfoUndefineds(
             "InterColorProfile", 0x8773, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -72,19 +72,19 @@ public final class TiffEpTagConstants {
     public static final TagInfoUndefineds EXIF_TAG_SPATIAL_FREQUENCY_RESPONSE_1 = new TagInfoUndefineds(
             "SpatialFrequencyResponse", 0x920c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    
+
     public static final TagInfoUndefineds EXIF_TAG_NOISE_1 = new TagInfoUndefineds(
             "Noise", 0x920d, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    
+
     public static final TagInfoRational EXIF_TAG_FOCAL_PLANE_XRESOLUTION = new TagInfoRational(
             "FocalPlaneXResolution", 0x920e,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    
+
     public static final TagInfoRational EXIF_TAG_FOCAL_PLANE_YRESOLUTION = new TagInfoRational(
             "FocalPlaneYResolution", 0x920f,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    
+
     public static final TagInfoShort EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT = new TagInfoShort(
             "FocalPlaneResolutionUnit", 0x9210,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -109,7 +109,7 @@ public final class TiffEpTagConstants {
     public static final TagInfoRationals EXIF_TAG_EXPOSURE_INDEX = new TagInfoRationals(
             "ExposureIndex", 0x9215, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
-    
+
     public static final TagInfoBytes EXIF_TAG_TIFF_EPSTANDARD_ID_1 = new TagInfoBytes(
             "TIFF/EPStandardID", 0x9216, 4,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);

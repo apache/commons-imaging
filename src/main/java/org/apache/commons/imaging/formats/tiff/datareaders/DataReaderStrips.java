@@ -55,7 +55,7 @@ public final class DataReaderStrips extends ImageDataReader {
     }
 
     private void interpretStrip(
-            final ImageBuilder imageBuilder, 
+            final ImageBuilder imageBuilder,
             final byte[] bytes,
             final int pixelsPerStrip,
             final int yLimit) throws ImageReadException, IOException {
@@ -217,16 +217,15 @@ public final class DataReaderStrips extends ImageDataReader {
 
         }
     }
-    
-    
+
+
     @Override
     public BufferedImage readImageData(final Rectangle subImage)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can
-        // be a partial).  So create a working image with compatible 
-        // dimensions and read that.  Later on, the working image 
+        // be a partial).  So create a working image with compatible
+        // dimensions and read that.  Later on, the working image
         // will be sub-imaged to the proper size.
 
         // strip0 and strip1 give the indices of the strips containing
@@ -237,17 +236,17 @@ public final class DataReaderStrips extends ImageDataReader {
 
 
         // the legacy code uses a member element "y" to keep track
-        // of the row index of the output image that is being processed 
-        // by interpretStrip. y is set to zero before the first 
+        // of the row index of the output image that is being processed
+        // by interpretStrip. y is set to zero before the first
         // call to interpretStrip.  y0 will be the index of the first row
         // in the full image (the source image) that will be processed.
- 
+
         final int y0 = strip0 * rowsPerStrip;
         final int yLimit = subImage.y - y0 + subImage.height;
 
 
         // TO DO: we can probably save some processing by using yLimit instead
-        //        or working 
+        //        or working
         final ImageBuilder workingBuilder =
                 new ImageBuilder(width, workingHeight, false);
 
@@ -270,7 +269,7 @@ public final class DataReaderStrips extends ImageDataReader {
                     (int) pixelsPerStrip,
                     yLimit);
         }
- 
+
 
         if (subImage.x == 0
                 && subImage.y == y0
@@ -283,7 +282,7 @@ public final class DataReaderStrips extends ImageDataReader {
                 subImage.x,
                 subImage.y - y0,
                 subImage.width,
-                subImage.height);      
+                subImage.height);
     }
 
 }

@@ -28,9 +28,7 @@ class ScanExpediterSimple extends ScanExpediter {
     ScanExpediterSimple(final int width, final int height, final InputStream is,
             final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
-            final TransparencyFilter transparencyFilter)
-
-    {
+            final TransparencyFilter transparencyFilter) {
         super(width, height, is, bi, pngColorType, bitDepth, bitsPerPixel,
                 pngChunkPLTE, gammaCorrection, transparencyFilter);
     }

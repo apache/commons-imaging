@@ -301,7 +301,7 @@ public class TiffCcittTest extends TiffBaseTest {
      * Generates the next combination of elements in the sequence array, with
      * each element having a maximum value of max. Initially, the sequence
      * should be set to minimum values of each element.
-     * 
+     *
      * @param sequence
      *            the array of elements to update
      * @param max

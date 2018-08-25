@@ -32,20 +32,20 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
  */
 public final class AdobePhotoshopTagConstants {
 
-    public final static TagInfoUndefineds EXIF_TAG_JPEGTABLES = new TagInfoUndefineds(
+    public static final TagInfoUndefineds EXIF_TAG_JPEGTABLES = new TagInfoUndefineds(
             "JPEGTables", 0x015b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
 
-    public final static TagInfoUndefineds EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefineds(
+    public static final TagInfoUndefineds EXIF_TAG_IMAGE_SOURCE_DATA = new TagInfoUndefineds(
             "ImageSourceData", 0x935c, -1,
             TiffDirectoryType.EXIF_DIRECTORY_IFD0);
 
-    public final static List<TagInfo> ALL_ADOBE_PHOTOSHOP_TAGS =
+    public static final List<TagInfo> ALL_ADOBE_PHOTOSHOP_TAGS =
             Collections.unmodifiableList(Arrays.<TagInfo> asList(
                     EXIF_TAG_JPEGTABLES,
                     EXIF_TAG_IMAGE_SOURCE_DATA
             ));
-    
+
     private AdobePhotoshopTagConstants() {
     }
 }

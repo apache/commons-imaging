@@ -41,7 +41,7 @@ public class PhotometricInterpreterYCbCr extends PhotometricInterpreter {
      * imageWidth and imageHeight. These variables are either set manually in
      * the case of a null constructor, or they are automatically calculated from
      * the image parameter constructor.
-     * 
+     *
      * @param Y
      *            The Y component set.
      * @param Cb

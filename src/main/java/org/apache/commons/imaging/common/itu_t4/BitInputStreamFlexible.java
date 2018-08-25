@@ -32,7 +32,7 @@ class BitInputStreamFlexible extends InputStream {
     private int cacheBitsRemaining;
     private long bytesRead;
 
-    public BitInputStreamFlexible(final InputStream is) {
+    BitInputStreamFlexible(final InputStream is) {
         this.is = is;
         // super(is);
     }

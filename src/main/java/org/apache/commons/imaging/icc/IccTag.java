@@ -54,9 +54,9 @@ public class IccTag {
         data = bytes;
 
         try (InputStream bis = new ByteArrayInputStream(bytes)) {
-            dataTypeSignature = BinaryFunctions.read4Bytes("data type signature", bis, 
+            dataTypeSignature = BinaryFunctions.read4Bytes("data type signature", bis,
                     "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
-    
+
             itdt = getIccTagDataType(dataTypeSignature);
             // if (itdt != null)
             // {

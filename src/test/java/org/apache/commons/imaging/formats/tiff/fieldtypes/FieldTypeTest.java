@@ -25,7 +25,7 @@ public class FieldTypeTest{
 
   @Test
   public void testGetFieldTypeWithNegative() {
-      try { 
+      try {
         FieldType.getFieldType((-748));
         fail("Expecting exception: Exception");
       } catch(Exception e) {

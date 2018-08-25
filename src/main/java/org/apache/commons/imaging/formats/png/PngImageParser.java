@@ -122,7 +122,7 @@ public class PngImageParser extends ImageParser {
         return chunkTypes;
     }
 
-    public boolean hasChunkType(final ByteSource byteSource, final ChunkType chunkType) 
+    public boolean hasChunkType(final ByteSource byteSource, final ChunkType chunkType)
             throws ImageReadException, IOException {
         try (InputStream is = byteSource.getInputStream()) {
             readSignature(is);
@@ -196,7 +196,7 @@ public class PngImageParser extends ImageParser {
                     result.add(new PngChunkGama(length, chunkType, crc, bytes));
                 } else if (chunkType == ChunkType.iTXt.value) {
                     result.add(new PngChunkItxt(length, chunkType, crc, bytes));
-                } else { 
+                } else {
                     result.add(new PngChunk(length, chunkType, crc, bytes));
                 }
 

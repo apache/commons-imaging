@@ -25,12 +25,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Provides information about the compliance of a specified data 
+ * Provides information about the compliance of a specified data
  * source (byte array, file, etc&#46;) to an image format.
  */
 public class FormatCompliance {
 
-    private final static Logger LOGGER = Logger.getLogger(FormatCompliance.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(FormatCompliance.class.getName());
 
     private final boolean failOnError;
     private final String description;

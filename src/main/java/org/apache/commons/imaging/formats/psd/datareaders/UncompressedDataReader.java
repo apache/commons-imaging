@@ -55,12 +55,12 @@ public class UncompressedDataReader implements DataReader {
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++) {
                         final int b = bbis.readBits(depth);
-    
+
                         data[channel][y][x] = (byte) b;
                     }
                 }
             }
-    
+
             dataParser.parseData(data, bi, imageContents);
         }
     }

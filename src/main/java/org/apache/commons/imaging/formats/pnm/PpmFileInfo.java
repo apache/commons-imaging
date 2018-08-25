@@ -27,9 +27,9 @@ import org.apache.commons.imaging.ImageReadException;
 class PpmFileInfo extends FileInfo {
     private final int max;
     private final float scale;
-    private final int bytesPerSample; 
+    private final int bytesPerSample;
 
-    public PpmFileInfo(final int width, final int height, final boolean rawbits, final int max) throws ImageReadException {
+    PpmFileInfo(final int width, final int height, final boolean rawbits, final int max) throws ImageReadException {
         super(width, height, rawbits);
         if (max <= 0) {
             throw new ImageReadException("PPM maxVal " + max + " is out of range [1;65535]");
@@ -44,7 +44,7 @@ class PpmFileInfo extends FileInfo {
         }
         this.max = max;
     }
-    
+
     @Override
     public boolean hasAlpha() {
         return false;

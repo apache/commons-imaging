@@ -17,7 +17,7 @@
 package org.apache.commons.imaging;
 
 /**
- * The base class for implementing custom exceptions in the 
+ * The base class for implementing custom exceptions in the
  * Apache Commons Imaging package.
  */
 public class ImagingException extends Exception {

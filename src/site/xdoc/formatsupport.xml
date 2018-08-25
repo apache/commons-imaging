@@ -176,8 +176,8 @@ limitations under the License.
         including JPEG. Supports reading Tiled images.
     </td>
     <td>
-       <a href="http://partners.adobe.com/public/developer/tiff/index.html">Adobe</a>
-       <a href="http://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf">spec</a>
+       <a href="https://www.web.archive.org/web/20060116011057/https://partners.adobe.com/public/developer/tiff/index.html">Adobe</a>
+       <a href="https://www.web.archive.org/web/20050828212121/https://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf">spec</a>
        <a href="http://en.wikipedia.org/wiki/TIFF">wikipedia</a>
        <a href="http://www.awaresystems.be/imaging/tiff/tifftags.html">AWare Systems TIFF Tag Reference</a>
     </td>
@@ -191,7 +191,7 @@ limitations under the License.
     </td>
     <td>
        <a href="http://en.wikipedia.org/wiki/WBMP">wikipedia</a>
-       <a href="http://www.wapforum.org/what/technical/SPEC-WAESpec-19990524.pdf">spec</a>
+       <a href="https://www.web.archive.org/web/20050824034208/http://www.wapforum.org:80/what/technical/SPEC-WAESpec-19990524.pdf">spec</a>
     </td>
   </tr>
 
@@ -203,7 +203,7 @@ limitations under the License.
     </td>
     <td>
        <a href="http://en.wikipedia.org/wiki/XBM">wikipedia</a>
-       <a href="www.xfree86.org/current/xlib.pdf">spec</a>
+       <a href="http://www.xfree86.org/current/xlib.pdf">spec</a>
     </td>
   </tr>
 

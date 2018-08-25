@@ -239,12 +239,12 @@ class T4_T6_Tables {
     public static final Entry VL1 = new Entry("010", 0);
     public static final Entry VL2 = new Entry("000010", 0);
     public static final Entry VL3 = new Entry("0000010", 0);
-    
+
     public static class Entry {
         String bitString;
         Integer value;
 
-        public Entry(final String bitString, final int value) {
+        Entry(final String bitString, final int value) {
             this.bitString = bitString;
             this.value = value;
         }

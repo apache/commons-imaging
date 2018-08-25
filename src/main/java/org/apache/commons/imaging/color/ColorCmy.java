@@ -17,7 +17,7 @@
 package org.apache.commons.imaging.color;
 
 public final class ColorCmy {
-    
+
     /**
      * A constant for color cyan. Color components are:
      * <pre>

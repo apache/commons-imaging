@@ -45,12 +45,12 @@ public class JpegIptcRewriter extends JpegRewriter {
      * leaves the other data in that segment (if present) unchanged and writes
      * the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            Image file.
      * @param os
      *            OutputStream to write the image to.
-     * 
+     *
      * @see java.io.File
      * @see java.io.OutputStream
      */
@@ -58,20 +58,20 @@ public class JpegIptcRewriter extends JpegRewriter {
             throws ImageReadException, IOException, ImageWriteException {
         removeIPTC(src, os, false);
     }
-    
+
     /**
      * Reads a Jpeg image, removes all IPTC data from the App13 segment but
      * leaves the other data in that segment (if present) unchanged (unless
      * removeSegment is true) and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            Image file.
      * @param os
      *            OutputStream to write the image to.
      * @param removeSegment
      *            Remove the App13 segment.
-     * 
+     *
      * @see java.io.File
      * @see java.io.OutputStream
      */
@@ -86,7 +86,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      * leaves the other data in that segment (if present) unchanged and writes
      * the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            Byte array containing Jpeg image data.
      * @param os
@@ -96,13 +96,13 @@ public class JpegIptcRewriter extends JpegRewriter {
             throws ImageReadException, IOException, ImageWriteException {
         removeIPTC(src, os, false);
     }
-    
+
     /**
      * Reads a Jpeg image, removes all IPTC data from the App13 segment but
      * leaves the other data in that segment (if present) unchanged (unless
      * removeSegment is true) and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            Byte array containing Jpeg image data.
      * @param os
@@ -121,7 +121,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      * leaves the other data in that segment (if present) unchanged and writes
      * the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            InputStream containing Jpeg image data.
      * @param os
@@ -131,13 +131,13 @@ public class JpegIptcRewriter extends JpegRewriter {
             throws ImageReadException, IOException, ImageWriteException {
         removeIPTC(src, os, false);
     }
-    
+
     /**
      * Reads a Jpeg image, removes all IPTC data from the App13 segment but
      * leaves the other data in that segment (if present) unchanged (unless
      * removeSegment is true) and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            InputStream containing Jpeg image data.
      * @param os
@@ -156,7 +156,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      * leaves the other data in that segment (if present) unchanged and writes
      * the result to a stream.
      * <p>
-     * 
+     *
      * @param byteSource
      *            ByteSource containing Jpeg image data.
      * @param os
@@ -166,13 +166,13 @@ public class JpegIptcRewriter extends JpegRewriter {
             throws ImageReadException, IOException, ImageWriteException {
         removeIPTC(byteSource, os, false);
     }
-    
+
     /**
      * Reads a Jpeg image, removes all IPTC data from the App13 segment but
      * leaves the other data in that segment (if present) unchanged (unless
      * removeSegment is true) and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param byteSource
      *            ByteSource containing Jpeg image data.
      * @param os
@@ -211,7 +211,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      * Reads a Jpeg image, replaces the IPTC data in the App13 segment but
      * leaves the other data in that segment (if present) unchanged and writes
      * the result to a stream.
-     * 
+     *
      * @param src
      *            Byte array containing Jpeg image data.
      * @param os
@@ -230,7 +230,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      * Reads a Jpeg image, replaces the IPTC data in the App13 segment but
      * leaves the other data in that segment (if present) unchanged and writes
      * the result to a stream.
-     * 
+     *
      * @param src
      *            InputStream containing Jpeg image data.
      * @param os
@@ -249,7 +249,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      * Reads a Jpeg image, replaces the IPTC data in the App13 segment but
      * leaves the other data in that segment (if present) unchanged and writes
      * the result to a stream.
-     * 
+     *
      * @param src
      *            Image file.
      * @param os
@@ -267,7 +267,7 @@ public class JpegIptcRewriter extends JpegRewriter {
      * Reads a Jpeg image, replaces the IPTC data in the App13 segment but
      * leaves the other data in that segment (if present) unchanged and writes
      * the result to a stream.
-     * 
+     *
      * @param byteSource
      *            ByteSource containing Jpeg image data.
      * @param os

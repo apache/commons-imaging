@@ -23,14 +23,14 @@ public interface ImageFormat {
 
     /**
      * Get the name of this {@link ImageFormat}.
-     * 
+     *
      * @return String name
      */
     String getName();
 
     /**
      * Get the file extension associated with this {@link ImageFormat}.
-     * 
+     *
      * @return String extension
      */
     String getExtension();

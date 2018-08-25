@@ -32,7 +32,7 @@ import org.apache.commons.imaging.internal.Debug;
  * Used by some GPS tags and the EXIF user comment tag,
  * this badly documented value is meant to contain
  * the text encoding in the first 8 bytes followed by
- * the non-null-terminated text in an unknown byte order.  
+ * the non-null-terminated text in an unknown byte order.
  */
 public final class TagInfoGpsText extends TagInfo {
     private static final TagInfoGpsText.TextEncoding TEXT_ENCODING_ASCII = new TextEncoding(
@@ -73,7 +73,7 @@ public final class TagInfoGpsText extends TagInfo {
         final byte[] prefix;
         public final String encodingName;
 
-        public TextEncoding(final byte[] prefix, final String encodingName) {
+        TextEncoding(final byte[] prefix, final String encodingName) {
             this.prefix = prefix;
             this.encodingName = encodingName;
         }

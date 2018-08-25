@@ -74,10 +74,10 @@ public class GifImageParser extends ImageParser {
     private static final int APPLICATION_EXTENSION_LABEL = 0xff;
     private static final int XMP_COMPLETE_CODE = (EXTENSION_CODE << 8)
             | XMP_EXTENSION;
-    private final static int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
-    private final static int INTERLACE_FLAG_MASK = 1 << 6;
-    private final static int SORT_FLAG_MASK = 1 << 5;
-    private final static byte[] XMP_APPLICATION_ID_AND_AUTH_CODE = {
+    private static final int LOCAL_COLOR_TABLE_FLAG_MASK = 1 << 7;
+    private static final int INTERLACE_FLAG_MASK = 1 << 6;
+    private static final int SORT_FLAG_MASK = 1 << 5;
+    private static final byte[] XMP_APPLICATION_ID_AND_AUTH_CODE = {
         0x58, // X
         0x4D, // M
         0x50, // P
@@ -593,7 +593,7 @@ public class GifImageParser extends ImageParser {
         }
 
         imageData.toString(pw, "");
-        
+
         final GifImageContents blocks = readFile(byteSource, false);
 
         pw.println("gif.blocks: " + blocks.blocks.size());
@@ -992,7 +992,7 @@ public class GifImageParser extends ImageParser {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     * 
+     *
      * @param byteSource
      *            File containing image data.
      * @param params

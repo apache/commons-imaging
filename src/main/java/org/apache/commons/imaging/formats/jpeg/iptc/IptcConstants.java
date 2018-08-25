@@ -88,7 +88,7 @@ public final class IptcConstants {
     public static final int IPTC_RECORD_TAG_MARKER = 0x1c;
     public static final int IPTC_ENVELOPE_RECORD_NUMBER = 0x01;
     public static final int IPTC_APPLICATION_2_RECORD_NUMBER = 0x02;
-    
+
     private IptcConstants() {
     }
 }

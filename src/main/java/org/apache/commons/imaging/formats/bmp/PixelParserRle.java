@@ -27,9 +27,8 @@ class PixelParserRle extends PixelParser {
 
     private static final Logger LOGGER = Logger.getLogger(PixelParserRle.class.getName());
 
-    public PixelParserRle(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
+    PixelParserRle(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);
-
     }
 
     private int getSamplesPerByte() throws ImageReadException {

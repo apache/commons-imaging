@@ -45,7 +45,7 @@ abstract class TiffOutputItem {
         private final byte[] bytes;
         private final String name;
 
-        public Value(final String name, final byte[] bytes) {
+        Value(final String name, final byte[] bytes) {
             this.name = name;
             this.bytes = bytes;
         }

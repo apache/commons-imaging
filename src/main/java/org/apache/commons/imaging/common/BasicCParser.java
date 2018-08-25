@@ -200,7 +200,7 @@ public class BasicCParser {
                         throw new ImageReadException("Bad preprocessor directive");
                     }
                     if (!tokens[0].equals("define")) {
-                        throw new ImageReadException("Invalid/unsupported " 
+                        throw new ImageReadException("Invalid/unsupported "
                                 + "preprocessor directive '" + tokens[0] + "'");
                     }
                     defines.put(tokens[1], (tokens.length == 3) ? tokens[2]

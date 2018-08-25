@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_HEADER_SIZE;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
@@ -42,8 +44,6 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
-
-import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.*;
 
 public class TiffImageWriterLossless extends TiffImageWriterBase {
     private final byte[] exifBytes;
@@ -89,7 +89,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                     if (oversizeValue != null) {
                         final TiffOutputField frozenField = frozenFields.get(field.getTag());
                         if (frozenField != null
-                                && frozenField.getSeperateValue() != null 
+                                && frozenField.getSeperateValue() != null
                                 && frozenField.bytesEqual(field.getByteArrayValue())) {
                             frozenField.getSeperateValue().setOffset(field.getOffset());
                         } else {
@@ -145,7 +145,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
     public void write(final OutputStream os, final TiffOutputSet outputSet)
             throws IOException, ImageWriteException {
         // There are some fields whose address in the file must not change,
-        // unless of course their value is changed. 
+        // unless of course their value is changed.
         final Map<Integer, TiffOutputField> frozenFields = new HashMap<>();
         final TiffOutputField makerNoteField = outputSet.findField(ExifTagConstants.EXIF_TAG_MAKER_NOTE);
         if (makerNoteField != null && makerNoteField.getSeperateValue() != null) {
@@ -241,14 +241,14 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
             }
             if (null == bestFit) {
                 // we couldn't place this item. overflow.
-                if ((overflowIndex & 1l) != 0) {
+                if ((overflowIndex & 1L) != 0) {
                     overflowIndex += 1;
                 }
                 outputItem.setOffset(overflowIndex);
                 overflowIndex += outputItemLength;
             } else {
                 long offset = bestFit.offset;
-                if ((offset & 1l) != 0) {
+                if ((offset & 1L) != 0) {
                     offset += 1;
                 }
                 outputItem.setOffset(offset);
@@ -274,7 +274,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
         private final byte[] buffer;
         private int index;
 
-        public BufferOutputStream(final byte[] buffer, final int index) {
+        BufferOutputStream(final byte[] buffer, final int index) {
             this.buffer = buffer;
             this.index = index;
         }

@@ -22,7 +22,7 @@ import java.io.InputStream;
 class WhiteSpaceReader {
     private final InputStream is;
 
-    public WhiteSpaceReader(final InputStream is) {
+    WhiteSpaceReader(final InputStream is) {
         this.is = is;
     }
 
@@ -61,7 +61,7 @@ class WhiteSpaceReader {
 
         return buffer.toString();
     }
-    
+
     public String readLine() throws IOException {
         final StringBuilder buffer = new StringBuilder();
         for (char c = read(); (c != '\n') && (c != '\r'); c = read()) {

@@ -31,7 +31,7 @@ abstract class PixelParser {
 
     final InputStream is;
 
-    public PixelParser(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
+    PixelParser(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         this.bhi = bhi;
         this.colorTable = colorTable;
         this.imageData = imageData;

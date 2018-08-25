@@ -25,7 +25,7 @@ import java.util.List;
  */
 class HuffmanTree<T> {
     private final List<Node<T>> nodes = new ArrayList<>();
-    
+
     private static final class Node<T> {
         boolean empty = true;
         T value;

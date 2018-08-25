@@ -16,12 +16,12 @@
  */
 package org.apache.commons.imaging.formats.jpeg.segments;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public abstract class GenericSegment extends Segment {
     private final byte[] segmentData;
@@ -62,7 +62,7 @@ public abstract class GenericSegment extends Segment {
     /**
      * Returns a specific byte of the segment's contents,
      * excluding the marker and length bytes at
-     * the beginning. 
+     * the beginning.
      * @see GenericSegment#getSegmentData()
      * @return the bye in the segment's contents
      */

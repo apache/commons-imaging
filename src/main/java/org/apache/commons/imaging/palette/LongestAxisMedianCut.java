@@ -58,7 +58,7 @@ public class LongestAxisMedianCut implements MedianCut {
         }
         return true;
     }
-    
+
     private void doCut(final ColorGroup colorGroup, final ColorComponent mode,
             final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImageWriteException {
 

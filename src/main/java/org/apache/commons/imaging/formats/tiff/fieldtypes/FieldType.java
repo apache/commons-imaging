@@ -46,7 +46,7 @@ public abstract class FieldType {
     private final int type;
     private final String name;
     private final int elementSize;
-    
+
     public static final List<FieldType> ANY =
             Collections.unmodifiableList(Arrays.asList(
                     BYTE, ASCII, SHORT,
@@ -58,31 +58,31 @@ public abstract class FieldType {
     public static final List<FieldType> SHORT_OR_LONG =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, LONG));
-    
+
     public static final List<FieldType> SHORT_OR_RATIONAL =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, RATIONAL));
-    
+
     public static final List<FieldType> SHORT_OR_LONG_OR_RATIONAL =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, LONG, RATIONAL));
-    
+
     public static final List<FieldType> LONG_OR_SHORT =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, LONG));
-    
+
     public static final List<FieldType> BYTE_OR_SHORT =
             Collections.unmodifiableList(Arrays.asList(
                     SHORT, BYTE));
-    
+
     public static final List<FieldType> LONG_OR_IFD =
             Collections.unmodifiableList(Arrays.asList(
                     (FieldType) LONG, IFD));
-    
+
     public static final List<FieldType> ASCII_OR_RATIONAL =
             Collections.unmodifiableList(Arrays.asList(
                     ASCII, RATIONAL));
-    
+
     public static final List<FieldType> ASCII_OR_BYTE =
             Collections.unmodifiableList(Arrays.asList(
                     ASCII, BYTE));
@@ -92,20 +92,20 @@ public abstract class FieldType {
         this.name = name;
         this.elementSize = elementSize;
     }
-    
-    
+
+
     public int getType() {
         return type;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public int getSize() {
         return elementSize;
     }
-    
+
     public static FieldType getFieldType(final int type) throws ImageReadException {
         for (final FieldType fieldType : ANY) {
             if (fieldType.getType() == type) {
@@ -114,7 +114,7 @@ public abstract class FieldType {
         }
         throw new ImageReadException("Field type " + type + " is unsupported");
     }
-    
+
     public abstract Object getValue(final TiffField entry);
     public abstract byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException;
 }

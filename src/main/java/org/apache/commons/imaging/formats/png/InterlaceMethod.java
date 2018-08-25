@@ -18,7 +18,7 @@ package org.apache.commons.imaging.formats.png;
 
 /**
  * Interlace methods.
- * 
+ *
  * @see <a href="http://www.w3.org/TR/PNG/#8Interlace">Portable Network Graphics Specification - Interlacing and pass extraction</a>
  */
 public enum InterlaceMethod {
@@ -28,7 +28,7 @@ public enum InterlaceMethod {
 
     private final boolean progressive;
 
-    private InterlaceMethod(final boolean progressive) {
+    InterlaceMethod(final boolean progressive) {
         this.progressive = progressive;
     }
 

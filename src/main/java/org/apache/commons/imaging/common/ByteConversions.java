@@ -25,13 +25,13 @@ import java.nio.ByteOrder;
 public final class ByteConversions {
     private ByteConversions() {
     }
-    
+
     public static byte[] toBytes(final short value, final ByteOrder byteOrder) {
         final byte[] result = new byte[2];
         toBytes(value, byteOrder, result, 0);
         return result;
     }
-    
+
     public static byte[] toBytes(final short[] values, final ByteOrder byteOrder) {
         return toBytes(values, 0, values.length, byteOrder);
     }
@@ -59,7 +59,7 @@ public final class ByteConversions {
         toBytes(value, byteOrder, result, 0);
         return result;
     }
-    
+
     public static byte[] toBytes(final int[] values, final ByteOrder byteOrder) {
         return toBytes(values, 0, values.length, byteOrder);
     }
@@ -71,7 +71,7 @@ public final class ByteConversions {
         }
         return result;
     }
-    
+
     private static void toBytes(final int value, final ByteOrder byteOrder, final byte[] result, final int offset) {
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             result[offset + 0] = (byte) (value >> 24);
@@ -237,7 +237,7 @@ public final class ByteConversions {
             return ((byte1 << 8) | byte0);
         }
     }
-    
+
     public static int[] toUInt16s(final byte[] bytes, final ByteOrder byteOrder) {
         return toUInt16s(bytes, 0, bytes.length, byteOrder);
     }
@@ -302,7 +302,7 @@ public final class ByteConversions {
         return toFloats(bytes, 0, bytes.length, byteOrder);
     }
 
-    private static float[] toFloats(final byte[] bytes, final int offset, 
+    private static float[] toFloats(final byte[] bytes, final int offset,
             final int length, final ByteOrder byteOrder) {
         final float[] result = new float[length / 4];
         for (int i = 0; i < result.length; i++) {
@@ -379,7 +379,7 @@ public final class ByteConversions {
         return toRationals(bytes, 0, bytes.length, byteOrder);
     }
 
-    private static RationalNumber[] toRationals(final byte[] bytes, 
+    private static RationalNumber[] toRationals(final byte[] bytes,
             final int offset, final int length, final ByteOrder byteOrder) {
         final RationalNumber[] result = new RationalNumber[length / 8];
         for (int i = 0; i < result.length; i++) {

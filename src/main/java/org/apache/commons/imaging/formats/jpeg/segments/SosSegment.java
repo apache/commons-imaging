@@ -16,13 +16,13 @@
  */
 package org.apache.commons.imaging.formats.jpeg.segments;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class SosSegment extends Segment {
 
@@ -97,7 +97,7 @@ public class SosSegment extends Segment {
         successiveApproximationBitHigh = (successiveApproximationBitPosition >> 4) & 0xf;
         successiveApproximationBitLow = successiveApproximationBitPosition & 0xf;
     }
-    
+
     /**
      * Returns a copy of all the components.
      * @return all the components
@@ -105,7 +105,7 @@ public class SosSegment extends Segment {
     public Component[] getComponents() {
         return components.clone();
     }
-    
+
     /**
      * Return a component at the specified index.
      * @param index the component index

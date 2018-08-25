@@ -17,12 +17,12 @@
 
 /****************************************************************
  * Explanation of Use and Rationale For Procedures
- * 
+ *
  * This class is intended to serve as a "test stand" for loading
  * images using the Apache Imaging (nee "Sanselan") package.
  * It performs a loop that loads a specified image multiple times
  * recording both memory and time required for the loading process.
- * 
+ *
  * The notes given below explain some of the operations of this
  * test class and the reasons they were designed as they are.
  * This test is by no means to be considered the "last word" in how
@@ -31,61 +31,61 @@
  * enhancements for some of the Apache Imaging operations. But I know
  * I haven't thought of everything and am actually hoping that
  * someone will have suggestions for improvements.
- * 
- * 
+ *
+ *
  * Prerequisites to Testing  --------------------------------
- * 
- * Whenever testing software performance, particularly timing, 
+ *
+ * Whenever testing software performance, particularly timing,
  * there are a few important considerations that should be observed:
- * 
- *   a) Get a clean testing environment. In a modern computer 
+ *
+ *   a) Get a clean testing environment. In a modern computer
  *      system, there are dozens of processes running.  To whatever
  *      degree possible, make sure you are not running competing
  *      processes that will consume computer resources and contaminate
  *      your timing results.
- * 
+ *
  *   b) Make sure you are testing what you think you are testing.
  *      This guideline is especially true when comparing two different
  *      approaches.  Eliminate as many variables from the analysis
  *      as you possible can.
- * 
+ *
  *   c) When writing or modifying code, remember that no matter how
  *      obvious and self-evidentially superior a particular approach
  *      may seem, you don't really know if it's an improvement until you
  *      test it. If nothing else, the experience of computer programming
  *      teaches us to not to take anything for granted.
- * 
+ *
  *   d) Make sure the JVM is allowed a sufficiently large maximum
  *      memory size.   Putting aside the fact that the default size
  *      for the maximum memory use of the JVM could be too small for
  *      handling test images, we also want to allocate a sufficiently
  *      large memory size to ensure that it doesn't get too close to
  *      the maximum size when performing timing tests.   When the JVM
- *      detects that it is running up against the limits of its 
+ *      detects that it is running up against the limits of its
  *      maximum memory size setting, it triggers garbage collection
  *      operations that can contaminate timing values.
  *        I usually try to set the maximum memory size to be at least
- *      twice what I think I will need.  Traditionally, the memory 
+ *      twice what I think I will need.  Traditionally, the memory
  *      size for the JVM is quite modest, perhaps 256 megabytes.  You
  *      can alter that value by using something like the following
  *      specification (check your own JVM version for alternate values):
  *            -Xmx768M   (maximum of 768 megabytes)
- *      
- *  
- * 
- *  
+ *
+ *
+ *
+ *
  * What the Test Application Does and Why ----------------------
- * 
+ *
  * 0.  Functions  ------------------
  * This class reads the path to a graphics file from the command
  * line and attempts to read it several times, measuring the time
  * required to read it.   If you prefer, you may hardwire the code
  * to use a specific file.  Take whatever approach is easiest... it
  * shouldn't affect the accuracy of the results.
- * 
+ *
  * 1)  Specific Instances of Classes to Be Tested  -----------------
  * The Apache Imagine package includes a set of "parsers" for
- * reading different graphics file formats.  The package also includes 
+ * reading different graphics file formats.  The package also includes
  * a general-purpose class called "Imaging" that determines
  * the format an arbitrarily specified input
  * file and internally processes it using the appropriate parser.
@@ -93,32 +93,32 @@
  * class itself, it is better to instantiate the proper subject-matter
  * parser explicitly in your code.  In ordinary applications, it is often
  * more convenient to use the Imaging class and let it take care
- * of the details for you.  But in that "taking care of details" 
+ * of the details for you.  But in that "taking care of details"
  * operation, the Imaging class loads and instantiates a large
  * number of different subject-matter parsers.  These operations take
  * time, consume memory, and will color the results of any timing
  * and memory-use measurements you perform.
- * 
+ *
  * 2) Repetition -----------------------------------------
  * The example output from this program included below, shows that
  * it performs multiple image-loading operations, recording both
  * the time required for each individual load time and the overall
  * average time required for most of the load operations (times are
- * in milliseconds).  
- * 
+ * in milliseconds).
+ *
  *  image size: 10000 by 10000
  *  time to load image               memory
  *  time ms      avg ms         used mb   total mb
- * 15559.150     0.000    --    384.845   397.035 
- *  8544.926     0.000    --    410.981   568.723 
- *  8471.012  8471.012    --    411.563   695.723 
- *  8626.015  8548.513    --    384.791   397.039 
- * 
- * Note that in the example output, the times for the first two load 
+ * 15559.150     0.000    --    384.845   397.035
+ *  8544.926     0.000    --    410.981   568.723
+ *  8471.012  8471.012    --    411.563   695.723
+ *  8626.015  8548.513    --    384.791   397.039
+ *
+ * Note that in the example output, the times for the first two load
  * operations are not included in the average.  The reason for this is
  * that the first time a Java application performs some operation,
  * it is likely to take a little longer than for subsequent
- * operations due to the overhead for class loading and the 
+ * operations due to the overhead for class loading and the
  * just-in-time (JIT) compiler.  Unless you're specifically interested
  * in measuring the cost of start-up operations, the time they take
  * will contaminate any timing values for the functions of interest.
@@ -127,23 +127,23 @@
  * carry over into the second.  In either case, two loop iterations
  * has proven to be enough to isolate the start costs... but keep an eye
  * on the individual times to make sure nothing unwanted is happening.
- * 
+ *
  * 3) Clean Up Memory Between Load Operations --------------------
  * This test application specifically invokes the garbage collection
  * method provided by the Java Runtime class.  It then executes a one-second
  * sleep operation.
- *    Recall that in Java, the JVM performs garbage collection in a 
+ *    Recall that in Java, the JVM performs garbage collection in a
  * separate thread that runs whenever Java thinks it important to do so.
  * We want to do what we can to ensure that the garbage collection operation,
  * which consumes processor resources, doesn't do so while the application
- * is loading an image.  To that end, the application invokes 
- * Runtime.gc() and then allows the JVM one second to initiate and 
+ * is loading an image.  To that end, the application invokes
+ * Runtime.gc() and then allows the JVM one second to initiate and
  * complete the garbage collection.  However, the .gc() method is, at best,
  * a "suggestion" that the JVM should run garbage collection.
  * It does not guarantee that the garbage collection will be executed and
  * completed immediately.  Thus the relatively long one-second delay
  * between loop iterations.
- * 
+ *
  * ---------------------------------------------------------------------
  * Good luck in using the class for testing.
  * Feel free to modify it to suit your own requirements... Nothing
@@ -151,7 +151,7 @@
  * well for you.
  *                Gary Lucas --  May 2012.
  * ---------------------------------------------------------------
- * 
+ *
  */
 package org.apache.commons.imaging.examples;
 
@@ -174,7 +174,7 @@ public class ApacheImagingSpeedAndMemoryTest {
     /**
      * Create an instance of the speed and memory test class and execute a test
      * loop for the specified file.
-     * 
+     *
      * @param args
      *            the path to the file to be processed
      */
@@ -189,7 +189,7 @@ public class ApacheImagingSpeedAndMemoryTest {
     /**
      * Loads the input file multiple times, measuring the time and memory use
      * for each iteration.
-     * 
+     *
      * @param name
      *            the path for the input image file to be tested
      */

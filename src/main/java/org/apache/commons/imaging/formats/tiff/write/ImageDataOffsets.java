@@ -22,7 +22,7 @@ class ImageDataOffsets {
     final int[] imageDataOffsets;
     final TiffOutputField imageDataOffsetsField;
     final TiffOutputItem[] outputItems;
-    
+
     ImageDataOffsets(final TiffElement.DataElement[] imageData,
             final int[] imageDataOffsets,
             final TiffOutputField imageDataOffsetsField) {

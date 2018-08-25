@@ -34,7 +34,7 @@ import java.io.IOException;
 /**
  * A selection of tools for evaluating and manipulating color
  * spaces, color values, etc.
- * <p>The Javadoc provided in the original code gave the 
+ * <p>The Javadoc provided in the original code gave the
  * following notation:<br><br>
  *
  * &nbsp;&nbsp;&nbsp; "This class is a mess and needs to be cleaned up."
@@ -203,7 +203,7 @@ public class ColorTools {
                 RenderingHints.VALUE_RENDER_QUALITY);
         hints.put(RenderingHints.KEY_COLOR_RENDERING,
                 RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        hints.put(RenderingHints.KEY_DITHERING, 
+        hints.put(RenderingHints.KEY_DITHERING,
                 RenderingHints.VALUE_DITHER_ENABLE);
 
         // bi = relabelColorSpace(bi, cs);

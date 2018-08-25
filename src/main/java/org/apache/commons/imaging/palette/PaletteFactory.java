@@ -38,7 +38,7 @@ public class PaletteFactory {
     private static final Logger LOGGER = Logger.getLogger(PaletteFactory.class.getName());
 
     public static final int COMPONENTS = 3; // in bits
-    
+
     /**
      * Builds an exact complete opaque palette containing all the colors in {@code src},
      * using an algorithm that is faster than {@linkplain #makeExactRgbPaletteSimple} for large images
@@ -262,7 +262,7 @@ public class PaletteFactory {
         private final ColorSpaceSubset dst_a;
         private final ColorSpaceSubset dst_b;
 
-        public DivisionCandidate(final ColorSpaceSubset dst_a, final ColorSpaceSubset dst_b) {
+        DivisionCandidate(final ColorSpaceSubset dst_a, final ColorSpaceSubset dst_b) {
             // this.src = src;
             this.dst_a = dst_a;
             this.dst_b = dst_b;
@@ -381,7 +381,7 @@ public class PaletteFactory {
 
         return new QuantizedPalette(subsets, precision);
     }
-    
+
     /**
      * Builds an inexact possibly translucent palette of at most {@code max} colors in {@code src}
      * using the traditional Median Cut algorithm. Color bounding boxes are split along the
@@ -421,7 +421,7 @@ public class PaletteFactory {
                 }
             }
         }
-        
+
         final int[] result = new int[rgbs.size()];
         int next = 0;
         for (final int rgb : rgbs) {

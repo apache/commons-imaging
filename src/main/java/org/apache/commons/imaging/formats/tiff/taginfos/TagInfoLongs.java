@@ -26,15 +26,15 @@ public class TagInfoLongs extends TagInfo {
     public TagInfoLongs(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, FieldType.LONG, length, directoryType);
     }
-    
+
     public TagInfoLongs(final String name, final int tag, final int length, final TiffDirectoryType directoryType, final boolean isOffset) {
         super(name, tag, FieldType.LONG, length, directoryType, isOffset);
     }
-    
+
     public int[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toInts(bytes, byteOrder);
     }
-    
+
     public byte[] encodeValue(final ByteOrder byteOrder, final int... values) {
         return ByteConversions.toBytes(values, byteOrder);
     }

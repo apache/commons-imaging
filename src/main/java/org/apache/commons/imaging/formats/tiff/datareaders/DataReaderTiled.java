@@ -180,11 +180,10 @@ public final class DataReaderTiled extends ImageDataReader {
 
         }
     }
-    
+
     @Override
     public BufferedImage readImageData(final Rectangle subImage)
-            throws ImageReadException, IOException
-    {
+            throws ImageReadException, IOException {
         final int bitsPerRow = tileWidth * bitsPerPixel;
         final int bytesPerRow = (bitsPerRow + 7) / 8;
         final int bytesPerTile = bytesPerRow * tileLength;
@@ -192,7 +191,7 @@ public final class DataReaderTiled extends ImageDataReader {
         int y = 0;
 
         // tileWidth is the width of the tile
-        // tileLength is the height of the tile 
+        // tileLength is the height of the tile
         final int col0 = subImage.x / tileWidth;
         final int col1 = (subImage.x + subImage.width - 1) / tileWidth;
         final int row0 = subImage.y / tileLength;
@@ -207,10 +206,10 @@ public final class DataReaderTiled extends ImageDataReader {
 
         final int x0 = col0 * tileWidth;
         final int y0 = row0 * tileLength;
-        
+
         final ImageBuilder workingBuilder =
                 new ImageBuilder(workingWidth, workingHeight, false);
-        
+
         for (int iRow = row0; iRow <= row1; iRow++) {
             for (int iCol = col0; iCol <= col1; iCol++) {
                 final int tile = iRow * nColumnsOfTiles + iCol;
@@ -222,12 +221,12 @@ public final class DataReaderTiled extends ImageDataReader {
                 interpretTile(workingBuilder, decompressed, x, y, workingWidth, workingHeight);
             }
         }
-   
+
         if (subImage.x == x0
                 && subImage.y == y0
                 && subImage.width == workingWidth
                 && subImage.height == workingHeight) {
-            return workingBuilder.getBufferedImage(); 
+            return workingBuilder.getBufferedImage();
         }
         return workingBuilder.getSubimage(
             subImage.x - x0,

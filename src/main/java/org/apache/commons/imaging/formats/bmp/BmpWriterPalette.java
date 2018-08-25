@@ -28,7 +28,7 @@ class BmpWriterPalette implements BmpWriter {
     private final SimplePalette palette;
     private final int bitsPerSample;
 
-    public BmpWriterPalette(final SimplePalette palette) {
+    BmpWriterPalette(final SimplePalette palette) {
         this.palette = palette;
 
         if (palette.length() <= 2) {

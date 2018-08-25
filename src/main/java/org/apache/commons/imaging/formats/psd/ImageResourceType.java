@@ -127,13 +127,13 @@ class ImageResourceType {
 
     public final String description;
 
-    public ImageResourceType(final int id, final String description) {
+    ImageResourceType(final int id, final String description) {
         this.from = id;
         this.to = id;
         this.description = description;
     }
 
-    public ImageResourceType(final int id, final int id2, final String description) {
+    ImageResourceType(final int id, final int id2, final String description) {
         this.from = id;
         this.to = id2;
         this.description = description;

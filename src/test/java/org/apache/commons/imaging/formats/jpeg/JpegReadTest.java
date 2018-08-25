@@ -60,12 +60,12 @@ public class JpegReadTest extends JpegBaseTest {
         // TODO only run this tests with images that have metadata...
         //assertNotNull(metadata);
         Debug.debug("metadata", metadata);
-        
+
         Debug.debug("ICC profile", Imaging.getICCProfile(imageFile, params));
 
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, params);
         assertNotNull(imageInfo);
-        
+
         try {
             final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
             assertNotNull(image);

@@ -16,14 +16,17 @@
  */
 package org.apache.commons.imaging.formats.jpeg.segments;
 
+import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
+import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
-
-import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class JfifSegment extends Segment {
     public final int jfifMajorVersion;
@@ -46,7 +49,7 @@ public class JfifSegment extends Segment {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public JfifSegment(final int marker, final int markerLength, final InputStream is) 
+    public JfifSegment(final int marker, final int markerLength, final InputStream is)
             throws ImageReadException, IOException {
         super(marker, markerLength);
 

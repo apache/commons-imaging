@@ -29,7 +29,7 @@ class PamFileInfo extends FileInfo {
     private final int depth;
     private final int maxval;
     private final float scale;
-    private final int bytesPerSample; 
+    private final int bytesPerSample;
     private final boolean hasAlpha;
     private final TupleReader tupleReader;
 
@@ -62,12 +62,12 @@ class PamFileInfo extends FileInfo {
             throw new ImageReadException("Unknown PAM tupletype '" + tupleType + "'");
         }
     }
-    
+
     @Override
     public boolean hasAlpha() {
         return hasAlpha;
     }
-    
+
     @Override
     public int getNumComponents() {
         return depth;
@@ -97,7 +97,7 @@ class PamFileInfo extends FileInfo {
     public ImageInfo.ColorType getColorType() {
         return tupleReader.getColorType();
     }
-    
+
     @Override
     public int getRGB(final WhiteSpaceReader wsr) throws IOException {
         throw new UnsupportedOperationException("PAM files are only ever binary");
@@ -112,31 +112,31 @@ class PamFileInfo extends FileInfo {
         public abstract ImageInfo.ColorType getColorType();
         public abstract int getRGB(InputStream is) throws IOException;
     }
-    
+
     private class GrayscaleTupleReader extends TupleReader {
         private final ImageInfo.ColorType colorType;
-        
-        public GrayscaleTupleReader(final ImageInfo.ColorType colorType) {
+
+        GrayscaleTupleReader(final ImageInfo.ColorType colorType) {
             this.colorType = colorType;
         }
-        
+
         @Override
         public ImageInfo.ColorType getColorType() {
             return colorType;
         }
-        
+
         @Override
         public int getRGB(final InputStream is) throws IOException {
             int sample = readSample(is, bytesPerSample);
             sample = scaleSample(sample, scale, maxval);
-            
+
             int alpha = 0xff;
             if (hasAlpha) {
                 alpha = readSample(is, bytesPerSample);
                 alpha = scaleSample(alpha, scale, maxval);
             }
 
-            return ((0xff & alpha)  << 24) 
+            return ((0xff & alpha)  << 24)
                  | ((0xff & sample) << 16)
                  | ((0xff & sample) << 8)
                  | ((0xff & sample) << 0);
@@ -148,7 +148,7 @@ class PamFileInfo extends FileInfo {
         public ImageInfo.ColorType getColorType() {
             return ImageInfo.ColorType.RGB;
         }
-        
+
         @Override
         public int getRGB(final InputStream is) throws IOException {
             int red = readSample(is, bytesPerSample);
@@ -165,7 +165,7 @@ class PamFileInfo extends FileInfo {
                 alpha = scaleSample(alpha, scale, maxval);
             }
 
-            return ((0xff & alpha) << 24) 
+            return ((0xff & alpha) << 24)
                  | ((0xff & red)   << 16)
                  | ((0xff & green) << 8)
                  | ((0xff & blue)  << 0);

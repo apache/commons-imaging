@@ -46,7 +46,7 @@ public class WriteExifMetadataExample {
 
     /**
      * This example illustrates how to add/update EXIF metadata in a JPEG file.
-     * 
+     *
      * @param jpegImageFile
      *            A source image file.
      * @param dst
@@ -57,10 +57,10 @@ public class WriteExifMetadataExample {
      */
     public void changeExifMetadata(final File jpegImageFile, final File dst)
             throws IOException, ImageReadException, ImageWriteException {
-        
+
         try (FileOutputStream fos = new FileOutputStream(dst);
                 OutputStream os = new BufferedOutputStream(fos);) {
-            
+
             TiffOutputSet outputSet = null;
 
             // note that metadata might be null if no metadata is found.
@@ -133,10 +133,10 @@ public class WriteExifMetadataExample {
     /**
      * This example illustrates how to remove a tag (if present) from EXIF
      * metadata in a JPEG file.
-     * 
+     *
      * In this case, we remove the "aperture" tag from the EXIF metadata if
      * present.
-     * 
+     *
      * @param jpegImageFile
      *            A source image file.
      * @param dst
@@ -209,7 +209,7 @@ public class WriteExifMetadataExample {
 
     /**
      * This example illustrates how to set the GPS values in JPEG EXIF metadata.
-     * 
+     *
      * @param jpegImageFile
      *            A source image file.
      * @param dst

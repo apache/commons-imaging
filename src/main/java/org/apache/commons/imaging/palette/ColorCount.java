@@ -24,7 +24,7 @@ class ColorCount {
     public final int green;
     public final int blue;
 
-    public ColorCount(final int argb) {
+    ColorCount(final int argb) {
         this.argb = argb;
 
         alpha = 0xff & (argb >> 24);

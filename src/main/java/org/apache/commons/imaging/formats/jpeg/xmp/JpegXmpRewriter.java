@@ -42,12 +42,12 @@ public class JpegXmpRewriter extends JpegRewriter {
      * Reads a Jpeg image, removes all XMP XML (by removing the APP1 segment),
      * and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            Image file.
      * @param os
      *            OutputStream to write the image to.
-     * 
+     *
      * @see java.io.File
      * @see java.io.OutputStream
      */
@@ -61,7 +61,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      * Reads a Jpeg image, removes all XMP XML (by removing the APP1 segment),
      * and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            Byte array containing Jpeg image data.
      * @param os
@@ -77,7 +77,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      * Reads a Jpeg image, removes all XMP XML (by removing the APP1 segment),
      * and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            InputStream containing Jpeg image data.
      * @param os
@@ -93,7 +93,7 @@ public class JpegXmpRewriter extends JpegRewriter {
      * Reads a Jpeg image, removes all XMP XML (by removing the APP1 segment),
      * and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param byteSource
      *            ByteSource containing Jpeg image data.
      * @param os
@@ -110,7 +110,7 @@ public class JpegXmpRewriter extends JpegRewriter {
     /**
      * Reads a Jpeg image, replaces the XMP XML and writes the result to a
      * stream.
-     * 
+     *
      * @param src
      *            Byte array containing Jpeg image data.
      * @param os
@@ -127,7 +127,7 @@ public class JpegXmpRewriter extends JpegRewriter {
     /**
      * Reads a Jpeg image, replaces the XMP XML and writes the result to a
      * stream.
-     * 
+     *
      * @param src
      *            InputStream containing Jpeg image data.
      * @param os
@@ -144,7 +144,7 @@ public class JpegXmpRewriter extends JpegRewriter {
     /**
      * Reads a Jpeg image, replaces the XMP XML and writes the result to a
      * stream.
-     * 
+     *
      * @param src
      *            Image file.
      * @param os
@@ -161,7 +161,7 @@ public class JpegXmpRewriter extends JpegRewriter {
     /**
      * Reads a Jpeg image, replaces the XMP XML and writes the result to a
      * stream.
-     * 
+     *
      * @param byteSource
      *            ByteSource containing Jpeg image data.
      * @param os

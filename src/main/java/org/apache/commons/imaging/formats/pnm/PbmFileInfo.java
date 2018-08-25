@@ -30,7 +30,7 @@ class PbmFileInfo extends FileInfo {
     PbmFileInfo(final int width, final int height, final boolean rawbits) {
         super(width, height, rawbits);
     }
-    
+
     @Override
     public boolean hasAlpha() {
         return false;

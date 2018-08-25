@@ -22,7 +22,7 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 
 /**
  * Type of a PNG chunk.
- * 
+ *
  * @see <a href="http://www.w3.org/TR/PNG/#11Chunks">Portable Network Graphics Specification - Chunk specifications</a>
  */
 public enum ChunkType {
@@ -87,7 +87,7 @@ public enum ChunkType {
     final byte[] array;
     final int value;
 
-    private ChunkType() {
+    ChunkType() {
         final char[] chars = name().toCharArray();
         array = name().getBytes(StandardCharsets.UTF_8);
         value = BinaryFunctions.charsToQuad(chars[0], chars[1], chars[2], chars[3]);
