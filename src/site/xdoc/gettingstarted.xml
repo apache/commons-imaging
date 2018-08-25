@@ -54,12 +54,7 @@ limitations under the License.
 <p>
   There are two steps to building Commons Imaging from the latest source:
   <ul>
-      <li>Check out the latest source from <a href="source-repository.html">Subversion</a></li>
-          <ul>
-              <li>1. mkdir imaging-snapshot</li>
-              <li>2. cd imaging-snapshot</li>
-              <li>3. svn checkout <a href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/">https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/</a></li>
-          </ul>
+      <li>Check out the latest source from <a href="scm.html">git</a></li>
       <li>Build using <a href="http://maven.apache.org">Maven 2</a></li>
           <ul>
               <li>1. Install the latest version of Maven</li>
