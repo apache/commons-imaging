@@ -75,8 +75,7 @@
  <!-- ================================================== -->
  <section name="Release Information">
      <subsection name="Help Needed!">
-       There is currently no stable release of Imaging available, because there are a lot of outstanding issues.
-       If you want to help getting out a release you may:
+       If you want to help out you may:
        <ul>
          <li>Look through the <a href="https://issues.apache.org/jira/issues/?jql=project%20%3D%20IMAGING%20AND%20resolution%20%3D%20Unresolved%20AND%20fixVersion%20%3D%20%22Patch%20Needed%22%20ORDER%20BY%20priority%20DESC">issues waiting for a patch</a></li>
          <li>Look through the <em>Needs Work</em> tags in the <a href="taglist.html">TagList report</a></li>
@@ -84,56 +83,6 @@
          <li>Create a PR via <a href="https://github.com/apache/commons-imaging">Github</a></li>
        </ul>
        Make sure to read through our <a href="http://commons.apache.org/patches.html">guide lines for contributing patches</a> before you start coding. This will stream line the process of getting your contributions into the code.
-     </subsection>
-     <subsection name="Latest Imaging SNAPSHOT">
-         <p>There is currently no stable release of Imaging. You may: </p>
-         <ul>
-             <li>Build Imaging from sources by checking out the source code from the <a href="source-repository.html">SVN repository</a>.</li>
-             <li>Pull the latest snapshot from the Apache snapshot repository</li>
-             <!--<li>Download <a href="download_imaging.cgi">1.0</a></li>-->
-         </ul>
-
-       <p>
-         For pulling the latest snapshot via maven you need to add the Apache snapshot repository to your pom.xml:
-         <pre>
-&lt;repository&gt;
-  &lt;id&gt;apache.snapshots&lt;/id&gt;
-  &lt;name&gt;Apache Development Snapshot Repository&lt;/name&gt;
-  &lt;url&gt;https://repository.apache.org/content/repositories/snapshots/&lt;/url&gt;
-  &lt;releases&gt;
-    &lt;enabled&gt;false&lt;/enabled&gt;
-  &lt;/releases&gt;
-  &lt;snapshots&gt;
-    &lt;enabled&gt;true&lt;/enabled&gt;
-  &lt;/snapshots&gt;
-&lt;/repository&gt;                      
-         </pre>
-         Then you can use the SNAPSHOT version of Commons Imaging in your pom.xml:
-         <pre>
-&lt;dependency&gt;
-  &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
-  &lt;artifactId&gt;commons-imaging&lt;/artifactId&gt;
-  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-&lt;/dependency&gt;
-         </pre>
-       </p>
-     </subsection>
-     <subsection name="Final Sanselan Release">
-         <p>The last stable release of Sanselan, before it was renamed to Imaging, was 0.97 You may: </p>
-         <ul>
-             <li>Download <a href="download_sanselan.cgi">0.97</a></li>
-         </ul>
-
-         <p>
-             Alternatively you can pull it from the central Maven repositories:
-             <pre>
-&lt;dependency&gt;
-  &lt;groupId&gt;org.apache.sanselan&lt;/groupId&gt;
-  &lt;artifactId&gt;sanselan&lt;/artifactId&gt;
-  &lt;version&gt;0.97-incubator&lt;/version&gt;
-&lt;/dependency&gt;
-             </pre>
-         </p>
      </subsection>
 
      <p>

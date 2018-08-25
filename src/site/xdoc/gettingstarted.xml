@@ -24,12 +24,9 @@ limitations under the License.
 <!-- ================================================== -->
 <section name="Requirements">
 
-  <strong>Outdated:</strong> This page contains information which is not up to date. Help making this page more useful
-  by contributing a patch.
-
 <p>
   <ul>
-      <li>Commons Imaging requires Java 1.5 or higher.</li>
+      <li>Commons Imaging requires Java 1.7 or higher.</li>
       <li>The questions of porting to J2ME and Android have been raised, but not yet pursued.</li>
       <li>Commons Imaging has no dependencies.</li>
       <li>AWT is required. ImageIO is only required to compile and used optionally
@@ -70,6 +67,23 @@ limitations under the License.
               <li>3. mvn -Prc package</li>
               <li>4. The build will be in the "target" folder.</li>
           </ul>
+  </ul>
+</p>
+</section>
+
+<section name="Logging">
+<p>
+  Commons Imaging uses the JDK java.util.logging (JUL) classes for logging. You can find out more about
+  JUL in its <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/logging/overview.html">documentation</a>,
+  or reading the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/package-summary.html">logging API documentation</a>.
+</p>
+
+<p>
+  <ul>
+    <li>A more verbose output is available by enabling the log level <strong>FINE</strong></li>
+    <li>Information that is useful for debug and troubleshooting is being logged with the <strong>FINEST</strong> log level</li>
+    <li>Some exceptions that are not re-thrown are being logged with the <strong>SEVERE</strong> log level</li>
+    <li>Commons Imaging loggers are created using the class name, so you should be able to filter the log output with the class or package names</li>
   </ul>
 </p>
 </section>
