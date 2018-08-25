@@ -380,7 +380,7 @@ public class IcoImageParser extends ImageParser {
         final int xPelsPerMeter = read4Bytes("xPelsPerMeter", is,
                 "Not a Valid ICO File", getByteOrder()); // XPelsPerMeter (4 bytes), we don?t
                                          // use this (0)
-        final int yPelsPerMeter = read4Bytes("yPelsPerMeter", is, 
+        final int yPelsPerMeter = read4Bytes("yPelsPerMeter", is,
                 "Not a Valid ICO File", getByteOrder()); // YPelsPerMeter (4 bytes), we don?t
                                          // use this (0)
         final int colorsUsed = read4Bytes("colorsUsed", is, "Not a Valid ICO File", getByteOrder()); // ColorsUsed
@@ -437,7 +437,7 @@ public class IcoImageParser extends ImageParser {
             bos.write4Bytes(bitmapSize);
             bos.write4Bytes(0);
             bos.write4Bytes(bitmapPixelsOffset);
-    
+
             bos.write4Bytes(56);
             bos.write4Bytes(width);
             bos.write4Bytes(height / 2);
@@ -636,7 +636,7 @@ public class IcoImageParser extends ImageParser {
         if (params.containsKey(PARAM_KEY_FORMAT)) {
             params.remove(PARAM_KEY_FORMAT);
         }
-        
+
         final PixelDensity pixelDensity = (PixelDensity) params.remove(PARAM_KEY_PIXEL_DENSITY);
 
         if (!params.isEmpty()) {
@@ -798,7 +798,7 @@ public class IcoImageParser extends ImageParser {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     * 
+     *
      * @param byteSource
      *            File containing image data.
      * @param params

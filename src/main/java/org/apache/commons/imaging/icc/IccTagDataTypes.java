@@ -36,11 +36,11 @@ public enum IccTagDataTypes implements IccTagDataType {
         {
             try (InputStream bis = new ByteArrayInputStream(bytes)) {
                 read4Bytes("type_signature", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
-    
+
                 //            bis.setDebug(true);
                 read4Bytes("ignore", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
                 final int stringLength = read4Bytes("stringLength", bis, "ICC: corrupt tag data", ByteOrder.BIG_ENDIAN);
-    
+
                 //            bis.readByteArray("ignore", bytes.length -12, "none");
                 final String s = new String(bytes, 12, stringLength - 1, StandardCharsets.US_ASCII);
                 LOGGER.fine(prefix + "s: '" + s + "'");
@@ -125,12 +125,12 @@ public enum IccTagDataTypes implements IccTagDataType {
         this.name = name;
         this.signature = signature;
     }
-    
+
     @Override
     public String getName() {
         return name;
     }
-    
+
     @Override
     public int getSignature() {
         return signature;

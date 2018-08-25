@@ -59,18 +59,18 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  * class providing logic for identifying and processing data in their
  * own specific format.   Specific implementations are found
  * under the com.apache.commons.imaging.formats package.
- * 
+ *
  * <h3>Application Notes</h3>
- * 
+ *
  * <h4>Format support</h4>
- * 
+ *
  * For the most recent information on format support for the
  * Apache Commons Imaging package, refer to
  * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  * at the main project development web site.
- * 
+ *
  * <h4>On the accuracy of this Javadoc</h4>
- * 
+ *
  * The original authors of this class did not supply documentation.
  * The Javadoc for this class is based on inspection of the
  * source code.  In some cases, the purpose and usage for particular
@@ -78,9 +78,9 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  * the intentions of the original. Therefore, you should not assume
  * that the documentation is perfect, especially in the more obscure
  * and specialized areas of implementation.
- * 
+ *
  * <h4>The "Map params" argument</h4>
- * 
+ *
  * Many of the methods specified by this class accept an argument of
  * type Map giving a list of parameters to be used when processing an
  * image. For example, some of the output formats permit the specification
@@ -93,7 +93,7 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  * Therefore, a prudent programmer will always supply an valid, though
  * empty instance of a Map implementation when calling such methods.
  * Generally, the java HashMap class is useful for this purpose.
- * 
+ *
  * <p>Additionally, developers creating or enhancing classes derived
  * from ImageParser are encouraged to include such checks in their code.
  */
@@ -153,7 +153,7 @@ public abstract class ImageParser extends BinaryFileParser {
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
      * to process the specified byte source.
-     * 
+     *
      * <p>The params argument provides a mechanism for individual
      * implementations to pass optional information into the parser.
      * Not all formats will require this capability.  Because the
@@ -200,7 +200,7 @@ public abstract class ImageParser extends BinaryFileParser {
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
      * to process the specified data.
-     * 
+     *
      * <p>The params argument provides a mechanism for individual
      * implementations to pass optional information into the parser.
      * Not all formats will require this capability.  Because the
@@ -248,7 +248,7 @@ public abstract class ImageParser extends BinaryFileParser {
      * ImageParser implementations are expected to return a valid
      * IImageMetadata object or to throw an ImageReadException if unable
      * to process the specified data.
-     * 
+     *
      * <p>The params argument provides a mechanism for individual
      * implementations to pass optional information into the parser.
      * Not all formats will require this capability.  Because the
@@ -286,7 +286,7 @@ public abstract class ImageParser extends BinaryFileParser {
      * ImageParser implementations are expected to return a valid
      * ImageInfo object or to throw an ImageReadException if unable
      * to process the specified data.
-     * 
+     *
      * <p>The params argument provides a mechanism for individual
      * implementations to pass optional information into the parser.
      * Not all formats will require this capability.  Because the
@@ -559,7 +559,7 @@ public abstract class ImageParser extends BinaryFileParser {
     /**
      * Writes the content of a BufferedImage to the specified output
      * stream.
-     * 
+     *
      * <p>The params argument provides a mechanism for individual
      * implementations to pass optional information into the parser.
      * Not all formats will support this capability.  Currently,

@@ -81,7 +81,7 @@ abstract class ScanExpediter {
 
     public abstract void drive() throws ImageReadException, IOException;
 
-    int getRGB(final BitParser bitParser, final int pixelIndexInScanline) 
+    int getRGB(final BitParser bitParser, final int pixelIndexInScanline)
             throws ImageReadException, IOException {
 
         switch (pngColorType) {
@@ -184,7 +184,7 @@ abstract class ScanExpediter {
             case PAETH:
                 return new ScanlineFilterPaeth(bytesPerPixel);
         }
-        
+
         return null;
     }
 

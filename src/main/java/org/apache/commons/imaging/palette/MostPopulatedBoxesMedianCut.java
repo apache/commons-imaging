@@ -42,9 +42,9 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
         if (colorGroup == null) {
             return false;
         }
-        
-        
-        
+
+
+
         double bestScore = Double.MAX_VALUE;
         ColorComponent bestColorComponent = null;
         int bestMedianIndex = -1;
@@ -59,9 +59,9 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
             int medianIndex;
             for (medianIndex = 0; medianIndex < colorGroup.colorCounts.size(); medianIndex++) {
                 final ColorCount colorCount = colorGroup.colorCounts.get(medianIndex);
-    
+
                 newCount += colorCount.count;
-    
+
                 if (newCount < countHalf) {
                     oldCount = newCount;
                 } else {
@@ -100,7 +100,7 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
         if (bestColorComponent == null) {
             return false;
         }
-        
+
         Collections.sort(colorGroup.colorCounts, new ColorComparer(bestColorComponent));
         final List<ColorCount> lowerColors = new ArrayList<>(
                 colorGroup.colorCounts.subList(0, bestMedianIndex + 1));
@@ -112,7 +112,7 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
         colorGroups.remove(colorGroup);
         colorGroups.add(lowerGroup);
         colorGroups.add(upperGroup);
-        
+
         final ColorCount medianValue = colorGroup.colorCounts.get(bestMedianIndex);
         int limit;
         switch (bestColorComponent) {
@@ -134,16 +134,16 @@ public class MostPopulatedBoxesMedianCut implements MedianCut {
         colorGroup.cut = new ColorGroupCut(lowerGroup, upperGroup, bestColorComponent, limit);
         return true;
     }
-    
+
     private static class ColorComparer implements Comparator<ColorCount>, Serializable {
         private static final long serialVersionUID = 1L;
-        
+
         private final ColorComponent colorComponent;
-        
+
         public ColorComparer(final ColorComponent colorComponent) {
             this.colorComponent = colorComponent;
         }
-        
+
         @Override
         public int compare(final ColorCount c1, final ColorCount c2) {
             switch (colorComponent) {

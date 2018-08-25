@@ -498,7 +498,7 @@ public class PcxImageParser extends ImageParser {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     * 
+     *
      * @param byteSource
      *            File containing image data.
      * @param params

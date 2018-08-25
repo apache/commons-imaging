@@ -35,7 +35,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
  * http://partners.adobe.com/public/developer/en/tiff/TIFFPM6.pdf
  */
 public final class AdobePageMaker6TagConstants {
-    
+
     public static final TagInfoLongOrIFD TIFF_TAG_SUB_IFD = new TagInfoLongOrIFD(
             "SubIFDs",  0x014a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN, true);
@@ -78,7 +78,7 @@ public final class AdobePageMaker6TagConstants {
                     TIFF_TAG_INDEXED,
                     TIFF_TAG_OPIPROXY,
                     TIFF_TAG_IMAGE_ID));
-    
+
     private AdobePageMaker6TagConstants() {
     }
 }

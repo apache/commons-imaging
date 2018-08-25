@@ -26,7 +26,7 @@ public class TagInfoByte extends TagInfo {
     public TagInfoByte(final String name, final int tag, final TiffDirectoryType directoryType) {
         super(name, tag, FieldType.BYTE, 1, directoryType);
     }
-    
+
     public TagInfoByte(final String name, final int tag, final List<FieldType> fieldTypes,
             final TiffDirectoryType directoryType) {
         super(name, tag, fieldTypes, 1, directoryType);

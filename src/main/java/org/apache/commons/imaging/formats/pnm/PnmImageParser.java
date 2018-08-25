@@ -90,16 +90,16 @@ public class PnmImageParser extends ImageParser {
         if (identifier1 != PnmConstants.PNM_PREFIX_BYTE) {
             throw new ImageReadException("PNM file has invalid prefix byte 1");
         }
-        
+
         final WhiteSpaceReader wsr = new WhiteSpaceReader(is);
-        
+
         if (identifier2 == PnmConstants.PBM_TEXT_CODE
                 || identifier2 == PnmConstants.PBM_RAW_CODE
                 || identifier2 == PnmConstants.PGM_TEXT_CODE
                 || identifier2 == PnmConstants.PGM_RAW_CODE
                 || identifier2 == PnmConstants.PPM_TEXT_CODE
                 || identifier2 == PnmConstants.PPM_RAW_CODE) {
-            
+
             final int width;
             try {
               width = Integer.parseInt(wsr.readtoWhiteSpace());
@@ -112,7 +112,7 @@ public class PnmImageParser extends ImageParser {
             } catch (final NumberFormatException e) {
               throw new ImageReadException("Invalid height specified." , e);
             }
-    
+
             if (identifier2 == PnmConstants.PBM_TEXT_CODE) {
                 return new PbmFileInfo(width, height, false);
             } else if (identifier2 == PnmConstants.PBM_RAW_CODE) {
@@ -143,7 +143,7 @@ public class PnmImageParser extends ImageParser {
             boolean seenMaxVal = false;
             final StringBuilder tupleType = new StringBuilder();
             boolean seenTupleType = false;
-            
+
             // Advance to next line
             wsr.readLine();
             String line;
@@ -190,7 +190,7 @@ public class PnmImageParser extends ImageParser {
                     throw new ImageReadException("Invalid PAM file header type " + type);
                 }
             }
-            
+
             if (!seenWidth) {
                 throw new ImageReadException("PAM header has no WIDTH");
             } else if (!seenHeight) {
@@ -202,7 +202,7 @@ public class PnmImageParser extends ImageParser {
             } else if (!seenTupleType) {
                 throw new ImageReadException("PAM header has no TUPLTYPE");
             }
-            
+
             return new PamFileInfo(width, height, depth, maxVal, tupleType.toString());
         } else {
             throw new ImageReadException("PNM file has invalid prefix byte 2");
@@ -321,7 +321,7 @@ public class PnmImageParser extends ImageParser {
             throws ImageWriteException, IOException {
         PnmWriter writer = null;
         boolean useRawbits = true;
-        
+
         if (params != null) {
             final Object useRawbitsParam = params.get(PARAM_KEY_PNM_RAWBITS);
             if (useRawbitsParam != null) {
@@ -338,7 +338,7 @@ public class PnmImageParser extends ImageParser {
                     writer = new PgmWriter(useRawbits);
                 } else if (subtype.equals(ImageFormats.PPM)) {
                     writer = new PpmWriter(useRawbits);
-                } else if (subtype.equals(ImageFormats.PAM)) { 
+                } else if (subtype.equals(ImageFormats.PAM)) {
                     writer = new PamWriter();
                 }
             }
@@ -348,7 +348,7 @@ public class PnmImageParser extends ImageParser {
             final boolean hasAlpha = new PaletteFactory().hasTransparency(src);
             if (hasAlpha) {
                 writer = new PamWriter();
-            } else {   
+            } else {
                 writer = new PpmWriter(useRawbits);
             }
         }
@@ -369,7 +369,7 @@ public class PnmImageParser extends ImageParser {
         if (params.containsKey(PARAM_KEY_PNM_RAWBITS)) {
             params.remove(PARAM_KEY_PNM_RAWBITS);
         }
-        
+
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
@@ -381,7 +381,7 @@ public class PnmImageParser extends ImageParser {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     * 
+     *
      * @param byteSource
      *            File containing image data.
      * @param params

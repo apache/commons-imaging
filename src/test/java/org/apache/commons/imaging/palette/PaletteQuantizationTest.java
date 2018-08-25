@@ -35,7 +35,7 @@ public class PaletteQuantizationTest extends ImagingTest {
             }
         }
         checkPaletteDetails(whiteImage, 10, 1);
-        
+
         final BufferedImage whiteAndBlackImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < whiteImage.getHeight(); y++) {
             for (int x = 0; x < 5; x++) {
@@ -46,7 +46,7 @@ public class PaletteQuantizationTest extends ImagingTest {
             }
         }
         checkPaletteDetails(whiteAndBlackImage, 10, 2);
-        
+
         final BufferedImage rainbowImage = new BufferedImage(9, 10, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < whiteImage.getHeight(); y++) {
             for (int x = 0; x < 3; x++) {
@@ -62,7 +62,7 @@ public class PaletteQuantizationTest extends ImagingTest {
         checkPaletteDetails(rainbowImage, 10, 3);
         checkPaletteDetails(rainbowImage, 2, 2);
     }
-    
+
     private void checkPaletteDetails(final BufferedImage image, final int limit, final int expectedSize) throws ImageWriteException {
         final PaletteFactory paletteFactory = new PaletteFactory();
         Palette palette;
@@ -85,14 +85,14 @@ public class PaletteQuantizationTest extends ImagingTest {
         if (exact) {
             checkPixelsAreIdentical(image, palette);
         }
-        
+
         palette = paletteFactory.makeQuantizedRgbPalette(image, limit);
         assertEquals(expectedSize, palette.length());
         //checkUniqueColors(image, palette);
         if (exact) {
             //checkDithering(image, palette);
         }
-        
+
         final MedianCutQuantizer medianCutQuantizer = new MedianCutQuantizer(true);
         palette = medianCutQuantizer.process(
                 image, limit, new MostPopulatedBoxesMedianCut());
@@ -102,7 +102,7 @@ public class PaletteQuantizationTest extends ImagingTest {
             checkPixelsAreIdentical(image, palette);
         }
     }
-    
+
     private void checkUniqueColors(final BufferedImage src, final Palette palette) throws ImageWriteException {
         final BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
         dst.getGraphics().drawImage(src, 0, 0, src.getWidth(), src.getHeight(), null);
@@ -110,7 +110,7 @@ public class PaletteQuantizationTest extends ImagingTest {
         final Palette ditheredPalette = new PaletteFactory().makeExactRgbPaletteSimple(dst, palette.length() * 2);
         assertEquals(palette.length(), ditheredPalette.length());
     }
-    
+
     private void checkPixelsAreIdentical(final BufferedImage src, final Palette palette) throws ImageWriteException {
         final BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
         dst.getGraphics().drawImage(src, 0, 0, src.getWidth(), src.getHeight(), null);

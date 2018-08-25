@@ -77,7 +77,7 @@ final class TiffTags {
 
         return Collections.unmodifiableList(result);
     }
-    
+
     private static Map<Integer, List<TagInfo>> makeTagMap(
             final List<TagInfo> tags) {
         // make sure to use the thread-safe version; this is shared state.

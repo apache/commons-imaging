@@ -28,7 +28,7 @@ public class ComSegment extends GenericSegment {
     public ComSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength, is);
     }
-    
+
     /**
      * Returns a copy of the comment.
      * @return a copy of the comment's bytes

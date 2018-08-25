@@ -25,18 +25,18 @@
  * in Apache Sanselan.
  *   This increase is attained because ImageBuilder is a highly specialized
  * class that does not need to perform the general-purpose logic required
- * for BufferedImage.  If you need to modify this class to add new 
+ * for BufferedImage.  If you need to modify this class to add new
  * image formats or functionality, keep in mind that some of its methods
- * are invoked literally millions of times when building an image. 
+ * are invoked literally millions of times when building an image.
  * Since even the introduction of something as small as a single conditional
  * inside of setRGB could result in a noticeable increase in the
  * time to read a file, changes should be made with care.
  *    During development, I experimented with inlining the setRGB logic
  * in some of the code that uses it. This approach did not significantly
  * improve performance, leading me to speculate that the Java JIT compiler
- * might have inlined the method at run time.  Further investigation 
+ * might have inlined the method at run time.  Further investigation
  * is required.
- * 
+ *
  */
 package org.apache.commons.imaging.common;
 
@@ -74,7 +74,7 @@ public class ImageBuilder {
         if (height <= 0) {
             throw new RasterFormatException("zero or negative height value");
         }
-            
+
         data = new int[width * height];
         this.width = width;
         this.height = height;
@@ -130,7 +130,7 @@ public class ImageBuilder {
     public BufferedImage getBufferedImage() {
         return makeBufferedImage(data, width, height, hasAlpha);
     }
-    
+
     /**
      * Gets a subimage from the ImageBuilder using the specified parameters.
      * If the parameters specify a rectangular region that is not entirely
@@ -138,15 +138,15 @@ public class ImageBuilder {
      * throw a RasterFormatException.  This runtime-exception behavior
      * is consistent with the behavior of the getSubimage method
      * provided by BufferdImage.
-     * @param x the X coordinate of the upper-left corner of the 
+     * @param x the X coordinate of the upper-left corner of the
      *          specified rectangular region
-     * @param y the Y coordinate of the upper-left corner of the 
+     * @param y the Y coordinate of the upper-left corner of the
      *          specified rectangular region
      * @param w the width of the specified rectangular region
      * @param h the height of the specified rectangular region
      * @return a BufferedImage that constructed from the deta within the
      *           specified rectangular region
-     * @throws RasterFormatException f the specified area is not contained 
+     * @throws RasterFormatException f the specified area is not contained
      *         within this ImageBuilder
      */
     public BufferedImage getSubimage(final int x, final int y, final int w, final int h) {
@@ -172,7 +172,7 @@ public class ImageBuilder {
         }
 
 
-        // Transcribe the data to an output image array  
+        // Transcribe the data to an output image array
         final int[] argb = new int[w * h];
         int k = 0;
         for (int iRow = 0; iRow < h; iRow++) {

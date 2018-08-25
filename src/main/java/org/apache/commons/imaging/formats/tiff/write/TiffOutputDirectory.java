@@ -568,7 +568,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
      * If there is no field matching the given TagInfo, null will be returned.
      * </p>
      *
-     * @param tagInfo the TagInfo specifying the field 
+     * @param tagInfo the TagInfo specifying the field
      * @return the field matching tagInfo or null, if the field isn't present
      * @see #findField(int)
      */
@@ -583,7 +583,7 @@ public final class TiffOutputDirectory extends TiffOutputItem {
      * If there is no field matching the given tag, null will be returned.
      * </p>
      *
-     * @param tag the tag specifying the field 
+     * @param tag the tag specifying the field
      * @return the field matching tagInfo or null, if the field isn't present
      * @see #findField(TagInfo)
      */

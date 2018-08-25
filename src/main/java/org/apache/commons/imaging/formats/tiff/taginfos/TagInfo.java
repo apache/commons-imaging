@@ -76,7 +76,7 @@ public class TagInfo {
     }
 
     /**
-     * 
+     *
      * @param entry the TIFF field whose value to return
      * @return the value of the TIFF field
      * @throws ImageReadException thrown by subclasses

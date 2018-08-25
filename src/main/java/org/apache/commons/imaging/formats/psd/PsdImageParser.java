@@ -198,7 +198,7 @@ public class PsdImageParser extends ImageParser {
                     "Not a Valid PSD File");
             available -= nameLength;
             if (((nameLength + 1) % 2) != 0) {
-                //final int NameDiscard = 
+                //final int NameDiscard =
                 readByte("NameDiscard", is,
                         "Not a Valid PSD File");
                 available -= 1;
@@ -660,7 +660,7 @@ public class PsdImageParser extends ImageParser {
             throw new ImageReadException("Unknown Compression: "
                     + imageContents.Compression);
         }
-        
+
         try (InputStream is = getInputStream(byteSource, PSD_SECTION_IMAGE_DATA)) {
             fDataReader.readData(is, result, imageContents, this);
 
@@ -676,7 +676,7 @@ public class PsdImageParser extends ImageParser {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     * 
+     *
      * @param byteSource
      *            File containing image data.
      * @param params

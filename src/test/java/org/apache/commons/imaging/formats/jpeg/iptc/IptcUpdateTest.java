@@ -71,10 +71,10 @@ public class IptcUpdateTest extends IptcBaseTest {
         assertNotNull(metadata);
 
         final File noIptcFile = removeIptc(byteSource);
-        
+
         final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
                 new ByteSourceFile(noIptcFile), params);
-        
+
         // FIXME should either be null or empty
         assertTrue(outMetadata == null
                 || outMetadata.getItems().size() == 0);

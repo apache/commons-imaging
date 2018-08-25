@@ -45,7 +45,7 @@ public final class AdobePhotoshopTagConstants {
                     EXIF_TAG_JPEGTABLES,
                     EXIF_TAG_IMAGE_SOURCE_DATA
             ));
-    
+
     private AdobePhotoshopTagConstants() {
     }
 }

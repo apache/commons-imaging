@@ -19,7 +19,7 @@ package org.apache.commons.imaging.formats.png;
 public abstract class PngText {
     public final String keyword;
     public final String text;
-    
+
     public PngText(final String keyword, final String text) {
         this.keyword = keyword;
         this.text = text;

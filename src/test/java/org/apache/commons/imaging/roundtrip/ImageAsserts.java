@@ -31,7 +31,7 @@ final class ImageAsserts {
 
     private ImageAsserts() {
     }
-    
+
     static void assertEquals(final BufferedImage a, final BufferedImage b) {
         assertEquals(a, b, 0);
     }

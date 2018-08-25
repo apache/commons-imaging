@@ -127,7 +127,7 @@ public final class TiffOutputSet {
 
     /**
      * A convenience method to update GPS values in EXIF metadata.
-     * 
+     *
      * @param longitude
      *            Longitude in degrees E, negative values are W.
      * @param latitude

@@ -92,7 +92,7 @@ public class JpegUtils extends BinaryFileParser {
                     return;
                 }
             }
-            
+
             Debug.debug(Integer.toString(markerCount) + " markers");
         }
     }

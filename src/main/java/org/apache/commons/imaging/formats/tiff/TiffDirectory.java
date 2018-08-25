@@ -73,7 +73,7 @@ public class TiffDirectory extends TiffElement {
         this.entries = Collections.unmodifiableList(entries);
         this.nextDirectoryOffset = nextDirectoryOffset;
     }
-    
+
     public String description() {
         return TiffDirectory.description(type);
     }

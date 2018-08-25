@@ -2,9 +2,9 @@
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -173,7 +173,7 @@ public class XbmImageParser extends ImageParser {
             return xbmParseResult;
         }
     }
-    
+
     private static int parseCIntegerLiteral(String value) {
         if (value.startsWith("0")) {
             if (value.length() >= 2) {
@@ -300,7 +300,7 @@ public class XbmImageParser extends ImageParser {
         final ColorModel colorModel = new IndexColorModel(1, 2, palette, 0, false, -1, DataBuffer.TYPE_BYTE);
         final DataBufferByte dataBuffer = new DataBufferByte(imageData, imageData.length);
         final WritableRaster raster = Raster.createPackedRaster(dataBuffer, xbmHeader.width, xbmHeader.height, 1, null);
-        
+
         return new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), new Properties());
     }
 
@@ -414,7 +414,7 @@ public class XbmImageParser extends ImageParser {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     * 
+     *
      * @param byteSource
      *            File containing image data.
      * @param params

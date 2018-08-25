@@ -49,7 +49,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
  * <p>
  * <p>
  * See the source of the ExifMetadataUpdateExample class for example usage.
- * 
+ *
  * @see <a
  *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/WriteExifMetadataExample.java">org.apache.commons.imaging.examples.WriteExifMetadataExample</a>
  */
@@ -65,7 +65,7 @@ public class ExifRewriter extends BinaryFileParser {
     /**
      * Constructor.
      * <p>
-     * 
+     *
      * @param byteOrder
      *            byte order of EXIF segment.
      */
@@ -199,12 +199,12 @@ public class ExifRewriter extends BinaryFileParser {
      * Reads a Jpeg image, removes all EXIF metadata (by removing the APP1
      * segment), and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            Image file.
      * @param os
      *            OutputStream to write the image to.
-     * 
+     *
      * @see java.io.File
      * @see java.io.OutputStream
      * @see java.io.File
@@ -220,7 +220,7 @@ public class ExifRewriter extends BinaryFileParser {
      * Reads a Jpeg image, removes all EXIF metadata (by removing the APP1
      * segment), and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            Byte array containing Jpeg image data.
      * @param os
@@ -236,7 +236,7 @@ public class ExifRewriter extends BinaryFileParser {
      * Reads a Jpeg image, removes all EXIF metadata (by removing the APP1
      * segment), and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param src
      *            InputStream containing Jpeg image data.
      * @param os
@@ -252,7 +252,7 @@ public class ExifRewriter extends BinaryFileParser {
      * Reads a Jpeg image, removes all EXIF metadata (by removing the APP1
      * segment), and writes the result to a stream.
      * <p>
-     * 
+     *
      * @param byteSource
      *            ByteSource containing Jpeg image data.
      * @param os
@@ -283,7 +283,7 @@ public class ExifRewriter extends BinaryFileParser {
      * update, which is a serious issue, since all EXIF data must fit in a
      * single APP1 segment of the Jpeg image.
      * <p>
-     * 
+     *
      * @param src
      *            Image file.
      * @param os
@@ -309,7 +309,7 @@ public class ExifRewriter extends BinaryFileParser {
      * update, which is a serious issue, since all EXIF data must fit in a
      * single APP1 segment of the Jpeg image.
      * <p>
-     * 
+     *
      * @param src
      *            Byte array containing Jpeg image data.
      * @param os
@@ -335,7 +335,7 @@ public class ExifRewriter extends BinaryFileParser {
      * update, which is a serious issue, since all EXIF data must fit in a
      * single APP1 segment of the Jpeg image.
      * <p>
-     * 
+     *
      * @param src
      *            InputStream containing Jpeg image data.
      * @param os
@@ -361,7 +361,7 @@ public class ExifRewriter extends BinaryFileParser {
      * update, which is a serious issue, since all EXIF data must fit in a
      * single APP1 segment of the Jpeg image.
      * <p>
-     * 
+     *
      * @param byteSource
      *            ByteSource containing Jpeg image data.
      * @param os
@@ -406,7 +406,7 @@ public class ExifRewriter extends BinaryFileParser {
      * entire EXIF segment, ignoring the possibility that it may be discarding
      * data it couldn't parse (such as Maker Notes).
      * <p>
-     * 
+     *
      * @param src
      *            Byte array containing Jpeg image data.
      * @param os
@@ -429,7 +429,7 @@ public class ExifRewriter extends BinaryFileParser {
      * entire EXIF segment, ignoring the possibility that it may be discarding
      * data it couldn't parse (such as Maker Notes).
      * <p>
-     * 
+     *
      * @param src
      *            InputStream containing Jpeg image data.
      * @param os
@@ -452,7 +452,7 @@ public class ExifRewriter extends BinaryFileParser {
      * entire EXIF segment, ignoring the possibility that it may be discarding
      * data it couldn't parse (such as Maker Notes).
      * <p>
-     * 
+     *
      * @param src
      *            Image file.
      * @param os
@@ -475,7 +475,7 @@ public class ExifRewriter extends BinaryFileParser {
      * entire EXIF segment, ignoring the possibility that it may be discarding
      * data it couldn't parse (such as Maker Notes).
      * <p>
-     * 
+     *
      * @param byteSource
      *            ByteSource containing Jpeg image data.
      * @param os

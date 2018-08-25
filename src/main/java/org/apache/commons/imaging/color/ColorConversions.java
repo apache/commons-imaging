@@ -21,7 +21,7 @@ public final class ColorConversions {
     private static final double REF_X = 95.047;  // Observer= 2°, Illuminant= D65
     private static final double REF_Y = 100.000;
     private static final double REF_Z = 108.883;
-    
+
     private ColorConversions() {
     }
 
@@ -316,7 +316,7 @@ public final class ColorConversions {
         // Debug.debug("del_Max", del_Max);
         if (del_Max == 0) {
             // This is a gray, no chroma...
-        
+
             H = 0; // HSL results = 0 ÷ 1
             S = 0;
         } else {

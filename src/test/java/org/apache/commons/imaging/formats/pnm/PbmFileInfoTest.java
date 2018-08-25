@@ -34,7 +34,7 @@ public class PbmFileInfoTest{
       InputStream inputStream = new ByteArrayInputStream(byteArray);
       inputStream.read(byteArray);
 
-      try { 
+      try {
         pbmFileInfo.getRGB(inputStream);
         fail("Expecting exception: IOException");
       } catch(IOException e) {

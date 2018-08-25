@@ -2,9 +2,9 @@
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -72,7 +72,7 @@ public class XpmImageParser extends ImageParser {
             if (colorNames != null) {
                 return;
             }
-    
+
             try {
                 final InputStream rgbTxtStream =
                         XpmImageParser.class.getResourceAsStream("rgb.txt");
@@ -361,7 +361,7 @@ public class XpmImageParser extends ImageParser {
             return 0x00000000;
         }
     }
-    
+
     private void populatePaletteEntry(final PaletteEntry paletteEntry, final String key, final String color) throws ImageReadException {
         if ("m".equals(key)) {
             paletteEntry.monoArgb = parseColor(color);
@@ -399,11 +399,11 @@ public class XpmImageParser extends ImageParser {
             for (int j = 0; j < tokens.length; j++) {
                 final String token = tokens[j];
                 boolean isKey = false;
-                if (previousKeyIndex < (j - 1) 
+                if (previousKeyIndex < (j - 1)
                         && "m".equals(token)
-                        || "g4".equals(token) 
+                        || "g4".equals(token)
                         || "g".equals(token)
-                        || "c".equals(token) 
+                        || "c".equals(token)
                         || "s".equals(token)) {
                     isKey = true;
                 }
@@ -724,7 +724,7 @@ public class XpmImageParser extends ImageParser {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     * 
+     *
      * @param byteSource
      *            File containing image data.
      * @param params

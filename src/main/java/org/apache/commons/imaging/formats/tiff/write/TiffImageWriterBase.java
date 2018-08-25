@@ -67,7 +67,7 @@ public abstract class TiffImageWriterBase {
             throws ImageWriteException {
         final List<TiffOutputDirectory> directories = outputSet.getDirectories();
 
-        if (directories.isEmpty()) { 
+        if (directories.isEmpty()) {
             throw new ImageWriteException("No directories.");
         }
 
@@ -456,7 +456,7 @@ public abstract class TiffImageWriterBase {
                         (short) 0);
                 directory.add(TiffTagConstants.TIFF_TAG_XRESOLUTION,
                         RationalNumber.valueOf(pixelDensity.getRawHorizontalDensity()));
-                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION, 
+                directory.add(TiffTagConstants.TIFF_TAG_YRESOLUTION,
                         RationalNumber.valueOf(pixelDensity.getRawVerticalDensity()));
             } else if (pixelDensity.isInInches()) {
                 directory.add(TiffTagConstants.TIFF_TAG_RESOLUTION_UNIT,

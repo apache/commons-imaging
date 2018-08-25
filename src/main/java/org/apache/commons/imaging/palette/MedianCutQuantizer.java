@@ -81,7 +81,7 @@ public class MedianCutQuantizer {
         }
         throw new Error("");
     }
-    
+
     public Palette process(final BufferedImage image, final int maxColors,
             final MedianCut medianCut)
             throws ImageWriteException {

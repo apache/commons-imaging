@@ -79,7 +79,7 @@ public final class T4AndT6Compression {
             throws ImageWriteException {
         int color = WHITE;
         int runLength = 0;
-        
+
         for (int x = 0; x < width; x++) {
             try {
                 final int nextColor = inputStream.readBits(1);
@@ -97,7 +97,7 @@ public final class T4AndT6Compression {
                 throw new ImageWriteException("Error reading image to compress", ioException);
             }
         }
-        
+
         writeRunLength(outputStream, runLength, color);
     }
 
@@ -105,7 +105,7 @@ public final class T4AndT6Compression {
      * Compressed with the "Modified Huffman" encoding of section 10 in the
      * TIFF6 specification. No EOLs, no RTC, rows are padded to end on a byte
      * boundary.
-     * 
+     *
      * @param uncompressed
      * @param width
      * @param height
@@ -129,7 +129,7 @@ public final class T4AndT6Compression {
      * Decompresses the "Modified Huffman" encoding of section 10 in the TIFF6
      * specification. No EOLs, no RTC, rows are padded to end on a byte
      * boundary.
-     * 
+     *
      * @param compressed
      * @param width
      * @param height
@@ -152,7 +152,7 @@ public final class T4AndT6Compression {
                     color = 1 - color;
                     rowLength += runLength;
                 }
-    
+
                 if (rowLength == width) {
                     inputStream.flushCache();
                     outputStream.flush();
@@ -200,7 +200,7 @@ public final class T4AndT6Compression {
     /**
      * Decompresses T.4 1D encoded data. EOL at the beginning and after each
      * row, can be preceded by fill bits to fit on a byte boundary, no RTC.
-     * 
+     *
      * @param compressed
      * @param width
      * @param height
@@ -230,7 +230,7 @@ public final class T4AndT6Compression {
                 } catch (final HuffmanTreeException huffmanException) {
                     throw new ImageReadException("Decompression error", huffmanException);
                 }
-    
+
                 if (rowLength == width) {
                     outputStream.flush();
                 } else if (rowLength > width) {
@@ -241,7 +241,7 @@ public final class T4AndT6Compression {
             return ret;
         }
     }
- 
+
     private static int compressT(final int a0, final int a1, final int b1, final BitArrayOutputStream outputStream,final  int codingA0Color, final int[] codingLine ){
           final int a1b1 = a1 - b1;
           if (-3 <= a1b1 && a1b1 <= 3) {
@@ -263,7 +263,7 @@ public final class T4AndT6Compression {
               }
               entry.writeBits(outputStream);
               return a1;
-              
+
           } else {
               final int a2 = nextChangingElement(codingLine, 1 - codingA0Color, a1 + 1);
               final int a0a1 = a1 - a0;
@@ -287,7 +287,7 @@ public final class T4AndT6Compression {
         } else {
             T4_T6_Tables.EOL.writeBits(outputStream);
         }
-        
+
         for (int y = 0; y < height; y++) {
             if (kCounter > 0) {
                 // 2D
@@ -349,7 +349,7 @@ public final class T4AndT6Compression {
             }
             inputStream.flushCache();
         }
-        
+
         return outputStream.toByteArray();
     }
 
@@ -358,7 +358,7 @@ public final class T4AndT6Compression {
      * row, can be preceded by fill bits to fit on a byte boundary, and is
      * succeeded by a tag bit determining whether the next line is encoded using
      * 1D or 2D. No RTC.
-     * 
+     *
      * @param compressed
      * @param width
      * @param height
@@ -458,7 +458,7 @@ public final class T4AndT6Compression {
                 throw new ImageReadException("Unrecoverable row length error in image row " + y);
             }
         }
-        
+
         return outputStream.toByteArray();
     }
 
@@ -520,7 +520,7 @@ public final class T4AndT6Compression {
      * Decompress T.6 encoded data. No EOLs, except for 2 consecutive ones at
      * the end (the EOFB, end of fax block). No RTC. No fill bits anywhere. All
      * data is 2D encoded.
-     * 
+     *
      * @param compressed
      * @param width
      * @param height
@@ -598,7 +598,7 @@ public final class T4AndT6Compression {
                 throw new ImageReadException("Unrecoverable row length error in image row " + y);
             }
         }
-        
+
         return outputStream.toByteArray();
     }
 
@@ -657,11 +657,11 @@ public final class T4AndT6Compression {
                 first = middle + 1;
             }
         } while (first < last);
-        
+
         return entries[first];
     }
 
-    private static int readTotalRunLength(final BitInputStreamFlexible bitStream, 
+    private static int readTotalRunLength(final BitInputStreamFlexible bitStream,
             final int color) throws ImageReadException {
         try {
             int totalLength = 0;
@@ -693,7 +693,7 @@ public final class T4AndT6Compression {
                 && line[position] == currentColour; position++) {
             // noop
         }
-        
+
         return position < line.length ? position : line.length;
     }
 

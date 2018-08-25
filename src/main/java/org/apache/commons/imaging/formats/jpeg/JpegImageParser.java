@@ -68,7 +68,7 @@ public class JpegImageParser extends ImageParser {
 
     private static final String DEFAULT_EXTENSION = ".jpg";
     private static final String[] ACCEPTED_EXTENSIONS = { ".jpg", ".jpeg", };
-    
+
     public JpegImageParser() {
         setByteOrder(ByteOrder.BIG_ENDIAN);
         // setDebug(true);
@@ -525,7 +525,7 @@ public class JpegImageParser extends ImageParser {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     * 
+     *
      * @param byteSource
      *            File containing image data.
      * @param params
@@ -702,7 +702,7 @@ public class JpegImageParser extends ImageParser {
         if (app14Segments != null && !app14Segments.isEmpty()) {
             app14Segment = (App14Segment) app14Segments.get(0);
         }
-        
+
         // JfifSegment fTheJFIFSegment = (JfifSegment) findSegment(segments,
         // kJFIFMarker);
 
@@ -814,14 +814,14 @@ public class JpegImageParser extends ImageParser {
 
         boolean transparent = false;
         final boolean usesPalette = false; // TODO: inaccurate.
-        
+
         // See http://docs.oracle.com/javase/6/docs/api/javax/imageio/metadata/doc-files/jpeg_metadata.html#color
         ImageInfo.ColorType colorType = ImageInfo.ColorType.UNKNOWN;
         // Some images have both JFIF/APP0 and APP14.
         // JFIF is meant to win but in them APP14 is clearly right, so make it win.
         if (app14Segment != null && app14Segment.isAdobeJpegSegment()) {
             final int colorTransform = app14Segment.getAdobeColorTransform();
-            if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_UNKNOWN) { 
+            if (colorTransform == App14Segment.ADOBE_COLOR_TRANSFORM_UNKNOWN) {
                 if (numberOfComponents == 3) {
                     colorType = ImageInfo.ColorType.RGB;
                 } else if (numberOfComponents == 4) {
@@ -924,7 +924,7 @@ public class JpegImageParser extends ImageParser {
                                 maxVerticalSamplingFactor = component.verticalSamplingFactor;
                             }
                         }
-                        final boolean isSubsampled = (minHorizontalSamplingFactor != maxHorizontalSmaplingFactor) 
+                        final boolean isSubsampled = (minHorizontalSamplingFactor != maxHorizontalSmaplingFactor)
                                 || (minVerticalSamplingFactor != maxVerticalSamplingFactor);
                         if (numberOfComponents == 3) {
                             if (isSubsampled) {

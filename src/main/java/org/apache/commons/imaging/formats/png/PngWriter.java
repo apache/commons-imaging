@@ -50,7 +50,7 @@ class PngWriter {
      4. Miscellaneous information: bKGD, hIST, pHYs, sPLT (see 11.3.5: Miscellaneous information).
      5. Time information: tIME (see 11.3.6: Time stamp information).
     */
-    
+
     private void writeInt(final OutputStream os, final int value) throws IOException {
         os.write(0xff & (value >> 24));
         os.write(0xff & (value >> 16));
@@ -144,7 +144,7 @@ class PngWriter {
         writeChunk(os, ChunkType.iTXt, baos.toByteArray());
     }
 
-    private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text) 
+    private void writeChunkzTXt(final OutputStream os, final PngText.Ztxt text)
             throws IOException, ImageWriteException {
         if (!isValidISO_8859_1(text.keyword)) {
             throw new ImageWriteException("Png zTXt chunk keyword is not ISO-8859-1: " + text.keyword);
@@ -198,12 +198,12 @@ class PngWriter {
             return baos.toByteArray();
         }
     }
-    
+
     private boolean isValidISO_8859_1(final String s) {
         final String roundtrip = new String(s.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.ISO_8859_1);
         return s.equals(roundtrip);
     }
-    
+
     private void writeChunkXmpiTXt(final OutputStream os, final String xmpXml)
             throws IOException {
 
@@ -247,11 +247,11 @@ class PngWriter {
 
     private void writeChunkTRNS(final OutputStream os, final Palette palette) throws IOException {
         final byte[] bytes = new byte[palette.length()];
-        
+
         for (int i = 0; i < bytes.length; i++) {
             bytes[i] = (byte) (0xff & (palette.getEntry(i) >> 24));
         }
-        
+
         writeChunk(os, ChunkType.tRNS, bytes);
     }
 
@@ -309,11 +309,11 @@ class PngWriter {
     /// Wraps a palette by adding a single transparent entry at index 0.
     private static class TransparentPalette implements Palette {
         private final Palette palette;
-        
+
         TransparentPalette(final Palette palette) {
             this.palette = palette;
         }
-        
+
         @Override
         public int getEntry(final int index) {
             if (index == 0) {
@@ -321,12 +321,12 @@ class PngWriter {
             }
             return palette.getEntry(index - 1);
         }
-        
+
         @Override
         public int length() {
             return 1 + palette.length();
         }
-        
+
         @Override
         public int getPaletteIndex(final int rgb) throws ImageWriteException {
             if (rgb == 0x00000000) {
@@ -480,7 +480,7 @@ class PngWriter {
 
             if (hasAlpha) {
                 palette = new TransparentPalette(palette);
-                writeChunkPLTE(os, palette);                
+                writeChunkPLTE(os, palette);
                 writeChunkTRNS(os, new SimplePalette(new int[] { 0x00000000 }));
             } else {
                 writeChunkPLTE(os, palette);

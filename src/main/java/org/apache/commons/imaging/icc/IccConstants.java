@@ -21,7 +21,7 @@ public final class IccConstants {
             | ((0xff & 'C') << 8) | ((0xff & ' ') << 0));
     public static final int sRGB = (((0xff & 's') << 24) | ((0xff & 'R') << 16)
             | ((0xff & 'G') << 8) | ((0xff & 'B') << 0));
-    
+
     private IccConstants() {
     }
 }

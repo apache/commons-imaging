@@ -64,7 +64,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
         final byte[] bytes = Imaging.writeImageToBytes(image, ImageFormats.TIFF, params);
         checkFields(bytes);
     }
-    
+
     private TiffImageMetadata toTiffMetadata(final ImageMetadata metadata) throws Exception {
         if (metadata instanceof JpegImageMetadata) {
             return ((JpegImageMetadata)metadata).getExif();
@@ -76,7 +76,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
     }
 
     private byte[] cleanImage(final File imageWithExif) throws ImageReadException, ImageWriteException, IOException {
-        // Windows doesn't show XP tags if same-meaning tags exist in IPTC or XMP. Remove them: 
+        // Windows doesn't show XP tags if same-meaning tags exist in IPTC or XMP. Remove them:
         final ByteArrayOutputStream noXmp = new ByteArrayOutputStream();
         new JpegXmpRewriter().removeXmpXml(imageWithExif, noXmp);
         final ByteArrayOutputStream noXmpNoIptc = new ByteArrayOutputStream();
@@ -92,32 +92,32 @@ public class MicrosoftTagTest extends ExifBaseTest {
         final ExifRewriter rewriter = new ExifRewriter();
         final TiffOutputSet outputSet = metadata.getOutputSet();
         final TiffOutputDirectory root = outputSet.getOrCreateRootDirectory();
-        
+
         // In Windows these will also hide XP fields:
         root.removeField(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION);
         root.removeField(TiffTagConstants.TIFF_TAG_ARTIST);
-        
+
         // Duplicates can be a problem:
         root.removeField(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPAUTHOR, AUTHOR);
-        
+
         root.removeField(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, COMMENT);
-        
+
         root.removeField(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, SUBJECT);
-        
+
         root.removeField(MicrosoftTagConstants.EXIF_TAG_XPTITLE);
         root.add(MicrosoftTagConstants.EXIF_TAG_XPTITLE, TITLE);
-        
+
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         rewriter.updateExifMetadataLossy(imageWithExif, baos, outputSet);
         checkFields(baos.toByteArray());
     }
-    
+
     private void checkFields(final byte[] file) throws Exception {
         final TiffImageMetadata metadata = toTiffMetadata(Imaging.getMetadata(file));
-        
+
         // field values may be duplicated between directories, we have to check all
         final List<Object> authorValues = new ArrayList<>();
         final List<Object> commentValues = new ArrayList<>();
@@ -129,7 +129,7 @@ public class MicrosoftTagTest extends ExifBaseTest {
             commentValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPCOMMENT, false));
             subjectValues.add(d.getFieldValue(MicrosoftTagConstants.EXIF_TAG_XPSUBJECT, false));
         }
-        
+
         assertTrue(authorValues.contains(AUTHOR));
         assertTrue(commentValues.contains(COMMENT));
         assertTrue(subjectValues.contains(SUBJECT));

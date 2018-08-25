@@ -69,7 +69,7 @@ public enum PngColorType {
                 return type;
             }
         }
-        
+
         return null;
     }
 

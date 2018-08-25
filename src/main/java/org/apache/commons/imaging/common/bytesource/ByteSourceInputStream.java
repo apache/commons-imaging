@@ -91,7 +91,7 @@ public class ByteSourceInputStream extends ByteSource {
         private CacheBlock block;
         private boolean readFirst;
         private int blockIndex;
-        
+
         @Override
         public int read() throws IOException {
             if (null == block) {
@@ -158,7 +158,7 @@ public class ByteSourceInputStream extends ByteSource {
             blockIndex += readSize;
             return readSize;
         }
-        
+
         @Override
         public long skip(final long n) throws IOException {
 

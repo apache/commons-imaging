@@ -97,7 +97,7 @@ public class SosSegment extends Segment {
         successiveApproximationBitHigh = (successiveApproximationBitPosition >> 4) & 0xf;
         successiveApproximationBitLow = successiveApproximationBitPosition & 0xf;
     }
-    
+
     /**
      * Returns a copy of all the components.
      * @return all the components
@@ -105,7 +105,7 @@ public class SosSegment extends Segment {
     public Component[] getComponents() {
         return components.clone();
     }
-    
+
     /**
      * Return a component at the specified index.
      * @param index the component index

@@ -34,7 +34,7 @@ class PamWriter implements PnmWriter {
         os.write(PnmConstants.PNM_PREFIX_BYTE);
         os.write(PnmConstants.PAM_RAW_CODE);
         os.write(PnmConstants.PNM_NEWLINE);
-        
+
         final int width = src.getWidth();
         final int height = src.getHeight();
 
@@ -43,19 +43,19 @@ class PamWriter implements PnmWriter {
 
         os.write(("HEIGHT " + height).getBytes(StandardCharsets.US_ASCII));
         os.write(PnmConstants.PNM_NEWLINE);
-        
+
         os.write(("DEPTH 4").getBytes(StandardCharsets.US_ASCII));
         os.write(PnmConstants.PNM_NEWLINE);
-        
+
         os.write(("MAXVAL 255").getBytes(StandardCharsets.US_ASCII));
         os.write(PnmConstants.PNM_NEWLINE);
 
         os.write(("TUPLTYPE RGB_ALPHA").getBytes(StandardCharsets.US_ASCII));
         os.write(PnmConstants.PNM_NEWLINE);
-        
+
         os.write(("ENDHDR").getBytes(StandardCharsets.US_ASCII));
         os.write(PnmConstants.PNM_NEWLINE);
-        
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 final int argb = src.getRGB(x, y);

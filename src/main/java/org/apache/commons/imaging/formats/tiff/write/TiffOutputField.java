@@ -101,7 +101,7 @@ public class TiffOutputField {
     protected final boolean isLocalValue() {
         return bytes.length <= TIFF_ENTRY_MAX_VALUE_LENGTH;
     }
-    
+
     public boolean bytesEqual(final byte[] data) {
         return Arrays.equals(bytes, data);
     }

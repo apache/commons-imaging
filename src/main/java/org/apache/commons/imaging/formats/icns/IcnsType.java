@@ -170,7 +170,7 @@ enum IcnsType {
         if (bytes.length != 4) {
             throw new IllegalArgumentException("Invalid ICNS type");
         }
-        return ((0xff & bytes[0]) << 24) 
+        return ((0xff & bytes[0]) << 24)
              | ((0xff & bytes[1]) << 16)
              | ((0xff & bytes[2]) << 8)
              | (0xff & bytes[3]);

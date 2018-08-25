@@ -36,7 +36,7 @@ class PixelParserRgb extends PixelParserSimple {
     @Override
     public int getNextRGB() throws ImageReadException, IOException {
 
-        if ((bhi.bitsPerPixel == 1) 
+        if ((bhi.bitsPerPixel == 1)
                 || (bhi.bitsPerPixel == 4)) { // always grayscale?
             if (cachedBitCount < bhi.bitsPerPixel) {
                 if (cachedBitCount != 0) {

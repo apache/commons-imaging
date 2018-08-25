@@ -61,7 +61,7 @@ public final class PngConstants {
 
     /**
      * Parameter key.
-     * 
+     *
      * Only used when writing Png images.
      * <p>
      * Valid values: a list of WriteTexts.

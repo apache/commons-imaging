@@ -137,7 +137,7 @@ public class IccProfileParser extends BinaryFileParser {
 
             final int profileVersion = read4Bytes("ProfileVersion", is, "Not a Valid ICC Profile", getByteOrder());
 
-            final int profileDeviceClassSignature = read4Bytes("ProfileDeviceClassSignature", is, 
+            final int profileDeviceClassSignature = read4Bytes("ProfileDeviceClassSignature", is,
                     "Not a Valid ICC Profile", getByteOrder());
             if (LOGGER.isLoggable(Level.FINEST)) {
                 printCharQuad("ProfileDeviceClassSignature", profileDeviceClassSignature);

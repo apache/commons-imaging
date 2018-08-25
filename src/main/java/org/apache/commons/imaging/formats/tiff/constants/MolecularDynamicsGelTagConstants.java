@@ -28,7 +28,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 
 /**
  * Molecular Dynamics GEL file format
- * <BR>  
+ * <BR>
  * http://www.awaresystems.be/imaging/tiff/tifftags/docs/gel.html
  */
 public final class MolecularDynamicsGelTagConstants {
@@ -75,7 +75,7 @@ public final class MolecularDynamicsGelTagConstants {
                     EXIF_TAG_MD_PREP_DATE,
                     EXIF_TAG_MD_PREP_TIME,
                     EXIF_TAG_MD_FILE_UNITS));
-    
+
     private MolecularDynamicsGelTagConstants() {
     }
 }

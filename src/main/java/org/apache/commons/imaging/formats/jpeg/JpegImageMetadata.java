@@ -73,7 +73,7 @@ public class JpegImageMetadata implements ImageMetadata {
 
     /**
      * Returns the size of the first JPEG thumbnail found in the EXIF metadata.
-     * 
+     *
      * @return Thumbnail width and height or null if no thumbnail.
      * @throws ImageReadException
      * @throws IOException
@@ -90,7 +90,7 @@ public class JpegImageMetadata implements ImageMetadata {
 
     /**
      * Returns the data of the first JPEG thumbnail found in the EXIF metadata.
-     * 
+     *
      * @return JPEG data or null if no thumbnail.
      * @throws ImageReadException
      * @throws IOException
@@ -118,7 +118,7 @@ public class JpegImageMetadata implements ImageMetadata {
 
     /**
      * Get the thumbnail image if available.
-     * 
+     *
      * @return the thumbnail image. May be <code>null</code> if no image could
      *         be found.
      * @throws ImageReadException

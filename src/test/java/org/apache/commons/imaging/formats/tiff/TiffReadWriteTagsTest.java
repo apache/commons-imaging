@@ -50,7 +50,7 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         final String area = "A good area";
         final float widthRes = 2.2f;
         final double geoDoubleParams = -8.4;
-        
+
         final TiffOutputSet set = new TiffOutputSet();
         final TiffOutputDirectory dir = set.getOrCreateRootDirectory();
         dir.add(TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION, description);
@@ -62,11 +62,11 @@ public class TiffReadWriteTagsTest extends TiffBaseTest {
         dir.add(GpsTagConstants.GPS_TAG_GPS_AREA_INFORMATION, area);
         dir.add(MicrosoftHdPhotoTagConstants.EXIF_TAG_WIDTH_RESOLUTION, widthRes);
         dir.add(GeoTiffTagConstants.EXIF_TAG_GEO_DOUBLE_PARAMS_TAG, geoDoubleParams);
-        
+
         final TiffImageWriterLossy writer = new TiffImageWriterLossy();
         final ByteArrayOutputStream tiff = new ByteArrayOutputStream();
         writer.write(tiff, set);
-        
+
         final TiffReader reader = new TiffReader(true);
         final Map<String, Object> params = new TreeMap<>();
         final FormatCompliance formatCompliance = new FormatCompliance("");

@@ -26,7 +26,7 @@ public class TagInfoShorts extends TagInfo {
     public TagInfoShorts(final String name, final int tag, final int length, final TiffDirectoryType directoryType) {
         super(name, tag, FieldType.SHORT, length, directoryType);
     }
-    
+
     public short[] getValue(final ByteOrder byteOrder, final byte[] bytes) {
         return ByteConversions.toShorts(bytes, byteOrder);
     }

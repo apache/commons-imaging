@@ -593,7 +593,7 @@ public class GifImageParser extends ImageParser {
         }
 
         imageData.toString(pw, "");
-        
+
         final GifImageContents blocks = readFile(byteSource, false);
 
         pw.println("gif.blocks: " + blocks.blocks.size());
@@ -992,7 +992,7 @@ public class GifImageParser extends ImageParser {
     /**
      * Extracts embedded XML metadata as XML string.
      * <p>
-     * 
+     *
      * @param byteSource
      *            File containing image data.
      * @param params

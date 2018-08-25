@@ -420,7 +420,7 @@ public class TiffImageParser extends ImageParser {
      * The TIFF parser includes support for loading partial images without
      * committing significantly more memory resources than are necessary
      * to store the image. This feature is useful for conserving memory
-     * in applications that require a relatively small sub image from a 
+     * in applications that require a relatively small sub image from a
      * very large TIFF file.  The specifications for partial images are
      * as follows:
      * <code><pre>
@@ -431,14 +431,14 @@ public class TiffImageParser extends ImageParser {
      *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, new Integer(height));
      * </pre></code>
      * Note that the arguments x, y, width, and height must specify a
-     * valid rectangular region that is fully contained within the 
+     * valid rectangular region that is fully contained within the
      * source TIFF image.
      * @param byteSource A valid instance of ByteSource
-     * @param params Optional instructions for special-handling or 
-     * interpretation of the input data (null objects are permitted and 
+     * @param params Optional instructions for special-handling or
+     * interpretation of the input data (null objects are permitted and
      * must be supported by implementations).
      * @return A valid instance of BufferedImage.
-     * @throws ImageReadException In the event that the specified 
+     * @throws ImageReadException In the event that the specified
      * content does not conform to the format of the specific parser
      * implementation.
      * @throws IOException In the event of unsuccessful read or
@@ -498,7 +498,7 @@ public class TiffImageParser extends ImageParser {
         }
         throw new ImageReadException("Non-Integer parameter " + key);
     }
-    
+
     private Rectangle checkForSubImage(
             final Map<String, Object> params)
             throws ImageReadException
@@ -507,7 +507,7 @@ public class TiffImageParser extends ImageParser {
         final Integer iy0 = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_Y, params);
         final Integer iwidth = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, params);
         final Integer iheight = getIntegerParameter(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, params);
-        
+
         if (ix0 == null && iy0 == null && iwidth == null && iheight == null) {
             return null;
         }
@@ -529,12 +529,12 @@ public class TiffImageParser extends ImageParser {
             sb.setLength(sb.length() - 1);
             throw new ImageReadException("Incomplete subimage parameters, missing" + sb.toString());
         }
-        
+
         return new Rectangle(ix0, iy0, iwidth, iheight);
     }
-    
+
     protected BufferedImage getBufferedImage(final TiffDirectory directory,
-            final ByteOrder byteOrder, final Map<String, Object> params) 
+            final ByteOrder byteOrder, final Map<String, Object> params)
             throws ImageReadException, IOException
     {
         final List<TiffField> entries = directory.entries;
@@ -553,8 +553,8 @@ public class TiffImageParser extends ImageParser {
         }
         final int compression = 0xffff & compressionFieldValue;
         final int width = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
-        final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);      
-        
+        final int height = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
+
         Rectangle subImage = checkForSubImage(params);
         if (subImage != null) {
             // Check for valid subimage specification. The following checks
@@ -588,7 +588,7 @@ public class TiffImageParser extends ImageParser {
             }
         }
 
-        
+
         int samplesPerPixel = 1;
         final TiffField samplesPerPixelField = directory.findField(
                 TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
@@ -649,7 +649,7 @@ public class TiffImageParser extends ImageParser {
             dataReader.readImageData(imageBuilder);
             result =  imageBuilder.getBufferedImage();
         }
-        return result;     
+        return result;
     }
 
     private PhotometricInterpreter getPhotometricInterpreter(

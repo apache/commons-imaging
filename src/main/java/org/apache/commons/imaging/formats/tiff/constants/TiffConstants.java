@@ -61,8 +61,8 @@ public final class TiffConstants {
     public static final int TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE = 2;
     public static final int TIFF_FLAG_T4_OPTIONS_FILL = 4;
     public static final int TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE = 2;
-    
-    
+
+
     public static final String PARAM_KEY_SUBIMAGE_X = "SUBIMAGE_X";
     public static final String PARAM_KEY_SUBIMAGE_Y = "SUBIMAGE_Y";
     public static final String PARAM_KEY_SUBIMAGE_WIDTH = "SUBIMAGE_WIDTH";

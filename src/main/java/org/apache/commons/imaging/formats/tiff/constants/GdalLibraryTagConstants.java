@@ -31,7 +31,7 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoAscii;
  * http://www.awaresystems.be/imaging/tiff/tifftags/gdal_nodata.html
  */
 public final class GdalLibraryTagConstants {
-    
+
     public static final TagInfoAscii EXIF_TAG_GDAL_METADATA = new TagInfoAscii(
             "GDALMetadata", 0xa480, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);

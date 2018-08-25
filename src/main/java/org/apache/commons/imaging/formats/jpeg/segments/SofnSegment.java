@@ -84,7 +84,7 @@ public class SofnSegment extends Segment {
                     quantTabDestSelector);
         }
     }
-    
+
     /**
      * Returns a copy of all the components.
      * @return the components
@@ -92,7 +92,7 @@ public class SofnSegment extends Segment {
     public Component[] getComponents() {
         return components.clone();
     }
-    
+
     /**
      * Returns the component at the specified index.
      * @param index the array index
@@ -101,7 +101,7 @@ public class SofnSegment extends Segment {
     public Component getComponents(final int index) {
         return components[index];
     }
-    
+
 
     @Override
     public String getDescription() {

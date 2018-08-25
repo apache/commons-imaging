@@ -93,10 +93,10 @@ public abstract class ImageDataReader {
         }
         return true;
     }
- 
+
     /**
      * Reads samples and returns them in an int array.
-     * 
+     *
      * @param bis
      *            the stream to read from
      * @param result

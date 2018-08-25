@@ -62,7 +62,7 @@ public abstract class GenericSegment extends Segment {
     /**
      * Returns a specific byte of the segment's contents,
      * excluding the marker and length bytes at
-     * the beginning. 
+     * the beginning.
      * @see GenericSegment#getSegmentData()
      * @return the bye in the segment's contents
      */

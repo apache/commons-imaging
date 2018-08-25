@@ -89,7 +89,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
                     if (oversizeValue != null) {
                         final TiffOutputField frozenField = frozenFields.get(field.getTag());
                         if (frozenField != null
-                                && frozenField.getSeperateValue() != null 
+                                && frozenField.getSeperateValue() != null
                                 && frozenField.bytesEqual(field.getByteArrayValue())) {
                             frozenField.getSeperateValue().setOffset(field.getOffset());
                         } else {
@@ -145,7 +145,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
     public void write(final OutputStream os, final TiffOutputSet outputSet)
             throws IOException, ImageWriteException {
         // There are some fields whose address in the file must not change,
-        // unless of course their value is changed. 
+        // unless of course their value is changed.
         final Map<Integer, TiffOutputField> frozenFields = new HashMap<>();
         final TiffOutputField makerNoteField = outputSet.findField(ExifTagConstants.EXIF_TAG_MAKER_NOTE);
         if (makerNoteField != null && makerNoteField.getSeperateValue() != null) {

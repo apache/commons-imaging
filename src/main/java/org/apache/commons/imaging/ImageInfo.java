@@ -156,7 +156,7 @@ public class ImageInfo {
      * Returns the image file format, ie. ImageFormat.IMAGE_FORMAT_PNG.
      * <p/>
      * Returns ImageFormat.IMAGE_FORMAT_UNKNOWN if format is unknown.
-     * 
+     *
      * @return A constant defined in ImageFormat.
      * @see ImageFormats
      */
@@ -166,7 +166,7 @@ public class ImageInfo {
 
     /**
      * Returns a string with the name of the image file format.
-     * 
+     *
      * @see #getFormat()
      */
     public String getFormatName() {
@@ -175,7 +175,7 @@ public class ImageInfo {
 
     /**
      * Returns the height of the image in pixels.
-     * 
+     *
      * @see #getWidth()
      */
     public int getHeight() {
@@ -184,7 +184,7 @@ public class ImageInfo {
 
     /**
      * Returns the MIME type of the image.
-     * 
+     *
      * @see #getFormat()
      */
     public String getMimeType() {
@@ -207,7 +207,7 @@ public class ImageInfo {
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
      * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
      * 72).
-     * 
+     *
      * @return returns -1 if not present.
      */
     public int getPhysicalHeightDpi() {
@@ -220,7 +220,7 @@ public class ImageInfo {
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
      * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
      * 72).
-     * 
+     *
      * @return returns -1 if not present.
      */
     public float getPhysicalHeightInch() {
@@ -233,7 +233,7 @@ public class ImageInfo {
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
      * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
      * 72).
-     * 
+     *
      * @return returns -1 if not present.
      */
     public int getPhysicalWidthDpi() {
@@ -246,7 +246,7 @@ public class ImageInfo {
      * Applies to TIFF (optional), BMP (always), GIF (constant: 72), Jpeg
      * (optional), PNG (optional), PNM (constant: 72), PSD/Photoshop (constant:
      * 72).
-     * 
+     *
      * @return returns -1 if not present.
      */
     public float getPhysicalWidthInch() {
@@ -255,7 +255,7 @@ public class ImageInfo {
 
     /**
      * Returns the width of the image in pixels.
-     * 
+     *
      * @see #getHeight()
      */
     public int getWidth() {

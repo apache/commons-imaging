@@ -66,23 +66,23 @@ public class TiffField {
 
         tagInfo = TiffTags.getTag(directoryType, tag);
     }
-    
+
     public int getDirectoryType() {
         return directoryType;
     }
-    
+
     public TagInfo getTagInfo() {
         return tagInfo;
     }
 
     /**
      * Returns the field's tag, derived from bytes 0-1.
-     * @return the tag, as an <code>int</code> in which only the lowest 2 bytes are set 
+     * @return the tag, as an <code>int</code> in which only the lowest 2 bytes are set
      */
     public int getTag() {
         return tag;
     }
-    
+
     /**
      * Returns the field's type, derived from bytes 2-3.
      * @return the field's type, as a {@code FieldType} object.
@@ -137,7 +137,7 @@ public class TiffField {
     }
 
     /**
-     * Returns a copy of the raw value of the field. 
+     * Returns a copy of the raw value of the field.
      * @return the value of the field, in the byte order of the field.
      */
     public byte[] getByteArrayValue() {

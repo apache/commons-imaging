@@ -46,7 +46,7 @@ public class JfifSegment extends Segment {
         this(marker, segmentData.length, new ByteArrayInputStream(segmentData));
     }
 
-    public JfifSegment(final int marker, final int markerLength, final InputStream is) 
+    public JfifSegment(final int marker, final int markerLength, final InputStream is)
             throws ImageReadException, IOException {
         super(marker, markerLength);
 

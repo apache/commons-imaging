@@ -147,7 +147,7 @@ public final class JpegConstants {
                     0x30, // 0
                     0, });
     public static final int CONST_8BIM = BinaryFunctions.charsToQuad('8', 'B', 'I', 'M');
-    
+
     private JpegConstants() {
     }
 }

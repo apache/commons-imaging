@@ -30,7 +30,7 @@ public final class IptcTypeLookup {
 
     private IptcTypeLookup() {
     }
-    
+
     public static IptcType getIptcType(final int type) {
         if (!IPTC_TYPE_MAP.containsKey(type)) {
             return IptcTypes.getUnknown(type);
