@@ -19,10 +19,15 @@ package org.apache.commons.imaging.formats.jpeg.segments;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class SosSegment extends Segment {
+
+    private static final Logger LOGGER = Logger.getLogger(SosSegment.class.getName());
+
     public final int numberOfComponents;
     private final Component[] components;
     public final int startOfSpectralSelection;
@@ -50,8 +55,8 @@ public class SosSegment extends Segment {
     public SosSegment(final int marker, final int markerLength, final InputStream is) throws IOException {
         super(marker, markerLength);
 
-        if (getDebug()) {
-            System.out.println("SosSegment marker_length: " + markerLength);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("SosSegment marker_length: " + markerLength);
         }
 
         // Debug.debug("SOS", marker_length);
@@ -91,10 +96,6 @@ public class SosSegment extends Segment {
         // successive_approximation_bit_position);
         successiveApproximationBitHigh = (successiveApproximationBitPosition >> 4) & 0xf;
         successiveApproximationBitLow = successiveApproximationBitPosition & 0xf;
-
-        if (getDebug()) {
-            System.out.println("");
-        }
     }
     
     /**

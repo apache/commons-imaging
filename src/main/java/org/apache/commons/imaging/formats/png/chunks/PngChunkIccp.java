@@ -19,6 +19,8 @@ package org.apache.commons.imaging.formats.png.chunks;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -26,6 +28,9 @@ import org.apache.commons.imaging.ImageReadException;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PngChunkIccp extends PngChunk {
+
+    private static final Logger LOGGER = Logger.getLogger(PngChunkIccp.class.getName());
+
     // private final PngImageParser parser;
     public final String profileName;
     public final int compressionMethod;
@@ -57,18 +62,18 @@ public class PngChunkIccp extends PngChunk {
         compressedProfile = new byte[compressedProfileLength];
         System.arraycopy(bytes, index + 1 + 1, compressedProfile, 0, compressedProfileLength);
 
-        if (getDebug()) {
-            System.out.println("ProfileName: " + profileName);
-            System.out.println("ProfileName.length(): " + profileName.length());
-            System.out.println("CompressionMethod: " + compressionMethod);
-            System.out.println("CompressedProfileLength: " + compressedProfileLength);
-            System.out.println("bytes.length: " + bytes.length);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("ProfileName: " + profileName);
+            LOGGER.finest("ProfileName.length(): " + profileName.length());
+            LOGGER.finest("CompressionMethod: " + compressionMethod);
+            LOGGER.finest("CompressedProfileLength: " + compressedProfileLength);
+            LOGGER.finest("bytes.length: " + bytes.length);
         }
 
         uncompressedProfile = getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
 
-        if (getDebug()) {
-            System.out.println("UncompressedProfile: " + Integer.toString(bytes.length));
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("UncompressedProfile: " + Integer.toString(bytes.length));
         }
     }
 

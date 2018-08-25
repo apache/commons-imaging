@@ -19,12 +19,17 @@ package org.apache.commons.imaging.formats.jpeg.segments;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class SofnSegment extends Segment {
+
+    private static final Logger LOGGER = Logger.getLogger(SofnSegment.class.getName());
+
     public final int width;
     public final int height;
     public final int numberOfComponents;
@@ -54,8 +59,8 @@ public class SofnSegment extends Segment {
             throws IOException {
         super(marker, markerLength);
 
-        if (getDebug()) {
-            System.out.println("SOF0Segment marker_length: " + markerLength);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("SOF0Segment marker_length: " + markerLength);
         }
 
         precision = readByte("Data_precision", is, "Not a Valid JPEG File");
@@ -77,10 +82,6 @@ public class SofnSegment extends Segment {
             components[i] = new Component(componentIdentifier,
                     horizontalSamplingFactor, verticalSamplingFactor,
                     quantTabDestSelector);
-        }
-
-        if (getDebug()) {
-            System.out.println("");
         }
     }
     

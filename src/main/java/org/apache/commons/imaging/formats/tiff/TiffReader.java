@@ -89,10 +89,6 @@ public class TiffReader extends BinaryFileParser {
 
         skipBytes(is, offsetToFirstIFD - 8, "Not a Valid TIFF File: couldn't find IFDs");
 
-        if (getDebug()) {
-            System.out.println("");
-        }
-
         return new TiffHeader(byteOrder, tiffVersion, offsetToFirstIFD);
     }
 

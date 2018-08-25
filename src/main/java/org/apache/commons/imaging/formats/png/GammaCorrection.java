@@ -16,23 +16,27 @@
  */
 package org.apache.commons.imaging.formats.png;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class GammaCorrection {
-    private static final boolean DEBUG = false;
+
+    private static final Logger LOGGER = Logger.getLogger(GammaCorrection.class.getName());
 
     private final int[] lookupTable;
 
     public GammaCorrection(final double srcGamma, final double dstGamma) {
 
-        if (DEBUG) {
-            System.out.println("src_gamma: " + srcGamma);
-            System.out.println("dst_gamma: " + dstGamma);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("src_gamma: " + srcGamma);
+            LOGGER.finest("dst_gamma: " + dstGamma);
         }
 
         lookupTable = new int[256];
         for (int i = 0; i < 256; i++) {
             lookupTable[i] = correctSample(i, srcGamma, dstGamma);
-            if (DEBUG) {
-                System.out.println("lookup_table[" + i + "]: " + lookupTable[i]);
+            if (LOGGER.isLoggable(Level.FINEST)) {
+                LOGGER.finest("lookup_table[" + i + "]: " + lookupTable[i]);
             }
         }
     }

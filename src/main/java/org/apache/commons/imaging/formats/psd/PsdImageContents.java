@@ -16,11 +16,16 @@
  */
 package org.apache.commons.imaging.formats.psd;
 
-import java.io.OutputStreamWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
+import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PsdImageContents {
+
+    private static final Logger LOGGER = Logger.getLogger(PsdImageContents.class.getName());
+
     public final PsdHeaderInfo header;
 
     public final int ColorModeDataLength;
@@ -40,9 +45,14 @@ public class PsdImageContents {
     }
 
     public void dump() {
-        final PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
-        dump(pw);
-        pw.flush();
+        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+            dump(pw);
+            pw.flush();
+            sw.flush();
+            LOGGER.fine(sw.toString());
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     public void dump(final PrintWriter pw) {

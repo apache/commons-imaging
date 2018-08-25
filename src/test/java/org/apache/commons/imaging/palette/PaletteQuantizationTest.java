@@ -95,7 +95,7 @@ public class PaletteQuantizationTest extends ImagingTest {
         
         final MedianCutQuantizer medianCutQuantizer = new MedianCutQuantizer(true);
         palette = medianCutQuantizer.process(
-                image, limit, new MostPopulatedBoxesMedianCut(), false);
+                image, limit, new MostPopulatedBoxesMedianCut());
         assertEquals(expectedSize, palette.length());
         checkUniqueColors(image, palette);
         if (exact) {

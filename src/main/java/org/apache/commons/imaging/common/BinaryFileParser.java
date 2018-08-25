@@ -16,15 +16,19 @@
  */
 package org.apache.commons.imaging.common;
 
-import java.io.OutputStreamWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.ByteOrder;
-import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BinaryFileParser {
+
+    private static final Logger LOGGER = Logger.getLogger(BinaryFileParser.class.getName());
+
     // default byte order for Java, many file formats.
     private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-    private boolean debug;
 
     public BinaryFileParser(final ByteOrder byteOrder) {
         this.byteOrder = byteOrder;
@@ -45,18 +49,15 @@ public class BinaryFileParser {
         return byteOrder;
     }
 
-    public boolean getDebug() {
-        return debug;
-    }
-
-    public void setDebug(final boolean debug) {
-        this.debug = debug;
-    }
-
     protected final void debugNumber(final String msg, final int data, final int bytes) {
-        final PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
-        debugNumber(pw, msg, data, bytes);
-        pw.flush();
+        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+            debugNumber(pw, msg, data, bytes);
+            pw.flush();
+            sw.flush();
+            LOGGER.fine(sw.toString());
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     protected final void debugNumber(final PrintWriter pw, final String msg, final int data, final int bytes) {

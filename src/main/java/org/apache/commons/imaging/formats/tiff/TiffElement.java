@@ -39,11 +39,7 @@ public abstract class TiffElement {
         this.length = length;
     }
 
-    public String getElementDescription() {
-        return getElementDescription(false);
-    }
-
-    public abstract String getElementDescription(boolean verbose);
+    public abstract String getElementDescription();
 
     public static abstract class DataElement extends TiffElement {
         private final byte[] data;
@@ -69,7 +65,7 @@ public abstract class TiffElement {
         }
 
         @Override
-        public String getElementDescription(final boolean verbose) {
+        public String getElementDescription() {
             return "Element, offset: " + offset + ", length: " + length
                     + ", last: " + (offset + length);
         }

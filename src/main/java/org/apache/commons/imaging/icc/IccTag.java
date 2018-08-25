@@ -19,17 +19,20 @@ package org.apache.commons.imaging.icc;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.ByteOrder;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 public class IccTag {
+
+    private static final Logger LOGGER = Logger.getLogger(IccTag.class.getName());
+
     public final int signature;
     public final int offset;
     public final int length;
@@ -73,11 +76,12 @@ public class IccTag {
     }
 
     public void dump(final String prefix) throws ImageReadException, IOException {
-        final PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out, Charset.defaultCharset()));
-
-        dump(pw, prefix);
-
-        pw.flush();
+        try (StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {
+            dump(pw, prefix);
+            pw.flush();
+            sw.flush();
+            LOGGER.fine(sw.toString());
+        }
     }
 
     public void dump(final PrintWriter pw, final String prefix) throws ImageReadException,

@@ -47,7 +47,7 @@ import org.apache.commons.imaging.formats.pcx.PcxConstants;
 import org.apache.commons.imaging.formats.pcx.PcxImageParser;
 
 public class DcxImageParser extends ImageParser {
-    // See http://www.fileformat.info/format/pcx/egff.htm for documentation
+    // See http://www.fileformat.fine/format/pcx/egff.htm for documentation
     private static final String DEFAULT_EXTENSION = ".dcx";
     private static final String[] ACCEPTED_EXTENSIONS = { ".dcx", };
 

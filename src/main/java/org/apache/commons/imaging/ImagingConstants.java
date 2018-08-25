@@ -26,13 +26,6 @@ package org.apache.commons.imaging;
 public final class ImagingConstants {
     
     /**
-     * Parameter key. Applies to read and write operations.
-     * <p>
-     * Valid values: Boolean.TRUE and Boolean.FALSE.
-     */
-    public static final String PARAM_KEY_VERBOSE = "VERBOSE";
-
-    /**
      * Parameter key. Used to hint the filename when reading from a byte array
      * or InputStream. The filename hint can help disambiguate what file the
      * image format.

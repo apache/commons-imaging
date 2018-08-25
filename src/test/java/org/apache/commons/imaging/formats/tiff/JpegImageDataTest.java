@@ -26,7 +26,7 @@ public class JpegImageDataTest{
     public void testCreatesJpegImageDataAndCallsGetElementDescription() {
         byte[] byteArray = new byte[5];
         JpegImageData jpegImageData = new JpegImageData((-1L), 1, byteArray);
-        String string = jpegImageData.getElementDescription(true);
+        String string = jpegImageData.getElementDescription();
 
         assertEquals("Jpeg image data: 5 bytes", string);
     }

@@ -55,7 +55,6 @@ public class CompressedDataReader implements DataReader {
             scanlineBytecounts[i] = BinaryFunctions.read2Bytes("scanline_bytecount[" + i
                     + "]", is, "PSD: bad Image Data", bfp.getByteOrder());
         }
-        bfp.setDebug(false);
         // System.out.println("fImageContents.Compression: "
         // + imageContents.Compression);
 

@@ -45,8 +45,6 @@ public class UncompressedDataReader implements DataReader {
         final int width = header.columns;
         final int height = header.rows;
 
-        bfp.setDebug(false);
-
         final int channelCount = dataParser.getBasicChannelsCount();
         final int depth = header.depth;
         final MyBitInputStream mbis = new MyBitInputStream(is, ByteOrder.BIG_ENDIAN);

@@ -17,12 +17,15 @@
 package org.apache.commons.imaging.formats.bmp;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.ImageBuilder;
 
 class PixelParserRle extends PixelParser {
+
+    private static final Logger LOGGER = Logger.getLogger(PixelParserRle.class.getName());
 
     public PixelParserRle(final BmpHeaderInfo bhi, final byte[] colorTable, final byte[] imageData) {
         super(bhi, colorTable, imageData);
@@ -75,7 +78,7 @@ class PixelParserRle extends PixelParser {
                 imageBuilder.setRGB(x, y, rgb);
                 // bi.setRGB(x, y, 0xff00ff00);
             } else {
-                System.out.println("skipping bad pixel (" + x + "," + y + ")");
+                LOGGER.fine("skipping bad pixel (" + x + "," + y + ")");
             }
 
             x++;

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.util;
+package org.apache.commons.imaging.internal;
 
 import java.awt.color.ICC_Profile;
 import java.io.File;
@@ -26,23 +26,32 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+/**
+ * Internal-only debug class. Used for collecting extra information when parsing or
+ * modifying images or metadata. These methods are useful for troubleshooting and
+ * issue analysis, but this should not be used directly by end-users, nor extended
+ * in any way. This may change or be removed at any time.
+ */
 public final class Debug {
 
-    private static final boolean DEBUG = false;
+    private static final Logger LOGGER = Logger.getLogger(Debug.class.getName());
+
     // public static String newline = System.getProperty("line.separator");
     private static final String NEWLINE = "\r\n";
     private static long counter;
 
     public static void debug(final String message) {
-        if (DEBUG) {
-            System.out.println(message);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest(message);
         }
     }
 
     public static void debug() {
-        if (DEBUG) {
-            System.out.print(NEWLINE);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest(NEWLINE);
         }
     }
 

@@ -18,6 +18,8 @@ package org.apache.commons.imaging.formats.png.chunks;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.PngText;
@@ -25,6 +27,9 @@ import org.apache.commons.imaging.formats.png.PngText;
 import static org.apache.commons.imaging.common.BinaryFunctions.*;
 
 public class PngChunkText extends PngTextChunk {
+
+    private static final Logger LOGGER = Logger.getLogger(PngChunkText.class.getName());
+
     public final String keyword;
     public final String text;
 
@@ -42,9 +47,9 @@ public class PngChunkText extends PngTextChunk {
         final int textLength = bytes.length - (index + 1);
         text = new String(bytes, index + 1, textLength, StandardCharsets.ISO_8859_1);
 
-        if (getDebug()) {
-            System.out.println("Keyword: " + keyword);
-            System.out.println("Text: " + text);
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest("Keyword: " + keyword);
+            LOGGER.finest("Text: " + text);
         }
     }
 
