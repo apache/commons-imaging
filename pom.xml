@@ -33,7 +33,7 @@
   <artifactId>commons-imaging</artifactId>
   <name>Apache Commons Imaging</name>
 
-  <version>1.0-alpha1-SNAPSHOT</version>
+  <version>1.0-alpha1</version>
 
   <!--
     Keep the description on a single line. Otherwise Maven might generate
