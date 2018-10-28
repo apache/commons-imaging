@@ -43,7 +43,10 @@
 Apache Commons Imaging
 ===================
 
-[![Build Status](https://travis-ci.org/apache/commons-imaging.svg?branch=trunk)](https://travis-ci.org/apache/commons-imaging)
+[![Build Status](https://travis-ci.org/apache/commons-imaging.svg)](https://travis-ci.org/apache/commons-imaging)
+[![Coverage Status](https://coveralls.io/repos/apache/commons-imaging/badge.svg)](https://coveralls.io/r/apache/commons-imaging)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-imaging/)
+[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-imaging/1.0-alpha1.svg)](https://javadoc.io/doc/org.apache.commons/commons-imaging/1.0-alpha1)
 
 Apache Commons Imaging (previously Sanselan) is a pure-Java image library.
 
@@ -56,45 +59,17 @@ Questions related to the usage of Apache Commons Imaging should be posted to the
 
 Where can I get the latest release?
 -----------------------------------
-There is currently no stable release of Imaging. However you can pull the latest SNAPSHOT from the Apache snapshot repository by adding the snapshot repository to your pom.xml:
- 
-```xml
-<repository>
-  <id>apache.snapshots</id>
-  <name>Apache Development Snapshot Repository</name>
-  <url>https://repository.apache.org/content/repositories/snapshots/</url>
-  <releases>
-    <enabled>false</enabled>
-  </releases>
-  <snapshots>
-    <enabled>true</enabled>
-  </snapshots>
-</repository> 
-```
+You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-imaging/download_imaging.cgi).
 
-Then you can use the SNAPSHOT version of Commons Imaging in your pom.xml:
+Alternatively you can pull it from the central Maven repositories:
 
 ```xml
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-imaging</artifactId>
-  <version>1.0-SNAPSHOT</version>
-</dependency>
-``` 
-
-The last stable release of Sanselan, before it was renamed to Imaging, was 0.97. You may:
-+ Download source and binaries from our [download page](https://commons.apache.org/proper/commons-imaging/download_sanselan.cgi).
-+ Pull it from the central Maven repositories:
-
-```xml
-<dependency>
-  <groupId>org.apache.commons</groupId>
-  <artifactId>commons-sanselan</artifactId>
-  <version>0.97</version>
+  <version>1.0-alpha1</version>
 </dependency>
 ```
-
-Note that Commons Imaging and Commons Sanselan are neither binary nor source compatible.
 
 Contributing
 ------------

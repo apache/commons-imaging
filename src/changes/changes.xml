@@ -46,6 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
 
     <release version="1.0" date="TBA" description="First major release">
+      <!-- 1.0 alpha1 below here -->
       <action issue="IMAGING-154" dev="kinow" type="update">
         Remove Debug class
       </action>
