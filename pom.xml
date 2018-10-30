@@ -53,7 +53,7 @@
     <commons.module.name>org.apache.commons.imaging</commons.module.name>
 
     <commons.release.version>1.0-alpha1</commons.release.version>
-    <commons.rc.version>RC1</commons.rc.version>
+    <commons.rc.version>RC2</commons.rc.version>
 
     <commons.jira.id>IMAGING</commons.jira.id>
     <commons.jira.pid>12313421</commons.jira.pid>
