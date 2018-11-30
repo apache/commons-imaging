@@ -21,14 +21,19 @@ import static org.apache.commons.imaging.common.BinaryFunctions.getStreamBytes;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.formats.png.ChunkType;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
 
-public class PngChunkItxt extends PngTextChunk {
+public final class PngChunkItxt extends PngTextChunk {
+    
     public final String keyword;
     public final String text;
 
@@ -44,17 +49,18 @@ public class PngChunkItxt extends PngTextChunk {
     public final String languageTag;
 
     public final String translatedKeyword;
-
-    public PngChunkItxt(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException, IOException {
-        super(length, chunkType, crc, bytes);
+    
+    PngChunkItxt(final ByteBuffer contents) throws ImageReadException {
+        super(ChunkType.iTXt, contents);
+        byte bytes[] = contents.array();
+        
         int terminator = findNull(bytes);
         if (terminator < 0) {
             throw new ImageReadException(
                     "PNG iTXt chunk keyword is not terminated.");
         }
 
-        keyword = new String(bytes, 0, terminator, StandardCharsets.ISO_8859_1);
+        this.keyword = new String(bytes, 0, terminator, StandardCharsets.ISO_8859_1);
         int index = terminator + 1;
 
         final int compressionFlag = bytes[index++];
@@ -68,7 +74,8 @@ public class PngChunkItxt extends PngTextChunk {
 
         final int compressionMethod = bytes[index++];
         if (compressed && compressionMethod != PngConstants.COMPRESSION_DEFLATE_INFLATE) {
-            throw new ImageReadException("PNG iTXt chunk has unexpected compression method: " + compressionMethod);
+            throw new ImageReadException("PNG iTXt chunk has unexpected compression method: " +
+                    compressionMethod);
         }
 
         terminator = findNull(bytes, index);
@@ -76,7 +83,8 @@ public class PngChunkItxt extends PngTextChunk {
             throw new ImageReadException("PNG iTXt chunk language tag is not terminated.");
         }
 
-        languageTag = new String(bytes, index, terminator - index, StandardCharsets.ISO_8859_1);
+        this.languageTag = new String(bytes, index, terminator - index,
+                StandardCharsets.ISO_8859_1);
         index = terminator + 1;
 
         terminator = findNull(bytes, index);
@@ -84,7 +92,8 @@ public class PngChunkItxt extends PngTextChunk {
             throw new ImageReadException("PNG iTXt chunk translated keyword is not terminated.");
         }
 
-        translatedKeyword = new String(bytes, index, terminator - index, StandardCharsets.UTF_8);
+        this.translatedKeyword = new String(bytes, index, terminator - index,
+                StandardCharsets.UTF_8);
         index = terminator + 1;
 
         if (compressed) {
@@ -93,9 +102,14 @@ public class PngChunkItxt extends PngTextChunk {
             final byte[] compressedText = new byte[compressedTextLength];
             System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
-            text = new String(getStreamBytes(
-                    new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.UTF_8);
-
+            try {
+                text = new String(getStreamBytes(
+                        new InflaterInputStream(new ByteArrayInputStream(compressedText))),
+                        StandardCharsets.UTF_8);
+            } catch (IOException ex) {
+                throw new ImageReadException("Unresolved IOException while "
+                        + "uncompressing iTXt data.");
+            }
         } else {
             text = new String(bytes, index, bytes.length - index, StandardCharsets.UTF_8);
         }

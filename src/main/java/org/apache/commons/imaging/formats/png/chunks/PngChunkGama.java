@@ -20,16 +20,24 @@ import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.formats.png.ChunkType;
 
-public class PngChunkGama extends PngChunk {
+public final class PngChunkGama extends PngChunk {
+    
     public final int gamma;
 
-    public PngChunkGama(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws IOException {
-        super(length, chunkType, crc, bytes);
-
-        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-        gamma = read4Bytes("Gamma", is, "Not a Valid Png File: gAMA Corrupt", getByteOrder());
+    PngChunkGama(final ByteBuffer contents) throws ImageReadException {
+        super(ChunkType.gAMA, contents);
+        
+        if(contentSize() > 4) {
+            throw new ImageReadException("PNG Component: Illegal Gama chunk, "
+                    + "has illegal size (should be 4 bytes only): " + 
+                    contentSize());
+        }
+        
+        this.gamma = contents.getInt(0);
     }
 
     public double getGamma() {

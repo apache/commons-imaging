@@ -21,29 +21,33 @@ import static org.apache.commons.imaging.common.BinaryFunctions.getStreamBytes;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.formats.png.ChunkType;
 import org.apache.commons.imaging.formats.png.PngConstants;
 import org.apache.commons.imaging.formats.png.PngText;
 
-public class PngChunkZtxt extends PngTextChunk {
+public final class PngChunkZtxt extends PngTextChunk {
 
     public final String keyword;
     public final String text;
-
-    public PngChunkZtxt(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException, IOException {
-        super(length, chunkType, crc, bytes);
-
+    
+    PngChunkZtxt(ByteBuffer contents) throws ImageReadException {
+        super(ChunkType.zTXt, contents);
+        byte bytes[] = contents.array();
+        
         int index = findNull(bytes);
         if (index < 0) {
             throw new ImageReadException(
                     "PNG zTXt chunk keyword is unterminated.");
         }
 
-        keyword = new String(bytes, 0, index, StandardCharsets.ISO_8859_1);
+        this.keyword = new String(bytes, 0, index, StandardCharsets.ISO_8859_1);
         index++;
 
         final int compressionMethod = bytes[index++];
@@ -57,9 +61,16 @@ public class PngChunkZtxt extends PngTextChunk {
         final byte[] compressedText = new byte[compressedTextLength];
         System.arraycopy(bytes, index, compressedText, 0, compressedTextLength);
 
-        text = new String(getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedText))), StandardCharsets.ISO_8859_1);
+        try {
+            text = new String(getStreamBytes(
+                    new InflaterInputStream(new ByteArrayInputStream(compressedText))),
+                    StandardCharsets.ISO_8859_1);
+        } catch (IOException ex) {
+            throw new ImageReadException("Unresolved IOException while uncompressing "
+                    + "zTXt chunk text");
+        }
     }
-
+    
     /**
      * @return Returns the keyword.
      */

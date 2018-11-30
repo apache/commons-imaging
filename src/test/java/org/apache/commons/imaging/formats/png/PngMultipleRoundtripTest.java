@@ -31,6 +31,15 @@ import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.Test;
 
+/**
+ * PngMultipleRoundtripTest loads the sample PNG files into a BufferedImage
+ * object and then re-writes it into another temporary file.
+ * 
+ * This test allows you to check whether the Imaging library corrupts the
+ * PNG image data during processing.
+ * 
+ * @author Shukant Pal
+ */
 public class PngMultipleRoundtripTest extends PngBaseTest {
 
     @Test

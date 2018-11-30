@@ -16,53 +16,50 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.formats.png.ChunkType;
 import org.apache.commons.imaging.formats.png.GammaCorrection;
 
-public class PngChunkPlte extends PngChunk {
-    private final int[] rgb;
+public final class PngChunkPlte extends PngChunk {
+    
+    private final int[] rgbPaletteEntries;
 
-    public PngChunkPlte(final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException, IOException {
-        super(length, chunkType, crc, bytes);
-
-        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-
-        if ((length % 3) != 0) {
-            throw new ImageReadException("PLTE: wrong length: " + length);
+    PngChunkPlte(final ByteBuffer contents) throws ImageReadException {
+        super(ChunkType.PLTE, contents);
+        
+        if(contentSize() % 3 != 0) {
+            throw new ImageReadException("PNG Component: PNG PLTE chunk palette "
+                    + "contains illegal length: (should be multiple of 3, RGB) " + contentSize());
         }
-
-        final int count = length / 3;
-
-        rgb = new int[count];
-
-        for (int i = 0; i < count; i++) {
-            final int red = readByte("red[" + i + "]", is,
-                    "Not a Valid Png File: PLTE Corrupt");
-            final int green = readByte("green[" + i + "]", is,
-                    "Not a Valid Png File: PLTE Corrupt");
-            final int blue = readByte("blue[" + i + "]", is,
-                    "Not a Valid Png File: PLTE Corrupt");
-            rgb[i] = 0xff000000 | ((0xff & red) << 16) | ((0xff & green) << 8)
-                    | ((0xff & blue) << 0);
+        
+        final int entryCount = contentSize() / 3;
+        this.rgbPaletteEntries = new int[entryCount];
+        this.rawContents.position(0);
+        
+        for (int i = 0; i < entryCount; i++) {
+            final int red = rawContents.get();
+            final int green = rawContents.get();
+            final int blue = rawContents.get();// no need for readByte(), bytes length should be checked
+            rgbPaletteEntries[i] = 0xFF000000 | ((0xFF & red) << 16) |
+                    ((0xFF & green) << 8) | (0xFF & blue);
         }
     }
 
     public int[] getRgb() {
-        return rgb; // TODO clone? Is the method used?
+        return rgbPaletteEntries; // TODO clone? Is the method used?
     }
 
     public int getRGB(final int index) throws ImageReadException {
-        if ((index < 0) || (index >= rgb.length)) {
-            throw new ImageReadException("PNG: unknown Palette reference: "
-                    + index);
+        if ((index < 0) || (index >= rgbPaletteEntries.length)) {
+            throw new ImageReadException("PNG Component: Illegal palette "
+                    + "reference found: " + index);
         }
-        return rgb[index];
+        
+        return rgbPaletteEntries[index];
     }
 
     // public void printPalette() {
@@ -77,8 +74,8 @@ public class PngChunkPlte extends PngChunk {
     // }
 
     public void correct(final GammaCorrection gammaCorrection) {
-        for (int i = 0; i < rgb.length; i++) {
-            rgb[i] = gammaCorrection.correctARGB(rgb[i]);
+        for (int i = 0; i < rgbPaletteEntries.length; i++) {
+            rgbPaletteEntries[i] = gammaCorrection.correctARGB(rgbPaletteEntries[i]);
         }
     }
 

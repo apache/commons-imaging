@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.formats.png;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
@@ -86,10 +87,91 @@ public enum ChunkType {
 
     final byte[] array;
     final int value;
+    
+    private boolean propertyBits[];
 
     ChunkType() {
         final char[] chars = name().toCharArray();
         array = name().getBytes(StandardCharsets.UTF_8);
         value = BinaryFunctions.charsToQuad(chars[0], chars[1], chars[2], chars[3]);
     }
+    
+    /**
+     * Returns the numeric code identifying the chunk.
+     * 
+     * @return numeric code of chunk
+     */
+    public int toCode() {
+        return value;
+    }
+    
+    /**
+     * Returns the set of four property bits for this chunk type,
+     * possibly calculating if not done already.
+     * 
+     * @return set of four property bits
+     */
+    public boolean[] propertyBits() {
+        // now, propertyBits is property of ChunkType rather than
+        // Chunk.
+        if(propertyBits == null) {
+            propertyBits = new boolean[4];
+            int shift = 24;
+            
+            for (int i = 0; i < 4; i++) {
+                final int theByte = 0xff & (toCode() >> shift);
+                shift -= 8;
+                final int theMask = 1 << 5;
+                propertyBits[i] = ((theByte & theMask) > 0);
+            }
+        }
+        
+        // notice why ancillary, private, safeToCopy property
+        // accesssor are a bit complex.
+        return propertyBits.clone();
+    }
+    
+    public boolean isAncillary() {
+        if(propertyBits == null) {
+            return propertyBits()[0];
+        }
+        
+        return propertyBits[0];
+    }
+    
+    public boolean isPrivate() {
+        if(propertyBits == null) {
+            return propertyBits()[1];
+        }
+        
+        return propertyBits[1];
+    }
+    
+    public boolean isSafeToCopy() {
+        if(propertyBits == null) {
+            return propertyBits()[3];
+        }
+        
+        return propertyBits[3];
+    }
+    
+    /**
+     * Returns the ChunkType whose numeric code matches the given
+     * one.
+     * 
+     * @param code
+     * @return 
+     */
+    public static ChunkType forCode(int code) {
+        final String name = new String(
+                ByteBuffer.allocate(4).putInt(code).array(),
+                StandardCharsets.ISO_8859_1);
+        try {
+            return ChunkType.valueOf(name);
+        } catch (IllegalArgumentException ex) {
+            System.err.println("Unknown ChunkType requested: " + name + ", code: " + code);
+            return null;
+        }
+    }
+    
 }

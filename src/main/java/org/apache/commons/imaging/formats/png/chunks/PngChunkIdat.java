@@ -16,8 +16,16 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-public class PngChunkIdat extends PngChunk {
+import java.nio.ByteBuffer;
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.formats.png.ChunkType;
 
+public final class PngChunkIdat extends PngChunk {
+    
+    PngChunkIdat(ByteBuffer contents) {
+        super(ChunkType.IDAT, contents);
+    }
+    
     public PngChunkIdat(final int length, final int chunkType, final int crc, final byte[] bytes) {
         super(length, chunkType, crc, bytes);
     }

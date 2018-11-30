@@ -16,23 +16,22 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.findNull;
-import static org.apache.commons.imaging.common.BinaryFunctions.getStreamBytes;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.BinaryFunctions;
+import org.apache.commons.imaging.formats.png.ChunkType;
 
-public class PngChunkIccp extends PngChunk {
+public final class PngChunkIccp extends PngChunk {
 
     private static final Logger LOGGER = Logger.getLogger(PngChunkIccp.class.getName());
 
-    // private final PngImageParser parser;
     public final String profileName;
     public final int compressionMethod;
     private final byte[] compressedProfile;
@@ -42,39 +41,41 @@ public class PngChunkIccp extends PngChunk {
         return uncompressedProfile; // TODO clone?
     }
 
-    public PngChunkIccp(
-    // PngImageParser parser,
-            final int length, final int chunkType, final int crc, final byte[] bytes)
-            throws ImageReadException, IOException {
-        super(length, chunkType, crc, bytes);
-        // this.parser = parser;
-
-        final int index = findNull(bytes);
-        if (index < 0) {
-            throw new ImageReadException("PngChunkIccp: No Profile Name");
+    PngChunkIccp(ByteBuffer contents) throws ImageReadException {
+        super(ChunkType.iCCP, contents);
+        
+        final int nullIdx = BinaryFunctions.findNull(contents.array());
+        if(nullIdx < 0) {
+            throw new ImageReadException("PNG Component: iCCP chunk contains "
+                    + "illegal (none at all) profile name");
         }
-        final byte[] nameBytes = new byte[index];
-        System.arraycopy(bytes, 0, nameBytes, 0, index);
-        profileName = new String(nameBytes, StandardCharsets.ISO_8859_1);
-
-        compressionMethod = bytes[index + 1];
-
-        final int compressedProfileLength = bytes.length - (index + 1 + 1);
-        compressedProfile = new byte[compressedProfileLength];
-        System.arraycopy(bytes, index + 1 + 1, compressedProfile, 0, compressedProfileLength);
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("ProfileName: " + profileName);
-            LOGGER.finest("ProfileName.length(): " + profileName.length());
-            LOGGER.finest("CompressionMethod: " + compressionMethod);
-            LOGGER.finest("CompressedProfileLength: " + compressedProfileLength);
-            LOGGER.finest("bytes.length: " + bytes.length);
+        
+        final byte[] nameBytes = new byte[nullIdx];
+        System.arraycopy(contents.array(), 0, nameBytes, 0, nullIdx);
+        this.profileName = new String(nameBytes, StandardCharsets.ISO_8859_1);
+        this.compressionMethod = contents.get(nullIdx + 1);
+        
+        final int compressedProfileLength = contentSize() - (nullIdx + 1 + 1);
+        this.compressedProfile = new byte[compressedProfileLength];
+        System.arraycopy(contents.array(), nullIdx + 1 + 1, compressedProfile,
+                0, compressedProfileLength);
+        
+        try {
+            uncompressedProfile = BinaryFunctions.getStreamBytes(
+                    new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
+        } catch (IOException ex) {
+            throw new ImageReadException("Unresolved IOException while uncompressed "
+                    + "iCCP chunk profile content");
         }
-
-        uncompressedProfile = getStreamBytes(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
-
+        
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("UncompressedProfile: " + Integer.toString(bytes.length));
+            LOGGER.log(Level.FINEST, "ProfileName: {0}", profileName);
+            LOGGER.log(Level.FINEST, "ProfileName.length(): {0}", profileName.length());
+            LOGGER.log(Level.FINEST, "CompressionMethod: {0}", compressionMethod);
+            LOGGER.log(Level.FINEST, "CompressedProfileLength: {0}", compressedProfileLength);
+            LOGGER.log(Level.FINEST, "contents.capacity(): {0}", contents.capacity());
+            LOGGER.log(Level.FINEST, "UncompressedProfile: {0}",
+                    Integer.toString(contents.capacity()));
         }
     }
 

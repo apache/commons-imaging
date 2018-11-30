@@ -16,16 +16,38 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
+import java.nio.ByteBuffer;
+import org.apache.commons.imaging.formats.png.ChunkType;
 import org.apache.commons.imaging.formats.png.PngText;
 
+/**
+ * PngTextChunk is an abstraction to iTXT, tEXt, and zTXt chunks,
+ * all of which have a keyword and text value.
+ * 
+ * @author Shukant Pal
+ */
 public abstract class PngTextChunk extends PngChunk {
 
+    protected PngTextChunk(final ChunkType type, final ByteBuffer contents) {
+        super(type, contents);
+    }
+    
     public PngTextChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
         super(length, chunkType, crc, bytes);
     }
 
+    /**
+     * Returns the keyword
+     * 
+    * @return keyword
+     */
     public abstract String getKeyword();
 
+    /**
+     * Returns the text contents
+     * 
+     * @return text contents 
+     */
     public abstract String getText();
 
     public abstract PngText getContents();

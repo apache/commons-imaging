@@ -81,6 +81,7 @@ public class PngTextTest extends PngBaseTest {
         assertEquals(readTexts.size(), 3);
         for (final PngText text : readTexts) {
             if (text.keyword.equals("a")) {
+                System.out.println(text.text);
                 assertEquals(text.text, "b");
             } else if (text.keyword.equals("c")) {
                 assertEquals(text.text, "d");

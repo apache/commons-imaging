@@ -131,7 +131,7 @@ public final class Debug {
             return message + " map: " + null;
         }
 
-        final List<Object> keys = new ArrayList<>(map.keySet());
+        final List<Object> keys = new ArrayList<Object>(map.keySet());
         result.append(message + " map: " + keys.size() + NEWLINE);
         for (int i = 0; i < keys.size(); i++) {
             final Object key = keys.get(i);

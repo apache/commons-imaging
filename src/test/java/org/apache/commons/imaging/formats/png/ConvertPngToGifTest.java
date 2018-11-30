@@ -49,8 +49,13 @@ public class ConvertPngToGifTest extends PngBaseTest {
             final Map<String, Object> params = new HashMap<>();
             // params.put(ImagingConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
-            final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
-            assertNotNull(image);
+            BufferedImage image = null;
+            try {
+                image = Imaging.getBufferedImage(imageFile, params);
+            } catch(NullPointerException e) {
+                e.printStackTrace();
+            }
+                assertNotNull(image);
 
             final File outFile = createTempFile(imageFile.getName() + ".", ".gif");
             // Debug.debug("outFile", outFile);

@@ -33,6 +33,7 @@ import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterUp;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
 abstract class ScanExpediter {
+    
     final int width;
     final int height;
     final InputStream is;
@@ -46,9 +47,9 @@ abstract class ScanExpediter {
     final TransparencyFilter transparencyFilter;
 
     ScanExpediter(final int width, final int height, final InputStream is,
-            final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
-            final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
-            final TransparencyFilter transparencyFilter) {
+            final BufferedImage bi, final PngColorType pngColorType, final int bitDepth,
+            final int bitsPerPixel, final PngChunkPlte pngChunkPLTE,
+            final GammaCorrection gammaCorrection, final TransparencyFilter transparencyFilter) {
         this.width = width;
         this.height = height;
         this.is = is;
@@ -70,7 +71,7 @@ abstract class ScanExpediter {
         return ((0xff & alpha) << 24)
              | ((0xff & red)   << 16)
              | ((0xff & green) << 8)
-             | ((0xff & blue)  << 0);
+             | ((0xff & blue));
     }
 
     final int getPixelRGB(final int red, final int green, final int blue) {
@@ -169,7 +170,8 @@ abstract class ScanExpediter {
         }
     }
 
-    ScanlineFilter getScanlineFilter(final FilterType filterType, final int bytesPerPixel) throws ImageReadException {
+    ScanlineFilter getScanlineFilter(final FilterType filterType, final int bytesPerPixel)
+            throws ImageReadException {
         switch (filterType) {
             case NONE:
                 return new ScanlineFilterNone();

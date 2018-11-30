@@ -61,7 +61,10 @@ public class PngReadTest extends PngBaseTest {
                 } catch (final Exception e) {
                 }
             } else {
-                final ImageMetadata metadata = Imaging.getMetadata(imageFile);
+                ImageMetadata metadata = null;
+                try {
+    metadata                    = Imaging.getMetadata(imageFile);
+                } catch(Exception e) {  e.printStackTrace();}
                 Assert.assertFalse(metadata instanceof File); // Dummy check to avoid unused warning (it may be null)
 
                 final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);

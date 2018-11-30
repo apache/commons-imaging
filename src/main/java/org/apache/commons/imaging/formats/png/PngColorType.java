@@ -43,7 +43,7 @@ public enum PngColorType {
         this.allowedBitDepths = allowedBitDepths;
     }
 
-    int getValue() {
+    public int getValue() {
         return value;
     }
 

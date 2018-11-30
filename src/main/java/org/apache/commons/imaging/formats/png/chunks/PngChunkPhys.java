@@ -16,25 +16,20 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
+import java.nio.ByteBuffer;
+import org.apache.commons.imaging.formats.png.ChunkType;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
-public class PngChunkPhys extends PngChunk {
+public final class PngChunkPhys extends PngChunk {
+    
     public final int pixelsPerUnitXAxis;
     public final int pixelsPerUnitYAxis;
     public final int unitSpecifier;
-
-    public PngChunkPhys(final int length, final int chunkType, final int crc, final byte[] bytes) throws IOException {
-        super(length, chunkType, crc, bytes);
-
-        final ByteArrayInputStream is = new ByteArrayInputStream(bytes);
-
-        pixelsPerUnitXAxis = read4Bytes("PixelsPerUnitXAxis", is, "Not a Valid Png File: pHYs Corrupt", getByteOrder());
-        pixelsPerUnitYAxis = read4Bytes("PixelsPerUnitYAxis", is, "Not a Valid Png File: pHYs Corrupt", getByteOrder());
-        unitSpecifier = readByte("Unit specifier", is, "Not a Valid Png File: pHYs Corrupt");
+    
+    PngChunkPhys(final ByteBuffer contents) {
+        super(ChunkType.pHYs, contents);
+        this.pixelsPerUnitXAxis = contents.getInt(0);
+        this.pixelsPerUnitYAxis = contents.getInt(4);
+        this.unitSpecifier = contents.get(8);
     }
 
 }

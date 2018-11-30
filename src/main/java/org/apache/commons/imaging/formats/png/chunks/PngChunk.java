@@ -17,48 +17,90 @@
 package org.apache.commons.imaging.formats.png.chunks;
 
 import java.io.ByteArrayInputStream;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.formats.png.ChunkType;
 
 public class PngChunk extends BinaryFileParser {
-    public final int length;
-    public final int chunkType;
-    public final int crc;
-    private final byte[] bytes;
 
-    private final boolean[] propertyBits;
-    public final boolean ancillary;
-    public final boolean isPrivate;
-    public final boolean reserved;
-    public final boolean safeToCopy;
+    
+    public final ChunkType chunkType;
+    public int crc;
 
-    public PngChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
-        this.length = length;
+    protected final ByteBuffer rawContents;
+    
+    /**
+     * Should be set to true when child classes are used to
+     * modify the buffer.
+     */
+    protected boolean wasChanged;
+    
+    public PngChunk(final ChunkType chunkType, final ByteBuffer rawContents) {
         this.chunkType = chunkType;
+        this.rawContents = rawContents;
+    }
+    
+    /*
+    @deprecated, why not use ChunkType directly and also use bytes.length
+    */
+    public PngChunk(final int length, final int chunkType, final int crc, final byte[] bytes) {
+        this.chunkType = ChunkType.forCode(chunkType);// nonsense use above ctor
         this.crc = crc;
-        this.bytes = bytes; // TODO clone?
-
-        propertyBits = new boolean[4];
-        int shift = 24;
-        for (int i = 0; i < 4; i++) {
-            final int theByte = 0xff & (chunkType >> shift);
-            shift -= 8;
-            final int theMask = 1 << 5;
-            propertyBits[i] = ((theByte & theMask) > 0);
-        }
-
-        ancillary = propertyBits[0];
-        isPrivate = propertyBits[1];
-        reserved = propertyBits[2];
-        safeToCopy = propertyBits[3];
+        this.rawContents = ByteBuffer.wrap(bytes);
     }
 
     public byte[] getBytes() {
-        return bytes; // TODO clone?
+        return Arrays.copyOf(rawContents.array(), rawContents.capacity());
     }
-
-    public boolean[] getPropertyBits() {
-        return propertyBits.clone();
+    
+    /**
+     * Returns the size of this chunk's contents.
+     * 
+     * Replaced {@code Chunk.length} as it was not required.
+     * 
+     * @return 
+     */
+    public final int contentSize() {
+        return rawContents.capacity();
+    }
+    
+    /**
+     * Returns type code of this chunk.
+     * 
+     * Is overridden by PngChunkUnknown as there is no ChunkType
+     * having the typeCode required.
+     * 
+     * @return 
+     */
+    public int typeCode() {
+        return chunkType.toCode();
+    }
+    
+    /**
+     * Returns whether this chunk was modified after setting
+     * {@code wasChanged} to true (or after construction).
+     * 
+     * @return wasChanged 
+     */
+    public boolean wasChanged() {
+        return wasChanged;
+    }
+    
+    /**
+     * Returns {@code wasChanged} and sets its new value to
+     * false if required (shouldFlip).
+     * 
+     * @param shouldFlip - whether to set wasChanged to false
+     * @return wasChanged (old value)
+     */
+    public boolean wasChanged(boolean shouldFlip) {
+        boolean localCopy = wasChanged;
+        if(shouldFlip)
+            wasChanged = false;
+        
+        return localCopy;
     }
 
     protected ByteArrayInputStream getDataStream() {
