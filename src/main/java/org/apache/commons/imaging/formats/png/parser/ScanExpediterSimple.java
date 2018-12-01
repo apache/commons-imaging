@@ -14,19 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.png;
+package org.apache.commons.imaging.formats.png.parser;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.formats.png.GammaCorrection;
+import org.apache.commons.imaging.formats.png.PngColorType;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
-class ScanExpediterSimple extends ScanExpediter {
+public class ScanExpediterSimple extends ScanExpediter {
     
-    ScanExpediterSimple(final int width, final int height, final InputStream is,
+    public ScanExpediterSimple(final int width, final int height, final InputStream is,
             final BufferedImage bi, final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte pngChunkPLTE, final GammaCorrection gammaCorrection,
             final TransparencyFilter transparencyFilter) {
@@ -36,24 +38,16 @@ class ScanExpediterSimple extends ScanExpediter {
 
     @Override
     public void drive() throws ImageReadException, IOException {
-        final int bitsPerScanLine = bitsPerPixel * width;
-        final int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
-        byte[] prev = null;
-
+        final PixelParser parser = new PixelParser(null, bitsPerPixel, bitDepth);
+        
         for (int y = 0; y < height; y++) {
-            final byte[] unfiltered = getNextScanline(is, pixelBytesPerScanLine, prev, bytesPerPixel);
-
-            prev = unfiltered;
-
-            final BitParser bitParser = new BitParser(unfiltered, bitsPerPixel,
-                    bitDepth);
+            parser.setScanline(scanLine());
 
             for (int x = 0; x < width; x++) {
-                final int rgb = getRGB(bitParser, x);
-
+                final int rgb = getRGB(parser, x);
                 bi.setRGB(x, y, rgb);
             }
         }
-
     }
+    
 }

@@ -14,17 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.png;
+package org.apache.commons.imaging.formats.png.parser;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.formats.png.GammaCorrection;
+import org.apache.commons.imaging.formats.png.PngColorType;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
-class ScanExpediterInterlaced extends ScanExpediter {
+public class ScanExpediterInterlaced extends ScanExpediter {
     private static final int[] STARTING_ROW = { 0, 0, 4, 0, 2, 0, 1 };
     private static final int[] STARTING_COL = { 0, 4, 0, 2, 0, 1, 0 };
     private static final int[] ROW_INCREMENT = { 8, 8, 8, 4, 4, 2, 2 };
@@ -32,7 +34,7 @@ class ScanExpediterInterlaced extends ScanExpediter {
 //    private static final int Block_Height[] = { 8, 8, 4, 4, 2, 2, 1 };
 //    private static final int Block_Width[] = { 8, 4, 4, 2, 2, 1, 1 };
 
-    ScanExpediterInterlaced(final int width, final int height, final InputStream is,
+    public ScanExpediterInterlaced(final int width, final int height, final InputStream is,
             final BufferedImage bi,
             final PngColorType pngColorType, final int bitDepth, final int bitsPerPixel,
             final PngChunkPlte fPNGChunkPLTE,
@@ -42,7 +44,7 @@ class ScanExpediterInterlaced extends ScanExpediter {
                 fPNGChunkPLTE, gammaCorrection, transparencyFilter);
     }
 
-    private void visit(final int x, final int y, final BufferedImage bi, final BitParser fBitParser,
+    private void visit(final int x, final int y, final BufferedImage bi, final PixelParser fBitParser,
             final int pixelIndexInScanline)
             throws ImageReadException, IOException {
         final int rgb = getRGB(fBitParser, pixelIndexInScanline);
@@ -51,10 +53,10 @@ class ScanExpediterInterlaced extends ScanExpediter {
 
     @Override
     public void drive() throws ImageReadException, IOException {
-
+        final PixelParser parser = new PixelParser(null, bitsPerPixel, bitDepth);
+        
         int pass = 1;
         while (pass <= 7) {
-            byte[] prev = null;
 
             int y = STARTING_ROW[pass - 1];
             // int y_stride = ROW_INCREMENT[pass - 1];
@@ -69,14 +71,10 @@ class ScanExpediterInterlaced extends ScanExpediter {
                     final int bitsPerScanLine = bitsPerPixel * columnsInRow;
                     final int pixelBytesPerScanLine = getBitsToBytesRoundingUp(bitsPerScanLine);
 
-                    final byte[] unfiltered = getNextScanline(is, pixelBytesPerScanLine, prev, bytesPerPixel);
-
-                    prev = unfiltered;
-
-                    final BitParser fBitParser = new BitParser(unfiltered, bitsPerPixel, bitDepth);
+                    parser.setScanline(scanLine(pixelBytesPerScanLine));
 
                     while (x < width) {
-                        visit(x, y, bi, fBitParser, pixelIndexInScanline);
+                        visit(x, y, bi, parser, pixelIndexInScanline);
 
                         x = x + COL_INCREMENT[pass - 1];
                         pixelIndexInScanline++;

@@ -20,6 +20,8 @@ import org.apache.commons.imaging.ImageReadException;
 import org.junit.Test;
 
 import java.io.IOException;
+import org.apache.commons.imaging.formats.png.scanline.filters.AdaptiveFilter;
+import org.apache.commons.imaging.formats.png.scanline.filters.AdaptiveFilter.FilterType;
 
 import static org.junit.Assert.assertArrayEquals;
 
@@ -27,10 +29,10 @@ public class ScanlineFilterUpTest {
 
   @Test
   public void testUnfilterWithNull() throws IOException, ImageReadException {
-      ScanlineFilterUp scanlineFilterUp = new ScanlineFilterUp();
+      AdaptiveFilter filterObject = new AdaptiveFilter(1);
       byte[] byteArray = new byte[4];
-      scanlineFilterUp.unfilter(byteArray, byteArray, (byte[]) null);
-
+      filterObject.unfilter(FilterType.UP, byteArray);
+      
       assertArrayEquals(new byte[] {(byte)0, (byte)0, (byte)0, (byte)0}, byteArray);
   }
 

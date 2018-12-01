@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,8 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.formats.png.chunks.PngChunk;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkIhdr;
+import org.apache.commons.imaging.formats.png.scanline.filters.AdaptiveFilter;
+import org.apache.commons.imaging.formats.png.scanline.filters.AdaptiveFilter.FilterType;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
@@ -51,12 +54,12 @@ class PngWriter {
     
     /**
      * Transforms raw image pixel data into the required PNG IDAT
-     * (filtered, compressed) form.
+     * (compressed) form.
      * 
      * {@code DataTransformer} can be used to split compressed pixel
      * data into different chunks.
      */
-    static final class DataTransformer {
+    static final class ChunkedCompressor {
         
         /**
          * Transformation is done on this pixel data.
@@ -75,11 +78,11 @@ class PngWriter {
         
         private DeflaterOutputStream deflaterOutputStream;
         
-        DataTransformer() {
+        ChunkedCompressor() {
             this.pixelInput = null;
         }
         
-        DataTransformer(byte[] pixelInput) {
+        ChunkedCompressor(byte[] pixelInput) {
             setInput(pixelInput);
         }
         
@@ -537,27 +540,35 @@ class PngWriter {
         // 1. Transform the BufferedImage into an array of pixels (uncompressed)
         // that holds raw image data.
         
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream pixelDataBuffer = new ByteArrayOutputStream();
+        final ByteArrayOutputStream scanLineBuffer = new ByteArrayOutputStream();
+        
         final int width = refImage.getWidth(), height = refImage.getHeight();
-
         final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA
                 || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
-
+        
+        final FilterType filterType = (pngColorType != PngColorType.INDEXED_COLOR) ?
+                FilterType.PAETH : FilterType.NONE;
+        
+        // we only support 8-bit samples (to bad for us :(
+        final AdaptiveFilter filterObject = new AdaptiveFilter(pngColorType.getSamplesPerPixel());
+        
         final int[] row = new int[width];
         for (int y = 0; y < height; y++) {
-            // Debug.debug("y", y + "/" + height);
             refImage.getRGB(0, y, width, 1, row, 0, width);
-
-            baos.write(FilterType.NONE.ordinal());
+            pixelDataBuffer.write(filterType.ordinal());
+            
+            scanLineBuffer.reset();
+            
             for (int x = 0; x < width; x++) {
                 final int argb = row[x];
 
                 if (palette != null) {
                     if (hasAlpha && (argb >>> 24) == 0x00) {
-                        baos.write(0);
+                        scanLineBuffer.write(0);
                     } else {
                         final int index = palette.getPaletteIndex(argb);
-                        baos.write(0xff & index);
+                        scanLineBuffer.write(0xff & index);
                     }
                 } else {
                     final int alpha = 0xff & (argb >> 24);
@@ -567,24 +578,26 @@ class PngWriter {
 
                     if (isGrayscale) {
                         final int gray = (red + green + blue) / 3;
-                        baos.write(gray);
+                        scanLineBuffer.write(gray);
                     } else {
-                        baos.write(red);
-                        baos.write(green);
-                        baos.write(blue);
+                        scanLineBuffer.write(red);
+                        scanLineBuffer.write(green);
+                        scanLineBuffer.write(blue);
                     }
                     if (useAlpha) {
-                        baos.write(alpha);
+                        scanLineBuffer.write(alpha);
                     }
                 }
             }
+            
+            pixelDataBuffer.write(filterObject.filter(filterType, scanLineBuffer.toByteArray()));
         }
         
         // 2. Feed the uncompressed raw pixel data into a DataTransformer and
         // write it into IDAT chunks.
         
-        byte[] uncompressed = baos.toByteArray();
-        DataTransformer pixelTrs = new DataTransformer(uncompressed);
+        byte[] uncompressed = pixelDataBuffer.toByteArray();
+        ChunkedCompressor pixelTrs = new ChunkedCompressor(uncompressed);
         final int idatChunkLength = 256 * 1024;// default length
         
         while(pixelTrs.transformedAmount() < uncompressed.length) {

@@ -73,12 +73,17 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
 
                 final File tempFile = createTempFile(imageFile.getName() + "." + j
                         + ".", ".png");
+                final File docFile = new File("/home/shukant/Documents/" + imageFile.getName());
+                docFile.createNewFile();
+                
                 Debug.debug("tempFile", tempFile);
 
                 final Map<String, Object> writeParams = new HashMap<>();
                 Imaging.writeImage(image, tempFile,
                         ImageFormats.PNG, writeParams);
-
+                Imaging.writeImage(image, docFile,
+                        ImageFormats.PNG, writeParams);
+                
                 lastFile = tempFile;
             }
         }

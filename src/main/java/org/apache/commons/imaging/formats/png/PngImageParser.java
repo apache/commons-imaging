@@ -16,11 +16,11 @@
  */
 package org.apache.commons.imaging.formats.png;
 
+import org.apache.commons.imaging.formats.png.parser.ScanExpediterSimple;
+import org.apache.commons.imaging.formats.png.parser.ScanExpediterInterlaced;
+import org.apache.commons.imaging.formats.png.parser.ScanExpediter;
 import static org.apache.commons.imaging.common.BinaryFunctions.printCharQuad;
-import static org.apache.commons.imaging.common.BinaryFunctions.read4Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readAndVerifyBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
-import static org.apache.commons.imaging.common.BinaryFunctions.skipBytes;
 
 import java.awt.Dimension;
 import java.awt.color.ColorSpace;
@@ -56,7 +56,9 @@ import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.png.chunks.ChunkLoader;
+import org.apache.commons.imaging.formats.png.chunks.ChunkLoader.ChunkListSelector;
 import org.apache.commons.imaging.formats.png.chunks.ChunkLoader.ChunkSelector;
+import org.apache.commons.imaging.formats.png.chunks.ChunkLoader.ChunkUniselector;
 import org.apache.commons.imaging.formats.png.chunks.PngChunk;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkGama;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkIccp;
@@ -88,7 +90,12 @@ public class PngImageParser extends ImageParser {
     private static final String DEFAULT_EXTENSION = ".png";
     private static final String[] ACCEPTED_EXTENSIONS = { DEFAULT_EXTENSION, };
     
-    private static final ChunkSelector BUFIMG_SEL = new ChunkSelector(true,
+    /*
+     * These are some chunk selectors; use them whenever required to filter
+     * chunks. DO NOT MODIFY ANY PROPERTIES of these selectors.
+     */
+    
+    private static final ChunkSelector BUFIMG_SEL = new ChunkListSelector(true,
             new ChunkType[] {
                 ChunkType.IHDR,
                 ChunkType.PLTE,
@@ -99,7 +106,7 @@ public class PngImageParser extends ImageParser {
                 ChunkType.sRGB,
             });
     
-    private static final ChunkSelector IMGINFO_SEL = new ChunkSelector(true,
+    private static final ChunkSelector IMGINFO_SEL = new ChunkListSelector(true,
             new ChunkType[]{
                 ChunkType.IHDR,
                 ChunkType.pHYs,
@@ -111,25 +118,24 @@ public class PngImageParser extends ImageParser {
                 ChunkType.iTXt,
             });
     
-    private static final ChunkSelector IHDR_SEL = new ChunkSelector(true,
-            new ChunkType[] {
-                ChunkType.IHDR
-            });
+    static final ChunkSelector IHDR_SEL = new ChunkUniselector(true, ChunkType.IHDR);
+    static final ChunkSelector PLTE_SEL = new ChunkUniselector(true, ChunkType.PLTE);
+    static final ChunkSelector IDAT_SEL = new ChunkUniselector(true, ChunkType.IDAT);
     
-    private static final ChunkSelector ICCP_SEL = new ChunkSelector(true,
-            new ChunkType[]{
-                ChunkType.iCCP
-            });
+    static final ChunkSelector GAMA_SEL = new ChunkUniselector(true, ChunkType.gAMA);
+    static final ChunkSelector ICCP_SEL = new ChunkUniselector(true, ChunkType.iCCP);
+    static final ChunkSelector PHYS_SEL = new ChunkUniselector(true, ChunkType.pHYs);
+    static final ChunkSelector SRGB_SEL = new ChunkUniselector(true, ChunkType.sRGB);
+    static final ChunkSelector SCAL_SEL = new ChunkUniselector(true, ChunkType.sCAL);
+    static final ChunkSelector tEXt_SEL = new ChunkUniselector(true, ChunkType.tEXt);
+    static final ChunkSelector TRNS_SEL = new ChunkUniselector(true, ChunkType.tRNS);
+    static final ChunkSelector iTXt_SEL = new ChunkUniselector(true, ChunkType.iTXt);
+    static final ChunkSelector zTXt_SEL = new ChunkUniselector(true, ChunkType.zTXt);
     
-    private static final ChunkSelector TEXT_SEL = new ChunkSelector(true,
+    static final ChunkSelector TEXT_SEL = new ChunkListSelector(true,
             new ChunkType[]{
                 ChunkType.tEXt,
                 ChunkType.zTXt
-            });
-
-    private static final ChunkSelector iTXt_SEL = new ChunkSelector(true,
-            new ChunkType[]{
-                ChunkType.iTXt
             });
     
     @Override
@@ -182,12 +188,9 @@ public class PngImageParser extends ImageParser {
 
     public boolean hasChunkType(final ByteSource byteSource, final ChunkType chunkType)
             throws ImageReadException, IOException {
-        try (InputStream is = byteSource.getInputStream()) {
-            readSignature(is);
-            final List<PngChunk> chunks = readChunks(is, new ChunkSelector(true, 
-                    new ChunkType[] { chunkType }), true);
-            return !chunks.isEmpty();
-        }
+        return ChunkReader.newInstance(byteSource)
+                .readChunks(new ChunkUniselector(true, chunkType), true)
+                .size() > 0;
     }
 
     /**
@@ -257,62 +260,40 @@ public class PngImageParser extends ImageParser {
                 "Not a Valid PNG Segment: Incorrect Signature");
 
     }
-    
-    private List<PngChunk> readChunks(final ByteSource byteSource,
-            final ChunkSelector selector, final boolean returnAfterFirst)
-            throws IOException, ImageReadException {
-        try (InputStream inputStream = byteSource.getInputStream()) {
-            readSignature(inputStream);
-            return readChunks(inputStream, selector, returnAfterFirst);
-        }
-    }
 
     @Override
     public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final List<PngChunk> chunks = PngImageParser.this.readChunks(byteSource,
-                ICCP_SEL, true);
-
-        if ((chunks == null) || (chunks.isEmpty())) {
-            // throw new ImageReadException("Png: No chunks");
+        final PngChunkIccp pngChunkiCCP = (PngChunkIccp) ICCP_SEL.filterOnlyOne(
+                ChunkReader.newInstance(byteSource).readChunks(ICCP_SEL, true));
+        
+        if(pngChunkiCCP == null) {
+            System.err.println("Apache Commons Imaging: PNG file doesn't contain ICC profile");
             return null;
         }
 
-        if (chunks.size() > 1) {
-            throw new ImageReadException(
-                    "PNG contains more than one ICC Profile ");
-        }
-
-        final PngChunkIccp pngChunkiCCP = (PngChunkIccp) chunks.get(0);
-        final byte[] bytes = pngChunkiCCP.getUncompressedProfile(); // TODO should this be a clone?
-
-        return (bytes);
+        return pngChunkiCCP.getUncompressedProfile();
     }
 
     @Override
     public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final List<PngChunk> chunks = PngImageParser.this.readChunks(byteSource,
-                IHDR_SEL, true);
+        final PngChunkIhdr pngChunkIHDR =
+                ChunkReader.newInstance(byteSource.getInputStream()).getHeader();
 
-        if ((chunks == null) || (chunks.isEmpty())) {
-            throw new ImageReadException("Png: No chunks");
+        if(pngChunkIHDR == null) {
+            System.err.println("PNG file doesn't contain a header chunk.");
+            return null;
         }
-
-        if (chunks.size() > 1) {
-            throw new ImageReadException("PNG contains more than one Header");
-        }
-
-        final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) chunks.get(0);
-
+        
         return new Dimension(pngChunkIHDR.getWidth(), pngChunkIHDR.getHeight());
     }
 
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final List<PngChunk> chunks = PngImageParser.this.readChunks(byteSource,
-                TEXT_SEL, true);
+        final List<PngChunk> chunks = ChunkReader
+                .newInstance(byteSource).readChunks(TEXT_SEL, true);
 
         if ((chunks == null) || (chunks.isEmpty())) {
             return null;
@@ -324,18 +305,6 @@ public class PngImageParser extends ImageParser {
             final PngTextChunk textChunk = (PngTextChunk) chunk;
 
             result.add(textChunk.getKeyword(), textChunk.getText());
-        }
-
-        return result;
-    }
-
-    private List<PngChunk> filterChunks(final List<PngChunk> chunks, final ChunkType type) {
-        final List<PngChunk> result = new ArrayList<>();
-
-        for (final PngChunk chunk : chunks) {
-            if (chunk.chunkType == type) {
-                result.add(chunk);
-            }
         }
 
         return result;
@@ -364,22 +333,18 @@ public class PngImageParser extends ImageParser {
     @Override
     public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        final List<PngChunk> chunks = PngImageParser.this.readChunks(byteSource, IMGINFO_SEL, false);
+        final List<PngChunk> chunks = ChunkReader
+                .newInstance(byteSource).readChunks(IMGINFO_SEL, false);
 
         if ((chunks == null) || (chunks.isEmpty())) {
             throw new ImageReadException("PNG: no chunks");
         }
 
-        final List<PngChunk> IHDRs = filterChunks(chunks, ChunkType.IHDR);
-        if (IHDRs.size() != 1) {
-            throw new ImageReadException("PNG contains more than one Header");
-        }
+        final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) IHDR_SEL.filterOnlyOne(chunks);
 
-        final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) IHDRs.get(0);
+        boolean transparent;
 
-        boolean transparent = false;
-
-        final List<PngChunk> tRNSs = filterChunks(chunks, ChunkType.tRNS);
+        final List<PngChunk> tRNSs = TRNS_SEL.filter(chunks);
         if (!tRNSs.isEmpty()) {
             transparent = true;
         } else {
@@ -388,19 +353,11 @@ public class PngImageParser extends ImageParser {
             // END FIX
         }
 
-        PngChunkPhys pngChunkpHYs = null;
-
-        final List<PngChunk> pHYss = filterChunks(chunks, ChunkType.pHYs);
-        if (pHYss.size() > 1) {
-            throw new ImageReadException("PNG contains more than one pHYs: "
-                    + pHYss.size());
-        } else if (pHYss.size() == 1) {
-            pngChunkpHYs = (PngChunkPhys) pHYss.get(0);
-        }
+        final PngChunkPhys pngChunkpHYs = (PngChunkPhys) PHYS_SEL.filterOnlyOne(chunks);
 
         PhysicalScale physicalScale = PhysicalScale.UNDEFINED;
 
-        final List<PngChunk> sCALs = filterChunks(chunks, ChunkType.sCAL);
+        final List<PngChunk> sCALs = SCAL_SEL.filter(chunks);
         if (sCALs.size() > 1) {
             throw new ImageReadException("PNG contains more than one sCAL:"
                     + sCALs.size());
@@ -415,9 +372,9 @@ public class PngImageParser extends ImageParser {
             }
         }
 
-        final List<PngChunk> tEXts = filterChunks(chunks, ChunkType.tEXt);
-        final List<PngChunk> zTXts = filterChunks(chunks, ChunkType.zTXt);
-        final List<PngChunk> iTXts = filterChunks(chunks, ChunkType.iTXt);
+        final List<PngChunk> tEXts = tEXt_SEL.filter(chunks);
+        final List<PngChunk> zTXts = zTXt_SEL.filter(chunks);
+        final List<PngChunk> iTXts = iTXt_SEL.filter(chunks);
 
         int chunkCount = tEXts.size() + zTXts.size() + iTXts.size();
         final List<String> comments = new ArrayList<>(chunkCount);
@@ -474,7 +431,7 @@ public class PngImageParser extends ImageParser {
 
         boolean usesPalette = false;
 
-        final List<PngChunk> PLTEs = filterChunks(chunks, ChunkType.PLTE);
+        final List<PngChunk> PLTEs = PLTE_SEL.filter(chunks);
         if (PLTEs.size() > 1) {
             usesPalette = true;
         }
@@ -515,33 +472,19 @@ public class PngImageParser extends ImageParser {
         // Object firstKey = params.keySet().iterator().next();
         // throw new ImageWriteException("Unknown parameter: " + firstKey);
         // }
-        
-        final List<PngChunk> chunks = readChunks(byteSource, BUFIMG_SEL, false);
+        ChunkReader reader = new ChunkReader(byteSource.getInputStream());
+        final List<PngChunk> chunks = reader.readChunks(BUFIMG_SEL, false);
 
         if ((chunks == null) || (chunks.isEmpty())) {
             throw new ImageReadException("PNG: no chunks");
         }
 
-        final List<PngChunk> IHDRs = filterChunks(chunks, ChunkType.IHDR);
-        if (IHDRs.size() != 1) {
-            throw new ImageReadException("PNG contains more than one Header");
-        }
-
-        final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) IHDRs.get(0);
-
-        final List<PngChunk> PLTEs = filterChunks(chunks, ChunkType.PLTE);
-        if (PLTEs.size() > 1) {
-            throw new ImageReadException("PNG contains more than one Palette");
-        }
-
-        PngChunkPlte pngChunkPLTE = null;
-        if (PLTEs.size() == 1) {
-            pngChunkPLTE = (PngChunkPlte) PLTEs.get(0);
-        }
+        final PngChunkIhdr pngChunkIHDR = (PngChunkIhdr) IHDR_SEL.filterOnlyOne(chunks);
+        final PngChunkPlte pngChunkPLTE = (PngChunkPlte) PLTE_SEL.filterOnlyOne(chunks);
 
         // -----
 
-        final List<PngChunk> IDATs = filterChunks(chunks, ChunkType.IDAT);
+        final List<PngChunk> IDATs = IDAT_SEL.filter(chunks);
         if (IDATs.isEmpty()) {
             throw new ImageReadException("PNG missing image data");
         }
@@ -560,7 +503,7 @@ public class PngImageParser extends ImageParser {
 
         TransparencyFilter transparencyFilter = null;
 
-        final List<PngChunk> tRNSs = filterChunks(chunks, ChunkType.tRNS);
+        final List<PngChunk> tRNSs = TRNS_SEL.filter(chunks);
         if (!tRNSs.isEmpty()) {
             final PngChunk pngChunktRNS = tRNSs.get(0);
             transparencyFilter = getTransparencyFilter(
@@ -569,37 +512,26 @@ public class PngImageParser extends ImageParser {
 
         ICC_Profile iccProfile = null;
         GammaCorrection gammaCorrection = null;
-        {
-            final List<PngChunk> sRGBs = filterChunks(chunks, ChunkType.sRGB);
-            final List<PngChunk> gAMAs = filterChunks(chunks, ChunkType.gAMA);
-            final List<PngChunk> iCCPs = filterChunks(chunks, ChunkType.iCCP);
-            if (sRGBs.size() > 1) {
-                throw new ImageReadException("PNG: unexpected sRGB chunk");
-            }
-            if (gAMAs.size() > 1) {
-                throw new ImageReadException("PNG: unexpected gAMA chunk");
-            }
-            if (iCCPs.size() > 1) {
-                throw new ImageReadException("PNG: unexpected iCCP chunk");
-            }
+        {   
+            final PngChunk pngChunkSrgb = SRGB_SEL.filterOnlyOne(chunks);
+            final PngChunkIccp pngChunkIccp = (PngChunkIccp) ICCP_SEL.filterOnlyOne(chunks);
+            final PngChunkGama pngChunkGama = (PngChunkGama) GAMA_SEL.filterOnlyOne(chunks);
+            
 
-            if (sRGBs.size() == 1) {
+            if (pngChunkSrgb != null) {
                 // no color management neccesary.
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.finest("sRGB, no color management neccesary.");
                 }
-            } else if (iCCPs.size() == 1) {
+            } else if (pngChunkIccp != null) {
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.finest("iCCP.");
                 }
-
-                final PngChunkIccp pngChunkiCCP = (PngChunkIccp) iCCPs.get(0);
-                final byte[] bytes = pngChunkiCCP.getUncompressedProfile();
-
+                
+                final byte[] bytes = pngChunkIccp.getUncompressedProfile();
                 iccProfile = ICC_Profile.getInstance(bytes);
-            } else if (gAMAs.size() == 1) {
-                final PngChunkGama pngChunkgAMA = (PngChunkGama) gAMAs.get(0);
-                final double gamma = pngChunkgAMA.getGamma();
+            } else if (pngChunkGama != null) {
+                final double gamma = pngChunkGama.getGamma();
 
                 // charles: what is the correct target value here?
                 // double targetGamma = 2.2;
@@ -667,7 +599,7 @@ public class PngImageParser extends ImageParser {
 
             if (iccProfile != null) {
                 final Boolean is_srgb = new IccProfileParser().issRGB(iccProfile);
-                if (is_srgb == null || !is_srgb.booleanValue()) {
+                if (!is_srgb) {
                     final ICC_ColorSpace cs = new ICC_ColorSpace(iccProfile);
 
                     final ColorModel srgbCM = ColorModel.getRGBdefault();
@@ -693,8 +625,9 @@ public class PngImageParser extends ImageParser {
 
         imageInfo.toString(pw, "");
 
-        final List<PngChunk> chunks = PngImageParser.this.readChunks(byteSource, null, false);
-        final List<PngChunk> IHDRs = filterChunks(chunks, ChunkType.IHDR);
+        final List<PngChunk> chunks = ChunkReader
+                .newInstance(byteSource).readChunks(null, false);
+        final List<PngChunk> IHDRs = IHDR_SEL.filter(chunks);
         if (IHDRs.size() != 1) {
             if (LOGGER.isLoggable(Level.FINEST)) {
                 LOGGER.finest("PNG contains more than one Header");
@@ -732,7 +665,8 @@ public class PngImageParser extends ImageParser {
     public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
 
-        final List<PngChunk> chunks = PngImageParser.this.readChunks(byteSource, iTXt_SEL, false);
+        final List<PngChunk> chunks = ChunkReader
+                .newInstance(byteSource).readChunks(iTXt_SEL, false);
 
         if ((chunks == null) || (chunks.isEmpty())) {
             return null;

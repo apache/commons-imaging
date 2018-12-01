@@ -17,7 +17,6 @@
 package org.apache.commons.imaging.formats.png.chunks;
 
 import java.nio.ByteBuffer;
-import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.png.ChunkType;
 
 public final class PngChunkIdat extends PngChunk {

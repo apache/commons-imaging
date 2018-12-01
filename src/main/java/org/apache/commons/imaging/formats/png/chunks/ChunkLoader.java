@@ -19,6 +19,9 @@ package org.apache.commons.imaging.formats.png.chunks;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.formats.png.ChunkType;
@@ -189,26 +192,29 @@ public final class ChunkLoader {
      * loaded by {@code ChunkLoader.run()} to reduce overall
      * overhead.
      * 
+     * <h2>NOTICE</h2>
+     * 
      * (Replaces PngImageParser.keepChunk}. ChunkSelector also
      * supports two mode - whiteList and blackList. In whiteList,
      * the chunk types are the ones to be loaded, and in blackList
      * all chunks are loaded except the given ones.
+     * 
+     * <h2>USAGE</h2>
+     * There are two ChunkSelector implementations - ChunkListSelector
+     * and ChunkUniselector.
      */
-    public static class ChunkSelector {
+    public static abstract class ChunkSelector {
         
-        private final boolean whiteList;
-        private ChunkType[] list;
-        
+        protected final boolean whiteList;
+
         /**
          * Constructs a new ChunkSelector.
          * 
          * @param whiteList - whether chunk types given are to be
          *      accepted or refused
-         * @param list - list of chunk type to filter
          */
-        public ChunkSelector(boolean whiteList, ChunkType[] list) {
+        protected ChunkSelector(boolean whiteList) {
             this.whiteList = whiteList;
-            setList(list);
         }
         
         public boolean isWhiteList() {
@@ -219,14 +225,6 @@ public final class ChunkLoader {
             return !whiteList;
         }
         
-        public final ChunkType[] getList() {
-            return list;
-        }
-        
-        public final void setList(ChunkType[] list) {
-            this.list = list;
-        }
-        
         /**
          * Returns whether the given chunk is to be selected for
          * building.
@@ -234,17 +232,88 @@ public final class ChunkLoader {
          * @param chunkType
          * @return 
          */
+        public abstract boolean whetherToKeep(ChunkType chunkType);
+        
+        /**
+         * Filters all the chunks in src and the result contains
+         * only chunks which satisfy whetherToKeep(chunk.chunkType)
+         * 
+         * @param src
+         * @return 
+         */
+        public List<PngChunk> filter(List<PngChunk> src) {
+            List<PngChunk> dst = new ArrayList<>();
+            
+            for(PngChunk chunk : src) {
+                if(whetherToKeep(chunk.chunkType))
+                    dst.add(chunk);
+            }
+            
+            return dst;
+        }
+        
+        public PngChunk filterOnlyOne(List<PngChunk> src) throws ImageReadException {
+            List<PngChunk> filtered = filter(src);
+            
+            if(filtered.size() > 1) {
+                throw new ImageReadException("More than one present in filtered: " +
+                        "type is " + filtered.get(0).chunkType);
+            } else if(filtered.size() == 0) {
+                return null;
+            }
+            
+            return filtered.get(0);
+        }
+        
+    }
+    
+    public static class ChunkListSelector extends ChunkSelector {
+
+        private final ChunkType[] list;
+        
+        public ChunkListSelector(boolean whiteList, ChunkType[] list) {
+            super(whiteList);
+            this.list = list;
+        }
+        
+        public ChunkType[] getList() {
+            return Arrays.copyOf(list, list.length);
+        }
+        
+        @Override
         public boolean whetherToKeep(ChunkType chunkType) {
-            if(list == null || chunkType == null) {
+            if(list == null) {
                 return !whiteList;
             }
             
-            for(ChunkType anyChunkType : list) {
-                if(anyChunkType == chunkType) {
+            for(ChunkType type : list) {
+                if(type == chunkType) {
                     return whiteList;
                 }
             }
             
+            return !whiteList;
+        }
+        
+    }
+    
+    public static class ChunkUniselector extends ChunkSelector {
+        
+        private final ChunkType selected;
+        
+        public ChunkUniselector(boolean whiteList, ChunkType selected) {
+            super(whiteList);
+            this.selected = selected;
+        }
+ 
+        public ChunkType getSelected() {
+            return selected;
+        }
+        
+        @Override
+        public boolean whetherToKeep(ChunkType type) {
+            if(type == selected)
+                return whiteList;
             return !whiteList;
         }
         

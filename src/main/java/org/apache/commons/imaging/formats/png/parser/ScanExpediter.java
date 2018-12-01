@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.imaging.formats.png;
+package org.apache.commons.imaging.formats.png.parser;
 
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
 
@@ -23,30 +23,34 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.formats.png.GammaCorrection;
+import org.apache.commons.imaging.formats.png.PngColorType;
 import org.apache.commons.imaging.formats.png.chunks.PngChunkPlte;
-import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilter;
-import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterAverage;
-import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterNone;
-import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterPaeth;
-import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterSub;
-import org.apache.commons.imaging.formats.png.scanlinefilters.ScanlineFilterUp;
+import org.apache.commons.imaging.formats.png.scanline.filters.AdaptiveFilter;
+import static org.apache.commons.imaging.formats.png.scanline.filters.AdaptiveFilter.FilterType;
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilter;
 
-abstract class ScanExpediter {
+public abstract class ScanExpediter {
     
     final int width;
     final int height;
     final InputStream is;
     final BufferedImage bi;
     final PngColorType pngColorType;
+    
     final int bitDepth;
     final int bytesPerPixel;
     final int bitsPerPixel;
+    final int bitsPerLine;
+    final int bytesPerLine;
+    
     final PngChunkPlte pngChunkPLTE;
     final GammaCorrection gammaCorrection;
     final TransparencyFilter transparencyFilter;
+   
+    final AdaptiveFilter filterObject;
 
-    ScanExpediter(final int width, final int height, final InputStream is,
+    public ScanExpediter(final int width, final int height, final InputStream is,
             final BufferedImage bi, final PngColorType pngColorType, final int bitDepth,
             final int bitsPerPixel, final PngChunkPlte pngChunkPLTE,
             final GammaCorrection gammaCorrection, final TransparencyFilter transparencyFilter) {
@@ -58,9 +62,13 @@ abstract class ScanExpediter {
         this.bitDepth = bitDepth;
         this.bytesPerPixel = this.getBitsToBytesRoundingUp(bitsPerPixel);
         this.bitsPerPixel = bitsPerPixel;
+        this.bitsPerLine = bitsPerPixel * width;
+        this.bytesPerLine = getBitsToBytesRoundingUp(bitsPerLine);
         this.pngChunkPLTE = pngChunkPLTE;
         this.gammaCorrection = gammaCorrection;
         this.transparencyFilter = transparencyFilter;
+        
+        this.filterObject = new AdaptiveFilter(bytesPerPixel);
     }
 
     final int getBitsToBytesRoundingUp(final int bits) {
@@ -80,7 +88,7 @@ abstract class ScanExpediter {
 
     public abstract void drive() throws ImageReadException, IOException;
 
-    int getRGB(final BitParser bitParser, final int pixelIndexInScanline)
+    int getRGB(final PixelParser bitParser, final int pixelIndexInScanline)
             throws ImageReadException, IOException {
 
         switch (pngColorType) {
@@ -170,35 +178,11 @@ abstract class ScanExpediter {
         }
     }
 
-    ScanlineFilter getScanlineFilter(final FilterType filterType, final int bytesPerPixel)
-            throws ImageReadException {
-        switch (filterType) {
-            case NONE:
-                return new ScanlineFilterNone();
-            case SUB:
-                return new ScanlineFilterSub(bytesPerPixel);
-            case UP:
-                return new ScanlineFilterUp();
-            case AVERAGE:
-                return new ScanlineFilterAverage(bytesPerPixel);
-            case PAETH:
-                return new ScanlineFilterPaeth(bytesPerPixel);
-        }
-
-        return null;
+    protected byte[] scanLine() throws ImageReadException, IOException {
+        return scanLine(bytesPerLine);
     }
-
-    byte[] unfilterScanline(final FilterType filterType, final byte[] src, final byte[] prev,
-            final int bytesPerPixel) throws ImageReadException, IOException {
-        final ScanlineFilter filter = getScanlineFilter(filterType, bytesPerPixel);
-
-        final byte[] dst = new byte[src.length];
-        filter.unfilter(src, dst, prev);
-        return dst;
-    }
-
-    byte[] getNextScanline(final InputStream is, final int length, final byte[] prev,
-            final int bytesPerPixel) throws ImageReadException, IOException {
+    
+    protected byte[] scanLine(int length) throws ImageReadException, IOException {
         final int filterType = is.read();
         if (filterType < 0) {
             throw new ImageReadException("PNG: missing filter type");
@@ -209,7 +193,7 @@ abstract class ScanExpediter {
 
         final byte[] scanline = readBytes("scanline", is, length, "PNG: missing image data");
 
-        return unfilterScanline(FilterType.values()[filterType], scanline, prev, bytesPerPixel);
+        return filterObject.unfilter(filterType, scanline);
     }
 
 }
