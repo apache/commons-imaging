@@ -21,12 +21,15 @@ import static org.junit.Assert.assertNotNull;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.Test;
 
@@ -51,5 +54,22 @@ public class RgbeReadTest extends RgbeBaseTest {
             final BufferedImage image = Imaging.getBufferedImage(imageFile);
             assertNotNull(image);
         }
+    }
+
+    /**
+     * Test that a bad file does not gets the RgbeImageParser stuck reading it.
+     *
+     * @throws ImageReadException
+     * @throws IOException
+     */
+    @Test(expected = ImageReadException.class, timeout = 2000)
+    public void testErrorDecompressingInvalidFile() throws ImageReadException, IOException {
+        // From IMAGING-219
+        File inputFile = new File(
+                RgbeReadTest.class.getResource("/IMAGING-219/timeout-9713502c9c371f1654b493650c16ab17c0444369")
+                        .getFile());
+        ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
+        Map<String, Object> params = Collections.<String, Object>emptyMap();
+        new RgbeImageParser().getBufferedImage(byteSourceFile, params);
     }
 }
