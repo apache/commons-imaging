@@ -50,6 +50,8 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
         final BinaryOutputStream bos = new BinaryOutputStream(os, byteOrder);
 
         writeStep(bos, outputItems);
+
+        bos.close();
     }
 
     private void updateOffsetsStep(final List<TiffOutputItem> outputItems) {
