@@ -45,7 +45,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
 
-    <release version="1.0" date="TBA" description="First major release">
+    <release version="1.0-alpha" date="2019-03-??" description="First major release">
       <action issue="IMAGING-220" dev="kinow" type="fix">
         JpegDecoder takes a long time (+10s) to decode a bad JPEG
       </action>
