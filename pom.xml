@@ -26,13 +26,11 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>47</version>
+    <version>48</version>
   </parent>
 
-  <groupId>org.apache.commons</groupId>
   <artifactId>commons-imaging</artifactId>
   <name>Apache Commons Imaging</name>
-
   <version>1.0-SNAPSHOT</version>
 
   <!--
@@ -190,13 +188,12 @@
           <artifactId>apache-rat-plugin</artifactId>
           <configuration>
             <excludes>
-              <exclude>src/test/data/images/xpm/1/symbolic.xpm</exclude>
-              <exclude>src/test/data/images/xpm/1/Oregon Scientific DS6639 - DSC_0307 - small.xpm</exclude>
-              <exclude>src/test/data/images/pbm/2/5x5-grayscale.pam</exclude>
-              <exclude>src/test/data/images/pbm/2/5x5-bw.pam</exclude>
-              <exclude>src/test/data/images/pbm/1/Oregon Scientific DS6639 - DSC_0307 - small.pgm</exclude>
-              <exclude>src/test/data/images/xbm/1/Oregon Scientific DS6639 - DSC_0307 - small.xbm</exclude>
-              <exclude>src/test/data/images/xbm/1/Oregon Scientific DS6639 - DSC_0307 - small X10.xbm</exclude>
+              <exclude>src/test/data/**/*.xpm</exclude>
+              <exclude>src/test/data/**/*.pam</exclude>
+              <exclude>src/test/data/**/*.pbm</exclude>
+              <exclude>src/test/data/**/*.pgm</exclude>
+              <exclude>src/test/data/**/*.ppm</exclude>
+              <exclude>src/test/data/**/*.xbm</exclude>
               <exclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</exclude>
             </excludes>
           </configuration>
