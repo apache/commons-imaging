@@ -173,7 +173,7 @@ public class ExifRewriteTest extends ExifBaseTest {
     }
 
     private void rewrite(final Rewriter rewriter, final String name) throws IOException,
-            ImageReadException, ImageWriteException {
+            ImageReadException {
         final List<File> images = getImagesWithExifData();
         for (int i = 0; i < images.size(); i++) {
 
