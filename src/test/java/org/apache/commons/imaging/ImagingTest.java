@@ -29,8 +29,7 @@ import org.apache.commons.imaging.test.util.FileSystemTraversal;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 
-public abstract class ImagingTest implements
-        ImagingTestConstants {
+public abstract class ImagingTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -42,7 +41,7 @@ public abstract class ImagingTest implements
 
     protected boolean isPhilHarveyTestImage(final File file) {
         return file.getAbsolutePath().startsWith(
-                PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
+                ImagingTestConstants.PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
     }
 
     public interface ImageFilter {
@@ -85,7 +84,7 @@ public abstract class ImagingTest implements
     private static final List<File> ALL_IMAGES = new ArrayList<>();
 
     static {
-        File imagesFolder = TEST_IMAGE_FOLDER;
+        File imagesFolder = ImagingTestConstants.TEST_IMAGE_FOLDER;
 
         imagesFolder = imagesFolder.getAbsoluteFile();
 
