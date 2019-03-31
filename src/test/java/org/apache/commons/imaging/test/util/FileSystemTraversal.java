@@ -28,7 +28,7 @@ public class FileSystemTraversal {
     public static final int MODE_ALL = 4;
 
     public interface Visitor {
-        public boolean visit(File file, double progressEstimate);
+        boolean visit(File file, double progressEstimate);
     }
 
     public boolean traverseFiles(final File file, final Visitor visitor) {

@@ -48,7 +48,7 @@ public class ByteSourceDataTest extends ByteSourceTest {
     }
 
     private interface ByteSourceFactory {
-        public ByteSource getByteSource(byte src[]) throws IOException;
+        ByteSource getByteSource(byte src[]) throws IOException;
     }
 
     private class ByteSourceFileFactory implements ByteSourceFactory {

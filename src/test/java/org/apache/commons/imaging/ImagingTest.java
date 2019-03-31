@@ -45,8 +45,8 @@ public abstract class ImagingTest implements
                 PHIL_HARVEY_TEST_IMAGE_FOLDER.getAbsolutePath());
     }
 
-    public static interface ImageFilter {
-        public boolean accept(File file) throws IOException, ImageReadException;
+    public interface ImageFilter {
+        boolean accept(File file) throws IOException, ImageReadException;
     }
 
     protected File getTestImage() throws IOException, ImageReadException {

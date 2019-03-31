@@ -167,7 +167,7 @@ public class ExifRewriteTest extends ExifBaseTest {
     }
 
     private interface Rewriter {
-        public void rewrite(ByteSource byteSource, OutputStream os,
+        void rewrite(ByteSource byteSource, OutputStream os,
                 TiffOutputSet outputSet) throws ImageReadException,
                 IOException, ImageWriteException;
     }

@@ -68,7 +68,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         generatorMap.put(32, new GeneratorFor32BitBitmaps());
     }
 
-    private static interface BitmapGenerator {
+    private interface BitmapGenerator {
         byte[] generateBitmap(int foreground, int background, int paletteSize)
                 throws IOException, ImageWriteException;
     }
