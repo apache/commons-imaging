@@ -361,7 +361,7 @@ public class TiffField {
             pw.flush();
             sw.flush();
             LOGGER.fine(sw.toString());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }

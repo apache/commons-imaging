@@ -27,10 +27,10 @@ public class TagInfoSByteTest{
 
   @Test
   public void testCreatesTagInfoSByteAndCallsEncodeValue() {
-      TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_GPS;
-      TagInfoSByte tagInfoSByte = new TagInfoSByte("", 0, tiffDirectoryType);
-      ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-      byte[] byteArray = tagInfoSByte.encodeValue(byteOrder, (byte)6);
+      final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.EXIF_DIRECTORY_GPS;
+      final TagInfoSByte tagInfoSByte = new TagInfoSByte("", 0, tiffDirectoryType);
+      final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+      final byte[] byteArray = tagInfoSByte.encodeValue(byteOrder, (byte)6);
 
       assertArrayEquals(new byte[] {(byte)6}, byteArray);
   }

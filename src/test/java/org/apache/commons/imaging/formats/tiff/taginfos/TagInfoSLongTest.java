@@ -27,9 +27,9 @@ public class TagInfoSLongTest{
 
   @Test
   public void testEncodeValue() {
-      TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD0;
-      TagInfoSLong tagInfoSLong = new TagInfoSLong("ttq{\"0r{s}'RQ", (-1770), tiffDirectoryType);
-      ByteOrder byteOrder = ByteOrder.nativeOrder();
+      final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD0;
+      final TagInfoSLong tagInfoSLong = new TagInfoSLong("ttq{\"0r{s}'RQ", (-1770), tiffDirectoryType);
+      final ByteOrder byteOrder = ByteOrder.nativeOrder();
 
       assertArrayEquals(new byte[] {(byte)0, (byte)0, (byte)0, (byte)0}, tagInfoSLong.encodeValue(byteOrder, 0));
   }

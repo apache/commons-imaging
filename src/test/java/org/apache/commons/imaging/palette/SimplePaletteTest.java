@@ -26,8 +26,8 @@ public class SimplePaletteTest{
     @Test
     public void testGetPaletteIndexReturningNegative() {
 
-        int[] intArray = new int[1];
-        SimplePalette simplePalette = new SimplePalette(intArray);
+        final int[] intArray = new int[1];
+        final SimplePalette simplePalette = new SimplePalette(intArray);
 
         assertEquals( -1, simplePalette.getPaletteIndex((-1)));
         assertEquals(1, simplePalette.length() );

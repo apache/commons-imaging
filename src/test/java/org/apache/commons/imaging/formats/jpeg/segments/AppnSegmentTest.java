@@ -28,8 +28,8 @@ public class AppnSegmentTest{
 
   @Test
   public void testCreatesAppnSegment() throws IOException {
-      InputStream inputStream = new ByteArrayInputStream(new byte[0]);
-      AppnSegment appnSegment = new AppnSegment(0, 0, inputStream);
+      final InputStream inputStream = new ByteArrayInputStream(new byte[0]);
+      final AppnSegment appnSegment = new AppnSegment(0, 0, inputStream);
 
       assertEquals("[Segment: APPN (APP-65504) (Unknown)]", appnSegment.toString());
   }

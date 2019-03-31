@@ -26,8 +26,8 @@ public class ImageResourceBlockTest{
 
     @Test
     public void testCreatesImageResourceBlockAndCallsGetName() throws UnsupportedEncodingException {
-        byte[] byteArray = new byte[3];
-        ImageResourceBlock imageResourceBlock = new ImageResourceBlock(0, byteArray, byteArray);
+        final byte[] byteArray = new byte[3];
+        final ImageResourceBlock imageResourceBlock = new ImageResourceBlock(0, byteArray, byteArray);
 
         assertEquals( new String(byteArray, "ISO-8859-1"), imageResourceBlock.getName());
     }

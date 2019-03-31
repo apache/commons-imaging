@@ -27,8 +27,8 @@ public class ScanlineFilterUpTest {
 
   @Test
   public void testUnfilterWithNull() throws IOException, ImageReadException {
-      ScanlineFilterUp scanlineFilterUp = new ScanlineFilterUp();
-      byte[] byteArray = new byte[4];
+      final ScanlineFilterUp scanlineFilterUp = new ScanlineFilterUp();
+      final byte[] byteArray = new byte[4];
       scanlineFilterUp.unfilter(byteArray, byteArray, (byte[]) null);
 
       assertArrayEquals(new byte[] {(byte)0, (byte)0, (byte)0, (byte)0}, byteArray);

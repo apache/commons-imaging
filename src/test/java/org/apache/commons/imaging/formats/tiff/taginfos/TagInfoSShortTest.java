@@ -27,9 +27,9 @@ public class TagInfoSShortTest{
 
   @Test
   public void testGetValue() {
-      TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD3;
-      TagInfoSShort tagInfoSShort = new TagInfoSShort("n1SN[2cj\"2),+O", (-1785), tiffDirectoryType);
-      ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+      final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD3;
+      final TagInfoSShort tagInfoSShort = new TagInfoSShort("n1SN[2cj\"2),+O", (-1785), tiffDirectoryType);
+      final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
       assertEquals((short) (-10231), tagInfoSShort.getValue(null, tagInfoSShort.encodeValue(byteOrder, (short) 2520)));
   }

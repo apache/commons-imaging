@@ -55,7 +55,7 @@ public class PnmImageParserTest {
     @Test
     public void testWriteImageRaw_happyCase() throws ImageWriteException,
                                                      ImageReadException, IOException {
-        BufferedImage srcImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage srcImage = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
         final Map<String, Object> params = new HashMap<>();
         params.put(PnmImageParser.PARAM_KEY_PNM_RAWBITS, PnmImageParser.PARAM_VALUE_PNM_RAWBITS_YES);
 
@@ -65,12 +65,12 @@ public class PnmImageParserTest {
         assertTrue(srcImage.getWidth() == dstImage.getWidth());
         assertTrue(srcImage.getHeight() == dstImage.getHeight());
 
-        DataBufferInt srcData = (DataBufferInt) srcImage.getRaster().getDataBuffer();
-        DataBufferInt dstData = (DataBufferInt) dstImage.getRaster().getDataBuffer();
+        final DataBufferInt srcData = (DataBufferInt) srcImage.getRaster().getDataBuffer();
+        final DataBufferInt dstData = (DataBufferInt) dstImage.getRaster().getDataBuffer();
 
         for (int bank = 0; bank < srcData.getNumBanks(); bank++) {
-            int[] actual = srcData.getData(bank);
-            int[] expected = dstData.getData(bank);
+            final int[] actual = srcData.getData(bank);
+            final int[] expected = dstData.getData(bank);
 
             assertArrayEquals(actual, expected);
         }

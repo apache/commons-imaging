@@ -63,15 +63,15 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest {
                 return;
             }
             new WriteExifMetadataExample().changeExifMetadata(imageFile, tempFile);
-            JpegImageParser parser = new JpegImageParser();
-            ByteSourceFile byteSource = new ByteSourceFile(tempFile);
-            TiffImageMetadata tiff = parser.getExifMetadata(byteSource, null);
-            for (TiffField tiffField : tiff.getAllFields()) {
+            final JpegImageParser parser = new JpegImageParser();
+            final ByteSourceFile byteSource = new ByteSourceFile(tempFile);
+            final TiffImageMetadata tiff = parser.getExifMetadata(byteSource, null);
+            for (final TiffField tiffField : tiff.getAllFields()) {
                 if (!tiffField.isLocalValue()) {
-                    int offset = tiffField.getOffset();
-                    String tag = tiffField.getTagName();
-                    String message = String.format("Odd offset %d, field %s", offset, tag);
-                    boolean isOdd = (tiffField.getOffset() & 1l) == 0;
+                    final int offset = tiffField.getOffset();
+                    final String tag = tiffField.getTagName();
+                    final String message = String.format("Odd offset %d, field %s", offset, tag);
+                    final boolean isOdd = (tiffField.getOffset() & 1l) == 0;
                     assertTrue(message, isOdd);
                 }
             }

@@ -392,7 +392,7 @@ public class PngImageParser extends ImageParser {
         final List<PngChunk> zTXts = filterChunks(chunks, ChunkType.zTXt);
         final List<PngChunk> iTXts = filterChunks(chunks, ChunkType.iTXt);
 
-        int chunkCount = tEXts.size() + zTXts.size() + iTXts.size();
+        final int chunkCount = tEXts.size() + zTXts.size() + iTXts.size();
         final List<String> comments = new ArrayList<>(chunkCount);
         final List<PngText> textChunks = new ArrayList<>(chunkCount);
 

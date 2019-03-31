@@ -24,7 +24,7 @@ public class DataParserGrayscaleTest{
 
   @Test
   public void testGetBasicChannelsCount() {
-      DataParserGrayscale dataParserGrayscale = new DataParserGrayscale();
+      final DataParserGrayscale dataParserGrayscale = new DataParserGrayscale();
 
       assertEquals(1, dataParserGrayscale.getBasicChannelsCount());
   }

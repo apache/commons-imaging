@@ -166,7 +166,7 @@ enum IcnsType {
     }
 
     public static int typeAsInt(final String type) {
-        byte[] bytes = type.getBytes(StandardCharsets.US_ASCII);
+        final byte[] bytes = type.getBytes(StandardCharsets.US_ASCII);
         if (bytes.length != 4) {
             throw new IllegalArgumentException("Invalid ICNS type");
         }

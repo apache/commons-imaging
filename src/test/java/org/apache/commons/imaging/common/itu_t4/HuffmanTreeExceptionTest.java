@@ -24,8 +24,8 @@ public class HuffmanTreeExceptionTest{
 
     @Test
     public void testCreatesHuffmanTreeExceptionTakingString() {
-        HuffmanTreeException huffmanTreeException = new HuffmanTreeException("");
-        HuffmanTreeException huffmanTreeExceptionTwo = new HuffmanTreeException("", huffmanTreeException);
+        final HuffmanTreeException huffmanTreeException = new HuffmanTreeException("");
+        final HuffmanTreeException huffmanTreeExceptionTwo = new HuffmanTreeException("", huffmanTreeException);
 
         assertFalse(huffmanTreeExceptionTwo.equals(huffmanTreeException));
     }

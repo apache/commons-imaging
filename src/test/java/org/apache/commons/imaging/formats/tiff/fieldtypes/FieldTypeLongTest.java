@@ -27,13 +27,13 @@ public class FieldTypeLongTest {
 
     @Test
     public void testWriteDataWithNonNull() {
-        FieldTypeLong fieldTypeLong = FieldType.IFD;
-        ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+        final FieldTypeLong fieldTypeLong = FieldType.IFD;
+        final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
         try {
             fieldTypeLong.writeData(byteOrder, byteOrder);
             fail("Expecting exception: Exception");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertEquals("Invalid data: BIG_ENDIAN (java.nio.ByteOrder)", e.getMessage());
             assertEquals(FieldTypeLong.class.getName(), e.getStackTrace()[0].getClassName());
         }

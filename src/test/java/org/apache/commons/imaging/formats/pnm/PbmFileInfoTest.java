@@ -29,15 +29,15 @@ public class PbmFileInfoTest{
 
   @Test
   public void testGetRGBThrowsIOException() throws IOException {
-      PbmFileInfo pbmFileInfo = new PbmFileInfo(2764, 354, true);
-      byte[] byteArray = new byte[2];
-      InputStream inputStream = new ByteArrayInputStream(byteArray);
+      final PbmFileInfo pbmFileInfo = new PbmFileInfo(2764, 354, true);
+      final byte[] byteArray = new byte[2];
+      final InputStream inputStream = new ByteArrayInputStream(byteArray);
       inputStream.read(byteArray);
 
       try {
         pbmFileInfo.getRGB(inputStream);
         fail("Expecting exception: IOException");
-      } catch(IOException e) {
+      } catch(final IOException e) {
          assertEquals("PBM: Unexpected EOF",e.getMessage());
          assertEquals(PbmFileInfo.class.getName(), e.getStackTrace()[0].getClassName());
       }

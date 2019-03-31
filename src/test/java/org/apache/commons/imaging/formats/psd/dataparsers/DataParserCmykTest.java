@@ -24,7 +24,7 @@ public class DataParserCmykTest {
 
     @Test
     public void testGetBasicChannelsCount() {
-        DataParserCmyk dataParserCmyk = new DataParserCmyk();
+        final DataParserCmyk dataParserCmyk = new DataParserCmyk();
 
         assertEquals(4, dataParserCmyk.getBasicChannelsCount());
     }

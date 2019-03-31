@@ -24,7 +24,7 @@ public class DataParserLabTest{
 
   @Test
   public void testGetBasicChannelsCount() {
-      DataParserLab dataParserLab = new DataParserLab();
+      final DataParserLab dataParserLab = new DataParserLab();
 
       assertEquals(3, dataParserLab.getBasicChannelsCount());
   }

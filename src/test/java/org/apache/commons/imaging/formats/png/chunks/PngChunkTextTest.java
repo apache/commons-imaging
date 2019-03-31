@@ -25,11 +25,11 @@ public class PngChunkTextTest{
 
     @Test
     public void testCreatesPngChunkText() {
-        byte[] byteArray = new byte[0];
+        final byte[] byteArray = new byte[0];
         try {
             new PngChunkText(1214, 1214, 0, byteArray);
             fail("Expecting exception: Exception");
-        } catch(Throwable e) {
+        } catch(final Throwable e) {
             assertEquals("PNG tEXt chunk keyword is not terminated.",e.getMessage());
             assertEquals(PngChunkText.class.getName(), e.getStackTrace()[0].getClassName());
         }

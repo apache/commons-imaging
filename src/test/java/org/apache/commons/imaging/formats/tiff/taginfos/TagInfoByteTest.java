@@ -27,8 +27,8 @@ public class TagInfoByteTest {
 
     @Test
     public void testCreatesTagInfoByteTakingFourArgumentsAndCallsEncodeValue() {
-        TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD0;
-        TagInfoByte tagInfoByte = new TagInfoByte("", 347, tiffDirectoryType);
+        final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD0;
+        final TagInfoByte tagInfoByte = new TagInfoByte("", 347, tiffDirectoryType);
 
         assertArrayEquals(new byte[]{(byte) 0}, tagInfoByte.encodeValue((ByteOrder) null, (byte) 0));
     }

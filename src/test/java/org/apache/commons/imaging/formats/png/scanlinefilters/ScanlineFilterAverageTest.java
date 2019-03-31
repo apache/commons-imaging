@@ -27,8 +27,8 @@ public class ScanlineFilterAverageTest{
 
   @Test
   public void testUnfilterWithNull() throws IOException, ImageReadException {
-      ScanlineFilterAverage scanlineFilterAverage = new ScanlineFilterAverage(2);
-      byte[] byteArray = new byte[9];
+      final ScanlineFilterAverage scanlineFilterAverage = new ScanlineFilterAverage(2);
+      final byte[] byteArray = new byte[9];
       scanlineFilterAverage.unfilter(byteArray, byteArray, (byte[]) null);
 
       assertArrayEquals(new byte[] {(byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0}, byteArray);

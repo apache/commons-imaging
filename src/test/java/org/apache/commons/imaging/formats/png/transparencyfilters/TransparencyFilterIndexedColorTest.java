@@ -25,13 +25,13 @@ public class TransparencyFilterIndexedColorTest{
 
     @Test
     public void testFilterWithNegativeAndNegative() {
-        byte[] byteArray = new byte[0];
-        TransparencyFilterIndexedColor transparencyFilterIndexedColor = new TransparencyFilterIndexedColor(byteArray);
+        final byte[] byteArray = new byte[0];
+        final TransparencyFilterIndexedColor transparencyFilterIndexedColor = new TransparencyFilterIndexedColor(byteArray);
 
         try {
             transparencyFilterIndexedColor.filter((-416), (-398));
             fail("Expecting exception: Exception");
-        } catch(Exception e) {
+        } catch(final Exception e) {
             assertEquals("TransparencyFilterIndexedColor index: -398, bytes.length: 0",e.getMessage());
             assertEquals(TransparencyFilterIndexedColor.class.getName(), e.getStackTrace()[0].getClassName());
         }

@@ -25,13 +25,13 @@ public class JpegXmpParserTest{
 
     @Test
     public void testCreatesJpegXmpParserAndCallsParseXmpJpegSegment() {
-        JpegXmpParser jpegXmpParser = new JpegXmpParser();
-        byte[] byteArray = new byte[1];
+        final JpegXmpParser jpegXmpParser = new JpegXmpParser();
+        final byte[] byteArray = new byte[1];
 
         try {
             jpegXmpParser.parseXmpJpegSegment(byteArray);
             fail("Expecting exception: Exception");
-        } catch(Exception e) {
+        } catch(final Exception e) {
             assertEquals("Invalid JPEG XMP Segment.",e.getMessage());
             assertEquals(JpegXmpParser.class.getName(), e.getStackTrace()[0].getClassName());
         }

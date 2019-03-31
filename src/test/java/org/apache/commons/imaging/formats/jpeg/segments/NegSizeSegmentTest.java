@@ -35,7 +35,7 @@ public class NegSizeSegmentTest {
 
     @Test
     public void testCreatesNegSizeSegment() throws IOException {
-        byte[] bytes = new byte[8];
+        final byte[] bytes = new byte[8];
         bytes[0] = (byte) 0xff;
         bytes[1] = (byte) 0xd8;
         bytes[2] = (byte) 0xe1;
@@ -46,12 +46,12 @@ public class NegSizeSegmentTest {
         bytes[7] = (byte) 0x00;
 
         try {
-            InputStream inputStream = new ByteArrayInputStream(bytes);
-            ByteSource bs = new ByteSourceInputStream(inputStream, "NegSizeSegment");
-            JpegImageParser p = new JpegImageParser();
+            final InputStream inputStream = new ByteArrayInputStream(bytes);
+            final ByteSource bs = new ByteSourceInputStream(inputStream, "NegSizeSegment");
+            final JpegImageParser p = new JpegImageParser();
             p.getBufferedImage(bs, new HashMap<String, Object>());
             fail("Expecting exception: ImageReadException");
-        } catch (ImageReadException e) {
+        } catch (final ImageReadException e) {
             assertEquals("Invalid segment size", e.getMessage());
             assertEquals(JpegUtils.class.getName(), e.getStackTrace()[0].getClassName());
         }

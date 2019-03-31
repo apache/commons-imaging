@@ -174,7 +174,7 @@ public class XbmImageParser extends ImageParser {
         }
     }
 
-    private static int parseCIntegerLiteral(String value) {
+    private static int parseCIntegerLiteral(final String value) {
         if (value.startsWith("0")) {
             if (value.length() >= 2) {
                 if (value.charAt(1) == 'x' || value.charAt(1) == 'X') {

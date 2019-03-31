@@ -27,9 +27,9 @@ public class BmpWriterRgbTest{
 
     @Test
     public void testGetImageData() {
-        BmpWriterRgb bmpWriterRgb = new BmpWriterRgb();
-        BufferedImage bufferedImage = new BufferedImage(2, 2, 5);
-        byte[] byteArray = bmpWriterRgb.getImageData(bufferedImage);
+        final BmpWriterRgb bmpWriterRgb = new BmpWriterRgb();
+        final BufferedImage bufferedImage = new BufferedImage(2, 2, 5);
+        final byte[] byteArray = bmpWriterRgb.getImageData(bufferedImage);
 
         assertEquals(24, bmpWriterRgb.getBitsPerPixel());
         assertEquals(0, bmpWriterRgb.getPaletteSize());

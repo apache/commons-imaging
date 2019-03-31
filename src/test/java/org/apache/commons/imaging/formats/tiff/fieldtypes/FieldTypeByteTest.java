@@ -25,8 +25,8 @@ public class FieldTypeByteTest{
 
   @Test(expected = ImageWriteException.class)
   public void testWriteDataWithNull() throws ImageWriteException {
-      FieldTypeByte fieldTypeByte = FieldType.UNDEFINED;
-      ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+      final FieldTypeByte fieldTypeByte = FieldType.UNDEFINED;
+      final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
       fieldTypeByte.writeData( null, byteOrder);
   }

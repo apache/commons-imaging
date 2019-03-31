@@ -167,7 +167,7 @@ public final class Imaging {
             return false;
         }
 
-        String normalizedFilename = filename.toLowerCase(Locale.ENGLISH);
+        final String normalizedFilename = filename.toLowerCase(Locale.ENGLISH);
 
         for (final ImageParser imageParser : ImageParser.getAllImageParsers()) {
             for (final String extension : imageParser.getAcceptedExtensions()) {

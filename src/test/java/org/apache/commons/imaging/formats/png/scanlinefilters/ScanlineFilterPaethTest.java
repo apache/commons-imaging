@@ -27,8 +27,8 @@ public class ScanlineFilterPaethTest{
 
   @Test
   public void testUnfilter() throws IOException, ImageReadException {
-      ScanlineFilterPaeth scanlineFilterPaeth = new ScanlineFilterPaeth(0);
-      byte[] byteArray = new byte[5];
+      final ScanlineFilterPaeth scanlineFilterPaeth = new ScanlineFilterPaeth(0);
+      final byte[] byteArray = new byte[5];
       scanlineFilterPaeth.unfilter(byteArray, byteArray, (byte[]) null);
 
       assertArrayEquals(new byte[] {(byte)0, (byte)0, (byte)0, (byte)0, (byte)0}, byteArray);

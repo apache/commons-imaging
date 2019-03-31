@@ -28,10 +28,10 @@ public class WhiteSpaceReaderTest{
 
   @Test
   public void testReadLineReturningNonEmptyString() throws IOException {
-      byte[] byteArray = new byte[6];
+      final byte[] byteArray = new byte[6];
       byteArray[4] = (byte)13;
-      ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
-      WhiteSpaceReader whiteSpaceReader = new WhiteSpaceReader(byteArrayInputStream);
+      final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
+      final WhiteSpaceReader whiteSpaceReader = new WhiteSpaceReader(byteArrayInputStream);
 
       assertEquals(6, byteArrayInputStream.available());
       assertEquals("[0, 0, 0, 0]", Arrays.toString( whiteSpaceReader.readLine().getBytes() ) );

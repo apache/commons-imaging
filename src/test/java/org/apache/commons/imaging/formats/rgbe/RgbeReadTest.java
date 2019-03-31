@@ -65,11 +65,11 @@ public class RgbeReadTest extends RgbeBaseTest {
     @Test(expected = ImageReadException.class, timeout = 2000)
     public void testErrorDecompressingInvalidFile() throws ImageReadException, IOException {
         // From IMAGING-219
-        File inputFile = new File(
+        final File inputFile = new File(
                 RgbeReadTest.class.getResource("/IMAGING-219/timeout-9713502c9c371f1654b493650c16ab17c0444369")
                         .getFile());
-        ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
-        Map<String, Object> params = Collections.<String, Object>emptyMap();
+        final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
+        final Map<String, Object> params = Collections.<String, Object>emptyMap();
         new RgbeImageParser().getBufferedImage(byteSourceFile, params);
     }
 }

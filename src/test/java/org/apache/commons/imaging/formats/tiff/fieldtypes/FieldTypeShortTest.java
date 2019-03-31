@@ -27,13 +27,13 @@ public class FieldTypeShortTest {
 
     @Test
     public void testCreatesFieldTypeShortAndCallsWriteData() {
-        FieldTypeShort fieldTypeShort = new FieldTypeShort(1234, "");
-        ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
+        final FieldTypeShort fieldTypeShort = new FieldTypeShort(1234, "");
+        final ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
 
         try {
             fieldTypeShort.writeData("", byteOrder);
             fail("Expecting exception: Exception");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertEquals("Invalid data:  (java.lang.String)", e.getMessage());
             assertEquals(FieldTypeShort.class.getName(), e.getStackTrace()[0].getClassName());
         }

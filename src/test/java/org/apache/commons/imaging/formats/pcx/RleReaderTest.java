@@ -27,14 +27,14 @@ public class RleReaderTest{
 
     @Test
     public void testReadWithNonNull() {
-        RleReader rleReader = new RleReader(false);
-        byte[] byteArray = new byte[1];
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray, (byte) (-64), (byte) (-64));
+        final RleReader rleReader = new RleReader(false);
+        final byte[] byteArray = new byte[1];
+        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray, (byte) (-64), (byte) (-64));
 
         try {
             rleReader.read(byteArrayInputStream, byteArray);
             fail("Expecting exception: Exception");
-        } catch(Exception e) {
+        } catch(final Exception e) {
             assertEquals("Premature end of file reading image data",e.getMessage());
             assertEquals(RleReader.class.getName(), e.getStackTrace()[0].getClassName());
         }
