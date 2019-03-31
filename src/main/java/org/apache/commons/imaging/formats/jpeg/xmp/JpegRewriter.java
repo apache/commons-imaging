@@ -278,7 +278,7 @@ public class JpegRewriter extends BinaryFileParser {
             }
         }
 
-        final List<JFIFPiece> result = new ArrayList<JFIFPiece>(segments);
+        final List<JFIFPiece> result = new ArrayList<>(segments);
         if (firstAppIndex == -1) {
             throw new ImageWriteException("JPEG file has no APP segments.");
         }
@@ -301,7 +301,7 @@ public class JpegRewriter extends BinaryFileParser {
             }
         }
 
-        final List<JFIFPiece> result = new ArrayList<JFIFPiece>(segments);
+        final List<JFIFPiece> result = new ArrayList<>(segments);
         if (lastAppIndex == -1) {
             if (segments.size() < 1) {
                 throw new ImageWriteException("JPEG file has no APP segments.");

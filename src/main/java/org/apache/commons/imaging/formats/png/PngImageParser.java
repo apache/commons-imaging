@@ -480,7 +480,7 @@ public class PngImageParser extends ImageParser {
     @Override
     public BufferedImage getBufferedImage(final ByteSource byteSource, Map<String, Object> params)
             throws ImageReadException, IOException {
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
+        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
 
         // if (params.size() > 0) {
         // Object firstKey = params.keySet().iterator().next();

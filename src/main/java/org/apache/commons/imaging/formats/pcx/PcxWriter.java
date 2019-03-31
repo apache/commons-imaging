@@ -39,7 +39,7 @@ class PcxWriter {
 
     PcxWriter(Map<String, Object> params) throws ImageWriteException {
         // make copy of params; we'll clear keys as we consume them.
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
+        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
 
         // clear format key.
         if (params.containsKey(ImagingConstants.PARAM_KEY_FORMAT)) {

@@ -475,7 +475,7 @@ public class PcxImageParser extends ImageParser {
     @Override
     public final BufferedImage getBufferedImage(final ByteSource byteSource,
             Map<String, Object> params) throws ImageReadException, IOException {
-        params = (params == null) ? new HashMap<String, Object>() : new HashMap<>(params);
+        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
         boolean isStrict = false;
         final Object strictness = params.get(PARAM_KEY_STRICT);
         if (strictness != null) {
