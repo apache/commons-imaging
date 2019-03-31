@@ -93,15 +93,15 @@ public class RationalNumberTest extends ImagingTest {
                 34d, //
 
                 (double) Integer.MAX_VALUE, //
-                (double) Integer.MAX_VALUE + 0.1, //
-                (double) Integer.MAX_VALUE - 0.1, //
+                Integer.MAX_VALUE + 0.1, //
+                Integer.MAX_VALUE - 0.1, //
                 (double) -(Integer.MAX_VALUE), //
                 -(Integer.MAX_VALUE + 0.1), //
                 -(Integer.MAX_VALUE - 0.1), //
 
                 (double) Long.MAX_VALUE, //
-                (double) Long.MAX_VALUE + 0.1, //
-                (double) Long.MAX_VALUE - 0.1, //
+                Long.MAX_VALUE + 0.1, //
+                Long.MAX_VALUE - 0.1, //
                 (double) -(Long.MAX_VALUE), //
                 -(Long.MAX_VALUE + 0.1), //
                 -(Long.MAX_VALUE - 0.1) //
