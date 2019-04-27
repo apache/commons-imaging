@@ -1,6 +1,6 @@
 
 Apache Commons Imaging
-Version 1.0
+Version 1.0-alpha1
 Release Notes
 
 INTRODUCTION
@@ -45,9 +45,9 @@ and has been renamed to Apache Commons Imaging. As part of this rename:
 
 VERSION HISTORY
 
-Release 1.0
+Release 1.0-alpha1
 ------------
-24 November 2013
+First 1.0 alpha release
 
 Changes in this version include:
 
@@ -70,7 +70,30 @@ o IMAGING-89:  Detect the YCCK color space/type in JPEG files' APP14 segment.
 o IMAGING-94:  Add ability to load partial TIFF images Thanks to gwlucas. 
 
 Fixed Bugs:
-o IMAGING_121:  Null Pointer exception while extracting metadata for CR2 image. Thanks to Piyush Kapoor. 
+o IMAGING-199:  All tEXt chunks are not returned from PngImageParser.getMetadata Thanks to Ric Emery. 
+o IMAGING-220:  JpegDecoder takes a long time (+10s) to decode a bad JPEG 
+o IMAGING-219:  Imaging gets stuck parsing a RGBE input file 
+o IMAGING-215:  ArrayIndexOutOfBoundsException in DhtSegment 
+o IMAGING-203:  JPEG segment size not validated Thanks to Rody Kersten. 
+o IMAGING-209:  PnmImageParser throws ImageWriteException when writing if PnmImageParser.PARAM_KEY_PNM_RAWBITS is provided Thanks to Isak Wertwein. 
+o IMAGING-205:  Imaging (Apache Sanselan) produces "odd offsets" in (EXIF) metadata 
+o IMAGING-195:  Incorrect Maven coordinates on project website Thanks to Keith Strydom. 
+o IMAGING-190:  ImageDataReader.decompress() overwrites its input 
+o IMAGING-193:  Duplicate class names 
+o IMAGING-189:  parseXpmValuesSection uses && instead of || 
+o IMAGING-181:  EXIF lens metadata tags missing in Commons Imaging but recognized in exiftool 
+o IMAGING-172:  Microsoft tags are not seen in MS Windows Properties/Details dialog. 
+o IMAGING-176:  TiffImageParser.getImageInfo() throws exception when "Compression" field is missing. Thanks to Gabriel Axel. 
+o IMAGING-178:  PnmImageParser does not check the validity of input PAM header. Thanks to emopers. 
+o IMAGING-171:  MicrosoftTagTest rewrite image exif fails in some environments Thanks to Jan Helbich. 
+o IMAGING-169:  PnmImageParser throws NumberFormatException instead of ImageReadException when parsing invalid images Thanks to Nebu Pookins. 
+o IMAGING-144:  TiffOutputSet.setGPSInDegrees should make sure, GPSVersionID is set Thanks to Paul Hartmann. 
+o IMAGING-117:  Classes should not expose mutable arrays 
+o IMAGING-145:  DumpImage method for JPEG reports it's coming from TIFF. Thanks to Chris Carman. 
+o IMAGING-137:  Can not set EXIF_TAG_EXIF_VERSION tag. 
+o IMAGING-140:  ExifReWriter always writes EXIF segment before JFIF segment. Thanks to Gavin Shiels. 
+o IMAGING-131:  Allow null parameters in PngImageParser.getBufferedImage(), and add some tests for null parameters. 
+o IMAGING-121:  Null Pointer exception while extracting metadata for CR2 image. Thanks to Piyush Kapoor. 
 o IMAGING-115:  DhtSegment class contains mutable public arrays. 
 o IMAGING-117:  SofnSegment.components - public mutable array. 
 o IMAGING-116:  GenericSegment.bytes - public mutable array. 
@@ -135,8 +158,20 @@ o IMAGING-90:  Allow non-1 TIFF field lengths when parsing offset fields in non-
 o IMAGING-99:  java.io.IOException: Could not read block Thanks to st.h. 
 
 Changes:
+o IMAGING-154:  Remove Debug class 
+o IMAGING-124:  Tidy up IconParser Thanks to Jens Kapitza. 
+o IMAGING-123:  remove duplicated lines in T4AndT6Compression Thanks to Jens Kapitza. 
+o IMAGING-186:  Add sCAL support to PNG reading and writing. Thanks to Ric Emery. 
+o IMAGING-184:  Update platform from Java 5 to 7 
+o IMAGING-112:  JpegIptcRewriter.removeIPTC() does not remove all metadata Thanks to Xavier Dury. 
+o IMAGING-166:  ByteSourceImageTest: Local variable hides a field Thanks to Michael Groß. 
+o IMAGING-156:  Refactor TagConstants 
+o IMAGING-126:  TIFF and PNG images should not be bigger than the ones created by java ImageIO Thanks to Gary Lucas. 
+o IMAGING-147:  Add color constants Thanks to Stephan Koeninger. 
+o IMAGING-150:  Implement equals and hashcode on color classes Thanks to Stephan Koeninger. 
 o IMAGING-91:  ByteSourceInputStream.streamLength could be a long. 
 o IMAGING-95:  Some tiff processing takes very long. Thanks to amitgupt. 
+o IMAGING-223:  Update from Java 7 to Java 8. Thanks to Gary Gregory. 
 
 Minimum Java version: 1.5
 Compatibility with 0.97:
