@@ -26,22 +26,24 @@ limitations under the License.
  | commons-build-plugin/trunk/src/main/resources/commons-xdoc-templates |
  +======================================================================+
  |                                                                      |
- | 1) Re-generate using: mvn commons:download-page                      |
+ | 1) Re-generate using: mvn commons-build:download-page                |
  |                                                                      |
  | 2) Set the following properties in the component's pom:              |
- |    - commons.componentid (required, alphabetic, lower case)          |
+ |    - commons.componentid     (required, alphabetic, lower case)      |
  |    - commons.release.version (required)                              |
  |    - commons.release.name    (required)                              |
  |    - commons.binary.suffix   (optional)                              |
  |      (defaults to "-bin", set to "" for pre-maven2 releases)         |
  |    - commons.release.desc    (optional)                              |
  |    - commons.release.subdir  (optional)                              |
+ |    - commons.release.hash    (optional, lowercase, default sha512)   |
  |                                                                      |
- |    - commons.release.2/3.version       (conditional)                 |
- |    - commons.release.2/3.name          (conditional)                 |
- |    - commons.release.2/3.binary.suffix (optional)                    |
- |    - commons.release.2/3.desc          (optional)                    |
- |    - commons.release.2/3.subdir        (optional)                    |
+ |    - commons.release.[234].version       (conditional)               |
+ |    - commons.release.[234].name          (conditional)               |
+ |    - commons.release.[234].binary.suffix (optional)                  |
+ |    - commons.release.[234].desc          (optional)                  |
+ |    - commons.release.[234].subdir        (optional)                  |
+ |    - commons.release.[234].hash       (optional, lowercase, [sha512])|
  |                                                                      |
  | 3) Example Properties                                                |
  |    (commons.release.name inherited by parent:                        |
@@ -102,7 +104,7 @@ limitations under the License.
         It is essential that you
         <a href="https://www.apache.org/info/verification.html">verify the integrity</a>
         of downloaded files, preferably using the <code>PGP</code> signature (<code>*.asc</code> files);
-        failing that using the <code>SHA256</code> hash (<code>*.sha256</code> checksum files).
+        failing that using the <code>SHA512</code> hash (<code>*.sha512</code> checksum files).
       </p>
       <p>
         The <a href="https://www.apache.org/dist/commons/KEYS">KEYS</a>
@@ -111,32 +113,32 @@ limitations under the License.
       </p>
     </subsection>
     </section>
-    <section name="Apache Commons Imaging 1.0 ">
+    <section name="Apache Commons Imaging 1.0-alpha1 ">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0-bin.tar.gz">commons-imaging-1.0-bin.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-bin.tar.gz.sha256">sha256</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-bin.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0-alpha1-bin.tar.gz">commons-imaging-1.0-alpha1-bin.tar.gz</a></td>
+              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-alpha1-bin.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-alpha1-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0-bin.zip">commons-imaging-1.0-bin.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-bin.zip.sha256">sha256</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-bin.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/binaries/commons-imaging-1.0-alpha1-bin.zip">commons-imaging-1.0-alpha1-bin.zip</a></td>
+              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-alpha1-bin.zip.sha512">sha512</a></td>
+              <td><a href="https://www.apache.org/dist/commons/imaging/binaries/commons-imaging-1.0-alpha1-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/imaging/source/commons-imaging-1.0-src.tar.gz">commons-imaging-1.0-src.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-src.tar.gz.sha256">sha256</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/source/commons-imaging-1.0-alpha1-src.tar.gz">commons-imaging-1.0-alpha1-src.tar.gz</a></td>
+              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-alpha1-src.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-alpha1-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/imaging/source/commons-imaging-1.0-src.zip">commons-imaging-1.0-src.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-src.zip.sha256">sha256</a></td>
-              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/imaging/source/commons-imaging-1.0-alpha1-src.zip">commons-imaging-1.0-alpha1-src.zip</a></td>
+              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-alpha1-src.zip.sha512">sha512</a></td>
+              <td><a href="https://www.apache.org/dist/commons/imaging/source/commons-imaging-1.0-alpha1-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
