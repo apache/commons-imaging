@@ -28,6 +28,9 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.ImagingTestConstants;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,4 +71,17 @@ public class BmpReadTest extends BmpBaseTest {
         // TODO assert more
     }
 
+    /**
+     * Test that when the value of the mask parameter is zero, getMaskShift won't
+     * get stuck in one of its while loops.
+     *
+     * @throws IOException
+     * @throws ImageReadException
+     */
+    @Test(timeout = 1000)
+    public void testGetMaskShiftZeroMask() throws ImageReadException, IOException {
+        File inputFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER +
+                "/bmp/5/@broken/timeout-bd15dbfa26b4e88070de540c6603039e8a88626f");
+        new BmpImageParser().dumpImageFile(new ByteSourceFile(inputFile));
+    }
 }

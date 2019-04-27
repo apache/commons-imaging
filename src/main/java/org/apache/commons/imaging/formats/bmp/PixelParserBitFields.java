@@ -55,6 +55,10 @@ class PixelParserBitFields extends PixelParserSimple {
     }
 
     private int getMaskShift(int mask) {
+        if (mask == 0) {
+            return 0;
+        }
+
         int trailingZeroes = 0;
 
         while ((0x1 & mask) == 0) {
