@@ -175,7 +175,7 @@ o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks 
 ## End of main loop
 #end
 ##
-Minimum Java version: 1.5
+Minimum Java version: 1.8
 Compatibility with 0.97:
   Binary compatible: No.
   Source compatible: No.
