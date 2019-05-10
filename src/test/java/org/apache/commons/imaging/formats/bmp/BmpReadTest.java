@@ -28,7 +28,6 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.junit.Ignore;
