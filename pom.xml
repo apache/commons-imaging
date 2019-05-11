@@ -169,7 +169,7 @@
         <!-- Use version from parent pom as that is adjusted according to the Java version used to run Maven -->
         <version>${commons.findbugs.version}</version>
         <configuration>
-          <excludeFilterFile>${basedir}/findbugs-exclude-filter.xml</excludeFilterFile>
+          <excludeFilterFile>${basedir}/src/conf/findbugs-exclude-filter.xml</excludeFilterFile>
         </configuration>
       </plugin>
     </plugins>
