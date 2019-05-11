@@ -150,4 +150,13 @@
     <Method name="equals" />
     <Bug pattern="NP_EQUALS_SHOULD_HANDLE_NULL_ARGUMENT" />
   </Match>
+
+  <!-- Reason: the original API made heavy use of arrays. We may change that later in a future release,
+  but not without breaking BC. -->
+  <Match>
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
 </FindBugsFilter>
