@@ -172,4 +172,15 @@
     <Method name="readHeader" />
     <Bug pattern="UC_USELESS_CONDITION" />
   </Match>
+
+  <!-- Reason: Adding the Cloneable interface looks like a bad idea, as the method currently throws
+  the exception from the Object#clone method. Instead we should remove it, leaving Object#clone directly.
+  That would, however, cause a BC regression, and fail the build in clirr (tested). -->
+  <!-- TODO: remove exclusion and remove #clone() in release 1.0 or 2.0, etc -->
+  <Match>
+    <Class name="org.apache.commons.imaging.common.BinaryConstant" />
+    <Method name="clone" />
+    <Bug pattern="CN_IMPLEMENTS_CLONE_BUT_NOT_CLONEABLE" />
+  </Match>
+
 </FindBugsFilter>
