@@ -75,8 +75,8 @@ public class JpegImageMetadata implements ImageMetadata {
      * Returns the size of the first JPEG thumbnail found in the EXIF metadata.
      *
      * @return Thumbnail width and height or null if no thumbnail.
-     * @throws ImageReadException
-     * @throws IOException
+     * @throws ImageReadException if it fails to read the image
+     * @throws IOException if it fails to read the image size
      */
     public Dimension getEXIFThumbnailSize() throws ImageReadException,
             IOException {
@@ -92,8 +92,8 @@ public class JpegImageMetadata implements ImageMetadata {
      * Returns the data of the first JPEG thumbnail found in the EXIF metadata.
      *
      * @return JPEG data or null if no thumbnail.
-     * @throws ImageReadException
-     * @throws IOException
+     * @throws ImageReadException if it fails to read the image
+     * @throws IOException if an IO error occurred
      */
     public byte[] getEXIFThumbnailData() throws ImageReadException, IOException {
         if (exif == null) {
@@ -121,8 +121,8 @@ public class JpegImageMetadata implements ImageMetadata {
      *
      * @return the thumbnail image. May be <code>null</code> if no image could
      *         be found.
-     * @throws ImageReadException
-     * @throws IOException
+     * @throws ImageReadException if it fails to read the image
+     * @throws IOException if it fails to get the thumbnail or to read the image data
      */
     public BufferedImage getEXIFThumbnail() throws ImageReadException,
             IOException {

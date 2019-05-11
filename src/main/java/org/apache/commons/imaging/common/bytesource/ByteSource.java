@@ -56,6 +56,9 @@ public abstract class ByteSource {
     /**
      * This operation can be VERY expensive; for inputstream byte sources, the
      * entire stream must be drained to determine its length.
+     *
+     * @return the byte source length
+     * @throws IOException if it fails to read the byte source data
      */
     public abstract long getLength() throws IOException;
 

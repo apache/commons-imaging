@@ -139,7 +139,7 @@ public final class Imaging {
     /**
      * Attempts to determine if a file contains an image recorded in
      * a supported graphics format based on its file-name extension
-     * (for example "&#46jpg", "&#46;gif", "&#46;png", etc&#46;).
+     * (for example "&#46;jpg", "&#46;gif", "&#46;png", etc&#46;).
      *
      * @param file A valid File object providing a reference to
      * a file that may contain an image.
@@ -156,7 +156,7 @@ public final class Imaging {
     /**
      * Attempts to determine if a file contains an image recorded in
      * a supported graphics format based on its file-name extension
-     * (for example "&#46jpg", "&#46;gif", "&#46;png", etc&#46;).
+     * (for example "&#46;jpg", "&#46;gif", "&#46;png", etc&#46;).
      *
      * @param filename  A valid string representing name of file
      * which may contain an image.
@@ -194,6 +194,9 @@ public final class Imaging {
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
      *         determined.
+     * @throws ImageReadException in the event of an unsuccessful
+     *         attempt to read the image data
+     * @throws IOException in the event of an unrecoverable I/O condition.
      */
     public static ImageFormat guessFormat(final byte[] bytes)
             throws ImageReadException, IOException {
@@ -214,6 +217,9 @@ public final class Imaging {
      * @return An ImageFormat, such as ImageFormat.IMAGE_FORMAT_JPEG. Returns
      *         ImageFormat.IMAGE_FORMAT_UNKNOWN if the image type cannot be
      *         determined.
+     * @throws ImageReadException in the event of an unsuccessful
+     *         attempt to read the image data
+     * @throws IOException in the event of an unrecoverable I/O condition.
      */
     public static ImageFormat guessFormat(final File file) throws ImageReadException,
             IOException {
@@ -325,12 +331,13 @@ public final class Imaging {
     /**
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
-     * <p>
      *
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ICC_Profile getICCProfile(final byte[] bytes)
             throws ImageReadException, IOException {
@@ -340,14 +347,15 @@ public final class Imaging {
     /**
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
-     * <p>
      *
      * @param bytes
      *            Byte array containing an image file.
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ICC_Profile or null if the image contains no ICC
-     *         profile..
+     *         profile.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ICC_Profile getICCProfile(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -357,14 +365,15 @@ public final class Imaging {
     /**
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
-     * <p>
      *
      * @param is
      *            InputStream from which to read image data.
      * @param filename
      *            Filename associated with image data (optional).
      * @return An instance of ICC_Profile or null if the image contains no ICC
-     *         profile..
+     *         profile.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ICC_Profile getICCProfile(final InputStream is, final String filename)
             throws ImageReadException, IOException {
@@ -374,7 +383,6 @@ public final class Imaging {
     /**
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
-     * <p>
      *
      * @param is
      *            InputStream from which to read image data.
@@ -383,7 +391,9 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ICC_Profile or null if the image contains no ICC
-     *         profile..
+     *         profile.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ICC_Profile getICCProfile(final InputStream is, final String filename,
             final Map<String, Object> params) throws ImageReadException, IOException {
@@ -393,12 +403,13 @@ public final class Imaging {
     /**
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
-     * <p>
      *
      * @param file
      *            File containing image data.
      * @return An instance of ICC_Profile or null if the image contains no ICC
-     *         profile..
+     *         profile.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ICC_Profile getICCProfile(final File file)
             throws ImageReadException, IOException {
@@ -408,14 +419,15 @@ public final class Imaging {
     /**
      * Extracts an ICC Profile (if present) from JPEG, PNG, PSD (Photoshop) and
      * TIFF images.
-     * <p>
      *
      * @param file
      *            File containing image data.
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ICC_Profile or null if the image contains no ICC
-     *         profile..
+     *         profile.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ICC_Profile getICCProfile(final File file, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -444,16 +456,17 @@ public final class Imaging {
     /**
      * Extracts the raw bytes of an ICC Profile (if present) from JPEG, PNG, PSD
      * (Photoshop) and TIFF images.
-     * <p>
-     * To parse the result use IccProfileParser or
-     * ICC_Profile.getInstance(bytes).
-     * <p>
+     *
+     * <p>To parse the result use IccProfileParser or
+     * ICC_Profile.getInstance(bytes).</p>
      *
      * @param bytes
      *            Byte array containing an image file.
      * @return A byte array.
      * @see IccProfileParser
      * @see ICC_Profile
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static byte[] getICCProfileBytes(final byte[] bytes)
             throws ImageReadException, IOException {
@@ -463,10 +476,9 @@ public final class Imaging {
     /**
      * Extracts the raw bytes of an ICC Profile (if present) from JPEG, PNG, PSD
      * (Photoshop) and TIFF images.
-     * <p>
-     * To parse the result use IccProfileParser or
-     * ICC_Profile.getInstance(bytes).
-     * <p>
+     *
+     * <p>To parse the result use IccProfileParser or
+     * ICC_Profile.getInstance(bytes).</p>
      *
      * @param bytes
      *            Byte array containing an image file.
@@ -475,6 +487,8 @@ public final class Imaging {
      * @return A byte array.
      * @see IccProfileParser
      * @see ICC_Profile
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static byte[] getICCProfileBytes(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -484,16 +498,17 @@ public final class Imaging {
     /**
      * Extracts the raw bytes of an ICC Profile (if present) from JPEG, PNG, PSD
      * (Photoshop) and TIFF images.
-     * <p>
-     * To parse the result use IccProfileParser or
-     * ICC_Profile.getInstance(bytes).
-     * <p>
+     *
+     * <p>To parse the result use IccProfileParser or
+     * ICC_Profile.getInstance(bytes).</p>
      *
      * @param file
      *            File containing image data.
      * @return A byte array.
      * @see IccProfileParser
      * @see ICC_Profile
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static byte[] getICCProfileBytes(final File file)
             throws ImageReadException, IOException {
@@ -503,10 +518,9 @@ public final class Imaging {
     /**
      * Extracts the raw bytes of an ICC Profile (if present) from JPEG, PNG, PSD
      * (Photoshop) and TIFF images.
-     * <p>
-     * To parse the result use IccProfileParser or
-     * ICC_Profile.getInstance(bytes).
-     * <p>
+     *
+     * <p>To parse the result use IccProfileParser or
+     * ICC_Profile.getInstance(bytes).</p>
      *
      * @param file
      *            File containing image data.
@@ -515,6 +529,8 @@ public final class Imaging {
      * @return A byte array.
      * @see IccProfileParser
      * @see ICC_Profile
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static byte[] getICCProfileBytes(final File file, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -530,12 +546,11 @@ public final class Imaging {
 
     /**
      * Parses the "image info" of an image.
-     * <p>
-     * "Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.
-     * <p>
-     * Not to be confused with "image metadata."
-     * <p>
+     *
+     * <p>"Image info" is a summary of basic information about the image such as:
+     * width, height, file format, bit depth, color type, etc.</p>
+     *
+     * <p>Not to be confused with "image metadata."</p>
      *
      * @param filename
      *            String.
@@ -545,6 +560,8 @@ public final class Imaging {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ImageInfo.
      * @see ImageInfo
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final String filename, final byte[] bytes,
             final Map<String, Object> params) throws ImageReadException, IOException {
@@ -553,12 +570,11 @@ public final class Imaging {
 
     /**
      * Parses the "image info" of an image.
-     * <p>
-     * "Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.
-     * <p>
-     * Not to be confused with "image metadata."
-     * <p>
+     *
+     * <p>"Image info" is a summary of basic information about the image such as:
+     * width, height, file format, bit depth, color type, etc.</p>
+     *
+     * <p>Not to be confused with "image metadata."</p>
      *
      * @param filename
      *            String.
@@ -566,6 +582,8 @@ public final class Imaging {
      *            Byte array containing an image file.
      * @return An instance of ImageInfo.
      * @see ImageInfo
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final String filename, final byte[] bytes)
             throws ImageReadException, IOException {
@@ -573,13 +591,12 @@ public final class Imaging {
     }
 
     /**
-     * Parses the "image info" of an image.
-     * <p>
-     * "Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.
-     * <p>
-     * Not to be confused with "image metadata."
-     * <p>
+     * <p>Parses the "image info" of an image.</p>
+     *
+     * <p>"Image info" is a summary of basic information about the image such as:
+     * width, height, file format, bit depth, color type, etc.</p>
+     *
+     * <p>Not to be confused with "image metadata."</p>
      *
      * @param is
      *            InputStream from which to read image data.
@@ -587,6 +604,8 @@ public final class Imaging {
      *            Filename associated with image data (optional).
      * @return An instance of ImageInfo.
      * @see ImageInfo
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final InputStream is, final String filename)
             throws ImageReadException, IOException {
@@ -594,13 +613,12 @@ public final class Imaging {
     }
 
     /**
-     * Parses the "image info" of an image.
-     * <p>
-     * "Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.
-     * <p>
-     * Not to be confused with "image metadata."
-     * <p>
+     * <p>Parses the "image info" of an image.</p>
+     *
+     * <p>"Image info" is a summary of basic information about the image such as:
+     * width, height, file format, bit depth, color type, etc.</p>
+     *
+     * <p>Not to be confused with "image metadata."</p>
      *
      * @param is
      *            InputStream from which to read image data.
@@ -610,6 +628,8 @@ public final class Imaging {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ImageInfo.
      * @see ImageInfo
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final InputStream is, final String filename,
             final Map<String, Object> params) throws ImageReadException, IOException {
@@ -618,17 +638,18 @@ public final class Imaging {
 
     /**
      * Parses the "image info" of an image.
-     * <p>
-     * "Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.
-     * <p>
-     * Not to be confused with "image metadata."
-     * <p>
+     *
+     * <p>"Image info" is a summary of basic information about the image such as:
+     * width, height, file format, bit depth, color type, etc.</p>
+     *
+     * <p>Not to be confused with "image metadata."</p>
      *
      * @param bytes
      *            Byte array containing an image file.
      * @return An instance of ImageInfo.
      * @see ImageInfo
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final byte[] bytes)
             throws ImageReadException, IOException {
@@ -636,13 +657,12 @@ public final class Imaging {
     }
 
     /**
-     * Parses the "image info" of an image.
-     * <p>
-     * "Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.
-     * <p>
-     * Not to be confused with "image metadata."
-     * <p>
+     * <p>Parses the "image info" of an image.</p>
+     *
+     * <p>"Image info" is a summary of basic information about the image such as:
+     * width, height, file format, bit depth, color type, etc.</p>
+     *
+     * <p>Not to be confused with "image metadata."</p>
      *
      * @param bytes
      *            Byte array containing an image file.
@@ -650,6 +670,8 @@ public final class Imaging {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ImageInfo.
      * @see ImageInfo
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -657,13 +679,12 @@ public final class Imaging {
     }
 
     /**
-     * Parses the "image info" of an image file.
-     * <p>
-     * "Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.
-     * <p>
-     * Not to be confused with "image metadata."
-     * <p>
+     * <p>Parses the "image info" of an image file.</p>
+     *
+     * <p>"Image info" is a summary of basic information about the image such as:
+     * width, height, file format, bit depth, color type, etc.</p>
+     *
+     * <p>Not to be confused with "image metadata."</p>
      *
      * @param file
      *            File containing image data.
@@ -671,6 +692,8 @@ public final class Imaging {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of ImageInfo.
      * @see ImageInfo
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final File file, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -679,17 +702,18 @@ public final class Imaging {
 
     /**
      * Parses the "image info" of an image file.
-     * <p>
-     * "Image info" is a summary of basic information about the image such as:
-     * width, height, file format, bit depth, color type, etc.
-     * <p>
-     * Not to be confused with "image metadata."
-     * <p>
+     *
+     * <p>"Image info" is a summary of basic information about the image such as:
+     * width, height, file format, bit depth, color type, etc.</p>
+     *
+     * <p>Not to be confused with "image metadata."</p>
      *
      * @param file
      *            File containing image data.
      * @return An instance of ImageInfo.
      * @see ImageInfo
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static ImageInfo getImageInfo(final File file) throws ImageReadException,
             IOException {
@@ -738,6 +762,8 @@ public final class Imaging {
      * @param filename
      *            Filename associated with image data (optional).
      * @return The width and height of the image.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static Dimension getImageSize(final InputStream is, final String filename)
             throws ImageReadException, IOException {
@@ -755,6 +781,8 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return The width and height of the image.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static Dimension getImageSize(final InputStream is, final String filename,
             final Map<String, Object> params) throws ImageReadException, IOException {
@@ -768,6 +796,8 @@ public final class Imaging {
      * @param bytes
      *            Byte array containing an image file.
      * @return The width and height of the image.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static Dimension getImageSize(final byte[] bytes)
             throws ImageReadException, IOException {
@@ -783,6 +813,8 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return The width and height of the image.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static Dimension getImageSize(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -796,6 +828,8 @@ public final class Imaging {
      * @param file
      *            File containing image data.
      * @return The width and height of the image.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static Dimension getImageSize(final File file) throws ImageReadException,
             IOException {
@@ -811,6 +845,8 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return The width and height of the image.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static Dimension getImageSize(final File file, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -833,6 +869,8 @@ public final class Imaging {
      * @param filename
      *            Filename associated with image data (optional).
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static String getXmpXml(final InputStream is, final String filename)
             throws ImageReadException, IOException {
@@ -850,6 +888,8 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static String getXmpXml(final InputStream is, final String filename, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -863,6 +903,8 @@ public final class Imaging {
      * @param bytes
      *            Byte array containing an image file.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static String getXmpXml(final byte[] bytes) throws ImageReadException,
             IOException {
@@ -878,6 +920,8 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static String getXmpXml(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -891,6 +935,8 @@ public final class Imaging {
      * @param file
      *            File containing image data.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static String getXmpXml(final File file) throws ImageReadException,
             IOException {
@@ -906,6 +952,8 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static String getXmpXml(final File file, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -921,6 +969,8 @@ public final class Imaging {
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
      * @return Xmp Xml as String, if present. Otherwise, returns null.
+     * @throws ImageReadException if it fails to parse the image
+     * @throws IOException if it fails to read the image data
      */
     public static String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -946,6 +996,8 @@ public final class Imaging {
      *            Byte array containing an image file.
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
+     * @throws ImageReadException if it fails to read the image metadata
+     * @throws IOException if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final byte[] bytes)
             throws ImageReadException, IOException {
@@ -971,6 +1023,8 @@ public final class Imaging {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
+     * @throws ImageReadException if it fails to read the image metadata
+     * @throws IOException if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final byte[] bytes, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -996,6 +1050,8 @@ public final class Imaging {
      *            Filename associated with image data (optional).
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
+     * @throws ImageReadException if it fails to read the image metadata
+     * @throws IOException if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final InputStream is, final String filename)
             throws ImageReadException, IOException {
@@ -1023,6 +1079,8 @@ public final class Imaging {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
+     * @throws ImageReadException if it fails to read the image metadata
+     * @throws IOException if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final InputStream is, final String filename,
             final Map<String, Object> params) throws ImageReadException, IOException {
@@ -1046,6 +1104,8 @@ public final class Imaging {
      *            File containing image data.
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
+     * @throws ImageReadException if it fails to read the image metadata
+     * @throws IOException if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final File file)
             throws ImageReadException, IOException {
@@ -1071,6 +1131,8 @@ public final class Imaging {
      *            Map of optional parameters, defined in ImagingConstants.
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
+     * @throws ImageReadException if it fails to read the image metadata
+     * @throws IOException if it fails to read the image data
      */
     public static ImageMetadata getMetadata(final File file, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -1164,6 +1226,7 @@ public final class Imaging {
      * Gets all images specified by the InputStream  (some
      * formats may include multiple images within a single data source).
      * @param is A valid InputStream
+     * @param filename image file name
      * @return A valid (potentially empty) list of BufferedImage objects.
      * @throws ImageReadException In the event that the specified
      * content does not conform to the format of the specific parser
@@ -1353,6 +1416,7 @@ public final class Imaging {
      * image info, metadata and ICC profiles from all image formats that
      * provide this data.
      * @param file a valid reference to a file containing image data.
+     * @param params parameters map.
      * @return if successful, a valid buffered image
      * @throws ImageReadException in the event of a processing error
      * while reading an image (i.e. a format violation, etc.).

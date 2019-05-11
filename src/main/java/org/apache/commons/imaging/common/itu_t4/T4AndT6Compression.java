@@ -106,11 +106,11 @@ public final class T4AndT6Compression {
      * TIFF6 specification. No EOLs, no RTC, rows are padded to end on a byte
      * boundary.
      *
-     * @param uncompressed
-     * @param width
-     * @param height
+     * @param uncompressed uncompressed byte data
+     * @param width image width
+     * @param height image height
      * @return the compressed data
-     * @throws ImageWriteException
+     * @throws ImageWriteException if it fails to write the compressed data
      */
     public static byte[] compressModifiedHuffman(final byte[] uncompressed, final int width, final int height)
             throws ImageWriteException {
@@ -130,11 +130,11 @@ public final class T4AndT6Compression {
      * specification. No EOLs, no RTC, rows are padded to end on a byte
      * boundary.
      *
-     * @param compressed
-     * @param width
-     * @param height
-     * @return the decompressed data
-     * @throws ImageReadException
+     * @param compressed compressed byte data
+     * @param width image width
+     * @param height image height
+     * @return the compressed data
+     * @throws ImageReadException if it fails to read the compressed data
      */
     public static byte[] decompressModifiedHuffman(final byte[] compressed,
             final int width, final int height) throws ImageReadException {
@@ -201,11 +201,12 @@ public final class T4AndT6Compression {
      * Decompresses T.4 1D encoded data. EOL at the beginning and after each
      * row, can be preceded by fill bits to fit on a byte boundary, no RTC.
      *
-     * @param compressed
-     * @param width
-     * @param height
+     * @param compressed compressed byte data
+     * @param width image width
+     * @param height image height
+     * @param hasFill used to check the end of line
      * @return the decompressed data
-     * @throws ImageReadException
+     * @throws ImageReadException if it fails to read the compressed data
      */
     public static byte[] decompressT4_1D(final byte[] compressed, final int width,
             final int height, final boolean hasFill) throws ImageReadException {
@@ -359,11 +360,12 @@ public final class T4AndT6Compression {
      * succeeded by a tag bit determining whether the next line is encoded using
      * 1D or 2D. No RTC.
      *
-     * @param compressed
-     * @param width
-     * @param height
+     * @param compressed compressed byte data
+     * @param width image width
+     * @param height image height
+     * @param hasFill used to check the end of line
      * @return the decompressed data
-     * @throws ImageReadException
+     * @throws ImageReadException if it fails to read the compressed data
      */
     public static byte[] decompressT4_2D(final byte[] compressed, final int width,
             final int height, final boolean hasFill) throws ImageReadException {
@@ -521,11 +523,11 @@ public final class T4AndT6Compression {
      * the end (the EOFB, end of fax block). No RTC. No fill bits anywhere. All
      * data is 2D encoded.
      *
-     * @param compressed
-     * @param width
-     * @param height
+     * @param compressed compressed byte data
+     * @param width image width
+     * @param height image height
      * @return the decompressed data
-     * @throws ImageReadException
+     * @throws ImageReadException if it fails to read the compressed data
      */
     public static byte[] decompressT6(final byte[] compressed, final int width, final int height)
             throws ImageReadException {
