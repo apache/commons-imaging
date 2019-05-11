@@ -166,4 +166,10 @@
     <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
   </Match>
 
+  <!-- Reason: Appears to be another error with SpotBugs, as the if/else logic appears to be correct -->
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.pnm.PnmImageParser" />
+    <Method name="readHeader" />
+    <Bug pattern="UC_USELESS_CONDITION" />
+  </Match>
 </FindBugsFilter>
