@@ -391,6 +391,7 @@ public class PaletteFactory {
      * @param transparent whether to consider the alpha values
      * @param max the maximum number of colors the palette can contain
      * @return the palette of at most {@code max} colors
+     * @throws ImageWriteException if it fails to process the palette
      */
     public Palette makeQuantizedRgbaPalette(final BufferedImage src, final boolean transparent, final int max) throws ImageWriteException {
         return new MedianCutQuantizer(!transparent).process(src, max,

@@ -132,7 +132,7 @@ public final class TiffOutputSet {
      *            Longitude in degrees E, negative values are W.
      * @param latitude
      *            latitude in degrees N, negative values are S.
-     * @throws ImageWriteException
+     * @throws ImageWriteException if it fails to write the new data to the GPS directory
      */
     public void setGPSInDegrees(double longitude, double latitude)
             throws ImageWriteException {

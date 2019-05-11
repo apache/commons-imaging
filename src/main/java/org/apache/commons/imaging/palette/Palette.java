@@ -23,11 +23,12 @@ import org.apache.commons.imaging.ImageWriteException;
  */
 public interface Palette {
 
+    // TODO: shouldn't it be an ImageReadException for getPaletteIndex?
     /**
      * Looks up the palette index for a given color.
      * @param rgb the color to look up
      * @return the palette index
-     * @throws ImageWriteException
+     * @throws ImageWriteException if it fails to read the palette index
      */
     int getPaletteIndex(int rgb) throws ImageWriteException;
 

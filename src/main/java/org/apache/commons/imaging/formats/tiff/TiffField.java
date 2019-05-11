@@ -102,7 +102,7 @@ public class TiffField {
     /**
      * Returns the TIFF field's offset/value field, derived from bytes 8-11.
      * @return the field's offset in a <code>long</code> of 4 packed bytes,
-     * or its inlined value <= 4 bytes long encoded in the field's byte order.
+     * or its inlined value &lt;= 4 bytes long encoded in the field's byte order.
      */
     public int getOffset() {
         return (int) offset;

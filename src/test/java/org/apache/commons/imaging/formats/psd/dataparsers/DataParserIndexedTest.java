@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class DataParserIndexedTest{
@@ -30,7 +31,7 @@ public class DataParserIndexedTest{
         new DataParserIndexed(byteArray);
         fail("Expecting exception: ArrayIndexOutOfBoundsException");
       } catch(final ArrayIndexOutOfBoundsException e) {
-         assertEquals("256",e.getMessage());
+         assertTrue(e.getMessage().contains("256"));
          assertEquals(DataParserIndexed.class.getName(), e.getStackTrace()[0].getClassName());
       }
   }

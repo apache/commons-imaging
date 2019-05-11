@@ -418,28 +418,33 @@ public class TiffImageParser extends ImageParser {
     }
 
      /**
-     * Gets a buffered image specified by the byte source.
+     * <p>Gets a buffered image specified by the byte source.
      * The TiffImageParser class features support for a number of options that
      * are unique to the TIFF format.  These options can be specified by
      * supplying the appropriate parameters using the keys from the
-     * TiffConstants class and the params argument for this method.
-     * <h4>Loading Partial Images</h4>
-     * The TIFF parser includes support for loading partial images without
+     * TiffConstants class and the params argument for this method.</p>
+     *
+     * <h3>Loading Partial Images</h3>
+     *
+     * <p>The TIFF parser includes support for loading partial images without
      * committing significantly more memory resources than are necessary
      * to store the image. This feature is useful for conserving memory
      * in applications that require a relatively small sub image from a
      * very large TIFF file.  The specifications for partial images are
-     * as follows:
-     * <code><pre>
-     *   HashMap<String, Object> params = new HashMap<String, Object>();
+     * as follows:</p>
+     *
+     * <pre>
+     *   HashMap&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
      *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, new Integer(x));
      *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, new Integer(y));
      *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, new Integer(width));
      *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, new Integer(height));
-     * </pre></code>
-     * Note that the arguments x, y, width, and height must specify a
+     * </pre>
+     *
+     * <p>Note that the arguments x, y, width, and height must specify a
      * valid rectangular region that is fully contained within the
-     * source TIFF image.
+     * source TIFF image.</p>
+     *
      * @param byteSource A valid instance of ByteSource
      * @param params Optional instructions for special-handling or
      * interpretation of the input data (null objects are permitted and

@@ -169,7 +169,7 @@
         <!-- Use version from parent pom as that is adjusted according to the Java version used to run Maven -->
         <version>${commons.findbugs.version}</version>
         <configuration>
-          <excludeFilterFile>${basedir}/findbugs-exclude-filter.xml</excludeFilterFile>
+          <excludeFilterFile>${basedir}/src/conf/findbugs-exclude-filter.xml</excludeFilterFile>
         </configuration>
       </plugin>
     </plugins>
@@ -189,6 +189,7 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <configuration>
             <excludePackageNames>org.apache.commons.imaging.formats.psd.*:org.apache.commons.imaging.formats.png.*</excludePackageNames>
+            <source>8</source>
           </configuration>
         </plugin>
         <plugin>

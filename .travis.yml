@@ -19,8 +19,18 @@ sudo: false
 jdk:
   - oraclejdk8
   - oraclejdk11
-  - openjdk7
   - openjdk8
   - openjdk11
+  - openjdk12
   - openjdk-ea
+
+matrix:
+  allow_failures:
+    - jdk: openjdk-ea
+
+script:
+  - mvn
+
+after_success:
+  - mvn clean test jacoco:report coveralls:report -Ptravis-jacoco
 

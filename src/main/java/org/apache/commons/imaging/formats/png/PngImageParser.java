@@ -110,7 +110,10 @@ public class PngImageParser extends ImageParser {
     }
 
     /**
+     * @param is PNG image input stream
      * @return List of String-formatted chunk types, ie. "tRNs".
+     * @throws ImageReadException if it fail to read the PNG chunks
+     * @throws IOException if it fails to read the input stream data
      */
     public List<String> getChunkTypes(final InputStream is)
             throws ImageReadException, IOException {

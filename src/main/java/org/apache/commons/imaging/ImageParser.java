@@ -849,6 +849,7 @@ public abstract class ImageParser extends BinaryFileParser {
      * Write the ImageInfo and format-specific information for the image
      * content of the specified byte source to a PrintWriter
      *
+     * @param pw print writer used for writing the ImageInfo
      * @param byteSource A valid byte source.
      * @return A valid PrintWriter.
      * @throws ImageReadException In the event that the specified content

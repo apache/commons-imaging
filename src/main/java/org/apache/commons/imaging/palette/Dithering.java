@@ -34,7 +34,7 @@ public final class Dithering {
      *
      * @param image   the image to change
      * @param palette the palette to use
-     * @throws ImageWriteException
+     * @throws ImageWriteException if it fails to read the palette index
      */
     public static void applyFloydSteinbergDithering(final BufferedImage image, final Palette palette) throws ImageWriteException {
         for (int y = 0; y < image.getHeight(); y++) {

@@ -129,8 +129,6 @@ public class PnmImageParser extends ImageParser {
             } else if (identifier2 == PnmConstants.PPM_RAW_CODE) {
                 final int max = Integer.parseInt(wsr.readtoWhiteSpace());
                 return new PpmFileInfo(width, height, true, max);
-            } else {
-                throw new ImageReadException("PNM file has invalid header.");
             }
         } else if (identifier2 == PnmConstants.PAM_RAW_CODE) {
             int width = -1;
@@ -204,9 +202,8 @@ public class PnmImageParser extends ImageParser {
             }
 
             return new PamFileInfo(width, height, depth, maxVal, tupleType.toString());
-        } else {
-            throw new ImageReadException("PNM file has invalid prefix byte 2");
         }
+        throw new ImageReadException("PNM file has invalid prefix byte 2");
     }
 
     private FileInfo readHeader(final ByteSource byteSource)
