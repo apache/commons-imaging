@@ -189,6 +189,7 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <configuration>
             <excludePackageNames>org.apache.commons.imaging.formats.psd.*:org.apache.commons.imaging.formats.png.*</excludePackageNames>
+            <source>8</source>
           </configuration>
         </plugin>
         <plugin>
