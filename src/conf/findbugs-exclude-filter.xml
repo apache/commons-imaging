@@ -159,4 +159,11 @@
   <Match>
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
+
+  <!-- Reason: Broken in SpotBugs/FindBugs with JDK11 -->
+  <!-- TODO: remove exclusion once the bug if fixed: https://github.com/spotbugs/spotbugs/issues/756 -->
+  <Match>
+    <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
+  </Match>
+
 </FindBugsFilter>
