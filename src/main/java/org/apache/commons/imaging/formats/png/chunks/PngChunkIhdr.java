@@ -50,7 +50,7 @@ public class PngChunkIhdr extends PngChunk {
         compressionMethod = readByte("CompressionMethod", is, "Not a Valid Png File: IHDR Corrupt");
         filterMethod = readByte("FilterMethod", is, "Not a Valid Png File: IHDR Corrupt");
         final int method = readByte("InterlaceMethod", is, "Not a Valid Png File: IHDR Corrupt");
-        if (method < 0 && method >= InterlaceMethod.values().length) {
+        if (method < 0 || method >= InterlaceMethod.values().length) {
             throw new ImageReadException("PNG: unknown interlace method: " + method);
         }
         interlaceMethod = InterlaceMethod.values()[method];

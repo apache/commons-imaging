@@ -51,6 +51,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-167" dev="kinow" type="fix" due-to="Michael Groß">
         Possible infinite loop at XpmImageParser::writeImage
       </action>
+      <action issue="IMAGING-211" dev="kinow" type="fix">
+      	Imaging.getBufferedImage fails throwing java.lang.ArrayIndexOutOfBoundsException for specific inputs
+      </action>
     </release>
     <release version="1.0-alpha1" date="2019-04-28" description="First 1.0 alpha release">
       <action issue="IMAGING-199" dev="kinow" type="fix" due-to="Ric Emery">
