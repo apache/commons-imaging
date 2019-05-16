@@ -665,7 +665,7 @@ public class XpmImageParser extends ImageParser {
         while (palette == null) {
             palette = paletteFactory.makeExactRgbPaletteSimple(src,
                     hasTransparency ? maxColors - 1 : maxColors);
-            
+
             // leave the loop if numbers would go beyond Integer.MAX_VALUE to avoid infinite loops
             // test every operation from below if it would increase an int value beyond Integer.MAX_VALUE
             long nextMaxColors = maxColors * WRITE_PALETTE.length;
