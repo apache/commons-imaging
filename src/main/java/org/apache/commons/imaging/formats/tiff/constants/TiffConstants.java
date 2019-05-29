@@ -37,6 +37,8 @@ public final class TiffConstants {
     public static final int TIFF_COMPRESSION_JPEG = 6;
     public static final int TIFF_COMPRESSION_UNCOMPRESSED_2 = 32771;
     public static final int TIFF_COMPRESSION_PACKBITS = 32773;
+    public static final int TIFF_COMPRESSION_DEFLATE = 32946;
+    public static final int TIFF_COMPRESSION_DEFLATE_ADOBE = 8;
 
     /**
      * Parameter key. Used in write operations to indicate the desired

@@ -396,6 +396,17 @@ public class TiffReader extends BinaryFileParser {
         return contents;
     }
 
+    public TiffContents readDirectories(final ByteSource byteSource, final Map<String, Object> params,
+            final FormatCompliance formatCompliance) throws ImageReadException, IOException {
+        final Collector collector = new Collector(params);
+        readDirectories(byteSource, formatCompliance, collector);
+        final TiffContents contents = collector.getContents();
+        if (contents.directories.size() < 1) {
+          throw new ImageReadException("Image did not contain any directories.");
+        }
+        return contents;
+    }
+
     public TiffContents readContents(final ByteSource byteSource, final Map<String, Object> params,
             final FormatCompliance formatCompliance) throws ImageReadException,
             IOException {
@@ -412,7 +423,7 @@ public class TiffReader extends BinaryFileParser {
         readDirectories(byteSource, formatCompliance, listener);
     }
 
-    private TiffImageData getTiffRawImageData(final ByteSource byteSource,
+    public TiffImageData getTiffRawImageData(final ByteSource byteSource,
             final TiffDirectory directory) throws ImageReadException, IOException {
 
         final List<ImageDataElement> elements = directory.getTiffRawImageDataElements();
