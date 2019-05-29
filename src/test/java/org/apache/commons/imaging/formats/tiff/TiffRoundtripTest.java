@@ -55,7 +55,8 @@ public class TiffRoundtripTest extends TiffBaseTest {
             final int[] compressions = new int[]{
                     TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED,
                     TiffConstants.TIFF_COMPRESSION_LZW,
-                    TiffConstants.TIFF_COMPRESSION_PACKBITS
+                    TiffConstants.TIFF_COMPRESSION_PACKBITS,
+                    TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE
             };
             for (final int compression : compressions) {
                 final File tempFile = createTempFile(imageFile.getName() + "-" + compression + ".", ".tif");

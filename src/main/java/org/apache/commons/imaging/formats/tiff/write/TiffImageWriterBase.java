@@ -26,6 +26,7 @@ import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TI
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_LZW;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_PACKBITS;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_UNCOMPRESSED;
+import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_DEFLATE_ADOBE;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_HEADER_SIZE;
 
@@ -49,6 +50,7 @@ import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.RationalNumber;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
+import org.apache.commons.imaging.common.ZlibDeflate;
 import org.apache.commons.imaging.formats.tiff.TiffElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
@@ -411,11 +413,15 @@ public abstract class TiffImageWriterBase {
 
                 strips[i] = compressed;
             }
+        } else if (compression == TIFF_COMPRESSION_DEFLATE_ADOBE) {
+            for (int i = 0; i < strips.length; i++) {
+                strips[i] = ZlibDeflate.compress(strips[i]);
+            }
         } else if (compression == TIFF_COMPRESSION_UNCOMPRESSED) {
             // do nothing.
         } else {
             throw new ImageWriteException(
-                    "Invalid compression parameter (Only CCITT 1D/Group 3/Group 4, LZW, Packbits and uncompressed supported).");
+                    "Invalid compression parameter (Only CCITT 1D/Group 3/Group 4, LZW, Packbits, Zlib Deflate and uncompressed supported).");
         }
 
         final TiffElement.DataElement[] imageData = new TiffElement.DataElement[strips.length];
