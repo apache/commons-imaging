@@ -24,8 +24,8 @@ import org.apache.commons.imaging.common.BinaryFunctions;
 public abstract class ByteSource {
     private final String fileName;
 
-    public ByteSource(final String filename) {
-        this.fileName = filename;
+    public ByteSource(final String fileName) {
+        this.fileName = fileName;
     }
 
     public final InputStream getInputStream(final long start) throws IOException {

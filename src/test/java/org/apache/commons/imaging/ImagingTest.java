@@ -52,13 +52,13 @@ public abstract class ImagingTest {
         return getTestImage(null);
     }
 
-    protected File getTestImageByName(final String filename)
+    protected File getTestImageByName(final String fileName)
             throws IOException, ImageReadException {
         return getTestImage(new ImageFilter() {
             @Override
             public boolean accept(final File file) throws IOException,
                     ImageReadException {
-                return file.getName().equals(filename);
+                return file.getName().equals(fileName);
             }
         });
     }
