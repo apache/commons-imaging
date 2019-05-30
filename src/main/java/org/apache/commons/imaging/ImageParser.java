@@ -926,18 +926,18 @@ public abstract class ImageParser extends BinaryFileParser {
      * Indicates whether the ImageParser implementation can accept
      * the specified file name based on its extension.
      *
-     * @param filename An valid string giving a file name or file path.
+     * @param fileName A valid string giving a file name or file path.
      * @return If the parser can accept the format, true; otherwise, false.
      */
-    protected final boolean canAcceptExtension(final String filename) {
+    protected final boolean canAcceptExtension(final String fileName) {
         final String[] exts = getAcceptedExtensions();
         if (exts == null) {
             return true;
         }
 
-        final int index = filename.lastIndexOf('.');
+        final int index = fileName.lastIndexOf('.');
         if (index >= 0) {
-            String ext = filename.substring(index);
+            String ext = fileName.substring(index);
             ext = ext.toLowerCase(Locale.ENGLISH);
 
             for (final String ext2 : exts) {
