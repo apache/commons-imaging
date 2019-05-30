@@ -22,10 +22,10 @@ import java.io.InputStream;
 import org.apache.commons.imaging.common.BinaryFunctions;
 
 public abstract class ByteSource {
-    private final String filename;
+    private final String fileName;
 
     public ByteSource(final String filename) {
-        this.filename = filename;
+        this.fileName = filename;
     }
 
     public final InputStream getInputStream(final long start) throws IOException {
@@ -64,7 +64,8 @@ public abstract class ByteSource {
 
     public abstract String getDescription();
 
-    public final String getFilename() {
-        return filename;
+    public final String getFileName() {
+        return fileName;
     }
+
 }

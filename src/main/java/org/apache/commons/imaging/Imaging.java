@@ -739,7 +739,7 @@ public final class Imaging {
             }
         }
 
-        final String fileName = byteSource.getFilename();
+        final String fileName = byteSource.getFileName();
         if (fileName != null) {
             final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
 
