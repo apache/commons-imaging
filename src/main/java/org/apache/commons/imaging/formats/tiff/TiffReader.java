@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -386,23 +387,14 @@ public class TiffReader extends BinaryFileParser {
     public TiffContents readDirectories(final ByteSource byteSource,
             final boolean readImageData, final FormatCompliance formatCompliance)
             throws ImageReadException, IOException {
-        final Collector collector = new Collector(null);
+        Map<String, Object> params = Collections.singletonMap(
+          ImagingConstants.PARAM_KEY_READ_THUMBNAILS, readImageData);
+        final Collector collector = new Collector(params);
         readDirectories(byteSource, formatCompliance, collector);
         final TiffContents contents = collector.getContents();
         if (contents.directories.size() < 1) {
             throw new ImageReadException(
                     "Image did not contain any directories.");
-        }
-        return contents;
-    }
-
-    public TiffContents readDirectories(final ByteSource byteSource, final Map<String, Object> params,
-            final FormatCompliance formatCompliance) throws ImageReadException, IOException {
-        final Collector collector = new Collector(params);
-        readDirectories(byteSource, formatCompliance, collector);
-        final TiffContents contents = collector.getContents();
-        if (contents.directories.size() < 1) {
-          throw new ImageReadException("Image did not contain any directories.");
         }
         return contents;
     }
@@ -423,7 +415,7 @@ public class TiffReader extends BinaryFileParser {
         readDirectories(byteSource, formatCompliance, listener);
     }
 
-    public TiffImageData getTiffRawImageData(final ByteSource byteSource,
+    private TiffImageData getTiffRawImageData(final ByteSource byteSource,
             final TiffDirectory directory) throws ImageReadException, IOException {
 
         final List<ImageDataElement> elements = directory.getTiffRawImageDataElements();
