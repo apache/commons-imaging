@@ -30,7 +30,7 @@ import org.apache.commons.imaging.ImageWriteException;
  * Utility class to compress/decompress bytes using the ZLIB deflate/inflate
  * compression.
  * </p>
- * 
+ *
  * <p>
  * <a href="http://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE Compressed
  * Data Format Specification version 1.3</a>
@@ -40,9 +40,9 @@ public class ZlibDeflate {
 
     /**
      * Compress the byte[] using ZLIB deflate decompression.
-     * 
+     *
      * @param bytes The bytes to decompress
-     * 
+     *
      * @return The decompressed bytes.
      * @throws ImageReadException if the bytes could not be decompressed.
      * @see Inflater
@@ -61,9 +61,9 @@ public class ZlibDeflate {
 
     /**
      * Compress the byte[] using ZLIB deflate compression.
-     * 
+     *
      * @param bytes The bytes to compress
-     * 
+     *
      * @return The compressed bytes.
      * @throws ImageReadException if the bytes could not be compressed.
      * @see DeflaterOutputStream
