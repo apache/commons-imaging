@@ -32,7 +32,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     /**
      * Tristimulus color values (red-green-blue, as X-Y-Z, in the CIE XYZ color space).
      */
-    private static class TristimulusValues {
+    static class TristimulusValues {
         public float x;
         public float y;
         public float z;
@@ -41,7 +41,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     /**
      * Rgb values (reg-green-blue, as R-G-B, as in the RGB color model).
      */
-    private static class RgbValues {
+    static class RgbValues {
         public int r;
         public int g;
         public int b;
@@ -102,7 +102,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
      * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space">CIELAB color space</a>
      * @see <a href="https://en.wikipedia.org/wiki/White_point">White point</a>
      */
-    private TristimulusValues getTristimulusValues(int cieL, int cieA, int cieB) {
+    TristimulusValues getTristimulusValues(int cieL, int cieA, int cieB) {
         float var_Y = ((cieL * 100.0f / 255.0f) + 16.0f) / 116.0f;
         float var_X = cieA / 500.0f + var_Y;
         float var_Z = var_Y - cieB / 200.0f;
@@ -153,7 +153,7 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
      * @return RGB values
      * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space">CIELAB color space</a>
      */
-    private RgbValues getRgbValues(TristimulusValues tristimulusValues) {
+    RgbValues getRgbValues(TristimulusValues tristimulusValues) {
         final float var_X = tristimulusValues.x / 100f; // X = From 0 to ref_X
         final float var_Y = tristimulusValues.y / 100f; // Y = From 0 to ref_Y
         final float var_Z = tristimulusValues.z / 100f; // Z = From 0 to ref_Y

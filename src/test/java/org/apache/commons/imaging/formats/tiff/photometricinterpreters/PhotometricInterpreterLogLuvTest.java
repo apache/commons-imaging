@@ -18,19 +18,27 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class PhotometricInterpreterLogLuvTest {
 
+    private PhotometricInterpreterLogLuv p;
+
+    private int samplesPerPixel = 8;
+    private int[] bitsPerSample = new int[] {1, 2, 3};
+    private int predictor = 1;
+    private int width = 800;
+    private int height = 600;
+
+    @Before
+    public void setUp() {
+        p = new PhotometricInterpreterLogLuv(samplesPerPixel, bitsPerSample, predictor,
+                width, height);
+    }
+
     @Test
     public void testConstructor() {
-        int samplesPerPixel = 8;
-        int[] bitsPerSample = new int[] {1, 2, 3};
-        int predictor = 1;
-        int width = 800;
-        int height = 600;
-        PhotometricInterpreterLogLuv p = new PhotometricInterpreterLogLuv(samplesPerPixel, bitsPerSample, predictor,
-                width, height);
         assertEquals(samplesPerPixel, p.samplesPerPixel);
         for (int i = 0; i < bitsPerSample.length; i++) {
             assertEquals(bitsPerSample[i], p.getBitsPerSample(i));
@@ -38,5 +46,21 @@ public class PhotometricInterpreterLogLuvTest {
         assertEquals(predictor, p.predictor);
         assertEquals(width, p.width);
         assertEquals(height, p.height);
+    }
+
+    @Test
+    public void testGetTristimulusValues() {
+        // any value equals 0 will have its pow(N, 3) equal to 0
+        assertEquals(0.0d, (double) p.getTristimulusValues(0, 0, 0).x, 0.001d);
+        assertEquals(0.0d, (double) p.getTristimulusValues(0, 0, 0).y, 0.001d);
+        assertEquals(0.0d, (double) p.getTristimulusValues(0, 0, 0).z, 0.001d);
+        // values under the threshold used in the if statements
+        assertEquals(0.04126d, (double) p.getTristimulusValues(1, 0, 0).x, 0.001d);
+        assertEquals(0.04341d, (double) p.getTristimulusValues(1, 0, 0).y, 0.001d);
+        assertEquals(0.04727d, (double) p.getTristimulusValues(1, 0, 0).z, 0.001d);
+        // values under the threshold used in the if statements
+        assertEquals(29.36116d, (double) p.getTristimulusValues(100, 100, 50).x, 0.001d);
+        assertEquals(10.78483d, (double) p.getTristimulusValues(100, 100, 50).y, 0.001d);
+        assertEquals(1.25681d, (double) p.getTristimulusValues(100, 100, 50).z, 0.001d);
     }
 }
