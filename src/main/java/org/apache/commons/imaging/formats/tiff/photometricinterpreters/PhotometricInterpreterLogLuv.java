@@ -40,6 +40,9 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImageReadException, IOException {
+        if (samples == null || samples.length != 3) {
+            throw new ImageReadException("Invalid length of bits per sample (expected 3).");
+        }
         float X, Y, Z;
 
         final int cieL = samples[0];
