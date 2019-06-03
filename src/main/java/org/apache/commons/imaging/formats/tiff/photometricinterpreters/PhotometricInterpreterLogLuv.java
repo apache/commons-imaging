@@ -52,10 +52,6 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
     }
 
-    private float cube(final float f) {
-        return f * f * f;
-    }
-
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImageReadException, IOException {
@@ -107,9 +103,9 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         float var_X = cieA / 500.0f + var_Y;
         float var_Z = var_Y - cieB / 200.0f;
 
-        final float var_x_cube = cube(var_X);
-        final float var_y_cube = cube(var_Y);
-        final float var_z_cube = cube(var_Z);
+        final float var_x_cube = (float) Math.pow(var_X, 3.0d);
+        final float var_y_cube = (float) Math.pow(var_Y, 3.0d);
+        final float var_z_cube = (float) Math.pow(var_Z, 3.0d);
 
         if (var_y_cube > 0.008856f) {
             var_Y = var_y_cube;
