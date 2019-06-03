@@ -26,7 +26,9 @@ import org.apache.commons.imaging.common.ImageBuilder;
  * interpretation tag is a requirement for valid TIFF images, and defines the
  * color space of the image data.
  *
- * @see https://www.awaresystems.be/imaging/tiff/tifftags/photometricinterpretation.html
+ * @see <a href=
+ *      "https://www.awaresystems.be/imaging/tiff/tifftags/photometricinterpretation.html">
+ *      Baseline TIFF Tag PhotometricInterpretation </a>
  */
 public abstract class PhotometricInterpreter {
     protected final int samplesPerPixel;
