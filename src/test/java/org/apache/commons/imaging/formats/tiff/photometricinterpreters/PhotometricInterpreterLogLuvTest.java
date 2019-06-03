@@ -18,6 +18,10 @@ package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterLogLuv.TristimulusValues;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,5 +85,24 @@ public class PhotometricInterpreterLogLuvTest {
         assertEquals(28, p.getRgbValues(triValues).r);
         assertEquals(24, p.getRgbValues(triValues).g);
         assertEquals(23, p.getRgbValues(triValues).b);
+    }
+
+    @Test(expected=ImageReadException.class)
+    public void testInterpretPixelNullSamples() throws ImageReadException, IOException {
+        p.interpretPixel(null, null, 0, 0);
+    }
+
+    @Test(expected=ImageReadException.class)
+    public void testInterpretPixelEmptySamples() throws ImageReadException, IOException {
+        p.interpretPixel(null, new int[] {}, 0, 0);
+    }
+
+    @Test
+    public void testInterpretPixel() throws ImageReadException, IOException {
+        ImageBuilder imgBuilder = new ImageBuilder(600, 400, /*alpha*/ true);
+        int x = 10;
+        int y = 20;
+        p.interpretPixel(imgBuilder, new int[] {100, (byte) 32, (byte) 2}, x, y);
+        assertEquals(-7584166, imgBuilder.getRGB(x, y));
     }
 }
