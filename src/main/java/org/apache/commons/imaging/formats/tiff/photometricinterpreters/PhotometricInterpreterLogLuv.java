@@ -27,20 +27,15 @@ import org.apache.commons.imaging.common.ImageBuilder;
  * @see https://en.wikipedia.org/wiki/Logluv_TIFF
  */
 public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
-    // private final boolean yOnly;
 
     public PhotometricInterpreterLogLuv(final int samplesPerPixel,
             final int[] bitsPerSample, final int predictor, final int width, final int height) {
         super(samplesPerPixel, bitsPerSample, predictor, width, height);
-
-        // this.yOnly = yonly;
     }
 
     private float cube(final float f) {
         return f * f * f;
     }
-
-    // private float function_f(float value, )
 
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
@@ -120,11 +115,6 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
                 var_B = 12.92f * var_B;
             }
 
-            // var_R = (((var_R-)))
-            // updateMaxMin(new float[]{
-            // var_R, var_G, var_B,
-            // }, maxVarRGB, minVarRGB);
-
             // var_R = ((var_R + 0.16561039f) / (3.0152583f + 0.16561039f));
             // var_G = ((var_G + 0.06561642f) / (3.0239854f + 0.06561642f));
             // var_B = ((var_B + 0.19393992f) / (3.1043448f + 0.19393992f));
@@ -137,10 +127,6 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         // float R = 1.910f * X - 0.532f * Y - 0.288f * Z;
         // float G = -0.985f * X + 1.999f * Y - 0.028f * Z;
         // float B = 0.058f * X - 0.118f * Y + 0.898f * Z;
-
-        // updateMaxMin(new float[]{
-        // R, G, B,
-        // }, maxRGB, minRGB);
 
         int red = R;
         int green = G;
