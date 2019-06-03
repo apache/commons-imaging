@@ -21,6 +21,11 @@ import java.io.IOException;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 
+/**
+ * Photometric interpretation Logluv support. Logluv is an encoding for storing data inside TIFF images.
+ *
+ * @see https://en.wikipedia.org/wiki/Logluv_TIFF
+ */
 public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
     // private final boolean yOnly;
 
