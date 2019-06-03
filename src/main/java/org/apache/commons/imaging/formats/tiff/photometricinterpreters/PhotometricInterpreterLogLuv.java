@@ -47,7 +47,6 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         final int cieB = (byte) samples[2];
 
         {
-
             float var_Y = ((cieL * 100.0f / 255.0f) + 16.0f) / 116.0f;
             float var_X = cieA / 500.0f + var_Y;
             float var_Z = var_Y - cieB / 200.0f;
@@ -81,7 +80,6 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
             X = ref_X * var_X; // ref_X = 95.047 Observer= 2°, Illuminant= D65
             Y = ref_Y * var_Y; // ref_Y = 100.000
             Z = ref_Z * var_Z; // ref_Z = 108.883
-
         }
 
         // ref_X = 95.047 //Observer = 2°, Illuminant = D65
@@ -128,13 +126,9 @@ public class PhotometricInterpreterLogLuv extends PhotometricInterpreter {
         // float G = -0.985f * X + 1.999f * Y - 0.028f * Z;
         // float B = 0.058f * X - 0.118f * Y + 0.898f * Z;
 
-        int red = R;
-        int green = G;
-        int blue = B;
-
-        red = Math.min(255, Math.max(0, red));
-        green = Math.min(255, Math.max(0, green));
-        blue = Math.min(255, Math.max(0, blue));
+        final int red = Math.min(255, Math.max(0, R));
+        final int green = Math.min(255, Math.max(0, G));
+        final int blue = Math.min(255, Math.max(0, B));
         final int alpha = 0xff;
         final int rgb = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
         imageBuilder.setRGB(x, y, rgb);
