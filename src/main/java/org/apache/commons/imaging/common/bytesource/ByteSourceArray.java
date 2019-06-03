@@ -23,8 +23,8 @@ import java.io.InputStream;
 public class ByteSourceArray extends ByteSource {
     private final byte[] bytes;
 
-    public ByteSourceArray(final String filename, final byte[] bytes) {
-        super(filename);
+    public ByteSourceArray(final String fileName, final byte[] bytes) {
+        super(fileName);
         this.bytes = bytes;
     }
 

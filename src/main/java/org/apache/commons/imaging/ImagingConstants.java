@@ -26,13 +26,13 @@ package org.apache.commons.imaging;
 public final class ImagingConstants {
 
     /**
-     * <p>Parameter key. Used to hint the filename when reading from a byte array
-     * or InputStream. The filename hint can help disambiguate what file the
+     * <p>Parameter key. Used to hint the file name when reading from a byte array
+     * or InputStream. The file name hint can help disambiguate what file the
      * image format.</p>
      *
      * <p>Applies to read operations.</p>
      *
-     * <p>Valid values: filename as string</p>
+     * <p>Valid values: file name as string</p>
      *
      * @see java.io.InputStream
      */

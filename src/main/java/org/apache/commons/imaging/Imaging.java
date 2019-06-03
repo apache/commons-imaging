@@ -158,16 +158,16 @@ public final class Imaging {
      * a supported graphics format based on its file-name extension
      * (for example "&#46;jpg", "&#46;gif", "&#46;png", etc&#46;).
      *
-     * @param filename  A valid string representing name of file
+     * @param fileName  A valid string representing name of file
      * which may contain an image.
-     * @return true if the filename has an image format file extension.
+     * @return true if the file name has an image format file extension.
      */
-    public static boolean hasImageFileExtension(final String filename) {
-        if (filename == null) {
+    public static boolean hasImageFileExtension(final String fileName) {
+        if (fileName == null) {
             return false;
         }
 
-        final String normalizedFilename = filename.toLowerCase(Locale.ENGLISH);
+        final String normalizedFilename = fileName.toLowerCase(Locale.ENGLISH);
 
         for (final ImageParser imageParser : ImageParser.getAllImageParsers()) {
             for (final String extension : imageParser.getAcceptedExtensions()) {
@@ -368,16 +368,16 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @return An instance of ICC_Profile or null if the image contains no ICC
      *         profile.
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ICC_Profile getICCProfile(final InputStream is, final String filename)
+    public static ICC_Profile getICCProfile(final InputStream is, final String fileName)
             throws ImageReadException, IOException {
-        return getICCProfile(is, filename, null);
+        return getICCProfile(is, fileName, null);
     }
 
     /**
@@ -386,7 +386,7 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
@@ -395,9 +395,9 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ICC_Profile getICCProfile(final InputStream is, final String filename,
+    public static ICC_Profile getICCProfile(final InputStream is, final String fileName,
             final Map<String, Object> params) throws ImageReadException, IOException {
-        return getICCProfile(new ByteSourceInputStream(is, filename), params);
+        return getICCProfile(new ByteSourceInputStream(is, fileName), params);
     }
 
     /**
@@ -552,7 +552,7 @@ public final class Imaging {
      *
      * <p>Not to be confused with "image metadata."</p>
      *
-     * @param filename
+     * @param fileName
      *            String.
      * @param bytes
      *            Byte array containing an image file.
@@ -563,9 +563,9 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ImageInfo getImageInfo(final String filename, final byte[] bytes,
+    public static ImageInfo getImageInfo(final String fileName, final byte[] bytes,
             final Map<String, Object> params) throws ImageReadException, IOException {
-        return getImageInfo(new ByteSourceArray(filename, bytes), params);
+        return getImageInfo(new ByteSourceArray(fileName, bytes), params);
     }
 
     /**
@@ -576,7 +576,7 @@ public final class Imaging {
      *
      * <p>Not to be confused with "image metadata."</p>
      *
-     * @param filename
+     * @param fileName
      *            String.
      * @param bytes
      *            Byte array containing an image file.
@@ -585,9 +585,9 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ImageInfo getImageInfo(final String filename, final byte[] bytes)
+    public static ImageInfo getImageInfo(final String fileName, final byte[] bytes)
             throws ImageReadException, IOException {
-        return getImageInfo(new ByteSourceArray(filename, bytes), null);
+        return getImageInfo(new ByteSourceArray(fileName, bytes), null);
     }
 
     /**
@@ -600,16 +600,16 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @return An instance of ImageInfo.
      * @see ImageInfo
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ImageInfo getImageInfo(final InputStream is, final String filename)
+    public static ImageInfo getImageInfo(final InputStream is, final String fileName)
             throws ImageReadException, IOException {
-        return getImageInfo(new ByteSourceInputStream(is, filename), null);
+        return getImageInfo(new ByteSourceInputStream(is, fileName), null);
     }
 
     /**
@@ -622,7 +622,7 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
@@ -631,9 +631,9 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static ImageInfo getImageInfo(final InputStream is, final String filename,
+    public static ImageInfo getImageInfo(final InputStream is, final String fileName,
             final Map<String, Object> params) throws ImageReadException, IOException {
-        return getImageInfo(new ByteSourceInputStream(is, filename), params);
+        return getImageInfo(new ByteSourceInputStream(is, fileName), params);
     }
 
     /**
@@ -739,12 +739,12 @@ public final class Imaging {
             }
         }
 
-        final String filename = byteSource.getFilename();
-        if (filename != null) {
+        final String fileName = byteSource.getFileName();
+        if (fileName != null) {
             final ImageParser[] imageParsers = ImageParser.getAllImageParsers();
 
             for (final ImageParser imageParser : imageParsers) {
-                if (imageParser.canAcceptExtension(filename)) {
+                if (imageParser.canAcceptExtension(fileName)) {
                     return imageParser;
                 }
             }
@@ -759,15 +759,15 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @return The width and height of the image.
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static Dimension getImageSize(final InputStream is, final String filename)
+    public static Dimension getImageSize(final InputStream is, final String fileName)
             throws ImageReadException, IOException {
-        return getImageSize(is, filename, null);
+        return getImageSize(is, fileName, null);
     }
 
     /**
@@ -776,7 +776,7 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
@@ -784,9 +784,9 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static Dimension getImageSize(final InputStream is, final String filename,
+    public static Dimension getImageSize(final InputStream is, final String fileName,
             final Map<String, Object> params) throws ImageReadException, IOException {
-        return getImageSize(new ByteSourceInputStream(is, filename), params);
+        return getImageSize(new ByteSourceInputStream(is, fileName), params);
     }
 
     /**
@@ -866,15 +866,15 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @return Xmp Xml as String, if present. Otherwise, returns null.
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static String getXmpXml(final InputStream is, final String filename)
+    public static String getXmpXml(final InputStream is, final String fileName)
             throws ImageReadException, IOException {
-        return getXmpXml(is, filename, null);
+        return getXmpXml(is, fileName, null);
     }
 
     /**
@@ -883,7 +883,7 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
@@ -891,9 +891,9 @@ public final class Imaging {
      * @throws ImageReadException if it fails to parse the image
      * @throws IOException if it fails to read the image data
      */
-    public static String getXmpXml(final InputStream is, final String filename, final Map<String, Object> params)
+    public static String getXmpXml(final InputStream is, final String fileName, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        return getXmpXml(new ByteSourceInputStream(is, filename), params);
+        return getXmpXml(new ByteSourceInputStream(is, fileName), params);
     }
 
     /**
@@ -1046,16 +1046,16 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @return An instance of IImageMetadata.
      * @see org.apache.commons.imaging.common.ImageMetadata
      * @throws ImageReadException if it fails to read the image metadata
      * @throws IOException if it fails to read the image data
      */
-    public static ImageMetadata getMetadata(final InputStream is, final String filename)
+    public static ImageMetadata getMetadata(final InputStream is, final String fileName)
             throws ImageReadException, IOException {
-        return getMetadata(is, filename, null);
+        return getMetadata(is, fileName, null);
     }
 
     /**
@@ -1073,7 +1073,7 @@ public final class Imaging {
      *
      * @param is
      *            InputStream from which to read image data.
-     * @param filename
+     * @param fileName
      *            Filename associated with image data (optional).
      * @param params
      *            Map of optional parameters, defined in ImagingConstants.
@@ -1082,9 +1082,9 @@ public final class Imaging {
      * @throws ImageReadException if it fails to read the image metadata
      * @throws IOException if it fails to read the image data
      */
-    public static ImageMetadata getMetadata(final InputStream is, final String filename,
+    public static ImageMetadata getMetadata(final InputStream is, final String fileName,
             final Map<String, Object> params) throws ImageReadException, IOException {
-        return getMetadata(new ByteSourceInputStream(is, filename), params);
+        return getMetadata(new ByteSourceInputStream(is, fileName), params);
     }
 
     /**
@@ -1226,7 +1226,7 @@ public final class Imaging {
      * Gets all images specified by the InputStream  (some
      * formats may include multiple images within a single data source).
      * @param is A valid InputStream
-     * @param filename image file name
+     * @param fileName image file name
      * @return A valid (potentially empty) list of BufferedImage objects.
      * @throws ImageReadException In the event that the specified
      * content does not conform to the format of the specific parser
@@ -1235,8 +1235,8 @@ public final class Imaging {
      * access operation.
      */
     public static List<BufferedImage> getAllBufferedImages(final InputStream is,
-            final String filename) throws ImageReadException, IOException {
-        return getAllBufferedImages(new ByteSourceInputStream(is, filename));
+            final String fileName) throws ImageReadException, IOException {
+        return getAllBufferedImages(new ByteSourceInputStream(is, fileName));
     }
 
     /**
@@ -1325,11 +1325,11 @@ public final class Imaging {
      */
     public static BufferedImage getBufferedImage(final InputStream is, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        String filename = null;
+        String fileName = null;
         if (params != null && params.containsKey(PARAM_KEY_FILENAME)) {
-            filename = (String) params.get(PARAM_KEY_FILENAME);
+            fileName = (String) params.get(PARAM_KEY_FILENAME);
         }
-        return getBufferedImage(new ByteSourceInputStream(is, filename), params);
+        return getBufferedImage(new ByteSourceInputStream(is, fileName), params);
     }
 
     /**
