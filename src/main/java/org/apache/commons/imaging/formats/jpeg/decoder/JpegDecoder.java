@@ -74,15 +74,14 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
         final ByteArrayInputStream is = new ByteArrayInputStream(imageData);
         try {
             // read the scan header
-            final int segmentLength = read2Bytes("segmentLength", is, "Not a Valid JPEG File", getByteOrder());
-            final byte[] sosSegmentBytes = readBytes("SosSegment",
-                    is, segmentLength - 2, "Not a Valid JPEG File");
+            final int segmentLength = read2Bytes("segmentLength", is,"Not a Valid JPEG File", getByteOrder());
+            final byte[] sosSegmentBytes = readBytes("SosSegment", is, segmentLength - 2, "Not a Valid JPEG File");
             sosSegment = new SosSegment(marker, sosSegmentBytes);
 
             // read the payload of the scan, this is the remainder of image data after the header
-            // the payload contains the entropy-encoded segments (or ECS) divded by RST markers
+            // the payload contains the entropy-encoded segments (or ECS) divided by RST markers
             // or only one ECS if the entropy-encoded data is not divided by RST markers
-            // length of payload = length of imaga data - length of data already read
+            // length of payload = length of image data - length of data already read
             final int[] scanPayload = new int[imageData.length - segmentLength];
             int payloadReadCount = 0;
             while (payloadReadCount < scanPayload.length) {
@@ -140,9 +139,9 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
 
             for (int y1 = 0; y1 < vSize * yMCUs; y1 += vSize) {
                 for (int x1 = 0; x1 < hSize * xMCUs; x1 += hSize) {
-                    // provide a the next interval if an interval is read until it's end
+                    // Provide the next interval if an interval is read until it's end
                     // as long there are unread intervals available
-                    if (bitInputStream.hasNext() == false) {
+                    if (!bitInputStream.hasNext()) {
                         bitInputStreamCount++;
                         if (bitInputStreamCount < bitInputStreams.length) {
                             bitInputStream = bitInputStreams[bitInputStreamCount];
@@ -192,8 +191,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
             ioException = ioEx;
         } catch (final RuntimeException ex) {
             // Corrupt images can throw NPE and IOOBE
-            imageReadException = new ImageReadException("Error parsing JPEG",
-                    ex);
+            imageReadException = new ImageReadException("Error parsing JPEG",ex);
         }
     }
 
@@ -446,38 +444,40 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
     }
 
     /**
-     * Returns the positions of where each interval in the provided array starts.
+     * Returns the positions of where each interval in the provided array starts. The number
+     * of start positions is also the count of intervals while the number of restart markers
+     * found is equal to the number of start positions minus one (because restart markers
+     * are between intervals).
+     *
      * @param scanPayload array to examine
-     * @return the start positions, the number of start positions is also the count of intervals
-     * while the number of restart markers found = number of start positions - 1
-     * because restart markers are between intervals
+     * @return the start positions
      */
     static List<Integer> getIntervalStartPositions(final int[] scanPayload) {
         final List<Integer> intervalStarts = new ArrayList<Integer>();
-        intervalStarts.add( 0 );
+        intervalStarts.add(0);
         boolean foundFF = false;
         boolean foundD0toD7 = false;
         int pos = 0;
-        while ( pos < scanPayload.length ) {
-            if ( foundFF == true ) {
+        while (pos < scanPayload.length) {
+            if (foundFF) {
                 // found 0xFF D0 .. 0xFF D7 => RST marker
-                if ( scanPayload[ pos ] >= ( 0xff & JpegConstants.RST0_MARKER ) &&
-                    scanPayload[ pos ] <= ( 0xff & JpegConstants.RST7_MARKER ) ) {
+                if (scanPayload[pos] >= (0xff & JpegConstants.RST0_MARKER) &&
+                    scanPayload[pos] <= (0xff & JpegConstants.RST7_MARKER)) {
                     foundD0toD7 = true;
                 } else { // found 0xFF followed by something else => no RST marker
                     foundFF = false;
                 }
             }
 
-            if ( scanPayload[ pos ] == 0xFF ) {
+            if (scanPayload[pos] == 0xFF) {
                 foundFF = true;
             }
 
             // true if one of the RST markers was found
-            if ( foundFF == true && foundD0toD7 == true ) {
+            if (foundFF && foundD0toD7) {
                 // we need to add the position after the current position because
                 // we had already read 0xFF and are now at 0xDn
-                intervalStarts.add( pos + 1 );
+                intervalStarts.add(pos + 1);
                 foundFF = foundD0toD7 = false;
             }
 

@@ -15,6 +15,8 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
+import java.util.Arrays;
+
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
 
@@ -27,7 +29,7 @@ class JpegInputStream {
     private int b;
 
     JpegInputStream(final int[] interval) {
-        this.interval = interval;
+        this.interval = Arrays.copyOf(interval, interval.length);
         this.nextPos = 0;
     }
 
@@ -73,7 +75,7 @@ class JpegInputStream {
      * @throws IllegalStateException if the stream hasn't any other value.
      */
     int read() {
-        if (this.hasNext() == false) {
+        if (!this.hasNext()) {
             throw new IllegalStateException("This stream hasn't any other value, all values were already read.");
         }
         int value = this.interval[nextPos];
