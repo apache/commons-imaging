@@ -108,10 +108,10 @@ public final class MyLzwDecompressor {
         if (codes < (1 << codeSize)) {
             table[codes] = bytes;
             codes++;
-        } else {
-            throw new IOException("AddStringToTable: codes: " + codes
-                    + " code_size: " + codeSize);
         }
+        // If the table already full, then we simply ignore these bytes
+        // per the https://www.w3.org/Graphics/GIF/spec-gif89a.txt 'spec'.
+
         checkCodeSize();
     }
 

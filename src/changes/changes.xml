@@ -45,6 +45,18 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha2" date="2019-??-??" description="Second 1.0 alpha release">
+      <action issue="IMAGING-230" dev="kinow" type="fix">
+        Properly close resources with try-with-resources in T4AndT6Compression
+      </action>
+      <action issue="IMAGING-134" dev="kinow" type="fix" due-to="Michael Sommerville">
+        Invalid (RST) marker found in entropy data
+      </action>
+      <action issue="IMAGING-130" dev="kinow" type="fix" due-to="Michael Sommerville">
+        Reading of some GIF images throws java.io.IOException: AddStringToTable: codes: 4096 code_size: 12
+      </action>
+      <action issue="IMAGING-228" dev="kinow" type="add">
+        Remove private method PhotometricInterpreterLogLuv#cube by Math.pow
+      </action>
       <action issue="IMAGING-224" dev="kinow" type="fix">
         Fix build errors in Travis
       </action>
