@@ -42,6 +42,8 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknowns;
 
 /**
  * References:
+ * http://www.cipa.jp/std/std-sec_e.html
+ * The Camera &amp; Imaging Products Association (CIPA) is the driving body behind the EXIF standard
  * http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
  * http://tiki-lounge.com/~raf/tiff/fields.html
  * http://www.awaresystems.be/imaging/tiff/tifftags.html
@@ -218,9 +220,44 @@ public final class ExifTagConstants {
     public static final TagInfoShorts EXIF_TAG_ISO = new TagInfoShorts(
             "PhotographicSensitivity", 0x8827, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated The tag does not comply with the EXIF specification.
+     * Use {@link #EXIF_TAG_OECF} instead.
+     * @see #EXIF_TAG_OECF
+     */
+    @Deprecated
     public static final TagInfoUndefineds EXIF_TAG_OPTO_ELECTRIC_CONV_FACTOR = new TagInfoUndefineds(
             "Opto - Electric Conv Factor", 0x8828, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoUndefineds EXIF_TAG_OECF = new TagInfoUndefineds(
+            "OECF", 0x8828, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    public static final TagInfoShort EXIF_TAG_SENSITIVITY_TYPE = new TagInfoShort(
+            "SensitivityType", 0x8830,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final short SENSITIVITY_TYPE_VALUE_UNKNOWN = 0;
+    public static final short SENSITIVITY_TYPE_VALUE_SOS = 1;
+    public static final short SENSITIVITY_TYPE_VALUE_REI = 2;
+    public static final short SENSITIVITY_TYPE_VALUE_ISO = 3;
+    public static final short SENSITIVITY_TYPE_VALUE_SOS_REI = 4;
+    public static final short SENSITIVITY_TYPE_VALUE_SOS_ISO = 5;
+    public static final short SENSITIVITY_TYPE_VALUE_REI_ISO = 6;
+    public static final short SENSITIVITY_TYPE_VALUE_SOS_REI_ISO = 7;
+    public static final TagInfoLong EXIF_TAG_STANDARD_OUTPUT_SENSITIVITY = new TagInfoLong(
+            "StandardOutputSensitivity", 0x8831,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoLong EXIF_TAG_RECOMMENDED_EXPOSURE_INDEX = new TagInfoLong(
+            "RecommendedExposureIndex", 0x8832,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoLong EXIF_TAG_ISO_SPEED = new TagInfoLong(
+            "ISOSpeed", 0x8833,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoLong EXIF_TAG_ISO_SPEED_LATITUDE_YYY = new TagInfoLong(
+            "ISOSpeedLatitudeyyy", 0x8834,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoLong EXIF_TAG_ISO_SPEED_LATITUDE_ZZZ = new TagInfoLong(
+            "ISOSpeedLatitudezzz", 0x8835,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoLong EXIF_TAG_LEAF_SUB_IFD = new TagInfoLong(
             "LeafSubIFD", 0x888a,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -231,9 +268,19 @@ public final class ExifTagConstants {
             "DateTimeOriginal", 0x9003, 20,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_DATE_TIME_DIGITIZED = new TagInfoAscii(
-            "DateTimeDigitized", 0x9004, 20, TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+            "DateTimeDigitized", 0x9004, 20,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoUndefineds EXIF_TAG_COMPONENTS_CONFIGURATION = new TagInfoUndefineds(
             "ComponentsConfiguration", 0x9101, 4,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoAscii EXIF_TAG_OFFSET_TIME = new TagInfoAscii(
+            "OffsetTime", 0x9010, 7,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoAscii EXIF_TAG_OFFSET_TIME_ORIGINAL = new TagInfoAscii(
+            "OffsetTimeOriginal", 0x9011, 7,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoAscii EXIF_TAG_OFFSET_TIME_DIGITIZED = new TagInfoAscii(
+            "OffsetTimeDigitized", 0x9012, 7,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoRational EXIF_TAG_COMPRESSED_BITS_PER_PIXEL = new TagInfoRational(
             "CompressedBitsPerPixel", 0x9102,
@@ -247,14 +294,23 @@ public final class ExifTagConstants {
     public static final TagInfoSRational EXIF_TAG_BRIGHTNESS_VALUE = new TagInfoSRational(
             "BrightnessValue", 0x9203,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated The tag does not comply with the EXIF specification.
+     * Use {@link #EXIF_TAG_EXPOSURE_BIAS_VALUE} instead.
+     * @see #EXIF_TAG_EXPOSURE_BIAS_VALUE
+     */
+    @Deprecated
     public static final TagInfoSRational EXIF_TAG_EXPOSURE_COMPENSATION = new TagInfoSRational(
             "ExposureCompensation", 0x9204,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoSRational EXIF_TAG_EXPOSURE_BIAS_VALUE = new TagInfoSRational(
+            "ExposureBiasValue", 0x9204,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoRational EXIF_TAG_MAX_APERTURE_VALUE = new TagInfoRational(
             "MaxApertureValue", 0x9205,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoRationals EXIF_TAG_SUBJECT_DISTANCE = new TagInfoRationals(
-            "Subject Distance", 0x9206, -1,
+            "SubjectDistance", 0x9206, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoShort EXIF_TAG_METERING_MODE = new TagInfoShort(
             "MeteringMode", 0x9207,
@@ -343,23 +399,69 @@ public final class ExifTagConstants {
     public static final TagInfoAscii EXIF_TAG_SUB_SEC_TIME_DIGITIZED = new TagInfoAscii(
             "SubSecTimeDigitized", 0x9292, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoSRational EXIF_TAG_TEMPERATURE = new TagInfoSRational(
+            "Temperature", 0x9400,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_HUMIDITY = new TagInfoRational(
+            "Humidity", 0x9401,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_PRESSURE = new TagInfoRational(
+            "Pressure", 0x9402,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_WATER_DEPTH = new TagInfoRational(
+            "WaterDepth", 0x9403,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_ACCELERATION = new TagInfoRational(
+            "Acceleration", 0x9404,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoSRational EXIF_TAG_CAMERA_ELEVATION_ANGLE = new TagInfoSRational(
+            "CameraElevationAngle", 0x9405,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoUndefineds EXIF_TAG_FLASHPIX_VERSION = new TagInfoUndefineds(
             "FlashpixVersion", 0xa000, 4,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated The tag does not comply with the EXIF specification.
+     * Use {@link #EXIF_TAG_PIXEL_X_DIMENSION} instead.
+     * @see #EXIF_TAG_PIXEL_X_DIMENSION
+     */
+    @Deprecated
     public static final TagInfoShort EXIF_TAG_EXIF_IMAGE_WIDTH = new TagInfoShort(
             "ExifImageWidth", 0xa002,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoShortOrLong EXIF_TAG_PIXEL_X_DIMENSION = new TagInfoShortOrLong(
+            "PixelXDimension", 0xa002, 1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated The tag does not comply with the EXIF specification.
+     * Use {@link #EXIF_TAG_PIXEL_Y_DIMENSION} instead.
+     * @see #EXIF_TAG_PIXEL_Y_DIMENSION
+     */
+    @Deprecated
     public static final TagInfoShort EXIF_TAG_EXIF_IMAGE_LENGTH = new TagInfoShort(
             "ExifImageLength", 0xa003,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoShortOrLong EXIF_TAG_PIXEL_Y_DIMENSION = new TagInfoShortOrLong(
+            "PixelYDimension", 0xa003, 1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD, false);
     public static final TagInfoAscii EXIF_TAG_RELATED_SOUND_FILE = new TagInfoAscii(
             "RelatedSoundFile", 0xa004, 13,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoDirectory EXIF_TAG_INTEROP_OFFSET = new TagInfoDirectory(
             "InteropOffset", 0xa005,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    /**
+     * @deprecated The tag does not comply with the EXIF specification. This
+     * constant does not comply with the Java language constant naming
+     * convention. Use {@link #EXIF_TAG_FLASH_ENERGY} instead.
+     * @see #EXIF_TAG_FLASH_ENERGY
+     */
+    @Deprecated
     public static final TagInfoRationals EXIF_TAG_FLASH_ENERGY_EXIF_IFD = new TagInfoRationals(
             "FlashEnergy", 0xa20b, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_FLASH_ENERGY = new TagInfoRational(
+            "FlashEnergy", 0xa20b,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoUndefineds EXIF_TAG_SPATIAL_FREQUENCY_RESPONSE_2 = new TagInfoUndefineds(
             "SpatialFrequencyResponse", 0xa20c, -1,
@@ -367,20 +469,81 @@ public final class ExifTagConstants {
     public static final TagInfoUnknowns EXIF_TAG_NOISE_2 = new TagInfoUnknowns(
             "Noise", 0xa20d, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_FOCAL_PLANE_X_RESOLUTION} instead.
+     * @see #EXIF_TAG_FOCAL_PLANE_X_RESOLUTION
+     */
+    @Deprecated
     public static final TagInfoRational EXIF_TAG_FOCAL_PLANE_XRESOLUTION_EXIF_IFD = new TagInfoRational(
             "FocalPlaneXResolution", 0xa20e,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_FOCAL_PLANE_X_RESOLUTION = new TagInfoRational(
+            "FocalPlaneXResolution", 0xa20e,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_FOCAL_PLANE_Y_RESOLUTION} instead.
+     * @see #EXIF_TAG_FOCAL_PLANE_Y_RESOLUTION
+     */
+    @Deprecated
     public static final TagInfoRational EXIF_TAG_FOCAL_PLANE_YRESOLUTION_EXIF_IFD = new TagInfoRational(
             "FocalPlaneYResolution", 0xa20f,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_FOCAL_PLANE_Y_RESOLUTION = new TagInfoRational(
+            "FocalPlaneYResolution", 0xa20f,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT}
+     * instead.
+     * @see #EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT
+     */
+    @Deprecated
     public static final TagInfoShort EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT_EXIF_IFD = new TagInfoShort(
             "FocalPlaneResolutionUnit", 0xa210,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification. Do not use it.
+     */
+    @Deprecated
     public static final int FOCAL_PLANE_RESOLUTION_UNIT_EXIF_IFD_VALUE_NONE = 1;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #FOCAL_PLANE_RESOLUTION_UNIT_VALUE_INCH} instead.
+     * @see #FOCAL_PLANE_RESOLUTION_UNIT_VALUE_INCH
+     */
+    @Deprecated
     public static final int FOCAL_PLANE_RESOLUTION_UNIT_EXIF_IFD_VALUE_INCHES = 2;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #FOCAL_PLANE_RESOLUTION_UNIT_VALUE_CM} instead.
+     * @see #FOCAL_PLANE_RESOLUTION_UNIT_VALUE_CM
+     */
+    @Deprecated
     public static final int FOCAL_PLANE_RESOLUTION_UNIT_EXIF_IFD_VALUE_CM = 3;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification. Do not use it.
+     */
+    @Deprecated
     public static final int FOCAL_PLANE_RESOLUTION_UNIT_EXIF_IFD_VALUE_MM = 4;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification. Do not use it.
+     */
+    @Deprecated
     public static final int FOCAL_PLANE_RESOLUTION_UNIT_EXIF_IFD_VALUE_UM = 5;
+    public static final TagInfoShort EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT = new TagInfoShort(
+            "FocalPlaneResolutionUnit", 0xa210,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final short FOCAL_PLANE_RESOLUTION_UNIT_VALUE_INCH = 2;
+    public static final short FOCAL_PLANE_RESOLUTION_UNIT_VALUE_CM = 3;
+    public static final short FOCAL_PLANE_RESOLUTION_UNIT_DEFAULT_VALUE =
+            FOCAL_PLANE_RESOLUTION_UNIT_VALUE_INCH;
     public static final TagInfoUnknowns EXIF_TAG_IMAGE_NUMBER = new TagInfoUnknowns(
             "ImageNumber", 0xa211, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
@@ -393,22 +556,98 @@ public final class ExifTagConstants {
     public static final TagInfoShorts EXIF_TAG_SUBJECT_LOCATION = new TagInfoShorts(
             "SubjectLocation", 0xa214, 2,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_EXPOSURE_INDEX}
+     * instead.
+     * @see #EXIF_TAG_EXPOSURE_INDEX
+     */
+    @Deprecated
     public static final TagInfoRational EXIF_TAG_EXPOSURE_INDEX_EXIF_IFD = new TagInfoRational(
+            "ExposureIndex", 0xa215,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoRational EXIF_TAG_EXPOSURE_INDEX = new TagInfoRational(
             "ExposureIndex", 0xa215,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoUnknowns EXIF_TAG_TIFF_EPSTANDARD_ID_2 = new TagInfoUnknowns(
             "TIFF-EPStandardID", 0xa216, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_SENSING_METHOD}
+     * instead.
+     * @see #EXIF_TAG_SENSING_METHOD
+     */
+    @Deprecated
     public static final TagInfoShort EXIF_TAG_SENSING_METHOD_EXIF_IFD = new TagInfoShort(
             "SensingMethod", 0xa217,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SENSING_METHOD_VALUE_NOT_DEFINED} instead.
+     * @see #SENSING_METHOD_VALUE_NOT_DEFINED
+     */
+    @Deprecated
     public static final int SENSING_METHOD_EXIF_IFD_VALUE_NOT_DEFINED = 1;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SENSING_METHOD_VALUE_ONE_CHIP_COLOR_AREA} instead.
+     * @see #SENSING_METHOD_VALUE_ONE_CHIP_COLOR_AREA
+     */
+    @Deprecated
     public static final int SENSING_METHOD_EXIF_IFD_VALUE_ONE_CHIP_COLOR_AREA = 2;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SENSING_METHOD_VALUE_TWO_CHIP_COLOR_AREA} instead.
+     * @see #SENSING_METHOD_VALUE_TWO_CHIP_COLOR_AREA
+     */
+    @Deprecated
     public static final int SENSING_METHOD_EXIF_IFD_VALUE_TWO_CHIP_COLOR_AREA = 3;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SENSING_METHOD_VALUE_THREE_CHIP_COLOR_AREA} instead.
+     * @see #SENSING_METHOD_VALUE_THREE_CHIP_COLOR_AREA
+     */
+    @Deprecated
     public static final int SENSING_METHOD_EXIF_IFD_VALUE_THREE_CHIP_COLOR_AREA = 4;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SENSING_METHOD_VALUE_COLOR_SEQUENTIAL_AREA} instead.
+     * @see #SENSING_METHOD_VALUE_COLOR_SEQUENTIAL_AREA
+     */
+    @Deprecated
     public static final int SENSING_METHOD_EXIF_IFD_VALUE_COLOR_SEQUENTIAL_AREA = 5;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SENSING_METHOD_VALUE_TRILINEAR} instead.
+     * @see #SENSING_METHOD_VALUE_TRILINEAR
+     */
+    @Deprecated
     public static final int SENSING_METHOD_EXIF_IFD_VALUE_TRILINEAR = 7;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SENSING_METHOD_VALUE_COLOR_SEQUENTIAL_LINEAR} instead.
+     * @see #SENSING_METHOD_VALUE_COLOR_SEQUENTIAL_LINEAR
+     */
+    @Deprecated
     public static final int SENSING_METHOD_EXIF_IFD_VALUE_COLOR_SEQUENTIAL_LINEAR = 8;
+    public static final TagInfoShort EXIF_TAG_SENSING_METHOD = new TagInfoShort(
+            "SensingMethod", 0xa217,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final short SENSING_METHOD_VALUE_NOT_DEFINED = 1;
+    public static final short SENSING_METHOD_VALUE_ONE_CHIP_COLOR_AREA = 2;
+    public static final short SENSING_METHOD_VALUE_TWO_CHIP_COLOR_AREA = 3;
+    public static final short SENSING_METHOD_VALUE_THREE_CHIP_COLOR_AREA = 4;
+    public static final short SENSING_METHOD_VALUE_COLOR_SEQUENTIAL_AREA = 5;
+    public static final short SENSING_METHOD_VALUE_TRILINEAR = 7;
+    public static final short SENSING_METHOD_VALUE_COLOR_SEQUENTIAL_LINEAR = 8;
     public static final TagInfoUndefined EXIF_TAG_FILE_SOURCE = new TagInfoUndefined(
             "FileSource", 0xa300,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -418,7 +657,16 @@ public final class ExifTagConstants {
     public static final TagInfoUndefined EXIF_TAG_SCENE_TYPE = new TagInfoUndefined(
             "SceneType", 0xa301,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_CFA_PATTERN} instead.
+     * @see #EXIF_TAG_CFA_PATTERN
+     */
+    @Deprecated
     public static final TagInfoUndefineds EXIF_TAG_CFAPATTERN = new TagInfoUndefineds(
+            "CFAPattern", 0xa302, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoUndefineds EXIF_TAG_CFA_PATTERN = new TagInfoUndefineds(
             "CFAPattern", 0xa302, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoShort EXIF_TAG_CUSTOM_RENDERED = new TagInfoShort(
@@ -440,8 +688,17 @@ public final class ExifTagConstants {
     public static final TagInfoRational EXIF_TAG_DIGITAL_ZOOM_RATIO = new TagInfoRational(
             "DigitalZoomRatio", 0xa404,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated The tag does not comply with the EXIF specification.
+     * Use {@link #EXIF_TAG_FOCAL_LENGTH_IN_35MM_FILM} instead.
+     * @see #EXIF_TAG_FOCAL_LENGTH_IN_35MM_FILM
+     */
+    @Deprecated
     public static final TagInfoShort EXIF_TAG_FOCAL_LENGTH_IN_35MM_FORMAT = new TagInfoShort(
             "FocalLengthIn35mmFormat", 0xa405,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoShort EXIF_TAG_FOCAL_LENGTH_IN_35MM_FILM = new TagInfoShort(
+            "FocalLengthIn35mmFilm", 0xa405,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoShort EXIF_TAG_SCENE_CAPTURE_TYPE = new TagInfoShort(
             "SceneCaptureType", 0xa406,
@@ -505,6 +762,19 @@ public final class ExifTagConstants {
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoAscii EXIF_TAG_LENS_SERIAL_NUMBER = new TagInfoAscii(
             "LensSerialNumber", 0xa435, -1,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoShort EXIF_TAG_COMPOSITE_IMAGE = new TagInfoShort(
+            "CompositeImage", 0xa460,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final short COMPOSITE_IMAGE_VALUE_UNKNOWN = 0;
+    public static final short COMPOSITE_IMAGE_VALUE_NON_COMPOSITE = 1;
+    public static final short COMPOSITE_IMAGE_VALUE_COMPOSITE = 2;
+    public static final short COMPOSITE_IMAGE_VALUE_COMPOSITE_WHEN_SHOOTING = 3;
+    public static final TagInfoShorts EXIF_TAG_SOURCE_IMAGE_NUMBER_OF_COMPOSITE_IMAGE = new TagInfoShorts(
+            "SourceImageNumberOfCompositeImage", 0xa461, 2,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final TagInfoUndefineds EXIF_TAG_SOURCE_EXPOSURE_TIMES_OF_COMPOSITE_IMAGE = new TagInfoUndefineds(
+            "SourceExposureTimesOfCompositeImage", 0xa462, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
     public static final TagInfoRational EXIF_TAG_GAMMA = new TagInfoRational(
             "Gamma", 0xa500,
@@ -598,13 +868,16 @@ public final class ExifTagConstants {
                     EXIF_TAG_PHOTOSHOP_SETTINGS, EXIF_TAG_EXIF_OFFSET,
                     EXIF_TAG_EXPOSURE_PROGRAM,
                     EXIF_TAG_SPECTRAL_SENSITIVITY, EXIF_TAG_GPSINFO, EXIF_TAG_ISO,
-                    EXIF_TAG_OPTO_ELECTRIC_CONV_FACTOR,
+                    EXIF_TAG_OECF,
+                    EXIF_TAG_SENSITIVITY_TYPE,
+                    EXIF_TAG_STANDARD_OUTPUT_SENSITIVITY,
+                    EXIF_TAG_RECOMMENDED_EXPOSURE_INDEX,
                     EXIF_TAG_LEAF_SUB_IFD,
                     EXIF_TAG_EXIF_VERSION, EXIF_TAG_DATE_TIME_ORIGINAL,
                     EXIF_TAG_DATE_TIME_DIGITIZED, EXIF_TAG_COMPONENTS_CONFIGURATION,
                     EXIF_TAG_COMPRESSED_BITS_PER_PIXEL, EXIF_TAG_SHUTTER_SPEED_VALUE,
                     EXIF_TAG_APERTURE_VALUE, EXIF_TAG_BRIGHTNESS_VALUE,
-                    EXIF_TAG_EXPOSURE_COMPENSATION, EXIF_TAG_MAX_APERTURE_VALUE,
+                    EXIF_TAG_EXPOSURE_BIAS_VALUE, EXIF_TAG_MAX_APERTURE_VALUE,
                     EXIF_TAG_SUBJECT_DISTANCE, EXIF_TAG_IMAGE_UNIQUE_ID,
                     EXIF_TAG_CAMERA_OWNER_NAME,
                     EXIF_TAG_BODY_SERIAL_NUMBER,
@@ -618,20 +891,20 @@ public final class ExifTagConstants {
                     EXIF_TAG_STO_NITS, EXIF_TAG_SUB_SEC_TIME,
                     EXIF_TAG_SUB_SEC_TIME_ORIGINAL, EXIF_TAG_SUB_SEC_TIME_DIGITIZED,
                     EXIF_TAG_FLASHPIX_VERSION,
-                    EXIF_TAG_EXIF_IMAGE_WIDTH, EXIF_TAG_EXIF_IMAGE_LENGTH,
+                    EXIF_TAG_PIXEL_X_DIMENSION, EXIF_TAG_PIXEL_Y_DIMENSION,
                     EXIF_TAG_RELATED_SOUND_FILE, EXIF_TAG_INTEROP_OFFSET,
-                    EXIF_TAG_FLASH_ENERGY_EXIF_IFD,
+                    EXIF_TAG_FLASH_ENERGY,
                     EXIF_TAG_SPATIAL_FREQUENCY_RESPONSE_2, EXIF_TAG_NOISE_2,
-                    EXIF_TAG_FOCAL_PLANE_XRESOLUTION_EXIF_IFD,
-                    EXIF_TAG_FOCAL_PLANE_YRESOLUTION_EXIF_IFD,
-                    EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT_EXIF_IFD,
+                    EXIF_TAG_FOCAL_PLANE_X_RESOLUTION,
+                    EXIF_TAG_FOCAL_PLANE_Y_RESOLUTION,
+                    EXIF_TAG_FOCAL_PLANE_RESOLUTION_UNIT,
                     EXIF_TAG_IMAGE_NUMBER, EXIF_TAG_SECURITY_CLASSIFICATION,
                     EXIF_TAG_IMAGE_HISTORY, EXIF_TAG_SUBJECT_LOCATION,
-                    EXIF_TAG_EXPOSURE_INDEX_EXIF_IFD, EXIF_TAG_TIFF_EPSTANDARD_ID_2,
-                    EXIF_TAG_SENSING_METHOD_EXIF_IFD, EXIF_TAG_FILE_SOURCE,
-                    EXIF_TAG_SCENE_TYPE, EXIF_TAG_CFAPATTERN, EXIF_TAG_CUSTOM_RENDERED,
+                    EXIF_TAG_EXPOSURE_INDEX, EXIF_TAG_TIFF_EPSTANDARD_ID_2,
+                    EXIF_TAG_SENSING_METHOD, EXIF_TAG_FILE_SOURCE,
+                    EXIF_TAG_SCENE_TYPE, EXIF_TAG_CFA_PATTERN, EXIF_TAG_CUSTOM_RENDERED,
                     EXIF_TAG_EXPOSURE_MODE, EXIF_TAG_WHITE_BALANCE_1,
-                    EXIF_TAG_DIGITAL_ZOOM_RATIO, EXIF_TAG_FOCAL_LENGTH_IN_35MM_FORMAT,
+                    EXIF_TAG_DIGITAL_ZOOM_RATIO, EXIF_TAG_FOCAL_LENGTH_IN_35MM_FILM,
                     EXIF_TAG_SCENE_CAPTURE_TYPE, EXIF_TAG_GAIN_CONTROL,
                     EXIF_TAG_CONTRAST_1, EXIF_TAG_SATURATION_1, EXIF_TAG_SHARPNESS_1,
                     EXIF_TAG_DEVICE_SETTING_DESCRIPTION,
@@ -643,11 +916,18 @@ public final class ExifTagConstants {
                     EXIF_TAG_CONVERTER, EXIF_TAG_WHITE_BALANCE_2, EXIF_TAG_EXPOSURE,
                     EXIF_TAG_SHADOWS, EXIF_TAG_BRIGHTNESS, EXIF_TAG_CONTRAST_2,
                     EXIF_TAG_SATURATION_2, EXIF_TAG_SHARPNESS_2, EXIF_TAG_SMOOTHNESS,
-                    EXIF_TAG_MOIRE_FILTER,
-
-                    EXIF_TAG_USER_COMMENT, //
-
-                    EXIF_TAG_MAKER_NOTE));
+                    EXIF_TAG_MOIRE_FILTER, EXIF_TAG_USER_COMMENT,
+                    EXIF_TAG_MAKER_NOTE,
+                    EXIF_TAG_ISO_SPEED, EXIF_TAG_ISO_SPEED_LATITUDE_YYY,
+                    EXIF_TAG_ISO_SPEED_LATITUDE_ZZZ,
+                    EXIF_TAG_OFFSET_TIME, EXIF_TAG_OFFSET_TIME_ORIGINAL,
+                    EXIF_TAG_OFFSET_TIME_DIGITIZED,
+                    EXIF_TAG_COMPOSITE_IMAGE,
+                    EXIF_TAG_SOURCE_IMAGE_NUMBER_OF_COMPOSITE_IMAGE,
+                    EXIF_TAG_SOURCE_EXPOSURE_TIMES_OF_COMPOSITE_IMAGE,
+                    EXIF_TAG_TEMPERATURE, EXIF_TAG_HUMIDITY, EXIF_TAG_PRESSURE,
+                    EXIF_TAG_WATER_DEPTH, EXIF_TAG_ACCELERATION,
+                    EXIF_TAG_CAMERA_ELEVATION_ANGLE));
 
     private ExifTagConstants() {
     }
