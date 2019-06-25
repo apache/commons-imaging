@@ -42,6 +42,7 @@ public class ZlibDeflate {
      * Compress the byte[] using ZLIB deflate decompression.
      *
      * @param bytes The bytes to decompress
+     * @param expectedSize The expected size of the decompressed byte[].
      *
      * @return The decompressed bytes.
      * @throws ImageReadException if the bytes could not be decompressed.
@@ -65,7 +66,7 @@ public class ZlibDeflate {
      * @param bytes The bytes to compress
      *
      * @return The compressed bytes.
-     * @throws ImageReadException if the bytes could not be compressed.
+     * @throws ImageWriteException if the bytes could not be compressed.
      * @see DeflaterOutputStream
      */
     public static byte[] compress(final byte[] bytes) throws ImageWriteException {
