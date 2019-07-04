@@ -41,14 +41,16 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUndefineds;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoUnknowns;
 
 /**
- * References:
- * http://www.cipa.jp/std/std-sec_e.html
- * The Camera &amp; Imaging Products Association (CIPA) is the driving body behind the EXIF standard
- * http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
- * http://tiki-lounge.com/~raf/tiff/fields.html
- * http://www.awaresystems.be/imaging/tiff/tifftags.html
+ * EXIF tags and value constants stored in the {@code Exif} image file directory
+ * of a TIFF file.
  *
- * "Stonits": http://www.anyhere.com/gward/pixformat/tiffluv.html
+ * <P>The <A HREF="http://www.cipa.jp">Camera &amp; Imaging Products Association (CIPA)</A>
+ * is the driving body behind the EXIF standard.</P>
+ * @see <A HREF="http://www.cipa.jp/std/std-sec_e.html">EXIF Specification</A>
+ * @see <A HREF="https://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html">List of EXIF tags supported by</A> <A HREF="https://www.sno.phy.queensu.ca/~phil/exiftool"><CODE>exiftool</CODE></A>
+ * @see <A HREF="http://tiki-lounge.com/~raf/tiff/fields.html">http://tiki-lounge.com/~raf/tiff/fields.html</A>
+ * @see <A HREF="http://www.awaresystems.be/imaging/tiff/tifftags.html">AWare Systems&rsquo; Imaging / TIFF / TIFF Tag Reference</A>
+ * @see <A HREF="http://www.anyhere.com/gward/pixformat/tiffluv.html">LogLuv Encoding &ldquo;StoNits&rdquo; for TIFF Images</A>
  */
 public final class ExifTagConstants {
 
@@ -203,14 +205,14 @@ public final class ExifTagConstants {
     public static final TagInfoShort EXIF_TAG_EXPOSURE_PROGRAM = new TagInfoShort(
             "ExposureProgram", 0x8822,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int EXPOSURE_PROGRAM_VALUE_MANUAL = 1;
-    public static final int EXPOSURE_PROGRAM_VALUE_PROGRAM_AE = 2;
-    public static final int EXPOSURE_PROGRAM_VALUE_APERTURE_PRIORITY_AE = 3;
-    public static final int EXPOSURE_PROGRAM_VALUE_SHUTTER_SPEED_PRIORITY_AE = 4;
-    public static final int EXPOSURE_PROGRAM_VALUE_CREATIVE_SLOW_SPEED = 5;
-    public static final int EXPOSURE_PROGRAM_VALUE_ACTION_HIGH_SPEED = 6;
-    public static final int EXPOSURE_PROGRAM_VALUE_PORTRAIT = 7;
-    public static final int EXPOSURE_PROGRAM_VALUE_LANDSCAPE = 8;
+    public static final short EXPOSURE_PROGRAM_VALUE_MANUAL = 1;
+    public static final short EXPOSURE_PROGRAM_VALUE_PROGRAM_AE = 2;
+    public static final short EXPOSURE_PROGRAM_VALUE_APERTURE_PRIORITY_AE = 3;
+    public static final short EXPOSURE_PROGRAM_VALUE_SHUTTER_SPEED_PRIORITY_AE = 4;
+    public static final short EXPOSURE_PROGRAM_VALUE_CREATIVE_SLOW_SPEED = 5;
+    public static final short EXPOSURE_PROGRAM_VALUE_ACTION_HIGH_SPEED = 6;
+    public static final short EXPOSURE_PROGRAM_VALUE_PORTRAIT = 7;
+    public static final short EXPOSURE_PROGRAM_VALUE_LANDSCAPE = 8;
     public static final TagInfoAscii EXIF_TAG_SPECTRAL_SENSITIVITY = new TagInfoAscii(
             "SpectralSensitivity", 0x8824, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -315,66 +317,72 @@ public final class ExifTagConstants {
     public static final TagInfoShort EXIF_TAG_METERING_MODE = new TagInfoShort(
             "MeteringMode", 0x9207,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int METERING_MODE_VALUE_AVERAGE = 1;
-    public static final int METERING_MODE_VALUE_CENTER_WEIGHTED_AVERAGE = 2;
-    public static final int METERING_MODE_VALUE_SPOT = 3;
-    public static final int METERING_MODE_VALUE_MULTI_SPOT = 4;
-    public static final int METERING_MODE_VALUE_MULTI_SEGMENT = 5;
-    public static final int METERING_MODE_VALUE_PARTIAL = 6;
-    public static final int METERING_MODE_VALUE_OTHER = 255;
+    public static final short METERING_MODE_VALUE_UNKNOWN = 0;
+    public static final short METERING_MODE_VALUE_AVERAGE = 1;
+    public static final short METERING_MODE_VALUE_CENTER_WEIGHTED_AVERAGE = 2;
+    public static final short METERING_MODE_VALUE_SPOT = 3;
+    public static final short METERING_MODE_VALUE_MULTI_SPOT = 4;
+    public static final short METERING_MODE_VALUE_MULTI_SEGMENT = 5;
+    public static final short METERING_MODE_VALUE_PARTIAL = 6;
+    public static final short METERING_MODE_VALUE_OTHER = 255;
+    public static final short METERING_MODE_DEFAULT_VALUE =
+        METERING_MODE_VALUE_UNKNOWN;
     public static final TagInfoShort EXIF_TAG_LIGHT_SOURCE = new TagInfoShort(
             "LightSource", 0x9208,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int LIGHT_SOURCE_VALUE_DAYLIGHT = 1;
-    public static final int LIGHT_SOURCE_VALUE_FLUORESCENT = 2;
-    public static final int LIGHT_SOURCE_VALUE_TUNGSTEN = 3;
-    public static final int LIGHT_SOURCE_VALUE_FLASH = 4;
-    public static final int LIGHT_SOURCE_VALUE_FINE_WEATHER = 9;
-    public static final int LIGHT_SOURCE_VALUE_CLOUDY = 10;
-    public static final int LIGHT_SOURCE_VALUE_SHADE = 11;
-    public static final int LIGHT_SOURCE_VALUE_DAYLIGHT_FLUORESCENT = 12;
-    public static final int LIGHT_SOURCE_VALUE_DAY_WHITE_FLUORESCENT = 13;
-    public static final int LIGHT_SOURCE_VALUE_COOL_WHITE_FLUORESCENT = 14;
-    public static final int LIGHT_SOURCE_VALUE_WHITE_FLUORESCENT = 15;
-    public static final int LIGHT_SOURCE_VALUE_STANDARD_LIGHT_A = 17;
-    public static final int LIGHT_SOURCE_VALUE_STANDARD_LIGHT_B = 18;
-    public static final int LIGHT_SOURCE_VALUE_STANDARD_LIGHT_C = 19;
-    public static final int LIGHT_SOURCE_VALUE_D55 = 20;
-    public static final int LIGHT_SOURCE_VALUE_D65 = 21;
-    public static final int LIGHT_SOURCE_VALUE_D75 = 22;
-    public static final int LIGHT_SOURCE_VALUE_D50 = 23;
-    public static final int LIGHT_SOURCE_VALUE_ISO_STUDIO_TUNGSTEN = 24;
-    public static final int LIGHT_SOURCE_VALUE_OTHER = 255;
+    public static final short LIGHT_SOURCE_VALUE_UNKNOWN = 0;
+    public static final short LIGHT_SOURCE_VALUE_DAYLIGHT = 1;
+    public static final short LIGHT_SOURCE_VALUE_FLUORESCENT = 2;
+    public static final short LIGHT_SOURCE_VALUE_TUNGSTEN = 3;
+    public static final short LIGHT_SOURCE_VALUE_FLASH = 4;
+    public static final short LIGHT_SOURCE_VALUE_FINE_WEATHER = 9;
+    public static final short LIGHT_SOURCE_VALUE_CLOUDY = 10;
+    public static final short LIGHT_SOURCE_VALUE_SHADE = 11;
+    public static final short LIGHT_SOURCE_VALUE_DAYLIGHT_FLUORESCENT = 12;
+    public static final short LIGHT_SOURCE_VALUE_DAY_WHITE_FLUORESCENT = 13;
+    public static final short LIGHT_SOURCE_VALUE_COOL_WHITE_FLUORESCENT = 14;
+    public static final short LIGHT_SOURCE_VALUE_WHITE_FLUORESCENT = 15;
+    public static final short LIGHT_SOURCE_VALUE_STANDARD_LIGHT_A = 17;
+    public static final short LIGHT_SOURCE_VALUE_STANDARD_LIGHT_B = 18;
+    public static final short LIGHT_SOURCE_VALUE_STANDARD_LIGHT_C = 19;
+    public static final short LIGHT_SOURCE_VALUE_D55 = 20;
+    public static final short LIGHT_SOURCE_VALUE_D65 = 21;
+    public static final short LIGHT_SOURCE_VALUE_D75 = 22;
+    public static final short LIGHT_SOURCE_VALUE_D50 = 23;
+    public static final short LIGHT_SOURCE_VALUE_ISO_STUDIO_TUNGSTEN = 24;
+    public static final short LIGHT_SOURCE_VALUE_OTHER = 255;
+    public static final short LIGHT_SOURCE_DEFAULT_VALUE =
+        LIGHT_SOURCE_VALUE_UNKNOWN;
     public static final TagInfoShort EXIF_TAG_FLASH = new TagInfoShort(
             "Flash", 0x9209,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int FLASH_VALUE_NO_FLASH = 0x0;
-    public static final int FLASH_VALUE_FIRED = 0x1;
-    public static final int FLASH_VALUE_FIRED_RETURN_NOT_DETECTED = 0x5;
-    public static final int FLASH_VALUE_FIRED_RETURN_DETECTED = 0x7;
-    public static final int FLASH_VALUE_ON_DID_NOT_FIRE = 0x8;
-    public static final int FLASH_VALUE_ON = 0x9;
-    public static final int FLASH_VALUE_ON_RETURN_NOT_DETECTED = 0xd;
-    public static final int FLASH_VALUE_ON_RETURN_DETECTED = 0xf;
-    public static final int FLASH_VALUE_OFF = 0x10;
-    public static final int FLASH_VALUE_OFF_DID_NOT_FIRE_RETURN_NOT_DETECTED = 0x14;
-    public static final int FLASH_VALUE_AUTO_DID_NOT_FIRE = 0x18;
-    public static final int FLASH_VALUE_AUTO_FIRED = 0x19;
-    public static final int FLASH_VALUE_AUTO_FIRED_RETURN_NOT_DETECTED = 0x1d;
-    public static final int FLASH_VALUE_AUTO_FIRED_RETURN_DETECTED = 0x1f;
-    public static final int FLASH_VALUE_NO_FLASH_FUNCTION = 0x20;
-    public static final int FLASH_VALUE_OFF_NO_FLASH_FUNCTION = 0x30;
-    public static final int FLASH_VALUE_FIRED_RED_EYE_REDUCTION = 0x41;
-    public static final int FLASH_VALUE_FIRED_RED_EYE_REDUCTION_RETURN_NOT_DETECTED = 0x45;
-    public static final int FLASH_VALUE_FIRED_RED_EYE_REDUCTION_RETURN_DETECTED = 0x47;
-    public static final int FLASH_VALUE_ON_RED_EYE_REDUCTION = 0x49;
-    public static final int FLASH_VALUE_ON_RED_EYE_REDUCTION_RETURN_NOT_DETECTED = 0x4d;
-    public static final int FLASH_VALUE_ON_RED_EYE_REDUCTION_RETURN_DETECTED = 0x4f;
-    public static final int FLASH_VALUE_OFF_RED_EYE_REDUCTION = 0x50;
-    public static final int FLASH_VALUE_AUTO_DID_NOT_FIRE_RED_EYE_REDUCTION = 0x58;
-    public static final int FLASH_VALUE_AUTO_FIRED_RED_EYE_REDUCTION = 0x59;
-    public static final int FLASH_VALUE_AUTO_FIRED_RED_EYE_REDUCTION_RETURN_NOT_DETECTED = 0x5d;
-    public static final int FLASH_VALUE_AUTO_FIRED_RED_EYE_REDUCTION_RETURN_DETECTED = 0x5f;
+    public static final short FLASH_VALUE_NO_FLASH = 0x0;
+    public static final short FLASH_VALUE_FIRED = 0x1;
+    public static final short FLASH_VALUE_FIRED_RETURN_NOT_DETECTED = 0x5;
+    public static final short FLASH_VALUE_FIRED_RETURN_DETECTED = 0x7;
+    public static final short FLASH_VALUE_ON_DID_NOT_FIRE = 0x8;
+    public static final short FLASH_VALUE_ON = 0x9;
+    public static final short FLASH_VALUE_ON_RETURN_NOT_DETECTED = 0xd;
+    public static final short FLASH_VALUE_ON_RETURN_DETECTED = 0xf;
+    public static final short FLASH_VALUE_OFF = 0x10;
+    public static final short FLASH_VALUE_OFF_DID_NOT_FIRE_RETURN_NOT_DETECTED = 0x14;
+    public static final short FLASH_VALUE_AUTO_DID_NOT_FIRE = 0x18;
+    public static final short FLASH_VALUE_AUTO_FIRED = 0x19;
+    public static final short FLASH_VALUE_AUTO_FIRED_RETURN_NOT_DETECTED = 0x1d;
+    public static final short FLASH_VALUE_AUTO_FIRED_RETURN_DETECTED = 0x1f;
+    public static final short FLASH_VALUE_NO_FLASH_FUNCTION = 0x20;
+    public static final short FLASH_VALUE_OFF_NO_FLASH_FUNCTION = 0x30;
+    public static final short FLASH_VALUE_FIRED_RED_EYE_REDUCTION = 0x41;
+    public static final short FLASH_VALUE_FIRED_RED_EYE_REDUCTION_RETURN_NOT_DETECTED = 0x45;
+    public static final short FLASH_VALUE_FIRED_RED_EYE_REDUCTION_RETURN_DETECTED = 0x47;
+    public static final short FLASH_VALUE_ON_RED_EYE_REDUCTION = 0x49;
+    public static final short FLASH_VALUE_ON_RED_EYE_REDUCTION_RETURN_NOT_DETECTED = 0x4d;
+    public static final short FLASH_VALUE_ON_RED_EYE_REDUCTION_RETURN_DETECTED = 0x4f;
+    public static final short FLASH_VALUE_OFF_RED_EYE_REDUCTION = 0x50;
+    public static final short FLASH_VALUE_AUTO_DID_NOT_FIRE_RED_EYE_REDUCTION = 0x58;
+    public static final short FLASH_VALUE_AUTO_FIRED_RED_EYE_REDUCTION = 0x59;
+    public static final short FLASH_VALUE_AUTO_FIRED_RED_EYE_REDUCTION_RETURN_NOT_DETECTED = 0x5d;
+    public static final short FLASH_VALUE_AUTO_FIRED_RED_EYE_REDUCTION_RETURN_DETECTED = 0x5f;
     public static final TagInfoRationals EXIF_TAG_FOCAL_LENGTH = new TagInfoRationals(
             "FocalLength", 0x920a, -1,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -651,9 +659,11 @@ public final class ExifTagConstants {
     public static final TagInfoUndefined EXIF_TAG_FILE_SOURCE = new TagInfoUndefined(
             "FileSource", 0xa300,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int FILE_SOURCE_VALUE_FILM_SCANNER = 1;
-    public static final int FILE_SOURCE_VALUE_REFLECTION_PRINT_SCANNER = 2;
-    public static final int FILE_SOURCE_VALUE_DIGITAL_CAMERA = 3;
+    public static final byte FILE_SOURCE_VALUE_FILM_SCANNER = 1;
+    public static final byte FILE_SOURCE_VALUE_REFLECTION_PRINT_SCANNER = 2;
+    public static final byte FILE_SOURCE_VALUE_DIGITAL_CAMERA = 3;
+    public static final byte FILE_SOURCE_DEFAULT_VALUE =
+        FILE_SOURCE_VALUE_DIGITAL_CAMERA;
     public static final TagInfoUndefined EXIF_TAG_SCENE_TYPE = new TagInfoUndefined(
             "SceneType", 0xa301,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -672,19 +682,46 @@ public final class ExifTagConstants {
     public static final TagInfoShort EXIF_TAG_CUSTOM_RENDERED = new TagInfoShort(
             "CustomRendered", 0xa401,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int CUSTOM_RENDERED_VALUE_NORMAL = 0;
-    public static final int CUSTOM_RENDERED_VALUE_CUSTOM = 1;
+    public static final short CUSTOM_RENDERED_VALUE_NORMAL = 0;
+    public static final short CUSTOM_RENDERED_VALUE_CUSTOM = 1;
+    public static final short CUSTOM_RENDERED_DEFAULT_VALUE =
+        CUSTOM_RENDERED_VALUE_NORMAL;
     public static final TagInfoShort EXIF_TAG_EXPOSURE_MODE = new TagInfoShort(
             "ExposureMode", 0xa402,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int EXPOSURE_MODE_VALUE_AUTO = 0;
-    public static final int EXPOSURE_MODE_VALUE_MANUAL = 1;
-    public static final int EXPOSURE_MODE_VALUE_AUTO_BRACKET = 2;
+    public static final short EXPOSURE_MODE_VALUE_AUTO = 0;
+    public static final short EXPOSURE_MODE_VALUE_MANUAL = 1;
+    public static final short EXPOSURE_MODE_VALUE_AUTO_BRACKET = 2;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_WHITE_BALANCE} instead.
+     * @see #EXIF_TAG_WHITE_BALANCE
+     */
+    @Deprecated
     public static final TagInfoShort EXIF_TAG_WHITE_BALANCE_1 = new TagInfoShort(
             "WhiteBalance", 0xa403,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #WHITE_BALANCE_VALUE_AUTO} instead.
+     * @see #WHITE_BALANCE_VALUE_AUTO
+     */
+    @Deprecated
     public static final int WHITE_BALANCE_1_VALUE_AUTO = 0;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #WHITE_BALANCE_VALUE_MANUAL} instead.
+     * @see #WHITE_BALANCE_VALUE_MANUAL
+     */
+    @Deprecated
     public static final int WHITE_BALANCE_1_VALUE_MANUAL = 1;
+    public static final TagInfoShort EXIF_TAG_WHITE_BALANCE = new TagInfoShort(
+            "WhiteBalance", 0xa403,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final short WHITE_BALANCE_VALUE_AUTO = 0;
+    public static final short WHITE_BALANCE_VALUE_MANUAL = 1;
     public static final TagInfoRational EXIF_TAG_DIGITAL_ZOOM_RATIO = new TagInfoRational(
             "DigitalZoomRatio", 0xa404,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -703,45 +740,155 @@ public final class ExifTagConstants {
     public static final TagInfoShort EXIF_TAG_SCENE_CAPTURE_TYPE = new TagInfoShort(
             "SceneCaptureType", 0xa406,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int SCENE_CAPTURE_TYPE_VALUE_STANDARD = 0;
-    public static final int SCENE_CAPTURE_TYPE_VALUE_LANDSCAPE = 1;
-    public static final int SCENE_CAPTURE_TYPE_VALUE_PORTRAIT = 2;
-    public static final int SCENE_CAPTURE_TYPE_VALUE_NIGHT = 3;
+    public static final short SCENE_CAPTURE_TYPE_VALUE_STANDARD = 0;
+    public static final short SCENE_CAPTURE_TYPE_VALUE_LANDSCAPE = 1;
+    public static final short SCENE_CAPTURE_TYPE_VALUE_PORTRAIT = 2;
+    public static final short SCENE_CAPTURE_TYPE_VALUE_NIGHT = 3;
+    public static final short SCENE_CAPTURE_TYPE_DEFAULT_VALUE =
+        SCENE_CAPTURE_TYPE_VALUE_STANDARD;
     public static final TagInfoShort EXIF_TAG_GAIN_CONTROL = new TagInfoShort(
             "GainControl", 0xa407,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int GAIN_CONTROL_VALUE_NONE = 0;
-    public static final int GAIN_CONTROL_VALUE_LOW_GAIN_UP = 1;
-    public static final int GAIN_CONTROL_VALUE_HIGH_GAIN_UP = 2;
-    public static final int GAIN_CONTROL_VALUE_LOW_GAIN_DOWN = 3;
-    public static final int GAIN_CONTROL_VALUE_HIGH_GAIN_DOWN = 4;
+    public static final short GAIN_CONTROL_VALUE_NONE = 0;
+    public static final short GAIN_CONTROL_VALUE_LOW_GAIN_UP = 1;
+    public static final short GAIN_CONTROL_VALUE_HIGH_GAIN_UP = 2;
+    public static final short GAIN_CONTROL_VALUE_LOW_GAIN_DOWN = 3;
+    public static final short GAIN_CONTROL_VALUE_HIGH_GAIN_DOWN = 4;
+    public static final short GAIN_CONTROL_DEFAULT_VALUE =
+        GAIN_CONTROL_VALUE_NONE;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_CONTRAST} instead.
+     * @see #EXIF_TAG_CONTRAST
+     */
+    @Deprecated
     public static final TagInfoShort EXIF_TAG_CONTRAST_1 = new TagInfoShort(
             "Contrast", 0xa408,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #CONTRAST_VALUE_NORMAL} instead.
+     * @see #CONTRAST_VALUE_NORMAL
+     */
+    @Deprecated
     public static final int CONTRAST_1_VALUE_NORMAL = 0;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #CONTRAST_VALUE_LOW} instead.
+     * @see #CONTRAST_VALUE_LOW
+     */
+    @Deprecated
     public static final int CONTRAST_1_VALUE_LOW = 1;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #CONTRAST_VALUE_HIGH} instead.
+     * @see #CONTRAST_VALUE_HIGH
+     */
+    @Deprecated
     public static final int CONTRAST_1_VALUE_HIGH = 2;
+    public static final TagInfoShort EXIF_TAG_CONTRAST = new TagInfoShort(
+            "Contrast", 0xa408,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final short CONTRAST_VALUE_NORMAL = 0;
+    public static final short CONTRAST_VALUE_LOW = 1;
+    public static final short CONTRAST_VALUE_HIGH = 2;
+    public static final short CONTRAST_DEFAULT_VALUE =
+        CONTRAST_VALUE_NORMAL;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_SATURATION} instead.
+     * @see #EXIF_TAG_SATURATION
+     */
+    @Deprecated
     public static final TagInfoShort EXIF_TAG_SATURATION_1 = new TagInfoShort(
             "Saturation", 0xa409,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SATURATION_VALUE_NORMAL} instead.
+     * @see #SATURATION_VALUE_NORMAL
+     */
+    @Deprecated
     public static final int SATURATION_1_VALUE_NORMAL = 0;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SATURATION_VALUE_LOW} instead.
+     * @see #SATURATION_VALUE_LOW
+     */
+    @Deprecated
     public static final int SATURATION_1_VALUE_LOW = 1;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SATURATION_VALUE_HIGH} instead.
+     * @see #SATURATION_VALUE_HIGH
+     */
+    @Deprecated
     public static final int SATURATION_1_VALUE_HIGH = 2;
+    public static final TagInfoShort EXIF_TAG_SATURATION = new TagInfoShort(
+            "Saturation", 0xa409,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final short SATURATION_VALUE_NORMAL = 0;
+    public static final short SATURATION_VALUE_LOW = 1;
+    public static final short SATURATION_VALUE_HIGH = 2;
+    public static final short SATURATION_DEFAULT_VALUE =
+        SATURATION_VALUE_NORMAL;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention. Use {@link #EXIF_TAG_SHARPNESS} instead.
+     * @see #EXIF_TAG_SHARPNESS
+     */
+    @Deprecated
     public static final TagInfoShort EXIF_TAG_SHARPNESS_1 = new TagInfoShort(
             "Sharpness", 0xa40a,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SHARPNESS_VALUE_NORMAL} instead.
+     * @see #SHARPNESS_VALUE_NORMAL
+     */
+    @Deprecated
     public static final int SHARPNESS_1_VALUE_NORMAL = 0;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SHARPNESS_VALUE_SOFT} instead.
+     * @see #SHARPNESS_VALUE_SOFT
+     */
+    @Deprecated
     public static final int SHARPNESS_1_VALUE_SOFT = 1;
+    /**
+     * @deprecated This constant does not comply with the Java language constant
+     * naming convention nor the EXIF specification.
+     * Use {@link #SHARPNESS_VALUE_HARD} instead.
+     * @see #SHARPNESS_VALUE_HARD
+     */
+    @Deprecated
     public static final int SHARPNESS_1_VALUE_HARD = 2;
+    public static final TagInfoShort EXIF_TAG_SHARPNESS = new TagInfoShort(
+            "Sharpness", 0xa40a,
+            TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
+    public static final short SHARPNESS_VALUE_NORMAL = 0;
+    public static final short SHARPNESS_VALUE_SOFT = 1;
+    public static final short SHARPNESS_VALUE_HARD = 2;
+    public static final short SHARPNESS_DEFAULT_VALUE =
+        SHARPNESS_VALUE_NORMAL;
     public static final TagInfoUndefineds EXIF_TAG_DEVICE_SETTING_DESCRIPTION = new TagInfoUndefineds(
             "DeviceSettingDescription", 0xa40b, -1,
             TiffDirectoryType.EXIF_DIRECTORY_UNKNOWN);
     public static final TagInfoShort EXIF_TAG_SUBJECT_DISTANCE_RANGE = new TagInfoShort(
             "SubjectDistanceRange", 0xa40c,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
-    public static final int SUBJECT_DISTANCE_RANGE_VALUE_MACRO = 1;
-    public static final int SUBJECT_DISTANCE_RANGE_VALUE_CLOSE = 2;
-    public static final int SUBJECT_DISTANCE_RANGE_VALUE_DISTANT = 3;
+    public static final short SUBJECT_DISTANCE_RANGE_VALUE_UNKNOWN = 0;
+    public static final short SUBJECT_DISTANCE_RANGE_VALUE_MACRO = 1;
+    public static final short SUBJECT_DISTANCE_RANGE_VALUE_CLOSE = 2;
+    public static final short SUBJECT_DISTANCE_RANGE_VALUE_DISTANT = 3;
     public static final TagInfoAscii EXIF_TAG_IMAGE_UNIQUE_ID = new TagInfoAscii(
             "ImageUniqueID", 0xa420, 33,
             TiffDirectoryType.EXIF_DIRECTORY_EXIF_IFD);
@@ -903,10 +1050,10 @@ public final class ExifTagConstants {
                     EXIF_TAG_EXPOSURE_INDEX, EXIF_TAG_TIFF_EPSTANDARD_ID_2,
                     EXIF_TAG_SENSING_METHOD, EXIF_TAG_FILE_SOURCE,
                     EXIF_TAG_SCENE_TYPE, EXIF_TAG_CFA_PATTERN, EXIF_TAG_CUSTOM_RENDERED,
-                    EXIF_TAG_EXPOSURE_MODE, EXIF_TAG_WHITE_BALANCE_1,
+                    EXIF_TAG_EXPOSURE_MODE, EXIF_TAG_WHITE_BALANCE,
                     EXIF_TAG_DIGITAL_ZOOM_RATIO, EXIF_TAG_FOCAL_LENGTH_IN_35MM_FILM,
                     EXIF_TAG_SCENE_CAPTURE_TYPE, EXIF_TAG_GAIN_CONTROL,
-                    EXIF_TAG_CONTRAST_1, EXIF_TAG_SATURATION_1, EXIF_TAG_SHARPNESS_1,
+                    EXIF_TAG_CONTRAST, EXIF_TAG_SATURATION, EXIF_TAG_SHARPNESS,
                     EXIF_TAG_DEVICE_SETTING_DESCRIPTION,
                     EXIF_TAG_SUBJECT_DISTANCE_RANGE, EXIF_TAG_IMAGE_UNIQUE_ID,
                     EXIF_TAG_GAMMA,
