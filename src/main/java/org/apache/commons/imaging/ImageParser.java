@@ -66,7 +66,7 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  *
  * For the most recent information on format support for the
  * Apache Commons Imaging package, refer to
- * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+ * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  * at the main project development web site.
  *
  * <h4>On the accuracy of this Javadoc</h4>

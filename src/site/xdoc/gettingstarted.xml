@@ -40,7 +40,7 @@ limitations under the License.
 
 <p>
   <ul>
-      <li>Download the latest release from the <a href="http://commons.apache.org/imaging/download_imaging.cgi">download page</a>.</li>
+      <li>Download the latest release from the <a href="https://commons.apache.org/imaging/download_imaging.cgi">download page</a>.</li>
       <li>Add the jar to your project's classpath.</li>
       <li>See our <a href="sampleusage.html">Sample Code</a> for examples.</li>
       <li>Refer to the project's <a href="apidocs/index.html">javadoc</a></li>

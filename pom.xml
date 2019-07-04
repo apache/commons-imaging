@@ -38,7 +38,7 @@
     a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
    -->
   <description>Apache Commons Imaging (previously Sanselan) is a pure-Java image library.</description>
-  <url>http://commons.apache.org/proper/commons-imaging/</url>
+  <url>https://commons.apache.org/proper/commons-imaging/</url>
 
   <properties>
     <argLine>-Xmx512m</argLine>

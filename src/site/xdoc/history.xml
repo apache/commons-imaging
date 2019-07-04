@@ -34,7 +34,7 @@ limitations under the License.
   the package changed from <code>org.apache.sanselan</code> to <code>org.apache.commons.imaging</code>,
   the "main" class changed from <code>org.apache.sanselan.Sanselan</code> to
   <code>org.apache.commons.imaging.Imaging</code>, the website became
-  <a href="http://commons.apache.org/imaging">http://commons.apache.org/imaging</a>
+  <a href="https://commons.apache.org/imaging">https://commons.apache.org/imaging</a>
   and Maven co-ordinates also changed.
 </p>
 

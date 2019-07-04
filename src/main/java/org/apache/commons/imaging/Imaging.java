@@ -71,7 +71,7 @@ import org.apache.commons.imaging.icc.IccProfileParser;
  * While the Apache Commons Imaging package handles a number of different
  * graphics formats, support for some formats is not yet complete.
  * For the most recent information on support for specific formats, refer to
- * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+ * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  * at the main project development web site.
  * </p>
  *
@@ -108,7 +108,7 @@ import org.apache.commons.imaging.icc.IccProfileParser;
  *
  * @see <a
  *      href="https://svn.apache.org/repos/asf/commons/proper/imaging/trunk/src/test/java/org/apache/commons/imaging/examples/SampleUsage.java">org.apache.commons.imaging.examples.SampleUsage</a>
- * @see <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+ * @see <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  */
 public final class Imaging {
 
@@ -1284,7 +1284,7 @@ public final class Imaging {
      * Reads the first image from an InputStream.
      * <p>
      * For the most recent information on support for specific formats, refer to
-     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
      * at the main project development web site.   While the Apache Commons
      * Imaging package does not fully support all formats, it  can read
      * image info, metadata and ICC profiles from all image formats that
@@ -1311,7 +1311,7 @@ public final class Imaging {
      * by this package.
      * <p>
      * For the most recent information on support for specific formats, refer to
-     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
      * at the main project development web site.   While the Apache Commons
      * Imaging package does not fully support all formats, it  can read
      * image info, metadata and ICC profiles from all image formats that
@@ -1336,7 +1336,7 @@ public final class Imaging {
      * Reads the first image from a byte array.
      * <p>
      * For the most recent information on support for specific formats, refer to
-     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
      * at the main project development web site.   While the Apache Commons
      * Imaging package does not fully support all formats, it  can read
      * image info, metadata and ICC profiles from all image formats that
@@ -1361,7 +1361,7 @@ public final class Imaging {
      * by this package.
      * <p>
      * For the most recent information on support for specific formats, refer to
-     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
      * at the main project development web site.   While the Apache Commons
      * Imaging package does not fully support all formats, it  can read
      * image info, metadata and ICC profiles from all image formats that
@@ -1385,7 +1385,7 @@ public final class Imaging {
      * Reads the first image from a file.
      * <p>
      * For the most recent information on support for specific formats, refer to
-     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
      * at the main project development web site.   While the Apache Commons
      * Imaging package does not fully support all formats, it  can read
      * image info, metadata and ICC profiles from all image formats that
@@ -1410,7 +1410,7 @@ public final class Imaging {
      * by this package.
      * <p>
      * For the most recent information on support for specific formats, refer to
-     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
      * at the main project development web site.   While the Apache Commons
      * Imaging package does not fully support all formats, it  can read
      * image info, metadata and ICC profiles from all image formats that
@@ -1448,7 +1448,7 @@ public final class Imaging {
      * <p>
      * Image writing is not supported for all graphics formats.
      * For the most recent information on support for specific formats, refer to
-     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
      * at the main project development web site.   While the Apache Commons
      * Imaging package does not fully support all formats, it  can read
      * image info, metadata and ICC profiles from all image formats that
@@ -1481,7 +1481,7 @@ public final class Imaging {
      * <p>
      * Image writing is not supported for all graphics formats.
      * For the most recent information on support for specific formats, refer to
-     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
      * at the main project development web site.   While the Apache Commons
      * Imaging package does not fully support all formats, it  can read
      * image info, metadata and ICC profiles from all image formats that
@@ -1515,7 +1515,7 @@ public final class Imaging {
      * <p>
      * Image writing is not supported for all graphics formats.
      * For the most recent information on support for specific formats, refer to
-     * <a href="http://commons.apache.org/imaging/formatsupport.html">Format Support</a>
+     * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
      * at the main project development web site.   While the Apache Commons
      * Imaging package does not fully support all formats, it  can read
      * image info, metadata and ICC profiles from all image formats that
