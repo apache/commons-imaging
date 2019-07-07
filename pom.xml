@@ -83,7 +83,7 @@
 
   <issueManagement>
     <system>jira</system>
-    <url>http://issues.apache.org/jira/browse/IMAGING</url>
+    <url>https://issues.apache.org/jira/browse/IMAGING</url>
   </issueManagement>
   <inceptionYear>2007</inceptionYear>
 
