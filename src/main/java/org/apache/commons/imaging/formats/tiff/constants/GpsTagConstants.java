@@ -29,6 +29,11 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRational;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoRationals;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort;
 
+/**
+ * GPS tags and value constants stored in the {@code GPSInfo} image file
+ * directory of a TIFF file.
+ * @see <A HREF="http://www.cipa.jp/std/std-sec_e.html">EXIF Specification</A>
+ */
 public final class GpsTagConstants {
 
     public static final TagInfoBytes GPS_TAG_GPS_VERSION_ID = new TagInfoBytes(
@@ -70,8 +75,8 @@ public final class GpsTagConstants {
             "GPSAltitudeRef", 0x0005,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final int GPS_TAG_GPS_ALTITUDE_REF_VALUE_ABOVE_SEA_LEVEL = 0;
-    public static final int GPS_TAG_GPS_ALTITUDE_REF_VALUE_BELOW_SEA_LEVEL = 1;
+    public static final byte GPS_TAG_GPS_ALTITUDE_REF_VALUE_ABOVE_SEA_LEVEL = 0;
+    public static final byte GPS_TAG_GPS_ALTITUDE_REF_VALUE_BELOW_SEA_LEVEL = 1;
     // ************************************************************
     public static final TagInfoRational GPS_TAG_GPS_ALTITUDE = new TagInfoRational(
             "GPSAltitude", 0x0006,
@@ -99,8 +104,8 @@ public final class GpsTagConstants {
             "GPSMeasureMode", 0x000a, 2,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final int GPS_TAG_GPS_MEASURE_MODE_VALUE_2_DIMENSIONAL_MEASUREMENT = 2;
-    public static final int GPS_TAG_GPS_MEASURE_MODE_VALUE_3_DIMENSIONAL_MEASUREMENT = 3;
+    public static final String GPS_TAG_GPS_MEASURE_MODE_VALUE_2_DIMENSIONAL_MEASUREMENT = "2";
+    public static final String GPS_TAG_GPS_MEASURE_MODE_VALUE_3_DIMENSIONAL_MEASUREMENT = "3";
     // ************************************************************
     public static final TagInfoRational GPS_TAG_GPS_DOP = new TagInfoRational(
             "GPSDOP", 0x000b,
@@ -217,8 +222,8 @@ public final class GpsTagConstants {
             "GPSDifferential", 0x001e,
             TiffDirectoryType.EXIF_DIRECTORY_GPS);
 
-    public static final int GPS_TAG_GPS_DIFFERENTIAL_VALUE_NO_CORRECTION = 0;
-    public static final int GPS_TAG_GPS_DIFFERENTIAL_VALUE_DIFFERENTIAL_CORRECTED = 1;
+    public static final short GPS_TAG_GPS_DIFFERENTIAL_VALUE_NO_CORRECTION = 0;
+    public static final short GPS_TAG_GPS_DIFFERENTIAL_VALUE_DIFFERENTIAL_CORRECTED = 1;
     // ************************************************************
 
     public static final List<TagInfo> ALL_GPS_TAGS =
