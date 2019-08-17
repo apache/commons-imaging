@@ -50,4 +50,19 @@ public class PngWithInvalidPngChunkSizeTest {
 		Imaging.getBufferedImage(imageFile, params);
 	}
 
+	/**
+     * Test that an image with an invalid negative PNG chunk size causes an
+     * ImageReadException instead of other exception types.
+     *
+     * @throws IOException        if it fails to read from the input source
+     * @throws ImageReadException if it fails to read the image
+     */
+    @Test(expected = ImageReadException.class)
+    public void testPngWithInvalidNegativePngChunkSize() throws IOException, ImageReadException {
+        final File imageFile = new File(
+                JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-210/testfile.png").getFile());
+        final Map<String, Object> params = new HashMap<>();
+        params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY, new ManagedImageBufferedImageFactory());
+        Imaging.getBufferedImage(imageFile, params);
+    }
 }
