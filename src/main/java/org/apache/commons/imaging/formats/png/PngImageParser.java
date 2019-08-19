@@ -154,6 +154,9 @@ public class PngImageParser extends ImageParser {
 
         while (true) {
             final int length = read4Bytes("Length", is, "Not a Valid PNG File", getByteOrder());
+            if (length < 0) {
+                throw new ImageReadException("Invalid PNG chunk length: " + length);
+            }
             final int chunkType = read4Bytes("ChunkType", is, "Not a Valid PNG File", getByteOrder());
 
             if (LOGGER.isLoggable(Level.FINEST)) {
