@@ -60,16 +60,16 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  * own specific format.   Specific implementations are found
  * under the com.apache.commons.imaging.formats package.
  *
- * <h3>Application Notes</h3>
+ * <h2>Application Notes</h2>
  *
- * <h4>Format support</h4>
+ * <h3>Format support</h3>
  *
  * For the most recent information on format support for the
  * Apache Commons Imaging package, refer to
  * <a href="https://commons.apache.org/imaging/formatsupport.html">Format Support</a>
  * at the main project development web site.
  *
- * <h4>On the accuracy of this Javadoc</h4>
+ * <h3>On the accuracy of this Javadoc</h3>
  *
  * The original authors of this class did not supply documentation.
  * The Javadoc for this class is based on inspection of the
@@ -79,7 +79,7 @@ import org.apache.commons.imaging.formats.xpm.XpmImageParser;
  * that the documentation is perfect, especially in the more obscure
  * and specialized areas of implementation.
  *
- * <h4>The "Map params" argument</h4>
+ * <h3>The "Map params" argument</h3>
  *
  * Many of the methods specified by this class accept an argument of
  * type Map giving a list of parameters to be used when processing an

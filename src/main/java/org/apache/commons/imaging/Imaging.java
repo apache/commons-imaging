@@ -45,9 +45,9 @@ import org.apache.commons.imaging.icc.IccProfileParser;
 /**
  * The primary application programming interface (API) to the Imaging library.
  *
- * <h3>Application Notes</h3>
+ * <h2>Application Notes</h2>
  *
- * <h4>Using this class</h4>
+ * <h3>Using this class</h3>
  *
  * <p>
  * Almost all of the Apache Commons Imaging library's core functionality can
@@ -65,7 +65,7 @@ import org.apache.commons.imaging.icc.IccProfileParser;
  * The Apache Commons Imaging package is a pure Java implementation.
  * </p>
  *
- * <h4>Format support</h4>
+ * <h3>Format support</h3>
  *
  * <p>
  * While the Apache Commons Imaging package handles a number of different
@@ -75,7 +75,7 @@ import org.apache.commons.imaging.icc.IccProfileParser;
  * at the main project development web site.
  * </p>
  *
- * <h4>Optional parameters for image reading and writing</h4>
+ * <h3>Optional parameters for image reading and writing</h3>
  *
  * <p>
  * Some of the methods provided by this class accept an optional
@@ -99,7 +99,7 @@ import org.apache.commons.imaging.icc.IccProfileParser;
  * JpegContants or TiffConstants.
  * </p>
  *
- * <h4>Example code</h4>
+ * <h3>Example code</h3>
  *
  * <p>
  * See the source of the SampleUsage class and other classes in the

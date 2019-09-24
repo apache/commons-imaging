@@ -424,7 +424,7 @@ public class TiffImageParser extends ImageParser {
      * supplying the appropriate parameters using the keys from the
      * TiffConstants class and the params argument for this method.</p>
      *
-     * <h3>Loading Partial Images</h3>
+     * <p><strong>Loading Partial Images</strong></p>
      *
      * <p>The TIFF parser includes support for loading partial images without
      * committing significantly more memory resources than are necessary
