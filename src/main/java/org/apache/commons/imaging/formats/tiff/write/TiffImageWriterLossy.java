@@ -49,6 +49,7 @@ public class TiffImageWriterLossy extends TiffImageWriterBase {
 
         final BinaryOutputStream bos = new BinaryOutputStream(os, byteOrder);
 
+        // NB: resource is intentionally left open
         writeStep(bos, outputItems);
     }
 
