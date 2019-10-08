@@ -21,16 +21,13 @@ import java.util.Comparator;
 public abstract class TiffElement {
     public final long offset;
     public final int length;
-    public static final Comparator<TiffElement> COMPARATOR = new Comparator<TiffElement>() {
-        @Override
-        public int compare(final TiffElement e1, final TiffElement e2) {
-            if (e1.offset < e2.offset) {
-                return -1;
-            } else if (e1.offset > e2.offset) {
-                return 1;
-            } else {
-                return 0;
-            }
+    public static final Comparator<TiffElement> COMPARATOR = (e1, e2) -> {
+        if (e1.offset < e2.offset) {
+            return -1;
+        } else if (e1.offset > e2.offset) {
+            return 1;
+        } else {
+            return 0;
         }
     };
 

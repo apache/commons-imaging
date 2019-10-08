@@ -35,12 +35,7 @@ public abstract class JpegBaseTest extends ImagingTest {
         return format == ImageFormats.JPEG;
     }
 
-    public static final ImageFilter imageFilter = new ImageFilter() {
-        @Override
-        public boolean accept(final File file) throws IOException, ImageReadException {
-            return isJpeg(file);
-        }
-    };
+    public static final ImageFilter imageFilter = file -> isJpeg(file);
 
     protected static List<File> getJpegImages() throws IOException, ImageReadException {
         return getTestImages(imageFilter);

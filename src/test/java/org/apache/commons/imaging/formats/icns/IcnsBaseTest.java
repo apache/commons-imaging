@@ -35,12 +35,7 @@ public abstract class IcnsBaseTest extends ImagingTest {
         return format == ImageFormats.ICNS;
     }
 
-    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        @Override
-        public boolean accept(final File file) throws IOException, ImageReadException {
-            return isIcns(file);
-        }
-    };
+    private static final ImageFilter IMAGE_FILTER = file -> isIcns(file);
 
     protected static List<File> getIcnsImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

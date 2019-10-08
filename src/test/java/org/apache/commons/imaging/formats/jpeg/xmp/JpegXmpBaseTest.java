@@ -50,12 +50,7 @@ public abstract class JpegXmpBaseTest extends ImagingTest {
         }
     }
 
-    private static final ImageFilter HAS_JPEG_XMP_IMAGE_FILTER = new ImageFilter() {
-        @Override
-        public boolean accept(final File file) throws IOException, ImageReadException {
-            return hasJpegXmpData(file);
-        }
-    };
+    private static final ImageFilter HAS_JPEG_XMP_IMAGE_FILTER = file -> hasJpegXmpData(file);
 
     // private static final ImageFilter JPEG_IMAGE_FILTER = new ImageFilter()
     // {

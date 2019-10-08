@@ -33,12 +33,7 @@ public abstract class PsdBaseTest extends ImagingTest {
         return format == ImageFormats.PSD;
     }
 
-    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        @Override
-        public boolean accept(final File file) throws IOException, ImageReadException {
-            return isPsd(file);
-        }
-    };
+    private static final ImageFilter IMAGE_FILTER = file -> isPsd(file);
 
     protected List<File> getPsdImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

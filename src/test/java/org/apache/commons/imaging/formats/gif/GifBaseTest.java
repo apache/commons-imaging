@@ -35,12 +35,7 @@ public abstract class GifBaseTest extends ImagingTest {
         return format == ImageFormats.GIF;
     }
 
-    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        @Override
-        public boolean accept(final File file) throws IOException, ImageReadException {
-            return isGif(file);
-        }
-    };
+    private static final ImageFilter IMAGE_FILTER = file -> isGif(file);
 
     protected static List<File> getGifImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

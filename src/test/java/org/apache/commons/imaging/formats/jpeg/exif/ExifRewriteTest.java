@@ -248,30 +248,16 @@ public class ExifRewriteTest extends ExifBaseTest {
 
     @Test
     public void testRewriteLossy() throws Exception {
-        final Rewriter rewriter = new Rewriter() {
-            @Override
-            public void rewrite(final ByteSource byteSource, final OutputStream os,
-                    final TiffOutputSet outputSet) throws ImageReadException,
-                    IOException, ImageWriteException {
-                new ExifRewriter().updateExifMetadataLossy(byteSource, os,
-                        outputSet);
-            }
-        };
+        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossy(byteSource, os,
+                outputSet);
 
         rewrite(rewriter, "lossy");
     }
 
     @Test
     public void testRewriteLossless() throws Exception {
-        final Rewriter rewriter = new Rewriter() {
-            @Override
-            public void rewrite(final ByteSource byteSource, final OutputStream os,
-                    final TiffOutputSet outputSet) throws ImageReadException,
-                    IOException, ImageWriteException {
-                new ExifRewriter().updateExifMetadataLossless(byteSource, os,
-                        outputSet);
-            }
-        };
+        final Rewriter rewriter = (byteSource, os, outputSet) -> new ExifRewriter().updateExifMetadataLossless(byteSource, os,
+                outputSet);
 
         rewrite(rewriter, "lossless");
     }

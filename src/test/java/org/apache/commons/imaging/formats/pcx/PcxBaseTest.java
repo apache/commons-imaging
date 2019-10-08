@@ -30,12 +30,7 @@ public abstract class PcxBaseTest extends ImagingTest {
         return file.getName().toLowerCase().endsWith(".pcx");
     }
 
-    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        @Override
-        public boolean accept(final File file) throws IOException, ImageReadException {
-            return isPcx(file);
-        }
-    };
+    private static final ImageFilter IMAGE_FILTER = file -> isPcx(file);
 
     protected List<File> getPcxImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

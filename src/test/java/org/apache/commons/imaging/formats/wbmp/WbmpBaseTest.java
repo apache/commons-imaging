@@ -26,12 +26,7 @@ public abstract class WbmpBaseTest extends ImagingTest {
         return file.getName().toLowerCase().endsWith(".wbmp");
     }
 
-    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        @Override
-        public boolean accept(final File file) throws IOException, ImageReadException {
-            return isWbmp(file);
-        }
-    };
+    private static final ImageFilter IMAGE_FILTER = file -> isWbmp(file);
 
     protected List<File> getWbmpImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

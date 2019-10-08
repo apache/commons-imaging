@@ -35,12 +35,7 @@ public abstract class PamBaseTest extends ImagingTest {
         return format == ImageFormats.PAM;
     }
 
-    private static final ImageFilter IMAGE_FILTER = new ImageFilter() {
-        @Override
-        public boolean accept(final File file) throws IOException, ImageReadException {
-            return isPam(file);
-        }
-    };
+    private static final ImageFilter IMAGE_FILTER = file -> isPam(file);
 
     protected List<File> getPamImages() throws IOException, ImageReadException {
         return getTestImages(IMAGE_FILTER);

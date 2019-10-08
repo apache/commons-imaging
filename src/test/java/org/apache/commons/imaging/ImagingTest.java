@@ -54,13 +54,7 @@ public abstract class ImagingTest {
 
     protected File getTestImageByName(final String fileName)
             throws IOException, ImageReadException {
-        return getTestImage(new ImageFilter() {
-            @Override
-            public boolean accept(final File file) throws IOException,
-                    ImageReadException {
-                return file.getName().equals(fileName);
-            }
-        });
+        return getTestImage(file -> file.getName().equals(fileName));
     }
 
     protected File getTestImage(final ImageFilter filter) throws IOException,
@@ -91,16 +85,12 @@ public abstract class ImagingTest {
         Debug.debug("imagesFolder", imagesFolder);
         assertTrue(imagesFolder.exists());
 
-        final FileSystemTraversal.Visitor visitor = new FileSystemTraversal.Visitor() {
-
-            @Override
-            public boolean visit(final File file, final double progressEstimate) {
-                if (!Imaging.hasImageFileExtension(file)) {
-                    return true;
-                }
-                ALL_IMAGES.add(file);
+        final FileSystemTraversal.Visitor visitor = (file, progressEstimate) -> {
+            if (!Imaging.hasImageFileExtension(file)) {
                 return true;
             }
+            ALL_IMAGES.add(file);
+            return true;
         };
         new FileSystemTraversal().traverseFiles(imagesFolder, visitor);
     }

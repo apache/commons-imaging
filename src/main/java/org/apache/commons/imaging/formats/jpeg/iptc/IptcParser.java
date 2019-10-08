@@ -401,12 +401,7 @@ public class IptcParser extends BinaryFileParser {
             elements = new ArrayList<>(elements);
 
             // sort the list. Records must be in numerical order.
-            final Comparator<IptcRecord> comparator = new Comparator<IptcRecord>() {
-                @Override
-                public int compare(final IptcRecord e1, final IptcRecord e2) {
-                    return e2.iptcType.getType() - e1.iptcType.getType();
-                }
-            };
+            final Comparator<IptcRecord> comparator = (e1, e2) -> e2.iptcType.getType() - e1.iptcType.getType();
             Collections.sort(elements, comparator);
             // TODO: make sure order right
 

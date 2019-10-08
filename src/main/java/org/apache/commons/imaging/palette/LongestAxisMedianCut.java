@@ -24,14 +24,11 @@ import java.util.List;
 import org.apache.commons.imaging.ImageWriteException;
 
 public class LongestAxisMedianCut implements MedianCut {
-    private static final Comparator<ColorGroup> COMPARATOR = new Comparator<ColorGroup>() {
-        @Override
-        public int compare(final ColorGroup cg1, final ColorGroup cg2) {
-            if (cg1.maxDiff == cg2.maxDiff) {
-                return cg2.diffTotal - cg1.diffTotal;
-            }
-            return cg2.maxDiff - cg1.maxDiff;
+    private static final Comparator<ColorGroup> COMPARATOR = (cg1, cg2) -> {
+        if (cg1.maxDiff == cg2.maxDiff) {
+            return cg2.diffTotal - cg1.diffTotal;
         }
+        return cg2.maxDiff - cg1.maxDiff;
     };
 
     @Override
@@ -62,21 +59,18 @@ public class LongestAxisMedianCut implements MedianCut {
     private void doCut(final ColorGroup colorGroup, final ColorComponent mode,
             final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImageWriteException {
 
-        final Comparator<ColorCount> comp = new Comparator<ColorCount>() {
-            @Override
-            public int compare(final ColorCount c1, final ColorCount c2) {
-                switch (mode) {
-                    case ALPHA:
-                        return c1.alpha - c2.alpha;
-                    case RED:
-                        return c1.red - c2.red;
-                    case GREEN:
-                        return c1.green - c2.green;
-                    case BLUE:
-                        return c1.blue - c2.blue;
-                    default:
-                        return 0;
-                }
+        final Comparator<ColorCount> comp = (c1, c2) -> {
+            switch (mode) {
+                case ALPHA:
+                    return c1.alpha - c2.alpha;
+                case RED:
+                    return c1.red - c2.red;
+                case GREEN:
+                    return c1.green - c2.green;
+                case BLUE:
+                    return c1.blue - c2.blue;
+                default:
+                    return 0;
             }
         };
 
