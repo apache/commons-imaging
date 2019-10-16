@@ -327,7 +327,7 @@ public class TiffReader extends BinaryFileParser {
         }
 
         public TiffContents getContents() {
-            return new TiffContents(tiffHeader, directories);
+            return new TiffContents(tiffHeader, directories, fields);
         }
     }
 

@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha2" date="2019-??-??" description="Second 1.0 alpha release">
+      <action issue="IMAGING-165" dev="kinow" type="add" due-to="Michael Groß">
+        Add the fields from TiffReader.Collector to TiffContents
+      </action>
       <action issue="IMAGING-230" dev="kinow" type="fix">
         Properly close resources with try-with-resources in T4AndT6Compression
       </action>
