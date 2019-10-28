@@ -129,10 +129,4 @@ public class RgbeImageParser extends ImageParser {
             throws ImageReadException, IOException {
         return null;
     }
-
-    @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
-            throws ImageReadException, IOException {
-        return null;
-    }
 }

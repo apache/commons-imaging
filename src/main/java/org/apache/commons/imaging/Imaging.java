@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.XmpEmbeddable;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
@@ -975,8 +976,10 @@ public final class Imaging {
     public static String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
         final ImageParser imageParser = getImageParser(byteSource);
-
-        return imageParser.getXmpXml(byteSource, params);
+        if (imageParser instanceof XmpEmbeddable) {
+            return ((XmpEmbeddable) imageParser).getXmpXml(byteSource, params);
+        }
+        return null;
     }
 
     /**

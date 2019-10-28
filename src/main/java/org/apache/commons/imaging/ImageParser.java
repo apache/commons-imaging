@@ -669,26 +669,6 @@ public abstract class ImageParser extends BinaryFileParser {
             throws ImageReadException, IOException;
 
     /**
-     * Get a string containing XML-formatted text conforming to the Extensible
-     * Metadata  Platform (EXP) standard for representing information about
-     * image content.  Not all image formats support EXP infomation and
-     * even for those that do, there is no guarantee that such information
-     * will be present in an image.
-     *
-     * @param byteSource A valid reference to a ByteSource.
-     * @param params     Optional instructions for special-handling or
-     *                   interpretation of the input data.
-     * @return If XMP metadata is present, a valid string;
-     *         if it is not present, a null.
-     * @throws ImageReadException In the event that the specified content
-     *                            does not conform to the format of the specific
-     *                            parser implementation.
-     * @throws IOException        In the event of unsuccessful read or access operation.
-     */
-    public abstract String getXmpXml(ByteSource byteSource, Map<String, Object> params)
-            throws ImageReadException, IOException;
-
-    /**
      * Get an array of bytes describing the International Color Consortium (ICC)
      * specification for the color space of the image contained in the
      * input byte array. Not all formats support ICC profiles.
