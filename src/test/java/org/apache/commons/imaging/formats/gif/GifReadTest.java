@@ -17,11 +17,10 @@
 
 package org.apache.commons.imaging.formats.gif;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
@@ -29,6 +28,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
 public class GifReadTest extends GifBaseTest {
@@ -61,6 +62,13 @@ public class GifReadTest extends GifBaseTest {
     public void testBufferedImage() throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
+        // TODO assert more
+    }
+
+    @Test
+    public void testBufferedImages() throws Exception {
+        final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
+        assertTrue(images.size() > 0);
         // TODO assert more
     }
 }
