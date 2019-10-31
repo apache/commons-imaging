@@ -25,7 +25,7 @@ import static org.apache.commons.imaging.common.BinaryFunctions.read2Bytes;
 import static org.apache.commons.imaging.common.BinaryFunctions.readByte;
 import static org.apache.commons.imaging.common.BinaryFunctions.readBytes;
 
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -495,13 +495,12 @@ public class GifImageParser extends ImageParser {
         if (bhi == null) {
             throw new ImageReadException("GIF: Couldn't read Header");
         }
-
-        final ImageDescriptor id = (ImageDescriptor) findBlock(blocks.blocks,
-                IMAGE_SEPARATOR);
-        if (id == null) {
-            throw new ImageReadException("GIF: Couldn't read ImageDescriptor");
-        }
-
+        
+        // The logical screen width and height defines the overall dimensions of the image
+        // space from the top left corner. This does not necessarily match the dimensions
+        // of any individual image, or even the dimensions created by overlapping all
+        // images (since each images might have an offset from the top left corner).
+        // Nevertheless, these fields indicate the desired screen dimensions when rendering the GIF.
         return new Dimension(bhi.logicalScreenWidth, bhi.logicalScreenHeight);
     }
 
@@ -705,7 +704,7 @@ public class GifImageParser extends ImageParser {
         return new GifImageData(descriptor, gce);
     }
 
-    private final BufferedImage getBufferedImage(GifHeaderInfo headerInfo, GifImageData imageData, byte[] globalColorTable)
+    private BufferedImage getBufferedImage(GifHeaderInfo headerInfo, GifImageData imageData, byte[] globalColorTable)
             throws ImageReadException {
         final ImageDescriptor id = imageData.descriptor;
         final GraphicControlExtension gce = imageData.gce;
