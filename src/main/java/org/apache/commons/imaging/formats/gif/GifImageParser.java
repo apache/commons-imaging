@@ -495,7 +495,7 @@ public class GifImageParser extends ImageParser {
         if (bhi == null) {
             throw new ImageReadException("GIF: Couldn't read Header");
         }
-        
+
         // The logical screen width and height defines the overall dimensions of the image
         // space from the top left corner. This does not necessarily match the dimensions
         // of any individual image, or even the dimensions created by overlapping all
