@@ -439,6 +439,21 @@ public class GifImageParser extends ImageParser {
         return null;
     }
 
+    /**
+     * See {@link GifImageParser#readBlocks} for reference how the blocks are created. They should match
+     * the code we are giving here, returning the correct class type. Internal only.
+     */
+    @SuppressWarnings("unchecked")
+    private <T extends GifBlock> List<T> findAllBlocks(final List<GifBlock> blocks, final int code) {
+        final List<T> filteredBlocks = new ArrayList<>();
+        for (final GifBlock gifBlock : blocks) {
+            if (gifBlock.blockCode == code) {
+                filteredBlocks.add((T) gifBlock);
+            }
+        }
+        return filteredBlocks;
+    }
+
     private GifImageContents readFile(final ByteSource byteSource,
             final boolean stopBeforeImageData) throws ImageReadException, IOException {
         return readFile(byteSource, stopBeforeImageData,
@@ -486,23 +501,34 @@ public class GifImageParser extends ImageParser {
             throw new ImageReadException("GIF: Couldn't read Header");
         }
 
-        final ImageDescriptor id = (ImageDescriptor) findBlock(blocks.blocks,
-                IMAGE_SEPARATOR);
-        if (id == null) {
-            throw new ImageReadException("GIF: Couldn't read ImageDescriptor");
-        }
-
-        // Prefer the size information in the ImageDescriptor; it is more
-        // reliable
-        // than the size information in the header.
-        return new Dimension(id.imageWidth, id.imageHeight);
+        // The logical screen width and height defines the overall dimensions of the image
+        // space from the top left corner. This does not necessarily match the dimensions
+        // of any individual image, or even the dimensions created by overlapping all
+        // images (since each images might have an offset from the top left corner).
+        // Nevertheless, these fields indicate the desired screen dimensions when rendering the GIF.
+        return new Dimension(bhi.logicalScreenWidth, bhi.logicalScreenHeight);
     }
 
-    // FIXME should throw UOE
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
-        return null;
+        final GifImageContents imageContents = readFile(byteSource, false);
+
+        if (imageContents == null) {
+            throw new ImageReadException("GIF: Couldn't read blocks");
+        }
+
+        final GifHeaderInfo bhi = imageContents.gifHeaderInfo;
+        if (bhi == null) {
+            throw new ImageReadException("GIF: Couldn't read Header");
+        }
+
+        final List<GifImageData> imageData = findAllImageData(imageContents);
+        List<GifImageMetadataItem> metadataItems = new ArrayList<>(imageData.size());
+        for(GifImageData id : imageData) {
+            metadataItems.add(new GifImageMetadataItem(id.gce.delay, id.descriptor.imageLeftPosition, id.descriptor.imageTopPosition));
+        }
+        return new GifImageMetadata(bhi.logicalScreenWidth, bhi.logicalScreenHeight, metadataItems);
     }
 
     private List<String> getComments(final List<GifBlock> blocks) throws IOException {
@@ -542,18 +568,16 @@ public class GifImageParser extends ImageParser {
         final GraphicControlExtension gce = (GraphicControlExtension) findBlock(
                 blocks.blocks, GRAPHIC_CONTROL_EXTENSION);
 
-        // Prefer the size information in the ImageDescriptor; it is more
-        // reliable than the size information in the header.
-        final int height = id.imageHeight;
-        final int width = id.imageWidth;
+        final int height = bhi.logicalScreenHeight;
+        final int width = bhi.logicalScreenWidth;
 
         final List<String> comments = getComments(blocks.blocks);
         final int bitsPerPixel = (bhi.colorResolution + 1);
         final ImageFormat format = ImageFormats.GIF;
         final String formatName = "GIF Graphics Interchange Format";
         final String mimeType = "image/gif";
-        // we ought to count images, but don't yet.
-        final int numberOfImages = -1;
+
+        final int numberOfImages = findAllBlocks(blocks.blocks, IMAGE_SEPARATOR).size();
 
         final boolean progressive = id.interlaceFlag;
 
@@ -643,31 +667,53 @@ public class GifImageParser extends ImageParser {
         return result;
     }
 
-    @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
-            throws ImageReadException, IOException {
-        final GifImageContents imageContents = readFile(byteSource, false);
+    private List<GifImageData> findAllImageData(GifImageContents imageContents) throws ImageReadException {
+        final List<ImageDescriptor> descriptors = findAllBlocks(imageContents.blocks, IMAGE_SEPARATOR);
 
-        if (imageContents == null) {
-            throw new ImageReadException("GIF: Couldn't read blocks");
-        }
-
-        final GifHeaderInfo ghi = imageContents.gifHeaderInfo;
-        if (ghi == null) {
-            throw new ImageReadException("GIF: Couldn't read Header");
-        }
-
-        final ImageDescriptor id = (ImageDescriptor) findBlock(imageContents.blocks,
-                IMAGE_SEPARATOR);
-        if (id == null) {
+        if (descriptors.size() == 0) {
             throw new ImageReadException("GIF: Couldn't read Image Descriptor");
         }
+
+        final List<GraphicControlExtension> gcExtensions = findAllBlocks(imageContents.blocks, GRAPHIC_CONTROL_EXTENSION);
+
+        if (gcExtensions.size() != 0 && gcExtensions.size() != descriptors.size()) {
+            throw new ImageReadException("GIF: Invalid amount of Graphic Control Extensions");
+        }
+
+        List<GifImageData> imageData = new ArrayList<>(descriptors.size());
+        for(int i = 0; i < descriptors.size(); i++) {
+            final ImageDescriptor descriptor = descriptors.get(i);
+            if (descriptor == null) {
+                throw new ImageReadException(String.format("GIF: Couldn't read Image Descriptor of image number %d", i));
+            }
+
+            final GraphicControlExtension gce = gcExtensions.size() == 0 ? null : gcExtensions.get(i);
+
+            imageData.add(new GifImageData(descriptor, gce));
+        }
+
+        return imageData;
+    }
+
+    private GifImageData findFirstImageData(GifImageContents imageContents) throws ImageReadException {
+        final ImageDescriptor descriptor = (ImageDescriptor) findBlock(imageContents.blocks,
+                IMAGE_SEPARATOR);
+
+        if (descriptor == null) {
+            throw new ImageReadException("GIF: Couldn't read Image Descriptor");
+        }
+
         final GraphicControlExtension gce = (GraphicControlExtension) findBlock(
                 imageContents.blocks, GRAPHIC_CONTROL_EXTENSION);
 
-        // Prefer the size information in the ImageDescriptor; it is more
-        // reliable
-        // than the size information in the header.
+        return new GifImageData(descriptor, gce);
+    }
+
+    private BufferedImage getBufferedImage(GifHeaderInfo headerInfo, GifImageData imageData, byte[] globalColorTable)
+            throws ImageReadException {
+        final ImageDescriptor id = imageData.descriptor;
+        final GraphicControlExtension gce = imageData.gce;
+
         final int width = id.imageWidth;
         final int height = id.imageHeight;
 
@@ -681,8 +727,8 @@ public class GifImageParser extends ImageParser {
         int[] colorTable;
         if (id.localColorTable != null) {
             colorTable = getColorTable(id.localColorTable);
-        } else if (imageContents.globalColorTable != null) {
-            colorTable = getColorTable(imageContents.globalColorTable);
+        } else if (globalColorTable != null) {
+            colorTable = getColorTable(globalColorTable);
         } else {
             throw new ImageReadException("Gif: No Color Table");
         }
@@ -734,14 +780,52 @@ public class GifImageParser extends ImageParser {
                 if (transparentIndex == index) {
                     rgb = 0x00;
                 }
-
-                imageBuilder.setRGB(x, y, rgb);
+                imageBuilder.setRGB(x,y, rgb);
             }
-
         }
 
         return imageBuilder.getBufferedImage();
+    }
 
+    @Override
+    public List<BufferedImage> getAllBufferedImages(final ByteSource byteSource)
+            throws ImageReadException, IOException {
+        final GifImageContents imageContents = readFile(byteSource, false);
+
+        if (imageContents == null) {
+            throw new ImageReadException("GIF: Couldn't read blocks");
+        }
+
+        final GifHeaderInfo ghi = imageContents.gifHeaderInfo;
+        if (ghi == null) {
+            throw new ImageReadException("GIF: Couldn't read Header");
+        }
+
+        final List<GifImageData> imageData = findAllImageData(imageContents);
+        List<BufferedImage> result = new ArrayList<>(imageData.size());
+        for(GifImageData id : imageData) {
+            result.add(getBufferedImage(ghi, id, imageContents.globalColorTable));
+        }
+        return result;
+    }
+
+    @Override
+    public BufferedImage getBufferedImage(final ByteSource byteSource, final Map<String, Object> params)
+            throws ImageReadException, IOException {
+        final GifImageContents imageContents = readFile(byteSource, false);
+
+        if (imageContents == null) {
+            throw new ImageReadException("GIF: Couldn't read blocks");
+        }
+
+        final GifHeaderInfo ghi = imageContents.gifHeaderInfo;
+        if (ghi == null) {
+            throw new ImageReadException("GIF: Couldn't read Header");
+        }
+
+        final GifImageData imageData = findFirstImageData(imageContents);
+
+        return getBufferedImage(ghi, imageData, imageContents.globalColorTable);
     }
 
     private void writeAsSubBlocks(final OutputStream os, final byte[] bytes) throws IOException {
