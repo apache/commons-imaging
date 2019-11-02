@@ -75,6 +75,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-210" dev="kinow" type="fix">
         Imaging.getBufferedImage fails throwing NegativeArraySizeException for specific inputs
       </action>
+      <action issue="IMAGING-236" dev="kinow" type="add" due-to="Christoffer Rydberg">
+        Add support to read multiple images from GIF
+      </action>
     </release>
     <release version="1.0-alpha1" date="2019-04-28" description="First 1.0 alpha release">
       <action issue="IMAGING-199" dev="kinow" type="fix" due-to="Ric Emery">
