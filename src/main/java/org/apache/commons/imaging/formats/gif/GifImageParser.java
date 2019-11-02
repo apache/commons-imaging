@@ -439,6 +439,11 @@ public class GifImageParser extends ImageParser {
         return null;
     }
 
+    /**
+     * See {@link GifImageParser#readBlocks} for reference how the blocks are created. They should match
+     * the code we are giving here, returning the correct class type. Internal only.
+     */
+    @SuppressWarnings("unchecked")
     private <T extends GifBlock> List<T> findAllBlocks(final List<GifBlock> blocks, final int code) {
         final List<T> filteredBlocks = new ArrayList<>();
         for (final GifBlock gifBlock : blocks) {
