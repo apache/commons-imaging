@@ -36,7 +36,7 @@ public class PngChunk extends BinaryFileParser {
         this.length = length;
         this.chunkType = chunkType;
         this.crc = crc;
-        this.bytes = bytes; // TODO clone?
+        this.bytes = bytes.clone();
 
         propertyBits = new boolean[4];
         int shift = 24;
@@ -54,7 +54,7 @@ public class PngChunk extends BinaryFileParser {
     }
 
     public byte[] getBytes() {
-        return bytes; // TODO clone?
+        return bytes.clone();
     }
 
     public boolean[] getPropertyBits() {
