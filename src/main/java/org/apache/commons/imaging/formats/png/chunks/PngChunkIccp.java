@@ -39,7 +39,7 @@ public class PngChunkIccp extends PngChunk {
     private final byte[] uncompressedProfile;
 
     public byte[] getUncompressedProfile() {
-        return uncompressedProfile; // TODO clone?
+        return uncompressedProfile.clone();
     }
 
     public PngChunkIccp(
