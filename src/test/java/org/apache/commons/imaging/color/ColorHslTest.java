@@ -19,6 +19,7 @@ package org.apache.commons.imaging.color;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -60,4 +61,16 @@ public class ColorHslTest {
         assertTrue(color.equals(colorCopy) && colorCopy.equals(color));
         assertThat(color.hashCode(), is(colorCopy.hashCode()));
     }
+
+    @Test
+    public void testCreatesColorHslOne() {
+        ColorHsl colorHsl = ColorHsl.BLUE;
+        ColorHsl colorHslTwo = new ColorHsl(100.0, 667.226, (-687.72287636));
+
+        assertEquals(667.226, colorHslTwo.S, 0.01);
+        assertEquals(100.0, colorHslTwo.H, 0.01);
+        assertEquals((-687.72287636), colorHslTwo.L, 0.01);
+        assertFalse(colorHsl.equals(colorHslTwo));
+    }
+
 }

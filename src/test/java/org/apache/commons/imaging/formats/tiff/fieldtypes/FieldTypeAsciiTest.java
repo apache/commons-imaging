@@ -1,0 +1,64 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.imaging.formats.tiff.fieldtypes;
+
+import static org.junit.Assert.assertArrayEquals;
+
+import java.nio.ByteOrder;
+
+import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.formats.tiff.TiffField;
+import org.junit.Test;
+
+/**
+ * Unit tests for class {@link FieldTypeAscii}.
+ * @see FieldTypeAscii
+ *
+ **/
+public class FieldTypeAsciiTest {
+
+  @Test(expected = ImageWriteException.class)
+  public void testCreatesFieldTypeAsciiAndCallsWriteData() throws ImageWriteException {
+      FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
+      byte[] byteArray = new byte[1];
+      ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+      TiffField tiffField = new TiffField(0, 0, fieldTypeAscii, 0L, 0, byteArray, byteOrder, 1);
+
+      fieldTypeAscii.writeData(tiffField, byteOrder);
+
+  }
+
+  @Test
+  public void testCreatesFieldTypeAsciiAndWriteDataUsingByteArray() throws ImageWriteException {
+      FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
+      byte[] byteArray = new byte[1];
+      ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+      byte[] byteArrayTwo = fieldTypeAscii.writeData(byteArray, byteOrder);
+
+      assertArrayEquals(new byte[] {(byte)0, (byte)0}, byteArrayTwo);
+  }
+
+    @Test
+    public void testCreatesFieldTypeAsciiAndWriteDataUsingString() throws ImageWriteException {
+        FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
+        ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+        byte[] byteArrayTwo = fieldTypeAscii.writeData("asdf", byteOrder);
+
+        assertArrayEquals(new byte[] {(byte)97, (byte)115, (byte)100, (byte)102, (byte)0}, byteArrayTwo);
+    }
+
+}
