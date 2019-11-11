@@ -48,6 +48,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-238" dev="kinow" type="fix">
         Return copied byte arrays in Png Chunk and Png Chunk ICCP
       </action>
+      <action issue="IMAGING-239" dev="kinow" type="add" due-to="Paul Austin">
+        Add inflate (deflate algorithm) to TIFF files
+      </action>
       <action issue="IMAGING-164" dev="kinow" type="add" due-to="Michael Groß">
         Simplify code in IcoImageParser::writeImage
       </action>
