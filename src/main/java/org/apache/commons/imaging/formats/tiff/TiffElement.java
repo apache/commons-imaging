@@ -48,7 +48,7 @@ public abstract class TiffElement {
         }
 
         public byte[] getData() {
-            return data;
+            return data.clone();
         }
 
         public int getDataLength() {

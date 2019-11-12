@@ -105,11 +105,12 @@ public class JpegImageMetadata implements ImageMetadata {
 
             byte[] data = null;
             if (dir.getJpegImageData() != null) {
-                data = dir.getJpegImageData().getData(); // TODO clone?
+                data = dir.getJpegImageData().getData();
             }
             // Support other image formats here.
 
             if (data != null) {
+                // already cloned, safe to return this copy
                 return data;
             }
         }

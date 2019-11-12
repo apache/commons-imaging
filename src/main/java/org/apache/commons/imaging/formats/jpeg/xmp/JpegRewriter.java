@@ -90,7 +90,7 @@ public class JpegRewriter extends BinaryFileParser {
             this.marker = marker;
             this.markerBytes = markerBytes;
             this.segmentLengthBytes = segmentLengthBytes;
-            this.segmentData = segmentData; // TODO clone?
+            this.segmentData = segmentData.clone();
         }
 
         @Override
@@ -145,7 +145,7 @@ public class JpegRewriter extends BinaryFileParser {
         }
 
         public byte[] getSegmentData() {
-            return segmentData; // TODO clone?
+            return segmentData.clone();
         }
 
     }
