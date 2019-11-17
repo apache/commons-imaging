@@ -17,7 +17,7 @@
 
 package org.apache.commons.imaging.formats.tiff;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -34,8 +34,8 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.common.mylzw.MyLzwCompressor;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class TiffLzwTest extends TiffBaseTest {
 
@@ -58,7 +58,7 @@ public class TiffLzwTest extends TiffBaseTest {
         }
     }
 
-    @Ignore // FIXME fails with java.io.IOException: Bad Code: -1 codes: 258 code_size: 9, table: 4096
+    @Disabled // FIXME fails with java.io.IOException: Bad Code: -1 codes: 258 code_size: 9, table: 4096
     @Test
     public void testTiffImageData() throws IOException, ImageReadException {
         final List<File> images = getTiffImages();

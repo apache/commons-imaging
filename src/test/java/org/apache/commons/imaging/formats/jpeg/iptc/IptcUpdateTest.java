@@ -17,8 +17,8 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -26,10 +26,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -38,28 +38,21 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
 public class IptcUpdateTest extends IptcBaseTest {
-    private final File imageFile;
 
-    @Parameterized.Parameters
-    public static Collection<File> data() throws Exception {
-        return getImagesWithIptcData();
-    }
-
-    public IptcUpdateTest(final File imageFile) {
-        this.imageFile = imageFile;
+    public static Stream<File> data() throws Exception {
+        return getImagesWithIptcData().stream();
     }
 
     /*
      * Remove all Photoshop IPTC data from a JPEG file.
      */
-    @Test
-    public void testRemove() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testRemove(File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();
@@ -70,7 +63,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                 byteSource, params);
         assertNotNull(metadata);
 
-        final File noIptcFile = removeIptc(byteSource);
+        final File noIptcFile = removeIptc(byteSource, imageFile);
 
         final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
                 new ByteSourceFile(noIptcFile), params);
@@ -80,7 +73,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                 || outMetadata.getItems().size() == 0);
     }
 
-    public File removeIptc(final ByteSource byteSource) throws Exception {
+    public File removeIptc(final ByteSource byteSource, File imageFile) throws Exception {
         final File noIptcFile = createTempFile(imageFile.getName() + ".iptc.remove.", ".jpg");
 
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(noIptcFile))) {
@@ -89,8 +82,9 @@ public class IptcUpdateTest extends IptcBaseTest {
         return noIptcFile;
     }
 
-    @Test
-    public void testInsert() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testInsert(File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();
@@ -101,7 +95,7 @@ public class IptcUpdateTest extends IptcBaseTest {
                 byteSource, params);
         assertNotNull(metadata);
 
-        final File noIptcFile = removeIptc(byteSource);
+        final File noIptcFile = removeIptc(byteSource, imageFile);
 
         final List<IptcBlock> newBlocks = new ArrayList<>();
         final List<IptcRecord> newRecords = new ArrayList<>();
@@ -129,8 +123,9 @@ public class IptcUpdateTest extends IptcBaseTest {
         assertTrue(outMetadata.getItems().size() == 2);
     }
 
-    @Test
-    public void testUpdate() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testUpdate(File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();
@@ -150,7 +145,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords,
                 newBlocks);
 
-        final File updated = writeIptc(byteSource, newData);
+        final File updated = writeIptc(byteSource, newData, imageFile);
 
         final ByteSource updateByteSource = new ByteSourceFile(updated);
         final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(
@@ -160,7 +155,7 @@ public class IptcUpdateTest extends IptcBaseTest {
         assertTrue(outMetadata.getItems().size() == 2);
     }
 
-    public File writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData) throws IOException, ImageReadException, ImageWriteException {
+    public File writeIptc(final ByteSource byteSource, final PhotoshopApp13Data newData, File imageFile) throws IOException, ImageReadException, ImageWriteException {
         final File updated = createTempFile(imageFile.getName()
                 + ".iptc.update.", ".jpg");
         try (FileOutputStream fos = new FileOutputStream(updated);
@@ -170,8 +165,9 @@ public class IptcUpdateTest extends IptcBaseTest {
         return updated;
     }
 
-    @Test
-    public void testNoChangeUpdate() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testNoChangeUpdate(File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();
@@ -196,7 +192,7 @@ public class IptcUpdateTest extends IptcBaseTest {
 
         final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords, newBlocks);
 
-        final File updated = writeIptc(byteSource, newData);
+        final File updated = writeIptc(byteSource, newData, imageFile);
 
         final ByteSource updateByteSource = new ByteSourceFile(updated);
         final JpegPhotoshopMetadata outMetadata = new JpegImageParser().getPhotoshopMetadata(updateByteSource, params);

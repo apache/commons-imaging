@@ -16,7 +16,7 @@
 
 package org.apache.commons.imaging.formats.jpeg.specific;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,7 +26,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.decoder.JpegDecoderTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Basic tests for JpegImageParser.

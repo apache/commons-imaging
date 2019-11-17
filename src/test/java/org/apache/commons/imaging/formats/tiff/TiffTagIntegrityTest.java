@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.WangTagConstants;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TiffTagIntegrityTest extends ImagingTest {
 
@@ -108,11 +108,11 @@ public class TiffTagIntegrityTest extends ImagingTest {
         Collections.sort(fieldTags);
         final Set<Integer> allTagSet = new TreeSet<>();
         for (final TagInfo tagInfo : allTags) {
-            assertTrue("Missing field " + tagInfo.tag, Collections.binarySearch(fieldTags, tagInfo.tag) >= 0);
+            assertTrue(Collections.binarySearch(fieldTags, tagInfo.tag) >= 0);
             allTagSet.add(tagInfo.tag);
         }
         for (final Integer tag : fieldTags) {
-            assertTrue("Missing tag " + tag, allTagSet.contains(tag));
+            assertTrue(allTagSet.contains(tag));
         }
     }
 }

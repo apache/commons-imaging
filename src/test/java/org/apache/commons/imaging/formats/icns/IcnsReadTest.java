@@ -17,49 +17,45 @@
 
 package org.apache.commons.imaging.formats.icns;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-@RunWith(Parameterized.class)
 public class IcnsReadTest extends IcnsBaseTest {
 
-    private final File imageFile;
-
-    @Parameterized.Parameters
-    public static Collection<File> data() throws Exception {
-        return getIcnsImages();
+    public static Stream<File> data() throws Exception {
+        return getIcnsImages().stream();
     }
 
-    public IcnsReadTest(final File imageFile) {
-        this.imageFile = imageFile;
+    @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testImageMetadata(File imageFile) throws Exception {
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            Imaging.getMetadata(imageFile);
+        });
     }
 
-    @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
-    @Test(expected = UnsupportedOperationException.class)
-    public void testImageMetadata() throws Exception {
-        Imaging.getMetadata(imageFile);
-    }
-
-    @Test
-    public void testImageInfo() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testImageInfo(File imageFile) throws Exception {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
         assertNotNull(imageInfo);
     }
 
-    @Test
-    public void testBufferedImage() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testBufferedImage(File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more

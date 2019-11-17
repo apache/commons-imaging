@@ -22,7 +22,8 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the JpegDecoder.
@@ -35,13 +36,15 @@ public class JpegDecoderTest {
      * @throws IOException
      * @throws ImageReadException
      */
-    @Test(expected = ImageReadException.class, timeout = 2000)
+    @Test
     public void testDecodeBadFile() throws ImageReadException, IOException {
         // From IMAGING-220
         final File inputFile = new File(
                 JpegDecoderTest.class.getResource("/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg")
                         .getFile());
         final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
-        new JpegDecoder().decode(byteSourceFile);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            new JpegDecoder().decode(byteSourceFile);
+        });
     }
 }

@@ -17,18 +17,21 @@
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.nio.ByteOrder;
 
 public class FieldTypeByteTest{
 
-  @Test(expected = ImageWriteException.class)
+  @Test
   public void testWriteDataWithNull() throws ImageWriteException {
       final FieldTypeByte fieldTypeByte = FieldType.UNDEFINED;
       final ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
-      fieldTypeByte.writeData( null, byteOrder);
+      Assertions.assertThrows(ImageWriteException.class, () -> {
+          fieldTypeByte.writeData( null, byteOrder);          
+      });
   }
 
 }

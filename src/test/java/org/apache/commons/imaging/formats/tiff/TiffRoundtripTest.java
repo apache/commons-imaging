@@ -17,7 +17,7 @@
 
 package org.apache.commons.imaging.formats.tiff;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,7 +32,7 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TiffRoundtripTest extends TiffBaseTest {
 

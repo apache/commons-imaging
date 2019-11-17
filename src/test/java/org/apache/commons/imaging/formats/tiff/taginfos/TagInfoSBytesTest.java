@@ -17,11 +17,11 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.ByteOrder;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class TagInfoSBytesTest{
 

@@ -16,13 +16,14 @@
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link FieldTypeAscii}.
@@ -31,15 +32,16 @@ import org.junit.Test;
  **/
 public class FieldTypeAsciiTest {
 
-  @Test(expected = ImageWriteException.class)
+  @Test
   public void testCreatesFieldTypeAsciiAndCallsWriteData() throws ImageWriteException {
       FieldTypeAscii fieldTypeAscii = new FieldTypeAscii(0, "1");
       byte[] byteArray = new byte[1];
       ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
       TiffField tiffField = new TiffField(0, 0, fieldTypeAscii, 0L, 0, byteArray, byteOrder, 1);
 
-      fieldTypeAscii.writeData(tiffField, byteOrder);
-
+      Assertions.assertThrows(ImageWriteException.class, () -> {
+          fieldTypeAscii.writeData(tiffField, byteOrder);
+      });
   }
 
   @Test

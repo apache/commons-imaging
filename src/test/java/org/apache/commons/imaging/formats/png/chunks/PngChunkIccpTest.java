@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.png.chunks;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -28,7 +28,8 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link PngChunkIccp}.
@@ -37,10 +38,12 @@ public class PngChunkIccpTest {
 
     private static final int chunkType = 1766015824;
 
-    @Test(expected = ImageReadException.class)
+    @Test
     public void testErrorOnNoProfileName() throws ImageReadException, IOException {
         final byte[] data = new byte[0];
-        new PngChunkIccp(0, chunkType, 0, data);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            new PngChunkIccp(0, chunkType, 0, data);
+        });
     }
 
     @Test

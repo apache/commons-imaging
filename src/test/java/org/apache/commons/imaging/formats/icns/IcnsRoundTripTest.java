@@ -17,8 +17,8 @@
 
 package org.apache.commons.imaging.formats.icns;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -31,7 +31,7 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FileUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class IcnsRoundTripTest extends IcnsBaseTest {
     // 16x16 test image
@@ -370,7 +370,7 @@ public class IcnsRoundTripTest extends IcnsBaseTest {
             } catch (final ImageReadException imageReadException) {
                 threw = true;
             }
-            assertTrue("ICNS file with corrupt mask didn't fail to parse", threw);
+            assertTrue(threw);
         }
     }
 

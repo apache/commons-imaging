@@ -27,13 +27,9 @@ import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 public class TextFieldTest extends SpecificExifTagTest {
-
-    public TextFieldTest(final File imageFile) {
-        super(imageFile);
-    }
 
     @Override
     protected void checkField(final File imageFile, final TiffField field)
@@ -52,7 +48,7 @@ public class TextFieldTest extends SpecificExifTagTest {
 
         try {
             final Object textFieldValue = field.getValue();
-            Assert.assertNotNull(textFieldValue);
+            Assertions.assertNotNull(textFieldValue);
             // TODO what else to assert?
         } catch (final ImageReadException e) {
             Debug.debug("imageFile", imageFile.getAbsoluteFile());

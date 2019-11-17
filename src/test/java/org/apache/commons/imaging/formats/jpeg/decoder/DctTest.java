@@ -17,9 +17,9 @@
 
 package org.apache.commons.imaging.formats.jpeg.decoder;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DctTest {
 
@@ -33,23 +33,20 @@ public class DctTest {
         final float[] transformed = REFERENCE_forwardDCT(originalData);
         final float[] reversed = REFERENCE_inverseDCT(transformed);
         for (int i = 0; i < 8; i++) {
-            assertEquals("Reference transforms broken, at x=" + i,
-                    originalData[i], reversed[i], 0.001);
+            assertEquals(originalData[i], reversed[i], 0.001);
         }
 
         final float[] data = originalData.clone();
         Dct.forwardDCT8(data);
         Dct.scaleQuantizationVector(data);
         for (int i = 0; i < 8; i++) {
-            assertEquals("Forward transform broken, at x=" + i, data[i],
-                    transformed[i], 0.001);
+            assertEquals(data[i], transformed[i], 0.001);
         }
 
         Dct.scaleDequantizationVector(data);
         Dct.inverseDCT8(data);
         for (int i = 0; i < 8; i++) {
-            assertEquals("Inverse transform broken, at x=" + i, data[i],
-                    originalData[i], 0.001);
+            assertEquals(data[i], originalData[i], 0.001);
         }
     }
 
@@ -69,8 +66,7 @@ public class DctTest {
         final float[][] reversed8x8 = REFERENCE_inverseDCT(transformed8x8);
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                assertEquals("Reference transforms broken, at x=" + x + ",y="
-                        + y, originalData8x8[y][x], reversed8x8[y][x], 0.001);
+                assertEquals(originalData8x8[y][x], reversed8x8[y][x], 0.001);
             }
         }
 
@@ -79,8 +75,7 @@ public class DctTest {
         Dct.scaleQuantizationMatrix(data);
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                assertEquals("Forward transform broken, at x=" + x + ",y=" + y,
-                        transformed8x8[y][x], data[8 * y + x], 0.001);
+                assertEquals(transformed8x8[y][x], data[8 * y + x], 0.001);
             }
         }
 
@@ -88,8 +83,7 @@ public class DctTest {
         Dct.inverseDCT8x8(data);
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                assertEquals("Inverse transform broken, at x=" + x + ",y=" + y,
-                        originalData8x8[y][x], data[8 * y + x], 0.001);
+                assertEquals(originalData8x8[y][x], data[8 * y + x], 0.001);
             }
         }
     }

@@ -16,14 +16,14 @@
  */
 package org.apache.commons.imaging.palette;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link Dithering}.

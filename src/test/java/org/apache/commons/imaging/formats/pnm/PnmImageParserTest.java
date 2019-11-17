@@ -30,11 +30,12 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PnmImageParserTest {
 
@@ -80,27 +81,33 @@ public class PnmImageParserTest {
      * If an invalid width is specified, should throw {@link ImageReadException} rather than
      * {@link NumberFormatException}.
      */
-    @Test(expected = ImageReadException.class)
+    @Test
     public void testGetImageInfo_invalidWidth() throws ImageReadException, IOException {
         final byte[] bytes = "P1\na 2\n0 0 0 0 0 0 0 0 0 0 0\n1 1 1 1 1 1 1 1 1 1 1\n".getBytes(US_ASCII);
         final Map<String, Object> params = Collections.emptyMap();
         final PnmImageParser underTest = new PnmImageParser();
-        underTest.getImageInfo(bytes, params);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            underTest.getImageInfo(bytes, params);
+        });
     }
 
-    @Test(expected = ImageReadException.class)
+    @Test
     public void testGetImageInfo_invalidHeight() throws ImageReadException, IOException {
         final byte[] bytes = "P1\n2 a\n0 0\n0 0\n0 0\n0 0\n0 0\n0 1\n1 1\n1 1\n1 1\n1 1\n1 1\n".getBytes(US_ASCII);
         final Map<String, Object> params = Collections.emptyMap();
         final PnmImageParser underTest = new PnmImageParser();
-        underTest.getImageInfo(bytes, params);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            underTest.getImageInfo(bytes, params);
+        });
     }
 
-    @Test(expected = ImageReadException.class)
+    @Test
     public void testGetImageInfo_missingWidthValue() throws ImageReadException, IOException {
         final byte[] bytes = "P7\nWIDTH \n".getBytes(US_ASCII);
         final Map<String, Object> params = Collections.emptyMap();
         final PnmImageParser underTest = new PnmImageParser();
-        underTest.getImageInfo(bytes, params);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            underTest.getImageInfo(bytes, params);
+        });
     }
 }

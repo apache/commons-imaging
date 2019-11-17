@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.rgbe;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -31,7 +31,8 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class RgbeReadTest extends RgbeBaseTest {
 
@@ -62,7 +63,7 @@ public class RgbeReadTest extends RgbeBaseTest {
      * @throws ImageReadException
      * @throws IOException
      */
-    @Test(expected = ImageReadException.class, timeout = 2000)
+    @Test
     public void testErrorDecompressingInvalidFile() throws ImageReadException, IOException {
         // From IMAGING-219
         final File inputFile = new File(
@@ -70,6 +71,8 @@ public class RgbeReadTest extends RgbeBaseTest {
                         .getFile());
         final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
         final Map<String, Object> params = Collections.<String, Object>emptyMap();
-        new RgbeImageParser().getBufferedImage(byteSourceFile, params);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            new RgbeImageParser().getBufferedImage(byteSourceFile, params);
+        });
     }
 }

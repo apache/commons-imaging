@@ -16,12 +16,13 @@
  */
 package org.apache.commons.imaging.formats.tiff.fieldtypes;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageWriteException;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link FieldTypeRational}.
@@ -39,13 +40,13 @@ public class FieldTypeRationalTest {
       assertArrayEquals(new byte[] {(byte)11, (byte)0, (byte)0, (byte)0, (byte)5, (byte)0, (byte)0, (byte)0}, byteArray);
   }
 
-  @Test(expected = ImageWriteException.class)
+  @Test
   public void testWriteDataWithNonNull() throws ImageWriteException {
       FieldTypeRational fieldTypeRational = new FieldTypeRational((-922), "z_AX");
       ByteOrder byteOrder = ByteOrder.nativeOrder();
-
-      fieldTypeRational.writeData("z_AX", byteOrder);
-
+      Assertions.assertThrows(ImageWriteException.class, () -> {
+          fieldTypeRational.writeData("z_AX", byteOrder);
+      });
   }
 
 }

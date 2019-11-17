@@ -24,8 +24,8 @@ import java.util.Collections;
 
 import javax.imageio.ImageIO;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class IptcFullDiscardTest {
 
@@ -57,7 +57,7 @@ public class IptcFullDiscardTest {
         final byte[] originalImage = generateImage();
         final byte[] taggedImage = addMetaData(originalImage);
         final byte[] untaggedImage = removeMetaData(taggedImage, false);
-        Assert.assertEquals(18, untaggedImage.length - originalImage.length);
+        Assertions.assertEquals(18, untaggedImage.length - originalImage.length);
     }
 
     @Test
@@ -65,6 +65,6 @@ public class IptcFullDiscardTest {
         final byte[] originalImage = generateImage();
         final byte[] taggedImage = addMetaData(originalImage);
         final byte[] untaggedImage = removeMetaData(taggedImage, true);
-        Assert.assertEquals(originalImage.length, untaggedImage.length);
+        Assertions.assertEquals(originalImage.length, untaggedImage.length);
     }
 }

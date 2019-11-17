@@ -15,12 +15,12 @@
 
 package org.apache.commons.imaging.common;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImagingTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BinaryFileFunctionsTest extends ImagingTest {
 

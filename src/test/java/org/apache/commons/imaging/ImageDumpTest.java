@@ -16,12 +16,12 @@
  */
 package org.apache.commons.imaging;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ImageDumpTest {
 

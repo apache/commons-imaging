@@ -17,10 +17,10 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -39,7 +39,7 @@ import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.GenericImageMetadata;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.io.FileUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PngWriteReadTest extends ImagingTest {
     // public PngWriteReadTest(String name)
@@ -130,9 +130,9 @@ public class PngWriteReadTest extends ImagingTest {
               ImageFormats.PNG, optionalParams);
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
         final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
-        assertTrue("Invalid units", physicalScale.isInMeters());
-        assertEquals("Invalid horizontal units", 0.01, physicalScale.getHorizontalUnitsPerPixel(), 0.001);
-        assertEquals("Invalid vertical units", 0.02, physicalScale.getVerticalUnitsPerPixel(), 0.001);
+        assertTrue(physicalScale.isInMeters());
+        assertEquals(0.01, physicalScale.getHorizontalUnitsPerPixel(), 0.001);
+        assertEquals(0.02, physicalScale.getVerticalUnitsPerPixel(), 0.001);
     }
 
     @Test
@@ -146,9 +146,9 @@ public class PngWriteReadTest extends ImagingTest {
               ImageFormats.PNG, optionalParams);
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(pngBytes);
         final PhysicalScale physicalScale = imageInfo.getPhysicalScale();
-        assertTrue("Invalid units", physicalScale.isInRadians());
-        assertEquals("Invalid horizontal units", 0.01, physicalScale.getHorizontalUnitsPerPixel(), 0.001);
-        assertEquals("Invalid vertical units", 0.02, physicalScale.getVerticalUnitsPerPixel(), 0.001);
+        assertTrue(physicalScale.isInRadians());
+        assertEquals(0.01, physicalScale.getHorizontalUnitsPerPixel(), 0.001);
+        assertEquals(0.02, physicalScale.getVerticalUnitsPerPixel(), 0.001);
     }
 
     private BufferedImage imageDataToBufferedImage(final int[][] rawData) {

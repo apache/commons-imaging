@@ -18,18 +18,18 @@ package org.apache.commons.imaging.color;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ColorXyzTest {
 
     private ColorXyz color;
     private ColorXyz colorCopy;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         color = new ColorXyz(1.0, 2.0, 3.0);
         colorCopy = new ColorXyz(1.0, 2.0, 3.0);
