@@ -396,7 +396,7 @@ public class PsdImageParser extends ImageParser {
         if ((bytes == null) || (bytes.length < 1)) {
             return null;
         }
-        return bytes; // TODO clone?
+        return bytes.clone();
     }
 
     @Override
@@ -507,19 +507,6 @@ public class PsdImageParser extends ImageParser {
                 physicalWidthInch, width, progressive, transparent,
                 usesPalette, colorType, compressionAlgorithm);
     }
-
-//    // TODO not used
-//    private ImageResourceBlock findImageResourceBlock(
-//            final List<ImageResourceBlock> blocks, final int ID) {
-//        for (int i = 0; i < blocks.size(); i++) {
-//            final ImageResourceBlock block = blocks.get(i);
-//
-//            if (block.id == ID) {
-//                return block;
-//            }
-//        }
-//        return null;
-//    }
 
     @Override
     public boolean dumpImageFile(final PrintWriter pw, final ByteSource byteSource)

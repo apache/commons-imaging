@@ -25,7 +25,7 @@ public abstract class TransparencyFilter extends BinaryFileParser {
     private final byte[] bytes;
 
     public TransparencyFilter(final byte[] bytes) {
-        this.bytes = bytes; // TODO clone?
+        this.bytes = bytes.clone();
 
     }
 

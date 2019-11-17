@@ -87,13 +87,6 @@ public class App2Segment extends AppnSegment implements Comparable<App2Segment> 
      * @return the iccBytes
      */
     public byte[] getIccBytes() {
-        return iccBytes; // TODO clone?
+        return iccBytes.clone();
     }
-
-    // public String getDescription()
-    // {
-    // return "APPN (APP"
-    // + (marker - JpegImageParser.JPEG_APP0)
-    // + ") (" + getDescription() + ")";
-    // }
 }
