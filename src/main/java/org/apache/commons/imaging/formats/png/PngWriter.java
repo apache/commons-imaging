@@ -59,7 +59,7 @@ class PngWriter {
     }
 
     private void writeChunk(final OutputStream os, final ChunkType chunkType,
-                            final byte[] data) throws IOException {
+            final byte[] data) throws IOException {
         final int dataLength = data == null ? 0 : data.length;
         writeInt(os, dataLength);
         os.write(chunkType.array);
@@ -87,8 +87,8 @@ class PngWriter {
         public final InterlaceMethod interlaceMethod;
 
         ImageHeader(final int width, final int height, final byte bitDepth,
-                    final PngColorType pngColorType, final byte compressionMethod, final byte filterMethod,
-                    final InterlaceMethod interlaceMethod) {
+                final PngColorType pngColorType, final byte compressionMethod, final byte filterMethod,
+                final InterlaceMethod interlaceMethod) {
             this.width = width;
             this.height = height;
             this.bitDepth = bitDepth;
@@ -280,7 +280,7 @@ class PngWriter {
     }
 
     private void writeChunkSCAL(final OutputStream os, final double xUPP, final double yUPP, final byte units)
-            throws IOException {
+          throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // unit specifier
@@ -459,10 +459,10 @@ class PngWriter {
         }
 
         //{
-        // sRGB No Before PLTE and IDAT. If the sRGB chunk is present, the
-        // iCCP chunk should not be present.
+            // sRGB No Before PLTE and IDAT. If the sRGB chunk is present, the
+            // iCCP chunk should not be present.
 
-        // charles
+            // charles
         //}
 
         Palette palette = null;
@@ -501,7 +501,7 @@ class PngWriter {
         if (physcialScaleObj instanceof PhysicalScale) {
             final PhysicalScale physicalScale = (PhysicalScale)physcialScaleObj;
             writeChunkSCAL(os, physicalScale.getHorizontalUnitsPerPixel(), physicalScale.getVerticalUnitsPerPixel(),
-                    physicalScale.isInMeters() ? (byte) 1 : (byte) 2);
+                  physicalScale.isInMeters() ? (byte) 1 : (byte) 2);
         }
 
         if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
@@ -647,6 +647,6 @@ class PngWriter {
 
         os.close();
     } // todo: filter types
-    // proper colour types
-    // srgb, etc.
+      // proper colour types
+      // srgb, etc.
 }
