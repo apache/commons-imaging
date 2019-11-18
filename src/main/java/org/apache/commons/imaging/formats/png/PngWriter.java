@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.imaging.ImageWriteException;
@@ -588,8 +589,10 @@ class PngWriter {
             // Debug.debug("uncompressed", uncompressed.length);
 
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
             final int chunkSize = 256 * 1024;
+            Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION);
+            final DeflaterOutputStream dos = new DeflaterOutputStream(baos,deflater,chunkSize);
+
             for (int index = 0; index < uncompressed.length; index += chunkSize) {
                 final int end = Math.min(uncompressed.length, index + chunkSize);
                 final int length = end - index;
