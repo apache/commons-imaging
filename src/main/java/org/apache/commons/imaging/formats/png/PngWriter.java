@@ -59,7 +59,7 @@ class PngWriter {
     }
 
     private void writeChunk(final OutputStream os, final ChunkType chunkType,
-            final byte[] data) throws IOException {
+                            final byte[] data) throws IOException {
         final int dataLength = data == null ? 0 : data.length;
         writeInt(os, dataLength);
         os.write(chunkType.array);
@@ -87,8 +87,8 @@ class PngWriter {
         public final InterlaceMethod interlaceMethod;
 
         ImageHeader(final int width, final int height, final byte bitDepth,
-                final PngColorType pngColorType, final byte compressionMethod, final byte filterMethod,
-                final InterlaceMethod interlaceMethod) {
+                    final PngColorType pngColorType, final byte compressionMethod, final byte filterMethod,
+                    final InterlaceMethod interlaceMethod) {
             this.width = width;
             this.height = height;
             this.bitDepth = bitDepth;
@@ -280,7 +280,7 @@ class PngWriter {
     }
 
     private void writeChunkSCAL(final OutputStream os, final double xUPP, final double yUPP, final byte units)
-          throws IOException {
+            throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // unit specifier
@@ -459,30 +459,26 @@ class PngWriter {
         }
 
         //{
-            // sRGB No Before PLTE and IDAT. If the sRGB chunk is present, the
-            // iCCP chunk should not be present.
+        // sRGB No Before PLTE and IDAT. If the sRGB chunk is present, the
+        // iCCP chunk should not be present.
 
-            // charles
+        // charles
         //}
 
         Palette palette = null;
         if (pngColorType == PngColorType.INDEXED_COLOR) {
             // PLTE No Before first IDAT
 
-            final int maxColors = hasAlpha ? 255 : 256;
+            final int maxColors = 256;
 
             final PaletteFactory paletteFactory = new PaletteFactory();
-            palette = paletteFactory.makeQuantizedRgbPalette(src, maxColors);
-            // Palette palette2 = new PaletteFactory().makePaletteSimple(src,
-            // maxColors);
-
-            // palette.dump();
 
             if (hasAlpha) {
-                palette = new TransparentPalette(palette);
+                palette = paletteFactory.makeQuantizedRgbaPalette(src, true,maxColors);
                 writeChunkPLTE(os, palette);
-                writeChunkTRNS(os, new SimplePalette(new int[] { 0x00000000 }));
+                writeChunkTRNS(os, palette);
             } else {
+                palette = paletteFactory.makeQuantizedRgbPalette(src, maxColors);
                 writeChunkPLTE(os, palette);
             }
         }
@@ -505,7 +501,7 @@ class PngWriter {
         if (physcialScaleObj instanceof PhysicalScale) {
             final PhysicalScale physicalScale = (PhysicalScale)physcialScaleObj;
             writeChunkSCAL(os, physicalScale.getHorizontalUnitsPerPixel(), physicalScale.getVerticalUnitsPerPixel(),
-                  physicalScale.isInMeters() ? (byte) 1 : (byte) 2);
+                    physicalScale.isInMeters() ? (byte) 1 : (byte) 2);
         }
 
         if (params.containsKey(ImagingConstants.PARAM_KEY_XMP_XML)) {
@@ -552,12 +548,8 @@ class PngWriter {
                         final int argb = row[x];
 
                         if (palette != null) {
-                            if (hasAlpha && (argb >>> 24) == 0x00) {
-                                baos.write(0);
-                            } else {
-                                final int index = palette.getPaletteIndex(argb);
-                                baos.write(0xff & index);
-                            }
+                            final int index = palette.getPaletteIndex(argb);
+                            baos.write(0xff & index);
                         } else {
                             final int alpha = 0xff & (argb >> 24);
                             final int red = 0xff & (argb >> 16);
@@ -653,6 +645,6 @@ class PngWriter {
 
         os.close();
     } // todo: filter types
-      // proper colour types
-      // srgb, etc.
+    // proper colour types
+    // srgb, etc.
 }
