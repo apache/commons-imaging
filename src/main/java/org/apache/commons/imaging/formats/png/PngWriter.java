@@ -33,7 +33,6 @@ import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
-import org.apache.commons.imaging.palette.SimplePalette;
 
 class PngWriter {
 
