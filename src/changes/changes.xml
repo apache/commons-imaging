@@ -45,7 +45,7 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha2" date="2019-??-??" description="Second 1.0 alpha release">
-      <action issue="241" dev="kinow" type="fix">
+      <action issue="IMAGING-241" dev="kinow" type="fix">
         Copy byte arrays fixing TODO markers
       </action>
       <action issue="IMAGING-136" dev="kinow" type="fix" due-to="Michael Groß">
