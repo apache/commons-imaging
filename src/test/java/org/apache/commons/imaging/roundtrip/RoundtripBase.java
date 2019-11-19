@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.roundtrip;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,15 +30,12 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
-
-import static org.junit.Assert.assertNotNull;
+import org.junit.jupiter.api.io.TempDir;
 
 public class RoundtripBase {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public File folder;
 
     protected void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage,
                              final String tempPrefix, final boolean imageExact) throws IOException,
@@ -72,7 +71,7 @@ public class RoundtripBase {
 
     protected File createTempFile(final String prefix, final String suffix)
             throws IOException {
-        return File.createTempFile(prefix, suffix, folder.newFolder());
+        return File.createTempFile(prefix, suffix, folder);
     }
 
 }

@@ -27,7 +27,8 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.examples.ImageReadExample.ManagedImageBufferedImageFactory;
 import org.apache.commons.imaging.formats.jpeg.JpegWithInvalidDhtSegmentTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for PNG files with invalid chunk sizes.
@@ -41,13 +42,15 @@ public class PngWithInvalidPngChunkSizeTest {
 	 * @throws IOException        if it fails to read from the input source
 	 * @throws ImageReadException if it fails to read the image
 	 */
-	@Test(expected = ImageReadException.class)
+	@Test
 	public void testPngWithInvalidPngChunkSize() throws IOException, ImageReadException {
 		final File imageFile = new File(
 				JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-211/testfile_2.png").getFile());
 		final Map<String, Object> params = new HashMap<>();
 		params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY, new ManagedImageBufferedImageFactory());
-		Imaging.getBufferedImage(imageFile, params);
+		Assertions.assertThrows(ImageReadException.class, () -> {
+		    Imaging.getBufferedImage(imageFile, params);
+		});
 	}
 
 	/**
@@ -57,12 +60,14 @@ public class PngWithInvalidPngChunkSizeTest {
      * @throws IOException        if it fails to read from the input source
      * @throws ImageReadException if it fails to read the image
      */
-    @Test(expected = ImageReadException.class)
+    @Test
     public void testPngWithInvalidNegativePngChunkSize() throws IOException, ImageReadException {
         final File imageFile = new File(
                 JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-210/testfile.png").getFile());
         final Map<String, Object> params = new HashMap<>();
         params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY, new ManagedImageBufferedImageFactory());
-        Imaging.getBufferedImage(imageFile, params);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            Imaging.getBufferedImage(imageFile, params);
+        });
     }
 }

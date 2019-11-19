@@ -16,15 +16,16 @@
  */
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterLogLuv.TristimulusValues;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PhotometricInterpreterLogLuvTest {
 
@@ -36,7 +37,7 @@ public class PhotometricInterpreterLogLuvTest {
     private int width = 800;
     private int height = 600;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         p = new PhotometricInterpreterLogLuv(samplesPerPixel, bitsPerSample, predictor,
                 width, height);
@@ -87,14 +88,18 @@ public class PhotometricInterpreterLogLuvTest {
         assertEquals(23, p.getRgbValues(triValues).b);
     }
 
-    @Test(expected=ImageReadException.class)
+    @Test
     public void testInterpretPixelNullSamples() throws ImageReadException, IOException {
-        p.interpretPixel(null, null, 0, 0);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            p.interpretPixel(null, null, 0, 0);
+        });
     }
 
-    @Test(expected=ImageReadException.class)
+    @Test
     public void testInterpretPixelEmptySamples() throws ImageReadException, IOException {
-        p.interpretPixel(null, new int[] {}, 0, 0);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            p.interpretPixel(null, new int[] {}, 0, 0);
+        });
     }
 
     @Test

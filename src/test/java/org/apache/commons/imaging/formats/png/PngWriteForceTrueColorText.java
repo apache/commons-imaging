@@ -17,7 +17,7 @@
 
 package org.apache.commons.imaging.formats.png;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,7 +28,7 @@ import java.util.Map;
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PngWriteForceTrueColorText extends PngBaseTest {
 

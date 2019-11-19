@@ -16,21 +16,26 @@
  */
 package org.apache.commons.imaging.formats.pnm;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PgmFileInfoTest {
 
-    @Test(expected = ImageReadException.class)
+    @Test
     public void testCreateThrowsImageReadExceptionOne() throws ImageReadException {
-        new PgmFileInfo(16711680, 16711680, false, 16711680);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            new PgmFileInfo(16711680, 16711680, false, 16711680);
+        });
     }
 
-    @Test(expected = ImageReadException.class)
+    @Test
     public void testCreateThrowsImageReadExceptionTwo() throws ImageReadException {
-        new PgmFileInfo(0, 0, true, 0);
+        Assertions.assertThrows(ImageReadException.class, () -> {
+            new PgmFileInfo(0, 0, true, 0);
+        });
     }
 
     @Test

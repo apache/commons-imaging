@@ -17,20 +17,20 @@
 
 package org.apache.commons.imaging.common.bytesource;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageFormat;
 import org.apache.commons.imaging.ImageFormats;
@@ -40,26 +40,18 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FileUtils;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
 public class ByteSourceImageTest extends ByteSourceTest {
 
-    private final File imageFile;
-
-    @Parameterized.Parameters
-    public static Collection<File> data() throws Exception {
-        return getTestImages();
+    public static Stream<File> data() throws Exception {
+        return getTestImages().stream();
     }
 
-    public ByteSourceImageTest(final File imageFile) {
-        this.imageFile = imageFile;
-    }
-
-    @Test
-    public void test() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void test(File imageFile) throws Exception {
         Debug.debug("imageFile", imageFile);
         assertNotNull(imageFile);
 

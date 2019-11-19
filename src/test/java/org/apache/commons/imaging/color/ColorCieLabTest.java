@@ -16,20 +16,20 @@
  */
 package org.apache.commons.imaging.color;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ColorCieLabTest {
 
     private ColorCieLab color;
     private ColorCieLab colorCopy;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         color = new ColorCieLab(1.0, 2.0, 3.0);
         colorCopy = new ColorCieLab(1.0, 2.0, 3.0);

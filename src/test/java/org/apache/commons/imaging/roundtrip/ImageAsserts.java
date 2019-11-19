@@ -17,7 +17,7 @@
 
 package org.apache.commons.imaging.roundtrip;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -25,7 +25,7 @@ import java.io.IOException;
 
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 final class ImageAsserts {
 
@@ -37,8 +37,8 @@ final class ImageAsserts {
     }
 
     static void assertEquals(final BufferedImage a, final BufferedImage b, final int tolerance) {
-        Assert.assertEquals(a.getWidth(), b.getWidth());
-        Assert.assertEquals(a.getHeight(), b.getHeight());
+        Assertions.assertEquals(a.getWidth(), b.getWidth());
+        Assertions.assertEquals(a.getHeight(), b.getHeight());
 
         for (int x = 0; x < a.getWidth(); x++) {
             for (int y = 0; y < a.getHeight(); y++) {
@@ -58,7 +58,7 @@ final class ImageAsserts {
                     Debug.debug("a_argb: " + a_argb + " (0x" + Integer.toHexString(a_argb) + ")");
                     Debug.debug("b_argb: " + b_argb + " (0x" + Integer.toHexString(b_argb) + ")");
                 }
-                Assert.assertEquals(a_argb, b_argb);
+                Assertions.assertEquals(a_argb, b_argb);
             }
         }
     }
@@ -81,7 +81,7 @@ final class ImageAsserts {
     static void assertEquals(final File a, final File b) throws IOException {
         assertTrue(a.exists() && a.isFile());
         assertTrue(b.exists() && b.isFile());
-        Assert.assertEquals(a.length(), b.length());
+        Assertions.assertEquals(a.length(), b.length());
 
         final byte aData[] = FileUtils.readFileToByteArray(a);
         final byte bData[] = FileUtils.readFileToByteArray(b);
@@ -97,7 +97,7 @@ final class ImageAsserts {
                 Debug.debug("aByte: " + aByte + " (0x" + Integer.toHexString(aByte) + ")");
                 Debug.debug("bByte: " + bByte + " (0x" + Integer.toHexString(bByte) + ")");
             }
-            Assert.assertEquals(aByte, bByte);
+            Assertions.assertEquals(aByte, bByte);
         }
     }
 }

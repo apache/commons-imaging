@@ -19,21 +19,16 @@ package org.apache.commons.imaging.common;
 
 import java.text.NumberFormat;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
 public class RationalNumberTest extends ImagingTest {
 
-    private final double testValue;
-
-    @Parameterized.Parameters
-    public static Collection<Double> data() {
+    public static Stream<Double> data() {
         return Arrays.<Double> asList(
                 0d, //
                 0.1d, //
@@ -105,15 +100,12 @@ public class RationalNumberTest extends ImagingTest {
                 (double) -(Long.MAX_VALUE), //
                 -(Long.MAX_VALUE + 0.1), //
                 -(Long.MAX_VALUE - 0.1) //
-        );
+        ).stream();
     }
 
-    public RationalNumberTest(final double testValue) {
-        this.testValue = testValue;
-    }
-
-    @Test
-    public void testRationalNumber() {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testRationalNumber(double testValue) {
         final RationalNumber rational = RationalNumber.valueOf(testValue);
         final double difference = Math.abs(testValue - rational.doubleValue());
 

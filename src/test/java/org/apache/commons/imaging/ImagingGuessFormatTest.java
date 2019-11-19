@@ -17,18 +17,16 @@
 
 package org.apache.commons.imaging;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
 public class ImagingGuessFormatTest extends ImagingTest {
 
     public static final String BMP_IMAGE_FILE = "bmp\\1\\Oregon Scientific DS6639 - DSC_0307 - small.bmp";
@@ -45,11 +43,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
     public static final String TGA_IMAGE_FILE = "tga\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tga";
     public static final String UNKNOWN_IMAGE_FILE = "info.txt";
 
-    private final ImageFormats expectedFormat;
-    private final String pathToFile;
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
+    public static Stream<Object[]> data() {
         return Arrays.asList(
                 new Object[] { ImageFormats.PNG, PNG_IMAGE_FILE },
                 new Object[] { ImageFormats.GIF, GIF_IMAGE_FILE },
@@ -69,16 +63,12 @@ public class ImagingGuessFormatTest extends ImagingTest {
                 // new Object[] { ImageFormat.IMAGE_FORMAT_PNM, PNM_IMAGE_FILE },
                 // new Object[] { ImageFormat.IMAGE_FORMAT_JBIG2, JBIG2_IMAGE_FILE },
                 new Object[] { ImageFormats.UNKNOWN, UNKNOWN_IMAGE_FILE }
-        );
+        ).stream();
     }
 
-    public ImagingGuessFormatTest(final ImageFormats expectedFormat, final String pathToFile) {
-        this.expectedFormat = expectedFormat;
-        this.pathToFile = pathToFile;
-    }
-
-    @Test
-    public void testGuessFormat() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testGuessFormat(ImageFormats expectedFormat, String pathToFile) throws Exception {
         final String imagePath = FilenameUtils.separatorsToSystem(pathToFile);
         final File imageFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, imagePath);
 

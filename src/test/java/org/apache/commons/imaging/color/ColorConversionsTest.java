@@ -16,10 +16,10 @@
  */
 package org.apache.commons.imaging.color;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ColorConversionsTest {
     private static final int SAMPLE_RGBS[] = { 0xffffffff, 0xff000000,

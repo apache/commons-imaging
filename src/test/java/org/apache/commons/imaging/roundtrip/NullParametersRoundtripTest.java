@@ -17,24 +17,24 @@
 
 package org.apache.commons.imaging.roundtrip;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.Imaging;
-import org.junit.experimental.theories.DataPoints;
-import org.junit.experimental.theories.Theories;
-import org.junit.experimental.theories.Theory;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.Assert.assertNotNull;
-
-@RunWith(Theories.class)
 public class NullParametersRoundtripTest extends RoundtripBase {
 
-    @DataPoints
-    public static FormatInfo[] formatInfos = FormatInfo.READ_WRITE_FORMATS;
+    public static Stream<FormatInfo> data() {
+        return Stream.of(FormatInfo.READ_WRITE_FORMATS);
+    }
 
-    @Theory
+    @ParameterizedTest
+    @MethodSource("data")
     public void testNullParametersRoundtrip(final FormatInfo formatInfo) throws Exception {
         final BufferedImage testImage = TestImages.createFullColorImage(1, 1);
         final File temp1 = createTempFile("nullParameters.", "." + formatInfo.format.getExtension());

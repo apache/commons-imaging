@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.jpeg.exif;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -42,7 +42,7 @@ import org.apache.commons.imaging.formats.tiff.constants.MicrosoftTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MicrosoftTagTest extends ExifBaseTest {
     private static final String AUTHOR = "author";

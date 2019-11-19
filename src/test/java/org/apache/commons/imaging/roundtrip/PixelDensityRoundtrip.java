@@ -31,7 +31,7 @@ import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(Theories.class)
 public class PixelDensityRoundtrip extends RoundtripBase {
@@ -56,13 +56,9 @@ public class PixelDensityRoundtrip extends RoundtripBase {
             final int xReadDPI = imageInfo.getPhysicalWidthDpi();
             final int yReadDPI = imageInfo.getPhysicalHeightDpi();
             // allow a 5% margin of error in storage and conversion
-            assertTrue("horizontal pixel density stored wrongly for " + formatInfo.format +
-                            " in=" + pixelDensity.horizontalDensityInches() + ", out=" + xReadDPI,
-                    Math.abs((xReadDPI - pixelDensity.horizontalDensityInches()) /
+            assertTrue(Math.abs((xReadDPI - pixelDensity.horizontalDensityInches()) /
                             pixelDensity.horizontalDensityInches()) <= 0.05);
-            assertTrue("vertical pixel density stored wrongly for " + formatInfo.format +
-                            " in=" + pixelDensity.verticalDensityInches() + ", out=" + yReadDPI,
-                    Math.abs((yReadDPI - pixelDensity.verticalDensityInches()) /
+            assertTrue(Math.abs((yReadDPI - pixelDensity.verticalDensityInches()) /
                             pixelDensity.verticalDensityInches()) <= 0.05);
         }
     }

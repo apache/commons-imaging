@@ -17,7 +17,8 @@
 package org.apache.commons.imaging.formats.pnm;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link PpmFileInfo}.
@@ -26,14 +27,18 @@ import org.junit.Test;
  **/
 public class PpmFileInfoTest {
 
-  @Test(expected = ImageReadException.class)
+  @Test
   public void testCreatesPpmFileInfoOne() throws ImageReadException {
-      new PpmFileInfo(0, 0, false, 16711680);
+      Assertions.assertThrows(ImageReadException.class, () -> {
+          new PpmFileInfo(0, 0, false, 16711680);
+      });
   }
 
-  @Test(expected = ImageReadException.class)
+  @Test
   public void testCreatesPpmFileInfoThree() throws ImageReadException {
-      new PpmFileInfo(0, 0, true, 0);
+      Assertions.assertThrows(ImageReadException.class, () -> {
+          new PpmFileInfo(0, 0, true, 0);
+      });
   }
 
 }

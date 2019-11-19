@@ -16,18 +16,18 @@
  */
 package org.apache.commons.imaging.formats.tiff.write;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TiffOutputSetTest {
 
     private TiffOutputSet tiffOutputSet;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         tiffOutputSet = new TiffOutputSet();
     }

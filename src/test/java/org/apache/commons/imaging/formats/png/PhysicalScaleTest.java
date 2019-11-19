@@ -16,11 +16,11 @@
  */
 package org.apache.commons.imaging.formats.png;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PhysicalScaleTest {
    private static final double delta = 0.01;
@@ -29,19 +29,19 @@ public class PhysicalScaleTest {
    public void createFromMeters() {
       final PhysicalScale physicalScale = PhysicalScale.createFromMeters(1.0, 2.0);
 
-      assertTrue("Should be in meteres", physicalScale.isInMeters());
-      assertFalse("Should not be in radians", physicalScale.isInRadians());
-      assertEquals("Invalid horizontal units per pixel", physicalScale.getHorizontalUnitsPerPixel(), 1.0, delta);
-      assertEquals("Invalid vertical units per pixel", physicalScale.getVerticalUnitsPerPixel(), 2.0, delta);
+      assertTrue(physicalScale.isInMeters());
+      assertFalse(physicalScale.isInRadians());
+      assertEquals(physicalScale.getHorizontalUnitsPerPixel(), 1.0, delta);
+      assertEquals(physicalScale.getVerticalUnitsPerPixel(), 2.0, delta);
    }
 
    @Test
    public void createFromRadians() {
       final PhysicalScale physicalScale = PhysicalScale.createFromRadians(2.0, 1.0);
 
-      assertFalse("Should not be in meteres", physicalScale.isInMeters());
-      assertTrue("Should be in radians", physicalScale.isInRadians());
-      assertEquals("Invalid horizontal units per pixel", physicalScale.getHorizontalUnitsPerPixel(), 2.0, delta);
-      assertEquals("Invalid vertical units per pixel", physicalScale.getVerticalUnitsPerPixel(), 1.0, delta);
+      assertFalse(physicalScale.isInMeters());
+      assertTrue(physicalScale.isInRadians());
+      assertEquals(physicalScale.getHorizontalUnitsPerPixel(), 2.0, delta);
+      assertEquals(physicalScale.getVerticalUnitsPerPixel(), 1.0, delta);
    }
 }

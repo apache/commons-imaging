@@ -17,10 +17,10 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -49,8 +49,8 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ExifRewriteTest extends ExifBaseTest {
     // public ExifRewriteTest(String name)
@@ -77,7 +77,7 @@ public class ExifRewriteTest extends ExifBaseTest {
 
             {
                 final JpegImageMetadata metadata = (JpegImageMetadata) Imaging.getMetadata(imageFile);
-                Assert.assertNotNull(metadata);
+                Assertions.assertNotNull(metadata);
             }
 
             {
@@ -382,11 +382,8 @@ public class ExifRewriteTest extends ExifBaseTest {
                 if (!oldField.getTagInfo().isOffset()) {
                     if (oldField.getTagInfo().isText()) { /* do nothing */
                     } else if (oldField.isLocalValue()) {
-                        final String label = imageFile.getName() + ", dirType[" + i
-                                + "]=" + dirType + ", fieldTag[" + j + "]="
-                                + fieldTag;
                         if (oldField.getTag() == 0x116 || oldField.getTag() == 0x117) {
-                            assertEquals(label, oldField.getValue(), newField.getValue());
+                            assertEquals(oldField.getValue(), newField.getValue());
                         } else {
                             assertEquals(oldField.getBytesLength(), newField.getBytesLength());
                             assertArrayEquals(oldField.getByteArrayValue(), newField.getByteArrayValue());

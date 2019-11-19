@@ -17,7 +17,7 @@
 
 package org.apache.commons.imaging.formats.jpeg;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,7 +27,7 @@ import java.util.Map;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
 import org.apache.commons.imaging.common.ImageMetadata;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class JpegWithJpegThumbnailTest extends ImagingTest {
 

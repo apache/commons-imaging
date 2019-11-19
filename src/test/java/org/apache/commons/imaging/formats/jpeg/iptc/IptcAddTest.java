@@ -17,48 +17,40 @@
 
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.jpeg.JpegPhotoshopMetadata;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
 public class IptcAddTest extends IptcBaseTest {
 
-    private final File imageFile;
-
-    @Parameterized.Parameters
-    public static Collection<File> data() throws Exception {
-        return getJpegImages();
-    }
-
-    public IptcAddTest(final File imageFile) {
-        this.imageFile = imageFile;
+    public static Stream<File> data() throws Exception {
+        return getJpegImages().stream();
     }
 
     /*
          * Add a few IPTC values to JPEG images, whether or not they have existing
          * IPTC data.
          */
-    @Test
-    public void testAddIptcData() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testAddIptcData(File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
 
         final Map<String, Object> params = new HashMap<>();

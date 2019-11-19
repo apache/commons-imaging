@@ -19,7 +19,8 @@ package org.apache.commons.imaging.formats.jpeg.decoder;
 import java.io.IOException;
 
 import org.apache.commons.imaging.ImageReadException;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for class {@link JpegInputStream}.
@@ -27,23 +28,27 @@ import org.junit.Test;
  **/
 public class JpegInputStreamTest {
 
-  @Test(expected = ImageReadException.class)
+  @Test
   public void testNextBitThrowsImageReadExceptionOne() throws IOException, ImageReadException {
     int[] byteArray = new int[6];
     byteArray[0] = (byte) (-1);
     byteArray[1] = (byte) 74;
     JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
-    jpegInputStream.nextBit();
+    Assertions.assertThrows(ImageReadException.class, () -> {
+        jpegInputStream.nextBit();
+    });
 
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testNextBitThrowsImageReadExceptionTwo() throws IOException, ImageReadException {
     int[] byteArray = new int[0];
     JpegInputStream jpegInputStream = new JpegInputStream(byteArray);
 
-    jpegInputStream.nextBit();
+    Assertions.assertThrows(IllegalStateException.class, () -> {
+        jpegInputStream.nextBit();
+    });
 
   }
 

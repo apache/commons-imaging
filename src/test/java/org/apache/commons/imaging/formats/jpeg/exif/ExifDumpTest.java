@@ -17,12 +17,12 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
@@ -31,34 +31,27 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
 public class ExifDumpTest extends ExifBaseTest {
 
-    private final File imageFile;
-
-    @Parameterized.Parameters
-    public static Collection<File> data() throws Exception {
-        return getImagesWithExifData();
+    public static Stream<File> data() throws Exception {
+        return getImagesWithExifData().stream();
     }
 
-    public ExifDumpTest(final File imageFile) {
-        this.imageFile = imageFile;
-    }
-
-    @Test
-    public void testDumpJFIF() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testDumpJFIF(File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
         Debug.debug("Segments:");
         new JpegUtils().dumpJFIF(byteSource);
         // TODO assert someting
     }
 
-    @Test
-    public void testMetadata() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testMetadata(File imageFile) throws Exception {
         final Map<String, Object> params = new HashMap<>();
         final boolean ignoreImageData = isPhilHarveyTestImage(imageFile);
         params.put(ImagingConstants.PARAM_KEY_READ_THUMBNAILS, Boolean.valueOf(!ignoreImageData));

@@ -17,7 +17,7 @@
 
 package org.apache.commons.imaging;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,17 +26,16 @@ import java.util.List;
 
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.test.util.FileSystemTraversal;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.io.TempDir;
 
 public abstract class ImagingTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public File folder;
 
     protected File createTempFile(final String prefix, final String suffix)
             throws IOException {
-        return File.createTempFile(prefix, suffix, folder.newFolder());
+        return File.createTempFile(prefix, suffix, folder);
     }
 
     protected boolean isPhilHarveyTestImage(final File file) {

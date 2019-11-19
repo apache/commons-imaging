@@ -17,10 +17,10 @@
 
 package org.apache.commons.imaging.formats.jpeg.exif;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
-import java.util.Collection;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.examples.WriteExifMetadataExample;
@@ -28,30 +28,22 @@ import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.TiffImageMetadata;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
 public class WriteExifMetadataExampleTest extends ExifBaseTest {
 
-    private final File imageFile;
-
-    @Parameterized.Parameters
-    public static Collection<File> data() throws Exception {
-        return getJpegImages();
-    }
-
-    public WriteExifMetadataExampleTest(final File imageFile) {
-        this.imageFile = imageFile;
+    public static Stream<File> data() throws Exception {
+        return getJpegImages().stream();
     }
 
     /**
      * Test that there are no odd offsets in the generated TIFF images.
      * @throws Exception if the test failed for a unexpected reason
      */
-    @Test
-    public void testOddOffsets() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testOddOffsets(File imageFile) throws Exception {
         Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
         final File tempFile = createTempFile("test", ".jpg");
@@ -68,11 +60,8 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest {
             final TiffImageMetadata tiff = parser.getExifMetadata(byteSource, null);
             for (final TiffField tiffField : tiff.getAllFields()) {
                 if (!tiffField.isLocalValue()) {
-                    final int offset = tiffField.getOffset();
-                    final String tag = tiffField.getTagName();
-                    final String message = String.format("Odd offset %d, field %s", offset, tag);
                     final boolean isOdd = (tiffField.getOffset() & 1l) == 0;
-                    assertTrue(message, isOdd);
+                    assertTrue(isOdd);
                 }
             }
         } catch (final ExifRewriter.ExifOverflowException e) {

@@ -17,11 +17,12 @@
 package org.apache.commons.imaging.common.bytesource;
 
 import org.apache.commons.imaging.ImagingTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class ByteSourceTest extends ImagingTest {
     protected File createTempFile(final byte src[]) throws IOException {
@@ -64,11 +65,13 @@ public abstract class ByteSourceTest extends ImagingTest {
         return new byte[][]{emptyArray, single, simple, zeroes, longArray,};
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testGetInputStreamThrowsNullPointerException() throws IOException {
         final ByteSourceArray byteSourceArray = new ByteSourceArray(null);
 
-        byteSourceArray.getInputStream(0L);
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            byteSourceArray.getInputStream(0L);
+        });
     }
 
 }

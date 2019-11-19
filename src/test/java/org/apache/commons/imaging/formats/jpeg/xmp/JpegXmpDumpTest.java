@@ -17,36 +17,28 @@
 
 package org.apache.commons.imaging.formats.jpeg.xmp;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.jpeg.JpegImageParser;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
 public class JpegXmpDumpTest extends JpegXmpBaseTest {
 
-    private final File imageFile;
-
-    @Parameterized.Parameters
-    public static Collection<File> data() throws Exception {
-        return getImagesWithXmpData();
+    public static Stream<File> data() throws Exception {
+        return getImagesWithXmpData().stream();
     }
 
-    public JpegXmpDumpTest(final File imageFile) {
-        this.imageFile = imageFile;
-    }
-
-    @Test
-    public void test() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void test(File imageFile) throws Exception {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
         final Map<String, Object> params = new HashMap<>();
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);

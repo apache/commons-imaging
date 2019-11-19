@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TiffSubImageTest extends TiffBaseTest {
 

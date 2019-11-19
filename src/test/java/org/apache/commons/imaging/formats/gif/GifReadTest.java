@@ -17,49 +17,48 @@
 
 package org.apache.commons.imaging.formats.gif;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.Assert.*;
-
-@RunWith(Parameterized.class)
 public class GifReadTest extends GifBaseTest {
 
-    private final File imageFile;
-
-    @Parameterized.Parameters
-    public static Collection<File> data() throws Exception {
-        return getGifImages();
+    public static Stream<File> data() throws Exception {
+        return getGifImages().stream();
     }
 
-    public GifReadTest(final File imageFile) {
-        this.imageFile = imageFile;
+    @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testMetadata(File imageFile) throws Exception {
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            Imaging.getMetadata(imageFile);
+        });
     }
 
-    @Ignore(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
-    @Test(expected = UnsupportedOperationException.class)
-    public void testMetadata() throws Exception {
-        Imaging.getMetadata(imageFile);
-    }
-
-    @Test
-    public void testImageInfo() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testImageInfo(File imageFile) throws Exception {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         assertNotNull(imageInfo);
         // TODO assert more
     }
 
-    @Test
-    public void testImageDimensions() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testImageDimensions(File imageFile) throws Exception {
         final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
         final GifImageMetadata metadata = (GifImageMetadata) Imaging.getMetadata(imageFile);
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
@@ -81,15 +80,17 @@ public class GifReadTest extends GifBaseTest {
         assertEquals(height, imageInfo.getHeight());
     }
 
-    @Test
-    public void testBufferedImage() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testBufferedImage(File imageFile) throws Exception {
         final BufferedImage image = Imaging.getBufferedImage(imageFile);
         assertNotNull(image);
         // TODO assert more
     }
 
-    @Test
-    public void testBufferedImages() throws Exception {
+    @ParameterizedTest
+    @MethodSource("data")
+    public void testBufferedImages(File imageFile) throws Exception {
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
         assertTrue(images.size() > 0);
         // TODO assert more
