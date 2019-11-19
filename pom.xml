@@ -225,6 +225,7 @@
       <version>2.1</version>
       <scope>test</scope>
     </dependency>
+    <!-- the next three dependencies are for tests with theories/datapoints, see IMAGING-242 -->
     <dependency>
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-launcher</artifactId>
