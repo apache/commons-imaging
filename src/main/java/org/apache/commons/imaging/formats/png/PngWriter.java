@@ -441,7 +441,7 @@ class PngWriter {
             final PaletteFactory paletteFactory = new PaletteFactory();
 
             if (hasAlpha) {
-                palette = paletteFactory.makeQuantizedRgbaPalette(src, true,maxColors);
+                palette = paletteFactory.makeQuantizedRgbaPalette(src, hasAlpha, maxColors);
                 writeChunkPLTE(os, palette);
                 writeChunkTRNS(os, palette);
             } else {
