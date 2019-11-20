@@ -77,6 +77,16 @@ public final class PngConstants {
      */
     public static final String PARAM_KEY_PHYSICAL_SCALE = "PHYSICAL_SCALE_CHUNK";
 
+    /**
+     * Parameter key. Used to indicate the PNG compression level to be used.
+     *
+     * <p>For valid values, see {@link java.util.zip.Deflater}. If no value is specified, it will use
+     * the default compression level.</p>
+     *
+     * @see java.util.zip.Deflater
+     */
+    public static final String PARAM_KEY_PNG_COMPRESSION_LEVEL = "PNG_COMPRESSION_LEVEL";
+
     private PngConstants() {
     }
 }

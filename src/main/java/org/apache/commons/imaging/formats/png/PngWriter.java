@@ -345,6 +345,7 @@ class PngWriter {
             params.remove(ImagingConstants.PARAM_KEY_FORMAT);
         }
 
+        int compressionLevel = Deflater.DEFAULT_COMPRESSION;
         final Map<String, Object> rawParams = new HashMap<>(params);
         if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
             params.remove(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR);
@@ -361,8 +362,12 @@ class PngWriter {
         if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
             params.remove(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
         }
+        if (params.containsKey(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL)) {
+            compressionLevel = (int) params.remove(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL);
+        }
         params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
         params.remove(PngConstants.PARAM_KEY_PHYSICAL_SCALE);
+        params.remove(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL);
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
@@ -556,7 +561,7 @@ class PngWriter {
 
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final int chunkSize = 256 * 1024;
-            Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION);
+            Deflater deflater = new Deflater(compressionLevel);
             final DeflaterOutputStream dos = new DeflaterOutputStream(baos,deflater,chunkSize);
 
             for (int index = 0; index < uncompressed.length; index += chunkSize) {
