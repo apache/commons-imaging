@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 import org.apache.commons.imaging.ImageWriteException;
@@ -32,7 +33,6 @@ import org.apache.commons.imaging.PixelDensity;
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.palette.Palette;
 import org.apache.commons.imaging.palette.PaletteFactory;
-import org.apache.commons.imaging.palette.SimplePalette;
 
 class PngWriter {
 
@@ -306,39 +306,6 @@ class PngWriter {
         return pngColorType.isBitDepthAllowed(depth) ? depth : 8;
     }
 
-    /// Wraps a palette by adding a single transparent entry at index 0.
-    private static class TransparentPalette implements Palette {
-        private final Palette palette;
-
-        TransparentPalette(final Palette palette) {
-            this.palette = palette;
-        }
-
-        @Override
-        public int getEntry(final int index) {
-            if (index == 0) {
-                return 0x00000000;
-            }
-            return palette.getEntry(index - 1);
-        }
-
-        @Override
-        public int length() {
-            return 1 + palette.length();
-        }
-
-        @Override
-        public int getPaletteIndex(final int rgb) throws ImageWriteException {
-            if (rgb == 0x00000000) {
-                return 0;
-            }
-            final int index = palette.getPaletteIndex(rgb);
-            if (index >= 0) {
-                return 1 + index;
-            }
-            return index;
-        }
-    }
     /*
      between two chunk types indicates alternatives.
      Table 5.3 - Chunk ordering rules
@@ -378,6 +345,7 @@ class PngWriter {
             params.remove(ImagingConstants.PARAM_KEY_FORMAT);
         }
 
+        int compressionLevel = Deflater.DEFAULT_COMPRESSION;
         final Map<String, Object> rawParams = new HashMap<>(params);
         if (params.containsKey(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR)) {
             params.remove(PngConstants.PARAM_KEY_PNG_FORCE_TRUE_COLOR);
@@ -394,8 +362,12 @@ class PngWriter {
         if (params.containsKey(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS)) {
             params.remove(PngConstants.PARAM_KEY_PNG_TEXT_CHUNKS);
         }
+        if (params.containsKey(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL)) {
+            compressionLevel = (int) params.remove(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL);
+        }
         params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
         params.remove(PngConstants.PARAM_KEY_PHYSICAL_SCALE);
+        params.remove(PngConstants.PARAM_KEY_PNG_COMPRESSION_LEVEL);
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
@@ -469,20 +441,16 @@ class PngWriter {
         if (pngColorType == PngColorType.INDEXED_COLOR) {
             // PLTE No Before first IDAT
 
-            final int maxColors = hasAlpha ? 255 : 256;
+            final int maxColors = 256;
 
             final PaletteFactory paletteFactory = new PaletteFactory();
-            palette = paletteFactory.makeQuantizedRgbPalette(src, maxColors);
-            // Palette palette2 = new PaletteFactory().makePaletteSimple(src,
-            // maxColors);
-
-            // palette.dump();
 
             if (hasAlpha) {
-                palette = new TransparentPalette(palette);
+                palette = paletteFactory.makeQuantizedRgbaPalette(src, hasAlpha, maxColors);
                 writeChunkPLTE(os, palette);
-                writeChunkTRNS(os, new SimplePalette(new int[] { 0x00000000 }));
+                writeChunkTRNS(os, palette);
             } else {
+                palette = paletteFactory.makeQuantizedRgbPalette(src, maxColors);
                 writeChunkPLTE(os, palette);
             }
         }
@@ -552,12 +520,8 @@ class PngWriter {
                         final int argb = row[x];
 
                         if (palette != null) {
-                            if (hasAlpha && (argb >>> 24) == 0x00) {
-                                baos.write(0);
-                            } else {
-                                final int index = palette.getPaletteIndex(argb);
-                                baos.write(0xff & index);
-                            }
+                            final int index = palette.getPaletteIndex(argb);
+                            baos.write(0xff & index);
                         } else {
                             final int alpha = 0xff & (argb >> 24);
                             final int red = 0xff & (argb >> 16);
@@ -596,8 +560,10 @@ class PngWriter {
             // Debug.debug("uncompressed", uncompressed.length);
 
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            final DeflaterOutputStream dos = new DeflaterOutputStream(baos);
             final int chunkSize = 256 * 1024;
+            Deflater deflater = new Deflater(compressionLevel);
+            final DeflaterOutputStream dos = new DeflaterOutputStream(baos,deflater,chunkSize);
+
             for (int index = 0; index < uncompressed.length; index += chunkSize) {
                 final int end = Math.min(uncompressed.length, index + chunkSize);
                 final int length = end - index;
