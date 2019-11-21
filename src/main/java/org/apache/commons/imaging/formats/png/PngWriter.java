@@ -306,39 +306,6 @@ class PngWriter {
         return pngColorType.isBitDepthAllowed(depth) ? depth : 8;
     }
 
-    /// Wraps a palette by adding a single transparent entry at index 0.
-    private static class TransparentPalette implements Palette {
-        private final Palette palette;
-
-        TransparentPalette(final Palette palette) {
-            this.palette = palette;
-        }
-
-        @Override
-        public int getEntry(final int index) {
-            if (index == 0) {
-                return 0x00000000;
-            }
-            return palette.getEntry(index - 1);
-        }
-
-        @Override
-        public int length() {
-            return 1 + palette.length();
-        }
-
-        @Override
-        public int getPaletteIndex(final int rgb) throws ImageWriteException {
-            if (rgb == 0x00000000) {
-                return 0;
-            }
-            final int index = palette.getPaletteIndex(rgb);
-            if (index >= 0) {
-                return 1 + index;
-            }
-            return index;
-        }
-    }
     /*
      between two chunk types indicates alternatives.
      Table 5.3 - Chunk ordering rules
@@ -400,6 +367,7 @@ class PngWriter {
         }
         params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
         params.remove(PngConstants.PARAM_KEY_PHYSICAL_SCALE);
+        params.remove(PngConstants.PARAM_KEY_PNG_DEFLATE_COMPRESSION_LEVEL);
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
