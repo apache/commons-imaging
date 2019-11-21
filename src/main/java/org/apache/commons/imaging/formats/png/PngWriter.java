@@ -396,6 +396,7 @@ class PngWriter {
         }
         params.remove(ImagingConstants.PARAM_KEY_PIXEL_DENSITY);
         params.remove(PngConstants.PARAM_KEY_PHYSICAL_SCALE);
+        params.remove(PngConstants.PARAM_KEY_PNG_DEFLATE_COMPRESSION_LEVEL);
         if (!params.isEmpty()) {
             final Object firstKey = params.keySet().iterator().next();
             throw new ImageWriteException("Unknown parameter: " + firstKey);
@@ -589,7 +590,9 @@ class PngWriter {
 
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final int chunkSize = 256 * 1024;
-            Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION);
+            int compressionLevel = (int) params.getOrDefault(PngConstants.PARAM_KEY_PNG_DEFLATE_COMPRESSION_LEVEL,
+                    Deflater.DEFAULT_COMPRESSION);
+            Deflater deflater = new Deflater(compressionLevel);
             final DeflaterOutputStream dos = new DeflaterOutputStream(baos,deflater,chunkSize);
 
             for (int index = 0; index < uncompressed.length; index += chunkSize) {

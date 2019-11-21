@@ -77,6 +77,18 @@ public final class PngConstants {
      */
     public static final String PARAM_KEY_PHYSICAL_SCALE = "PHYSICAL_SCALE_CHUNK";
 
+    /**
+     * Parameter key,Used to set a Deflater Compression level.
+     *  Default:java.util.zip.Deflater.DEFAULT_COMPRESSION
+     *
+     * <p> Valid Values Integer
+     *     For Example: Deflater.BEST_COMPRESSION  or Deflater.BEST_SPEED
+     * </p>
+     *
+     *  @see java.util.zip.Deflater;
+     */
+    public static final String PARAM_KEY_PNG_DEFLATE_COMPRESSION_LEVEL  ="PNG_DEFLATE_COMPRESSION_LEVEL";
+
     private PngConstants() {
     }
 }
