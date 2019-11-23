@@ -18,16 +18,14 @@
 package org.apache.commons.imaging.roundtrip;
 
 import java.awt.image.BufferedImage;
+import java.util.stream.Stream;
 
-import org.junit.experimental.theories.DataPoints;
-import org.junit.experimental.theories.Theories;
-import org.junit.experimental.theories.Theory;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Theories.class)
 public class BitmapRoundtripTest extends RoundtripBase {
 
-    @DataPoints
     public static BufferedImage[] images = new BufferedImage[] {
             TestImages.createArgbBitmapImage(1, 1), // minimal
             TestImages.createArgbBitmapImage(2, 2), //
@@ -40,10 +38,12 @@ public class BitmapRoundtripTest extends RoundtripBase {
             TestImages.createBitmapBitmapImage(300, 300), // larger than 256
     };
 
-    @DataPoints
-    public static FormatInfo[] formatInfos = FormatInfo.READ_WRITE_FORMATS;
+    public static Stream<Arguments> testBitmapRoundtrip() {
+        return createRoundtripArguments(images);
+    }
 
-    @Theory
+    @ParameterizedTest
+    @MethodSource
     public void testBitmapRoundtrip(final BufferedImage testImage, final FormatInfo formatInfo) throws Exception {
         roundtrip(formatInfo, testImage, "bitmap", true);
     }

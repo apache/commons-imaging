@@ -19,27 +19,28 @@ package org.apache.commons.imaging.roundtrip;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.PixelDensity;
-import org.junit.experimental.theories.DataPoints;
-import org.junit.experimental.theories.Theories;
-import org.junit.experimental.theories.Theory;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RunWith(Theories.class)
 public class PixelDensityRoundtrip extends RoundtripBase {
 
-    @DataPoints
-    public static FormatInfo[] formatInfos = FormatInfo.PRESERVING_RESOLUTION_FORMATS;
+    public static Stream<FormatInfo> testPixelDensityRoundtrip() {
+        return Arrays.stream(FormatInfo.PRESERVING_RESOLUTION_FORMATS);
+    }
 
-    @Theory
+    @ParameterizedTest
+    @MethodSource
     public void testPixelDensityRoundtrip(final FormatInfo formatInfo) throws Exception {
         final BufferedImage testImage = TestImages.createFullColorImage(2, 2);
 
