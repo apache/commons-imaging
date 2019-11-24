@@ -21,8 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
@@ -31,6 +33,7 @@ import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.provider.Arguments;
 
 public class RoundtripBase {
 
@@ -74,4 +77,7 @@ public class RoundtripBase {
         return File.createTempFile(prefix, suffix, folder);
     }
 
+    public static Stream<Arguments> createRoundtripArguments(BufferedImage[] images) {
+        return Arrays.stream(images).flatMap(i -> Arrays.stream(FormatInfo.READ_WRITE_FORMATS).map(f -> Arguments.of(i, f)));
+    }
 }
