@@ -23,11 +23,13 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
     private final int delay;
     private final int leftPosition;
     private final int topPosition;
+    private final DisposalMethod disposalMethod;
 
-    GifImageMetadataItem(int delay, int leftPosition, int topPosition) {
+    GifImageMetadataItem(int delay, int leftPosition, int topPosition, DisposalMethod disposalMethod) {
         this.delay = delay;
         this.leftPosition = leftPosition;
         this.topPosition = topPosition;
+        this.disposalMethod = disposalMethod;
     }
 
     public int getDelay() {
@@ -42,6 +44,8 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
         return topPosition;
     }
 
+    public DisposalMethod getDisposalMethod() { return disposalMethod; }
+
     @Override
     public String toString(String prefix) {
         prefix = prefix == null ? "" : prefix;
@@ -49,6 +53,7 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
         result.append(String.format("%sDelay: %d%s", prefix, delay, NEWLINE));
         result.append(String.format("%sLeft position: %d%s", prefix, leftPosition, NEWLINE));
         result.append(String.format("%sTop position: %d%s", prefix, topPosition, NEWLINE));
+        result.append(String.format("%sDisposal method: %d%s", prefix, disposalMethod, NEWLINE));
         return result.toString();
     }
 }

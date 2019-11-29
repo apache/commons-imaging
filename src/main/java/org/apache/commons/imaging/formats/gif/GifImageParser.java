@@ -509,6 +509,29 @@ public class GifImageParser extends ImageParser {
         return new Dimension(bhi.logicalScreenWidth, bhi.logicalScreenHeight);
     }
 
+    private DisposalMethod createDisposalMethodFromIntValue(int value) throws ImageReadException {
+        switch (value) {
+            case 0:
+                return DisposalMethod.UNSPECIFIED;
+            case 1:
+                return DisposalMethod.DO_NOT_DISPOSE;
+            case 2:
+                return DisposalMethod.RESTORE_TO_BACKGROUND;
+            case 3:
+                return DisposalMethod.RESTORE_TO_PREVIOUS;
+            case 4:
+                return DisposalMethod.TO_BE_DEFINED_1;
+            case 5:
+                return DisposalMethod.TO_BE_DEFINED_2;
+            case 6:
+                return DisposalMethod.TO_BE_DEFINED_3;
+            case 7:
+                return DisposalMethod.TO_BE_DEFINED_4;
+            default:
+                throw new ImageReadException("GIF: Invalid parsing of disposal method");
+        }
+    }
+
     @Override
     public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
             throws ImageReadException, IOException {
@@ -526,7 +549,8 @@ public class GifImageParser extends ImageParser {
         final List<GifImageData> imageData = findAllImageData(imageContents);
         List<GifImageMetadataItem> metadataItems = new ArrayList<>(imageData.size());
         for(GifImageData id : imageData) {
-            metadataItems.add(new GifImageMetadataItem(id.gce.delay, id.descriptor.imageLeftPosition, id.descriptor.imageTopPosition));
+            DisposalMethod disposalMethod = createDisposalMethodFromIntValue(id.gce.dispose);
+            metadataItems.add(new GifImageMetadataItem(id.gce.delay, id.descriptor.imageLeftPosition, id.descriptor.imageTopPosition, disposalMethod));
         }
         return new GifImageMetadata(bhi.logicalScreenWidth, bhi.logicalScreenHeight, metadataItems);
     }
