@@ -27,9 +27,11 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageInfo;
+import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.Imaging;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -37,6 +39,14 @@ public class GifReadTest extends GifBaseTest {
 
     public static Stream<File> data() throws Exception {
         return getGifImages().stream();
+    }
+
+    public static Stream<File> singleImageData() throws Exception {
+        return getGifImagesWithSingleImage().stream();
+    }
+
+    public static Stream<File> animatedImageData() throws Exception {
+        return getAnimatedGifImages().stream();
     }
 
     @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
@@ -89,10 +99,49 @@ public class GifReadTest extends GifBaseTest {
     }
 
     @ParameterizedTest
-    @MethodSource("data")
-    public void testBufferedImages(File imageFile) throws Exception {
+    @MethodSource("singleImageData")
+    public void testBufferedImagesForSingleImageGif(File imageFile) throws Exception {
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
-        assertTrue(images.size() > 0);
-        // TODO assert more
+        assertTrue(images.size() == 1);
+    }
+
+    @ParameterizedTest
+    @MethodSource("animatedImageData")
+    public void testBufferedImagesForAnimatedImageGif(File imageFile) throws Exception {
+        final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
+        assertTrue(images.size() > 1);
+    }
+
+    @Test
+    public void testCreateMetadataWithDisposalMethods() {
+        for(DisposalMethod disposalMethod : DisposalMethod.values()) {
+            GifImageMetadataItem metadataItem = new GifImageMetadataItem(0, 0, 0, disposalMethod);
+            Assertions.assertEquals(disposalMethod, metadataItem.getDisposalMethod());
+        }
+    }
+
+    @Test
+    public void testConvertValidDisposalMethodValues() throws ImageReadException {
+        DisposalMethod unspecified = GifImageParser.createDisposalMethodFromIntValue(0);
+        DisposalMethod doNotDispose = GifImageParser.createDisposalMethodFromIntValue(1);
+        DisposalMethod restoreToBackground = GifImageParser.createDisposalMethodFromIntValue(2);
+        DisposalMethod restoreToPrevious = GifImageParser.createDisposalMethodFromIntValue(3);
+        DisposalMethod toBeDefined1 = GifImageParser.createDisposalMethodFromIntValue(4);
+        DisposalMethod toBeDefined2 = GifImageParser.createDisposalMethodFromIntValue(5);
+        DisposalMethod toBeDefined3 = GifImageParser.createDisposalMethodFromIntValue(6);
+        DisposalMethod toBeDefined4 = GifImageParser.createDisposalMethodFromIntValue(7);
+        Assertions.assertEquals(unspecified, DisposalMethod.UNSPECIFIED);
+        Assertions.assertEquals(doNotDispose, DisposalMethod.DO_NOT_DISPOSE);
+        Assertions.assertEquals(restoreToBackground, DisposalMethod.RESTORE_TO_BACKGROUND);
+        Assertions.assertEquals(restoreToPrevious, DisposalMethod.RESTORE_TO_PREVIOUS);
+        Assertions.assertEquals(toBeDefined1, DisposalMethod.TO_BE_DEFINED_1);
+        Assertions.assertEquals(toBeDefined2, DisposalMethod.TO_BE_DEFINED_2);
+        Assertions.assertEquals(toBeDefined3, DisposalMethod.TO_BE_DEFINED_3);
+        Assertions.assertEquals(toBeDefined4, DisposalMethod.TO_BE_DEFINED_4);
+    }
+
+    @Test
+    public void testConvertInvalidDisposalMethodValues() {
+        Assertions.assertThrows(ImageReadException.class, () -> GifImageParser.createDisposalMethodFromIntValue(8));
     }
 }
