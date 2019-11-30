@@ -44,7 +44,9 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
         return topPosition;
     }
 
-    public DisposalMethod getDisposalMethod() { return disposalMethod; }
+    public DisposalMethod getDisposalMethod() {
+        return disposalMethod;
+    }
 
     @Override
     public String toString(String prefix) {
