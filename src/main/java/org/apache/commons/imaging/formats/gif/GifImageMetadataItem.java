@@ -55,7 +55,7 @@ public class GifImageMetadataItem implements ImageMetadata.ImageMetadataItem {
         result.append(String.format("%sDelay: %d%s", prefix, delay, NEWLINE));
         result.append(String.format("%sLeft position: %d%s", prefix, leftPosition, NEWLINE));
         result.append(String.format("%sTop position: %d%s", prefix, topPosition, NEWLINE));
-        result.append(String.format("%sDisposal method: %d%s", prefix, disposalMethod, NEWLINE));
+        result.append(String.format("%sDisposal method: %s%s", prefix, disposalMethod, NEWLINE));
         return result.toString();
     }
 }
