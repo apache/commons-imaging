@@ -30,6 +30,7 @@ import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -37,6 +38,14 @@ public class GifReadTest extends GifBaseTest {
 
     public static Stream<File> data() throws Exception {
         return getGifImages().stream();
+    }
+
+    public static Stream<File> singleImageData() throws Exception {
+        return getGifImagesWithSingleImage().stream();
+    }
+
+    public static Stream<File> animatedImageData() throws Exception {
+        return getAnimatedGifImages().stream();
     }
 
     @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
@@ -89,10 +98,24 @@ public class GifReadTest extends GifBaseTest {
     }
 
     @ParameterizedTest
-    @MethodSource("data")
-    public void testBufferedImages(File imageFile) throws Exception {
+    @MethodSource("singleImageData")
+    public void testBufferedImagesForSingleImageGif(File imageFile) throws Exception {
         final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
-        assertTrue(images.size() > 0);
-        // TODO assert more
+        assertTrue(images.size() == 1);
+    }
+
+    @ParameterizedTest
+    @MethodSource("animatedImageData")
+    public void testBufferedImagesForAnimatedImageGif(File imageFile) throws Exception {
+        final List<BufferedImage> images = Imaging.getAllBufferedImages(imageFile);
+        assertTrue(images.size() > 1);
+    }
+
+    @Test
+    public void testCreateMetadataWithDisposalMethods() {
+        for(DisposalMethod disposalMethod : DisposalMethod.values()) {
+            GifImageMetadataItem metadataItem = new GifImageMetadataItem(0, 0, 0, disposalMethod);
+            Assertions.assertEquals(disposalMethod, metadataItem.getDisposalMethod());
+        }
     }
 }
