@@ -31,7 +31,7 @@ public class ImagingGuessFormatTest extends ImagingTest {
 
     public static final String BMP_IMAGE_FILE = "bmp\\1\\Oregon Scientific DS6639 - DSC_0307 - small.bmp";
     public static final String PNG_IMAGE_FILE = "png\\1\\Oregon Scientific DS6639 - DSC_0307 - small.png";
-    public static final String GIF_IMAGE_FILE = "gif\\1\\Oregon Scientific DS6639 - DSC_0307 - small.gif";
+    public static final String GIF_IMAGE_FILE = "gif\\single\\1\\Oregon Scientific DS6639 - DSC_0307 - small.gif";
     public static final String ICNS_IMAGE_FILE = "icns\\1\\poedit48x48.icns";
     public static final String ICO_IMAGE_FILE = "ico\\1\\Oregon Scientific DS6639 - DSC_0307 - small.ico";
     public static final String TIFF_IMAGE_FILE = "tiff\\1\\Oregon Scientific DS6639 - DSC_0307 - small.tif";
