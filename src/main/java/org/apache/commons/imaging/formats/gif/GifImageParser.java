@@ -509,7 +509,8 @@ public class GifImageParser extends ImageParser {
         return new Dimension(bhi.logicalScreenWidth, bhi.logicalScreenHeight);
     }
 
-    private DisposalMethod createDisposalMethodFromIntValue(int value) throws ImageReadException {
+    // Made internal for testability.
+    static DisposalMethod createDisposalMethodFromIntValue(int value) throws ImageReadException {
         switch (value) {
             case 0:
                 return DisposalMethod.UNSPECIFIED;
