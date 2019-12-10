@@ -120,7 +120,7 @@ public class JpegImageMetadata implements ImageMetadata {
     /**
      * Get the thumbnail image if available.
      *
-     * @return the thumbnail image. May be <code>null</code> if no image could
+     * @return the thumbnail image. May be {@code null} if no image could
      *         be found.
      * @throws ImageReadException if it fails to read the image
      * @throws IOException if it fails to get the thumbnail or to read the image data

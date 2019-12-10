@@ -77,7 +77,7 @@ public class TiffField {
 
     /**
      * Returns the field's tag, derived from bytes 0-1.
-     * @return the tag, as an <code>int</code> in which only the lowest 2 bytes are set
+     * @return the tag, as an {@code int} in which only the lowest 2 bytes are set
      */
     public int getTag() {
         return tag;
@@ -101,7 +101,7 @@ public class TiffField {
 
     /**
      * Returns the TIFF field's offset/value field, derived from bytes 8-11.
-     * @return the field's offset in a <code>long</code> of 4 packed bytes,
+     * @return the field's offset in a {@code long} of 4 packed bytes,
      * or its inlined value &lt;= 4 bytes long encoded in the field's byte order.
      */
     public int getOffset() {
