@@ -21,30 +21,30 @@ import java.util.List;
 import org.apache.commons.imaging.ImageWriteException;
 
 class ColorGroup {
-    // public final ColorGroup parent;
-    public ColorGroupCut cut;
-    // public final List children = new ArrayList();
-    public int paletteIndex = -1;
+    // final ColorGroup parent;
+    ColorGroupCut cut;
+    // final List children = new ArrayList();
+    int paletteIndex = -1;
 
-    public final List<ColorCount> colorCounts;
-    public final boolean ignoreAlpha;
-    public int minRed = Integer.MAX_VALUE;
-    public int maxRed = Integer.MIN_VALUE;
-    public int minGreen = Integer.MAX_VALUE;
-    public int maxGreen = Integer.MIN_VALUE;
-    public int minBlue = Integer.MAX_VALUE;
-    public int maxBlue = Integer.MIN_VALUE;
-    public int minAlpha = Integer.MAX_VALUE;
-    public int maxAlpha = Integer.MIN_VALUE;
+    final List<ColorCount> colorCounts;
+    final boolean ignoreAlpha;
+    int minRed = Integer.MAX_VALUE;
+    int maxRed = Integer.MIN_VALUE;
+    int minGreen = Integer.MAX_VALUE;
+    int maxGreen = Integer.MIN_VALUE;
+    int minBlue = Integer.MAX_VALUE;
+    int maxBlue = Integer.MIN_VALUE;
+    int minAlpha = Integer.MAX_VALUE;
+    int maxAlpha = Integer.MIN_VALUE;
 
-    public final int alphaDiff;
-    public final int redDiff;
-    public final int greenDiff;
-    public final int blueDiff;
+    final int alphaDiff;
+    final int redDiff;
+    final int greenDiff;
+    final int blueDiff;
 
-    public final int maxDiff;
-    public final int diffTotal;
-    public final int totalPoints;
+    final int maxDiff;
+    final int diffTotal;
+    final int totalPoints;
 
     ColorGroup(final List<ColorCount> colorCounts, final boolean ignoreAlpha) throws ImageWriteException {
         this.colorCounts = colorCounts;
@@ -79,7 +79,7 @@ class ColorGroup {
         diffTotal = (ignoreAlpha ? 0 : alphaDiff) + redDiff + greenDiff + blueDiff;
     }
 
-    public boolean contains(final int argb) {
+    boolean contains(final int argb) {
         final int alpha = 0xff & (argb >> 24);
         final int red = 0xff & (argb >> 16);
         final int green = 0xff & (argb >> 8);
@@ -100,7 +100,7 @@ class ColorGroup {
         return true;
     }
 
-    public int getMedianValue() {
+    int getMedianValue() {
         long countTotal = 0;
         long alphaTotal = 0;
         long redTotal = 0;
