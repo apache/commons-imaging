@@ -59,23 +59,8 @@ public class LongestAxisMedianCut implements MedianCut {
     private void doCut(final ColorGroup colorGroup, final ColorComponent mode,
             final List<ColorGroup> colorGroups, final boolean ignoreAlpha) throws ImageWriteException {
 
-        final Comparator<ColorCount> comp = (c1, c2) -> {
-            switch (mode) {
-                case ALPHA:
-                    return c1.alpha - c2.alpha;
-                case RED:
-                    return c1.red - c2.red;
-                case GREEN:
-                    return c1.green - c2.green;
-                case BLUE:
-                    return c1.blue - c2.blue;
-                default:
-                    return 0;
-            }
-        };
-
         final List<ColorCount> colorCounts = colorGroup.getColorCounts();
-        Collections.sort(colorCounts, comp);
+        Collections.sort(colorCounts, new ColorCountComparator(mode));
         final int countHalf = (int) Math.round((double) colorGroup.totalPoints / 2);
         int oldCount = 0;
         int newCount = 0;
