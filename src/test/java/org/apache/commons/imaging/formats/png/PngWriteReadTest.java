@@ -192,7 +192,7 @@ public class PngWriteReadTest extends ImagingTest {
 
         // Debug.debug("bytes", bytes);
 
-        final File tempFile = createTempFile("temp", ".png");
+        final File tempFile = File.createTempFile("temp", ".png");
         FileUtils.writeByteArrayToFile(tempFile, bytes);
 
         final BufferedImage dstImage = Imaging.getBufferedImage(bytes);
@@ -221,7 +221,7 @@ public class PngWriteReadTest extends ImagingTest {
 
         // Debug.debug("bytes", bytes);
 
-        final File tempFile = createTempFile("temp", ".png");
+        final File tempFile = File.createTempFile("temp", ".png");
         FileUtils.writeByteArrayToFile(tempFile, bytes);
 
         final BufferedImage dstImage = Imaging.getBufferedImage(bytes);

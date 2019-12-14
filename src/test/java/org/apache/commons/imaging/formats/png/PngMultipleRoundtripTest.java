@@ -62,7 +62,7 @@ public class PngMultipleRoundtripTest extends PngBaseTest {
                         readParams);
                 assertNotNull(image);
 
-                final File tempFile = createTempFile(imageFile.getName() + "." + j
+                final File tempFile = File.createTempFile(imageFile.getName() + "." + j
                         + ".", ".png");
                 Debug.debug("tempFile", tempFile);
 

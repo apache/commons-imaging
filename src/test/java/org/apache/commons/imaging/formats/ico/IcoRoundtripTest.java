@@ -537,7 +537,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         // File exportFile = new File("/tmp/" + description + ".ico");
         // IoUtils.writeToFile(rawData, exportFile);
 
-        final File tempFile = createTempFile("temp", ".ico");
+        final File tempFile = File.createTempFile("temp", ".ico");
         FileUtils.writeByteArrayToFile(tempFile, rawData);
 
         final BufferedImage dstImage = Imaging.getBufferedImage(tempFile);

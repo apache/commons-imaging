@@ -151,7 +151,7 @@ public class BmpRoundtripTest extends BmpBaseTest {
 
         // Debug.debug("bytes", bytes);
 
-        final File tempFile = createTempFile("temp", ".bmp");
+        final File tempFile = File.createTempFile("temp", ".bmp");
         FileUtils.writeByteArrayToFile(tempFile, bytes);
 
         final BufferedImage dstImage = Imaging.getBufferedImage(bytes);

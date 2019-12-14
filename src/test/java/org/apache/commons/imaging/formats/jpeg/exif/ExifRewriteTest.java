@@ -84,7 +84,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = createTempFile("test", ".jpg");
+                final File tempFile = File.createTempFile("test", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
 
@@ -124,7 +124,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new ExifRewriter().removeExifMetadata(byteSource, baos);
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = createTempFile("removed", ".jpg");
+                final File tempFile = File.createTempFile("removed", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
 
@@ -145,7 +145,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                         outputSet);
 
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = createTempFile("inserted" + "_", ".jpg");
+                final File tempFile = File.createTempFile("inserted" + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
 
@@ -214,7 +214,7 @@ public class ExifRewriteTest extends ExifBaseTest {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 rewriter.rewrite(byteSource, baos, outputSet);
                 final byte[] bytes = baos.toByteArray();
-                final File tempFile = createTempFile(name + "_", ".jpg");
+                final File tempFile = File.createTempFile(name + "_", ".jpg");
                 Debug.debug("tempFile", tempFile);
                 FileUtils.writeByteArrayToFile(tempFile, bytes);
 

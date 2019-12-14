@@ -53,7 +53,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
                         new HashMap<String, Object>());
                 assertNotNull(image);
 
-                final File outFile = createTempFile(imageFile.getName() + ".", ".gif");
+                final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
                 // Debug.debug("outFile", outFile);
 
                 final Map<String, Object> params = new HashMap<>();

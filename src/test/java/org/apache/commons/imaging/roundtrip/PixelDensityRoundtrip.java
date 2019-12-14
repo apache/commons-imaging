@@ -44,7 +44,7 @@ public class PixelDensityRoundtrip extends RoundtripBase {
     public void testPixelDensityRoundtrip(final FormatInfo formatInfo) throws Exception {
         final BufferedImage testImage = TestImages.createFullColorImage(2, 2);
 
-        final File temp1 = createTempFile("pixeldensity.", "."
+        final File temp1 = File.createTempFile("pixeldensity.", "."
                 + formatInfo.format.getExtension());
 
         final Map<String, Object> params = new HashMap<>();
