@@ -16,6 +16,7 @@
  */
 package org.apache.commons.imaging.palette;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.imaging.ImageWriteException;
@@ -26,7 +27,7 @@ class ColorGroup {
     // final List children = new ArrayList();
     int paletteIndex = -1;
 
-    final List<ColorCount> colorCounts;
+    private final List<ColorCount> colorCounts;
     final boolean ignoreAlpha;
     int minRed = Integer.MAX_VALUE;
     int maxRed = Integer.MIN_VALUE;
@@ -121,6 +122,14 @@ class ColorGroup {
         final int blue = (int) Math.round((double) blueTotal / countTotal);
 
         return (alpha << 24) | (red << 16) | (green << 8) | blue;
+    }
+
+    /**
+     * Return a copy of the list of color counts.
+     * @return a copy of the list of color counts
+     */
+    List<ColorCount> getColorCounts() {
+        return new ArrayList<ColorCount>(colorCounts);
     }
 
     @Override
