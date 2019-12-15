@@ -16,6 +16,15 @@
  */
 package org.apache.commons.imaging.color;
 
+/**
+ * Represents a color in the CMYK color space.
+ *
+ * <p>Contains the constant values for black, white, red,
+ * green, blue, cyan, magenta, and yellow.</p>
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/CMYK_color_model">https://en.wikipedia.org/wiki/CMYK_color_model</a>
+ * @since 1.0-alpha1
+ */
 public final class ColorCmyk {
 
     /**

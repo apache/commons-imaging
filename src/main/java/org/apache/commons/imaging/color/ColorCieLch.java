@@ -16,6 +16,15 @@
  */
 package org.apache.commons.imaging.color;
 
+/**
+ * Represents a color in the CIELCH color space.
+ *
+ * <p>Contains the constant values for black, white, red,
+ * green, and blue.</p>
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)">https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)</a>
+ * @since 1.0-alpha1
+ */
 public final class ColorCieLch {
 
     /**

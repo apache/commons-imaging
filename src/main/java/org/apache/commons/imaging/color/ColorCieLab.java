@@ -16,6 +16,16 @@
  */
 package org.apache.commons.imaging.color;
 
+/**
+ * Represents a color in the CIELAB color space, also
+ * known as LAB color space.
+ *
+ * <p>Contains the constant values for black, white, red,
+ * green, and blue.</p>
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space#CIELAB">https://en.wikipedia.org/wiki/CIELAB_color_space#CIELAB</a>
+ * @since 1.0-alpha1
+ */
 public final class ColorCieLab {
 
     /**
