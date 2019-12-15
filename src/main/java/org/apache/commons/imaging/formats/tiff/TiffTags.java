@@ -127,7 +127,7 @@ final class TiffTags {
     private static TagInfo getTag(final int directoryType, final List<TagInfo> possibleMatches) {
         // Please keep this method in sync with TiffImageMetadata's findField()
 
-        if (possibleMatches.size() < 1) {
+        if (possibleMatches.isEmpty()) {
             return null;
         }
 

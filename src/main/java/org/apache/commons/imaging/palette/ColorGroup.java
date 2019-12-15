@@ -50,7 +50,7 @@ class ColorGroup {
         this.colorCounts = colorCounts;
         this.ignoreAlpha = ignoreAlpha;
 
-        if (colorCounts.size() < 1) {
+        if (colorCounts.isEmpty()) {
             throw new ImageWriteException("empty color_group");
         }
 

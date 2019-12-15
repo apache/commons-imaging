@@ -288,7 +288,7 @@ public class JpegRewriter extends BinaryFileParser {
 
         final List<JFIFPiece> result = new ArrayList<>(segments);
         if (lastAppIndex == -1) {
-            if (segments.size() < 1) {
+            if (segments.isEmpty()) {
                 throw new ImageWriteException("JPEG file has no APP segments.");
             }
             result.addAll(1, newSegments);

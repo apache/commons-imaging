@@ -387,7 +387,7 @@ public class PsdImageParser extends ImageParser {
         final List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
                 new int[] { IMAGE_RESOURCE_ID_ICC_PROFILE, }, 1);
 
-        if ((blocks == null) || (blocks.size() < 1)) {
+        if ((blocks == null) || (blocks.isEmpty())) {
             return null;
         }
 
@@ -688,7 +688,7 @@ public class PsdImageParser extends ImageParser {
         final List<ImageResourceBlock> blocks = readImageResourceBlocks(byteSource,
                 new int[] { IMAGE_RESOURCE_ID_XMP, }, -1);
 
-        if ((blocks == null) || (blocks.size() < 1)) {
+        if ((blocks == null) || (blocks.isEmpty())) {
             return null;
         }
 
@@ -706,7 +706,7 @@ public class PsdImageParser extends ImageParser {
             xmpBlocks.addAll(blocks);
 //        }
 
-        if (xmpBlocks.size() < 1) {
+        if (xmpBlocks.isEmpty()) {
             return null;
         }
         if (xmpBlocks.size() > 1) {

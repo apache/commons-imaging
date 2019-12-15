@@ -392,7 +392,7 @@ public class ExifRewriter extends BinaryFileParser {
         TiffImageWriterBase writer;
         // Just use first APP1 segment for now.
         // Multiple APP1 segments are rare and poorly supported.
-        if (jfifPieces.exifPieces.size() > 0) {
+        if (!jfifPieces.exifPieces.isEmpty()) {
             JFIFPieceSegment exifPiece = null;
             exifPiece = (JFIFPieceSegment) jfifPieces.exifPieces.get(0);
 
