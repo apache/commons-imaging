@@ -377,7 +377,7 @@ public class TiffReader extends BinaryFileParser {
         final Collector collector = new FirstDirectoryCollector(readImageData);
         read(byteSource, params, formatCompliance, collector);
         final TiffContents contents = collector.getContents();
-        if (contents.directories.size() < 1) {
+        if (contents.directories.isEmpty()) {
             throw new ImageReadException(
                     "Image did not contain any directories.");
         }
@@ -392,7 +392,7 @@ public class TiffReader extends BinaryFileParser {
         final Collector collector = new Collector(params);
         readDirectories(byteSource, formatCompliance, collector);
         final TiffContents contents = collector.getContents();
-        if (contents.directories.size() < 1) {
+        if (contents.directories.isEmpty()) {
             throw new ImageReadException(
                     "Image did not contain any directories.");
         }

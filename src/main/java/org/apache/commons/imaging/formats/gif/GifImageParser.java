@@ -670,13 +670,13 @@ public class GifImageParser extends ImageParser {
     private List<GifImageData> findAllImageData(GifImageContents imageContents) throws ImageReadException {
         final List<ImageDescriptor> descriptors = findAllBlocks(imageContents.blocks, IMAGE_SEPARATOR);
 
-        if (descriptors.size() == 0) {
+        if (descriptors.isEmpty()) {
             throw new ImageReadException("GIF: Couldn't read Image Descriptor");
         }
 
         final List<GraphicControlExtension> gcExtensions = findAllBlocks(imageContents.blocks, GRAPHIC_CONTROL_EXTENSION);
 
-        if (gcExtensions.size() != 0 && gcExtensions.size() != descriptors.size()) {
+        if (!gcExtensions.isEmpty() && gcExtensions.size() != descriptors.size()) {
             throw new ImageReadException("GIF: Invalid amount of Graphic Control Extensions");
         }
 
@@ -687,7 +687,7 @@ public class GifImageParser extends ImageParser {
                 throw new ImageReadException(String.format("GIF: Couldn't read Image Descriptor of image number %d", i));
             }
 
-            final GraphicControlExtension gce = gcExtensions.size() == 0 ? null : gcExtensions.get(i);
+            final GraphicControlExtension gce = gcExtensions.isEmpty() ? null : gcExtensions.get(i);
 
             imageData.add(new GifImageData(descriptor, gce));
         }
@@ -1141,7 +1141,7 @@ public class GifImageParser extends ImageParser {
                 result.add(xml);
             }
 
-            if (result.size() < 1) {
+            if (result.isEmpty()) {
                 return null;
             }
             if (result.size() > 1) {
