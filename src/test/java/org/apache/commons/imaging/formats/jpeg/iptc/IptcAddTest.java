@@ -80,7 +80,7 @@ public class IptcAddTest extends IptcBaseTest {
 
         final PhotoshopApp13Data newData = new PhotoshopApp13Data(newRecords, newBlocks);
 
-        final File updated = createTempFile(imageFile.getName() + ".iptc.add.", ".jpg");
+        final File updated = File.createTempFile(imageFile.getName() + ".iptc.add.", ".jpg");
         try (FileOutputStream fos = new FileOutputStream(updated);
                 OutputStream os = new BufferedOutputStream(fos)) {
             new JpegIptcRewriter().writeIPTC(byteSource, os, newData);

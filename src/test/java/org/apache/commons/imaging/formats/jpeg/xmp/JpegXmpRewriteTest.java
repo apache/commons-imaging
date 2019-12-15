@@ -49,7 +49,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
         final String xmpXml = new JpegImageParser().getXmpXml(byteSource, params);
         assertNotNull(xmpXml);
 
-        final File noXmpFile = createTempFile(imageFile.getName() + ".", ".jpg");
+        final File noXmpFile = File.createTempFile(imageFile.getName() + ".", ".jpg");
         {
             // test remove
 
@@ -70,7 +70,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             // test update
 
             final String newXmpXml = "test";
-            final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
+            final File updated = File.createTempFile(imageFile.getName() + ".", ".jpg");
             try (FileOutputStream fos = new FileOutputStream(updated);
                     OutputStream os = new BufferedOutputStream(fos)) {
                 new JpegXmpRewriter().updateXmpXml(byteSource, os, newXmpXml);
@@ -89,7 +89,7 @@ public class JpegXmpRewriteTest extends JpegXmpBaseTest {
             // test insert
 
             final String newXmpXml = "test";
-            final File updated = createTempFile(imageFile.getName() + ".", ".jpg");
+            final File updated = File.createTempFile(imageFile.getName() + ".", ".jpg");
             try (FileOutputStream fos = new FileOutputStream(updated);
                     OutputStream os = new BufferedOutputStream(fos)) {
                 new JpegXmpRewriter().updateXmpXml(new ByteSourceFile(

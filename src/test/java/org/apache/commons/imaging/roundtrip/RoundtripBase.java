@@ -32,18 +32,14 @@ import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.internal.Debug;
-import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.provider.Arguments;
 
 public class RoundtripBase {
 
-    @TempDir
-    public File folder;
-
     protected void roundtrip(final FormatInfo formatInfo, final BufferedImage testImage,
                              final String tempPrefix, final boolean imageExact) throws IOException,
             ImageReadException, ImageWriteException {
-        final File temp1 = createTempFile(tempPrefix + ".", "."
+        final File temp1 = File.createTempFile(tempPrefix + ".", "."
                 + formatInfo.format.getExtension());
         Debug.debug("tempFile: " + temp1.getName());
 
@@ -63,18 +59,13 @@ public class RoundtripBase {
         }
 
         if (formatInfo.identicalSecondWrite) {
-            final File temp2 = createTempFile(tempPrefix + ".", "."
+            final File temp2 = File.createTempFile(tempPrefix + ".", "."
                     + formatInfo.format.getExtension());
             // Debug.debug("tempFile: " + tempFile.getName());
             Imaging.writeImage(image2, temp2, formatInfo.format, params);
 
             ImageAsserts.assertEquals(temp1, temp2);
         }
-    }
-
-    protected File createTempFile(final String prefix, final String suffix)
-            throws IOException {
-        return File.createTempFile(prefix, suffix, folder);
     }
 
     public static Stream<Arguments> createRoundtripArguments(BufferedImage[] images) {

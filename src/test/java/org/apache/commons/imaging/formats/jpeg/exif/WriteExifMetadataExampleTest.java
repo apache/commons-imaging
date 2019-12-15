@@ -46,7 +46,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest {
     public void testOddOffsets(File imageFile) throws Exception {
         Debug.debug("imageFile", imageFile.getAbsoluteFile());
 
-        final File tempFile = createTempFile("test", ".jpg");
+        final File tempFile = File.createTempFile("test", ".jpg");
         Debug.debug("tempFile", tempFile.getAbsoluteFile());
 
         try {

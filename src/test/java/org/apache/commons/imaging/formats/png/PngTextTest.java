@@ -71,7 +71,7 @@ public class PngTextTest extends PngBaseTest {
         final byte[] bytes = Imaging.writeImageToBytes(srcImage,
                 ImageFormats.PNG, writeParams);
 
-        final File tempFile = createTempFile("temp", ".png");
+        final File tempFile = File.createTempFile("temp", ".png");
         FileUtils.writeByteArrayToFile(tempFile, bytes);
 
         final PngImageInfo imageInfo = (PngImageInfo) Imaging.getImageInfo(bytes);

@@ -52,7 +52,7 @@ public class ConvertPngToGifTest extends PngBaseTest {
             final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
             assertNotNull(image);
 
-            final File outFile = createTempFile(imageFile.getName() + ".", ".gif");
+            final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
             // Debug.debug("outFile", outFile);
 
             Imaging.writeImage(image, outFile, ImageFormats.GIF,

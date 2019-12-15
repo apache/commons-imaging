@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class ByteSourceTest extends ImagingTest {
     protected File createTempFile(final byte src[]) throws IOException {
-        final File file = createTempFile("raw_", ".bin");
+        final File file = File.createTempFile("raw_", ".bin");
 
         // write test bytes to file.
         try (FileOutputStream fos = new FileOutputStream(file);

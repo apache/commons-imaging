@@ -26,17 +26,8 @@ import java.util.List;
 
 import org.apache.commons.imaging.internal.Debug;
 import org.apache.commons.imaging.test.util.FileSystemTraversal;
-import org.junit.jupiter.api.io.TempDir;
 
 public abstract class ImagingTest {
-
-    @TempDir
-    public File folder;
-
-    protected File createTempFile(final String prefix, final String suffix)
-            throws IOException {
-        return File.createTempFile(prefix, suffix, folder);
-    }
 
     protected boolean isPhilHarveyTestImage(final File file) {
         return file.getAbsolutePath().startsWith(
