@@ -16,6 +16,15 @@
  */
 package org.apache.commons.imaging.color;
 
+/**
+ * Represents a color in the Hunter Lab color space.
+ *
+ * <p>Contains the constant values for black, white, red,
+ * green, and blue.</p>
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space#Hunter_Lab">https://en.wikipedia.org/wiki/CIELAB_color_space#Hunter_Lab</a>
+ * @since 1.0-alpha1
+ */
 public final class ColorHunterLab {
 
     /**
