@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha2" date="2019-??-??" description="Second 1.0 alpha release">
+      <action issue="IMAGING-245" dev="kinow" type="add" due-to="Christoffer Rydberg">
+        Add disposal method to GIF metadata
+      </action>
       <action issue="IMAGING-243" dev="kinow" type="add" due-to="Andreas Menze">
         PNG Writer Indexed Color with semi-transparent Pixels and Better Compression
       </action>
