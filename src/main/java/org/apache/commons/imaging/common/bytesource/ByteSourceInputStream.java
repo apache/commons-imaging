@@ -20,6 +20,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import org.apache.commons.imaging.common.BinaryFunctions;
 
@@ -119,12 +120,11 @@ public class ByteSourceInputStream extends ByteSource {
         }
 
         @Override
-        public int read(final byte[] b, final int off, final int len) throws IOException {
+        public int read(final byte[] array, final int off, final int len) throws IOException {
             // first section copied verbatim from InputStream
-            if (b == null) {
-                throw new NullPointerException();
-            } else if ((off < 0) || (off > b.length) || (len < 0)
-                    || ((off + len) > b.length) || ((off + len) < 0)) {
+            Objects.requireNonNull(array, "array");
+            if ((off < 0) || (off > array.length) || (len < 0)
+                    || ((off + len) > array.length) || ((off + len) < 0)) {
                 throw new IndexOutOfBoundsException();
             } else if (len == 0) {
                 return 0;
@@ -154,7 +154,7 @@ public class ByteSourceInputStream extends ByteSource {
             }
 
             final int readSize = Math.min(len, block.bytes.length - blockIndex);
-            System.arraycopy(block.bytes, blockIndex, b, off, readSize);
+            System.arraycopy(block.bytes, blockIndex, array, off, readSize);
             blockIndex += readSize;
             return readSize;
         }
