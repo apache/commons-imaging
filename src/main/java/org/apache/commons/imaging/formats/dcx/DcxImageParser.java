@@ -241,20 +241,4 @@ public class DcxImageParser extends ImageParser {
         final PcxImageParser pcxImageParser = new PcxImageParser();
         pcxImageParser.writeImage(src, bos, pcxParams);
     }
-
-    /**
-     * Extracts embedded XML metadata as XML string.
-     * <p>
-     *
-     * @param byteSource
-     *            File containing image data.
-     * @param params
-     *            Map of optional parameters, defined in ImagingConstants.
-     * @return Xmp Xml as String, if present. Otherwise, returns null.
-     */
-    @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
-            throws ImageReadException, IOException {
-        return null;
-    }
 }
