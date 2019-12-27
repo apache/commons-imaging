@@ -130,7 +130,7 @@ public class MedianCutQuantizer {
 
             colorGroup.paletteIndex = i;
 
-            if (colorGroup.colorCounts.isEmpty()) {
+            if (colorGroup.getColorCounts().isEmpty()) {
                 throw new ImageWriteException("empty color_group: "
                         + colorGroup);
             }

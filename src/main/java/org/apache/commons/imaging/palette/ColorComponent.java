@@ -16,6 +16,11 @@
  */
 package org.apache.commons.imaging.palette;
 
+/**
+ * An RGBA (reg, green, blue, alpha) color space component enum.
+ *
+ * @since 1.0-alpha1
+ */
 enum ColorComponent {
     ALPHA(24),
     RED(16),

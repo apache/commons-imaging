@@ -57,6 +57,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-244" dev="kinow" type="add">
         Use isEmpty instead of comparing size() with integers
       </action>
+      <action issue="IMAGING-151" dev="kinow" type="fix">
+        ColorGroup.color_counts is mutable public List and is multiply sorted
+      </action>
       <action issue="IMAGING-243" dev="kinow" type="add" due-to="Andreas Menze">
         PNG Writer Indexed Color with semi-transparent Pixels and Better Compression
       </action>
