@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -42,6 +43,7 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.common.BinaryFileParser;
+import org.apache.commons.imaging.common.BinaryFunctions;
 import org.apache.commons.imaging.common.BinaryOutputStream;
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.jpeg.JpegConstants;
@@ -52,6 +54,16 @@ public class IptcParser extends BinaryFileParser {
     private static final Logger LOGGER = Logger.getLogger(IptcParser.class.getName());
 
     private static final ByteOrder APP13_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
+
+    /**
+     * Block types (or Image Resource IDs) that are not recommended to be
+     * interpreted when libraries process Photoshop IPTC metadata.
+     *
+     * @see https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/
+     * @see https://issues.apache.org/jira/browse/IMAGING-246
+     * @since 1.0-alpha2
+     */
+    private static final List<Integer> PHOTOSHOP_IGNORED_BLOCK_TYPE = Arrays.asList(1084, 1085, 1086, 1087);
 
     public IptcParser() {
         setByteOrder(ByteOrder.BIG_ENDIAN);
@@ -281,6 +293,16 @@ public class IptcParser extends BinaryFileParser {
 
                 final int blockType = read2Bytes("", bis, "Image Resource Block missing type", APP13_BYTE_ORDER);
                 Debug.debug("blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
+
+                // skip blocks that the photoshop spec recommends to, see IMAGING-246
+                if (PHOTOSHOP_IGNORED_BLOCK_TYPE.contains(blockType)) {
+                    Debug.debug("Skipping blockType: " + blockType + " (0x" + Integer.toHexString(blockType) + ")");
+                    // if there is still data in this block, before the next image resource block
+                    // (8BIM), then we must consume these bytes to leave a pointer ready to read
+                    // the next block
+                    BinaryFunctions.searchQuad(JpegConstants.CONST_8BIM, bis);
+                    continue;
+                }
 
                 final int blockNameLength = readByte("Name length", bis, "Image Resource Block missing name length");
                 if (blockNameLength > 0) {
