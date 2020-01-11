@@ -598,12 +598,12 @@ public class JpegImageParser extends ImageParser implements XmpEmbeddable {
             final App13Segment segment = (App13Segment) s;
 
             final PhotoshopApp13Data data = segment.parsePhotoshopSegment(params);
-            if (data != null && photoshopApp13Data != null) {
-                throw new ImageReadException(
-                        "Jpeg contains more than one Photoshop App13 segment.");
+            if (data != null) {
+                if (photoshopApp13Data != null) {
+                    throw new ImageReadException("Jpeg contains more than one Photoshop App13 segment.");
+                }
+                photoshopApp13Data = data;
             }
-
-            photoshopApp13Data = data;
         }
 
         if (null == photoshopApp13Data) {
