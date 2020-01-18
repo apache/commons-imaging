@@ -270,6 +270,48 @@ public final class BinaryFunctions {
         return (((0xff & c1) << 24) | ((0xff & c2) << 16) | ((0xff & c3) << 8) | ((0xff & c4) << 0));
     }
 
+    /**
+     * Convert a quad into a byte array.
+     * @param quad quad
+     * @return a byte array
+     */
+    public static byte[] quadsToByteArray(int quad) {
+        byte[] arr = new byte[4];
+        arr[0] = (byte) (quad >> 24);
+        arr[1] = (byte) (quad >> 16);
+        arr[2] = (byte) (quad >> 8);
+        arr[3] = (byte) quad;
+        return arr;
+    }
+
+    /**
+     * Consumes the {@code InputStream} (without closing it) searching for a quad. It will
+     * stop either when the quad is found, or when there are no more bytes in the input stream.
+     *
+     * <p>Returns {@code true} if it found the quad, and {@code false} otherwise.
+     *
+     * @param quad a quad (the needle)
+     * @param bis an input stream (the haystack)
+     * @return {@code true} if it found the quad, and {@code false} otherwise
+     * @throws IOException
+     */
+    public static boolean searchQuad(int quad, InputStream bis) throws IOException {
+        byte[] needle = BinaryFunctions.quadsToByteArray(quad);
+        int b = -1;
+        int position = 0;
+        while ((b = bis.read()) != -1) {
+            if (needle[position] == b) {
+                position++;
+                if (position == needle.length) {
+                    return true;
+                }
+            } else {
+                position = 0;
+            }
+        }
+        return false;
+    }
+
     public static int findNull(final byte[] src) {
         return findNull(src, 0);
     }
