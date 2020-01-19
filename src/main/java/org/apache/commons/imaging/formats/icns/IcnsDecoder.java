@@ -196,7 +196,9 @@ final class IcnsDecoder {
         final List<BufferedImage> result = new ArrayList<>();
         for (int i = 0; i < icnsElements.length; i++) {
             BufferedImage image = decodeImage(icnsElements, i);
-            if (image != null) result.add(image);
+            if (image != null) {
+            	result.add(image);
+            }
         }
         return result;
     }
@@ -224,8 +226,7 @@ final class IcnsDecoder {
             BufferedImage image = null;
             try {
                 image = Imaging.getBufferedImage(imageElement.data);
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 if (imageType.getWidth() <= 32) {
                     try {
                         image = decodeImageImpl(imageType, imageElement, icnsElements);
