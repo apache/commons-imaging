@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha2" date="2020-??-??" description="Second 1.0 alpha release">
+      <action issue="IMAGING-248" dev="kinow" type="add" due-to="Greg Shrago">
+        ICNS: missing element types; some safety checks
+      </action>
       <action issue="IMAGING-246" dev="kinow" type="fix">
         Invalid Block Size error prevents handling of block 1084, Macintosh NSPrintInfo
       </action>
