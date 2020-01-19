@@ -319,7 +319,7 @@ final class IcnsDecoder {
                 apply8BPPMask(maskElement.data, imageBuilder);
             }
             else {
-                throw new ImageReadException("Unsupport mask bit depth " + maskType.getBitsPerPixel());
+                throw new ImageReadException("Unsupported mask bit depth " + maskType.getBitsPerPixel());
             }
         }
 
