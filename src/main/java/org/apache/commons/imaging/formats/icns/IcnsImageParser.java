@@ -186,21 +186,16 @@ public class IcnsImageParser extends ImageParser {
         }
     }
 
-    private IcnsElement readIcnsElement(final InputStream is) throws IOException {
-        final int type = read4Bytes("Type", is, "Not a Valid ICNS File", getByteOrder()); // Icon type
-                                                                    // (4 bytes)
-        final int elementSize = read4Bytes("ElementSize", is, "Not a Valid ICNS File", getByteOrder()); // Length
-                                                                                  // of
-                                                                                  // data
-                                                                                  // (4
-                                                                                  // bytes),
-                                                                                  // in
-                                                                                  // bytes,
-                                                                                  // including
-                                                                                  // this
-                                                                                  // header
-        final byte[] data = readBytes("Data", is, elementSize - 8,
-                "Not a Valid ICNS File");
+    private IcnsElement readIcnsElement(final InputStream is, final int remainingSize) throws IOException {
+        // Icon type (4 bytes)
+        final int type = read4Bytes("Type", is, "Not a valid ICNS file", getByteOrder());
+        // Length of data (4 bytes), in bytes, including this header
+        final int elementSize = read4Bytes("ElementSize", is, "Not a valid ICNS file", getByteOrder());
+        if (elementSize > remainingSize) {
+            throw new IOException(String.format("Corrupted ICNS file: element size %d is greater than "
+                    + "remaining size %d", elementSize, remainingSize));
+        }
+        final byte[] data = readBytes("Data", is, elementSize - 8, "Not a valid ICNS file");
 
         return new IcnsElement(type, elementSize, data);
     }
@@ -223,7 +218,7 @@ public class IcnsImageParser extends ImageParser {
 
             final List<IcnsElement> icnsElementList = new ArrayList<>();
             for (int remainingSize = icnsHeader.fileSize - 8; remainingSize > 0;) {
-                final IcnsElement icnsElement = readIcnsElement(is);
+                final IcnsElement icnsElement = readIcnsElement(is, remainingSize);
                 icnsElementList.add(icnsElement);
                 remainingSize -= icnsElement.elementSize;
             }
