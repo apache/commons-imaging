@@ -197,7 +197,7 @@ final class IcnsDecoder {
         for (int i = 0; i < icnsElements.length; i++) {
             BufferedImage image = decodeImage(icnsElements, i);
             if (image != null) {
-            	result.add(image);
+                result.add(image);
             }
         }
         return result;
@@ -230,8 +230,7 @@ final class IcnsDecoder {
                 if (imageType.getWidth() <= 32) {
                     try {
                         image = decodeImageImpl(imageType, imageElement, icnsElements);
-                    }
-                    catch (Exception ignored) { }
+                    } catch (Exception ignored) { }
                 }
                 if (image == null) {
                     image = new BufferedImage(imageType.getWidth(), imageType.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -254,12 +253,10 @@ final class IcnsDecoder {
                 imageData = Rle24Compression.decompress(
                   imageType.getWidth(), imageType.getHeight(),
                   imageElement.data);
-            }
-            else {
+            } else {
                 throw new ImageReadException("Short image data but not a 32 bit compressed type");
             }
-        }
-        else {
+        } else {
             imageData = imageElement.data;
         }
 
@@ -287,8 +284,7 @@ final class IcnsDecoder {
         if (imageType.hasMask()) {
             maskType = imageType;
             maskElement = imageElement;
-        }
-        else {
+        } else {
             maskType = IcnsType.find8BPPMaskType(imageType);
             if (maskType != null) {
                 for (final IcnsElement icnsElement : icnsElements) {
@@ -314,11 +310,9 @@ final class IcnsDecoder {
         if (maskElement != null) {
             if (maskType.getBitsPerPixel() == 1) {
                 apply1BPPMask(maskElement.data, imageBuilder);
-            }
-            else if (maskType.getBitsPerPixel() == 8) {
+            } else if (maskType.getBitsPerPixel() == 8) {
                 apply8BPPMask(maskElement.data, imageBuilder);
-            }
-            else {
+            } else {
                 throw new ImageReadException("Unsupported mask bit depth " + maskType.getBitsPerPixel());
             }
         }

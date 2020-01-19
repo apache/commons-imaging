@@ -193,7 +193,7 @@ public class IcnsImageParser extends ImageParser {
         final int elementSize = read4Bytes("ElementSize", is, "Not a valid ICNS file", getByteOrder());
         if (elementSize > remainingSize) {
             throw new IOException(String.format("Corrupted ICNS file: element size %d is greater than "
-            		+ "remaining size %d", elementSize, remainingSize));
+                    + "remaining size %d", elementSize, remainingSize));
         }
         final byte[] data = readBytes("Data", is, elementSize - 8, "Not a valid ICNS file");
 
