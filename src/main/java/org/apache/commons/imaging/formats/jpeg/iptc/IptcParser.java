@@ -136,7 +136,7 @@ public class IptcParser extends BinaryFileParser {
                 continue;
             }
 
-            records.addAll(parseIPTCBlock(block.blockData));
+            records.addAll(parseIPTCBlock(block.getBlockData()));
         }
 
         return new PhotoshopApp13Data(records, blocks);
@@ -374,31 +374,30 @@ public class IptcParser extends BinaryFileParser {
         for (final IptcBlock block : blocks) {
             bos.write4Bytes(JpegConstants.CONST_8BIM);
 
-            if (block.blockType < 0 || block.blockType > 0xffff) {
+            if (block.getBlockType() < 0 || block.getBlockType() > 0xffff) {
                 throw new ImageWriteException("Invalid IPTC block type.");
             }
-            bos.write2Bytes(block.blockType);
+            bos.write2Bytes(block.getBlockType());
 
-            if (block.blockNameBytes.length > 255) {
-                throw new ImageWriteException("IPTC block name is too long: "
-                        + block.blockNameBytes.length);
+            final byte[] blockNameBytes = block.getBlockNameBytes();
+            if (blockNameBytes.length > 255) {
+                throw new ImageWriteException("IPTC block name is too long: " + blockNameBytes.length);
             }
-            bos.write(block.blockNameBytes.length);
-            bos.write(block.blockNameBytes);
-            if (block.blockNameBytes.length % 2 == 0) {
+            bos.write(blockNameBytes.length);
+            bos.write(blockNameBytes);
+            if (blockNameBytes.length % 2 == 0) {
                 bos.write(0); // pad to even size, including length byte.
             }
 
-            if (block.blockData.length > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
-                throw new ImageWriteException("IPTC block data is too long: "
-                        + block.blockData.length);
+            final byte[] blockData = block.getBlockData();
+            if (blockData.length > IptcConstants.IPTC_NON_EXTENDED_RECORD_MAXIMUM_SIZE) {
+                throw new ImageWriteException("IPTC block data is too long: " + blockData.length);
             }
-            bos.write4Bytes(block.blockData.length);
-            bos.write(block.blockData);
-            if (block.blockData.length % 2 == 1) {
+            bos.write4Bytes(blockData.length);
+            bos.write(blockData);
+            if (blockData.length % 2 == 1) {
                 bos.write(0); // pad to even size
             }
-
         }
 
         bos.flush();

@@ -16,22 +16,38 @@
  */
 package org.apache.commons.imaging.formats.jpeg.iptc;
 
+import java.util.Objects;
+
 /**
  * Represents an IPTC block, a set of key-value pairs of Photoshop IPTC data.
  */
 public class IptcBlock {
     // N.B. The class is used in public API parameter types
 
-    public final int blockType;
-    //  Only currently used by classes in the package
-    final byte[] blockNameBytes; // TODO make private and provide getter?
-    final byte[] blockData; // TODO make private and provide getter?
+    private final int blockType;
+    private final byte[] blockNameBytes;
+    private final byte[] blockData;
 
     public IptcBlock(final int blockType, final byte[] blockNameBytes, final byte[] blockData) {
+        Objects.requireNonNull(blockNameBytes, "Block name bytes must not be null.");
+        Objects.requireNonNull(blockNameBytes, "Block data bytes must not be null.");
         this.blockData = blockData;
         this.blockNameBytes = blockNameBytes;
         this.blockType = blockType;
     }
+
+    public int getBlockType() {
+        return blockType;
+    }
+
+    public byte[] getBlockNameBytes() {
+        return blockNameBytes.clone();
+    }
+
+    public byte[] getBlockData() {
+        return blockData.clone();
+    }
+
 
     public boolean isIPTCBlock() {
         return blockType == IptcConstants.IMAGE_RESOURCE_BLOCK_IPTC_DATA;
