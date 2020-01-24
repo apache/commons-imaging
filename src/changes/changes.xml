@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha2" date="2020-??-??" description="Second 1.0 alpha release">
+      <action issue="IMAGING-249" dev="kinow" type="update">
+        Make IPTCBlock members private and add getter/setter
+      </action>
       <action issue="IMAGING-248" dev="kinow" type="add" due-to="Greg Shrago">
         ICNS: missing element types; some safety checks
       </action>
