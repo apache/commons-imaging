@@ -130,7 +130,8 @@ public class TestImageInfo {
                 "Is Transparent: false\n" +
                 "Color Type: Black and White\n" +
                 "Uses Palette: false\n";
-        assertEquals(expected, imageInfo.toString());
+        String testString = imageInfo.toString().replaceAll("\\r", "");
+        assertEquals(expected, testString);
     }
 
     @Test
@@ -157,6 +158,7 @@ public class TestImageInfo {
                 "Is Transparent: false\n" +
                 "Color Type: Black and White\n" +
                 "Uses Palette: false\n";
-        assertEquals(expected, imageInfo.toString());
+        String testString = imageInfo.toString().replaceAll("\\r", "");
+        assertEquals(expected, testString);
     }
 }
