@@ -202,8 +202,12 @@ public class TiffReader extends BinaryFileParser {
             final long nextDirectoryOffset = 0xFFFFffffL & read4Bytes("nextDirectoryOffset", is,
                     "Not a Valid TIFF File", getByteOrder());
 
-            final TiffDirectory directory = new TiffDirectory(dirType, fields,
-                    directoryOffset, nextDirectoryOffset);
+            final TiffDirectory directory = new TiffDirectory(
+                dirType,
+                fields,
+                directoryOffset,
+                nextDirectoryOffset,
+                getByteOrder());
 
             if (listener.readImageData()) {
                 if (directory.hasTiffImageData()) {
