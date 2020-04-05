@@ -48,6 +48,7 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
+@SuppressWarnings("PMD.TooManyStaticImports")
 public abstract class ImageDataReader {
     protected final TiffDirectory directory;
     protected final PhotometricInterpreter photometricInterpreter;
@@ -59,6 +60,7 @@ public abstract class ImageDataReader {
     protected final int samplesPerPixel;
     protected final int width;
     protected final int height;
+	protected final boolean floatingPointFormat;
 
     public ImageDataReader(final TiffDirectory directory,
             final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,
@@ -72,6 +74,20 @@ public abstract class ImageDataReader {
         this.width = width;
         this.height = height;
         last = new int[samplesPerPixel];
+
+        // as a concession to legacy test programs, check to see if the
+        // directory is null before assigning the floating-point element
+        Object sFmt = null;  // sample format
+        if (directory != null) {
+            try {
+                sFmt = directory.getFieldValue(
+                    TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT);
+            } catch (ImageReadException ex) {
+                sFmt = null;
+            }
+        }
+        floatingPointFormat = (sFmt instanceof Short
+            && (short) sFmt == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT);
     }
 
     // public abstract void readImageData(BufferedImage bi, ByteSource
