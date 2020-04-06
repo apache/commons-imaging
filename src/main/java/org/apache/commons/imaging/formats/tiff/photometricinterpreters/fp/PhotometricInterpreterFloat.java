@@ -274,7 +274,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
      * @return a valid array of length 2.
      */
     public int[] getMaxXY() {
-        return new int[]{xMin, yMin};
+        return new int[]{xMax, yMax};
     }
 
     /**
