@@ -60,7 +60,7 @@ public abstract class ImageDataReader {
     protected final int samplesPerPixel;
     protected final int width;
     protected final int height;
-	protected final boolean floatingPointFormat;
+    protected final boolean floatingPointFormat;
 
     public ImageDataReader(final TiffDirectory directory,
             final PhotometricInterpreter photometricInterpreter, final int[] bitsPerSample,

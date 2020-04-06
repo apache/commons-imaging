@@ -14,9 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
- 
-/*
+ /*
  * Implementation Notes:
  *
  *   Additional implementation notes are given in DataReaderStrips.java
@@ -93,6 +91,7 @@
  * (see Commons Imaging JIRA issue IMAGING-102), though documentation
  * for that format was not available when these notes were written.
  */
+
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import java.awt.Rectangle;

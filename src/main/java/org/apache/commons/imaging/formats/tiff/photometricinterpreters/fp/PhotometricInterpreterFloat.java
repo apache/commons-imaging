@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp;
 
 import java.awt.Color;
@@ -47,11 +46,12 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * This class allows an Apache Commons implementation to construct and specify a
  * custom photometric interpreter when reading from a TIFF file. Applications
  * may supply their own palette that maps real-valued data to specified colors.
- * <p> 
+ * <p>
  * This class provides two constructors:
  * <ol>
  * <li>A simple constructor to support gray scales</li>
- * <li>A constructor to support a color palette (with potential interpolation)</li>
+ * <li>A constructor to support a color palette (with potential
+ * interpolation)</li>
  * </ol>
  * <p>
  * To use this class, an application must access the TIFF file using the
@@ -77,8 +77,8 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
      * Constructs a photometric interpreter that will produce a gray scale
      * linearly distributed across the RGB color space for values in the range
      * valueBlack to valueWhite. Note that the two values may be given in either
-     * ascending order or descending order, but they must not be equal.
-     * Infinite values will not result in proper numerical computations.
+     * ascending order or descending order, but they must not be equal. Infinite
+     * values will not result in proper numerical computations.
      *
      * @param directory a valid directory
      * @param valueBlack the value associated with the dark side of the gray
@@ -146,7 +146,6 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
      * @throws ImageReadException in the event of an improper specification or
      * an incompatible TIFF directory
      */
-
     public PhotometricInterpreterFloat(
         TiffDirectory directory,
         List<IPaletteEntry> paletteEntries) throws ImageReadException {
@@ -240,7 +239,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         }
         nFound++;
         sumFound += f;
-        
+
         for (IPaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
                 int p = entry.getARGB(f);
@@ -248,7 +247,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
                 return;
             }
         }
-        
+
         for (IPaletteEntry entry : rangePaletteEntries) {
             if (entry.isCovered(f)) {
                 int p = entry.getARGB(f);

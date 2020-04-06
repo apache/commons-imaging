@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Provides supplemental photometric interpreters for TIFF products based
  * on floating-point data.

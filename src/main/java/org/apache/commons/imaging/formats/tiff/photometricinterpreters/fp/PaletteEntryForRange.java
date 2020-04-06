@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp;
 
 import java.awt.Color;
@@ -168,10 +167,9 @@ public class PaletteEntryForRange implements IPaletteEntry {
     public float getUpperBound() {
         return v1;
     }
-    
-    
+
     @Override
-    public String toString(){
-        return  "PaletteEntry for range "+v0+", "+v1;
+    public String toString() {
+        return "PaletteEntry for range " + v0 + ", " + v1;
     }
 }

@@ -14,15 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp;
 
 import java.awt.Color;
 
 /**
- * Provides a palette entry for a color assignment to a single value.  This
- * class will assign a color to a value only if it is an exact match
- * for the input. This class will also support Float.NaN
+ * Provides a palette entry for a color assignment to a single value. This class
+ * will assign a color to a value only if it is an exact match for the input.
+ * This class will also support Float.NaN
  */
 public class PaletteEntryForValue implements IPaletteEntry {
 
