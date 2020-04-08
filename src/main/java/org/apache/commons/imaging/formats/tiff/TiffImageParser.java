@@ -637,11 +637,15 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
                     + bitsPerSample.length + ")");
         }
 
-
-
-        final PhotometricInterpreter photometricInterpreter = getPhotometricInterpreter(
+        PhotometricInterpreter photometricInterpreter;
+        Object test = params.get(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER);
+        if (test instanceof PhotometricInterpreter) {
+            photometricInterpreter = (PhotometricInterpreter) test;
+        } else {
+            photometricInterpreter = getPhotometricInterpreter(
                 directory, photometricInterpretation, bitsPerPixel,
                 bitsPerSample, predictor, samplesPerPixel, width, height);
+        }
 
         final TiffImageData imageData = directory.getTiffImageData();
 

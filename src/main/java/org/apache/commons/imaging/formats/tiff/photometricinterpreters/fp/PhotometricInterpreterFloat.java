@@ -217,15 +217,20 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
 
         Float f = Float.intBitsToFloat(samples[0]);
         // in the event of NaN, do not stored entry in the image builder.
-        if (Float.isNaN(f)) {
-            // only the single bound palette entries support NaN
-            for (IPaletteEntry entry : singleValuePaletteEntries) {
-                if (entry.coversSingleEntry()) {
-                    int p = entry.getARGB(f);
-                    imageBuilder.setRGB(x, y, p);
-                    return;
-                }
+
+        // only the single bound palette entries support NaN
+        for (IPaletteEntry entry : singleValuePaletteEntries) {
+            if (entry.isCovered(f)) {
+                int p = entry.getARGB(f);
+                imageBuilder.setRGB(x, y, p);
+                return;
             }
+        }
+
+        if (Float.isNaN(f)) {
+            // if logic reaches here, there is no definition
+            // for a NaN.
+            return;
         }
         if (f < minFound) {
             minFound = f;

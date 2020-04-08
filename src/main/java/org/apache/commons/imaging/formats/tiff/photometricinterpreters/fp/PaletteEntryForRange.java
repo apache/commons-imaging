@@ -148,7 +148,7 @@ public class PaletteEntryForRange implements IPaletteEntry {
             int r = (int) (t * deltaR + r0 + 0.5);
             int g = (int) (t * deltaG + g0 + 0.5);
             int b = (int) (t * deltaB + b0 + 0.5);
-            return new Color(a, r, g, b);
+            return new Color(r, g, b, a);
         }
         return null;
     }

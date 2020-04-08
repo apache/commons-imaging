@@ -105,6 +105,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 
@@ -123,10 +124,10 @@ public final class DataReaderTiled extends ImageDataReader {
     public DataReaderTiled(final TiffDirectory directory,
             final PhotometricInterpreter photometricInterpreter, final int tileWidth,
             final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
-            final int predictor, final int samplesPerPixel, final int width, final int height,
-            final int compression, final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
+        final int predictor, final int samplesPerPixel, final int sampleFormat,
+        final int width, final int height,            final int compression, final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
-                samplesPerPixel, width, height);
+            samplesPerPixel, sampleFormat, width, height);
 
         this.tileWidth = tileWidth;
         this.tileLength = tileLength;
@@ -146,7 +147,7 @@ public final class DataReaderTiled extends ImageDataReader {
         // 16 bit floats (which is an IEEE 754 standard) and 24 bits (which is
         // a non-standard format implemented for TIFF).  At this time, this
         // code only supports 32-bite.
-        if (floatingPointFormat) {
+        if (sampleFormat == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
             if (predictor != 3 || bitsPerPixel != 32 || bitsPerSampleLength != 1) {
                 throw new ImageReadException(
                     "Floating point format not supported for predictor=" + predictor

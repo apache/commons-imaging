@@ -21,6 +21,7 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderTiled;
@@ -55,11 +56,11 @@ public abstract class TiffImageData {
                 final PhotometricInterpreter photometricInterpreter,
                 final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
                 final int samplesPerPixel, final int width, final int height, final int compression,
-                final ByteOrder byteOrder) throws IOException, ImageReadException {
+            final ByteOrder byteOrder) throws IOException, ImageReadException {
+            int sampleFormat = extractSampleFormat(directory);
             return new DataReaderTiled(directory, photometricInterpreter,
                     tileWidth, tileLength, bitsPerPixel, bitsPerSample,
-                    predictor, samplesPerPixel, width, height, compression,
-                    byteOrder, this);
+                predictor, samplesPerPixel, sampleFormat, width, height, compression,                    byteOrder, this);
         }
 
         /**
@@ -121,10 +122,11 @@ public abstract class TiffImageData {
                 final PhotometricInterpreter photometricInterpreter,
                 final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
                 final int samplesPerPixel, final int width, final int height, final int compression,
-                final ByteOrder byteorder) throws IOException, ImageReadException {
+            final ByteOrder byteorder) throws IOException, ImageReadException {
+            int sampleFormat = extractSampleFormat(directory);
             return new DataReaderStrips(directory, photometricInterpreter,
-                    bitsPerPixel, bitsPerSample, predictor, samplesPerPixel,
-                    width, height, compression, byteorder, rowsPerStrip, this);
+                bitsPerPixel, bitsPerSample, predictor, samplesPerPixel, sampleFormat,
+                width, height, compression, byteorder, rowsPerStrip, this);
         }
 
     }
@@ -174,5 +176,14 @@ public abstract class TiffImageData {
                 return new byte[0];
             }
         }
+    }
+
+    private static int extractSampleFormat(TiffDirectory directory) throws ImageReadException {
+        short[] sSampleFmt = directory.getFieldValue(
+            TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
+        if (sSampleFmt != null && sSampleFmt.length > 0) {
+            return (int) sSampleFmt[0];
+        }
+        return 0;  // unspecified format
     }
 }
