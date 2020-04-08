@@ -144,7 +144,6 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testGetMaxXY() {
-        System.out.println("getMaxXY");
         int[] expResult = new int[]{256, 256};
         int[] result = pInterp.getMaxXY();
         assertArrayEquals(expResult, result);
@@ -165,7 +164,6 @@ public class PhotometricInterpreterFloatTest {
      */
     @Test
     public void testGetMinXY() {
-        System.out.println("getMaxXY");
         int[] expResult = new int[]{0, 0};
         int[] result = pInterp.getMinXY();
         assertArrayEquals(expResult, result);
