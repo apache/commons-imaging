@@ -79,11 +79,11 @@ public class PhotometricInterpreterFloatTest {
             // image of a floating-point type.  Rather than constructing one using
             // the commons-imaging API, we simply read one from the resources.
             // The relative path is 8 levels up and then down into the data directory
-            File target = new File("src\\test\\data\\images\\tiff\\9",
+            File target = new File("src/test/data/images/tiff/9",
                 "USGS_13_n38w077_dir5.tiff");
-            if (!target.exists()) {
-                fail("Input resource not found " + target.getAbsolutePath());
-            }
+            //if (!target.exists()) {
+            //    fail("Input resource not found " + target.getAbsolutePath());
+            //}
             ByteSourceFile byteSource = new ByteSourceFile(target);
             TiffReader tiffReader = new TiffReader(true);
             TiffContents contents = tiffReader.readDirectories(
