@@ -42,15 +42,14 @@ class ByteSourceInputStreamTest {
 
         final String imagePath = FilenameUtils.separatorsToSystem(ICO_IMAGE_FILE);
         final File imageFile = new File(ImagingTestConstants.TEST_IMAGE_FOLDER, imagePath);
-        BufferedInputStream imageStream = new BufferedInputStream(new FileInputStream(imageFile));
+        try(BufferedInputStream imageStream = new BufferedInputStream(new FileInputStream(imageFile))) {
+         // ByteSourceInputStream is created inside of following method
+            BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream,
+                    Collections.singletonMap(ImagingConstants.PARAM_KEY_FILENAME, ICO_IMAGE_FILE));
 
-        // ByteSourceInputStream is created inside of following method
-        BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream,
-                Collections.singletonMap(ImagingConstants.PARAM_KEY_FILENAME, ICO_IMAGE_FILE));
-
-        Assertions.assertEquals(bufferedImage.getWidth(), ICO_IMAGE_WIDTH);
-        Assertions.assertEquals(bufferedImage.getHeight(), ICO_IMAGE_HEIGHT);
-
+            Assertions.assertEquals(bufferedImage.getWidth(), ICO_IMAGE_WIDTH);
+            Assertions.assertEquals(bufferedImage.getHeight(), ICO_IMAGE_HEIGHT);
+        }
     }
 
 }
