@@ -16,13 +16,7 @@
  */
 package org.apache.commons.imaging.common.bytesource;
 
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
-import org.apache.commons.imaging.ImagingTestConstants;
-import org.apache.commons.io.FilenameUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -30,6 +24,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collections;
+
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingTestConstants;
+import org.apache.commons.io.FilenameUtils;
+import org.junit.jupiter.api.Test;
 
 class ByteSourceInputStreamTest {
 
@@ -47,8 +48,8 @@ class ByteSourceInputStreamTest {
             BufferedImage bufferedImage = Imaging.getBufferedImage(imageStream,
                     Collections.singletonMap(ImagingConstants.PARAM_KEY_FILENAME, ICO_IMAGE_FILE));
 
-            Assertions.assertEquals(bufferedImage.getWidth(), ICO_IMAGE_WIDTH);
-            Assertions.assertEquals(bufferedImage.getHeight(), ICO_IMAGE_HEIGHT);
+            assertEquals(bufferedImage.getWidth(), ICO_IMAGE_WIDTH);
+            assertEquals(bufferedImage.getHeight(), ICO_IMAGE_HEIGHT);
         }
     }
 
