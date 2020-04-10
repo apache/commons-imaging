@@ -213,7 +213,7 @@ public class ByteSourceInputStream extends ByteSource {
         // We include a separate check for int overflow.
         if ((blockStart < 0) || (blockLength < 0)
                 || (blockStart + blockLength < 0)
-                || (blockStart + blockLength > streamLength)) {
+                || (blockStart + blockLength > getLength())) {
             throw new IOException("Could not read block (block start: "
                     + blockStart + ", block length: " + blockLength
                     + ", data length: " + streamLength + ").");
