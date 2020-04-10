@@ -1,10 +1,20 @@
 This folder contains sample TIFF images that provide floating-point data formats.
 
-USGS_13_n38w077_dir5.tiff -------------------------------------------
+Content ---------------------------------------------------------------
+USGS_13_n38w077_dir5.tiff  
    Samples Per Pixel:  1
    Bits Per Pixel:    32 (IEEE-754 standard single-precision)
    Predictor:          3  (floating-point specific)
+   Data Reader:        Tiled
    
+Sample64BitFloatingPointPix451x337.tiff
+   Samples per Pixel: 1
+   Bits Per Pixel:    64 (IEEE-754 standard double-precision)
+   Predictor:         None
+   Data Reader:       Strips
+
+
+About USGS_13_n38w077_dir5.tiff -------------------------------------------
 The US Geologic Survey (USGS) provides terrestrial elevation data in the form of TIFF images with metadata tags
 suitable to Geographic Information System (GIS) applications.  TIFF files that provide these standard
 metadata tags are known as GeoTIFF files.
