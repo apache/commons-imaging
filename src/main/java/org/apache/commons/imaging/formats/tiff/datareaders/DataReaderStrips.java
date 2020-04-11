@@ -134,7 +134,7 @@ public final class DataReaderStrips extends ImageDataReader {
                         int b1 = bytes[k++] & 0xff;
                         int b2 = bytes[k++] & 0xff;
                         int b3 = bytes[k++] & 0xff;
-                        long sbits;
+                        int sbits;
                         if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                             sbits
                                 = (b3 << 24)
@@ -153,8 +153,7 @@ public final class DataReaderStrips extends ImageDataReader {
                         // currently support doubles, we need to replace this
                         // element with a float.  This action is inefficient and
                         // should be improved.
-                        float f = (float) Double.longBitsToDouble(sbits);
-                        samples[0] = Float.floatToRawIntBits(f);
+                        samples[0] = sbits;
                         photometricInterpreter.interpretPixel(imageBuilder,
                             samples, j, i);
                     }

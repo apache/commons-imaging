@@ -146,7 +146,7 @@ public final class DataReaderTiled extends ImageDataReader {
         // for the compressed floating-point, there is a standard that allows
         // 16 bit floats (which is an IEEE 754 standard) and 24 bits (which is
         // a non-standard format implemented for TIFF).  At this time, this
-        // code only supports 32-bite.
+        // code only supports the 32-bit format.
         if (sampleFormat == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
             if (predictor != 3 || bitsPerPixel != 32 || bitsPerSampleLength != 1) {
                 throw new ImageReadException(
