@@ -24,9 +24,6 @@ import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
-import org.apache.commons.imaging.formats.tiff.TiffDirectory;
-import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
 /**
@@ -80,18 +77,13 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
      * ascending order or descending order, but they must not be equal. Infinite
      * values will not result in proper numerical computations.
      *
-     * @param directory a valid directory
      * @param valueBlack the value associated with the dark side of the gray
      * scale
      * @param valueWhite the value associated with the light side of the gray
      * scale
-     * @throws ImageReadException in the event of an improper specification or
-     * an incompatible TIFF directory
      */
     public PhotometricInterpreterFloat(
-        TiffDirectory directory,
-        float valueBlack,
-        float valueWhite) throws ImageReadException {
+        float valueBlack, float valueWhite) {
         // The abstract base class requires that the following fields
         // be set in the constructor:
         //     samplesPerPixel (int)
@@ -99,22 +91,14 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         //     predictor (int, not used by this class)
         //     width (int)
         //     height (int)
-        // All the access methods that get data from the directory will throw
-        // an ImageReadException if they cannot extract TIFF tags, so
-        // there is no need for null-checls
         super(
-            directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL),
-            directory.findField(
-                TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, true).getIntArrayValue(),
+            1,
+            new int[]{32}, // bits per sample
             0, // not used by this class
-            directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH),
-            directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH)
+            32, // pro forma width value
+            32 // pro format height value
         );
 
-        if (!directory.hasTiffImageData()) {
-            throw new ImageReadException(
-                "The specified TIFF directory does not store an image");
-        }
 
         if (valueWhite > valueBlack) {
             PaletteEntryForRange entry
@@ -125,30 +109,15 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
                 = new PaletteEntryForRange(valueWhite, valueBlack, Color.white, Color.black);
             rangePaletteEntries.add(entry);
         }
-
-        TiffField dataFormatField = directory.findField(
-            TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
-        int[] dataFormat = dataFormatField.getIntArrayValue();
-        if (dataFormat.length == 0
-            || dataFormat[0] != TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
-            throw new ImageReadException("TIFF directory does not specify a floating-point format");
-        }
     }
 
     /**
-     * Constructs a photometric interpreter that will produce a gray scale
-     * linearly distributed across the RGB color space for values in the range
-     * valueBlack to valueWhite. Note that the two values may be given in either
-     * ascending order or descending order, but they must not be equal.
+     * Constructs a photometric interpreter that will use the specified palette
+     * to assign colors to floating-point values.
      *
-     * @param directory a valid directory
      * @param paletteEntries a valid, non-empty list of palette entries
-     * @throws ImageReadException in the event of an improper specification or
-     * an incompatible TIFF directory
      */
-    public PhotometricInterpreterFloat(
-        TiffDirectory directory,
-        List<IPaletteEntry> paletteEntries) throws ImageReadException {
+    public PhotometricInterpreterFloat(List<IPaletteEntry> paletteEntries) {
         // The abstract base class requires that the following fields
         // be set in the constructor:
         //     samplesPerPixel (int)
@@ -156,22 +125,13 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         //     predictor (int, not used by this class)
         //     width (int)
         //     height (int)
-        // All the access methods that get data from the directory will throw
-        // an ImageReadException if they cannot extract TIFF tags, so
-        // there is no need for null-checls
         super(
-            directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL),
-            directory.findField(
-                TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE, true).getIntArrayValue(),
+            1,
+            new int[]{32}, // bits per sample
             0, // not used by this class
-            directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH),
-            directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH)
+            32, // pro forma width value
+            32 // pro format height value
         );
-
-        if (!directory.hasTiffImageData()) {
-            throw new ImageReadException(
-                "The specified TIFF directory does not store an image");
-        }
 
         if (paletteEntries == null || paletteEntries.isEmpty()) {
             throw new IllegalArgumentException(
@@ -199,14 +159,6 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         Collections.sort(rangePaletteEntries, comparator);
         Collections.sort(singleValuePaletteEntries, comparator);
 
-        TiffField dataFormatField = directory.findField(
-            TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
-        int[] dataFormat = dataFormatField.getIntArrayValue();
-        if (dataFormat.length == 0
-            || dataFormat[0] != TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
-            throw new ImageReadException(
-                "TIFF directory does not specify a floating-point format");
-        }
     }
 
     @Override

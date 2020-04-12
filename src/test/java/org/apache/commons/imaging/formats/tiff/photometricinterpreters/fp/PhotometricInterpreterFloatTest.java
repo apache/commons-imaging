@@ -27,7 +27,6 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
-import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -90,9 +89,7 @@ public class PhotometricInterpreterFloatTest {
                 byteSource,
                 true, // indicates that application should read image data, if present
                 FormatCompliance.getDefault());
-
-            TiffDirectory directory = contents.directories.get(0);
-            pInterp = new PhotometricInterpreterFloat(directory, reverseList);
+            pInterp = new PhotometricInterpreterFloat(reverseList);
 
             // pre-populate the state data for the interpreter with
             // some values so that we can test min/max access methods.

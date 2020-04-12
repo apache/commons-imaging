@@ -79,7 +79,7 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
                 FormatCompliance.getDefault());
             TiffDirectory directory = contents.directories.get(0);
             PhotometricInterpreterFloat pi
-                = new PhotometricInterpreterFloat(directory, -0.0001f, 1.0001f);
+                = new PhotometricInterpreterFloat(-0.0001f, 1.0001f);
             HashMap<String, Object> params = new HashMap<>();
             params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
             ByteOrder byteOrder = tiffReader.getByteOrder();

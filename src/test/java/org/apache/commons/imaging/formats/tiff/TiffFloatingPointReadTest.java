@@ -83,8 +83,7 @@ public class TiffFloatingPointReadTest {
         List<IPaletteEntry> pList = new ArrayList<>();
         pList.add(new PaletteEntryForValue(fNot, Color.red));
         pList.add(new PaletteEntryForRange(f0, f1, Color.black, Color.white));
-        PhotometricInterpreterFloat pInterp
-            = new PhotometricInterpreterFloat(directory, pList);
+        PhotometricInterpreterFloat pInterp = new PhotometricInterpreterFloat(pList);
         HashMap<String, Object> params = new HashMap<>();
         params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pInterp);
         BufferedImage bImage = directory.getTiffImage(byteOrder, params);

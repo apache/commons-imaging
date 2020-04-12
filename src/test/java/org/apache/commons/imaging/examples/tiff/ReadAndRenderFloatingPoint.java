@@ -108,9 +108,9 @@ public class ReadAndRenderFloatingPoint {
         }
 
         // Obtain metadata about what kind of data is in the product.
-        // Because this demo is designed for floating-point data, 
+        // Because this demo is designed for floating-point data,
         // it will expect the sample format to include only one element
-        // of type floating point.   Beyond that, the TIFF specification 
+        // of type floating point.   Beyond that, the TIFF specification
         // allows a large number of variations in format (16, 24, or 32 byte
         // floats; tiles versus strips; etc.).  Unfortunately the test data
         // for the less common variations was not available when Commons Imaging
@@ -118,7 +118,7 @@ public class ReadAndRenderFloatingPoint {
         // of them.  This test will simply allow the API to throw an exception
         // if an unsupported format is encountered.
         //    The getFieldValue call allows an application to provide a
-        // boolean indicating that the field must be present for processing 
+        // boolean indicating that the field must be present for processing
         // to continue. If it does not, an exception is thrown.
         short[] sampleFormat = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
         short samplesPerPixel = directory.getFieldValue(TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
@@ -145,8 +145,7 @@ public class ReadAndRenderFloatingPoint {
         // good interpretation, we need to read the data twice.
         //    For this demo, we store the Photometric Interpreter instance
         // as a option-parameter to be passed into the read-image method.
-        PhotometricInterpreterFloat pi
-            = new PhotometricInterpreterFloat(directory, 0.0f, 1.0f);
+        PhotometricInterpreterFloat pi = new PhotometricInterpreterFloat(0.0f, 1.0f);
         HashMap<String, Object> params = new HashMap<>();
         params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
         System.out.println("Reading image");
@@ -164,7 +163,7 @@ public class ReadAndRenderFloatingPoint {
             // create a new photometric interpreter based on the range
             // of values found above.
             PhotometricInterpreterFloat grayScale
-                = new PhotometricInterpreterFloat(directory, minValue, maxValue);
+                = new PhotometricInterpreterFloat(minValue, maxValue);
             params = new HashMap<>();
             params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, grayScale);
             bImage = directory.getTiffImage(byteOrder, params);
