@@ -19,6 +19,7 @@ package org.apache.commons.imaging.formats.psd;
 import org.junit.jupiter.api.Test;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,7 +30,7 @@ public class ImageResourceBlockTest{
         final byte[] byteArray = new byte[3];
         final ImageResourceBlock imageResourceBlock = new ImageResourceBlock(0, byteArray, byteArray);
 
-        assertEquals( new String(byteArray, "ISO-8859-1"), imageResourceBlock.getName());
+        assertEquals( new String(byteArray, StandardCharsets.ISO_8859_1), imageResourceBlock.getName());
     }
 
 }
