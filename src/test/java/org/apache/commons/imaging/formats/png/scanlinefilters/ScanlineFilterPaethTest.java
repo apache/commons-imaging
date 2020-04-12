@@ -29,7 +29,7 @@ public class ScanlineFilterPaethTest{
   public void testUnfilter() throws IOException, ImageReadException {
       final ScanlineFilterPaeth scanlineFilterPaeth = new ScanlineFilterPaeth(0);
       final byte[] byteArray = new byte[5];
-      scanlineFilterPaeth.unfilter(byteArray, byteArray, (byte[]) null);
+      scanlineFilterPaeth.unfilter(byteArray, byteArray, null);
 
       assertArrayEquals(new byte[] {(byte)0, (byte)0, (byte)0, (byte)0, (byte)0}, byteArray);
   }

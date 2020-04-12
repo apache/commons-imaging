@@ -57,17 +57,17 @@ public class PhotometricInterpreterLogLuvTest {
     @Test
     public void testGetTristimulusValues() {
         // any value equals 0 will have its pow(N, 3) equal to 0
-        assertEquals(0.0d, (double) p.getTristimulusValues(0, 0, 0).x, 0.001d);
-        assertEquals(0.0d, (double) p.getTristimulusValues(0, 0, 0).y, 0.001d);
-        assertEquals(0.0d, (double) p.getTristimulusValues(0, 0, 0).z, 0.001d);
+        assertEquals(0.0d, p.getTristimulusValues(0, 0, 0).x, 0.001d);
+        assertEquals(0.0d, p.getTristimulusValues(0, 0, 0).y, 0.001d);
+        assertEquals(0.0d, p.getTristimulusValues(0, 0, 0).z, 0.001d);
         // values under the threshold used in the if statements
-        assertEquals(0.04126d, (double) p.getTristimulusValues(1, 0, 0).x, 0.001d);
-        assertEquals(0.04341d, (double) p.getTristimulusValues(1, 0, 0).y, 0.001d);
-        assertEquals(0.04727d, (double) p.getTristimulusValues(1, 0, 0).z, 0.001d);
+        assertEquals(0.04126d, p.getTristimulusValues(1, 0, 0).x, 0.001d);
+        assertEquals(0.04341d, p.getTristimulusValues(1, 0, 0).y, 0.001d);
+        assertEquals(0.04727d, p.getTristimulusValues(1, 0, 0).z, 0.001d);
         // values under the threshold used in the if statements
-        assertEquals(29.36116d, (double) p.getTristimulusValues(100, 100, 50).x, 0.001d);
-        assertEquals(10.78483d, (double) p.getTristimulusValues(100, 100, 50).y, 0.001d);
-        assertEquals(1.25681d, (double) p.getTristimulusValues(100, 100, 50).z, 0.001d);
+        assertEquals(29.36116d, p.getTristimulusValues(100, 100, 50).x, 0.001d);
+        assertEquals(10.78483d, p.getTristimulusValues(100, 100, 50).y, 0.001d);
+        assertEquals(1.25681d, p.getTristimulusValues(100, 100, 50).z, 0.001d);
     }
 
     @Test

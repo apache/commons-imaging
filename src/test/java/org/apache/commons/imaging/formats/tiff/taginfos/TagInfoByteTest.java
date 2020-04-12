@@ -30,7 +30,7 @@ public class TagInfoByteTest {
         final TiffDirectoryType tiffDirectoryType = TiffDirectoryType.TIFF_DIRECTORY_IFD0;
         final TagInfoByte tagInfoByte = new TagInfoByte("", 347, tiffDirectoryType);
 
-        assertArrayEquals(new byte[]{(byte) 0}, tagInfoByte.encodeValue((ByteOrder) null, (byte) 0));
+        assertArrayEquals(new byte[]{(byte) 0}, tagInfoByte.encodeValue(null, (byte) 0));
     }
 
 }

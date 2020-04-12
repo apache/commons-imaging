@@ -29,7 +29,7 @@ public class ScanlineFilterUpTest {
   public void testUnfilterWithNull() throws IOException, ImageReadException {
       final ScanlineFilterUp scanlineFilterUp = new ScanlineFilterUp();
       final byte[] byteArray = new byte[4];
-      scanlineFilterUp.unfilter(byteArray, byteArray, (byte[]) null);
+      scanlineFilterUp.unfilter(byteArray, byteArray, null);
 
       assertArrayEquals(new byte[] {(byte)0, (byte)0, (byte)0, (byte)0}, byteArray);
   }
