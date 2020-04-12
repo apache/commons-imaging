@@ -63,8 +63,7 @@ public class IptcAddTest extends IptcBaseTest {
             return;
         }
 
-        final List<IptcBlock> newBlocks = new ArrayList<>();
-        newBlocks.addAll(metadata.photoshopApp13Data.getNonIptcBlocks());
+        final List<IptcBlock> newBlocks = new ArrayList<>(metadata.photoshopApp13Data.getNonIptcBlocks());
         final List<IptcRecord> oldRecords = metadata.photoshopApp13Data.getRecords();
 
         final List<IptcRecord> newRecords = new ArrayList<>();
