@@ -45,7 +45,7 @@ public class RationalNumber extends Number {
             while ((n > Integer.MAX_VALUE || n < Integer.MIN_VALUE
                     || d > Integer.MAX_VALUE || d < Integer.MIN_VALUE)
                     && (Math.abs(n) > 1) && (Math.abs(d) > 1)) {
-                // brutal, inprecise truncation =(
+                // brutal, imprecise truncation =(
                 // use the sign-preserving right shift operator.
                 n >>= 1;
                 d >>= 1;

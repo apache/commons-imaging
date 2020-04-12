@@ -569,9 +569,9 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
             }
 
             if (sRGBs.size() == 1) {
-                // no color management neccesary.
+                // no color management necessary.
                 if (LOGGER.isLoggable(Level.FINEST)) {
-                    LOGGER.finest("sRGB, no color management neccesary.");
+                    LOGGER.finest("sRGB, no color management necessary.");
                 }
             } else if (iCCPs.size() == 1) {
                 if (LOGGER.isLoggable(Level.FINEST)) {

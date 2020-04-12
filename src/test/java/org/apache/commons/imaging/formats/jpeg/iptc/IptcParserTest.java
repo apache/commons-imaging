@@ -50,7 +50,7 @@ public class IptcParserTest {
      *
      * When such a case happens, the IptcParser fails with an exception, to avoid a memory
      * error. To prevent that, the parser must be able to skip these blocks that the specification
-     * says "It is recommened that you do not interpret or use this data".
+     * says "It is recommended that you do not interpret or use this data".
      *
      * @throws IOException when reading input
      * @throws ImageReadException when parsing file

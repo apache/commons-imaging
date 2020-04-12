@@ -36,7 +36,7 @@ public class DcxReadTest extends DcxBaseTest {
         return getDcxImages().stream();
     }
 
-    @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
     public void testImageMetadata(File imageFile) throws Exception {
@@ -45,7 +45,7 @@ public class DcxReadTest extends DcxBaseTest {
         });
     }
 
-    @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
     public void testImageInfo(File imageFile) throws Exception {

@@ -749,7 +749,7 @@ public abstract class ImageParser extends BinaryFileParser {
     /**
      * Get an array of bytes describing the International Color Consortium (ICC)
      * specification for the color space of the image contained in the
-     * input byteSoruce. Not all formats support ICC profiles.
+     * input byteSource. Not all formats support ICC profiles.
      *
      * @param byteSource A valid ByteSource.
      * @param params     Optional instructions for special-handling or

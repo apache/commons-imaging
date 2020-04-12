@@ -57,7 +57,7 @@ public class PcxImageParser extends ImageParser {
     // (among other places) but it's pretty thin. The fileformat.fine document
     // at http://www.fileformat.fine/format/pcx/egff.htm is a little better
     // but their gray sample image seems corrupt. PCX files themselves are
-    // the ultimate test but pretty hard to find nowdays, so the best
+    // the ultimate test but pretty hard to find nowadays, so the best
     // test is against other image viewers (Irfanview is pretty good).
     //
     // Open source projects are generally poor at parsing PCX,

@@ -525,7 +525,7 @@ public class IcoRoundtripTest extends IcoBaseTest {
         writeBITMAPINFOHEADER(bos, 16, 2 * 16, 1, 32, 0, 0, 0);
         bos.write(bitmap);
         bos.flush();
-        // Because every pixel is fully trasparent, ***ALPHA GETS IGNORED***:
+        // Because every pixel is fully transparent, ***ALPHA GETS IGNORED***:
         writeAndReadImageData("16x16x32-fully-transparent", baos.toByteArray(),
                 0xFF000000, 0xFFFFFFFF);
     }
