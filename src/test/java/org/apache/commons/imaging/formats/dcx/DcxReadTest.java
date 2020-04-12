@@ -49,7 +49,7 @@ public class DcxReadTest extends DcxBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageInfo(File imageFile) throws Exception {
-        Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
+        Imaging.getImageInfo(imageFile, Collections.emptyMap());
     }
 
     @ParameterizedTest

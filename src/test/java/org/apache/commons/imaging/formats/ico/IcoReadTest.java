@@ -50,7 +50,7 @@ public class IcoReadTest extends IcoBaseTest {
     @MethodSource("data")
     public void testImageInfo(File imageFile) throws Exception {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
+            Imaging.getImageInfo(imageFile, Collections.emptyMap());
         });
     }
 
