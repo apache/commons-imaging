@@ -192,7 +192,7 @@ public class TiffField {
                 final Object object = objects[i];
 
                 if (i > 50) {
-                    result.append("... (" + objects.length + ")");
+                    result.append("... (").append(objects.length).append(")");
                     break;
                 }
                 if (i > 0) {
@@ -241,7 +241,7 @@ public class TiffField {
                 final int iVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
@@ -258,7 +258,7 @@ public class TiffField {
                 final long lVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
@@ -292,7 +292,7 @@ public class TiffField {
                 final byte bVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
@@ -309,7 +309,7 @@ public class TiffField {
                 final char cVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
@@ -326,7 +326,7 @@ public class TiffField {
                 final float fVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
@@ -386,14 +386,18 @@ public class TiffField {
 
     @Override
     public String toString() {
-        final StringBuilder result = new StringBuilder();
-
-        result.append(getTag() + " (0x" + Integer.toHexString(getTag()) + ": "
-                + getTagInfo().name + "): ");
-        result.append(getValueDescription() + " (" + getCount() + " "
-                + getFieldType().getName() + ")");
-
-        return result.toString();
+        return getTag() +
+                " (0x" +
+                Integer.toHexString(getTag()) +
+                ": " +
+                getTagInfo().name +
+                "): " +
+                getValueDescription() +
+                " (" +
+                getCount() +
+                " " +
+                getFieldType().getName() +
+                ")";
     }
 
     public String getTagName() {

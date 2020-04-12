@@ -520,18 +520,23 @@ public class TiffImageMetadata extends GenericImageMetadata {
             // latitude: 8 degrees, 40 minutes, 42.2 seconds S
             // longitude: 115 degrees, 26 minutes, 21.8 seconds E
 
-            final StringBuilder result = new StringBuilder(88);
-            result.append("[GPS. Latitude: " + latitudeDegrees.toDisplayString()
-                    + " degrees, " + latitudeMinutes.toDisplayString()
-                    + " minutes, " + latitudeSeconds.toDisplayString()
-                    + " seconds " + latitudeRef);
-            result.append(", Longitude: " + longitudeDegrees.toDisplayString()
-                    + " degrees, " + longitudeMinutes.toDisplayString()
-                    + " minutes, " + longitudeSeconds.toDisplayString()
-                    + " seconds " + longitudeRef);
-            result.append(']');
-
-            return result.toString();
+            return "[GPS. Latitude: " +
+                    latitudeDegrees.toDisplayString() +
+                    " degrees, " +
+                    latitudeMinutes.toDisplayString() +
+                    " minutes, " +
+                    latitudeSeconds.toDisplayString() +
+                    " seconds " +
+                    latitudeRef +
+                    ", Longitude: " +
+                    longitudeDegrees.toDisplayString() +
+                    " degrees, " +
+                    longitudeMinutes.toDisplayString() +
+                    " minutes, " +
+                    longitudeSeconds.toDisplayString() +
+                    " seconds " +
+                    longitudeRef +
+                    ']';
         }
 
         public double getLongitudeAsDegreesEast() throws ImageReadException {
