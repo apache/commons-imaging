@@ -59,7 +59,7 @@ public class WriteExifMetadataExample {
             throws IOException, ImageReadException, ImageWriteException {
 
         try (FileOutputStream fos = new FileOutputStream(dst);
-                OutputStream os = new BufferedOutputStream(fos);) {
+                OutputStream os = new BufferedOutputStream(fos)) {
 
             TiffOutputSet outputSet = null;
 
