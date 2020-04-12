@@ -224,13 +224,13 @@ public class TiffField {
                 final short sval = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Short.toString(sval));
+                result.append(sval);
             }
             return result.toString();
         } else if (o instanceof int[]) {
@@ -247,7 +247,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Integer.toString(iVal));
+                result.append(iVal);
             }
             return result.toString();
         } else if (o instanceof long[]) {
@@ -264,7 +264,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Long.toString(lVal));
+                result.append(lVal);
             }
             return result.toString();
         } else if (o instanceof double[]) {
@@ -275,13 +275,13 @@ public class TiffField {
                 final double dVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Double.toString(dVal));
+                result.append(dVal);
             }
             return result.toString();
         } else if (o instanceof byte[]) {
@@ -298,7 +298,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Byte.toString(bVal));
+                result.append(bVal);
             }
             return result.toString();
         } else if (o instanceof char[]) {
@@ -315,7 +315,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Character.toString(cVal));
+                result.append(cVal);
             }
             return result.toString();
         } else if (o instanceof float[]) {
@@ -332,7 +332,7 @@ public class TiffField {
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Float.toString(fVal));
+                result.append(fVal);
             }
             return result.toString();
         }
