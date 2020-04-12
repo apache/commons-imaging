@@ -274,7 +274,7 @@ public final class TiffOutputSet {
             final List<TiffOutputField> fields = directory.getFields();
             for (final TiffOutputField field : fields) {
                 result.append(prefix);
-                result.append("\t\tfield " + i + ": " + field.tagInfo);
+                result.append("\t\tfield ").append(i).append(": ").append(field.tagInfo);
                 result.append(NEWLINE);
             }
         }

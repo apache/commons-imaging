@@ -698,7 +698,7 @@ public final class T4AndT6Compression {
             // noop
         }
 
-        return position < line.length ? position : line.length;
+        return Math.min(position, line.length);
     }
 
     private static void fillRange(final BitArrayOutputStream outputStream,

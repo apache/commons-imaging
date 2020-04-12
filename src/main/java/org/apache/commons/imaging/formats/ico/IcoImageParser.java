@@ -196,7 +196,7 @@ public class IcoImageParser extends ImageParser {
         final byte reserved = readByte("Reserved", is, "Not a Valid ICO File");
         // Planes (2 bytes), always 1
         final int planes = read2Bytes("Planes", is, "Not a Valid ICO File", getByteOrder());
-        // BitCount (2 bytes), number of bits per pixel (1 for monchrome,
+        // BitCount (2 bytes), number of bits per pixel (1 for monochrome,
         // 4 for 16 colors, 8 for 256 colors, 24 for true colors,
         // 32 for true colors + alpha channel)
         final int bitCount = read2Bytes("BitCount", is, "Not a Valid ICO File", getByteOrder());

@@ -137,14 +137,14 @@ public class ImageBuilder {
      * contained within the bounds defined by the ImageBuilder, this method will
      * throw a RasterFormatException.  This runtime-exception behavior
      * is consistent with the behavior of the getSubimage method
-     * provided by BufferdImage.
+     * provided by BufferedImage.
      * @param x the X coordinate of the upper-left corner of the
      *          specified rectangular region
      * @param y the Y coordinate of the upper-left corner of the
      *          specified rectangular region
      * @param w the width of the specified rectangular region
      * @param h the height of the specified rectangular region
-     * @return a BufferedImage that constructed from the deta within the
+     * @return a BufferedImage that constructed from the data within the
      *           specified rectangular region
      * @throws RasterFormatException f the specified area is not contained
      *         within this ImageBuilder

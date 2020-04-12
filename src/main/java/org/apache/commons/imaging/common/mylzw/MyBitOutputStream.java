@@ -67,8 +67,8 @@ public class MyBitOutputStream extends OutputStream {
                 bitCache >>= 8;
                 bitsInCache -= 8;
             }
-            final int remainderMask = (1 << bitsInCache) - 1; // unneccesary
-            bitCache &= remainderMask; // unneccesary
+            final int remainderMask = (1 << bitsInCache) - 1; // unnecessary
+            bitCache &= remainderMask; // unnecessary
         }
 
     }

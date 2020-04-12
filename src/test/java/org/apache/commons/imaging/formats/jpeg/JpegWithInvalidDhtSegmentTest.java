@@ -39,7 +39,7 @@ public class JpegWithInvalidDhtSegmentTest {
                 .getResource("/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg")
                 .getFile());
         Assertions.assertThrows(ImageReadException.class, () -> {
-            Imaging.getMetadata(imageFile, Collections.<String, Object>emptyMap());
+            Imaging.getMetadata(imageFile, Collections.emptyMap());
         });
     }
 }

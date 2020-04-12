@@ -436,7 +436,7 @@ public class JpegDecoder extends BinaryFileParser implements JpegUtils.Visitor {
      */
     static JpegInputStream[] splitByRstMarkers(final int[] scanPayload) {
         final List<Integer> intervalStarts = getIntervalStartPositions(scanPayload);
-        // get number of intervals in payload to init an array of approbiate length
+        // get number of intervals in payload to init an array of appropriate length
         final int intervalCount = intervalStarts.size();
         JpegInputStream[] streams = new JpegInputStream[intervalCount];
         for (int i = 0; i < intervalCount; i++) {

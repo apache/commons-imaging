@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class RationalNumberTest extends ImagingTest {
 
     public static Stream<Double> data() {
-        return Arrays.<Double> asList(
+        return Arrays.asList(
                 0d, //
                 0.1d, //
                 0.01d, //

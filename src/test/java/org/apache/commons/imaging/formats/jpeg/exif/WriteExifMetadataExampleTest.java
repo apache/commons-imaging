@@ -60,7 +60,7 @@ public class WriteExifMetadataExampleTest extends ExifBaseTest {
             final TiffImageMetadata tiff = parser.getExifMetadata(byteSource, null);
             for (final TiffField tiffField : tiff.getAllFields()) {
                 if (!tiffField.isLocalValue()) {
-                    final boolean isOdd = (tiffField.getOffset() & 1l) == 0;
+                    final boolean isOdd = (tiffField.getOffset() & 1L) == 0;
                     assertTrue(isOdd);
                 }
             }

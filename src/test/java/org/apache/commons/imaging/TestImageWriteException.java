@@ -33,7 +33,7 @@ public class TestImageWriteException {
 
 	public static Stream<Object[]> data() {
 		final ImageWriteException exception = new ImageWriteException(null);
-		return Stream.<Object[]>of(
+		return Stream.of(
 				new Object[] {null, "null"},
 				new Object[] {new Object[] {Integer.valueOf(1)}, "[Object[]: 1]"},
 				new Object[] {new char[] {'a', 'b', 'c'}, "[char[]: 3]"},

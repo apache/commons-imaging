@@ -34,7 +34,7 @@ public interface XmpEmbeddable {
     /**
      * Get a string containing XML-formatted text conforming to the Extensible
      * Metadata  Platform (EXP) standard for representing information about
-     * image content.  Not all image formats support EXP infomation and
+     * image content.  Not all image formats support EXP information and
      * even for those that do, there is no guarantee that such information
      * will be present in an image.
      *

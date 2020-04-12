@@ -192,7 +192,7 @@ public class TiffField {
                 final Object object = objects[i];
 
                 if (i > 50) {
-                    result.append("... (" + objects.length + ")");
+                    result.append("... (").append(objects.length).append(")");
                     break;
                 }
                 if (i > 0) {
@@ -224,13 +224,13 @@ public class TiffField {
                 final short sval = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Short.toString(sval));
+                result.append(sval);
             }
             return result.toString();
         } else if (o instanceof int[]) {
@@ -241,13 +241,13 @@ public class TiffField {
                 final int iVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Integer.toString(iVal));
+                result.append(iVal);
             }
             return result.toString();
         } else if (o instanceof long[]) {
@@ -258,13 +258,13 @@ public class TiffField {
                 final long lVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Long.toString(lVal));
+                result.append(lVal);
             }
             return result.toString();
         } else if (o instanceof double[]) {
@@ -275,13 +275,13 @@ public class TiffField {
                 final double dVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Double.toString(dVal));
+                result.append(dVal);
             }
             return result.toString();
         } else if (o instanceof byte[]) {
@@ -292,13 +292,13 @@ public class TiffField {
                 final byte bVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Byte.toString(bVal));
+                result.append(bVal);
             }
             return result.toString();
         } else if (o instanceof char[]) {
@@ -309,13 +309,13 @@ public class TiffField {
                 final char cVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Character.toString(cVal));
+                result.append(cVal);
             }
             return result.toString();
         } else if (o instanceof float[]) {
@@ -326,13 +326,13 @@ public class TiffField {
                 final float fVal = values[i];
 
                 if (i > 50) {
-                    result.append("... (" + values.length + ")");
+                    result.append("... (").append(values.length).append(")");
                     break;
                 }
                 if (i > 0) {
                     result.append(", ");
                 }
-                result.append(Float.toString(fVal));
+                result.append(fVal);
             }
             return result.toString();
         }
@@ -386,14 +386,18 @@ public class TiffField {
 
     @Override
     public String toString() {
-        final StringBuilder result = new StringBuilder();
-
-        result.append(getTag() + " (0x" + Integer.toHexString(getTag()) + ": "
-                + getTagInfo().name + "): ");
-        result.append(getValueDescription() + " (" + getCount() + " "
-                + getFieldType().getName() + ")");
-
-        return result.toString();
+        return getTag() +
+                " (0x" +
+                Integer.toHexString(getTag()) +
+                ": " +
+                getTagInfo().name +
+                "): " +
+                getValueDescription() +
+                " (" +
+                getCount() +
+                " " +
+                getFieldType().getName() +
+                ")";
     }
 
     public String getTagName() {

@@ -68,7 +68,7 @@ public class TiffLzwTest extends TiffBaseTest {
 
             final ByteSource byteSource = new ByteSourceFile(image);
             final List<byte[]> data = new TiffImageParser().collectRawImageData(byteSource,
-                    Collections.<String, Object>emptyMap());
+                    Collections.emptyMap());
 
             for (final byte[] bytes : data) {
                 decompressRoundtripAndValidate(bytes);

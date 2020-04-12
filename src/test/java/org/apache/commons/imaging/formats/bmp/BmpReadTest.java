@@ -51,7 +51,7 @@ public class BmpReadTest extends BmpBaseTest {
         // TODO assert more
     }
 
-    @Disabled(value = "RoundtripTest has to be fixed befor implementation can throw UnsupportedOperationException")
+    @Disabled(value = "RoundtripTest has to be fixed before implementation can throw UnsupportedOperationException")
     @ParameterizedTest
     @MethodSource("data")
     public void testMetaData(File imageFile) throws ImageReadException, IOException {

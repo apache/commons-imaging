@@ -161,7 +161,7 @@ public class FormatCompliance {
         if (valid.length > 1) {
             result.append('}');
         }
-        result.append(", actual: " + getValueDescription(actual) + ")");
+        result.append(", actual: ").append(getValueDescription(actual)).append(")");
         addComment(result.toString());
         return false;
     }

@@ -31,7 +31,7 @@ public class IptcFullDiscardTest {
 
     private byte[] addMetaData(final byte[] bytes) throws Exception {
         final IptcRecord record = new IptcRecord(IptcTypes.KEYWORDS, "meta; data");
-        final PhotoshopApp13Data data = new PhotoshopApp13Data(Collections.singletonList(record), Collections.<IptcBlock> emptyList());
+        final PhotoshopApp13Data data = new PhotoshopApp13Data(Collections.singletonList(record), Collections.emptyList());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         new JpegIptcRewriter().writeIPTC(bytes, byteArrayOutputStream, data);
         return byteArrayOutputStream.toByteArray();

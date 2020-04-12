@@ -72,7 +72,7 @@ public class IcnsReadTest extends IcnsBaseTest {
     @ParameterizedTest
     @MethodSource("data")
     public void testImageInfo(File imageFile) throws Exception {
-        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, Collections.<String, Object> emptyMap());
+        final ImageInfo imageInfo = Imaging.getImageInfo(imageFile, Collections.emptyMap());
         assertNotNull(imageInfo);
     }
 

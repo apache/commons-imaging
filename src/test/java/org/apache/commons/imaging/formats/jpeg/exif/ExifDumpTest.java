@@ -46,7 +46,7 @@ public class ExifDumpTest extends ExifBaseTest {
         final ByteSource byteSource = new ByteSourceFile(imageFile);
         Debug.debug("Segments:");
         new JpegUtils().dumpJFIF(byteSource);
-        // TODO assert someting
+        // TODO assert something
     }
 
     @ParameterizedTest

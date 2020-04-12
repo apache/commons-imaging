@@ -70,7 +70,7 @@ public class RgbeReadTest extends RgbeBaseTest {
                 RgbeReadTest.class.getResource("/IMAGING-219/timeout-9713502c9c371f1654b493650c16ab17c0444369")
                         .getFile());
         final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
-        final Map<String, Object> params = Collections.<String, Object>emptyMap();
+        final Map<String, Object> params = Collections.emptyMap();
         Assertions.assertThrows(ImageReadException.class, () -> {
             new RgbeImageParser().getBufferedImage(byteSourceFile, params);
         });

@@ -53,7 +53,7 @@ public class TiffOutputField {
         if (isLocalValue()) {
             separateValueItem = null;
         } else {
-            final String name = "Field Seperate value (" + tagInfo.getDescription()
+            final String name = "Field Separate value (" + tagInfo.getDescription()
                     + ")";
             separateValueItem = new TiffOutputItem.Value(name, bytes);
         }
