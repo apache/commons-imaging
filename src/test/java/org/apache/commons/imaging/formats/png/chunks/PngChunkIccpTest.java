@@ -51,10 +51,10 @@ public class PngChunkIccpTest {
         final List<Byte> bytes = new ArrayList<>();
         final String profileName = "my-profile-01";
         for (byte b : profileName.getBytes(StandardCharsets.ISO_8859_1)) {
-            bytes.add(new Byte(b));
+            bytes.add(b);
         }
-        bytes.add(new Byte((byte) 0)); // null
-        bytes.add(new Byte((byte) 0)); // 0=deflate compression method
+        bytes.add((byte) 0); // null
+        bytes.add((byte) 0); // 0=deflate compression method
         
         // generate some 100 bytes of dummy data
         byte[] uncompressedData = new byte[100];

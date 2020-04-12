@@ -34,7 +34,7 @@ public class FieldTypeRationalTest {
   @Test
   public void testWriteDataWithNull() throws ImageWriteException {
       FieldTypeRational fieldTypeRational = new FieldTypeRational(9, null);
-      Double doubleOne = new Double(2.2);
+      Double doubleOne = 2.2d;
       byte[] byteArray = fieldTypeRational.writeData(doubleOne, null);
 
       assertArrayEquals(new byte[] {(byte)11, (byte)0, (byte)0, (byte)0, (byte)5, (byte)0, (byte)0, (byte)0}, byteArray);
