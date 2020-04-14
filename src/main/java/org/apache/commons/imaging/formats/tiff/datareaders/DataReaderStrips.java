@@ -14,6 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+ /*
+ * Implementation notes:
+ *    See ImageDataReader for notes on development
+ * with particular emphasis on run-time performance.
+ */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import java.awt.Rectangle;
@@ -30,6 +36,9 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 
+/**
+ * Provides a data reader for TIFF file images organized by tiles.
+ */
 public final class DataReaderStrips extends ImageDataReader {
 
     private final int bitsPerPixel;
@@ -67,14 +76,7 @@ public final class DataReaderStrips extends ImageDataReader {
 
         // changes added March 2020
         if (sampleFormat == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
-            if (predictor == 2 || predictor == 3) {
-                throw new ImageReadException("Unsupported feature, TIFF predictor "
-                    + predictor + " not supported for floating-point strip data");
-            }
-            if (samplesPerPixel != 1 || (bitsPerPixel != 64 && bitsPerPixel != 32)) {
-                throw new ImageReadException("TIFF floating-point bits-per-pixel "
-                    + bitsPerPixel + " not supported");
-            }
+
             int k = 0;
             int nRows = pixelsPerStrip / width;
             if (y + nRows > yLimit) {
@@ -85,80 +87,17 @@ public final class DataReaderStrips extends ImageDataReader {
             x = 0;
             y += nRows;
             final int[] samples = new int[1];
-            if (bitsPerPixel == 64) {
-                for (int i = i0; i < i1; i++) {
-                    for (int j = 0; j < width; j++) {
-                        long b0 = bytes[k++] & 0xffL;
-                        long b1 = bytes[k++] & 0xffL;
-                        long b2 = bytes[k++] & 0xffL;
-                        long b3 = bytes[k++] & 0xffL;
-                        long b4 = bytes[k++] & 0xffL;
-                        long b5 = bytes[k++] & 0xffL;
-                        long b6 = bytes[k++] & 0xffL;
-                        long b7 = bytes[k++] & 0xffL;
-                        long sbits;
-                        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
-                            sbits = (b7 << 56)
-                                | (b6 << 48)
-                                | (b5 << 40)
-                                | (b4 << 32)
-                                | (b3 << 24)
-                                | (b2 << 16)
-                                | (b1 << 8)
-                                | b0;
+            int[] b = unpackFloatingPointSamples(
+                width, i1 - i0, width, bytes, predictor, bitsPerPixel, byteOrder);
 
-                        } else {
-                            sbits = (b0 << 56)
-                                | (b1 << 48)
-                                | (b2 << 40)
-                                | (b3 << 32)
-                                | (b4 << 24)
-                                | (b5 << 16)
-                                | (b6 << 8)
-                                | b7;
-                        }
-                        // since the photometric interpreter does not
-                        // currently support doubles, we need to replace this
-                        // element with a float.  This action is inefficient and
-                        // should be improved.
-                        float f = (float) Double.longBitsToDouble(sbits);
-                        samples[0] = Float.floatToRawIntBits(f);
-                        photometricInterpreter.interpretPixel(imageBuilder,
-                            samples, j, i);
-                    }
-                }
-            } else if (bitsPerPixel == 32) {
-                for (int i = i0; i < i1; i++) {
-                    for (int j = 0; j < width; j++) {
-                        int b0 = bytes[k++] & 0xff;
-                        int b1 = bytes[k++] & 0xff;
-                        int b2 = bytes[k++] & 0xff;
-                        int b3 = bytes[k++] & 0xff;
-                        int sbits;
-                        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
-                            sbits
-                                = (b3 << 24)
-                                | (b2 << 16)
-                                | (b1 << 8)
-                                | b0;
-
-                        } else {
-                            sbits
-                                = (b0 << 24)
-                                | (b1 << 16)
-                                | (b2 << 8)
-                                | b3;
-                        }
-                        // since the photometric interpreter does not
-                        // currently support doubles, we need to replace this
-                        // element with a float.  This action is inefficient and
-                        // should be improved.
-                        samples[0] = sbits;
-                        photometricInterpreter.interpretPixel(imageBuilder,
-                            samples, j, i);
-                    }
+            for (int i = i0; i < i1; i++) {
+                for (int j = 0; j < width; j++) {
+                    samples[0] = b[k++];
+                    photometricInterpreter.interpretPixel(imageBuilder,
+                        samples, j, i);
                 }
             }
+
             return;
         }
 

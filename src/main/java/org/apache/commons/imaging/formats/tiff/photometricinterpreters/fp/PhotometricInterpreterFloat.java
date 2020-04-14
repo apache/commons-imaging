@@ -167,7 +167,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         int[] samples, int x, int y)
         throws ImageReadException, IOException {
 
-        Float f = Float.intBitsToFloat(samples[0]);
+        float f = Float.intBitsToFloat(samples[0]);
         // in the event of NaN, do not stored entry in the image builder.
 
         // only the single bound palette entries support NaN

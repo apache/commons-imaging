@@ -14,6 +14,86 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+ /*
+ * Implementation Notes:
+ *
+ *   Additional implementation notes are given in:
+ *        DataReaderStrips.java
+ *        DataReaderTiled.java
+ *
+ * The TIFF Floating-Point Formats ----------------------------------
+ *    In addition to providing images, TIFF files can supply data in the
+ * form of numerical values. As of March 2020 the Commons Imaging library
+ * was extended to support some floating-point data formats.
+ *    Unfortunately, the floating-point format allows for a lot of different
+ * variations and only the most widely used of these are currently supported.
+ * At the time of implementation, only a small set of data products were
+ * available. Thus it is likely that developers will wish to extend this capability
+ * as additional test data become available. When implementing extensions
+ * to this logic, developers are reminder that image processing requires
+ * access to literally millions of pixels, so attention to performance
+ * is essential to a successful implementation (please see the notes in
+ * DataReaderStrips.java for more information).
+ *    The TIFF floating-point implementation is very poorly documented.
+ * So these notes are included to provide clarification on at least
+ * some aspects of the format.
+ *
+ * The Predictor==3 Case
+ *   TIFF specifies an extension for a predictor that is intended to
+ * improve data compression ratios for floating-point values.  This
+ * predictor is specified using the TIFF predictor TAG with a value of 3
+ * (see TIFF Technical Note 3, April 8, 2005).  Consider a 4-byte floating
+ * point value given in IEEE-754 format.  Let f3 be the high-order byte,
+ * with f2 the next highest, followed by f1, and f0 for the
+ * low-order byte.  This designation shoulod not be confused with the
+ * in-memory layout of the bytes (little-endian versus big-endian), but
+ * rather their numerical values. The sign bit and upper 7 bits of the exponent
+ * are given in the high-order byte, followed by the remaining sign bit
+ * and the mantissa in the lower.
+ *   In many real-valued raster data sets, the sign and magnitude (exponent)
+ * of the values changes slowly which the contents of the mantissa vary in
+ * a semi-random manner, with the information entropy tending to increase
+ * in the lowest ordered bytes.  Thus, the high-order bytes have more
+ * redundancy than the low-order bytes and can compress more efficiently.
+ * To exploit this, the TIFF format splits the bytes into groups based on their
+ * order-of-magnitude.  This splitting process takes place on a ROW-BY-ROW
+ * basis (note the emphasis, this point is not clearly documented in the spec).
+ * .  For example, for row length of 3 pixels -- A, B, and C -- the data
+ * for two rows would be given as shown below (again, ignoring endian issues):
+ *   Original:
+ *      A3 A2 A1 A0   B3 B2 B1 B0   C3 C2 C1 C0
+ *      D3 D3 D1 D0   E3 E2 E2 E0   F3 F2 F1 F0
+ *
+ *   Bytes split into groups by order-of-magnitude:
+ *      A3 B3 C3   A2 B2 C2   A1 B1 C1   A0 B0 C0
+ *      D3 E3 F3   D2 E2 F2   D1 E1 F1   D0 E0 F0
+ *
+ * To further improve the compression, the predictor takes the difference of
+ * each subsequent bytes.  Again, the differences (deltas) are computed on
+ * a row-byte-row basis.  For the most part, the differences combine
+ * bytes associated with the same order-of-magnitude, though there is
+ * a special transition at the end of each order-of-magnitude set (shown in
+ * parentheses):
+ *
+ *      A3, B3-A3, C3-B3, (A2-C3), B2-A2, C2-B2, (A1-C2), etc.
+ *      D3, E3-D3, F3-D3, (D2-F3), E3-D2, etc.
+ *
+ * Once the predictor transform is complete, the data is stored using
+ * conventional data compression techniques such as Deflate or LZW.
+ * In practice, floating point data does not compress especially well, but
+ * using the above technique, the TIFF process typically reduces the overall
+ * storage size by 20 to 30 percent (depending on the data).
+ *    The TIFF Technical Note 3 specifies 3 data size formats for
+ * storing floating point values:
+ *     32 bits    IEEE-754 single-precision standard
+ *     16 bits    IEEE-754 half-precision standard
+ *     24 bits    A non-standard representation
+ * At this time, we have not obtained data samples for the smaller
+ * representations.  There are also reports of 64-bit data
+ * (see Commons Imaging JIRA issue IMAGING-102), though documentation
+ * for that format was not available when these notes were written.
+ */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
@@ -48,6 +128,11 @@ import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 
+/**
+ * Defines the base class for the TIFF file reader classes. The TIFF format
+ * defines two broad organizations for image pixel storage: strips and tiles.
+ * This class defines common elements for both representations.
+ */
 @SuppressWarnings("PMD.TooManyStaticImports")
 public abstract class ImageDataReader {
     protected final TiffDirectory directory;
@@ -235,5 +320,169 @@ public abstract class ImageDataReader {
         default:
             throw new ImageReadException("Tiff: unknown/unsupported compression: " + compression);
         }
+    }
+
+    /**
+     * Given a source file that specifies the floating-point data format, unpack
+     * the raw bytes obtained from the source file and organize them into an
+     * array of integers containing the bit-equivalent of IEEE-754 32-bit
+     * floats. Source files containing 64 bit doubles are downcast to floats.
+     * <p>
+     * This method supports either the tile format or the strip format of TIFF
+     * source files. The scan size indicates the number of columns to be
+     * extracted. For strips, the width and the scan size are always the full
+     * width of the image. For tiles, the scan size is the full width of the
+     * tile, but the width may be smaller in the cases where the tiles do not
+     * evenly divide the width (for example, a 256 pixel wide tile in a 257
+     * pixel wide image would result in two columns of tiles, the second column
+     * having only one column of pixels that were worth extracting.
+     *
+     * @param width the width of the data block to be extracted
+     * @param height the height of the data block to be extracted
+     * @param scansize the number of pixels in a single row of the block
+     * @param bytes the raw bytes
+     * @param predictor the predictor specified by the source, only predictor 3
+     * is supported.
+     * @param bitsPerSample the number of bits per sample, 32 or 64.
+     * @param byteOrder the byte order for the source data
+     * @return a valid array of integers in row major order, dimensions
+     * scan-size wide and height height.
+     * @throws ImageReadException in the event of an invalid format.
+     */
+    protected int[] unpackFloatingPointSamples(
+        int width,
+        int height,
+        int scansize,
+        byte[] bytes,
+        int predictor,
+        int bitsPerSample, ByteOrder byteOrder)
+        throws ImageReadException {
+        int bytesPerSample = bitsPerSample / 8;
+        int nBytes = bytesPerSample * scansize * height;
+        int length = bytes.length < nBytes ? nBytes / scansize : height;
+
+        int[] samples = new int[scansize * height];
+        if (predictor == 3) {
+            // at this time, this class supports the 32-bit format.  The
+            // main reason for this is that we have not located sample data
+            // that can be used for testing and analysis.
+            if (bitsPerSample != 32) {
+                throw new ImageReadException(
+                    "Imaging does not yet support floating-point data"
+                    + " with predictor type 3 for "
+                    + bitsPerSample + " bits per sample");
+            }
+            int bytesInRow = scansize * 4;
+            for (int i = 0; i < length; i++) {
+                int aOffset = i * bytesInRow;
+                int bOffset = aOffset + scansize;
+                int cOffset = bOffset + scansize;
+                int dOffset = cOffset + scansize;
+                // in this loop, the source bytes give delta values.
+                // we adjust them to give true values.  This operation is
+                // done on a row-by-row basis.
+                for (int j = 1; j < bytesInRow; j++) {
+                    bytes[aOffset + j] += bytes[aOffset + j - 1];
+                }
+                // pack the bytes into the integer bit-equivalent of
+                // floating point values
+                int index = i * scansize;
+                for (int j = 0; j < width; j++) {
+                    int a = bytes[aOffset + j];
+                    int b = bytes[bOffset + j];
+                    int c = bytes[cOffset + j];
+                    int d = bytes[dOffset + j];
+                    // Pack the 4 byte components into a single integer
+                    // in the byte order used by the TIFF standard
+                    samples[index++] = ((a & 0xff) << 24)
+                        | ((b & 0xff) << 16)
+                        | ((c & 0xff) << 8)
+                        | (d & 0xff);
+                }
+            }
+            return samples;
+        }  // end of predictor==3 case.
+
+        // simple packing case, 64 or 32 bits --------------------------
+        if (bitsPerSample == 64) {
+            int k = 0;
+            int index = 0;
+            for (int i = 0; i < length; i++) {
+                for (int j = 0; j < scansize; j++) {
+                    long b0 = bytes[k++] & 0xffL;
+                    long b1 = bytes[k++] & 0xffL;
+                    long b2 = bytes[k++] & 0xffL;
+                    long b3 = bytes[k++] & 0xffL;
+                    long b4 = bytes[k++] & 0xffL;
+                    long b5 = bytes[k++] & 0xffL;
+                    long b6 = bytes[k++] & 0xffL;
+                    long b7 = bytes[k++] & 0xffL;
+                    long sbits;
+                    if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
+                        sbits = (b7 << 56)
+                            | (b6 << 48)
+                            | (b5 << 40)
+                            | (b4 << 32)
+                            | (b3 << 24)
+                            | (b2 << 16)
+                            | (b1 << 8)
+                            | b0;
+
+                    } else {
+                        sbits = (b0 << 56)
+                            | (b1 << 48)
+                            | (b2 << 40)
+                            | (b3 << 32)
+                            | (b4 << 24)
+                            | (b5 << 16)
+                            | (b6 << 8)
+                            | b7;
+                    }
+                    // since the photometric interpreter does not
+                    // currently support doubles, we need to replace this
+                    // element with a float.  This action is inefficient and
+                    // should be improved.
+                    float f = (float) Double.longBitsToDouble(sbits);
+                    samples[index++] = Float.floatToRawIntBits(f);
+                }
+            }
+        } else if (bitsPerSample == 32) {
+            int k = 0;
+            int index = 0;
+            for (int i = 0; i < length; i++) {
+                for (int j = 0; j < scansize; j++) {
+                    int b0 = bytes[k++] & 0xff;
+                    int b1 = bytes[k++] & 0xff;
+                    int b2 = bytes[k++] & 0xff;
+                    int b3 = bytes[k++] & 0xff;
+                    int sbits;
+                    if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
+                        sbits
+                            = (b3 << 24)
+                            | (b2 << 16)
+                            | (b1 << 8)
+                            | b0;
+
+                    } else {
+                        sbits
+                            = (b0 << 24)
+                            | (b1 << 16)
+                            | (b2 << 8)
+                            | b3;
+                    }
+                    // since the photometric interpreter does not
+                    // currently support doubles, we need to replace this
+                    // element with a float.  This action is inefficient and
+                    // should be improved.
+                    samples[index++] = sbits;
+                }
+            }
+        } else {
+            throw new ImageReadException(
+                "Imaging does not support floating-point samples with "
+                + bitsPerSample + " bits per sample");
+        }
+
+        return samples;
     }
 }

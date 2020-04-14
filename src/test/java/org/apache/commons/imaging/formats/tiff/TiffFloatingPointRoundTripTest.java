@@ -14,9 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.imaging.formats.tiff;
-
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
@@ -26,9 +24,12 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
 import java.util.HashMap;
+import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.FormatCompliance;
+import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
+import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -39,6 +40,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -53,9 +55,59 @@ import org.junit.jupiter.api.io.TempDir;
  * exercised.
  */
 public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
+
     @TempDir
     Path tempDir;
 
+    int width = 48;
+    int height = 23;
+    float f0 = 0.0F;
+    float f1 = 1.0F;
+    float[] f = new float[width * height];
+    int[] argb = new int[width * height];
+
+    public TiffFloatingPointRoundTripTest() {
+        // populate the image data
+        for (int iCol = 0; iCol < width; iCol++) {
+            float s = iCol / (float) (width - 1);
+            for (int iRow = 0; iRow < height; iRow++) {
+                int index = iRow * width + iCol;
+                f[index] = s;
+            }
+        }
+
+        // apply the photometric interpreter to assign colors to the
+        // floating-point input data.  The ultimate goal of the test is to verify
+        // that the values read back from the TIFF file match the input.
+        try {
+            PhotometricInterpreterFloat pi = getPhotometricInterpreter();
+            ImageBuilder builder = new ImageBuilder(width, height, false);
+            int samples[] = new int[1];
+            for (int iCol = 0; iCol < width; iCol++) {
+                for (int iRow = 0; iRow < height; iRow++) {
+                    int index = iRow * width + iCol;
+                    samples[0] = Float.floatToRawIntBits(f[index]);
+                    pi.interpretPixel(builder, samples, iCol, iRow);
+                    argb[index] = builder.getRGB(iCol, iRow);
+                }
+            }
+
+        } catch (ImageReadException | IOException ex) {
+            fail("Exception initializing data " + ex.getMessage());
+        }
+
+    }
+
+    /**
+     * Construct a photometric interpreter. This initialization is performed in
+     * a dedicated method to ensure consistency throughout different phases of
+     * the test.
+     *
+     * @return a valid instance.
+     */
+    private PhotometricInterpreterFloat getPhotometricInterpreter() {
+        return new PhotometricInterpreterFloat(f0, f1 + 1.0e-5f);
+    }
 
     @Test
     public void test() throws Exception {
@@ -64,11 +116,15 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         // TIFF datareaders classes.  So that format is not yet exercised.
         // Note also that the compressed floating-point with predictor=3
         // is processed in other tests, but not here.
-        File[] testFile = new File[4];
+        File[] testFile = new File[8];
         testFile[0] = writeFile(32, ByteOrder.LITTLE_ENDIAN, false);
         testFile[1] = writeFile(64, ByteOrder.LITTLE_ENDIAN, false);
         testFile[2] = writeFile(32, ByteOrder.BIG_ENDIAN, false);
         testFile[3] = writeFile(64, ByteOrder.BIG_ENDIAN, false);
+        testFile[4] = writeFile(32, ByteOrder.LITTLE_ENDIAN, true);
+        testFile[5] = writeFile(64, ByteOrder.LITTLE_ENDIAN, true);
+        testFile[6] = writeFile(32, ByteOrder.BIG_ENDIAN, true);
+        testFile[7] = writeFile(64, ByteOrder.BIG_ENDIAN, true);
         for (int i = 0; i < testFile.length; i++) {
             String name = testFile[i].getName();
             ByteSourceFile byteSource = new ByteSourceFile(testFile[i]);
@@ -78,17 +134,27 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
                 true, // indicates that application should read image data, if present
                 FormatCompliance.getDefault());
             TiffDirectory directory = contents.directories.get(0);
-            PhotometricInterpreterFloat pi
-                = new PhotometricInterpreterFloat(-0.0001f, 1.0001f);
+            PhotometricInterpreterFloat pi = getPhotometricInterpreter();
             HashMap<String, Object> params = new HashMap<>();
             params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
             ByteOrder byteOrder = tiffReader.getByteOrder();
             BufferedImage bImage = directory.getTiffImage(byteOrder, params);
             assertNotNull(bImage, "Failed to get image from " + name);
+            int[] pixel = new int[width * height];
+            bImage.getRGB(0, 0, width, height, pixel, 0, width);
+            for (int k = 0; k < pixel.length; k++) {
+                assertEquals(argb[k], pixel[k],
+                    "Extracted data does not match original, test "
+                    + i + ", index " + k);
+            }
             float meanValue = pi.getMeanFound();
             assertEquals(0.5, meanValue, 1.0e-5, "Invalid numeric values in " + name);
-        }
+            // To write out an image file for inspection, use the following
+            // (with appropriate adjustments for path and OS)
+            //File imFile = new File("C:/Users/public", testFile[i].getName() + ".png");
+            //ImageIO.write(bImage, "PNG", imFile);
 
+        }
     }
 
     private File writeFile(int bitsPerSample, ByteOrder byteOrder, boolean useTiles)
@@ -99,28 +165,25 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
             useTiles ? "Tiles" : "Strips");
         File outputFile = new File(tempDir.toFile(), name);
 
-        int width = 48;
-        int height = 23;
+        int bytesPerSample = bitsPerSample / 8;
         int nRowsInBlock;
         int nColsInBlock;
-        float[] f = new float[width * height];
-        // note that Use Tiles is not yet implemented
+        int nBytesInBlock;
         if (useTiles) {
+            // Define the tiles so that they will not evenly subdivide
+            // the image.  This will allow the test to evaluate how the
+            // data reader processes tiles that are only partially used.
             nRowsInBlock = 12;
-            nColsInBlock = 24;
+            nColsInBlock = 20;
         } else {
+            // Define the strips so that they will not evenly subdivide
+            // the image.  This will allow the test to evaluate how the
+            // data reader processes strips that are only partially used.
             nRowsInBlock = 2;
             nColsInBlock = width;
         }
+        nBytesInBlock = nRowsInBlock * nColsInBlock * bytesPerSample;
 
-        // populate the image data
-        for (int iCol = 0; iCol < width; iCol++) {
-            float s = iCol / (float) (width - 1);
-            for (int iRow = 0; iRow < height; iRow++) {
-                int index = iRow * width + iCol;
-                f[index] = s;
-            }
-        }
         byte[][] blocks;
         if (bitsPerSample == 32) {
             blocks = this.getBytesForOutput32(
@@ -149,16 +212,28 @@ public class TiffFloatingPointRoundTripTest extends TiffBaseTest {
         outDir.add(TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION,
             (short) TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY);
 
-        outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, 2);
-        outDir.add(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS, 2 * 48 * 4);
+        if (useTiles) {
+            outDir.add(TiffTagConstants.TIFF_TAG_TILE_WIDTH, nColsInBlock);
+            outDir.add(TiffTagConstants.TIFF_TAG_TILE_LENGTH, nRowsInBlock);
+            outDir.add(TiffTagConstants.TIFF_TAG_TILE_BYTE_COUNTS, nBytesInBlock);
+        } else {
+            outDir.add(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP, 2);
+            outDir.add(TiffTagConstants.TIFF_TAG_STRIP_BYTE_COUNTS, nBytesInBlock);
+        }
 
         final TiffElement.DataElement[] imageData = new TiffElement.DataElement[blocks.length];
         for (int i = 0; i < blocks.length; i++) {
             imageData[i] = new TiffImageData.Data(0, blocks[i].length, blocks[i]);
         }
 
-        final TiffImageData tiffImageData = new TiffImageData.Strips(imageData,
-            nRowsInBlock);
+        TiffImageData tiffImageData;
+        if (useTiles) {
+            tiffImageData
+                = new TiffImageData.Tiles(imageData, nColsInBlock, nRowsInBlock);
+        } else {
+            tiffImageData
+                = new TiffImageData.Strips(imageData, nRowsInBlock);
+        }
         outDir.setTiffImageData(tiffImageData);
 
         try (FileOutputStream fos = new FileOutputStream(outputFile);
