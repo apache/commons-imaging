@@ -17,17 +17,12 @@
 package org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp;
 
 import java.awt.Color;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.common.ImageBuilder;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.tiff.TiffContents;
-import org.apache.commons.imaging.formats.tiff.TiffReader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,7 +34,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PhotometricInterpreterFloatTest {
 
     private static PhotometricInterpreterFloat pInterp;
+    private static PhotometricInterpreterFloat bandedInterp;
     private static ImageBuilder imageBuilder;
+    private static ImageBuilder bandedImageBuilder;
+
+    private static final Color orange = new Color(255, 136, 62);
+    private static final Color green = new Color(22, 155, 98);
 
     public PhotometricInterpreterFloatTest() {
     }
@@ -72,36 +72,41 @@ public class PhotometricInterpreterFloatTest {
             reverseList.add(entry);
         }
 
-        try {
-            // The interpreter's constructor requires a directory as an argument.
-            // The directory must define specific parameters and have an associated
-            // image of a floating-point type.  Rather than constructing one using
-            // the commons-imaging API, we simply read one from the resources.
-            // The relative path is 8 levels up and then down into the data directory
-            File target = new File("src/test/data/images/tiff/9",
-                "USGS_13_n38w077_dir5.tiff");
-            //if (!target.exists()) {
-            //    fail("Input resource not found " + target.getAbsolutePath());
-            //}
-            ByteSourceFile byteSource = new ByteSourceFile(target);
-            TiffReader tiffReader = new TiffReader(true);
-            TiffContents contents = tiffReader.readDirectories(
-                byteSource,
-                true, // indicates that application should read image data, if present
-                FormatCompliance.getDefault());
-            pInterp = new PhotometricInterpreterFloat(reverseList);
+        pInterp = new PhotometricInterpreterFloat(reverseList);
 
-            // pre-populate the state data for the interpreter with
-            // some values so that we can test min/max access methods.
-            imageBuilder = new ImageBuilder(257, 257, false);
-            int[] samples = new int[1];
-            for (int i = 0; i <= 256; i++) {
-                float f = (float) i / 256f;
-                samples[0] = Float.floatToRawIntBits(f);
-                pInterp.interpretPixel(imageBuilder, samples, i, i);
+        // pre-populate the state data for the interpreter with
+        // some values so that we can test min/max access methods.
+        imageBuilder = new ImageBuilder(257, 257, false);
+        int[] samples = new int[1];
+        for (int i = 0; i <= 256; i++) {
+            float f = (float) i / 256f;
+            samples[0] = Float.floatToRawIntBits(f);
+            pInterp.interpretPixel(imageBuilder, samples, i, i);
+        }
+
+        // Now set up a palette than maps values in a range to a single color.
+        List<IPaletteEntry> bandedPaletteList = new ArrayList<>();
+        bandedPaletteList.add(new PaletteEntryForRange(0f, 0.33f, green));
+        bandedPaletteList.add(new PaletteEntryForRange(0.33f, 0.66f, Color.white));
+        bandedPaletteList.add(new PaletteEntryForRange(0.66f, 1.0f, orange));
+        bandedPaletteList.add(new PaletteEntryForValue(Float.NaN, Color.gray));
+        bandedInterp = new PhotometricInterpreterFloat(bandedPaletteList);
+        bandedImageBuilder = new ImageBuilder(300, 200, false);
+        for (int j = 0; j < 300; j++) {
+            float f = (float) j / 299.0f;
+            samples[0] = Float.floatToRawIntBits(f);
+            for (int i = 0; i < 200; i++) {
+                bandedInterp.interpretPixel(bandedImageBuilder, samples, j, i);
             }
-        } catch (ImageReadException | IOException ex) {
-            fail("Exception initializing test " + ex.getMessage());
+        }
+        samples[0] = Float.floatToRawIntBits(Float.NaN);
+        for (int i = 0; i < 200; i++) {
+            bandedInterp.interpretPixel(bandedImageBuilder, samples, 0, i);
+            bandedInterp.interpretPixel(bandedImageBuilder, samples, 299, i);
+        }
+        for (int i = 0; i < 300; i++) {
+            bandedInterp.interpretPixel(bandedImageBuilder, samples, i, 0);
+            bandedInterp.interpretPixel(bandedImageBuilder, samples, i, 199);
         }
     }
 
@@ -124,6 +129,23 @@ public class PhotometricInterpreterFloatTest {
         // and the corresponding pixel was set to zero.
         int argb = imageBuilder.getRGB(256, 256);
         assertEquals(argb, 0, "Invalid upper-bound test");
+
+        // Now inspect the banded palette case
+        argb = bandedImageBuilder.getRGB(0, 0);
+        assertEquals(Color.gray.getRGB(), argb, "Invalid mapping of NaN");
+        argb = bandedImageBuilder.getRGB(50, 10);
+        assertEquals(green.getRGB(), argb, "Invalid mapping of green range");
+        argb = bandedImageBuilder.getRGB(150, 10);
+        assertEquals(Color.white.getRGB(), argb, "Invalid mapping of white range");
+        argb = bandedImageBuilder.getRGB(250, 10);
+        assertEquals(orange.getRGB(), argb, "Invalid mapping of orange range");
+        // Example code to write image to PNG file for visual inspection.
+        //try {
+        //    BufferedImage bImage = bandedImageBuilder.getBufferedImage();
+        //    ImageIO.write(bImage, "PNG", new File("C:/Users/Public/test1.png"));
+        //} catch (IOException ioex) {
+        //    fail("IOException saving test image" + ioex.getMessage());
+        //}
     }
 
     /**

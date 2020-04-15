@@ -90,9 +90,19 @@
  *     16 bits    IEEE-754 half-precision standard
  *     24 bits    A non-standard representation
  * At this time, we have not obtained data samples for the smaller
- * representations.  There are also reports of 64-bit data
- * (see Commons Imaging JIRA issue IMAGING-102), though documentation
- * for that format was not available when these notes were written.
+ * representations used in combination with a predictor.
+ *
+ * Interleaved formats
+ *   TIFF Technical Note 3 also provides sample code for interleaved
+ * data, such as a real-valued vector or a complex pair.  At this time
+ * no samples of interleaved data were available. As a caveat, the specification
+ * that the document provides has disadvantages in terms of code complexity
+ * and performance.  Because the interleaved evaluation is embedded inside
+ * the pixel row and column loops, it puts a lot of redundant conditional
+ * evaluations inside the double nested loops. It is recommended that when
+ * interleaved data is implemented, it should get their own block of code
+ * so as not to interfere with the more common non-interleaved floating-point
+ * processing.
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
@@ -362,7 +372,8 @@ public abstract class ImageDataReader {
         int length = bytes.length < nBytes ? nBytes / scansize : height;
 
         int[] samples = new int[scansize * height];
-        if (predictor == 3) {
+        // floating-point differencing is indicated by a predictor value of 3.
+        if (predictor == TiffTagConstants.PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING) {
             // at this time, this class supports the 32-bit format.  The
             // main reason for this is that we have not located sample data
             // that can be used for testing and analysis.

@@ -288,6 +288,7 @@ public final class TiffTagConstants {
             TiffDirectoryType.TIFF_DIRECTORY_ROOT);
     public static final int PREDICTOR_VALUE_NONE = 1;
     public static final int PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING = 2;
+    public static final int PREDICTOR_VALUE_FLOATING_POINT_DIFFERENCING = 3;
 
     public static final TagInfoRationals TIFF_TAG_WHITE_POINT = new TagInfoRationals(
             "WhitePoint", 0x13E, 2,
