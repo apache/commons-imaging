@@ -30,6 +30,7 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -321,6 +322,59 @@ public final class DataReaderStrips extends ImageDataReader {
                 subImage.y - y0,
                 subImage.width,
                 subImage.height);
+    }
+
+    @Override
+    public TiffRasterData readRasterData(Rectangle subImage)
+        throws ImageReadException, IOException {
+
+        int xRaster;
+        int yRaster;
+        int rasterWidth;
+        int rasterHeight;
+        if (subImage != null) {
+            xRaster = subImage.x;
+            yRaster = subImage.y;
+            rasterWidth = subImage.width;
+            rasterHeight = subImage.height;
+        } else {
+            xRaster = 0;
+            yRaster = 0;
+            rasterWidth = width;
+            rasterHeight = height;
+        }
+        float[] rasterData = new float[rasterWidth * rasterHeight];
+
+        // the legacy code is optimized to the reading of whole
+        // strips (except for the last strip in the image, which can
+        // be a partial).  So create a working image with compatible
+        // dimensions and read that.  Later on, the working image
+        // will be sub-imaged to the proper size.
+        // strip0 and strip1 give the indices of the strips containing
+        // the first and last rows of pixels in the subimage
+        final int strip0 = yRaster / rowsPerStrip;
+        final int strip1 = (yRaster + rasterHeight - 1) / rowsPerStrip;
+
+        for (int strip = strip0; strip <= strip1; strip++) {
+            int yStrip = strip * rowsPerStrip;
+            int rowsRemaining = height - yStrip;
+            int rowsInThisStrip
+                = rowsRemaining > rowsPerStrip ? rowsPerStrip : rowsRemaining;
+            int bytesPerRow = (bitsPerPixel * width + 7) / 8;
+            int bytesPerStrip = rowsInThisStrip * bytesPerRow;
+
+            final byte[] compressed = imageData.getImageData(strip).getData();
+            final byte[] decompressed = decompress(compressed, compression,
+                bytesPerStrip, width, rowsInThisStrip);
+
+            int[] blockData = unpackFloatingPointSamples(
+                width, (int) rowsInThisStrip, width,
+                decompressed,
+                predictor, bitsPerPixel, byteOrder);
+            transferBlockToRaster(0, yStrip, width, (int) rowsInThisStrip, blockData,
+                xRaster, yRaster, rasterWidth, rasterHeight, rasterData);
+        }
+        return new TiffRasterData(rasterWidth, rasterHeight, rasterData);
     }
 
 }

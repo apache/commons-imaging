@@ -24,6 +24,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.imaging.FormatCompliance;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -64,9 +65,9 @@ public class TiffFloatingPointReadTest {
      * @param target the specified TIFF file
      * @param f0 the expected minimum bound or lower
      * @param f1 the expected maximum bound or higher
-     * @param fNot an arbitary non-data value or NaN
+     * @param fNot an arbitrary non-data value or NaN
      * @return if successful, a valid photometric interpreter.
-     * @throws ImageReadException in the event of an unsupported or misformed
+     * @throws ImageReadException in the event of an unsupported or malformed
      * file data element.
      * @throws IOException in the event of an I/O error
      */
@@ -93,8 +94,34 @@ public class TiffFloatingPointReadTest {
         return pInterp;
     }
 
+    /**
+     * Read the floating-point content from a TIFF file.
+     *
+     * @param target the specified TIFF file
+     * @param params an optional map of parameters for reading.
+     * @return if successful, a valid raster data instance
+     * @throws ImageReadException in the event of an unsupported or malformed
+     * file data element.
+     * @throws IOException in the event of an I/O error
+     */
+    private TiffRasterData readRasterFromTIFF(
+        File target, Map<String, Object> params)
+        throws ImageReadException, IOException {
+        ByteSourceFile byteSource = new ByteSourceFile(target);
+        TiffReader tiffReader = new TiffReader(true);
+        TiffContents contents = tiffReader.readDirectories(
+            byteSource,
+            true, // indicates that application should read image data, if present
+            FormatCompliance.getDefault());
+        ByteOrder byteOrder = tiffReader.getByteOrder();
+        TiffDirectory directory = contents.directories.get(0);
+        TiffImageParser parser = new TiffImageParser();
+        return parser.readFloatingPointRasterData(directory, byteOrder, params);
+    }
+
     @Test
     public void test() {
+        Map<String, Object> params = new HashMap<>();
 
         // These TIFF sample data includes files that contain known
         // floating-point values in various formats.  We know the range
@@ -119,6 +146,27 @@ public class TiffFloatingPointReadTest {
             assertTrue(testCondition, "Min,Max values not in range 0 to 1: " + minVal + ", " + maxVal);
             assertTrue(minVal <= maxVal, "Min Value not <= maxVal: " + minVal + ", " + maxVal);
 
+            // To test the sub-image logic, read the full raster and then
+            // the sub-raster.  Compare the results.  The offsets of
+            // 17 are just an arbitrary value not likely to align with
+            // any arbitrary features in the TIFF files.
+            params.clear();
+            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 17);
+            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 17);
+            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, 200);
+            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, 200);
+            TiffRasterData fullRaster = readRasterFromTIFF(target, null);
+            TiffRasterData partRaster = readRasterFromTIFF(target, params);
+            assertEquals(200, partRaster.getWidth(), "Invalid width in partial for " + target.getName());
+            assertEquals(200, partRaster.getHeight(), "Invalid height in partial for " + target.getName());
+            for (int y = 17; y < 217; y++) {
+                for (int x = 17; x < 217; x++) {
+                    float vFull = fullRaster.getValue(x, y);
+                    float vPart = partRaster.getValue(x - 17, y - 17);
+                    assertEquals(vFull, vPart, "Invalid value match for partial at (" + x + "," + y + ")");
+                }
+            }
+
             // We know from inspection that this sample file contains values
             // in the range -2 to 62 and uses -99999 as a "no-data" value.
             target = getTiffFile("USGS_13_n38w077_dir5.tiff");
@@ -131,6 +179,23 @@ public class TiffFloatingPointReadTest {
             testCondition = -2 <= minVal && minVal <= 62 && -2 <= maxVal && maxVal <= 62;
             assertTrue(testCondition, "Min,Max values not in range -2 to 62: " + minVal + ", " + maxVal);
             assertTrue(minVal <= maxVal, "Min Value not <= maxVal: " + minVal + ", " + maxVal);
+
+            params.clear();
+            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, 17);
+            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, 17);
+            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, 200);
+            params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, 200);
+            fullRaster = readRasterFromTIFF(target, null);
+            partRaster = readRasterFromTIFF(target, params);
+            assertEquals(200, partRaster.getWidth(), "Invalid width in partial for " + target.getName());
+            assertEquals(200, partRaster.getHeight(), "Invalid height in partial for " + target.getName());
+            for (int y = 17; y < 217; y++) {
+                for (int x = 17; x < 217; x++) {
+                    float vFull = fullRaster.getValue(x, y);
+                    float vPart = partRaster.getValue(x - 17, y - 17);
+                    assertEquals(vFull, vPart, "Invalid value match for partial at (" + x + "," + y + ")");
+                }
+            }
 
         } catch (ImageReadException | IOException ex) {
             fail("Exception during test " + ex.getMessage());

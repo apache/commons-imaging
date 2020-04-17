@@ -133,6 +133,7 @@ import org.apache.commons.imaging.common.PackBits;
 import org.apache.commons.imaging.common.itu_t4.T4AndT6Compression;
 import org.apache.commons.imaging.common.mylzw.MyLzwDecompressor;
 import org.apache.commons.imaging.common.ZlibDeflate;
+import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
@@ -496,4 +497,102 @@ public abstract class ImageDataReader {
 
         return samples;
     }
+
+    /**
+     *
+     * @param xBlock coordinate of block relative to source data
+     * @param yBlock coordinate of block relative to source data
+     * @param blockWidth width of block, in pixels
+     * @param blockHeight height of block in pixels
+     * @param blockData the data for the block
+     * @param xRaster coordinate of raster relative to source data
+     * @param yRaster coordinate of raster relative to source data
+     * @param rasterWidth width of the raster (salways smaller than source data)
+     * @param rasterHeight height of the raster (always smaller than source
+     * data)
+     * @param rasterData the raster data.
+     */
+    void transferBlockToRaster(int xBlock, int yBlock,
+        int blockWidth, int blockHeight, int blockData[],
+        int xRaster, int yRaster,
+        int rasterWidth, int rasterHeight, float[] rasterData) {
+
+        // xR0, yR0 are the coordinates within the raster (upper-left corner)
+        // xR1, yR1 are ONE PAST the coordinates of the lower-right corner
+        int xR0 = xBlock - xRaster;  // xR0, yR0 coordinates relative to
+        int yR0 = yBlock - yRaster; // the raster
+        int xR1 = xR0 + blockWidth;
+        int yR1 = yR0 + blockHeight;
+        if (xR0 < 0) {
+            xR0 = 0;
+        }
+        if (yR0 < 0) {
+            yR0 = 0;
+        }
+        if (xR1 > rasterWidth) {
+            xR1 = rasterWidth;
+        }
+        if (yR1 > rasterHeight) {
+            yR1 = rasterHeight;
+        }
+
+        // Recall that the above logic may have adjusted xR0, xY0 so that
+        // they are not necessrily point to the source pixel at xRaster, yRaster
+        // we compute xSource = xR0+xRaster.
+        //            xOffset = xSource-xBlock
+        // since the block cannot be accessed with a negative offset,
+        // we check for negatives and adjust xR0, yR0 upward as necessary
+        int xB0 = xR0 + xRaster - xBlock;
+        int yB0 = yR0 + yRaster - yBlock;
+        if (xB0 < 0) {
+            xR0 -= xB0;
+            xB0 = 0;
+        }
+        if (yB0 < 0) {
+            yR0 -= yB0;
+            yB0 = 0;
+        }
+
+        int w = xR1 - xR0;
+        int h = yR1 - yR0;
+        if (w <= 0 || h <= 0) {
+            // The call to this method put the block outside the
+            // bounds of the raster.  There is nothing to do.  Ideally,
+            // this situation never arises, because it would mean that
+            // the data was read from the file unnecessarily.
+            return;
+        }
+        // see if the xR1, yR1 would extend past the limits of the block
+        if (w > blockWidth) {
+            w = blockWidth;
+        }
+        if (h > blockHeight) {
+            h = blockHeight;
+        }
+
+        for (int i = 0; i < h; i++) {
+            int yR = yR0 + i;
+            int yB = yB0 + i;
+            int rOffset = yR * rasterWidth + xR0;
+            int bOffset = yB * blockWidth + xB0;
+            for (int j = 0; j < w; j++) {
+                rasterData[rOffset + j] = Float.intBitsToFloat(blockData[bOffset + j]);
+            }
+        }
+    }
+
+    /**
+     * Defines a method for accessing the floating-point raster data in a TIFF
+     * image. These implementations of this method in DataReaderStrips and
+     * DataReaderTiled assume that this instance is of a compatible data type
+     * (floating-point) and that all access checks have already been performed.
+     *
+     * @param subImage if non-null, instructs the access method to retrieve only
+     * a sub-section of the image data.
+     * @return a valid instance
+     * @throws ImageReadException in the event of an incompatible data form.
+     * @throws IOException in the event of I/O error.
+     */
+    public abstract TiffRasterData readRasterData(final Rectangle subImage)
+        throws ImageReadException, IOException;
 }

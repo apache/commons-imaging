@@ -746,4 +746,161 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         new TiffImageWriterLossy().writeImage(src, os, params);
     }
 
+    /**
+     * Reads the content of a TIFF file that contains floating-point data
+     * samples.
+     * <p>
+     * If desired, sub-image data can be read from the file by using a Java Map
+     * instance to specify the subsection of the image that is required. The
+     * following code illustrates the approach:
+     * <pre>
+     *   int x; // coordinate (column) of corner of sub-image
+     *   int y; // coordinate (row) of corner of sub-image
+     *   int width; // width of sub-image
+     *   int height; // height of sub-image
+     *
+     *   Map&lt;String, Object&gt;params = new HashMap&lt;&gt;();
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, x);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, y);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
+     *   TiffRasterData raster =
+     *        readFloatingPointRasterData(directory, byteOrder, params);
+     * </pre>
+     *
+     * @param directory the TIFF directory pointing to the data to be extracted
+     * (TIFF files may contain multiple directories)
+     * @param byteOrder the byte order of the data to be extracted
+     * @param params an optional parameter map instance
+     * @return a valid instance
+     * @throws ImageReadException in the event of incompatible or malformed data
+     * @throws IOException in the event of an I/O error
+     */
+    public TiffRasterData readFloatingPointRasterData(
+        final TiffDirectory directory,
+        final ByteOrder byteOrder,
+        final Map<String, Object> params)
+        throws ImageReadException, IOException {
+        final List<TiffField> entries = directory.entries;
+
+        if (entries == null) {
+            throw new ImageReadException("TIFF missing entries");
+        }
+
+        short[] sSampleFmt = directory.getFieldValue(
+            TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, true);
+        if (sSampleFmt[0] != TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
+            throw new ImageReadException("TIFF does not provide floating-point data");
+        }
+
+        int samplesPerPixel = 1;
+        final TiffField samplesPerPixelField = directory.findField(
+            TiffTagConstants.TIFF_TAG_SAMPLES_PER_PIXEL);
+        if (samplesPerPixelField != null) {
+            samplesPerPixel = samplesPerPixelField.getIntValue();
+        }
+        if (samplesPerPixel != 1) {
+            throw new ImageReadException(
+                "TIFF floating-point data uses unsupported samples per pixel: "
+                + samplesPerPixel);
+        }
+
+        int[] bitsPerSample = {1};
+        int bitsPerPixel = samplesPerPixel;
+        final TiffField bitsPerSampleField = directory.findField(
+            TiffTagConstants.TIFF_TAG_BITS_PER_SAMPLE);
+        if (bitsPerSampleField != null) {
+            bitsPerSample = bitsPerSampleField.getIntArrayValue();
+            bitsPerPixel = bitsPerSampleField.getIntValueOrArraySum();
+        }
+
+        if (bitsPerPixel != 32 && bitsPerPixel != 64) {
+            throw new ImageReadException(
+                "TIFF floating-point data uses unsupported bits-per-pixel: "
+                + bitsPerPixel);
+        }
+
+        final short compressionFieldValue;
+        if (directory.findField(TiffTagConstants.TIFF_TAG_COMPRESSION) != null) {
+            compressionFieldValue
+                = directory.getFieldValue(TiffTagConstants.TIFF_TAG_COMPRESSION);
+        } else {
+            compressionFieldValue = TIFF_COMPRESSION_UNCOMPRESSED_1;
+        }
+        final int compression = 0xffff & compressionFieldValue;
+        final int width
+            = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH);
+        final int height
+            = directory.getSingleFieldValue(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
+
+        Rectangle subImage = checkForSubImage(params);
+        if (subImage != null) {
+            // Check for valid subimage specification. The following checks
+            // are consistent with BufferedImage.getSubimage()
+            if (subImage.width <= 0) {
+                throw new ImageReadException("negative or zero subimage width");
+            }
+            if (subImage.height <= 0) {
+                throw new ImageReadException("negative or zero subimage height");
+            }
+            if (subImage.x < 0 || subImage.x >= width) {
+                throw new ImageReadException("subimage x is outside raster");
+            }
+            if (subImage.x + subImage.width > width) {
+                throw new ImageReadException("subimage (x+width) is outside raster");
+            }
+            if (subImage.y < 0 || subImage.y >= height) {
+                throw new ImageReadException("subimage y is outside raster");
+            }
+            if (subImage.y + subImage.height > height) {
+                throw new ImageReadException("subimage (y+height) is outside raster");
+            }
+
+            // if the subimage is just the same thing as the whole
+            // image, suppress the subimage processing
+            if (subImage.x == 0
+                && subImage.y == 0
+                && subImage.width == width
+                && subImage.height == height) {
+                subImage = null;
+            }
+        }
+
+        // int bitsPerPixel = getTagAsValueOrArraySum(entries,
+        // TIFF_TAG_BITS_PER_SAMPLE);
+        int predictor = -1;
+        {
+            // dumpOptionalNumberTag(entries, TIFF_TAG_FILL_ORDER);
+            // dumpOptionalNumberTag(entries, TIFF_TAG_FREE_BYTE_COUNTS);
+            // dumpOptionalNumberTag(entries, TIFF_TAG_FREE_OFFSETS);
+            // dumpOptionalNumberTag(entries, TIFF_TAG_ORIENTATION);
+            // dumpOptionalNumberTag(entries, TIFF_TAG_PLANAR_CONFIGURATION);
+            final TiffField predictorField = directory.findField(
+                TiffTagConstants.TIFF_TAG_PREDICTOR);
+            if (null != predictorField) {
+                predictor = predictorField.getIntValueOrArraySum();
+            }
+        }
+
+        if (predictor == TiffTagConstants.PREDICTOR_VALUE_HORIZONTAL_DIFFERENCING) {
+            throw new ImageReadException(
+                "TIFF floating-point data uses unsupported horizontal-differencing predictor");
+        }
+
+        // The photometric interpreter is not used, but the image-based
+        // data reader classes require one.  So we create a dummy interpreter.
+        PhotometricInterpreter photometricInterpreter
+            = new PhotometricInterpreterBiLevel(samplesPerPixel,
+                bitsPerSample, predictor, width, height, false);
+
+        final TiffImageData imageData = directory.getTiffImageData();
+
+        final ImageDataReader dataReader = imageData.getDataReader(directory,
+            photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
+            samplesPerPixel, width, height, compression, byteOrder);
+
+        return dataReader.readRasterData(subImage);
+    }
+
+
 }
