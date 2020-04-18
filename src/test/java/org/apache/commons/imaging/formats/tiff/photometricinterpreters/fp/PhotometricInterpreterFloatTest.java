@@ -219,4 +219,25 @@ public class PhotometricInterpreterFloatTest {
         assertEquals(test, argb, "Excluded value mapped to incorrect ARGB");
     }
 
+    @Test
+    public void testConstructors() {
+        PhotometricInterpreterFloat ptest;
+        ptest = new PhotometricInterpreterFloat(0, 1);
+        ptest = new PhotometricInterpreterFloat(1, 0);
+        try {
+            ptest = new PhotometricInterpreterFloat(null);
+            fail("Constructor failed to detect null arguments");
+        } catch (IllegalArgumentException iex) {
+
+        }
+
+        try {
+            ptest = new PhotometricInterpreterFloat(0.1f, 0.1f);
+            fail("Constructor failed to detect bad-range argument values");
+        } catch (IllegalArgumentException iex) {
+
+        }
+
+    }
+
 }
