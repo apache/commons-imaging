@@ -90,6 +90,7 @@ public class PhotometricInterpreterFloatTest {
         bandedPaletteList.add(new PaletteEntryForRange(0.33f, 0.66f, Color.white));
         bandedPaletteList.add(new PaletteEntryForRange(0.66f, 1.0f, orange));
         bandedPaletteList.add(new PaletteEntryForValue(Float.NaN, Color.gray));
+        bandedPaletteList.add(new PaletteEntryForValue(-1, Color.gray));
         bandedInterp = new PhotometricInterpreterFloat(bandedPaletteList);
         bandedImageBuilder = new ImageBuilder(300, 200, false);
         for (int j = 0; j < 300; j++) {
@@ -104,6 +105,7 @@ public class PhotometricInterpreterFloatTest {
             bandedInterp.interpretPixel(bandedImageBuilder, samples, 0, i);
             bandedInterp.interpretPixel(bandedImageBuilder, samples, 299, i);
         }
+        samples[0] = Float.floatToRawIntBits(-1);
         for (int i = 0; i < 300; i++) {
             bandedInterp.interpretPixel(bandedImageBuilder, samples, i, 0);
             bandedInterp.interpretPixel(bandedImageBuilder, samples, i, 199);
