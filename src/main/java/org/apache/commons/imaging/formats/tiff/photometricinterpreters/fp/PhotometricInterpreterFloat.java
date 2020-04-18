@@ -168,7 +168,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         throws ImageReadException, IOException {
 
         float f = Float.intBitsToFloat(samples[0]);
-        // in the event of NaN, do not stored entry in the image builder.
+        // in the event of NaN, do not store entry in the image builder.
 
         // only the single bound palette entries support NaN
         for (IPaletteEntry entry : singleValuePaletteEntries) {
@@ -264,6 +264,45 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
             return 0;
         }
         return (float) (sumFound / nFound);
+    }
+
+    /**
+     * Provides a method for mapping a pixel value to an integer (ARGB) value.
+     * This method is not defined for the standard photometric interpreters and
+     * is provided as a convenience to applications that are processing data
+     * outside the standard TIFF image-reading modules.
+     *
+     * @param f the floating point value to be mapped to an ARGB value
+     * @return a valid ARGB value, or zero if no palette specification covers
+     * the input value.
+     */
+    public int mapValueToARGB(float f) {
+
+        // only the single bound palette entries support NaN
+        for (IPaletteEntry entry : singleValuePaletteEntries) {
+            if (entry.isCovered(f)) {
+                return entry.getARGB(f);
+            }
+        }
+
+        if (Float.isNaN(f)) {
+            // if logic reaches here, there is no definition
+            // for a NaN.
+            return 0;
+        }
+
+        for (IPaletteEntry entry : singleValuePaletteEntries) {
+            if (entry.isCovered(f)) {
+                return entry.getARGB(f);
+            }
+        }
+
+        for (IPaletteEntry entry : rangePaletteEntries) {
+            if (entry.isCovered(f)) {
+                return entry.getARGB(f);
+            }
+        }
+        return 0;
     }
 
 }

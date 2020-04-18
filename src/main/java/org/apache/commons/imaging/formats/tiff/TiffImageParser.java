@@ -776,7 +776,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
      * @throws ImageReadException in the event of incompatible or malformed data
      * @throws IOException in the event of an I/O error
      */
-    public TiffRasterData readFloatingPointRasterData(
+    public TiffRasterData getFloatingPointRasterData(
         final TiffDirectory directory,
         final ByteOrder byteOrder,
         final Map<String, Object> params)

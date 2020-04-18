@@ -148,18 +148,16 @@ public class ReadAndRenderFloatingPoint {
         PhotometricInterpreterFloat pi = new PhotometricInterpreterFloat(0.0f, 1.0f);
         HashMap<String, Object> params = new HashMap<>();
         params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
-        System.out.println("Reading image");
         BufferedImage bImage = directory.getTiffImage(byteOrder, params);
 
         float maxValue = pi.getMaxFound();
         float minValue = pi.getMinFound();
 
-        System.out.format("Image size %dx%d%n", bImage.getWidth(), bImage.getHeight());
-        System.out.format("Range of values in TIFF: %f %f%n", minValue, maxValue);
+        // System.out.format("Image size %dx%d%n", bImage.getWidth(), bImage.getHeight());
+        // System.out.format("Range of values in TIFF: %f %f%n", minValue, maxValue);
 
         if (optionalImageWritingEnabled) {
             File output = new File(outputPath);
-            System.out.println("Writing image to " + output.getPath());
             // create a new photometric interpreter based on the range
             // of values found above.
             PhotometricInterpreterFloat grayScale

@@ -116,7 +116,7 @@ public class TiffFloatingPointReadTest {
         ByteOrder byteOrder = tiffReader.getByteOrder();
         TiffDirectory directory = contents.directories.get(0);
         TiffImageParser parser = new TiffImageParser();
-        return parser.readFloatingPointRasterData(directory, byteOrder, params);
+        return parser.getFloatingPointRasterData(directory, byteOrder, params);
     }
 
     @Test

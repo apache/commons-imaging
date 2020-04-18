@@ -788,4 +788,67 @@ public class TiffDirectory extends TiffElement {
         return jpegImageData;
     }
 
+    /**
+     * Reads the floating-point data stored in this TIFF directory, if
+     * available. Note that this method is defined only for TIFF directories
+     * that contain floating-point data.
+     * <p>
+     * TIFF directories that provide floating-point data do not directly specify
+     * images, though it is possible to interpret the data as an image using
+     * this library. TIFF files may contain multiple directories which are
+     * allowed to have different formats. Thus it is possible for a TIFF file to
+     * contain a mix of image and floating-point raster data.
+     * <p>
+     * If desired, sub-image data can be read from the file by using a Java Map
+     * instance to specify the subsection of the image that is required. The
+     * following code illustrates the approach:
+     * <pre>
+     *   int x; // coordinate (column) of corner of sub-image
+     *   int y; // coordinate (row) of corner of sub-image
+     *   int width; // width of sub-image
+     *   int height; // height of sub-image
+     *
+     *   Map&lt;String, Object&gt;params = new HashMap&lt;&gt;();
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, x);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, y);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
+     *   TiffRasterData raster =
+     *        readFloatingPointRasterData(directory, byteOrder, params);
+     * </pre>
+     *
+     * @param byteOrder the byte order of the data to be extracted
+     * @param params an optional parameter map instance
+     * @return a valid instance
+     * @throws ImageReadException in the event of incompatible or malformed data
+     * @throws IOException in the event of an I/O error
+     */
+    public TiffRasterData getFloatingPointRasterData(
+        final ByteOrder byteOrder,
+        final Map<String, Object> params)
+        throws ImageReadException, IOException {
+
+        TiffImageParser parser = new TiffImageParser();
+        return parser.getFloatingPointRasterData(this, byteOrder, params);
+    }
+
+    /**
+     * Indicates whether the directory definition specifies a float-point data
+     * format.
+     *
+     * @return true if the directory contains floating point data; otherwise,
+     * false
+     * @throws ImageReadException in the event of an invalid or malformed
+     * specification.
+     */
+    public boolean hasTiffFloatingPointRasterData() throws ImageReadException {
+        if (this.hasTiffImageData()) {
+            short[] sSampleFmt = getFieldValue(
+                TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
+            return sSampleFmt != null && sSampleFmt.length > 0
+                && sSampleFmt[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT;
+
+        }
+        return false;
+    }
 }

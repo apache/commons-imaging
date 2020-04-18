@@ -200,4 +200,23 @@ public class PhotometricInterpreterFloatTest {
         assertEquals(expResult, result, 1.0, "Invalid mean value");
     }
 
+    /**
+     * Test of interpretPixel method, of class PhotometricInterpreterFloat.
+     */
+    @Test
+    public void testMapValueToARGB() {
+
+        int argb = pInterp.mapValueToARGB(0.5f);
+        int test = imageBuilder.getRGB(128, 128);
+        assertEquals(test, argb, "Conflicting results from value-to-ARGB map");
+
+        // to test mappings for special values, use the banded-interpreter
+        argb = bandedInterp.mapValueToARGB(Float.NaN);
+        test = Color.gray.getRGB();
+        assertEquals(test, argb, "Float.NaN mapped to incorrect ARGB");
+        argb = bandedInterp.mapValueToARGB(-1f);
+        test = Color.gray.getRGB();
+        assertEquals(test, argb, "Excluded value mapped to incorrect ARGB");
+    }
+
 }
