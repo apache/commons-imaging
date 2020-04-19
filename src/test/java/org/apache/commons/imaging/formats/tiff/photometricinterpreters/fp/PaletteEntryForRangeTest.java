@@ -105,4 +105,46 @@ public class PaletteEntryForRangeTest {
         assertEquals(1.0f, instance.getUpperBound());
     }
 
+    @Test
+    public void testFaultyConstructors() {
+        Color c0 = new Color(0xff0000ff);
+        Color c1 = new Color(0xff00ff00);
+        PaletteEntryForRange pTest;
+
+        // test the two-color variations -----------------------
+        try {
+            pTest = new PaletteEntryForRange(0.0f, 0.0f, c0, c1);
+            fail("Constructor failed to detect invalid range");
+        } catch (IllegalArgumentException iex) {
+            // successful test
+        }
+
+        try {
+            pTest = new PaletteEntryForRange(0.0f, 1.0f, null, c1);
+            fail("Constructor failed to detect null color");
+        } catch (IllegalArgumentException iex) {
+            // successful test
+        }
+        try {
+            pTest = new PaletteEntryForRange(0.0f, 1.0f, c0, null);
+            fail("Constructor failed to detect invalid color");
+        } catch (IllegalArgumentException iex) {
+            // successful test
+        }
+
+        // test the one-color variations -----------------------
+        try {
+            pTest = new PaletteEntryForRange(0.0f, 0.0f, c0);
+            fail("Constructor failed to detect invalid range");
+        } catch (IllegalArgumentException iex) {
+            // successful test
+        }
+
+        try {
+            pTest = new PaletteEntryForRange(0.0f, 1.0f, null);
+            fail("Constructor failed to detect null color");
+        } catch (IllegalArgumentException iex) {
+            // successful test
+        }
+    }
 }
