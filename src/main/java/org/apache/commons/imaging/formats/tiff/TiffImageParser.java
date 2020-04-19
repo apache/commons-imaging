@@ -638,7 +638,9 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         }
 
         PhotometricInterpreter photometricInterpreter;
-        Object test = params.get(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER);
+        Object test = params == null
+            ? null
+            : params.get(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER);
         if (test instanceof PhotometricInterpreter) {
             photometricInterpreter = (PhotometricInterpreter) test;
         } else {
