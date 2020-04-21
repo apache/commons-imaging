@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *
- * @author gwluc
+ * Performs unit tests for palette entries based on range of values.
  */
 public class PaletteEntryForRangeTest {
 

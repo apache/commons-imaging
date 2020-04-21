@@ -40,13 +40,12 @@ public class PaletteEntryForValue implements IPaletteEntry {
      * @param color the color assigned to value
      */
     public PaletteEntryForValue(float value, Color color) {
-        this.value = value;
-        this.color = color;
-        this.iColor = color.getRGB();
-
         if (color == null) {
             throw new IllegalArgumentException("Null colors not allowed");
         }
+        this.value = value;
+        this.color = color;
+        this.iColor = color.getRGB();
         isNull = Float.isNaN(value);
 
     }

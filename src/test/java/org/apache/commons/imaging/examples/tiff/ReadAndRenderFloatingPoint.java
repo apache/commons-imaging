@@ -95,7 +95,7 @@ public class ReadAndRenderFloatingPoint {
             byteSource,
             true, // indicates that application should read image data, if present
             FormatCompliance.getDefault());
-        ByteOrder byteOrder = tiffReader.getByteOrder();
+
 
         // Render the first directory in the file.  A practical implementation
         // could use any of the directories in the file. This demo uses the
@@ -148,7 +148,7 @@ public class ReadAndRenderFloatingPoint {
         PhotometricInterpreterFloat pi = new PhotometricInterpreterFloat(0.0f, 1.0f);
         HashMap<String, Object> params = new HashMap<>();
         params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, pi);
-        BufferedImage bImage = directory.getTiffImage(byteOrder, params);
+        BufferedImage bImage = directory.getTiffImage(params);
 
         float maxValue = pi.getMaxFound();
         float minValue = pi.getMinFound();
@@ -164,7 +164,7 @@ public class ReadAndRenderFloatingPoint {
                 = new PhotometricInterpreterFloat(minValue, maxValue);
             params = new HashMap<>();
             params.put(TiffConstants.PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER, grayScale);
-            bImage = directory.getTiffImage(byteOrder, params);
+            bImage = directory.getTiffImage(params);
             ImageIO.write(bImage, "JPEG", output);
         }
     }

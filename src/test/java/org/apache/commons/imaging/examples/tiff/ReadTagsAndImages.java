@@ -88,7 +88,6 @@ public class ReadTagsAndImages {
             byteSource,
             optionalImageReadingEnabled, // read image data, if present
             FormatCompliance.getDefault());
-        ByteOrder byteOrder = tiffReader.getByteOrder();
 
         // Loop on the directories and fetch the metadata and
         // image (if available, and configured to do so)
@@ -122,7 +121,7 @@ public class ReadTagsAndImages {
             if (optionalImageReadingEnabled && hasTiffImageData) {
                 File output = new File(rootName + "_" + iDirectory + ".jpg");
                 System.out.println("Writing image to " + output.getPath());
-                BufferedImage bImage = directory.getTiffImage(byteOrder, params);
+                BufferedImage bImage = directory.getTiffImage(params);
                 ImageIO.write(bImage, "JPEG", output);
             }
             System.out.println("");

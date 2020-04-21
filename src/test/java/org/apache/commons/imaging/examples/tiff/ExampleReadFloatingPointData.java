@@ -85,10 +85,8 @@ public class ExampleReadFloatingPointData {
         ByteSourceFile byteSource = new ByteSourceFile(target);
 
         // Establish a TiffReader. This is just a simple constructor that
-        // does not actually access the file.  So the application cannot
-        // obtain the byteOrder, or other details, until the contents has
-        // been read.  Then read the directories associated with the
-        // file by passing in the byte source and options.
+        // does not actually access the file until one of its methods such as
+        // readDirectories is called.
         TiffReader tiffReader = new TiffReader(true);
 
         // Read the directories in the TIFF file.  Directories are the
@@ -100,7 +98,6 @@ public class ExampleReadFloatingPointData {
             byteSource,
             true, // indicates that application should read image data, if present
             FormatCompliance.getDefault());
-        ByteOrder byteOrder = tiffReader.getByteOrder();
 
         // Read the first directory in the file.  A practical implementation
         // could use any of the directories in the file. This demo uses the
@@ -119,7 +116,7 @@ public class ExampleReadFloatingPointData {
         long time0 = System.nanoTime();
         HashMap<String, Object> params = new HashMap<>();
         TiffRasterData rasterData
-            = directory.getFloatingPointRasterData(byteOrder, params);
+            = directory.getFloatingPointRasterData(params);
         long time1 = System.nanoTime();
         System.out.println("Data read in " + ((time1 - time0) / 1.0e+6) + " ms");
 

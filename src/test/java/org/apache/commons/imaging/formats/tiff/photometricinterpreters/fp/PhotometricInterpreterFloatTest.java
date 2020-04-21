@@ -210,6 +210,11 @@ public class PhotometricInterpreterFloatTest {
         int test = imageBuilder.getRGB(128, 128);
         assertEquals(test, argb, "Conflicting results from value-to-ARGB map");
 
+        // pInterp does not define a state for NaN, but bandedInterp does.
+        // so test both variations
+        argb = pInterp.mapValueToARGB(Float.NaN);
+        assertEquals(0, argb, "Non-defined NaN did not return ARGB of zero");
+
         // to test mappings for special values, use the banded-interpreter
         argb = bandedInterp.mapValueToARGB(Float.NaN);
         test = Color.gray.getRGB();

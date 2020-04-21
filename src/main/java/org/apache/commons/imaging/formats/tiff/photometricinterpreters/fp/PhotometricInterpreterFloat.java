@@ -278,7 +278,10 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
      */
     public int mapValueToARGB(float f) {
 
-        // only the single bound palette entries support NaN
+        // The single-value palette entries can accept a Float.NaN as
+        // a target while the range-of-values entries cannot.  So
+        // check the single-values before testing for Float.isNaN()
+        // because NaN may have special treatment.
         for (IPaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
                 return entry.getARGB(f);
@@ -289,12 +292,6 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
             // if logic reaches here, there is no definition
             // for a NaN.
             return 0;
-        }
-
-        for (IPaletteEntry entry : singleValuePaletteEntries) {
-            if (entry.isCovered(f)) {
-                return entry.getARGB(f);
-            }
         }
 
         for (IPaletteEntry entry : rangePaletteEntries) {

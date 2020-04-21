@@ -117,9 +117,8 @@ public class TiffFloatingPointReadTest {
             byteSource,
             true, // indicates that application should read image data, if present
             FormatCompliance.getDefault());
-        ByteOrder byteOrder = tiffReader.getByteOrder();
         TiffDirectory directory = contents.directories.get(0);
-        return directory.getFloatingPointRasterData(byteOrder, params);
+        return directory.getFloatingPointRasterData(params);
     }
 
     @Test
