@@ -18,4 +18,4 @@
  * Provides supplemental photometric interpreters for TIFF products based
  * on floating-point data.
  */
-package org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp;
+package org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint;

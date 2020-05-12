@@ -31,10 +31,10 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp.IPaletteEntry;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp.PaletteEntryForRange;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp.PaletteEntryForValue;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp.PhotometricInterpreterFloat;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.IPaletteEntry;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForRange;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForValue;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

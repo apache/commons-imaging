@@ -34,10 +34,10 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffRasterStatistics;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp.IPaletteEntry;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp.PaletteEntryForRange;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp.PaletteEntryForValue;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.fp.PhotometricInterpreterFloat;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.IPaletteEntry;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForRange;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForValue;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
 
 /**
  * A simple example application that reads the content of a TIFF file containing
