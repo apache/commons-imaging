@@ -158,7 +158,6 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
 
         Collections.sort(rangePaletteEntries, comparator);
         Collections.sort(singleValuePaletteEntries, comparator);
-
     }
 
     @Override

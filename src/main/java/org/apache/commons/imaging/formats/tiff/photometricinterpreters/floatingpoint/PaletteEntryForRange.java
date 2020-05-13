@@ -32,7 +32,6 @@ public class PaletteEntryForRange implements IPaletteEntry {
 
     private final float v0;
     private final float v1;
-    private final float deltaV;
     private final float r0;
     private final float r1;
     private final float g0;
@@ -41,10 +40,6 @@ public class PaletteEntryForRange implements IPaletteEntry {
     private final float b1;
     private final float a0;
     private final float a1;
-    private final float deltaA;
-    private final float deltaR;
-    private final float deltaG;
-    private final float deltaB;
 
     /**
      * Constructs a palette entry for the range of values v0 &le; f &lt; v1. The
@@ -58,7 +53,7 @@ public class PaletteEntryForRange implements IPaletteEntry {
     public PaletteEntryForRange(float v0, float v1, Color color0, Color color1) {
         this.v0 = v0;
         this.v1 = v1;
-        deltaV = v1 - v0;
+        float deltaV = v1 - v0;
         // check for range volation
         if (deltaV <= 0 || Float.isNaN(deltaV)) {
             throw new IllegalArgumentException("Specified values must be v0<v1");
@@ -77,11 +72,6 @@ public class PaletteEntryForRange implements IPaletteEntry {
         r1 = (argb1 >> 16) & 0xff;
         g1 = (argb1 >> 8) & 0xff;
         b1 = argb1 & 0xff;
-
-        deltaA = a1 - a0;
-        deltaR = r1 - r0;
-        deltaG = g1 - g0;
-        deltaB = b1 - b0;
     }
 
     /**
@@ -95,7 +85,7 @@ public class PaletteEntryForRange implements IPaletteEntry {
     public PaletteEntryForRange(float v0, float v1, Color color) {
         this.v0 = v0;
         this.v1 = v1;
-        deltaV = v1 - v0;
+        float deltaV = v1 - v0;
         // check for range volation
         if (deltaV <= 0 || Float.isNaN(deltaV)) {
             throw new IllegalArgumentException("Specified values must be v0<v1");
@@ -115,11 +105,6 @@ public class PaletteEntryForRange implements IPaletteEntry {
         r1 = (argb1 >> 16) & 0xff;
         g1 = (argb1 >> 8) & 0xff;
         b1 = argb1 & 0xff;
-
-        deltaA = a1 - a0;
-        deltaR = r1 - r0;
-        deltaG = g1 - g0;
-        deltaB = b1 - b0;
     }
 
     @Override
@@ -130,11 +115,11 @@ public class PaletteEntryForRange implements IPaletteEntry {
     @Override
     public int getARGB(float f) {
         if (v0 <= f && f <= v1) {
-            float t = (f - v0) / deltaV;
-            int a = (int) (t * deltaA + a0 + 0.5);
-            int r = (int) (t * deltaR + r0 + 0.5);
-            int g = (int) (t * deltaG + g0 + 0.5);
-            int b = (int) (t * deltaB + b0 + 0.5);
+            float t = (f - v0) / (v1 - v0);
+            int a = (int) (t * (a1 - a0) + a0 + 0.5);
+            int r = (int) (t * (r1 - r0) + r0 + 0.5);
+            int g = (int) (t * (g1 - g0) + g0 + 0.5);
+            int b = (int) (t * (b1 - b0) + b0 + 0.5);
             return (((((a << 8) | r) << 8) | g) << 8) | b;
         }
         return 0;
@@ -143,11 +128,11 @@ public class PaletteEntryForRange implements IPaletteEntry {
     @Override
     public Color getColor(float f) {
         if (v0 <= f && f <= v1) {
-            float t = (f - v0) / deltaV;
-            int a = (int) (t * deltaA + a0 + 0.5);
-            int r = (int) (t * deltaR + r0 + 0.5);
-            int g = (int) (t * deltaG + g0 + 0.5);
-            int b = (int) (t * deltaB + b0 + 0.5);
+            float t = (f - v0) / (v1 - v0);
+            int a = (int) (t * (a1 - a0) + a0 + 0.5);
+            int r = (int) (t * (r1 - r0) + r0 + 0.5);
+            int g = (int) (t * (g1 - g0) + g0 + 0.5);
+            int b = (int) (t * (b1 - b0) + b0 + 0.5);
             return new Color(r, g, b, a);
         }
         return null;

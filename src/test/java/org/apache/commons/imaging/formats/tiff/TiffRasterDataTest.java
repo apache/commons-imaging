@@ -122,5 +122,70 @@ public class TiffRasterDataTest {
         float[] result = raster.getData();
         assertArrayEquals(data, result);
     }
+    
+    
+     /**
+     * Test of constructors with bad arguments, of class TiffRasterData.
+     */
+    @Test
+    public void testBadConstructor() {
+        try{
+            TiffRasterData raster = new TiffRasterData(-1, 10);
+            fail("Constructor did not detect bad width");
+        }catch(IllegalArgumentException illArgEx){
+            // success!
+        }
+        try{
+            TiffRasterData raster = new TiffRasterData(10, -1);
+            fail("Constructor did not detect bad height");
+        }catch(IllegalArgumentException illArgEx){
+            // success!
+        }
+        try{
+            float []f = new float[10];
+            TiffRasterData raster = new TiffRasterData(2, 10, f);
+            fail("Constructor did not detect insufficient input array size");
+        }catch(IllegalArgumentException illArgEx){
+            // success!
+        }
+        try{
+            float []f = new float[10];
+            TiffRasterData raster = new TiffRasterData(-1, 10, f);
+            fail("Constructor did not detect bad width");
+        }catch(IllegalArgumentException illArgEx){
+            // success!
+        }
+        try{
+            float []f = new float[10];
+            TiffRasterData raster = new TiffRasterData(10, -1, f);
+            fail("Constructor did not detect bad height");
+        }catch(IllegalArgumentException illArgEx){
+            // success!
+        }
+    }
+    
+    /**
+     * Test of access with bad coordinates, of class TiffRasterData.
+     */
+    @Test
+    public void testBadCoordinates() {
+        
+        try{
+            float []f = new float[100];
+            TiffRasterData raster = new TiffRasterData(10, 10, f);
+            raster.getValue(11, 11);
+            fail("Access method getValue() did not detect bad coordinates");
+        }catch(IllegalArgumentException illArgEx){
+            // success!
+        }
+        try{
+            float []f = new float[100];
+            TiffRasterData raster = new TiffRasterData(10, 10, f);
+            raster.setValue(11, 11, 5.0f);
+            fail("Access method getValue() did not detect bad coordinates");
+        }catch(IllegalArgumentException illArgEx){
+            // success!
+        }
+    }
 
 }

@@ -141,13 +141,6 @@ public class PhotometricInterpreterFloatTest {
         assertEquals(Color.white.getRGB(), argb, "Invalid mapping of white range");
         argb = bandedImageBuilder.getRGB(250, 10);
         assertEquals(orange.getRGB(), argb, "Invalid mapping of orange range");
-        // Example code to write image to PNG file for visual inspection.
-        //try {
-        //    BufferedImage bImage = bandedImageBuilder.getBufferedImage();
-        //    ImageIO.write(bImage, "PNG", new File("C:/Users/Public/test1.png"));
-        //} catch (IOException ioex) {
-        //    fail("IOException saving test image" + ioex.getMessage());
-        //}
     }
 
     /**

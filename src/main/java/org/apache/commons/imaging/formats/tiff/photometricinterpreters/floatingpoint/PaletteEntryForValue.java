@@ -60,28 +60,20 @@ public class PaletteEntryForValue implements IPaletteEntry {
 
     @Override
     public int getARGB(float f) {
-        if (isNull) {
-            if (Float.isNaN(f)) {
-                return iColor;
-            }
-        } else {
-            if (f == value) {
-                return iColor;
-            }
+        if (isNull && Float.isNaN(f)) {
+            return iColor;
+        } else if (f == value) {
+            return iColor;
         }
         return 0;
     }
 
     @Override
     public Color getColor(float f) {
-        if (isNull) {
-            if (Float.isNaN(f)) {
-                return color;
-            }
-        } else {
-            if (f == value) {
-                return color;
-            }
+        if (isNull && Float.isNaN(f)) {
+            return color;
+        } else if (f == value) {
+            return color;
         }
         return null;
     }
