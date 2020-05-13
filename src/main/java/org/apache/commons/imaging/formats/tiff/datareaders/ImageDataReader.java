@@ -14,96 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
- /*
- * Implementation Notes:
- *
- *   Additional implementation notes are given in:
- *        DataReaderStrips.java
- *        DataReaderTiled.java
- *
- * The TIFF Floating-Point Formats ----------------------------------
- *    In addition to providing images, TIFF files can supply data in the
- * form of numerical values. As of March 2020 the Commons Imaging library
- * was extended to support some floating-point data formats.
- *    Unfortunately, the floating-point format allows for a lot of different
- * variations and only the most widely used of these are currently supported.
- * At the time of implementation, only a small set of data products were
- * available. Thus it is likely that developers will wish to extend this capability
- * as additional test data become available. When implementing extensions
- * to this logic, developers are reminder that image processing requires
- * access to literally millions of pixels, so attention to performance
- * is essential to a successful implementation (please see the notes in
- * DataReaderStrips.java for more information).
- *    The TIFF floating-point implementation is very poorly documented.
- * So these notes are included to provide clarification on at least
- * some aspects of the format.
- *
- * The Predictor==3 Case
- *   TIFF specifies an extension for a predictor that is intended to
- * improve data compression ratios for floating-point values.  This
- * predictor is specified using the TIFF predictor TAG with a value of 3
- * (see TIFF Technical Note 3, April 8, 2005).  Consider a 4-byte floating
- * point value given in IEEE-754 format.  Let f3 be the high-order byte,
- * with f2 the next highest, followed by f1, and f0 for the
- * low-order byte.  This designation shoulod not be confused with the
- * in-memory layout of the bytes (little-endian versus big-endian), but
- * rather their numerical values. The sign bit and upper 7 bits of the exponent
- * are given in the high-order byte, followed by the remaining sign bit
- * and the mantissa in the lower.
- *   In many real-valued raster data sets, the sign and magnitude (exponent)
- * of the values changes slowly which the contents of the mantissa vary in
- * a semi-random manner, with the information entropy tending to increase
- * in the lowest ordered bytes.  Thus, the high-order bytes have more
- * redundancy than the low-order bytes and can compress more efficiently.
- * To exploit this, the TIFF format splits the bytes into groups based on their
- * order-of-magnitude.  This splitting process takes place on a ROW-BY-ROW
- * basis (note the emphasis, this point is not clearly documented in the spec).
- * .  For example, for row length of 3 pixels -- A, B, and C -- the data
- * for two rows would be given as shown below (again, ignoring endian issues):
- *   Original:
- *      A3 A2 A1 A0   B3 B2 B1 B0   C3 C2 C1 C0
- *      D3 D3 D1 D0   E3 E2 E2 E0   F3 F2 F1 F0
- *
- *   Bytes split into groups by order-of-magnitude:
- *      A3 B3 C3   A2 B2 C2   A1 B1 C1   A0 B0 C0
- *      D3 E3 F3   D2 E2 F2   D1 E1 F1   D0 E0 F0
- *
- * To further improve the compression, the predictor takes the difference of
- * each subsequent bytes.  Again, the differences (deltas) are computed on
- * a row-byte-row basis.  For the most part, the differences combine
- * bytes associated with the same order-of-magnitude, though there is
- * a special transition at the end of each order-of-magnitude set (shown in
- * parentheses):
- *
- *      A3, B3-A3, C3-B3, (A2-C3), B2-A2, C2-B2, (A1-C2), etc.
- *      D3, E3-D3, F3-D3, (D2-F3), E3-D2, etc.
- *
- * Once the predictor transform is complete, the data is stored using
- * conventional data compression techniques such as Deflate or LZW.
- * In practice, floating point data does not compress especially well, but
- * using the above technique, the TIFF process typically reduces the overall
- * storage size by 20 to 30 percent (depending on the data).
- *    The TIFF Technical Note 3 specifies 3 data size formats for
- * storing floating point values:
- *     32 bits    IEEE-754 single-precision standard
- *     16 bits    IEEE-754 half-precision standard
- *     24 bits    A non-standard representation
- * At this time, we have not obtained data samples for the smaller
- * representations used in combination with a predictor.
- *
- * Interleaved formats
- *   TIFF Technical Note 3 also provides sample code for interleaved
- * data, such as a real-valued vector or a complex pair.  At this time
- * no samples of interleaved data were available. As a caveat, the specification
- * that the document provides has disadvantages in terms of code complexity
- * and performance.  Because the interleaved evaluation is embedded inside
- * the pixel row and column loops, it puts a lot of redundant conditional
- * evaluations inside the double nested loops. It is recommended that when
- * interleaved data is implemented, it should get their own block of code
- * so as not to interfere with the more common non-interleaved floating-point
- * processing.
- */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
@@ -143,6 +53,95 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  * Defines the base class for the TIFF file reader classes. The TIFF format
  * defines two broad organizations for image pixel storage: strips and tiles.
  * This class defines common elements for both representations.
+ * <p>
+ * <strong>The TIFF Floating-Point Formats </strong>
+ * <p>
+ * In addition to providing images, TIFF files can supply data in the form of
+ * numerical values. As of March 2020 the Commons Imaging library was extended
+ * to support some floating-point data formats.
+ * <p>
+ * Unfortunately, the TIFF floating-point format allows for a lot of different
+ * variations. At this time, only the most widely used of these are supported.
+ * When this code was written, only a small set of test data products were
+ * available. Thus it is likely that developers will wish to extend the
+ * range of floating-point data that can be processed as
+ * additional test data become available. When implementing extensions to this
+ * logic, developers are reminded that image processing requires
+ * the handling of literally millions of pixels, so attention to performance
+ * is essential to a successful implementation (please see the notes in
+ * DataReaderStrips.java for more information).
+ * <p>
+ * The TIFF floating-point specification is very poorly documented. So these
+ * notes are included to provide clarification on at least some aspects of the
+ * format. Some documentation and C-code examples are available in "TIFF
+ * Technical Note 3, April 8, 2005)".
+ * <p>
+ * <strong>The Predictor==3 Case</strong>
+ * <p>
+ * TIFF specifies an extension for a predictor that is intended to improve data
+ * compression ratios for floating-point values. This predictor is specified
+ * using the TIFF predictor TAG with a value of 3 (see TIFF Technical Note 3).
+ * Consider a 4-byte floating point value given in IEEE-754 format. Let f3 be
+ * the high-order byte, with f2 the next highest, followed by
+ * f1, and f0 for the low-order byte. This designation should not be confused
+ * with the in-memory layout of the bytes (little-endian versus big-endian), but
+ * rather their numerical values. The sign bit and upper 7 bits of the exponent
+ * are given in the high-order byte, followed by the remaining sign bit and the
+ * mantissa in the lower.
+ * <p>
+ * In many real-valued raster data sets, the sign and magnitude (exponent) of
+ * the values change slowly. But the bits in the mantissa vary rapidly in a
+ * semi-random manner. The information entropy in the mantissa tends to increase
+ * in the lowest ordered bytes. Thus, the high-order bytes have more redundancy
+ * than the low-order bytes and can compress more efficiently. To exploit this,
+ * the TIFF format splits the bytes into groups based on their order-of-magnitude.
+ * This splitting process takes place on a ROW-BY-ROW basis (note the emphasis,
+ * this point is not clearly documented in the spec). For example, for a row of
+ * length 3 pixels -- A, B, and C -- the data for two rows would be given as
+ * shown below (again, ignoring endian issues):
+ * <pre>
+ *   Original:
+ *      A3 A2 A1 A0   B3 B2 B1 B0   C3 C2 C1 C0
+ *      D3 D3 D1 D0   E3 E2 E2 E0   F3 F2 F1 F0
+ *
+ *   Bytes split into groups by order-of-magnitude:
+ *      A3 B3 C3   A2 B2 C2   A1 B1 C1   A0 B0 C0
+ *      D3 E3 F3   D2 E2 F2   D1 E1 F1   D0 E0 F0
+ * </pre>
+ * To further improve the compression, the predictor takes the difference
+ * of each subsequent bytes. Again, the differences (deltas) are computed on a
+ * row-byte-row basis. For the most part, the differences combine bytes
+ * associated with the same order-of-magnitude, though there is a special
+ * transition at the end of each order-of-magnitude set (shown in parentheses):
+ * <pre>
+ *      A3, B3-A3, C3-B3, (A2-C3), B2-A2, C2-B2, (A1-C2), etc.
+ *      D3, E3-D3, F3-D3, (D2-F3), E3-D2, etc.
+ * </pre>
+ * Once the predictor transform is complete, the data is stored using
+ * conventional data compression techniques such as Deflate or LZW. In practice,
+ * floating point data does not compress especially well, but using the above
+ * technique, the TIFF process typically reduces the overall storage size by 20
+ * to 30 percent (depending on the data). The TIFF Technical Note 3 specifies 3
+ * data size formats for storing floating point values:
+ * <pre>
+ *     32 bits    IEEE-754 single-precision standard
+ *     16 bits    IEEE-754 half-precision standard
+ *     24 bits    A non-standard representation
+ * </pre>
+ * At this time, we have not obtained data samples for the smaller
+ * representations used in combination with a predictor.
+ * <p>
+ * <strong>Interleaved formats</strong>
+ * <p>
+ * TIFF Technical Note 3 also provides sample code for interleaved data, such as
+ * a real-valued vector or a complex pair. At this time no samples of
+ * interleaved data were available. As a caveat, the specification that the
+ * document provides has disadvantages in terms of code complexity and
+ * performance. Because the interleaved evaluation is embedded inside the pixel
+ * row and column loops, it puts a lot of redundant conditional evaluations
+ * inside the double nested loops. It is recommended that when interleaved data
+ * is implemented, it should get their own block of code so as not to interfere
+ * with the processing of the more common non-interleaved variations.
  */
 @SuppressWarnings("PMD.TooManyStaticImports")
 public abstract class ImageDataReader {
@@ -507,7 +506,7 @@ public abstract class ImageDataReader {
      * @param blockData the data for the block
      * @param xRaster coordinate of raster relative to source data
      * @param yRaster coordinate of raster relative to source data
-     * @param rasterWidth width of the raster (salways smaller than source data)
+     * @param rasterWidth width of the raster (always smaller than source data)
      * @param rasterHeight height of the raster (always smaller than source
      * data)
      * @param rasterData the raster data.
@@ -537,7 +536,7 @@ public abstract class ImageDataReader {
         }
 
         // Recall that the above logic may have adjusted xR0, xY0 so that
-        // they are not necessrily point to the source pixel at xRaster, yRaster
+        // they are not necessarily point to the source pixel at xRaster, yRaster
         // we compute xSource = xR0+xRaster.
         //            xOffset = xSource-xBlock
         // since the block cannot be accessed with a negative offset,

@@ -15,11 +15,6 @@
  * limitations under the License.
  */
 
- /*
- * Implementation notes:
- *    See ImageDataReader for notes on development
- * with particular emphasis on run-time performance.
- */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import java.awt.Rectangle;
@@ -39,6 +34,9 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
 
 /**
  * Provides a data reader for TIFF file images organized by tiles.
+ * <p>
+ * @see ImageDataReader for notes discussing design and development with
+ * particular emphasis on run-time performance.
  */
 public final class DataReaderStrips extends ImageDataReader {
 
@@ -358,8 +356,7 @@ public final class DataReaderStrips extends ImageDataReader {
         for (int strip = strip0; strip <= strip1; strip++) {
             int yStrip = strip * rowsPerStrip;
             int rowsRemaining = height - yStrip;
-            int rowsInThisStrip
-                = rowsRemaining > rowsPerStrip ? rowsPerStrip : rowsRemaining;
+            int rowsInThisStrip = Math.min(rowsRemaining, rowsPerStrip);
             int bytesPerRow = (bitsPerPixel * width + 7) / 8;
             int bytesPerStrip = rowsInThisStrip * bytesPerRow;
 

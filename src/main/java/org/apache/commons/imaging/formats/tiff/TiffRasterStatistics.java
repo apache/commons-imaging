@@ -116,7 +116,7 @@ public class TiffRasterStatistics {
      * Get the mean value for all sample values in the raster. Null-data values
      * and excluded values are not considered.
      *
-     * @return the meanValuethe mean value of the samples
+     * @return the mean value of the samples
      */
     public float getMeanValue() {
         return meanValue;

@@ -104,8 +104,8 @@ public class TiffRasterData {
      * Tabulates simple statistics for the raster and returns an instance
      * containing general metadata.
      *
-     * @return a valid instance.
-     */
+     * @return a valid instance containing a safe copy of the current simple
+   * statistics for the raster.     */
     public TiffRasterStatistics getSimpleStatistics() {
         return new TiffRasterStatistics(this, Float.NaN);
     }
@@ -144,7 +144,10 @@ public class TiffRasterData {
      * value is <strong>not</strong> a safe copy and that modifying it would
      * directly affect the content of the instance. While this design approach
      * carries some risk in terms of data security, it was chosen for reasons of
-     * performance and memory conservation.
+     * performance and memory conservation. TIFF images that contain
+   * floating-point data are often quite large. Sizes of 100 million raster
+   * cells are common. Making a redundant copy of such a large in-memory object
+   * might exceed the resources available to a Java application.
      *
      * @return a direct reference to the data array stored in this instance.
      */
