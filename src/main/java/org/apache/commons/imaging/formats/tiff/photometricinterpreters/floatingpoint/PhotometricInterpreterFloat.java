@@ -146,14 +146,11 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
             }
         }
 
-        Comparator<IPaletteEntry> comparator = new Comparator<IPaletteEntry>() {
-            @Override
-            public int compare(IPaletteEntry o1, IPaletteEntry o2) {
-                if (o1.getLowerBound() == o2.getLowerBound()) {
-                    return Double.compare(o1.getUpperBound(), o2.getUpperBound());
-                }
-                return Double.compare(o1.getLowerBound(), o2.getLowerBound());
+        Comparator<IPaletteEntry> comparator = (o1, o2) -> {
+            if (o1.getLowerBound() == o2.getLowerBound()) {
+                return Double.compare(o1.getUpperBound(), o2.getUpperBound());
             }
+            return Double.compare(o1.getLowerBound(), o2.getLowerBound());
         };
 
         Collections.sort(rangePaletteEntries, comparator);

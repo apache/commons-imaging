@@ -237,5 +237,34 @@ public class PhotometricInterpreterFloatTest {
         }
 
     }
+    
+     /**
+     * Test of overlapping entries 
+     */
+    @Test
+    public void testOverlappingEntriesEntry() throws ImageWriteException, ImageReadException, IOException  {
+        Color c0 = new Color(0xff0000ff);
+        Color c1 = new Color(0xff00ff00);
+        List<IPaletteEntry> overlapList = new ArrayList<>();
+        overlapList.add(new PaletteEntryForRange(0.0f, 1.0f, c0));
+        overlapList.add(new PaletteEntryForRange(0.0f, 1.5f, c1));
+        
+        PhotometricInterpreterFloat interpreter = new PhotometricInterpreterFloat(overlapList);
+
+        imageBuilder = new ImageBuilder(257, 257, false);
+        int[] samples = new int[1];
+        samples[0] = Float.floatToRawIntBits(0.5f);
+        interpreter.interpretPixel(imageBuilder, samples, 0, 0);
+        samples[0] = Float.floatToRawIntBits(1.2f);
+        interpreter.interpretPixel(imageBuilder, samples, 1, 1);
+        int argb0 = imageBuilder.getRGB(0,0)|0xff000000;
+        int argb1 = imageBuilder.getRGB(1,1)|0xff000000;
+        assertEquals(argb0, c0.getRGB(), "Invalid result for overlapping palette entry 0");
+        assertEquals(argb1, c1.getRGB(), "Invalid result for overlapping palette entry 1");
+        argb0 = interpreter.mapValueToARGB(0.5f);
+        argb1 = interpreter.mapValueToARGB(1.2f);
+        assertEquals(argb0, c0.getRGB(), "Invalid mapping for overlapping palette entry 0");
+        assertEquals(argb1, c1.getRGB(), "Invalid mapping for overlapping palette entry 1");
+    }
 
 }
