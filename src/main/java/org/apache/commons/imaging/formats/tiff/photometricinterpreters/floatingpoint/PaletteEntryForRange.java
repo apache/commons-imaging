@@ -28,7 +28,7 @@ import java.awt.Color;
  * &lt; v1. Thus, a value that exactly matches the upper bound of the range is
  * not considered "covered".
  */
-public class PaletteEntryForRange implements IPaletteEntry {
+public class PaletteEntryForRange implements PaletteEntry {
 
     private final float v0;
     private final float v1;

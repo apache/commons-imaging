@@ -22,7 +22,7 @@ import java.awt.Color;
  * Defines an interface for specifying color assignments to floating point
  * values.
  */
-public interface IPaletteEntry {
+public interface PaletteEntry {
 
     /**
      * Indicates that the entry covers exactly one unique value (including,

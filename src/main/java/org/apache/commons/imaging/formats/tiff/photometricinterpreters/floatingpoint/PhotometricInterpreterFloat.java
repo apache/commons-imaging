@@ -57,8 +57,8 @@ import org.apache.commons.imaging.formats.tiff.photometricinterpreters.Photometr
  */
 public class PhotometricInterpreterFloat extends PhotometricInterpreter {
 
-    ArrayList<IPaletteEntry> rangePaletteEntries = new ArrayList<>();
-    ArrayList<IPaletteEntry> singleValuePaletteEntries = new ArrayList<>();
+    ArrayList<PaletteEntry> rangePaletteEntries = new ArrayList<>();
+    ArrayList<PaletteEntry> singleValuePaletteEntries = new ArrayList<>();
 
     float minFound = Float.POSITIVE_INFINITY;
     float maxFound = Float.NEGATIVE_INFINITY;
@@ -122,7 +122,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
      *
      * @param paletteEntries a valid, non-empty list of palette entries
      */
-    public PhotometricInterpreterFloat(List<IPaletteEntry> paletteEntries) {
+    public PhotometricInterpreterFloat(List<PaletteEntry> paletteEntries) {
         // The abstract base class requires that the following fields
         // be set in the constructor:
         //     samplesPerPixel (int)
@@ -143,7 +143,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
                 "Palette entries list must be non-null and non-empty");
         }
 
-        for (IPaletteEntry entry : paletteEntries) {
+        for (PaletteEntry entry : paletteEntries) {
             if (entry.coversSingleEntry()) {
                 singleValuePaletteEntries.add(entry);
             } else {
@@ -151,7 +151,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
             }
         }
 
-        Comparator<IPaletteEntry> comparator = (o1, o2) -> {
+        Comparator<PaletteEntry> comparator = (o1, o2) -> {
             if (o1.getLowerBound() == o2.getLowerBound()) {
                 return Double.compare(o1.getUpperBound(), o2.getUpperBound());
             }
@@ -172,7 +172,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         // in the event of NaN, do not store entry in the image builder.
 
         // only the single bound palette entries support NaN
-        for (IPaletteEntry entry : singleValuePaletteEntries) {
+        for (PaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
                 int p = entry.getARGB(f);
                 imageBuilder.setRGB(x, y, p);
@@ -198,7 +198,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         nFound++;
         sumFound += f;
 
-        for (IPaletteEntry entry : singleValuePaletteEntries) {
+        for (PaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
                 int p = entry.getARGB(f);
                 imageBuilder.setRGB(x, y, p);
@@ -206,7 +206,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
             }
         }
 
-        for (IPaletteEntry entry : rangePaletteEntries) {
+        for (PaletteEntry entry : rangePaletteEntries) {
             if (entry.isCovered(f)) {
                 int p = entry.getARGB(f);
                 imageBuilder.setRGB(x, y, p);
@@ -283,7 +283,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
         // a target while the range-of-values entries cannot.  So
         // check the single-values before testing for Float.isNaN()
         // because NaN may have special treatment.
-        for (IPaletteEntry entry : singleValuePaletteEntries) {
+        for (PaletteEntry entry : singleValuePaletteEntries) {
             if (entry.isCovered(f)) {
                 return entry.getARGB(f);
             }
@@ -295,7 +295,7 @@ public class PhotometricInterpreterFloat extends PhotometricInterpreter {
             return 0;
         }
 
-        for (IPaletteEntry entry : rangePaletteEntries) {
+        for (PaletteEntry entry : rangePaletteEntries) {
             if (entry.isCovered(f)) {
                 return entry.getARGB(f);
             }

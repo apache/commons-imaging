@@ -52,8 +52,8 @@ public class PhotometricInterpreterFloatTest {
         // The floating point values at each pixel are just the
         // index divided by 256.
 
-        List<IPaletteEntry> paletteList = new ArrayList<>();
-        List<IPaletteEntry> reverseList = new ArrayList<>();
+        List<PaletteEntry> paletteList = new ArrayList<>();
+        List<PaletteEntry> reverseList = new ArrayList<>();
         for (int i = 0; i < 256; i += 32) {
             int i1 = i + 31;
             float f0 = (float) i / 256f;
@@ -68,7 +68,7 @@ public class PhotometricInterpreterFloatTest {
         // The interpreter is supposed to sort entries.  To test that,
         // we copy them to a list in reverse order.
         for (int i = paletteList.size() - 1; i >= 0; i--) {
-            IPaletteEntry entry = paletteList.get(i);
+            PaletteEntry entry = paletteList.get(i);
             reverseList.add(entry);
         }
 
@@ -85,7 +85,7 @@ public class PhotometricInterpreterFloatTest {
         }
 
         // Now set up a palette than maps values in a range to a single color.
-        List<IPaletteEntry> bandedPaletteList = new ArrayList<>();
+        List<PaletteEntry> bandedPaletteList = new ArrayList<>();
         bandedPaletteList.add(new PaletteEntryForRange(0f, 0.33f, green));
         bandedPaletteList.add(new PaletteEntryForRange(0.33f, 0.66f, Color.white));
         bandedPaletteList.add(new PaletteEntryForRange(0.66f, 1.0f, orange));
@@ -245,7 +245,7 @@ public class PhotometricInterpreterFloatTest {
     public void testOverlappingEntriesEntry() throws ImageWriteException, ImageReadException, IOException  {
         Color c0 = new Color(0xff0000ff);
         Color c1 = new Color(0xff00ff00);
-        List<IPaletteEntry> overlapList = new ArrayList<>();
+        List<PaletteEntry> overlapList = new ArrayList<>();
         overlapList.add(new PaletteEntryForRange(0.0f, 1.0f, c0));
         overlapList.add(new PaletteEntryForRange(0.0f, 1.5f, c1));
         

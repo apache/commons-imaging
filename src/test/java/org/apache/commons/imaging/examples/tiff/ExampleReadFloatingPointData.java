@@ -33,10 +33,10 @@ import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffRasterStatistics;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.IPaletteEntry;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForRange;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForValue;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntry;
 
 /**
  * A simple example application that reads the content of a TIFF file containing
@@ -152,7 +152,7 @@ public class ExampleReadFloatingPointData {
             System.out.println("Writing image to " + output.getPath());
             // create a new photometric interpreter based on the range
             // of values found above.
-            List<IPaletteEntry> paletteList = new ArrayList();
+            List<PaletteEntry> paletteList = new ArrayList();
             if (!Float.isNaN(excludedValue)) {
                 // draw the excluded value in red.
                 paletteList.add(new PaletteEntryForValue(excludedValue, Color.red));

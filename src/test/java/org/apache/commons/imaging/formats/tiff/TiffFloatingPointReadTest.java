@@ -31,12 +31,12 @@ import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImagingTestConstants;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
-import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.IPaletteEntry;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForRange;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntryForValue;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PhotometricInterpreterFloat;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.apache.commons.imaging.formats.tiff.photometricinterpreters.floatingpoint.PaletteEntry;
 
 /**
  * Performs tests that access the content of TIFF files containing floating
@@ -85,7 +85,7 @@ public class TiffFloatingPointReadTest {
             fail("Internal error, sample file does not have floating-point data "
                 + target.getName());
         }
-        List<IPaletteEntry> pList = new ArrayList<>();
+        List<PaletteEntry> pList = new ArrayList<>();
         pList.add(new PaletteEntryForValue(fNot, Color.red));
         pList.add(new PaletteEntryForRange(f0, f1, Color.black, Color.white));
         PhotometricInterpreterFloat pInterp = new PhotometricInterpreterFloat(pList);
