@@ -57,6 +57,12 @@ import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShorts;
 import org.apache.commons.imaging.formats.tiff.taginfos.TagInfoXpString;
 
+/**
+ * Provides methods and elements for accessing an Image File Directory (IFD)
+ * from a TIFF file. In the TIFF specification, the IFD is the main container
+ * for individual images or sets of metadata. While not all Directories contain
+ * images, images are always stored in a Directory.
+ */
 public class TiffDirectory extends TiffElement {
     public final int type;
     public final List<TiffField> entries;
@@ -64,7 +70,18 @@ public class TiffDirectory extends TiffElement {
     private TiffImageData tiffImageData;
     private JpegImageData jpegImageData;
 
-    public TiffDirectory(final int type, final List<TiffField> entries, final long offset, final long nextDirectoryOffset) {
+    // Preservers the byte order derived from the TIFF file header.
+    // Some of the legacy methods in this class require byte order as an
+    // argument, though that use could be phased out eventually.
+    private final ByteOrder headerByteOrder;
+
+
+    public TiffDirectory(
+        final int type,
+        final List<TiffField> entries,
+        final long offset,
+        final long nextDirectoryOffset,
+        final ByteOrder byteOrder) {
         super(offset, TiffConstants.TIFF_DIRECTORY_HEADER_LENGTH
                 + entries.size() * TiffConstants.TIFF_ENTRY_LENGTH
                 + TiffConstants.TIFF_DIRECTORY_FOOTER_LENGTH);
@@ -72,6 +89,7 @@ public class TiffDirectory extends TiffElement {
         this.type = type;
         this.entries = Collections.unmodifiableList(entries);
         this.nextDirectoryOffset = nextDirectoryOffset;
+        this.headerByteOrder = byteOrder;
     }
 
     public String description() {
@@ -148,12 +166,85 @@ public class TiffDirectory extends TiffElement {
         return false;
     }
 
+    /**
+     * Gets the image associated with the directory, if any. Note that not all
+     * directories contain images.
+     *
+     * @return if successful, a valid BufferedImage instance.
+     * @throws ImageReadException in the event of an invalid or incompatible
+     * data format.
+     * @throws IOException in the event of an I/O error.
+     */
+    public BufferedImage getTiffImage() throws ImageReadException, IOException {
+        if (null == tiffImageData) {
+            return null;
+        }
+
+        return new TiffImageParser().getBufferedImage(this, headerByteOrder, null);
+    }
+
+    /**
+     * Gets the image associated with the directory, if any. Note that not all
+     * directories contain images.
+     * <p>
+     * The optional parameters map can be used to specify image access or
+     * rendering options such as reading only a part of the overall image (i.e.
+     * reading a sub-image) or applying a custom photometric interpreter.
+     *
+     * @param params a map containing optional parameters to be applied to the
+     * read operation.
+     * @return if successful, a valid BufferedImage instance.
+     * @throws ImageReadException in the event of an invalid or incompatible
+     * data format.
+     * @throws IOException in the event of an I/O error.
+     */
+    public BufferedImage getTiffImage(final Map<String, Object> params)
+        throws ImageReadException, IOException {
+        if (null == tiffImageData) {
+            return null;
+        }
+
+        return new TiffImageParser().getBufferedImage(this, headerByteOrder, params);
+    }
+
+    /**
+     * Gets the image associated with the directory, if any. Note that not all
+     * directories contain images.
+     * <p>
+     * This method comes from an older version of this class in which byte order
+     * was required from an external source. Developers are encouraged to use
+     * the simpler version of getTiffImage that does not require the byte-order
+     * argument.
+     *
+     * @param byteOrder byte-order obtained from the containing TIFF file
+     * @return if successful, a valid BufferedImage instance.
+     * @throws ImageReadException in the event of an invalid or incompatible
+     * data format.
+     * @throws IOException in the event of an I/O error.
+     */
     public BufferedImage getTiffImage(final ByteOrder byteOrder) throws ImageReadException,
             IOException {
         final Map<String, Object> params = null;
         return getTiffImage(byteOrder, params);
     }
 
+    /**
+     * Gets the image associated with the directory, if any. Note that not all
+     * directories contain images.
+     * <p>
+     * This method comes from an older version of this class in which byte order
+     * was required from an external source. Developers are encouraged to use
+     * the simpler version of getTiffImage that does not require the byte-order
+     * argument.
+     *
+     * @param byteOrder byte-order obtained from the containing TIFF file
+     * @param params a map containing optional parameters to be applied to the
+     * read operation.
+     * @return if successful, a valid BufferedImage instance.
+     * @throws ImageReadException in the event of an invalid or incompatible
+     * data format.
+     * @throws IOException in the event of an I/O error.
+     */
     public BufferedImage getTiffImage(final ByteOrder byteOrder, final Map<String, Object> params)
             throws ImageReadException, IOException {
         if (null == tiffImageData) {
@@ -162,6 +253,8 @@ public class TiffDirectory extends TiffElement {
 
         return new TiffImageParser().getBufferedImage(this, byteOrder, params);
     }
+
+
 
     public TiffField findField(final TagInfo tag) throws ImageReadException {
         final boolean failIfMissing = false;
@@ -788,4 +881,65 @@ public class TiffDirectory extends TiffElement {
         return jpegImageData;
     }
 
+    /**
+     * Reads the floating-point data stored in this TIFF directory, if
+     * available. Note that this method is defined only for TIFF directories
+     * that contain floating-point data.
+     * <p>
+     * TIFF directories that provide floating-point data do not directly specify
+     * images, though it is possible to interpret the data as an image using
+     * this library. TIFF files may contain multiple directories which are
+     * allowed to have different formats. Thus it is possible for a TIFF file to
+     * contain a mix of image and floating-point raster data.
+     * <p>
+     * If desired, sub-image data can be read from the file by using a Java Map
+     * instance to specify the subsection of the image that is required. The
+     * following code illustrates the approach:
+     * <pre>
+     *   int x; // coordinate (column) of corner of sub-image
+     *   int y; // coordinate (row) of corner of sub-image
+     *   int width; // width of sub-image
+     *   int height; // height of sub-image
+     *
+     *   Map&lt;String, Object&gt;params = new HashMap&lt;&gt;();
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_X, x);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_Y, y);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_WIDTH, width);
+     *   params.put(TiffConstants.PARAM_KEY_SUBIMAGE_HEIGHT, height);
+     *   TiffRasterData raster =
+     *        directory.readFloatingPointRasterData(params);
+     * </pre>
+
+     * @param params an optional parameter map instance
+     * @return a valid instance
+     * @throws ImageReadException in the event of incompatible or malformed data
+     * @throws IOException in the event of an I/O error
+     */
+    public TiffRasterData getFloatingPointRasterData(
+        final Map<String, Object> params)
+        throws ImageReadException, IOException {
+
+        TiffImageParser parser = new TiffImageParser();
+        return parser.getFloatingPointRasterData(this, headerByteOrder, params);
+    }
+
+    /**
+     * Indicates whether the directory definition specifies a float-point data
+     * format.
+     *
+     * @return true if the directory contains floating point data; otherwise,
+     * false
+     * @throws ImageReadException in the event of an invalid or malformed
+     * specification.
+     */
+    public boolean hasTiffFloatingPointRasterData() throws ImageReadException {
+        if (this.hasTiffImageData()) {
+            short[] sSampleFmt = getFieldValue(
+                TiffTagConstants.TIFF_TAG_SAMPLE_FORMAT, false);
+            return sSampleFmt != null && sSampleFmt.length > 0
+                && sSampleFmt[0] == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT;
+
+        }
+        return false;
+    }
 }

@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import java.awt.Rectangle;
@@ -24,11 +25,19 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageBuilder;
+import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
 
+/**
+ * Provides a data reader for TIFF file images organized by tiles.
+ * <p>
+ * @see ImageDataReader for notes discussing design and development with
+ * particular emphasis on run-time performance.
+ */
 public final class DataReaderStrips extends ImageDataReader {
 
     private final int bitsPerPixel;
@@ -41,11 +50,12 @@ public final class DataReaderStrips extends ImageDataReader {
 
     public DataReaderStrips(final TiffDirectory directory,
             final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
-            final int[] bitsPerSample, final int predictor, final int samplesPerPixel, final int width,
-            final int height, final int compression, final ByteOrder byteOrder, final int rowsPerStrip,
-            final TiffImageData.Strips imageData) {
+        final int[] bitsPerSample, final int predictor,
+        final int samplesPerPixel, final int sampleFormat, final int width,
+        final int height, final int compression, final ByteOrder byteOrder, final int rowsPerStrip,
+        final TiffImageData.Strips imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
-                samplesPerPixel, width, height);
+            samplesPerPixel, sampleFormat, width, height);
 
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;
@@ -60,6 +70,33 @@ public final class DataReaderStrips extends ImageDataReader {
             final int pixelsPerStrip,
             final int yLimit) throws ImageReadException, IOException {
         if (y >= yLimit) {
+            return;
+        }
+
+        // changes added March 2020
+        if (sampleFormat == TiffTagConstants.SAMPLE_FORMAT_VALUE_IEEE_FLOATING_POINT) {
+
+            int k = 0;
+            int nRows = pixelsPerStrip / width;
+            if (y + nRows > yLimit) {
+                nRows = yLimit - y;
+            }
+            final int i0 = y;
+            final int i1 = y + nRows;
+            x = 0;
+            y += nRows;
+            final int[] samples = new int[1];
+            int[] b = unpackFloatingPointSamples(
+                width, i1 - i0, width, bytes, predictor, bitsPerPixel, byteOrder);
+
+            for (int i = i0; i < i1; i++) {
+                for (int j = 0; j < width; j++) {
+                    samples[0] = b[k++];
+                    photometricInterpreter.interpretPixel(imageBuilder,
+                        samples, j, i);
+                }
+            }
+
             return;
         }
 
@@ -166,7 +203,7 @@ public final class DataReaderStrips extends ImageDataReader {
         // this logic will handle all cases not conforming to the
         // special case handled above
 
-        try (final BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder)) {
+        try (BitInputStream bis = new BitInputStream(new ByteArrayInputStream(bytes), byteOrder)) {
 
             int[] samples = new int[bitsPerSampleLength];
             resetPredictor();
@@ -283,6 +320,58 @@ public final class DataReaderStrips extends ImageDataReader {
                 subImage.y - y0,
                 subImage.width,
                 subImage.height);
+    }
+
+    @Override
+    public TiffRasterData readRasterData(Rectangle subImage)
+        throws ImageReadException, IOException {
+
+        int xRaster;
+        int yRaster;
+        int rasterWidth;
+        int rasterHeight;
+        if (subImage != null) {
+            xRaster = subImage.x;
+            yRaster = subImage.y;
+            rasterWidth = subImage.width;
+            rasterHeight = subImage.height;
+        } else {
+            xRaster = 0;
+            yRaster = 0;
+            rasterWidth = width;
+            rasterHeight = height;
+        }
+        float[] rasterData = new float[rasterWidth * rasterHeight];
+
+        // the legacy code is optimized to the reading of whole
+        // strips (except for the last strip in the image, which can
+        // be a partial).  So create a working image with compatible
+        // dimensions and read that.  Later on, the working image
+        // will be sub-imaged to the proper size.
+        // strip0 and strip1 give the indices of the strips containing
+        // the first and last rows of pixels in the subimage
+        final int strip0 = yRaster / rowsPerStrip;
+        final int strip1 = (yRaster + rasterHeight - 1) / rowsPerStrip;
+
+        for (int strip = strip0; strip <= strip1; strip++) {
+            int yStrip = strip * rowsPerStrip;
+            int rowsRemaining = height - yStrip;
+            int rowsInThisStrip = Math.min(rowsRemaining, rowsPerStrip);
+            int bytesPerRow = (bitsPerPixel * width + 7) / 8;
+            int bytesPerStrip = rowsInThisStrip * bytesPerRow;
+
+            final byte[] compressed = imageData.getImageData(strip).getData();
+            final byte[] decompressed = decompress(compressed, compression,
+                bytesPerStrip, width, rowsInThisStrip);
+
+            int[] blockData = unpackFloatingPointSamples(
+                width, (int) rowsInThisStrip, width,
+                decompressed,
+                predictor, bitsPerPixel, byteOrder);
+            transferBlockToRaster(0, yStrip, width, (int) rowsInThisStrip, blockData,
+                xRaster, yRaster, rasterWidth, rasterHeight, rasterData);
+        }
+        return new TiffRasterData(rasterWidth, rasterHeight, rasterData);
     }
 
 }

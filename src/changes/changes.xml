@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha2" date="2020-??-??" description="Second 1.0 alpha release">
+      <action issue="IMAGING-251" dev="kinow" type="update" due-to="Gary Lucas">
+        Support for TIFF floating-point formats
+      </action>
       <action issue="IMAGING-254" dev="kinow" type="update">
         Small code improvements
       </action>

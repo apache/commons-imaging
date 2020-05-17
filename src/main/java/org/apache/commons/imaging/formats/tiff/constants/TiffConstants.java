@@ -70,6 +70,9 @@ public final class TiffConstants {
     public static final String PARAM_KEY_SUBIMAGE_WIDTH = "SUBIMAGE_WIDTH";
     public static final String PARAM_KEY_SUBIMAGE_HEIGHT = "SUBIMAGE_HEIGHT";
 
+    public static final String PARAM_KEY_CUSTOM_PHOTOMETRIC_INTERPRETER
+        = "CUSTOM_PHOTOMETRIC_INTERPRETER";
+
     /**
      * Specifies the amount of memory in bytes to be used for a strip
      * or tile size when employing LZW compression.  The default is
