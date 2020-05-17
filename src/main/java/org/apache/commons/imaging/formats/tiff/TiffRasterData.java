@@ -112,7 +112,7 @@ public class TiffRasterData {
 
     /**
      * Tabulates simple statistics for the raster excluding the specified value
-     * and returns an instance containing general metadata,
+     * and returns an instance containing general metadata.
      *
      * @param valueToExclude exclude samples with this specified value.
      * @return a valid instance.
