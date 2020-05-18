@@ -28,6 +28,7 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
      * palette
      */
     private final int[] indexColorMap;
+    private final int bitsPerPixelMask;
 
     public PhotometricInterpreterPalette(final int samplesPerPixel,
             final int[] bitsPerSample, final int predictor, final int width, final int height,
@@ -45,11 +46,24 @@ public class PhotometricInterpreterPalette extends PhotometricInterpreter {
                     | blue;
         }
 
+        // Fix for IMAGING-247  5/17/2020
+        // This interpreter is used with TIFF_COMPRESSION_PACKBITS (32773).
+        // which unpacks to 8 bits per sample.  But if the bits-per-pixel
+        // is less than 8 bits, some authoring tools do not zero-out the
+        // unused bits.  This results in cases where the decoded by index
+        // exceeds the size of the palette.  So we set up a mask to protect
+        // the code from an array bounds exception.
+        int temp = 0;
+        for (int i = 0; i < bitsPerPixel; i++) {
+            temp = (temp << 1) | 1;
+        }
+        bitsPerPixelMask = temp;
+
     }
 
     @Override
     public void interpretPixel(final ImageBuilder imageBuilder, final int[] samples, final int x,
             final int y) throws ImageReadException, IOException {
-        imageBuilder.setRGB(x, y, indexColorMap[samples[0]]);
+        imageBuilder.setRGB(x, y, indexColorMap[samples[0] & bitsPerPixelMask]);
     }
 }
