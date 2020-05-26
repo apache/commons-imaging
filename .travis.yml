@@ -15,7 +15,9 @@
 
 language: java
 sudo: false
-
+cache:
+  directories:
+    - $HOME/.m2
 jdk:
   - oraclejdk11
   - openjdk8
