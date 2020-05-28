@@ -144,7 +144,7 @@ public final class DataReaderStrips extends ImageDataReader {
         // verify that all samples are one byte in size
         final boolean allSamplesAreOneByte = isHomogenous(8);
 
-         if (predictor != 2 && bitsPerPixel == 8 && allSamplesAreOneByte) {
+        if (predictor != 2 && bitsPerPixel == 8 && allSamplesAreOneByte) {
             int k = 0;
             int nRows = pixelsPerStrip / width;
             if (y + nRows > yLimit) {
