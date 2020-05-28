@@ -125,8 +125,8 @@ public final class DataReaderTiled extends ImageDataReader {
         // verify that all samples are one byte in size
         final boolean allSamplesAreOneByte = isHomogenous(8);
 
-        if (predictor != 2 && bitsPerPixel == 24 && allSamplesAreOneByte) {
-            int k = 0;
+          if (bitsPerPixel == 24 && allSamplesAreOneByte
+            && photometricInterpreter instanceof PhotometricInterpreterRgb) {
             final int i0 = startY;
             int i1 = startY + tileLength;
             if (i1 > yLimit) {
@@ -139,29 +139,35 @@ public final class DataReaderTiled extends ImageDataReader {
                 // the tile is padded to beyond the tile width
                 j1 = xLimit;
             }
-            if (photometricInterpreter instanceof PhotometricInterpreterRgb) {
+            if (predictor == 2) {
+                // pre-apply the predictor logic before feeding
+                // the bytes to the photometric interpretor.
                 for (int i = i0; i < i1; i++) {
-                    k = (i - i0) * tileWidth * 3;
-                    for (int j = j0; j < j1; j++, k += 3) {
-                        final int rgb = 0xff000000
-                                | (((bytes[k] << 8) | (bytes[k + 1] & 0xff)) << 8)
-                                | (bytes[k + 2] & 0xff);
-                        imageBuilder.setRGB(j, i, rgb);
-                    }
-                }
-            } else {
-                final int[] samples = new int[3];
-                for (int i = i0; i < i1; i++) {
-                    k = (i - i0) * tileWidth * 3;
-                    for (int j = j0; j < j1; j++) {
-                        samples[0] = bytes[k++] & 0xff;
-                        samples[1] = bytes[k++] & 0xff;
-                        samples[2] = bytes[k++] & 0xff;
-                        photometricInterpreter.interpretPixel(imageBuilder,
-                                samples, j, i);
+                    int k = (i - i0) * tileWidth * 3;
+                    int p0 = bytes[k++] & 0xff;
+                    int p1 = bytes[k++] & 0xff;
+                    int p2 = bytes[k++] & 0xff;
+                    for (int j = 1; j < tileWidth; j++) {
+                        p0 = (bytes[k] + p0) & 0xff;
+                        bytes[k++] = (byte) p0;
+                        p1 = (bytes[k] + p1) & 0xff;
+                        bytes[k++] = (byte) p1;
+                        p2 = (bytes[k] + p2) & 0xff;
+                        bytes[k++] = (byte) p2;
                     }
                 }
             }
+
+            for (int i = i0; i < i1; i++) {
+                int k = (i - i0) * tileWidth * 3;
+                for (int j = j0; j < j1; j++, k += 3) {
+                    final int rgb = 0xff000000
+                        | (((bytes[k] << 8) | (bytes[k + 1] & 0xff)) << 8)
+                        | (bytes[k + 2] & 0xff);
+                    imageBuilder.setRGB(j, i, rgb);
+                }
+            }
+
             return;
         }
 
