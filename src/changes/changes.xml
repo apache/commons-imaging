@@ -132,6 +132,9 @@ The <action> type attribute can be add,update,fix,remove.
       <action issue="IMAGING-236" dev="kinow" type="add" due-to="Christoffer Rydberg">
         Add support to read multiple images from GIF
       </action>
+      <action type="update" dev="ggregory" due-to="Gary Gregory">
+        Update tests from commons-io:commons-io 2.6 to 2.7.
+      </action>
     </release>
     <release version="1.0-alpha1" date="2019-04-28" description="First 1.0 alpha release">
       <action issue="IMAGING-199" dev="kinow" type="fix" due-to="Ric Emery">
