@@ -159,11 +159,12 @@ public final class DataReaderStrips extends ImageDataReader {
                 for (int j = 0; j < width; j++) {
                     samples[0] = bytes[k++] & 0xff;
                     photometricInterpreter.interpretPixel(imageBuilder,
-                            samples, j, i);
+                        samples, j, i);
                 }
             }
             return;
-        } else if (predictor != 2 && bitsPerPixel == 24 && allSamplesAreOneByte) {
+        } else if (bitsPerPixel == 24 && allSamplesAreOneByte
+            && photometricInterpreter instanceof PhotometricInterpreterRgb) {
             int k = 0;
             int nRows = pixelsPerStrip / width;
             if (y + nRows > yLimit) {
@@ -173,25 +174,29 @@ public final class DataReaderStrips extends ImageDataReader {
             final int i1 = y + nRows;
             x = 0;
             y += nRows;
-            if (photometricInterpreter instanceof PhotometricInterpreterRgb) {
+            if (predictor == 2) {
                 for (int i = i0; i < i1; i++) {
-                    for (int j = 0; j < width; j++, k += 3) {
-                        final int rgb = 0xff000000
-                                | (((bytes[k] << 8) | (bytes[k + 1] & 0xff)) << 8)
-                                | (bytes[k + 2] & 0xff);
-                        imageBuilder.setRGB(j, i, rgb);
+                    int p0 = bytes[k++] & 0xff;
+                    int p1 = bytes[k++] & 0xff;
+                    int p2 = bytes[k++] & 0xff;
+                    for (int j = 1; j < width; j++) {
+                        p0 = (bytes[k] + p0) & 0xff;
+                        bytes[k++] = (byte) p0;
+                        p1 = (bytes[k] + p1) & 0xff;
+                        bytes[k++] = (byte) p1;
+                        p2 = (bytes[k] + p2) & 0xff;
+                        bytes[k++] = (byte) p2;
                     }
                 }
-            } else {
-                final int[] samples = new int[3];
-                for (int i = i0; i < i1; i++) {
-                    for (int j = 0; j < width; j++) {
-                        samples[0] = bytes[k++] & 0xff;
-                        samples[1] = bytes[k++] & 0xff;
-                        samples[2] = bytes[k++] & 0xff;
-                        photometricInterpreter.interpretPixel(imageBuilder,
-                                samples, j, i);
-                    }
+            }
+
+            k = 0;
+            for (int i = i0; i < i1; i++) {
+                for (int j = 0; j < width; j++, k += 3) {
+                    final int rgb = 0xff000000
+                        | (((bytes[k] << 8) | (bytes[k + 1] & 0xff)) << 8)
+                        | (bytes[k + 2] & 0xff);
+                    imageBuilder.setRGB(j, i, rgb);
                 }
             }
 
