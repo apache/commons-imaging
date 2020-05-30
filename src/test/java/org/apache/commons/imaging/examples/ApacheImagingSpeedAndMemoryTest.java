@@ -158,7 +158,7 @@ package org.apache.commons.imaging.examples;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Formatter;
+import java.io.PrintStream;
 import java.util.HashMap;
 
 import org.apache.commons.imaging.ImageReadException;
@@ -183,19 +183,17 @@ public class ApacheImagingSpeedAndMemoryTest {
 
         final ApacheImagingSpeedAndMemoryTest testStand = new ApacheImagingSpeedAndMemoryTest();
 
-        testStand.performTest(name);
+        testStand.performTest(System.out, name);
     }
 
     /**
      * Loads the input file multiple times, measuring the time and memory use
      * for each iteration.
-     *
-     * @param name
-     *            the path for the input image file to be tested
+     * @param fmt a valid PrintStream for formatting the output
+     * @param name the path for the input image file to be tested
      */
-    private void performTest(final String name) {
+    private void performTest(final PrintStream fmt, final String name) {
         final File target = new File(name);
-        final Formatter fmt = new Formatter(System.out);
 
         double sumTime = 0;
         int n = 1;
@@ -264,9 +262,7 @@ public class ApacheImagingSpeedAndMemoryTest {
             } catch (final IOException ioex) {
                 ioex.printStackTrace();
                 System.exit(-1);
-            } finally {
-                fmt.close();
-            }
+            } 
 
             try {
                 // sleep between loop iterations allows time
