@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /****************************************************************
  * Explanation of Use and Rationale For Procedures
  *
@@ -154,23 +153,19 @@
  *
  */
 package org.apache.commons.imaging.examples;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
-
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffImageParser;
-
 /**
  * A "test stand" for evaluating the speed an memory use of different Apache
  * Imaging operations
  */
 public class ApacheImagingSpeedAndMemoryTest {
-
     /**
      * Create an instance of the speed and memory test class and execute a test
      * loop for the specified file.
@@ -180,12 +175,9 @@ public class ApacheImagingSpeedAndMemoryTest {
      */
     public static void main(final String[] args) {
         final String name = args[0];
-
         final ApacheImagingSpeedAndMemoryTest testStand = new ApacheImagingSpeedAndMemoryTest();
-
         testStand.performTest(System.out, name);
     }
-
     /**
      * Loads the input file multiple times, measuring the time and memory use
      * for each iteration.
@@ -194,7 +186,6 @@ public class ApacheImagingSpeedAndMemoryTest {
      */
     private void performTest(final PrintStream fmt, final String name) {
         final File target = new File(name);
-
         double sumTime = 0;
         int n = 1;
         for (int i = 0; i < 10; i++) {
@@ -208,18 +199,15 @@ public class ApacheImagingSpeedAndMemoryTest {
                 // BufferedInputStream bins = new BufferedInputStream(fins);
                 // ByteSourceInputStream byteSource =
                 // new ByteSourceInputStream(bins, target.getName());
-
                 // ready the parser (you may modify this code block
                 // to use your parser of choice)
                 HashMap<String, Object> params = new HashMap<>();
                 TiffImageParser tiffImageParser = new TiffImageParser();
-
                 // load the file and record time needed to do so
                 final long time0 = System.nanoTime();
                 BufferedImage bImage = tiffImageParser.getBufferedImage(
                         byteSource, params);
                 final long time1 = System.nanoTime();
-
                 // tabulate results
                 final double testTime = (time1 - time0) / 1000000.0;
                 if (i > 1) {
@@ -227,7 +215,6 @@ public class ApacheImagingSpeedAndMemoryTest {
                     sumTime += testTime;
                 }
                 final double avgTime = sumTime / n;
-
                 // tabulate the memory results. Note that the
                 // buffered image, the byte source, and the parser
                 // are all still in scope. This approach is taken
@@ -239,7 +226,6 @@ public class ApacheImagingSpeedAndMemoryTest {
                 final long freeMemory = r.freeMemory();
                 final long totalMemory = r.totalMemory();
                 final long usedMemory = totalMemory - freeMemory;
-
                 if (i == 0) {
                     // print header info
                     fmt.format("%n");
@@ -262,8 +248,7 @@ public class ApacheImagingSpeedAndMemoryTest {
             } catch (final IOException ioex) {
                 ioex.printStackTrace();
                 System.exit(-1);
-            } 
-
+            }
             try {
                 // sleep between loop iterations allows time
                 // for the JVM to clean up memory. The Netbeans IDE
@@ -276,7 +261,6 @@ public class ApacheImagingSpeedAndMemoryTest {
                 // this isn't fatal, but shouldn't happen
                 iex.printStackTrace();
             }
-
         }
     }
 }
