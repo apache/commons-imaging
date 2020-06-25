@@ -16,14 +16,23 @@
  */
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
+import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
 
 /**
  * A LONG representing an offset to a TIFF directory.
  */
 public class TagInfoDirectory extends TagInfoLong {
+
+    static final List<FieldType> fieldList
+        = Collections.unmodifiableList(
+            Arrays.asList(FieldType.LONG, FieldType.IFD));
+
     public TagInfoDirectory(final String name, final int tag,
-            final TiffDirectoryType directoryType) {
-        super(name, tag, directoryType, true);
+        final TiffDirectoryType directoryType) {
+        super(name, tag, fieldList, 1, directoryType, true);
     }
 }
