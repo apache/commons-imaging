@@ -27,7 +27,7 @@ import org.apache.commons.imaging.formats.tiff.fieldtypes.FieldType;
  */
 public class TagInfoDirectory extends TagInfoLong {
 
-    static final List<FieldType> fieldList
+    private static final List<FieldType> fieldList
         = Collections.unmodifiableList(
             Arrays.asList(FieldType.LONG, FieldType.IFD));
 
