@@ -17,6 +17,7 @@
 package org.apache.commons.imaging.formats.tiff.taginfos;
 
 import java.nio.ByteOrder;
+import java.util.List;
 
 import org.apache.commons.imaging.common.ByteConversions;
 import org.apache.commons.imaging.formats.tiff.constants.TiffDirectoryType;
@@ -30,6 +31,11 @@ public class TagInfoLong extends TagInfo {
 
     public TagInfoLong(final String name, final int tag, final TiffDirectoryType directoryType, final boolean isOffset) {
         super(name, tag, FieldType.LONG, 1, directoryType, isOffset);
+    }
+
+    public TagInfoLong(final String name, final int tag, final List<FieldType> dataTypes, final int length,
+        final TiffDirectoryType exifDirectory, final boolean isOffset) {
+        super(name, tag, dataTypes, length, exifDirectory, isOffset);
     }
 
     public int getValue(final ByteOrder byteOrder, final byte[] bytes) {

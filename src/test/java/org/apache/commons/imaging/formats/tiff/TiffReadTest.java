@@ -21,12 +21,21 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
+
+import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
+import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.internal.Debug;
+
+import org.apache.commons.imaging.formats.tiff.TiffContents;
+import org.apache.commons.imaging.formats.tiff.TiffDirectory;
+import org.apache.commons.imaging.formats.tiff.TiffReader;
+
 import org.junit.jupiter.api.Test;
 
 public class TiffReadTest extends TiffBaseTest {
@@ -51,4 +60,27 @@ public class TiffReadTest extends TiffBaseTest {
         }
     }
 
+    @Test
+    public void testReadDirectories() throws Exception {
+        // same as above, but test reading the TIFF directories
+        final List<File> images = getTiffImages();
+        for (final File imageFile : images) {
+            String name = imageFile.getName();
+            // the "bad offsets" file will cause an exception to be thrown.
+            // It's not relevant to what this test is trying to discover.
+            // So skip it.
+            if(name.toLowerCase().contains("bad")){
+                continue;
+            }
+            ByteSourceFile byteSource = new ByteSourceFile(imageFile);
+            HashMap<String, Object> params = new HashMap<>();
+            TiffReader tiffReader = new TiffReader(true);
+            TiffContents contents = tiffReader.readDirectories(
+                byteSource,
+                true,
+                FormatCompliance.getDefault());
+                assertNotNull(contents);
+        }
+    }
 }
+
