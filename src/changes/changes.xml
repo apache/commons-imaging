@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha2" date="2020-??-??" description="Second 1.0 alpha release">
+      <action issue="IMAGING-258" dev="kinow" type="update" due-to="Gary Lucas">
+        Prevent exception in TIFF when reading EXIF directory
+      </action>
       <action issue="IMAGING-260" dev="kinow" type="update">
         Fix mvn site failure with JavaNCSS parse error
       </action>
