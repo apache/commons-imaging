@@ -26,7 +26,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>50</version>
+    <version>51</version>
   </parent>
 
   <artifactId>commons-imaging</artifactId>
