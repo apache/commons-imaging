@@ -680,8 +680,8 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
 
             return new PhotometricInterpreterBiLevel(samplesPerPixel,
                     bitsPerSample, predictor, width, height, invert);
-        case 3: // Palette
-        {
+        case 3: {
+           // Palette
             final int[] colorMap = directory.findField(
                     TiffTagConstants.TIFF_TAG_COLOR_MAP, true).getIntArrayValue();
 
@@ -702,8 +702,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         case 5: // CMYK
             return new PhotometricInterpreterCmyk(samplesPerPixel,
                     bitsPerSample, predictor, width, height);
-        case 6: //
-        {
+        case 6: {
 //            final double yCbCrCoefficients[] = directory.findField(
 //                    TiffTagConstants.TIFF_TAG_YCBCR_COEFFICIENTS, true)
 //                    .getDoubleArrayValue();

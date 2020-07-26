@@ -55,7 +55,7 @@
     <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <checkstyle.plugin.version>3.0.0</checkstyle.plugin.version>
+    <checkstyle.plugin.version>3.1.1</checkstyle.plugin.version>
 
     <!-- Commons Release Plugin -->
     <!-- commons.bc.version>0.97</commons.bc.version -->

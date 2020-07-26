@@ -610,10 +610,8 @@ public class PsdImageParser extends ImageParser implements XmpEmbeddable {
         case 9:
             dataParser = new DataParserLab();
             break;
-        case COLOR_MODE_INDEXED:
-        // case 2 : // Indexed=2;
-        {
-
+        case COLOR_MODE_INDEXED: {
+            // case 2 : // Indexed=2;
             final byte[] ColorModeData = getData(byteSource, PSD_SECTION_COLOR_MODE);
 
             // ImageResourceBlock block = findImageResourceBlock(blocks,
