@@ -28,6 +28,7 @@ jobs:
         experimental: [false]
         include:
           - node: 15-ea
+            java: 15-ea
             experimental: true        
         
     steps:
