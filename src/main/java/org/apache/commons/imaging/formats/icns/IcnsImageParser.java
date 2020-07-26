@@ -292,8 +292,7 @@ public class IcnsImageParser extends ImageParser {
                     + src.getWidth() + " and height " + src.getHeight());
         }
 
-        try (final BinaryOutputStream bos = new BinaryOutputStream(os,
-                ByteOrder.BIG_ENDIAN)) {
+        try (BinaryOutputStream bos = new BinaryOutputStream(os, ByteOrder.BIG_ENDIAN)) {
             bos.write4Bytes(ICNS_MAGIC);
             bos.write4Bytes(4 + 4 + 4 + 4 + 4 * imageType.getWidth()
             * imageType.getHeight() + 4 + 4 + imageType.getWidth()

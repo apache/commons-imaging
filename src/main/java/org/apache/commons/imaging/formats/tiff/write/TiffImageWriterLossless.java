@@ -311,7 +311,7 @@ public class TiffImageWriterLossless extends TiffImageWriterBase {
 
         // write in the new items
         for (final TiffOutputItem outputItem : outputItems) {
-            try (final BinaryOutputStream bos = new BinaryOutputStream(
+            try (BinaryOutputStream bos = new BinaryOutputStream(
                     new BufferOutputStream(output, (int) outputItem.getOffset()), byteOrder)) {
                 outputItem.writeItem(bos);
             }

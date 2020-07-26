@@ -302,8 +302,7 @@ public abstract class ImageDataReader {
             return T4AndT6Compression.decompressT6(compressedOrdered, tileWidth,
                     tileHeight);
         }
-        case TIFF_COMPRESSION_LZW: // LZW
-        {
+        case TIFF_COMPRESSION_LZW: {
             final InputStream is = new ByteArrayInputStream(compressedOrdered);
 
             final int lzwMinimumCodeSize = 8;
@@ -316,14 +315,14 @@ public abstract class ImageDataReader {
             return myLzwDecompressor.decompress(is, expectedSize);
         }
 
-        case TIFF_COMPRESSION_PACKBITS: // Packbits
-        {
+        // Packbits
+        case TIFF_COMPRESSION_PACKBITS: {
             return new PackBits().decompress(compressedOrdered, expectedSize);
         }
 
+        // deflate
         case TIFF_COMPRESSION_DEFLATE_ADOBE:
-        case TIFF_COMPRESSION_DEFLATE_PKZIP: // deflate
-        {
+        case TIFF_COMPRESSION_DEFLATE_PKZIP: {
             return ZlibDeflate.decompress(compressedInput, expectedSize);
         }
 
@@ -592,6 +591,6 @@ public abstract class ImageDataReader {
      * @throws ImageReadException in the event of an incompatible data form.
      * @throws IOException in the event of I/O error.
      */
-    public abstract TiffRasterData readRasterData(final Rectangle subImage)
+    public abstract TiffRasterData readRasterData(Rectangle subImage)
         throws ImageReadException, IOException;
 }

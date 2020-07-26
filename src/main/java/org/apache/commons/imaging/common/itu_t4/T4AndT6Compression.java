@@ -115,7 +115,7 @@ public final class T4AndT6Compression {
     public static byte[] compressModifiedHuffman(final byte[] uncompressed, final int width, final int height)
             throws ImageWriteException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
-        try (final BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
+        try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             for (int y = 0; y < height; y++) {
                 compress1DLine(inputStream, outputStream, null, width);
                 inputStream.flushCache();
@@ -170,7 +170,7 @@ public final class T4AndT6Compression {
     public static byte[] compressT4_1D(final byte[] uncompressed, final int width,
             final int height, final boolean hasFill) throws ImageWriteException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(uncompressed));
-        try (final BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
+        try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             if (hasFill) {
                 T4_T6_Tables.EOL16.writeBits(outputStream);
             } else {
@@ -370,7 +370,7 @@ public final class T4AndT6Compression {
     public static byte[] decompressT4_2D(final byte[] compressed, final int width,
             final int height, final boolean hasFill) throws ImageReadException {
         final BitInputStreamFlexible inputStream = new BitInputStreamFlexible(new ByteArrayInputStream(compressed));
-        try (final BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
+        try (BitArrayOutputStream outputStream = new BitArrayOutputStream()) {
             final int[] referenceLine = new int[width];
             for (int y = 0; y < height; y++) {
                 int rowLength = 0;
@@ -467,7 +467,7 @@ public final class T4AndT6Compression {
 
     public static byte[] compressT6(final byte[] uncompressed, final int width, final int height)
             throws ImageWriteException {
-        try (final ByteArrayInputStream bais = new ByteArrayInputStream(uncompressed);
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(uncompressed);
                 BitInputStreamFlexible inputStream = new BitInputStreamFlexible(bais)) {
             final BitArrayOutputStream outputStream = new BitArrayOutputStream();
             int[] referenceLine = new int[width];

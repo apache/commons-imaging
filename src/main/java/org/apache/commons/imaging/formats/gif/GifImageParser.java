@@ -266,8 +266,7 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
 
                 break;
 
-            case EXTENSION_CODE: // extension
-            {
+            case EXTENSION_CODE: {
                 final int extensionCode = is.read();
                 final int completeCode = ((0xff & code) << 8)
                         | (0xff & extensionCode);
@@ -287,9 +286,9 @@ public class GifImageParser extends ImageParser implements XmpEmbeddable {
                     break;
                 }
 
-                case APPLICATION_EXTENSION_LABEL: // 255 (hex 0xFF) Application
+                case APPLICATION_EXTENSION_LABEL: {
+                    // 255 (hex 0xFF) Application
                     // Extension Label
-                {
                     final byte[] label = readSubBlock(is);
 
                     if (formatCompliance != null) {

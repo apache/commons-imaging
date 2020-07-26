@@ -21,6 +21,6 @@ import java.util.List;
 import org.apache.commons.imaging.ImageWriteException;
 
 public interface MedianCut {
-    boolean performNextMedianCut(final List<ColorGroup> colorGroups, final boolean ignoreAlpha)
+    boolean performNextMedianCut(List<ColorGroup> colorGroups, boolean ignoreAlpha)
             throws ImageWriteException;
 }

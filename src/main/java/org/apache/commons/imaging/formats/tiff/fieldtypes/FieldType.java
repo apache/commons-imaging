@@ -115,6 +115,6 @@ public abstract class FieldType {
         throw new ImageReadException("Field type " + type + " is unsupported");
     }
 
-    public abstract Object getValue(final TiffField entry);
-    public abstract byte[] writeData(final Object o, final ByteOrder byteOrder) throws ImageWriteException;
+    public abstract Object getValue(TiffField entry);
+    public abstract byte[] writeData(Object o, ByteOrder byteOrder) throws ImageWriteException;
 }
