@@ -105,4 +105,9 @@
     <Class name="org.apache.commons.imaging.palette.SimplePalette" />
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
+  <!-- Reason: For code clarity, we could use a simple 'else', but instead keep a complete expression -->
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.pnm.PnmImageParser" />
+    <Bug pattern="UC_USELESS_CONDITION" />
+  </Match>
 </FindBugsFilter>
