@@ -22,21 +22,87 @@
   put here to instruct findbugs it must ignore them.
 -->
 <FindBugsFilter>
-  <!-- This file was copied from commons-lang. This is an example for the first entry. -->
-  <!-- Reason: Optimization to use == -->
-  <!--
+  <!-- Reason: Intentionally exposing an array -->
   <Match>
-    <Class name="org.apache.commons.lang3.BooleanUtils" />
-    <Or>
-      <Method name="toBoolean" />
-      <Method name="toBooleanObject" />
-    </Or>
-    <Bug pattern="ES_COMPARING_PARAMETER_STRING_WITH_EQ" />
+    <Class name="org.apache.commons.imaging.common.bytesource.ByteSourceArray" />
+    <Method name="getAll" />
+    <Bug pattern="EI_EXPOSE_REP" />
   </Match>
   <Match>
-    <Class name="org.apache.commons.lang3.BooleanUtils" />
-    <Method name="toBoolean" />
-    <Bug pattern="RC_REF_COMPARISON_BAD_PRACTICE_BOOLEAN" />
+    <Class name="org.apache.commons.imaging.common.bytesource.ByteSourceArray" />
+    <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
-  -->
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.iptc.IptcBlock" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.segments.DqtSegment$QuantizationTable" />
+    <Method name="getElements" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.jpeg.segments.DqtSegment$QuantizationTable" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffElement$DataElement" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffField" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffImageData$Strips" />
+    <Method name="getImageData" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffImageData$Strips" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffRasterData" />
+    <Method name="getData" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.TiffRasterData" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.write.TiffImageWriterLossless" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.formats.tiff.write.TiffOutputField" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.icc.IccProfileInfo" />
+    <Method name="getTags" />
+    <Bug pattern="EI_EXPOSE_REP" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.icc.IccProfileInfo" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.icc.IccTag" />
+    <Method name="setData" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
+  <Match>
+    <Class name="org.apache.commons.imaging.palette.SimplePalette" />
+    <Bug pattern="EI_EXPOSE_REP2" />
+  </Match>
 </FindBugsFilter>
