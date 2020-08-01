@@ -58,7 +58,7 @@
     <checkstyle.plugin.version>3.1.1</checkstyle.plugin.version>
 
     <!-- Commons Release Plugin -->
-    <!-- commons.bc.version>0.97</commons.bc.version -->
+    <commons.bc.version>1.0-alpha1</commons.bc.version>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
