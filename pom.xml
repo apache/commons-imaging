@@ -59,7 +59,7 @@
 
     <!-- Commons Release Plugin -->
     <!-- commons.bc.version>0.97</commons.bc.version -->
-    <commons.rc.version>RC3</commons.rc.version>
+    <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
     <commons.releaseManagerName>Bruno P. Kinoshita</commons.releaseManagerName>
