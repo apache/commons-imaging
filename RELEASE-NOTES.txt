@@ -1,104 +1,66 @@
+              Apache Commons Imaging 1.0-alpha2
+                  RELEASE NOTES
 
-Apache Commons Imaging
-Version 1.0-alpha2
-Release Notes
+The Apache Commons Imaging team is pleased to announce the release of Apache Commons Imaging 1.0-alpha2
 
-INTRODUCTION
+Apache Commons Imaging (previously Sanselan) is a pure-Java image library.
 
-Apache Commons Imaging is a pure-Java image library for reading and writing
-a variety of image formats.
-
-For complete information on Commons Imaging, including sample code,
-instructions on how to submit bug reports, patches, or suggestions for
-improvement, see the Apache Commons Net website:
-
-https://commons.apache.org/imaging/
-
-Please note that the project was previously known as Apache Sanselan,
-and has been renamed to Apache Commons Imaging. As part of this rename:
-
- * the package changed to
-     org.apache.commons.imaging
-   from
-     org.apache.sanselan
-
- * the main class is now
-     org.apache.commons.imaging.Imaging
-   and not
-     org.apache.sanselan.Sanselan
-
- * the Maven coordinates are now:
-     <groupId>org.apache.commons</groupId>
-     <artifactId>commons-imaging</artifactId>
-     <name>Commons Imaging</name>
-   instead of the old:
-     <groupId>org.apache.sanselan</groupId>
-     <artifactId>sanselan</artifactId>
-     <name>Apache Sanselan</name>
-
- * the website is
-     https://commons.apache.org/imaging
-   and not
-     https://commons.apache.org/sanselan
-
- * etc.
-
-VERSION HISTORY
-
-Release 1.0-alpha2
-------------
 Second 1.0 alpha release
 
 Changes in this version include:
 
 New features:
-o IMAGING-248:  ICNS: missing element types; some safety checks Thanks to Greg Shrago. 
-o IMAGING-245:  Add disposal method to GIF metadata Thanks to Christoffer Rydberg. 
-o IMAGING-146:  Add documentation for the color package 
-o IMAGING-244:  Use isEmpty instead of comparing size() with integers 
-o IMAGING-243:  PNG Writer Indexed Color with semi-transparent Pixels and Better Compression Thanks to Andreas Menze. 
-o IMAGING-239:  Add inflate (deflate algorithm) to TIFF files Thanks to Paul Austin. 
-o IMAGING-164:  Simplify code in IcoImageParser::writeImage Thanks to Michael Groß. 
-o IMAGING-165:  Add the fields from TiffReader.Collector to TiffContents Thanks to Michael Groß. 
-o IMAGING-228:  Remove private method PhotometricInterpreterLogLuv#cube by Math.pow 
-o IMAGING-236:  Add support to read multiple images from GIF Thanks to Christoffer Rydberg. 
+o IMAGING-248:  ICNS: missing element types; some safety checks Thanks to Greg Shrago.
+o IMAGING-245:  Add disposal method to GIF metadata Thanks to Christoffer Rydberg.
+o IMAGING-146:  Add documentation for the color package
+o IMAGING-244:  Use isEmpty instead of comparing size() with integers
+o IMAGING-243:  PNG Writer Indexed Color with semi-transparent Pixels and Better Compression Thanks to Andreas Menze.
+o IMAGING-239:  Add inflate (deflate algorithm) to TIFF files Thanks to Paul Austin.
+o IMAGING-164:  Simplify code in IcoImageParser::writeImage Thanks to Michael Groß.
+o IMAGING-165:  Add the fields from TiffReader.Collector to TiffContents Thanks to Michael Groß.
+o IMAGING-228:  Remove private method PhotometricInterpreterLogLuv#cube by Math.pow
+o IMAGING-236:  Add support to read multiple images from GIF Thanks to Christoffer Rydberg.
 
 Fixed Bugs:
-o IMAGING-247:  Fix crash when reading TIFF using PackBits Thanks to Gary Lucas. 
-o IMAGING-246:  Invalid Block Size error prevents handling of block 1084, Macintosh NSPrintInfo 
-o IMAGING-163:  Add XmpEmbedabble interface to parsers that support it 
-o IMAGING-151:  ColorGroup.color_counts is mutable public List and is multiply sorted 
-o IMAGING-242:  Upgrade to JUnit 5 
-o IMAGING-241:  Copy byte arrays fixing TODO markers 
-o IMAGING-136:  Imaging.getImageInfo() fails to read JPEG file Thanks to Michael Groß. 
-o IMAGING-238:  Return copied byte arrays in Png Chunk and Png Chunk ICCP 
-o IMAGING-230:  Properly close resources with try-with-resources in T4AndT6Compression 
-o IMAGING-134:  Invalid (RST) marker found in entropy data Thanks to Michael Sommerville. 
-o IMAGING-130:  Reading of some GIF images throws java.io.IOException: AddStringToTable: codes: 4096 code_size: 12 Thanks to Michael Sommerville. 
-o IMAGING-224:  Fix build errors in Travis 
-o IMAGING-167:  Possible infinite loop at XpmImageParser::writeImage Thanks to Michael Groß. 
-o IMAGING-211:  Imaging.getBufferedImage fails throwing java.lang.ArrayIndexOutOfBoundsException for specific inputs 
-o IMAGING-210:  Imaging.getBufferedImage fails throwing NegativeArraySizeException for specific inputs 
+o IMAGING-247:  Fix crash when reading TIFF using PackBits Thanks to Gary Lucas.
+o IMAGING-246:  Invalid Block Size error prevents handling of block 1084, Macintosh NSPrintInfo
+o IMAGING-163:  Add XmpEmbedabble interface to parsers that support it
+o IMAGING-151:  ColorGroup.color_counts is mutable public List and is multiply sorted
+o IMAGING-242:  Upgrade to JUnit 5
+o IMAGING-241:  Copy byte arrays fixing TODO markers
+o IMAGING-136:  Imaging.getImageInfo() fails to read JPEG file Thanks to Michael Groß.
+o IMAGING-238:  Return copied byte arrays in Png Chunk and Png Chunk ICCP
+o IMAGING-230:  Properly close resources with try-with-resources in T4AndT6Compression
+o IMAGING-134:  Invalid (RST) marker found in entropy data Thanks to Michael Sommerville.
+o IMAGING-130:  Reading of some GIF images throws java.io.IOException: AddStringToTable: codes: 4096 code_size: 12 Thanks to Michael Sommerville.
+o IMAGING-224:  Fix build errors in Travis
+o IMAGING-167:  Possible infinite loop at XpmImageParser::writeImage Thanks to Michael Groß.
+o IMAGING-211:  Imaging.getBufferedImage fails throwing java.lang.ArrayIndexOutOfBoundsException for specific inputs
+o IMAGING-210:  Imaging.getBufferedImage fails throwing NegativeArraySizeException for specific inputs
 
 Changes:
-o IMAGING-258:  Prevent exception in TIFF when reading EXIF directory Thanks to Gary Lucas. 
-o IMAGING-260:  Fix mvn site failure with JavaNCSS parse error 
-o IMAGING-259:  Enhance TIFF DataReaders speed for compressed RGB Thanks to Gary Lucas. 
-o IMAGING-251:  Support for TIFF floating-point formats Thanks to Gary Lucas. 
-o IMAGING-254:  Small code improvements 
-o IMAGING-253:  ByteSourceInputStream has initialized its length when reading starts Thanks to David Hrbacek. 
-o IMAGING-249:  Make IPTCBlock members private and add getter/setter 
-o           Update tests from commons-io:commons-io 2.6 to 2.7. Thanks to Gary Gregory. 
-o           Update commons-parent from 50 to 51 #88. Thanks to Dependabot. 
-o           Update actions/checkout from v1 to v2.3.1 #87. Thanks to Dependabot. 
-o           Update junit-jupiter from 5.5.2 to 5.6.2 #86. Thanks to Dependabot. 
+o IMAGING-258:  Prevent exception in TIFF when reading EXIF directory Thanks to Gary Lucas.
+o IMAGING-260:  Fix mvn site failure with JavaNCSS parse error
+o IMAGING-259:  Enhance TIFF DataReaders speed for compressed RGB Thanks to Gary Lucas.
+o IMAGING-251:  Support for TIFF floating-point formats Thanks to Gary Lucas.
+o IMAGING-254:  Small code improvements
+o IMAGING-253:  ByteSourceInputStream has initialized its length when reading starts Thanks to David Hrbacek.
+o IMAGING-249:  Make IPTCBlock members private and add getter/setter
+o               Update tests from commons-io:commons-io 2.6 to 2.7. Thanks to Gary Gregory.
+o               Update commons-parent from 50 to 51 #88. Thanks to Dependabot.
+o               Update actions/checkout from v1 to v2.3.1 #87. Thanks to Dependabot.
+o               Update junit-jupiter from 5.5.2 to 5.6.2 #86. Thanks to Dependabot.
 
-Minimum Java version: 1.8
-Compatibility with 0.97:
-  Binary compatible: No.
-  Source compatible: No.
-  Semantic compatible: No.
 
+Historical list of changes: https://commons.apache.org/proper/commons-imaging/changes-report.html
+
+For complete information on Apache Commons Imaging, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Imaging website:
+
+https://commons.apache.org/proper/commons-imaging/
+
+The following changes are here only for history, from when the project was initially
+created and was called Sanselan.
 
 Release 0.97
 ------------
