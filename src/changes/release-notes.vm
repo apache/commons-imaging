@@ -14,56 +14,15 @@
 ## KIND, either express or implied.  See the License for the
 ## specific language governing permissions and limitations
 ## under the License.
-
-Apache Commons Imaging
-Version ${version}
-Release Notes
-
-INTRODUCTION
-
-Apache Commons Imaging is a pure-Java image library for reading and writing
-a variety of image formats.
-
-For complete information on Commons Imaging, including sample code,
-instructions on how to submit bug reports, patches, or suggestions for
-improvement, see the Apache Commons Net website:
-
-https://commons.apache.org/imaging/
-
-Please note that the project was previously known as Apache Sanselan,
-and has been renamed to Apache Commons Imaging. As part of this rename:
-
- * the package changed to
-     org.apache.commons.imaging
-   from
-     org.apache.sanselan
-
- * the main class is now
-     org.apache.commons.imaging.Imaging
-   and not
-     org.apache.sanselan.Sanselan
-
- * the Maven coordinates are now:
-     <groupId>org.apache.commons</groupId>
-     <artifactId>commons-imaging</artifactId>
-     <name>Commons Imaging</name>
-   instead of the old:
-     <groupId>org.apache.sanselan</groupId>
-     <artifactId>sanselan</artifactId>
-     <name>Apache Sanselan</name>
-
- * the website is
-     https://commons.apache.org/imaging
-   and not
-     https://commons.apache.org/sanselan
-
- * etc.
-
-VERSION HISTORY
-
-Release ${version}
-------------
 ##
+              ${project.name} ${version}
+                  RELEASE NOTES
+
+The ${developmentTeam} is pleased to announce the release of ${project.name} ${version}
+
+$introduction.replaceAll("(?<!\015)\012", "
+").replaceAll("(?m)^ +","")
+
 ## N.B. the available variables are described here:
 ## http://maven.apache.org/plugins/maven-changes-plugin/examples/using-a-custom-announcement-template.html
 ##
@@ -71,116 +30,99 @@ Release ${version}
 $release.description.replaceAll("  ", "
 ")
 
+## set up indent sizes. Only change indent1
+#set($props=${project.properties})
+#set($jiralen=$props.get("commons.jira.id").length())
+## indent1 =   POOL-nnnn:
+#set($blanklen=$jiralen+6)## +6 for "-nnnn:"
+## must be at least as long as the longest JIRA id
+#set($blanks="                                  ")
+#set($indent1=$blanks.substring(0,$blanklen))
+## indent2 allows for issue wrapper
+#set($indent2="$indent1   ")
+##
+#macro ( processaction )
+## Use replaceAll to fix up LF-only line ends on Windows.
+#set($action=$actionItem.getAction().replaceAll("\n","
+"))
+## Replace &lt; with < so can embed tag markup
+#set($action=$action.replaceAll("&lt;","<"))
+## use an empty date to mean don't format the entry
+## TODO how to enable leading spaces without compromising html report
+## unfortunately leading spaces are trimmed even from CDATA sections
+#if ($actionItem.getDate() && $actionItem.getDate().length()==0)
+$action
+#else
+## Fix up indentation for multi-line action descriptions
+#set($action=$action.replaceAll("(?m)^  +",$indent2))
+#if ($actionItem.getIssue())
+#set($issue="$actionItem.getIssue():")
+## Pad shorter issue numbers
+#if ($issue.length() < $indent1.length())#set ($issue="$issue ")#end
+#if ($issue.length() < $indent1.length())#set ($issue="$issue ")#end
+#if ($issue.length() < $indent1.length())#set ($issue="$issue ")#end
+#else
+#set($issue=$indent1)
+#end
+#if ($actionItem.getDueTo())
+#set($dueto=" Thanks to $actionItem.getDueTo().")
+#else
+#set($dueto="")
+#end
+o $issue ${action}$dueto
+#end
+#set($action="")
+#set($issue="")
+#set($dueto="")
+#end
 ##
 #if ($release.getActions().size() == 0)
 No changes defined in this version.
 #else
 Changes in this version include:
 
-## indent to be used if there is no issue attribute.
-## should be the same as the indent in the changes.xml file
-## less 2 spaces for the 'o' and trailing space
-#set($indent='          ')
 #if ($release.getActions('add').size() !=0)
 New features:
 #foreach($actionItem in $release.getActions('add'))
-## Use replaceAll to fix up LF-only line ends on Windows.
-#set($action=$actionItem.getAction().replaceAll("\n","
-"))
-#if ($actionItem.getIssue())
-#set($issue=$actionItem.getIssue())
-#else
-#set($issue="")
-#end
-#if ($actionItem.getDueTo())
-#set($dueto=$actionItem.getDueTo())
-#else
-#set($dueto="")
-#end
-o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
-
-#set($issue="")
-#set($dueto="")
+#processaction()
 #end 
-#end
 
+#end
+##
 #if ($release.getActions('fix').size() !=0)
 Fixed Bugs:
 #foreach($actionItem in $release.getActions('fix'))
-## Use replaceAll to fix up LF-only line ends on Windows.
-#set($action=$actionItem.getAction().replaceAll("\n","
-"))
-#if ($actionItem.getIssue())
-#set($issue=$actionItem.getIssue())
-#else
-#set($issue="")
-#end
-#if ($actionItem.getDueTo())
-#set($dueto=$actionItem.getDueTo())
-#else
-#set($dueto="")
-#end
-o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
-
-#set($issue="")
-#set($dueto="")
-#end
+#processaction()
 #end
 
+#end
+##
 #if ($release.getActions('update').size() !=0)
 Changes:
 #foreach($actionItem in $release.getActions('update'))
-## Use replaceAll to fix up LF-only line ends on Windows.
-#set($action=$actionItem.getAction().replaceAll("\n","
-"))
-#if ($actionItem.getIssue())
-#set($issue=$actionItem.getIssue())
-#else
-#set($issue="")
-#end
-#if ($actionItem.getDueTo())
-#set($dueto=$actionItem.getDueTo())
-#else
-#set($dueto="")
-#end
-o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
-
-#set($issue="")
-#set($dueto="")
-#end
+#processaction()
 #end
 
+#end
+##
 #if ($release.getActions('remove').size() !=0)
 Removed:
 #foreach($actionItem in $release.getActions('remove'))
-## Use replaceAll to fix up LF-only line ends on Windows.
-#set($action=$actionItem.getAction().replaceAll("\n","
-"))
-#if ($actionItem.getIssue())
-#set($issue=$actionItem.getIssue())
-#else
-#set($issue="")
-#end
-#if ($actionItem.getDueTo())
-#set($dueto=$actionItem.getDueTo())
-#else
-#set($dueto="")
-#end
-o#if($!issue != "") $issue: #else$indent#end ${action} #if($!dueto != "")Thanks to $dueto. #end
-##
-#set($issue="")
-#set($dueto="")
+#processaction()
 #end
 #end
 ## End of main loop
 #end
-##
-Minimum Java version: 1.8
-Compatibility with 0.97:
-  Binary compatible: No.
-  Source compatible: No.
-  Semantic compatible: No.
 
+Historical list of changes: ${project.url}changes-report.html
+
+For complete information on ${project.name}, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache ${project.name} website:
+
+${project.url}
+
+The following changes are here only for history, from when the project was initially
+created and was called Sanselan.
 
 Release 0.97
 ------------
