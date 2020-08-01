@@ -46,7 +46,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <commons.componentid>imaging</commons.componentid>
     <commons.module.name>org.apache.commons.imaging</commons.module.name>
-    <commons.release.version>1.0</commons.release.version>
+    <commons.release.version>1.0-alpha2</commons.release.version>
     <commons.jira.id>IMAGING</commons.jira.id>
     <commons.jira.pid>12313421</commons.jira.pid>
     <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
@@ -58,7 +58,7 @@
     <checkstyle.plugin.version>3.1.1</checkstyle.plugin.version>
 
     <!-- Commons Release Plugin -->
-    <!-- commons.bc.version>0.97</commons.bc.version -->
+    <commons.bc.version>1.0-alpha1</commons.bc.version>
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
