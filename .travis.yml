@@ -22,8 +22,6 @@ jdk:
   - oraclejdk11
   - openjdk8
   - openjdk11
-  - openjdk12
-  - openjdk13
   - openjdk14
   - openjdk-ea
 
@@ -32,8 +30,7 @@ matrix:
     - jdk: openjdk-ea
 
 script:
-  - mvn
+  - mvn -V --no-transfer-progress
 
 after_success:
-  - mvn clean test jacoco:report coveralls:report -Ptravis-jacoco
-
+  - mvn -V clean test jacoco:report coveralls:report -Ptravis-jacoco --no-transfer-progress
