@@ -44,6 +44,9 @@ The <action> type attribute can be add,update,fix,remove.
     <title>Apache Commons Imaging Release Notes</title>
   </properties>
   <body>
+    <release version="1.0-alpha3" date="2020-??-??" description="Third 1.0 alpha release">
+
+    </release>
     <release version="1.0-alpha2" date="2020-08-01" description="Second 1.0 alpha release">
       <action issue="IMAGING-258" dev="kinow" type="update" due-to="Gary Lucas">
         Prevent exception in TIFF when reading EXIF directory
