@@ -35,7 +35,7 @@
 
   <!--
     Keep the description on a single line. Otherwise Maven might generate
-    a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
+    a corrupted MANIFEST.MF (see https://issues.apache.org/jira/browse/MJAR-4)
    -->
   <description>Apache Commons Imaging (previously Sanselan) is a pure-Java image library.</description>
   <url>https://commons.apache.org/proper/commons-imaging/</url>
