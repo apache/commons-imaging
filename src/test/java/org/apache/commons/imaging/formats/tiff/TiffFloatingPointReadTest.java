@@ -122,7 +122,7 @@ public class TiffFloatingPointReadTest {
     }
 
     @Test
-     public void test() {
+    public void test() {
         Map<String, Object> params = new HashMap<>();
         // These TIFF sample data includes files that contain known
         // floating-point values in various formats.  We know the range
