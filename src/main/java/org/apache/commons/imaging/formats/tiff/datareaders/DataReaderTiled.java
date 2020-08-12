@@ -324,17 +324,14 @@ public final class DataReaderTiled extends ImageDataReader {
 
         final int nColumnsOfTiles = (width + tileWidth - 1) / tileWidth;
 
-        final int x0 = col0 * tileWidth;
-        final int y0 = row0 * tileLength;
-
         for (int iRow = row0; iRow <= row1; iRow++) {
             for (int iCol = col0; iCol <= col1; iCol++) {
                 final int tile = iRow * nColumnsOfTiles + iCol;
                 final byte[] compressed = imageData.tiles[tile].getData();
                 final byte[] decompressed = decompress(compressed, compression,
                     bytesPerTile, tileWidth, tileLength);
-                int x = iCol * tileWidth - x0;
-                int y = iRow * tileLength - y0;
+                int x = iCol * tileWidth;
+                int y = iRow * tileLength;
                 int[] blockData = unpackFloatingPointSamples(
                     tileWidth, tileLength, tileWidth,
                     decompressed,
