@@ -174,6 +174,8 @@ public class TiffFloatingPointReadTest {
                 checkSubImage(target, fullRaster, i+1, i, 8, 8);
             }
 
+            // now read the entire image
+            checkSubImage(target, fullRaster, 0, 0, width, height);
 
             // Test the USGS overview file ------------------------------
             // We know from inspection that this sample file contains values
@@ -210,6 +212,9 @@ public class TiffFloatingPointReadTest {
             for(int i=0; i<height-8; i++){
                 checkSubImage(target, fullRaster, i, i, 8, 8);
             }
+            
+            // now read the entire image
+            checkSubImage(target, fullRaster, 0, 0, width, height);
         } catch (ImageReadException | IOException ex) {
             fail("Exception during test " + ex.getMessage());
         }
