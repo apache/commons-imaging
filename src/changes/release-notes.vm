@@ -18,7 +18,7 @@
               ${project.name} ${version}
                   RELEASE NOTES
 
-The ${developmentTeam} is pleased to announce the release of ${project.name} ${version}
+The ${developmentTeam} is pleased to announce the release of ${project.name} ${version}.
 
 $introduction.replaceAll("(?<!\015)\012", "
 ").replaceAll("(?m)^ +","")
