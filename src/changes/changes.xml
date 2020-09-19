@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha3" date="2020-??-??" description="Third 1.0 alpha release">
+      <action issue="IMAGING-265" dev="kinow" type="fix" due-to="Gary Lucas">
+        ArrayIndexOutOfBoundsException on reading simple GeoTIFF.
+      </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump actions/setup-java from v1.4.0 to v1.4.3 #92 #95 #101.
       </action>

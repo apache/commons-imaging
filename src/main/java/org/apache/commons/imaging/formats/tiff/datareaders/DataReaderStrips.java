@@ -28,6 +28,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
@@ -43,23 +44,27 @@ public final class DataReaderStrips extends ImageDataReader {
     private final int bitsPerPixel;
     private final int compression;
     private final int rowsPerStrip;
+    private final TiffPlanarConfiguration planarConfiguration;
     private final ByteOrder byteOrder;
     private int x;
     private int y;
     private final TiffImageData.Strips imageData;
 
     public DataReaderStrips(final TiffDirectory directory,
-            final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
-        final int[] bitsPerSample, final int predictor,
-        final int samplesPerPixel, final int sampleFormat, final int width,
-        final int height, final int compression, final ByteOrder byteOrder, final int rowsPerStrip,
-        final TiffImageData.Strips imageData) {
+      final PhotometricInterpreter photometricInterpreter, final int bitsPerPixel,
+      final int[] bitsPerSample, final int predictor,
+      final int samplesPerPixel, final int sampleFormat, final int width,
+      final int height, final int compression,
+      final TiffPlanarConfiguration planarConfiguration,
+      final ByteOrder byteOrder,
+      final int rowsPerStrip, final TiffImageData.Strips imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
             samplesPerPixel, sampleFormat, width, height);
 
         this.bitsPerPixel = bitsPerPixel;
         this.compression = compression;
         this.rowsPerStrip = rowsPerStrip;
+        this.planarConfiguration = planarConfiguration;
         this.imageData = imageData;
         this.byteOrder = byteOrder;
     }
@@ -237,27 +242,51 @@ public final class DataReaderStrips extends ImageDataReader {
 
     @Override
     public void readImageData(final ImageBuilder imageBuilder)
-            throws ImageReadException, IOException {
-        for (int strip = 0; strip < imageData.getImageDataLength(); strip++) {
-            final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
-            final long rowsRemaining = height - (strip * rowsPerStripLong);
-            final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
-            final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
-            final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
-            final long pixelsPerStrip = rowsInThisStrip * width;
+      throws ImageReadException, IOException {
+        if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
+            for (int strip = 0; strip < imageData.getImageDataLength(); strip++) {
+                final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
+                final long rowsRemaining = height - (strip * rowsPerStripLong);
+                final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
+                final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
+                final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
+                final long pixelsPerStrip = rowsInThisStrip * width;
 
-            final byte[] compressed = imageData.getImageData(strip).getData();
+                final byte[] compressed = imageData.getImageData(strip).getData();
+                final byte[] decompressed = decompress(compressed, compression,
+                  (int) bytesPerStrip, width, (int) rowsInThisStrip);
+                interpretStrip(
+                  imageBuilder,
+                  decompressed,
+                  (int) pixelsPerStrip,
+                  height);
+            }
+        } else {
+            int nStripsInPlane = imageData.getImageDataLength() / 3;
+            for (int strip = 0; strip < nStripsInPlane; strip++) {
+                final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
+                final long rowsRemaining = height - (strip * rowsPerStripLong);
+                final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
+                final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
+                final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
+                final long pixelsPerStrip = rowsInThisStrip * width;
 
-            final byte[] decompressed = decompress(compressed, compression,
-                    (int) bytesPerStrip, width, (int) rowsInThisStrip);
-
-            interpretStrip(
-                    imageBuilder,
-                    decompressed,
-                    (int) pixelsPerStrip,
-                    height);
-
+                byte[] b = new byte[(int) bytesPerStrip];
+                for (int iPlane = 0; iPlane < 3; iPlane++) {
+                    int planeStrip = iPlane * nStripsInPlane + strip;
+                    final byte[] compressed = imageData.getImageData(planeStrip).getData();
+                    final byte[] decompressed = decompress(compressed, compression,
+                      (int) bytesPerStrip, width, (int) rowsInThisStrip);
+                    int index = iPlane;
+                    for (int i = 0; i < decompressed.length; i++) {
+                        b[index] = decompressed[i];
+                        index += 3;
+                    }
+                }
+                interpretStrip(imageBuilder, b, (int) pixelsPerStrip, height);
+            }
         }
+
     }
 
 
@@ -291,25 +320,50 @@ public final class DataReaderStrips extends ImageDataReader {
         //        or working
         final ImageBuilder workingBuilder =
                 new ImageBuilder(width, workingHeight, false);
+        if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
+            for (int strip = strip0; strip <= strip1; strip++) {
+                final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
+                final long rowsRemaining = height - (strip * rowsPerStripLong);
+                final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
+                final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
+                final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
+                final long pixelsPerStrip = rowsInThisStrip * width;
 
-        for (int strip = strip0; strip <= strip1; strip++) {
-            final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
-            final long rowsRemaining = height - (strip * rowsPerStripLong);
-            final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
-            final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
-            final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
-            final long pixelsPerStrip = rowsInThisStrip * width;
+                final byte[] compressed = imageData.getImageData(strip).getData();
 
-            final byte[] compressed = imageData.getImageData(strip).getData();
+                final byte[] decompressed = decompress(compressed, compression,
+                  (int) bytesPerStrip, width, (int) rowsInThisStrip);
 
-            final byte[] decompressed = decompress(compressed, compression,
-                    (int) bytesPerStrip, width, (int) rowsInThisStrip);
+                interpretStrip(
+                  workingBuilder,
+                  decompressed,
+                  (int) pixelsPerStrip,
+                  yLimit);
+            }
+        } else {
+            int nStripsInPlane = imageData.getImageDataLength() / 3;
+            for (int strip = strip0; strip <= strip1; strip++) {
+                final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
+                final long rowsRemaining = height - (strip * rowsPerStripLong);
+                final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
+                final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
+                final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
+                final long pixelsPerStrip = rowsInThisStrip * width;
 
-            interpretStrip(
-                    workingBuilder,
-                    decompressed,
-                    (int) pixelsPerStrip,
-                    yLimit);
+                byte[] b = new byte[(int) bytesPerStrip];
+                for (int iPlane = 0; iPlane < 3; iPlane++) {
+                    int planeStrip = iPlane * nStripsInPlane + strip;
+                    final byte[] compressed = imageData.getImageData(planeStrip).getData();
+                    final byte[] decompressed = decompress(compressed, compression,
+                      (int) bytesPerStrip, width, (int) rowsInThisStrip);
+                    int index = iPlane;
+                    for (int i = 0; i < decompressed.length; i++) {
+                        b[index] = decompressed[i];
+                        index += 3;
+                    }
+                }
+                interpretStrip(workingBuilder, b, (int) pixelsPerStrip, height);
+            }
         }
 
 
