@@ -58,7 +58,9 @@ public final class DataReaderTiled extends ImageDataReader {
             final PhotometricInterpreter photometricInterpreter, final int tileWidth,
             final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
         final int predictor, final int samplesPerPixel, final int sampleFormat,
-        final int width, final int height,            final int compression, final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
+      final int width, final int height,
+      final int compression, final int planarConfiguration,
+      final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
             samplesPerPixel, sampleFormat, width, height);
 
