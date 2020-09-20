@@ -136,8 +136,6 @@ public abstract class TiffImageData {
 
     }
 
-    // public abstract TiffElement[] getElements();
-
     public abstract TiffElement.DataElement[] getImageData();
 
     public abstract boolean stripsNotTiles();
@@ -146,7 +144,7 @@ public abstract class TiffImageData {
             PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
             int[] bitsPerSample, int predictor, int samplesPerPixel, int width,
       int height, int compression, int planarConfiguration,
-      ByteOrder byteOrder) throws IOException,            ImageReadException;
+      ByteOrder byteOrder) throws IOException, ImageReadException;
 
     public static class Data extends TiffElement.DataElement {
         public Data(final long offset, final int length, final byte[] data) {

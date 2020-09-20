@@ -241,7 +241,7 @@ public final class DataReaderStrips extends ImageDataReader {
     @Override
     public void readImageData(final ImageBuilder imageBuilder)
       throws ImageReadException, IOException {
-        if (planarConfiguration != 2) {
+        if (planarConfiguration != TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR) {
             for (int strip = 0; strip < imageData.getImageDataLength(); strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
                 final long rowsRemaining = height - (strip * rowsPerStripLong);
@@ -318,7 +318,7 @@ public final class DataReaderStrips extends ImageDataReader {
         //        or working
         final ImageBuilder workingBuilder =
                 new ImageBuilder(width, workingHeight, false);
-        if (planarConfiguration != 2) {
+        if (planarConfiguration != TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR) {
             for (int strip = strip0; strip <= strip1; strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
                 final long rowsRemaining = height - (strip * rowsPerStripLong);

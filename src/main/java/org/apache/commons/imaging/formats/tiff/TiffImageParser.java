@@ -920,8 +920,9 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         final TiffImageData imageData = directory.getTiffImageData();
 
         final ImageDataReader dataReader = imageData.getDataReader(directory,
-            photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
-          samplesPerPixel, width, height, compression, 1, byteOrder);
+          photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
+          samplesPerPixel, width, height, compression,
+          TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY, byteOrder);
 
         return dataReader.readRasterData(subImage);
     }
