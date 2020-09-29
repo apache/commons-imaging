@@ -45,6 +45,18 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha3" date="2020-??-??" description="Third 1.0 alpha release">
+      <action dev="kinow" type="update" due-to="Dependabot">
+        Bump actions/setup-java from v1.4.0 to v1.4.2 #92 #95.
+      </action>
+      <action dev="kinow" type="update" due-to="Dependabot">
+        Bump commons-io from 2.7 to 2.8.0 #96.
+      </action>
+      <action dev="kinow" type="update" due-to="Dependabot">
+        Bump junit-jupiter from 5.6.2 to 5.7.0 #97.
+      </action>
+      <action dev="kinow" type="update" due-to="Dependabot">
+        Bump actions/checkout from v2.3.2 to v2.3.3 #99.
+      </action>
       <action issue="IMAGING-264" dev="kinow" type="fix">
         BMP Parser physicalWidthDpi and physicalHeightDpi truncated before rounding off.
       </action>
