@@ -46,7 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
   <body>
     <release version="1.0-alpha3" date="2020-??-??" description="Third 1.0 alpha release">
       <action dev="kinow" type="update" due-to="Dependabot">
-        Bump actions/setup-java from v1.4.0 to v1.4.2 #92 #95.
+        Bump actions/setup-java from v1.4.0 to v1.4.3 #92 #95 #101.
       </action>
       <action dev="kinow" type="update" due-to="Dependabot">
         Bump commons-io from 2.7 to 2.8.0 #96.
