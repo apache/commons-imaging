@@ -28,6 +28,7 @@ import org.apache.commons.imaging.common.ImageBuilder;
 import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
@@ -43,7 +44,7 @@ public final class DataReaderStrips extends ImageDataReader {
     private final int bitsPerPixel;
     private final int compression;
     private final int rowsPerStrip;
-    private final int planarConfiguration;
+    private final TiffPlanarConfiguration planarConfiguration;
     private final ByteOrder byteOrder;
     private int x;
     private int y;
@@ -54,7 +55,8 @@ public final class DataReaderStrips extends ImageDataReader {
       final int[] bitsPerSample, final int predictor,
       final int samplesPerPixel, final int sampleFormat, final int width,
       final int height, final int compression,
-      final int planarConfiguration, final ByteOrder byteOrder,
+      final TiffPlanarConfiguration planarConfiguration,
+      final ByteOrder byteOrder,
       final int rowsPerStrip, final TiffImageData.Strips imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
             samplesPerPixel, sampleFormat, width, height);
@@ -241,7 +243,7 @@ public final class DataReaderStrips extends ImageDataReader {
     @Override
     public void readImageData(final ImageBuilder imageBuilder)
       throws ImageReadException, IOException {
-        if (planarConfiguration != TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR) {
+        if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
             for (int strip = 0; strip < imageData.getImageDataLength(); strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
                 final long rowsRemaining = height - (strip * rowsPerStripLong);
@@ -318,7 +320,7 @@ public final class DataReaderStrips extends ImageDataReader {
         //        or working
         final ImageBuilder workingBuilder =
                 new ImageBuilder(width, workingHeight, false);
-        if (planarConfiguration != TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR) {
+        if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
             for (int strip = strip0; strip <= strip1; strip++) {
                 final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
                 final long rowsRemaining = height - (strip * rowsPerStripLong);

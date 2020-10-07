@@ -51,6 +51,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -652,12 +653,12 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         // Obtain the planar configuration
         final TiffField pcField = directory.findField(
           TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION);
-        final int planarConfiguration
+        final TiffPlanarConfiguration planarConfiguration
           = pcField == null
-            ? TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY
-            : pcField.getIntValue();
+            ? TiffPlanarConfiguration.CHUNKY
+            : TiffPlanarConfiguration.lenientValueOf(pcField.getIntValue());
 
-        if (planarConfiguration == TiffTagConstants.PLANAR_CONFIGURATION_VALUE_PLANAR) {
+        if (planarConfiguration == TiffPlanarConfiguration.PLANAR) {
             // currently, we support the non-interleaved (non-chunky)
             // option only in the case of a 24-bit RBG photometric interpreter
             // and for strips (not for tiles).
@@ -922,7 +923,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         final ImageDataReader dataReader = imageData.getDataReader(directory,
           photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
           samplesPerPixel, width, height, compression,
-          TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY, byteOrder);
+          TiffPlanarConfiguration.CHUNKY, byteOrder);
 
         return dataReader.readRasterData(subImage);
     }

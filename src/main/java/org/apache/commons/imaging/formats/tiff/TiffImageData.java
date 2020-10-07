@@ -21,6 +21,7 @@ import java.nio.ByteOrder;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
+import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.datareaders.DataReaderStrips;
@@ -57,7 +58,7 @@ public abstract class TiffImageData {
           final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
           final int samplesPerPixel, final int width, final int height,
           final int compression,
-          final int planarConfiguration,
+          final TiffPlanarConfiguration planarConfiguration,
           final ByteOrder byteOrder) throws IOException, ImageReadException {
             int sampleFormat = extractSampleFormat(directory);
             return new DataReaderTiled(directory, photometricInterpreter,
@@ -126,7 +127,8 @@ public abstract class TiffImageData {
           final int bitsPerPixel, final int[] bitsPerSample, final int predictor,
           final int samplesPerPixel, final int width, final int height,
           final int compression,
-          final int planarConfiguration, final ByteOrder byteorder) throws IOException, ImageReadException {
+          final TiffPlanarConfiguration planarConfiguration,
+          final ByteOrder byteorder) throws IOException, ImageReadException {
             int sampleFormat = extractSampleFormat(directory);
             return new DataReaderStrips(directory, photometricInterpreter,
               bitsPerPixel, bitsPerSample, predictor,
@@ -141,9 +143,10 @@ public abstract class TiffImageData {
     public abstract boolean stripsNotTiles();
 
     public abstract ImageDataReader getDataReader(TiffDirectory directory,
-            PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
-            int[] bitsPerSample, int predictor, int samplesPerPixel, int width,
-      int height, int compression, int planarConfiguration,
+      PhotometricInterpreter photometricInterpreter, int bitsPerPixel,
+      int[] bitsPerSample, int predictor, int samplesPerPixel, int width,
+      int height, int compression,
+      TiffPlanarConfiguration planarConfiguration,
       ByteOrder byteOrder) throws IOException, ImageReadException;
 
     public static class Data extends TiffElement.DataElement {

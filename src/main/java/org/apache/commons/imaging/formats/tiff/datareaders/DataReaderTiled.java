@@ -35,6 +35,7 @@ import org.apache.commons.imaging.formats.tiff.TiffRasterData;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffElement.DataElement;
 import org.apache.commons.imaging.formats.tiff.TiffImageData;
+import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreterRgb;
@@ -55,11 +56,12 @@ public final class DataReaderTiled extends ImageDataReader {
     private final TiffImageData.Tiles imageData;
 
     public DataReaderTiled(final TiffDirectory directory,
-            final PhotometricInterpreter photometricInterpreter, final int tileWidth,
-            final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
-        final int predictor, final int samplesPerPixel, final int sampleFormat,
+      final PhotometricInterpreter photometricInterpreter, final int tileWidth,
+      final int tileLength, final int bitsPerPixel, final int[] bitsPerSample,
+      final int predictor, final int samplesPerPixel, final int sampleFormat,
       final int width, final int height,
-      final int compression, final int planarConfiguration,
+      final int compression,
+      final TiffPlanarConfiguration planarConfiguration,
       final ByteOrder byteOrder, final TiffImageData.Tiles imageData) {
         super(directory, photometricInterpreter, bitsPerSample, predictor,
             samplesPerPixel, sampleFormat, width, height);

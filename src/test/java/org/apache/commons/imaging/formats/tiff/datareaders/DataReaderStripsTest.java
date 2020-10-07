@@ -16,7 +16,7 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
-import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +28,7 @@ public class DataReaderStripsTest {
         final int[] bitsPerPixel = {1,2,3};
         final DataReaderStrips strips = new DataReaderStrips(
             null, null, 3, bitsPerPixel, 2, 4, 0, 3, 1, 1, 
-            TiffTagConstants.PLANAR_CONFIGURATION_VALUE_CHUNKY, null, 2, null);
+            TiffPlanarConfiguration.CHUNKY, null, 2, null);
         strips.resetPredictor();
         final int[] samples = {10, 355, 355, 255};
         int[] expected = {10, 99, 99, 255};
