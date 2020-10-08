@@ -51,6 +51,7 @@ import org.apache.commons.imaging.common.bytesource.ByteSource;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory.ImageDataElement;
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants;
 import org.apache.commons.imaging.formats.tiff.constants.TiffEpTagConstants;
+import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.datareaders.ImageDataReader;
 import org.apache.commons.imaging.formats.tiff.photometricinterpreters.PhotometricInterpreter;
@@ -649,11 +650,34 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
                 bitsPerSample, predictor, samplesPerPixel, width, height);
         }
 
+        // Obtain the planar configuration
+        final TiffField pcField = directory.findField(
+          TiffTagConstants.TIFF_TAG_PLANAR_CONFIGURATION);
+        final TiffPlanarConfiguration planarConfiguration
+          = pcField == null
+            ? TiffPlanarConfiguration.CHUNKY
+            : TiffPlanarConfiguration.lenientValueOf(pcField.getIntValue());
+
+        if (planarConfiguration == TiffPlanarConfiguration.PLANAR) {
+            // currently, we support the non-interleaved (non-chunky)
+            // option only in the case of a 24-bit RBG photometric interpreter
+            // and for strips (not for tiles).
+            if (photometricInterpretation
+              != TiffTagConstants.PHOTOMETRIC_INTERPRETATION_VALUE_RGB
+              || bitsPerPixel != 24) {
+                throw new ImageReadException("For planar configuration 2, only 24 bit RGB is currently supported");
+            }
+            if (null == directory.findField(TiffTagConstants.TIFF_TAG_STRIP_OFFSETS)) {
+                throw new ImageReadException("For planar configuration 2, only strips-organization is supported");
+            }
+        }
+
         final TiffImageData imageData = directory.getTiffImageData();
 
         final ImageDataReader dataReader = imageData.getDataReader(directory,
                 photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
-                samplesPerPixel, width, height, compression, byteOrder);
+          samplesPerPixel, width, height, compression,
+          planarConfiguration, byteOrder);
 
         BufferedImage result = null;
         if (subImage != null) {
@@ -897,8 +921,9 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
         final TiffImageData imageData = directory.getTiffImageData();
 
         final ImageDataReader dataReader = imageData.getDataReader(directory,
-            photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
-            samplesPerPixel, width, height, compression, byteOrder);
+          photometricInterpreter, bitsPerPixel, bitsPerSample, predictor,
+          samplesPerPixel, width, height, compression,
+          TiffPlanarConfiguration.CHUNKY, byteOrder);
 
         return dataReader.readRasterData(subImage);
     }

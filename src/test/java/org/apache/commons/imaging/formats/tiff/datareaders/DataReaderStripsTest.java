@@ -16,6 +16,8 @@
  */
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
+import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -24,7 +26,9 @@ public class DataReaderStripsTest {
     @Test
     public void testApplyPredictor() throws Exception {
         final int[] bitsPerPixel = {1,2,3};
-        final DataReaderStrips strips = new DataReaderStrips(null, null, 3, bitsPerPixel, 2, 4, 0, 3, 1, 1, null, 2, null);
+        final DataReaderStrips strips = new DataReaderStrips(
+            null, null, 3, bitsPerPixel, 2, 4, 0, 3, 1, 1, 
+            TiffPlanarConfiguration.CHUNKY, null, 2, null);
         strips.resetPredictor();
         final int[] samples = {10, 355, 355, 255};
         int[] expected = {10, 99, 99, 255};
