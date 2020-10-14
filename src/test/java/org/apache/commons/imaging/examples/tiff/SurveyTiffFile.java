@@ -14,21 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 package org.apache.commons.imaging.examples.tiff;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Formatter;
-import java.util.HashMap;
 import org.apache.commons.imaging.FormatCompliance;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
 import org.apache.commons.imaging.formats.tiff.TiffContents;
 import org.apache.commons.imaging.formats.tiff.TiffDirectory;
 import org.apache.commons.imaging.formats.tiff.TiffField;
-import org.apache.commons.imaging.formats.tiff.TiffImageData;
 import org.apache.commons.imaging.formats.tiff.TiffReader;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_1D;
 import static org.apache.commons.imaging.formats.tiff.constants.TiffConstants.TIFF_COMPRESSION_CCITT_GROUP_3;
@@ -44,13 +41,17 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 
 /**
- * Provides methods to collect data for a tiff file.  This class is ntended for use with
+ * Provides methods to collect data for a tiff file. This class is ntended for
+ * use with
  * SurveyTiffFolder, though it could be integrated into other applications.
  */
 public class SurveyTiffFile {
 
     public String surveyFile(File file, boolean csv) throws ImageReadException, IOException {
         String delimiter = "  ";
+        if (csv) {
+            delimiter = ", ";
+        }
 
         StringBuilder sb = new StringBuilder();
         Formatter fmt = new Formatter(sb);
@@ -135,13 +136,13 @@ public class SurveyTiffFile {
             tileHeight = tileLengthField.getIntValue();
         }
 
-        String compressionString         = getCompressionString(directory);
-        String predictorString           = getPredictorString(directory);
+        String compressionString = getCompressionString(directory);
+        String predictorString = getPredictorString(directory);
         String planarConfigurationString = getPlanarConfigurationString(directory);
-        String bitsPerSampleString       = getBitsPerSampleString(bitsPerSample);
-        String sampleFmtString           = getSampleFormatString(directory);
-        String piString                  = getPhotometricInterpreterString(directory, bitsPerSample);
-        String iccString                 = getIccProfileString(directory);
+        String bitsPerSampleString = getBitsPerSampleString(bitsPerSample);
+        String sampleFmtString = getSampleFormatString(directory);
+        String piString = getPhotometricInterpreterString(directory, bitsPerSample);
+        String iccString = getIccProfileString(directory);
 
         fmt.format("%s%4dx%-4d", delimiter, width, height);
         if (imageDataInStrips) {
@@ -160,7 +161,7 @@ public class SurveyTiffFile {
         fmt.format("%s%-7s", delimiter, iccString);
 
         if (csv) {
-            return reformatForCsv(sb.toString());
+            return trimForCsv(sb);
         }
         return sb.toString();
     }
@@ -354,12 +355,17 @@ public class SurveyTiffFile {
             "    Size     Layout  Blk_sz     P_conf  Compress  "
             + "Predict  Data_Fmt   B/P B/S      Photo     ICC_Pro");
         if (csv) {
-            return reformatForCsv(header).toLowerCase();
+            return reformatHeaderForCsv(header);
         } else {
             return header;
         }
     }
 
+    /**
+     * Prints the legend information to the output stream
+     *
+     * @param ps a valid instance
+     */
     void printLegend(PrintStream ps) {
         ps.println("Legend:");
         ps.println("  Size      Size of image (width-by-height)");
@@ -374,9 +380,18 @@ public class SurveyTiffFile {
         ps.println("  Photo     Photometric Interpretation (pixel color type)");
         ps.println("  ICC_Pro   Is ICC color profile supplied");
         ps.println("");
+        ps.println("  RGBA       RGB with unassociated alpha (transparency)");
+        ps.println("  RGBA_Pre-A RGB with associated (premultiplied) alpha");
+        ps.println("");
     }
 
-    private String reformatForCsv(String s) {
+    /**
+     * Reformats the header inserting commas and removing spaces
+     *
+     * @param s a valid string
+     * @return a header suitable for a CSV file.
+     */
+    private String reformatHeaderForCsv(String s) {
         StringBuilder sb = new StringBuilder(s.length());
         boolean enableComma = false;
         for (int i = 0; i < s.length(); i++) {
@@ -388,8 +403,51 @@ public class SurveyTiffFile {
                 }
             } else {
                 enableComma = true;
+                if (Character.isUpperCase(c)) {
+                    c = Character.toLowerCase(c);
+                }
                 sb.append(c);
             }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Trims spaces from a range of characters intended for a CSV output
+     *
+     * @param source the standard source file
+     * @return the equivalent string with spaces removed.
+     */
+    private String trimForCsv(StringBuilder source) {
+        int n = source.length();
+        StringBuilder sb = new StringBuilder(n);
+        boolean spaceEnabled = false;
+        boolean spacePending = false;
+        for (int i = 0; i < n; i++) {
+            char c = source.charAt(i);
+            if (Character.isWhitespace(c)) {
+                if (spaceEnabled) {
+                    spacePending = true;
+                    spaceEnabled = false;
+                }
+            } else {
+
+                if (Character.isLetter(c) || Character.isDigit(c)) {
+                    if (spacePending) {
+                        sb.append(' ');
+                        spacePending = false;
+                    }
+                    spaceEnabled = true;
+                } else {
+                    spacePending = false;
+                    spaceEnabled = false;
+                }
+                sb.append(c);
+            }
+        }
+        n = sb.length();
+        if (n > 0 && sb.charAt(n - 1) == ' ') {
+            sb.setLength(n - 1);
         }
         return sb.toString();
     }

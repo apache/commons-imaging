@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package org.apache.commons.imaging.examples.tiff;
 
 import java.io.BufferedOutputStream;
@@ -204,9 +204,7 @@ public class SurveyTiffFolder {
                 }
                 sBuilder.append(path[i]);
             }
-            if (csv) {
-                sBuilder.append(',');
-            } else {
+            if (!csv) {
                 for (int i = sBuilder.length(); i < n; i++) {
                     sBuilder.append(' ');
                 }
