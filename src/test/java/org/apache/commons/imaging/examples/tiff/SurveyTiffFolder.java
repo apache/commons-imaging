@@ -34,7 +34,7 @@ import org.apache.commons.imaging.ImageReadException;
  * Command-line Arguments:</p>
  * <ol>
  * <li>Top-level directory (mandatory)</li>
- * <li>Output file for results (optional></li>
+ * <li>Output file for results (optional)</li>
  * </ol>
  * If the optional output file has the extension ".csv", the output
  * will be formatted as a comma-separated-value file suitable
@@ -83,7 +83,7 @@ public class SurveyTiffFolder {
             File reportFile = new File(args[1]);
             try (FileOutputStream fos = new FileOutputStream(reportFile);
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
-                PrintStream ps = new PrintStream(bos, true, "UTF-8");) {
+                PrintStream ps = new PrintStream(bos, true, "UTF-8")) {
                 surveyFiles(topLevelDir, pathList, maxLen, csv, ps);
             } catch (IOException ioex) {
                 System.err.println("IOException writing report to " + args[1]);

@@ -41,7 +41,7 @@ import org.apache.commons.imaging.formats.tiff.constants.TiffPlanarConfiguration
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 
 /**
- * Provides methods to collect data for a tiff file. This class is ntended for
+ * Provides methods to collect data for a tiff file. This class is intended for
  * use with
  * SurveyTiffFolder, though it could be integrated into other applications.
  */
@@ -58,7 +58,7 @@ public class SurveyTiffFile {
 
         // Establish a TiffReader. This is just a simple constructor that
         // does not actually access the file.  So the application cannot
-        // obtain the byteOrder, or other details, until the contents has
+        // obtain the byteOrder, or other details, until the contents have
         // been read.  Then read the directories associated with the
         // file by passing in the byte source and options.
         ByteSourceFile byteSource = new ByteSourceFile(file);
@@ -115,7 +115,7 @@ public class SurveyTiffFile {
                 rowsPerStrip = rowsPerStripField.getIntValue();
             } else {
                 final TiffField imageHeight = directory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH);
-                /**
+                /*
                  * if rows per strip not present then rowsPerStrip is equal to
                  * imageLength or an infinity value;
                  */
