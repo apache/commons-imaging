@@ -293,7 +293,7 @@ public final class BinaryFunctions {
      * @param quad a quad (the needle)
      * @param bis an input stream (the haystack)
      * @return {@code true} if it found the quad, and {@code false} otherwise
-     * @throws IOException
+     * @throws IOException if it fails to read from the given input stream
      */
     public static boolean searchQuad(int quad, InputStream bis) throws IOException {
         byte[] needle = BinaryFunctions.quadsToByteArray(quad);
