@@ -588,17 +588,7 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
             if (subImage.y + subImage.height > height) {
                 throw new ImageReadException("subimage (y+height) is outside raster");
             }
-
-            // if the subimage is just the same thing as the whole
-            // image, suppress the subimage processing
-            if (subImage.x == 0
-                    && subImage.y == 0
-                    && subImage.width == width
-                    && subImage.height == height) {
-                subImage = null;
-            }
         }
-
 
         int samplesPerPixel = 1;
         final TiffField samplesPerPixelField = directory.findField(
@@ -679,17 +669,8 @@ public class TiffImageParser extends ImageParser implements XmpEmbeddable {
           samplesPerPixel, width, height, compression,
           planarConfiguration, byteOrder);
 
-        BufferedImage result = null;
-        if (subImage != null) {
-            result = dataReader.readImageData(subImage);
-        } else {
-            final boolean hasAlpha = false;
-            final ImageBuilder imageBuilder = new ImageBuilder(width, height, hasAlpha);
-
-            dataReader.readImageData(imageBuilder);
-            result =  imageBuilder.getBufferedImage();
-        }
-        return result;
+        final ImageBuilder iBuilder = dataReader.readImageData(subImage);
+        return iBuilder.getBufferedImage();
     }
 
     private PhotometricInterpreter getPhotometricInterpreter(

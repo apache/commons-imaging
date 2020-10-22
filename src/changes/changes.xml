@@ -45,6 +45,9 @@ The <action> type attribute can be add,update,fix,remove.
   </properties>
   <body>
     <release version="1.0-alpha3" date="2020-??-??" description="Third 1.0 alpha release">
+      <action issue="IMAGING-269" dev="kinow" type="add" due-to="Gary Lucas">
+        Consolidate redundant methods in TIFF datareaders.
+      </action>
       <action issue="IMAGING-268" dev="kinow" type="add" due-to="Gary Lucas">
         Add list of TIFF files and example survey application.
       </action>
