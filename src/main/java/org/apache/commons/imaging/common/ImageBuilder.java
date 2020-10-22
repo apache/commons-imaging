@@ -131,6 +131,56 @@ public class ImageBuilder {
         return makeBufferedImage(data, width, height, hasAlpha);
     }
 
+
+     /**
+     * Gets a subset of the ImageBuilder content using the specified parameters
+     * to indicate an area of interest. If the parameters specify a rectangular
+     * region that is not entirely contained within the bounds defined
+     * by the ImageBuilder, this method will throw a RasterFormatException.
+     * This run- time exception is consistent with the behavior of the
+     * getSubimage method provided by BufferedImage.
+     * @param x the X coordinate of the upper-left corner of the
+     *          specified rectangular region
+     * @param y the Y coordinate of the upper-left corner of the
+     *          specified rectangular region
+     * @param w the width of the specified rectangular region
+     * @param h the height of the specified rectangular region
+     * @return a valid instance of the specified width and height.
+     * @throws RasterFormatException if the specified area is not contained
+     *         within this ImageBuilder
+     */
+    public ImageBuilder getSubset(final int x, final int y, final int w, final int h) {
+        if (w <= 0) {
+            throw new RasterFormatException("negative or zero subimage width");
+        }
+        if (h <= 0) {
+            throw new RasterFormatException("negative or zero subimage height");
+        }
+        if (x < 0 || x >= width) {
+            throw new RasterFormatException("subimage x is outside raster");
+        }
+        if (x + w > width) {
+            throw new RasterFormatException(
+                    "subimage (x+width) is outside raster");
+        }
+        if (y < 0 || y >= height) {
+            throw new RasterFormatException("subimage y is outside raster");
+        }
+        if (y + h > height) {
+            throw new RasterFormatException(
+                    "subimage (y+height) is outside raster");
+        }
+
+        ImageBuilder b = new ImageBuilder(w, h, hasAlpha);
+        for(int i=0; i<h; i++){
+            int srcDex = (i+y)*width+x;
+            int outDex = i*w;
+            System.arraycopy(data, srcDex, b.data, outDex, w);
+        }
+        return b;
+    }
+
+
     /**
      * Gets a subimage from the ImageBuilder using the specified parameters.
      * If the parameters specify a rectangular region that is not entirely

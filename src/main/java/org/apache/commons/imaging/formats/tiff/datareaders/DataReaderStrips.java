@@ -18,7 +18,6 @@
 package org.apache.commons.imaging.formats.tiff.datareaders;
 
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.ByteOrder;
@@ -240,59 +239,19 @@ public final class DataReaderStrips extends ImageDataReader {
         }
     }
 
+
     @Override
-    public void readImageData(final ImageBuilder imageBuilder)
-      throws ImageReadException, IOException {
-        if (planarConfiguration != TiffPlanarConfiguration.PLANAR) {
-            for (int strip = 0; strip < imageData.getImageDataLength(); strip++) {
-                final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
-                final long rowsRemaining = height - (strip * rowsPerStripLong);
-                final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
-                final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
-                final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
-                final long pixelsPerStrip = rowsInThisStrip * width;
+    public ImageBuilder readImageData(final Rectangle subImageSpecification)
+            throws ImageReadException, IOException {
 
-                final byte[] compressed = imageData.getImageData(strip).getData();
-                final byte[] decompressed = decompress(compressed, compression,
-                  (int) bytesPerStrip, width, (int) rowsInThisStrip);
-                interpretStrip(
-                  imageBuilder,
-                  decompressed,
-                  (int) pixelsPerStrip,
-                  height);
-            }
+        final Rectangle subImage;
+        if (subImageSpecification == null) {
+            // configure subImage to read entire image
+            subImage = new Rectangle(0, 0, width, height);
         } else {
-            int nStripsInPlane = imageData.getImageDataLength() / 3;
-            for (int strip = 0; strip < nStripsInPlane; strip++) {
-                final long rowsPerStripLong = 0xFFFFffffL & rowsPerStrip;
-                final long rowsRemaining = height - (strip * rowsPerStripLong);
-                final long rowsInThisStrip = Math.min(rowsRemaining, rowsPerStripLong);
-                final long bytesPerRow = (bitsPerPixel * width + 7) / 8;
-                final long bytesPerStrip = rowsInThisStrip * bytesPerRow;
-                final long pixelsPerStrip = rowsInThisStrip * width;
-
-                byte[] b = new byte[(int) bytesPerStrip];
-                for (int iPlane = 0; iPlane < 3; iPlane++) {
-                    int planeStrip = iPlane * nStripsInPlane + strip;
-                    final byte[] compressed = imageData.getImageData(planeStrip).getData();
-                    final byte[] decompressed = decompress(compressed, compression,
-                      (int) bytesPerStrip, width, (int) rowsInThisStrip);
-                    int index = iPlane;
-                    for (int i = 0; i < decompressed.length; i++) {
-                        b[index] = decompressed[i];
-                        index += 3;
-                    }
-                }
-                interpretStrip(imageBuilder, b, (int) pixelsPerStrip, height);
-            }
+            subImage = subImageSpecification;
         }
 
-    }
-
-
-    @Override
-    public BufferedImage readImageData(final Rectangle subImage)
-            throws ImageReadException, IOException {
         // the legacy code is optimized to the reading of whole
         // strips (except for the last strip in the image, which can
         // be a partial).  So create a working image with compatible
@@ -372,9 +331,10 @@ public final class DataReaderStrips extends ImageDataReader {
                 && subImage.width == width
                 && subImage.height == workingHeight) {
             // the subimage exactly matches the ImageBuilder bounds
-            return workingBuilder.getBufferedImage();
+            // so we can return that.
+            return workingBuilder;
         }
-        return workingBuilder.getSubimage(
+        return workingBuilder.getSubset(
                 subImage.x,
                 subImage.y - y0,
                 subImage.width,
